@@ -1,7 +1,5 @@
 - ByFogcreek = require "../includes/by-fogcreek"
 
-- CategoryPresenter = require "../../presenters/category"
-- RecentProjectsPresenter = require "../../presenters/recent-projects"
 - QuestionsPresenter = require "../../presenters/questions"
 
 - COMMUNITY_PROJECT = "https://glitch.com/edit/#!/community"
@@ -14,16 +12,15 @@ span
     = @ctaButtons
 
     = QuestionsPresenter(@application)
-    = RecentProjectsPresenter(@application)
+    = @RecentProjectsPresenter
 
     section.featured.featured-collections
       h2 Featured
       ul
         = @featuredCollections
 
-    - application = @application
     - @randomCategories().forEach (category) ->
-      = CategoryPresenter(application, category)
+      = @CategoryPresenter(category)
 
     = @CategoriesPresenter
 

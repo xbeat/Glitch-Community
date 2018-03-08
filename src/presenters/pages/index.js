@@ -6,6 +6,8 @@ const HeaderPresenter = require("../header");
 const FeaturedCollectionPresenter = require("../featured-collection");
 const CategoriesPresenter = require ("../../presenters/categories");
 const CategoryPresenter = require ("../../presenters/category");
+const RecentProjectsPresenter = require("../../presenters/recent-projects");
+
 
 module.exports = function(application) {
   console.log("Presented index");
@@ -46,7 +48,9 @@ module.exports = function(application) {
       return CategoriesPresenter(application);
     },
     
-    CategoryPresenter()
+    CategoryPresenter(category) {
+      return CategoryPresenter(application, category);
+    },
   };
 
   const content = IndexTemplate(self);
