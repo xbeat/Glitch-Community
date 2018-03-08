@@ -3,7 +3,6 @@
 - CategoryPresenter = require "../../presenters/category"
 - RecentProjectsPresenter = require "../../presenters/recent-projects"
 - QuestionsPresenter = require "../../presenters/questions"
-- CategoriesPresenter = require "../../presenters/categories"
 
 - COMMUNITY_PROJECT = "https://glitch.com/edit/#!/community"
 
@@ -26,7 +25,7 @@ span
     - @randomCategories().forEach (category) ->
       = CategoryPresenter(application, category)
 
-    = CategoriesPresenter(@application)
+    = @CategoriesPresenter
 
     = ByFogcreek(@application)
 

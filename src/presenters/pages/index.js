@@ -4,6 +4,8 @@ const WhatIsGlitchPresenter = require("../what-is-glitch");
 const CtaButtonsPresenter = require("../cta-buttons");
 const HeaderPresenter = require("../header");
 const FeaturedCollectionPresenter = require("../featured-collection");
+const CategoriesPresenter = require ("../../presenters/categories");
+const CategoryPresenter = require ("../../presenters/category");
 
 module.exports = function(application) {
   console.log("Presented index");
@@ -38,7 +40,13 @@ module.exports = function(application) {
 
     categories() {
       return application.categories();
-    }
+    },
+    
+    CategoriesPresenter() {
+      return CategoriesPresenter(application);
+    },
+    
+    CategoryPresenter()
   };
 
   const content = IndexTemplate(self);

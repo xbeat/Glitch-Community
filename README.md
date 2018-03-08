@@ -17,8 +17,8 @@ File structure
 
 - the backend app starts at `server.js`
 - `src/client.js` is compiled and served as /client-bundle.js
-- view templates start at `src/templates/hello.jadelet`
-- stylus files like `public/style.styl` is compiled and served directly as `public/style.css`
+- view templates start at `src/templates/hello.jade`
+- stylus files like `public/styles/style.styl` is compiled and served directly as `public/style.css`
 - Files in `public/` are served directly
 - drag in `assets`, like images or music, to add them to your project
 
@@ -27,7 +27,8 @@ application models -> presenter -> DOM
 Built with
 ----------
 
-- [Coffescript](http://coffeescript.org/)
+- [ES6](http://es6-features.org/)
+- [React.js](https://reactjs.org/)
 - [Jadelet](https://jadelet.com/)
 - [Stylus](http://stylus-lang.com/)
 - [Node.js](https://nodejs.org/dist/latest-v8.x/docs/api/)
