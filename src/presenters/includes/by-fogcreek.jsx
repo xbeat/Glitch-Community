@@ -6,7 +6,7 @@ const age = current - FOUNDED;
 const logo = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffogcreek.svg";
   
 const ByFogCreek = () => (
-  <section class="by-fogcreek" role="complementary">
+  <section className="by-fogcreek" role="complementary">
     <h2>Made By Fog Creek</h2>
     <img src={logo} alt="Fog Creek logo"/>
     <p>

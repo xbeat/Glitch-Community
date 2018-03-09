@@ -55,9 +55,14 @@ module.exports = function(application) {
     
     Categories() {
       const id = "categories";
+      const props = {
+        categories() {
+          return application.categories()
+        },
+      };
       setTimeout(() => { 
         return render(
-          React.createElement(Categories, {categories: application.categories()}),
+          React.createElement(Categories, props),
           document.getElementById(id)
         );
       });

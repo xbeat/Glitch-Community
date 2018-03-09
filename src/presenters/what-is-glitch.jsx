@@ -13,22 +13,22 @@ const WhatIsGlitch = ({isSignedIn, showVideoOverlay}) => {
   }
   
   return (
-    <section class="what-is-glitch">
+    <section className="what-is-glitch">
       <span>
         <a href="https://glitch.com/about">
           <figure title="How Glitch works">
-            <img class="wide" src={whatsGlitchWide} alt={whatsGlitchAlt}/>
-            <img class="narrow" src={whatsGlitchNarrow} alt={whatsGlitchAlt}/>
+            <img className="wide" src={whatsGlitchWide} alt={whatsGlitchAlt}/>
+            <img className="narrow" src={whatsGlitchNarrow} alt={whatsGlitchAlt}/>
           </figure>
         </a>
-        <p>
-          <span>And it's <img class="free" src={free} alt="free"/></span>
+        <div>
+          <span>And it's <img className="free" src={free} alt="free"/></span>
           <span>. </span>
-          <div class="video" onClick={showVideoOverlay}>
-            <img class="play-button" src={play} alt="play"/>
+          <div className="video" onClick={showVideoOverlay}>
+            <img className="play-button" src={play} alt="play"/>
             <span>How it works in 2 minutes</span>
           </div>
-        </p>
+        </div>
       </span>
     </section>
   );
