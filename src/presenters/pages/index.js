@@ -1,6 +1,5 @@
 const IndexTemplate = require("../../templates/pages/index");
 const LayoutPresenter = require("../layout");
-const WhatIsGlitchPresenter = require("../what-is-glitch");
 const CtaButtonsPresenter = require("../cta-buttons");
 const HeaderPresenter = require("../header");
 const FeaturedCollectionPresenter = require("../featured-collection");
@@ -10,6 +9,7 @@ const RecentProjectsPresenter = require("../recent-projects");
 const QuestionsPresenter = require("../questions");
 const Reactlet = require("../../templates/reactlet");
 
+import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
 import {render, unmountComponentAtNode} from 'react-dom';
 import React from 'react';
@@ -23,8 +23,15 @@ module.exports = function(application) {
     
     user: application.user,
 
-    whatIsGlitch() {
-      return WhatIsGlitchPresenter(application);
+    WhatIsGlitch() {
+      const id = "what-is-glitch";
+      setTimeout(() => { 
+        return render(
+          React.createElement(WhatIsGlitch, null),
+          document.getElementById(id)
+        );
+      });
+      return Reactlet({id: id});
     },
 
     ctaButtons() {
