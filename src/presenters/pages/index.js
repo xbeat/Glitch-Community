@@ -27,13 +27,16 @@ module.exports = function(application) {
       const id = "what-is-glitch";
       
       const props = {
-        visible: application.currentUser().isSignedIn()
+        isSignedIn() {
+          return application.currentUser().isSignedIn()
+        },
+        showVideoOverlay(event) {
+          application.overlayVideoVisible(true);
+          document.getElementsByClassName('video-overlay')[0].focus();
+          return event.stopPropagation();
+        },
       }
-      showVideoOverlay(event) {
-        application.overlayVideoVisible(true);
-        document.getElementsByClassName('video-overlay')[0].focus();
-        return event.stopPropagation();
-      }
+      
       
       setTimeout(() => { 
         return render(
