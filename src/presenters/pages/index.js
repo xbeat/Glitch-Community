@@ -62,7 +62,7 @@ module.exports = function(application) {
           document.getElementById(id)
         );
       });
-      return Reactlet(id);
+      return Reactlet({id: id});
     }
   };
 
