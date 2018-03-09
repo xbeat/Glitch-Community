@@ -8,7 +8,7 @@ const CategoriesPresenter = require ("../categories");
 const CategoryPresenter = require ("../category");
 const RecentProjectsPresenter = require("../recent-projects");
 const QuestionsPresenter = require("../questions");
-const ByFogcreek = require("../../templates/includes/by-fogcreek");
+const ByFogCreek = require("../includes/by-fogcreek.jsx");
 
 
 module.exports = function(application) {
@@ -51,8 +51,15 @@ module.exports = function(application) {
       return QuestionsPresenter(application);
     },
     
-    ByFogcreek() {
-      return ByFogcreek(application);
+    ByFogCreek() {
+      SignInPop(containerId) {
+      setTimeout(() => { 
+        return render(
+          React.createElement(ByFogCreek, null),
+          document.getElementById(containerId)
+        );
+      });
+      return ReactAttachment(application);
     }
   };
 
