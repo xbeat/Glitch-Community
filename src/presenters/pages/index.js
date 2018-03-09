@@ -3,7 +3,6 @@ const LayoutPresenter = require("../layout");
 const CtaButtonsPresenter = require("../cta-buttons");
 const HeaderPresenter = require("../header");
 const FeaturedCollectionPresenter = require("../featured-collection");
-const CategoriesPresenter = require ("../categories");
 const CategoryPresenter = require ("../category");
 const RecentProjectsPresenter = require("../recent-projects");
 const QuestionsPresenter = require("../questions");
@@ -66,8 +65,8 @@ module.exports = function(application) {
       return categories.map((category) =>CategoryPresenter(application, category));
     },
    
-    CategoriesPresenter() {
-      return CategoriesPresenter(application);
+    categories() {
+      return application.categories();
     },
     
     QuestionsPresenter() {

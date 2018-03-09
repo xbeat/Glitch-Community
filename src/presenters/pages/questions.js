@@ -17,8 +17,8 @@ module.exports = function(application) {
       return QuestionsPresenter(application, 12);
     },
 
-    categories() {
-      return CategoriesPresenter(application);
+    Categories() {
+      return application.categories();
     }
   };
       
