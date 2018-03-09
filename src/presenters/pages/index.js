@@ -25,9 +25,19 @@ module.exports = function(application) {
 
     WhatIsGlitch() {
       const id = "what-is-glitch";
+      
+      const props = {
+        visible: application.currentUser().isSignedIn()
+      }
+      showVideoOverlay(event) {
+        application.overlayVideoVisible(true);
+        document.getElementsByClassName('video-overlay')[0].focus();
+        return event.stopPropagation();
+      }
+      
       setTimeout(() => { 
         return render(
-          React.createElement(WhatIsGlitch, null),
+          React.createElement(WhatIsGlitch, props),
           document.getElementById(id)
         );
       });
