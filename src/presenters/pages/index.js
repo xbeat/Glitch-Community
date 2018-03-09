@@ -79,6 +79,13 @@ module.exports = function(application) {
           document.getElementById(id)
         );
       });
+      
+      application.categories.observe(function() {
+        render(
+          React.createElement(Categories, props),
+          document.getElementById(id)
+        );
+      });
       return Reactlet({id: id});
     },
     
