@@ -286,12 +286,6 @@ var self = Model({
     return questions = Question.getQuestions(self).then(questions => self.questions(questions));
   },
     
-  fogcreekAge() {
-    const FOUNDED = 2001;
-    const current = new Date().getFullYear();
-    return current - FOUNDED;
-  },
-
   showProjectOverlayPage(domain) {
     return Project.getProjectOverlay(application, domain);
   },
