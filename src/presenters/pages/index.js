@@ -7,7 +7,7 @@ const FeaturedCollectionPresenter = require("../featured-collection");
 const CategoriesPresenter = require ("../../presenters/categories");
 const CategoryPresenter = require ("../../presenters/category");
 const RecentProjectsPresenter = require("../../presenters/recent-projects");
-
+const QuestionsPresenter = require("../../presenters/questions");
 
 module.exports = function(application) {
   console.log("Presented index");
@@ -37,19 +37,16 @@ module.exports = function(application) {
     },
 
     randomCategories() {
-      return application.categories().filter(category => category.hasProjects());
+      let categories = application.categories().filter(category => category.hasProjects());
+      return categories.map((category) =>CategoryPresenter(application, category));
     },
-
-    categories() {
-      return application.categories();
-    },
-    
+   
     CategoriesPresenter() {
       return CategoriesPresenter(application);
     },
     
-    CategoryPresenter(category) {
-      return CategoryPresenter(application, category);
+    QuestionsPresenter() {
+      return QuestionsPresenter(application);
     },
   };
 
