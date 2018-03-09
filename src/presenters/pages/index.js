@@ -4,10 +4,12 @@ const WhatIsGlitchPresenter = require("../what-is-glitch");
 const CtaButtonsPresenter = require("../cta-buttons");
 const HeaderPresenter = require("../header");
 const FeaturedCollectionPresenter = require("../featured-collection");
-const CategoriesPresenter = require ("../../presenters/categories");
-const CategoryPresenter = require ("../../presenters/category");
-const RecentProjectsPresenter = require("../../presenters/recent-projects");
-const QuestionsPresenter = require("../../presenters/questions");
+const CategoriesPresenter = require ("../categories");
+const CategoryPresenter = require ("../category");
+const RecentProjectsPresenter = require("../recent-projects");
+const QuestionsPresenter = require("../questions");
+const ByFogcreek = require("../../templates/includes/by-fogcreek");
+
 
 module.exports = function(application) {
   console.log("Presented index");
@@ -48,6 +50,10 @@ module.exports = function(application) {
     QuestionsPresenter() {
       return QuestionsPresenter(application);
     },
+    
+    ByFogcreek() {
+      return ByFogcreek(application);
+    }
   };
 
   const content = IndexTemplate(self);
