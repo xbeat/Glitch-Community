@@ -8,8 +8,11 @@ const CategoriesPresenter = require ("../categories");
 const CategoryPresenter = require ("../category");
 const RecentProjectsPresenter = require("../recent-projects");
 const QuestionsPresenter = require("../questions");
-const ByFogCreek = require("../includes/by-fogcreek.jsx");
+const Reactlet = require("../../templates/reactlet");
 
+import ByFogCreek from "../includes/by-fogcreek.jsx";
+import {render, unmountComponentAtNode} from 'react-dom';
+import React from 'react';
 
 module.exports = function(application) {
   console.log("Presented index");
@@ -52,14 +55,14 @@ module.exports = function(application) {
     },
     
     ByFogCreek() {
-      SignInPop(containerId) {
+      const id = "by-fogcreek";
       setTimeout(() => { 
         return render(
           React.createElement(ByFogCreek, null),
-          document.getElementById(containerId)
+          document.getElementById(id)
         );
       });
-      return ReactAttachment(application);
+      return Reactlet(id);
     }
   };
 
