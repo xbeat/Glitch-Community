@@ -1,5 +1,5 @@
 // This shim helps attach React components to Jadelet files
-// Also see presenters/reactlet.js
+// Also see templates/reactlet.jade
 
 const ReactletTemplate = require("../templates/reactlet");
 import {render} from 'react-dom';
