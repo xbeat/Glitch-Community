@@ -1,7 +1,7 @@
 // This shim helps attach React components to Jadelet files
 // Also see presenters/reactlet.js
 
-const ReactletTemplate = require("../templates/includes/reactlet");
+const ReactletTemplate = require("../templates/reactlet");
 
 module.exports = function(application, category) {
   const { projects } = category;
