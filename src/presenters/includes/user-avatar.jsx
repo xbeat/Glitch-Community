@@ -10,7 +10,6 @@ const UserAvatar = ({userAvatarUrl, anonAvatar, alt, userLink, login, tooltipNam
     <a className="user" href={userLink} title={login} data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
       {img}
     </a>
-    
   );
 }
 
