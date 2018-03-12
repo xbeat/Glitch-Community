@@ -62,6 +62,7 @@ module.exports = function(application) {
     },
 
     randomCategories() {
+      debugger;
       let categories = application.categories().filter(category => category.hasProjects());
       return categories.map((category) =>CategoryPresenter(application, category));
     },
@@ -69,9 +70,7 @@ module.exports = function(application) {
     Categories() {
       const id = "categories";
       const props = {
-        categories() {
-          return application.categories()
-        },
+        categories: application.categories,
       };
       setTimeout(() => { 
         return render(
@@ -80,12 +79,6 @@ module.exports = function(application) {
         );
       });
       
-      application.categories.observe(function() {
-        render(
-          React.createElement(Categories, props),
-          document.getElementById(id)
-        );
-      });
       return Reactlet({id: id});
     },
     

@@ -280,6 +280,10 @@ var self = Model({
     return Category.getCategories(self)
       .then(categories => self.categories(categories));
   },
+  
+  get categories() {
+    return cachedCategories;
+  },
 
   getQuestions() {
     let questions;
@@ -351,7 +355,6 @@ var self = Model({
       
 self.attrModel("user", User);
 self.attrModel("currentUser", User);
-self.attrModels("categories", Category);
 self.attrModel("category", Category);
 self.attrModel("team", Team);
 self.attrModel("question", Question);

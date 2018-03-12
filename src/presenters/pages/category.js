@@ -20,26 +20,14 @@ module.exports = function(application) {
       return self.category().projects().map(project => ProjectItemPresenter(application, project, self.category()));
     },
 
-    categories() {
-      return application.categories();
-    },
-
     Categories() {
       const id = "categories";
       const props = {
-        categories() {
-          return application.categories()
-        },
+        categories: application.categories,
       };
+      
       setTimeout(() => { 
         return render(
-          React.createElement(Categories, props),
-          document.getElementById(id)
-        );
-      });
-      
-      application.categories.observe(function() {
-        render(
           React.createElement(Categories, props),
           document.getElementById(id)
         );

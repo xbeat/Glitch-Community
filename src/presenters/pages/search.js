@@ -57,7 +57,7 @@ module.exports = function(application) {
     Categories() {
       const id = "categories";
       const props = {
-        categories: categories,
+        categories: application.categories,
       };
       setTimeout(() => { 
         return render(
