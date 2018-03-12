@@ -46,8 +46,8 @@ module.exports = (Category = function(I, self) {
   return self;
 });
 
-/*
-Category.getRandomCategories = function(application, numberOfCategories, projectsPerCategory) {
+
+Category.getRandomCategories = function(api, numberOfCategories, projectsPerCategory) {
   let categoriesPath;
   console.log('🎷🎷🎷 get random categories');
   if (numberOfCategories) {
@@ -57,11 +57,13 @@ Category.getRandomCategories = function(application, numberOfCategories, project
   } else {
     categoriesPath = "categories/random";
   }
-  return application.api().get(categoriesPath)
+  return api.get(categoriesPath)
     .then(({data}) =>
       data.map(categoryDatum => Category(categoryDatum).update(categoryDatum))
     );
 };
+
+/*
 
 Category.getCategories = function(application) {
   console.log('🎷🎷🎷 get categories');
