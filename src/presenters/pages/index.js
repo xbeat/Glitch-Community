@@ -8,6 +8,7 @@ const QuestionsPresenter = require("../questions");
 const CategoryPresenter = require("../category");
 const CategoryModel = require("../../models/category");
 const Reactlet = require("../../templates/reactlet");
+const Observable = require('o_0');
 
 import Categories from "../categories.jsx";
 import WhatIsGlitch from "../what-is-glitch.jsx";
@@ -61,17 +62,20 @@ module.exports = function(application) {
     featuredCollections() {
       return application.featuredCollections.map(collection => FeaturedCollectionPresenter(application, collection));
     },
+    
+    categoryObservable: Observable([]),
 
     randomCategories() {
-      /* future:
-       -- need to fetch the categories.
-      CategoryModel.getRandomCategories().then((categories) => 
-        categories.filter(category => category.projects && category.projects.length)
-        return categories.map((category) =>CategoryPresenter(application, category))
-      );
-      */
       
-      return application.categories.map((category) =>CategoryPresenter(application, CategoryModel(category)));
+      if(!self.categoryObservable.length) {
+        self.categoryObservable(application.categories.map((category) => CategoryModel(category)));
+      
+        CategoryModel.getRandomCategories().then((categories) => 
+          self.categoryObservable(categories.filter(category => category.projects && category.projects.length))
+        );
+      }
+      
+      return self.categoryObservable.map((categoryModel) =>CategoryPresenter(application, categoryModel));
     },
    
     Categories() {
