@@ -10,8 +10,7 @@ const axios = require('axios');
 const LayoutPresenter = require("../layout");
 const SearchPageTemplate = require("../../templates/pages/search");
 
-const Reactlet = require("../../templates/reactlet");
-const categories = require('../../cache/categories');
+const Reactlet = require("../reactlet");
 
 import Categories from "../categories.jsx";
 import {render} from 'react-dom';

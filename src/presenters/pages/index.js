@@ -63,19 +63,19 @@ module.exports = function(application) {
       return application.featuredCollections.map(collection => FeaturedCollectionPresenter(application, collection));
     },
     
-    categoryObservable: Observable([]),
+    randomCategoriesObservable: Observable([]),
 
     randomCategories() {
       
-      if(!self.categoryObservable.length) {
-        self.categoryObservable(application.categories.map((category) => CategoryModel(category)));
+      if(!self.randomCategoriesObservable.length) {
+        self.randomCategoriesObservable(application.categories.map((category) => CategoryModel(category)));
       
-        CategoryModel.getRandomCategories().then((categories) => 
-          self.categoryObservable(categories.filter(category => category.projects && category.projects.length))
+        CategoryModel.getRandomCategories(application.api()).then((categories) => 
+          self.randomCategoriesObservable(categories.filter(category => category.projects && category.projects.length))
         );
       }
       
-      return self.categoryObservable.map((categoryModel) =>CategoryPresenter(application, categoryModel));
+      return self.randomCategoriesObservable.map((categoryModel) =>CategoryPresenter(application, categoryModel));
     },
    
     Categories() {
