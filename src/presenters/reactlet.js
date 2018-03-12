@@ -2,35 +2,20 @@
 // Also see presenters/reactlet.js
 
 const ReactletTemplate = require("../templates/reactlet");
+import {render} from 'react-dom';
+import React from 'react';
+let anchorId = 1;
 
-module.exports = function(application, category) {
-  const { projects } = category;
+module.exports = function(Component, props) {
+  const id = `reactlet-anchor-${anchorId}`;
+  anchorId++;
 
-  const projectElements = projects.map(project => ProjectItemPresenter(application, project, category));
+  setTimeout(() => { 
+    return render(
+      React.createElement(Component, props),
+      document.getElementById(id)
+    );
+  });
 
-  const self = {
-
-    category,
-    projects,
-
-    style() {
-      return {backgroundColor: category.backgroundColor()};
-    },
-
-    url() {
-      return category.url();
-    },
-
-    name() {
-      return category.name();
-    },
-    
-    description() {
-      return category.description();
-    }
-  };
-    
-  self.projects = projectElements;
-
-  return CategoryTemplate(self);
+  return ReactletTemplate({id: id});
 };

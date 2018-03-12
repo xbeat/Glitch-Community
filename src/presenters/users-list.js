@@ -26,7 +26,7 @@ module.exports = function(projectOrTeam, type) {
         return 'hidden'; 
       }
 
-      if (!(projectOrTeam != null ? projectOrTeam.showAsGlitchTeam() : undefined)) { return 'hidden'; }
+      if (!(projectOrTeam && projectOrTeam.showAsGlitchTeam() : undefined)) { return 'hidden'; }
     },
 
     hiddenIfShowAsGlitchTeam() {

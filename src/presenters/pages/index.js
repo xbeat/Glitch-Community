@@ -71,18 +71,10 @@ module.exports = function(application) {
     },
    
     Categories() {
-      const id = "categories";
       const props = {
         categories: application.categories,
       };
-      setTimeout(() => { 
-        return render(
-          React.createElement(Categories, props),
-          document.getElementById(id)
-        );
-      });
-      
-      return Reactlet({id: id});
+      return Reactlet(Categories, props);
     },
     
     QuestionsPresenter() {
@@ -90,14 +82,7 @@ module.exports = function(application) {
     },
     
     ByFogCreek() {
-      const id = "by-fogcreek";
-      setTimeout(() => { 
-        return render(
-          React.createElement(ByFogCreek, null),
-          document.getElementById(id)
-        );
-      });
-      return Reactlet({id: id});
+      return Reactlet(ByFogCreek, null);
     }
   };
 
