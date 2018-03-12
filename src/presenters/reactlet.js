@@ -11,11 +11,16 @@ module.exports = function(Component, props) {
   anchorId++;
 
   setTimeout(() => { 
+    const el = document.getElementById(id);
+    if(!el) {
+      console.error("Dom element not found.", id);
+      return;
+    }
     return render(
       React.createElement(Component, props),
-      document.getElementById(id)
+      el
     );
-  });
+  }, 100);
 
   return ReactletTemplate({id: id});
 };
