@@ -1,5 +1,4 @@
 const UsersListTemplate = require("../templates/includes/users-list");
-import Reactlet from "./reactlet";
 
 module.exports = function(projectOrTeam, type) {
   

@@ -20,7 +20,7 @@ module.exports = function(Component, props) {
       React.createElement(Component, props),
       el
     );
-  }, 100);
+  });
 
   return ReactletTemplate({id: id});
 };

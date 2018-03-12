@@ -73,6 +73,7 @@ Category.getCategories = function(application) {
       data.map(categoryDatum => Category(categoryDatum).update(categoryDatum))
     );
 };
+*/
 
 Category.updateCategory = function(application, id) {
   const categoriesPath = `categories/${id}`;
@@ -84,7 +85,6 @@ Category.updateCategory = function(application, id) {
       return application.categoryProjectsLoaded(true);
     });
 };
-*/
 
 
 Category._cache = cache;
