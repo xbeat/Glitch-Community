@@ -8,13 +8,20 @@ const free = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffree
 const whatsGlitchAlt = "Create a node app, or remix one. It updates as you type. Code with Friends!";
   
 const UserAvatar = ({user}) => {
-  if (isSignedIn()) {
-    return null;
-  }
+  let isSignedIn = user.isSignedIn();
+  let {anonAvatar, alt} = user;
+  
+  const img = { isSignedIn ? (
+        <img width="32" height="32" src={userAvatarUrl} alt={alt} }
+      ) : (
+        <img className="anon-avatar" width="32" height="32" src={anonAvatar} alt={alt} }
+      )}
   
   return (
-    a.user(href=@userLink title=@login data-tooltip=@tooltipName data-tooltip-left=true @style)
+    //a.user(href=@userLink title=@login data-tooltip=@tooltipName data-tooltip-left=true @style)
     <a className="user" href={userLink} title={login} data-tooltip={tooltipName} data-tooltip-left=true style={style}>
+      {img}
+    </a>
     
   );
 }
