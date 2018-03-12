@@ -7,7 +7,7 @@ const RecentProjectsPresenter = require("../recent-projects");
 const QuestionsPresenter = require("../questions");
 const CategoryPresenter = require("../category");
 const CategoryModel = require("../../models/category");
-const Reactlet = require("../../templates/reactlet");
+const Reactlet = require("../reactlet");
 const Observable = require('o_0');
 
 import Categories from "../categories.jsx";
@@ -26,7 +26,6 @@ module.exports = function(application) {
     user: application.user,
 
     WhatIsGlitch() {
-      const id = "what-is-glitch";
       
       const props = {
         isSignedIn() {
@@ -38,15 +37,8 @@ module.exports = function(application) {
           return event.stopPropagation();
         },
       }
-      
-      
-      setTimeout(() => { 
-        return render(
-          React.createElement(WhatIsGlitch, props),
-          document.getElementById(id)
-        );
-      });
-      return Reactlet({id: id});
+
+      return Reactlet(WhatIsGlitch, props);
     },
 
     ctaButtons() {
