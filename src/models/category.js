@@ -38,12 +38,6 @@ module.exports = (Category = function(I, self) {
   self.attrModels('projects', Project);
   self.attrObservable("gettingCategory", "fetched");
 
-  self.extend({
-    hasProjects() {
-      if (self.projects().length) { return true; }
-    }
-  });
-
   if (I.id) {
     cache[I.id] = self;
   }
@@ -52,7 +46,7 @@ module.exports = (Category = function(I, self) {
   return self;
 });
 
-
+/*
 Category.getRandomCategories = function(application, numberOfCategories, projectsPerCategory) {
   let categoriesPath;
   console.log('🎷🎷🎷 get random categories');
@@ -88,6 +82,7 @@ Category.updateCategory = function(application, id) {
       return application.categoryProjectsLoaded(true);
     });
 };
+*/
 
 
 Category._cache = cache;

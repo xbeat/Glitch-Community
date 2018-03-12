@@ -270,17 +270,7 @@ var self = Model({
     self.category(Category(categoryData));
     return Category.updateCategory(application, categoryData.id);
   },
-
-  getRandomCategories(numberOfCategories, projectsPerCategory) {
-    return Category.getRandomCategories(self, numberOfCategories, projectsPerCategory)
-      .then(categories => self.categories(categories));
-  },
-
-  getCategories() {
-    return Category.getCategories(self)
-      .then(categories => self.categories(categories));
-  },
-  
+ 
   get categories() {
     return cachedCategories;
   },

@@ -62,8 +62,7 @@ module.exports = function(application) {
     },
 
     randomCategories() {
-      debugger;
-      let categories = application.categories().filter(category => category.hasProjects());
+      let categories = application.categories.filter(category => category.projects && category.projects.length);
       return categories.map((category) =>CategoryPresenter(application, category));
     },
    
