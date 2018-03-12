@@ -1,13 +1,8 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Check that you're happy with the conversion, then remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const UsersListTemplate = require("../templates/includes/users-list");
-const UserAvatarTemplate = require("../templates/includes/user-avatar"); //
+const UserAvatarTemplate = require("../templates/includes/user-avatar");
+
+import UserAvatar from "./includes/user-avatar.jsx";
+import Reactlet from "./reactlet";
 
 module.exports = function(projectOrTeam, type) {
   
@@ -18,7 +13,11 @@ module.exports = function(projectOrTeam, type) {
     },
 
     userAvatars() {
-      return self.users().map(UserAvatarTemplate);
+      const props = {
+        users: self.users()
+      }
+      return Reactlet(UserAvatar, props);
+      
     },
 
     hiddenUnlessShowAsGlitchTeam() {
@@ -26,12 +25,14 @@ module.exports = function(projectOrTeam, type) {
         return 'hidden'; 
       }
 
-      if (!(projectOrTeam && projectOrTeam.showAsGlitchTeam() : undefined)) { return 'hidden'; }
+      let showAsGlitchTeam = projectOrTeam && projectOrTeam.showAsGlitchTeam();
+      if (!(showAsGlitchTeam)) { return 'hidden'; }
     },
 
     hiddenIfShowAsGlitchTeam() {
+      let showAsGlitchTeam = projectOrTeam && projectOrTeam.showAsGlitchTeam();
       if (type !== 'team') {
-        if (projectOrTeam != null ? projectOrTeam.showAsGlitchTeam() : undefined) { return 'hidden'; }
+        if (showAsGlitchTeam) { return 'hidden'; }
       }
     }
   };
