@@ -11,6 +11,7 @@ const LayoutPresenter = require("../layout");
 const SearchPageTemplate = require("../../templates/pages/search");
 
 const Reactlet = require("../../templates/reactlet");
+const categories = require('../../cache/categories');
 
 import Categories from "../categories.jsx";
 import {render} from 'react-dom';
@@ -56,9 +57,7 @@ module.exports = function(application) {
     Categories() {
       const id = "categories";
       const props = {
-        categories() {
-          return application.categories()
-        },
+        categories: categories,
       };
       setTimeout(() => { 
         return render(
@@ -66,6 +65,7 @@ module.exports = function(application) {
           document.getElementById(id)
         );
       });
+      
       return Reactlet({id: id});
     },
     

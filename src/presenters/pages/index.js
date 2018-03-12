@@ -81,7 +81,6 @@ module.exports = function(application) {
       });
       
       application.categories.observe(function() {
-        console.log("I observe categories:", Categories);
         render(
           React.createElement(Categories, props),
           document.getElementById(id)
