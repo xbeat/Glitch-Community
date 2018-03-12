@@ -31,6 +31,5 @@ module.exports = function(application, category) {
     
   self.projects = projectElements;
 
-  debugger;
   return CategoryTemplate(self);
 };

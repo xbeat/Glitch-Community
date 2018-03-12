@@ -6,6 +6,7 @@ const FeaturedCollectionPresenter = require("../featured-collection");
 const RecentProjectsPresenter = require("../recent-projects");
 const QuestionsPresenter = require("../questions");
 const CategoryPresenter = require("../category");
+const CategoryModel = require("../../models/category");
 const Reactlet = require("../../templates/reactlet");
 
 import Categories from "../categories.jsx";
@@ -62,9 +63,15 @@ module.exports = function(application) {
     },
 
     randomCategories() {
-      debugger;
-      let categories = await Category.getRandomCategories(application.categories.filter(category => category.projects && category.projects.length);
-      return categories.map((category) =>CategoryPresenter(application, category));
+      /* future:
+       -- need to fetch the categories.
+      CategoryModel.getRandomCategories().then((categories) => 
+        categories.filter(category => category.projects && category.projects.length)
+        return categories.map((category) =>CategoryPresenter(application, category))
+      );
+      */
+      
+      return application.categories.map((category) =>CategoryPresenter(application, CategoryModel(category)));
     },
    
     Categories() {
