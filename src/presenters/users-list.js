@@ -12,21 +12,22 @@ module.exports = function(projectOrTeam, type) {
       return projectOrTeam.users();
     },
 
+    /*
     userAvatars() {
-      return self.users().map(user => {
-        const props = {
-          userAvatarUrl: user.userAvatarUrl(),
-          anonAvatar: user.anonAvatar(),
-          alt: user.alt(),
-          userLink: user.userLink(),
-          login: user.login(),
-          tooltipName: user.tooltipName(),
-          style: user.style(),
-          isSignedIn: user.isSignedIn(),
+      const UserAvatar = ({userAvatarUrl, anonAvatar, alt, userLink, login, tooltipName, style, isSignedIn}) => { 
+        let img = <img className="anon-avatar" width="32" height="32" src={anonAvatar} alt={alt}></img>
+        if(isSignedIn) {
+          img = <img width="32" height="32" src={userAvatarUrl} alt={alt}></img>
         }
-        return Reactlet(UserAvatar, props);
-      });
+
+        return (
+          <a className="user" href={userLink} title={login} data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
+            {img}
+          </a>
+        );
+      }
     },
+    */
 
     hiddenUnlessShowAsGlitchTeam() {
       if (type === 'team') {
