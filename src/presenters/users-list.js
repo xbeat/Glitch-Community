@@ -2,6 +2,10 @@ const UsersListTemplate = require("../templates/includes/users-list");
 
 module.exports = function(projectOrTeam, type) {
   
+  function showAsGlitchTeam() {
+    return projectOrTeam && projectOrTeam.showAsGlitchTeam && projectOrTeam.showAsGlitchTeam();
+  }
+  
   var self = {
   
     users() {
@@ -13,14 +17,12 @@ module.exports = function(projectOrTeam, type) {
         return 'hidden'; 
       }
 
-      let showAsGlitchTeam = projectOrTeam && projectOrTeam.showAsGlitchTeam();
-      if (!(showAsGlitchTeam)) { return 'hidden'; }
+      if (!(showAsGlitchTeam())) { return 'hidden'; }
     },
 
     hiddenIfShowAsGlitchTeam() {
-      let showAsGlitchTeam = projectOrTeam && projectOrTeam.showAsGlitchTeam();
       if (type !== 'team') {
-        if (showAsGlitchTeam) { return 'hidden'; }
+        if (showAsGlitchTeam()) { return 'hidden'; }
       }
     }
   };

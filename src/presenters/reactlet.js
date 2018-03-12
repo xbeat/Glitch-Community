@@ -7,13 +7,15 @@ import React from 'react';
 let anchorId = 1;
 
 module.exports = function(Component, props) {
-  const id = `reactlet-anchor-${anchorId}`;
+  const id = `reactlet-${Component.name}-${anchorId}`;
   anchorId++;
 
   setTimeout(() => { 
     const el = document.getElementById(id);
     if(!el) {
-      console.error("Dom element not found.", id);
+      // The page rerendered multiple times before
+      // we got put into the dom.
+      // Jadelet gonna jadelet, it's ok.
       return;
     }
     return render(
