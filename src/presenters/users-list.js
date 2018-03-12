@@ -13,11 +13,19 @@ module.exports = function(projectOrTeam, type) {
     },
 
     userAvatars() {
-      const props = {
-        users: self.users()
-      }
-      return Reactlet(UserAvatar, props);
-      
+      return self.users().map(user => {
+        const props = {
+          userAvatarUrl: user.userAvatarUrl(),
+          anonAvatar: user.anonAvatar(),
+          alt: user.alt(),
+          userLink: user.userLink(),
+          login: user.login(),
+          tooltipName: user.tooltipName(),
+          style: user.style(),
+          isSignedIn: user.isSignedIn(),
+        }
+        return Reactlet(UserAvatar, props);
+      });
     },
 
     hiddenUnlessShowAsGlitchTeam() {
