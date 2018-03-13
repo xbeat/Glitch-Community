@@ -6,7 +6,7 @@ span
       span= " "
       span is the friendly community where you'll build the app of your dreams
 
-    - if @currentUser.isSignedIn()
+    - if @currentUser().isSignedIn()
       = @QuestionsPresenter
       = @RecentProjectsPresenter
 
@@ -18,6 +18,8 @@ span
       h2 Featured
       ul
         = @featuredCollections
+        
+    = @JumpRightIn
 
     = @randomCategories
 

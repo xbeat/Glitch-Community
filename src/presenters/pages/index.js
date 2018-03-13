@@ -94,7 +94,23 @@ module.exports = function(application) {
     
     ByFogCreek() {
       return Reactlet(ByFogCreek, null);
-    }
+    },
+
+    jumpRightInObservable: Observable([]),
+    JumpRightIn() {
+      const projects = [ 'hello-website', 
+      
+      if(!self.jumpRightInObservable.length) {
+        self.jumpRightInObservable(application.categories.map((category) => CategoryModel(category)));
+      
+        CategoryModel.getRandomCategories(application.api()).then((categories) => 
+          self.randomCategoriesObservable(categories.filter(category => category.projects && category.projects.length))
+        );
+      }
+      
+      return self.randomCategoriesObservable.map((categoryModel) =>CategoryPresenter(application, categoryModel));
+    },
+
   };
 
   const content = IndexTemplate(self);
