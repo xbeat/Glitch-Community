@@ -109,13 +109,12 @@ module.exports = function(application) {
       const projects = projectIds.map(
         (id) => ProjectModel({id})
       );
-      debugger;
       
-      if(projects.filter((project) => !project.fetched())) {
+      if(projects.filter((project) => !project.fetched()).length) {
         ProjectModel.getProjectsByIds(application.api(), projectIds);
       }
       
-      return projects.map((project) => 
+      return projects.filter((project) => project.fetched()).map((project) => 
         ProjectItemPresenter(application, projects, category)
       );
     },
