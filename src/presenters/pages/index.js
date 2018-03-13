@@ -51,6 +51,10 @@ module.exports = function(application) {
     },
 
     currentUser: application.currentUser,
+    
+    hiddenUnlessCurrentUser() {
+      if (!application.currentUser().id()) { return 'hidden'; }
+    },
       
     featuredCollections() {
       return application.featuredCollections.map(collection => FeaturedCollectionPresenter(application, collection));

@@ -6,8 +6,9 @@ span
       span= " "
       span is the friendly community where you'll build the app of your dreams
 
-    = @QuestionsPresenter
-    = @RecentProjectsPresenter
+    - if @currentUser.isSignedIn()
+      = @QuestionsPresenter
+      = @RecentProjectsPresenter
 
     section.featured.featured-collections
       h2 Community Pick 💎
