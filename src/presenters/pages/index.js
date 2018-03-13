@@ -97,8 +97,12 @@ module.exports = function(application) {
     },
 
     jumpRightInObservable: Observable([]),
-    JumpRightIn() {
-      const projects = [ 'hello-website', 
+    JumpRightInProjects() {
+      const projects = ['hello-website', 'hello-node'];
+      const category = {};
+      category.projects = [];
+      
+      //api req to fetch projects, then populate
       
       if(!self.jumpRightInObservable.length) {
         self.jumpRightInObservable(application.categories.map((category) => CategoryModel(category)));
