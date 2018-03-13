@@ -72,7 +72,9 @@ module.exports = function(application) {
     },
     
     embed() {
-      return EmbedHtml;
+      const node = document.createElement('span');
+      node.innerHTML = EmbedHtml;
+      return node;
     },
    
     Categories() {
