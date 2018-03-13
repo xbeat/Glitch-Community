@@ -100,22 +100,23 @@ module.exports = function(application) {
 
     jumpRightInProjectsObservable: Observable([]),
     JumpRightInProjects() {
-      if(!self.jumpRightInProjectsObservable.length) {
-        //get projects
-        const projectIds = ['hello-website', 'hello-node'];
-        //self.jumpRightInProjectsObservable(projects)
-        const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
-        debugger;
-        self.jumpRightInProjectsObservable(projects);
-      }
-      
+      const projectIds = [
+        '0a59806f-5c0d-468e-84bb-fa5b54ecf500', // hello-website,
+        'a0fcd798-9ddf-42e5-8205-17158d4bf5bb', // hello-node
+      ];
       const category = {
       };
+      const projects = projectIds.map(
+        (id) => ProjectModel({id})
+      );
+      debugger;
       
-      const projects = 
+      if(projects.filter((project) => !project.fetched())) {
+        ProjectModel.getProjectsByIds(application.api(), projectIds);
+      }
       
-      return self.jumpRightInProjectsObservable.map((project) => 
-        ProjectItemPresenter(application, project, category)
+      return projects.map((project) => 
+        ProjectItemPresenter(application, projects, category)
       );
     },
 
