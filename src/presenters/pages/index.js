@@ -9,6 +9,7 @@ const CategoryPresenter = require("../category");
 const CategoryModel = require("../../models/category");
 const Reactlet = require("../reactlet");
 const Observable = require('o_0');
+const EmbedHtml = require('../../curated/embed');
 
 import Categories from "../categories.jsx";
 import WhatIsGlitch from "../what-is-glitch.jsx";
@@ -68,6 +69,10 @@ module.exports = function(application) {
       }
       
       return self.randomCategoriesObservable.map((categoryModel) =>CategoryPresenter(application, categoryModel));
+    },
+    
+    embed() {
+      return EmbedHtml;
     },
    
     Categories() {
