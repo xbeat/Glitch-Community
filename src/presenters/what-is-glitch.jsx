@@ -14,7 +14,7 @@ const WhatIsGlitch = ({isSignedIn, showVideoOverlay}) => {
   
   return (
     <section className="what-is-glitch">
-      <h2>How It Works <span class="arrow">→</span></h2>
+      <h2>How It Works</h2>
       <span>
         <a href="https://glitch.com/about">
           <figure title="How Glitch works">

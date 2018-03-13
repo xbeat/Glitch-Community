@@ -174,17 +174,17 @@ Project.getProjectsByIds = function(api, ids) {
       return newProjectIds.slice(index, index + NUMBER_OF_PROJECTS_PER_REQUEST);       
     }  return null; }).filter(id => id);
   
-    projectIdGroups.map(function(group) {
-      const projectsPath = `projects/byIds?ids=${group.join(',')}`;
-      return api.get(projectsPath)
-        .then(function({data}) {
-          data.map(function(datum) {
-            datum.fetched = true;
-            return Project(datum).update(datum);
-          }); 
-        })
-        .catch(error => console.error("getProjectsByIds", error));
-    });
+  projectIdGroups.map(function(group) {
+    const projectsPath = `projects/byIds?ids=${group.join(',')}`;
+    return api.get(projectsPath)
+      .then(function({data}) {
+        data.map(function(datum) {
+          datum.fetched = true;
+          return Project(datum).update(datum);
+        }); 
+      })
+      .catch(error => console.error("getProjectsByIds", error));
+  });
   
   return ids.map(id => Project({id}));
 }

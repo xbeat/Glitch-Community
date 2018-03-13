@@ -104,11 +104,9 @@ module.exports = function(application) {
         '0a59806f-5c0d-468e-84bb-fa5b54ecf500', // hello-website,
         'a0fcd798-9ddf-42e5-8205-17158d4bf5bb', // hello-node
       ];
-      const category = {
-      };
+      const category = {}
       const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
       
-      console.log(projects);
       return projects.filter(
         (project) => project.fetched()
       ).map((project) => 
