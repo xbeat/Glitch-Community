@@ -4,6 +4,7 @@ const CtaButtonsPresenter = require("../cta-buttons");
 const HeaderPresenter = require("../header");
 const FeaturedCollectionPresenter = require("../featured-collection");
 const RecentProjectsPresenter = require("../recent-projects");
+const ProjectItemPresenter = require("../project-item");
 const QuestionsPresenter = require("../questions");
 const CategoryPresenter = require("../category");
 const CategoryModel = require("../../models/category");
@@ -96,23 +97,19 @@ module.exports = function(application) {
       return Reactlet(ByFogCreek, null);
     },
 
-    jumpRightInObservable: Observable([]),
+    jumpRightInProjectsObservable: Observable([]),
     JumpRightInProjects() {
-      const projects = ['hello-website', 'hello-node'];
-      const category = {};
-      category.projects = [];
-      
-      //api req to fetch projects, then populate
-      
-      if(!self.jumpRightInObservable.length) {
-        self.jumpRightInObservable(application.categories.map((category) => CategoryModel(category)));
-      
-        CategoryModel.getRandomCategories(application.api()).then((categories) => 
-          self.randomCategoriesObservable(categories.filter(category => category.projects && category.projects.length))
-        );
+      if(!self.jumpRightInProjectsObservable.length) {
+        //get projects
+        //const projects = ['hello-website', 'hello-node'];
+        //self.jumpRightInProjectsObservable(projects)
       }
       
-      return self.randomCategoriesObservable.map((categoryModel) =>CategoryPresenter(application, categoryModel));
+      const category = {};
+      
+      return self.jumpRightInProjectsObservable.map((project) => 
+        ProjectItemPresenter(application, project, category)
+      );
     },
 
   };
