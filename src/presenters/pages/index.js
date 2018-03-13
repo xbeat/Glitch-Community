@@ -8,6 +8,7 @@ const ProjectItemPresenter = require("../project-item");
 const QuestionsPresenter = require("../questions");
 const CategoryPresenter = require("../category");
 const CategoryModel = require("../../models/category");
+const ProjectModel = require("../../models/project");
 const Reactlet = require("../reactlet");
 const Observable = require('o_0');
 const EmbedHtml = require('../../curated/embed');
@@ -101,11 +102,17 @@ module.exports = function(application) {
     JumpRightInProjects() {
       if(!self.jumpRightInProjectsObservable.length) {
         //get projects
-        //const projects = ['hello-website', 'hello-node'];
+        const projectIds = ['hello-website', 'hello-node'];
         //self.jumpRightInProjectsObservable(projects)
+        const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
+        debugger;
+        self.jumpRightInProjectsObservable(projects);
       }
       
-      const category = {};
+      const category = {
+      };
+      
+      const projects = 
       
       return self.jumpRightInProjectsObservable.map((project) => 
         ProjectItemPresenter(application, project, category)
