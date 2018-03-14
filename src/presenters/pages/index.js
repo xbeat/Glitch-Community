@@ -98,6 +98,9 @@ module.exports = function(application) {
       return Reactlet(ByFogCreek, null);
     },
 
+    JumpRightIn() {
+      return Reactlet(J
+    }
     jumpRightInProjectsObservable: Observable([]),
     JumpRightInProjects() {
       const projectIds = [
