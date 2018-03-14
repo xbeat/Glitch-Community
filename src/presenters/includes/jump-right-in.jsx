@@ -28,22 +28,39 @@ article.projects.jump-right-in
 */ 
 
 import React from 'react';
+const StarterProject = ({name}) => {
+  const GlitchTeamAvatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267"
 
-const StarterProject = ({name}) => (
-  <li>
-    <span>
-      <div class="users hidden">
-        <div class="users">
-          <div class="user made-by-glitch" style="background-color:#74ecfc" data-tooltip="Glitch Team" data-tooltip-left="true">
-            <img width="32" height="32" src={GlitchTeamAvatar alt="Glitch Team">
-          </div></div></span><div class="project-options button-borderless opens-pop-over hidden"><div class="down-arrow"></div></div><a href="/~backbone-todomvc"><div class="project" data-track="project" data-track-label="backbone-todomvc" style="background-color: rgb(252, 243, 175); border-bottom-color: rgb(252, 243, 175);"><div class="project-container"><img class="avatar" src="https://cdn.glitch.com/project-avatar/c16a0c85-5369-42c2-9f2f-9144d02c5c93.png" alt="backbone-todomvc avatar"><button class=""><span class="private-project-badge"></span><div class="project-name">backbone-todomvc</div></button><div class="description">TodoMVC example using Backbone.js</div><div class="overflow-mask" style="background-color: rgb(252, 243, 175);"></div></div></div></a>
-          </li>
-);
+  return (
+    <li>
+      <span>
+        <div className="users">
+          <div className="user made-by-glitch" data-tooltip="Glitch Team" data-tooltip-left="true">
+            <img width="32" height="32" src={GlitchTeamAvatarUrl} alt="Glitch Team"/>
+          </div>
+        </div>
+      </span>
+      <a href={`/~{name}`">
+        <div className="project" data-track="project" data-track-label="backbone-todomvc">
+          <div className="project-container">
+            <img className="avatar" src="https://cdn.glitch.com/project-avatar/c16a0c85-5369-42c2-9f2f-9144d02c5c93.png" alt="backbone-todomvc avatar"/>
+            <button className="">
+              <span className="private-project-badge"></span>
+              <div className="project-name">{name}</div>
+            </button>
+            <div className="description">TodoMVC example using Backbone.js</div>
+            <div className="overflow-mask"></div>
+          </div>
+        </div>
+      </a>
+    </li>
+  );
+};
   
 const JumpRightIn = () => (
-  <article className="jump-right-in">
+  <article className="jump-right-in projects">
     <h2>Jump Right In</h2>
-    <ul>
+    <ul className="projects-container">
       <StarterProject key="website" name="website"/>
       <StarterProject key="node" name="node"/>
     </ul>
