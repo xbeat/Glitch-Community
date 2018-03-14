@@ -31,13 +31,13 @@ const JumpRightIn = () => {
     {
       title: "Remix a Node.js App",
       domain: "hello-node",
-      description: "Behold the wonderful description of what it is to be a node app.",
+      description: "A simple Node app running on Express, instantly up and running.",
       avatarUrl: "https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2FNode.js_logo.svg?1521062036657"
     },
     {
       title: "Remix a Web Page",
       domain: "hello-website",
-      description: "Behold the wonderful description of what it is to be a website.",
+      description: "Your very own web page, ready for you to customize.",
       avatarUrl: "https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2FHTML5_logo_and_wordmark.svg?1521062032021"
     },
   ];
