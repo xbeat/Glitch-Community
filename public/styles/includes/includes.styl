@@ -191,43 +191,9 @@ category-box-radius = 5px
         display: block
      
   .project
-    font-size: 0.9rem
-    background-color: section-line
-    border-bottom-color: section-line
-    border-radius: 5px
-    width: 100%
-    padding: 12px
-    height: 150px
-    position: relative
-    transition: 0.1s all
-    cursor: pointer
-    overflow: visible
-    &:hover
-      button
-        background-color: secondary-background
-        box-shadow: 2px 2px 0 primary
-    &:active
-      button
-        background-color: secondary-background-active
-        box-shadow: none
-    &:after
-      top: -13px
-      left: 3%
-      border: solid transparent
-      content: " "
-      height: 0
-      width: 0
-      position: absolute
-      pointer-events: none
-      border-bottom-color: inherit
-      border-width: 7px
-    @media (max-width: largeViewport)
-      &:after
-        left: 4%
+    height: auto;
     @media (max-width: mediumViewport)
-      height: 150px
-      &:after
-        left: 3%
+      height: auto;
 
         
 // footer.styl
