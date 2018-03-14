@@ -25,7 +25,7 @@ article.projects.jump-right-in
 -      ul.projects-container
 -        = @JumpRightInProjects
 
-*/
+*/ 
 
 import React from 'react';
   
