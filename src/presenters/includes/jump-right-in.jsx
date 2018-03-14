@@ -34,15 +34,15 @@ const JumpRightIn = () => {
     
     Their edit links are here:
      hello-webpage: https://glitch.com/edit/#!/join/ee85f517-943e-4eec-8291-af16d8b5dcf4
-     hello-node: https://glitch.com/edit/#!/join/14042991-af37-4350-a1e3-84149029506a
+     hello-express: https://glitch.com/edit/#!/join/14042991-af37-4350-a1e3-84149029506a
      
     It's safe to play with them and make enhancements.
   
   */
   const starterProjects = [
     {
-      title: "hello-node",
-      domain: "hello-node",
+      title: "hello-express",
+      domain: "hello-express",
       description: "A simple Node app built on Express, instantly up and running.",
       avatarUrl: "https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2FNode.js_logo.svg?1521062036657"
     },
