@@ -177,9 +177,17 @@ category-box-radius = 5px
   width: auto;
   h2
     margin-top: 0
-  .projects-container li
-    width: 285px;
-    max-width: 285px
+  .projects-container
+    display: inline-block
+    
+    li
+      width: 285px
+      display: inline-block
+      float: none
+      
+      @media (max-width: mediumViewport)
+        display: block
+        float: left
      
   .project
     font-size: 0.9rem
