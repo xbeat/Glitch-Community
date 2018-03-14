@@ -29,15 +29,14 @@ const StarterProject = ({title, domain, description, avatarUrl}) => {
 const JumpRightIn = () => {
   
   /*
-    hello-node and hello-webpage are remixes of the "real" sites.
+    hello-node and hello-webpage are remixes of the "real" starter sites.
     I'll make sure the links are pointed to the right spot before deployment.
     
     Their edit links are here:
      hello-webpage: https://glitch.com/edit/#!/join/ee85f517-943e-4eec-8291-af16d8b5dcf4
      hello-node: https://glitch.com/edit/#!/join/14042991-af37-4350-a1e3-84149029506a
      
-    It's safe to play with them and make enhancements that we can move back to the real thi
-  
+    It's safe to play with them and make enhancements.
   
   */
   const starterProjects = [
