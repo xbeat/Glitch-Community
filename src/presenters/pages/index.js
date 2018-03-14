@@ -16,6 +16,7 @@ const EmbedHtml = require('../../curated/embed');
 import Categories from "../categories.jsx";
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
+import JumpRightIn from "../includes/jump-right-in.jsx"
 import {render, unmountComponentAtNode} from 'react-dom';
 import React from 'react';
 
@@ -99,24 +100,8 @@ module.exports = function(application) {
     },
 
     JumpRightIn() {
-      return Reactlet(J
+      return Reactlet(JumpRightIn, null);
     }
-    jumpRightInProjectsObservable: Observable([]),
-    JumpRightInProjects() {
-      const projectIds = [
-        '0a59806f-5c0d-468e-84bb-fa5b54ecf500', // hello-website,
-        'a0fcd798-9ddf-42e5-8205-17158d4bf5bb', // hello-node
-      ];
-      const category = {}
-      const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
-      
-      return projects.filter(
-        (project) => project.fetched()
-      ).map((project) => 
-        ProjectItemPresenter(application, project, category)
-      );
-    },
-
   };
 
   const content = IndexTemplate(self);
