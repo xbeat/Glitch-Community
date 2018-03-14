@@ -33,20 +33,18 @@ const StarterProject = ({title, domain, description, avatarUrl}) => {
 
   return (
     <li>
-      <span>
-        <div className="users">
-          <div className="user made-by-glitch" data-tooltip="Glitch Team" data-tooltip-left="true">
-            <img width="32" height="32" src={GlitchTeamAvatarUrl} alt="Glitch Team"/>
-          </div>
+      <div className="users">
+        <div className="user made-by-glitch" data-tooltip="Glitch Team" data-tooltip-left="true">
+          <img width="32" height="32" src={GlitchTeamAvatarUrl} alt="Glitch Team"/>
         </div>
-      </span>
-      <a href={`https://glitch.com/edit/#!/remix/{project}`}>
-        <div className="project" data-track="project" data-track-label="backbone-todomvc">
+      </div>
+      <a href={`https://glitch.com/edit/#!/remix/${domain}`}>
+        <div className="project">
           <div className="project-container">
-            <img className="avatar" src="{avatarUrl}" alt="Avatar image for {title}"/>
+            <img className="avatar" src={avatarUrl} alt={`Avatar image for ${title}`}/>
             <button className="">
               <span className="private-project-badge"></span>
-              <div className="project-name">{title}<div class="emoji microphone"></div></div>
+              <div className="project-name">{title} <div className="emoji microphone"></div></div>
             </button>
             <div className="description">{description}</div>
             <div className="overflow-mask"></div>
@@ -58,16 +56,28 @@ const StarterProject = ({title, domain, description, avatarUrl}) => {
 };
   
 const JumpRightIn = () => {
-  starterProjects = [
-    {title: "Create a node.js app, domain, description, avatarUrl},
+  const starterProjects = [
+    {
+      title: "Remix a Node.js App",
+      domain: "hello-node",
+      description: "Behold the wonderful description of what it is to be a node app.",
+      avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg"
+    },
+    {
+      title: "Remix a Web Page",
+      domain: "hello-website",
+      description: "Behold the wonderful description of what it is to be a website.",
+      avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg"
+    },
   ];
      
   return (
     <article className="jump-right-in projects">
       <h2>Jump Right In</h2>
       <ul className="projects-container">
-        <StarterProject key="website" name="website"/>
-        <StarterProject key="node" name="node"/>
+        { starterProjects.map((starter, key) => (
+          <StarterProject key={key} {...starter}/>
+        ))}
       </ul>
     </article>
   );
