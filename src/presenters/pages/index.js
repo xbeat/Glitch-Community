@@ -106,15 +106,19 @@ module.exports = function(application) {
       ];
       const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
       const fetchedProjects = projects.filter(project => project.fetched());
-      const starterProjects = fetchedProjects.map(({domain, ) => ({
-        title: "hello-express",
-        domain: "hello-express",
-        description: "A simple Node app built on Express, instantly up and running.",
-        avatarUrl: "https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2FNode.js_logo.svg?1521062036657"
+      const starterProjects = fetchedProjects.map((project) => {
+        const {domain, description, avatar} = project;
+        return {
+        title: domain(),
+        domain: domain(),
+        description: description(),
+        avatar: avatar(),
+        showOverlay() { project.showOverlay(application); }
+        } 
       });
-  ];
+    },
       
-      return Reactlet(JumpRightIn, {projects: fetchedProjects});
+      return Reactlet(JumpRightIn, {starterProjects});
     }
   };
 
