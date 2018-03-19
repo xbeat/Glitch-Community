@@ -100,7 +100,21 @@ module.exports = function(application) {
     },
 
     JumpRightIn() {
-      return Reactlet(JumpRightIn, {application, ProjectModel});
+      const projectIds = [
+        'a0fcd798-9ddf-42e5-8205-17158d4bf5bb', // 'hello-express'
+        '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
+      ];
+      const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
+      const fetchedProjects = projects.filter(project => project.fetched());
+      const starterProjects = fetchedProjects.map(({domain, ) => ({
+        title: "hello-express",
+        domain: "hello-express",
+        description: "A simple Node app built on Express, instantly up and running.",
+        avatarUrl: "https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2FNode.js_logo.svg?1521062036657"
+      });
+  ];
+      
+      return Reactlet(JumpRightIn, {projects: fetchedProjects});
     }
   };
 

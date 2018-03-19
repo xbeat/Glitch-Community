@@ -26,23 +26,7 @@ const StarterProject = ({title, domain, description, avatarUrl}) => {
   );
 };
   
-const JumpRightIn = ({application, ProjectModel}) => {
-  
-  const starterProjects = [ 'hello-expres', 'hello-webpage' ];
-    {
-      title: "hello-express",
-      domain: "hello-express",
-      description: "A simple Node app built on Express, instantly up and running.",
-      avatarUrl: "https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2FNode.js_logo.svg?1521062036657"
-    },
-    {
-      title: "hello-webpage",
-      domain: "hello-webpage",
-      description: "Your very own basic web page, ready for you to customize.",
-      avatarUrl: "https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2FHTML5_logo_and_wordmark.svg?1521062032021"
-    },
-  ];
-     
+const JumpRightIn = ({starterProjects}) => {
   return (
     <article className="jump-right-in projects">
       <h2>Jump Right In</h2>
