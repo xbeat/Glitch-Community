@@ -169,9 +169,12 @@ category-box-radius = 5px
     max-height: 500px !important //override the Embed's configurable height.
 
 
+peach-leaf-color = #68b683
+peach-color = rgb(245,175,160)
+peach-branch-color = #a78f4c
 .jump-right-in
-  background-color: rgb(235,174,59)
-  background-image: linear-gradient(45deg, rgb(245,175,160) 25%, transparent 25%), linear-gradient(-45deg, rgb(245,175,160) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgb(245,175,160) 75%), linear-gradient(-45deg, transparent 75%, rgb(245,175,160) 75%);
+  background-color:  //peach leaves
+  background-image: linear-gradient(45deg, peach-color 25%, transparent 25%), linear-gradient(-45deg, peach-color 25%, transparent 25%), linear-gradient(45deg, transparent 75%, peach-color 75%), linear-gradient(-45deg, transparent 75%, peach-color 75%);
   background-size: 80px 80px;
   background-position: 0 0, 0 40px, 40px -40px, -40px 0px;
   width: auto;
@@ -192,6 +195,10 @@ category-box-radius = 5px
      
   .project
     height: auto;
+    background-color: peach-branch-color
+    border-bottom-color: peach-branch-color
+    .overflow-mask
+      background-color: peach-branch-color
     @media (max-width: mediumViewport)
       height: auto;
 
