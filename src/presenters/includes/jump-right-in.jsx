@@ -26,18 +26,9 @@ const StarterProject = ({title, domain, description, avatarUrl}) => {
   );
 };
   
-const JumpRightIn = () => {
+const JumpRightIn = ({application, ProjectModel}) => {
   
-  /*
-    hello-node and hello-webpage are remixes of the "real" starter sites.
-    I'll make sure the links are pointed to the right spot before deployment.
-    
-    Their edit links are here:
-     
-    It's safe to play with them and make enhancements.
-  
-  */
-  const starterProjects = [
+  const starterProjects = [ 'hello-expres', 'hello-webpage' ];
     {
       title: "hello-express",
       domain: "hello-express",

@@ -100,7 +100,7 @@ module.exports = function(application) {
     },
 
     JumpRightIn() {
-      return Reactlet(JumpRightIn, null);
+      return Reactlet(JumpRightIn, {application, ProjectModel});
     }
   };
 
