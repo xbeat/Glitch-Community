@@ -109,14 +109,13 @@ module.exports = function(application) {
       const starterProjects = fetchedProjects.map((project) => {
         const {domain, description, avatar} = project;
         return {
-        title: domain(),
-        domain: domain(),
-        description: description(),
-        avatar: avatar(),
-        showOverlay() { project.showOverlay(application); }
+          title: domain(),
+          domain: domain(),
+          description: description(),
+          avatar: avatar(),
+          showOverlay() { project.showOverlay(application); }
         } 
       });
-    },
       
       return Reactlet(JumpRightIn, {starterProjects});
     }

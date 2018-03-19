@@ -1,5 +1,5 @@
 import React from 'react';
-const StarterProject = ({title, domain, description, avatarUrl}) => {
+const StarterProject = ({title, domain, description, avatar, showOverlay}) => {
   const GlitchTeamAvatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267"
 
   return (
@@ -9,10 +9,10 @@ const StarterProject = ({title, domain, description, avatarUrl}) => {
           <img width="32" height="32" src={GlitchTeamAvatarUrl} alt="Glitch Team"/>
         </div>
       </div>
-      <a href={`/~${domain}`}>
+      <a href={`/~${domain}`} onClick>
         <div className="project">
           <div className="project-container">
-            <img className="avatar" src={avatarUrl} alt={`Avatar image for ${title}`}/>
+            <img className="avatar" src={avatar} alt={`Avatar image for ${title}`}/>
             <button>
               <span className="private-project-badge"></span>
               <div className="project-name">{title}</div>
