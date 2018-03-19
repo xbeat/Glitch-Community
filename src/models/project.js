@@ -90,12 +90,20 @@ module.exports = (Project = function(I, self) {
       self.getReadme(application);
       originalUrlPath = window.location.pathname;
       originalQueryString = window.location.search;
-      history.replaceState(null, `${self.domain()} – Glitch`, `~${self.domain()}`);
+      console.log('showing', originalUrlPath, originalQueryString)
+      const target = `~${self.domain()}`
+      if(target === originalUrlPath) {
+        //They navigated here directly.
+        originalUrlPath = "/"
+        originalQueryString = ''
+      }
+      history.replaceState(null, `${self.domain()} – Glitch`, target);
       application.overlayProjectVisible(true);
       return document.getElementsByClassName('project-overlay')[0].focus();
     },
 
     hideOverlay(application) {
+      console.log('hiding', originalUrlPath, originalQueryString)
       source.cancel('Operation canceled by the user.');
       return history.replaceState(null, null, originalUrlPath + originalQueryString);
     },
