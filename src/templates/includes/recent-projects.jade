@@ -8,9 +8,6 @@ section.profile.recent-projects(class=@hiddenUnlessCurrentUser)
       .user-avatar-container
         a(href=@userLink)
           .user-avatar(class=@userAvatarIsAnon style=@userAvatarStyle alt="Your avatar")
-          .button.has-emoji Your Profile
-            img.emoji.avatar(src=@userAvatarUrl style=@userAvatarStyle)
-
     article.projects
       span(class=@hiddenIfUserIsFetched)
         = Loader(this)
@@ -25,3 +22,9 @@ section.profile.recent-projects(class=@hiddenUnlessCurrentUser)
               button Sign in
               span(class=@hiddenUnlessSignInPopVisible)
                 = SignInPopPresenter(@.application).template
+    .profile-buttons
+      a(href=@userLink)
+        .button.has-emoji Your Profile
+          img.emoji.avatar(src=@userAvatarUrl style=@userAvatarStyle)
+      a(href="https://glitch.com/edit/" data-track="cta → resume coding")
+        .button.button-cta Resume Coding
