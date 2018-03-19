@@ -1,6 +1,5 @@
 const QuestionsPageTemplate = require("../../templates/pages/questions");
 const LayoutPresenter = require("../layout");
-const CtaButtonsPresenter = require("../cta-buttons");
 const QuestionsPresenter = require("../questions");
 
 const Reactlet = require("../reactlet");
@@ -13,10 +12,6 @@ module.exports = function(application) {
   const self = {
 
     application,
-
-    ctaButtons() {
-      return CtaButtonsPresenter(application);
-    },
 
     questions() {
       return QuestionsPresenter(application, 12);

@@ -49,7 +49,6 @@ var self = Model({
   signInPopVisibleOnHeader: Observable(false),
   signInPopVisibleOnRecentProjects: Observable(false),
   userOptionsPopVisible: Observable(false),
-  ctaPopVisible: Observable(false),
   addTeamUserPopVisible: Observable(false),
   addTeamProjectPopVisible: Observable(false),
 
@@ -124,7 +123,6 @@ var self = Model({
     self.signInPopVisibleOnHeader(false);
     self.signInPopVisibleOnRecentProjects(false);
     self.userOptionsPopVisible(false);
-    self.ctaPopVisible(false);
     self.addTeamUserPopVisible(false);
     self.addTeamProjectPopVisible(false);
     self.overlayProjectVisible(false);

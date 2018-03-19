@@ -1,6 +1,5 @@
 const IndexTemplate = require("../../templates/pages/index");
 const LayoutPresenter = require("../layout");
-const CtaButtonsPresenter = require("../cta-buttons");
 const HeaderPresenter = require("../header");
 const FeaturedCollectionPresenter = require("../featured-collection");
 const RecentProjectsPresenter = require("../recent-projects");
@@ -43,10 +42,6 @@ module.exports = function(application) {
       }
 
       return Reactlet(WhatIsGlitch, props);
-    },
-
-    ctaButtons() {
-      return CtaButtonsPresenter(application);
     },
 
     header() {
