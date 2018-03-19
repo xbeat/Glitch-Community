@@ -33,8 +33,6 @@ const JumpRightIn = () => {
     I'll make sure the links are pointed to the right spot before deployment.
     
     Their edit links are here:
-     hello-webpage: https://glitch.com/edit/#!/join/ee85f517-943e-4eec-8291-af16d8b5dcf4
-     hello-express: https://glitch.com/edit/#!/join/14042991-af37-4350-a1e3-84149029506a
      
     It's safe to play with them and make enhancements.
   
