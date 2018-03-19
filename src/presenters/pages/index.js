@@ -95,6 +95,10 @@ module.exports = function(application) {
       return QuestionsPresenter(application);
     },
     
+    RecentProjectsPresenter() {
+      return RecentProjectsPresenter(application);
+    },
+    
     ByFogCreek() {
       return Reactlet(ByFogCreek, null);
     },
