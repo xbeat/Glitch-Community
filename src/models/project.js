@@ -90,9 +90,12 @@ module.exports = (Project = function(I, self) {
       self.getReadme(application);
       originalUrlPath = window.location.pathname;
       originalQueryString = window.location.search;
-      console.log('showing', originalUrlPath, originalQueryString)
-      const target = `~${self.domain()}`
-      if(target === originalUrlPath) {
+      console.log('showing', originalUrlPath,',', originalQueryString)
+      const target = `/~${self.domain()}`
+      if(!self.domain()) {
+        return;
+      }
+      if(target === originalUrlPath+originalQueryString) {
         //They navigated here directly.
         originalUrlPath = "/"
         originalQueryString = ''
