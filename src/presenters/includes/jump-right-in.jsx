@@ -32,7 +32,7 @@ const StarterProject = ({title, domain, description, avatar, showOverlay}) => {
   );
 };
   
-const JumpRightIn = ({starterProjects}) => {
+const StarterApps = ({starterProjects}) => {
   return (
     <article className="jump-right-in projects">
       <header className="category category-name">
@@ -47,4 +47,4 @@ const JumpRightIn = ({starterProjects}) => {
   );
 }
 
-export default JumpRightIn;
+export default StarterApps;
