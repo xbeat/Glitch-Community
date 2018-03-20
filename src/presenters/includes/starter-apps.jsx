@@ -1,6 +1,5 @@
 import React from 'react';
 const StarterProject = ({title, domain, description, avatar, showOverlay}) => {
-  const GlitchTeamAvatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267"
 
   function clickProject(event) {
     event.preventDefault();
@@ -10,13 +9,8 @@ const StarterProject = ({title, domain, description, avatar, showOverlay}) => {
   
   return (
     <li>
-      <div className="users">
-        <div className="user made-by-glitch" data-tooltip="Glitch Team" data-tooltip-left="true">
-          <img width="32" height="32" src={GlitchTeamAvatarUrl} alt="Glitch Team"/>
-        </div>
-      </div>
       <a href={`/~${domain}`} onClick={clickProject}>
-        <div className="project">
+        <div className="project starter-project">
           <div className="project-container">
             <img className="avatar" src={avatar} alt={`Avatar image for ${title}`}/>
             <button>
@@ -33,11 +27,14 @@ const StarterProject = ({title, domain, description, avatar, showOverlay}) => {
 };
   
 const StarterApps = ({starterProjects}) => {
+  const bricksUrl = "https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2Fbricks.svg?1521579119559";
+  
   return (
-    <article className="jump-right-in projects">
+    <article className="starter-apps projects">
       <header className="category category-name">
-        <h2>Jump Right In</h2>
+        <h2>Create your Dream App</h2>
       </header>
+      <img className="starter-apps-graphic" src={bricksUrl} width="129px" height="80px"/>
       <ul className="projects-container">
         { starterProjects.map((starter, key) => (
           <StarterProject key={key} {...starter}/>

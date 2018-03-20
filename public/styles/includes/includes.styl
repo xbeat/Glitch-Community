@@ -183,9 +183,12 @@ category-box-radius = 5px
       max-height: 500px !important //override the Embed's configurable height.
 
 
-.jump-right-in
-  background-color: #ffc2b8
-
+.starter-apps
+  position: relative
+  img.starter-apps-graphic
+    position: absolute
+    right: 0px;
+  
   // Special two-column no-graphics display on larger screens
   @media (min-width: mediumViewport)
     header.category
@@ -193,7 +196,6 @@ category-box-radius = 5px
       display: block
       width: auto
 
-    width: auto;
     h2
       margin-top: 0
     .projects-container

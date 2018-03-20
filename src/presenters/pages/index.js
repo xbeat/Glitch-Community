@@ -15,7 +15,7 @@ const EmbedHtml = require('../../curated/embed');
 import Categories from "../categories.jsx";
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
-import JumpRightIn from "../includes/jump-right-in.jsx"
+import StarterApps from "../includes/starter-apps.jsx"
 import {render, unmountComponentAtNode} from 'react-dom';
 import React from 'react';
 
@@ -98,7 +98,7 @@ module.exports = function(application) {
       return Reactlet(ByFogCreek, null);
     },
 
-    JumpRightIn() {
+    StarterApps() {
       const projectIds = [
         'a0fcd798-9ddf-42e5-8205-17158d4bf5bb', // 'hello-express'
         '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
@@ -116,7 +116,7 @@ module.exports = function(application) {
         } 
       });
       
-      return Reactlet(JumpRightIn, {starterProjects});
+      return Reactlet(StarterApps, {starterProjects});
     }
   };
 
