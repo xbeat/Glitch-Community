@@ -179,29 +179,25 @@ category-box-radius = 5px
 
 .jump-right-in
   background-color: #ffc2b8
-  width: auto;
-  h2
-    margin-top: 0
-  .projects-container
-    display: inline-block
-    white-space: nowrap
-    
-    li
-      width: 285px
+  
+  @media (min-width: mediumViewport)
+    width: auto;
+    h2
+      margin-top: 0
+    .projects-container
       display: inline-block
-      white-space: normal
-      float: none
-      
-      @media (max-width: mediumViewport)
-        display: block
-     
-  .project
-    height: auto;
-    background-color: peach-branch-color
-    border-bottom-color: peach-branch-color
-    .overflow-mask
-      background-color: peach-branch-color
-    @media (max-width: mediumViewport)
+      white-space: nowrap
+
+      li
+        width: 285px
+        display: inline-block
+        white-space: normal
+        float: none
+
+        @media (max-width: mediumViewport)
+          display: block
+
+    .project
       height: auto;
 
         

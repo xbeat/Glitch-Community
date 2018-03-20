@@ -35,7 +35,9 @@ const StarterProject = ({title, domain, description, avatar, showOverlay}) => {
 const JumpRightIn = ({starterProjects}) => {
   return (
     <article className="jump-right-in projects">
-      <h2>Jump Right In</h2>
+      <header className="category category-name">
+        <h2>Jump Right In</h2>
+      </header>
       <ul className="projects-container">
         { starterProjects.map((starter, key) => (
           <StarterProject key={key} {...starter}/>
