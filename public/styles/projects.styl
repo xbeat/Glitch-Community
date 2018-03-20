@@ -238,3 +238,39 @@ project-avatar-size = 42px
         
   @media (max-width: mediumViewport)
     width: 100%
+    
+
+
+.starter-apps
+  position: relative
+  padding: 0px
+  img.starter-apps-graphic
+    position: absolute
+    right: 0px;
+    
+  .starter-project
+    max-width: 370px
+  .starter-project:after
+   content: none
+  
+  // Special two-column no-graphics display on larger screens
+  @media (min-width: mediumViewport)
+    header.category
+      float: none
+      display: block
+      width: auto
+
+    h2
+      margin-top: 0
+    .projects-container
+      display: inline-block
+      white-space: nowrap
+
+      li
+        width: 285px
+        display: inline-block
+        white-space: normal
+        float: none
+
+    .project
+      height: auto;
