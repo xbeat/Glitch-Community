@@ -179,8 +179,13 @@ category-box-radius = 5px
 
 .jump-right-in
   background-color: #ffc2b8
-  
+
+  // Special two-column no-graphics display on larger screens
   @media (min-width: mediumViewport)
+    header.category
+      float: none
+      display: block
+
     width: auto;
     h2
       margin-top: 0
@@ -193,9 +198,6 @@ category-box-radius = 5px
         display: inline-block
         white-space: normal
         float: none
-
-        @media (max-width: mediumViewport)
-          display: block
 
     .project
       height: auto;
