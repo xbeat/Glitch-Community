@@ -112,6 +112,7 @@ category-box-radius = 5px
     margin-top: 0
     margin-bottom: 0
     display: flex
+    overflow-x: auto
     @media (max-width: mediumViewport)
       // flex-wrap: wrap
       display: flex
@@ -123,7 +124,7 @@ category-box-radius = 5px
     list-style-type: none
     margin-right: 10px
     display: inline-block
-    min-width: 240px
+    min-width: 32%
     &:last-child
       margin-right: 0
     @media (max-width: largeViewport)
@@ -512,3 +513,36 @@ count = infinite
 
   p
     margin: 0
+
+    
+// Scrollbar styles
+
+.scrollbar {
+	margin-left: 22px;
+	float: left;
+	height: 300px;
+	width: 65px;
+	background: #F5F5F5;
+	overflow-y: scroll;
+	margin-bottom: 25px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: rgba(0,0,0,0.1);
+  border: 1px solid #ccc;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: linear-gradient(left, #fff, #e4e4e4);
+  border: 1px solid #aaa;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #fff;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(left, #22ADD4, #1E98BA);
+}
