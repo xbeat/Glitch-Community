@@ -6,8 +6,8 @@
  * DS103: Rewrite code to no longer use __guard__
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-// 🤔 in layout, only render this guy if application.overlayProject
-// then can drop the null(?) checks
+
+/* global CDN_URL EDITOR_URL analytics*/
 
 const OverlayProjectTemplate = require("../../templates/overlays/overlay-project");
 
@@ -75,7 +75,7 @@ module.exports = function(application) {
     },
 
     remixLink() {
-      return `${EDITOR_URL}#!/remix/${self.projectDomain()}/${self.projectId()}`;
+      return `${EDITOR_URL}#!/remix/${self.projectDomain()}`;
     },
       
     trackRemix() {
