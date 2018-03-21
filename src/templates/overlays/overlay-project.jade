@@ -18,6 +18,7 @@
         .button View Source
       a.button-link.remix-link(href=@remixLink onclick=@trackRemix)
         .button.button-cta Remix your own
+          span.emoji.microphone
 
     section.pop-over-actions.has-buttons.editor-actions(class=@hiddenUnlessCurrentUserInProject)
       a.button-link.show-app-link(href=@showLink)
@@ -27,7 +28,7 @@
       a.button-link.project-link(href=@editorLink)
         .button.button-cta Edit Project
       a.button-link.remix-link(href=@remixLink onclick=@trackRemix)
-        .button.button-cta Remix This
+        .button Remix This
           span.emoji.microphone
 
     section.pop-over-actions.markdown-container(class=@warningIfProjectNotFound)
