@@ -5,7 +5,7 @@ module.exports = function(application, collection) {
     collection,
 
     title() {
-      return collection.title;
+      return collection.title ;
     },
     
     src() {
@@ -13,8 +13,12 @@ module.exports = function(application, collection) {
     },
         
     link() {
-      return collection.link;
-    }
+      return collection.link || null;
+    },
+    
+    imgTitle() {
+      return collection.imgTitle || "";
+    },
   };
       
   return FeaturedCollectionTemplate(self);
