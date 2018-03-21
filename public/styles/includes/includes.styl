@@ -97,6 +97,7 @@ category-box-radius = 5px
     
 // featured.styl
 
+//smallViewport = 414px
 //mediumViewport = 670px
 //largeViewport = 900px
 
@@ -122,20 +123,11 @@ category-box-radius = 5px
     list-style-type: none
     margin-right: 10px
     display: inline-block
-    min-width: 32%
+    min-width: 275px
     &:last-child
       margin-right: 0
-    @media (max-width: largeViewport)
-      //width: 48%
-    @media (max-width: mediumViewport)
-      min-width: 240px
-      flex-grow: 0
-      flex-shrink: 0
-      flex-basis: auto
-      margin-right: 8px
-      -webkit-overflow-scrolling: touch
-    @media (max-width: smallViewport)
-      width: 90%
+
+    -webkit-overflow-scrolling: touch
 
   .featured
     margin-right: 10px
