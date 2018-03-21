@@ -26,6 +26,9 @@
           span Preview
       a.button-link.project-link(href=@editorLink)
         .button.button-cta Edit Project
+      a.button-link.remix-link(href=@remixLink onclick=@trackRemix)
+        .button.button-cta Remix This
+          span.emoji.microphone
 
     section.pop-over-actions.markdown-container(class=@warningIfProjectNotFound)
       .users
