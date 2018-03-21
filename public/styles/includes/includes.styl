@@ -126,15 +126,16 @@ category-box-radius = 5px
     &:last-child
       margin-right: 0
     @media (max-width: largeViewport)
-      width: 48%
+      //width: 48%
     @media (max-width: mediumViewport)
+      min-width: 240px
       flex-grow: 0
       flex-shrink: 0
       flex-basis: auto
       margin-right: 8px
       -webkit-overflow-scrolling: touch
     @media (max-width: smallViewport)
-      width: 65%
+      width: 90%
 
   .featured
     margin-right: 10px
