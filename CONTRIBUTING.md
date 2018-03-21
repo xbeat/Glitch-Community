@@ -84,25 +84,22 @@ Only employees of Fog Creek will be able to do this step, and here it is!  This 
 
 First, let's make sure any changes made direct to Community are merged and happy.  This is a Glitch site, after all-- we're not forcing the PR workflow, especially for small changes.
 
-1. In your local git repo, checkout `origin/master`, then pull from `https://api.glitch.com/community/git` and, if there were any changes, merge them and push them back to `origin/master`.  If there were big changes, you'll want to test this merge by performing step #2 on a remix of community first before changing the live site.
+1. In your local git repo, checkout `origin/master`, then pull from `https://api.glitch.com/community/git` and, if there were any changes, merge them and push them back to `origin/master`.
 
     Ok, now the GitHub repository is updated and stable. 
   
-2. Inside of https://glitch.com/~community, open up the console.
+2. Inside of https://glitch.com/~community-staging, open up the console.
     ```
     git log -1 # Gets a stable changeset handy in case we need to revert
     git pull
     refresh # Updates the glitch editor with the new files
     ```
-    
-    Known issue:  The watchers can get into a tangled mess sometimes, and they'll just spew errors into the activity log. Quickly fix this by restarting the container:
-    ```
-    curl -X POST https://api.glitch.com/projects/community/stop?authorization=[your token]
-    ```
-    
-3. You're deployed!  View the site and the logs, make sure it's building and looks basically alive.
+  
+3. Your new version in staged!  View the site and the logs, make sure it's building and looks alive.
 
-    3.1 caveat for if you just broke the internet...  no worries, you've got git on your side: `git checkout <commit-hash-from-above>` and you're back to where you were before the pull.  Now go get help because something went wrong with step 1, and you need to figure it out and fix it. Once more into the breach!
+4. Swap ~community with ~community-staging to put your new version in front of users.
+
+5. Problem? No worries, swap it back!
 
 #### Or just doing it live…
 

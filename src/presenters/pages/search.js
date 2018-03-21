@@ -10,6 +10,12 @@ const axios = require('axios');
 const LayoutPresenter = require("../layout");
 const SearchPageTemplate = require("../../templates/pages/search");
 
+const Reactlet = require("../reactlet");
+
+import Categories from "../categories.jsx";
+import {render} from 'react-dom';
+import React from 'react';
+
 module.exports = function(application) {
 
   const self = { 
@@ -45,7 +51,15 @@ module.exports = function(application) {
 
     hiddenUnlessSearchHasNoResults() {
       if (!application.searchResultsHaveNoUsers() || !application.searchResultsHaveNoProjects() || !application.searchResultsHaveNoTeams()) { return 'hidden'; }
-    }
+    },
+    
+    Categories() {
+      const props = {
+        categories: application.categories,
+      };
+      return Reactlet(Categories, props);
+    },
+    
   };
     
 

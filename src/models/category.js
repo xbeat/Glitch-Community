@@ -38,12 +38,6 @@ module.exports = (Category = function(I, self) {
   self.attrModels('projects', Project);
   self.attrObservable("gettingCategory", "fetched");
 
-  self.extend({
-    hasProjects() {
-      if (self.projects().length) { return true; }
-    }
-  });
-
   if (I.id) {
     cache[I.id] = self;
   }
@@ -53,7 +47,7 @@ module.exports = (Category = function(I, self) {
 });
 
 
-Category.getRandomCategories = function(application, numberOfCategories, projectsPerCategory) {
+Category.getRandomCategories = function(api, numberOfCategories, projectsPerCategory) {
   let categoriesPath;
   console.log('🎷🎷🎷 get random categories');
   if (numberOfCategories) {
@@ -63,11 +57,13 @@ Category.getRandomCategories = function(application, numberOfCategories, project
   } else {
     categoriesPath = "categories/random";
   }
-  return application.api().get(categoriesPath)
+  return api.get(categoriesPath)
     .then(({data}) =>
       data.map(categoryDatum => Category(categoryDatum).update(categoryDatum))
     );
 };
+
+/*
 
 Category.getCategories = function(application) {
   console.log('🎷🎷🎷 get categories');
@@ -77,6 +73,7 @@ Category.getCategories = function(application) {
       data.map(categoryDatum => Category(categoryDatum).update(categoryDatum))
     );
 };
+*/
 
 Category.updateCategory = function(application, id) {
   const categoriesPath = `categories/${id}`;

@@ -8,7 +8,6 @@ const md = require('markdown-it')({
 
 const TeamTemplate = require("../../templates/pages/team");
 const LayoutPresenter = require("../layout");
-const CtaButtonsPresenter = require("../cta-buttons");
 const AddTeamUserPopPresenter = require("../pop-overs/add-team-user-pop");
 const AddTeamProjectPopPresenter = require("../pop-overs/add-team-project-pop");
 const ProjectsListPresenter = require("../projects-list");
@@ -44,10 +43,6 @@ module.exports = function(application) {
       if (self.team().fetched()) {
         return AnalyticsPresenter(application, self.team());
       }
-    },
-
-    ctaButtons() {
-      return CtaButtonsPresenter(application);
     },
 
     addTeamUserPop() {

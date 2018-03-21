@@ -2,8 +2,12 @@
 
 span
   .users(class=@hiddenIfShowAsGlitchTeam)
-    = @userAvatars
+    - @users().forEach (user) ->
+      - {userLink, tooltipName, style, hiddenIfSignedIn, anonAvatar, alt, hiddenUnlessSignedIn, userAvatarUrl} = user
+      a.user(href=userLink data-tooltip=tooltipName data-tooltip-left=true style=style)
+        img.anon-avatar(class=hiddenIfSignedIn width=32 height=32 src=anonAvatar alt=alt)
+        img(class=hiddenUnlessSignedIn width=32 height=32 src=userAvatarUrl alt=alt)
 
   .users(class=@hiddenUnlessShowAsGlitchTeam)
-    .user.made-by-glitch(title='Glitch Team' data-tooltip='Glitch Team' data-tooltip-left=true style="background-color:#74ecfc")
+    .user.made-by-glitch(data-tooltip='Glitch Team' data-tooltip-left=true style="background-color:#74ecfc")
       img(width=32 height=32 src=glitchTeamAvatar alt="Glitch Team")
