@@ -90,12 +90,11 @@ module.exports = (Project = function(I, self) {
       self.getReadme(application);
       originalUrlPath = window.location.pathname;
       originalQueryString = window.location.search;
-      console.log('showing', originalUrlPath,',', originalQueryString)
       const target = `/~${self.domain()}`
       if(!self.domain()) {
         return;
       }
-      if(target === originalUrlPath+originalQueryString) {
+      if((originalUrlPath+originalQueryString).includes("~")) {
         //They navigated here directly.
         originalUrlPath = "/"
         originalQueryString = ''
@@ -106,7 +105,6 @@ module.exports = (Project = function(I, self) {
     },
 
     hideOverlay(application) {
-      console.log('hiding', originalUrlPath, originalQueryString)
       source.cancel('Operation canceled by the user.');
       return history.replaceState(null, null, originalUrlPath + originalQueryString);
     },
