@@ -32,7 +32,7 @@ const StarterApps = ({starterProjects}) => {
   return (
     <article className="starter-apps projects">
       <header className="category category-name">
-        <h2>Create your Dream App</h2>
+        <h2>Create Your Dream App</h2>
       </header>
       <img className="starter-apps-graphic" src={bricksUrl} width="129px" height="80px"/>
       <ul className="projects-container">
