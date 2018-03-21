@@ -28,10 +28,10 @@ module.exports = function() {
             Our contribution guidelines are live!
 
             Check out [CONTRIBUTING.md](https://glitch.com/edit/#!/community?path=CONTRIBUTING.md) to see how you can join us to help build the very fabric of the Glitch community site.
-          """
+          ""}
       ,
       */
-        id: 1,
+        id: 2,
         title: "Deleted, but not forgotten",
         body:
           `\
