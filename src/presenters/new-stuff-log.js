@@ -31,7 +31,7 @@ module.exports = function() {
           ""}
       ,
       */
-        id: 2,
+        id: 1,
         title: "Deleted, but not forgotten",
         body:
           `\
