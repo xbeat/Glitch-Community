@@ -90,15 +90,15 @@ module.exports = (Project = function(I, self) {
       self.getReadme(application);
       originalUrlPath = window.location.pathname;
       originalQueryString = window.location.search;
-      const target = `/~${self.domain()}`
-      if(!self.domain()) {
-        return;
-      }
       if((originalUrlPath+originalQueryString).includes("~")) {
         //They navigated here directly.
         originalUrlPath = "/"
         originalQueryString = ''
       }
+      if(!self.domain()) {
+        return;
+      }
+      const target = `/~${self.domain()}`
       history.replaceState(null, `${self.domain()} – Glitch`, target);
       application.overlayProjectVisible(true);
       return document.getElementsByClassName('project-overlay')[0].focus();
