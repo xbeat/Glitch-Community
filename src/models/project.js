@@ -1,12 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Check that you're happy with the conversion, then remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 /* global application CDN_URL EDITOR_URL*/
 let Project;
 const cache = {};
@@ -99,7 +90,16 @@ module.exports = (Project = function(I, self) {
       self.getReadme(application);
       originalUrlPath = window.location.pathname;
       originalQueryString = window.location.search;
-      history.replaceState(null, `${self.domain()} – Glitch`, `~${self.domain()}`);
+      if((originalUrlPath+originalQueryString).includes("~")) {
+        //They navigated here directly.
+        originalUrlPath = "/"
+        originalQueryString = ''
+      }
+      if(!self.domain()) {
+        return;
+      }
+      const target = `/~${self.domain()}`
+      history.replaceState(null, `${self.domain()} – Glitch`, target);
       application.overlayProjectVisible(true);
       return document.getElementsByClassName('project-overlay')[0].focus();
     },
@@ -176,22 +176,27 @@ Project.getProjectsByIds = function(api, ids) {
     const project = cache[id];
     return !project || !project.fetched();
   });
+  
   // fetch the ids in groups so they fit into max allowable url length
   const projectIdGroups = newProjectIds.map(function(id, index) {
     if ((index % NUMBER_OF_PROJECTS_PER_REQUEST) === 0) { 
       return newProjectIds.slice(index, index + NUMBER_OF_PROJECTS_PER_REQUEST);       
     }  return null; }).filter(id => id);
-  return projectIdGroups.forEach(function(group) {
+  
+  projectIdGroups.map(function(group) {
     const projectsPath = `projects/byIds?ids=${group.join(',')}`;
     return api.get(projectsPath)
       .then(function({data}) {
-        data.forEach(function(datum) {
+        data.map(function(datum) {
           datum.fetched = true;
           return Project(datum).update(datum);
-        });
-        return ids.map(id => Project({id}));}).catch(error => console.error("getProjectsByIds", error));
+        }); 
+      })
+      .catch(error => console.error("getProjectsByIds", error));
   });
-};
+  
+  return ids.map(id => Project({id}));
+}
 
 Project.getProjectOverlay = function(application, domain) {
   const projectPath = `projects/${domain}`;

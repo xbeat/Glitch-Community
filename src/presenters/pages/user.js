@@ -10,7 +10,6 @@ const md = require('markdown-it')({
 const UserTemplate = require("../../templates/pages/user");
 const DeletedProjectsTemplate = require("../../templates/deleted-projects");
 const LayoutPresenter = require("../layout");
-const CtaButtonsPresenter = require("../cta-buttons");
 const ProjectsListPresenter = require("../projects-list");
 
 module.exports = function(application, userLoginOrId) {
@@ -30,10 +29,6 @@ module.exports = function(application, userLoginOrId) {
 
     application,
   
-    ctaButtons() {
-      return CtaButtonsPresenter(application);
-    },
-
     coverUrl() {
       if (application.user().localCoverImage()) {
         return application.user().localCoverImage();

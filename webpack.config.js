@@ -47,8 +47,8 @@ module.exports = () => {
           exclude: /node_modules/,
           loader: "eslint-loader",
           options: {
-            fix: false, // We can turn this on once OTFS is live
-            cache: false, //caching tends to make the config stick, so turn it off deliberately :(
+            fix: true,
+            cache: true, //caching tends to make the config stick, so turn it off when reconfiguring
             emitError: true,
             emitWarning: true,
             failOnError: false,

@@ -40,10 +40,6 @@ const UserOptionsPop = ({visible, profileLink, avatarUrl, teams, showNewStuffOve
   return (
     <dialog className="pop-over user-options-pop">
       <section className="pop-over-actions">
-        <a className="button-link" href="https://glitch.com/edit">
-          <div className="button button-cta button-small">Resume Coding</div>
-        </a>
-
         <a className="button-link" href={profileLink}>
           <div className="button button-small has-emoji button-tertiary">
             <span>Your Profile </span>

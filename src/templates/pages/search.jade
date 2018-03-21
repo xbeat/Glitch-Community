@@ -1,6 +1,5 @@
 - cat = "https://cdn.gomix.com/us-east-1%3Acba180f4-ee65-4dfc-8dd5-f143280d3c10%2Fcat.svg"
 
-- CategoriesPresenter = require "../../presenters/categories"
 - TeamItemPresenter = require "../../presenters/team-item"
 - UserItemPresenter = require "../../presenters/user-item"
 - ProjectItemPresenter = require "../../presenters/project-item"
@@ -39,4 +38,4 @@ main.search-results(role="main")
     p no results found
     img(src=cat)
 
-  = CategoriesPresenter(@application)
+  = @Categories

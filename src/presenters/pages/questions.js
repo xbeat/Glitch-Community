@@ -1,32 +1,29 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Check that you're happy with the conversion, then remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const QuestionsPageTemplate = require("../../templates/pages/questions");
 const LayoutPresenter = require("../layout");
-const CtaButtonsPresenter = require("../cta-buttons");
 const QuestionsPresenter = require("../questions");
-const CategoriesPresenter = require("../categories");
+
+const Reactlet = require("../reactlet");
+
+import Categories from "../categories.jsx";
+import {render} from 'react-dom';
+import React from 'react';
 
 module.exports = function(application) {
   const self = {
 
     application,
 
-    ctaButtons() {
-      return CtaButtonsPresenter(application);
-    },
-
     questions() {
       return QuestionsPresenter(application, 12);
     },
 
-    categories() {
-      return CategoriesPresenter(application);
-    }
+    Categories() {
+      const props = {
+        categories: application.categories,
+      };
+     
+      return Reactlet(Categories, props);
+    },
   };
       
   const content = QuestionsPageTemplate(self);

@@ -57,7 +57,6 @@ Promise.resolve()
 
     // index page ✅
     if ((normalizedRoute === "index.html") || (normalizedRoute === "")) {
-      application.getRandomCategories();
       application.getQuestions();
       indexPage = IndexPage(application);
       return document.body.appendChild(indexPage);
@@ -65,7 +64,6 @@ Promise.resolve()
 
       // questions page ✅
     } else if (application.isQuestionsUrl(normalizedRoute)) {
-      application.getCategories();
       const questionsPage = QuestionsPage(application);
       document.body.appendChild(questionsPage);
       // TODO append active projects count to document.title . i.e. Questions (12)
@@ -76,7 +74,6 @@ Promise.resolve()
     } else if (application.isProjectUrl(normalizedRoute)) {
       const projectDomain = application.removeFirstCharacter(normalizedRoute);
       application.showProjectOverlayPage(projectDomain);
-      application.getRandomCategories();
       indexPage = IndexPage(application);
       return document.body.appendChild(indexPage);
 
@@ -113,7 +110,6 @@ Promise.resolve()
     
       // search page ✅
     } else if (application.isSearchUrl(normalizedRoute, queryString)) {
-      application.getRandomCategories();
       const query = queryString.q;
       application.searchQuery(query);
       application.searchTeams(query);
@@ -126,7 +122,6 @@ Promise.resolve()
 
       // category page ✅
     } else if (application.isCategoryUrl(normalizedRoute)) {
-      application.getCategories();
       application.getCategory(normalizedRoute);
       const categoryPage = CategoryPage(application);
       document.body.appendChild(categoryPage);

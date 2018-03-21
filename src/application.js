@@ -49,7 +49,6 @@ var self = Model({
   signInPopVisibleOnHeader: Observable(false),
   signInPopVisibleOnRecentProjects: Observable(false),
   userOptionsPopVisible: Observable(false),
-  ctaPopVisible: Observable(false),
   addTeamUserPopVisible: Observable(false),
   addTeamProjectPopVisible: Observable(false),
 
@@ -124,7 +123,6 @@ var self = Model({
     self.signInPopVisibleOnHeader(false);
     self.signInPopVisibleOnRecentProjects(false);
     self.userOptionsPopVisible(false);
-    self.ctaPopVisible(false);
     self.addTeamUserPopVisible(false);
     self.addTeamProjectPopVisible(false);
     self.overlayProjectVisible(false);
@@ -270,15 +268,9 @@ var self = Model({
     self.category(Category(categoryData));
     return Category.updateCategory(application, categoryData.id);
   },
-
-  getRandomCategories(numberOfCategories, projectsPerCategory) {
-    return Category.getRandomCategories(self, numberOfCategories, projectsPerCategory)
-      .then(categories => self.categories(categories));
-  },
-
-  getCategories() {
-    return Category.getCategories(self)
-      .then(categories => self.categories(categories));
+ 
+  get categories() {
+    return cachedCategories;
   },
 
   getQuestions() {
@@ -286,12 +278,6 @@ var self = Model({
     return questions = Question.getQuestions(self).then(questions => self.questions(questions));
   },
     
-  fogcreekAge() {
-    const FOUNDED = 2001;
-    const current = new Date().getFullYear();
-    return current - FOUNDED;
-  },
-
   showProjectOverlayPage(domain) {
     return Project.getProjectOverlay(application, domain);
   },
@@ -357,7 +343,6 @@ var self = Model({
       
 self.attrModel("user", User);
 self.attrModel("currentUser", User);
-self.attrModels("categories", Category);
 self.attrModel("category", Category);
 self.attrModel("team", Team);
 self.attrModel("question", Question);

@@ -1,23 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Check that you're happy with the conversion, then remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
-/*
-We use a cache to keep an identity map of users by id.
-
-When constructing a user model User(...) if it has an id
-field it will be cached based on the id. If the id already
-exists in the cache the same reference to that model will be
-returned.
-
-If the id property is not given the model is not cached.
-*/
-
 let User;
 const axios = require('axios');
 const md = require('markdown-it')({
