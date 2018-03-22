@@ -27,7 +27,7 @@ _behind the scenes_ we'll make use of GitHub's Pull Request workflow to incorpor
 
 Sometimes we'll have another feature or design underway that'll be in conflict with the direction that you took the site.  It's all good, let's keep it fun and keep it focused on the ideas and improvements.
 
-This site is open source. All interactions between this site and Glitch-the-application are using public API endpoints-- there aren't any special prevlidges or secret endpoints going on.
+This site is open source. All interactions between this site and Glitch-the-application are using public API endpoints-- there aren't any special privileges or secret endpoints going on.
 
 This site is also young and hungry.  We don't have a public "bug list" and a lot of processes that are best to formalize have yet to be. And this site believes in a Glitchy future-- it is built, maintained, and deployed entirely within Glitch itself.  We're living the Glitchy future of web development, and it's a blast.
 
