@@ -102,6 +102,7 @@ module.exports = function(application) {
       const projectIds = [
         'a0fcd798-9ddf-42e5-8205-17158d4bf5bb', // 'hello-express'
         '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
+        'cb519589-591c-474f-8986-a513f22dbf88', // 'hello-sqlite'
       ];
       const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
       const fetchedProjects = projects.filter(project => project.fetched());
