@@ -11,7 +11,8 @@
 
 const OverlayProjectTemplate = require("../../templates/overlays/overlay-project");
 
-const UsersList = require("../users-list");
+import UsersList from "../users-list.jsx";
+import Reactlet from "../reactlet";
 
 const markdown = require('markdown-it')({html: true})
   .use(require('markdown-it-sanitizer'))
@@ -29,6 +30,10 @@ module.exports = function(application) {
     
     projectUsers() {
       if (application.overlayProject()) {
+        const props = {
+          users: application.overlayProject().users(),
+          showAsGlitchTeam: application.overlayProject().showAsGlitchTeam
+        return Reactlet(UsersList, props);
         return UsersList(application.overlayProject());
       }
     },
