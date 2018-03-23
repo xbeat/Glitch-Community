@@ -2,7 +2,7 @@ import React from 'react';
 
 const glitchTeamAvatar = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267";
   
-const UsersList = ({projectOrTeam, type}) => {
+const UsersList = ({users, showAsGlitchTeam}) => {
   function users() {
     return projectOrTeam.users();
   }
@@ -21,13 +21,19 @@ const UsersList = ({projectOrTeam, type}) => {
       }
     }
   
-  function showAsGlitchTeam() {
+  /*function showAsGlitchTeam() {
     return projectOrTeam && projectOrTeam.showAsGlitchTeam && projectOrTeam.showAsGlitchTeam();
-  }
+  }*/
 
   return (
     <span>
       // hiddenIfShowAsGlitchTeam
+      { showAsGlitchTeam ? (
+        <div className="user made-by-glitch" data-tooltip="Glitch-Team" data-tooltip-left="true" style={{"background-color":"#74ecfc"}}>
+        <img width={32} height={32} src={glitchTeamAvatar} alt="Glitch Team Avatar"/>
+      </div>
+        )
+        
       <div className="users">
         { users.map((user, key) => (
           <UserTile key={key} {...user}></UserTile>
@@ -35,9 +41,7 @@ const UsersList = ({projectOrTeam, type}) => {
       </div>
       
       //hiddenUnlessShowAsGlitchTeam
-      <div className="user made-by-glitch" data-tooltip="Glitch-Team" data-tooltip-left="true" style={{"background-color":"#74ecfc"}}>
-        <img width={32} height={32} src={glitchTeamAvatar} alt="Glitch Team Avatar"/>
-      </div>
+      
     </span>
   );
 };
