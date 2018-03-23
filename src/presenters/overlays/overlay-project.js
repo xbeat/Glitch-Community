@@ -12,6 +12,7 @@
 const OverlayProjectTemplate = require("../../templates/overlays/overlay-project");
 
 import UsersList from "../users-list.jsx";
+import GlitchTeamUsersList from "../glitch-team-users-list.jsx";
 import Reactlet from "../reactlet";
 
 const markdown = require('markdown-it')({html: true})
@@ -29,12 +30,16 @@ module.exports = function(application) {
     project: application.overlayProject,
     
     projectUsers() {
-      if (application.overlayProject()) {
+      const project = application.overlayProject();
+      if (project) {
+        if(project.showAsGlitchTeam && project.showAsGlitchTeam()){
+          return Reactlet(GlitchTeamUsersList, {});
+        }
+        
         const props = {
-          users: application.overlayProject().users(),
-          showAsGlitchTeam: application.overlayProject().showAsGlitchTeam
-        return Reactlet(UsersList, props);
-        return UsersList(application.overlayProject());
+          users: project.users(),
+        }
+        return Reactlet(UsersList, props);x
       }
     },
   
