@@ -3,7 +3,10 @@ const WARN = 1;
 const ERROR = 2;
 
 module.exports = exports = {
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:jsx-a11y/recommended",
+  ],
   env: {
       'es6': true,        // We are writing ES6 code
       'browser': true,    // for the browser
@@ -11,8 +14,11 @@ module.exports = exports = {
   "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module",
-    "allowImportExportEverywhere": true
+    "allowImportExportEverywhere": true,
   },
+  "plugins": [
+    "jsx-a11y/recommended", // https://www.npmjs.com/package/eslint-plugin-jsx-a11y
+  ],
   "rules": {
     // Intentional config:
     "no-console": OFF,
