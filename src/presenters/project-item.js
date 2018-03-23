@@ -11,6 +11,7 @@ const UsersListPresenter = require("./users-list");
 const ProjectOptionsPop = require("../templates/pop-overs/project-options-pop");
 const ProjectOptionsPopPresenter = require('./pop-overs/project-options-pop');
 
+
 module.exports = function(application, project, category, userPagePresenter) {
 
   var self = { 
