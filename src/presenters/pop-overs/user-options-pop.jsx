@@ -43,7 +43,7 @@ const UserOptionsPop = ({visible, profileLink, avatarUrl, teams, showNewStuffOve
         <a className="button-link" href={profileLink}>
           <div className="button button-small has-emoji button-tertiary">
             <span>Your Profile </span>
-            <img className="emoji avatar" src={avatarUrl}></img>
+            <img className="emoji avatar" src={avatarUrl} alt="Your avatar"></img>
           </div>
         </a>
 
