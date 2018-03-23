@@ -14,7 +14,7 @@ Example:
 module.exports =
   [
     {
-      title: 'Monday: From beta to now',
+      title: 'From beta to now',
       img: 'https://cdn.glitch.com/85de0811-a09d-482e-8aba-1039316a71ac%2Fv2_1wtcwd-monday.jpg?1521719756785',
       link: 'https://medium.com/glitch'
     }
@@ -27,7 +27,7 @@ module.exports =
       title: 'Wednesday',
       img: "https://cdn.glitch.com/85de0811-a09d-482e-8aba-1039316a71ac%2Fbw_1w2cwd-wednesday.jpg?1521719511375",
       imgTitle: 'Hey, no peeking - this will be announced Wednesday'
-    },
+    }
     , {
       title: 'Thursday',
       img: "https://cdn.glitch.com/85de0811-a09d-482e-8aba-1039316a71ac%2Fbw_1wtcwd-thursday.jpg?1521719511206",
