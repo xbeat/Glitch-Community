@@ -35,8 +35,9 @@ const UsersList = ({projectOrTeam, type}) => {
       </div>
       
       //hiddenUnlessShowAsGlitchTeam
-      //.user.made-by-glitch(data-tooltip='Glitch Team' data-tooltip-left=true style="background-color:#74ecfc")
-      //img(width=32 height=32 src=glitchTeamAvatar alt="Glitch Team")
+      <div className="user made-by-glitch" data-tooltip="Glitch-Team" data-tooltip-left="true" style={{"background-color":"#74ecfc"}}>
+        <img width={32} height={32} src={glitchTeamAvatar} alt="Glitch Team Avatar"/>
+      </div>
     </span>
   );
 };
@@ -51,25 +52,13 @@ const UserTile = (
    hiddenUnlessSignedIn, 
    userAvatarUrl}
   ) => (
-/*
-a.user(href=userLink data-tooltip=tooltipName data-tooltip-left=true style=style)
-        img.anon-avatar(class=hiddenIfSignedIn width=32 height=32 src=anonAvatar alt=alt)
-        img(class=hiddenUnlessSignedIn width=32 height=32 src=userAvatarUrl alt=alt)
-        */
+  <a className="user" href={userLink} data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
+    //hiddenIfSignedIn
+    <img class="anon-avatar" width={32} height={32} src={anonAvatar} alt={alt}/>
+    //hiddenUnlessSignedIn
+    <img width={32} height={32} src={userAvatarUrl} alt={alt}/>
+    
+  </a>
 );
-
-/*
-
-span
-  .users(class=@hiddenIfShowAsGlitchTeam)
-    - @users().forEach (user) ->
-      - {userLink, tooltipName, style, hiddenIfSignedIn, anonAvatar, alt, hiddenUnlessSignedIn, userAvatarUrl} = user
-      
-
-  .users(class=@hiddenUnlessShowAsGlitchTeam)
-    .user.made-by-glitch(data-tooltip='Glitch Team' data-tooltip-left=true style="background-color:#74ecfc")
-      img(width=32 height=32 src=glitchTeamAvatar alt="Glitch Team")
-
-*/
 
 export default UsersList;
