@@ -25,10 +25,10 @@ const WhatIsGlitch = ({isSignedIn, showVideoOverlay}) => {
         <div>
           <span>And it's <img className="free" src={free} alt="free"/></span>
           <span>. </span>
-          <div className="video" onClick={showVideoOverlay}>
+          <button className="video" onClick={showVideoOverlay}>
             <img className="play-button" src={play} alt="play"/>
             <span>How it works in 2 minutes</span>
-          </div>
+          </button>
         </div>
       </span>
     </section>

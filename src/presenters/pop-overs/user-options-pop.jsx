@@ -7,7 +7,7 @@ const TeamButton = ({url, name, teamAvatarUrl=""}) => (
   <a className="button-link" href={url}>
     <div className="button button-small has-emoji button-tertiary">
       <span>{name} </span>
-      <img className="emoji avatar" src={teamAvatarUrl}/>
+      <img className="emoji avatar" src={teamAvatarUrl} alt={`${name} team avatar`}/>
     </div>
   </a>
 );
