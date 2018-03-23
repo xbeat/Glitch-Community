@@ -17,7 +17,7 @@ module.exports = exports = {
     "allowImportExportEverywhere": true,
   },
   "plugins": [
-    "jsx-a11y/recommended", // https://www.npmjs.com/package/eslint-plugin-jsx-a11y
+    "jsx-a11y", // https://www.npmjs.com/package/eslint-plugin-jsx-a11y
   ],
   "rules": {
     // Intentional config:
