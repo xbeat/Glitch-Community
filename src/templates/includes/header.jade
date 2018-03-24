@@ -18,5 +18,4 @@ header(role="banner")
       button.user(click=@toggleUserOptionsPopVisible)
         img(src=@userAvatar width=30 height=30 alt="User options")
         span.down-arrow.icon
-      span(id=@userOptionsPopContainerId)
-        - @UserOptionsPop(@application.userOptionsPopVisible())
+      = @UserOptionsPop(@application.userOptionsPopVisible())

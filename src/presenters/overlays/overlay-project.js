@@ -22,7 +22,7 @@ module.exports = function(application) {
     
     projectUsers: self.project().users(),
     
-    UsersList(usersObs) {
+    UsersList(users) {
       const project = self.project();
       if (project) {
         if(project.showAsGlitchTeam && project.showAsGlitchTeam()){
@@ -30,7 +30,7 @@ module.exports = function(application) {
         }
         
         const props = {
-          users: usersObs().filter(user => user.fetched()).map(user => user.asProps())
+          users: users().filter(user => user.fetched()).map(user => user.asProps())
         };
         return Reactlet(UsersList, props);
       }
