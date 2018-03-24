@@ -179,7 +179,7 @@ module.exports = function(I, self) {
     // The JSON representation, I, is kept up to date via the observable properites
     toJSON() {
       return I;
-    }
+    },
   }
   );
 };

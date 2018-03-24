@@ -17,7 +17,7 @@ module.exports = function(application) {
   const notificationTypes = [
     "UserDescriptionUpdated",
     "Uploading",
-    "UploadFailure"
+    "UploadFailure",
   ];
 
   const notifications = notificationTypes.map(str => `.notify${str}`).join(',');
@@ -41,7 +41,7 @@ module.exports = function(application) {
 
     uploadProgress() {
       return application.uploadProgress();
-    }
+    },
   };
 
 

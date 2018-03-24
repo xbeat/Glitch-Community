@@ -31,7 +31,7 @@ module.exports = function(application) {
           return Reactlet(GlitchTeamUsersList);
         }
         const props = {
-          users: project.users().map(user => user.asProps())
+          users: project.users().map(user => user.asProps()),
         };
         return Reactlet(UsersList, props);
       }
@@ -86,7 +86,7 @@ module.exports = function(application) {
       analytics.track("Click Remix", {
         origin: "project overlay",
         baseProjectId: self.projectId(),
-        baseDomain: self.projectDomain()
+        baseDomain: self.projectDomain(),
       }
       );
       return true;
@@ -167,7 +167,7 @@ Thanks 💖
 (project id: ${projectId})\
 `;
       return encodeURI(`mailto:${support}?subject=${subject}&body=${body}`);
-    }
+    },
   };
 
 

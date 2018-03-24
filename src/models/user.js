@@ -35,7 +35,7 @@ module.exports = (User = function(I, self) {
     showAsGlitchTeam: false,
     persistentToken: null,
     pins: [],
-    deletedProjects: []
+    deletedProjects: [],
   });
 
   self.attrObservable(...Array.from(Object.keys(I) || []));
@@ -218,7 +218,7 @@ module.exports = (User = function(I, self) {
         alt: self.alt(),
         userAvatarUrl:self.userAvatarUrl(), 
       };
-    }
+    },
   });
 
 

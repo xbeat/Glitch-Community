@@ -27,7 +27,7 @@ module.exports = function(application, user, options) {
     hoverBackground() {
       return {
         backgroundImage: `url('${user.coverUrl()}')`,
-        backgroundColor: user.coverColor('small')
+        backgroundColor: user.coverColor('small'),
       };
     },
 
@@ -65,7 +65,7 @@ module.exports = function(application, user, options) {
 
     thanks() {
       return user.userThanks();
-    }
+    },
   };
     
     

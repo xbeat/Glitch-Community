@@ -37,7 +37,7 @@ module.exports = function(application) {
       return{ 
         name: extract("name"),
         url: extract("url"),
-        teamAvatarUrl: extract("teamAvatarUrl")
+        teamAvatarUrl: extract("teamAvatarUrl"),
       };
     });
   };
@@ -110,7 +110,7 @@ module.exports = function(application) {
           analytics.reset();
           localStorage.removeItem('cachedUser');
           return location.reload();
-        }
+        },
       };
 
       return Reactlet(UserOptionsPop, props);
@@ -120,7 +120,7 @@ module.exports = function(application) {
       if (event.target.children.q.value.trim().length === 0) {
         return event.preventDefault();
       }
-    }
+    },
   };
         
   return HeaderTemplate(self);

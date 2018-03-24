@@ -16,7 +16,7 @@ module.exports = function(application, project, options, analytics) {
       }
 
       const props = {
-        users: project.users().map(user => user.asProps())
+        users: project.users().map(user => user.asProps()),
       };
       return Reactlet(UsersList, props);
     },
@@ -76,7 +76,7 @@ module.exports = function(application, project, options, analytics) {
     
     preventDefault(event) {
       return event.preventDefault();
-    }
+    },
   };
     
   return ProjectResultTemplate(self);

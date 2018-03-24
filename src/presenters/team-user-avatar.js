@@ -42,7 +42,7 @@ module.exports = function(application, user) {
 
     alt() {
       return user.alt();
-    }
+    },
   };
 
   return TeamUserTemplate(self);

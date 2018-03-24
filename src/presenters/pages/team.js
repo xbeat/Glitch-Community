@@ -3,7 +3,7 @@ const _ = require('lodash');
 const md = require('markdown-it')({
   breaks: true,
   linkify: true,
-  typographer: true
+  typographer: true,
 });
 
 const TeamTemplate = require("../../templates/pages/team");
@@ -64,7 +64,7 @@ module.exports = function(application) {
     teamProfileStyle() {
       return {
         backgroundColor: application.team().coverColor(),
-        backgroundImage: `url('${self.coverUrl()}')`
+        backgroundImage: `url('${self.coverUrl()}')`,
       };
     },
 
@@ -224,7 +224,7 @@ module.exports = function(application) {
       if (application.addTeamProjectPopVisible()) {
         return $('#team-project-search').focus();
       }
-    }
+    },
   };
 
   application.team.observe(function(newVal) {

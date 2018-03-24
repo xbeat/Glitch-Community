@@ -14,12 +14,12 @@ const Observable = require('o_0');
 const COVER_SIZES = {
   large: 1000,
   medium: 700,
-  small: 450
+  small: 450,
 };
 const AVATAR_SIZES = {
   large: 300,
   medium: 150,
-  small: 60
+  small: 60,
 };
 
 const blobToImage = file =>
@@ -103,7 +103,7 @@ const getDominantColor = function(image) {
   const outlyingColors = [];
   const outlyingColorsList = JSON.stringify([
     [255,255,255],
-    [0,0,0]
+    [0,0,0],
   ]);
   /*
   Iterate through edge pixels and get the average color, then conditionally
@@ -117,7 +117,7 @@ const getDominantColor = function(image) {
       const color = [
         pixelData[0], // r
         pixelData[1], // g
-        pixelData[2] // b
+        pixelData[2], // b
       ];
       const colorRegExObject = new RegExp(`(${color})`, 'g');
       if (pixelData[3] < 255) { // alpha pixels
@@ -295,7 +295,7 @@ module.exports = function(application) {
           application.notifyUploadFailure(true);
           return console.error('addAvatarFile', error);
         });
-    }
+    },
   };
 };
 

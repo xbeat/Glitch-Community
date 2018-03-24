@@ -14,14 +14,14 @@ module.exports = function(application) {
     style() {
       return {
         backgroundImage: `url('${application.currentUser().coverUrl('large')}')`,
-        backgroundColor: application.currentUser().coverColor()
+        backgroundColor: application.currentUser().coverColor(),
       };
     },
     
     userAvatarStyle() {
       return {
         backgroundColor: application.currentUser().color(),
-        backgroundImage: `url('${application.currentUser().userAvatarUrl('large')}')`
+        backgroundImage: `url('${application.currentUser().userAvatarUrl('large')}')`,
       };
     },
     
@@ -43,7 +43,7 @@ module.exports = function(application) {
         const category = { 
           color() {
             return undefined;
-          }
+          },
         };
         return ProjectItemPresenter(application, project, category);
       });
@@ -76,7 +76,7 @@ module.exports = function(application) {
 
     hiddenUnlessCurrentUser() {
       if (!application.currentUser().id()) { return 'hidden'; }
-    }
+    },
   };
 
   return RecentProjectsTemplate(self);

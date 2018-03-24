@@ -18,7 +18,7 @@ module.exports = function(application, team) {
 
     UsersList() {
       const props = {
-        users: team.users().map(user => user.asProps())
+        users: team.users().map(user => user.asProps()),
       };
       return Reactlet(UsersList, props);
     },
@@ -70,9 +70,9 @@ module.exports = function(application, team) {
     style() {
       return {
         backgroundImage: `url('${self.coverUrl()}')`,
-        backgroundColor: self.coverColor()
+        backgroundColor: self.coverColor(),
       };
-    }
+    },
   };
 
   return TeamItemTemplate(self);

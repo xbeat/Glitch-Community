@@ -34,7 +34,7 @@ const cachedUser =
 
 var self = Model({
   // featuredProjects: featuredProjects
-  currentUser: cachedUser
+  currentUser: cachedUser,
 }).extend({
 
   featuredCollections,
@@ -153,13 +153,13 @@ var self = Model({
         baseURL: API_URL,
         cancelToken: (source != null ? source.token : undefined),
         headers: {
-          Authorization: persistentToken
-        }
+          Authorization: persistentToken,
+        },
       });
     } 
     return axios.create({
       baseURL: API_URL,
-      cancelToken: (source != null ? source.token : undefined)
+      cancelToken: (source != null ? source.token : undefined),
     });
   },
 
@@ -337,7 +337,7 @@ var self = Model({
     if (url === 'questions') {
       return true;
     }
-  }
+  },
 });
 
       

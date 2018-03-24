@@ -19,7 +19,7 @@ module.exports = function(application, project, category, userPagePresenter) {
       }
         
       const props = {
-        users: project.users().map(user => user.asProps())
+        users: project.users().map(user => user.asProps()),
       };
       return Reactlet(UsersList, props);
     },
@@ -97,7 +97,7 @@ module.exports = function(application, project, category, userPagePresenter) {
     style() {
       return {
         backgroundColor: (typeof category.color === 'function' ? category.color() : undefined),
-        borderBottomColor: (typeof category.color === 'function' ? category.color() : undefined)
+        borderBottomColor: (typeof category.color === 'function' ? category.color() : undefined),
       };
     },
 
@@ -107,7 +107,7 @@ module.exports = function(application, project, category, userPagePresenter) {
 
     avatar() {
       return project.avatar();
-    }
+    },
   };
 
   return ProjectItemTemplate(self);

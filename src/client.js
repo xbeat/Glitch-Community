@@ -50,7 +50,7 @@ Promise.resolve()
         name: user.name(),
         login: user.login(),
         email: user.email(),
-        created_at: user.createdAt()
+        created_at: user.createdAt(),
       }
       );
     }

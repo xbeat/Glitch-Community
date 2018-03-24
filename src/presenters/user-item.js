@@ -60,9 +60,9 @@ module.exports = function(application, user) {
     style() {
       return {
         backgroundImage: `url('${self.coverUrl()}')`,
-        backgroundColor: self.coverColor()
+        backgroundColor: self.coverColor(),
       };
-    }
+    },
   };
 
   return UserTemplate(self);

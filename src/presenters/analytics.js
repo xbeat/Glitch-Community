@@ -125,7 +125,7 @@ module.exports = function(application, teamOrProject) {
       return {
         leftMargin: self.getWidthOfText(leftMarginString, "Benton Sans", "14px"), // super gross
         ranges: maxes.map(function(max) {
-          if (max >= 3) { return undefined; }  return [0, 3]; })
+          if (max >= 3) { return undefined; }  return [0, 3]; }),
       };
     },
 
@@ -134,23 +134,23 @@ module.exports = function(application, teamOrProject) {
 
       const elements = [
         self.remixesChartElement,
-        self.visitsChartElement
+        self.visitsChartElement,
       ];
       return elements.map(function(element, i) {
         const data = {
           marker: {
-            color: COLORS[i]
+            color: COLORS[i],
           },
           type: 'histogram',
           histfunc: "sum",
-          nbinsx: 28
+          nbinsx: 28,
         };
 
         const layout = {
           paper_bgcolor: BACKGROUND_COLOR,
           plot_bgcolor: BACKGROUND_COLOR,
           font: {
-            family: '"Benton Sans",Helvetica,Sans-serif'
+            family: '"Benton Sans",Helvetica,Sans-serif',
           },
           height: 200,
           margin: {
@@ -158,9 +158,9 @@ module.exports = function(application, teamOrProject) {
             r: 0,
             b: 50,
             t: 10,
-            pad: 0
+            pad: 0,
           },
-          bargap: 0.2
+          bargap: 0.2,
         };
 
         const options =
@@ -181,7 +181,7 @@ module.exports = function(application, teamOrProject) {
 
       const elements = [
         self.remixesChartElement,
-        self.visitsChartElement
+        self.visitsChartElement,
       ];
 
       return chartData.map(function(data, i) {
@@ -192,7 +192,7 @@ module.exports = function(application, teamOrProject) {
             r: 0,
             b: 50,
             t: 10,
-            pad: 0
+            pad: 0,
           },
           xaxis: {
             zeroline: false,
@@ -203,15 +203,15 @@ module.exports = function(application, teamOrProject) {
             autorange: false,
             fixedrange: true,         
             //tickangle: 1e-10 # to have it aligned to the right of the tick          xaxis:
-            range: [data.x[0].getTime() - 3600000, data.x[data.x.length-1].getTime() + (4 * 3600000)]
+            range: [data.x[0].getTime() - 3600000, data.x[data.x.length-1].getTime() + (4 * 3600000)],
           },
           yaxis: {
             fixedrange: true,
             rangemode: "nonnegative",
             tickformat: ',dr',
             zeroline: false,
-            range: ranges[i]
-          }
+            range: ranges[i],
+          },
         };
 
 
@@ -238,17 +238,17 @@ module.exports = function(application, teamOrProject) {
     initReferrers() {
       const elements = [
         self.remixesReferrersBars,
-        self.visitsReferrersBars
+        self.visitsReferrersBars,
       ];
 
       return elements.map(function(element, i) {
         const data = {
           hoverinfo: 'none',
           marker: {
-            color: COLORS[i]
+            color: COLORS[i],
           },
           type: 'bar',
-          orientation: 'h'
+          orientation: 'h',
         };
 
         const layout = {
@@ -256,26 +256,26 @@ module.exports = function(application, teamOrProject) {
           plot_bgcolor: BACKGROUND_COLOR,
           font: {
             family: '"Benton Sans",Helvetica,Sans-serif',
-            size: 14
+            size: 14,
           },
           margin: {
             l: 0,
             r: 10,
             b: 10,
             t: 10,
-            pad: 0
+            pad: 0,
           },
           barwidth: 20,
           xaxis: {
             showticklabels: false,
             showgrid: false,
             zeroline: false,
-            fixedrange: true
+            fixedrange: true,
           },
           yaxis: {
             showticklabels: false,
-            fixedrange: true
-          }
+            fixedrange: true,
+          },
         };
 
         const options =
@@ -288,7 +288,7 @@ module.exports = function(application, teamOrProject) {
     updateReferrers(analyticsData) {
       const elements = [
         self.remixesReferrersBars,
-        self.visitsReferrersBars
+        self.visitsReferrersBars,
       ];
 
       return REFERRER_FIELDS.map(function(field, i) {
@@ -309,13 +309,13 @@ module.exports = function(application, teamOrProject) {
         referrers = referrers.map(r =>
           ({
             domain: r.domain,
-            value: r[REFERRER_VALUES[i]]
+            value: r[REFERRER_VALUES[i]],
           }));
 
         // NOTE: Plotly.restyle wants the arrays pushed down into the trace values YOLO!
         const data = {
           x: [referrers.map(r => r.value)],
-          y: [referrers.map(r => r.domain)]
+          y: [referrers.map(r => r.domain)],
         };
         
         const layout = {
@@ -326,10 +326,10 @@ module.exports = function(application, teamOrProject) {
               showarrow: false,
               text: `${r.value} - ${r.domain}`,
               xanchor: "left",
-              xshift: 5
+              xshift: 5,
             })
           ),
-          height: 20 + (30 * referrers.length)
+          height: 20 + (30 * referrers.length),
         };
 
         const element = elements[i];
@@ -348,7 +348,7 @@ module.exports = function(application, teamOrProject) {
       return METRICS.map((metric, i) =>
         ({
           x: buckets.map(x => new Date(x.startTime)),
-          y: buckets.map(y => y.analytics[metric] != null ? y.analytics[metric] : 0)
+          y: buckets.map(y => y.analytics[metric] != null ? y.analytics[metric] : 0),
         })
       );
     },
@@ -426,7 +426,7 @@ module.exports = function(application, teamOrProject) {
 
     hiddenUnlessCurrentUserIsOnTeam() {
       if (!self.currentUserIsOnTeam(application)) { return 'hidden'; }
-    }
+    },
   };
 
 

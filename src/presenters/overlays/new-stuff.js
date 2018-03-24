@@ -81,7 +81,7 @@ module.exports = function(application) {
         
     showNewStuffOverlay() {
       return application.overlayNewStuffVisible(true);
-    }
+    },
   };
 
   self.getUpdates();

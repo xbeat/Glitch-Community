@@ -32,7 +32,7 @@ module.exports = (Team = function(I, self) {
     projects: [],
     isVerified: false,
     teamPins: [],
-    hasAvatarImage: false
+    hasAvatarImage: false,
   }
   );
     
@@ -189,7 +189,7 @@ module.exports = (Team = function(I, self) {
     pushSearchResult(application) {
       application.searchResultsTeams.push(self);
       return application.searchResultsTeamsLoaded(true);
-    }
+    },
   });
 
   if (I.id) {

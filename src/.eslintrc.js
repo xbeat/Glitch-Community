@@ -26,7 +26,7 @@ module.exports = exports = {
     "indent": ["error", 2],
     
     //New rules, to apply:
-    //"comma-dangle": ["error","always-multiline"]
+    "comma-dangle": ["error", "always-multiline"],
     
     // Unintentionally off -- we should fix these, then enable them
     // Looking for a good first PR to contribute to the site?
