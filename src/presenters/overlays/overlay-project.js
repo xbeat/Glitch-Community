@@ -20,7 +20,9 @@ module.exports = function(application) {
     application,
     project: application.overlayProject,
     
-    projectUsers: self.project().users(),
+    projectUsers() {
+      return self.project() && self.project().users();
+    },
     
     UsersList(users) {
       const project = self.project();
