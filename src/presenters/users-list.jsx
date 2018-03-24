@@ -9,18 +9,16 @@ export const UsersList = ({users}) => (
   </div>
 );
 
-const UserTile = (
-  {
-    userLink,
-    tooltipName, 
-    style,
-    alt, 
-    userAvatarUrl,
-    className=null,
-  }
-) => (
-  <a className="user" className={className} href={userLink} data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
-    <img width={32} height={32} src={userAvatarUrl} alt={alt}/>
+const UserTile = ({
+  userLink,
+  tooltipName, 
+  style,
+  alt, 
+  userAvatarUrl,
+  extraClass=null,
+}) => (
+  <a className="user" className={extraClass} href={userLink} data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
+    <img width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
   </a>
 );
   
@@ -32,16 +30,12 @@ export const GlitchTeamUsersList = () => {
     tooltipName: "Glitch-Team",
     style: {backgroundColor:"#74ecfc"},
     alt: "Glitch Team Avatar",
-    src: glitchTeamAvatar,
-  }
-  return (
-    <UserTile {...user}></UserTile>
-  );
+    userAvatarUrl: glitchTeamAvatar,
+    extraClass: "made-by-glitch",
+  };
   
   return (
-    <div className="user made-by-glitch" data-tooltip="Glitch-Team" data-tooltip-left="true" style={{backgroundColor:"#74ecfc"}}>
-      <img width={32} height={32} src={glitchTeamAvatar} alt="Glitch Team Avatar"/>
-    </div>
+    <UsersList users={[user]}></UsersList>
   );
 }
 
