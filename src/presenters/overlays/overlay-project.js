@@ -28,8 +28,8 @@ module.exports = function(application) {
         }
         
         const props = {
-          users: project.users(),
-        }
+          users: project.users().map( user => user.getProps())
+        };
         return Reactlet(UsersList, props);
       }
     },

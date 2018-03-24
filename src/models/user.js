@@ -208,6 +208,17 @@ module.exports = (User = function(I, self) {
       const pinPath = `users/${self.id()}/pinned-projects/${projectId}`;
       return application.api().delete(pinPath)
         .then(({data}) => console.log(data)).catch(error => console.error('removePin', error));
+    },
+    
+    getProps() {            
+      return { 
+        userLink: userLink(), 
+        tooltipName: tooltipName(), 
+        style: style(),
+        alt:alt(),
+        userAvatarUrl:userAvatarUrl(), 
+      };
+    }),
     }
   });
 
