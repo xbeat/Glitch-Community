@@ -13,7 +13,10 @@ const AddTeamProjectPopPresenter = require("../pop-overs/add-team-project-pop");
 const ProjectsListPresenter = require("../projects-list");
 const TeamUserPresenter = require("../team-user-avatar");
 const AnalyticsPresenter = require("../analytics");
-const UserAvatarTemplate = require("../../templates/includes/user-avatar"); //
+const UserAvatarTemplate = require("../../templates/includes/user-avatar");
+
+import Reactlet from "../reactlet";
+import UsersList from "../users-list";
 
 module.exports = function(application) {
   const assetUtils = require('../../utils/assets')(application);
@@ -34,9 +37,9 @@ module.exports = function(application) {
       const users = application.team().users();
       if (self.currentUserIsOnTeam()) {
         return users.map(user => TeamUserPresenter(application, user));
-      } 
-      return users.map(UserAvatarTemplate);
+      }
       
+      return Reactlet(UsersList, {users: users.map(user => user.asProps())});      
     },
 
     teamAnalytics() {
