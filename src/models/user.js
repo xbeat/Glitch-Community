@@ -71,7 +71,7 @@ module.exports = (User = function(I, self) {
     userAvatarUrl(size) {
       size = size || 'small';
       if (self.isAnon()) {
-        return "https://cdn.glitch.com/f6949da2-781d-4fd5-81e6-1fdd56350165%2Fanon-user-on-project-avatar.svg";
+        return self.anonAvatar();
       } else if (self.facebookId()) {
         return `https://graph.facebook.com/${self.facebookId()}/picture?type=${size}`;
       } 

@@ -1,11 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Check that you're happy with the conversion, then remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS103: Rewrite code to no longer use __guard__
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 
 /* global CDN_URL EDITOR_URL analytics*/
 
