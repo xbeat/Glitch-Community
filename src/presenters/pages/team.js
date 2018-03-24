@@ -31,12 +31,14 @@ module.exports = function(application) {
     verifiedTeamTooltip() {
       return application.team().verifiedTooltip();
     },
+    
+    TeamUsersAsMember() {
+      const users = application.team().users();
+      return users.map(user => TeamUserPresenter(application, user));
+    },
 
     TeamUsers() {
       const users = application.team().users();
-      if (self.currentUserIsOnTeam()) {
-        return users.map(user => TeamUserPresenter(application, user));
-      }
       const props = {
         users: users.map(user => user.asProps()),
         extraClass: "team-users",
