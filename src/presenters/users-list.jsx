@@ -1,8 +1,8 @@
 import React from 'react';
 
   
-export const UsersList = ({users}) => (
-  <div className="users">
+export const UsersList = ({users, extraClass="" }) => (
+  <div className={`users ${extraClass}`}>
     { users.map((user, key) => (
       <UserTile key={key} {...user}></UserTile>
     ))}

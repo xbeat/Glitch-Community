@@ -39,6 +39,7 @@ module.exports = function(application) {
       }
       const props = {
         users: users.map(user => user.asProps()),
+        extraClass: "team-users",
       };
       return Reactlet(UsersList, props);      
     },
