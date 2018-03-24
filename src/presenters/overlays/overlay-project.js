@@ -21,18 +21,19 @@ module.exports = function(application) {
     project: application.overlayProject,
     
     projectUsers() {
-      return self.project() && self.project().users();
+      return self.project && self.project() && self.project().users && self.project().users();
     },
-    
-    UsersList(users) {
+
+    UsersList() {
       const project = self.project();
       if (project) {
         if(project.showAsGlitchTeam && project.showAsGlitchTeam()){
           return Reactlet(GlitchTeamUsersList);
         }
+        console.log("users are", project.users(), project.users().map(user => user.asProps()));
         
         const props = {
-          users: users().filter(user => user.fetched()).map(user => user.asProps())
+          users: project.users().filter(user => user.fetched()).map(user => user.asProps())
         };
         return Reactlet(UsersList, props);
       }
