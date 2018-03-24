@@ -20,17 +20,18 @@ module.exports = function(application) {
     application,
     project: application.overlayProject,
     
-    projectUsers() {
-      const project = application.overlayProject();
+    projectUsers: self.project().users(),
+    
+    UsersList(usersObs) {
+      const project = self.project();
       if (project) {
         if(project.showAsGlitchTeam && project.showAsGlitchTeam()){
-          return Reactlet(GlitchTeamUsersList, {});
+          return Reactlet(GlitchTeamUsersList);
         }
         
         const props = {
-          users: project.users().filter(user => user.fetched()).map(user => user.asProps())
+          users: usersObs().filter(user => user.fetched()).map(user => user.asProps())
         };
-        console.log("rendering users: ", props.users);
         return Reactlet(UsersList, props);
       }
     },

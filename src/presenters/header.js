@@ -95,8 +95,6 @@ module.exports = function(application) {
       return Reactlet(SignInPop);
     },
 
-    userOptionsPopContainerId: 'userOptionsPopContainer',
-
     UserOptionsPop(visible) {
       const props = {
         visible,
@@ -115,12 +113,7 @@ module.exports = function(application) {
         }
       };
 
-      return setTimeout(() => { 
-        return render(
-          React.createElement(UserOptionsPop, props),
-          document.getElementById(self.userOptionsPopContainerId)
-        );
-      });
+      return Reactlet(UserOptionsPop, props);
     },
     
     submit(event) {
