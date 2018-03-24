@@ -1,5 +1,4 @@
 - Loader = require "./loader"
-- SignInPopPresenter = require "../../presenters/pop-overs/sign-in-pop"
 
 section.profile.recent-projects(class=@hiddenUnlessCurrentUser)
   h2
@@ -23,5 +22,5 @@ section.profile.recent-projects(class=@hiddenUnlessCurrentUser)
               p Access all your projects anywhere
               button Sign in
               span(class=@hiddenUnlessSignInPopVisible)
-                = SignInPopPresenter(@.application).template
+                = @SignInPop
     

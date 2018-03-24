@@ -1,6 +1,9 @@
 const RecentProjectsTemplate = require("../templates/includes/recent-projects");
 const ProjectItemPresenter = require("./project-item");
 
+import SignInPop from "./pop-overs/sign-in-pop.jsx";
+import Reactlet from "./reactlet";
+
 module.exports = function(application) {
 
   const self = { 
@@ -45,7 +48,11 @@ module.exports = function(application) {
         return ProjectItemPresenter(application, project, category);
       });
     },
-
+        
+    SignInPop() {
+      return Reactlet(SignInPop);
+    },
+    
     userAvatarIsAnon() {
       if (application.currentUser().isAnon()) { return 'anon-user-avatar'; }
     },
