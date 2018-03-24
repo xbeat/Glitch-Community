@@ -13,10 +13,9 @@ const AddTeamProjectPopPresenter = require("../pop-overs/add-team-project-pop");
 const ProjectsListPresenter = require("../projects-list");
 const TeamUserPresenter = require("../team-user-avatar");
 const AnalyticsPresenter = require("../analytics");
-const UserAvatarTemplate = require("../../templates/includes/user-avatar");
 
 import Reactlet from "../reactlet";
-import UsersList from "../users-list";
+import UsersList from "../users-list.jsx";
 
 module.exports = function(application) {
   const assetUtils = require('../../utils/assets')(application);
@@ -33,13 +32,15 @@ module.exports = function(application) {
       return application.team().verifiedTooltip();
     },
 
-    teamUsers() {
+    TeamUsers() {
       const users = application.team().users();
       if (self.currentUserIsOnTeam()) {
         return users.map(user => TeamUserPresenter(application, user));
       }
-      
-      return Reactlet(UsersList, {users: users.map(user => user.asProps())});      
+      const props = {
+        users: users.map(user => user.asProps()),
+      };
+      return Reactlet(UsersList, props);      
     },
 
     teamAnalytics() {
