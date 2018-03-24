@@ -30,6 +30,7 @@ module.exports = function(application) {
         const props = {
           users: project.users().filter(user => user.fetched()).map(user => user.asProps())
         };
+        console.log("rendering users: ", props.users);
         return Reactlet(UsersList, props);
       }
     },
