@@ -210,15 +210,14 @@ module.exports = (User = function(I, self) {
         .then(({data}) => console.log(data)).catch(error => console.error('removePin', error));
     },
     
-    getProps() {            
+    asProps() {
       return { 
-        userLink: userLink(), 
-        tooltipName: tooltipName(), 
-        style: style(),
-        alt:alt(),
-        userAvatarUrl:userAvatarUrl(), 
+        userLink: self.userLink(), 
+        tooltipName: self.tooltipName(), 
+        style: self.style(),
+        alt: self.alt(),
+        userAvatarUrl:self.userAvatarUrl(), 
       };
-    }),
     }
   });
 

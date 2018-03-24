@@ -1,16 +1,10 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Check that you're happy with the conversion, then remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const ProjectItemTemplate = require("../templates/includes/project-item");
-const UsersListPresenter = require("./users-list");
 
 const ProjectOptionsPop = require("../templates/pop-overs/project-options-pop");
 const ProjectOptionsPopPresenter = require('./pop-overs/project-options-pop');
 
+import {UsersList, GlitchTeamUsersList} from "../users-list.jsx";
+import Reactlet from "../reactlet";
 
 module.exports = function(application, project, category, userPagePresenter) {
 
@@ -19,8 +13,17 @@ module.exports = function(application, project, category, userPagePresenter) {
     category,
     project,
     
-    usersListPresenter: UsersListPresenter(project),
-
+    UsersList() {
+      if(project.showAsGlitchTeam && project.showAsGlitchTeam()){
+        return Reactlet(GlitchTeamUsersList, {});
+      }
+        
+      const props = {
+        users: project.users().filter(user => user.fetched()).map(user => user.asProps())
+      };
+      return Reactlet(UsersList, props);
+    },
+    
     projectLink() {
       if (project.isRecentProject) {
         return self.editorLink();
