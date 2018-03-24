@@ -18,7 +18,7 @@ module.exports = function(application, team) {
 
     UsersList() {
       const props = {
-        users: team.users().filter(user => user.fetched()).map(user => user.asProps())
+        users: team.users().map(user => user.asProps())
       };
       return Reactlet(UsersList, props);
     },

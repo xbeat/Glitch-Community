@@ -19,7 +19,7 @@ module.exports = function(application, project, category, userPagePresenter) {
       }
         
       const props = {
-        users: project.users().filter(user => user.fetched()).map(user => user.asProps())
+        users: project.users().map(user => user.asProps())
       };
       return Reactlet(UsersList, props);
     },
