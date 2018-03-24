@@ -3,8 +3,8 @@ const ProjectItemTemplate = require("../templates/includes/project-item");
 const ProjectOptionsPop = require("../templates/pop-overs/project-options-pop");
 const ProjectOptionsPopPresenter = require('./pop-overs/project-options-pop');
 
-import {UsersList, GlitchTeamUsersList} from "../users-list.jsx";
-import Reactlet from "../reactlet";
+import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
+import Reactlet from "./reactlet";
 
 module.exports = function(application, project, category, userPagePresenter) {
 

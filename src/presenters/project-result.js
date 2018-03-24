@@ -1,6 +1,6 @@
 const ProjectResultTemplate = require("../templates/includes/project-result");
-import {UsersList, GlitchTeamUsersList} from "../users-list.jsx";
-import Reactlet from "../reactlet";
+import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
+import Reactlet from "./reactlet";
 
 module.exports = function(application, project, options, analytics) {
 

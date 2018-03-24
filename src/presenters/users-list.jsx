@@ -1,7 +1,7 @@
 import React from 'react';
 
   
-const UsersList = ({users}) => (
+export const UsersList = ({users}) => (
   <div className="users">
     { users.map((user, key) => (
       <UserTile key={key} {...user}></UserTile>
@@ -15,16 +15,13 @@ const UserTile = (
     tooltipName, 
     style,
     alt, 
-    userAvatarUrl
+    userAvatarUrl,
   }
-) => {
-  
-  return (
-    <a className="user" href={userLink} data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
-      <img width={32} height={32} src={userAvatarUrl} alt={alt}/>
-    </a>
-  );
-}
+) => (
+  <a className="user" href={userLink} data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
+    <img width={32} height={32} src={userAvatarUrl} alt={alt}/>
+  </a>
+);
   
 export const GlitchTeamUsersList = () => {
   const glitchTeamAvatar = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267";
