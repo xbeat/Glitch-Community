@@ -214,16 +214,17 @@ var self = Model({
   },
 
   getUserByLogin(login) {
-    return User.getUserByLogin(application, login);
+    User.getUserByLogin(application, login).then((user) => self.saveUser(user));
   },
 
   getUserById(id) {
-    return User.getUserById(application, id).then(user => {
-      application.saveUser(user);
-      
-      if (application.currentUser().id() === user.id) {
-        application.saveCurrentUser(user);
-      } 
+    User.getUserById(application, id).then((user) => self.saveUser(user));
+  },
+  
+  getCurrentUserById(id) {
+    User.getUserById(application, id).then((userData) => {
+      const user = self.loadUser(userData);
+      self.currentUser(user);
     });
   },
 
@@ -231,20 +232,28 @@ var self = Model({
     return Team.getTeamById(application, id);
   },
 
-  saveCurrentUser(userData) {
-    userData.fetched = true;
-    console.log('👀 current user data is ', userData);
-    self.currentUser().update(userData);
-    const teams = self.currentUser().teams().map(datum => Team(datum));
-    self.currentUser().teams(teams);
-  },
-
+  // due to model caching, whenever user.id === currentuser.id, 
+  // the objects will be set equal other.
+  // this means that they must share a loader,
+  // and that 'saveUser' will clobber 'getCurrentUserById'
+  // but not necessarily the other way around.
   saveUser(userData) {
+    
+    const user = self.loadUser(userData);
+    self.user(user);
+  },
+  
+  loadUser(userData){
     userData.fetched = true;
     userData.initialDescription = userData.description;
     console.log('👀 user data is ', userData);
-    self.user(User(userData).update(userData));
-    return self.getProjects(userData.projects);
+    self.getProjects(userData.projects);
+    
+    const user = User(userData).update(userData);
+    const teams = user.teams().map(teamData => Team(teamData));
+    user.teams(teams);
+    
+    return user;
   },
 
   saveTeam(teamData) {

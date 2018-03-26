@@ -42,7 +42,7 @@ Promise.resolve()
     let indexPage, userPage;
     const currentUserId = application.currentUser().id();
     if (currentUserId) {
-      application.getUserById(currentUserId);
+      application.getCurrentUserById(currentUserId);
     }
     const user = application.currentUser();
     if (application.currentUser().isSignedIn()) {
