@@ -239,9 +239,8 @@ User.getUserByLogin = function(application, login) {
         application.user().notFound(true);
         return;
       }
-      return User.getUserById(application, userId).then(user => {
-        return application.saveUser(user);
-      });}).catch(error => console.error(`getUserByLogin GET ${userIdPath}`, error));
+      return User.getUserById(application, userId);
+    }).catch(error => console.error(`getUserByLogin GET ${userIdPath}`, error));
 };
 
 User.getUserById = function(application, id) {
