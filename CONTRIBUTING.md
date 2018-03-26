@@ -76,7 +76,14 @@ Ok cool, these next steps are what we'd do internally and you're welcome to foll
    git checkout my-branch  # Make sure we're on the right branch
    git pull my-remix master
    git push origin my-branch
-   ```
+   ```   
+   
+Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes. If you make some quick changes, they may not show up in your diff on the Github pull request. If that is the case, you can either wait several minutes for the checkpoint to be made or manually commit your changes in your Glitch app's console (under "Advanced Options") by running:
+  ```
+  git add .
+  git commit -m "A short message about what your commit does"
+  ```
+After you either wait or run the above commands, go to step 5 to update the pull request.
 
 #### Deployment
 
