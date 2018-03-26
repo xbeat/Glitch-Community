@@ -3,43 +3,28 @@
 const moment = require('moment');
 
 const HeaderTemplate = require("../templates/includes/header");
-import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 
+import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import Reactlet from "./reactlet";
 
 module.exports = function(application) {
   
   const getTeamsPojo = function(teams) { 
+    
     if (!teams || !teams.length) {
       return [];
     }
     
-    // https://our.manuscript.com/f/cases/3292168/
-    // teams is inconsistent;
-    // pending a fix, let's normalize that here.
-    // Just need to extract name, url, and teamAvatarUrl
-    // trouble is they're inconsistently functions, strings, or undefined
-    return teams.map(function(team) {
-      const extract = function(prop) {
-        const item = team[prop];
-        if (typeof(item) === "string") {
-          return item;
-        } else if (typeof(item) === "function") {
-          return item();
-        } else if (typeof(item) === "undefined") {
-          return "";
-        } 
-        return console.error("Unxpected team property type", item, typeof(item));
-        
-      };
+    // Teams load in two passes, first as an incomplete object,
+    // then as a model. Filter out the incomplete teams.
+    teams = teams.filter(team => team.I !== undefined);
     
-      return{ 
-        name: extract("name"),
-        url: extract("url"),
-        teamAvatarUrl: extract("teamAvatarUrl"),
-      };
-    });
+    return teams.map(({name, url, teamAvatarUrl}) => ({
+      name: name(),
+      url: url(),
+      teamAvatarUrl: teamAvatarUrl(),
+    }));
   };
 
   var self = {

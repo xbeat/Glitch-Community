@@ -257,7 +257,6 @@ User.getUserById = function(application, id) {
 };
 
 User.getUsersById = function(api, ids) {
-  const team = application.team();
   const userIdsToFetch = ids.filter(function(id) {
     const user = cache[id];
     return !user || !user.fetched();

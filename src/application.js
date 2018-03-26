@@ -219,10 +219,11 @@ var self = Model({
 
   getUserById(id) {
     return User.getUserById(application, id).then(user => {
+      application.saveUser(user);
+      
       if (application.currentUser().id() === user.id) {
-        return application.saveCurrentUser(user);
+        application.saveCurrentUser(user);
       } 
-      return application.saveUser(user);
     });
   },
 
