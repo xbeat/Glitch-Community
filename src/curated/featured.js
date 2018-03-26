@@ -16,7 +16,7 @@ module.exports =
     {
       title: 'From beta to now',
       img: 'https://cdn.glitch.com/85de0811-a09d-482e-8aba-1039316a71ac%2Fv2_1wtcwd-monday.jpg?1521719756785',
-      link: 'https://medium.com/glitch'
+      link: 'https://medium.com/glitch/changing-the-way-we-build-the-web-together-14f8a792a600'
     }
     , {
       title: 'Tuesday',
