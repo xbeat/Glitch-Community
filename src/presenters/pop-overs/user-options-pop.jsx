@@ -3,11 +3,11 @@
      
 import React from 'react';
 
-const TeamButton = ({url, name, teamAvatarUrl=""}) => (
+const TeamButton = ({url, name, teamAvatarUrl}) => (
   <a className="button-link" href={url}>
     <div className="button button-small has-emoji button-tertiary">
       <span>{name} </span>
-      <img className="emoji avatar" src={teamAvatarUrl} alt={`${name} team avatar`}/>
+      <img className="emoji avatar" src={teamAvatarUrl} alt={`${name} team avatar`} width="16px" height="16px"/>
     </div>
   </a>
 );
