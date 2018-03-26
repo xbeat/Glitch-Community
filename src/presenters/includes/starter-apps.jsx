@@ -12,7 +12,7 @@ const StarterProject = ({title, domain, description, avatar, showOverlay}) => {
       <a href={`/~${domain}`} onClick={clickProject}>
         <div className="project starter-project">
           <div className="project-container">
-            <img className="avatar" src={avatar} alt={`Avatar image for ${title}`}/>
+            <img className="avatar" src={avatar} alt={`Project avatar for ${title}`}/>
             <button>
               <span className="private-project-badge"></span>
               <div className="project-name">{title}</div>
@@ -34,7 +34,7 @@ const StarterApps = ({starterProjects}) => {
       <header className="category category-name">
         <h2>Create Your Dream App</h2>
       </header>
-      <img className="starter-apps-graphic" src={bricksUrl} width="129px" height="80px"/>
+      <img className="starter-apps-graphic" alt="" src={bricksUrl} width="129px" height="80px"/>
       <ul className="projects-container">
         { starterProjects.map((starter, key) => (
           <StarterProject key={key} {...starter}/>

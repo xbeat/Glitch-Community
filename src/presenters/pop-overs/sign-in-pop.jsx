@@ -17,10 +17,6 @@ function facebookAuthLink() {
   return "https://www.facebook.com/v2.9/dialog/oauth?" + `client_id=${clientId}&scope=${scopes}&redirect_uri=${callbackURL}`;
 }
 
-function stopPropagation(event) {
-  return event.stopPropagation();
-}
-
 // And then we can replace the jadelet files with React templates here:
 
 const SignInPopButton = (props) => (
@@ -32,7 +28,7 @@ const SignInPopButton = (props) => (
 );
 
 const SignInPop = () => (
-  <div className="pop-over sign-in-pop" onClick={stopPropagation}>
+  <div className="pop-over sign-in-pop">
     <section className="pop-over-actions last-section">
       <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook"/>
       <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat"/>
