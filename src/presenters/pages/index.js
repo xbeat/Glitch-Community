@@ -76,6 +76,16 @@ module.exports = function(application) {
     embed() {
       const node = document.createElement('span');
       node.innerHTML = EmbedHtml;
+      
+      // EDGE shim for broken embed
+      if(navigator.appVersion.includes('Edge')){
+        node.innerHTML = `
+        <div class="glitch-embed-wrap" style="height: 388px; width: 100%;">
+          <a href="https://glitch.com/edit/#!/snowy-island">
+            <img src="https://cdn.glitch.com/23a91b2c-b82e-4e0e-bb86-a226136e5dbb%2Fsnowy-island-fallback.png?1522081237146" alt="Screenshot of Snowy-Island"/>
+        </a>`;
+      }
+      
       return node;
     },
    
