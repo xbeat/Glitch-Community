@@ -27,7 +27,7 @@ const WhatIsGlitch = ({isSignedIn, showVideoOverlay}) => {
           <span>. </span>
           <div className="video" onClick={showVideoOverlay}>
             <img className="play-button" src={play} alt="play"/>
-            <span>How it works in 2 minutes</span>
+            <span>How it works in 1 minute</span>
           </div>
         </div>
       </span>
