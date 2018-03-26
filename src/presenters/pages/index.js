@@ -123,12 +123,12 @@ module.exports = function(application) {
           domain: domain(),
           description: description(),
           avatar: avatar(),
-          showOverlay() { project.showOverlay(application); }
+          showOverlay() { project.showOverlay(application); },
         } 
       });
       
       return Reactlet(StarterApps, {starterProjects});
-    }
+    },
   };
 
   const content = IndexTemplate(self);

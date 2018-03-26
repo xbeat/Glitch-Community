@@ -25,7 +25,7 @@ module.exports = function(application, maxQuestions) {
         'ヽ(*ﾟｰﾟ*)ﾉ',
         '♪(┌・。・)┌',
         'ヽ(๏∀๏ )ﾉ',
-        'ヽ(^。^)丿'
+        'ヽ(^。^)丿',
       ];
       return self.kaomoji(_.sample(kaomojis));
     },

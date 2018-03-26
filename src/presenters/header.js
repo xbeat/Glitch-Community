@@ -3,53 +3,29 @@
 const moment = require('moment');
 
 const HeaderTemplate = require("../templates/includes/header");
-import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 
+import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
-import {render, unmountComponentAtNode} from 'react-dom';
-import React from 'react';
+import Reactlet from "./reactlet";
 
 module.exports = function(application) {
   
   const getTeamsPojo = function(teams) { 
+    
     if (!teams || !teams.length) {
       return [];
     }
     
-    // https://our.manuscript.com/f/cases/3292168/
-    // teams is inconsistent;
-    // pending a fix, let's normalize that here.
-    // Just need to extract name, url, and teamAvatarUrl
-    // trouble is they're inconsistently functions, strings, or undefined
-    return teams.map(function(team) {
-      const extract = function(prop) {
-        const item = team[prop];
-        if (typeof(item) === "string") {
-          return item;
-        } else if (typeof(item) === "function") {
-          return item();
-        } else if (typeof(item) === "undefined") {
-          return "";
-        } 
-        return console.error("Unxpected team property type", item, typeof(item));
-        
-      };
+    // Teams load in two passes, first as an incomplete object,
+    // then as a model. Filter out the incomplete teams.
+    teams = teams.filter(team => team.I !== undefined);
     
-      return{ 
-        name: extract("name"),
-        url: extract("url"),
-        teamAvatarUrl: extract("teamAvatarUrl")
-      };
-    });
+    return teams.map(({name, url, teamAvatarUrl}) => ({
+      name: name(),
+      url: url(),
+      teamAvatarUrl: teamAvatarUrl(),
+    }));
   };
-  
-  // React will complain/break if non-react components remove a react component
-  // from the dom.  We heal that by observing and cleaning up here:
-  application.userOptionsPopVisible.observe(function() {
-    if (application.userOptionsPopVisible() === false) {
-      return unmountComponentAtNode(document.getElementById(self.userOptionsPopContainerId));
-    }
-  });
 
   var self = {
 
@@ -100,16 +76,9 @@ module.exports = function(application) {
       if (!application.currentUser().login()) { return 'hidden'; }
     },
         
-    SignInPop(containerId) {
-      return setTimeout(() => { 
-        return render(
-          React.createElement(SignInPop, null),
-          document.getElementById(containerId)
-        );
-      });
+    SignInPop() {
+      return Reactlet(SignInPop);
     },
-
-    userOptionsPopContainerId: 'userOptionsPopContainer',
 
     UserOptionsPop(visible) {
       const props = {
@@ -126,22 +95,17 @@ module.exports = function(application) {
           analytics.reset();
           localStorage.removeItem('cachedUser');
           return location.reload();
-        }
+        },
       };
 
-      return setTimeout(() => { 
-        return render(
-          React.createElement(UserOptionsPop, props),
-          document.getElementById(self.userOptionsPopContainerId)
-        );
-      });
+      return Reactlet(UserOptionsPop, props);
     },
     
     submit(event) {
       if (event.target.children.q.value.trim().length === 0) {
         return event.preventDefault();
       }
-    }
+    },
   };
         
   return HeaderTemplate(self);

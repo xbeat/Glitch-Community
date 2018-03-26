@@ -101,9 +101,9 @@ module.exports = function(credentials) {
         acl,
         policy,
         signature,
-        file: blob
+        file: blob,
       })).then(() => `${bucketUrl}/${encodeURIComponent(namespacedKey)}`);
-    }
+    },
   };
 };
 
@@ -131,7 +131,7 @@ var extractPolicyData = function(policy) {
   return {
     acl: getKey(conditions, "acl"),
     bucket: getKey(conditions, "bucket"),
-    namespace: getNamespaceFromPolicyConditions(conditions)
+    namespace: getNamespaceFromPolicyConditions(conditions),
   };
 };
 

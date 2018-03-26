@@ -44,11 +44,11 @@ module.exports = () => {
         {
           enforce: "pre",
           test: /\.jsx?$/,
-          exclude: /node_modules/,
+          exclude: [/node_modules/, /templates/],
           loader: "eslint-loader",
           options: {
             fix: true,
-            cache: true, //caching tends to make the config stick, so turn it off when reconfiguring
+            cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so blank it when reconfiguring
             emitError: true,
             emitWarning: true,
             failOnError: false,

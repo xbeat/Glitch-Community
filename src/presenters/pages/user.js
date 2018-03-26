@@ -40,7 +40,7 @@ module.exports = function(application, userLoginOrId) {
     userProfileStyle() {
       return {
         backgroundColor: application.user().coverColor(),
-        backgroundImage: `url('${self.coverUrl()}')`
+        backgroundImage: `url('${self.coverUrl()}')`,
       };
     },
 
@@ -124,7 +124,7 @@ module.exports = function(application, userLoginOrId) {
     userAvatarStyle() {
       return {
         backgroundColor: application.user().color(),
-        backgroundImage: `url('${self.userAvatarUrl()}')`
+        backgroundImage: `url('${self.userAvatarUrl()}')`,
       };
     },
 
@@ -334,7 +334,7 @@ module.exports = function(application, userLoginOrId) {
       $(projectContainer).addClass('slide-down');
       
       return project.leave();
-    }
+    },
   };
         
   const content = UserTemplate(self);

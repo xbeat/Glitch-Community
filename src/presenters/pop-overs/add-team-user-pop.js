@@ -57,7 +57,7 @@ module.exports = function(application) {
       if (!self.searchResults().length && !application.searchingForUsers()) {
         return 'hidden';
       }
-    } 
+    }, 
   };
             
   return AddTeamUserTemplate(self);

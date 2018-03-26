@@ -11,7 +11,7 @@ module.exports = function(application) {
 
     stopPropagation(event) {
       return event.stopPropagation();
-    }
+    },
   };
 
   return OverlayVideoTemplate(self);

@@ -30,7 +30,7 @@ module.exports = (Category = function(I, self) {
     description: undefined,
     name: undefined,
     url: undefined,
-    projects: []
+    projects: [],
   });
 
   self.attrObservable(...Array.from(Object.keys(I) || []));

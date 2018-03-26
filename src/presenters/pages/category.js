@@ -49,7 +49,7 @@ module.exports = function(application) {
 
     hiddenIfCategoryProjectsLoaded() {
       if (application.categoryProjectsLoaded()) { return 'hidden'; }
-    }
+    },
   };
     
   const content = CategoryPageTemplate(self);

@@ -34,7 +34,7 @@ const cachedUser =
 
 var self = Model({
   // featuredProjects: featuredProjects
-  currentUser: cachedUser
+  currentUser: cachedUser,
 }).extend({
 
   featuredCollections,
@@ -153,13 +153,13 @@ var self = Model({
         baseURL: API_URL,
         cancelToken: (source != null ? source.token : undefined),
         headers: {
-          Authorization: persistentToken
-        }
+          Authorization: persistentToken,
+        },
       });
     } 
     return axios.create({
       baseURL: API_URL,
-      cancelToken: (source != null ? source.token : undefined)
+      cancelToken: (source != null ? source.token : undefined),
     });
   },
 
@@ -219,10 +219,11 @@ var self = Model({
 
   getUserById(id) {
     return User.getUserById(application, id).then(user => {
+      application.saveUser(user);
+      
       if (application.currentUser().id() === user.id) {
-        return application.saveCurrentUser(user);
+        application.saveCurrentUser(user);
       } 
-      return application.saveUser(user);
     });
   },
 
@@ -337,7 +338,7 @@ var self = Model({
     if (url === 'questions') {
       return true;
     }
-  }
+  },
 });
 
       

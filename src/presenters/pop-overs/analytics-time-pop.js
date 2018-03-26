@@ -41,7 +41,7 @@ module.exports = function(application, analytics) {
 
     activeIfLabelIsHours() {
       if (analytics.analyticsTimeLabel() === 'Last 24 Hours') { return 'active'; }
-    }
+    },
   };
 
 

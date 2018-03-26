@@ -46,7 +46,7 @@ module.exports = function(application, analytics) {
 
     selectAllProjects() {
       return analytics.analyticsProjectDomain('All Projects');
-    }
+    },
   };
         
   return AnalyticsProjectsPopTemplate(self);

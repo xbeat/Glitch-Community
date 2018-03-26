@@ -35,7 +35,7 @@ module.exports = (User = function(I, self) {
     showAsGlitchTeam: false,
     persistentToken: null,
     pins: [],
-    deletedProjects: []
+    deletedProjects: [],
   });
 
   self.attrObservable(...Array.from(Object.keys(I) || []));
@@ -71,7 +71,7 @@ module.exports = (User = function(I, self) {
     userAvatarUrl(size) {
       size = size || 'small';
       if (self.isAnon()) {
-        return "https://cdn.glitch.com/f6949da2-781d-4fd5-81e6-1fdd56350165%2Fanon-user-on-project-avatar.svg";
+        return self.anonAvatar();
       } else if (self.facebookId()) {
         return `https://graph.facebook.com/${self.facebookId()}/picture?type=${size}`;
       } 
@@ -208,7 +208,17 @@ module.exports = (User = function(I, self) {
       const pinPath = `users/${self.id()}/pinned-projects/${projectId}`;
       return application.api().delete(pinPath)
         .then(({data}) => console.log(data)).catch(error => console.error('removePin', error));
-    }
+    },
+    
+    asProps() {
+      return { 
+        userLink: self.userLink(), 
+        tooltipName: self.tooltipName(), 
+        style: self.style(),
+        alt: self.alt(),
+        userAvatarUrl:self.userAvatarUrl(), 
+      };
+    },
   });
 
 
@@ -247,7 +257,6 @@ User.getUserById = function(application, id) {
 };
 
 User.getUsersById = function(api, ids) {
-  const team = application.team();
   const userIdsToFetch = ids.filter(function(id) {
     const user = cache[id];
     return !user || !user.fetched();

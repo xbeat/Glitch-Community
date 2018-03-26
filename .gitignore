@@ -11,3 +11,4 @@ src/templates/**/*.js
 .config/configstore/update-notifier-pnpm.json
 .viminfo
 .webpackCache/*
+.eslintcache

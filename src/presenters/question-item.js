@@ -62,7 +62,7 @@ module.exports = function(application, question) {
 
     userLogin() {
       return question.userLogin();
-    }
+    },
   };
 
     // tags: ->

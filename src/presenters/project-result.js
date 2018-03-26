@@ -1,12 +1,6 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Check that you're happy with the conversion, then remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const ProjectResultTemplate = require("../templates/includes/project-result");
-const UsersListPresenter = require("./users-list");
+import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
+import Reactlet from "./reactlet";
 
 module.exports = function(application, project, options, analytics) {
 
@@ -16,7 +10,16 @@ module.exports = function(application, project, options, analytics) {
   
   var self = {
 
-    usersListPresenter: UsersListPresenter(project),
+    UsersList() {
+      if(project.showAsGlitchTeam && project.showAsGlitchTeam()){
+        return Reactlet(GlitchTeamUsersList, {});
+      }
+
+      const props = {
+        users: project.users().map(user => user.asProps()),
+      };
+      return Reactlet(UsersList, props);
+    },
 
     name() {
       return project.name();
@@ -73,7 +76,7 @@ module.exports = function(application, project, options, analytics) {
     
     preventDefault(event) {
       return event.preventDefault();
-    }
+    },
   };
     
   return ProjectResultTemplate(self);

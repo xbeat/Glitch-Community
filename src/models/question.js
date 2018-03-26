@@ -41,7 +41,7 @@ module.exports = (Question = function(I, self) {
     userAvatar: undefined,
     userColor: undefined,
     userId: undefined,
-    userLogin: undefined
+    userLogin: undefined,
   }
   );
 
@@ -54,7 +54,7 @@ module.exports = (Question = function(I, self) {
         return `${EDITOR_URL}#!/${I.domain}?path=${I.path}:${I.line}:${I.character}`;
       } 
       return `${EDITOR_URL}#!/${I.domain}`;
-    }
+    },
   });
 
 
@@ -75,7 +75,7 @@ Question.getQuestions = function(application) {
         const question = JSON.parse(datum.details);
         const colors = randomColor({
           luminosity: 'light',
-          count: 2
+          count: 2,
         });
         question.colorInner = colors[0];
         question.colorOuter = colors[1];

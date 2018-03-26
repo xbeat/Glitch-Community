@@ -67,6 +67,6 @@ module.exports = function(project, application, projectItemPresenter, userPagePr
       if (window.confirm(prompt)) {
         return userPagePresenter.leaveProject(project, event);
       }
-    }
+    },
   };
 };

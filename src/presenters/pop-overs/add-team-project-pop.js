@@ -57,7 +57,7 @@ module.exports = function(application) {
       if (!self.searchResults().length && !application.searchingForProjects()) {
         return 'hidden';
       }
-    } 
+    }, 
   };
 
 
