@@ -23,7 +23,7 @@ module.exports = (Project = function(I, self) {
     id: undefined,
     description: undefined,
     users: undefined,
-    showAsGlitchTeam: false
+    showAsGlitchTeam: false,
   }
   );
 
@@ -150,8 +150,8 @@ module.exports = (Project = function(I, self) {
       const projectAuthPath = `/projects/${self.id()}/authorization`;
       const config = {
         data: { 
-          targetUserId: application.currentUser().id()
-        }
+          targetUserId: application.currentUser().id(),
+        },
       };
       return new Promise(function(resolve, reject) {
         return application.api().delete(projectAuthPath, config)
@@ -160,7 +160,7 @@ module.exports = (Project = function(I, self) {
             return reject(error);
           });
       });
-    }
+    },
   });
       
   cache[I.id] = self;

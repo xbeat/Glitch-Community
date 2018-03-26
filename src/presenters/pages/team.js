@@ -3,7 +3,7 @@ const _ = require('lodash');
 const md = require('markdown-it')({
   breaks: true,
   linkify: true,
-  typographer: true
+  typographer: true,
 });
 
 const TeamTemplate = require("../../templates/pages/team");
@@ -13,7 +13,9 @@ const AddTeamProjectPopPresenter = require("../pop-overs/add-team-project-pop");
 const ProjectsListPresenter = require("../projects-list");
 const TeamUserPresenter = require("../team-user-avatar");
 const AnalyticsPresenter = require("../analytics");
-const UserAvatarTemplate = require("../../templates/includes/user-avatar"); //
+
+import Reactlet from "../reactlet";
+import UsersList from "../users-list.jsx";
 
 module.exports = function(application) {
   const assetUtils = require('../../utils/assets')(application);
@@ -29,14 +31,19 @@ module.exports = function(application) {
     verifiedTeamTooltip() {
       return application.team().verifiedTooltip();
     },
-
-    teamUsers() {
+    
+    TeamUsersAsMember() {
       const users = application.team().users();
-      if (self.currentUserIsOnTeam()) {
-        return users.map(user => TeamUserPresenter(application, user));
-      } 
-      return users.map(UserAvatarTemplate);
-      
+      return users.map(user => TeamUserPresenter(application, user));
+    },
+
+    TeamUsers() {
+      const users = application.team().users();
+      const props = {
+        users: users.map(user => user.asProps()),
+        extraClass: "team-users",
+      };
+      return Reactlet(UsersList, props);      
     },
 
     teamAnalytics() {
@@ -64,7 +71,7 @@ module.exports = function(application) {
     teamProfileStyle() {
       return {
         backgroundColor: application.team().coverColor(),
-        backgroundImage: `url('${self.coverUrl()}')`
+        backgroundImage: `url('${self.coverUrl()}')`,
       };
     },
 
@@ -224,7 +231,7 @@ module.exports = function(application) {
       if (application.addTeamProjectPopVisible()) {
         return $('#team-project-search').focus();
       }
-    }
+    },
   };
 
   application.team.observe(function(newVal) {

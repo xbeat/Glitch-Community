@@ -26,7 +26,7 @@ module.exports = function(application, title, projects, userPagePresenter) {
 
     hiddenUnlessTitleIsPinned() {
       if (title !== 'Pinned Projects') { return 'hidden'; }
-    }
+    },
   };
 
 

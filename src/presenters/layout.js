@@ -20,6 +20,6 @@ module.exports = (application, content) =>
     overlayProject: OverlayProject(application),
     overlayVideo: OverlayVideo(application),
     notifications: Notifications(application),
-    newStuff: NewStuffPresenter(application)
+    newStuff: NewStuffPresenter(application),
   })
 ;

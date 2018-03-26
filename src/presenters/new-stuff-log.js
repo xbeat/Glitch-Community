@@ -42,10 +42,10 @@ and you can restore them to life with just one click.
 ![Undelete projects using the new controls at the bottom of your profile page](https://cdn.glitch.com/03736932-82dc-40e8-8dc7-93330c933143%2Fnew-stuff-undelete.png?1518552423035)
 
 No forever-💔 here, every project has a second chance.\
-`
-      }
+`,
+      },
       ];
-    }
+    },
   };
 
 

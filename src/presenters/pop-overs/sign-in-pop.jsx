@@ -17,8 +17,6 @@ function facebookAuthLink() {
   return "https://www.facebook.com/v2.9/dialog/oauth?" + `client_id=${clientId}&scope=${scopes}&redirect_uri=${callbackURL}`;
 }
 
-// And then we can replace the jadelet files with React templates here:
-
 const SignInPopButton = (props) => (
   <a className="button-link" href={props.href}>
     <div className="button button-small">Sign in with {props.company}

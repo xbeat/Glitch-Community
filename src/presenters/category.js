@@ -26,7 +26,7 @@ module.exports = function(application, category) {
     
     description() {
       return category.description();
-    }
+    },
   };
     
   self.projects = projectElements;

@@ -47,7 +47,7 @@ module.exports = function(application, user) {
     
     hiddenUnlessUserIsCurrentUser() {
       if (!user.isCurrentUser(application)) { return 'hidden'; }
-    }
+    },
   };
 };
 

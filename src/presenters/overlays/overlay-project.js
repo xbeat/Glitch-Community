@@ -1,17 +1,10 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Check that you're happy with the conversion, then remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS103: Rewrite code to no longer use __guard__
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 
 /* global CDN_URL EDITOR_URL analytics*/
 
 const OverlayProjectTemplate = require("../../templates/overlays/overlay-project");
 
-const UsersList = require("../users-list");
+import {UsersList, GlitchTeamUsersList} from "../users-list.jsx";
+import Reactlet from "../reactlet";
 
 const markdown = require('markdown-it')({html: true})
   .use(require('markdown-it-sanitizer'))
@@ -28,8 +21,19 @@ module.exports = function(application) {
     project: application.overlayProject,
     
     projectUsers() {
-      if (application.overlayProject()) {
-        return UsersList(application.overlayProject());
+      return self.project && self.project() && self.project().users && self.project().users();
+    },
+
+    UsersList() {
+      const project = self.project();
+      if (project) {
+        if(project.showAsGlitchTeam && project.showAsGlitchTeam()){
+          return Reactlet(GlitchTeamUsersList);
+        }
+        const props = {
+          users: project.users().map(user => user.asProps()),
+        };
+        return Reactlet(UsersList, props);
       }
     },
   
@@ -82,7 +86,7 @@ module.exports = function(application) {
       analytics.track("Click Remix", {
         origin: "project overlay",
         baseProjectId: self.projectId(),
-        baseDomain: self.projectDomain()
+        baseDomain: self.projectDomain(),
       }
       );
       return true;
@@ -163,7 +167,7 @@ Thanks 💖
 (project id: ${projectId})\
 `;
       return encodeURI(`mailto:${support}?subject=${subject}&body=${body}`);
-    }
+    },
   };
 
 
