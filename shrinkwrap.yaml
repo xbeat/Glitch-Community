@@ -5531,7 +5531,7 @@ specifiers:
   express: ^4.16.2
   jadelet: ^0.8.0-pre.11
   lodash: ^4.17.5
-  markdown-it: ^8.4.0
+  markdown-it: ^8.4.1
   markdown-it-emoji: ^1.4.0
   markdown-it-sanitizer: ^0.4.3
   moment: ^2.19.0

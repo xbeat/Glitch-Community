@@ -38,7 +38,7 @@ module.exports = function(application) {
     },
   
     overlayReadme() {
-      const readme = __guard__(self.project(), x => x.readme());
+      const readme = self.project()__guard__(self.project(), x => x.readme());
       if (readme) {
         return self.mdToNode(readme.toString());
       }
