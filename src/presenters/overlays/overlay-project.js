@@ -38,22 +38,24 @@ module.exports = function(application) {
     },
   
     overlayReadme() {
-      const readme = self.project()__guard__(self.project(), x => x.readme());
+      const readme = self.project() && self.project().readme();
+      
+      return readme && readme.toString();
       if (readme) {
         return self.mdToNode(readme.toString());
       }
     },
 
     projectDomain() {
-      return __guard__(self.project(), x => x.domain());
+      return self.project() && self.project().domain();
     },
 
     projectId() {
-      return __guard__(self.project(), x => x.id());
+      return self.project() && self.project().id();
     },
 
     currentUserIsInProject() {
-      return __guard__(self.project(), x => x.userIsCurrentUser(application));
+      return self.project() && self.project().userIsCurrentUser(application);
     },
 
     hiddenIfCurrentUserInProject() {
@@ -101,23 +103,23 @@ module.exports = function(application) {
     },
       
     warningIfProjectNotFound() {
-      if (__guard__(self.project(), x => x.projectNotFound())) { return "warning"; }
+      if (self.project() && self.project().projectNotFound()) { return "warning"; }
     },
 
     hiddenUnlessProjectNotFound() {
-      if (!__guard__(self.project(), x => x.projectNotFound())) { return 'hidden'; }
+      if (!(self.project() && self.project().projectNotFound())) { return 'hidden'; }
     }, 
         
     hiddenIfProjectNotFound() {
-      if ((self.project() === undefined) || __guard__(self.project(), x => x.projectNotFound())) { return 'hidden'; }
+      if ((self.project() === undefined) || (self.project() && self.project().projectNotFound())) { return 'hidden'; }
     },
     
     hiddenUnlessReadmeNotFound() {
-      if (!__guard__(self.project(), x => x.readmeNotFound())) { return 'hidden'; }
+      if (!(self.project() && self.project().readmeNotFound())) { return 'hidden'; }
     },
 
     hiddenIfOverlayReadmeLoaded() {
-      if (__guard__(self.project(), x => x.readme()) || __guard__(self.project(), x1 => x1.projectNotFound()) || __guard__(self.project(), x2 => x2.readmeNotFound())) {
+      if ((self.project() && self.project().readme()) || (self.project() && self.project().projectNotFound()) || (self.project() && self.project().readmeNotFound())) {
         return 'hidden';
       }
     }, 
@@ -173,7 +175,3 @@ Thanks 💖
 
   return OverlayProjectTemplate(self);
 };
-
-function __guard__(value, transform) {
-  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
-}
