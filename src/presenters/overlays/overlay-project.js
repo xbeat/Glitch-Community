@@ -39,8 +39,6 @@ module.exports = function(application) {
   
     overlayReadme() {
       const readme = self.project() && self.project().readme();
-      
-      return readme && readme.toString();
       if (readme) {
         return self.mdToNode(readme.toString());
       }
