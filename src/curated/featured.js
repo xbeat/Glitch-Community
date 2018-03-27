@@ -14,14 +14,14 @@ Example:
 module.exports =
   [
     {
-      title: 'Get ready!',
+      title: 'Get Ready!',
       img: 'https://cdn.glitch.com/85de0811-a09d-482e-8aba-1039316a71ac%2Fv2_1wtcwd-monday.jpg?1521719756785',
       link: 'https://medium.com/glitch/changing-the-way-we-build-the-web-together-14f8a792a600'
     }
     , {
-      title: 'Tuesday',
-      img: "https://cdn.glitch.com/85de0811-a09d-482e-8aba-1039316a71ac%2Fbw_1wtcwd-tuesday.jpg?1521719511721",
-      imgTitle: 'You\'ll have to wait until Tuesday'
+      title: 'Glitch Embeds',
+      img: "https://cdn.glitch.com/85de0811-a09d-482e-8aba-1039316a71ac%2Fv2_1wtcwd-tuesday.jpg?1521719757143",
+      link: 'https://medium.com/glitch/making-learning-to-code-more-accessible-d802effd52bf'
     }
     , {
       title: 'Wednesday',
