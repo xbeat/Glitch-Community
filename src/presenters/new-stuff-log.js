@@ -23,7 +23,7 @@ module.exports = function() {
             Check out [CONTRIBUTING.md](https://glitch.com/edit/#!/community?path=CONTRIBUTING.md) to see how you can join us to help build the very fabric of the Glitch community site.
           ""}
       ,
-      */
+      */         
         id: 1,
         title: "Deleted, but not forgotten",
         body:
