@@ -28,9 +28,8 @@ module.exports = (Project = function(I, self) {
   );
 
   self.attrObservable(...Array.from(Object.keys(I) || []));
-  self.attrObservable("readme", "readmeNotFound", "projectNotFound", "fetched", "displayName");
-  self.attrModels('users', User);
-  self.attrReader("private");
+  self.attrObservable("readme", "readmeNotFound", "projectNotFound", "fetched", "displayName", "private");
+  self.attrModels('users', User)
 
   self.extend({
 
@@ -163,7 +162,7 @@ module.exports = (Project = function(I, self) {
     },
   });
       
-  //cache[I.id] = self;
+  cache[I.id] = self;
   // console.log '💎 project cache', cache
 
   return self;
