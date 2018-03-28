@@ -163,7 +163,7 @@ module.exports = (Project = function(I, self) {
     },
   });
       
-  cache[I.id] = self;
+  //cache[I.id] = self;
   // console.log '💎 project cache', cache
 
   return self;

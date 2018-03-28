@@ -49,7 +49,7 @@ module.exports = function(application, project, category, userPagePresenter) {
     },
 
     projectIsPrivate() {
-      
+      console.log('projispriv', project.private())
       return project.private() ? 'private-project' : '';
     },
 
