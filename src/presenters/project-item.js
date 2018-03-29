@@ -54,7 +54,13 @@ module.exports = function(application, project, category, userPagePresenter) {
       application.closeAllPopOvers();
       event.stopPropagation();
       const button = $(event.target).closest('.opens-pop-over');
-      return button[0].appendChild(ProjectOptionsPop(ProjectOptionsPopPresenter(project, application, self, userPagePresenter)));
+      const props = {
+        project,
+        application,
+        projectItemPresenter: self,
+        userPagePresenter
+      };
+      return button[0].appendChild(Reactlet(ProjectOptionsPop, props));
     },
 
     visibleIfUserHasProjectOptions() {

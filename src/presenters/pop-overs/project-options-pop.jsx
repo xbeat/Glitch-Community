@@ -1,38 +1,7 @@
 import React from 'react';
 
 export const ProjectOptionsPop = ({project, application, projectItemPresenter, userPagePresenter}) => {
-  const self = {
 
-    stopPropagation(event) {
-      return event.stopPropagation();
-    },
-
-    pinnedProjectIds() {
-      return application.user().pins().map(pin => pin.projectId);
-    },
-
-    hiddenIfProjectIsPinned() {
-      if (project.isPinnedByUser(application) || project.isPinnedByTeam(application)) {
-        return 'hidden';
-      }
-    }, 
-
-    hiddenUnlessProjectIsPinned() {
-      if (!project.isPinnedByUser(application) && !project.isPinnedByTeam(application)) {
-        return 'hidden';
-      }
-    },
-
-    hiddenUnlessPageIsTeamPage() {
-      if (!application.pageIsTeamPage()) { return 'hidden'; }
-    },
-        
-    hiddenIfPageIsTeamPage() {
-      if (application.pageIsTeamPage()) { return 'hidden'; }
-    },
-    
-  };
-  
   function stopPropagation(event) {
     return event.stopPropagation();
   }
@@ -66,49 +35,51 @@ export const ProjectOptionsPop = ({project, application, projectItemPresenter, u
     }
   }
   
+  const projectIsPinned = project.isPinnedByUser(application) || project.isPinnedByTeam(application);
+  
   return (
-    <dialog class="pop-over project-options-pop disposable" onClick={stopPropagation}>
-      <section class="pop-over-actions"> //hiddenIfProjectIsPinned
-      <div class="button-link" onClick={addPin}>
-        <button class="button-small has-emoji button-tertiary">
-          <span>Pin This </span>
-          <span class="emoji pushpin"></span>
-        </button>
-      </div>
-      </section>
-      
-      <section class="pop-over-actions"> //hiddenUnlessProjectIsPinned
-      <div class="button-link" onClick={removePin}>
-        <button class="button-small has-emoji button-tertiary">
-          <span>Un-Pin This </span>
-          <span class="emoji pushpin"></span>
-        </button>
-      </div>
-      </section>
+    <dialog className="pop-over project-options-pop disposable" onClick={stopPropagation}>
+      { projectIsPinned ? (
+        <section className="pop-over-actions">
+          <div className="button-link" onClick={removePin}>
+            <button className="button-small has-emoji button-tertiary">
+              <span>Un-Pin This </span>
+              <span className="emoji pushpin"></span>
+            </button>
+          </div>
+        </section>
+      ): (
+        <section className="pop-over-actions">
+          <div className="button-link" onClick={addPin}>
+            <button className="button-small has-emoji button-tertiary">
+              <span>Pin This </span>
+              <span className="emoji pushpin"></span>
+            </button>
+          </div>
+        </section>
+      )}
 
       {application.pageIsTeamPage() ? (
-      <section class="pop-over-actions team-options danger-zone last-section"> //hiddenUnlessPageIsTeamPage
-      <button class="button-small has-emoji button-tertiary" onClick={removeProjectFromTeam}>
-        <span>Remove Project </span>
-        <span class="emoji thumbs_down"></span>
-      </button>
-      </section>
-        ) : (
-      <section class="pop-over-actions danger-zone last-section"> //hiddenIfPageIsTeamPage
-      <button class="button button-small has-emoji button-tertiary" onClick={deleteProject}>
-        <span>Delete This </span>
-        <span class="emoji bomb"></span>
-      </button>
-      <button class="button button-small has-emoji button-tertiary" onClick={leaveProject}>
-        <span>Leave This </span>
-        <span class="emoji wave"></span>
-      </button>
-      </section>
-        );}
+        <section className="pop-over-actions team-options danger-zone last-section">
+          <button className="button-small has-emoji button-tertiary" onClick={removeProjectFromTeam}>
+            <span>Remove Project </span>
+            <span className="emoji thumbs_down"></span>
+          </button>
+        </section>
+      ) : (
+        <section className="pop-over-actions danger-zone last-section">
+          <button className="button button-small has-emoji button-tertiary" onClick={deleteProject}>
+            <span>Delete This </span>
+            <span className="emoji bomb"></span>
+          </button>
+          <button className="button button-small has-emoji button-tertiary" onClick={leaveProject}>
+            <span>Leave This </span>
+            <span className="emoji wave"></span>
+          </button>
+        </section>
+      )}
     </dialog>
   );
 };
-
-
 
 export default ProjectOptionsPop;
