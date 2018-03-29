@@ -201,12 +201,16 @@ module.exports = function(application) {
 
     recentProjects() {
       const recentProjects = self.projects().filter(project => !_.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Recent Projects", recentProjects, {});
+      return ProjectsListPresenter(application, "Recent Projects", recentProjects, {removeProjectFromTeam: self.removeProjectFromTeam});
     },
     
     pinnedProjectsList() {
       const pinnedProjects = self.projects().filter(project => _.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, {});
+      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, {removeProjectFromTeam: self.removeProjectFromTeam});
+    },
+    
+    removeProjectFromTeam(project) {
+      application.team().removeProject(application, project);
     },
     
     hiddenIfNotOnTeamAndNoPins() {

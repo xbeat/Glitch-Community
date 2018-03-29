@@ -196,12 +196,12 @@ module.exports = function(application, userLoginOrId) {
 
     recentProjects() {
       const recentProjects = self.projects().filter(project => !_.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Recent Projects", recentProjects, self);
+      return ProjectsListPresenter(application, "Recent Projects", recentProjects, {deleteProject: self.deleteProject, leaveProject: self.leaveProject});
     },  
     
     pinnedProjectsList() {
       const pinnedProjects = self.projects().filter(project => _.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, self);
+      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, {deleteProject: self.deleteProject, leaveProject: self.leaveProject});
     },
 
     hiddenIfNotCurrentUserAndNoPins() {

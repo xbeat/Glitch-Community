@@ -55,7 +55,7 @@ module.exports = function(application, project, category, projectOptions={}) {
       event.stopPropagation();
       const button = $(event.target).closest('.opens-pop-over');
       
-      const props = {
+      let props = {
         projectName: project.name(),
         projectIsPinned: project.isPinnedByUser(application) || project.isPinnedByTeam(application),
         closeAllPopOvers: application.closeAllPopOvers,

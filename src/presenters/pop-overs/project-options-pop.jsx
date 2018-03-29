@@ -32,8 +32,8 @@ export const ProjectOptionsPop = ({
     <dialog className="pop-over project-options-pop disposable">
       { projectIsPinned ? (
         <section className="pop-over-actions">
-          <div className="button-link" onClick={removePin}>
-            <button className="button-small has-emoji button-tertiary">
+          <div className="button-link" >
+            <button className="button-small has-emoji button-tertiary" onClick={removePin}>
               <span>Un-Pin This </span>
               <span className="emoji pushpin"></span>
             </button>
@@ -41,7 +41,7 @@ export const ProjectOptionsPop = ({
         </section>
       ) : (
         <section className="pop-over-actions">
-          <div className="button-link" onClick={addPin}>
+          <div className="button-link" >
             <button className="button-small has-emoji button-tertiary">
               <span>Pin This </span>
               <span className="emoji pushpin"></span>
