@@ -29,9 +29,9 @@ module.exports =
       link: 'https://medium.com/glitch/tackling-the-biggest-pain-points-in-web-development-57d64afe19dc'
     }
     , {
-      title: 'Thursday',
-      img: "https://cdn.glitch.com/85de0811-a09d-482e-8aba-1039316a71ac%2Fbw_1wtcwd-thursday.jpg?1521719511206",
-      imgTitle: 'This is going to be good - check back Thursday'
+      title: 'Glitch Rewind',
+      img: "https://cdn.glitch.com/85de0811-a09d-482e-8aba-1039316a71ac%2Fv2_1wtcwd-thursday.jpg?1521719757598",
+      link: 'https://medium.com/glitch/reinventing-version-control-with-glitch-rewind-914c350da442'
     }
     , {
       title: 'Friday',
