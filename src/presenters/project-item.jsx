@@ -51,15 +51,7 @@ export const ProjectItem = ({application, project, category, projectOptions={}})
       return button[0].after(Reactlet(ProjectOptionsPop, props));
     }
     
-    function userHasProjectOptions() {
-      return application.user().isOnUserPageForCurrentUser(application) || application.team().currentUserIsOnTeam(application)
-    }
-
-    function visibleIfUserHasProjectOptions() {
-      if (self.userHasProjectOptions()) {                    
-        return 'visible';
-      }
-    }
+    const userHasProjectOptions = application.user().isOnUserPageForCurrentUser(application) || application.team().currentUserIsOnTeam(application);
 
     function stopPropagation(event) {
       return event.stopPropagation();
@@ -105,15 +97,22 @@ export const ProjectItem = ({application, project, category, projectOptions={}})
       return project.avatar();
     }
   
-  return (return null;
-  /*
-   li
-  = @UsersList
+  const Users = ({glitchTeam}) => {
+    if(glitchTeam) {
+      return <GlitchTeamUsersList/> 
+    }
+    return <UsersList users={project.users().map(user => user.asProps())}/>
+  }
 
-  a(href=@projectLink click=@showProject)
+  
+  return (return 
+      <Users glitchTeam={project.showAsGlitchTeam && project.showAsGlitchTeam()}/>n    
+
+  a(huserHasProjectOptions && (
     .project(@style data-track="project" data-track-label=@proje=@projectIsPrivate)
       .project-container
-        img.avatar(src=@avatar alt="#{@project.domain()} avatar")
+        img.avatar(src=@avatar alt="#{
+    )}@project.domain()} avatar")
         button(class=@buttonCtaIfCurrentUser)
           span.private-project-badge
           .project-name=@project.domain
