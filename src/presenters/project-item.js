@@ -4,7 +4,7 @@ import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
-module.exports = function(application, project, category, deleteProject, leaveProject) {
+module.exports = function(application, project, category, projectOptions={}) {
 
   var self = { 
 
@@ -61,15 +61,19 @@ module.exports = function(application, project, category, deleteProject, leavePr
         closeAllPopOvers: application.closeAllPopOvers,
         pageIsTeamPage: application.pageIsTeamPage(),
         togglePinnedState: self.togglePinnedState,
-        deleteProject: (event) => deleteProject(project, event),
-        leaveProject: (event) => leaveProject(project, event),
-        removeProjectFromTeam: () => application.team().removeProject(application, project),
+        deleteProject: (event) => projectOptions.deleteProject(project, event),
+        leaveProject: (event) => projectOptions.leaveProject(project, event),
+        removeProjectFromTeam: () => projectOptions.removeProjectFromTeam(project),
       };
       return button[0].after(Reactlet(ProjectOptionsPop, props));
     },
+    
+    userHasProjectOptions() {
+      return application.user().isOnUserPageForCurrentUser(application) || application.team().currentUserIsOnTeam(application)
+    },
 
     visibleIfUserHasProjectOptions() {
-      if (application.user().isOnUserPageForCurrentUser(application) || application.team().currentUserIsOnTeam(application)) {                    
+      if (self.userHasProjectOptions()) {                    
         return 'visible';
       }
     },
