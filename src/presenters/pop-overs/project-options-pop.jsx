@@ -1,5 +1,12 @@
 import React from 'react';
 
+const PopOverButton = ({onClick, text, emoji}) => (
+  <button className="button-small has-emoji button-tertiary" onClick={onClick}>
+    <span>{text} </span>
+    <span className={`emoji ${emoji}`}></span>
+  </button>
+)
+
 export const ProjectOptionsPop = ({
   projectName, projectIsPinned, closeAllPopOvers, 
   pageIsTeamPage, togglePinnedState, deleteProject, 
@@ -30,43 +37,23 @@ export const ProjectOptionsPop = ({
   
   return (
     <dialog className="pop-over project-options-pop disposable">
-      { projectIsPinned ? (
-        <section className="pop-over-actions">
-          <div className="button-link" >
-            <button className="button-small has-emoji button-tertiary" onClick={removePin}>
-              <span>Un-Pin This </span>
-              <span className="emoji pushpin"></span>
-            </button>
-          </div>
-        </section>
-      ) : (
-        <section className="pop-over-actions">
-          <div className="button-link" >
-            <button className="button-small has-emoji button-tertiary">
-              <span>Pin This </span>
-              <span className="emoji pushpin"></span>
-            </button>
-          </div>
-        </section>
-      )}
+      <section className="pop-over-actions">
+        { projectIsPinned ? (
+          <PopOverButton onClick={removePin} text="Un-Pin This" emoji="pushpin"/>
+        ) : (
+          <PopOverButton onClick={addPin} text="Pin This" emoji="pushpin"/>
+        )}
+      </section>
+
 
       {pageIsTeamPage ? (
         <section className="pop-over-actions team-options danger-zone last-section">
-          <button className="button-small has-emoji button-tertiary" onClick={removeProjectFromTeam}>
-            <span>Remove Project </span>
-            <span className="emoji thumbs_down"></span>
-          </button>
+          <PopOverButton onClick={removeProjectFromTeam} text="Remove Project" emoji="thumbs_down"/>
         </section>
       ) : (
         <section className="pop-over-actions danger-zone last-section">
-          <button className="button button-small has-emoji button-tertiary" onClick={deleteProject}>
-            <span>Delete This </span>
-            <span className="emoji bomb"></span>
-          </button>
-          <button className="button button-small has-emoji button-tertiary" onClick={clickLeave}>
-            <span>Leave This </span>
-            <span className="emoji wave"></span>
-          </button>
+          <PopOverButton onClick={deleteProject} text="Delete This" emoji="bomb"/>
+          <PopOverButton onClick={clickLeave} text="Leave This" emoji="wave"/>
         </section>
       )}
     </dialog>
