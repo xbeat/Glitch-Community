@@ -1,11 +1,7 @@
 import React from 'react';
 
-export const ProjectOptionsPop = ({project, application, projectItemPresenter, userPagePresenter}) => {
-
-  function stopPropagation(event) {
-    return event.stopPropagation();
-  }
-  
+export const ProjectOptionsPop = ({project, application, projectItemPresenter, deleteProject, leaveProject}) => {
+ 
   function addPin(event) {
     const projectContainer = event.target.closest('li');
     application.closeAllPopOvers();
@@ -23,22 +19,11 @@ export const ProjectOptionsPop = ({project, application, projectItemPresenter, u
   function removeProjectFromTeam() {
     return application.team().removeProject(application, project);
   }
-                  
-  function deleteProject(event) {
-    return userPagePresenter.deleteProject(project, event);
-  }
-      
-  function leaveProject(event) {
-    const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${project.name()}?`;
-    if (window.confirm(prompt)) {
-      return userPagePresenter.leaveProject(project, event);
-    }
-  }
   
   const projectIsPinned = project.isPinnedByUser(application) || project.isPinnedByTeam(application);
   
   return (
-    <dialog className="pop-over project-options-pop disposable" onClick={stopPropagation}>
+    <dialog className="pop-over project-options-pop disposable">
       { projectIsPinned ? (
         <section className="pop-over-actions">
           <div className="button-link" onClick={removePin}>
@@ -48,7 +33,7 @@ export const ProjectOptionsPop = ({project, application, projectItemPresenter, u
             </button>
           </div>
         </section>
-      ): (
+      ) : (
         <section className="pop-over-actions">
           <div className="button-link" onClick={addPin}>
             <button className="button-small has-emoji button-tertiary">
