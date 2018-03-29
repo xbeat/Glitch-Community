@@ -1,9 +1,9 @@
+import React from 'react';
 import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
-module.exports = function(application, project, category, projectOptions={}) {
-
+export const ProjectItem = ({application, project, category, projectOptions={}) => {
   var self = { 
 
     category,
@@ -120,6 +120,44 @@ module.exports = function(application, project, category, projectOptions={}) {
       return project.avatar();
     },
   };
+  
+  return null;
+  /*
+   li
+  = @UsersList
 
-  return ProjectItemTemplate(self);
+  a(href=@projectLink click=@showProject)
+    .project(@style data-track="project" data-track-label=@project.domain class=@projectIsPrivate)
+      .project-container
+        img.avatar(src=@avatar alt="#{@project.domain()} avatar")
+        button(class=@buttonCtaIfCurrentUser)
+          span.private-project-badge
+          .project-name=@project.domain
+        .description=@project.description
+        .overflow-mask(style=@maskStyle)
+    */
+  <li>
+    <div class="users "></div>
+    { /*visibleIfUserHasProjectOptions */}
+     <div class="project-options button-borderless opens-pop-over hidden visible" onClick={showProjectOptionsPop}> 
+        <div class="down-arrow"></div>
+     </div>
+     <a href="/~community">
+        <div class="project " data-track="project" data-track-label="community">
+           <div class="project-container">
+              <img class="avatar" src="https://cdn.glitch.com/project-avatar/2bdfb3f8-05ef-4035-a06e-2043962a3a13.png" alt="community avatar">
+              <button class="">
+                 <span class="private-project-badge"></span>
+                 <div class="project-name">community</div>
+              </button>
+              <div class="description">The Glitch community site</div>
+              <div class="overflow-mask"></div>
+           </div>
+        </div>
+     </a>
+</li>
+  
 };
+
+
+export default ProjectItem;

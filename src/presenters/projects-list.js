@@ -10,7 +10,7 @@ module.exports = function(application, title, projects, projectOptions={}) {
     sectionTitle: title,
 
     projects() {
-      return projects.map(project => Reactlet(Projec(application, project, {}, projectOptions));
+      return projects.map(project => Reactlet(ProjectItem, {application, project, category:{}, projectOptions}));
     },
 
     visibleIfNoPins() {
