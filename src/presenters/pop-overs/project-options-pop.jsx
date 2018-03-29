@@ -14,17 +14,18 @@ export const ProjectOptionsPop = ({
 }) => {
  
   function addPin(event) {
-    const projectContainer = event.target.closest('li');
-    closeAllPopOvers();
-    $(projectContainer).one('animationend', () => togglePinnedState());
-    return $(projectContainer).addClass('slide-up');
+    togglePin(event, 'slide-up');
   }
   
   function removePin(event) {
+    togglePin(event, 'slide-down');
+  }
+  
+  function togglePin(event, className) {
     const projectContainer = event.target.closest('li');
     closeAllPopOvers();
     $(projectContainer).one('animationend', () => togglePinnedState());
-    return $(projectContainer).addClass('slide-down');
+    return $(projectContainer).addClass(className);
   }
      
   function clickLeave(event) {
@@ -33,7 +34,6 @@ export const ProjectOptionsPop = ({
       return leaveProject(event);
     }
   }
-
   
   return (
     <dialog className="pop-over project-options-pop disposable">
