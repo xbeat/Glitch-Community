@@ -3,52 +3,37 @@ import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
-export const ProjectItem = ({application, project, category, projectOptions={}) => {
-  var self = { 
-
-    category,
-    project,
+export const ProjectItem = ({application, project, category, projectOptions={}}) => {
     
-    UsersList() {
-      if(project.showAsGlitchTeam && project.showAsGlitchTeam()){
-        return Reactlet(GlitchTeamUsersList, {});
-      }
-        
-      const props = {
-        users: project.users().map(user => user.asProps()),
-      };
-      return Reactlet(UsersList, props);
-    },
-    
-    projectLink() {
+    function projectLink() {
       if (project.isRecentProject) {
         return self.editorLink();
       } 
       return `/~${project.domain()}`;
       
-    },
+    }
 
-    editorLink() {
+   function  editorLink() {
       return project.editUrl();
-    },
+    }
 
-    showProject(event) {
+    function showProject(event) {
       event.preventDefault();
       event.stopPropagation();
       return project.showOverlay(application);
-    },
+    }
 
-    buttonCtaIfCurrentUser() {
+    function buttonCtaIfCurrentUser() {
       if (project.isRecentProject) {
         return "button-cta";
       }
-    },
+    }
 
-    projectIsPrivate() {
+    function projectIsPrivate() {
       return project.private() ? 'private-project' : '';
-    },
+    }
 
-    showProjectOptionsPop(event) {
+    function showProjectOptionsPop(event) {
       application.closeAllPopOvers();
       event.stopPropagation();
       const button = $(event.target).closest('.opens-pop-over');
@@ -64,70 +49,69 @@ export const ProjectItem = ({application, project, category, projectOptions={}) 
         removeProjectFromTeam: () => projectOptions.removeProjectFromTeam(project),
       };
       return button[0].after(Reactlet(ProjectOptionsPop, props));
-    },
+    }
     
-    userHasProjectOptions() {
+    function userHasProjectOptions() {
       return application.user().isOnUserPageForCurrentUser(application) || application.team().currentUserIsOnTeam(application)
-    },
+    }
 
-    visibleIfUserHasProjectOptions() {
+    function visibleIfUserHasProjectOptions() {
       if (self.userHasProjectOptions()) {                    
         return 'visible';
       }
-    },
+    }
 
-    stopPropagation(event) {
+    function stopPropagation(event) {
       return event.stopPropagation();
-    },
+    }
 
-    togglePinnedState() {
+   function togglePinnedState() {
       if (application.pageIsTeamPage()) {
         return self.toggleTeamPin();
       } 
       return self.toggleUserPin();
       
-    },
+    }
 
-    toggleUserPin() {
+    function toggleUserPin() {
       if (project.isPinnedByUser(application)) {
         return application.user().removePin(application, project.id());
       } 
       return application.user().addPin(application, project.id());
       
-    },
+    }
 
-    toggleTeamPin() {
+   function  toggleTeamPin() {
       if (project.isPinnedByTeam(application)) {
         return application.team().removePin(application, project.id());
       } 
       console.log('toggleTeamPin addpin');
       return application.team().addPin(application, project.id());
       
-    },
+    }
 
-    style() {
+    function style() {
       return {
         backgroundColor: (typeof category.color === 'function' ? category.color() : undefined),
         borderBottomColor: (typeof category.color === 'function' ? category.color() : undefined),
       };
-    },
+    }
 
-    maskStyle() {
+   function  maskStyle() {
       return {backgroundColor: (typeof category.color === 'function' ? category.color() : undefined)};
-    },
+    }
 
-    avatar() {
+    function avatar() {
       return project.avatar();
-    },
-  };
+    }
   
-  return null;
+  return (return null;
   /*
    li
   = @UsersList
 
   a(href=@projectLink click=@showProject)
-    .project(@style data-track="project" data-track-label=@project.domain class=@projectIsPrivate)
+    .project(@style data-track="project" data-track-label=@proje=@projectIsPrivate)
       .project-container
         img.avatar(src=@avatar alt="#{@project.domain()} avatar")
         button(class=@buttonCtaIfCurrentUser)
@@ -139,23 +123,25 @@ export const ProjectItem = ({application, project, category, projectOptions={}) 
   <li>
     <div class="users "></div>
     { /*visibleIfUserHasProjectOptions */}
-     <div class="project-options button-borderless opens-pop-over hidden visible" onClick={showProjectOptionsPop}> 
-        <div class="down-arrow"></div>
-     </div>
-     <a href="/~community">
-        <div class="project " data-track="project" data-track-label="community">
-           <div class="project-container">
-              <img class="avatar" src="https://cdn.glitch.com/project-avatar/2bdfb3f8-05ef-4035-a06e-2043962a3a13.png" alt="community avatar">
-              <button class="">
-                 <span class="private-project-badge"></span>
-                 <div class="project-name">community</div>
-              </button>
-              <div class="description">The Glitch community site</div>
-              <div class="overflow-mask"></div>
-           </div>
+    <div class="project-options button-borderless opens-pop-over hidden visible" onClick={showProjectOptionsPop}> 
+      <div class="down-arrow"></div>
+    </div>
+    
+    <a href={projectLink} onClick={showProject}>
+      <div class={`project ${projectIsPrivate()}`} style={style} data-track="project" data-track-label={proj
+    );ect.domain}>
+        <div class="project-container">
+          <img class="avatar" src={avatar} alt={`${projectDomain} avatar`}/>
+          <button class={buttonCtaIfCurrentUser}>
+            <span class="private-project-badge"></span>
+            <div class="project-name">{projectDomain}</div>
+          </button>
+          <div class="description">{projectDescription}</div>
+          <div class="overflow-mask" style={maskStyle}></div>
         </div>
-     </a>
-</li>
+      </div>
+    </a>
+  </li>
   
 };
 
