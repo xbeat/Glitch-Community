@@ -56,10 +56,14 @@ module.exports = function(application, project, category, deleteProject, leavePr
       const button = $(event.target).closest('.opens-pop-over');
       
       const props = {
-        application,
+        projectName: project.name(),
+        projectIsPinned: project.isPinnedByUser(application) || project.isPinnedByTeam(application),
+        closeAllPopOvers: application.closeAllPopOvers,
+        pageIsTeamPage: application.pageIsTeamPage(),
         togglePinnedState: self.togglePinnedState,
         deleteProject: (event) => deleteProject(project, event),
         leaveProject: (event) => leaveProject(project, event),
+        removeProjectFromTeam: () => application.team().removeProject(application, project),
       };
       return button[0].after(Reactlet(ProjectOptionsPop, props));
     },

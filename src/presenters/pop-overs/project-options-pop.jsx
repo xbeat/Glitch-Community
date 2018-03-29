@@ -1,33 +1,32 @@
 import React from 'react';
 
-export const ProjectOptionsPop = ({project, application, togglePinnedState, deleteProject, leaveProject}) => {
+export const ProjectOptionsPop = ({
+  projectName, projectIsPinned, closeAllPopOvers, 
+  pageIsTeamPage, togglePinnedState, deleteProject, 
+  leaveProject, removeProjectFromTeam
+}) => {
  
   function addPin(event) {
     const projectContainer = event.target.closest('li');
-    application.closeAllPopOvers();
+    closeAllPopOvers();
     $(projectContainer).one('animationend', () => togglePinnedState());
     return $(projectContainer).addClass('slide-up');
   }
   
   function removePin(event) {
     const projectContainer = event.target.closest('li');
-    application.closeAllPopOvers();
+    closeAllPopOvers();
     $(projectContainer).one('animationend', () => togglePinnedState());
     return $(projectContainer).addClass('slide-down');
   }
      
   function clickLeave(event) {
-    const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${project.name()}?`;
+    const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${projectName}?`;
     if (window.confirm(prompt)) {
       return leaveProject(event);
     }
   }
-  
-  function removeProjectFromTeam() {
-    return application.team().removeProject(application, project);
-  }
-  
-  const projectIsPinned = project.isPinnedByUser(application) || project.isPinnedByTeam(application);
+
   
   return (
     <dialog className="pop-over project-options-pop disposable">
@@ -51,7 +50,7 @@ export const ProjectOptionsPop = ({project, application, togglePinnedState, dele
         </section>
       )}
 
-      {application.pageIsTeamPage() ? (
+      {pageIsTeamPage ? (
         <section className="pop-over-actions team-options danger-zone last-section">
           <button className="button-small has-emoji button-tertiary" onClick={removeProjectFromTeam}>
             <span>Remove Project </span>

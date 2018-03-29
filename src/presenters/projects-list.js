@@ -1,7 +1,7 @@
 const ProjectItemPresenter = require("./project-item");
 const ProjectsListTemplate = require("../templates/projects-list");
 
-module.exports = function(application, title, projects, userPagePresenter) {
+module.exports = function(application, title, projects, userPagePresenter=) {
   
   const self = {
 
