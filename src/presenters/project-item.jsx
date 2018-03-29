@@ -1,5 +1,3 @@
-const ProjectItemTemplate = require("../templates/includes/project-item");
-
 import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
 import Reactlet from "./reactlet";

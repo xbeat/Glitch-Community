@@ -1,5 +1,7 @@
-const ProjectItemPresenter = require("./project-item");
 const ProjectsListTemplate = require("../templates/projects-list");
+
+import Reactlet from "./reactlet";
+import ProjectItem from "./project-item.jsx"
 
 module.exports = function(application, title, projects, projectOptions={}) {
   
@@ -8,7 +10,7 @@ module.exports = function(application, title, projects, projectOptions={}) {
     sectionTitle: title,
 
     projects() {
-      return projects.map(project => ProjectItemPresenter(application, project, {}, projectOptions));
+      return projects.map(project => Reactlet(Projec(application, project, {}, projectOptions));
     },
 
     visibleIfNoPins() {
