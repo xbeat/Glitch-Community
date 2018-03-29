@@ -1,19 +1,26 @@
 import React from 'react';
 
-export const ProjectOptionsPop = ({project, application, projectItemPresenter, deleteProject, leaveProject}) => {
+export const ProjectOptionsPop = ({project, application, togglePinnedState, deleteProject, leaveProject}) => {
  
   function addPin(event) {
     const projectContainer = event.target.closest('li');
     application.closeAllPopOvers();
-    $(projectContainer).one('animationend', () => projectItemPresenter.togglePinnedState());
+    $(projectContainer).one('animationend', () => togglePinnedState());
     return $(projectContainer).addClass('slide-up');
   }
   
   function removePin(event) {
     const projectContainer = event.target.closest('li');
     application.closeAllPopOvers();
-    $(projectContainer).one('animationend', () => projectItemPresenter.togglePinnedState());
+    $(projectContainer).one('animationend', () => togglePinnedState());
     return $(projectContainer).addClass('slide-down');
+  }
+     
+  function clickLeave(event) {
+    const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${project.name()}?`;
+    if (window.confirm(prompt)) {
+      return leaveProject(event);
+    }
   }
   
   function removeProjectFromTeam() {
@@ -57,7 +64,7 @@ export const ProjectOptionsPop = ({project, application, projectItemPresenter, d
             <span>Delete This </span>
             <span className="emoji bomb"></span>
           </button>
-          <button className="button button-small has-emoji button-tertiary" onClick={leaveProject}>
+          <button className="button button-small has-emoji button-tertiary" onClick={clickLeave}>
             <span>Leave This </span>
             <span className="emoji wave"></span>
           </button>

@@ -4,7 +4,7 @@ import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
-module.exports = function(application, project, category, userPagePresenter) {
+module.exports = function(application, project, category, deleteProject, leaveProject) {
 
   var self = { 
 
@@ -55,24 +55,11 @@ module.exports = function(application, project, category, userPagePresenter) {
       event.stopPropagation();
       const button = $(event.target).closest('.opens-pop-over');
       
-      function deleteProject(event) {
-        return userPagePresenter.deleteProject(project, event);
-      }
-      
-      function leaveProject(event) {
-        const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${project.name()}?`;
-        if (window.confirm(prompt)) {
-          return userPagePresenter.leaveProject(project, event);
-        }
-      }
-      
       const props = {
-        project,
         application,
-        projectItemPresenter: self,
-        userPagePresenter,
-        deleteProject,
-        leaveProject,
+        togglePinnedState: self.togglePinnedState,
+        deleteProject: (event) => deleteProject(project, event),
+        leaveProject: (event) => leaveProject(project, event),
       };
       return button[0].after(Reactlet(ProjectOptionsPop, props));
     },
