@@ -34,8 +34,8 @@ module.exports =
       link: 'https://medium.com/glitch/reinventing-version-control-with-glitch-rewind-914c350da442'
     }
     , {
-      title: 'Friday',
-      img: "https://cdn.glitch.com/85de0811-a09d-482e-8aba-1039316a71ac%2Fbw_1wtcwd-friday.jpg?1521719510966",
-      imgTitle: 'We\'ll give you all the deets on Friday'
+      title: 'Glitch Opens Up: Welcome!',
+      img: "https://cdn.glitch.com/85de0811-a09d-482e-8aba-1039316a71ac%2Fv2_1wtcwd-friday.jpg?1521719757785",
+      imgTitle: 'https://medium.com/glitch/glitch-opens-up-welcome-85c62d0d6e84'
     }    
   ];
