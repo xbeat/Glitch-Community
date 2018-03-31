@@ -1,6 +1,6 @@
 const RecentProjectsTemplate = require("../templates/includes/recent-projects");
-const ProjectItemPresenter = require("./project-item");
 
+import ProjectItem from "./project-item.jsx"
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import Reactlet from "./reactlet";
 
@@ -45,7 +45,7 @@ module.exports = function(application) {
             return undefined;
           },
         };
-        return ProjectItemPresenter(application, project, category);
+        return Reactlet(ProjectItem, {application, project, category});
       });
     },
         
