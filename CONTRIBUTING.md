@@ -112,4 +112,4 @@ First, let's make sure any changes made direct to Community are merged and happy
 
  *Can I just edit community directly, since it’s Glitch we’re dealing with here?*
   
-Sure, go for it.  Viva la quick ways to make small changes. All standard caveats and cautions apply.
+Sure, go for it. But make sure to export your changes to the git repository on Github aftewards so that your changes aren't picked up by a future pull request. Viva la quick ways to make small changes. All standard caveats and cautions apply.
