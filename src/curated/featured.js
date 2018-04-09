@@ -14,18 +14,18 @@ Example:
 module.exports =
   [
     {
-      title: 'Teach Alexa New Skills',
-      img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Falexa.png?1491426616444',
-      link: 'https://glitch.com/~alexa-skill'
+      title: '\'sea-pinks\' by Rich-Harris',
+      img: 'https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Fsea-pinks.jpg?1523258160830',
+      link: 'https://glitch.com/~sea-pinks'
     }
     , {
-      title: 'Create a Slack App',
-      img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffeatured-slack-slash-bot.svg?1494429489069",
-      link: 'https://glitch.com/~slack-slash-command'
+      title: '\'before-dawn-mystify\' by muffinista',
+      img: "https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Fbefore-dawn-mystify.jpg?1523258247261",
+      link: 'https://glitch.com/~before-dawn-mystify'
     }
     , {
-      title: 'Make WebVR, Reality',
-      img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FmozillaAframe.png?1494449169684",
-      link: 'https://glitch.com/aframe'
+      title: '\'timelink\' by jacopocolo',
+      img: "https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Ftimezone.jpg?1523258382060",
+      link: 'https://glitch.com/~timelink'
     }   
   ];
