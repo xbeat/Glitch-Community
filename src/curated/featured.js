@@ -16,16 +16,16 @@ module.exports =
     {
       title: '\'sea-pinks\' by Rich-Harris',
       img: 'https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Fsea-pinks.jpg?1523258160830',
-      link: 'https://glitch.com/~sea-pinks'
+      link: 'https://sea-pinks.glitch.me'
     }
     , {
       title: '\'before-dawn-mystify\' by muffinista',
       img: "https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Fbefore-dawn-mystify.jpg?1523258247261",
-      link: 'https://glitch.com/~before-dawn-mystify'
+      link: 'https://before-dawn-mystify.glitch.me'
     }
     , {
       title: '\'timelink\' by jacopocolo',
       img: "https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Ftimezone.jpg?1523258382060",
-      link: 'https://glitch.com/~timelink'
+      link: 'https://timelink.glitch.me'
     }   
   ];
