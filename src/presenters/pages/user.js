@@ -213,6 +213,21 @@ module.exports = function(application, userLoginOrId) {
     hiddenUnlessUserIsAnon() {
       if (!self.user().isAnon()) { return 'hidden'; }
     },
+    
+        // TODO: Hoist togglePinnedState into projectOptions
+    application.user().isOnUserPageForCurrentUser(application) || application.team().currentUserIsOnTeam(application);
+    togglePinnedState() {
+      let entity = application.user();
+      let pinned = project.isPinnedByUser;
+
+      if (projectOptions.pageIsTeamPage) {
+        entity = application.team();
+        pinned = project.isPinnedByTeam;
+      }
+      const action = pinned ? "removePin" : "addPin";
+      return entity[action](application, project.id);
+    }
+
                 
     deleteProject(project, event) {
       const projectContainer = event.target.closest('li');

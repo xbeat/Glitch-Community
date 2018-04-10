@@ -9,35 +9,22 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
     closeAllPopOvers();
     event.stopPropagation();
     const button = $(event.target).closest('.opens-pop-over');
-    
-    // TODO: Hoist togglePinnedState into projectOptions
-    function togglePinnedState() {
-      let entity = application.user();
-      let pinned = project.isPinnedByUser;
-
-      if (projectOptions.pageIsTeamPage) {
-        entity = application.team();
-        pinned = project.isPinnedByTeam;
-      }
-      const action = pinned ? "removePin" : "addPin";
-      return entity[action](application, project.id);
-    }
       
     let props = {
       projectName: project.name,
       projectIsPinned: project.isPinnedByUser || project.isPinnedByTeam,
       closeAllPopOvers: closeAllPopOvers,
       pageIsTeamPage: projectOptions.pageIsTeamPage,
-      togglePinnedState: self.togglePinnedState,
+      togglePinnedState: projectOptions.togglePinnedState,
       deleteProject: (event) => projectOptions.deleteProject(project, event),
       leaveProject: (event) => projectOptions.leaveProject(project, event),
       removeProjectFromTeam: () => projectOptions.removeProjectFromTeam(project),
     };
+    
+    //todo: store 'is visible' state, and toggle that.
+    // use the container patten.
     return button[0].after(Reactlet(ProjectOptionsPop, props));
   }
-    
-  // TODO: Hoist userHasProjectOptions into projectOptions
-  const userHasProjectOptions = application.user().isOnUserPageForCurrentUser(application) || application.team().currentUserIsOnTeam(application);
   
   function showProject() {
     event.preventDefault();
