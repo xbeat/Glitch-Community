@@ -3,50 +3,29 @@ import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
-function getProps() {
-  let project = this;
-  let application = null;
-  
-  function projectLink() {
-    if (project.isRecentProject) {
-      return project.editUrl();
-    } 
-    return `/~${project.domain()}`;
-  }
-  
-  return {
-    link: projectLink(),
-    showProject: (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      return project.showOverlay(application);
-    },
-    isRecentProject: project.isRecentProject,
-    private: project.private(),
-    name: project.name(),
-    isPinnedByTeam: project.isPinnedByTeam(application),
-    isPinnedByUser: project.isPinnedByUser(application),
-    id: project.id(),
-    avatar: project.avatar(),
-    domain: project.domain(),
-    description: project.description(),
-    showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
-    
-  };
-    
-  
-}
-
 export const ProjectItem = ({application, project, categoryColor, projectOptions={}}) => {
 
   function showProjectOptionsPop(event) {
     application.closeAllPopOvers();
     event.stopPropagation();
     const button = $(event.target).closest('.opens-pop-over');
+    
+    // TODO: Hoist togglePinnedState into projectOptions
+    function togglePinnedState() {
+      let entity = application.user();
+      let pinned = project.isPinnedByUser;
+
+      if (application.pageIsTeamPage()) {
+        entity = application.team();
+        pinned = project.isPinnedByTeam;
+      }
+      const action = pinned ? "removePin" : "addPin";
+      return entity[action](application, project.id);
+    }
       
     let props = {
-      projectName: project.name(),
-      projectIsPinned: project.isPinnedByUser(application) || project.isPinnedByTeam(application),
+      projectName: project.name,
+      projectIsPinned: project.isPinnedByUser || project.isPinnedByTeam,
       closeAllPopOvers: application.closeAllPopOvers,
       pageIsTeamPage: application.pageIsTeamPage(),
       togglePinnedState: self.togglePinnedState,
@@ -57,20 +36,13 @@ export const ProjectItem = ({application, project, categoryColor, projectOptions
     return button[0].after(Reactlet(ProjectOptionsPop, props));
   }
     
+  // TODO: Hoist userHasProjectOptions into projectOptions
   const userHasProjectOptions = application.user().isOnUserPageForCurrentUser(application) || application.team().currentUserIsOnTeam(application);
-
-  function togglePinnedState() {
-    let entity = application.user();
-    let pinned = project.isPinnedByUser;
-    
-    if (application.pageIsTeamPage()) {
-      entity = application.team();
-      pinned = project.isPinnedByTeam;
-    }
-    
-    const action = pinned ? "removePin" : "addPin";
-
-    return entity[action](application, project.id);
+  
+  function showProject() {
+    event.preventDefault();
+    event.stopPropagation();
+    return project.showOverlay();
   }
   
   const Users = ({glitchTeam}) => {
@@ -79,7 +51,6 @@ export const ProjectItem = ({application, project, categoryColor, projectOptions
     }
     return <UsersList users={project.users().map(user => user.asProps())}/>
   }
-
   
   return ( 
 
@@ -92,7 +63,7 @@ export const ProjectItem = ({application, project, categoryColor, projectOptions
         </div>
       )}
     
-      <a href={project.link} onClick={project.showProject}>
+      <a href={project.link} onClick={showProject}>
         <div class={['project', project.private ? 'private-project' : ''].join(' ')} 
           style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
           data-track="project" data-track-label={project.domain}>

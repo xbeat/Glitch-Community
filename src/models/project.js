@@ -32,6 +32,28 @@ module.exports = (Project = function(I, self) {
   self.attrModels('users', User)
 
   self.extend({
+    
+    asProps() {
+      const project = self;
+
+      return {
+        link: project.isRecentProject ? project.editUrl() : `/~${project.domain()}`,
+        showOverlay: () => {
+          project.showOverlay(application);
+        },
+        isRecentProject: project.isRecentProject,
+        private: project.private(),
+        name: project.name(),
+        isPinnedByTeam: project.isPinnedByTeam(application),
+        isPinnedByUser: project.isPinnedByUser(application),
+        id: project.id(),
+        avatar: project.avatar(),
+        domain: project.domain(),
+        description: project.description(),
+        showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
+      };
+    }
+    },
 
     name() {
       return self.domain();
