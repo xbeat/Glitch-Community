@@ -4,6 +4,8 @@ import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
 function getProps() {
+  let project = this;
+  let application = null;
   
   function projectLink() {
     if (project.isRecentProject) {
@@ -13,27 +15,23 @@ function getProps() {
   }
   
   return {
-  projectLink: projectLink(),
-  showProject: (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    return project.showOverlay(application);
-  },
+    projectLink: projectLink(),
+    showProject: (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      return project.showOverlay(application);
+    },
+    isRecentProject: project.isRecentProject,
+    private: project.private(),
+    name: project.name(),
+    project.isPinnedByTeam: project.isPinnedB
+    
+  };
+    
   
 }
 
 export const ProjectItem = ({application, project, categoryColor, projectOptions={}}) => {
-    
-
-  function buttonCtaIfCurrentUser() {
-    if (project.isRecentProject) {
-      return "button-cta";
-    }
-  }
-
-  function projectIsPrivate() {
-    return project.private() ? 'private-project' : '';
-  }
 
   function showProjectOptionsPop(event) {
     application.closeAllPopOvers();
@@ -55,15 +53,11 @@ export const ProjectItem = ({application, project, categoryColor, projectOptions
     
   const userHasProjectOptions = application.user().isOnUserPageForCurrentUser(application) || application.team().currentUserIsOnTeam(application);
 
-  function stopPropagation(event) {
-    return event.stopPropagation();
-  }
-
   function togglePinnedState() {
     if (application.pageIsTeamPage()) {
-      return self.toggleTeamPin();
+      return toggleTeamPin();
     } 
-    return self.toggleUserPin();
+    return toggleUserPin();
       
   }
 
@@ -108,10 +102,12 @@ export const ProjectItem = ({application, project, categoryColor, projectOptions
       )}
     
       <a href={projectLink} onClick={project.showProject}>
-        <div class={`project ${projectIsPrivate()}`} style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}} data-track="project" data-track-label={project.domain}>
+        <div class={['project', project.private ? 'private-project' : ''].join(' ')} 
+          style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
+          data-track="project" data-track-label={project.domain}>
           <div class="project-container">
             <img class="avatar" src={avatar} alt={`${projectDomain} avatar`}/>
-            <button class={buttonCtaIfCurrentUser}>
+            <button class={project.isRecentProject ? "button-cta" : ""}>
               <span class="private-project-badge"></span>
               <div class="project-name">{projectDomain}</div>
             </button>
