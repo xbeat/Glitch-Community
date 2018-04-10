@@ -9,7 +9,7 @@ const PopOverButton = ({onClick, text, emoji}) => (
 
 export const ProjectOptionsPop = ({
   projectName, projectIsPinned, closeAllPopOvers, 
-  pageIsTeamPage, togglePinnedState, deleteProject, 
+  togglePinnedState, deleteProject, 
   leaveProject, removeProjectFromTeam
 }) => {
  
@@ -46,11 +46,12 @@ export const ProjectOptionsPop = ({
       </section>
 
 
-      {pageIsTeamPage ? (
+      {removeProjectFromTeam && (
         <section className="pop-over-actions team-options danger-zone last-section">
           <PopOverButton onClick={removeProjectFromTeam} text="Remove Project" emoji="thumbs_down"/>
         </section>
-      ) : (
+      )}
+      {(deleteProject && leaveProject) && (
         <section className="pop-over-actions danger-zone last-section">
           <PopOverButton onClick={deleteProject} text="Delete This" emoji="bomb"/>
           <PopOverButton onClick={clickLeave} text="Leave This" emoji="wave"/>

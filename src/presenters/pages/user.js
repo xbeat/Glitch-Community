@@ -223,14 +223,13 @@ module.exports = function(application, userLoginOrId) {
       return {
         deleteProject: self.deleteProject, 
         leaveProject: self.leaveProject, 
-        togglePinnedState: self.togglePinnedState,
-        pageIsTeamPage: false,
+        togglePinnedState: self.togglePinnedState
       }
     },
     
-    togglePinnedState() {
-      const action = self.isPinnedByUser() ? "removePin" : "addPin";
-      return application.user()[action](application, self.id());
+    togglePinnedState(project) {
+      const action = project.isPinnedByUser() ? "removePin" : "addPin";
+      return application.user()[action](application, project.id());
     },
 
                 

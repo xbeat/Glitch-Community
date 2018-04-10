@@ -215,7 +215,6 @@ module.exports = function(application) {
       return {
         removeProjectFromTeam: self.removeProjectFromTeam, 
         togglePinnedState: self.togglePinnedState,
-        pageIsTeamPage: true
       };
     },
     
