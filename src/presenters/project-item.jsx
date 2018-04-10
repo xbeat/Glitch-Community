@@ -15,7 +15,7 @@ function getProps() {
   }
   
   return {
-    projectLink: projectLink(),
+    link: projectLink(),
     showProject: (event) => {
       event.preventDefault();
       event.stopPropagation();
@@ -24,7 +24,13 @@ function getProps() {
     isRecentProject: project.isRecentProject,
     private: project.private(),
     name: project.name(),
-    project.isPinnedByTeam: project.isPinnedB
+    isPinnedByTeam: project.isPinnedByTeam(application),
+    isPinnedByUser: project.isPinnedByUser(application),
+    id: project.id(),
+    avatar: project.avatar(),
+    domain: project.domain(),
+    description: project.description(),
+    showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
     
   };
     
@@ -54,32 +60,19 @@ export const ProjectItem = ({application, project, categoryColor, projectOptions
   const userHasProjectOptions = application.user().isOnUserPageForCurrentUser(application) || application.team().currentUserIsOnTeam(application);
 
   function togglePinnedState() {
+    let obj = application.user();
     if (application.pageIsTeamPage()) {
-      return toggleTeamPin();
-    } 
-    return toggleUserPin();
+      obj = application.team()
       
-  }
-
-  function toggleUserPin() {
-    if (project.isPinnedByUser(application)) {
-      return application.user().removePin(application, project.id());
+      if (project.isPinnedByTeam) {
+        return application.team().removePin(application, project.id);
+      } 
+    return application.team().addPin(application, project.id);
     } 
-    return application.user().addPin(application, project.id());
-      
-  }
-
-  function  toggleTeamPin() {
-    if (project.isPinnedByTeam(application)) {
-      return application.team().removePin(application, project.id());
+    if (project.isPinnedByUser) {
+      return application.user().removePin(application, project.id);
     } 
-    console.log('toggleTeamPin addpin');
-    return application.team().addPin(application, project.id());
-      
-  }
-  
-  function avatar() {
-    return project.avatar();
+    return application.user().addPin(application, project.id);
   }
   
   const Users = ({glitchTeam}) => {
@@ -93,7 +86,7 @@ export const ProjectItem = ({application, project, categoryColor, projectOptions
   return ( 
 
     <li>
-      <Users glitchTeam={project.showAsGlitchTeam && project.showAsGlitchTeam()}/>
+      <Users glitchTeam={project.showAsGlitchTeam}/>
 
       {userHasProjectOptions && (
         <div class="project-options button-borderless opens-pop-over hidden visible" onClick={showProjectOptionsPop}> 
@@ -101,17 +94,17 @@ export const ProjectItem = ({application, project, categoryColor, projectOptions
         </div>
       )}
     
-      <a href={projectLink} onClick={project.showProject}>
+      <a href={project.link} onClick={project.showProject}>
         <div class={['project', project.private ? 'private-project' : ''].join(' ')} 
           style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
           data-track="project" data-track-label={project.domain}>
           <div class="project-container">
-            <img class="avatar" src={avatar} alt={`${projectDomain} avatar`}/>
+            <img class="avatar" src={project.avatar} alt={`${project.domain} avatar`}/>
             <button class={project.isRecentProject ? "button-cta" : ""}>
               <span class="private-project-badge"></span>
-              <div class="project-name">{projectDomain}</div>
+              <div class="project-name">{project.domain}</div>
             </button>
-            <div class="description">{projectDescription}</div>
+            <div class="description">{project.description}</div>
             <div class="overflow-mask" style={{backgroundColor: categoryColor}}></div>
           </div>
         </div>
