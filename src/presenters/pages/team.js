@@ -194,6 +194,9 @@ module.exports = function(application) {
     projects() {
       return self.team().projects();
     },
+    
+        onetwothreefourfivesixseveneghtnine() {
+    },
       
     pinnedProjectIds() {
       return self.team().pins().map(pin => pin.projectId);
