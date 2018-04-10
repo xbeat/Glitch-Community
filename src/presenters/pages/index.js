@@ -15,8 +15,6 @@ import Categories from "../categories.jsx";
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
 import StarterApps from "../includes/starter-apps.jsx"
-import {render, unmountComponentAtNode} from 'react-dom';
-import React from 'react';
 
 module.exports = function(application) {
   console.log("Presented index");

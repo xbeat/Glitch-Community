@@ -40,12 +40,7 @@ module.exports = function(application) {
       application.getProjects(projectIds);
       return projects.map(function(project) {
         project.isRecentProject = true;
-        const category = { 
-          color() {
-            return undefined;
-          },
-        };
-        return Reactlet(ProjectItem, {application, project, category});
+        return Reactlet(ProjectItem, {closeAllPopOvers: application.closeAllPopOvers, project: project.asProps()});
       });
     },
         

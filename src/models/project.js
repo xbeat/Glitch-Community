@@ -43,7 +43,7 @@ module.exports = (Project = function(I, self) {
         id: project.id(),
         isPinnedByTeam: project.isPinnedByTeam(application),
         isPinnedByUser: project.isPinnedByUser(application),
-        isRecentProject: project.isRecentProject,
+        isRecentProject: !!(project.isRecentProject),
         link: project.isRecentProject ? project.editUrl() : `/~${project.domain()}`,
         name: project.name(),
         private: project.private(),
