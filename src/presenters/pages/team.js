@@ -206,7 +206,16 @@ module.exports = function(application) {
     
     pinnedProjectsList() {
       const pinnedProjects = self.projects().filter(project => _.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, {removeProjectFromTeam: self.removeProjectFromTeam});
+      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, projectOptions());
+    },
+    
+    projectOptions(){
+      return {removeProjectFromTeam: self.removeProjectFromTeam, togglePinnedState: self.togglePinnedState}
+    },
+    
+     togglePinnedState() {
+      const action = self.isPinnedByTeam() ? "removePin" : "addPin";
+      return application.team()[action](application, self.id());
     },
     
     removeProjectFromTeam(project) {
