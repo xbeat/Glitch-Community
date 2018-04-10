@@ -60,19 +60,17 @@ export const ProjectItem = ({application, project, categoryColor, projectOptions
   const userHasProjectOptions = application.user().isOnUserPageForCurrentUser(application) || application.team().currentUserIsOnTeam(application);
 
   function togglePinnedState() {
-    let obj = application.user();
+    let entity = application.user();
+    let pinned = project.isPinnedByUser;
+    
     if (application.pageIsTeamPage()) {
-      obj = application.team()
-      
-      if (project.isPinnedByTeam) {
-        return application.team().removePin(application, project.id);
-      } 
-    return application.team().addPin(application, project.id);
-    } 
-    if (project.isPinnedByUser) {
-      return application.user().removePin(application, project.id);
-    } 
-    return application.user().addPin(application, project.id);
+      entity = application.team();
+      pinned = project.isPinnedByTeam;
+    }
+    
+    const action = pinned ? "removePin" : "addPin";
+
+    return entity[action](application, project.id);
   }
   
   const Users = ({glitchTeam}) => {
