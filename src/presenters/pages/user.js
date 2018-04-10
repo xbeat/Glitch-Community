@@ -196,12 +196,12 @@ module.exports = function(application, userLoginOrId) {
 
     recentProjects() {
       const recentProjects = self.projects().filter(project => !_.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Recent Projects", recentProjects, {deleteProject: self.deleteProject, leaveProject: self.leaveProject});
+      return ProjectsListPresenter(application, "Recent Projects", recentProjects, self.projectOptions());
     },  
     
     pinnedProjectsList() {
       const pinnedProjects = self.projects().filter(project => _.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, {deleteProject: self.deleteProject, leaveProject: self.leaveProject});
+      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, self.projectOptions());
     },
 
     hiddenIfNotCurrentUserAndNoPins() {
@@ -214,19 +214,25 @@ module.exports = function(application, userLoginOrId) {
       if (!self.user().isAnon()) { return 'hidden'; }
     },
     
-        // TODO: Hoist togglePinnedState into projectOptions
-    application.user().isOnUserPageForCurrentUser(application) || application.team().currentUserIsOnTeam(application);
+    projectOptions() {
+      
+      
+      return {
+        deleteProject: self.deleteProject, leaveProject: self.leaveProject, togglePinnedState: self.togglePinnedState
+      }
+    }
+    
     togglePinnedState() {
       let entity = application.user();
-      let pinned = project.isPinnedByUser;
+      let pinned = self.isPinnedByUser();
 
-      if (projectOptions.pageIsTeamPage) {
+      if (application.pageIsTeamPage()) {
         entity = application.team();
-        pinned = project.isPinnedByTeam;
+        pinned = self.isPinnedByTeam();
       }
       const action = pinned ? "removePin" : "addPin";
-      return entity[action](application, project.id);
-    }
+      return entity[action](application, self.id());
+    },
 
                 
     deleteProject(project, event) {

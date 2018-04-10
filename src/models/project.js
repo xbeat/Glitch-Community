@@ -37,22 +37,21 @@ module.exports = (Project = function(I, self) {
       const project = self;
 
       return {
+        avatar: project.avatar(),
+        description: project.description(),
+        domain: project.domain(),
+        id: project.id(),
+        isPinnedByTeam: project.isPinnedByTeam(application),
+        isPinnedByUser: project.isPinnedByUser(application),
+        isRecentProject: project.isRecentProject,
         link: project.isRecentProject ? project.editUrl() : `/~${project.domain()}`,
+        name: project.name(),
+        private: project.private(),
+        showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
         showOverlay: () => {
           project.showOverlay(application);
         },
-        isRecentProject: project.isRecentProject,
-        private: project.private(),
-        name: project.name(),
-        isPinnedByTeam: project.isPinnedByTeam(application),
-        isPinnedByUser: project.isPinnedByUser(application),
-        id: project.id(),
-        avatar: project.avatar(),
-        domain: project.domain(),
-        description: project.description(),
-        showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
       };
-    }
     },
 
     name() {
