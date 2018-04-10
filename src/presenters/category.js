@@ -8,7 +8,12 @@ import Reactlet from "./reactlet";
 module.exports = function(application, category) {
   const { projects } = category;
 
-  const projectElements = projects.map(project => Reactlet(ProjectItem, application, project, category));
+  const projectElements = projects.map(project => 
+    Reactlet(ProjectItem, {
+      closeAllPopOvers: application.closeAllPopOvers,
+      project: project.asProps(),
+      categoryColor: category.backgroundColor(),
+    }));
 
   const self = {
 

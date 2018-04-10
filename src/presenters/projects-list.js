@@ -10,7 +10,7 @@ module.exports = function(application, title, projects, projectOptions={}) {
     sectionTitle: title,
 
     projects() {
-      return projects.map(project => Reactlet(ProjectItem, {closeAllPopovers: application.closeAllPopovers, project: project.asProps(), projectOptions}));
+      return projects.map(project => Reactlet(ProjectItem, {closeAllPopOvers: application.closeAllPopOvers, project: project.asProps(), projectOptions}));
     },
 
     visibleIfNoPins() {
