@@ -3,25 +3,27 @@ import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
-export const ProjectItem = ({application, project, categoryColor, projectOptions={}}) => {
-    
+function getProps() {
+  
   function projectLink() {
     if (project.isRecentProject) {
-      return self.editorLink();
+      return project.editUrl();
     } 
     return `/~${project.domain()}`;
-      
   }
-
-  function  editorLink() {
-    return project.editUrl();
-  }
-
-  function showProject(event) {
+  
+  return {
+  projectLink: projectLink(),
+  showProject: (event) => {
     event.preventDefault();
     event.stopPropagation();
     return project.showOverlay(application);
-  }
+  },
+  
+}
+
+export const ProjectItem = ({application, project, categoryColor, projectOptions={}}) => {
+    
 
   function buttonCtaIfCurrentUser() {
     if (project.isRecentProject) {
@@ -105,7 +107,7 @@ export const ProjectItem = ({application, project, categoryColor, projectOptions
         </div>
       )}
     
-      <a href={projectLink} onClick={showProject}>
+      <a href={projectLink} onClick={project.showProject}>
         <div class={`project ${projectIsPrivate()}`} style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}} data-track="project" data-track-label={project.domain}>
           <div class="project-container">
             <img class="avatar" src={avatar} alt={`${projectDomain} avatar`}/>

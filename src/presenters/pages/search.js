@@ -5,6 +5,7 @@ const SearchPageTemplate = require("../../templates/pages/search");
 
 import Categories from "../categories.jsx";
 import Reactlet from "../reactlet";
+import ProjectItem from "../project-item.jsx";
 
 
 module.exports = function(application) {
@@ -42,6 +43,10 @@ module.exports = function(application) {
 
     hiddenUnlessSearchHasNoResults() {
       if (!application.searchResultsHaveNoUsers() || !application.searchResultsHaveNoProjects() || !application.searchResultsHaveNoTeams()) { return 'hidden'; }
+    },
+    
+    ProjectItemPresenter(context, project, {}) {
+      return Reactlet(ProjectItem, context, project, {});
     },
     
     Categories() {
