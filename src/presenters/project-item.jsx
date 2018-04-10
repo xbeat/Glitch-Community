@@ -1,4 +1,6 @@
 import React from 'react';
+
+import PropTypes from 'prop-types';
 import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
 import Reactlet from "./reactlet";
@@ -67,6 +69,13 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
     </li>
   );
 };
+
+ProjectItem.propTypes = {
+  closeAllPopOvers: PropTypes.func.isRequired,
+  project: PropTypes.Object.isRequired,
+  categoryColor: PropTypes.string,
+  projectOptions: PropTypes.Object,
+}
 
 
 export default ProjectItem;

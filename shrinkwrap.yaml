@@ -22,6 +22,7 @@ dependencies:
   moment: 2.20.1
   nodemon: 1.17.1
   o_0: 0.3.8
+  prop-types: 15.6.1
   quantize: 1.0.2
   querystringify: 1.0.0
   randomcolor: 0.5.3
@@ -5537,6 +5538,7 @@ specifiers:
   moment: ^2.19.0
   nodemon: ^1.14.11
   o_0: ^0.3.8
+  prop-types: ^15.6.1
   quantize: ^1.0.2
   querystringify: ^1.0.0
   randomcolor: ^0.5.3
