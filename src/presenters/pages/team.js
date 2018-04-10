@@ -195,7 +195,7 @@ module.exports = function(application) {
       return self.team().projects();
     },
     
-        onetwothreefourfivesixseveneghtnine() {
+      onetwothreefourfivesixseveneightnineteneleventwelvethirteenfourteenfifteensixteensevent() {
     },
       
     pinnedProjectIds() {
@@ -221,7 +221,7 @@ module.exports = function(application) {
       };
     },
     
-     togglePinnedState() {
+    togglePinnedState() {
       const action = self.isPinnedByTeam() ? "removePin" : "addPin";
       return application.team()[action](application, self.id());
     },
