@@ -72,9 +72,28 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
 
 ProjectItem.propTypes = {
   closeAllPopOvers: PropTypes.func.isRequired,
-  project: PropTypes.Object.isRequired,
+  project: PropTypes.shape({
+    avatar: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    domain: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    isPinnedByTeam: PropTypes.bool.isRequired,
+    isPinnedByUser: PropTypes.bool.isRequired,
+    isRecentProject: PropTypes.bool.isRequired,
+    link: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    private: PropTypes.bool.isRequired,
+    showAsGlitchTeam: PropTypes.bool.isRequired,
+    showOverlay: PropTypes.func.isRequired,
+    users: PropTypes.array.isRequired,
+  }).isRequired,
   categoryColor: PropTypes.string,
-  projectOptions: PropTypes.Object,
+  projectOptions: PropTypes.shape({
+    togglePinnedState: PropTypes.func,
+    deleteProject: PropTypes.func,
+    leaveProject: PropTypes.func,
+    removeProjectFromTeam: PropTypes.func,
+  }),
 }
 
 
