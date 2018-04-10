@@ -35,7 +35,7 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
     if(glitchTeam) {
       return <GlitchTeamUsersList/> 
     }
-    return <UsersList users={project.users().map(user => user.asProps())}/>
+    return <UsersList users={project.users}/>
   }
   
   return ( 
@@ -44,23 +44,23 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
       <Users glitchTeam={project.showAsGlitchTeam}/>
 
       {projectOptions && (
-        <div class="project-options button-borderless opens-pop-over hidden visible" onClick={showProjectOptionsPop}> 
-          <div class="down-arrow"></div>
+        <div className="project-options button-borderless opens-pop-over hidden visible" onClick={showProjectOptionsPop}> 
+          <div className="down-arrow"></div>
         </div>
       )}
     
       <a href={project.link} onClick={showProject}>
-        <div class={['project', project.private ? 'private-project' : ''].join(' ')} 
+        <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
           style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
           data-track="project" data-track-label={project.domain}>
-          <div class="project-container">
-            <img class="avatar" src={project.avatar} alt={`${project.domain} avatar`}/>
-            <button class={project.isRecentProject ? "button-cta" : ""}>
-              <span class="private-project-badge"></span>
-              <div class="project-name">{project.domain}</div>
+          <div className="project-container">
+            <img className="avatar" src={project.avatar} alt={`${project.domain} avatar`}/>
+            <button className={project.isRecentProject ? "button-cta" : ""}>
+              <span className="private-project-badge"></span>
+              <div className="project-name">{project.domain}</div>
             </button>
-            <div class="description">{project.description}</div>
-            <div class="overflow-mask" style={{backgroundColor: categoryColor}}></div>
+            <div className="description">{project.description}</div>
+            <div className="overflow-mask" style={{backgroundColor: categoryColor}}></div>
           </div>
         </div>
       </a>

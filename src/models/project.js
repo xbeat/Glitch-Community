@@ -51,6 +51,7 @@ module.exports = (Project = function(I, self) {
         showOverlay: () => {
           project.showOverlay(application);
         },
+        users: project.users().map(user => user.asProps()),
       };
     },
 

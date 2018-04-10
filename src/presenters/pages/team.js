@@ -194,9 +194,6 @@ module.exports = function(application) {
     projects() {
       return self.team().projects();
     },
-    
-      onetwothreefourfivesixseveneightnineteneleventwelvethirteenfourteenfifteensixteensevent() {
-    },
       
     pinnedProjectIds() {
       return self.team().pins().map(pin => pin.projectId);
@@ -214,6 +211,9 @@ module.exports = function(application) {
     
     projectOptions(){
       const userHasProjectOptions = application.team().currentUserIsOnTeam(application);
+      if(!userHasProjectOptions) {
+        return {};
+      }
       
       return {
         removeProjectFromTeam: self.removeProjectFromTeam, 
@@ -221,9 +221,9 @@ module.exports = function(application) {
       };
     },
     
-    togglePinnedState() {
-      const action = self.isPinnedByTeam() ? "removePin" : "addPin";
-      return application.team()[action](application, self.id());
+    togglePinnedState(project) {
+      const action = project.isPinnedByTeam() ? "removePin" : "addPin";
+      return application.team()[action](application, project.id());
     },
     
     removeProjectFromTeam(project) {

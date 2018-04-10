@@ -47,7 +47,7 @@ module.exports = () => {
           exclude: [/node_modules/, /templates/],
           loader: "eslint-loader",
           options: {
-            //fix: true,
+            fix: true,
             cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so blank it when reconfiguring
             emitError: true,
             emitWarning: true,
