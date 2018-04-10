@@ -46,7 +46,7 @@ module.exports = function(application) {
     },
     
     ProjectItemPresenter(context, project, {}) {
-      return Reactlet(ProjectItem, context, project, {});
+      return Reactlet(ProjectItem, {closeAllPopOvers: context.closeAllPopOvers, project: project.asProps()});
     },
     
     Categories() {

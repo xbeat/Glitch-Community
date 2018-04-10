@@ -14,7 +14,14 @@ module.exports = function(application) {
     category: application.category,
 
     projectElements() {
-      return self.category().projects().map(project => Reactlet(ProjectItem, application, project, self.category()));
+      return self.category().projects().map(project => {
+        const props = {
+          closeAllPopOvers: application.closeAllPopOvers, 
+          project: project.asProps(), 
+          categoryColor: self.backgroundColor()
+        };
+        return Reactlet(ProjectItem, props);
+      });
     },
 
     Categories() {

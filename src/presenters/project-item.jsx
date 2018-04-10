@@ -27,7 +27,7 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
     return button[0].after(Reactlet(ProjectOptionsPop, props));
   }
   
-  function showProject() {
+  function showProject(event) {
     event.preventDefault();
     event.stopPropagation();
     return project.showOverlay();
