@@ -215,24 +215,22 @@ module.exports = function(application, userLoginOrId) {
     },
     
     projectOptions() {
-      const userHasProjectOptions = application.user().isOnUserPageForCurrentUser(application) || application.pageIsTeamPage && application.team().currentUserIsOnTeam(application);
-      if(!userHasProjectOptions) {return null;}
+      const userHasProjectOptions = application.user().isOnUserPageForCurrentUser(application);
+      if(!userHasProjectOptions) {
+        return {};
+      }
       
       return {
-        deleteProject: self.deleteProject, leaveProject: self.leaveProject, togglePinnedState: self.togglePinnedState
+        deleteProject: self.deleteProject, 
+        leaveProject: self.leaveProject, 
+        togglePinnedState: self.togglePinnedState,
+        pageIsTeamPage: false,
       }
-    }
+    },
     
     togglePinnedState() {
-      let entity = application.user();
-      let pinned = self.isPinnedByUser();
-
-      if (application.pageIsTeamPage()) {
-        entity = application.team();
-        pinned = self.isPinnedByTeam();
-      }
-      const action = pinned ? "removePin" : "addPin";
-      return entity[action](application, self.id());
+      const action = self.isPinnedByUser() ? "removePin" : "addPin";
+      return application.user()[action](application, self.id());
     },
 
                 

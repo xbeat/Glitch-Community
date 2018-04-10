@@ -201,16 +201,22 @@ module.exports = function(application) {
 
     recentProjects() {
       const recentProjects = self.projects().filter(project => !_.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Recent Projects", recentProjects, {removeProjectFromTeam: self.removeProjectFromTeam});
+      return ProjectsListPresenter(application, "Recent Projects", recentProjects, self.projectOptions());
     },
     
     pinnedProjectsList() {
       const pinnedProjects = self.projects().filter(project => _.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, projectOptions());
+      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, self.projectOptions());
     },
     
     projectOptions(){
-      return {removeProjectFromTeam: self.removeProjectFromTeam, togglePinnedState: self.togglePinnedState}
+      const userHasProjectOptions = application.team().currentUserIsOnTeam(application);
+      
+      return {
+        removeProjectFromTeam: self.removeProjectFromTeam, 
+        togglePinnedState: self.togglePinnedState,
+        pageIsTeamPage: true
+      };
     },
     
      togglePinnedState() {
