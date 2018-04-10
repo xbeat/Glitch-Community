@@ -3,11 +3,9 @@ const axios = require('axios');
 const LayoutPresenter = require("../layout");
 const SearchPageTemplate = require("../../templates/pages/search");
 
-const Reactlet = require("../reactlet");
-
 import Categories from "../categories.jsx";
-import {render} from 'react-dom';
-import React from 'react';
+import Reactlet from "../reactlet";
+
 
 module.exports = function(application) {
 

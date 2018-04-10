@@ -3,7 +3,6 @@ const LayoutPresenter = require("../layout");
 const HeaderPresenter = require("../header");
 const FeaturedCollectionPresenter = require("../featured-collection");
 const RecentProjectsPresenter = require("../recent-projects");
-const ProjectItemPresenter = require("../project-item");
 const QuestionsPresenter = require("../questions");
 const CategoryPresenter = require("../category");
 const CategoryModel = require("../../models/category");

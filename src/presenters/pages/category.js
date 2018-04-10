@@ -1,12 +1,9 @@
 const CategoryPageTemplate = require("../../templates/pages/category");
 const LayoutPresenter = require("../layout");
-const ProjectItemPresenter = require("../project-item");
 
-const Reactlet = require("../reactlet");
-
+import ProjectItem from "../project-item.jsx";
 import Categories from "../categories.jsx";
-import {render} from 'react-dom';
-import React from 'react';
+import Reactlet from "../reactlet";
 
 module.exports = function(application) {
 
@@ -17,7 +14,7 @@ module.exports = function(application) {
     category: application.category,
 
     projectElements() {
-      return self.category().projects().map(project => ProjectItemPresenter(application, project, self.category()));
+      return self.category().projects().map(project => Reactlet(ProjectItem, application, project, self.category()));
     },
 
     Categories() {
