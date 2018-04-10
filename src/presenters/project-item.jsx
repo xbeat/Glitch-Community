@@ -3,10 +3,10 @@ import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
-export const ProjectItem = ({application, project, categoryColor, projectOptions={}}) => {
+export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOptions}) => {
 
   function showProjectOptionsPop(event) {
-    application.closeAllPopOvers();
+    closeAllPopOvers();
     event.stopPropagation();
     const button = $(event.target).closest('.opens-pop-over');
     
@@ -15,7 +15,7 @@ export const ProjectItem = ({application, project, categoryColor, projectOptions
       let entity = application.user();
       let pinned = project.isPinnedByUser;
 
-      if (application.pageIsTeamPage()) {
+      if (projectOptions.pageIsTeamPage) {
         entity = application.team();
         pinned = project.isPinnedByTeam;
       }
@@ -26,8 +26,8 @@ export const ProjectItem = ({application, project, categoryColor, projectOptions
     let props = {
       projectName: project.name,
       projectIsPinned: project.isPinnedByUser || project.isPinnedByTeam,
-      closeAllPopOvers: application.closeAllPopOvers,
-      pageIsTeamPage: application.pageIsTeamPage(),
+      closeAllPopOvers: closeAllPopOvers,
+      pageIsTeamPage: projectOptions.pageIsTeamPage,
       togglePinnedState: self.togglePinnedState,
       deleteProject: (event) => projectOptions.deleteProject(project, event),
       leaveProject: (event) => projectOptions.leaveProject(project, event),
@@ -57,7 +57,7 @@ export const ProjectItem = ({application, project, categoryColor, projectOptions
     <li>
       <Users glitchTeam={project.showAsGlitchTeam}/>
 
-      {userHasProjectOptions && (
+      {projectOptions && (
         <div class="project-options button-borderless opens-pop-over hidden visible" onClick={showProjectOptionsPop}> 
           <div class="down-arrow"></div>
         </div>
