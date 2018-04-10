@@ -215,7 +215,7 @@ module.exports = function(application, userLoginOrId) {
     },
     
     projectOptions() {
-      
+      const userHasProjectOptions = application.user().isOnUserPageForCurrentUser(application) || application.team().currentUserIsOnTeam(application);
       
       return {
         deleteProject: self.deleteProject, leaveProject: self.leaveProject, togglePinnedState: self.togglePinnedState
