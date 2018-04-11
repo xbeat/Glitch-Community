@@ -89,7 +89,7 @@ export class ProjectOptionsContainer extends React.Component {
     const {projectOptions, closeAllPopOvers, project} = this.props;
     
     // If no project options are provided, render nothing.
-    if(!Object.keys(projectOptions)) {
+    if(Object.keys(projectOptions).length === 0) {
       return null;
     }
     
@@ -112,20 +112,20 @@ export class ProjectOptionsContainer extends React.Component {
       });
     }
     
-    const props = {
+    let popupProps = {
       projectId: project.id,
       projectName: project.name,
       projectIsPinned: project.isPinnedByUser||project.isPinnedByTeam,
-      closeAllPopOvers: closeAllPopOvers
+      closeAllPopOvers: closeAllPopOvers,
     };
-    Object.assign(projectOptions, props);
+    Object.assign(popupProps, projectOptions);
     
     return (
       <React.Fragment>
         <div className="project-options button-borderless opens-pop-over" onClick={showProjectOptionsPop}> 
           <div className="down-arrow"></div>
         </div>
-        { this.state.visible && <ProjectOptionsPop {...{props}}></ProjectOptionsPop> }
+        { this.state.visible && <ProjectOptionsPop {...{popupProps}}></ProjectOptionsPop> }
       </React.Fragment>
       );
   }
