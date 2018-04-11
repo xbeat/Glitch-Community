@@ -12,7 +12,33 @@ const Users = ({glitchTeam, users}) => {
   return <UsersList users={users}/>
 }
 
-const Pro
+class ProjectOptionsContainer extends React.Component {
+  constructor() {
+    super()
+    this.state = { visible: false }
+  }
+
+//  this.setState({comments: comments});
+  render() {
+    const {projectOptions, closeAllPopOvers} = this.props;
+    
+    if(!Object.keys(projectOptions)) {
+      return null;
+    }
+    
+    function showProjectOptionsPop(event) {
+      closeAllPopOvers();
+      event.stopPropagation();
+      this.setState({visible: true});
+    }
+    
+    return (
+        <div className="project-options button-borderless opens-pop-over" onClick={showProjectOptionsPop}> 
+          <div className="down-arrow"></div>
+        </div>
+      );
+  }
+}
 
 export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOptions}) => {
 
@@ -49,11 +75,8 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
     <li>
       <Users glitchTeam={project.showAsGlitchTeam} users={project.users}/>
 
-      {projectOptions && (
-        <div className="project-options button-borderless opens-pop-over hidden visible" onClick={showProjectOptionsPop}> 
-          <div className="down-arrow"></div>
-        </div>
-      )}
+      <ProjectOptionsContainer name={project.name} isPinned={project.isPinnedByUser||project.isPinnedByTeam} closeAllPopOvers={closeAllPopOvers} projectOptions={projectOptions}></ProjectOptionsContainer>
+
     
       <a href={project.link} onClick={showProject}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
