@@ -1,5 +1,4 @@
-/* globals Project */
-
+const Project = require("../../models/project");
 const Observable = require('o_0');
 const _ = require('lodash');
 const md = require('markdown-it')({

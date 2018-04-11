@@ -14,7 +14,7 @@ export const ProjectOptionsPop = ({
   togglePinnedState, deleteProject, 
   leaveProject, removeProjectFromTeam
 }) => {
- 
+  
   function addPin(event) {
     togglePin(event, 'slide-up');
   }
@@ -118,13 +118,14 @@ export class ProjectOptionsContainer extends React.Component {
       projectIsPinned: project.isPinnedByUser||project.isPinnedByTeam,
       closeAllPopOvers: closeAllPopOvers
     };
+    Object.assign(projectOptions, props);
     
     return (
       <React.Fragment>
         <div className="project-options button-borderless opens-pop-over" onClick={showProjectOptionsPop}> 
           <div className="down-arrow"></div>
         </div>
-        { this.state.visible && <ProjectOptionsPop {...{props}} {...projectOptions}></ProjectOptionsPop> }
+        { this.state.visible && <ProjectOptionsPop {...{props}}></ProjectOptionsPop> }
       </React.Fragment>
       );
   }

@@ -194,7 +194,7 @@ Project.isPinnedByUser = (user, projectId) => {
 };
 
 Project.isPinnedByTeam = function(team, projectId) {
-    const pins = team().pins().map(pin => pin.projectId);
+    const pins = team.pins().map(pin => pin.projectId);
     return _.includes(pins, projectId);
 }
 

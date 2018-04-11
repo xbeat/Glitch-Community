@@ -5,7 +5,7 @@ const md = require('markdown-it')({
   linkify: true,
   typographer: true,
 });
-const Project = require("../../models/Project");
+const Project = require("../../models/project");
 
 const TeamTemplate = require("../../templates/pages/team");
 const LayoutPresenter = require("../layout");
