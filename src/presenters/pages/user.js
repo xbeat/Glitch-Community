@@ -206,7 +206,7 @@ module.exports = function(application, userLoginOrId) {
       };
       console.log("rerendering recent projects.")
       return Reactlet(ProjectsList, props);
-    },  
+    },
     
     pinnedProjectsList() {
       const pinnedProjects = self.projects().filter(project => project.fetched() && _.includes(self.pinnedProjectIds(), project.id()));
