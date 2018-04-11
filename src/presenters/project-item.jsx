@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
+import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
@@ -10,45 +10,6 @@ const Users = ({glitchTeam, users}) => {
     return <GlitchTeamUsersList/> 
   }
   return <UsersList users={users}/>
-}
-
-class ProjectOptionsContainer extends React.Component {
-  constructor() {
-    super()
-    this.state = { visible: false }
-  }
-
-//  this.setState({comments: comments});
-  render() {
-    const {projectOptions, closeAllPopOvers, project} = this.props;
-    
-    if(!Object.keys(projectOptions)) {
-      return null;
-    }
-    
-    function showProjectOptionsPop(event) {
-      closeAllPopOvers();
-      event.stopPropagation();
-      this.setState({visible: true});
-    }
-    
-    //Allow external actions to close this popover:
-    closeAllPopOvers(() => {
-      this.setState({visible: false});
-    });
-    
-    const props = {
-      projectName: project.name,
-      projectIsPinned: project.isPinnedByUser||project.isPinnedByTeam,
-      closeAllPopOvers: closeAllPopOvers,
-      project: project,
-    }
-    return (
-        <div className="project-options button-borderless opens-pop-over" onClick={showProjectOptionsPop}> 
-          <div className="down-arrow"></div>
-        </div>
-      );
-  }
 }
 
 export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOptions}) => {
@@ -96,15 +57,12 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
     return project.showOverlay();
   }
   
-
-  
   return ( 
 
     <li>
       <Users glitchTeam={project.showAsGlitchTeam} users={project.users}/>
 
       <ProjectOptionsContainer project={project} closeAllPopOvers={closeAllPopOvers} projectOptions={projectOptions}></ProjectOptionsContainer>
-
     
       <a href={project.link} onClick={showProject}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 

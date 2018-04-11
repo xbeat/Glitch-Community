@@ -61,4 +61,48 @@ export const ProjectOptionsPop = ({
   );
 };
 
-export default ProjectOptionsPop;
+class ProjectOptionsContainer extends React.Component {
+  constructor() {
+    super()
+    this.state = { visible: false }
+  }
+  
+  componentDidMount() {
+     //Allow external actions to close this popover:
+    this.props.closeAllPopOvers(() => {
+      this.setState({visible: false});
+    });
+  }
+
+  render() {
+    const {projectOptions, closeAllPopOvers, project} = this.props;
+    
+    // If no project options are provided, render nothing.
+    if(!Object.keys(projectOptions)) {
+      return null;
+    }
+    
+    function showProjectOptionsPop(event) {
+      closeAllPopOvers();
+      event.stopPropagation();
+      this.setState({visible: true});
+    }
+    
+    const props = {
+      projectId: project.id,
+      projectName: project.name,
+      projectIsPinned: project.isPinnedByUser||project.isPinnedByTeam,
+      closeAllPopOvers: closeAllPopOvers,
+      projectOptions: projectOptions,
+    };
+    
+    return (
+        <div className="project-options button-borderless opens-pop-over" onClick={showProjectOptionsPop}> 
+          <div className="down-arrow"></div>
+        </div>
+        { this.state.visible && <ProjectOptionsPop {...{props}}></ProjectOptionsPop> }
+      );
+  }
+}
+
+export default ProjectOptionsContainer;
