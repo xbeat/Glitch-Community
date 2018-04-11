@@ -20,7 +20,7 @@ class ProjectOptionsContainer extends React.Component {
 
 //  this.setState({comments: comments});
   render() {
-    const {projectOptions, closeAllPopOvers} = this.props;
+    const {projectOptions, closeAllPopOvers, project} = this.props;
     
     if(!Object.keys(projectOptions)) {
       return null;
@@ -32,6 +32,17 @@ class ProjectOptionsContainer extends React.Component {
       this.setState({visible: true});
     }
     
+    //Allow external actions to close this popover:
+    closeAllPopOvers(() => {
+      this.setState({visible: false});
+    });
+    
+    const props = {
+      projectName: project.name,
+      projectIsPinned: project.isPinnedByUser||project.isPinnedByTeam,
+      closeAllPopOvers: closeAllPopOvers,
+      project: project,
+    }
     return (
         <div className="project-options button-borderless opens-pop-over" onClick={showProjectOptionsPop}> 
           <div className="down-arrow"></div>
@@ -46,6 +57,23 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
     closeAllPopOvers();
     event.stopPropagation();
     const button = $(event.target).closest('.opens-pop-over');
+    
+    
+    if(projectOptions.togglePinnedState) {
+      props.togglePinnedState = () => projectOptions.togglePinnedState(project);
+    }
+    
+    if(projectOptions.deleteProject) {
+      props.deleteProject = (event) => projectOptions.deleteProject(project, event);
+    }
+    if(projectOptions.leaveProject) {
+      props.leaveProject = (event) => projectOptions.leaveProject(project, event);
+    }
+    
+    if(projectOptions.removeProjectFromTeam) {
+      props.removeProjectFromTeam = () => projectOptions.removeProjectFromTeam(project);
+    };
+    
       
     let props = {
       projectName: project.name,
@@ -75,7 +103,7 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
     <li>
       <Users glitchTeam={project.showAsGlitchTeam} users={project.users}/>
 
-      <ProjectOptionsContainer name={project.name} isPinned={project.isPinnedByUser||project.isPinnedByTeam} closeAllPopOvers={closeAllPopOvers} projectOptions={projectOptions}></ProjectOptionsContainer>
+      <ProjectOptionsContainer project={project} closeAllPopOvers={closeAllPopOvers} projectOptions={projectOptions}></ProjectOptionsContainer>
 
     
       <a href={project.link} onClick={showProject}>
