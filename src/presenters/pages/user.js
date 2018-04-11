@@ -10,7 +10,9 @@ const md = require('markdown-it')({
 const UserTemplate = require("../../templates/pages/user");
 const DeletedProjectsTemplate = require("../../templates/deleted-projects");
 const LayoutPresenter = require("../layout");
-const ProjectsListPresenter = require("../projects-list");
+
+import ProjectsList from "../projects-list.jsx";
+import Reactlet from "../reactlet";
 
 module.exports = function(application, userLoginOrId) {
   const assetUtils = require('../../utils/assets')(application);
@@ -196,12 +198,12 @@ module.exports = function(application, userLoginOrId) {
 
     recentProjects() {
       const recentProjects = self.projects().filter(project => !_.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Recent Projects", recentProjects, self.projectOptions());
+      return Reactlet(ProjectsList, { ProjectsListPresenter(application, "Recent Projects", recentProjects, self.projectOptions());
     },  
     
     pinnedProjectsList() {
       const pinnedProjects = self.projects().filter(project => _.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, self.projectOptions());
+      return Reactlet(ProjectsList, ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, self.projectOptions());
     },
 
     hiddenIfNotCurrentUserAndNoPins() {
