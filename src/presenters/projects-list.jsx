@@ -7,14 +7,14 @@ export const ProjectsList = ({closeAllPopOvers, title, isPinned, projects, proje
 
   return (
     <article className="projects">
-    <h2>
-      <span>{title}
-        { isPinned && <span className="emoji pushpin emoji-in-title"></span> }
-      </span>
+      <h2>
+        <span>{title}
+          { isPinned && <span className="emoji pushpin emoji-in-title"></span> }
+        </span>
       </h2>
       
       { !isPinned && (
-      <div className="placeholder">
+        <div className="placeholder">
           <img className="psst" src={psst}></img>
           <p>Pin your projects to show them off
           <span className="emoji pushpin"></span></p>
@@ -23,12 +23,12 @@ export const ProjectsList = ({closeAllPopOvers, title, isPinned, projects, proje
       
       <ul className="projects-container">
         { projects.map(project => (
-        <ProjectItem key={project.id} {...{closeAllPopOvers, project, projectOptions}}></ProjectItem>
-          ))}
+          <ProjectItem key={project.id} {...{closeAllPopOvers, project, projectOptions}}></ProjectItem>
+        ))}
       </ul>
     
     </article>
-    );
+  );
 };
 
 ProjectsList.propTypes = {

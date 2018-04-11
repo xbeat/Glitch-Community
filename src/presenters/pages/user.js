@@ -197,9 +197,8 @@ module.exports = function(application, userLoginOrId) {
     },
 
     recentProjects() {
-      const recentProjects = self.projects().filter(project => !_.includes(self.pinnedProjectIds(), project.id()));
-      const projects = recentProjects.map( project => project.asProps)
-      const props =  {
+      const recentProjects = self.projects().filter(project => project.fetched && !_.includes(self.pinnedProjectIds(), project.id()));
+      const props = {
         closeAllPopOvers: application.closeAllPopOvers,
         title: "Recent Projects",
         isPinned: false,
@@ -210,8 +209,15 @@ module.exports = function(application, userLoginOrId) {
     },  
     
     pinnedProjectsList() {
-      const pinnedProjects = self.projects().filter(project => _.includes(self.pinnedProjectIds(), project.id()));
-      return Reactlet(ProjectsList, ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, self.projectOptions());
+      const pinnedProjects = self.projects().filter(project => project.fetched && _.includes(self.pinnedProjectIds(), project.id()));
+      const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
+        title: "Pinned Projects",
+        isPinned: true,
+        projects: pinnedProjects.map(project => project.asProps()),
+        projectOptions: self.projectOptions()
+      };
+      return Reactlet(ProjectsList, props);
     },
 
     hiddenIfNotCurrentUserAndNoPins() {

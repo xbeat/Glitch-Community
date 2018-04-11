@@ -10,12 +10,12 @@ const TeamTemplate = require("../../templates/pages/team");
 const LayoutPresenter = require("../layout");
 const AddTeamUserPopPresenter = require("../pop-overs/add-team-user-pop");
 const AddTeamProjectPopPresenter = require("../pop-overs/add-team-project-pop");
-const ProjectsListPresenter = require("../projects-list");
 const TeamUserPresenter = require("../team-user-avatar");
 const AnalyticsPresenter = require("../analytics");
 
 import Reactlet from "../reactlet";
 import UsersList from "../users-list.jsx";
+import ProjectsList from "../projects-list.jsx";
 
 module.exports = function(application) {
   const assetUtils = require('../../utils/assets')(application);
@@ -198,15 +198,30 @@ module.exports = function(application) {
     pinnedProjectIds() {
       return self.team().pins().map(pin => pin.projectId);
     },
-
+   
     recentProjects() {
-      const recentProjects = self.projects().filter(project => !_.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Recent Projects", recentProjects, self.projectOptions());
-    },
+      const recentProjects = self.projects().filter(project => project.fetched && !_.includes(self.pinnedProjectIds(), project.id()));
+      const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
+        title: "Recent Projects",
+        isPinned: false,
+        projects: recentProjects.map(project => project.asProps()),
+        projectOptions: self.projectOptions()
+      };
+      return Reactlet(ProjectsList, props);
+    },  
     
     pinnedProjectsList() {
-      const pinnedProjects = self.projects().filter(project => _.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, self.projectOptions());
+      const pinnedProjects = self.projects().filter(project => project.fetched && _.includes(self.pinnedProjectIds(), project.id()));
+      const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
+        title: "Pinned Projects",
+        isPinned: true,
+        projects: pinnedProjects.map(project => project.asProps()),
+        projectOptions: self.projectOptions()
+      };
+      
+      return Reactlet(ProjectsList, props);
     },
     
     projectOptions(){
