@@ -61,7 +61,6 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
 
     <li>
       <Users glitchTeam={project.showAsGlitchTeam} users={project.users}/>
-
       <ProjectOptionsContainer project={project} closeAllPopOvers={closeAllPopOvers} projectOptions={projectOptions}></ProjectOptionsContainer>
     
       <a href={project.link} onClick={showProject}>

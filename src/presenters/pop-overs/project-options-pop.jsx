@@ -8,6 +8,7 @@ const PopOverButton = ({onClick, text, emoji}) => (
 )
 
 export const ProjectOptionsPop = ({
+  projectId,
   projectName, projectIsPinned, closeAllPopOvers, 
   togglePinnedState, deleteProject, 
   leaveProject, removeProjectFromTeam
@@ -24,15 +25,19 @@ export const ProjectOptionsPop = ({
   function togglePin(event, className) {
     const projectContainer = event.target.closest('li');
     closeAllPopOvers();
-    $(projectContainer).one('animationend', () => togglePinnedState());
+    $(projectContainer).one('animationend', () => togglePinnedState(projectId));
     return $(projectContainer).addClass(className);
   }
      
   function clickLeave(event) {
     const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${projectName}?`;
     if (window.confirm(prompt)) {
-      return leaveProject(event);
+      return leaveProject(projectId, event);
     }
+  }
+  
+  function clickDelete(event) {
+    return deleteProject(projectId, event);
   }
   
   return (
@@ -48,12 +53,12 @@ export const ProjectOptionsPop = ({
 
       {removeProjectFromTeam && (
         <section className="pop-over-actions team-options danger-zone last-section">
-          <PopOverButton onClick={removeProjectFromTeam} text="Remove Project" emoji="thumbs_down"/>
+          <PopOverButton onClick={removeProjectFromTeam(projectId)} text="Remove Project" emoji="thumbs_down"/>
         </section>
       )}
       {(deleteProject && leaveProject) && (
         <section className="pop-over-actions danger-zone last-section">
-          <PopOverButton onClick={deleteProject} text="Delete This" emoji="bomb"/>
+          <PopOverButton onClick={clickDelete} text="Delete This" emoji="bomb"/>
           <PopOverButton onClick={clickLeave} text="Leave This" emoji="wave"/>
         </section>
       )}
@@ -66,13 +71,6 @@ class ProjectOptionsContainer extends React.Component {
     super()
     this.state = { visible: false }
   }
-  
-  componentDidMount() {
-     //Allow external actions to close this popover:
-    this.props.closeAllPopOvers(() => {
-      this.setState({visible: false});
-    });
-  }
 
   render() {
     const {projectOptions, closeAllPopOvers, project} = this.props;
@@ -82,7 +80,7 @@ class ProjectOptionsContainer extends React.Component {
       return null;
     }
     
-    function showProjectOptionsPop(event) {
+    const showProjectOptionsPop = (event) => {
       closeAllPopOvers();
       event.stopPropagation();
       this.setState({visible: true});
@@ -97,10 +95,12 @@ class ProjectOptionsContainer extends React.Component {
     };
     
     return (
+      <span>
         <div className="project-options button-borderless opens-pop-over" onClick={showProjectOptionsPop}> 
           <div className="down-arrow"></div>
         </div>
         { this.state.visible && <ProjectOptionsPop {...{props}}></ProjectOptionsPop> }
+      </span>
       );
   }
 }
