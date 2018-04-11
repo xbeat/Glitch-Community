@@ -14,43 +14,6 @@ const Users = ({glitchTeam, users}) => {
 
 export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOptions}) => {
 
-  function showProjectOptionsPop(event) {
-    closeAllPopOvers();
-    event.stopPropagation();
-    const button = $(event.target).closest('.opens-pop-over');
-    
-    
-    if(projectOptions.togglePinnedState) {
-      props.togglePinnedState = () => projectOptions.togglePinnedState(project);
-    }
-    
-    if(projectOptions.deleteProject) {
-      props.deleteProject = (event) => projectOptions.deleteProject(project, event);
-    }
-    if(projectOptions.leaveProject) {
-      props.leaveProject = (event) => projectOptions.leaveProject(project, event);
-    }
-    
-    if(projectOptions.removeProjectFromTeam) {
-      props.removeProjectFromTeam = () => projectOptions.removeProjectFromTeam(project);
-    };
-    
-      
-    let props = {
-      projectName: project.name,
-      projectIsPinned: project.isPinnedByUser || project.isPinnedByTeam,
-      closeAllPopOvers: closeAllPopOvers,
-      togglePinnedState: projectOptions.togglePinnedState(project),
-      deleteProject: (event) => projectOptions.deleteProject(project, event),
-      leaveProject: (event) => projectOptions.leaveProject(project, event),
-      removeProjectFromTeam: () => projectOptions.removeProjectFromTeam(project),
-    };
-    
-    //todo: store 'is visible' state, and toggle that.
-    // use the container patten.
-    return button[0].after(Reactlet(ProjectOptionsPop, props));
-  }
-  
   function showProject(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -100,12 +63,7 @@ ProjectItem.propTypes = {
     users: PropTypes.array.isRequired,
   }).isRequired,
   categoryColor: PropTypes.string,
-  projectOptions: PropTypes.shape({
-    togglePinnedState: PropTypes.func,
-    deleteProject: PropTypes.func,
-    leaveProject: PropTypes.func,
-    removeProjectFromTeam: PropTypes.func,
-  }),
+  projectOptions: PropTypes.object,
 }
 
 

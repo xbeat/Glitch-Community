@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const PopOverButton = ({onClick, text, emoji}) => (
   <button className="button-small has-emoji button-tertiary" onClick={onClick}>
@@ -66,21 +67,29 @@ export const ProjectOptionsPop = ({
   );
 };
 
-class ProjectOptionsContainer extends React.Component {
+projectId,
+  projectName, projectIsPinned, closeAllPopOvers, 
+  togglePinnedState, deleteProject, 
+  leaveProject, removeProjectFromTeam
+
+ProjectOptionsPop.propTypes = {
+  projectId: PropTypes.string.isRequired,
+    projectName: PropTypes.string.isRequired,
+  projectIsPinned: PropTypes.bool.isRequired,
+  closeAllPopOvers: PropTypes.func.isRequired,
+
+  ({
+    togglePinnedState: PropTypes.func,
+    deleteProject: PropTypes.func,
+    leaveProject: PropTypes.func,
+    removeProjectFromTeam: PropTypes.func,
+  }),
+
+export class ProjectOptionsContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = { visible: false }
   }
-  
-  showProjectOptionsPop(event) {
-      this.props.closeAllPopOvers();
-      event.stopPropagation();
-      this.setState({visible: true});
-      this.props.closeAllPopOvers(() => {
-        console.log("closin' all popovers, like ME!");
-        this.setState({visible: false});
-      });
-    }
 
   render() {
     const {projectOptions, closeAllPopOvers, project} = this.props;
@@ -88,6 +97,25 @@ class ProjectOptionsContainer extends React.Component {
     // If no project options are provided, render nothing.
     if(!Object.keys(projectOptions)) {
       return null;
+    }
+    
+    const showProjectOptionsPop = (event) => {
+      const wasVisible = this.state.visible;
+      
+      closeAllPopOvers();
+      event.stopPropagation();
+      
+      if(wasVisible) {
+        // In this circumstance, they clicked the down-arrow in order to
+        // close the popup, since it was already open.
+        // ..so leave it closed.
+        return;
+      }
+      
+      this.setState({visible: true});
+      this.props.closeAllPopOvers(() => {
+        this.setState({visible: false});
+      });
     }
     
     const props = {
@@ -99,7 +127,7 @@ class ProjectOptionsContainer extends React.Component {
     
     return (
       <React.Fragment>
-        <div className="project-options button-borderless opens-pop-over" onClick={this.showProjectOptionsPop}> 
+        <div className="project-options button-borderless opens-pop-over" onClick={showProjectOptionsPop}> 
           <div className="down-arrow"></div>
         </div>
         { this.state.visible && <ProjectOptionsPop {...{props}} {...projectOptions}></ProjectOptionsPop> }
