@@ -201,7 +201,7 @@ module.exports = function(application, userLoginOrId) {
         closeAllPopOvers: application.closeAllPopOvers,
         title: "Recent Projects",
         isPinned: false,
-        projects: recentProjects.map(project => project.asProps()),
+        //projects: recentProjects.map(project => project.asProps()),
         projectOptions: self.projectOptions()
       };
       console.log("rerendering recent projects.")
@@ -214,7 +214,7 @@ module.exports = function(application, userLoginOrId) {
         closeAllPopOvers: application.closeAllPopOvers,
         title: "Pinned Projects",
         isPinned: true,
-        projects: pinnedProjects.map(project => project.asProps()),
+        //projects: pinnedProjects.map(project => project.asProps()),
         projectOptions: self.projectOptions()
       };
       console.log("rerendering pinned projects.")
