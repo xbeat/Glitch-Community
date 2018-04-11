@@ -8,15 +8,12 @@ const PopOverButton = ({onClick, text, emoji}) => (
   </button>
 )
 
-export const ProjectOptionsPop = (props) => {
-  
-  console.log("options pop got", props);
-  const {
+export const ProjectOptionsPop = ({
   projectId,
   projectName, projectIsPinned, closeAllPopOvers, 
   togglePinnedState, deleteProject, 
   leaveProject, removeProjectFromTeam
-} = props;
+}) => {
   
   function addPin(event) {
     togglePin(event, 'slide-up');
@@ -124,9 +121,9 @@ export class ProjectOptionsContainer extends React.Component {
     
     return (
       <React.Fragment>
-        <div className="project-options button-borderless opens-pop-over" onClick={showProjectOptionsPop}> 
+        <button className="project-options button-borderless opens-pop-over" onClick={showProjectOptionsPop}> 
           <div className="down-arrow"></div>
-        </div>
+        </button>
         { this.state.visible && <ProjectOptionsPop {...popupProps} {...projectOptions}></ProjectOptionsPop> }
       </React.Fragment>
       );

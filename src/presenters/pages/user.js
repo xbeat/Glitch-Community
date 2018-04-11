@@ -204,6 +204,7 @@ module.exports = function(application, userLoginOrId) {
         projects: recentProjects.map(project => project.asProps()),
         projectOptions: self.projectOptions()
       };
+      console.log("rerendering recent projects.")
       return Reactlet(ProjectsList, props);
     },  
     
@@ -216,6 +217,7 @@ module.exports = function(application, userLoginOrId) {
         projects: pinnedProjects.map(project => project.asProps()),
         projectOptions: self.projectOptions()
       };
+      console.log("rerendering pinned projects.")
       return Reactlet(ProjectsList, props);
     },
 

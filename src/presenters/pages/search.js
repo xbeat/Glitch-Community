@@ -45,7 +45,7 @@ module.exports = function(application) {
       if (!application.searchResultsHaveNoUsers() || !application.searchResultsHaveNoProjects() || !application.searchResultsHaveNoTeams()) { return 'hidden'; }
     },
     
-    ProjectItemPresenter(context, project, {}) {
+    ProjectItemPresenter(context, project) {
       return Reactlet(ProjectItem, {closeAllPopOvers: context.closeAllPopOvers, project: project.asProps()});
     },
     
