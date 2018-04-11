@@ -19,9 +19,9 @@ module.exports =
       link: 'https://sea-pinks.glitch.me'
     }
     , {
-      title: '\'narrow-the-gap\' by ginatrapani',
-      img: "https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Fnarrow-the-gap.jpg?1523371524403",
-      link: 'https://narrow-the-gap.glitch.me'
+      title: '\'before-dawn-mystify\' by muffinista',
+      img: "https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Fbefore-dawn-mystify.jpg?1523258247261",
+      link: 'https://before-dawn-mystify.glitch.me'
     }
     , {
       title: '\'timelink\' by jacopocolo',
