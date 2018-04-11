@@ -35,7 +35,7 @@ module.exports = function(Component, props) {
           continue;
         }
         render(el);
-      };
+      }
       batchPending = false;
     });
   }
