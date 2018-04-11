@@ -198,7 +198,15 @@ module.exports = function(application, userLoginOrId) {
 
     recentProjects() {
       const recentProjects = self.projects().filter(project => !_.includes(self.pinnedProjectIds(), project.id()));
-      return Reactlet(ProjectsList, { ProjectsListPresenter(application, "Recent Projects", recentProjects, self.projectOptions());
+      const projects = recentProjects.map( project => project.asProps)
+      const props =  {
+        closeAllPopOvers: application.closeAllPopOvers,
+        title: "Recent Projects",
+        isPinned: false,
+        projects: recentProjects.map(project => project.asProps()),
+        projectOptions: self.projectOptions()
+      };
+      return Reactlet(ProjectsList, props);
     },  
     
     pinnedProjectsList() {
