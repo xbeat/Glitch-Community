@@ -5,6 +5,7 @@ const md = require('markdown-it')({
   linkify: true,
   typographer: true,
 });
+const Project = require("../../models/Project");
 
 const TeamTemplate = require("../../templates/pages/team");
 const LayoutPresenter = require("../layout");
@@ -236,13 +237,13 @@ module.exports = function(application) {
       };
     },
     
-    togglePinnedState(project) {
-      const action = project.isPinnedByTeam() ? "removePin" : "addPin";
-      return application.team()[action](application, project.id());
+    togglePinnedState(projectId) {
+      const action = Project.isPinnedByTeam(application.team(), projectId) ? "removePin" : "addPin";
+      return application.team()[action](application, projectId);
     },
     
-    removeProjectFromTeam(project) {
-      application.team().removeProject(application, project);
+    removeProjectFromTeam(projectId) {
+      application.team().removeProject(application, projectId);
     },
     
     hiddenIfNotOnTeamAndNoPins() {

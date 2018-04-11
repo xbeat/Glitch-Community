@@ -177,11 +177,11 @@ module.exports = (Team = function(I, self) {
           return console.log('added project. team projects are now', self.projects());}).catch(error => console.error('addProject', error));
     },
 
-    removeProject(application, project) {
-      const teamProjectPath = `/teams/${self.id()}/projects/${project.id()}`;
+    removeProject(application, projectId) {
+      const teamProjectPath = `/teams/${self.id()}/projects/${projectId}`;
       return application.api().delete(teamProjectPath)
         .then(function(response) {
-          const newProjects = _.reject(self.projects(), removedProject => removedProject.id() === project.id());
+          const newProjects = _.reject(self.projects(), removedProject => removedProject.id() === projectId);
           self.projects(newProjects);
           return console.log('removed project. team projects are now', self.projects());}).catch(error => console.error('addProject', error));
     },

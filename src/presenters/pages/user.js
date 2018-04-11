@@ -243,9 +243,9 @@ module.exports = function(application, userLoginOrId) {
       }
     },
     
-    togglePinnedState(project) {
-      const action = project.isPinnedByUser() ? "removePin" : "addPin";
-      return application.user()[action](application, project.id());
+    togglePinnedState(projectId) {
+      const action = Project.isPinnedByUser(application.user(), projectId) ? "removePin" : "addPin";
+      return application.user()[action](application, projectId);
     },
 
                 

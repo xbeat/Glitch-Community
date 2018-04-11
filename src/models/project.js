@@ -136,14 +136,11 @@ module.exports = (Project = function(I, self) {
     },
 
     isPinnedByUser(application) {
-      const pins = application.user().pins().map(pin => pin.projectId);
-      return _.includes(pins, self.id());
+      return Project.isPinnedByUser(application.user(), self.id());
     },
 
     isPinnedByTeam(application) {
-      return Project.isPinnedByTeam(p
-      const pins = application.team().pins().map(pin => pin.projectId);
-      return _.includes(pins, self.id());
+      return Project.isPinnedByTeam(application.team(), self.id());
     },
            
     delete() {
@@ -190,6 +187,16 @@ module.exports = (Project = function(I, self) {
 
   return self;
 });
+
+Project.isPinnedByUser = (user, projectId) => {
+    const pins = user.pins().map(pin => pin.projectId);
+    return _.includes(pins, projectId);
+};
+
+Project.isPinnedByTeam = function(team, projectId) {
+    const pins = team().pins().map(pin => pin.projectId);
+    return _.includes(pins, projectId);
+}
 
 // Fetch projects and populate them into the local cache
 Project.getProjectsByIds = function(api, ids) {
