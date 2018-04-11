@@ -200,7 +200,7 @@ module.exports = function(application) {
     },
    
     recentProjects() {
-      const recentProjects = self.projects().filter(project => project.fetched && !_.includes(self.pinnedProjectIds(), project.id()));
+      const recentProjects = self.projects().filter(project => project.fetched() && !_.includes(self.pinnedProjectIds(), project.id()));
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
         title: "Recent Projects",
@@ -212,7 +212,7 @@ module.exports = function(application) {
     },  
     
     pinnedProjectsList() {
-      const pinnedProjects = self.projects().filter(project => project.fetched && _.includes(self.pinnedProjectIds(), project.id()));
+      const pinnedProjects = self.projects().filter(project => project.fetched() && _.includes(self.pinnedProjectIds(), project.id()));
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
         title: "Pinned Projects",

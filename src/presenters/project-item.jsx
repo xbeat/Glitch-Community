@@ -5,6 +5,15 @@ import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
+const Users = ({glitchTeam, users}) => {
+  if(glitchTeam) {
+    return <GlitchTeamUsersList/> 
+  }
+  return <UsersList users={users}/>
+}
+
+const Pro
+
 export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOptions}) => {
 
   function showProjectOptionsPop(event) {
@@ -33,17 +42,12 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
     return project.showOverlay();
   }
   
-  const Users = ({glitchTeam}) => {
-    if(glitchTeam) {
-      return <GlitchTeamUsersList/> 
-    }
-    return <UsersList users={project.users}/>
-  }
+
   
   return ( 
 
     <li>
-      <Users glitchTeam={project.showAsGlitchTeam}/>
+      <Users glitchTeam={project.showAsGlitchTeam} users={project.users}/>
 
       {projectOptions && (
         <div className="project-options button-borderless opens-pop-over hidden visible" onClick={showProjectOptionsPop}> 

@@ -13,9 +13,9 @@ export const ProjectsList = ({closeAllPopOvers, title, isPinned, projects, proje
         </span>
       </h2>
       
-      { !isPinned && (
+      { (isPinned && projects.length === 0) && (
         <div className="placeholder">
-          <img className="psst" src={psst}></img>
+          <img className="psst" src={psst} alt="psst"></img>
           <p>Pin your projects to show them off
           <span className="emoji pushpin"></span></p>
         </div>
@@ -36,3 +36,5 @@ ProjectsList.propTypes = {
   title: PropTypes.string.isRequired,
   isPinned: PropTypes.bool.isRequired,
 }
+
+export default ProjectsList
