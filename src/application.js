@@ -122,7 +122,9 @@ var self = Model({
       }
       
       callbacks.forEach(cb => cb());
-      callbacks = []
+      
+      //delete all the callbacks
+      callbacks.length = 0;
       
       $(".pop-over.disposable, .overlay-background.disposable").remove();
       self.signInPopVisibleOnHeader(false);

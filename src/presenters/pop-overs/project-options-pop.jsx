@@ -67,14 +67,20 @@ export const ProjectOptionsPop = ({
 };
 
 class ProjectOptionsContainer extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = { visible: false }
   }
   
-  componentDidMount() {
-    this.props.closeAllPopOvers(() => this.state = { visible: false });
-  }
+  showProjectOptionsPop(event) {
+      this.props.closeAllPopOvers();
+      event.stopPropagation();
+      this.setState({visible: true});
+      this.props.closeAllPopOvers(() => {
+        console.log("closin' all popovers, like ME!");
+        this.setState({visible: false});
+      });
+    }
 
   render() {
     const {projectOptions, closeAllPopOvers, project} = this.props;
@@ -82,12 +88,6 @@ class ProjectOptionsContainer extends React.Component {
     // If no project options are provided, render nothing.
     if(!Object.keys(projectOptions)) {
       return null;
-    }
-    
-    const showProjectOptionsPop = (event) => {
-      closeAllPopOvers();
-      event.stopPropagation();
-      this.setState({visible: true});
     }
     
     const props = {
@@ -98,12 +98,12 @@ class ProjectOptionsContainer extends React.Component {
     };
     
     return (
-      <span>
-        <div className="project-options button-borderless opens-pop-over" onClick={showProjectOptionsPop}> 
+      <React.Fragment>
+        <div className="project-options button-borderless opens-pop-over" onClick={this.showProjectOptionsPop}> 
           <div className="down-arrow"></div>
         </div>
         { this.state.visible && <ProjectOptionsPop {...{props}} {...projectOptions}></ProjectOptionsPop> }
-      </span>
+      </React.Fragment>
       );
   }
 }
