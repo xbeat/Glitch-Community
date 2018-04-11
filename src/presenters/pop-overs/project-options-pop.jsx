@@ -41,7 +41,7 @@ export const ProjectOptionsPop = ({
   }
   
   return (
-    <dialog className="pop-over project-options-pop disposable">
+    <dialog className="pop-over project-options-pop">
       <section className="pop-over-actions">
         { projectIsPinned ? (
           <PopOverButton onClick={removePin} text="Un-Pin This" emoji="pushpin"/>
@@ -71,6 +71,10 @@ class ProjectOptionsContainer extends React.Component {
     super()
     this.state = { visible: false }
   }
+  
+  componentDidMount() {
+    this.props.closeAllPopOvers(() => this.state = { visible: false });
+  }
 
   render() {
     const {projectOptions, closeAllPopOvers, project} = this.props;
@@ -90,8 +94,7 @@ class ProjectOptionsContainer extends React.Component {
       projectId: project.id,
       projectName: project.name,
       projectIsPinned: project.isPinnedByUser||project.isPinnedByTeam,
-      closeAllPopOvers: closeAllPopOvers,
-      projectOptions: projectOptions,
+      closeAllPopOvers: closeAllPopOvers
     };
     
     return (
@@ -99,7 +102,7 @@ class ProjectOptionsContainer extends React.Component {
         <div className="project-options button-borderless opens-pop-over" onClick={showProjectOptionsPop}> 
           <div className="down-arrow"></div>
         </div>
-        { this.state.visible && <ProjectOptionsPop {...{props}}></ProjectOptionsPop> }
+        { this.state.visible && <ProjectOptionsPop {...{props}} {...projectOptions}></ProjectOptionsPop> }
       </span>
       );
   }
