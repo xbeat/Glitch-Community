@@ -250,7 +250,8 @@ module.exports = function(application, userLoginOrId) {
     },
 
                 
-    deleteProject(project, event) {
+    deleteProject(projectId, event) {
+      const project = Project({id: projectId});
       const projectContainer = event.target.closest('li');
       application.closeAllPopOvers();
       $(projectContainer).one('animationend', function() { 
@@ -356,7 +357,8 @@ module.exports = function(application, userLoginOrId) {
       if (self.deletedProjectsLoadingState() === 'loaded') { return 'hidden'; }
     },
         
-    leaveProject(project, event) {
+    leaveProject(projectId, event) {
+      const project = Project({id: projectId});
       const projectContainer = event.target.closest('li');
       application.closeAllPopOvers();
       $(projectContainer).one('animationend', function() { 
