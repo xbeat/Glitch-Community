@@ -54,7 +54,7 @@ export const ProjectOptionsPop = ({
 
       {removeProjectFromTeam && (
         <section className="pop-over-actions team-options danger-zone last-section">
-          <PopOverButton onClick={removeProjectFromTeam(projectId)} text="Remove Project" emoji="thumbs_down"/>
+          <PopOverButton onClick={() => removeProjectFromTeam(projectId)} text="Remove Project" emoji="thumbs_down"/>
         </section>
       )}
       {(deleteProject && leaveProject) && (
@@ -67,23 +67,17 @@ export const ProjectOptionsPop = ({
   );
 };
 
-projectId,
-  projectName, projectIsPinned, closeAllPopOvers, 
-  togglePinnedState, deleteProject, 
-  leaveProject, removeProjectFromTeam
-
 ProjectOptionsPop.propTypes = {
   projectId: PropTypes.string.isRequired,
-    projectName: PropTypes.string.isRequired,
+  projectName: PropTypes.string.isRequired,
   projectIsPinned: PropTypes.bool.isRequired,
   closeAllPopOvers: PropTypes.func.isRequired,
+  togglePinnedState: PropTypes.func,
+  deleteProject: PropTypes.func,
+  leaveProject: PropTypes.func,
+  removeProjectFromTeam: PropTypes.func,
+};
 
-  ({
-    togglePinnedState: PropTypes.func,
-    deleteProject: PropTypes.func,
-    leaveProject: PropTypes.func,
-    removeProjectFromTeam: PropTypes.func,
-  }),
 
 export class ProjectOptionsContainer extends React.Component {
   constructor(props) {

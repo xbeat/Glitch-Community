@@ -141,6 +141,7 @@ module.exports = (Project = function(I, self) {
     },
 
     isPinnedByTeam(application) {
+      return Project.isPinnedByTeam(p
       const pins = application.team().pins().map(pin => pin.projectId);
       return _.includes(pins, self.id());
     },
