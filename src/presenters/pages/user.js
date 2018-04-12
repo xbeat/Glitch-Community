@@ -190,9 +190,6 @@ module.exports = function(application, userLoginOrId) {
     
     userProjects() {
       const pinnedProjectIds = self.user().pins().map(pin => pin.projectId);
-      console.log("projects look like this: ",self.user().projects());
-      return;
-      
       const projects = self.user().projects().filter(
         project => project.fetched()
       ).map(
