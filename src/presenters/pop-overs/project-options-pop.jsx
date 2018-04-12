@@ -86,7 +86,7 @@ export class ProjectOptionsContainer extends React.Component {
   }
 
   render() {
-    const {projectOptions, closeAllPopOvers, project} = this.props;
+    const {projectOptions={}, closeAllPopOvers, project} = this.props;
     
     // If no project options are provided, render nothing.
     if(Object.keys(projectOptions).length === 0) {
