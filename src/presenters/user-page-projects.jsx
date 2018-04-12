@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const UserPageProjects = ({isCurrentUser, projects, pinnedProjectIds, projectOptions}) => {
+/* globals Set */
+
+export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, projects, pinnedProjectIds, projectOptions}) => {
+
+    const pinnedSet = new Set(pinnedProjectIds);
+    const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
+    const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
   
-   function recentProjects() {
-      const recentProjects = self.projects().filter(project => project.fetched() && !_.includes(self.pinnedProjectIds(), project.id()));
+   const recentProjectsList = () => {
       const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
+        closeAllPopOvers: closeAllPopOvers,
         title: "Recent Projects",
         isPinned: false,
         projects: recentProjects.map(project => project.asProps()),
@@ -15,10 +20,14 @@ export const UserPageProjects = ({isCurrentUser, projects, pinnedProjectIds, pro
       return <ProjectsList {...props}></ProjectsList>;
     }
     
-    function pinnedProjectsList() {
-      const pinnedProjects = self.projects().filter(project => project.fetched() && _.includes(self.pinnedProjectIds(), project.id()));
+    const pinnedProjectsList = () => {
+
+      if (!isCurrentUser && pinnedProjects.length === 0) {
+        return null;
+      }
+
       const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
+        closeAllPopOvers: closeAllPopOvers,
         title: "Pinned Projects",
         isPinned: true,
         projects: pinnedProjects.map(project => project.asProps()),
@@ -29,8 +38,8 @@ export const UserPageProjects = ({isCurrentUser, projects, pinnedProjectIds, pro
       
     return (
     <React.Fragment>
-      { !(!isCurrentUser && pinnedProjects.length === 0) && pinnedProjectsList()}
-      { recentProjects() }
+      <pinnedProjectsList></pinnedProjectsList>
+      <recentProjectsList></recentProjectsList>
     </React.Fragment>
       );
   
