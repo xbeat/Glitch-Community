@@ -27,10 +27,7 @@ main.search-results(role="main")
       = Loader(this)
 
   article.projects(class=@hiddenIfSearchResultsHaveNoProjects)
-    h2 Projects
-    ul.projects-container
-      - @searchResultsProjects().forEach (project) ->
-        = ProjectItemPresenterSpecialScope(context, project, {})
+     = @ProjectListPresenter
     span(class=@hiddenIfSearchResultsProjectsLoaded)
       = Loader(this)
 

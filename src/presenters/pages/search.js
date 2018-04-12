@@ -5,7 +5,7 @@ const SearchPageTemplate = require("../../templates/pages/search");
 
 import Categories from "../categories.jsx";
 import Reactlet from "../reactlet";
-import ProjectItem from "../project-item.jsx";
+import ProjectsList from "../projects-list.jsx";
 
 
 module.exports = function(application) {
@@ -48,6 +48,14 @@ module.exports = function(application) {
     ProjectItemPresenter(context, project) {
       return Reactlet(ProjectItem, {closeAllPopOvers: context.closeAllPopOvers, project: project.asProps()});
     },
+    
+    ProjectListPresenter() {
+      
+      - @searchResultsProjects().forEach (project) ->
+        = ProjectItemPresenterSpecialScope(context, project, {})
+      //({closeAllPopOvers, title, isPinned, projects, projectOptions}) 
+      return Reactlet(ProjectsList, {closeAllPopOvers: context.closeAllPopOvers, project: project.asProps()});
+    }
     
     Categories() {
       const props = {
