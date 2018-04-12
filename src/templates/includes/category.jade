@@ -8,4 +8,5 @@ article.projects(@style)
         img(src=@category.avatarUrl alt=@name)
     p.category-description= @description
 
-  = @projects
+  ul.projects-container
+    = @projects

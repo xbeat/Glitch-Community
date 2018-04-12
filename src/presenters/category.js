@@ -1,14 +1,24 @@
 
 const CategoryTemplate = require("../templates/includes/category");
 
-import ProjectList from "./projects-list.jsx";
+import ProjectItem from "./project-item.jsx";
 import Reactlet from "./reactlet";
 
 
 module.exports = function(application, category) {
+  const { projects } = category;
+
+  const projectElements = projects.map(project => 
+    Reactlet(ProjectItem, {
+      closeAllPopOvers: application.closeAllPopOvers,
+      project: project.asProps(),
+      categoryColor: category.backgroundColor(),
+    }));
+
   const self = {
 
     category,
+    projects,
 
     style() {
       return {backgroundColor: category.backgroundColor()};
@@ -25,18 +35,9 @@ module.exports = function(application, category) {
     description() {
       return category.description();
     },
-    
-    projects() {
-      const { projects } = category;
-      console.log(projects.map(project => project.asProps()));
-      const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
-        projects: projects.map(project => project.asProps()),
-        categoryColor: category.backgroundColor(),
-      }
-      Reactlet(ProjectList, props);
-    }
   };
+    
+  self.projects = projectElements;
 
   return CategoryTemplate(self);
 };
