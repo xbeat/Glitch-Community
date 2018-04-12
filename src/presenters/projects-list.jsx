@@ -27,13 +27,15 @@ export const ProjectsList = ({closeAllPopOvers, title, isPinned=false, projects,
   );
 };
 
-export const ProjectsUL = ({projects, closeAllPopOvers, projectOptions, categoryColor}) => (
+export const ProjectsUL = ({projects, closeAllPopOvers, projectOptions, categoryColor}) => {
+  return (
   <ul className="projects-container">
     { projects.map(project => (
       <ProjectItem key={project.id} {...{closeAllPopOvers, project, projectOptions, categoryColor}}></ProjectItem>
     ))}
   </ul>
 );
+};
 
 ProjectsList.propTypes = {
   projects: PropTypes.array.isRequired,

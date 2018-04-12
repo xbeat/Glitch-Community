@@ -33,7 +33,7 @@ module.exports = function(application, category) {
       }
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
-        projects: [],//projects.map(project => project.asProps()),
+        projects: projects.map(project => project.asProps()),
         categoryColor: category.backgroundColor(),
       }
       console.log(props.projects, props.projects.filter((project) => !project.description));
