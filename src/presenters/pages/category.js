@@ -18,7 +18,7 @@ module.exports = function(application) {
       const props = {
         closeAllPopOvers: application.closeAllPopOvers, 
         projects: projects.map(project => project.asProps()),
-        categoryColor: self.backgroundColor()
+        categoryColor: self.category().color(),
       };
       return Reactlet(ProjectsUL, props);
     },
