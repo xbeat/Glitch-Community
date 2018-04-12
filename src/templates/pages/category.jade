@@ -8,9 +8,9 @@ main.category-page(role="main")
         img(src=@avatarUrl)
       p.description=@description
 
-    = @projects
     span(class=@hiddenIfCategoryProjectsLoaded)
       = Loader(this)
+    = @projects
 
 
   = @Categories

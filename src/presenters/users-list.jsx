@@ -1,7 +1,7 @@
 import React from 'react';
 
   
-export const UsersList = ({users, extraClass="" }) => (
+export const PopulatedUsersList = ({users, extraClass="" }) => (
   <div className={`users ${extraClass}`}>
     { users.map((user, key) => (
       <UserTile key={key} {...user}></UserTile>
@@ -35,8 +35,15 @@ export const GlitchTeamUsersList = () => {
   };
   
   return (
-    <UsersList users={[user]}></UsersList>
+    <PopulatedUsersList users={[user]}></UsersList>
   );
+}
+
+const UsersList = ({glitchTeam=false, users, extraClass}) => {
+  if(glitchTeam) {
+    return <GlitchTeamUsersList/> 
+  }
+  return <UsersList users={users} extraClass={extraClass}/>
 }
 
 export default UsersList;

@@ -2,15 +2,8 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
-import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
+import UsersList from "./users-list.jsx";
 import Reactlet from "./reactlet";
-
-const Users = ({glitchTeam, users}) => {
-  if(glitchTeam) {
-    return <GlitchTeamUsersList/> 
-  }
-  return <UsersList users={users}/>
-}
 
 export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOptions}) => {
 
@@ -23,7 +16,7 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
   return ( 
 
     <li>
-      <Users glitchTeam={project.showAsGlitchTeam} users={project.users}/>
+      <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users}/>
       <ProjectOptionsContainer project={project} closeAllPopOvers={closeAllPopOvers} projectOptions={projectOptions}></ProjectOptionsContainer>
     
       <a href={project.link} onClick={showProject}>
