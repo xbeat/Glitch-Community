@@ -194,6 +194,19 @@ module.exports = function(application, userLoginOrId) {
     pinnedProjectIds() {
       return self.user().pins().map(pin => pin.projectId);
     },
+    
+    userProjects() {
+      const props = {
+        isCurrentUser: self.isCurrentUser(),
+      };
+      
+      return Reactlet(UserPageProjects, props);
+      /* span(class=@hiddenIfNotCurrentUserAndNoPins)
+      = @pinnedProjectsList
+    = @recentProjects
+    
+      */
+    }
 
     recentProjects() {
       const recentProjects = self.projects().filter(project => project.fetched() && !_.includes(self.pinnedProjectIds(), project.id()));
@@ -217,12 +230,6 @@ module.exports = function(application, userLoginOrId) {
         projectOptions: self.projectOptions()
       };
       return Reactlet(ProjectsList, props);
-    },
-
-    hiddenIfNotCurrentUserAndNoPins() {
-      if (!self.isCurrentUser() && (self.user().pins().length === 0)) {
-        return 'hidden';
-      }
     },
     
     hiddenUnlessUserIsAnon() {

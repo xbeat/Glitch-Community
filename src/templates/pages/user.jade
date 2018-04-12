@@ -38,9 +38,7 @@ main.user-page(role="main")
 
       button.button-small.button-tertiary.upload-cover-button(class=@hiddenUnlessUserIsCurrentUser click=@uploadCover) Upload Cover
 
-    span(class=@hiddenIfNotCurrentUserAndNoPins)
-      = @pinnedProjectsList
-    = @recentProjects
+    =@userProjects
     - if @isCurrentUser()
       = @deletedProjects
 
