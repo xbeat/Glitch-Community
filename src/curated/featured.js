@@ -14,18 +14,18 @@ Example:
 module.exports =
   [
     {
-      title: '\'sea-pinks\' by Rich-Harris',
-      img: 'https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Fsea-pinks.jpg?1523258160830',
-      link: 'https://sea-pinks.glitch.me'
+      title: 'Just Building Some Bridges',
+      img: 'https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Fjust-building-some-bridges.jpg?1523528321451',
+      link: 'https://just-building-some-bridges.glitch.me'
     }
     , {
-      title: '\'before-dawn-mystify\' by muffinista',
-      img: "https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Fbefore-dawn-mystify.jpg?1523258247261",
-      link: 'https://before-dawn-mystify.glitch.me'
+      title: 'Lipstick Robot',
+      img: "https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Flipstick-robot.jpg?1523528321154",
+      link: 'https://lipstick-robot.glitch.me'
     }
     , {
-      title: '\'timelink\' by jacopocolo',
-      img: "https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Ftimezone.jpg?1523258382060",
-      link: 'https://timelink.glitch.me'
+      title: 'Lyric Toxicity Escalator',
+      img: "https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Fperspective-lyrics.jpg?1523528321638",
+      link: 'https://perspective-lyrics.glitch.me'
     }   
   ];
