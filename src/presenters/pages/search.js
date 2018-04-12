@@ -45,17 +45,14 @@ module.exports = function(application) {
       if (!application.searchResultsHaveNoUsers() || !application.searchResultsHaveNoProjects() || !application.searchResultsHaveNoTeams()) { return 'hidden'; }
     },
     
-    ProjectItemPresenter(context, project) {
-      return Reactlet(ProjectItem, {closeAllPopOvers: context.closeAllPopOvers, project: project.asProps()});
-    },
-    
     ProjectListPresenter() {
-      
-      - @searchResultsProjects().forEach (project) ->
-        = ProjectItemPresenterSpecialScope(context, project, {})
-      //({closeAllPopOvers, title, isPinned, projects, projectOptions}) 
-      return Reactlet(ProjectsList, {closeAllPopOvers: context.closeAllPopOvers, project: project.asProps()});
-    }
+      const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
+        projects: self.searchResultsProjects().map(project => project.asProps()),
+        title: "Projects"
+      };
+      return Reactlet(ProjectsList, props);
+    },
     
     Categories() {
       const props = {

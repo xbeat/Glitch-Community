@@ -3,7 +3,7 @@
 - TeamItemPresenter = require "../../presenters/team-item"
 - UserItemPresenter = require "../../presenters/user-item"
 - Loader = require "../includes/loader"
-- ProjectItemPresenterSpecialScope = @ProjectItemPresenter
+- ProjectListPresenter = @ProjectListPresenter
 
 - context = @application
 
@@ -27,7 +27,7 @@ main.search-results(role="main")
       = Loader(this)
 
   article.projects(class=@hiddenIfSearchResultsHaveNoProjects)
-     = @ProjectListPresenter
+    = ProjectListPresenter()
     span(class=@hiddenIfSearchResultsProjectsLoaded)
       = Loader(this)
 
