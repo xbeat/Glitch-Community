@@ -9,37 +9,34 @@ export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, projects, pin
     const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
     const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
   
-   const recentProjectsList = () => {
-      const props = {
-        closeAllPopOvers: closeAllPopOvers,
-        title: "Recent Projects",
-        isPinned: false,
-        projects: recentProjects.map(project => project.asProps()),
-        projectOptions: self.projectOptions()
-      };
-      return <ProjectsList {...props}></ProjectsList>;
+    const commonProps = {
+      closeAllPopOvers: closeAllPopOvers,
+      projectOptions: self.projectOptions()
+    };
+  
+   const RecentProjectsList = (props) => {
+      return <ProjectsList title="Recent Projects" isPinned={false} {...props}></ProjectsList>;
     }
     
-    const pinnedProjectsList = () => {
+    const PinnedProjectsList = (props) => {
 
       if (!isCurrentUser && pinnedProjects.length === 0) {
         return null;
       }
 
       const props = {
-        closeAllPopOvers: closeAllPopOvers,
         title: "Pinned Projects",
         isPinned: true,
-        projects: pinnedProjects.map(project => project.asProps()),
-        projectOptions: self.projectOptions()
+        projects: pinnedProjects,
       };
-      return <ProjectsList {...props}></ProjectsList>;
+      return <ProjectsList {...commonProps} {...props}></ProjectsList>;
     }
-      
+    
     return (
     <React.Fragment>
-      <pinnedProjectsList></pinnedProjectsList>
-      <recentProjectsList></recentProjectsList>
+      <PinnedProjectsList {...commonProps} projects={pinnedProjects}/>
+      <RecentProjectsList {...commonProps} projects={recentProjects}/>
+      <ProjectsList title="Recent Projects" isPinned={false} projects={recentProjects} {...commonProps}/;
     </React.Fragment>
       );
   
