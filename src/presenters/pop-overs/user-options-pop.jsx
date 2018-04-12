@@ -57,7 +57,7 @@ const UserOptionsPop = ({visible, profileLink, avatarUrl, teams, showNewStuffOve
             <span>Support </span>
             <span className="emoji ambulance"></span>
           </div>
-        </a>
+        </a>        
       </section>
 
       <TeamButtons teams={teams}/>

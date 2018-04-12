@@ -8,8 +8,6 @@ const animationIteration = 'webkitAnimationiteration oanimationiteration msAnima
 const DEFAULT_MAX_QUESTIONS = 3;
 
 module.exports = function(application, maxQuestions) {
-  console.log("Presented questions");
-
   var self = {
 
     maxQuestions() {
