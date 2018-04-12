@@ -1,20 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import ProjectsList from "./projects-list.jsx";
+
 /* globals Set */
-
-const PinnedProjectsList = ({isCurrentUser, projects, ...props}) => {
-  if (!isCurrentUser && projects.length === 0) {
-    return null;
-  }
-
-  return <ProjectsList title="Pinned Projects" isPinned={true} {...props}></ProjectsList>;
-}
-
-PinnedProjectsList.propTypes ={
-  
-  isCurrentUser: PropTypes.bool.isRequired,
-};
 
 export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, projects, pinnedProjectIds, projectOptions}) => {
 
@@ -23,12 +12,16 @@ export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, projects, pin
   const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
   
   const commonProps = {
-    closeAllPopOvers: closeAllPopOvers,
-    projectOptions: projectOptions,
+    closeAllPopOvers,
+    projectOptions,
   };
+  
+  const showPinnedProjects = isCurrentUser || pinnedProjects.length !== 0;
   return (
     <React.Fragment>
-      <PinnedProjectsList isCurrentUser={isCurrentUser} projects={pinnedProjects} {...commonProps}/>
+      { showPinnedProjects && (
+        <ProjectsList title="Pinned Projects" isPinned={true} projects={pinnedProjects} {...commonProps}/>
+      )}
       <ProjectsList title="Recent Projects" projects={recentProjects} {...commonProps}/>
     </React.Fragment>
   );
@@ -37,6 +30,7 @@ export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, projects, pin
 UserPageProjects.propTypes = {
   projects: PropTypes.array.isRequired,
   pinnedProjectIds: PropTypes.array.isRequired,
+  isCurrentUser: PropTypes.bool.isRequired,
 };
 
 export default UserPageProjects;
