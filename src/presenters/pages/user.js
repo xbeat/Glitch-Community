@@ -188,18 +188,17 @@ module.exports = function(application, userLoginOrId) {
       return false;
     },
 
-    projects() {
-      return self.user().projects();
-    },
-
     pinnedProjectIds() {
       return self.user().pins().map(pin => pin.projectId);
     },
     
     userProjects() {
       const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
         isCurrentUser: self.isCurrentUser(),
+        projects: self().user().projects().filter(
       };
+      //{closeAllPopOvers, isCurrentUser, projects, pinnedProjectIds, projectOptions}
       
       return Reactlet(UserPageProjects, props);
     },

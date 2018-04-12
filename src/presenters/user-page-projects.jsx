@@ -5,42 +5,29 @@ import PropTypes from 'prop-types';
 
 export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, projects, pinnedProjectIds, projectOptions}) => {
 
-    const pinnedSet = new Set(pinnedProjectIds);
-    const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
-    const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
+  const pinnedSet = new Set(pinnedProjectIds);
+  const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
+  const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
   
-    const commonProps = {
-      closeAllPopOvers: closeAllPopOvers,
-      projectOptions: self.projectOptions()
-    };
-  
-   const RecentProjectsList = (props) => {
-      return <ProjectsList title="Recent Projects" isPinned={false} {...props}></ProjectsList>;
-    }
-    
-    const PinnedProjectsList = (props) => {
+  const commonProps = {
+    closeAllPopOvers: closeAllPopOvers,
+    projectOptions: self.projectOptions()
+  };
 
-      if (!isCurrentUser && pinnedProjects.length === 0) {
-        return null;
-      }
-
-      const props = {
-        title: "Pinned Projects",
-        isPinned: true,
-        projects: pinnedProjects,
-      };
-      return <ProjectsList {...commonProps} {...props}></ProjectsList>;
+  const PinnedProjectsList = (props) => {
+    if (!isCurrentUser && pinnedProjects.length === 0) {
+      return null;
     }
+
+    return <ProjectsList title="Pinned Projects" isPinned={true} {...props}></ProjectsList>;
+  }
     
-    return (
+  return (
     <React.Fragment>
       <PinnedProjectsList {...commonProps} projects={pinnedProjects}/>
-      <RecentProjectsList {...commonProps} projects={recentProjects}/>
-      <ProjectsList title="Recent Projects" isPinned={false} projects={recentProjects} {...commonProps}/;
+      <ProjectsList title="Recent Projects" projects={recentProjects} {...commonProps}/>
     </React.Fragment>
-      );
-  
-  
+  );
 };
 
 export default UserPageProjects;

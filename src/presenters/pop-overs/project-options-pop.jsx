@@ -126,7 +126,7 @@ export class ProjectOptionsContainer extends React.Component {
         </button>
         { this.state.visible && <ProjectOptionsPop {...popupProps} {...projectOptions}></ProjectOptionsPop> }
       </React.Fragment>
-      );
+    );
   }
 }
 
