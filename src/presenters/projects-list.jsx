@@ -27,10 +27,10 @@ export const ProjectsList = ({closeAllPopOvers, title, isPinned=false, projects,
   );
 };
 
-export const ProjectsUL = ({projects, closeAllPopOvers, projectOptions}) => (
+export const ProjectsUL = ({projects, closeAllPopOvers, projectOptions, categoryColor}) => (
   <ul className="projects-container">
     { projects.map(project => (
-      <ProjectItem key={project.id} {...{closeAllPopOvers, project, projectOptions}}></ProjectItem>
+      <ProjectItem key={project.id} {...{closeAllPopOvers, project, projectOptions, categoryColor}}></ProjectItem>
     ))}
   </ul>
 );
