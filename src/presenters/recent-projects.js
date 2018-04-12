@@ -1,6 +1,6 @@
 const RecentProjectsTemplate = require("../templates/includes/recent-projects");
 
-import ProjectItem from "./project-item.jsx"
+import {ProjectsUL} from "./projects-list.jsx"
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import Reactlet from "./reactlet";
 
@@ -38,10 +38,13 @@ module.exports = function(application) {
       }
       const projectIds = projects.map(project => ({id: project.id()}));
       application.getProjects(projectIds);
-      return projects.map(function(project) {
-        project.isRecentProject = true;
-        return Reactlet(ProjectItem, {closeAllPopOvers: application.closeAllPopOvers, project: project.asProps()});
-      });
+      
+      const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
+        projects: projects.filter(project => project.fetched()).map(project => project.asProps()),
+      }
+
+      return Reactlet(ProjectsUL, props);
     },
         
     SignInPop() {

@@ -36,8 +36,8 @@ module.exports = function(application, category) {
         projects: projects.map(project => project.asProps()),
         categoryColor: category.backgroundColor(),
       }
-      console.log(props.projects, props.projects.filter((project) => !project.description));
-      Reactlet(ProjectsUL, props);
+
+      return Reactlet(ProjectsUL, props);
     }
   };
 
