@@ -10,6 +10,7 @@ const UserTemplate = require("../../templates/pages/user");
 const DeletedProjectsTemplate = require("../../templates/deleted-projects");
 const LayoutPresenter = require("../layout");
 
+import UserPageProjects from "../user-page-projects.jsx"
 import ProjectsList from "../projects-list.jsx";
 import Reactlet from "../reactlet";
 
@@ -201,35 +202,6 @@ module.exports = function(application, userLoginOrId) {
       };
       
       return Reactlet(UserPageProjects, props);
-      /* span(class=@hiddenIfNotCurrentUserAndNoPins)
-      = @pinnedProjectsList
-    = @recentProjects
-    
-      */
-    }
-
-    recentProjects() {
-      const recentProjects = self.projects().filter(project => project.fetched() && !_.includes(self.pinnedProjectIds(), project.id()));
-      const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
-        title: "Recent Projects",
-        isPinned: false,
-        projects: recentProjects.map(project => project.asProps()),
-        projectOptions: self.projectOptions()
-      };
-      return Reactlet(ProjectsList, props);
-    },
-    
-    pinnedProjectsList() {
-      const pinnedProjects = self.projects().filter(project => project.fetched() && _.includes(self.pinnedProjectIds(), project.id()));
-      const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
-        title: "Pinned Projects",
-        isPinned: true,
-        projects: pinnedProjects.map(project => project.asProps()),
-        projectOptions: self.projectOptions()
-      };
-      return Reactlet(ProjectsList, props);
     },
     
     hiddenUnlessUserIsAnon() {
