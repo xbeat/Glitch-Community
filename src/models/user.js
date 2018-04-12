@@ -41,16 +41,15 @@ module.exports = (User = function(I, self) {
   self.attrObservable(...Array.from(Object.keys(I) || []));
   self.attrObservable("notFound");
   self.attrObservable("localCoverImage");
-  self.attrModels('projects', Project);
 
   self.extend({
 
     isSignedIn() {
-      if (self.login()) { return true; }
+      return !!self.login();
     },
 
     isAnon() {
-      if (!self.login()) { return true; }
+      return !self.login();
     },
 
     isAnExperiencedUser() {
@@ -81,11 +80,11 @@ module.exports = (User = function(I, self) {
     // self.avatarUrl size
 
     isCurrentUser(application) {
-      if (self.id() === application.currentUser().id()) { return true; }
+      return self.id() === application.currentUser().id();
     },
 
     isOnUserPageForCurrentUser(application) {
-      if (application.pageIsUserPage() && self.isCurrentUser(application)) { return true; }
+      return !!(application.pageIsUserPage() && self.isCurrentUser(application));
     },
 
     hiddenIfSignedIn() {
