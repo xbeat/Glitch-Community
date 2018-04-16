@@ -13,7 +13,6 @@ const projectStateFromModels = (projectsModel, pinsModel) => {
   const projects = projectsModel.filter(project => project.fetched()).map(project => project.asProps());
   const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
   const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
-  console.log("getting deets for the render", {pinnedProjects, recentProjects});
   return {pinnedProjects, recentProjects};
 }
 
@@ -29,7 +28,6 @@ export class UserPageProjectsContainer extends React.Component {
     this.aggregateObservable = null;
     this.setStateFromModels = debounce((projectsModel, pinsModel) => {
       this.setState(projectStateFromModels(projectsModel, pinsModel));
-      console.log("set state", this.state);
     }, 10);
   }
 
