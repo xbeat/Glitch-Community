@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
 import Observable from "o_0";
+import _ from "lodash";
 
 
 /* globals Set */
 
 const projectStateFromModels = (projectsModel, pinnedProjectsModel) => {
   const pinnedIds = pinnedProjectsModel.map(({projectId}) => projectId);
-  const pinnedSet = new Set(pinnedIds);
+  const pinnedSet = new Set([]);
   const projects = projectsModel.filter(project => project.fetched()).map(project => project.asProps());
   const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
   const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
@@ -26,20 +27,20 @@ export class UserPageProjectsContainer extends React.Component {
     };
     
     this.aggregateObservable = null;
+    this.setStateDebounced = _.debounce(this.setState, 50);
   }
 
   //        const newState = projectStateFromModels(projectsModel, pinsModel);
 
   componentDidMount() {
+    let fetchedObservables = this.props.projectsObservable.map(model => model.fetched);
+    
     this.aggregateObservable = Observable(() => {
       const projectsModel = this.props.projectsObservable();
       const pinsModel = this.props.pinsObservable();
-      for(let model of projectsModel) {
-        //noop?
-        model.fetched();
-      }
+      fetchedObservables.forEach(fetched => fetched && fetched());
       
-      this.setState({pinsModel, projectsModel});
+      this.setStateDebounced({pinsModel, projectsModel});
       console.log("updating state", {pinsModel, projectsModel});
     });
   }
