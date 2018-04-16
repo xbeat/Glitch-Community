@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import ProjectsList from "./projects-list.jsx";
+import Observable from "o_0";
+
 
 /* globals Set */
 
@@ -22,17 +23,9 @@ export class UserPageProjectsContainer extends React.Component {
     this.state = {
       pinnedProjects: [],
       recentProjects: [],
+      obs: null, // maintained here 
     };
   }
-  
-  const aggregateObservable = Observable(()=>
-    const projects = projectsObservable(); //touch projects to subscribe
-    const projectsFetchedItems = projects.forEach((project) => project.fetched()); //touch 'fetched' to subscribe to each
-  );
-  aggregateObservable.observe( () => {
-    //either the array was modified, or an item has become fetched 
-  })
-  aggregateObservable.releaseDependencies() // garbage collect.
   
   componentDidMount() {
     const updateState = (projectsModel, pinsModel) => {
