@@ -23,9 +23,11 @@ export class UserPageProjectsContainer extends React.Component {
     this.state = {
       pinnedProjects: [],
       recentProjects: [],
-      obs: null, // maintained here 
     };
+    
+    this.aggregateObservable = null;
   }
+
   
   componentDidMount() {
     const updateState = (projectsModel, pinsModel) => {
@@ -34,19 +36,17 @@ export class UserPageProjectsContainer extends React.Component {
       console.log("updating state", newState);
     }
     
-    // Observe the collections for collection-size changes
-    this.props.projectsObservable.observe((projectsModel) => updateState(projectsModel, this.props.pinsObservable()));
-    this.props.pinsObservable.observe((pinsModel) => updateState(this.props.projectsObservable(), pinsModel));
-    
-    this.props.projectsObservable.filter(project => !project.fetched()).for
-    
-    updateState(this.props.projectsObservable(), this.props.pinsObservable());
+    this.aggregateObservable = Observable(() => {
+      const projectsModel = this.props.projectsObservable();
+      const pinsModel = this.props.pinsObservable();
+      projectsModel.map((project)=>{project.fetched()}); // touch each project
+      
+      updateState(projectsModel, pinsModel);
+    });
   }
   
-  // Ideally, garbage-collect the listeners in componentWillUnmount.
-  // These listeners don't have a way to unsubscribe,
-  // So just deal with it instead.
   componentWillUnmount(){
+    this.aggregateObservable && this.aggregateObservable.releaseDependencies();
   }
 
 
