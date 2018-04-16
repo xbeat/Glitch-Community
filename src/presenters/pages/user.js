@@ -192,12 +192,12 @@ module.exports = function(application, userLoginOrId) {
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
         isCurrentUser: self.isCurrentUser(),
-        projectsObservable: self.user().projects(),
-        pinnedProjectsObservable: self.user().pins(),
+        projectsObservable: self.user().projects,
+        pinsObservable: self.user().pins,
         projectOptions: self.projectOptions(),
       };
       
-      return Reactlet(UserPageProjects, "UserPageProjectsContainer");
+      return Reactlet(UserPageProjects, props, "UserPageProjectsContainer");
     },
     
     hiddenUnlessUserIsAnon() {

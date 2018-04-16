@@ -18,16 +18,17 @@ export class UserPageProjectsContainer extends React.Component {
    constructor(props) {
     super(props)
     
-    {pinnedProjects, recentProjects} = projectStateFromModels(props.projectsObservable(), props.pinnedProjectsObservable())
-    this.state = { recentProjects: recentProjects, pinnedProjects = pinnedProjects }
+    const {pinnedProjects, recentProjects} = projectStateFromModels(props.projectsObservable(), props.pinsObservable())
+    this.state = { recentProjects: recentProjects, pinnedProjects: pinnedProjects }
     
     const updateState = () => {
-          const newState = projectStateFromModels(props.projectsObservable(), props.pinnedProjectsObservable());
-          this.setState(newState);
+        const newState = projectStateFromModels(props.projectsObservable(), props.pinsObservable());
+        this.setState(newState);
+        console.log("updating state new", newState);
     }
     
-    
-
+    props.projectsObservable.observe(updateState);
+    props.pinsObservable.observe(updateState);
   }
 
 
@@ -36,17 +37,12 @@ export class UserPageProjectsContainer extends React.Component {
   }
 }
 UserPageProjectsContainer.propTypes = {
-  projectsObservable: PropTypes.object.isRequired,
-  pinnedProjectsObservable: PropTypes.object.isRequired,
+  projectsObservable: PropTypes.func.isRequired,
+  pinsObservable: PropTypes.func.isRequired,
 };
-  // {closeAllPopOvers, isCurrentUser, projectsObservable, pinnedProjectsObservable, projectOptions}
 
-export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, projects, pinnedProjectIds, projectOptions}) => {
+export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, recentProjects, pinnedProjects, pinnedProjectIds, projectOptions}) => {
 
-  const pinnedSet = new Set(pinnedProjectIds);
-  const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
-  const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
-  
   const commonProps = {
     closeAllPopOvers,
     projectOptions,
