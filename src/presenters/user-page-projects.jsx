@@ -25,6 +25,15 @@ export class UserPageProjectsContainer extends React.Component {
     };
   }
   
+  const aggregateObservable = Observable(()=>
+    const projects = projectsObservable(); //touch projects to subscribe
+    const projectsFetchedItems = projects.forEach((project) => project.fetched()); //touch 'fetched' to subscribe to each
+  );
+  aggregateObservable.observe( () => {
+    //either the array was modified, or an item has become fetched 
+  })
+  aggregateObservable.releaseDependencies() // garbage collect.
+  
   componentDidMount() {
     const updateState = (projectsModel, pinsModel) => {
       const newState = projectStateFromModels(projectsModel, pinsModel);
