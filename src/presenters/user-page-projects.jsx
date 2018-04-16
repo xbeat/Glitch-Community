@@ -36,12 +36,7 @@ export class UserPageProjectsContainer extends React.Component {
     this.props.projectsObservable.observe((projectsModel) => updateState(projectsModel, this.props.pinsObservable()));
     this.props.pinsObservable.observe((pinsModel) => updateState(this.props.projectsObservable(), pinsModel));
     
-    //observe the projects themselves for project changes, such as becoming 'fetched'
-    this.props.projectsObservable().forEach(
-      (model) => model.observe(
-        () => updateState(this.props.projectsObservable(), this.props.pinsObservable())
-      )
-    );
+    this.props.projectsObservable.filter(project => !project.fetched()).for
     
     updateState(this.props.projectsObservable(), this.props.pinsObservable());
   }
