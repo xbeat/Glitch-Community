@@ -17,14 +17,12 @@ const projectStateFromModels = (projectsModel, pinnedProjectsModel) => {
 export class UserPageProjectsContainer extends React.Component {
    constructor(props) {
     super(props)
-    
-    const {pinnedProjects, recentProjects} = projectStateFromModels(props.projectsObservable(), props.pinsObservable())
-    this.state = { recentProjects: recentProjects, pinnedProjects: pinnedProjects }
+    this.state =  projectStateFromModels(props.projectsObservable(), props.pinsObservable())
     
     const updateState = () => {
         const newState = projectStateFromModels(props.projectsObservable(), props.pinsObservable());
         this.setState(newState);
-        console.log("updating state new", newState);
+        console.log("updating state", newState);
     }
     
     props.projectsObservable.observe(updateState);
@@ -41,7 +39,7 @@ UserPageProjectsContainer.propTypes = {
   pinsObservable: PropTypes.func.isRequired,
 };
 
-export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, recentProjects, pinnedProjects, pinnedProjectIds, projectOptions}) => {
+export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, recentProjects, pinnedProjects, projectOptions}) => {
 
   const commonProps = {
     closeAllPopOvers,
@@ -60,8 +58,8 @@ export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, recentProject
 };
 
 UserPageProjects.propTypes = {
-  projects: PropTypes.array.isRequired,
-  pinnedProjectIds: PropTypes.array.isRequired,
+  recentProjects: PropTypes.array.isRequired,
+  pinnedProjects: PropTypes.array.isRequired,
   isCurrentUser: PropTypes.bool.isRequired,
 };
 
