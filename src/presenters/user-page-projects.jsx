@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
 import Observable from "o_0";
-import _ from "lodash";
+import {debounce} from "lodash";
 
 
 /* globals Set */
@@ -27,7 +27,7 @@ export class UserPageProjectsContainer extends React.Component {
     };
     
     this.aggregateObservable = null;
-    this.setStateDebounced = _.debounce(this.setState,);
+    this.setStateDebounced = debounce(this.setState, 10);
   }
 
   //        const newState = projectStateFromModels(projectsModel, pinsModel);
@@ -41,7 +41,7 @@ export class UserPageProjectsContainer extends React.Component {
       fetchedObservables.forEach(fetched => fetched && fetched());
       
       this.setStateDebounced({pinsModel, projectsModel});
-      console.log("updating state", {pinsModel, projectsModel});
+      //console.log("updating state", {pinsModel, projectsModel});
     });
   }
   
