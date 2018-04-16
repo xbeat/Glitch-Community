@@ -7,8 +7,8 @@ import {debounce} from "lodash";
 
 /* globals Set */
 
-const projectStateFromModels = (projectsModel, pinnedProjectsModel) => {
-  const pinnedIds = pinnedProjectsModel.map(({projectId}) => projectId);
+const projectStateFromModels = (projectsModel, pinsModel) => {
+  const pinnedIds = pinsModel.map(({projectId}) => projectId);
   const pinnedSet = new Set(pinnedIds);
   const projects = projectsModel.filter(project => project.fetched()).map(project => project.asProps());
   const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
@@ -22,15 +22,16 @@ export class UserPageProjectsContainer extends React.Component {
     super(props)
      
     this.state = {
-      projectsModel: [],
-      pinsModel: [],
+      recentProjects: [],
+      pinnedProjects: [],
     };
     
     this.aggregateObservable = null;
-    this.setStateDebounced = debounce(this.setState, 10);
+    this.setStateFromModels = debounce((projectsModel, pinsModel) => {
+      this.setState(projectStateFromModels(projectsModel, pinsModel));
+      console.log("set state", this.state);
+    }, 10);
   }
-
-  //        const newState = projectStateFromModels(projectsModel, pinsModel);
 
   componentDidMount() {
     this.aggregateObservable = Observable(() => {
@@ -42,8 +43,7 @@ export class UserPageProjectsContainer extends React.Component {
         fetched && fetched();
       }
       
-      this.setStateDebounced({pinsModel, projectsModel});
-      console.log("updating state", {pinsModel, projectsModel});
+      this.setStateFromModels(projectsModel, pinsModel);
     });
   }
   
@@ -54,9 +54,7 @@ export class UserPageProjectsContainer extends React.Component {
 
 
   render() {
-    const projectProps = projectStateFromModels(this.state.projectsModel, this.state.pinsModel);
-    
-    return <UserPageProjects {...this.props} {...projectProps}/>
+    return <UserPageProjects {...this.props} {...this.state}/>
   }
 }
 UserPageProjectsContainer.propTypes = {
