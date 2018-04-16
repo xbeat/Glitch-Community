@@ -5,6 +5,24 @@ import ProjectsList from "./projects-list.jsx";
 
 /* globals Set */
 
+export const UserPageProjectsContainer = ({closeAllPopOvers, isCurrentUser, projectsObservable, pinnedProjectsObservable, projectOptions}) => {
+
+  const pinnedSet = new Set(pinnedProjectIds);
+  const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
+  const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
+  
+  export class ProjectOptionsContainer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { visible: false }
+  }
+
+  render() {
+    return <UserPageProjects/>
+  }
+}
+  // {closeAllPopOvers, isCurrentUser, projectsObservable, pinnedProjectsObservable, projectOptions}
+
 export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, projects, pinnedProjectIds, projectOptions}) => {
 
   const pinnedSet = new Set(pinnedProjectIds);
@@ -33,4 +51,4 @@ UserPageProjects.propTypes = {
   isCurrentUser: PropTypes.bool.isRequired,
 };
 
-export default UserPageProjects;
+export default UserPageProjectsContainer;

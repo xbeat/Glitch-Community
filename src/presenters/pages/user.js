@@ -189,24 +189,15 @@ module.exports = function(application, userLoginOrId) {
     },
     
     userProjects() {
-      const pinnedProjectIds = self.user().pins().map(pin => pin.projectId);
-      const projects = (self.user().projects||[]).map(
-        project => Project(project)
-      ).filter(
-        project => project.fetched()
-      ).map(
-        project => project.asProps()
-      );
-      
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
         isCurrentUser: self.isCurrentUser(),
-        projects: projects,
-        pinnedProjectIds: pinnedProjectIds,
+        projectsObservable: self.user().projects(),
+        pinnedProjectsObservable: self.user().pins(),
         projectOptions: self.projectOptions(),
       };
       
-      return Reactlet(UserPageProjects, props);
+      return Reactlet(UserPageProjects, "UserPageProjectsContainer");
     },
     
     hiddenUnlessUserIsAnon() {
