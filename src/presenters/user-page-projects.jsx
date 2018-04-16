@@ -6,7 +6,7 @@ import ProjectsList from "./projects-list.jsx";
 /* globals Set */
 
 const projectStateFromModels = (projectsModel, pinnedProjectsModel) => {
-  const pinnedIds = pinnedProjectsModel.map(project => project.id);
+  const pinnedIds = pinnedProjectsModel.map(({projectId}) => projectId);
   const pinnedSet = new Set(pinnedIds);
   const projects = projectsModel.filter(project => project.fetched()).map(project => project.asProps());
   const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
@@ -27,7 +27,8 @@ export class UserPageProjectsContainer extends React.Component {
     props.projectsObservable.observe(updateState);
     props.pinsObservable.observe(updateState);
      
-    this.state =  projectStateFromModels(props.projectsObservable(), props.pinsObservable())
+    this.state = projectStateFromModels(props.projectsObservable(), props.pinsObservable())
+    console.log("initial state", this.state)
   }
 
 
