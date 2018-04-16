@@ -22,19 +22,20 @@ export class UserPageProjectsContainer extends React.Component {
     console.log("initial state", this.state)
   }
   
-  componntDidMount{
-        
-    const updateState = () => {
-      const newState = projectStateFromModels(props.projectsObservable(), props.pinsObservable());
+  componntDidMount() {
+    const updateState = (projectsModel, pinsModel) => {
+      const newState = projectStateFromModels(projectsModel, pinsModel);
       this.setState(newState);
       console.log("updating state", newState);
     }
     
-    props.projectsObservable.observe(updateState);
-    props.pinsObservable.observe(updateState);
+    this.props.projectsObservable.observe((projectsModel) => updateState(projectsModel, this.props.pinsObservable()));
+    this.props.pinsObservable.observe((pinsModel) => updateState(this.props.projectsObservable(), pinsModel));
+    
+    updateState(this.props.projectsObservable(), props.pinsObservable());
   }
-componentWillUnmount{
-}
+  componentWillUnmount(){
+  }
 
 
   render() {    
