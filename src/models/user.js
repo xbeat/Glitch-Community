@@ -41,7 +41,7 @@ module.exports = (User = function(I, self) {
   self.attrObservable(...Array.from(Object.keys(I) || []));
   self.attrObservable("notFound");
   self.attrObservable("localCoverImage");
-  self.attrModels('projects', Project);
+  //self.attrModels('projects', Project);
 
   self.extend({
 

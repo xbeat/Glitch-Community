@@ -190,7 +190,9 @@ module.exports = function(application, userLoginOrId) {
     
     userProjects() {
       const pinnedProjectIds = self.user().pins().map(pin => pin.projectId);
-      const projects = self.user().projects().filter(
+      const projects = (self.user().projects||[]).map(
+        project => Project(project)
+      ).filter(
         project => project.fetched()
       ).map(
         project => project.asProps()
