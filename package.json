@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "Find cool projects and people using Glitch",
   "scripts": {
-    "start": "bash sh/start.sh"
+    "prestart": "sh/watchers.sh",
+    "start": "nodemon ./server.js --watch server.js --watch routes.js -L"
   },
   "dependencies": {
     "autoprefixer-stylus": "^0.14.0",
