@@ -33,15 +33,17 @@ export class UserPageProjectsContainer extends React.Component {
   //        const newState = projectStateFromModels(projectsModel, pinsModel);
 
   componentDidMount() {
-    let fetchedObservables = this.props.projectsObservable.map(model => model.fetched);
-    
     this.aggregateObservable = Observable(() => {
       const projectsModel = this.props.projectsObservable();
       const pinsModel = this.props.pinsObservable();
-      fetchedObservables.forEach(fetched => fetched && fetched());
+      
+      // Subscribe just to the 'fetched' subcomponent of the projects.
+      for(let {fetched} of projectsModel) {
+        fetched && fetched();
+      }
       
       this.setStateDebounced({pinsModel, projectsModel});
-      //console.log("updating state", {pinsModel, projectsModel});
+      console.log("updating state", {pinsModel, projectsModel});
     });
   }
   
