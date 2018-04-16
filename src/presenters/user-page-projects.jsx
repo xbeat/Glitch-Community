@@ -9,7 +9,7 @@ import _ from "lodash";
 
 const projectStateFromModels = (projectsModel, pinnedProjectsModel) => {
   const pinnedIds = pinnedProjectsModel.map(({projectId}) => projectId);
-  const pinnedSet = new Set([]);
+  const pinnedSet = new Set(pinnedIds);
   const projects = projectsModel.filter(project => project.fetched()).map(project => project.asProps());
   const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
   const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
@@ -27,7 +27,7 @@ export class UserPageProjectsContainer extends React.Component {
     };
     
     this.aggregateObservable = null;
-    this.setStateDebounced = _.debounce(this.setState, 50);
+    this.setStateDebounced = _.debounce(this.setState,);
   }
 
   //        const newState = projectStateFromModels(projectsModel, pinsModel);
