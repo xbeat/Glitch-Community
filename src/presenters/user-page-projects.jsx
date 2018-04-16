@@ -9,10 +9,10 @@ import Observable from "o_0";
 const projectStateFromModels = (projectsModel, pinnedProjectsModel) => {
   const pinnedIds = pinnedProjectsModel.map(({projectId}) => projectId);
   const pinnedSet = new Set(pinnedIds);
-  console.log("projects and fetched projects", projectsModel, projectsModel.filter(project => project.fetched()));
   const projects = projectsModel.filter(project => project.fetched()).map(project => project.asProps());
   const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
   const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
+  console.log("getting deets for the render", {pinnedProjects, recentProjects});
   return {pinnedProjects, recentProjects};
 }
 
@@ -21,37 +21,39 @@ export class UserPageProjectsContainer extends React.Component {
     super(props)
      
     this.state = {
-      pinnedProjects: [],
-      recentProjects: [],
+      projectsModel: [],
+      pinsModel: [],
     };
     
     this.aggregateObservable = null;
   }
 
-  
+  //        const newState = projectStateFromModels(projectsModel, pinsModel);
+
   componentDidMount() {
-    const updateState = (projectsModel, pinsModel) => {
-      const newState = projectStateFromModels(projectsModel, pinsModel);
-      this.setState(newState);
-      console.log("updating state", newState);
-    }
-    
     this.aggregateObservable = Observable(() => {
       const projectsModel = this.props.projectsObservable();
       const pinsModel = this.props.pinsObservable();
-      projectsModel.map((project)=>{project.fetched()}); // touch each project
+      for(let model of projectsModel) {
+        //noop?
+        model.fetched();
+      }
       
-      updateState(projectsModel, pinsModel);
+      this.setState({pinsModel, projectsModel});
+      console.log("updating state", {pinsModel, projectsModel});
     });
   }
   
   componentWillUnmount(){
     this.aggregateObservable && this.aggregateObservable.releaseDependencies();
+    this.aggregateObservable = null;
   }
 
 
-  render() {    
-    return <UserPageProjects {...this.props} {...this.state}/>
+  render() {
+    const projectProps = projectStateFromModels(this.state.projectsModel, this.state.pinsModel);
+    
+    return <UserPageProjects {...this.props} {...projectProps}/>
   }
 }
 UserPageProjectsContainer.propTypes = {
