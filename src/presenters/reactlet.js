@@ -8,8 +8,8 @@ let anchorId = 1;
 let stack = [];
 let batchPending = false;
 
-module.exports = function(Component, props) {
-  const id = `reactlet-${Component.name}-${anchorId}`;
+module.exports = function(Component, props, guid=null) {
+  const id = guid || `reactlet-${Component.name}-${anchorId}`;
   anchorId++;
   
   stack.push({
