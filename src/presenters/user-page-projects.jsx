@@ -8,6 +8,7 @@ import ProjectsList from "./projects-list.jsx";
 const projectStateFromModels = (projectsModel, pinnedProjectsModel) => {
   const pinnedIds = pinnedProjectsModel.map(({projectId}) => projectId);
   const pinnedSet = new Set(pinnedIds);
+  console.log("projects and fetched projects", projectsModel, projectsModel.filter(project => project.fetched()));
   const projects = projectsModel.filter(project => project.fetched()).map(project => project.asProps());
   const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
   const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
@@ -18,11 +19,13 @@ export class UserPageProjectsContainer extends React.Component {
   constructor(props) {
     super(props)
      
-    this.state = projectStateFromModels(props.projectsObservable(), props.pinsObservable())
-    console.log("initial state", this.state)
+    this.state = {
+      pinnedProjects: [],
+      recentProjects: [],
+    };
   }
   
-  componntDidMount() {
+  componentDidMount() {
     const updateState = (projectsModel, pinsModel) => {
       const newState = projectStateFromModels(projectsModel, pinsModel);
       this.setState(newState);
@@ -32,8 +35,12 @@ export class UserPageProjectsContainer extends React.Component {
     this.props.projectsObservable.observe((projectsModel) => updateState(projectsModel, this.props.pinsObservable()));
     this.props.pinsObservable.observe((pinsModel) => updateState(this.props.projectsObservable(), pinsModel));
     
-    updateState(this.props.projectsObservable(), props.pinsObservable());
+    updateState(this.props.projectsObservable(), this.props.pinsObservable());
   }
+  
+  // Ideally, garbage-collect the listeners in componentWillUnmount.
+  // These listeners don't have a way to unsubscribe,
+  // So just deal with it instead.
   componentWillUnmount(){
   }
 
