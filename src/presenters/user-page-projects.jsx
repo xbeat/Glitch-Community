@@ -17,7 +17,6 @@ const projectStateFromModels = (projectsModel, pinnedProjectsModel) => {
 export class UserPageProjectsContainer extends React.Component {
    constructor(props) {
     super(props)
-    this.state =  projectStateFromModels(props.projectsObservable(), props.pinsObservable())
     
     const updateState = () => {
         const newState = projectStateFromModels(props.projectsObservable(), props.pinsObservable());
@@ -27,6 +26,8 @@ export class UserPageProjectsContainer extends React.Component {
     
     props.projectsObservable.observe(updateState);
     props.pinsObservable.observe(updateState);
+     
+   this.state =  projectStateFromModels(props.projectsObservable(), props.pinsObservable())
   }
 
 
