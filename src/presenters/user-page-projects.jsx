@@ -6,28 +6,28 @@ import ProjectsList from "./projects-list.jsx";
 /* globals Set */
 
 const projectStateFromModels = (projectsModel, pinnedProjectsModel) => {
-    const pinnedIds = pinnedProjectsModel.map(project => project.id);
-    const pinnedSet = new Set(pinnedIds);
-    const projects = projectsModel.filter(project => project.fetched()).map(project => project.asProps());
-    const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
-    const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
-    return {pinnedProjects, recentProjects};
+  const pinnedIds = pinnedProjectsModel.map(project => project.id);
+  const pinnedSet = new Set(pinnedIds);
+  const projects = projectsModel.filter(project => project.fetched()).map(project => project.asProps());
+  const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
+  const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
+  return {pinnedProjects, recentProjects};
 }
 
 export class UserPageProjectsContainer extends React.Component {
-   constructor(props) {
+  constructor(props) {
     super(props)
     
     const updateState = () => {
-        const newState = projectStateFromModels(props.projectsObservable(), props.pinsObservable());
-        this.setState(newState);
-        console.log("updating state", newState);
+      const newState = projectStateFromModels(props.projectsObservable(), props.pinsObservable());
+      this.setState(newState);
+      console.log("updating state", newState);
     }
     
     props.projectsObservable.observe(updateState);
     props.pinsObservable.observe(updateState);
      
-   this.state =  projectStateFromModels(props.projectsObservable(), props.pinsObservable())
+    this.state =  projectStateFromModels(props.projectsObservable(), props.pinsObservable())
   }
 
 

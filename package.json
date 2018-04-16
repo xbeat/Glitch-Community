@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Find cool projects and people using Glitch",
   "scripts": {
-    "prestart": "sh/watchers.sh",
+    "prestart": "bash sh/watchers.sh",
     "start": "nodemon ./server.js --watch server.js --watch routes.js -L"
   },
   "dependencies": {
