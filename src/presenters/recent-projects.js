@@ -35,14 +35,13 @@ module.exports = function(application) {
     },
     
     projects() {
-      let projects = application.currentUser().projects();
+      const projectsObservable = application.currentUser().projects;
+      let projects = [];
       if (application.currentUser().isAnon()) {
-        projects = projects.slice(0,1);
+        projects = projectsObservable.slice(0,1);
       } else if (application.currentUser().isSignedIn()) {
-        projects = projects.slice(0,3);      
+        projects = projectsObservable.slice(0,3);      
       }
-      const projectIds = projects.map(project => ({id: project.id()}));
-      application.getProjects(projectIds);
       
       if(projects.find(project => !project.fetched())){
         return self.loader();
