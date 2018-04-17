@@ -83,6 +83,15 @@ export class ProjectOptionsContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = { visible: false }
+    this._ismounted = false;
+  }
+  
+  componentDidMount() { 
+    this._ismounted = true;
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
   }
 
   render() {
@@ -108,7 +117,7 @@ export class ProjectOptionsContainer extends React.Component {
       
       this.setState({visible: true});
       this.props.closeAllPopOvers(() => {
-        this.setState({visible: false});
+        this._ismounted && this.setState({visible: false});
       });
     }
     
