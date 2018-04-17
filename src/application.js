@@ -336,11 +336,11 @@ var self = Model({
   },
 
   isTeamUrl(url) {
-    if (_.find(cachedTeams, team => team.url === url)) { return true; }
+    return !!_.find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
   },
 
   getCachedTeamByUrl(url) {
-    return _.find(cachedTeams, team => team.url === url);
+    return _.find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
   },
 
   isQuestionsUrl(url) {
