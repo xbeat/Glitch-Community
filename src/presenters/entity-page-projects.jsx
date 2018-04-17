@@ -59,7 +59,7 @@ EntityPageProjectsContainer.propTypes = {
   pinsObservable: PropTypes.func.isRequired,
   isAuthorizedUser: PropTypes.bool.isRequired,
   closeAllPopOvers: PropTypes.func.isRequired,
-      projectOptions: self.projectOptions(),
+  projectOptions: PropTypes.object.isRequired,
 };
 
 export const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects, pinnedProjects, projectOptions}) => {
