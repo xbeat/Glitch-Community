@@ -101,8 +101,7 @@ module.exports = (Team = function(I, self) {
     },
 
     currentUserIsOnTeam(application) {
-      const matchingUser = self.users().filter(user => user.id() === application.currentUser().id());
-      if (matchingUser.length) { return true; }
+      return -1 !== self.users().findIndex(user => user.id() === application.currentUser().id());
     },
 
     updateCoverColor(application, color) {
