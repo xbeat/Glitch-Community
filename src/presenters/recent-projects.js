@@ -44,7 +44,7 @@ module.exports = function(application) {
         projects: projects.filter(project => project.fetched()).map(project => project.asProps()),
       }
 
-      return Reactlet(ProjectsUL, props);
+      return Reactlet(ProjectsUL, props, "starter-projects-container");
     },
         
     SignInPop() {
