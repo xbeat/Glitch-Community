@@ -16,7 +16,7 @@ const projectStateFromModels = (projectsModel, pinsModel) => {
   return {pinnedProjects, recentProjects};
 }
 
-export class UserPageProjectsContainer extends React.Component {
+export class EntityPageProjectsContainer extends React.Component {
   constructor(props) {
     super(props)
      
@@ -51,15 +51,18 @@ export class UserPageProjectsContainer extends React.Component {
   }
 
   render() {
-    return <UserPageProjects {...this.props} {...this.state}/>
+    return <EntityPageProjects {...this.props} {...this.state}/>
   }
 }
-UserPageProjectsContainer.propTypes = {
+EntityPageProjectsContainer.propTypes = {
   projectsObservable: PropTypes.func.isRequired,
   pinsObservable: PropTypes.func.isRequired,
+  isAuthorizedUser: PropTypes.bool.isRequired,
+  closeAllPopOvers: PropTypes.func.isRequired,
+      projectOptions: self.projectOptions(),
 };
 
-export const UserPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects, pinnedProjects, projectOptions}) => {
+export const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects, pinnedProjects, projectOptions}) => {
 
   const commonProps = {
     closeAllPopOvers,
@@ -77,10 +80,10 @@ export const UserPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProj
   );
 };
 
-UserPageProjects.propTypes = {
+EntityPageProjects.propTypes = {
   recentProjects: PropTypes.array.isRequired,
   pinnedProjects: PropTypes.array.isRequired,
   isAuthorizedUser: PropTypes.bool.isRequired,
 };
 
-export default UserPageProjectsContainer;
+export default EntityPageProjectsContainer;

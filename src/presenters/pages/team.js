@@ -16,7 +16,7 @@ const AnalyticsPresenter = require("../analytics");
 
 import Reactlet from "../reactlet";
 import UsersList from "../users-list.jsx";
-import ProjectsList from "../projects-list.jsx";
+import EntityPageProjects from "../entity-page-projects.jsx"
 
 module.exports = function(application) {
   const assetUtils = require('../../utils/assets')(application);
@@ -49,37 +49,15 @@ module.exports = function(application) {
     
     TeamProjects() {
       
-          projects() {
-      return self.team().projects();
-    },
-      
-    pinnedProjectIds() {
-      return self.team().pins().map(pin => pin.projectId);
-    },
-   
-    recentProjects() {
-      const recentProjects = self.projects().filter(project => project.fetched() && !_.includes(self.pinnedProjectIds(), project.id()));
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
-        title: "Recent Projects",
-        isPinned: false,
-        projects: recentProjects.map(project => project.asProps()),
-        projectOptions: self.projectOptions()
-      };
-      return Reactlet(ProjectsList, props);
-    },  
-    
-    pinnedProjectsList() {
-      const pinnedProjects = self.projects().filter(project => project.fetched() && _.includes(self.pinnedProjectIds(), project.id()));
-      const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
-        title: "Pinned Projects",
-        isPinned: true,
-        projects: pinnedProjects.map(project => project.asProps()),
-        projectOptions: self.projectOptions()
+        isAuthorizedUser: self.currentUserIsOnTeam(),
+        projectsObservable: self.team().projects,
+        pinsObservable: self.team().pins,
+        projectOptions: self.projectOptions(),
       };
       
-      return Reactlet(ProjectsList, props);
+      return Reactlet(EntityPageProjects, props, "UserPageProjectsContainer");
     },
     
     projectOptions(){
@@ -92,13 +70,6 @@ module.exports = function(application) {
         removeProjectFromTeam: self.removeProjectFromTeam, 
         togglePinnedState: self.togglePinnedState,
       };
-    },
-      
-      /*
-      span(class=@hiddenIfNotOnTeamAndNoPins)
-      = @pinnedProjectsList
-      = @recentProjects
-      */
     },
 
     teamAnalytics() {
@@ -253,12 +224,6 @@ module.exports = function(application) {
     
     removeProjectFromTeam(projectId) {
       application.team().removeProject(application, projectId);
-    },
-    
-    hiddenIfNotOnTeamAndNoPins() {
-      if (!self.currentUserIsOnTeam() && (self.team().pins().length === 0)) {
-        return 'hidden';
-      }
     },
 
     hiddenIfOnTeam() {
