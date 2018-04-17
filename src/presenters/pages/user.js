@@ -10,8 +10,7 @@ const UserTemplate = require("../../templates/pages/user");
 const DeletedProjectsTemplate = require("../../templates/deleted-projects");
 const LayoutPresenter = require("../layout");
 
-import UserPageProjects from "../user-page-projects.jsx"
-import ProjectsList from "../projects-list.jsx";
+import EntityPageProjects from "../entity-page-projects.jsx"
 import Reactlet from "../reactlet";
 
 module.exports = function(application, userLoginOrId) {
@@ -191,13 +190,13 @@ module.exports = function(application, userLoginOrId) {
     userProjects() {
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
-        isCurrentUser: self.isCurrentUser(),
+        isAuthorizedUser: self.isCurrentUser(),
         projectsObservable: self.user().projects,
         pinsObservable: self.user().pins,
         projectOptions: self.projectOptions(),
       };
       
-      return Reactlet(UserPageProjects, props, "UserPageProjectsContainer");
+      return Reactlet(EntityPageProjects, props, "UserPageProjectsContainer");
     },
     
     hiddenUnlessUserIsAnon() {

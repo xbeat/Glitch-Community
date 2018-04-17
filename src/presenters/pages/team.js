@@ -46,6 +46,60 @@ module.exports = function(application) {
       };
       return Reactlet(UsersList, props);      
     },
+    
+    TeamProjects() {
+      
+          projects() {
+      return self.team().projects();
+    },
+      
+    pinnedProjectIds() {
+      return self.team().pins().map(pin => pin.projectId);
+    },
+   
+    recentProjects() {
+      const recentProjects = self.projects().filter(project => project.fetched() && !_.includes(self.pinnedProjectIds(), project.id()));
+      const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
+        title: "Recent Projects",
+        isPinned: false,
+        projects: recentProjects.map(project => project.asProps()),
+        projectOptions: self.projectOptions()
+      };
+      return Reactlet(ProjectsList, props);
+    },  
+    
+    pinnedProjectsList() {
+      const pinnedProjects = self.projects().filter(project => project.fetched() && _.includes(self.pinnedProjectIds(), project.id()));
+      const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
+        title: "Pinned Projects",
+        isPinned: true,
+        projects: pinnedProjects.map(project => project.asProps()),
+        projectOptions: self.projectOptions()
+      };
+      
+      return Reactlet(ProjectsList, props);
+    },
+    
+    projectOptions(){
+      const userHasProjectOptions = application.team().currentUserIsOnTeam(application);
+      if(!userHasProjectOptions) {
+        return {};
+      }
+      
+      return {
+        removeProjectFromTeam: self.removeProjectFromTeam, 
+        togglePinnedState: self.togglePinnedState,
+      };
+    },
+      
+      /*
+      span(class=@hiddenIfNotOnTeamAndNoPins)
+      = @pinnedProjectsList
+      = @recentProjects
+      */
+    },
 
     teamAnalytics() {
       if (self.team().fetched()) {
@@ -192,51 +246,6 @@ module.exports = function(application) {
       return false;
     },
 
-    projects() {
-      return self.team().projects();
-    },
-      
-    pinnedProjectIds() {
-      return self.team().pins().map(pin => pin.projectId);
-    },
-   
-    recentProjects() {
-      const recentProjects = self.projects().filter(project => project.fetched() && !_.includes(self.pinnedProjectIds(), project.id()));
-      const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
-        title: "Recent Projects",
-        isPinned: false,
-        projects: recentProjects.map(project => project.asProps()),
-        projectOptions: self.projectOptions()
-      };
-      return Reactlet(ProjectsList, props);
-    },  
-    
-    pinnedProjectsList() {
-      const pinnedProjects = self.projects().filter(project => project.fetched() && _.includes(self.pinnedProjectIds(), project.id()));
-      const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
-        title: "Pinned Projects",
-        isPinned: true,
-        projects: pinnedProjects.map(project => project.asProps()),
-        projectOptions: self.projectOptions()
-      };
-      
-      return Reactlet(ProjectsList, props);
-    },
-    
-    projectOptions(){
-      const userHasProjectOptions = application.team().currentUserIsOnTeam(application);
-      if(!userHasProjectOptions) {
-        return {};
-      }
-      
-      return {
-        removeProjectFromTeam: self.removeProjectFromTeam, 
-        togglePinnedState: self.togglePinnedState,
-      };
-    },
-    
     togglePinnedState(projectId) {
       const action = Project.isPinnedByTeam(application.team(), projectId) ? "removePin" : "addPin";
       return application.team()[action](application, projectId);

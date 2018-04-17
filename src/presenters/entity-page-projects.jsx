@@ -50,7 +50,6 @@ export class UserPageProjectsContainer extends React.Component {
     this.aggregateObservable = null;
   }
 
-
   render() {
     return <UserPageProjects {...this.props} {...this.state}/>
   }
@@ -60,14 +59,14 @@ UserPageProjectsContainer.propTypes = {
   pinsObservable: PropTypes.func.isRequired,
 };
 
-export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, recentProjects, pinnedProjects, projectOptions}) => {
+export const UserPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects, pinnedProjects, projectOptions}) => {
 
   const commonProps = {
     closeAllPopOvers,
     projectOptions,
   };
   
-  const showPinnedProjects = isCurrentUser || pinnedProjects.length !== 0;
+  const showPinnedProjects = isAuthorizedUser || pinnedProjects.length !== 0;
   return (
     <React.Fragment>
       { showPinnedProjects && (
@@ -81,7 +80,7 @@ export const UserPageProjects = ({closeAllPopOvers, isCurrentUser, recentProject
 UserPageProjects.propTypes = {
   recentProjects: PropTypes.array.isRequired,
   pinnedProjects: PropTypes.array.isRequired,
-  isCurrentUser: PropTypes.bool.isRequired,
+  isAuthorizedUser: PropTypes.bool.isRequired,
 };
 
 export default UserPageProjectsContainer;
