@@ -51,7 +51,7 @@ module.exports = function(application) {
       
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
-        isAuthorizedUser: self.currentUserIsOnTeam(),
+        isAuthorizedUser: application.team().currentUserIsOnTeam(application),
         projectsObservable: self.team().projects,
         pinsObservable: self.team().pins,
         projectOptions: self.projectOptions(),

@@ -3,7 +3,7 @@ const fs = require("fs");
 const axios = require("axios");
 const util = require("util");
 const express = require('express');
-const CACHE_INTERVAL = 1000 * 60 * 30; // 30 minutes
+const CACHE_INTERVAL = 1000 * 60 * 5; // 5 minutes
 
 const fs_writeFile = util.promisify(fs.writeFile);
 

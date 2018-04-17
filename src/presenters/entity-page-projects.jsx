@@ -62,7 +62,7 @@ EntityPageProjectsContainer.propTypes = {
   projectOptions: PropTypes.object.isRequired,
 };
 
-export const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects, pinnedProjects, projectOptions}) => {
+const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects, pinnedProjects, projectOptions}) => {
 
   const commonProps = {
     closeAllPopOvers,
