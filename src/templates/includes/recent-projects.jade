@@ -9,10 +9,10 @@ section.profile.recent-projects(class=@hiddenUnlessCurrentUser)
           .user-avatar(class=@userAvatarIsAnon style=@userAvatarStyle alt="Your avatar")
     article.projects
       span(class=@hiddenIfUserIsFetched)
-        @loader
+        =@loader
 
       ul.projects-container
-        = @projects
+        =@projects
 
         - unless @currentUser.isSignedIn()
           li
