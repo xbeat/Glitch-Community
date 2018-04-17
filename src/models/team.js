@@ -7,7 +7,6 @@ const cache = {};
 const cacheBuster = Math.floor(Math.random() * 1000);
 
 const Model = require('./model');
-let Project = require('./project');
 const User = require('./user');
 
 module.exports = (Team = function(I, self) {
@@ -230,5 +229,5 @@ Team.getSearchResults = function(application, query) {
 Team._cache = cache;
 
 // Circular dependencies must go below module.exports
-Project = require('./project');
+const Project = require('./project');
 const Users = require('./user');
