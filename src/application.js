@@ -345,7 +345,8 @@ var self = Model({
   },
 
   isTeamUrl(url) {
-    if (_.find(cachedTeams, team => team.url === url)) { return true; }
+    console.log("is team url?", url, cachedTeams);
+    return !!_.find(cachedTeams, team => team.url === url);
   },
 
   getCachedTeamByUrl(url) {
