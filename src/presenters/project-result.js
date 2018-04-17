@@ -1,5 +1,6 @@
 const ProjectResultTemplate = require("../templates/includes/project-result");
-import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
+
+import UsersList from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
 module.exports = function(application, project, options, analytics) {
@@ -11,12 +12,9 @@ module.exports = function(application, project, options, analytics) {
   var self = {
 
     UsersList() {
-      if(project.showAsGlitchTeam && project.showAsGlitchTeam()){
-        return Reactlet(GlitchTeamUsersList, {});
-      }
-
       const props = {
         users: project.users().map(user => user.asProps()),
+        glitchTeam: project.showAsGlitchTeam && project.showAsGlitchTeam(),
       };
       return Reactlet(UsersList, props);
     },
