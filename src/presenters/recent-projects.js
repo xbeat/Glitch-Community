@@ -1,4 +1,5 @@
 const RecentProjectsTemplate = require("../templates/includes/recent-projects");
+const Loader = require("../templates/includes/loader");
 
 import {ProjectsUL} from "./projects-list.jsx"
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
@@ -29,6 +30,10 @@ module.exports = function(application) {
       return application.currentUser().userAvatarUrl('large');
     },
     
+    loader() {
+      return Loader(self);
+    },
+    
     projects() {
       let projects = application.currentUser().projects();
       if (application.currentUser().isAnon()) {
@@ -39,12 +44,16 @@ module.exports = function(application) {
       const projectIds = projects.map(project => ({id: project.id()}));
       application.getProjects(projectIds);
       
+      if(projects.find(project => !project.fetched())){
+        return self.loader();
+      }
+      
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
-        projects: projects.filter(project => project.fetched()).map(project => project.asProps()),
+        projects: projects.map(project => project.asProps()),
       }
 
-      return Reactlet(ProjectsUL, props, "starter-projects-container");
+      return Reactlet(ProjectsUL, props);
     },
         
     SignInPop() {
