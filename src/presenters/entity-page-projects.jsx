@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
+import Observable from "o_0";
 import {debounce} from "lodash";
 
 
@@ -25,22 +26,23 @@ export class EntityPageProjectsContainer extends React.Component {
     };
     
     this.aggregateObservable = null;
-    this.setStateFromModels = debounce((projectsModel, pinsModel, Component) => {
-      Component.setState(projectStateFromModels(projectsModel, pinsModel));
+    this.setStateFromModels = debounce((projectsModel, pinsModel) => {
+      this.setState(projectStateFromModels(projectsModel, pinsModel));
     }, 10);
   }
 
   componentDidMount() {
-    const cb = () => { 
-      this.setStateFromModels(this.props.projectsObservable(), this.props.pinsObservable(), this);
-    }
-
-    this.props.projectsObservable.observe(cb);
-    this.props.pinsObservable.observe(cb);
-    // Subscribe just to the 'fetched' subcomponent of the projects.
-    this.props.projectsObservable.forEach(project => project.fetched.observe(cb));
-
-    cb();
+    this.aggregateObservable = Observable(() => {
+      const projectsModel = this.props.projectsObservable();
+      const pinsModel = this.props.pinsObservable();
+      
+      // Subscribe just to the 'fetched' subcomponent of the projects.
+      for(let {fetched} of projectsModel) {
+        fetched && fetched();
+      }
+      
+      this.setStateFromModels(projectsModel, pinsModel);
+    });
   }
   
   componentWillUnmount(){
