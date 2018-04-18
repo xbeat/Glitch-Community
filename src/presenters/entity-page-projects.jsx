@@ -27,11 +27,13 @@ export class EntityPageProjectsContainer extends React.Component {
     
     this.aggregateObservable = null;
     this.setStateFromModels = debounce((projectsModel, pinsModel) => {
-      this.setState(projectStateFromModels(projectsModel, pinsModel));
+      this.mounted && this.setState(projectStateFromModels(projectsModel, pinsModel));
     }, 10);
+    this._mounted = false;
   }
 
   componentDidMount() {
+    this._mounted = true;
     this.aggregateObservable = Observable(() => {
       const projectsModel = this.props.projectsObservable();
       const pinsModel = this.props.pinsObservable();
@@ -46,6 +48,7 @@ export class EntityPageProjectsContainer extends React.Component {
   }
   
   componentWillUnmount(){
+    this._mounted = false;
     this.aggregateObservable && this.aggregateObservable.releaseDependencies();
     this.aggregateObservable = null;
   }
