@@ -345,6 +345,7 @@ var self = Model({
   },
 
   isTeamUrl(url) {
+    console.log("is team url?", url, cachedTeams);
     return !!_.find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
   },
 
