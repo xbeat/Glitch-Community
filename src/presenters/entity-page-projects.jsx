@@ -43,22 +43,11 @@ export class EntityPageProjectsContainer extends React.Component {
       
       this.setStateFromModels(projectsModel, pinsModel, this);
     });
-    
-    if(window.navigator.userAgent.indexOf("Edge") > -1) {
-      const obs = this.props.projectsObservable;
-      // The Observable library isn't reliable in Edge :'-(
-      // Shim this by triggering the observable with polling.
-      this.edgeShimInterval = setInterval(() => obs.splice(0,0), 1000);
-    }
   }
   
   componentWillUnmount(){
     this.aggregateObservable && this.aggregateObservable.releaseDependencies();
     this.aggregateObservable = null;
-    
-    if(this.edgeShimInterval) {
-      clearInterval(this.ieShimInterval);
-    }
   }
 
   render() {
