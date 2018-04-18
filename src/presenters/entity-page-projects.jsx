@@ -43,6 +43,15 @@ export class EntityPageProjectsContainer extends React.Component {
       
       this.setStateFromModels(projectsModel, pinsModel, this);
     });
+    
+    if(window.navigator.userAgent.indexOf("Edge") > -1) {
+      // Observable isn't reliable in Edge :'-(
+      // Work around this by triggering a timer.
+      const ieShim = () => {
+        if(this.state.recentProjects.length === 0 && this.props.projectsObservable.length !==0) {
+          
+      }
+    }
   }
   
   componentWillUnmount(){
