@@ -8,14 +8,18 @@ import {render} from 'react-dom';
 import React from 'react';
 let anchorId = 1;
 let stack = [];
-let uniques = new Set();
+let distinctIds = new Set();
 let batchPending = false;
 
 module.exports = function(Component, props, guid=null) {
-  const id = guid || `reactlet-${Component.name}-${anchorId}`;
-  anchorId++;
+  const id = guid || `reactlet-${Component.name}-${anchorId++}`;
   
-  uniques.add(id);
+  // Rather than rendering immediately, 
+  // collect the invocations into a stack.
+  // We have to wait until the DOM element is present before we can act anyway,
+  // and then we can render in reverse order so that duplicates get culled
+  // and we end up outputing only the most recent version.
+  distinctIds.add(id);
   stack.push({
     id: id,
     render: (el) => { 
@@ -31,7 +35,7 @@ module.exports = function(Component, props, guid=null) {
     setTimeout(() => { 
       while(stack.length) {
         const {id, render} = stack.pop();
-        const distinct = uniques.delete(id);
+        const distinct = distinctIds.delete(id);
         if(!distinct){
           // The same ID was added multiple times.
           // If we proceed now, we'll render an older version.
@@ -48,7 +52,10 @@ module.exports = function(Component, props, guid=null) {
         render(el);
       }
       batchPending = false;
-      if(
+      
+      if(distinctIds.size !== 0) {
+        console.error("Unrendered elements detected", distinctIds);
+      }
     });
   }
 
