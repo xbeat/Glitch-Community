@@ -26,8 +26,8 @@ export class EntityPageProjectsContainer extends React.Component {
     };
     
     this.aggregateObservable = null;
-    this.setStateFromModels = debounce((projectsModel, pinsModel, setState) => {
-      setState(projectStateFromModels(projectsModel, pinsModel));
+    this.setStateFromModels = debounce((projectsModel, pinsModel, Component) => {
+      Component.setState(projectStateFromModels(projectsModel, pinsModel));
     }, 10);
   }
 
@@ -41,7 +41,7 @@ export class EntityPageProjectsContainer extends React.Component {
         fetched && fetched();
       }
       
-      this.setStateFromModels(projectsModel, pinsModel, this.setState);
+      this.setStateFromModels(projectsModel, pinsModel, this);
     });
   }
   
