@@ -48,6 +48,8 @@ module.exports = function(application) {
     },
     
     TeamProjects() {
+      // Subscribe here to projects and pins
+      console.log(self.team().projects);
       
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,

@@ -42,6 +42,7 @@ export class EntityPageProjectsContainer extends React.Component {
       }
       
       this.setStateFromModels(projectsModel, pinsModel, this);
+      console.log("bam.", projectsModel);
     });
   }
   
