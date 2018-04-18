@@ -14,18 +14,18 @@ Example:
 module.exports =
   [
     {
-      title: 'Just Building Some Bridges',
-      img: 'https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Fjust-building-some-bridges.jpg?1523528321451',
-      link: 'https://just-building-some-bridges.glitch.me'
+      title: '\'Breakfast with Blerf\' by ericandrewlewis',
+      img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fabsorbing-property.jpg?1523868914076',
+      link: 'https://absorbing-property.glitch.me'
     }
     , {
-      title: 'Lipstick Robot',
-      img: "https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Flipstick-robot.jpg?1523528321154",
-      link: 'https://lipstick-robot.glitch.me'
+      title: '\'wikipedia-game\' by dqgorelick',
+      img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwikipedia-game.jpg?1523869115594",
+      link: 'https://wikipedia-game.glitch.me'
     }
     , {
-      title: 'Lyric Toxicity Escalator',
-      img: "https://cdn.glitch.com/73130730-0e26-4579-8b64-4974759a11e2%2Fperspective-lyrics.jpg?1523528321638",
-      link: 'https://perspective-lyrics.glitch.me'
+      title: '\'flip-clock\' by brunomarchioro',
+      img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fflip-clock.jpg?1523869218178",
+      link: 'https://flip-clock.glitch.me'
     }   
   ];
