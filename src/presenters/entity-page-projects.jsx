@@ -31,10 +31,6 @@ export class EntityPageProjectsContainer extends React.Component {
     }, 10);
   }
   
-  getDerivedStateFromProps() {
-    console.log("got new props!");
-  }
-
   componentDidMount() {
     console.log("didmount!");
     this.aggregateObservable = Observable(() => {
@@ -47,7 +43,7 @@ export class EntityPageProjectsContainer extends React.Component {
       }
       
       this.setStateFromModels(projectsModel, pinsModel, this);
-      console.log("bam.", projectsModel);
+      console.log("bam.", projectsModel.length, pinsModel.length);
     });
   }
   
