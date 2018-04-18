@@ -44,29 +44,21 @@ export class EntityPageProjectsContainer extends React.Component {
       this.setStateFromModels(projectsModel, pinsModel, this);
     });
     
-    window.agg = this.aggregateObservable;
-    
     if(window.navigator.userAgent.indexOf("Edge") > -1) {
-      // Observable isn't reliable in Edge :'-(
-      // Work around this by triggering a timer.
-      // Not a perfect fix, but will help the common case of a
-      // page load failing to notice the projects loading in.
-      const ieShim = (Component) => {
-        // So long as we haven't successfully updated our state,
-        // Keep checking euntil we succeed at least once.
-        if(Component.state.recentProjects.length === 0) {
-          console.log("shim shimminy");
-          Component.setStateFromModels(this.props.projectsObservable(), this.props.pinsObservable(), Component);
-          setTimeout(ieShim, 5000, Component);
-        }
-      }
-      //ieShim(this);
+      const obs = this.props.projectsObservable;
+      // The Observable library isn't reliable in Edge :'-(
+      // Shim this by triggering the observable with polling.
+      this.edgeShimInterval = setInterval(() => obs.splice(0,0), 1000);
     }
   }
   
   componentWillUnmount(){
     this.aggregateObservable && this.aggregateObservable.releaseDependencies();
     this.aggregateObservable = null;
+    
+    if(this.edgeShimInterval) {
+      clearInterval(this.ieShimInterval);
+    }
   }
 
   render() {
