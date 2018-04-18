@@ -30,8 +30,13 @@ export class EntityPageProjectsContainer extends React.Component {
       Component.setState(projectStateFromModels(projectsModel, pinsModel));
     }, 10);
   }
+  
+  getDerivedStateFromProps() {
+    console.log("got new props!");
+  }
 
   componentDidMount() {
+    console.log("didmount!");
     this.aggregateObservable = Observable(() => {
       const projectsModel = this.props.projectsObservable();
       const pinsModel = this.props.pinsObservable();
