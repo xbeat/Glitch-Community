@@ -2,8 +2,8 @@
 
 - TeamItemPresenter = require "../../presenters/team-item"
 - UserItemPresenter = require "../../presenters/user-item"
-- ProjectItemPresenter = require "../../presenters/project-item"
 - Loader = require "../includes/loader"
+- ProjectListPresenter = @ProjectListPresenter
 
 - context = @application
 
@@ -27,10 +27,7 @@ main.search-results(role="main")
       = Loader(this)
 
   article.projects(class=@hiddenIfSearchResultsHaveNoProjects)
-    h2 Projects
-    ul.projects-container
-      - @searchResultsProjects().forEach (project) ->
-        = ProjectItemPresenter(context, project, {})
+    = ProjectListPresenter()
     span(class=@hiddenIfSearchResultsProjectsLoaded)
       = Loader(this)
 

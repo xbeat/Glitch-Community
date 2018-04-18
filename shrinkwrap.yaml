@@ -22,6 +22,7 @@ dependencies:
   moment: 2.20.1
   nodemon: 1.17.1
   o_0: 0.3.8
+  prop-types: 15.6.1
   quantize: 1.0.2
   querystringify: 1.0.0
   randomcolor: 0.5.3
@@ -5531,12 +5532,13 @@ specifiers:
   express: ^4.16.2
   jadelet: ^0.8.0-pre.11
   lodash: ^4.17.5
-  markdown-it: ^8.4.0
+  markdown-it: ^8.4.1
   markdown-it-emoji: ^1.4.0
   markdown-it-sanitizer: ^0.4.3
   moment: ^2.19.0
   nodemon: ^1.14.11
   o_0: ^0.3.8
+  prop-types: ^15.6.1
   quantize: ^1.0.2
   querystringify: ^1.0.0
   randomcolor: ^0.5.3

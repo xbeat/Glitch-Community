@@ -7,7 +7,6 @@ const cache = {};
 const cacheBuster = Math.floor(Math.random() * 1000);
 
 const Model = require('./model');
-let Project = require('./project');
 const User = require('./user');
 
 module.exports = (Team = function(I, self) {
@@ -102,8 +101,7 @@ module.exports = (Team = function(I, self) {
     },
 
     currentUserIsOnTeam(application) {
-      const matchingUser = self.users().filter(user => user.id() === application.currentUser().id());
-      if (matchingUser.length) { return true; }
+      return -1 !== self.users().findIndex(user => user.id() === application.currentUser().id());
     },
 
     updateCoverColor(application, color) {
@@ -177,11 +175,11 @@ module.exports = (Team = function(I, self) {
           return console.log('added project. team projects are now', self.projects());}).catch(error => console.error('addProject', error));
     },
 
-    removeProject(application, project) {
-      const teamProjectPath = `/teams/${self.id()}/projects/${project.id()}`;
+    removeProject(application, projectId) {
+      const teamProjectPath = `/teams/${self.id()}/projects/${projectId}`;
       return application.api().delete(teamProjectPath)
         .then(function(response) {
-          const newProjects = _.reject(self.projects(), removedProject => removedProject.id() === project.id());
+          const newProjects = _.reject(self.projects(), removedProject => removedProject.id() === projectId);
           self.projects(newProjects);
           return console.log('removed project. team projects are now', self.projects());}).catch(error => console.error('addProject', error));
     },
@@ -230,5 +228,5 @@ Team.getSearchResults = function(application, query) {
 Team._cache = cache;
 
 // Circular dependencies must go below module.exports
-Project = require('./project');
+const Project = require('./project');
 const Users = require('./user');

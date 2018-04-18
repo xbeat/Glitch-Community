@@ -3,11 +3,10 @@ const axios = require('axios');
 const LayoutPresenter = require("../layout");
 const SearchPageTemplate = require("../../templates/pages/search");
 
-const Reactlet = require("../reactlet");
-
 import Categories from "../categories.jsx";
-import {render} from 'react-dom';
-import React from 'react';
+import Reactlet from "../reactlet";
+import ProjectsList from "../projects-list.jsx";
+
 
 module.exports = function(application) {
 
@@ -44,6 +43,15 @@ module.exports = function(application) {
 
     hiddenUnlessSearchHasNoResults() {
       if (!application.searchResultsHaveNoUsers() || !application.searchResultsHaveNoProjects() || !application.searchResultsHaveNoTeams()) { return 'hidden'; }
+    },
+    
+    ProjectListPresenter() {
+      const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
+        projects: self.searchResultsProjects().map(project => project.asProps()),
+        title: "Projects"
+      };
+      return Reactlet(ProjectsList, props);
     },
     
     Categories() {

@@ -1,7 +1,6 @@
 - Loader = require "../includes/loader"
 
 main.category-page(role="main")
-  - console.log 'rendered category page', @
   article.projects(@style)
     header.category
       h2.category-name=@name
@@ -9,9 +8,9 @@ main.category-page(role="main")
         img(src=@avatarUrl)
       p.description=@description
 
-    ul.projects-container    
-      span(class=@hiddenIfCategoryProjectsLoaded)
-        = Loader(this)
-      = @projectElements
+    span(class=@hiddenIfCategoryProjectsLoaded)
+      = Loader(this)
+    = @projects
+
 
   = @Categories

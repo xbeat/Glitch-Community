@@ -1,13 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Check that you're happy with the conversion, then remove this comment.
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS205: Consider reworking code to avoid use of IIFEs
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
-
 /* globals baseUrl API_URL APP_URL EDITOR_URL analytics application*/
 
 const Observable = require('o_0');
@@ -118,17 +108,36 @@ var self = Model({
     
   },
 
-  closeAllPopOvers() {
-    $(".pop-over.disposable, .overlay-background.disposable").remove();
-    self.signInPopVisibleOnHeader(false);
-    self.signInPopVisibleOnRecentProjects(false);
-    self.userOptionsPopVisible(false);
-    self.addTeamUserPopVisible(false);
-    self.addTeamProjectPopVisible(false);
-    self.overlayProjectVisible(false);
-    self.overlayVideoVisible(false);
-    return self.overlayNewStuffVisible(false);
-  },
+  // Call this function to close all active popovers and overlays.
+  // Pass a callback to this function to register a callback
+  // to be invoked when this function is called (e.g., so you can close yourself.);
+  // Callbacks are only invoked once.
+  closeAllPopOvers: (() => {
+    const callbacks = [];
+    
+    return (cb) => {
+      if(cb) {
+        callbacks.push(cb);
+        return;
+      }
+      
+      callbacks.forEach(cb => cb());
+      
+      //delete all the callbacks
+      callbacks.length = 0;
+      
+      $(".pop-over.disposable, .overlay-background.disposable").remove();
+      self.signInPopVisibleOnHeader(false);
+      self.signInPopVisibleOnRecentProjects(false);
+      self.userOptionsPopVisible(false);
+      self.addTeamUserPopVisible(false);
+      self.addTeamProjectPopVisible(false);
+      self.overlayProjectVisible(false);
+      self.overlayVideoVisible(false);
+      return self.overlayNewStuffVisible(false);
+    }
+  
+  })(),
 
   searchProjects(query) {
     self.searchResultsProjects([]);

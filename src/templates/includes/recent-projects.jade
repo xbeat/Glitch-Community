@@ -1,5 +1,3 @@
-- Loader = require "./loader"
-
 section.profile.recent-projects(class=@hiddenUnlessCurrentUser)
   h2
     a(href=@userLink)
@@ -11,10 +9,10 @@ section.profile.recent-projects(class=@hiddenUnlessCurrentUser)
           .user-avatar(class=@userAvatarIsAnon style=@userAvatarStyle alt="Your avatar")
     article.projects
       span(class=@hiddenIfUserIsFetched)
-        = Loader(this)
+        =@loader
 
       ul.projects-container
-        = @projects
+        =@projects
 
         - unless @currentUser.isSignedIn()
           li

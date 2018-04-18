@@ -32,6 +32,28 @@ module.exports = (Project = function(I, self) {
   self.attrModels('users', User)
 
   self.extend({
+    
+    asProps() {
+      const project = self;
+
+      return {
+        avatar: project.avatar(),
+        description: project.description(),
+        domain: project.domain(),
+        id: project.id(),
+        isPinnedByTeam: project.isPinnedByTeam(application),
+        isPinnedByUser: project.isPinnedByUser(application),
+        isRecentProject: !!(project.isRecentProject),
+        link: project.isRecentProject ? project.editUrl() : `/~${project.domain()}`,
+        name: project.name(),
+        private: project.private(),
+        showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
+        showOverlay: () => {
+          project.showOverlay(application);
+        },
+        users: project.users().map(user => user.asProps()),
+      };
+    },
 
     name() {
       return self.domain();
@@ -114,13 +136,11 @@ module.exports = (Project = function(I, self) {
     },
 
     isPinnedByUser(application) {
-      const pins = application.user().pins().map(pin => pin.projectId);
-      return _.includes(pins, self.id());
+      return Project.isPinnedByUser(application.user(), self.id());
     },
 
     isPinnedByTeam(application) {
-      const pins = application.team().pins().map(pin => pin.projectId);
-      return _.includes(pins, self.id());
+      return Project.isPinnedByTeam(application.team(), self.id());
     },
            
     delete() {
@@ -167,6 +187,16 @@ module.exports = (Project = function(I, self) {
 
   return self;
 });
+
+Project.isPinnedByUser = (user, projectId) => {
+  const pins = user.pins().map(pin => pin.projectId);
+  return _.includes(pins, projectId);
+};
+
+Project.isPinnedByTeam = function(team, projectId) {
+  const pins = team.pins().map(pin => pin.projectId);
+  return _.includes(pins, projectId);
+}
 
 // Fetch projects and populate them into the local cache
 Project.getProjectsByIds = function(api, ids) {

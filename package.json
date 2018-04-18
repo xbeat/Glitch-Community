@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "Find cool projects and people using Glitch",
   "scripts": {
-    "start": "bash sh/start.sh"
+    "prestart": "bash sh/watchers.sh &",
+    "start": "nodemon ./server.js --watch server.js --watch routes.js -L"
   },
   "dependencies": {
     "autoprefixer-stylus": "^0.14.0",
@@ -22,7 +23,7 @@
     "express": "^4.16.2",
     "jadelet": "^0.8.0-pre.11",
     "lodash": "^4.17.5",
-    "markdown-it": "^8.4.0",
+    "markdown-it": "^8.4.1",
     "markdown-it-emoji": "^1.4.0",
     "markdown-it-sanitizer": "^0.4.3",
     "moment": "^2.19.0",
@@ -36,7 +37,8 @@
     "stylus": "^0.54.5",
     "uglifyjs-webpack-plugin": "^1.1.8",
     "webpack": "^3.10.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3"
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "prop-types": "^15.6.1"
   },
   "engines": {
     "node": "8.x"

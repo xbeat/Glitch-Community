@@ -1,5 +1,4 @@
-/* globals Project */
-
+const Project = require("../../models/project");
 const Observable = require('o_0');
 const _ = require('lodash');
 const md = require('markdown-it')({
@@ -10,7 +9,9 @@ const md = require('markdown-it')({
 const UserTemplate = require("../../templates/pages/user");
 const DeletedProjectsTemplate = require("../../templates/deleted-projects");
 const LayoutPresenter = require("../layout");
-const ProjectsListPresenter = require("../projects-list");
+
+import EntityPageProjects from "../entity-page-projects.jsx"
+import Reactlet from "../reactlet";
 
 module.exports = function(application, userLoginOrId) {
   const assetUtils = require('../../utils/assets')(application);
@@ -185,36 +186,44 @@ module.exports = function(application, userLoginOrId) {
       input.click();
       return false;
     },
-
-    projects() {
-      return self.user().projects();
-    },
-
-    pinnedProjectIds() {
-      return self.user().pins().map(pin => pin.projectId);
-    },
-
-    recentProjects() {
-      const recentProjects = self.projects().filter(project => !_.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Recent Projects", recentProjects, self);
-    },  
     
-    pinnedProjectsList() {
-      const pinnedProjects = self.projects().filter(project => _.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects, self);
-    },
-
-    hiddenIfNotCurrentUserAndNoPins() {
-      if (!self.isCurrentUser() && (self.user().pins().length === 0)) {
-        return 'hidden';
-      }
+    userProjects() {
+      const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
+        isAuthorizedUser: self.isCurrentUser(),
+        projectsObservable: self.user().projects,
+        pinsObservable: self.user().pins,
+        projectOptions: self.projectOptions(),
+      };
+      
+      return Reactlet(EntityPageProjects, props, "UserPageProjectsContainer");
     },
     
     hiddenUnlessUserIsAnon() {
       if (!self.user().isAnon()) { return 'hidden'; }
     },
+    
+    projectOptions() {
+      const userHasProjectOptions = application.user().isOnUserPageForCurrentUser(application);
+      if(!userHasProjectOptions) {
+        return {};
+      }
+      
+      return {
+        deleteProject: self.deleteProject, 
+        leaveProject: self.leaveProject, 
+        togglePinnedState: self.togglePinnedState
+      }
+    },
+    
+    togglePinnedState(projectId) {
+      const action = Project.isPinnedByUser(application.user(), projectId) ? "removePin" : "addPin";
+      return application.user()[action](application, projectId);
+    },
+
                 
-    deleteProject(project, event) {
+    deleteProject(projectId, event) {
+      const project = Project({id: projectId});
       const projectContainer = event.target.closest('li');
       application.closeAllPopOvers();
       $(projectContainer).one('animationend', function() { 
@@ -320,7 +329,8 @@ module.exports = function(application, userLoginOrId) {
       if (self.deletedProjectsLoadingState() === 'loaded') { return 'hidden'; }
     },
         
-    leaveProject(project, event) {
+    leaveProject(projectId, event) {
+      const project = Project({id: projectId});
       const projectContainer = event.target.closest('li');
       application.closeAllPopOvers();
       $(projectContainer).one('animationend', function() { 

@@ -5,17 +5,18 @@ const md = require('markdown-it')({
   linkify: true,
   typographer: true,
 });
+const Project = require("../../models/project");
 
 const TeamTemplate = require("../../templates/pages/team");
 const LayoutPresenter = require("../layout");
 const AddTeamUserPopPresenter = require("../pop-overs/add-team-user-pop");
 const AddTeamProjectPopPresenter = require("../pop-overs/add-team-project-pop");
-const ProjectsListPresenter = require("../projects-list");
 const TeamUserPresenter = require("../team-user-avatar");
 const AnalyticsPresenter = require("../analytics");
 
 import Reactlet from "../reactlet";
 import UsersList from "../users-list.jsx";
+import EntityPageProjects from "../entity-page-projects.jsx"
 
 module.exports = function(application) {
   const assetUtils = require('../../utils/assets')(application);
@@ -44,6 +45,30 @@ module.exports = function(application) {
         extraClass: "team-users",
       };
       return Reactlet(UsersList, props);      
+    },
+    
+    TeamProjects() {
+      const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
+        isAuthorizedUser: application.team().currentUserIsOnTeam(application),
+        projectsObservable: application.team().projects,
+        pinsObservable: application.team().pins,
+        projectOptions: self.projectOptions(),
+      };
+      
+      return Reactlet(EntityPageProjects, props, "UserPageProjectsContainer");
+    },
+    
+    projectOptions(){
+      const userHasProjectOptions = application.team().currentUserIsOnTeam(application);
+      if(!userHasProjectOptions) {
+        return {};
+      }
+      
+      return {
+        removeProjectFromTeam: self.removeProjectFromTeam, 
+        togglePinnedState: self.togglePinnedState,
+      };
     },
 
     teamAnalytics() {
@@ -191,28 +216,13 @@ module.exports = function(application) {
       return false;
     },
 
-    projects() {
-      return self.team().projects();
-    },
-      
-    pinnedProjectIds() {
-      return self.team().pins().map(pin => pin.projectId);
-    },
-
-    recentProjects() {
-      const recentProjects = self.projects().filter(project => !_.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Recent Projects", recentProjects);
+    togglePinnedState(projectId) {
+      const action = Project.isPinnedByTeam(application.team(), projectId) ? "removePin" : "addPin";
+      return application.team()[action](application, projectId);
     },
     
-    pinnedProjectsList() {
-      const pinnedProjects = self.projects().filter(project => _.includes(self.pinnedProjectIds(), project.id()));
-      return ProjectsListPresenter(application, "Pinned Projects", pinnedProjects);
-    },
-    
-    hiddenIfNotOnTeamAndNoPins() {
-      if (!self.currentUserIsOnTeam() && (self.team().pins().length === 0)) {
-        return 'hidden';
-      }
+    removeProjectFromTeam(projectId) {
+      application.team().removeProject(application, projectId);
     },
 
     hiddenIfOnTeam() {

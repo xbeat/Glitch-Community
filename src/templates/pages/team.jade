@@ -43,11 +43,8 @@ main.user-page.team-page(role="main")
       .emoji.bento-box
     = @addTeamProjectPop
 
-  span(class=@hiddenIfNotOnTeamAndNoPins)
-    = @pinnedProjectsList
-  = @recentProjects
+  = @TeamProjects
 
-  - console.log "render team"
   = @teamAnalytics
 
   section.team-marketing(class=@hiddenIfOnTeam)
