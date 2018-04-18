@@ -1,17 +1,21 @@
 // This shim helps attach React components to Jadelet files
 // Also see templates/reactlet.jade
 
+/* globals Set */
+
 const ReactletTemplate = require("../templates/reactlet");
 import {render} from 'react-dom';
 import React from 'react';
 let anchorId = 1;
 let stack = [];
+let uniques = new Set();
 let batchPending = false;
 
 module.exports = function(Component, props, guid=null) {
-  const id = `reactlet-${Component.name}-${anchorId}`;
+  const id = guid || `reactlet-${Component.name}-${anchorId}`;
   anchorId++;
   
+  uniques.add(id);
   stack.push({
     id: id,
     render: (el) => { 
@@ -27,6 +31,13 @@ module.exports = function(Component, props, guid=null) {
     setTimeout(() => { 
       while(stack.length) {
         const {id, render} = stack.pop();
+        const distinct = uniques.delete(id);
+        if(!distinct){
+          // The same ID was added multiple times.
+          // If we proceed now, we'll render an older version.
+          // ...So don't.
+          continue;
+        }
         const el = document.getElementById(id);
         if(!el) {
           // The page rerendered multiple times before
@@ -37,6 +48,7 @@ module.exports = function(Component, props, guid=null) {
         render(el);
       }
       batchPending = false;
+      if(
     });
   }
 
