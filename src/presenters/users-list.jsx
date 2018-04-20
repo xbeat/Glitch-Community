@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const PopulatedUsersList = ({users, extraClass="" }) => (
   <div className={`users ${extraClass}`}>
     { users.map((user, key) => (
