@@ -29,7 +29,7 @@ module.exports = (Project = function(I, self) {
 
   self.attrObservable(...Array.from(Object.keys(I) || []));
   self.attrObservable("readme", "readmeNotFound", "projectNotFound", "fetched", "displayName", "private");
-  self.attrModels('users', User)
+  self.attrModels('users', User);
 
   self.extend({
     
@@ -113,13 +113,13 @@ module.exports = (Project = function(I, self) {
       originalQueryString = window.location.search;
       if((originalUrlPath+originalQueryString).includes("~")) {
         //They navigated here directly.
-        originalUrlPath = "/"
-        originalQueryString = ''
+        originalUrlPath = "/";
+        originalQueryString = '';
       }
       if(!self.domain()) {
         return;
       }
-      const target = `/~${self.domain()}`
+      const target = `/~${self.domain()}`;
       history.replaceState(null, `${self.domain()} – Glitch`, target);
       application.overlayProjectVisible(true);
       return document.getElementsByClassName('project-overlay')[0].focus();
@@ -196,7 +196,7 @@ Project.isPinnedByUser = (user, projectId) => {
 Project.isPinnedByTeam = function(team, projectId) {
   const pins = team.pins().map(pin => pin.projectId);
   return _.includes(pins, projectId);
-}
+};
 
 // Fetch projects and populate them into the local cache
 Project.getProjectsByIds = function(api, ids) {
@@ -225,7 +225,7 @@ Project.getProjectsByIds = function(api, ids) {
   });
   
   return ids.map(id => Project({id}));
-}
+};
 
 Project.getProjectOverlay = function(application, domain) {
   const projectPath = `projects/${domain}`;

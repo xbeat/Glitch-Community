@@ -35,7 +35,7 @@ module.exports = function(application, category) {
         closeAllPopOvers: application.closeAllPopOvers,
         projects: projects.map(project => project.asProps()),
         categoryColor: category.color(),
-      }
+      };
 
       return Reactlet(ProjectsUL, props);
     }

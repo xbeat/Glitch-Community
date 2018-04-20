@@ -135,7 +135,7 @@ var self = Model({
       self.overlayProjectVisible(false);
       self.overlayVideoVisible(false);
       return self.overlayNewStuffVisible(false);
-    }
+    };
   
   })(),
 

@@ -1,11 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Check that you're happy with the conversion, then remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 // 💭 based on frontend/utils/assets in the editor
 
 const S3Uploader = require('./s3-uploader');
@@ -31,15 +23,6 @@ const blobToImage = file =>
   })
 ;
     
-const blobToBase64 = file =>
-  new Promise(function(resolve, reject) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    return reader.onerror = error => reject(error);
-  })
-;
-
 // Reduces the width/height and draws a new image until it reaches
 // the final size. It loops by waiting for the onload to fire on the updated
 // image and exits as soon as the new width/height are less than or equal to the
@@ -63,7 +46,7 @@ const drawCanvasThumbnail = function(image, type, max) {
     sourceCanvas = targetCanvas;
   }
 
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     return sourceCanvas.toBlob(function(blob) {
       blob.width = width;
       blob.height = height;

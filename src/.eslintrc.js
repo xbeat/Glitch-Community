@@ -6,6 +6,7 @@ module.exports = exports = {
   "extends": [
     "eslint:recommended",
     "plugin:jsx-a11y/recommended",
+    "plugin:react/recommended",
   ],
   env: {
       'es6': true,        // We are writing ES6 code

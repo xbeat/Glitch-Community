@@ -10,7 +10,7 @@ const UserTemplate = require("../../templates/pages/user");
 const DeletedProjectsTemplate = require("../../templates/deleted-projects");
 const LayoutPresenter = require("../layout");
 
-import EntityPageProjects from "../entity-page-projects.jsx"
+import EntityPageProjects from "../entity-page-projects.jsx";
 import Reactlet from "../reactlet";
 
 module.exports = function(application, userLoginOrId) {
@@ -213,7 +213,7 @@ module.exports = function(application, userLoginOrId) {
         deleteProject: self.deleteProject, 
         leaveProject: self.leaveProject, 
         togglePinnedState: self.togglePinnedState
-      }
+      };
     },
     
     togglePinnedState(projectId) {

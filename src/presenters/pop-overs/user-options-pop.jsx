@@ -35,7 +35,7 @@ const UserOptionsPop = ({visible, profileLink, avatarUrl, teams, showNewStuffOve
   const clickNewStuff = (event) => {
     showNewStuffOverlay();
     event.stopPropagation();
-  }
+  };
 
   return (
     <dialog className="pop-over user-options-pop">

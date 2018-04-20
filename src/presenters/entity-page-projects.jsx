@@ -14,11 +14,11 @@ const projectStateFromModels = (projectsModel, pinsModel) => {
   const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
   const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
   return {pinnedProjects, recentProjects};
-}
+};
 
 export class EntityPageProjectsContainer extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
      
     this.state = {
       recentProjects: [],
@@ -51,7 +51,7 @@ export class EntityPageProjectsContainer extends React.Component {
   }
 
   render() {
-    return <EntityPageProjects {...this.props} {...this.state}/>
+    return <EntityPageProjects {...this.props} {...this.state}/>;
   }
 }
 EntityPageProjectsContainer.propTypes = {

@@ -57,7 +57,7 @@ ProjectItem.propTypes = {
   }).isRequired,
   categoryColor: PropTypes.string,
   projectOptions: PropTypes.object,
-}
+};
 
 
 export default ProjectItem;
