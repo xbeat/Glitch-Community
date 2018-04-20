@@ -34,6 +34,8 @@ module.exports = exports = {
     "semi": ["error", "always"],
     "no-debugger": WARN,
     
+    "react/no-unescaped-entities": ["error", {"forbid": [">", "}"]}], // permit ' and " in jsx html
+    
     // Unintentionally off -- we should fix these, then enable them
     // Looking for a good first PR to contribute to the site?
     // Turn one of these on and fix it up!

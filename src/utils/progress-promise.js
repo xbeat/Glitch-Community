@@ -23,6 +23,7 @@ if (Promise.prototype._notify == null) { Promise.prototype._notify = function(ev
     try {
       return handler(event);
     } catch (error) {
+      // empty
     }
   });
 }; }
@@ -41,6 +42,7 @@ const ProgressPromise = function(fn) {
         try {
           return handler(event);
         } catch (error) {
+          //empty
         }
       }) : undefined
     ;

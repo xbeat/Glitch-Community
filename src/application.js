@@ -20,7 +20,9 @@ const cachedUser =
   localStorage.cachedUser ?
     (() => { try {
       return JSON.parse(localStorage.cachedUser);
-    } catch (error) {} })() : undefined;
+    } catch (error) {
+      // empty
+      } })() : undefined;
 
 var self = Model({
   // featuredProjects: featuredProjects
@@ -366,6 +368,7 @@ self.attrModel("category", Category);
 self.attrModel("team", Team);
 self.attrModel("question", Question);
 
+var global = global || {};
 global.application = self;
 global.API_URL = API_URL;
 global.EDITOR_URL = EDITOR_URL;
