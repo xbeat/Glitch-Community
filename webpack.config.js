@@ -12,7 +12,9 @@ const BASE = path.resolve(__dirname, '.');
 module.exports = () => {
   
   let plugins = [];
+  let mode = 'development';
   if(process.env.NODE_ENV === 'production') {
+    mode = 'production';
     plugins = [
       new UglifyJsPlugin({
         cache: true,
@@ -31,6 +33,7 @@ module.exports = () => {
   }
   
   return {
+    mode,
     entry: {
       "client-bundle": `${SRC}/client.js`
     },
