@@ -48,7 +48,7 @@ module.exports = () => {
           loader: "eslint-loader",
           options: {
             fix: true,
-            cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so blank it when reconfiguring
+            //cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so blank it when reconfiguring
             emitError: true,
             emitWarning: true,
             failOnError: false,

@@ -15,16 +15,22 @@ module.exports = exports = {
   "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module",
-    "allowImportExportEverywhere": true,
+    "allowImportExportEverywhere": false,
   },
   "plugins": [
     "jsx-a11y", // https://www.npmjs.com/package/eslint-plugin-jsx-a11y
   ],
+  "globals": {
+    "$": true,
+    "module": true,
+  },
   "rules": {
     // Intentional config:
     "no-console": OFF,
     "no-else-return": ERROR,
     "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
+    "semi": ["error", "always"],
     "no-debugger": WARN,
     
     // Unintentionally off -- we should fix these, then enable them
