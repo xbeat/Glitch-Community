@@ -1,10 +1,15 @@
 {
   "presets" : [
-  ["modern-browsers", {
-    "loose": true,
-    "esnext": false,
-    "es2017": false,
-  }],
-  "react",
-  ]
+    ["modern-browsers", {
+      "loose": true,
+      "esnext": false,
+      "es2017": false,
+    }],
+    "react",
+  ],
+  "env": {
+    "production": {
+      "plugins": ["transform-react-remove-prop-types"]
+    }
+  }
 }
