@@ -10,6 +10,7 @@ module.exports = exports = {
   env: {
       'es6': true,        // We are writing ES6 code
       'browser': true,    // for the browser
+      'amd': true,       // supporting define() and require()
   },
   "parser": "babel-eslint",
   "parserOptions": {
@@ -29,9 +30,9 @@ module.exports = exports = {
     // Unintentionally off -- we should fix these, then enable them
     // Looking for a good first PR to contribute to the site?
     // Turn one of these on and fix it up!
-    "no-undef": OFF,
-    "no-unused-vars": OFF,
-    "no-useless-escape": OFF,
-    "no-empty": OFF,
+    //"no-undef": OFF,
+    //"no-unused-vars": OFF,
+    //"no-useless-escape": OFF,
+    //"no-empty": OFF,
   }
 }
