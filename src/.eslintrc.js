@@ -35,6 +35,7 @@ module.exports = exports = {
     "no-debugger": WARN,
     
     "react/no-unescaped-entities": ["error", {"forbid": [">", "}"]}], // permit ' and " in jsx html
+    "react/prop-types": [OFF], // disabled so we can use composed prop-types
     
     // Unintentionally off -- we should fix these, then enable them
     // Looking for a good first PR to contribute to the site?

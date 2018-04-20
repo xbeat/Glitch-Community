@@ -44,7 +44,7 @@ module.exports = () => {
         {
           enforce: "pre",
           test: /\.jsx?$/,
-          exclude: [/node_modules/, /templates/],
+          exclude: [/node_modules/, /templates/, /public/, /cache/],
           loader: "eslint-loader",
           options: {
             fix: true,

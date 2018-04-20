@@ -1,6 +1,3 @@
-/* global analytics */
-
-     
 import React from 'react';
 
 const TeamButton = ({url, name, teamAvatarUrl}) => (

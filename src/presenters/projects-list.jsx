@@ -45,8 +45,6 @@ export const ProjectsUL = ({projects, closeAllPopOvers, projectOptions, category
 
 ProjectsUL.propTypes = {
   projects: PropTypes.array.isRequired,
-  ...ProjectItem.propTypes,
-  project: null,
 };
 
 
