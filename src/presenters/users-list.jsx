@@ -28,7 +28,7 @@ const UserTile = ({
 );
 
 UserTile.propTypes = {
-  userLink: PropTypes.string.isRequired,
+  userLink: PropTypes.string,
   tooltipName: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
   alt: PropTypes.string.isRequired,

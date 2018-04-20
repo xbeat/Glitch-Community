@@ -371,14 +371,13 @@ self.attrModel("category", Category);
 self.attrModel("team", Team);
 self.attrModel("question", Question);
 
-var global = global || {};
-global.application = self;
-global.API_URL = API_URL;
-global.EDITOR_URL = EDITOR_URL;
-global.User = User;
-global.Project = Project;
-global.Category = Category;
-global.Team = Team;
-global.Question = Question;
+window.application = self;
+window.API_URL = API_URL;
+window.EDITOR_URL = EDITOR_URL;
+window.User = User;
+window.Project = Project;
+window.Category = Category;
+window.Team = Team;
+window.Question = Question;
 
 module.exports = self;
