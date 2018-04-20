@@ -27,6 +27,12 @@ export const ProjectsList = ({closeAllPopOvers, title, isPinned=false, projects,
   );
 };
 
+ProjectsList.propTypes = {
+  projects: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
+  isPinned: PropTypes.bool,
+};
+
 export const ProjectsUL = ({projects, closeAllPopOvers, projectOptions, categoryColor}) => {
   return (
     <ul className="projects-container">
@@ -37,10 +43,11 @@ export const ProjectsUL = ({projects, closeAllPopOvers, projectOptions, category
   );
 };
 
-ProjectsList.propTypes = {
+ProjectsUL.propTypes = {
   projects: PropTypes.array.isRequired,
-  title: PropTypes.string.isRequired,
-  isPinned: PropTypes.bool,
+  ...ProjectItem.propTypes,
+  project: null,
 };
+
 
 export default ProjectsList;

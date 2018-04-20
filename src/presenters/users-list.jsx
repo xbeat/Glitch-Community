@@ -62,6 +62,7 @@ const UsersList = ({glitchTeam=false, users, extraClass}) => {
 
 UsersList.propTypes = {
   glitchTeam: PropTypes.bool,
+  ...PopulatedUsersList.propTypes,
 };
 
 export default UsersList;

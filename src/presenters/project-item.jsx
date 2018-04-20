@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
-import Reactlet from "./reactlet";
 
 export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOptions}) => {
 
