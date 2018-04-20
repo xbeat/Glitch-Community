@@ -125,7 +125,7 @@ module.exports = (Project = function(I, self) {
       return document.getElementsByClassName('project-overlay')[0].focus();
     },
 
-    hideOverlay(application) {
+    hideOverlay() {
       source.cancel('Operation canceled by the user.');
       return history.replaceState(null, null, originalUrlPath + originalQueryString);
     },

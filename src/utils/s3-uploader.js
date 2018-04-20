@@ -1,4 +1,5 @@
 "use strict";
+const ProgressPromise = require("./progress-promise");
 /* eslint-disable */
 
 /*
