@@ -6,10 +6,5 @@
       "es2017": false,
     }],
     "react",
-  ],
-  "env": {
-    "production": {
-      "plugins": ["transform-react-remove-prop-types"]
-    }
-  }
+  ]
 }
