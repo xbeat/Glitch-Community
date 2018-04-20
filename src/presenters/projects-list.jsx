@@ -17,7 +17,7 @@ export const ProjectsList = ({closeAllPopOvers, title, isPinned=false, projects,
         <div className="placeholder">
           <img className="psst" src={psst} alt="psst"></img>
           <p>Pin your projects to show them off
-          <span className="emoji pushpin"></span></p>
+            <span className="emoji pushpin"></span></p>
         </div>
       )}
       
