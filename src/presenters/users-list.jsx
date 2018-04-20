@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const PopulatedUsersList = ({users, extraClass="" }) => (
   <div className={`users ${extraClass}`}>
@@ -7,6 +8,9 @@ export const PopulatedUsersList = ({users, extraClass="" }) => (
     ))}
   </div>
 );
+
+PopulatedUsersList.propTypes = {
+  users:
 
 const UserTile = ({
   userLink,
@@ -20,6 +24,15 @@ const UserTile = ({
     <img width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
   </a>
 );
+
+UserTile.propTypes = {
+  userLink: PropTypes.string.isRequired,
+  tooltipName: PropTypes.string.isRequired,
+  style: PropTypes.object.isRequired,
+  alt: PropTypes.string.isRequired,
+  userAvatarUrl: PropTypes.string.isRequired,
+  extraClass: PropTypes.string,
+};
   
 const GlitchTeamUsersList = () => {
   const glitchTeamAvatar = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267";

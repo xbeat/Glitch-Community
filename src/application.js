@@ -17,12 +17,13 @@ const Team = require('./models/team');
 const Question = require('./models/question');
 
 const cachedUser = 
-  localStorage.cachedUser ?
-    (() => { try {
+  localStorage.cachedUser ? (
+    () => { try {
       return JSON.parse(localStorage.cachedUser);
     } catch (error) {
       // empty
-      } })() : undefined;
+      } 
+    })() : undefined;
 
 var self = Model({
   // featuredProjects: featuredProjects
@@ -157,7 +158,7 @@ var self = Model({
   },
     
     
-  api(source, queries) {
+  api(source) {
     const persistentToken = self.currentUser() && self.currentUser().persistentToken();
     if (persistentToken) {
       return axios.create({  
@@ -177,15 +178,18 @@ var self = Model({
   storeLocal(key, value) {
     try {
       return window.localStorage[key] = JSON.stringify(value);
-    } catch (error1) {
-      return console.warn("Could not save to localStorage. (localStorage is disabled in private Safari windows)");
+    } catch (error) {
+      console.warn("Could not save to localStorage. (localStorage is disabled in private Safari windows)");
+      return undefined;
     }
   },
 
   getLocal(key) {
     try {
       return JSON.parse(window.localStorage[key]);
-    } catch (error1) {}
+    } catch (error) {
+      return undefined;
+    }
   },
 
   getUserPrefs() {
@@ -295,8 +299,7 @@ var self = Model({
   },
 
   getQuestions() {
-    let questions;
-    return questions = Question.getQuestions(self).then(questions => self.questions(questions));
+    return Question.getQuestions(self).then(questions => self.questions(questions));
   },
     
   showProjectOverlayPage(domain) {
