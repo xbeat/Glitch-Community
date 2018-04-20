@@ -10,7 +10,9 @@ export const PopulatedUsersList = ({users, extraClass="" }) => (
 );
 
 PopulatedUsersList.propTypes = {
-  users:
+  users: PropTypes.array.isRequired,
+  extraClass: PropTypes.string,
+};
 
 const UserTile = ({
   userLink,
@@ -56,6 +58,10 @@ const UsersList = ({glitchTeam=false, users, extraClass}) => {
     return <GlitchTeamUsersList/>; 
   }
   return <PopulatedUsersList users={users} extraClass={extraClass}/>;
+};
+
+UsersList.propTypes = {
+  glitchTeam: PropTypes.bool,
 };
 
 export default UsersList;
