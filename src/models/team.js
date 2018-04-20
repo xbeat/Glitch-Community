@@ -1,7 +1,6 @@
 let Team;
 const _ = require('lodash');
 const axios = require('axios');
-const querystring = require('querystring');
 
 const cache = {};
 const cacheBuster = Math.floor(Math.random() * 1000);
@@ -153,7 +152,7 @@ module.exports = (Team = function(I, self) {
     addUser(application, user) {
       const teamUserPath = `/teams/${self.id()}/users/${user.id()}`;
       return application.api().post(teamUserPath)
-        .then(function(response) {
+        .then(function() {
           self.users.push(user);
           return console.log('added user. team users are now', self.users());}).catch(error => console.error('addUser', error));
     },
@@ -161,7 +160,7 @@ module.exports = (Team = function(I, self) {
     removeUser(application, user) {
       const teamUserPath = `/teams/${self.id()}/users/${user.id()}`;
       return application.api().delete(teamUserPath)
-        .then(function(response) {
+        .then(function() {
           const newUsers = _.reject(self.users(), removedUser => removedUser.id() === user.id());
           self.users(newUsers);
           return console.log('removed user. team users are now', self.users());}).catch(error => console.error('removeUser', error));
@@ -170,7 +169,7 @@ module.exports = (Team = function(I, self) {
     addProject(application, project) {
       const teamProjectPath = `/teams/${self.id()}/projects/${project.id()}`;
       return application.api().post(teamProjectPath)
-        .then(function(response) {
+        .then(function() {
           self.projects.push(project);
           return console.log('added project. team projects are now', self.projects());}).catch(error => console.error('addProject', error));
     },
@@ -178,7 +177,7 @@ module.exports = (Team = function(I, self) {
     removeProject(application, projectId) {
       const teamProjectPath = `/teams/${self.id()}/projects/${projectId}`;
       return application.api().delete(teamProjectPath)
-        .then(function(response) {
+        .then(function() {
           const newProjects = _.reject(self.projects(), removedProject => removedProject.id() === projectId);
           self.projects(newProjects);
           return console.log('removed project. team projects are now', self.projects());}).catch(error => console.error('addProject', error));
@@ -229,4 +228,3 @@ Team._cache = cache;
 
 // Circular dependencies must go below module.exports
 const Project = require('./project');
-const Users = require('./user');

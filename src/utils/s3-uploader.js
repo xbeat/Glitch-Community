@@ -1,4 +1,5 @@
 "use strict";
+/* eslint-disable */
 
 /*
 S3 Uploader

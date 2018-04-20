@@ -1,15 +1,3 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Check that you're happy with the conversion, then remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * DS201: Simplify complex destructure assignments
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
-// todo do accessibility w hidden tables
-
 /* globals Plotly */
 
 const Observable = require('o_0');
@@ -118,7 +106,7 @@ module.exports = function(application, teamOrProject) {
       //     we are going to calculate the width of the left margin
       // PK: is it used anywhere? I see it's definition, but no other references to it
       // ET: it is used 4 lines below...
-      let leftMarginString = __range__(1, maxDigits, true).reduce((a, b) => a + "9"
+      let leftMarginString = __range__(1, maxDigits, true).reduce((a) => a + "9"
         , "9"); // we add one digit because the histogram may aggregate buckets together
       leftMarginString = Plotly.d3.format(',dr')(parseInt(leftMarginString));
 
@@ -299,9 +287,8 @@ module.exports = function(application, teamOrProject) {
           return obj;
         };
         
-        let total = analyticsData[field].reduce((a, b) => makeObj(referrerValue, a[referrerValue] + b[referrerValue])
+        analyticsData[field].reduce((a, b) => makeObj(referrerValue, a[referrerValue] + b[referrerValue])
           , makeObj(referrerValue, 0));
-        total = total[REFERRER_VALUES[i]];
 
         let referrers = analyticsData[field].filter((r, i) => !r.self && (i < 5));
         // invert them
@@ -345,7 +332,7 @@ module.exports = function(application, teamOrProject) {
     mapChartData(data) {
       const {buckets} = data;
 
-      return METRICS.map((metric, i) =>
+      return METRICS.map((metric) =>
         ({
           x: buckets.map(x => new Date(x.startTime)),
           y: buckets.map(y => y.analytics[metric] != null ? y.analytics[metric] : 0),

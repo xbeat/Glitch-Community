@@ -2,9 +2,8 @@ const QuestionsTemplate = require("../templates/includes/questions");
 const QuestionItemPresenter = require('./question-item');
 
 const Observable = require('o_0');
-const _ = require('lodash/collection');
+import {sample} from 'lodash/collection';
 
-const animationIteration = 'webkitAnimationiteration oanimationiteration msAnimationiteration animationiteration';
 const DEFAULT_MAX_QUESTIONS = 3;
 
 module.exports = function(application, maxQuestions) {
@@ -25,7 +24,7 @@ module.exports = function(application, maxQuestions) {
         'ヽ(๏∀๏ )ﾉ',
         'ヽ(^。^)丿',
       ];
-      return self.kaomoji(_.sample(kaomojis));
+      return self.kaomoji(sample(kaomojis));
     },
 
     hiddenIfQuestions() {

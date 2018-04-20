@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const play = "https://cdn.hyperdev.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fplay.svg";
 const whatsGlitchWide = "https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fwhats-glitch-wide.svg?1499885209761";
@@ -33,6 +34,11 @@ const WhatIsGlitch = ({isSignedIn, showVideoOverlay}) => {
       </span>
     </section>
   );
+};
+
+WhatIsGlitch.propTypes = {
+  isSignedIn: PropTypes.func.isRequired,
+  showVideoOverlay: PropTypes.func.isRequired,
 };
 
 export default WhatIsGlitch;
