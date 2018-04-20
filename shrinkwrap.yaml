@@ -5,13 +5,13 @@ dependencies:
   babel-eslint: 8.2.3
   babel-loader: 7.1.4
   babel-preset-env: 1.6.1
-  babel-preset-modern-browsers: 10.0.1
+  babel-preset-modern-browsers: 11.0.1
   babel-preset-react: 6.24.1
   body-parser: 1.18.2
   compression: 1.7.2
   ejs: 2.5.9
   eslint: 4.19.1
-  eslint-loader: 1.9.0
+  eslint-loader: 2.0.0
   eslint-plugin-jsx-a11y: 6.0.3
   eslint-plugin-react: 7.7.0
   express: 4.16.3
@@ -22,10 +22,10 @@ dependencies:
   markdown-it-sanitizer: 0.4.3
   moment: 2.22.1
   nodemon: 1.17.3
-  o_0: 0.3.8
+  o_0: 0.4.0-pre.0
   prop-types: 15.6.1
   quantize: 1.0.2
-  querystringify: 1.0.0
+  querystringify: 2.0.0
   randomcolor: 0.5.3
   react: 16.3.2
   react-dom: 16.3.2
@@ -1065,7 +1065,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-5xIYiHCFrpoktb5Baa/7WZgWxJ0=
-  /babel-preset-modern-browsers/10.0.1:
+  /babel-preset-modern-browsers/11.0.1:
     dependencies:
       babel-plugin-check-es2015-constants: 6.22.0
       babel-plugin-syntax-object-rest-spread: 6.13.0
@@ -1076,7 +1076,7 @@ packages:
       babel-plugin-transform-object-rest-spread: 6.26.0
     dev: false
     resolution:
-      integrity: sha512-OwJlaopcYWBjgw4jLkPRXaArpFzpdAdgn7ZDQdY6a284uAjpKGsFP3eRo7rxrXsvmDMcXXQu1CsQzg09IUQelQ==
+      integrity: sha512-9QR7Mq4BkHyWZ3I2lRwgfpYOhqOaw9wBGAyXfyKV3hasIEBNehBOTmEFwFYnQqVjLtovGrmHE/l+SV3MunwkdA==
   /babel-preset-react/6.24.1:
     dependencies:
       babel-plugin-syntax-jsx: 6.18.0
@@ -2293,7 +2293,7 @@ packages:
       source-map: 0.1.43
     resolution:
       integrity: sha1-8CQBb1qI4Eb9EgBQVek5gC5sXyM=
-  /eslint-loader/1.9.0:
+  /eslint-loader/2.0.0:
     dependencies:
       loader-fs-cache: 1.0.1
       loader-utils: 1.1.0
@@ -2303,8 +2303,9 @@ packages:
     dev: false
     peerDependencies:
       eslint: '>=1.6.0 <5.0.0'
+      webpack: '>=2.0.0 <5.0.0'
     resolution:
-      integrity: sha512-40aN976qSNPyb9ejTqjEthZITpls1SVKtwguahmH1dzGCwQU/vySE+xX33VZmD8csU0ahVNCtFlsPgKqRBiqgg==
+      integrity: sha512-VxxGDI4bXzLk0+/jMt/0EkGMRKS9ox6Czx+yapMb9WJmcS/ZHhlhqcVUNgUjFBNp02j/2pZLdGOrG7EXyjoz/g==
   /eslint-plugin-jsx-a11y/6.0.3:
     dependencies:
       aria-query: 0.7.1
@@ -4655,10 +4656,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
-  /o_0/0.3.8:
-    dev: false
-    resolution:
-      integrity: sha1-YTK7OV9U8jkN3peNdp7vzdnsOCM=
   /o_0/0.4.0-pre.0:
     dev: false
     resolution:
@@ -5290,10 +5287,10 @@ packages:
       node: '>=0.4.x'
     resolution:
       integrity: sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
-  /querystringify/1.0.0:
+  /querystringify/2.0.0:
     dev: false
     resolution:
-      integrity: sha1-YoYkIRLFtxL6ZU5SZlK/ahP/Bcs=
+      integrity: sha512-eTPo5t/4bgaMNZxyjWx6N2a6AuE0mq51KWvpc7nU/MAqixcI6v6KrGUKES0HaomdnolQBBXU/++X6/QQ9KL4tw==
   /randomatic/1.1.7:
     dependencies:
       is-number: 3.0.0
