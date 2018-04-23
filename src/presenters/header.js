@@ -41,6 +41,10 @@ module.exports = function(application) {
       application.userOptionsPopVisible.toggle();
       return event.stopPropagation();
     },
+    
+    toggleNewProjectPopVisible(event) {
+      application.newProjectPopVisible.toggle();      
+    },
 
     hiddenUnlessUserIsExperienced() {
       if (!application.currentUser().isAnExperiencedUser()) { return 'hidden'; }

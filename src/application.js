@@ -41,6 +41,7 @@ var self = Model({
   userOptionsPopVisible: Observable(false),
   addTeamUserPopVisible: Observable(false),
   addTeamProjectPopVisible: Observable(false),
+  newProjectPopVisible: Observable(false),
 
   // search - users
   searchQuery: Observable(""),
