@@ -11,12 +11,12 @@ module.exports = exports = {
   env: {
       'es6': true,        // We are writing ES6 code
       'browser': true,    // for the browser
-      'amd': true,       // supporting define() and require()
+      'amd': true,        // supporting define() and require()
   },
   "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module",
-    "allowImportExportEverywhere": false,
+    "allowImportExportEverywhere": false,  // import/export must happen at the top level.
   },
   "plugins": [
     "jsx-a11y", // https://www.npmjs.com/package/eslint-plugin-jsx-a11y
@@ -26,7 +26,7 @@ module.exports = exports = {
     "module": true,
   },
   "rules": {
-    // Intentional config:
+    // Overrides/additions to eslint:recommended:
     "no-console": OFF,
     "no-else-return": ERROR,
     "indent": ["error", 2],
@@ -34,15 +34,8 @@ module.exports = exports = {
     "semi": ["error", "always"],
     "no-debugger": WARN,
     
-    "react/no-unescaped-entities": ["error", {"forbid": [">", "}"]}], // permit ' and " in jsx html
+    // Overrides of react/recommended:
+    "react/no-unescaped-entities": ["error", {"forbid": [`"`, ">", "}"]}], // permit ' in jsx html,
     "react/prop-types": [OFF], // disabled so we can use composed prop-types
-    
-    // Unintentionally off -- we should fix these, then enable them
-    // Looking for a good first PR to contribute to the site?
-    // Turn one of these on and fix it up!
-    //"no-undef": OFF,
-    //"no-unused-vars": OFF,
-    //"no-useless-escape": OFF,
-    //"no-empty": OFF,
   }
 }
