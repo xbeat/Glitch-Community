@@ -13,9 +13,9 @@ module.exports = () => {
   
   let plugins = [];
   let mode = 'development';
-  if(process.env.NODE_ENV === false&&'production') {
+  if(process.env.NODE_ENV === 'production') {
     mode = 'production';
-    plugins = [
+    /*plugins = [
       new UglifyJsPlugin({
         cache: true,
         sourceMap: true,
@@ -29,10 +29,10 @@ module.exports = () => {
      new webpack.DefinePlugin({
        'process.env.NODE_ENV': JSON.stringify('production')
      })
-    ];
+    ];*/
   }
   
-  console.log(`Using ${mode} mode.`);
+  console.log(`Starting Webpack in ${mode} mode.`);
   
   return {
     mode,
