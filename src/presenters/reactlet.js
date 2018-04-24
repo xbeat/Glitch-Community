@@ -3,21 +3,17 @@
 
 /* globals Set */
 
-const iamavariable=`
-the sun is a mass of incandescent gas
-agigantic nuclear furnace
-where hydrogen bonds with helium
-at temperatures of millions of degrees
-hello
-one two three four five six
-one two three four five six
-one two three four five six
-five four three two one
-one two three four five
-three to one two three
-and died and died and died and died
+var one;
+var two;
+var three;
 
-`;
+var one = [
+  ];
+      
+var four;
+const iamavariable=`
+
+            `;
 
 const ReactletTemplate = require("../templates/reactlet");
 import {render} from 'react-dom';
