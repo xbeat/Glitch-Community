@@ -13,7 +13,7 @@ module.exports = () => {
   
   let plugins = [];
   let mode = 'development';
-  if(process.env.NODE_ENV === 'production') {
+  if(process.env.NODE_ENV === false&&'production') {
     mode = 'production';
     plugins = [
       new UglifyJsPlugin({
@@ -31,6 +31,8 @@ module.exports = () => {
      })
     ];
   }
+  
+  console.log(`Using ${mode} mode.`);
   
   return {
     mode,
