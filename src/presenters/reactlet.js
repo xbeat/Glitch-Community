@@ -3,6 +3,11 @@
 
 /* globals Set */
 
+const iamavariable=`
+the sun is a mass of incandesent gas
+a gigantic nuclear furnace,
+`;
+
 const ReactletTemplate = require("../templates/reactlet");
 import {render} from 'react-dom';
 import React from 'react';

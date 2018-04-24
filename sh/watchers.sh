@@ -2,7 +2,7 @@
 set -e
 
 nodemon --exec "bash sh/compile-jade.sh" --watch src/templates --ext .jade &
-#pnpx webpack --watch &
+pnpx webpack --watch &
 bash sh/stylus.sh &
 
 # ESLint the server files:

@@ -7,6 +7,7 @@ exists in the cache the same reference to that model will be
 returned.
 
 If the id property is not given the model is not cached.
+
 */
 
 /* globals EDITOR_URL */
