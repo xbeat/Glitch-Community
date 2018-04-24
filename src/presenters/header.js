@@ -7,6 +7,7 @@ const HeaderTemplate = require("../templates/includes/header");
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import Reactlet from "./reactlet";
+import NewProjectPop from "./pop-overs/new-project-pop.jsx";
 
 module.exports = function(application) {
   
@@ -46,6 +47,10 @@ module.exports = function(application) {
       application.newProjectPopVisible.toggle();      
     },
 
+    hiddenUnlessNewProjectPopVisible(event) {
+      if (!application.newProjectPopVisible()) { return 'hidden'; }
+    },
+    
     hiddenUnlessUserIsExperienced() {
       if (!application.currentUser().isAnExperiencedUser()) { return 'hidden'; }
     },

@@ -11,9 +11,7 @@ header(role="banner")
     span
       .button.button-small(data-track="open new-project pop" click=@toggleNewProjectPopVisible) New Project
       span(class=@hiddenUnlessNewProjectPopVisible)
-        =@NewProjectPop
     
-
     span(class=@hiddenIfSignedIn)
       button.button.button-small.opens-pop-over(click=@toggleSignInPopVisible) Sign in
       span(class=@hiddenUnlessSignInPopVisible)
