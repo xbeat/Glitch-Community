@@ -3,15 +3,10 @@
 
 /* globals Set */
 
-var one;
-var two;
-var three;
-
-var one = [
-  ];
-      
-var four;
 const iamavariable=`
+
+neat.
+
 
             `;
 
