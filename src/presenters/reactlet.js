@@ -3,13 +3,6 @@
 
 /* globals Set */
 
-const iamavariable=`
-
-neat.
-
-
-            `;
-
 const ReactletTemplate = require("../templates/reactlet");
 import {render} from 'react-dom';
 import React from 'react';
