@@ -88,10 +88,6 @@ module.exports = function(application) {
     SignInPop() {
       return Reactlet(SignInPop);
     },
-
-    NewProjectPop() {
-      return Reactlet(NewProjectPop);
-    },
     
     UserOptionsPop(visible) {
       const props = {

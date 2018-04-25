@@ -54,7 +54,6 @@ const newProjects = [
   }
 ]
 
-
 const NewProjectPop = () => (
   <div className="pop-over new-project-pop pop-list">
     <section className="pop-over-actions pop-list-results">
