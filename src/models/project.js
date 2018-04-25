@@ -268,6 +268,36 @@ Project.getSearchResults = function(application, query) {
       });}).catch(error => console.error('getSearchResults', error));
 };
 
+Project.newProjects = function() {
+  const basepath = "https://glitch.com/edit";
+  const newProjects = [
+    {
+      domain: 'hello-express',
+      // staticName: 'node-app',
+      description: 'Create a Node app built on Express',
+      staticAvatar: basepath + '/images/new-project-avatars/hello-express.svg',
+      avatarUpdatedAt: new Date()
+    },
+    {
+      domain: 'hello-sqlite',
+      // staticName: 'node-sqlite',
+      description: 'A Node app with an SQLite database to hold data.',
+      staticAvatar: basepath + '/images/new-project-avatars/hello-sqlite.svg',
+      avatarUpdatedAt: new Date()
+    },
+    {
+      domain: 'hello-webpage',
+      // staticName: 'webpage',
+      description: 'Your very own web page',
+      staticAvatar: basepath + '/images/new-project-avatars/hello-webpage.svg',
+      avatarUpdatedAt: new Date()
+    }
+  ];
+  newProjects.map(function(project) {
+    Project(project)
+  })
+}
+
 
 Project._cache = cache;
 

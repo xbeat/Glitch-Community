@@ -154,7 +154,10 @@ var self = Model({
     self.searchResultsTeams([]);
     return Team.getSearchResults(application, query);
   },
-    
+  
+  newProjects() {
+    return Project.newProjects();
+  },
     
   api(source, queries) {
     const persistentToken = self.currentUser() && self.currentUser().persistentToken();

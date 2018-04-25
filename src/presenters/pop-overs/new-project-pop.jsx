@@ -1,5 +1,5 @@
 import React from 'react';
-import Project from 'Project';
+// import Project from 'Project';
 import ProjectResultListItem from 'project-result'; // change to -result-list-item
 
 // - ProjectItem = require "./project-item"
@@ -54,12 +54,6 @@ const newProjects = [
   }
 ]
 
-const NewProjects = () => (
-  newProjects.map(function(project) {
-    console.log ('🌹', project)
-    Project(project)
-  })
-);
 
 const NewProjectPop = () => (
   <div className="pop-over new-project-pop pop-list">
@@ -67,7 +61,7 @@ const NewProjectPop = () => (
       <ul className="results">
         
         // for each NewProjects (project) , projectresultitem
-        <ProjectResultListItem project={project} />
+        {console.log(application.newProjects())}        
       </ul>
     </section>
   </div>
