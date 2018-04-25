@@ -1,5 +1,5 @@
 import Observable from 'o_0';
-import debounce from 'lodash-es/debounce';
+import {debounce} from 'lodash';
 
 import AddTeamUserTemplate from '../../templates/pop-overs/add-team-user-pop';
 

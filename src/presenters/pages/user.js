@@ -1,6 +1,6 @@
 import Project from '../../models/project';
 import Observable from 'o_0';
-import debounce from 'lodash-es/debounce';
+import {debounce} from 'lodash';
 import mdFactory from 'markdown-it';
 const md = mdFactory({
   breaks: true,

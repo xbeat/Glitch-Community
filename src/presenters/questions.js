@@ -1,7 +1,7 @@
 import QuestionsTemplate from '../templates/includes/questions';
 import QuestionItemPresenter from './question-item';
 import Observable from 'o_0';
-import sample from 'lodash-es/sample';
+import {sample} from 'lodash';
 
 const DEFAULT_MAX_QUESTIONS = 3;
 

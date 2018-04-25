@@ -1,5 +1,5 @@
 /* global application CDN_URL EDITOR_URL*/
-import find from 'lodash-es/find';
+import {find} from 'lodash';
 
 let Project;
 const cache = {};

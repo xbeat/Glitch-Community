@@ -1,5 +1,5 @@
 let Team;
-import reject from 'lodash-es/reject';
+import {reject} from 'lodash';
 import axios from 'axios';
 
 const cache = {};

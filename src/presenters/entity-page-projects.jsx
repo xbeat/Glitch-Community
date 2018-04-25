@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
 import Observable from "o_0";
-import debounce from 'lodash-es/debounce';
+import {debounce} from 'lodash';
 
 
 /* globals Set */

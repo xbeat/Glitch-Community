@@ -3,7 +3,7 @@
 import Observable from 'o_0';
 
 import axios from 'axios';
-import throttle from 'lodash-es/throttle';
+import {throttle} from 'lodash';
 import moment from 'moment-mini';
 import AnalyticsTemplate from '../templates/includes/analytics';
 import AnalyticsTimePopPresenter from './pop-overs/analytics-time-pop';
