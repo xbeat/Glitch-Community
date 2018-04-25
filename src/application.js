@@ -1,7 +1,8 @@
 /* globals baseUrl API_URL APP_URL EDITOR_URL analytics application*/
 
 const Observable = require('o_0');
-import {find, keys, includes} from "lodash";
+import find from "lodash-es/find";
+import keys from "lodash-es/keys";
 const axios = require('axios');
 
 const cachedCategories = require('./cache/categories.js');
@@ -340,7 +341,7 @@ var self = Model({
   
   isSearchUrl(url, queryString) {
     const queryStringKeys = keys(queryString); // ['q', 'blah']
-    if ((url === 'search') && (includes(queryStringKeys, 'q'))) {
+    if ((url === 'search') && (queryStringKeys.includes('q'))) {
       return true;
     }
   },
