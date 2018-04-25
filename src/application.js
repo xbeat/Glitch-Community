@@ -1,21 +1,19 @@
 /* globals baseUrl API_URL APP_URL EDITOR_URL analytics application*/
 
-const Observable = require('o_0');
+import Observable from 'o_0';
+
 import find from "lodash-es/find";
 import keys from "lodash-es/keys";
-const axios = require('axios');
-
-const cachedCategories = require('./cache/categories.js');
-const cachedTeams = require('./cache/teams.js');  
-const featuredCollections = require("./curated/featured");
-
-const Model = require("./models/model");
-
-const User = require('./models/user');
-const Project = require('./models/project');
-const Category = require('./models/category');
-const Team = require('./models/team');
-const Question = require('./models/question');
+import axios from 'axios';
+import cachedCategories from './cache/categories.js';
+import cachedTeams from './cache/teams.js';
+import featuredCollections from './curated/featured';
+import Model from './models/model';
+import User from './models/user';
+import Project from './models/project';
+import Category from './models/category';
+import Team from './models/team';
+import Question from './models/question';
 
 const cachedUser = 
   localStorage.cachedUser ? (
@@ -365,7 +363,7 @@ var self = Model({
   },
 });
 
-      
+
 self.attrModel("user", User);
 self.attrModel("currentUser", User);
 self.attrModel("category", Category);
@@ -381,4 +379,4 @@ window.Category = Category;
 window.Team = Team;
 window.Question = Question;
 
-module.exports = self;
+export default self;
