@@ -11,9 +11,6 @@ const BASE = path.resolve(__dirname, '.');
 
 module.exports = () => {
   
-  let plugins = [
-    new LodashModuleReplacementPlugin,
-  ];
   let mode = 'development';
   if(process.env.NODE_ENV === 'production') {
     mode = 'production';
@@ -55,6 +52,8 @@ module.exports = () => {
         },
       ],
     },
-    plugins: plugins
+    plugins: [
+      new LodashModuleReplacementPlugin,
+    ],
   };
 }
