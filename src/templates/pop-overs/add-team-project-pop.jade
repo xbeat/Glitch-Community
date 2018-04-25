@@ -1,6 +1,6 @@
 - Loader = require "../includes/loader"
 
-- ProjectResultPresenter = require "../../presenters/project-result"
+- ProjectResultItemPresenter = require "../../presenters/project-result-item"
 
 dialog.pop-over.add-team-project-pop.results-list(class=@hiddenUnlessAddTeamProjectPopVisible click=@stopPropagation)
 
@@ -14,6 +14,6 @@ dialog.pop-over.add-team-project-pop.results-list(class=@hiddenUnlessAddTeamProj
       - application = @application
       - options = {addProjectToTeam: true}
       - @searchResults().forEach (project) ->
-        = ProjectResultPresenter(application, project, options)
+        = ProjectResultItemPresenter(application, project, options)
   section.pop-over-info.last-section
     .info-description You can add projects you've made, or ones by other cool people

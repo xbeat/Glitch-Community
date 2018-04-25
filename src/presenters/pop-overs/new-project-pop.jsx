@@ -30,7 +30,7 @@ import ProjectResultListItem from 'project-result'; // change to -result-list-it
 // );
 
 const basepath = "https://glitch.com/edit";
-const newProjectslist = [
+const newProjects = [
   {
     domain: 'hello-express',
     // staticName: 'node-app',
@@ -54,9 +54,8 @@ const newProjectslist = [
   }
 ]
 
-
 const NewProjects = () => (
-  newProjectslist.map(function(project) {
+  newProjects.map(function(project) {
     console.log ('🌹', project)
     Project(project)
   })

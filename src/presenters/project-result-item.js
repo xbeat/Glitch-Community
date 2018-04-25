@@ -1,4 +1,4 @@
-const ProjectResultTemplate = require("../templates/includes/project-result");
+const ProjectResultItemTemplate = require("../templates/includes/project-result-item");
 
 import UsersList from "./users-list.jsx";
 import Reactlet from "./reactlet";
@@ -77,5 +77,5 @@ module.exports = function(application, project, options, analytics) {
     },
   };
     
-  return ProjectResultTemplate(self);
+  return ProjectResultItemTemplate(self);
 };
