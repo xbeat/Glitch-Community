@@ -1,6 +1,6 @@
 import React from 'react';
 // import Project from 'Project';
-import ProjectResultListItem from 'project-result'; // change to -result-list-item
+import ProjectResultItem from 'project-result-item'; // change to -result-list-item
 
 // - ProjectItem = require "./project-item"
 // - NewProjectItemPresenter = require "../../source/presenters/pop-overs/new-project-item"
@@ -59,9 +59,8 @@ const NewProjectPop = () => (
     <section className="pop-over-actions pop-list-results">
       <ul className="results">
         
-        // for each NewProjects (project) , projectresultitem
-        {console.log(application.newProjects())}   
-        <ProjectResultListItem project={project} />
+        {console.log(props.projects)}   
+        <projects project={project} />
 
       </ul>
     </section>
