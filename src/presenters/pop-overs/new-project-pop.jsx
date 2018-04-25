@@ -1,37 +1,40 @@
 import React from 'react';
-/* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
-function githubAuthLink() {
-  var clientId, redirectUri, scope;
-  clientId = GITHUB_CLIENT_ID;
-  scope = "user:email";
-  redirectUri = encodeURIComponent(`${APP_URL}/login/github`);
-  return `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=${scope}&redirect_uri=${redirectUri}`;
-}
+// - ProjectItem = require "./project-item"
+// - NewProjectItemPresenter = require "../../source/presenters/pop-overs/new-project-item"
 
-function facebookAuthLink() {
-  var callbackURL, clientId, scopes;
-  clientId = FACEBOOK_CLIENT_ID;
-  scopes = "email";
-  callbackURL = encodeURIComponent(`${APP_URL}/login/facebook`);
-  return "https://www.facebook.com/v2.9/dialog/oauth?" + `client_id=${clientId}&scope=${scopes}&redirect_uri=${callbackURL}`;
-}
+// function githubAuthLink() {
+//   var clientId, redirectUri, scope;
+//   clientId = GITHUB_CLIENT_ID;
+//   scope = "user:email";
+//   redirectUri = encodeURIComponent(`${APP_URL}/login/github`);
+//   return `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=${scope}&redirect_uri=${redirectUri}`;
+// }
 
-const SignInPopButton = (props) => (
-  <a className="button-link" href={props.href}>
-    <div className="button button-small">Sign in with {props.company}
-      <span className={`emoji ${props.emoji}`}></span>
-    </div>
-  </a>
-);
+// function facebookAuthLink() {
+//   var callbackURL, clientId, scopes;
+//   clientId = FACEBOOK_CLIENT_ID;
+//   scopes = "email";
+//   callbackURL = encodeURIComponent(`${APP_URL}/login/facebook`);
+//   return "https://www.facebook.com/v2.9/dialog/oauth?" + `client_id=${clientId}&scope=${scopes}&redirect_uri=${callbackURL}`;
+// }
 
-const SignInPop = () => (
-  <div className="pop-over sign-in-pop">
-    <section className="pop-over-actions last-section">
-      <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook"/>
-      <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat"/>
+// const SignInPopButton = (props) => (
+//   <a className="button-link" href={props.href}>
+//     <div className="button button-small">Sign in with {props.company}
+//       <span className={`emoji ${props.emoji}`}></span>
+//     </div>
+//   </a>
+// );
+
+const NewProjectPop = () => (
+  <div className="pop-over new-project-pop pop-list">
+    <section className="pop-over-actions pop-list-results">
+      <ul className="results">
+      
+      </ul>
     </section>
   </div>
 );
 
-export default SignInPop;
+export default NewProjectPop;
