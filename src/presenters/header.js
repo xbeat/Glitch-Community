@@ -1,6 +1,6 @@
 /* global analytics */
 
-import moment from 'moment';
+import moment from 'moment-mini';
 
 import HeaderTemplate from '../templates/includes/header';
 

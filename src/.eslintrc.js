@@ -22,7 +22,6 @@ module.exports = exports = {
   ],
   "globals": {
     "$": true,
-    "module": true,
   },
   "rules": {
     // Overrides/additions to eslint:recommended:
