@@ -98,8 +98,19 @@ module.exports = function(application) {
         '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
       ];
       var props = {}
-      props.projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
-      return Reactlet(NewProjectPop, props);
+      const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
+      const fetchedProjects = projects.filter(project => project.fetched());
+      const newProjects = fetchedProjects.map((project) => {
+        const {domain, description, avatar} = project;
+        return {
+          title: domain(),
+          domain: domain(),
+          description: description(),
+          avatar: avatar(),
+        }
+      });
+
+      return Reactlet(NewProjectPop, {newProjects});
     },
 
     UserOptionsPop(visible) {

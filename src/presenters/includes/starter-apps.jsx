@@ -36,6 +36,7 @@ const StarterApps = ({starterProjects}) => {
       </header>
       <img className="starter-apps-graphic" alt="" src={bricksUrl} width="129px" height="80px"/>
       <ul className="projects-container">
+        {console.log(starterProjects)}
         { starterProjects.map((starter, key) => (
           <StarterProject key={key} {...starter}/>
         ))}
