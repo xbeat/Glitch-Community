@@ -1,5 +1,5 @@
 const Observable = require('o_0');
-const _ = require('lodash');
+import {debounce} from 'lodash';
 const md = require('markdown-it')({
   breaks: true,
   linkify: true,
@@ -167,7 +167,7 @@ module.exports = function(application) {
         description: text});
     },
 
-    updateTeam: _.debounce(data => application.team().updateTeam(application, data)
+    updateTeam: debounce(data => application.team().updateTeam(application, data)
       , 250),
 
     applyDescription(event) {

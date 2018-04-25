@@ -1,5 +1,5 @@
 const Observable = require('o_0');
-const _ = require('lodash/function');
+import {debounce} from 'lodash';
 
 const AddTeamUserTemplate = require("../../templates/pop-overs/add-team-user-pop");
 
@@ -35,7 +35,7 @@ module.exports = function(application) {
       return self.searchUsers(query);
     },
 
-    searchUsers: _.debounce(function(query) {
+    searchUsers: debounce(function(query) {
       if (query.length) {
         return application.searchUsers(self.query());
       } 

@@ -1,9 +1,10 @@
 /* global application CDN_URL EDITOR_URL*/
+import {find} from 'lodash';
+
 let Project;
 const cache = {};
 
 const Model = require('./model');
-const _ = require('lodash/collection');
 const axios = require('axios');
 
 let source = undefined; // reference to cancel token
@@ -67,7 +68,7 @@ module.exports = (Project = function(I, self) {
     },
 
     userIsCurrentUser(application) {
-      const userIsCurrentUser = _.find(self.users(), user => user.id() === application.currentUser().id());
+      const userIsCurrentUser = find(self.users(), user => user.id() === application.currentUser().id());
       return !!userIsCurrentUser;
     },
 
@@ -190,12 +191,12 @@ module.exports = (Project = function(I, self) {
 
 Project.isPinnedByUser = (user, projectId) => {
   const pins = user.pins().map(pin => pin.projectId);
-  return _.includes(pins, projectId);
+  return pins.includes(projectId);
 };
 
 Project.isPinnedByTeam = function(team, projectId) {
   const pins = team.pins().map(pin => pin.projectId);
-  return _.includes(pins, projectId);
+  return pins.includes(projectId);
 };
 
 // Fetch projects and populate them into the local cache

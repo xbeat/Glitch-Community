@@ -2,7 +2,7 @@
 
 const Observable = require('o_0');
 const axios = require('axios');
-const _ = require('lodash/function');
+import {throttle} from 'lodash';
 const moment = require('moment');
 
 const AnalyticsTemplate = require("../templates/includes/analytics");
@@ -417,7 +417,7 @@ module.exports = function(application, teamOrProject) {
   };
 
 
-  window.addEventListener('resize', _.throttle(function() {
+  window.addEventListener('resize', throttle(function() {
     Plotly.Plots.resize(self.remixesChartElement);
     Plotly.Plots.resize(self.remixesReferrersBars);
     Plotly.Plots.resize(self.visitsChartElement);

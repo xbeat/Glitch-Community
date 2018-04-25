@@ -1,6 +1,6 @@
 const Project = require("../../models/project");
 const Observable = require('o_0');
-const _ = require('lodash');
+import {debounce} from 'lodash';
 const md = require('markdown-it')({
   breaks: true,
   linkify: true,
@@ -111,7 +111,7 @@ module.exports = function(application, userLoginOrId) {
         description: text});
     },
 
-    updateUser: _.debounce(data => application.user().updateUser(application, data)
+    updateUser: debounce(data => application.user().updateUser(application, data)
       , 250),
 
     userHasData() {

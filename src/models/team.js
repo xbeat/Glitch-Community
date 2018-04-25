@@ -1,5 +1,5 @@
 let Team;
-const _ = require('lodash');
+import {reject} from 'lodash';
 const axios = require('axios');
 
 const cache = {};
@@ -161,7 +161,7 @@ module.exports = (Team = function(I, self) {
       const teamUserPath = `/teams/${self.id()}/users/${user.id()}`;
       return application.api().delete(teamUserPath)
         .then(function() {
-          const newUsers = _.reject(self.users(), removedUser => removedUser.id() === user.id());
+          const newUsers = reject(self.users(), removedUser => removedUser.id() === user.id());
           self.users(newUsers);
           return console.log('removed user. team users are now', self.users());}).catch(error => console.error('removeUser', error));
     },
@@ -178,7 +178,7 @@ module.exports = (Team = function(I, self) {
       const teamProjectPath = `/teams/${self.id()}/projects/${projectId}`;
       return application.api().delete(teamProjectPath)
         .then(function() {
-          const newProjects = _.reject(self.projects(), removedProject => removedProject.id() === projectId);
+          const newProjects = reject(self.projects(), removedProject => removedProject.id() === projectId);
           self.projects(newProjects);
           return console.log('removed project. team projects are now', self.projects());}).catch(error => console.error('addProject', error));
     },

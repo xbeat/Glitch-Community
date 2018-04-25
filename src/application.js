@@ -1,7 +1,7 @@
 /* globals baseUrl API_URL APP_URL EDITOR_URL analytics application*/
 
 const Observable = require('o_0');
-const _ = require('lodash');
+import {find, keys, includes} from "lodash";
 const axios = require('axios');
 
 const cachedCategories = require('./cache/categories.js');
@@ -289,7 +289,7 @@ var self = Model({
   },
 
   getCategory(url) {
-    const categoryData = _.find(cachedCategories, category => category.url === url);
+    const categoryData = find(cachedCategories, category => category.url === url);
     self.category(Category(categoryData));
     return Category.updateCategory(application, categoryData.id);
   },
@@ -339,22 +339,22 @@ var self = Model({
   },
   
   isSearchUrl(url, queryString) {
-    const queryStringKeys = _.keys(queryString); // ['q', 'blah']
-    if ((url === 'search') && (_.includes(queryStringKeys, 'q'))) {
+    const queryStringKeys = keys(queryString); // ['q', 'blah']
+    if ((url === 'search') && (includes(queryStringKeys, 'q'))) {
       return true;
     }
   },
 
   isCategoryUrl(url) {
-    if (_.find(cachedCategories, category => category.url === url)) { return true; }
+    if (find(cachedCategories, category => category.url === url)) { return true; }
   },
 
   isTeamUrl(url) {
-    return !!_.find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
+    return !!find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
   },
 
   getCachedTeamByUrl(url) {
-    return _.find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
+    return find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
   },
 
   isQuestionsUrl(url) {
