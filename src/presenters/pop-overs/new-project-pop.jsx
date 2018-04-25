@@ -1,4 +1,5 @@
 import React from 'react';
+import Project from 'Project';
 
 // - ProjectItem = require "./project-item"
 // - NewProjectItemPresenter = require "../../source/presenters/pop-overs/new-project-item"
@@ -55,6 +56,7 @@ const newProjectslist = [
 
 const NewProjects = () => (
   newProjectslist.map(function(project) {
+    console.log ('🌹', project)
     Project(project)
   })
 );
