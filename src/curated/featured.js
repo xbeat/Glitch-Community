@@ -14,18 +14,18 @@ Example:
 module.exports =
   [
     {
-      title: '\'immigrationcolab\' by mehtapaydin',
-      img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fdrip.jpg?1524131997509',
-      link: 'https://immigrationcolab.glitch.me'
+      title: '\'faithful-violet\' by mapk',
+      img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ffaithful-violet.jpg?1524500256206',
+      link: 'https://faithful-violet.glitch.me'
     }
     , {
-      title: '\'color-wander\' by Matt DesLauriers',
-      img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcolor-wander.jpg?1524131876470",
-      link: 'https://color-wander.glitch.me'
+      title: '\'emoji-garden\' by Monica Dinculescu',
+      img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Femoji-garden.jpg?1524500256325",
+      link: 'https://emoji-garden.glitch.me'
     }
     , {
-      title: '\'parcel-starter\' by thejameskyle',
-      img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fparcel-starter.jpg?1524132030141",
-      link: 'https://parcel-starter.glitch.me'
+      title: '\'molnar-x-ashby\' by Sean Catangui',
+      img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmolnar-x-ashby.jpg?1524500256073",
+      link: 'https://molnar-x-ashby.glitch.me'
     }   
   ];
