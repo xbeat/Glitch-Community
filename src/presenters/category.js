@@ -1,11 +1,11 @@
 
-const CategoryTemplate = require("../templates/includes/category");
+import CategoryTemplate from '../templates/includes/category';
 
 import {ProjectsUL} from "./projects-list.jsx";
 import Reactlet from "./reactlet";
 
 
-module.exports = function(application, category) {
+export default function(application, category) {
   const self = {
 
     category,
@@ -42,4 +42,4 @@ module.exports = function(application, category) {
   };
 
   return CategoryTemplate(self);
-};
+}

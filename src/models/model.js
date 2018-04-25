@@ -1,5 +1,3 @@
-"use strict";
-
 // A composable data model that serializes cleanly to JSON and provides
 // observable properties.
 
@@ -182,7 +180,7 @@ export default function(I, self) {
     },
   }
   );
-};
+}
 
 // Extend an object with the properties of other objects
 var extend = Object.assign;

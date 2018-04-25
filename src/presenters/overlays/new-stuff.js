@@ -1,12 +1,11 @@
-"use strict";
+import markdownFactory from 'markdown-it';
+import markdownSanitizer from 'markdown-it-sanitizer';
+const markdown = markdownFactory({html: true})
+  .use(markdownSanitizer);
+import Observable from 'o_0';
+import OverlayNewStuffTemplate from '../../templates/overlays/new-stuff';
 
-const markdown = require('markdown-it')({html: true})
-  .use(require('markdown-it-sanitizer'));
-const Observable = require('o_0');
-
-const OverlayNewStuffTemplate = require("../../templates/overlays/new-stuff");
-
-module.exports = function(application) {
+export default function(application) {
   
   application.overlayNewStuffVisible.observe(function() {
     if (application.overlayNewStuffVisible() === true) {

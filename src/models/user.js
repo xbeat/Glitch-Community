@@ -1,6 +1,7 @@
 let User;
 import axios from 'axios';
-const md = require('markdown-it')({
+import mdFactory from 'markdown-it';
+const md = mdFactory({
   breaks: true,
   linkify: true,
   typographer: true}).disable(['image']);

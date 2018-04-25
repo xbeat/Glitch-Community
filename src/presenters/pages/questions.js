@@ -1,12 +1,11 @@
-const QuestionsPageTemplate = require("../../templates/pages/questions");
-const LayoutPresenter = require("../layout");
-const QuestionsPresenter = require("../questions");
-
-const Reactlet = require("../reactlet");
+import QuestionsPageTemplate from '../../templates/pages/questions';
+import LayoutPresenter from '../layout';
+import QuestionsPresenter from '../questions';
+import Reactlet from '../reactlet';
 
 import Categories from "../categories.jsx";
 
-module.exports = function(application) {
+export default function(application) {
   const self = {
 
     application,
@@ -27,4 +26,4 @@ module.exports = function(application) {
   const content = QuestionsPageTemplate(self);
 
   return LayoutPresenter(application, content);
-};
+}

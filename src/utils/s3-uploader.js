@@ -1,4 +1,3 @@
-"use strict";
 import ProgressPromise from './progress-promise';
 
 /* eslint-disable */

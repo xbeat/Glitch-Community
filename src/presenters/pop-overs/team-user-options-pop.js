@@ -1,4 +1,4 @@
-module.exports = function(application, user) {
+export default function(application, user) {
 
   return {
   
@@ -41,5 +41,5 @@ module.exports = function(application, user) {
       if (!user.isCurrentUser(application)) { return 'hidden'; }
     },
   };
-};
+}
 

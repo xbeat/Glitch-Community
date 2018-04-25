@@ -1,11 +1,11 @@
-const RecentProjectsTemplate = require("../templates/includes/recent-projects");
-const Loader = require("../templates/includes/loader");
+import RecentProjectsTemplate from '../templates/includes/recent-projects';
+import Loader from '../templates/includes/loader';
 
 import {ProjectsUL} from "./projects-list.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import Reactlet from "./reactlet";
 
-module.exports = function(application) {
+export default function(application) {
 
   const self = { 
 
@@ -82,4 +82,4 @@ module.exports = function(application) {
   };
 
   return RecentProjectsTemplate(self);
-};
+}

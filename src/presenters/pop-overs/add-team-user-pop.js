@@ -1,9 +1,9 @@
-const Observable = require('o_0');
+import Observable from 'o_0';
 import debounce from 'lodash-es/debounce';
 
-const AddTeamUserTemplate = require("../../templates/pop-overs/add-team-user-pop");
+import AddTeamUserTemplate from '../../templates/pop-overs/add-team-user-pop';
 
-module.exports = function(application) {
+export default function(application) {
 
   var self = {
   
@@ -61,4 +61,4 @@ module.exports = function(application) {
   };
             
   return AddTeamUserTemplate(self);
-};
+}

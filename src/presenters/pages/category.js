@@ -1,11 +1,11 @@
-const CategoryPageTemplate = require("../../templates/pages/category");
-const LayoutPresenter = require("../layout");
+import CategoryPageTemplate from '../../templates/pages/category';
+import LayoutPresenter from '../layout';
 
 import {ProjectsUL} from "../projects-list.jsx";
 import Categories from "../categories.jsx";
 import Reactlet from "../reactlet";
 
-module.exports = function(application) {
+export default function(application) {
 
     
   var self = {
@@ -57,5 +57,5 @@ module.exports = function(application) {
     
   const content = CategoryPageTemplate(self);
   return LayoutPresenter(application, content);
-};
+}
 

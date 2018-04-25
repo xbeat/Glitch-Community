@@ -1,12 +1,11 @@
-const QuestionsTemplate = require("../templates/includes/questions");
-const QuestionItemPresenter = require('./question-item');
-
-const Observable = require('o_0');
+import QuestionsTemplate from '../templates/includes/questions';
+import QuestionItemPresenter from './question-item';
+import Observable from 'o_0';
 import sample from 'lodash-es/sample';
 
 const DEFAULT_MAX_QUESTIONS = 3;
 
-module.exports = function(application, maxQuestions) {
+export default function(application, maxQuestions) {
   var self = {
 
     maxQuestions() {
@@ -52,4 +51,4 @@ module.exports = function(application, maxQuestions) {
     , 10000);
 
   return QuestionsTemplate(self);
-};
+}

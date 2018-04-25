@@ -1,9 +1,9 @@
-const Observable = require('o_0');
+import Observable from 'o_0';
 import debounce from 'lodash-es/debounce';
 
-const AddTeamProjectTemplate = require("../../templates/pop-overs/add-team-project-pop");
+import AddTeamProjectTemplate from '../../templates/pop-overs/add-team-project-pop';
 
-module.exports = function(application) {
+export default function(application) {
 
   var self = {
   
@@ -62,4 +62,4 @@ module.exports = function(application) {
 
 
   return AddTeamProjectTemplate(self);
-};
+}

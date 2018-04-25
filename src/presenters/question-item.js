@@ -1,9 +1,9 @@
-const QuestionItemTemplate = require("../templates/includes/question-item");
+import QuestionItemTemplate from '../templates/includes/question-item';
 
 const MAX_QUESTION_LENGTH = 140;
 const MAX_TAG_LENGTH = 15;
 
-module.exports = function(application, question) {
+export default function(application, question) {
   
   const self = { 
   
@@ -61,4 +61,4 @@ module.exports = function(application, question) {
     //   question.tags()
 
   return QuestionItemTemplate(self);
-};
+}
