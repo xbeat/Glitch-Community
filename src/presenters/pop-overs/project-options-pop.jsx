@@ -6,7 +6,7 @@ const PopOverButton = ({onClick, text, emoji}) => (
     <span>{text} </span>
     <span className={`emoji ${emoji}`}></span>
   </button>
-)
+);
 
 export const ProjectOptionsPop = ({
   projectId,
@@ -81,8 +81,8 @@ ProjectOptionsPop.propTypes = {
 
 export class ProjectOptionsContainer extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = { visible: false }
+    super(props);
+    this.state = { visible: false };
     this._ismounted = false;
   }
   
@@ -119,7 +119,7 @@ export class ProjectOptionsContainer extends React.Component {
       this.props.closeAllPopOvers(() => {
         this._ismounted && this.setState({visible: false});
       });
-    }
+    };
     
     const popupProps = {
       projectId: project.id,

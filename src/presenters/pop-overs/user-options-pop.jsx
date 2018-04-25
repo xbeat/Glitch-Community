@@ -1,6 +1,3 @@
-/* global analytics */
-
-     
 import React from 'react';
 
 const TeamButton = ({url, name, teamAvatarUrl}) => (
@@ -35,7 +32,7 @@ const UserOptionsPop = ({visible, profileLink, avatarUrl, teams, showNewStuffOve
   const clickNewStuff = (event) => {
     showNewStuffOverlay();
     event.stopPropagation();
-  }
+  };
 
   return (
     <dialog className="pop-over user-options-pop">

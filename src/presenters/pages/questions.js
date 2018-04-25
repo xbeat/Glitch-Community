@@ -5,8 +5,6 @@ const QuestionsPresenter = require("../questions");
 const Reactlet = require("../reactlet");
 
 import Categories from "../categories.jsx";
-import {render} from 'react-dom';
-import React from 'react';
 
 module.exports = function(application) {
   const self = {

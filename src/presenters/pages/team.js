@@ -1,5 +1,5 @@
 const Observable = require('o_0');
-const _ = require('lodash');
+import debounce from 'lodash-es/debounce';
 const md = require('markdown-it')({
   breaks: true,
   linkify: true,
@@ -16,7 +16,7 @@ const AnalyticsPresenter = require("../analytics");
 
 import Reactlet from "../reactlet";
 import UsersList from "../users-list.jsx";
-import EntityPageProjects from "../entity-page-projects.jsx"
+import EntityPageProjects from "../entity-page-projects.jsx";
 
 module.exports = function(application) {
   const assetUtils = require('../../utils/assets')(application);
@@ -167,7 +167,7 @@ module.exports = function(application) {
         description: text});
     },
 
-    updateTeam: _.debounce(data => application.team().updateTeam(application, data)
+    updateTeam: debounce(data => application.team().updateTeam(application, data)
       , 250),
 
     applyDescription(event) {

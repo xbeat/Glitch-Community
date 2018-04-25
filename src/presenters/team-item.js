@@ -1,5 +1,5 @@
 const TeamItemTemplate = require("../templates/includes/team-item");
-import {UsersList, GlitchTeamUsersList} from "./users-list.jsx";
+import UsersList from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
 module.exports = function(application, team) {

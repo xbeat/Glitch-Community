@@ -14,7 +14,7 @@ const EmbedHtml = require('../../curated/embed');
 import Categories from "../categories.jsx";
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
-import StarterApps from "../includes/starter-apps.jsx"
+import StarterApps from "../includes/starter-apps.jsx";
 
 module.exports = function(application) {
   console.log("Presented index");
@@ -29,14 +29,14 @@ module.exports = function(application) {
       
       const props = {
         isSignedIn() {
-          return application.currentUser().isSignedIn()
+          return application.currentUser().isSignedIn();
         },
         showVideoOverlay(event) {
           application.overlayVideoVisible(true);
           document.getElementsByClassName('video-overlay')[0].focus();
           return event.stopPropagation();
         },
-      }
+      };
 
       return Reactlet(WhatIsGlitch, props);
     },
@@ -111,7 +111,7 @@ module.exports = function(application) {
           description: description(),
           avatar: avatar(),
           showOverlay() { project.showOverlay(application); },
-        } 
+        }; 
       });
       
       return Reactlet(StarterApps, {starterProjects});

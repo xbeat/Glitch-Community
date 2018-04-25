@@ -1,7 +1,7 @@
 const RecentProjectsTemplate = require("../templates/includes/recent-projects");
 const Loader = require("../templates/includes/loader");
 
-import {ProjectsUL} from "./projects-list.jsx"
+import {ProjectsUL} from "./projects-list.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import Reactlet from "./reactlet";
 
@@ -50,7 +50,7 @@ module.exports = function(application) {
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
         projects: projects.map(project => project.asProps()),
-      }
+      };
 
       return Reactlet(ProjectsUL, props);
     },

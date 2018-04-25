@@ -42,6 +42,6 @@ const StarterApps = ({starterProjects}) => {
       </ul>
     </article>
   );
-}
+};
 
 export default StarterApps;

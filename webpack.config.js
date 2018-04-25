@@ -12,25 +12,15 @@ const BASE = path.resolve(__dirname, '.');
 module.exports = () => {
   
   let plugins = [];
+  let mode = 'development';
   if(process.env.NODE_ENV === 'production') {
-    plugins = [
-      new UglifyJsPlugin({
-        cache: true,
-        sourceMap: true,
-        uglifyOptions: {
-          ecma: 6,
-          mangle: true,
-          compress: true
-        }
-      }),
-     //https://webpack.js.org/guides/production/#specify-the-environment
-     new webpack.DefinePlugin({
-       'process.env.NODE_ENV': JSON.stringify('production')
-     })
-    ];
+    mode = 'production';
   }
   
+  console.log(`Starting Webpack in ${mode} mode.`);
+  
   return {
+    mode,
     entry: {
       "client-bundle": `${SRC}/client.js`
     },
@@ -44,11 +34,12 @@ module.exports = () => {
         {
           enforce: "pre",
           test: /\.jsx?$/,
-          exclude: [/node_modules/, /templates/],
+          exclude: [/templates/, /cache/],
+          include: SRC,
           loader: "eslint-loader",
           options: {
-            fix: true,
-            cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so blank it when reconfiguring
+            //fix: true,
+            cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so disable this when reconfiguring
             emitError: true,
             emitWarning: true,
             failOnError: false,
@@ -57,6 +48,7 @@ module.exports = () => {
         {
           test: /\.jsx?/,
           include: SRC,
+          exclude: /node_modules/,
           loader : 'babel-loader'
         }
       ],

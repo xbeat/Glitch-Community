@@ -1,4 +1,4 @@
-"use strict";
+module.exports = ProgressPromise;
 
 // Extend promises with `finally`
 // From: https://github.com/domenic/promises-unwrapping/issues/18
@@ -22,7 +22,9 @@ if (Promise.prototype._notify == null) { Promise.prototype._notify = function(ev
   return this._progressHandlers.forEach(function(handler) {
     try {
       return handler(event);
-    } catch (error) {}
+    } catch (error) {
+      // empty
+    }
   });
 }; }
 
@@ -33,13 +35,15 @@ if (Promise.prototype.progress == null) { Promise.prototype.progress = function(
   return this;
 }; }
 
-global.ProgressPromise = function(fn) {
+function ProgressPromise(fn) {
   var p = new Promise(function(resolve, reject) {
     const notify = () =>
       p._progressHandlers != null ? p._progressHandlers.forEach(function(handler) {
         try {
           return handler(event);
-        } catch (error) {}
+        } catch (error) {
+          //empty
+        }
       }) : undefined
     ;
 
@@ -55,41 +59,4 @@ global.ProgressPromise = function(fn) {
   };
 
   return p;
-};
-
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
-const includes = function(searchElement) {
-  let k;
-  const O = Object(this);
-  const len = parseInt(O.length) || 0;
-  if (len === 0) { return false; }
-
-  const n = parseInt(arguments[1]) || 0;
-
-  if (n >= 0) {
-    k = n;
-  } else {
-    k = len + n;
-    if (k < 0) { k = 0; }
-  }
-
-  while (k < len) {
-    const currentElement = O[k];
-    if ((searchElement === currentElement) || ((searchElement !== searchElement) && (currentElement !== currentElement))) { // NaN != NaN
-      return true;
-    }
-    k++;
-  }
-
-  return false;
-};
-
-Array.prototype.includes || Object.defineProperty(Array.prototype, "includes",
-  {value: includes});
-
-// http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
-if (RegExp.escape == null) { RegExp.escape = str => str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"); }
-
-if (Number.MAX_SAFE_INTEGER == null) { Number.MAX_SAFE_INTEGER = 9007199254740991; }
-
-module.exports = {includes};
+}
