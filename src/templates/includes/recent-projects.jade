@@ -11,14 +11,11 @@ section.profile.recent-projects(class=@hiddenUnlessCurrentUser)
       span(class=@hiddenIfUserIsFetched)
         =@loader
 
-      ul.projects-container
-        =@projects
+      - unless @currentUser.isSignedIn()
+        .project.anon-user-sign-up.opens-pop-over(click=@toggleSignInPopVisible)
+          p Access all your projects anywhere
+          button Sign in
+          span(class=@hiddenUnlessSignInPopVisible)
+            = @SignInPop
 
-        - unless @currentUser.isSignedIn()
-          li
-            .project.anon-user-sign-up.opens-pop-over(click=@toggleSignInPopVisible)
-              p Access all your projects anywhere
-              button Sign in
-              span(class=@hiddenUnlessSignInPopVisible)
-                = @SignInPop
-    
+      =@projects
