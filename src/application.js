@@ -135,6 +135,7 @@ var self = Model({
       self.addTeamProjectPopVisible(false);
       self.overlayProjectVisible(false);
       self.overlayVideoVisible(false);
+      self.newProjectPopVisible(false);
       return self.overlayNewStuffVisible(false);
     }
   

@@ -47,6 +47,7 @@ module.exports = function(application) {
     
     toggleNewProjectPopVisible(event) {
       application.newProjectPopVisible.toggle();      
+      return event.stopPropagation();
     },
 
     hiddenUnlessNewProjectPopVisible(event) {
@@ -101,7 +102,7 @@ module.exports = function(application) {
       const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
       const fetchedProjects = projects.filter(project => project.fetched());
       const newProjects = fetchedProjects.map((project) => {
-        
+        console.log('🌹', project)
         const {domain, description, avatar, remixUrl} = project;
         return {
           title: domain(),
@@ -109,7 +110,7 @@ module.exports = function(application) {
           description: description(),
           avatar: avatar(),
           url: remixUrl(),
-          action: console.log('yolo action'),
+          action: console.log('yolo'), 
         }
       });
 

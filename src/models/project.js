@@ -52,7 +52,6 @@ module.exports = (Project = function(I, self) {
           project.showOverlay(application);
         },
         users: project.users().map(user => user.asProps()),
-        remixUrl: `https://glitch.com/edit/#!/remix/${project.domain()}`
       };
     },
 
@@ -65,6 +64,10 @@ module.exports = (Project = function(I, self) {
         return `${EDITOR_URL}#!/${I.domain}?path=${I.path}:${I.line}:${I.character}`;
       }
       return `${EDITOR_URL}#!/${I.domain}`;
+    },
+    
+    remixUrl() {
+      return `${EDITOR_URL}#!/remix/${I.domain}`;
     },
 
     userIsCurrentUser(application) {
