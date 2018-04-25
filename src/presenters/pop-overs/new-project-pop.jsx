@@ -27,33 +27,34 @@ import React from 'react';
 //   </a>
 // );
 
-const NewProjects = () => (
-  basepath = "https://glitch.com/edit"
-  newProjects = [
-    {
-      domain: 'hello-express',
-      // staticName: 'node-app',
-      description: 'Create a Node app built on Express',
-      staticAvatar: basepath + '/images/new-project-avatars/hello-express.svg',
-      avatarUpdatedAt: new Date()
-    },
-    {
-      domain: 'hello-sqlite',
-      // staticName: 'node-sqlite',
-      description: 'A Node app with an SQLite database to hold data.',
-      staticAvatar: basepath + '/images/new-project-avatars/hello-sqlite.svg',
-      avatarUpdatedAt: new Date()
-    },
-    {
-      domain: 'hello-webpage',
-      // staticName: 'webpage',
-      description: 'Your very own web page',
-      staticAvatar: basepath + '/images/new-project-avatars/hello-webpage.svg',
-      avatarUpdatedAt: new Date()
-    }
-  ]
+const basepath = "https://glitch.com/edit";
+const newProjectslist = [
+  {
+    domain: 'hello-express',
+    // staticName: 'node-app',
+    description: 'Create a Node app built on Express',
+    staticAvatar: basepath + '/images/new-project-avatars/hello-express.svg',
+    avatarUpdatedAt: new Date()
+  },
+  {
+    domain: 'hello-sqlite',
+    // staticName: 'node-sqlite',
+    description: 'A Node app with an SQLite database to hold data.',
+    staticAvatar: basepath + '/images/new-project-avatars/hello-sqlite.svg',
+    avatarUpdatedAt: new Date()
+  },
+  {
+    domain: 'hello-webpage',
+    // staticName: 'webpage',
+    description: 'Your very own web page',
+    staticAvatar: basepath + '/images/new-project-avatars/hello-webpage.svg',
+    avatarUpdatedAt: new Date()
+  }
+]
 
-  newProjects.map(function(project) {
+
+const NewProjects = () => (
+  newProjectslist.map(function(project) {
     Project(project)
   })
 );
