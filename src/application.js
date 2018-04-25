@@ -2,8 +2,8 @@
 
 import Observable from 'o_0';
 
-import find from "lodash-es/find";
-import keys from "lodash-es/keys";
+import {find} from "lodash";
+import {keys} from "lodash";
 import axios from 'axios';
 import cachedCategories from './cache/categories.js';
 import cachedTeams from './cache/teams.js';
