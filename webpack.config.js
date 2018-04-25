@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 
 
@@ -10,7 +11,9 @@ const BASE = path.resolve(__dirname, '.');
 
 module.exports = () => {
   
-  let plugins = [];
+  let plugins = [
+    new LodashModuleReplacementPlugin,
+  ];
   let mode = 'development';
   if(process.env.NODE_ENV === 'production') {
     mode = 'production';
@@ -49,7 +52,7 @@ module.exports = () => {
           include: SRC,
           exclude: /node_modules/,
           loader : 'babel-loader'
-        }
+        },
       ],
     },
     plugins: plugins
