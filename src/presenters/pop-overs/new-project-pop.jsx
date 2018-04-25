@@ -60,7 +60,9 @@ const NewProjectPop = () => (
       <ul className="results">
         
         // for each NewProjects (project) , projectresultitem
-        {console.log(application.newProjects())}        
+        {console.log(application.newProjects())}   
+        <ProjectResultListItem project={project} />
+
       </ul>
     </section>
   </div>
