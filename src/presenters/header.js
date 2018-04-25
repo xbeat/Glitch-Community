@@ -101,12 +101,15 @@ module.exports = function(application) {
       const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
       const fetchedProjects = projects.filter(project => project.fetched());
       const newProjects = fetchedProjects.map((project) => {
-        const {domain, description, avatar} = project;
+        
+        const {domain, description, avatar, remixUrl} = project;
         return {
           title: domain(),
           domain: domain(),
           description: description(),
           avatar: avatar(),
+          url: remixUrl(),
+          action: console.log('yolo action'),
         }
       });
 

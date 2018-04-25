@@ -1,53 +1,15 @@
-// under construction
-
-// li
-//   a.result(href=@projectUrl click=@switchProject class=@activeIfCurrentProject mouseout=@clearFocus data-test-project-type=@staticName)
-//     - if @avatar()
-//       img.avatar(src=@avatar)
-//     - else
-//       .emoji.bento
-
-//     .result-name(title=@domain)= @domain
-//     .result-description= @description
-
 import React from 'react';
-const StarterProject = ({title, domain, description, avatar, url, action}) => {
-  
+
+const ProjectResultItem = ({title, domain, description, avatar, url, action}) => {
   return (
     <li>
-      <a href={`/~${domain}`} onClick={clickProject}>
-        <div className="project starter-project">
-          <div className="project-container">
-            <img className="avatar" src={avatar} alt={`Project avatar for ${title}`}/>
-            <button>
-              <span className="private-project-badge"></span>
-              <div className="project-name">{title}</div>
-            </button>
-            <div className="description">{description}</div>
-            <div className="overflow-mask"></div>
-          </div>
-        </div>
+      <a className="result" href={url} onClick={action}>
+        <img className="avatar" src={avatar} alt={`Project avatar for ${title}`}/>
+        <div className="result-name" title={domain}>{domain}</div>
+        <div className="result-description">{description}</div>
       </a>
     </li>
   );
 };
-  
-const StarterApps = ({starterProjects}) => {
-  const bricksUrl = "https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2Fbricks.svg?1521579119559";
-  
-  return (
-    <article className="starter-apps projects">
-      <header className="category category-name">
-        <h2>Create Your Dream App</h2>
-      </header>
-      <img className="starter-apps-graphic" alt="" src={bricksUrl} width="129px" height="80px"/>
-      <ul className="projects-container">
-        { starterProjects.map((starter, key) => (
-          <StarterProject key={key} {...starter}/>
-        ))}
-      </ul>
-    </article>
-  );
-}
 
-export default StarterApps;
+export default ProjectResultItem;

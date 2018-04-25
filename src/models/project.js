@@ -52,6 +52,7 @@ module.exports = (Project = function(I, self) {
           project.showOverlay(application);
         },
         users: project.users().map(user => user.asProps()),
+        remixUrl: `https://glitch.com/edit/#!/remix/${project.domain()}`
       };
     },
 

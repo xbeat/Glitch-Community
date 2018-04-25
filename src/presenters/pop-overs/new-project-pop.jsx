@@ -5,15 +5,15 @@ import ProjectResultItem from '../includes/project-result-item.jsx'; // change t
 // projct-result-item.jsx takes project (w title etc.) , returns html
 // replace new project with project result item
 
-const NewProject = ({title, domain, description, avatar}) => {
+// const NewProject = ({title, domain, description, avatar}) => {
 
-  return (
-    <li>
-      <p>{title}</p>
-    </li>
-  );
+//   return (
+//     <li>
+//       <p>{title}</p>
+//     </li>
+//   );
 
-};
+// };
 
 
 const NewProjectPop = ({newProjects}) => (
@@ -21,7 +21,7 @@ const NewProjectPop = ({newProjects}) => (
     <section className="pop-over-actions pop-list-results">
       <ul className="results">
         { newProjects.map((project, key) => (
-          <NewProject key={key} {...project}/>
+          <ProjectResultItem key={key} {...project}/>
         ))}
       </ul>
     </section>
