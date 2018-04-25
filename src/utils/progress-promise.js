@@ -35,7 +35,7 @@ if (Promise.prototype.progress == null) { Promise.prototype.progress = function(
   return this;
 }; }
 
-const ProgressPromise = function(fn) {
+function ProgressPromise(fn) {
   var p = new Promise(function(resolve, reject) {
     const notify = () =>
       p._progressHandlers != null ? p._progressHandlers.forEach(function(handler) {
@@ -59,4 +59,4 @@ const ProgressPromise = function(fn) {
   };
 
   return p;
-};
+}
