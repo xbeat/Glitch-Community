@@ -1,11 +1,15 @@
 import React from 'react';
 
-import ProjectResultItem from 'includes/project-result-item'; // change to -result-list-item
+// import ProjectResultItem from 'includes/project-result-item'; // change to -result-list-item
 // import Project from 'Project';
 
-const newProject = ({title, domain, description, avatar}) => {
+const NewProject = ({title, domain, description, avatar}) => {
 
-
+  return (
+    <li>
+      <p>{title}</p>
+    </li>
+  );
   // - ProjectItem = require "./project-item"
   // - NewProjectItemPresenter = require "../../source/presenters/pop-overs/new-project-item"
 
@@ -60,13 +64,21 @@ const newProject = ({title, domain, description, avatar}) => {
 //   }
 // ]
 
-const NewProjectPop = () => (
+
+const NewProjectPop = ({newProjects}) => (
   <div className="pop-over new-project-pop pop-list">
     <section className="pop-over-actions pop-list-results">
       <ul className="results">
-
+        {/* {console.log(title, domain, description, avatar)} */}
+        
+        {/*
         // {console.log(props.projects)}   
         // <NewProjects project={project} />
+
+        */}
+        { newProjects.map((project, key) => (
+          <NewProject key={key} {...project}/>
+        ))}
 
       </ul>
     </section>

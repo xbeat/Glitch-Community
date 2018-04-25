@@ -4,7 +4,7 @@ const moment = require('moment');
 
 const HeaderTemplate = require("../templates/includes/header");
 
-const ProjectModel = require("../../models/project");
+const ProjectModel = require("../models/project");
 
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
