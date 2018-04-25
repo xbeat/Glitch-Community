@@ -7,7 +7,7 @@ section.profile.recent-projects(class=@hiddenUnlessCurrentUser)
       .user-avatar-container
         a(href=@userLink)
           .user-avatar(class=@userAvatarIsAnon style=@userAvatarStyle alt="Your avatar")
-      - unless @currentUser.isSignedIn()
+      - if @currentUser.isAnon()
         .anon-user-sign-up.opens-pop-over(click=@toggleSignInPopVisible)
           button Sign in
           span(class=@hiddenUnlessSignInPopVisible)
