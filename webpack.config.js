@@ -15,21 +15,6 @@ module.exports = () => {
   let mode = 'development';
   if(process.env.NODE_ENV === 'production') {
     mode = 'production';
-    plugins = [
-      new UglifyJsPlugin({
-        cache: true,
-        sourceMap: true,
-        uglifyOptions: {
-          ecma: 6,
-          mangle: true,
-          compress: true
-        }
-      }),
-     //https://webpack.js.org/guides/production/#specify-the-environment
-     new webpack.DefinePlugin({
-       'process.env.NODE_ENV': JSON.stringify('production')
-     })
-    ];
   }
   
   console.log(`Starting Webpack in ${mode} mode.`);
@@ -53,8 +38,8 @@ module.exports = () => {
           include: SRC,
           loader: "eslint-loader",
           options: {
-            fix: true,
-            //cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so blank it when reconfiguring
+            //fix: true,
+            cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so blank it when reconfiguring
             emitError: true,
             emitWarning: true,
             failOnError: false,
@@ -63,6 +48,7 @@ module.exports = () => {
         {
           test: /\.jsx?/,
           include: SRC,
+          exclude: /node_modules/,
           loader : 'babel-loader'
         }
       ],
