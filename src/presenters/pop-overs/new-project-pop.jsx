@@ -27,7 +27,7 @@ import React from 'react';
 //   </a>
 // );
 
-const NewProjects = () =>
+const NewProjects = () => (
   basepath = "https://glitch.com/edit"
   newProjects = [
     {
@@ -52,10 +52,11 @@ const NewProjects = () =>
       avatarUpdatedAt: new Date()
     }
   ]
+
   newProjects.map(function(project) {
-    Project(project);
+    Project(project)
   })
-}
+);
 
 const NewProjectPop = () => (
   <div className="pop-over new-project-pop pop-list">
