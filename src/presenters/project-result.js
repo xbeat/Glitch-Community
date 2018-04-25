@@ -6,7 +6,7 @@ import Reactlet from "./reactlet";
 module.exports = function(application, project, options, analytics) {
 
   options = options || {};
-  // options.addProjectToTeam
+
   analytics = analytics || {};
   
   var self = {
