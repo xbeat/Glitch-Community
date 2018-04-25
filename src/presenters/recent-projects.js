@@ -36,7 +36,7 @@ module.exports = function(application) {
     
     projects() {
       const projectsObservable = application.currentUser().projects;
-      let projects = projectsObservable.slice(0,3);      
+      const projects = projectsObservable.slice(0,3);      
       
       if(projects.find(project => !project.fetched())){
         return self.loader();
@@ -76,8 +76,8 @@ module.exports = function(application) {
     },
 
     hiddenUnlessCurrentUser() {
-      let hasUser = application.currentUser().id() && application.currentUser().fetched();
-      if (!hasUser) { return 'hidden'; }
+      const currentAndFetched = application.currentUser().id() && application.currentUser().fetched();
+      if (!currentAndFetched) { return 'hidden'; }
     },
   };
 
