@@ -2,7 +2,7 @@ const QuestionsTemplate = require("../templates/includes/questions");
 const QuestionItemPresenter = require('./question-item');
 
 const Observable = require('o_0');
-import {sample} from 'lodash/collection';
+import sample from 'lodash-es/sample';
 
 const DEFAULT_MAX_QUESTIONS = 3;
 

@@ -1,5 +1,5 @@
 const Observable = require('o_0');
-import {debounce} from 'lodash';
+import debounce from 'lodash-es/debounce';
 
 const AddTeamProjectTemplate = require("../../templates/pop-overs/add-team-project-pop");
 

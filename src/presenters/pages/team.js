@@ -1,5 +1,5 @@
 const Observable = require('o_0');
-import {debounce} from 'lodash';
+import debounce from 'lodash-es/debounce';
 const md = require('markdown-it')({
   breaks: true,
   linkify: true,

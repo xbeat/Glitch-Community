@@ -2,7 +2,7 @@
 
 const Observable = require('o_0');
 const axios = require('axios');
-import {throttle} from 'lodash';
+import throttle from 'lodash-es/throttle';
 const moment = require('moment');
 
 const AnalyticsTemplate = require("../templates/includes/analytics");
