@@ -4,14 +4,14 @@ import find from 'lodash-es/find';
 let Project;
 const cache = {};
 
-const Model = require('./model');
-const axios = require('axios');
+import Model from './model';
+import axios from 'axios';
 
 let source = undefined; // reference to cancel token
 let originalUrlPath = "/";
 let originalQueryString = "";
 
-module.exports = (Project = function(I, self) {
+export default Project = function(I, self) {
   
   if (I == null) { I = {}; }
   if (self == null) { self = Model(I); }
@@ -187,7 +187,7 @@ module.exports = (Project = function(I, self) {
   // console.log '💎 project cache', cache
 
   return self;
-});
+};
 
 Project.isPinnedByUser = (user, projectId) => {
   const pins = user.pins().map(pin => pin.projectId);
@@ -273,4 +273,4 @@ Project.getSearchResults = function(application, query) {
 Project._cache = cache;
 
 // Circular dependencies must go below module.exports
-var User = require("./user");
+import User from './user';

@@ -1,14 +1,14 @@
 let Team;
 import reject from 'lodash-es/reject';
-const axios = require('axios');
+import axios from 'axios';
 
 const cache = {};
 const cacheBuster = Math.floor(Math.random() * 1000);
 
-const Model = require('./model');
-const User = require('./user');
+import Model from './model';
+import User from './user';
 
-module.exports = (Team = function(I, self) {
+export default Team = function(I, self) {
 
   if (I == null) { I = {}; }
   if (self == null) { self = Model(I); }
@@ -195,7 +195,7 @@ module.exports = (Team = function(I, self) {
   // console.log '👯 team cache', cache
 
   return self;
-});
+};
 
 Team.getTeamById = function(application, id) {
   const teamsPath = `teams/${id}`;
@@ -227,4 +227,4 @@ Team.getSearchResults = function(application, query) {
 Team._cache = cache;
 
 // Circular dependencies must go below module.exports
-const Project = require('./project');
+import Project from './project';

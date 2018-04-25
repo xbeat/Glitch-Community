@@ -1,5 +1,6 @@
 "use strict";
-const ProgressPromise = require("./progress-promise");
+import ProgressPromise from './progress-promise';
+
 /* eslint-disable */
 
 /*
@@ -73,7 +74,7 @@ SOFTWARE.
 
 */
 
-module.exports = function(credentials) {
+export default function(credentials) {
   const {policy, signature, accessKeyId} = credentials;
   const {acl, bucket, namespace} = extractPolicyData(policy);
 

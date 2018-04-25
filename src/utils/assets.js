@@ -1,8 +1,9 @@
 // 💭 based on frontend/utils/assets in the editor
 
-const S3Uploader = require('./s3-uploader');
-const quantize = require('quantize');
-const Observable = require('o_0');
+import S3Uploader from './s3-uploader';
+
+import quantize from 'quantize';
+import Observable from 'o_0';
 const COVER_SIZES = {
   large: 1000,
   medium: 700,
@@ -22,7 +23,7 @@ const blobToImage = file =>
     return image.src = URL.createObjectURL(file);
   })
 ;
-    
+
 // Reduces the width/height and draws a new image until it reaches
 // the final size. It loops by waiting for the onload to fire on the updated
 // image and exits as soon as the new width/height are less than or equal to the
@@ -127,7 +128,7 @@ const getDominantColor = function(image) {
 };
 
 
-module.exports = function(application) {
+export default function(application) {
 
   let self;
   return self = { 
@@ -280,9 +281,9 @@ module.exports = function(application) {
         });
     },
   };
-};
+}
 
- 
+
 function __range__(left, right, inclusive) {
   let range = [];
   let ascending = left < right;

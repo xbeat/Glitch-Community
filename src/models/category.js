@@ -13,9 +13,9 @@ If the id property is not given the model is not cached.
 let Category;
 const cache = {};
 
-const Model = require('./model');
+import Model from './model';
 
-module.exports = (Category = function(I, self) {
+export default Category = function(I, self) {
 
   if (I == null) { I = {}; }
   if (self == null) { self = Model(I); }
@@ -44,7 +44,7 @@ module.exports = (Category = function(I, self) {
   // console.log '☎️ category cache', cache
 
   return self;
-});
+};
 
 
 Category.getRandomCategories = function(api, numberOfCategories, projectsPerCategory) {
@@ -90,4 +90,4 @@ Category.updateCategory = function(application, id) {
 Category._cache = cache;
 
 // Circular dependencies must go below module.exports
-var Project = require('./project');
+import Project from './project';

@@ -1,15 +1,15 @@
 let User;
-const axios = require('axios');
+import axios from 'axios';
 const md = require('markdown-it')({
   breaks: true,
   linkify: true,
   typographer: true}).disable(['image']);
 
-const Model = require('./model');
+import Model from './model';
 const cache = {};
 const cacheBuster = Math.floor(Math.random() * 1000);
 
-module.exports = (User = function(I, self) {
+export default User = function(I, self) {
 
   if (I == null) { I = {}; }
   if (self == null) { self = Model(I); }
@@ -228,7 +228,7 @@ module.exports = (User = function(I, self) {
   // console.log '☎️ user cache', cache
 
   return self;
-});
+};
 
 User.getUserByLogin = function(application, login) {
   const userIdPath = `/userid/byLogin/${login}`;
@@ -295,4 +295,4 @@ User.getSearchResults = function(application, query) {
 User._cache = cache;
 
 // Circular dependencies must go below module.exports
-var Project = require('./project');
+import Project from './project';

@@ -1,4 +1,4 @@
-module.exports = ProgressPromise;
+export default ProgressPromise;
 
 // Extend promises with `finally`
 // From: https://github.com/domenic/promises-unwrapping/issues/18
