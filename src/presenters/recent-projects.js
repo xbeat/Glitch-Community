@@ -76,7 +76,8 @@ module.exports = function(application) {
     },
 
     hiddenUnlessCurrentUser() {
-      if (!application.currentUser().id()) { return 'hidden'; }
+      let hasUser = application.currentUser().id() && application.currentUser().fetched();
+      if (!hasUser) { return 'hidden'; }
     },
   };
 
