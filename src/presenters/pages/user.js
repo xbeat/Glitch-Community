@@ -1,11 +1,13 @@
 import Project from '../../models/project';
 import Observable from 'o_0';
 import debounce from 'lodash-es/debounce';
-const md = require('markdown-it')({
+import mdFactory from 'markdown-it';
+const md = mdFactory({
   breaks: true,
   linkify: true,
   typographer: true}).disable(['image']);
 
+import assets from '../../utils/assets';
 import UserTemplate from '../../templates/pages/user';
 import DeletedProjectsTemplate from '../../templates/deleted-projects';
 import LayoutPresenter from '../layout';
@@ -14,7 +16,7 @@ import EntityPageProjects from "../entity-page-projects.jsx";
 import Reactlet from "../reactlet";
 
 export default function(application, userLoginOrId) {
-  const assetUtils = require('../../utils/assets')(application);
+  const assetUtils = assets(application);
 
   var self = {
 

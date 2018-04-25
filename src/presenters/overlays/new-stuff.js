@@ -4,6 +4,7 @@ const markdown = markdownFactory({html: true})
   .use(markdownSanitizer);
 import Observable from 'o_0';
 import OverlayNewStuffTemplate from '../../templates/overlays/new-stuff';
+import newStuffLog from '../new-stuff-log';
 
 export default function(application) {
   
@@ -16,7 +17,7 @@ export default function(application) {
 
   var self = {
 
-    newStuffLog: require('../new-stuff-log')(self),
+    newStuffLog: newStuffLog(self),
     
     newStuffNotificationVisible: Observable(false),
     newStuff: Observable([]),
@@ -85,4 +86,4 @@ export default function(application) {
 
   self.getUpdates();
   return OverlayNewStuffTemplate(self);
-};
+}

@@ -1,6 +1,7 @@
 import Observable from 'o_0';
 import debounce from 'lodash-es/debounce';
 import mdFactory from 'markdown-it';
+import assets from '../../utils/assets';
 
 const md = mdFactory({
   breaks: true,
@@ -21,7 +22,7 @@ import UsersList from "../users-list.jsx";
 import EntityPageProjects from "../entity-page-projects.jsx";
 
 export default function(application) {
-  const assetUtils = require('../../utils/assets')(application);
+  const assetUtils = assets(application);
 
   var self = {
 
