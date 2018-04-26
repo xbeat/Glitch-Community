@@ -7,18 +7,13 @@ section.profile.recent-projects(class=@hiddenUnlessCurrentUser)
       .user-avatar-container
         a(href=@userLink)
           .user-avatar(class=@userAvatarIsAnon style=@userAvatarStyle alt="Your avatar")
+      - if @currentUser.isAnon()
+        .anon-user-sign-up.opens-pop-over(click=@toggleSignInPopVisible)
+          button Sign in
+          span(class=@hiddenUnlessSignInPopVisible)
+            = @SignInPop
     article.projects
       span(class=@hiddenIfUserIsFetched)
         =@loader
 
-      ul.projects-container
-        =@projects
-
-        - unless @currentUser.isSignedIn()
-          li
-            .project.anon-user-sign-up.opens-pop-over(click=@toggleSignInPopVisible)
-              p Access all your projects anywhere
-              button Sign in
-              span(class=@hiddenUnlessSignInPopVisible)
-                = @SignInPop
-    
+      =@projects

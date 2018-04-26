@@ -1,14 +1,5 @@
-// TODO: This file was created by bulk-decaffeinate.
-// Check that you're happy with the conversion, then remove this comment.
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const NotificationsTemplate = require("../templates/includes/notifications");
 
-const Observable = require("o_0");
 const animationEnd = 'webkitAnimationEnd oanimationend msAnimationEnd animationend';
 
 module.exports = function(application) {
@@ -24,7 +15,7 @@ module.exports = function(application) {
 
   const generateNotifier = (method, application) =>
     function() {
-      $(notifications).one(animationEnd, event => application[method](false));
+      $(notifications).one(animationEnd, () => application[method](false));
       if (!application[method]()) {
         return "hidden";
       }
@@ -45,7 +36,7 @@ module.exports = function(application) {
   };
 
 
-  for (let notificationType of Array.from(notificationTypes)) {
+  for (let notificationType of notificationTypes) {
     const method = `notify${notificationType}`;
     self[method] = generateNotifier(method, application);
   }

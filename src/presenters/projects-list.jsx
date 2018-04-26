@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProjectItem from "./project-item.jsx"
+import ProjectItem from "./project-item.jsx";
 
 export const ProjectsList = ({closeAllPopOvers, title, isPinned=false, projects, projectOptions}) => {
   const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
@@ -17,7 +17,7 @@ export const ProjectsList = ({closeAllPopOvers, title, isPinned=false, projects,
         <div className="placeholder">
           <img className="psst" src={psst} alt="psst"></img>
           <p>Pin your projects to show them off
-          <span className="emoji pushpin"></span></p>
+            <span className="emoji pushpin"></span></p>
         </div>
       )}
       
@@ -25,6 +25,12 @@ export const ProjectsList = ({closeAllPopOvers, title, isPinned=false, projects,
     
     </article>
   );
+};
+
+ProjectsList.propTypes = {
+  projects: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
+  isPinned: PropTypes.bool,
 };
 
 export const ProjectsUL = ({projects, closeAllPopOvers, projectOptions, categoryColor}) => {
@@ -37,10 +43,9 @@ export const ProjectsUL = ({projects, closeAllPopOvers, projectOptions, category
   );
 };
 
-ProjectsList.propTypes = {
+ProjectsUL.propTypes = {
   projects: PropTypes.array.isRequired,
-  title: PropTypes.string.isRequired,
-  isPinned: PropTypes.bool,
-}
+};
 
-export default ProjectsList
+
+export default ProjectsList;

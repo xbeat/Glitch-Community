@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-  
 export const PopulatedUsersList = ({users, extraClass="" }) => (
   <div className={`users ${extraClass}`}>
     { users.map((user, key) => (
@@ -8,6 +8,11 @@ export const PopulatedUsersList = ({users, extraClass="" }) => (
     ))}
   </div>
 );
+
+PopulatedUsersList.propTypes = {
+  users: PropTypes.array.isRequired,
+  extraClass: PropTypes.string,
+};
 
 const UserTile = ({
   userLink,
@@ -21,6 +26,15 @@ const UserTile = ({
     <img width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
   </a>
 );
+
+UserTile.propTypes = {
+  userLink: PropTypes.string,
+  tooltipName: PropTypes.string.isRequired,
+  style: PropTypes.object.isRequired,
+  alt: PropTypes.string.isRequired,
+  userAvatarUrl: PropTypes.string.isRequired,
+  extraClass: PropTypes.string,
+};
   
 const GlitchTeamUsersList = () => {
   const glitchTeamAvatar = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267";
@@ -37,13 +51,17 @@ const GlitchTeamUsersList = () => {
   return (
     <PopulatedUsersList users={[user]}></PopulatedUsersList>
   );
-}
+};
 
 const UsersList = ({glitchTeam=false, users, extraClass}) => {
   if(glitchTeam) {
-    return <GlitchTeamUsersList/> 
+    return <GlitchTeamUsersList/>; 
   }
-  return <PopulatedUsersList users={users} extraClass={extraClass}/>
-}
+  return <PopulatedUsersList users={users} extraClass={extraClass}/>;
+};
+
+UsersList.propTypes = {
+  glitchTeam: PropTypes.bool,
+};
 
 export default UsersList;

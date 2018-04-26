@@ -1,4 +1,6 @@
 "use strict";
+const ProgressPromise = require("./progress-promise");
+/* eslint-disable */
 
 /*
 S3 Uploader

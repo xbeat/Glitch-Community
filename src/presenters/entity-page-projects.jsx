@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
 import Observable from "o_0";
-import {debounce} from "lodash";
+import debounce from 'lodash-es/debounce';
 
 
 /* globals Set */
@@ -14,11 +14,11 @@ const projectStateFromModels = (projectsModel, pinsModel) => {
   const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
   const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
   return {pinnedProjects, recentProjects};
-}
+};
 
 export class EntityPageProjectsContainer extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
      
     this.state = {
       recentProjects: [],
@@ -51,7 +51,7 @@ export class EntityPageProjectsContainer extends React.Component {
   }
 
   render() {
-    return <EntityPageProjects {...this.props} {...this.state}/>
+    return <EntityPageProjects {...this.props} {...this.state}/>;
   }
 }
 EntityPageProjectsContainer.propTypes = {

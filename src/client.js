@@ -1,6 +1,4 @@
 /* globals route EDITOR_URL baseUrl analytics */
-require("./extensions");
-
 const application = require('./application');
 const qs = require('querystringify');
 const queryString = qs.parse(window.location.search);

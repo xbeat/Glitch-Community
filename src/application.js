@@ -1,7 +1,8 @@
 /* globals baseUrl API_URL APP_URL EDITOR_URL analytics application*/
 
 const Observable = require('o_0');
-const _ = require('lodash');
+import find from "lodash-es/find";
+import keys from "lodash-es/keys";
 const axios = require('axios');
 
 const cachedCategories = require('./cache/categories.js');
@@ -17,10 +18,13 @@ const Team = require('./models/team');
 const Question = require('./models/question');
 
 const cachedUser = 
-  localStorage.cachedUser ?
-    (() => { try {
+  localStorage.cachedUser ? (
+    () => { try {
       return JSON.parse(localStorage.cachedUser);
-    } catch (error) {} })() : undefined;
+    } catch (error) {
+      // empty
+    } 
+    })() : undefined;
 
 var self = Model({
   // featuredProjects: featuredProjects
@@ -137,7 +141,7 @@ var self = Model({
       self.overlayVideoVisible(false);
       self.newProjectPopVisible(false);
       return self.overlayNewStuffVisible(false);
-    }
+    };
   
   })(),
 
@@ -160,7 +164,7 @@ var self = Model({
     return Project.newProjects();
   },
     
-  api(source, queries) {
+  api(source) {
     const persistentToken = self.currentUser() && self.currentUser().persistentToken();
     if (persistentToken) {
       return axios.create({  
@@ -180,15 +184,18 @@ var self = Model({
   storeLocal(key, value) {
     try {
       return window.localStorage[key] = JSON.stringify(value);
-    } catch (error1) {
-      return console.warn("Could not save to localStorage. (localStorage is disabled in private Safari windows)");
+    } catch (error) {
+      console.warn("Could not save to localStorage. (localStorage is disabled in private Safari windows)");
+      return undefined;
     }
   },
 
   getLocal(key) {
     try {
       return JSON.parse(window.localStorage[key]);
-    } catch (error1) {}
+    } catch (error) {
+      return undefined;
+    }
   },
 
   getUserPrefs() {
@@ -288,7 +295,7 @@ var self = Model({
   },
 
   getCategory(url) {
-    const categoryData = _.find(cachedCategories, category => category.url === url);
+    const categoryData = find(cachedCategories, category => category.url === url);
     self.category(Category(categoryData));
     return Category.updateCategory(application, categoryData.id);
   },
@@ -298,8 +305,7 @@ var self = Model({
   },
 
   getQuestions() {
-    let questions;
-    return questions = Question.getQuestions(self).then(questions => self.questions(questions));
+    return Question.getQuestions(self).then(questions => self.questions(questions));
   },
     
   showProjectOverlayPage(domain) {
@@ -339,22 +345,22 @@ var self = Model({
   },
   
   isSearchUrl(url, queryString) {
-    const queryStringKeys = _.keys(queryString); // ['q', 'blah']
-    if ((url === 'search') && (_.includes(queryStringKeys, 'q'))) {
+    const queryStringKeys = keys(queryString); // ['q', 'blah']
+    if ((url === 'search') && (queryStringKeys.includes('q'))) {
       return true;
     }
   },
 
   isCategoryUrl(url) {
-    if (_.find(cachedCategories, category => category.url === url)) { return true; }
+    if (find(cachedCategories, category => category.url === url)) { return true; }
   },
 
   isTeamUrl(url) {
-    return !!_.find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
+    return !!find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
   },
 
   getCachedTeamByUrl(url) {
-    return _.find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
+    return find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
   },
 
   isQuestionsUrl(url) {
@@ -371,13 +377,13 @@ self.attrModel("category", Category);
 self.attrModel("team", Team);
 self.attrModel("question", Question);
 
-global.application = self;
-global.API_URL = API_URL;
-global.EDITOR_URL = EDITOR_URL;
-global.User = User;
-global.Project = Project;
-global.Category = Category;
-global.Team = Team;
-global.Question = Question;
+window.application = self;
+window.API_URL = API_URL;
+window.EDITOR_URL = EDITOR_URL;
+window.User = User;
+window.Project = Project;
+window.Category = Category;
+window.Team = Team;
+window.Question = Question;
 
 module.exports = self;

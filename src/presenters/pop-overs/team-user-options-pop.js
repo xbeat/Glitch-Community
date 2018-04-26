@@ -1,7 +1,6 @@
 module.exports = function(application, user) {
 
-  let self;
-  return self = {
+  return {
   
     application,
     user,

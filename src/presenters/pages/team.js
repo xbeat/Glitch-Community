@@ -1,5 +1,5 @@
 const Observable = require('o_0');
-const _ = require('lodash');
+import debounce from 'lodash-es/debounce';
 const md = require('markdown-it')({
   breaks: true,
   linkify: true,
@@ -34,7 +34,7 @@ module.exports = function(application) {
     verifiedTeamTooltip() {
       return application.team().verifiedTooltip();
     },
-    
+
     TeamUsersAsMember() {
       const users = application.team().users();
       return users.map(user => TeamUserPresenter(application, user));
@@ -46,9 +46,9 @@ module.exports = function(application) {
         users: users.map(user => user.asProps()),
         extraClass: "team-users",
       };
-      return Reactlet(UsersList, props);      
+      return Reactlet(UsersList, props);
     },
-    
+
     TeamProjects() {
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
@@ -57,18 +57,18 @@ module.exports = function(application) {
         pinsObservable: application.team().pins,
         projectOptions: self.projectOptions(),
       };
-      
+
       return Reactlet(EntityPageProjects, props, "UserPageProjectsContainer");
     },
-    
+
     projectOptions(){
       const userHasProjectOptions = application.team().currentUserIsOnTeam(application);
       if(!userHasProjectOptions) {
         return {};
       }
-      
+
       return {
-        removeProjectFromTeam: self.removeProjectFromTeam, 
+        removeProjectFromTeam: self.removeProjectFromTeam,
         togglePinnedState: self.togglePinnedState,
       };
     },
@@ -87,7 +87,7 @@ module.exports = function(application) {
       const action = ({project}) => (
         application.team().addProject(application, project)
       );
-      
+
       const props = {
         searchProjects: application.searchProjects,
         action,
@@ -99,9 +99,9 @@ module.exports = function(application) {
     coverUrl() {
       if (application.team().localCoverImage()) {
         return application.team().localCoverImage();
-      } 
+      }
       return application.team().coverUrl();
-      
+
     },
 
     teamProfileStyle() {
@@ -114,11 +114,11 @@ module.exports = function(application) {
     teamAvatarStyle() {
       if (application.team().hasAvatarImage()) {
         return {backgroundImage: `url('${self.teamAvatarUrl()}')`};
-      } 
+      }
       return {backgroundColor: application.team().backgroundColor()};
-      
+
     },
-      
+
     teamName() {
       return application.team().name();
     },
@@ -134,14 +134,14 @@ module.exports = function(application) {
     verifiedImage() {
       return application.team().verifiedImage();
     },
-      
+
     hiddenUnlessVerified() {
       if (!self.isVerified()) { return 'hidden'; }
     },
 
     hiddenUnlessTeamHasThanks() {
       if (!(application.team().thanksCount() > 0)) { return 'hidden'; }
-    }, 
+    },
 
     currentUserIsOnTeam() {
       return application.team().currentUserIsOnTeam(application);
@@ -154,7 +154,7 @@ module.exports = function(application) {
     hiddenIfCurrentUserIsOnTeam() {
       if (self.currentUserIsOnTeam(application)) { return 'hidden'; }
     },
-        
+
     description() {
       const text = application.team().description();
       const node = document.createElement('span');
@@ -178,7 +178,7 @@ module.exports = function(application) {
         description: text});
     },
 
-    updateTeam: _.debounce(data => application.team().updateTeam(application, data)
+    updateTeam: debounce(data => application.team().updateTeam(application, data)
       , 250),
 
     applyDescription(event) {
@@ -189,9 +189,9 @@ module.exports = function(application) {
     teamAvatarUrl() {
       if (application.team().localAvatarImage()) {
         return application.team().localAvatarImage();
-      } 
+      }
       return application.team().teamAvatarUrl('large');
-      
+
     },
 
 
@@ -231,7 +231,7 @@ module.exports = function(application) {
       const action = Project.isPinnedByTeam(application.team(), projectId) ? "removePin" : "addPin";
       return application.team()[action](application, projectId);
     },
-    
+
     removeProjectFromTeam(projectId) {
       application.team().removeProject(application, projectId);
     },
@@ -243,14 +243,14 @@ module.exports = function(application) {
     hiddenUnlessAddTeamProjectPopVisible() {
       if (!application.addTeamProjectPopVisible()) { return 'hidden' }
     },
-    
+
     toggleAddTeamUserPop() {
       application.addTeamUserPopVisible.toggle();
       if (application.addTeamUserPopVisible()) {
         return $('#team-user-search').focus();
       }
     },
-    
+
     toggleAddTeamProjectPop() {
       application.addTeamProjectPopVisible.toggle();
       if (application.addTeamProjectPopVisible()) {
@@ -264,7 +264,7 @@ module.exports = function(application) {
       return self.setInitialTeamDescription();
     }
   });
-        
+
   const content = TeamTemplate(self);
 
   return LayoutPresenter(application, content);
