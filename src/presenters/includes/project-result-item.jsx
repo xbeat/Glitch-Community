@@ -34,5 +34,4 @@ ProjectResultItem.propTypes = {
 };
 
 
-
 export default ProjectResultItem;
