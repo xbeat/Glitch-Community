@@ -1,6 +1,7 @@
 /* globals baseUrl API_URL APP_URL EDITOR_URL analytics application*/
 
 const Observable = require('o_0');
+
 const _ = require('lodash');
 const axios = require('axios');
 
