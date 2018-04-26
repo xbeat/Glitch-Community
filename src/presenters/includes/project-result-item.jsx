@@ -1,17 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-
-// const Users = ({users}) => {
-//   return (
-//     <p>i am users</p> 
-//   )
-// }
-
-
-const Users = ({users}) => (
-  <p>i am users</p>
-)
+import UsersList from '../users-list';
 
 const ProjectResultItem = ({
     title, 
@@ -26,7 +15,7 @@ const ProjectResultItem = ({
       <li className="result">
         <img className="avatar" src={avatar} alt={`Project avatar for ${title}`}/>
 
-        { users.length > 0 && <Users/> }
+        { users.length > 0 && <Users users={users} /> }
 
         <div className="result-name" title={domain}>{domain}</div>
         <div className="result-description">{description}</div>
