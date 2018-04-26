@@ -14,7 +14,6 @@ const EmbedHtml = require('../../curated/embed');
 import Categories from "../categories.jsx";
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
-import StarterApps from "../includes/starter-apps.jsx"
 
 module.exports = function(application) {
   console.log("Presented index");
@@ -93,29 +92,7 @@ module.exports = function(application) {
     
     ByFogCreek() {
       return Reactlet(ByFogCreek, null);
-    },
-
-    StarterApps() {
-      const projectIds = [
-        'a0fcd798-9ddf-42e5-8205-17158d4bf5bb', // 'hello-express'
-        'cb519589-591c-474f-8986-a513f22dbf88', // 'hello-sqlite'
-        '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
-      ];
-      const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
-      const fetchedProjects = projects.filter(project => project.fetched());
-      const starterProjects = fetchedProjects.map((project) => {
-        const {domain, description, avatar} = project;
-        return {
-          title: domain(),
-          domain: domain(),
-          description: description(),
-          avatar: avatar(),
-          showOverlay() { project.showOverlay(application); },
-        } 
-      });
-      
-      return Reactlet(StarterApps, {starterProjects});
-    },
+    }
   };
 
   const content = IndexTemplate(self);
