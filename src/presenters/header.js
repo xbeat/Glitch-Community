@@ -102,7 +102,6 @@ module.exports = function(application) {
       const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
       const fetchedProjects = projects.filter(project => project.fetched());
       const newProjects = fetchedProjects.map((project) => {
-        console.log('🌹', project)
         const {domain, description, avatar, remixUrl} = project;
         return {
           title: domain(),

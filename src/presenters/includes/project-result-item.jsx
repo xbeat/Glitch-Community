@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 
 const Users = ({users}) => {
+  if (users.length === 0) {
+    return null
+  }
   return (
     <p>i am users</p> 
   )
@@ -14,8 +17,6 @@ const ProjectResultItem = ({title, domain, description, avatar, url, action, use
       <li className="result">
         <img className="avatar" src={avatar} alt={`Project avatar for ${title}`}/>
         <Users/>
-        { users.length && <Users/> }
-
         <div className="result-name" title={domain}>{domain}</div>
         <div className="result-description">{description}</div>
       </li>
@@ -24,8 +25,8 @@ const ProjectResultItem = ({title, domain, description, avatar, url, action, use
 };
 
 ProjectResultItem.propTypes = {
-  //each 'key' maps to a prop that you use here.
-  //if your only use of the prop is to pass it to a child, you can skip it.
+   //each 'key' maps to a prop that you use here.
+   //if your only use of the prop is to pass it to a child, you can skip it.
   // do i have to specify types on all params? should i?
   //you don't _have to_, but it's a good idea, and it'll propagate up the entire call tree.
   // so there should never be redundancy unless multiple parts of the chain depend on the same prop,
@@ -58,8 +59,8 @@ ProjectResultItem.propTypes = {
   // parent/caller?
   // we can make it required here and then the parent would just pass '[]' if it wants to,
   // or we can make it optional here and the parent can leave it off - i like this approach for this
-  // ok cool, then we do this....
-  // make it optional in proptypes and give it a default <--
+    // ok cool, then we do this....
+     // make it optional in proptypes and give it a default <--
   // both are fairly ok, it kind of has to do with how many parents you have :p
   // my thinking is that parents should only be concerned with what they're gonna render, rather than the structure of a method - as much as possible anyways
 };
