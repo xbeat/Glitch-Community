@@ -2,8 +2,19 @@ import React from 'react';
 
 const Users = ({users}) => {
   if (users) {
-    <p>i am users</p>
+    <p>i am users</p>  //missing 'return' ;-)
   }
+  /*
+  I'd usually do:
+  if(!users) {
+     return null - PK isn't the null implied? like if there are no users , dont do the thing
+     //nope, all react components must return;  "null" means "render nothing",  
+  }
+  
+  return (
+    <p> I am users. etc. </p>
+  );
+  */
 };
 
 const ProjectResultItem = ({title, domain, description, avatar, url, action}) => {
