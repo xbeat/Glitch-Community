@@ -1,13 +1,33 @@
 import React from 'react';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 
+import debounce from 'lodash-es/debounce';
+
 // const stopPropagation = (event) => {
 //   console.log('🌹')
 //   event.stopPropagation()
 // }
 
-const searchProject = (event) => {
+// put class here
+// w state stuff
+// reference entity-page-projects.jsx
+//   constructor(props) {
+//     super(props);
+     
+//     this.state = {
+//       blah: [],
+// 
+// set state with 
+//     this.setStateFromModels = debounce((projectsModel, pinsModel, Component) => {
+    //   Component.setState(projectStateFromModels(projectsModel, pinsModel));
+    // }, 10);
+
+
+// mopve searchProjects to class 
+
+const searchProject = (event, {searchProjects}) => {
   console.log(event.target.value);
+  searchProjects(event.target.value)
   // event.preventDefault()
 };
 

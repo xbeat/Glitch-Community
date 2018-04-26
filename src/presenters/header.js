@@ -98,7 +98,7 @@ module.exports = function(application) {
         'cb519589-591c-474f-8986-a513f22dbf88', // 'hello-sqlite'
         '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
       ];
-      var props = {}
+      var props = {};
       const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
       const fetchedProjects = projects.filter(project => project.fetched());
       const newProjects = fetchedProjects.map((project) => {
@@ -110,10 +110,10 @@ module.exports = function(application) {
           avatar: avatar(),
           url: remixUrl(),
           action: (event) => {
-            event.preventDefault()
-            console.log('yolo')
+            event.preventDefault();
+            console.log('yolo');
           },
-        }
+        };
       });
 
       return Reactlet(NewProjectPop, {newProjects});

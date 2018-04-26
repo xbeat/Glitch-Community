@@ -17,8 +17,8 @@ const AnalyticsPresenter = require("../analytics");
 
 import Reactlet from "../reactlet";
 import UsersList from "../users-list.jsx";
-import EntityPageProjects from "../entity-page-projects.jsx"
-import AddTeamProjectPop from "../pop-overs/add-team-project-pop.jsx"
+import EntityPageProjects from "../entity-page-projects.jsx";
+import AddTeamProjectPop from "../pop-overs/add-team-project-pop.jsx";
 
 module.exports = function(application) {
   const assetUtils = require('../../utils/assets')(application);
@@ -241,7 +241,7 @@ module.exports = function(application) {
     },
 
     hiddenUnlessAddTeamProjectPopVisible() {
-      if (!application.addTeamProjectPopVisible()) { return 'hidden' }
+      if (!application.addTeamProjectPopVisible()) { return 'hidden'; }
     },
 
     toggleAddTeamUserPop() {
