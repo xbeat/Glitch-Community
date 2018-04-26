@@ -1,11 +1,19 @@
 import React from 'react';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 
-const NewProjectPop = ({newProjects}) => (
+// pass action method down to, addProjectToTeam
+
+const ProjectSearchResults = []
+
+const AddTeamProjectPop = ({searchProjects}) => (
   <div className="pop-over new-project-pop">
+    <section className="pop-over-info">
+      <input id="team-project-search" className="pop-over-input search-input pop-over-search" />
+    </section>
     <section className="pop-over-actions results-list">
       <ul className="results">
-        { newProjects.map((project, key) => (
+        // do the search here
+        { ProjectSearchResults.map((project, key) => (
           <ProjectResultItem key={key} {...project}/>
         ))}
       </ul>
@@ -33,7 +41,7 @@ const NewProjectPop = ({newProjects}) => (
 //   section.pop-over-info.last-section
 //     .info-description You can add projects you've made, or ones by other cool people
 
-export default NewProjectPop;
+export default AddTeamProjectPop;
 
 
 // const Observable = require('o_0');
@@ -49,9 +57,6 @@ export default NewProjectPop;
   
 //     query: Observable(""),
 
-//     hiddenUnlessAddTeamProjectPopVisible() {
-//       if (!application.addTeamProjectPopVisible()) { return 'hidden'; }
-//     },
 
 //     stopPropagation(event) {
 //       return event.stopPropagation();

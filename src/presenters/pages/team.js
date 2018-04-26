@@ -12,14 +12,13 @@ const LayoutPresenter = require("../layout");
 const AddTeamUserPopPresenter = require("../pop-overs/add-team-user-pop");
 // const AddTeamProjectPopPresenter = require("../pop-overs/add-team-project-pop");
 
-const AddTeamProjectPop = require("../pop-overs/add-team-project-pop.jsx");
-
 const TeamUserPresenter = require("../team-user-avatar");
 const AnalyticsPresenter = require("../analytics");
 
 import Reactlet from "../reactlet";
 import UsersList from "../users-list.jsx";
 import EntityPageProjects from "../entity-page-projects.jsx"
+import AddTeamProjectPop from "../pop-overs/add-team-project-pop.jsx"
 
 module.exports = function(application) {
   const assetUtils = require('../../utils/assets')(application);
@@ -86,7 +85,11 @@ module.exports = function(application) {
 
     addTeamProjectPop() {
       // return AddTeamProjectPopPresenter(application);
-      return Reactlet(AddTeamProjectPop);
+      const searchProjects = ({query}) => (
+        application.searchProjects(query)
+      );
+      // searchProjects = application.searchProjects()
+      return Reactlet(AddTeamProjectPop, {application.searchProjects});
     },
 
     coverUrl() {
