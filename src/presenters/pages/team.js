@@ -10,7 +10,10 @@ const Project = require("../../models/project");
 const TeamTemplate = require("../../templates/pages/team");
 const LayoutPresenter = require("../layout");
 const AddTeamUserPopPresenter = require("../pop-overs/add-team-user-pop");
-const AddTeamProjectPopPresenter = require("../pop-overs/add-team-project-pop");
+// const AddTeamProjectPopPresenter = require("../pop-overs/add-team-project-pop");
+
+const AddTeamProjectPop = require("../pop-overs/add-team-project-pop.jsx");
+
 const TeamUserPresenter = require("../team-user-avatar");
 const AnalyticsPresenter = require("../analytics");
 
@@ -82,7 +85,8 @@ module.exports = function(application) {
     },
 
     addTeamProjectPop() {
-      return AddTeamProjectPopPresenter(application);
+      // return AddTeamProjectPopPresenter(application);
+      return Reactlet(AddTeamProjectPop);
     },
 
     coverUrl() {
@@ -229,6 +233,10 @@ module.exports = function(application) {
       if (self.currentUserIsOnTeam()) { return 'hidden'; }
     },
 
+    hiddenUnlessAddTeamProjectPopVisible() {
+      if (!application.addTeamProjectPopVisible()) { return 'hidden' }
+    },
+    
     toggleAddTeamUserPop() {
       application.addTeamUserPopVisible.toggle();
       if (application.addTeamUserPopVisible()) {

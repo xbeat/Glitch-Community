@@ -41,7 +41,8 @@ main.user-page.team-page(role="main")
   section.add-project-container
     button.button.add-project.has-emoji.opens-pop-over(class=@hiddenUnlessCurrentUserIsOnTeam click=@toggleAddTeamProjectPop) Add Project
       .emoji.bento-box
-    = @addTeamProjectPop
+      span(class=@hiddenUnlessAddTeamProjectPopVisible)
+        = @addTeamProjectPop
 
   = @TeamProjects
 

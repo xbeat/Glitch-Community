@@ -1,3 +1,5 @@
+//temp, replaced by jsx
+
 const Observable = require('o_0');
 const _ = require('lodash/function');
 
