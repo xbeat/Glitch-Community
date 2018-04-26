@@ -3,19 +3,22 @@ import ProjectResultItem from '../includes/project-result-item.jsx';
 
 // pass action method down to, addProjectToTeam
 
-const ProjectSearchResults = []
+const ProjectSearchResults = [] // does the search
 
-const AddTeamProjectPop = ({searchProjects}) => (
-  <div className="pop-over new-project-pop">
+const AddTeamProjectPop = ({searchProjects, action}) => (
+  <div className="pop-over add-team-project-pop">
     <section className="pop-over-info">
       <input id="team-project-search" className="pop-over-input search-input pop-over-search" />
     </section>
     <section className="pop-over-actions results-list">
       <ul className="results">
+
         // do the search here
+        
         { ProjectSearchResults.map((project, key) => (
-          <ProjectResultItem key={key} {...project}/>
+          <ProjectResultItem key={key} {...project} />
         ))}
+        
       </ul>
     </section>
   </div>

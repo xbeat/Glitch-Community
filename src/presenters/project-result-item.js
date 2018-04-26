@@ -33,6 +33,9 @@ module.exports = function(application, project, options, analytics) {
       
     },
       
+    
+    
+    
     addProjectToTeam() {
       console.log(`adding ${project.name()} to ${application.team().id()}`);
       return application.team().addProject(application, project);
