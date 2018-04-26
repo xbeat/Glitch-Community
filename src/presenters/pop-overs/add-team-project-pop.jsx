@@ -1,10 +1,10 @@
 import React from 'react';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 
-const stopPropagation = (event) => {
-  console.log('🌹')
-  event.stopPropagation()
-}
+// const stopPropagation = (event) => {
+//   console.log('🌹')
+//   event.stopPropagation()
+// }
 
 const searchProject = (event) => {
   console.log(event)
@@ -20,7 +20,7 @@ const ProjectSearchResults = (event) => {
 };
 
 const AddTeamProjectPop = ({searchProjects, action}) => (
-  <div className="pop-over add-team-project-pop" onClick={stopPropagation}>
+  <div className="pop-over add-team-project-pop">
     <section className="pop-over-info">
       <input onChange={searchProject} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
     </section>

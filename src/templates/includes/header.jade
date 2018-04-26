@@ -10,7 +10,7 @@ header(role="banner")
 
     span
       .button.button-small(data-track="open new-project pop" click=@toggleNewProjectPopVisible) New Project
-        span(class=@hiddenUnlessNewProjectPopVisible click=@stopPropagation)
+        span(class=@hiddenUnlessNewProjectPopVisible)
           =@NewProjectPop
     
     span(class=@hiddenIfSignedIn)

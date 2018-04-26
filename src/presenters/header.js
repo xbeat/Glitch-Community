@@ -34,12 +34,7 @@ module.exports = function(application) {
 
     application,
     baseUrl: application.normalizedBaseUrl(),
-  
-    stopPropagation(event) {
-      console.log('🍕')
-      event.stopPropagation()
-    },
-    
+      
     toggleSignInPopVisible(event) {
       application.signInPopVisibleOnHeader.toggle();
       return event.stopPropagation();
@@ -55,18 +50,18 @@ module.exports = function(application) {
       return event.stopPropagation();
     },
 
-    hiddenUnlessNewProjectPopVisible(event) {
-      if (!application.newProjectPopVisible()) { return 'hidden'; }
-    },
-    
     hiddenUnlessUserIsExperienced() {
       if (!application.currentUser().isAnExperiencedUser()) { return 'hidden'; }
     },
-      
+
     hiddenUnlessSignInPopVisible() {
       if (!application.signInPopVisibleOnHeader()) { return 'hidden'; }
     },
 
+    hiddenUnlessNewProjectPopVisible(event) {
+      if (!application.newProjectPopVisible()) { return 'hidden'; }
+    },
+    
     userAvatar() {
       return application.currentUser().avatarUrl();
     },
