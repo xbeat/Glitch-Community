@@ -14,7 +14,7 @@ Example:
 module.exports =
   [
     {
-      title: 'Make Spotify Playlists with Nelson',
+      title: 'Spotify Song Recommendations with Nelson',
       img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fnelson.jpg?1524762437514',
       link: 'https://nelson.glitch.me/'
     }
