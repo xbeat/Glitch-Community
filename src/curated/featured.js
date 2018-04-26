@@ -24,8 +24,8 @@ module.exports =
       link: 'http://beachcomber.glitch.me'
     }
     , {
-      title: 'Get Started with Stencil',
-      img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmolnar-x-ashby.jpg?1524500256073",
-      link: 'https://molnar-x-ashby.glitch.me'
+      title: 'Get Started with Using Stencil',
+      img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fhello-stencil.jpg?1524762437393",
+      link: 'https://glitch.com/~hello-stencil'
     }   
   ];
