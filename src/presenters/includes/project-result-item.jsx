@@ -10,7 +10,7 @@ const Users = ({users}) => {
 
 const ProjectResultItem = ({title, domain, description, avatar, url, action, users=[]}) => {
   return (
-    <a href={url} onClick={action(domain)}>
+    <a href={url} onClick={action}>
       <li className="result">
         <img className="avatar" src={avatar} alt={`Project avatar for ${title}`}/>
         

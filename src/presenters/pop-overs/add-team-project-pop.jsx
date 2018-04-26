@@ -3,10 +3,11 @@ import ProjectResultItem from '../includes/project-result-item.jsx';
 
 // debounce me
 const ProjectSearchResults = (event) => {
-  let searchProjects = {searchProjects}
-  console.log(event)
-  let query = "event.value"
-  return searchProjects(query)
+  // let searchProjects = {searchProjects}
+  // console.log(event)
+  // let query = "event.value"
+  // return searchProjects(query)
+  return []
 };
 
 const AddTeamProjectPop = ({searchProjects, action}) => (
@@ -19,11 +20,13 @@ const AddTeamProjectPop = ({searchProjects, action}) => (
 
         // search results
         
+        {/*
         { ProjectSearchResults.map((project, key) => (
           // pass action method down to, addProjectToTeam
           // project.action = action
           <ProjectResultItem key={key} {...project} />
         ))}
+        */}
         
       </ul>
     </section>
