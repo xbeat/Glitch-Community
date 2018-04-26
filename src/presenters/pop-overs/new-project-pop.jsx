@@ -1,24 +1,9 @@
 import React from 'react';
-
-import ProjectResultItem from '../includes/project-result-item.jsx'; // change to -result-list-item
-// import Project from 'Project';
-// projct-result-item.jsx takes project (w title etc.) , returns html
-// replace new project with project result item
-
-// const NewProject = ({title, domain, description, avatar}) => {
-
-//   return (
-//     <li>
-//       <p>{title}</p>
-//     </li>
-//   );
-
-// };
-
+import ProjectResultItem from '../includes/project-result-item.jsx';
 
 const NewProjectPop = ({newProjects}) => (
-  <div className="pop-over new-project-pop pop-list">
-    <section className="pop-over-actions pop-list-results">
+  <div className="pop-over new-project-pop">
+    <section className="pop-over-actions results-list">
       <ul className="results">
         { newProjects.map((project, key) => (
           <ProjectResultItem key={key} {...project}/>
@@ -27,6 +12,5 @@ const NewProjectPop = ({newProjects}) => (
     </section>
   </div>
 );
-
 
 export default NewProjectPop;
