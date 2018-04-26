@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 const LayoutPresenter = require("../layout");
 const SearchPageTemplate = require("../../templates/pages/search");
 

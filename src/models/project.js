@@ -1,9 +1,10 @@
 /* global application CDN_URL EDITOR_URL*/
+import find from 'lodash-es/find';
+
 let Project;
 const cache = {};
 
 const Model = require('./model');
-const _ = require('lodash/collection');
 const axios = require('axios');
 
 let source = undefined; // reference to cancel token
@@ -29,7 +30,7 @@ module.exports = (Project = function(I, self) {
 
   self.attrObservable(...Array.from(Object.keys(I) || []));
   self.attrObservable("readme", "readmeNotFound", "projectNotFound", "fetched", "displayName", "private");
-  self.attrModels('users', User)
+  self.attrModels('users', User);
 
   self.extend({
     
@@ -71,7 +72,7 @@ module.exports = (Project = function(I, self) {
     },
 
     userIsCurrentUser(application) {
-      const userIsCurrentUser = _.find(self.users(), user => user.id() === application.currentUser().id());
+      const userIsCurrentUser = find(self.users(), user => user.id() === application.currentUser().id());
       return !!userIsCurrentUser;
     },
 
@@ -117,19 +118,19 @@ module.exports = (Project = function(I, self) {
       originalQueryString = window.location.search;
       if((originalUrlPath+originalQueryString).includes("~")) {
         //They navigated here directly.
-        originalUrlPath = "/"
-        originalQueryString = ''
+        originalUrlPath = "/";
+        originalQueryString = '';
       }
       if(!self.domain()) {
         return;
       }
-      const target = `/~${self.domain()}`
+      const target = `/~${self.domain()}`;
       history.replaceState(null, `${self.domain()} – Glitch`, target);
       application.overlayProjectVisible(true);
       return document.getElementsByClassName('project-overlay')[0].focus();
     },
 
-    hideOverlay(application) {
+    hideOverlay() {
       source.cancel('Operation canceled by the user.');
       return history.replaceState(null, null, originalUrlPath + originalQueryString);
     },
@@ -194,13 +195,13 @@ module.exports = (Project = function(I, self) {
 
 Project.isPinnedByUser = (user, projectId) => {
   const pins = user.pins().map(pin => pin.projectId);
-  return _.includes(pins, projectId);
+  return pins.includes(projectId);
 };
 
 Project.isPinnedByTeam = function(team, projectId) {
   const pins = team.pins().map(pin => pin.projectId);
-  return _.includes(pins, projectId);
-}
+  return pins.includes(projectId);
+};
 
 // Fetch projects and populate them into the local cache
 Project.getProjectsByIds = function(api, ids) {
@@ -229,7 +230,7 @@ Project.getProjectsByIds = function(api, ids) {
   });
   
   return ids.map(id => Project({id}));
-}
+};
 
 Project.getProjectOverlay = function(application, domain) {
   const projectPath = `projects/${domain}`;

@@ -1,6 +1,6 @@
 const Project = require("../../models/project");
 const Observable = require('o_0');
-const _ = require('lodash');
+import debounce from 'lodash-es/debounce';
 const md = require('markdown-it')({
   breaks: true,
   linkify: true,
@@ -10,7 +10,7 @@ const UserTemplate = require("../../templates/pages/user");
 const DeletedProjectsTemplate = require("../../templates/deleted-projects");
 const LayoutPresenter = require("../layout");
 
-import EntityPageProjects from "../entity-page-projects.jsx"
+import EntityPageProjects from "../entity-page-projects.jsx";
 import Reactlet from "../reactlet";
 
 module.exports = function(application, userLoginOrId) {
@@ -111,7 +111,7 @@ module.exports = function(application, userLoginOrId) {
         description: text});
     },
 
-    updateUser: _.debounce(data => application.user().updateUser(application, data)
+    updateUser: debounce(data => application.user().updateUser(application, data)
       , 250),
 
     userHasData() {
@@ -213,7 +213,7 @@ module.exports = function(application, userLoginOrId) {
         deleteProject: self.deleteProject, 
         leaveProject: self.leaveProject, 
         togglePinnedState: self.togglePinnedState
-      }
+      };
     },
     
     togglePinnedState(projectId) {

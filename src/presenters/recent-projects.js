@@ -1,7 +1,7 @@
 const RecentProjectsTemplate = require("../templates/includes/recent-projects");
 const Loader = require("../templates/includes/loader");
 
-import {ProjectsUL} from "./projects-list.jsx"
+import {ProjectsUL} from "./projects-list.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import Reactlet from "./reactlet";
 
@@ -36,12 +36,7 @@ module.exports = function(application) {
     
     projects() {
       const projectsObservable = application.currentUser().projects;
-      let projects = [];
-      if (application.currentUser().isAnon()) {
-        projects = projectsObservable.slice(0,1);
-      } else if (application.currentUser().isSignedIn()) {
-        projects = projectsObservable.slice(0,3);      
-      }
+      const projects = projectsObservable.slice(0,3);      
       
       if(projects.find(project => !project.fetched())){
         return self.loader();
@@ -50,7 +45,7 @@ module.exports = function(application) {
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
         projects: projects.map(project => project.asProps()),
-      }
+      };
 
       return Reactlet(ProjectsUL, props);
     },
@@ -81,7 +76,8 @@ module.exports = function(application) {
     },
 
     hiddenUnlessCurrentUser() {
-      if (!application.currentUser().id()) { return 'hidden'; }
+      const currentAndFetched = application.currentUser().id() && application.currentUser().fetched();
+      if (!currentAndFetched) { return 'hidden'; }
     },
   };
 

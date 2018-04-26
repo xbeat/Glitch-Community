@@ -1,10 +1,4 @@
-const moment = require('moment');
-
 const AnalyticsTimePopTemplate = require("../../templates/pop-overs/analytics-time-pop");
-
-const twoWeeks = moment().subtract(2, 'weeks').valueOf();
-const oneMonth = moment().subtract(4, 'weeks').valueOf();
-const oneDay = moment().subtract(24, 'hours').valueOf();
 
 module.exports = function(application, analytics) {
 
