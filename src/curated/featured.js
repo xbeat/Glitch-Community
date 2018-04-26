@@ -19,7 +19,7 @@ module.exports =
       link: 'https://nelson.glitch.me/'
     }
     , {
-      title: '\'beachcomber\' by Patrick Weaver',
+      title: 'Hunt for Treasure in Beachcomber',
       img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fbeachcomber.jpg?1524762437608",
       link: 'http://beachcomber.glitch.me'
     }
