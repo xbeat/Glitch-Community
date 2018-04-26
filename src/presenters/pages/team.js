@@ -87,11 +87,11 @@ module.exports = function(application) {
       const searchProjects = ({query}) => (
         application.searchProjects(query)
       );
-      
+
       const action = ({project}) => (
         application.team().addProject(application, project)
       );
-      
+
       return Reactlet(AddTeamProjectPop, {searchProjects, action});
     },
 
