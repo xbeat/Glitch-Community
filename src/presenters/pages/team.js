@@ -84,15 +84,16 @@ module.exports = function(application) {
     },
 
     addTeamProjectPop() {
-      const searchProjects = ({query}) => (
-        application.searchProjects(query)
-      );
-
       const action = ({project}) => (
         application.team().addProject(application, project)
       );
+      
+      const props = {
+        searchProjects: application.searchProjects,
+        action,
+      };
 
-      return Reactlet(AddTeamProjectPop, {searchProjects, action});
+      return Reactlet(AddTeamProjectPop, props);
     },
 
     coverUrl() {

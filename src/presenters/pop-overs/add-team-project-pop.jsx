@@ -7,7 +7,8 @@ import ProjectResultItem from '../includes/project-result-item.jsx';
 // }
 
 const searchProject = (event) => {
-  console.log(event)
+  console.log(event.target.value)
+  // event.preventDefault()
 };
 
 // debounce me
