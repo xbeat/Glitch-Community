@@ -7,7 +7,7 @@ import ProjectResultItem from '../includes/project-result-item.jsx';
 // }
 
 const searchProject = (event) => {
-  console.log(event.target.value)
+  console.log(event.target.value);
   // event.preventDefault()
 };
 
@@ -17,7 +17,7 @@ const ProjectSearchResults = (event) => {
   // console.log(event)
   // let query = "event.value"
   // return searchProjects(query)
-  return []
+  return [];
 };
 
 const AddTeamProjectPop = ({searchProjects, action}) => (

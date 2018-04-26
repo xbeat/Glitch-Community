@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import UsersList from '../users-list';
+import UsersList from '../users-list.jsx';
 
 const ProjectResultItem = ({
     title, 
