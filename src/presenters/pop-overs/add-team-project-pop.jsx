@@ -1,6 +1,10 @@
 import React from 'react';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 
+const SearchProject = (event) => {
+  console.log(event)
+};
+
 // debounce me
 const ProjectSearchResults = (event) => {
   // let searchProjects = {searchProjects}
@@ -17,21 +21,22 @@ const AddTeamProjectPop = ({searchProjects, action}) => (
     </section>
     <section className="pop-over-actions results-list">
       <ul className="results">
-
-        // search results
-        
-        {/*
-        { ProjectSearchResults.map((project, key) => (
-          // pass action method down to, addProjectToTeam
-          // project.action = action
-          <ProjectResultItem key={key} {...project} />
-        ))}
-        */}
         
       </ul>
     </section>
   </div>
 );
+
+
+// search results
+        
+//  {
+//  { ProjectSearchResults.map((project, key) => (
+//    // pass action method down to, addProjectToTeam
+//    // project.action = action
+//    <ProjectResultItem key={key} {...project} />
+//  ))}
+// }
 
 // - Loader = require "../includes/loader"
 
