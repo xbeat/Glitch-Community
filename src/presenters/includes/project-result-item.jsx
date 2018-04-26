@@ -8,32 +8,18 @@ const Users = ({users}) => {
   )
 }
 
-const ResultItem = () => (
+const ProjectResultItem = ({title, domain, description, avatar, url, action, users=[]}) => {
   return (
-    <li className="result">
-      <img className="avatar" src={avatar} alt={`Project avatar for ${title}`}/>
+    <a href={url} onClick={action}>
+      <li className="result">
+        <img className="avatar" src={avatar} alt={`Project avatar for ${title}`}/>
+        
+        { users.length > 0 && <Users/> }
 
-      { users.length > 0 && <Users/> }
-
-      <div className="result-name" title={domain}>{domain}</div>
-      <div className="result-description">{description}</div>
-    </li>
-  )
-};
-
-const ResultItemWithUrl = ({props}) => {
-  return (
-    <a href={props.url} >
-      <ResultItem />
+        <div className="result-name" title={domain}>{domain}</div>
+        <div className="result-description">{description}</div>
+      </li>
     </a>
-  );
-};
-
-const ProjectResultItem = ({props}) => {
-  return (
-    
-    { props.url && <ResultItemWithUrl {...props} /> }
-    
   );
 };
 

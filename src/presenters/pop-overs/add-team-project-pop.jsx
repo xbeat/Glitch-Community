@@ -34,7 +34,6 @@ const AddTeamProjectPop = ({searchProjects, action}) => (
 );
 
 
-
 // search results
         
 //  {
