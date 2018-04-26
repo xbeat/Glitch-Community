@@ -1,21 +1,27 @@
 import React from 'react';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 
-// pass action method down to, addProjectToTeam
-
-const ProjectSearchResults = [] // does the search
+// debounce me
+const ProjectSearchResults = (event) => {
+  let searchProjects = {searchProjects}
+  console.log(event)
+  let query = "event.value"
+  return searchProjects(query)
+};
 
 const AddTeamProjectPop = ({searchProjects, action}) => (
   <div className="pop-over add-team-project-pop">
     <section className="pop-over-info">
-      <input id="team-project-search" className="pop-over-input search-input pop-over-search" />
+      <input id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
     </section>
     <section className="pop-over-actions results-list">
       <ul className="results">
 
-        // do the search here
+        // search results
         
         { ProjectSearchResults.map((project, key) => (
+          // pass action method down to, addProjectToTeam
+          // project.action = action
           <ProjectResultItem key={key} {...project} />
         ))}
         
