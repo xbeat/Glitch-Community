@@ -35,6 +35,11 @@ module.exports = function(application) {
     application,
     baseUrl: application.normalizedBaseUrl(),
   
+    stopPropagation(event) {
+      console.log('🍕')
+      event.stopPropagation()
+    },
+    
     toggleSignInPopVisible(event) {
       application.signInPopVisibleOnHeader.toggle();
       return event.stopPropagation();
