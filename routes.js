@@ -31,7 +31,7 @@ const updateCache = async type => {
   
   if(type === 'teams') {
     let teams = JSON.parse(json);
-    let reduced = teams.map(({id, url}) => ({id, url}));
+    let reduced = teams.map(({id, name, url}) => ({id, name, url}));
     json = JSON.stringify(reduced);
   }
   
