@@ -51,7 +51,7 @@ export class AddTeamProjectPop extends React.Component {
       let query = event.target.value
       console.log(teamUserIds()) // an array of user ids
       // TODO: search by ids :::: glitch.users.byIds([])
-      console.log(query);
+      console.log(query, API_URL);
       
       // this.props.searchProjects(query)
       // .then (
