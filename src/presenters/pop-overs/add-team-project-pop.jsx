@@ -59,13 +59,12 @@ export class AddTeamProjectPop extends React.Component {
       const source = CancelToken.source();
       let query = event.target.value;
       let ids = teamUserIds().join();
-
-      this.setState({isSearching: true})
+      let context = this
       
+      this.setState({isSearching: true})
       this.props.api(source).get(`users/byIds?ids=${ids}`)
       .then(function(response) {
-        console.log(response)
-        this.setState({isSearching: false})
+        context.setState({isSearching: false})
       })
 
     }
