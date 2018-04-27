@@ -1,49 +1,58 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import debounce from 'lodash-es/debounce';
+
 import ProjectResultItem from '../includes/project-result-item.jsx';
 
-import debounce from 'lodash-es/debounce';
 
 // const stopPropagation = (event) => {
 //   console.log('🌹')
 //   event.stopPropagation()
 // }
 
-// put class here
-// w state stuff
-// reference entity-page-projects.jsx
-//   constructor(props) {
-//     super(props);
-     
-//     this.state = {
-//       blah: [],
-// 
-// set state with 
-//     this.setStateFromModels = debounce((projectsModel, pinsModel, Component) => {
-    //   Component.setState(projectStateFromModels(projectsModel, pinsModel));
-    // }, 10);
-
-
 // mopve searchProjects to class 
 
-const searchProject = (event) => {
-  console.log(event.target.value);
-  // searchProjects(event.target.value)
-  // event.preventDefault()
-};
+// const searchProject = (event) => {
+//   console.log(event.target.value);
+//   // searchProjects(event.target.value)
+//   // event.preventDefault()
+// };
 
 // debounce me
-const ProjectSearchResults = (event) => {
-  // let searchProjects = {searchProjects}
-  // console.log(event)
-  // let query = "event.value"
-  // return searchProjects(query)
-  return [];
-};
+// const ProjectSearchResults = (event) => {
+//   // let searchProjects = {searchProjects}
+//   // console.log(event)
+//   // let query = "event.value"
+//   // return searchProjects(query)
+//   return [];
+// };
 
-export class AddTeamProjectPop extends React.Component {
+export class AddTeamProjectPopContainer extends React.Component {
+  constructor(props) {
+    super(props);
+
+    // observables
+    this.state = {
+      searching: false,
+    };
+
+    // this.setStateFromModels = debounce((projectsModel, pinsModel, Component) => {
+    //   Component.setState(projectStateFromModels(projectsModel, pinsModel));
+    // }, 10);
+  }
+  
+  render() {
+    return <AddTeamProjectPop {...this.props} {...this.state}/>;
+  }
+}
+
+AddTeamProjectPop.propTypes = {
+  searchProjects: PropTypes.func.isRequired,
+  action: PropTypes.func.isRequired,
 
 
 const AddTeamProjectPop = ({searchProjects, action}) => (
+
   <div className="pop-over add-team-project-pop">
     <section className="pop-over-info">
       <input onChange={searchProject} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
@@ -56,6 +65,13 @@ const AddTeamProjectPop = ({searchProjects, action}) => (
   </div>
 );
 
+AddTeamProjectPop.propTypes = {
+  searchProjects: PropTypes.func.isRequired,
+  action: PropTypes.func.isRequired,
+
+  
+  
+export default AddTeamProjectPopContainer;
 
 // search results
         
@@ -87,7 +103,6 @@ const AddTeamProjectPop = ({searchProjects, action}) => (
 //   section.pop-over-info.last-section
 //     .info-description You can add projects you've made, or ones by other cool people
 
-export default AddTeamProjectPop;
 
 
 // const Observable = require('o_0');
