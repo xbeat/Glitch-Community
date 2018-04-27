@@ -12,14 +12,6 @@ import Loader from '../includes/loader.jsx';
 
 // mopve searchProjects to class 
 
-const searchProject = (event) => {
-  // console.log('🌹', this)
-  // isSearching = true
-  console.log(event.target.value);
-//   // searchProjects(event.target.value)
-//   // event.preventDefault()
-};
-
 // debounce me
 // const ProjectSearchResults = (event) => {
 //   // let searchProjects = {searchProjects}
@@ -29,7 +21,7 @@ const searchProject = (event) => {
 //   return [];
 // };
 
-export class AddTeamProjectPopContainer extends React.Component {
+export class AddTeamProjectPop extends React.Component {
   constructor(props) {
     super(props);
 
@@ -47,9 +39,17 @@ export class AddTeamProjectPopContainer extends React.Component {
   render() {
     const searchProject = (event) => {
       this.state.isSearching = true
-      console.log(event.target.value);
-      this.props.searchProjects(event.target.value)
-    //   // event.preventDefault()
+      let query = event.target.value
+      // do the search here using axios raw
+      console.log(query);
+      this.props.searchProjects(query)
+      .then (
+        function(response) {
+          console.log(response);
+        }
+        
+      )
+      
     };
 
     //return <AddTeamProjectPop {...this.props} {...this.state}/>;
@@ -71,8 +71,8 @@ export class AddTeamProjectPopContainer extends React.Component {
   }
 }
 
-AddTeamProjectPopContainer.propTypes = {
-  searchProjects: PropTypes.func.isRequired,
+AddTeamProjectPop.propTypes = {
+  // searchProjects: PropTypes.func.isRequired,
   action: PropTypes.func.isRequired,
 }
 
@@ -99,7 +99,7 @@ AddTeamProjectPopContainer.propTypes = {
 // }
 
   
-export default AddTeamProjectPopContainer;
+export default AddTeamProjectPop;
 
 // search results
         
