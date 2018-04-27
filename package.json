@@ -56,7 +56,8 @@
     "react"
   ],
   "sideEffects": [
-    "./src/utils/progress-promise.js"
+    "./src/utils/progress-promise.js",
+    "./src/application.js"
   ],
   "license": "Apache License Version 2.0"
 }

@@ -36,12 +36,7 @@ module.exports = function(application) {
     
     projects() {
       const projectsObservable = application.currentUser().projects;
-      let projects = [];
-      if (application.currentUser().isAnon()) {
-        projects = projectsObservable.slice(0,1);
-      } else if (application.currentUser().isSignedIn()) {
-        projects = projectsObservable.slice(0,3);      
-      }
+      const projects = projectsObservable.slice(0,3);      
       
       if(projects.find(project => !project.fetched())){
         return self.loader();
@@ -81,7 +76,8 @@ module.exports = function(application) {
     },
 
     hiddenUnlessCurrentUser() {
-      if (!application.currentUser().id()) { return 'hidden'; }
+      const currentAndFetched = application.currentUser().id() && application.currentUser().fetched();
+      if (!currentAndFetched) { return 'hidden'; }
     },
   };
 
