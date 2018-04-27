@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import debounce from 'lodash-es/debounce';
+import _ from 'lodash-es';
 import axios from 'axios';
 
 import ProjectResultItem from '../includes/project-result-item.jsx';
@@ -41,38 +41,42 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   render() {
-    const teamUserIds = () => {
-      console.log('🚒', this.props.teamUsers)
-      return this.props.teamUsers.map((user) => {
-        return user.id()
-      })
-    }
+    // const teamUserIds = () => {
+    //   return this.props.teamUsers.map((user) => {
+    //     return user.id()
+    //   })
+    // }
     
-    const searchTeamUserProjects = () => {
-      console.log( this.props.teamUsers.map((user) => {
+    const teamUserProjects = () => {
+      return this.props.teamUsers.map((user) => {
+        console.log('📟',user)
         return user.projects()
       })
-)
     }
     
-    const searchProject = (event) => {
-      const { CancelToken } = axios;
-      const source = CancelToken.source();
-      let query = event.target.value
-      let ids = teamUserIds().join()      
+    const filterTeamProjects = (event) => {
+      console.log('⏪', teamUserProjects())
+    }
+    
+    
+//     const searchProject = (event) => {
+//       const { CancelToken } = axios;
+//       const source = CancelToken.source();
+//       let query = event.target.value
+//       let ids = teamUserIds().join()      
       
-      this.state.isSearching = true
-      this.props.api(source).get(`users/byIds?ids=${ids}`)
-      .then(function(response) {
-        console.log(response)
-        this.state.isSearching = false
-      })
+//       this.state.isSearching = true
+//       this.props.api(source).get(`users/byIds?ids=${ids}`)
+//       .then(function(response) {
+//         console.log(response)
+//         this.state.isSearching = false
+//       })
 
       
       
-      console.log(teamUserIds()) // an array of user ids
+      // console.log(teamUserIds()) // an array of user ids
       // TODO: search by ids :::: glitch.users.byIds([])
-      console.log(query);
+      // console.log(query);
       
       // this.props.searchProjects(query)
       // .then (
@@ -82,12 +86,12 @@ export class AddTeamProjectPop extends React.Component {
         
       // )
       
-    };
+    // };
 
     return (
       <div className="pop-over add-team-project-pop">
         <section className="pop-over-info">
-          <input onChange={searchTeamUserProjects} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
+          <input onChange={filterTeamProjects} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
         </section>
         <section className="pop-over-actions results-list">
           { this.state.isSearching && <Loader /> }
