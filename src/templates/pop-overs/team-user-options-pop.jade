@@ -1,11 +1,9 @@
-- UserResultPresenter = require "../../presenters/user-result"
-
 dialog.pop-over.team-user-options-pop.disposable(click=@stopPropagation)
 
   section.pop-over-info.user-result
     ul.results
       a(href=@userLink)
-        = UserResultPresenter(@application, @user, {showThanks: true})
+        = @UserResultPresenter(@application, @user, {showThanks: true})
 
   section.pop-over-info.last-section.section-has-tertiary-buttons.danger-zone
     button.button-small.has-emoji.button-tertiary.button-on-secondary-background(click=@removeUser class=@hiddenIfUserIsCurrentUser)

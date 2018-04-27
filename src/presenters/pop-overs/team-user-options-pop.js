@@ -1,9 +1,12 @@
+import UserResultPresenter from '../user-result';
+
 export default function(application, user) {
 
   return {
   
     application,
     user,
+    UserResultPresenter,
 
     stopPropagation(event) {
       return event.stopPropagation();
