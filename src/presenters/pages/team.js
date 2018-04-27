@@ -89,7 +89,7 @@ module.exports = function(application) {
       );
 
       const props = {
-        searchProjects: application.searchProjects,
+        // searchProjects: application.searchProjects,
         action,
       };
 

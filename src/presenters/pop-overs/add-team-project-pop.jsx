@@ -21,6 +21,9 @@ import Loader from '../includes/loader.jsx';
 //   return [];
 // };
 
+// const searchProjects = new Promise((resolve, reject) => {
+
+
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
     super(props);
@@ -42,13 +45,14 @@ export class AddTeamProjectPop extends React.Component {
       let query = event.target.value
       // do the search here using axios raw
       console.log(query);
-      this.props.searchProjects(query)
-      .then (
-        function(response) {
-          console.log(response);
-        }
+      
+      // this.props.searchProjects(query)
+      // .then (
+      //   function(response) {
+      //     console.log(response);
+      //   }
         
-      )
+      // )
       
     };
 
