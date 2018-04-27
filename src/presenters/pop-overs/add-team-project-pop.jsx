@@ -42,18 +42,34 @@ export class AddTeamProjectPop extends React.Component {
   
   render() {
     const teamUserIds = () => {
+      console.log('🚒', this.props.teamUsers)
       return this.props.teamUsers.map((user) => {
         return user.id()
       })
+    }
+    
+    const searchTeamUserProjects = () => {
+      console.log( this.props.teamUsers.map((user) => {
+        return user.projects()
+      })
+)
     }
     
     const searchProject = (event) => {
       const { CancelToken } = axios;
       const source = CancelToken.source();
       let query = event.target.value
+      let ids = teamUserIds().join()      
+      
       this.state.isSearching = true
+      this.props.api(source).get(`users/byIds?ids=${ids}`)
+      .then(function(response) {
+        console.log(response)
+        this.state.isSearching = false
+      })
 
-      this.props.api(source).get('')
+      
+      
       console.log(teamUserIds()) // an array of user ids
       // TODO: search by ids :::: glitch.users.byIds([])
       console.log(query);
@@ -71,7 +87,7 @@ export class AddTeamProjectPop extends React.Component {
     return (
       <div className="pop-over add-team-project-pop">
         <section className="pop-over-info">
-          <input onChange={searchProject} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
+          <input onChange={searchTeamUserProjects} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
         </section>
         <section className="pop-over-actions results-list">
           { this.state.isSearching && <Loader /> }

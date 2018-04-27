@@ -90,7 +90,7 @@ module.exports = function(application) {
 
       const props = {
         // searchProjects: application.searchProjects,
-        api: application.api(),
+        api: application.api,
         teamUsers: application.team().users(),
         action,
       };
