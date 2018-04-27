@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash-es/debounce';
 
 import ProjectResultItem from '../includes/project-result-item.jsx';
-
+import Loader from '../includes/loader.jsx';
 
 // const stopPropagation = (event) => {
 //   console.log('🌹')
@@ -13,8 +13,8 @@ import ProjectResultItem from '../includes/project-result-item.jsx';
 // mopve searchProjects to class 
 
 const searchProject = (event) => {
-  console.log('🌹', this, this.state)
-  this.state.isSearching = true
+  // console.log('🌹', this)
+  // isSearching = true
   console.log(event.target.value);
 //   // searchProjects(event.target.value)
 //   // event.preventDefault()
@@ -36,6 +36,7 @@ export class AddTeamProjectPopContainer extends React.Component {
     // https://reactjs.org/docs/state-and-lifecycle.html
     this.state = {
       isSearching: false,
+      searchResults: [],
     };
 
     // this.setStateFromModels = debounce((projectsModel, pinsModel, Component) => {
@@ -53,18 +54,17 @@ export class AddTeamProjectPopContainer extends React.Component {
 //   action: PropTypes.func.isRequired,
 // }
 
-const AddTeamProjectPop = ({searchProjects, action, isSearching}) => (
-
+const AddTeamProjectPop = ({searchProjects, action, isSearching, searchResults}) => (
   <div className="pop-over add-team-project-pop">
     <section className="pop-over-info">
       <input onChange={searchProject} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
     </section>
     <section className="pop-over-actions results-list">
-      if (this.state.isSearching) {
-        <p>loader goes if here isSearching</p>
-      }
+      { isSearching && <Loader /> }
       <ul className="results">
-        
+        { searchResults.map((project, key) => (
+          <ProjectResultItem key={key} {...project}/>
+        ))}
       </ul>
     </section>
   </div>
