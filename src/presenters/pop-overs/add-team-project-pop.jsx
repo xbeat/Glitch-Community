@@ -77,6 +77,7 @@ export class AddTeamProjectPop extends React.Component {
 
 AddTeamProjectPop.propTypes = {
   // searchProjects: PropTypes.func.isRequired,
+  teamMembers: PropTypes
   action: PropTypes.func.isRequired,
 }
 
