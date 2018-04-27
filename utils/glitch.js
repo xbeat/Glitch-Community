@@ -1,4 +1,4 @@
-// 🚧🚧🚧
+// 🚧🚧🚧 scaffolded
 
 // a wrapper for making calls to the glitch api (currently unused cuz i can't figure out global application scoping)
 // replaces application.api with something higher level
@@ -42,7 +42,7 @@ function Glitch(authToken) {
     byIds: (ids) => {
       console.log('glitch.users.byIds(ids)')
       // returns promise
-      // cat
+      // catch here
     }
   }
   
@@ -50,6 +50,7 @@ function Glitch(authToken) {
   user: (id) => {
     console.log('glitch.user.id(id)')
     // returns promise
+    // catch here
   }
 
 }
