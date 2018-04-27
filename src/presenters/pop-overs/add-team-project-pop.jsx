@@ -40,6 +40,9 @@ const ProjectSearchResults = (event) => {
   return [];
 };
 
+export class AddTeamProjectPop extends React.Component {
+
+
 const AddTeamProjectPop = ({searchProjects, action}) => (
   <div className="pop-over add-team-project-pop">
     <section className="pop-over-info">
