@@ -1,5 +1,7 @@
 import LayoutPresenter from '../layout';
 import SearchPageTemplate from '../../templates/pages/search';
+import TeamItemPresenter from '../team-item';
+import UserItemPresenter from '../user-item';
 
 import Categories from "../categories.jsx";
 import Reactlet from "../reactlet";
@@ -14,6 +16,8 @@ export default function(application) {
     searchResultsProjects: application.searchResultsProjects,
     searchResultsUsers: application.searchResultsUsers,
     searchResultsTeams: application.searchResultsTeams,
+    TeamItemPresenter,
+    UserItemPresenter,
     
     hiddenIfSearchResultsTeamsLoaded() {
       if (application.searchResultsTeamsLoaded()) { return 'hidden'; }

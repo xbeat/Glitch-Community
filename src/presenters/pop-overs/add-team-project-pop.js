@@ -2,12 +2,13 @@ import Observable from 'o_0';
 import {debounce} from 'lodash';
 
 import AddTeamProjectTemplate from '../../templates/pop-overs/add-team-project-pop';
-
+import ProjectResultPresenter from '../project-result';
 export default function(application) {
 
   var self = {
   
     application,
+    ProjectResultPresenter,
   
     query: Observable(""),
 

@@ -2,12 +2,14 @@ import Observable from 'o_0';
 import {debounce} from 'lodash';
 
 import AddTeamUserTemplate from '../../templates/pop-overs/add-team-user-pop';
+import UserResultPresenter from '../user-result';
 
 export default function(application) {
 
   var self = {
   
     application,
+    UserResultPresenter,
   
     query: Observable(""),
 
