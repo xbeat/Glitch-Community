@@ -12,11 +12,13 @@ import ProjectResultItem from '../includes/project-result-item.jsx';
 
 // mopve searchProjects to class 
 
-// const searchProject = (event) => {
-//   console.log(event.target.value);
+const searchProject = (event) => {
+  console.log('🌹', this, this.state)
+  this.state.isSearching = true
+  console.log(event.target.value);
 //   // searchProjects(event.target.value)
 //   // event.preventDefault()
-// };
+};
 
 // debounce me
 // const ProjectSearchResults = (event) => {
@@ -31,9 +33,9 @@ export class AddTeamProjectPopContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    // observables
+    // https://reactjs.org/docs/state-and-lifecycle.html
     this.state = {
-      searching: false,
+      isSearching: false,
     };
 
     // this.setStateFromModels = debounce((projectsModel, pinsModel, Component) => {
@@ -46,18 +48,21 @@ export class AddTeamProjectPopContainer extends React.Component {
   }
 }
 
-AddTeamProjectPop.propTypes = {
-  searchProjects: PropTypes.func.isRequired,
-  action: PropTypes.func.isRequired,
+// AddTeamProjectPopContainer.propTypes = {
+//   searchProjects: PropTypes.func.isRequired,
+//   action: PropTypes.func.isRequired,
+// }
 
-
-const AddTeamProjectPop = ({searchProjects, action}) => (
+const AddTeamProjectPop = ({searchProjects, action, isSearching}) => (
 
   <div className="pop-over add-team-project-pop">
     <section className="pop-over-info">
       <input onChange={searchProject} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
     </section>
     <section className="pop-over-actions results-list">
+      if (this.state.isSearching) {
+        <p>loader goes if here isSearching</p>
+      }
       <ul className="results">
         
       </ul>
@@ -68,8 +73,8 @@ const AddTeamProjectPop = ({searchProjects, action}) => (
 AddTeamProjectPop.propTypes = {
   searchProjects: PropTypes.func.isRequired,
   action: PropTypes.func.isRequired,
+}
 
-  
   
 export default AddTeamProjectPopContainer;
 
