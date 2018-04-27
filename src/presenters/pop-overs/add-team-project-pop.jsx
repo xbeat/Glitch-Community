@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash-es';
+// import _ from 'lodash-es';
 import axios from 'axios';
 
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import Loader from '../includes/loader.jsx';
+import debounce from 'lodash-es/debounce';
 
 // const stopPropagation = (event) => {
 //   console.log('🌹')
@@ -41,7 +42,13 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   render() {
-    const searchProjects = (event) => {
+    // const teamUserIds = () => {
+    //   return this.props.teamUsers.map((user) => {
+    //     return user.id()
+    //   })
+    // }
+
+    const searchProjects = debounce((event) => {
       const MAX_RESULTS = 20;
       const { CancelToken } = axios;
       const source = CancelToken.source();
@@ -53,14 +60,8 @@ export class AddTeamProjectPop extends React.Component {
         // let projects = data
         console.log('🚧', data)
       })
-
-      
-    }
-    // const teamUserIds = () => {
-    //   return this.props.teamUsers.map((user) => {
-    //     return user.id()
-    //   })
-    // }
+    }, 400);
+    
     
     // const teamUserProjects = () => {
     //   return this.props.teamUsers.map((user) => {
