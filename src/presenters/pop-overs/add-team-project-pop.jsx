@@ -41,21 +41,33 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   render() {
-    // const teamUserIds = () => {
-    //   return this.props.teamUsers.map((user) => {
-    //     return user.id()
-    //   })
-    // }
-    
-    const teamUserProjects = () => {
+    const teamUserIds = () => {
       return this.props.teamUsers.map((user) => {
-        console.log('📟',user)
-        return user.projects()
+        return user.id()
       })
     }
     
+    // const teamUserProjects = () => {
+    //   return this.props.teamUsers.map((user) => {
+    //     console.log('📟',user)
+    //     return user.projects()
+    //   })
+    // }
+    
     const filterTeamProjects = (event) => {
-      console.log('⏪', teamUserProjects())
+      const { CancelToken } = axios;
+      const source = CancelToken.source();
+      let query = event.target.value;
+      let ids = teamUserIds().join();
+
+      this.setState({isSearching: true})
+      
+      this.props.api(source).get(`users/byIds?ids=${ids}`)
+      .then(function(response) {
+        console.log(response)
+        this.setState({isSearching: false})
+      })
+
     }
     
     
