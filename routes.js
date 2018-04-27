@@ -29,8 +29,14 @@ const updateCache = async type => {
   });
   let json = response.data;
   
+  if(type === 'teams') {
+    let teams = JSON.parse(json);
+    let reduced = teams.map(({id, url}) => ({id, url}));
+    json = JSON.stringify(reduced);
+  }
+  
   try {
-    let fileContents = `module.exports = ${json}`
+    let fileContents = `export default ${json}`
     await fs_writeFile(`./src/cache/${type}.js`, fileContents);
     console.log(`☂️ ${type} re-cached`);
   } catch (error) {
