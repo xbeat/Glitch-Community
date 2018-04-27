@@ -11,7 +11,6 @@ module.exports = exports = {
   env: {
       'es6': true,        // We are writing ES6 code
       'browser': true,    // for the browser
-      'amd': true,        // supporting define() and require()
   },
   "parser": "babel-eslint",
   "parserOptions": {
@@ -23,7 +22,6 @@ module.exports = exports = {
   ],
   "globals": {
     "$": true,
-    "module": true,
   },
   "rules": {
     // Overrides/additions to eslint:recommended:

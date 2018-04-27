@@ -13,13 +13,11 @@ If the id property is not given the model is not cached.
 /* globals EDITOR_URL */
 
 let Question;
-const randomColor = require('randomcolor');
-
-
-const Model = require('./model');
+import randomColor from 'randomcolor';
+import Model from './model';
 const cache = {};
 
-module.exports = (Question = function(I, self) {
+export default Question = function(I, self) {
 
   if (I == null) { I = {}; }
   if (self == null) { self = Model(I); }
@@ -65,7 +63,7 @@ module.exports = (Question = function(I, self) {
   console.log('☎️ question cache', cache);
 
   return self;
-});
+};
 
 Question.getQuestions = function(application) {
   application.gettingQuestions(true);

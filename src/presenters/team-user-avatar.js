@@ -1,9 +1,8 @@
-const TeamUserTemplate = require("../templates/includes/team-user-avatar"); // rename
+import TeamUserTemplate from '../templates/includes/team-user-avatar'; // rename
+import TeamUserOptionsPop from '../templates/pop-overs/team-user-options-pop';
+import TeamUserOptionsPopPresenter from './pop-overs/team-user-options-pop';
 
-const TeamUserOptionsPop = require("../templates/pop-overs/team-user-options-pop");
-const TeamUserOptionsPopPresenter = require('./pop-overs/team-user-options-pop');
-
-module.exports = function(application, user) {
+export default function(application, user) {
 
   var self = { 
 
@@ -39,4 +38,4 @@ module.exports = function(application, user) {
   };
 
   return TeamUserTemplate(self);
-};
+}

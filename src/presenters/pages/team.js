@@ -1,25 +1,28 @@
-const Observable = require('o_0');
-import debounce from 'lodash-es/debounce';
-const md = require('markdown-it')({
+import Observable from 'o_0';
+import {debounce} from 'lodash';
+import mdFactory from 'markdown-it';
+import assets from '../../utils/assets';
+
+const md = mdFactory({
   breaks: true,
   linkify: true,
   typographer: true,
 });
-const Project = require("../../models/project");
 
-const TeamTemplate = require("../../templates/pages/team");
-const LayoutPresenter = require("../layout");
-const AddTeamUserPopPresenter = require("../pop-overs/add-team-user-pop");
-const AddTeamProjectPopPresenter = require("../pop-overs/add-team-project-pop");
-const TeamUserPresenter = require("../team-user-avatar");
-const AnalyticsPresenter = require("../analytics");
+import Project from '../../models/project';
+import TeamTemplate from '../../templates/pages/team';
+import LayoutPresenter from '../layout';
+import AddTeamUserPopPresenter from '../pop-overs/add-team-user-pop';
+import AddTeamProjectPopPresenter from '../pop-overs/add-team-project-pop';
+import TeamUserPresenter from '../team-user-avatar';
+import AnalyticsPresenter from '../analytics';
 
 import Reactlet from "../reactlet";
 import UsersList from "../users-list.jsx";
 import EntityPageProjects from "../entity-page-projects.jsx";
 
-module.exports = function(application) {
-  const assetUtils = require('../../utils/assets')(application);
+export default function(application) {
+  const assetUtils = assets(application);
 
   var self = {
 
@@ -253,4 +256,4 @@ module.exports = function(application) {
   const content = TeamTemplate(self);
 
   return LayoutPresenter(application, content);
-};
+}

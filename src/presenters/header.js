@@ -1,14 +1,14 @@
 /* global analytics */
 
-const moment = require('moment');
+import moment from 'moment-mini';
 
-const HeaderTemplate = require("../templates/includes/header");
+import HeaderTemplate from '../templates/includes/header';
 
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import Reactlet from "./reactlet";
 
-module.exports = function(application) {
+export default function(application) {
   
   const getTeamsPojo = function(teams) { 
     
@@ -109,4 +109,4 @@ module.exports = function(application) {
   };
         
   return HeaderTemplate(self);
-};
+}

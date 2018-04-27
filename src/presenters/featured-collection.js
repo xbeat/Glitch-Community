@@ -1,6 +1,6 @@
-const FeaturedCollectionTemplate = require("../templates/includes/featured-collection");
+import FeaturedCollectionTemplate from '../templates/includes/featured-collection';
 
-module.exports = function(application, collection) {
+export default function(application, collection) {
   const self = {
     collection,
 
@@ -22,4 +22,4 @@ module.exports = function(application, collection) {
   };
       
   return FeaturedCollectionTemplate(self);
-};
+}

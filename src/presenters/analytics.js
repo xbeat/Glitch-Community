@@ -1,13 +1,13 @@
 /* globals Plotly */
 
-const Observable = require('o_0');
-const axios = require('axios');
-import throttle from 'lodash-es/throttle';
-const moment = require('moment');
+import Observable from 'o_0';
 
-const AnalyticsTemplate = require("../templates/includes/analytics");
-const AnalyticsTimePopPresenter = require("./pop-overs/analytics-time-pop");
-const AnalyticsProjectsPopPresenter = require("./pop-overs/analytics-projects-pop");
+import axios from 'axios';
+import {throttle} from 'lodash';
+import moment from 'moment-mini';
+import AnalyticsTemplate from '../templates/includes/analytics';
+import AnalyticsTimePopPresenter from './pop-overs/analytics-time-pop';
+import AnalyticsProjectsPopPresenter from './pop-overs/analytics-projects-pop';
 
 const METRICS = ["remixes", "visits"];
 const REFERRER_FIELDS = ["remixReferrers", "referrers"];
@@ -41,7 +41,7 @@ const sum = array =>
     , 0)
 ;
 
-module.exports = function(application, teamOrProject) {
+export default function(application, teamOrProject) {
   const plotlyPromise = OpenPromise();
 
   var self = { 
@@ -435,7 +435,7 @@ module.exports = function(application, teamOrProject) {
   });
 
   return AnalyticsTemplate(self);
-};
+}
 
 function __range__(left, right, inclusive) {
   let range = [];

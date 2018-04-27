@@ -1,6 +1,6 @@
-const AnalyticsTimePopTemplate = require("../../templates/pop-overs/analytics-time-pop");
+import AnalyticsTimePopTemplate from '../../templates/pop-overs/analytics-time-pop';
 
-module.exports = function(application, analytics) {
+export default function(application, analytics) {
 
   const self = {
   
@@ -40,4 +40,4 @@ module.exports = function(application, analytics) {
 
 
   return AnalyticsTimePopTemplate(self);
-};
+}

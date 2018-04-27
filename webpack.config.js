@@ -1,6 +1,6 @@
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 
 
@@ -11,7 +11,6 @@ const BASE = path.resolve(__dirname, '.');
 
 module.exports = () => {
   
-  let plugins = [];
   let mode = 'development';
   if(process.env.NODE_ENV === 'production') {
     mode = 'production';
@@ -38,7 +37,7 @@ module.exports = () => {
           include: SRC,
           loader: "eslint-loader",
           options: {
-            //fix: true,
+            fix: true,
             cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so disable this when reconfiguring
             emitError: true,
             emitWarning: true,
@@ -50,9 +49,11 @@ module.exports = () => {
           include: SRC,
           exclude: /node_modules/,
           loader : 'babel-loader'
-        }
+        },
       ],
     },
-    plugins: plugins
+    plugins: [
+      new LodashModuleReplacementPlugin,
+    ],
   };
 }

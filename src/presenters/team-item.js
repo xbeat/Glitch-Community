@@ -1,8 +1,8 @@
-const TeamItemTemplate = require("../templates/includes/team-item");
+import TeamItemTemplate from '../templates/includes/team-item';
 import UsersList from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
-module.exports = function(application, team) {
+export default function(application, team) {
 
   var self = {
     application,
@@ -76,4 +76,4 @@ module.exports = function(application, team) {
   };
 
   return TeamItemTemplate(self);
-};
+}
