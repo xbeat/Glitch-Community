@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash-es/debounce';
+import axios from 'axios';
 
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import Loader from '../includes/loader.jsx';
@@ -47,8 +48,12 @@ export class AddTeamProjectPop extends React.Component {
     }
     
     const searchProject = (event) => {
-      this.state.isSearching = true
+      const { CancelToken } = axios;
+      const source = CancelToken.source();
       let query = event.target.value
+      this.state.isSearching = true
+
+      this.props.api(source).get('')
       console.log(teamUserIds()) // an array of user ids
       // TODO: search by ids :::: glitch.users.byIds([])
       console.log(query);
