@@ -6,20 +6,42 @@
 "use strict";
 
 const axios = require('axios');
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
+
+let API_URL;
+
+if (process.env.RUNNING_ON === 'staging') {
+  API_URL = 'https://api.staging.glitch.com/';
+} else {
+  API_URL = 'https://api.glitch.com/';
+}
 
 // const Glitch = new axios
 // needs authorizationToken (const persistentToken = self.currentUser() && self.currentUser().persistentToken();)
 
 function Glitch(authToken) {
   this.authToken = authToken
+  axios.create({  
+    baseURL: API_URL,
+    cancelToken: (source != null ? source.token : undefined),
+    headers: {
+      Authorization: authToken,
+    },
+  });
+
 }
 
+// ^ construct w glitch = new Glitch(authToken)
+
 const glitch = {
+  // glitch.users.byIds(ids)
   users: {
     byIds: (ids) => {
       ;
     }
   },
+  // glitch.user.id(id)
   user: (id) => {
     ;
   }
@@ -28,4 +50,4 @@ const glitch = {
   
 }
 
-module.exports = glitch
+module.exports = Glitch
