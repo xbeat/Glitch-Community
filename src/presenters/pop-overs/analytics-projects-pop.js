@@ -5,11 +5,11 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const Observable = require('o_0');
+import Observable from 'o_0';
 
-const AnalyticsProjectsPopTemplate = require("../../templates/pop-overs/analytics-projects-pop");
+import AnalyticsProjectsPopTemplate from '../../templates/pop-overs/analytics-projects-pop';
 
-module.exports = function(application, analytics) {
+export default function(application, analytics) {
 
   var self = {
   
@@ -50,4 +50,4 @@ module.exports = function(application, analytics) {
   };
         
   return AnalyticsProjectsPopTemplate(self);
-};
+}

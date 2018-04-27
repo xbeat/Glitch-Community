@@ -1,9 +1,7 @@
-"use strict";
-
 // A composable data model that serializes cleanly to JSON and provides
 // observable properties.
 
-const Observable = require("o_0");
+import Observable from 'o_0';
 
 const defAccessor = (self, attrName) =>
   self[attrName] = function(newValue) {
@@ -17,7 +15,7 @@ const defAccessor = (self, attrName) =>
   }
 ;
 
-module.exports = function(I, self) {
+export default function(I, self) {
   if (I == null) { I = {}; }
   if (self == null) { self = {}; }
   const constructors = {};
@@ -182,7 +180,7 @@ module.exports = function(I, self) {
     },
   }
   );
-};
+}
 
 // Extend an object with the properties of other objects
 var extend = Object.assign;

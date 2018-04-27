@@ -1,22 +1,22 @@
-const IndexTemplate = require("../../templates/pages/index");
-const LayoutPresenter = require("../layout");
-const HeaderPresenter = require("../header");
-const FeaturedCollectionPresenter = require("../featured-collection");
-const RecentProjectsPresenter = require("../recent-projects");
-const QuestionsPresenter = require("../questions");
-const CategoryPresenter = require("../category");
-const CategoryModel = require("../../models/category");
-const ProjectModel = require("../../models/project");
-const Reactlet = require("../reactlet");
-const Observable = require('o_0');
-const EmbedHtml = require('../../curated/embed');
+import IndexTemplate from '../../templates/pages/index';
+import LayoutPresenter from '../layout';
+import HeaderPresenter from '../header';
+import FeaturedCollectionPresenter from '../featured-collection';
+import RecentProjectsPresenter from '../recent-projects';
+import QuestionsPresenter from '../questions';
+import CategoryPresenter from '../category';
+import CategoryModel from '../../models/category';
+import ProjectModel from '../../models/project';
+import Reactlet from '../reactlet';
+import Observable from 'o_0';
+import EmbedHtml from '../../curated/embed';
 
 import Categories from "../categories.jsx";
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
 import StarterApps from "../includes/starter-apps.jsx";
 
-module.exports = function(application) {
+export default function(application) {
   console.log("Presented index");
   
   const self = {
@@ -121,4 +121,4 @@ module.exports = function(application) {
   const content = IndexTemplate(self);
 
   return LayoutPresenter(application, content);
-};
+}

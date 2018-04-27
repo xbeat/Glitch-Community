@@ -1,6 +1,6 @@
-const OverlayVideoTemplate = require("../../templates/overlays/overlay-video");
+import OverlayVideoTemplate from '../../templates/overlays/overlay-video';
 
-module.exports = function(application) {
+export default function(application) {
 
   const self = {     
     application,
@@ -15,4 +15,4 @@ module.exports = function(application) {
   };
 
   return OverlayVideoTemplate(self);
-};
+}

@@ -1,18 +1,20 @@
 
 /* global CDN_URL EDITOR_URL analytics*/
 
-const OverlayProjectTemplate = require("../../templates/overlays/overlay-project");
+import OverlayProjectTemplate from '../../templates/overlays/overlay-project';
 
 import UsersList from "../users-list.jsx";
 import Reactlet from "../reactlet";
+import markdownFactory from 'markdown-it';
+import markdownSanitizer from 'markdown-it-sanitizer';
+import markdownEmoji from 'markdown-it-emoji';
+const markdown = markdownFactory({html: true})
+  .use(markdownSanitizer)
+  .use(markdownEmoji);
 
-const markdown = require('markdown-it')({html: true})
-  .use(require('markdown-it-sanitizer'))
-  .use(require('markdown-it-emoji'));
-  
 // currentPagePath = "/"
 
-module.exports = function(application) {
+export default function(application) {
   console.log("overlay project presented");
 
   var self = { 
@@ -170,4 +172,4 @@ Thanks 💖
 
 
   return OverlayProjectTemplate(self);
-};
+}

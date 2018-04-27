@@ -1,15 +1,16 @@
 /* globals route EDITOR_URL baseUrl analytics */
-const application = require('./application');
-const qs = require('querystringify');
+import application from './application';
+
+import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
-const IndexPage = require("./presenters/pages/index");
-const CategoryPage = require("./presenters/pages/category");
-const UserPage = require("./presenters/pages/user");
-const TeamPage = require("./presenters/pages/team");
-const QuestionsPage = require("./presenters/pages/questions");
-const SearchPage = require("./presenters/pages/search");
-const errorPageTemplate = require("./templates/pages/error");
+import IndexPage from './presenters/pages/index';
+import CategoryPage from './presenters/pages/category';
+import UserPage from './presenters/pages/user';
+import TeamPage from './presenters/pages/team';
+import QuestionsPage from './presenters/pages/questions';
+import SearchPage from './presenters/pages/search';
+import errorPageTemplate from './templates/pages/error';
 
 let normalizedRoute = route.replace(/^\/|\/$/g, "").toLowerCase();
 console.log("#########");

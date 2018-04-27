@@ -1,9 +1,9 @@
-const ProjectResultTemplate = require("../templates/includes/project-result");
+import ProjectResultTemplate from '../templates/includes/project-result';
 
 import UsersList from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
-module.exports = function(application, project, options, analytics) {
+export default function(application, project, options, analytics) {
 
   options = options || {};
 
@@ -78,4 +78,4 @@ module.exports = function(application, project, options, analytics) {
   };
     
   return ProjectResultTemplate(self);
-};
+}
