@@ -53,7 +53,7 @@ module.exports = () => {
       ],
     },
     plugins: [
-      new LodashModuleReplacementPlugin,
+      //new LodashModuleReplacementPlugin,
     ],
   };
 }
