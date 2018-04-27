@@ -41,11 +41,26 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   render() {
-    const teamUserIds = () => {
-      return this.props.teamUsers.map((user) => {
-        return user.id()
+    const searchProjects = (event) => {
+      const MAX_RESULTS = 20;
+      const { CancelToken } = axios;
+      const source = CancelToken.source();
+      let query = event.target.value;
+      this.props.api(source).get(`projects/search?q=${query}`)
+      .then( ({data}) => {
+        this.setState({isSearching: false})
+        this.setState({searchResults: data})
+        // let projects = data
+        console.log('🚧', data)
       })
+
+      
     }
+    // const teamUserIds = () => {
+    //   return this.props.teamUsers.map((user) => {
+    //     return user.id()
+    //   })
+    // }
     
     // const teamUserProjects = () => {
     //   return this.props.teamUsers.map((user) => {
@@ -54,20 +69,19 @@ export class AddTeamProjectPop extends React.Component {
     //   })
     // }
     
-    const filterTeamProjects = (event) => {
-      const { CancelToken } = axios;
-      const source = CancelToken.source();
-      let query = event.target.value;
-      let ids = teamUserIds().join();
-      let context = this
+//     const filterTeamProjects = (event) => {
+//       const { CancelToken } = axios;
+//       const source = CancelToken.source();
+//       let query = event.target.value;
+//       let ids = teamUserIds().join();
       
-      this.setState({isSearching: true})
-      this.props.api(source).get(`users/byIds?ids=${ids}`)
-      .then(function(response) {
-        context.setState({isSearching: false})
-      })
+//       this.setState({isSearching: true})
+//       this.props.api(source).get(`users/byIds?ids=${ids}`)
+//       .then( (response) => {
+//         this.setState({isSearching: false})
+//       })
 
-    }
+//     }
     
     
 //     const searchProject = (event) => {
@@ -102,7 +116,7 @@ export class AddTeamProjectPop extends React.Component {
     return (
       <div className="pop-over add-team-project-pop">
         <section className="pop-over-info">
-          <input onChange={filterTeamProjects} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
+          <input onChange={searchProjects} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
         </section>
         <section className="pop-over-actions results-list">
           { this.state.isSearching && <Loader /> }
