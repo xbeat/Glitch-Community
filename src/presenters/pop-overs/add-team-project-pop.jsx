@@ -45,35 +45,58 @@ export class AddTeamProjectPopContainer extends React.Component {
   }
   
   render() {
-    return <AddTeamProjectPop {...this.props} {...this.state}/>;
+    const searchProject = (event) => {
+      this.state.isSearching = true
+      console.log(event.target.value);
+      this.props.searchProjects(event.target.value)
+    //   // event.preventDefault()
+    };
+
+    //return <AddTeamProjectPop {...this.props} {...this.state}/>;
+    return (
+      <div className="pop-over add-team-project-pop">
+        <section className="pop-over-info">
+          <input onChange={searchProject} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
+        </section>
+        <section className="pop-over-actions results-list">
+          { this.state.isSearching && <Loader /> }
+          <ul className="results">
+            { this.state.searchResults.map((project, key) => (
+              <ProjectResultItem key={key} {...project}/>
+            ))}
+          </ul>
+        </section>
+      </div>
+  );
   }
 }
 
-// AddTeamProjectPopContainer.propTypes = {
-//   searchProjects: PropTypes.func.isRequired,
-//   action: PropTypes.func.isRequired,
-// }
-
-const AddTeamProjectPop = ({searchProjects, action, isSearching, searchResults}) => (
-  <div className="pop-over add-team-project-pop">
-    <section className="pop-over-info">
-      <input onChange={searchProject} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
-    </section>
-    <section className="pop-over-actions results-list">
-      { isSearching && <Loader /> }
-      <ul className="results">
-        { searchResults.map((project, key) => (
-          <ProjectResultItem key={key} {...project}/>
-        ))}
-      </ul>
-    </section>
-  </div>
-);
-
-AddTeamProjectPop.propTypes = {
+AddTeamProjectPopContainer.propTypes = {
   searchProjects: PropTypes.func.isRequired,
   action: PropTypes.func.isRequired,
 }
+
+// const AddTeamProjectPop = ({searchProjects, action, isSearching, searchResults}) => (
+//   <div className="pop-over add-team-project-pop">
+//     <section className="pop-over-info">
+//       <input onChange={searchProject} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
+//     </section>
+//     <section className="pop-over-actions results-list">
+//       {xx()}
+//       { isSearching && <Loader /> }
+//       <ul className="results">
+//         { searchResults.map((project, key) => (
+//           <ProjectResultItem key={key} {...project}/>
+//         ))}
+//       </ul>
+//     </section>
+//   </div>
+// );
+
+// AddTeamProjectPop.propTypes = {
+//   searchProjects: PropTypes.func.isRequired,
+//   action: PropTypes.func.isRequired,
+// }
 
   
 export default AddTeamProjectPopContainer;
