@@ -40,10 +40,17 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   render() {
+    const teamUserIds = () => {
+      return this.props.teamUsers.map((user) => {
+        return user.id()
+      })
+    }
+    
     const searchProject = (event) => {
       this.state.isSearching = true
       let query = event.target.value
-      // do the search here using axios raw
+      console.log(teamUserIds()) // an array of user ids
+      // TODO: search by ids :::: glitch.users.byIds([])
       console.log(query);
       
       // this.props.searchProjects(query)
@@ -56,7 +63,6 @@ export class AddTeamProjectPop extends React.Component {
       
     };
 
-    //return <AddTeamProjectPop {...this.props} {...this.state}/>;
     return (
       <div className="pop-over add-team-project-pop">
         <section className="pop-over-info">
@@ -71,37 +77,16 @@ export class AddTeamProjectPop extends React.Component {
           </ul>
         </section>
       </div>
-  );
+    );
   }
 }
 
 AddTeamProjectPop.propTypes = {
   // searchProjects: PropTypes.func.isRequired,
-  teamMembers: PropTypes
+  teamUsers: PropTypes.array.isRequired,
   action: PropTypes.func.isRequired,
 }
 
-// const AddTeamProjectPop = ({searchProjects, action, isSearching, searchResults}) => (
-//   <div className="pop-over add-team-project-pop">
-//     <section className="pop-over-info">
-//       <input onChange={searchProject} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
-//     </section>
-//     <section className="pop-over-actions results-list">
-//       {xx()}
-//       { isSearching && <Loader /> }
-//       <ul className="results">
-//         { searchResults.map((project, key) => (
-//           <ProjectResultItem key={key} {...project}/>
-//         ))}
-//       </ul>
-//     </section>
-//   </div>
-// );
-
-// AddTeamProjectPop.propTypes = {
-//   searchProjects: PropTypes.func.isRequired,
-//   action: PropTypes.func.isRequired,
-// }
 
   
 export default AddTeamProjectPop;

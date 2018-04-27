@@ -90,7 +90,7 @@ module.exports = function(application) {
 
       const props = {
         // searchProjects: application.searchProjects,
-        teamMembers: application.team().users(),
+        teamUsers: application.team().users(),
         action,
       };
 
