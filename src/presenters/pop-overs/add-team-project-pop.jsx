@@ -25,9 +25,9 @@ import debounce from 'lodash-es/debounce';
 
 // mopve searchProjects to class 
 
-const searchProject = (event, {searchProjects}) => {
+const searchProject = (event) => {
   console.log(event.target.value);
-  searchProjects(event.target.value)
+  // searchProjects(event.target.value)
   // event.preventDefault()
 };
 
