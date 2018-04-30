@@ -3,15 +3,7 @@ import PropTypes from 'prop-types';
 import UsersList from '../users-list.jsx';
 
 const ResultItemDetails = () => {
-  return (
-    <li className="result">
-      <img className="avatar" src={avatar} alt={`Project avatar for ${title}`}/>
-      <div className="result-name" title={domain}>{domain}</div>
-      
-      { users.length > 0 && <UsersList users={users} /> }
-      <div className="result-description">{description}</div>
-    </li>
-  );
+  
 };
 
 const ProjectResultItem = ({
@@ -23,10 +15,15 @@ const ProjectResultItem = ({
   action, 
   users=[]
 }) => (
-  <a href={url} onClick={action}>
-    <ResultItemDetails />
+    
+  <li className="result" onClick={action}>
+    <img className="avatar" src={avatar} alt={`Project avatar for ${title}`}/>
+    <div className="result-name" title={domain}>{domain}</div>
 
-  </a>
+    { users.length > 0 && <UsersList users={users} /> }
+
+    <div className="result-description">{description}</div>
+  </li>
 );
 
 ProjectResultItem.propTypes = {
