@@ -64,7 +64,6 @@ export class AddTeamProjectPop extends React.Component {
           { this.state.isSearching && <Loader /> }
           <ul className="results">
             { this.state.searchResults.map((project, key) => (
-              // project.action = this.props.action
               <ProjectResultItem key={key} {...project}/>
             ))}
           </ul>
