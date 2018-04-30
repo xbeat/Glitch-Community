@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Spotify Song Recommendations with Nelson',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fnelson.jpg?1524762437514',
-    link: 'https://nelson.glitch.me/'
+    title: '"Speech Synthesis" by ericandrewlewis',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fspeech-synthesis-api-voices-demo.jpg?1525087633374',
+    link: 'https://speech-synthesis-api-voices-demo.glitch.me/'
   }
   , {
-    title: 'Hunt for Treasure in Beachcomber',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fbeachcomber.jpg?1524762437608",
-    link: 'http://beachcomber.glitch.me'
+    title: '"art-connoisseur" by oa495',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fart-connoisseur.jpg?1525087810179",
+    link: 'http://art-connoisseur.glitch.me'
   }
   , {
-    title: 'Get Started with Using Stencil',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fhello-stencil.jpg?1524762437393",
+    title: 'Biscuit Tin-der by ',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fbiscuit-tinder.jpg?1525087899535",
     link: 'https://glitch.com/~hello-stencil'
   }   
 ];
