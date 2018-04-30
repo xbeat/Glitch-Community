@@ -84,14 +84,12 @@ module.exports = function(application) {
     },
 
     addTeamProjectPop() {
-      const action = (projectdata) => {
-        project = Project(project)
-        console.log('📟', project)
-        application.team().addProject(application, project)
+      const action = (projectData) => {
+        const project = Project(projectData);
+        application.team().addProject(application, project);
       };
 
       const props = {
-        // searchProjects: application.searchProjects,
         api: application.api,
         teamUsers: application.team().users(),
         action,
