@@ -24,15 +24,17 @@ export class AddTeamProjectPop extends React.Component {
   searchProjects(query) {
     const MAX_RESULTS = 20;
     console.log('🚒',query);
+    this.setState({isSearching: true});
     this.props.api(source).get(`projects/search?q=${query}`)
       .then(({data}) => {
         console.log('🚧', data);
         this.setState({isSearching: false});
         const projects = data.map((project) => {
-          
           let projectProps = ProjectModel(project).asProps();
-          projectProps.action = this.props.action;
-          
+          Object.assign(projectProps, {
+            action: this.props.action,
+            title: projectProps.domain
+          });
           return projectProps;
         });
         this.setState({searchResults: projects});
@@ -41,7 +43,6 @@ export class AddTeamProjectPop extends React.Component {
   
   
   render() {
-
     return (
       <div className="pop-over add-team-project-pop">
         <section className="pop-over-info">
