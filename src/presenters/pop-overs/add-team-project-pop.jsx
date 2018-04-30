@@ -12,8 +12,11 @@ import debounce from 'lodash-es/debounce';
 // I wonder if our entity models should be attached to the api object?
 // Seems like we'd want to pass them together most of the time.
 // I like having the API return the raw json by default,
-//
-// e.g. something like this.props.api.ProjectModel
+// but I think it'll be pretty common to wrap the object in the model to get its composed props.
+//  I imagine in the that our models themselve will end up just looking like
+// their 'asprops' functions and nothing more.
+// Anyway, for now I'm ok with importing the models as we need them, so long as we limit their
+// usage to the handy 'asProps' function.
 import ProjectModel from '../../models/project.js';
 
 export class AddTeamProjectPop extends React.Component {
