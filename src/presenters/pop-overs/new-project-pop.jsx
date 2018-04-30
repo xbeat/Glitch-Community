@@ -6,7 +6,9 @@ const NewProjectPop = ({newProjects}) => (
     <section className="pop-over-actions results-list">
       <ul className="results">
         { newProjects.map((project, key) => (
-          <ProjectResultItem key={key} {...project}/>
+          <a href={project.url}>
+            <ProjectResultItem key={key} {...project}/>
+          </a>
         ))}
       </ul>
     </section>
