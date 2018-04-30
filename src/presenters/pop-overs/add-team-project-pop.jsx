@@ -27,11 +27,8 @@ export class AddTeamProjectPop extends React.Component {
     //   })
     // }
 
-    
-    const debouncedSearchProjects = (query) => {
+    const debouncedSearchProjects = debounce((query) => {
       const MAX_RESULTS = 20;
-      // let query = event.target.value;
-      console.log('yolo', query);
       this.props.api(source).get(`projects/search?q=${query}`)
       .then( ({data}) => {
         console.log('🚧', data);
@@ -39,17 +36,17 @@ export class AddTeamProjectPop extends React.Component {
         this.setState({searchResults: data});
         // let projects = data
       })
-    };
+    }, 400);
     
     const searchProjects = (event) => {
       const query = event.target.value
-      debounce(debouncedSearchProjects(query), 400)
-    };
-    
+      debouncedSearchProjects(query)
+    }
+
     return (
       <div className="pop-over add-team-project-pop">
         <section className="pop-over-info">
-          <input onChange={searchProjects} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
+          <input onChange={debouncedSearchProjects} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
         </section>
         <section className="pop-over-actions results-list">
           { this.state.isSearching && <Loader /> }
