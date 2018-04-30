@@ -17,21 +17,16 @@ export class AddTeamProjectPop extends React.Component {
       isSearching: false,
       searchResults: [],
     };
-
+    
+    this.searchProjects = debounce(this.searchProjects, 400);
   }
-  
-  render() {
-    // const teamUserIds = () => {
-    //   return this.props.teamUsers.map((user) => {
-    //     return user.id()
-    //   })
-    // }
-
-    const debouncedSearchProjects = debounce((event, query) => {
-      const MAX_RESULTS = 20;
-      console.log('🚒',query)
-      this.props.api(source).get(`projects/search?q=${query}`)
-      .then( ({data}) => {
+  searchProjects(event) {
+    const query = event.target.value;
+    
+    const MAX_RESULTS = 20;
+    console.log('🚒',query);
+    this.props.api(source).get(`projects/search?q=${query}`)
+      .then(({data}) => {
         console.log('🚧', data);
         this.setState({isSearching: false});
         const projects = data.map((project) => {
@@ -42,23 +37,21 @@ export class AddTeamProjectPop extends React.Component {
             description: description(),
             avatar: avatar(),
             // url: "javascript:void(0)",
-            action: (event) => {this.props.action}
+            action: (event) => {this.props.action;}
           };
         });
         // construct projects (needs title,avatar, action, Users
         this.setState({searchResults: projects});
-      })
-    }, 400);
-    
-    const searchProjects = (event) => {
-      const query = event.target.value
-      debouncedSearchProjects(query)
-    }
+      });
+  }
+  
+  
+  render() {
 
     return (
       <div className="pop-over add-team-project-pop">
         <section className="pop-over-info">
-          <input onChange={debouncedSearchProjects} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
+          <input onChange={this.searchProjects} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
         </section>
         <section className="pop-over-actions results-list">
           { this.state.isSearching && <Loader /> }
@@ -78,7 +71,7 @@ AddTeamProjectPop.propTypes = {
   api: PropTypes.func.isRequired,
   teamUsers: PropTypes.array.isRequired,
   action: PropTypes.func.isRequired,
-}
+};
 
 
   
