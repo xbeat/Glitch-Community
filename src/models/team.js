@@ -167,6 +167,7 @@ module.exports = (Team = function(I, self) {
     },
 
     addProject(application, project) {
+      console.log
       const teamProjectPath = `/teams/${self.id()}/projects/${project.id()}`;
       return application.api().post(teamProjectPath)
         .then(function() {

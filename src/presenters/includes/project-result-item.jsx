@@ -13,10 +13,8 @@ const ProjectResultItem = ({
   <li className="result" onClick={action}>
     <img className="avatar" src={avatar} alt={`Project avatar for ${title}`}/>
     <div className="result-name" title={domain}>{domain}</div>
-      
-    { users.length > 0 && <UsersList users={users} /> }
-
     <div className="result-description">{description}</div>
+    { users.length > 0 && <UsersList users={users} /> }
   </li>
 );
 
