@@ -2,26 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import _ from 'lodash-es';
 import axios from 'axios';
+const { CancelToken } = axios;
+const source = CancelToken.source();
 
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import Loader from '../includes/loader.jsx';
 import debounce from 'lodash-es/debounce';
-
-// const stopPropagation = (event) => {
-//   console.log('🌹')
-//   event.stopPropagation()
-// }
-
-// mopve searchProjects to class 
-
-// debounce me
-// const ProjectSearchResults = (event) => {
-//   // let searchProjects = {searchProjects}
-//   // console.log(event)
-//   // let query = "event.value"
-//   // return searchProjects(query)
-//   return [];
-// };
 
 // const searchProjects = new Promise((resolve, reject) => {
 
@@ -50,15 +36,14 @@ export class AddTeamProjectPop extends React.Component {
 
     const searchProjects = debounce((event) => {
       const MAX_RESULTS = 20;
-      const { CancelToken } = axios;
-      const source = CancelToken.source();
       let query = event.target.value;
+      console.log('yolo', query);
       this.props.api(source).get(`projects/search?q=${query}`)
       .then( ({data}) => {
-        this.setState({isSearching: false})
-        this.setState({searchResults: data})
+        console.log('🚧', data);
+        this.setState({isSearching: false});
+        this.setState({searchResults: data});
         // let projects = data
-        console.log('🚧', data)
       })
     }, 400);
     
