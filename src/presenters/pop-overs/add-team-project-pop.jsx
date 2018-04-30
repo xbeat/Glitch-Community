@@ -8,6 +8,7 @@ const source = CancelToken.source();
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import Loader from '../includes/loader.jsx';
 import debounce from 'lodash-es/debounce';
+import ProjectModel from '../../models/project.js';
 
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
@@ -28,18 +29,10 @@ export class AddTeamProjectPop extends React.Component {
         console.log('🚧', data);
         this.setState({isSearching: false});
         const projects = data.map((project) => {
-          let projectProps = {
-          /*
-           title: PropTypes.string.isRequired, 
-          domain: PropTypes.string.isRequired,
-          description: PropTypes.string.isRequired,
-          avatar: PropTypes.string.isRequired,
-          url: PropTypes.string,
-          action: PropTypes.func.isRequired,
-          users: PropTypes.array,
-          */
-          let projectProps = project.asProps();
+          
+          let projectProps = ProjectModel(project).asProps();
           projectProps.action = this.props.action;
+          
           return projectProps;
         });
         this.setState({searchResults: projects});

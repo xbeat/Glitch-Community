@@ -49,6 +49,7 @@ module.exports = (Project = function(I, self) {
         name: project.name(),
         private: project.private(),
         showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
+        remixUrl: project.remixUrl(), 
         showOverlay: () => {
           project.showOverlay(application);
         },
