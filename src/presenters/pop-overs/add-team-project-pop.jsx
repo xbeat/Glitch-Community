@@ -20,9 +20,7 @@ export class AddTeamProjectPop extends React.Component {
     
     this.searchProjects = debounce(this.searchProjects, 400);
   }
-  searchProjects(event) {
-    const query = event.target.value;
-    
+  searchProjects(query) {
     const MAX_RESULTS = 20;
     console.log('🚒',query);
     this.props.api(source).get(`projects/search?q=${query}`)
@@ -30,17 +28,20 @@ export class AddTeamProjectPop extends React.Component {
         console.log('🚧', data);
         this.setState({isSearching: false});
         const projects = data.map((project) => {
-          const {domain, description, avatar, remixUrl} = project;
-          return {
-            title: domain(),
-            domain: domain(),
-            description: description(),
-            avatar: avatar(),
-            // url: "javascript:void(0)",
-            action: (event) => {this.props.action;}
-          };
+          let projectProps = {
+          /*
+           title: PropTypes.string.isRequired, 
+          domain: PropTypes.string.isRequired,
+          description: PropTypes.string.isRequired,
+          avatar: PropTypes.string.isRequired,
+          url: PropTypes.string,
+          action: PropTypes.func.isRequired,
+          users: PropTypes.array,
+          */
+          let projectProps = project.asProps();
+          projectProps.action = this.props.action;
+          return projectProps;
         });
-        // construct projects (needs title,avatar, action, Users
         this.setState({searchResults: projects});
       });
   }
@@ -51,7 +52,7 @@ export class AddTeamProjectPop extends React.Component {
     return (
       <div className="pop-over add-team-project-pop">
         <section className="pop-over-info">
-          <input onChange={this.searchProjects} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
+          <input onChange={(event) => {this.searchProjects(event.target.value);}} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
         </section>
         <section className="pop-over-actions results-list">
           { this.state.isSearching && <Loader /> }
