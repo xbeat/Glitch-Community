@@ -23,8 +23,8 @@ export default [
     link: 'http://art-connoisseur.glitch.me'
   }
   , {
-    title: 'Biscuit Tin-der by ',
+    title: '"Biscuit Tin-der" by thisisjofrank',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fbiscuit-tinder.jpg?1525087899535",
-    link: 'https://glitch.com/~hello-stencil'
+    link: 'https://biscuittinder.glitch.me'
   }   
 ];
