@@ -23,7 +23,7 @@ module.exports = function(application, user, options) {
 
     // truncatedDescription: ->
     //   user.truncatedDescription()
-      
+
     hoverBackground() {
       return {
         backgroundImage: `url('${user.coverUrl()}')`,
