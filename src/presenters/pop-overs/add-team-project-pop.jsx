@@ -8,6 +8,12 @@ const source = CancelToken.source();
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import Loader from '../includes/loader.jsx';
 import debounce from 'lodash-es/debounce';
+
+// I wonder if our entity models should be attached to the api object?
+// Seems like we'd want to pass them together most of the time.
+// I like having the API return the raw json by default,
+//
+// e.g. something like this.props.api.ProjectModel
 import ProjectModel from '../../models/project.js';
 
 export class AddTeamProjectPop extends React.Component {
@@ -22,6 +28,9 @@ export class AddTeamProjectPop extends React.Component {
     this.searchProjects = debounce(this.searchProjects, 400);
   }
   searchProjects(query) {
+    if(!query) {
+      return;
+    }
     const MAX_RESULTS = 20;
     console.log('🚒',query);
     this.setState({isSearching: true});
