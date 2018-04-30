@@ -27,14 +27,26 @@ export class AddTeamProjectPop extends React.Component {
     //   })
     // }
 
-    const debouncedSearchProjects = debounce((query) => {
+    const debouncedSearchProjects = debounce((event, query) => {
       const MAX_RESULTS = 20;
+      console.log('🚒',query)
       this.props.api(source).get(`projects/search?q=${query}`)
       .then( ({data}) => {
         console.log('🚧', data);
         this.setState({isSearching: false});
-        this.setState({searchResults: data});
-        // let projects = data
+        const projects = data.map((project) => {
+          const {domain, description, avatar, remixUrl} = project;
+          return {
+            title: domain(),
+            domain: domain(),
+            description: description(),
+            avatar: avatar(),
+            // url: "javascript:void(0)",
+            action: (event) => {this.props.action}
+          };
+        });
+        // construct projects (needs title,avatar, action, Users
+        this.setState({searchResults: projects});
       })
     }, 400);
     
@@ -52,6 +64,7 @@ export class AddTeamProjectPop extends React.Component {
           { this.state.isSearching && <Loader /> }
           <ul className="results">
             { this.state.searchResults.map((project, key) => (
+              // project.action = this.props.action
               <ProjectResultItem key={key} {...project}/>
             ))}
           </ul>
