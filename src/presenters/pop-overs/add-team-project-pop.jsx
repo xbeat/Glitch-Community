@@ -9,22 +9,15 @@ import ProjectResultItem from '../includes/project-result-item.jsx';
 import Loader from '../includes/loader.jsx';
 import debounce from 'lodash-es/debounce';
 
-// const searchProjects = new Promise((resolve, reject) => {
-
-
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
     super(props);
 
-    // https://reactjs.org/docs/state-and-lifecycle.html
     this.state = {
       isSearching: false,
       searchResults: [],
     };
 
-    // this.setStateFromModels = debounce((projectsModel, pinsModel, Component) => {
-    //   Component.setState(projectStateFromModels(projectsModel, pinsModel));
-    // }, 10);
   }
   
   render() {
@@ -34,9 +27,10 @@ export class AddTeamProjectPop extends React.Component {
     //   })
     // }
 
-    const searchProjects = debounce((event) => {
+    
+    const debouncedSearchProjects = (query) => {
       const MAX_RESULTS = 20;
-      let query = event.target.value;
+      // let query = event.target.value;
       console.log('yolo', query);
       this.props.api(source).get(`projects/search?q=${query}`)
       .then( ({data}) => {
@@ -45,60 +39,13 @@ export class AddTeamProjectPop extends React.Component {
         this.setState({searchResults: data});
         // let projects = data
       })
-    }, 400);
+    };
     
+    const searchProjects = (event) => {
+      const query = event.target.value
+      debounce(debouncedSearchProjects(query), 400)
+    };
     
-    // const teamUserProjects = () => {
-    //   return this.props.teamUsers.map((user) => {
-    //     console.log('📟',user)
-    //     return user.projects()
-    //   })
-    // }
-    
-//     const filterTeamProjects = (event) => {
-//       const { CancelToken } = axios;
-//       const source = CancelToken.source();
-//       let query = event.target.value;
-//       let ids = teamUserIds().join();
-      
-//       this.setState({isSearching: true})
-//       this.props.api(source).get(`users/byIds?ids=${ids}`)
-//       .then( (response) => {
-//         this.setState({isSearching: false})
-//       })
-
-//     }
-    
-    
-//     const searchProject = (event) => {
-//       const { CancelToken } = axios;
-//       const source = CancelToken.source();
-//       let query = event.target.value
-//       let ids = teamUserIds().join()      
-      
-//       this.state.isSearching = true
-//       this.props.api(source).get(`users/byIds?ids=${ids}`)
-//       .then(function(response) {
-//         console.log(response)
-//         this.state.isSearching = false
-//       })
-
-      
-      
-      // console.log(teamUserIds()) // an array of user ids
-      // TODO: search by ids :::: glitch.users.byIds([])
-      // console.log(query);
-      
-      // this.props.searchProjects(query)
-      // .then (
-      //   function(response) {
-      //     console.log(response);
-      //   }
-        
-      // )
-      
-    // };
-
     return (
       <div className="pop-over add-team-project-pop">
         <section className="pop-over-info">
