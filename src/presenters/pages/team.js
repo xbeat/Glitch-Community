@@ -84,9 +84,11 @@ module.exports = function(application) {
     },
 
     addTeamProjectPop() {
-      const action = ({project}) => (
+      const action = (projectdata) => {
+        project = Project(project)
+        console.log('📟', project)
         application.team().addProject(application, project)
-      );
+      };
 
       const props = {
         // searchProjects: application.searchProjects,

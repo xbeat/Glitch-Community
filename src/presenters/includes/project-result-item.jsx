@@ -2,19 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UsersList from '../users-list.jsx';
 
-const ProjectResultItem = ({
-  title, 
-  domain, 
-  description, 
-  avatar, 
-  action, 
-  users=[]
-}) => (
-  <li className="result" onClick={action}>
-    <img className="avatar" src={avatar} alt={`Project avatar for ${title}`}/>
-    <div className="result-name" title={domain}>{domain}</div>
-    <div className="result-description">{description}</div>
-    { users.length > 0 && <UsersList users={users} /> }
+const ProjectResultItem = (project) => (
+  <li className="result" onClick={() => project.action(project)}>
+    <img className="avatar" src={project.avatar} alt={`Project avatar for ${project.title}`}/>
+    <div className="result-name" title={project.domain}>{project.domain}</div>
+    <div className="result-description">{project.description}</div>
+    { project.users.length > 0 && <UsersList users={project.users} /> }
   </li>
 );
 
@@ -28,5 +21,8 @@ ProjectResultItem.propTypes = {
   users: PropTypes.array,
 };
 
+ProjectResultItem.defaultProps = {
+  users: []
+};
 
 export default ProjectResultItem;
