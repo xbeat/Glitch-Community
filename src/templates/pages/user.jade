@@ -10,7 +10,7 @@ main.user-page(role="main")
 
   span(class=@hiddenIfUserNotFound)
     section.profile
-      .profile-container(@userProfileStyle)
+      .profile-container(style=@userProfileStyle)
         .profile-info
           .loader(class=@hiddenIfUserFetched)
             span= Loader(@application)
