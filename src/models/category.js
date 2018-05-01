@@ -74,6 +74,13 @@ Category.getRandomCategories = function(api, numberOfCategories, projectsPerCate
     );
 };
 
+Category.getCategoryById = function(api, id) {
+  const path = `categories/${id}`;
+  return api.get(path)
+    .then(({data}) => Category(data).update(categoryDatum))
+    );
+}
+
 /*
 
 Category.getCategories = function(application) {
