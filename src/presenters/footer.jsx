@@ -1,3 +1,4 @@
+/*
 - about = "https://glitch.com/about"
 - blog = "https://medium.com/glitch"
 - help = "https://glitch.com/faq"
@@ -24,8 +25,15 @@ footer(role="contentinfo")
     a(href=legal data-track="footer → legal stuff") Legal Stuff 👮‍
   p
     a(href=hiring data-track="footer → hiring") Pssst... we're hiring a Design Engineer! 🙋‍
-  hr
+  hrs
   p
     a(href=platforms data-track="footer → platforms") 
       img.for-platforms-icon(src="https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188")
       span.for-platforms-text Glitch for Teams
+*/
+export default function Footer() {
+  return (
+    <footer role="contentinfo">
+    </footer>
+  );
+}
