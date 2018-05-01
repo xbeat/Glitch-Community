@@ -4,7 +4,6 @@ import HeaderPresenter from '../header';
 import FeaturedCollectionPresenter from '../featured-collection';
 import RecentProjectsPresenter from '../recent-projects';
 import QuestionsPresenter from '../questions';
-import CategoryPresenter from '../category';
 import CategoryModel from '../../models/category';
 import ProjectModel from '../../models/project';
 import Reactlet from '../reactlet';
@@ -12,6 +11,7 @@ import Observable from 'o_0';
 import EmbedHtml from '../../curated/embed';
 
 import Categories from "../categories.jsx";
+import Category from '../category.jsx';
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
 import StarterApps from "../includes/starter-apps.jsx";
@@ -67,7 +67,13 @@ export default function(application) {
         );
       }
       
-      return self.randomCategoriesObservable.map((categoryModel) =>CategoryPresenter(application, categoryModel));
+      return self.randomCategoriesObservable.map((categoryModel) => {
+        const props = {
+          closeAllPopovers: application.closeAllPopovers,
+        };
+        return Reactlet(Category, props);
+        Category(application, categoryModel.asProps());
+      });
     },
     
     embed() {
