@@ -60,7 +60,7 @@ export default function(application) {
     randomCategories() {
       
       if(!self.randomCategoriesObservable.length) {
-        self.randomCategoriesObservable(application.categories.map((category) => CategoryModel(category)));
+        //self.randomCategoriesObservable(application.categories.map((category) => CategoryModel(category)));
       
         CategoryModel.getRandomCategories(application.api()).then((categories) => 
           self.randomCategoriesObservable(categories.filter(category => category.projects && category.projects.length))
@@ -68,11 +68,12 @@ export default function(application) {
       }
       
       return self.randomCategoriesObservable.map((categoryModel) => {
+        console.log(categoryModel.id(),categoryModel.name());
         const props = {
           closeAllPopOvers: application.closeAllPopOvers,
           category: categoryModel.asProps(),
         };
-        return Reactlet(Category, props);
+        return Reactlet(Category, props, `Reactlet-Category-${categoryModel.id()}`);
       });
     },
     
