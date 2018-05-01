@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 const UserResultItem = (user) => (
   <li className="result">
   </li>
-
-
 );
 
 UserResultItem.propTypes = {

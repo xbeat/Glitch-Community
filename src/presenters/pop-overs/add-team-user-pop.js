@@ -64,9 +64,14 @@ module.exports = function(application) {
     }, 
 
     UserResultItem(user) {      
+      const {x,y} = user;
       const props = {
-        user,
-        action: () => {console.log('blahhhh add user to team');}
+        avatar: user.userAvatarUrl('large'),
+        name: user.name(),
+        login: user.login(),
+        thanks: user.userThanks(),
+        
+        action: () => {console.log('blahhhh add user to team');},
       };
       return Reactlet(UserResultItem, props);
     },
