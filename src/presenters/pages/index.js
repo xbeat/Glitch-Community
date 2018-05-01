@@ -10,12 +10,10 @@ import Reactlet from '../reactlet';
 import EmbedHtml from '../../curated/embed';
 
 import Categories from "../categories.jsx";
-import Category from '../category.jsx';
+import RandomCategories from '../random-categories.jsx';
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
 import StarterApps from "../includes/starter-apps.jsx";
-
-import {sampleSize} from 'lodash';
 
 export default function(application) {
   console.log("Presented index");
@@ -56,17 +54,12 @@ export default function(application) {
       return application.featuredCollections.map(collection => FeaturedCollectionPresenter(application, collection));
     },
     
-    randomCategoriesSample: sampleSize(application.categories, 3),
-    
     randomCategories() {
-      return self.randomCategoriesSample.map((cachedCategory) => {
-        const props = {
-          closeAllPopOvers: application.closeAllPopOvers,
-          cachedCategory: cachedCategory,
-          getCategory: () => CategoryModel.getCategoryById(application.api(), cachedCategory.id),
-        };
-        return Reactlet(Category, props);
-      });
+      const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
+        getCategories: () => CategoryModel.getRandomCategories(application.api()),
+      };
+      return Reactlet(RandomCategories, props);
     },
     
     embed() {

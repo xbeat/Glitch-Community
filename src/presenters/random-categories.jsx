@@ -42,25 +42,35 @@ export default class CategoryContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: props.cachedCategory,
+      categories: [],
     };
   }
   
   componentDidMount() {
-    this.props.getCategory().then((categoryModel) => {
-      const category = categoryModel.asProps();
-      category.projects = sampleSize(category.projects, 3);
+    this.props.getCategories().then((categoryModels) => {
+      let models = categoryModels.filter(model => !!model.projects.length);
+      models = sampleSize(models, 3);
       
-      this.setState({category});
+      const categories = models.map(categoryModel => {
+        const category = categoryModel.asProps();
+        category.projects = sampleSize(category.projects, 3);
+        return category;
+      });
+      this.setState({categories});
     });
   }
   render() {
-    return <Category category={this.state.category} closeAllPopOvers={this.props.closeAllPopOvers}/>;
+    return (
+      <React.Fragment>
+        { this.state.categories.map((category) => (
+          <Category key={category.id} category={category} closeAllPopOvers={this.props.closeAllPopOvers}/>
+        ))}
+      </React.Fragment>
+    );
   }
 }
 
 CategoryContainer.propTypes = {
-  cachedCategory: PropTypes.object.isRequired,
-  getCategory: PropTypes.func.isRequired,
+  getCategories: PropTypes.func.isRequired,
   closeAllPopOvers: PropTypes.func.isRequired,
 };
