@@ -60,6 +60,7 @@ export default class CategoryContainer extends React.Component {
     });
   }
   render() {
+    console.log(this.state.categories);
     return (
       <React.Fragment>
         { this.state.categories.map((category) => (
