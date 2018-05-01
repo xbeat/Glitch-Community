@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {ProjectsUL} from "./projects-list.jsx";
+import {sampleSize} from 'lodash';
 
-export const Category = ({closeAllPopOvers, category}) => {
+const Category = ({closeAllPopOvers, category}) => {
   const ulProps = {
     closeAllPopOvers,
-    projects: category.projects,
+    projects: category.projects||[],
     categoryColor: category.color,
   };
   return (
@@ -27,6 +28,33 @@ export const Category = ({closeAllPopOvers, category}) => {
   );
 };
 
+export class CategoryContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      category: props.cachedCategory,
+    };
+  }
+  
+  componentDidMount() {
+    this.props.getCategory().then((categoryModel) => {
+      const category = categoryModel.asProps();
+      category.projects = sampleSize(category.projects, 3);
+      
+      this.setState({category});
+    });
+  }
+  render() {
+    return <Category category={this.state.category} closeAllPopOvers={this.props.closeAllPopOvers}/>;
+  }
+}
+
+CategoryContainer.propTypes = {
+  cachedCategory: PropTypes.object.isRequired,
+  getCategory: PropTypes.func.isRequired,
+  closeAllPopOvers: PropTypes.func.isRequired,
+};
+
 Category.propTypes = {
   category: PropTypes.shape({
     avatarUrl: PropTypes.string.isRequired,
@@ -37,4 +65,4 @@ Category.propTypes = {
   }).isRequired,
 };
 
-export default Category;
+export default CategoryContainer;
