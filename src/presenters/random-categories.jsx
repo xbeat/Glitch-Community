@@ -43,16 +43,16 @@ export default class CategoryContainer extends React.Component {
     super(props);
     this.state = {
       categories: [],
-    }
+    };
   }
   
   componentDidMount() {
     this.props.getCategories().then((categoryModels) => {
-      const models = categoryModels.filter(model => !!model.projects.length);
+      let models = categoryModels.filter(model => !!model.projects.length);
       models = sampleSize(models, 3);
       
       const categories = models.map(categoryModel => {
-        const category = categoryModel.asProps()
+        const category = categoryModel.asProps();
         category.projects = sampleSize(category.projects, 3);
         return category;
       });
@@ -62,10 +62,10 @@ export default class CategoryContainer extends React.Component {
   render() {
     return (
       <React.Fragment>
-      { this.state.categories.map( (category) => (
-      <Category category={category} closeAllPopOvers={this.props.closeAllPopOvers}/>
-       )}
-    </React.Fragment>
+        { this.state.categories.map((category) => (
+          <Category key={category.id} category={category} closeAllPopOvers={this.props.closeAllPopOvers}/>
+        ))}
+      </React.Fragment>
     );
   }
 }
