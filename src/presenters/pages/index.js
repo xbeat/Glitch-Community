@@ -55,17 +55,10 @@ export default function(application) {
       return application.featuredCollections.map(collection => FeaturedCollectionPresenter(application, collection));
     },
     
-    randomCategoriesObservable: Observable([]),
-
     randomCategories() {
-      
-      if(!self.randomCategoriesObservable.length) {
-        //self.randomCategoriesObservable(application.categories.map((category) => CategoryModel(category)));
-      
-        CategoryModel.getRandomCategories(application.api()).then((categories) => 
-          self.randomCategoriesObservable(categories.filter(category => category.projects && category.projects.length))
-        );
-      }
+      CategoryModel.getRandomCategories(application.api()).then((categories) => 
+        self.randomCategoriesObservable(categories.filter(category => category.projects && category.projects.length))
+      );
       
       return self.randomCategoriesObservable.map((categoryModel) => {
         console.log(categoryModel.id(),categoryModel.name());
@@ -73,7 +66,7 @@ export default function(application) {
           closeAllPopOvers: application.closeAllPopOvers,
           category: categoryModel.asProps(),
         };
-        return Reactlet(Category, props, `Reactlet-Category-${categoryModel.id()}`);
+        return Reactlet(Category, props);
       });
     },
     
