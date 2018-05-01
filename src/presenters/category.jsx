@@ -28,7 +28,17 @@ const Category = ({closeAllPopOvers, category}) => {
   );
 };
 
-export class CategoryContainer extends React.Component {
+Category.propTypes = {
+  category: PropTypes.shape({
+    avatarUrl: PropTypes.string.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export default class CategoryContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,15 +64,3 @@ CategoryContainer.propTypes = {
   getCategory: PropTypes.func.isRequired,
   closeAllPopOvers: PropTypes.func.isRequired,
 };
-
-Category.propTypes = {
-  category: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
-export default CategoryContainer;
