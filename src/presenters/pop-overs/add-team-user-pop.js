@@ -72,7 +72,7 @@ module.exports = function(application) {
         avatar: user.userAvatarUrl('large'),
         name: user.name(),
         login: user.login(),
-        thanks: user.userThanks(),
+        thanks: user.thanksCount(),
         action,
       };
       

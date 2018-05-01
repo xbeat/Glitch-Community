@@ -1,20 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const UserThanks = (thanks) => (
+  <div className="resultThanks">
+    {thanks}
+    <span className="emoji sparkling_heart"></span>
+  </div>
+);
+
 const UserResultItem = (user) => (
   <li className="result" tabIndex="0" onClick={() => user.action(user)}>
     <img className="avatar" src={user.avatar} alt={`User avatar for ${user.login}`}/>
     <div className="result-name" title={user.name}>{user.name}</div>
-    <div className="result-name" title={user.login}>{user.login}</div>
-
+    <div className="result-description" title={user.login}>@{user.login}</div>
+    { user.thanks > 0 && <UserThanks thanks={user.thanks} />}
   </li>
-)
+);
 
 UserResultItem.propTypes = {
   avatar: PropTypes.string.isRequired,
   name: PropTypes.string,
   login: PropTypes.string.isRequired,
-  thanks: PropTypes.string.isRequired,
+  thanks: PropTypes.number.isRequired,
   action: PropTypes.func.isRequired,
 };
 
@@ -22,8 +29,7 @@ UserResultItem.propTypes = {
 export default UserResultItem;
 
 
-// to do remove 
-
+// todo remove specific pop, user-result styles
 
 // // temp
 // .result-container(style=@hoverBackground)
