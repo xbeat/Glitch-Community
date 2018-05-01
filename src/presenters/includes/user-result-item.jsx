@@ -1,14 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const UserResultItem = (user) => (
-  <li className="result">
+const UserResultItem = () => (
+  <li className="result" tabIndex="0" click={this.props.action}>
   </li>
 );
 
 UserResultItem.propTypes = {
-  user: PropTypes.object.isRequired,
+  avatar: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  login: PropTypes.string.isRequired,
+  thanks: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired,
 };
+
 
 export default UserResultItem;
 

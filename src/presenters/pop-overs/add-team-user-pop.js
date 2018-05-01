@@ -63,16 +63,17 @@ module.exports = function(application) {
       }
     }, 
 
-    UserResultItem(user) {      
-      const {x,y} = user;
+    UserResultItem(user) {
       const props = {
         avatar: user.userAvatarUrl('large'),
         name: user.name(),
         login: user.login(),
         thanks: user.userThanks(),
-        
         action: () => {console.log('blahhhh add user to team');},
       };
+      
+      console.log('🌹', props);
+
       return Reactlet(UserResultItem, props);
     },
     
