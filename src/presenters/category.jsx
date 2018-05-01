@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import {ProjectsUL} from "./projects-list.jsx";
 
-export const Category = ({closeAllPopOvers, projects, category}) => {
+export const Category = ({closeAllPopOvers, category}) => {
   const ulProps = {
     closeAllPopOvers,
     projects: category.projects,
     categoryColor: category.color,
   };
   return (
-    <article className="projects" style={backgroundColor: category.backgroundColor}>
+    <article className="projects" style={{backgroundColor: category.backgroundColor}}>
       <header className="category">
         <a className="category-name" href={category.url}>
           <h2>{category.name} <span className="arrow">→</span></h2>
@@ -25,7 +25,7 @@ export const Category = ({closeAllPopOvers, projects, category}) => {
       <ProjectsUL {...ulProps}/>
     </article>
   );
-}
+};
 
 Category.propTypes = {
   category: PropTypes.shape({
@@ -34,7 +34,7 @@ Category.propTypes = {
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-  }).isRequired;
+  }).isRequired
 };
 
 export default Category;

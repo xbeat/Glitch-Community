@@ -70,9 +70,9 @@ export default function(application) {
       return self.randomCategoriesObservable.map((categoryModel) => {
         const props = {
           closeAllPopovers: application.closeAllPopovers,
+          category: categoryModel.asProps,
         };
         return Reactlet(Category, props);
-        Category(application, categoryModel.asProps());
       });
     },
     

@@ -32,6 +32,16 @@ export default Category = function(I, self) {
     url: undefined,
     projects: [],
   });
+  
+  self.asProps = () => ({
+    
+    avatarUrl: PropTypes.string.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+  });
+                        
 
   self.attrObservable(...Array.from(Object.keys(I) || []));
   
