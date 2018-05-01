@@ -13,5 +13,6 @@ dialog.pop-over.add-team-user-pop.results-list(class=@hiddenUnlessAddTeamUserPop
 
     ul.results
       - application = @application
+      - context = @
       - @searchResults().forEach (user) ->
-        = @UserResultItem(user)
+        = context.UserResultItem(user)
