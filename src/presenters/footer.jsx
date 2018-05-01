@@ -50,7 +50,7 @@ export default function Footer() {
       <FooterLine href="https://medium.com/glitch" track="blog">Blog <span role="img" aria-label="">📰</span></FooterLine>
       <hr/>
       <FooterLine href="https://glitch.com/forteams" track="platforms">
-        <img className="for-platforms-icon" src="https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188" alt="" />
+        <img className="for-platforms-icon" src="https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188" alt=""/>
         <span className="for-platforms-text">Glitch for Teams</span>
       </FooterLine>
     </footer>
