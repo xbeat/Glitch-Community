@@ -7,7 +7,6 @@ import QuestionsPresenter from '../questions';
 import CategoryModel from '../../models/category';
 import ProjectModel from '../../models/project';
 import Reactlet from '../reactlet';
-import Observable from 'o_0';
 import EmbedHtml from '../../curated/embed';
 
 import Categories from "../categories.jsx";
@@ -15,6 +14,8 @@ import Category from '../category.jsx';
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
 import StarterApps from "../includes/starter-apps.jsx";
+
+import {sampleSize} from 'lodash';
 
 export default function(application) {
   console.log("Presented index");
@@ -55,16 +56,14 @@ export default function(application) {
       return application.featuredCollections.map(collection => FeaturedCollectionPresenter(application, collection));
     },
     
+    randomCategoriesSample: sampleSize(application.categories, 3),
+    
     randomCategories() {
-      CategoryModel.getRandomCategories(application.api()).then((categories) => 
-        self.randomCategoriesObservable(categories.filter(category => category.projects && category.projects.length))
-      );
-      
-      return self.randomCategoriesObservable.map((categoryModel) => {
-        console.log(categoryModel.id(),categoryModel.name());
+      return self.randomCategoriesSample.map((cachedCategory) => {
         const props = {
           closeAllPopOvers: application.closeAllPopOvers,
-          category: categoryModel.asProps(),
+          cachedCategory: cachedCategory,
+          getCategory: () => CategoryModel.getCategoryById(application.api(), cachedCategory.id),
         };
         return Reactlet(Category, props);
       });
