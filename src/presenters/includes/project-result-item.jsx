@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import UsersList from '../users-list.jsx';
 
 const ProjectResultItem = (project) => (
-  <li className="result" onClick={() => project.action(project)}>
+  <li className="result" tabIndex="0" onClick={() => project.action(project)}>
     <img className="avatar" src={project.avatar} alt={`Project avatar for ${project.title}`}/>
     <div className="result-name" title={project.domain}>{project.domain}</div>
     <div className="result-description">{project.description}</div>

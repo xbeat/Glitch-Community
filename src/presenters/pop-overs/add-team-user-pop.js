@@ -64,12 +64,16 @@ module.exports = function(application) {
     }, 
 
     UserResultItem(user) {
+      const action = () => {
+        console.log('yoyo');
+        console.log('++',user.login());
+      };
       const props = {
         avatar: user.userAvatarUrl('large'),
         name: user.name(),
         login: user.login(),
         thanks: user.userThanks(),
-        action: () => {console.log('blahhhh add user to team');},
+        action,
       };
       
       console.log('🌹', props);

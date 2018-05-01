@@ -110,8 +110,7 @@ module.exports = function(application) {
           description: description(),
           avatar: avatar(),
           url: remixUrl(),
-          action: (event) => {
-          },
+          action: (event) => { return null; },
         };
       });
 

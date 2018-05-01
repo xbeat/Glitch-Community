@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const UserResultItem = () => (
-  <li className="result" tabIndex="0" click={this.props.action}>
+const UserResultItem = (user) => (
+  <li className="result" tabIndex="0" onClick={() => user.action(user)}>
+    <img className="avatar" src={user.avatar} alt={`User avatar for ${user.login}`}/>
+    <div className="result-name" title={user.name}>{user.name}</div>
+    <div className="result-name" title={user.login}>{user.login}</div>
+
   </li>
-);
+)
 
 UserResultItem.propTypes = {
   avatar: PropTypes.string.isRequired,
@@ -17,6 +21,8 @@ UserResultItem.propTypes = {
 
 export default UserResultItem;
 
+
+// to do remove 
 
 
 // // temp
