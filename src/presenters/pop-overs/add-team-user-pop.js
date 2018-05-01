@@ -58,6 +58,10 @@ module.exports = function(application) {
         return 'hidden';
       }
     }, 
+    
+    UserResultItem() {
+    }
+    
   };
             
   return AddTeamUserTemplate(self);

@@ -1,5 +1,5 @@
 - Loader = require "../includes/loader"
-- UserResultPresenter = require "../../presenters/user-result"
+// - UserResultPresenter = require "../../presenters/user-result"
 
 dialog.pop-over.add-team-user-pop.results-list(class=@hiddenUnlessAddTeamUserPopVisible click=@stopPropagation)
 
@@ -14,4 +14,4 @@ dialog.pop-over.add-team-user-pop.results-list(class=@hiddenUnlessAddTeamUserPop
     ul.results
       - application = @application
       - @searchResults().forEach (user) ->
-        = UserResultPresenter(application, user)
+        = UserResultItem
