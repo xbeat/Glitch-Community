@@ -4,14 +4,13 @@ import HeaderPresenter from '../header';
 import FeaturedCollectionPresenter from '../featured-collection';
 import RecentProjectsPresenter from '../recent-projects';
 import QuestionsPresenter from '../questions';
-import CategoryPresenter from '../category';
 import CategoryModel from '../../models/category';
 import ProjectModel from '../../models/project';
 import Reactlet from '../reactlet';
-import Observable from 'o_0';
 import EmbedHtml from '../../curated/embed';
 
 import Categories from "../categories.jsx";
+import RandomCategories from '../random-categories.jsx';
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
 import StarterApps from "../includes/starter-apps.jsx";
@@ -55,19 +54,12 @@ export default function(application) {
       return application.featuredCollections.map(collection => FeaturedCollectionPresenter(application, collection));
     },
     
-    randomCategoriesObservable: Observable([]),
-
     randomCategories() {
-      
-      if(!self.randomCategoriesObservable.length) {
-        self.randomCategoriesObservable(application.categories.map((category) => CategoryModel(category)));
-      
-        CategoryModel.getRandomCategories(application.api()).then((categories) => 
-          self.randomCategoriesObservable(categories.filter(category => category.projects && category.projects.length))
-        );
-      }
-      
-      return self.randomCategoriesObservable.map((categoryModel) =>CategoryPresenter(application, categoryModel));
+      const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
+        getCategories: () => CategoryModel.getRandomCategories(application.api()),
+      };
+      return Reactlet(RandomCategories, props);
     },
     
     embed() {

@@ -32,6 +32,17 @@ export default Category = function(I, self) {
     url: undefined,
     projects: [],
   });
+  
+  self.asProps = () => ({
+    avatarUrl: self.avatarUrl(),
+    backgroundColor: self.backgroundColor(),
+    color: self.color(),
+    description: self.description(),
+    name: self.name(),
+    url: self.url(),
+    projects: self.projects.map(projectModel => projectModel.asProps()),
+  });
+                        
 
   self.attrObservable(...Array.from(Object.keys(I) || []));
   
@@ -46,34 +57,13 @@ export default Category = function(I, self) {
   return self;
 };
 
-
-Category.getRandomCategories = function(api, numberOfCategories, projectsPerCategory) {
-  let categoriesPath;
-  console.log('🎷🎷🎷 get random categories');
-  if (numberOfCategories) {
-    categoriesPath = "categories/random?numCategories=2";
-  } else if (projectsPerCategory) {
-    categoriesPath = "categories/random?projectsPerCategory=2";
-  } else {
-    categoriesPath = "categories/random";
-  }
+Category.getRandomCategories = function(api) {
+  const categoriesPath = "categories/random";
   return api.get(categoriesPath)
     .then(({data}) =>
       data.map(categoryDatum => Category(categoryDatum).update(categoryDatum))
     );
 };
-
-/*
-
-Category.getCategories = function(application) {
-  console.log('🎷🎷🎷 get categories');
-  const categoriesPath = "categories";
-  return application.api().get(categoriesPath)
-    .then(({data}) =>
-      data.map(categoryDatum => Category(categoryDatum).update(categoryDatum))
-    );
-};
-*/
 
 Category.updateCategory = function(application, id) {
   const categoriesPath = `categories/${id}`;
