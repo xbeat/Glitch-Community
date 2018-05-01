@@ -1,3 +1,5 @@
+//temp
+
 module.exports = function(application, user) {
 
   return {

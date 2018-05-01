@@ -17,6 +17,12 @@ import debounce from 'lodash-es/debounce';
 // their 'asprops' functions and nothing more.
 // Anyway, for now I'm ok with importing the models as we need them, so long as we limit their
 // usage to the handy 'asProps' function.
+
+// PK: I like the idea of that the api abstraction returns model entities instead of
+// raw data. The flipside of that is if we draw a line in teh sand that components 
+// should *Never* consume raw data, only models. If that's the case then the api 
+// should Always return model entities.
+
 import ProjectModel from '../../models/project.js';
 
 export class AddTeamProjectPop extends React.Component {
