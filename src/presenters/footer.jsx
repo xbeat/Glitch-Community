@@ -25,15 +25,28 @@ footer(role="contentinfo")
     a(href=legal data-track="footer → legal stuff") Legal Stuff 👮‍
   p
     a(href=hiring data-track="footer → hiring") Pssst... we're hiring a Design Engineer! 🙋‍
-  hrs
+  hr
   p
     a(href=platforms data-track="footer → platforms") 
       img.for-platforms-icon(src="https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188")
       span.for-platforms-text Glitch for Teams
 */
+import React from 'react';
+import PropTypes from 'prop-types';
+
+function FooterLine({href, track, contents}) {
+  return <p><a href={href} dataTrack={'footer → '+track}>{contents}</a></p>;
+}
+FooterLine.propTypes = {
+  href: PropTypes.string.isRequired,
+  track: PropTypes.string.isRequired,
+  contents: PropTypes.node.isRequired,
+};
+
 export default function Footer() {
   return (
     <footer role="contentinfo">
+      <FooterLine href="https://glitch.com/about" track="about">About Glitch 🔮</FooterLine>
     </footer>
   );
 }
