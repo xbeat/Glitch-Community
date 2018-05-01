@@ -48,10 +48,25 @@ export default class CategoryContainer extends React.Component {
   
   componentDidMount() {
     this.props.getCategory().then((categoryModel) => {
+      const projectModels = sampleSize(categoryModel.projects(), 3);
       const category = categoryModel.asProps();
-      category.projects = sampleSize(category.projects, 3);
-      
+      category.projects = projectModels.map(projectModel => projectModel.asProps());
       this.setState({category});
+      
+      for(let model of projectModels) {
+        if(model.fetched()) {
+          continue;
+        }
+        
+        model.fetched.observe((isFetched)=>{
+          console.log("Fetch observable!", isFetched);
+          if(!isFetched) {
+            return;
+          }
+          category.projects = projectModels.map(projectModel => projectModel.asProps());
+          this.setState({category});
+        });
+      }
     });
   }
   render() {
