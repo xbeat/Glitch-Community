@@ -34,19 +34,25 @@ footer(role="contentinfo")
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function FooterLine({href, track, contents}) {
-  return <p><a href={href} dataTrack={'footer → '+track}>{contents}</a></p>;
+function FooterLine({href, track, children}) {
+  return <p><a href={href} data-track={'footer → '+track}>{children}</a></p>;
 }
 FooterLine.propTypes = {
   href: PropTypes.string.isRequired,
   track: PropTypes.string.isRequired,
-  contents: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default function Footer() {
   return (
     <footer role="contentinfo">
-      <FooterLine href="https://glitch.com/about" track="about">About Glitch 🔮</FooterLine>
+      <FooterLine href="https://glitch.com/about" track="about">About Glitch <span role="img" aria-label="">🔮</span></FooterLine>
+      <FooterLine href="https://medium.com/glitch" track="blog">Blog <span role="img" aria-label="">📰</span></FooterLine>
+      <hr/>
+      <FooterLine href="https://glitch.com/forteams" track="platforms">
+        <img className="for-platforms-icon" src="https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188" alt="" />
+        <span className="for-platforms-text">Glitch for Teams</span>
+      </FooterLine>
     </footer>
   );
 }
