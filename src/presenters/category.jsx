@@ -17,7 +17,7 @@ export const Category = ({closeAllPopOvers, category}) => {
         </a>
         <span className="category-image-container">
           <a className="category-image" href={category.url}>
-            <img src={category.avatarUrl} alt={category.name} />
+            <img  height="80px" width="120px" src={category.avatarUrl} alt={category.name} />
           </a>
         </span>
         <p className="category-description">{category.description}</p>
@@ -34,7 +34,7 @@ Category.propTypes = {
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-  }).isRequired
+  }).isRequired,
 };
 
 export default Category;
