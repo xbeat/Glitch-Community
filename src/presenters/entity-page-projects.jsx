@@ -17,6 +17,7 @@ const projectStateFromModels = (projectsModel, pinsModel) => {
 };
 
 export class EntityPageProjectsContainer extends React.Component {
+  
   constructor(props) {
     super(props);
      
@@ -54,6 +55,7 @@ export class EntityPageProjectsContainer extends React.Component {
     return <EntityPageProjects {...this.props} {...this.state}/>;
   }
 }
+
 EntityPageProjectsContainer.propTypes = {
   projectsObservable: PropTypes.func.isRequired,
   pinsObservable: PropTypes.func.isRequired,
@@ -81,7 +83,6 @@ const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects,
 };
 
 EntityPageProjects.propTypes = {
-  recentProjects: PropTypes.array.isRequired,
   pinnedProjects: PropTypes.array.isRequired,
   isAuthorizedUser: PropTypes.bool.isRequired,
 };

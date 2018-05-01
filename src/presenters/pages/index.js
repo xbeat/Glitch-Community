@@ -4,17 +4,18 @@ import HeaderPresenter from '../header';
 import FeaturedCollectionPresenter from '../featured-collection';
 import RecentProjectsPresenter from '../recent-projects';
 import QuestionsPresenter from '../questions';
-import CategoryPresenter from '../category';
 import CategoryModel from '../../models/category';
 import ProjectModel from '../../models/project';
 import Reactlet from '../reactlet';
-import Observable from 'o_0';
 import EmbedHtml from '../../curated/embed';
 
 import Categories from "../categories.jsx";
+import Category from '../category.jsx';
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
 import StarterApps from "../includes/starter-apps.jsx";
+
+import {sampleSize} from 'lodash';
 
 export default function(application) {
   console.log("Presented index");
@@ -55,19 +56,17 @@ export default function(application) {
       return application.featuredCollections.map(collection => FeaturedCollectionPresenter(application, collection));
     },
     
-    randomCategoriesObservable: Observable([]),
-
+    randomCategoriesSample: sampleSize(application.categories, 3),
+    
     randomCategories() {
-      
-      if(!self.randomCategoriesObservable.length) {
-        self.randomCategoriesObservable(application.categories.map((category) => CategoryModel(category)));
-      
-        CategoryModel.getRandomCategories(application.api()).then((categories) => 
-          self.randomCategoriesObservable(categories.filter(category => category.projects && category.projects.length))
-        );
-      }
-      
-      return self.randomCategoriesObservable.map((categoryModel) =>CategoryPresenter(application, categoryModel));
+      return self.randomCategoriesSample.map((cachedCategory) => {
+        const props = {
+          closeAllPopOvers: application.closeAllPopOvers,
+          cachedCategory: cachedCategory,
+          getCategory: () => CategoryModel.getCategoryById(application.api(), cachedCategory.id),
+        };
+        return Reactlet(Category, props);
+      });
     },
     
     embed() {
