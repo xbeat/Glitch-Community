@@ -58,9 +58,6 @@ const UserOptionsPop = ({visible, profileLink, avatarUrl, teams, showNewStuffOve
             <span className="emoji ambulance"></span>
           </div>
         </a>        
-      </section>
-        
-      <section className="pop-over-info last-section section-has-tertiary-buttons">
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={signOut}>
           <span>Sign Out</span>
           <span className="emoji balloon"></span>
