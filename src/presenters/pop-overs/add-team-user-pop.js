@@ -3,6 +3,10 @@ import debounce from 'lodash-es/debounce';
 
 const AddTeamUserTemplate = require("../../templates/pop-overs/add-team-user-pop");
 
+import UserResultItem from "../includes/user-result-item.jsx";
+import Reactlet from "../reactlet";
+
+
 module.exports = function(application) {
 
   var self = {
@@ -59,8 +63,9 @@ module.exports = function(application) {
       }
     }, 
     
-    UserResultItem() {
-    }
+    UserResultItem(user) {
+      return Reactlet(UserResultItem(application, user));
+    },
     
   };
             
