@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import {ProjectsUL} from "./projects-list.jsx";
 import {sampleSize} from 'lodash';
-import Observable from "o_0";
 
 const Category = ({closeAllPopOvers, category}) => {
   const ulProps = {
@@ -43,43 +42,35 @@ export default class CategoryContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: props.cachedCategory,
-    };
+      categories: [],
+    }
   }
   
   componentDidMount() {
-    /*
-    
-   this.aggregateObservable = Observable(() => {
-        const projectsModel = this.props.projectsObservable();
-        const pinsModel = this.props.pinsObservable();
-
-        // Subscribe just to the 'fetched' subcomponent of the projects.
-        for(let {fetched} of projectsModel) {
-          fetched && fetched();
-        }
-
-        this.setStateFromModels(projectsModel, pinsModel, this);
+    this.props.getCategories().then((categoryModels) => {
+      const models = categoryModels.filter(model => !!model.projects.length);
+      models = sampleSize(models, 3);
+      
+      const categories = models.map(categoryModel => {
+        const category = categoryModel.asProps()
+        category.projects = sampleSize(category.projects, 3);
+        return category;
       });
-
-    */
-    this.props.getCategory().then((categoryModel) => {
-      const projectModels = sampleSize(categoryModel.projects(), 3);
-      this.aggregateObservable = Observable(() => {
-        const category = categoryModel.asProps();
-        category.projects = projectModels.map(projectModel => projectModel.asProps());
-        console.log(category.projects);
-        this.setState({category});
-      });
+      this.setState({categories});
     });
   }
   render() {
-    return <Category category={this.state.category} closeAllPopOvers={this.props.closeAllPopOvers}/>;
+    return (
+      <React.Fragment>
+      { this.state.categories.map( (category) => (
+      <Category category={category} closeAllPopOvers={this.props.closeAllPopOvers}/>
+       )}
+    </React.Fragment>
+    );
   }
 }
 
 CategoryContainer.propTypes = {
-  cachedCategory: PropTypes.object.isRequired,
-  getCategory: PropTypes.func.isRequired,
+  getCategories: PropTypes.func.isRequired,
   closeAllPopOvers: PropTypes.func.isRequired,
 };

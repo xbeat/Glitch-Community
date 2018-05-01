@@ -57,9 +57,12 @@ export default Category = function(I, self) {
   return self;
 };
 
-Category.getCategoryById = function(api, id) {
-  const path = `categories/${id}`;
-  return api.get(path).then(({data}) => Category(data).update(data));
+Category.getRandomCategories = function(api) {
+  const categoriesPath = "categories/random";
+  return api.get(categoriesPath)
+    .then(({data}) =>
+      data.map(categoryDatum => Category(categoryDatum).update(categoryDatum))
+    );
 };
 
 Category.updateCategory = function(application, id) {
