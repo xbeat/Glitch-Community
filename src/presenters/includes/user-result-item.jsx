@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ProjectResultItem = (user) => (
-  
-)
+const UserResultItem = (user) => (
+  <li className="result">
+  </li>
 
+
+);
 
 UserResultItem.propTypes = {
   user: PropTypes.object.isRequired,

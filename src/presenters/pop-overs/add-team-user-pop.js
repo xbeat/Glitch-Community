@@ -64,7 +64,7 @@ module.exports = function(application) {
     }, 
     
     UserResultItem(user) {
-      return Reactlet(UserResultItem(user));
+      return Reactlet(UserResultItem());
     },
     
   };
