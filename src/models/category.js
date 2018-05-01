@@ -34,12 +34,13 @@ export default Category = function(I, self) {
   });
   
   self.asProps = () => ({
-    
-    avatarUrl: PropTypes.string.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
+    avatarUrl: self.avatarUrl(),
+    backgroundColor: self.backgroundColor(),
+    color: self.color(),
+    description: self.description(),
+    name: self.name(),
+    url: self.url(),
+    projects: self.projects.map(projectModel => projectModel.asProps()),
   });
                         
 
