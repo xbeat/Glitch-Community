@@ -62,9 +62,13 @@ module.exports = function(application) {
         return 'hidden';
       }
     }, 
-    
-    UserResultItem(user) {
-      return Reactlet(UserResultItem());
+
+    UserResultItem(user) {      
+      const props = {
+        user,
+        action: () => {console.log('blahhhh add user to team');}
+      };
+      return Reactlet(UserResultItem, props);
     },
     
   };
