@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {ProjectsUL} from "./projects-list.jsx";
 import {sampleSize} from 'lodash';
+import Observable from "o_0";
 
 const Category = ({closeAllPopOvers, category}) => {
   const ulProps = {
@@ -47,26 +48,29 @@ export default class CategoryContainer extends React.Component {
   }
   
   componentDidMount() {
+    /*
+    
+   this.aggregateObservable = Observable(() => {
+        const projectsModel = this.props.projectsObservable();
+        const pinsModel = this.props.pinsObservable();
+
+        // Subscribe just to the 'fetched' subcomponent of the projects.
+        for(let {fetched} of projectsModel) {
+          fetched && fetched();
+        }
+
+        this.setStateFromModels(projectsModel, pinsModel, this);
+      });
+
+    */
     this.props.getCategory().then((categoryModel) => {
       const projectModels = sampleSize(categoryModel.projects(), 3);
-      const category = categoryModel.asProps();
-      category.projects = projectModels.map(projectModel => projectModel.asProps());
-      this.setState({category});
-      
-      for(let model of projectModels) {
-        if(model.fetched()) {
-          continue;
-        }
-        
-        model.fetched.observe((isFetched)=>{
-          console.log("Fetch observable!", isFetched);
-          if(!isFetched) {
-            return;
-          }
-          category.projects = projectModels.map(projectModel => projectModel.asProps());
-          this.setState({category});
-        });
-      }
+      this.aggregateObservable = Observable(() => {
+        const category = categoryModel.asProps();
+        category.projects = projectModels.map(projectModel => projectModel.asProps());
+        console.log(category.projects);
+        this.setState({category});
+      });
     });
   }
   render() {
