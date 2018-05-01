@@ -1,3 +1,19 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const ProjectResultItem = (user) => (
+  
+)
+
+
+UserResultItem.propTypes = {
+  user: PropTypes.object.isRequired,
+};
+
+export default UserResultItem;
+
+
+
 // // temp
 // .result-container(style=@hoverBackground)
 //   li.result.user-result(tabindex=0 click=@addUserToTeam keydown=@userResultKey)
