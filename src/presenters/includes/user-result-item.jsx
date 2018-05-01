@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const UserThanks = (thanks) => (
-  <div className="resultThanks">
-    {thanks}
+  <div className="result-description">
+    {thanks.thanks}
+    &nbsp;
     <span className="emoji sparkling_heart"></span>
   </div>
 );

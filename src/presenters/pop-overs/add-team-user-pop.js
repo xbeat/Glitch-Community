@@ -76,8 +76,6 @@ module.exports = function(application) {
         action,
       };
       
-      console.log('🌹', props);
-
       return Reactlet(UserResultItem, props);
     },
     
