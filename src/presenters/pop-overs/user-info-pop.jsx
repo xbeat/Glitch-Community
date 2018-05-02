@@ -5,7 +5,7 @@ const UserThanks = (thanks) => (
   <div className="result-description">
     {thanks.thanks}
     &nbsp;
-    <span className="emoji sparkling_heart"></span>
+    <span className="emoji sparkling_heart" />
   </div>
 );
 
@@ -19,8 +19,9 @@ const UserInfoPop = (user) => (
       <div className="description" title={user.login}>@{user.login}</div>
       { user.thanksCount > 0 && <UserThanks thanks={user.thanksString} />}
     </section>
-    <section className="pop-over-actions results-list">
-      <p>yolo</p>
+    <section className="pop-over-actions last-section">
+      <p>remove from team</p>
+      <span className="emoji wave" />
     </section>
   </dialog>
 );
@@ -64,6 +65,7 @@ export default UserInfoPop;
 
 
 // todo: remove user-result styles(?)
+// todo: remove //temp files
 
 
 // module.exports = function(application, user) {
