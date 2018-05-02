@@ -11,7 +11,7 @@ const UserThanks = (thanks) => (
 
 const UserInfoPop = (user) => (
   <dialog className="pop-over user-info-pop">
-    <section className="pop-over-info user-info">
+    <section className="pop-over-info ">
       <a href={user.link}>
         <img className="avatar" src={user.avatar} alt={`User avatar for ${user.login}`}/>
       </a>
