@@ -1,24 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TeamUserPop = (user) => (
+const UserInfoPop = (user) => (
   <p>f</p>
 )
 
 
-TeamUserPop.propTypes = {
+UserInfoPop.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired, 
   domain: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
-  users: PropTypes.array,
 };
 
 
 
-export default TeamUserPop
+export default UserInfoPop
 
 // make not disposable
 
