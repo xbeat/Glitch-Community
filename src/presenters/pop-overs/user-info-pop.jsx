@@ -2,21 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const UserThanks = (thanks) => (
-    <p className="user-thanks">
-      {console.log('🐊',thanks)}
-      {thanks.thanks}
-      &nbsp;
-      <span className="emoji sparkling_heart" />
-    </p>
+  <p className="user-thanks">
+    {console.log('🐊',thanks)}
+    {thanks.thanks}
+    &nbsp;
+    <span className="emoji sparkling_heart" />
+  </p>
 );
 
 const RemoveFromTeam = (action) => (
   <section className="pop-over-actions danger-zone">
-    <p>remove from team</p>
-    <span className="emoji wave" />
+    <button className="button-small has-emoji button-tertiary button-on-secondary-background">
+      Remove from Team
+      <span className="emoji wave" />
+    </button>
   </section>
-)
-
+);
 
 const UserInfoPop = (user) => (
   <dialog className="pop-over user-info-pop">
@@ -24,11 +25,11 @@ const UserInfoPop = (user) => (
       <a href={user.link}>
         <img className="avatar" src={user.avatar} alt={`User avatar for ${user.login}`}/>
       </a>
-        <div class="info-container">
-          <p className="name" title={user.name}>{user.name}</p>
-          <p className="user-login" title={user.login}>{user.login}</p>
-        </div>
-        { user.thanksCount > 0 && <UserThanks thanks={user.thanksString} />}
+      <div className="info-container">
+        <p className="name" title={user.name}>{user.name}</p>
+        <p className="user-login" title={user.login}>{user.login}</p>
+      </div>
+      { user.thanksCount > 0 && <UserThanks thanks={user.thanksString} />}
 
     </section>
     { user.currentUserIsOnTeam === true && <RemoveFromTeam action={user.removeUserFromTeam} />}
