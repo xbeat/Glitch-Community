@@ -45,6 +45,7 @@ module.exports = function(application, user) {
         isOnTeam: self.userIsOnTeam(),
         currentUserIsOnTeam: currentUserIsOnTeam,
         removeUserFromTeam: () => application.team().removeUser(application, user),
+        // closeAllPopOvers: () => application.closeAllPopOvers()
       };
       return Reactlet(UserInfoPop, props);
     },

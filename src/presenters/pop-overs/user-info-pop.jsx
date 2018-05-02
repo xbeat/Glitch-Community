@@ -29,8 +29,17 @@ const UserInfoPop = (user) => (
         <p className="user-login" title={user.login}>{user.login}</p>
       </div>
       { user.thanksCount > 0 && <UserThanks thanks={user.thanksString} />}
-
     </section>
+    
+    <section className="pop-over-actions danger-zone">
+      <a href={}>
+        <div className="button button-small has-emoji button-tertiary button-on-secondary-background">
+          Profile
+          <span className="emoji wave" />
+        </div>
+      </a>
+    </section>
+
     { user.currentUserIsOnTeam === true && <RemoveFromTeam action={user.removeUserFromTeam} />}
   </dialog>
 );
@@ -46,7 +55,8 @@ UserInfoPop.propTypes = {
   thanksString: PropTypes.string,
   isOnTeam: PropTypes.bool,
   currentUserIsOnTeam: PropTypes.bool,
-  removeUserFromTeam: PropTypes.func
+  removeUserFromTeam: PropTypes.func,
+  // closeAllPopOvers: PropTypes.func,
 };
 
 UserInfoPop.defaultProps = {
