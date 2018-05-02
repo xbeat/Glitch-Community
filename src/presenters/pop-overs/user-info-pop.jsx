@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const UserThanks = (thanks) => (
+const UserThanks = ({thanks}) => (
   <p className="user-thanks">
-    {console.log('🐊',thanks)}
-    {thanks.thanks}
+    {thanks}
     &nbsp;
     <span className="emoji sparkling_heart" />
   </p>
 );
 
 const RemoveFromTeam = (action) => (
+  {console.log('🐊',action)}
   <section className="pop-over-actions danger-zone">
-    <button className="button-small has-emoji button-tertiary button-on-secondary-background">
+    <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={action}>
       Remove from Team
       <span className="emoji wave" />
     </button>

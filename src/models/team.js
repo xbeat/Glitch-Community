@@ -159,6 +159,7 @@ module.exports = (Team = function(I, self) {
     },
 
     removeUser(application, user) {
+      console.log('removeUser called');
       const teamUserPath = `/teams/${self.id()}/users/${user.id()}`;
       return application.api().delete(teamUserPath)
         .then(function() {

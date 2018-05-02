@@ -30,7 +30,7 @@ module.exports = function(application, user) {
       // TODO instead of disposable, put the element under the avatar
       // return avatar[0].appendChild(TeamUserOptionsPop(self.teamUserOptionsPopPresenter));
     },
-    
+
     UserInfoPop() {
       const currentUserIsOnTeam = application.team().currentUserIsOnTeam(application);
       const props = {
@@ -44,11 +44,11 @@ module.exports = function(application, user) {
         thanksString: user.userThanks(),
         isOnTeam: self.userIsOnTeam(),
         currentUserIsOnTeam: currentUserIsOnTeam,
-        removeUser: () => application.team().removeUser(application, user),
+        removeUserFromTeam: () => application.team().removeUser(application, user),
       };
       return Reactlet(UserInfoPop, props);
     },
-  
+
     userIsOnTeam() {
       let teamId = self.team().id;
       if (!user.teams()) {
