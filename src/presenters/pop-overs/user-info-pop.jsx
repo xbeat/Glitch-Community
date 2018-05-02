@@ -1,32 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const UserThanks = (thanks) => (
+  <div className="result-description">
+    {thanks.thanks}
+    &nbsp;
+    <span className="emoji sparkling_heart"></span>
+  </div>
+);
+
 const UserInfoPop = (user) => (
   <dialog className="pop-over user-info-pop">
-    <section className="pop-over-info user-result">
-      
-      
-      <li className="result" tabIndex="0" onClick={() => user.action(user)}>
+    <section className="pop-over-info user-info">
+      <a href={user.link}>
         <img className="avatar" src={user.avatar} alt={`User avatar for ${user.login}`}/>
-        <div className="result-name" title={user.name}>{user.name}</div>
-        <div className="result-description" title={user.login}>@{user.login}</div>
-        { user.thanks > 0 && <UserThanks thanks={user.thanks} />}
-      </li>
-
-      
-      <input onChange={(event) => {this.searchProjects(event.target.value);}} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
+      </a>
+      <div className="name" title={user.name}>{user.name}</div>
+      <div className="description" title={user.login}>@{user.login}</div>
+      { user.thanksCount > 0 && <UserThanks thanks={user.thanksString} />}
     </section>
     <section className="pop-over-actions results-list">
-      { this.state.isSearching && <Loader /> }
-      <ul className="results">
-        { this.state.searchResults.map((project, key) => (
-          <ProjectResultItem key={key} {...project}/>
-        ))}
-      </ul>
+      <p>yolo</p>
     </section>
   </dialog>
 );
-
 
 // dialog.pop-over.user-info-pop.disposable(click=@stopPropagation)
 
@@ -46,9 +43,10 @@ UserInfoPop.propTypes = {
   color: PropTypes.string.isRequired, 
   name: PropTypes.string,
   login: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
-  // description: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+  thanksCount: PropTypes.number.isRequired,
+  thanksString: PropTypes.string,
   isOnTeam: PropTypes.bool,
   currentUserIsOnTeam: PropTypes.bool,
   removeUserFromTeam: PropTypes.func
@@ -65,6 +63,7 @@ export default UserInfoPop;
 // make not disposable
 
 
+// todo: remove user-result styles(?)
 
 
 // module.exports = function(application, user) {

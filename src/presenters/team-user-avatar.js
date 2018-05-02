@@ -40,7 +40,8 @@ module.exports = function(application, user) {
         login: user.login(),
         avatar: user.userAvatarUrl('large'),
         link: user.userLink(),
-
+        thanksCount: user.thanksCount(),
+        thanksString: user.userThanks(),
         isOnTeam: self.userIsOnTeam(),
         currentUserIsOnTeam: currentUserIsOnTeam,
         removeUser: () => application.team().removeUser(application, user),
