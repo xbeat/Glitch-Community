@@ -17,7 +17,7 @@ const TeamUserPresenter = require("../team-user-avatar");
 const AnalyticsPresenter = require("../analytics");
 
 import Reactlet from "../reactlet";
-import UsersList from "../users-list.jsx";
+// import UsersList from "../users-list.jsx";
 import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProjectPop from "../pop-overs/add-team-project-pop.jsx";
 
