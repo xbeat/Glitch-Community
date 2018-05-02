@@ -194,6 +194,14 @@ module.exports = (User = function(I, self) {
       
     },
 
+    isOnTeam(teamId) {
+      if (self.teams().filter(team => {
+        team.id() === teamId;
+      })) {
+        return true;
+      }
+    },
+    
     addPin(application, projectId) {
       self.pins.push({
         projectId});
@@ -211,7 +219,7 @@ module.exports = (User = function(I, self) {
     },
     
     asProps() {
-      return { 
+      return {
         userLink: self.userLink(), 
         tooltipName: self.tooltipName(), 
         style: self.style(),

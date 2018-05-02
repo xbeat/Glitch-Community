@@ -17,7 +17,7 @@ module.exports = function(application, user) {
 
     hiddenUnlessUserInfoPopVisible() {
       if (!self.userInfoPopVisible()) {
-        return 'hidden'
+        return 'hidden';
       }
     },
     
@@ -38,23 +38,18 @@ module.exports = function(application, user) {
         name: user.name(),
         login: user.login(),
         avatar: user.userAvatarUrl('large'),
-        isOnTeam: 
-
+        
+        isOnTeam: self.userIsOnTeam(),
         currentUserIsOnTeam: application.team().currentUserIsOnTeam(application),
         removeUser: application.team().removeUser(application, user)
       };
-      console.log('user info pop', props)
       return Reactlet(UserInfoPop, props);
     },
   
-    // move to team model, .isOnTeam(teamId) {}
     userIsOnTeam() {
-      // user.isOnTeam(teamId)
-      teamId = self.team().id
-      
-      user.teams()
-
-    }
+      let teamId = self.team().id;
+      return user.isOnTeam(teamId);      
+    },
     
     login() {
       return user.login();
