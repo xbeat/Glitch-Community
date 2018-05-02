@@ -16,7 +16,7 @@ export default (application, content) =>
     
     content,
 
-    footer: Reactlet(Footer, {}),
+    footer: Reactlet(Footer),
     
     overlayProject: OverlayProject(application),
     overlayVideo: OverlayVideo(application),
