@@ -1,7 +1,6 @@
-import UserTemplate from '../templates/includes/user-item';
+import React from 'react';
 
 export function UserItemPresenter(application, user) {
-
   var self = {
     application,
     user,
@@ -57,8 +56,6 @@ export function UserItemPresenter(application, user) {
       };
     },
   };
-
-  return UserTemplate(self);
 }
 
 export default function UserItem(application, userModel) {
