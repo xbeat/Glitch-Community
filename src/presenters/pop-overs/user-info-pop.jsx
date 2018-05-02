@@ -23,8 +23,6 @@ UserInfoPop.defaultProps = {
   removeUserFromTeam: () => undefined
 };
 
-
-
 export default UserInfoPop;
 
 // make not disposable

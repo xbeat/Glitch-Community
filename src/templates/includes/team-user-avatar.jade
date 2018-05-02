@@ -1,7 +1,8 @@
 // overflow visible to team-user-avatar so that pop can show
-.user.team-user-avatar(click=@toggleUserInfoPop title=@login data-tooltip=@tooltipName data-tooltip-left=true @style)
+a.user.team-user-avatar(click=@toggleUserInfoPop title=@login data-tooltip=@tooltipName data-tooltip-left=true @style)
   img(width=32 height=32 src=@avatarUrl @alt)
   .button-borderless
     .down-arrow
 
-  = @UserInfoPop
+  span(class=@hiddenUnlessUserInfoPopVisible)
+    = @UserInfoPop
