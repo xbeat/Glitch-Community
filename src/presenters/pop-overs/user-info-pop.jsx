@@ -2,7 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const UserInfoPop = (user) => (
-  <dialog>f</p>
+  <dialog className="pop-over user-info-pop">
+    <section className="pop-over-info user-result">
+      
+      
+      <li className="result" tabIndex="0" onClick={() => user.action(user)}>
+        <img className="avatar" src={user.avatar} alt={`User avatar for ${user.login}`}/>
+        <div className="result-name" title={user.name}>{user.name}</div>
+        <div className="result-description" title={user.login}>@{user.login}</div>
+        { user.thanks > 0 && <UserThanks thanks={user.thanks} />}
+      </li>
+
+      
+      <input onChange={(event) => {this.searchProjects(event.target.value);}} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
+    </section>
+    <section className="pop-over-actions results-list">
+      { this.state.isSearching && <Loader /> }
+      <ul className="results">
+        { this.state.searchResults.map((project, key) => (
+          <ProjectResultItem key={key} {...project}/>
+        ))}
+      </ul>
+    </section>
+  </dialog>
 );
 
 
@@ -24,6 +46,7 @@ UserInfoPop.propTypes = {
   color: PropTypes.string.isRequired, 
   name: PropTypes.string,
   login: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
   // description: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
   isOnTeam: PropTypes.bool,

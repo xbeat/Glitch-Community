@@ -39,6 +39,7 @@ module.exports = function(application, user) {
         name: user.name(),
         login: user.login(),
         avatar: user.userAvatarUrl('large'),
+        link: user.userLink(),
 
         isOnTeam: self.userIsOnTeam(),
         currentUserIsOnTeam: currentUserIsOnTeam,

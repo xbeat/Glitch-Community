@@ -60,7 +60,7 @@ export class AddTeamProjectPop extends React.Component {
   
   render() {
     return (
-      <div className="pop-over add-team-project-pop">
+      <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
           <input onChange={(event) => {this.searchProjects(event.target.value);}} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
         </section>
@@ -72,7 +72,7 @@ export class AddTeamProjectPop extends React.Component {
             ))}
           </ul>
         </section>
-      </div>
+      </dialog>
     );
   }
 }
