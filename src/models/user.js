@@ -217,9 +217,10 @@ export default User = function(I, self) {
         tooltipName: self.tooltipName(), 
         style: self.style(),
         alt: self.alt(),
-        coverUrl: self.coverUrl(),
+        coverUrlSmall: self.coverUrl('small'),
         coverColor: self.coverColor(),
-        userAvatarUrl:self.userAvatarUrl(), 
+        userAvatarUrl: self.userAvatarUrl(),
+        userAvatarUrlLarge: self.userAvatarUrl('large'),
       };
     },
   });

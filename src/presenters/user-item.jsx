@@ -18,14 +18,6 @@ export function UserItemPresenter(application, user) {
       return user.truncatedDescriptionMarkdown();
     },
 
-    coverUrl() {
-      return user.coverUrl('small');
-    },
-
-    coverColor() {
-      return user.coverColor();
-    },
-
     thanks() {
       return user.userThanks();
     },
@@ -49,27 +41,20 @@ export function UserItemPresenter(application, user) {
     hiddenUnlessName() {
       if (!user.name()) { return 'hidden'; }
     },
-
-    style() {
-      return {
-        backgroundImage: `url('${self.coverUrl()}')`,
-        backgroundColor: self.coverColor(),
-      };
-    },
   };
 }
 
 export default function UserItem({user}) {
   const style = {
-    backgroundImage: `url('${user.coverUrl('small')}')`,
-    backgroundColor: self.coverColor,
+    backgroundImage: `url('${user.coverUrlSmall}')`,
+    //backgroundColor: user.coverColor,
   };
   return (
     <li>
       <a href={user.userLink}>
         <div className="item" style={style}>
           <div className="content">
-            <img className="avatar" src="@avatarUrl" alt="@login"></img>
+            <img className="avatar" src={user.userAvatarUrlLarge} alt="@login"></img>
             <div className="information">
               <h3 className="name @hiddenUnlessName">@name</h3>
               <div className="button"><span>@login</span></div>
@@ -86,5 +71,7 @@ export default function UserItem({user}) {
 UserItem.propTypes = {
   user: PropTypes.shape({
     userLink: PropTypes.string.isRequired,
+    //coverColor: PropTypes.string.isRequired,
+    coverUrlSmall: PropTypes.string.isRequired,
   }),
 };
