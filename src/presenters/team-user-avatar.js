@@ -48,7 +48,14 @@ module.exports = function(application, user) {
   
     userIsOnTeam() {
       let teamId = self.team().id;
-      return user.isOnTeam(teamId);
+      if (user.teams()) {
+        if (user.teams().filter(team => {
+          team.id() === teamId;
+        })) {
+          return true;
+        }
+      }
+      
     },
     
     login() {

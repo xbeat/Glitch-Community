@@ -193,14 +193,6 @@ module.exports = (User = function(I, self) {
       return `Thanked ${thanksCount} times`;
       
     },
-
-    isOnTeam(teamId) {
-      if (self.teams().filter(team => {
-        team.id() === teamId;
-      })) {
-        return true;
-      }
-    },
     
     addPin(application, projectId) {
       self.pins.push({
