@@ -32,7 +32,7 @@ module.exports = function(application, user) {
     },
     
     UserInfoPop() {
-      const currentUserIsOnTeam = application.team().currentUserIsOnTeam(application);
+      const currentUserIsOnTeam = application.team().currentUserIsOnTeam(application)
       const props = {
         id: user.id(),
         color: user.color(),
@@ -49,6 +49,7 @@ module.exports = function(application, user) {
   
     userIsOnTeam() {
       let teamId = self.team().id;
+      if 
       if (user.teams()) {
         if (user.teams().filter(team => {
           team.id() === teamId;
