@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Popover from './pop-over.jsx';
 
 const PopoverButton = ({onClick, text, emoji}) => (
   <button className="button-small has-emoji button-tertiary" onClick={onClick}>
@@ -78,56 +79,6 @@ ProjectOptionsPop.propTypes = {
   removeProjectFromTeam: PropTypes.func,
 };
 
-/*
-A popover is a light, hollow roll made from an egg batter similar to
-that of Yorkshire pudding, typically baked in muffin tins or dedicated
-popover pans, which have straight-walled sides rather than angled.
-
-..
-*/
-export class PopoverContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { visible: false };
-    this._ismounted = false;
-  }
-  
-  componentDidMount() { 
-    this._ismounted = true;
-  }
-
-  componentWillUnmount() {
-    this._ismounted = false;
-  }
-
-  render() {
-    const toggle = (event) => {
-      const wasVisible = this.state.visible;
-      
-      //closeAllPopovers();
-      event.stopPropagation();
-      
-      if(wasVisible) {
-        // In this circumstance, they clicked the down-arrow in order to
-        // close the popup, since it was already open.
-        // ..so leave it closed.
-        return;
-      }
-      
-      this.setState({visible: true});
-      //this.props.closeAllPopovers(() => {
-      //  this._ismounted && this.setState({visible: false});
-      //});
-    };
-    
-    let Children = this.props.children;
-    
-    return (
-      <Children togglePopover={toggle} visible={this.state.visible}/>
-    );
-  }
-}
-
 export default function ProjectOptions({projectOptions={}, project}) {
   if(Object.keys(projectOptions).length === 0) {
     return null;
@@ -140,15 +91,15 @@ export default function ProjectOptions({projectOptions={}, project}) {
   };
   
   return (
-    <PopoverContainer>
-      { ({togglePopover, visible}) => (
+    <Popover>
+      {({togglePopover, visible}) => (
         <React.Fragment>
           <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
             <div className="down-arrow"></div>
           </button>
-          { visible && <ProjectOptionsPop {...popupProps} {...projectOptions} togglePopover={togglePopover}></ProjectOptionsPop> }
+          { visible && <ProjectOptionsPop {...popupProps} {...projectOptions} togglePopover={togglePopover}/> }
         </React.Fragment>
       )}
-    </PopoverContainer>
+    </Popover>
   );
 }
