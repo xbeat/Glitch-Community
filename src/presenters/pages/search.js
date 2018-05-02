@@ -1,7 +1,7 @@
 import LayoutPresenter from '../layout';
 import SearchPageTemplate from '../../templates/pages/search';
 import TeamItemPresenter from '../team-item';
-import UserItemPresenter from '../user-item';
+import UserItem from '../user-item.jsx';
 
 import Categories from "../categories.jsx";
 import Reactlet from "../reactlet";
