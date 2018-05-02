@@ -2,8 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const UserInfoPop = (user) => (
-  <p>f</p>
+  <dialog>f</p>
 );
+
+
+// dialog.pop-over.user-info-pop.disposable(click=@stopPropagation)
+
+//   section.pop-over-info.user-result
+//     ul.results
+//       a(href=@userLink)
+//         = UserResultPresenter(@application, @user, {showThanks: true})
+
+//   section.pop-over-info.last-section.section-has-tertiary-buttons.danger-zone(class=@hiddenIfUserIsNotOnTeam)
+//     button.button-small.has-emoji.button-tertiary.button-on-secondary-background(click=@removeUser)
+//       span Remove from Team :: 
+//       span.emoji.wave
+
 
 UserInfoPop.propTypes = {
   id: PropTypes.number.isRequired,
@@ -27,17 +41,6 @@ export default UserInfoPop;
 
 // make not disposable
 
-// dialog.pop-over.user-info-pop.disposable(click=@stopPropagation)
-
-//   section.pop-over-info.user-result
-//     ul.results
-//       a(href=@userLink)
-//         = UserResultPresenter(@application, @user, {showThanks: true})
-
-//   section.pop-over-info.last-section.section-has-tertiary-buttons.danger-zone(class=@hiddenIfUserIsNotOnTeam)
-//     button.button-small.has-emoji.button-tertiary.button-on-secondary-background(click=@removeUser)
-//       span Remove from Team :: 
-//       span.emoji.wave
 
 
 
