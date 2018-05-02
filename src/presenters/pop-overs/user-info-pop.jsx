@@ -32,7 +32,7 @@ const UserInfoPop = (user) => (
     </section>
     
     <section className="pop-over-actions danger-zone">
-      <a href={}>
+      <a href={user.link}>
         <div className="button button-small has-emoji button-tertiary button-on-secondary-background">
           Profile
           <span className="emoji wave" />
@@ -66,59 +66,3 @@ UserInfoPop.defaultProps = {
 };
 
 export default UserInfoPop;
-
-// make not disposable
-
-
-// todo: remove user-result styles(?)
-// todo: remove //temp files
-
-
-// module.exports = function(application, user) {
-
-//   return {
-  
-//     application,
-//     user,
-
-//     stopPropagation(event) {
-//       return event.stopPropagation();
-//     },
-
-//     userCover() {
-//       return user.coverUrl('small');
-//     },
-      
-//     userAvatarBackground() {
-//       return {backgroundColor: user.color()};
-//     },
-  
-//     userLink() {
-//       return user.userLink();
-//     },
-
-//     removeUser() {
-//       return application.team().removeUser(application, user);
-//     },
-    
-//     name() {
-//       return user.name();
-//     },
-    
-//     avatarUrl() {
-//       return user.userAvatarUrl('small');
-//     },
-    
-//     hiddenIfUserIsCurrentUser() {
-//       if (user.isCurrentUser(application)) { return 'hidden'; }
-//     },
-    
-//     hiddenUnlessUserIsCurrentUser() {
-//       if (!user.isCurrentUser(application)) { return 'hidden'; }
-//     },
-//   };
-// };
-
-
-// - UserResultPresenter = require "../../presenters/user-result"
-
