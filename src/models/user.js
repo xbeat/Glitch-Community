@@ -214,7 +214,7 @@ export default User = function(I, self) {
     asProps() {
       return {
         description: self.description(),
-        truncatedDescriptionMarkdown: self.truncatedDescriptionMarkdown(),
+        truncatedDescriptionHtml: md.render(self.truncatedDescription()),
         id: self.id(),
         name: self.name(),
         login: self.login(),

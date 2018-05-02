@@ -15,7 +15,7 @@ export default function UserItem({user}) {
             {user.name ? <h3 className="name">{user.name}</h3> : null}
             <div className="button">@{user.login}</div>
             {user.thanksCount > 0 ? <p className="thanks">{user.userThanks} <span className="emoji sparkling_heart"></span></p> : null}
-            {user.description ? <p className="description">{user.truncatedDescriptionMarkdown}</p> : null}
+            {user.description ? <p className="description" dangerouslySetInnerHTML={{__html: user.truncatedDescriptionHtml}}></p> : null}
           </div>
         </div>
       </div>
@@ -33,6 +33,5 @@ UserItem.propTypes = {
     login: PropTypes.string.isRequired,
     userThanks: PropTypes.string.isRequired,
     thanksCount: PropTypes.number.isRequired,
-    truncatedDescriptionMarkdown: PropTypes.string,
   }),
 };
