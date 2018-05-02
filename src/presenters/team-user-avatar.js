@@ -22,7 +22,7 @@ module.exports = function(application, user) {
     },
     
     toggleUserInfoPop(event) {
-      // application.closeAllPopOvers();
+      application.closeAllPopOvers();
       event.stopPropagation();
       self.userInfoPopVisible.toggle();
       // const avatar = $(event.target).closest('.opens-pop-over');
