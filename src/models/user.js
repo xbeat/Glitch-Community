@@ -217,6 +217,8 @@ export default User = function(I, self) {
         tooltipName: self.tooltipName(), 
         style: self.style(),
         alt: self.alt(),
+        coverUrl: self.coverUrl(),
+        coverColor: self.coverColor(),
         userAvatarUrl:self.userAvatarUrl(), 
       };
     },

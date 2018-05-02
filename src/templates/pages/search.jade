@@ -5,9 +5,8 @@
 - ProjectListPresenter = @ProjectListPresenter
 
 - context = @application
-
-- Reactlet = require "../reactlet"
-- UserItem = require "../
+- Reactlet = @Reactlet
+- UserItem = @UserItem
 
 main.search-results(role="main")
 
@@ -24,7 +23,7 @@ main.search-results(role="main")
     h2 Users
     ul.users-container
       - @searchResultsUsers().forEach (user) ->
-        = user
+        = Reactlet(UserItem, {user: user.asProps()})
     span(class=@hiddenIfSearchResultsUsersLoaded)
       = Loader(this)
 

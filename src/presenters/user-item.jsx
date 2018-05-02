@@ -60,10 +60,14 @@ export function UserItemPresenter(application, user) {
 }
 
 export default function UserItem({user}) {
+  const style = {
+    backgroundImage: `url('${user.coverUrl('small')}')`,
+    backgroundColor: self.coverColor,
+  };
   return (
     <li>
       <a href={user.userLink}>
-        <div className="item" style="@style">
+        <div className="item" style={style}>
           <div className="content">
             <img className="avatar" src="@avatarUrl" alt="@login"></img>
             <div className="information">
@@ -80,5 +84,7 @@ export default function UserItem({user}) {
 }
 
 UserItem.propTypes = {
-  userLink: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+    userLink: PropTypes.string.isRequired,
+  }),
 };

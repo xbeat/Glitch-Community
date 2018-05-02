@@ -13,10 +13,12 @@ export default function(application) {
   const self = { 
 
     application,
+    Reactlet,
     searchResultsProjects: application.searchResultsProjects,
     searchResultsUsers: application.searchResultsUsers,
     searchResultsTeams: application.searchResultsTeams,
     TeamItemPresenter,
+    UserItem,
     
     hiddenIfSearchResultsTeamsLoaded() {
       if (application.searchResultsTeamsLoaded()) { return 'hidden'; }
