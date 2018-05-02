@@ -36,19 +36,20 @@ module.exports = function(application) {
       return application.team().verifiedTooltip();
     },
 
-    TeamUsersAsMember() {
+    TeamUsers() {
       const users = application.team().users();
+      console.log('team users', users);
       return users.map(user => TeamUserPresenter(application, user));
     },
 
-    TeamUsers() {
-      const users = application.team().users();
-      const props = {
-        users: users.map(user => user.asProps()),
-        extraClass: "team-users",
-      };
-      return Reactlet(UsersList, props);
-    },
+    // TeamUsers() {
+    //   const users = application.team().users();
+    //   const props = {
+    //     users: users.map(user => user.asProps()),
+    //     extraClass: "team-users",
+    //   };
+    //   return Reactlet(UsersList, props);
+    // },
 
     TeamProjects() {
       const props = {

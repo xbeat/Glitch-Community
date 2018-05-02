@@ -38,17 +38,17 @@ module.exports = function(application, user) {
         name: user.name(),
         login: user.login(),
         avatar: user.userAvatarUrl('large'),
-        
+
         isOnTeam: self.userIsOnTeam(),
         currentUserIsOnTeam: application.team().currentUserIsOnTeam(application),
-        removeUser: application.team().removeUser(application, user)
+        removeUser: application.team().removeUser(application, user),
       };
       return Reactlet(UserInfoPop, props);
     },
   
     userIsOnTeam() {
       let teamId = self.team().id;
-      return user.isOnTeam(teamId);      
+      return user.isOnTeam(teamId);
     },
     
     login() {
