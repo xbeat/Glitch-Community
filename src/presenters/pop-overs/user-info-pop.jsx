@@ -9,8 +9,7 @@ const UserThanks = ({thanks}) => (
   </p>
 );
 
-const RemoveFromTeam = (action) => (
-  // {console.log('🐊',action)}
+const RemoveFromTeam = ({action}) => (
   <section className="pop-over-actions danger-zone">
     <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={action}>
       Remove from Team
