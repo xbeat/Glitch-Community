@@ -9,22 +9,30 @@ module.exports = function(application, user) {
   var self = { 
 
     team: application.team,
-    userInfoPopVisible: Observable fal
+    userInfoPopVisible: Observable(false),
     // teamUserOptionsPopPresenter: TeamUserOptionsPopPresenter(application, user),
 
-    showUserInfoPop(event) {
+    toggleUserInfoPop(event) {
       application.closeAllPopOvers();
       event.stopPropagation();
-      const avatar = $(event.target).closest('.opens-pop-over');
-      
+      userInfoPopVisible.toggle()
+      // const avatar = $(event.target).closest('.opens-pop-over');
+
+      // TODO instead of disposable, put the element under the avatar
+      // return avatar[0].appendChild(TeamUserOptionsPop(self.teamUserOptionsPopPresenter));
+    },
+    
+    UserInfoPop() {
       const isOnTeam
       const currentUserIsOnTeam
       const removeUserFromTeam
 
-      const props
-      
-      // TODO instead of disposable, put the element under the avatar
-      return avatar[0].appendChild(TeamUserOptionsPop(self.teamUserOptionsPopPresenter));
+      const props = {
+        user: user.asProps(),
+        currentUserIsOnTeam: application.team().currentUserIsOnTeam(application),
+        
+      }
+      return reactet
     },
 
     login() {
