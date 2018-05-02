@@ -32,6 +32,7 @@ module.exports = function(application, user) {
     },
     
     UserInfoPop() {
+      const currentUserIsOnTeam = application.team().currentUserIsOnTeam(application);
       const props = {
         id: user.id(),
         color: user.color(),
@@ -40,7 +41,7 @@ module.exports = function(application, user) {
         avatar: user.userAvatarUrl('large'),
 
         isOnTeam: self.userIsOnTeam(),
-        currentUserIsOnTeam: () => application.team().currentUserIsOnTeam(application),
+        currentUserIsOnTeam: currentUserIsOnTeam,
         removeUser: () => application.team().removeUser(application, user),
       };
       return Reactlet(UserInfoPop, props);

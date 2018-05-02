@@ -6,7 +6,7 @@ const UserInfoPop = (user) => (
 );
 
 UserInfoPop.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired, 
   name: PropTypes.string,
   login: PropTypes.string.isRequired,
