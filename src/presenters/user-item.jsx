@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export function UserItemPresenter(application, user) {
@@ -58,10 +59,10 @@ export function UserItemPresenter(application, user) {
   };
 }
 
-export default function UserItem({application, user}) {
+export default function UserItem({user}) {
   return (
     <li>
-      <a href="@userLink">
+      <a href={user.userLink}>
         <div className="item" style="@style">
           <div className="content">
             <img className="avatar" src="@avatarUrl" alt="@login"></img>
@@ -77,3 +78,7 @@ export default function UserItem({application, user}) {
     </li>
   );
 }
+
+UserItem.propTypes = {
+  userLink: PropTypes.string.isRequired,
+};

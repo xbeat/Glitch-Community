@@ -6,6 +6,9 @@
 
 - context = @application
 
+- Reactlet = require "../reactlet"
+- UserItem = require "../
+
 main.search-results(role="main")
 
   article(class=@hiddenIfSearchResultsHaveNoTeams)
@@ -20,7 +23,8 @@ main.search-results(role="main")
   article(class=@hiddenIfSearchResultsHaveNoUsers)
     h2 Users
     ul.users-container
-      - @searchResultsUsers
+      - @searchResultsUsers().forEach (user) ->
+        = user
     span(class=@hiddenIfSearchResultsUsersLoaded)
       = Loader(this)
 
