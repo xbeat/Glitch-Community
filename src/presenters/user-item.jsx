@@ -25,13 +25,13 @@ export default function UserItem({user}) {
 
 UserItem.propTypes = {
   user: PropTypes.shape({
-    userLink: PropTypes.string.isRequired,
     coverColor: PropTypes.string,
     coverUrlSmall: PropTypes.string.isRequired,
     description: PropTypes.string,
-    name: PropTypes.string,
     login: PropTypes.string.isRequired,
-    userThanks: PropTypes.string.isRequired,
+    name: PropTypes.string,
     thanksCount: PropTypes.number.isRequired,
+    userLink: PropTypes.string.isRequired,
+    userThanks: PropTypes.string.isRequired,
   }),
 };
