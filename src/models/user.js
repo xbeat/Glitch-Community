@@ -212,7 +212,10 @@ export default User = function(I, self) {
     },
     
     asProps() {
-      return { 
+      return {
+        id: self.id(),
+        name: self.name(),
+        login: self.login(),
         userLink: self.userLink(), 
         tooltipName: self.tooltipName(), 
         style: self.style(),

@@ -21,15 +21,6 @@ export function UserItemPresenter(application, user) {
     thanks() {
       return user.userThanks();
     },
-
-    userLink() {
-      return user.userLink();
-    },
-
-    avatarUrl() {
-      return user.userAvatarUrl('large');
-    },
-
     hiddenUnlessThanks() {
       if (!(user.thanksCount() > 0)) { return 'hidden'; }
     },
@@ -50,21 +41,19 @@ export default function UserItem({user}) {
     //backgroundColor: user.coverColor,
   };
   return (
-    <li>
-      <a href={user.userLink}>
-        <div className="item" style={style}>
-          <div className="content">
-            <img className="avatar" src={user.userAvatarUrlLarge} alt="@login"></img>
-            <div className="information">
-              <h3 className="name @hiddenUnlessName">@name</h3>
-              <div className="button"><span>@login</span></div>
-              <p className="thanks @hiddenUnlessThanks">@thanks <span className="emoji sparkling_heart"></span></p>
-              <p className="description @hiddenUnlessDescription">@truncatedDescription</p>
-            </div>
+    <a href={user.userLink}>
+      <div className="item" style={style}>
+        <div className="content">
+          <img className="avatar" src={user.userAvatarUrlLarge} alt={"@"+user.login}></img>
+          <div className="information">
+            <h3 className="name @hiddenUnlessName">{user.name}</h3>
+            <div className="button">@{user.login}</div>
+            <p className="thanks @hiddenUnlessThanks">@thanks <span className="emoji sparkling_heart"></span></p>
+            <p className="description @hiddenUnlessDescription">@truncatedDescription</p>
           </div>
         </div>
-      </a>
-    </li>
+      </div>
+    </a>
   );
 }
 
@@ -73,5 +62,7 @@ UserItem.propTypes = {
     userLink: PropTypes.string.isRequired,
     //coverColor: PropTypes.string.isRequired,
     coverUrlSmall: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    login: PropTypes.string.isRequired,
   }),
 };
