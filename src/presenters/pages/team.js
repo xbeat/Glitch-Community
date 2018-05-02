@@ -10,9 +10,10 @@ const Project = require("../../models/project");
 const TeamTemplate = require("../../templates/pages/team");
 const LayoutPresenter = require("../layout");
 const AddTeamUserPopPresenter = require("../pop-overs/add-team-user-pop");
-// const AddTeamProjectPopPresenter = require("../pop-overs/add-team-project-pop");
 
 const TeamUserPresenter = require("../team-user-avatar");
+
+
 const AnalyticsPresenter = require("../analytics");
 
 import Reactlet from "../reactlet";

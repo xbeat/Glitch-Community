@@ -1,7 +1,7 @@
 const TeamUserTemplate = require("../templates/includes/team-user-avatar"); // rename
 
-const TeamUserOptionsPop = require("../templates/pop-overs/team-user-options-pop");
-const TeamUserOptionsPopPresenter = require('./pop-overs/team-user-options-pop');
+// const TeamUserOptionsPop = require("../templates/pop-overs/team-user-options-pop");
+// const TeamUserOptionsPopPresenter = require('./pop-overs/team-user-options-pop');
 
 module.exports = function(application, user) {
 

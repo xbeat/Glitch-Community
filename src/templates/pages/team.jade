@@ -19,6 +19,7 @@ main.user-page.team-page(role="main")
                 img.verified(src=@verifiedImage class=@hiddenUnlessVerified)
 
             .users-information
+                // TODO remove this condition and display user info pops to all ppl (with stuff hidden to non members)
               - if @currentUserIsOnTeam()
                 .users.team-users
                   =@TeamUsersAsMember

@@ -13,6 +13,8 @@ UserInfoPop.propTypes = {
   description: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
+  isOnTeam: PropTypes.bool,
+  currentUserIsOnTeam
 };
 
 
@@ -21,7 +23,7 @@ export default UserInfoPop
 
 // make not disposable
 
-// dialog.pop-over.team-user-options-pop.disposable(click=@stopPropagation)
+// dialog.pop-over.user-info-pop.disposable(click=@stopPropagation)
 
 //   section.pop-over-info.user-result
 //     ul.results
