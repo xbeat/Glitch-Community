@@ -17,7 +17,7 @@ export default function(application) {
     searchResultsUsers: application.searchResultsUsers,
     searchResultsTeams: application.searchResultsTeams,
     TeamItemPresenter,
-    UserItemPresenter,
+    UserItem,
     
     hiddenIfSearchResultsTeamsLoaded() {
       if (application.searchResultsTeamsLoaded()) { return 'hidden'; }

@@ -1,6 +1,6 @@
 import UserTemplate from '../templates/includes/user-item';
 
-export default function(application, user) {
+export function UserItemPresenter(application, user) {
 
   var self = {
     application,
@@ -59,4 +59,24 @@ export default function(application, user) {
   };
 
   return UserTemplate(self);
+}
+
+export default function UserItem(application, userModel) {
+  return (
+    <li>
+      <a href="@userLink">
+        <div className="item" style="@style">
+          <div className="content">
+            <img className="avatar" src="@avatarUrl" alt="@login"></img>
+            <div className="information">
+              <h3 className="name @hiddenUnlessName">@name</h3>
+              <div className="button"><span>@login</span></div>
+              <p className="thanks @hiddenUnlessThanks">@thanks <span className="emoji sparkling_heart"></span></p>
+              <p className="description @hiddenUnlessDescription">@truncatedDescription</p>
+            </div>
+          </div>
+        </div>
+      </a>
+    </li>
+  );
 }
