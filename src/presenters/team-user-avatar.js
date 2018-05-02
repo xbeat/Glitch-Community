@@ -40,8 +40,8 @@ module.exports = function(application, user) {
         avatar: user.userAvatarUrl('large'),
 
         isOnTeam: self.userIsOnTeam(),
-        currentUserIsOnTeam: application.team().currentUserIsOnTeam(application),
-        removeUser: application.team().removeUser(application, user),
+        currentUserIsOnTeam: () => application.team().currentUserIsOnTeam(application),
+        removeUser: () => application.team().removeUser(application, user),
       };
       return Reactlet(UserInfoPop, props);
     },
