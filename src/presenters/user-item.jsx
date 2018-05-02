@@ -1,44 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export function UserItemPresenter(application, user) {
-  var self = {
-    application,
-    user,
-
-    login() {
-      return `@${user.login()}`;
-    },
-
-    name() {
-      return user.name();
-    },
-
-    truncatedDescription() {
-      return user.truncatedDescriptionMarkdown();
-    },
-
-    thanks() {
-      return user.userThanks();
-    },
-    hiddenUnlessThanks() {
-      if (!(user.thanksCount() > 0)) { return 'hidden'; }
-    },
-    
-    hiddenUnlessDescription() {
-      if (!user.description()) { return 'hidden'; }
-    },
-    
-    hiddenUnlessName() {
-      if (!user.name()) { return 'hidden'; }
-    },
-  };
-}
-
 export default function UserItem({user}) {
   const style = {
     backgroundImage: `url('${user.coverUrlSmall}')`,
-    //backgroundColor: user.coverColor,
+    backgroundColor: user.coverColor || '',
   };
   return (
     <a href={user.userLink}>
@@ -46,10 +12,10 @@ export default function UserItem({user}) {
         <div className="content">
           <img className="avatar" src={user.userAvatarUrlLarge} alt={"@"+user.login}></img>
           <div className="information">
-            <h3 className="name @hiddenUnlessName">{user.name}</h3>
+            {user.name ? <h3 className="name">{user.name}</h3> : null}
             <div className="button">@{user.login}</div>
-            <p className="thanks @hiddenUnlessThanks">@thanks <span className="emoji sparkling_heart"></span></p>
-            <p className="description @hiddenUnlessDescription">@truncatedDescription</p>
+            {user.thanksCount > 0 ? <p className="thanks">{user.userThanks} <span className="emoji sparkling_heart"></span></p> : null}
+            {user.description ? <p className="description">{user.truncatedDescriptionMarkdown}</p> : null}
           </div>
         </div>
       </div>
@@ -60,9 +26,13 @@ export default function UserItem({user}) {
 UserItem.propTypes = {
   user: PropTypes.shape({
     userLink: PropTypes.string.isRequired,
-    //coverColor: PropTypes.string.isRequired,
+    coverColor: PropTypes.string,
     coverUrlSmall: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    name: PropTypes.string,
     login: PropTypes.string.isRequired,
+    userThanks: PropTypes.string.isRequired,
+    thanksCount: PropTypes.number.isRequired,
+    truncatedDescriptionMarkdown: PropTypes.string,
   }),
 };

@@ -213,17 +213,21 @@ export default User = function(I, self) {
     
     asProps() {
       return {
+        description: self.description(),
+        truncatedDescriptionMarkdown: self.truncatedDescriptionMarkdown(),
         id: self.id(),
         name: self.name(),
         login: self.login(),
-        userLink: self.userLink(), 
-        tooltipName: self.tooltipName(), 
+        userLink: self.userLink(),
+        thanksCount: self.thanksCount(),
+        tooltipName: self.tooltipName(),
         style: self.style(),
         alt: self.alt(),
         coverUrlSmall: self.coverUrl('small'),
         coverColor: self.coverColor(),
         userAvatarUrl: self.userAvatarUrl(),
         userAvatarUrlLarge: self.userAvatarUrl('large'),
+        userThanks: self.userThanks(),
       };
     },
   });
