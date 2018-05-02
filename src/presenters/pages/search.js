@@ -14,10 +14,9 @@ export default function(application) {
 
     application,
     searchResultsProjects: application.searchResultsProjects,
-    searchResultsUsers: application.searchResultsUsers,
+    searchResultsUsers: application.searchResultsUsers.map(user => Reactlet(UserItem, {application, user: user.asProps()})),
     searchResultsTeams: application.searchResultsTeams,
     TeamItemPresenter,
-    UserItem,
     
     hiddenIfSearchResultsTeamsLoaded() {
       if (application.searchResultsTeamsLoaded()) { return 'hidden'; }

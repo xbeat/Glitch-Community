@@ -58,7 +58,7 @@ export function UserItemPresenter(application, user) {
   };
 }
 
-export default function UserItem(application, userModel) {
+export default function UserItem({application, user}) {
   return (
     <li>
       <a href="@userLink">
