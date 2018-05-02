@@ -3,23 +3,29 @@ import PropTypes from 'prop-types';
 
 const UserInfoPop = (user) => (
   <p>f</p>
-)
-
+);
 
 UserInfoPop.propTypes = {
   id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired, 
-  domain: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired, 
+  name: PropTypes.string,
+  login: PropTypes.string.isRequired,
+  // description: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
-  action: PropTypes.func.isRequired,
   isOnTeam: PropTypes.bool,
-  currentUserIsOnTeam
+  currentUserIsOnTeam: PropTypes.bool,
+  removeUserFromTeam: PropTypes.func
+};
+
+UserInfoPop.defaultProps = {
+  isOnTeam: false,
+  currentUserIsOnTeam: false,
+  removeUserFromTeam: () => undefined
 };
 
 
 
-export default UserInfoPop
+export default UserInfoPop;
 
 // make not disposable
 
@@ -30,12 +36,9 @@ export default UserInfoPop
 //       a(href=@userLink)
 //         = UserResultPresenter(@application, @user, {showThanks: true})
 
-//   section.pop-over-info.last-section.section-has-tertiary-buttons.danger-zone
-//     button.button-small.has-emoji.button-tertiary.button-on-secondary-background(click=@removeUser class=@hiddenIfUserIsCurrentUser)
-//       span Remove from Team
-//       span.emoji.wave
-//     button.button-small.has-emoji.button-tertiary.button-on-secondary-background(click=@removeUser class=@hiddenUnlessUserIsCurrentUser)
-//       span Leave this Team
+//   section.pop-over-info.last-section.section-has-tertiary-buttons.danger-zone(class=@hiddenIfUserIsNotOnTeam)
+//     button.button-small.has-emoji.button-tertiary.button-on-secondary-background(click=@removeUser)
+//       span Remove from Team :: 
 //       span.emoji.wave
 
 
