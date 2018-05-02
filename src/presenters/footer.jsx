@@ -11,6 +11,7 @@ FooterLine.propTypes = {
 };
 
 export default function Footer() {
+  const srcForPlatforms = "https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188";
   return (
     <footer role="contentinfo">
       <FooterLine href="https://glitch.com/about" track="about">
@@ -36,7 +37,7 @@ export default function Footer() {
       </FooterLine>
       <hr/>
       <FooterLine href="https://glitch.com/forteams" track="platforms">
-        <img className="for-platforms-icon" src="https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188" alt=""/>
+        <img className="for-platforms-icon" src={srcForPlatforms} alt=""/>
         <span className="for-platforms-text">Glitch for Teams</span>
       </FooterLine>
     </footer>
