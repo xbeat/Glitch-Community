@@ -2,21 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const UserThanks = (thanks) => (
-  <div className="result-description">
-    {thanks.thanks}
-    &nbsp;
-    <span className="emoji sparkling_heart" />
-  </div>
+  <section className="pop-over-info">
+    <p>
+      {thanks.thanks}
+      &nbsp;
+      <span className="emoji sparkling_heart" />
+    </p>
+  </section>
 );
 
 const UserInfoPop = (user) => (
   <dialog className="pop-over user-info-pop">
-    <section className="pop-over-info ">
+    <section className="pop-over-info">
       <a href={user.link}>
         <img className="avatar" src={user.avatar} alt={`User avatar for ${user.login}`}/>
       </a>
-      <div className="name" title={user.name}>{user.name}</div>
-      <div className="description" title={user.login}>@{user.login}</div>
+      <div className="info-container">
+        <p className="name" title={user.name}>{user.name}</p>
+        <p className="login" title={user.login}>{user.login}</p>
+      </div>
       { user.thanksCount > 0 && <UserThanks thanks={user.thanksString} />}
     </section>
     <section className="pop-over-actions last-section">
