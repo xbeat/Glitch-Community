@@ -31,12 +31,13 @@ const UserInfoPop = (user) => (
       { user.thanksCount > 0 && <UserThanks thanks={user.thanksString} />}
     </section>
     
-    <section className="pop-over-actions danger-zone">
+
+    <section className="pop-over-actions">
       <a href={user.link}>
-        <div className="button button-small has-emoji button-tertiary button-on-secondary-background">
-          Profile
-          <span className="emoji wave" />
-        </div>
+        <button className="button button-small has-emoji button-tertiary">
+          <span>Profile </span>
+          <img className="emoji avatar" src={user.avatar} alt="Your avatar"></img>
+        </button>
       </a>
     </section>
 
