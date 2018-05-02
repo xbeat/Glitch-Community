@@ -34,6 +34,7 @@ export default Category = function(I, self) {
   });
   
   self.asProps = () => ({
+    id: self.id(),
     avatarUrl: self.avatarUrl(),
     backgroundColor: self.backgroundColor(),
     color: self.color(),
