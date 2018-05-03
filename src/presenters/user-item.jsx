@@ -10,12 +10,12 @@ export default function UserItem({user}) {
     <a href={user.userLink}>
       <div className="item" style={style}>
         <div className="content">
-          <img className="avatar" src={user.userAvatarUrlLarge} alt={"@"+user.login}></img>
+          <img className="avatar" src={user.userAvatarUrlLarge} alt=""></img>
           <div className="information">
-            {user.name ? <h3 className="name">{user.name}</h3> : null}
+            {!!user.name && <h3 className="name">{user.name}</h3>}
             <div className="button">@{user.login}</div>
-            {user.thanksCount > 0 ? <p className="thanks">{user.userThanks} <span className="emoji sparkling_heart"></span></p> : null}
-            {user.description ? <p className="description" dangerouslySetInnerHTML={{__html: user.truncatedDescriptionHtml}}></p> : null}
+            {!!user.thanksCount && <p className="thanks">{user.userThanks} <span className="emoji sparkling_heart"></span></p>}
+            {!!user.description && <p className="description" dangerouslySetInnerHTML={{__html: user.truncatedDescriptionHtml}}></p>}
           </div>
         </div>
       </div>
