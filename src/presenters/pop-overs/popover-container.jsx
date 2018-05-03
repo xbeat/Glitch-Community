@@ -27,7 +27,7 @@ export default class PopoverContainer extends React.Component {
     this.setState({visible: false});
   }
   
-  toggle(event) {
+  toggle() {
     this.setState({visible: !this.state.visible});
   }
 
@@ -40,10 +40,15 @@ export default class PopoverContainer extends React.Component {
       </span>
     );
     
+    // The rest of this logic sets up and configures the onClickOutside wrapper
+    // https://github.com/Pomax/react-onclickoutside
+
+    // We do extra work with disableOnClickOutside and handleClickOutside
+    // to prevent event bindings frto occur until the popover is visible.
     const clickOutsideConfig = {
-      handleClickOutside: () => this.handleClickOutside,
-      excludeScrollbar: true,
-    };
+       handleClickOutside: () => this.handleClickOutside,
+       excludeScrollbar: true,
+    }
     const MonitoredComponent = onClickOutside(Children, clickOutsideConfig);
     
     return (
