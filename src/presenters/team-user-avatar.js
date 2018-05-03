@@ -1,5 +1,3 @@
-const Observable = require('o_0');
-
 import UserInfoPop from './pop-overs/user-info-pop.jsx';
 import Reactlet from "./reactlet";
 import TeamUserTemplate from '../templates/includes/team-user-avatar'; // rename
@@ -9,7 +7,6 @@ export default function(application, user) {
   var self = { 
 
     team: application.team,
-    userInfoPopVisible: Observable(false),
     
     hiddenUnlessUserInfoPopVisible() {
       if (!self.userInfoPopVisible()) {

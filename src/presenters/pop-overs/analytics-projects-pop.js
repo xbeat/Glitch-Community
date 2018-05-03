@@ -1,7 +1,7 @@
 import Observable from 'o_0';
 
 import AnalyticsProjectsPopTemplate from '../../templates/pop-overs/analytics-projects-pop';
-import ProjectResultPresenter from '../project-result-item';
+//import ProjectResultPresenter from '../project-result';
 
 export default function(application, analytics) {
 
@@ -10,7 +10,7 @@ export default function(application, analytics) {
     application,  
     teamProjects: Observable(application.team().projects()),
     analytics,
-    ProjectResultPresenter,
+    //    ProjectResultPresenter,
     
     stopPropagation(event) {
       return event.stopPropagation();

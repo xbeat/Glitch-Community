@@ -13,7 +13,6 @@ import Project from '../../models/project';
 import TeamTemplate from '../../templates/pages/team';
 import LayoutPresenter from '../layout';
 import AddTeamUserPopPresenter from '../pop-overs/add-team-user-pop';
-import AddTeamProjectPopPresenter from '../pop-overs/add-team-project-pop';
 import TeamUserPresenter from '../team-user-avatar';
 import AnalyticsPresenter from '../analytics';
 

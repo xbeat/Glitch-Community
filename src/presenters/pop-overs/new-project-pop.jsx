@@ -5,9 +5,9 @@ const NewProjectPop = ({newProjects}) => (
   <div className="pop-over new-project-pop">
     <section className="pop-over-actions results-list">
       <ul className="results">
-        { newProjects.map((project, key) => (
-          <a href={project.url}>
-            <ProjectResultItem key={key} {...project}/>
+        { newProjects.map((project) => (
+          <a key={project.id} href={project.url}>
+            <ProjectResultItem {...project}/>
           </a>
         ))}
       </ul>

@@ -36,7 +36,7 @@ const SignInPop = () => (
   </div>
 );
 
-const SignInPopContainer = ({togglePopover, visible}) => (
+const SignInPopContainerInnards = ({togglePopover, visible}) => (
   <React.Fragment>
     <button className="button button-small" onClick={togglePopover}>Sign in</button>
     {visible && <SignInPop/>}
@@ -48,10 +48,10 @@ SignInPopContainer.propTypes = {
   visible: PropTypes.bool.isRequired,
 };
 
-export default function() {
+export default function SignInPopContainer() {
   return (
     <PopoverContainer>
-      <SignInPopContainer/>
+      {SignInPopContainerInnards}
     </PopoverContainer>
   );
 }

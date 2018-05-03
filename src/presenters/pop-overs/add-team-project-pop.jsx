@@ -39,7 +39,6 @@ export class AddTeamProjectPop extends React.Component {
     if(!query) {
       return;
     }
-    const MAX_RESULTS = 20;
     this.setState({isSearching: true});
     this.props.api(source).get(`projects/search?q=${query}`)
       .then(({data}) => {

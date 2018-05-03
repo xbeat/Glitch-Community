@@ -1,4 +1,4 @@
-import ProjectResultTemplate from '../templates/includes/project-result-item';
+import ProjectResultItemTemplate from '../templates/includes/project-result-item';
 
 import UsersList from "./users-list.jsx";
 import Reactlet from "./reactlet";
@@ -79,11 +79,5 @@ export default function(application, project, options, analytics) {
       return event.preventDefault();
     },
   };
-    
-<<<<<<< HEAD:src/presenters/project-result-item.js
   return ProjectResultItemTemplate(self);
-};
-=======
-  return ProjectResultTemplate(self);
 }
->>>>>>> future-riddle:src/presenters/project-result.js
