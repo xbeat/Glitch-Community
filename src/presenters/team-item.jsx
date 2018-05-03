@@ -24,18 +24,6 @@ export function TeamItemPresenter(application, team) {
       };
       return Reactlet(UsersList, props);
     },
-    
-    url() {
-      return team.url();
-    },
-    
-    coverUrl() {
-      return team.coverUrl('small');
-    },
-
-    coverColor() {
-      return team.coverColor();
-    },
 
     thanks() {
       return team.teamThanks();
@@ -43,10 +31,6 @@ export function TeamItemPresenter(application, team) {
     
     users() {
       return team.users();
-    },
-    
-    avatarUrl() {
-      return team.teamAvatarUrl();
     },
 
     hiddenUnlessThanks() {
@@ -89,6 +73,10 @@ export default function TeamItem({team}) {
     <a href={team.url}>
       <div className="item" style={style}>
         <div className="content">
+          <img className="avatar" src={team.teamAvatarUrl} alt=""></img>
+          <div className="information">
+            <div className="button"></div>
+          </div>
         </div>
       </div>
     </a>
@@ -96,6 +84,10 @@ export default function TeamItem({team}) {
 }
 TeamItem.propTypes = {
   team: PropTypes.shape({
+    coverColor: PropTypes.string.isRequired,
+    coverUrlSmall: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    teamAvatarUrl: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
   }),
 };

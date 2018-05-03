@@ -190,10 +190,11 @@ export default Team = function(I, self) {
     
     asProps() {
       return {
+        coverColor: self.coverColor(),
+        coverUrlSmall: self.coverUrl('small'),
         id: self.id(),
+        teamAvatarUrl: self.teamAvatarUrl(),
         url: self.url(),
-        backgroundColor: self.backgroundColor(),
-        backgroundUrl: self.backgroundUrl(),
       };
     },
   });
