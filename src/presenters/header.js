@@ -1,8 +1,8 @@
 /* global analytics */
 
-const moment = require('moment');
+import moment from 'moment-mini';
 
-const HeaderTemplate = require("../templates/includes/header");
+import HeaderTemplate from '../templates/includes/header';
 
 const ProjectModel = require("../models/project");
 
@@ -11,7 +11,7 @@ import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
 import Reactlet from "./reactlet";
 
-module.exports = function(application) {
+export default function(application) {
   
   const getTeamsPojo = function(teams) { 
     
@@ -34,6 +34,7 @@ module.exports = function(application) {
 
     application,
     baseUrl: application.normalizedBaseUrl(),
+<<<<<<< HEAD
       
     toggleSignInPopVisible(event) {
       application.signInPopVisibleOnHeader.toggle();
@@ -65,6 +66,12 @@ module.exports = function(application) {
     userAvatar() {
       return application.currentUser().avatarUrl();
     },
+=======
+  
+    hiddenUnlessUserIsExperienced() {
+      if (!application.currentUser().isAnExperiencedUser()) { return 'hidden'; }
+    },
+>>>>>>> future-riddle
 
     logo() {
       const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
@@ -117,14 +124,16 @@ module.exports = function(application) {
       return Reactlet(NewProjectPop, {newProjects});
     },
 
-    UserOptionsPop(visible) {
+    UserOptionsPop() {
+      const user = application.currentUser();
+      if(!user.fetched()) {
+        return;
+      }
       const props = {
-        visible,
-        teams: getTeamsPojo(application.currentUser().teams()),
-        profileLink: `/@${application.currentUser().login()}`,
-        avatarUrl: application.currentUser().avatarUrl(),
+        teams: getTeamsPojo(user.teams()),
+        profileLink: `/@${user.login()}`,
+        avatarUrl: user.avatarUrl(),
         showNewStuffOverlay() {
-          application.userOptionsPopVisible(false);
           return application.overlayNewStuffVisible(true);
         },
         signOut() {
@@ -135,7 +144,7 @@ module.exports = function(application) {
         },
       };
 
-      return Reactlet(UserOptionsPop, props);
+      return Reactlet(UserOptionsPop, props, "widdershins");
     },
     
     submit(event) {
@@ -146,4 +155,4 @@ module.exports = function(application) {
   };
         
   return HeaderTemplate(self);
-};
+}

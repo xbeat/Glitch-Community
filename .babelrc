@@ -5,5 +5,8 @@
       "es2017": false,
     }],
     "react",
-  ]
+  ],
+  "plugins": [
+    "lodash",
+  ],
 }

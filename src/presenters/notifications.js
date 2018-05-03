@@ -1,8 +1,8 @@
-const NotificationsTemplate = require("../templates/includes/notifications");
+import NotificationsTemplate from '../templates/includes/notifications';
 
 const animationEnd = 'webkitAnimationEnd oanimationend msAnimationEnd animationend';
 
-module.exports = function(application) {
+export default function(application) {
 
   // defined as observables in application.coffee
   const notificationTypes = [
@@ -42,4 +42,4 @@ module.exports = function(application) {
   }
 
   return NotificationsTemplate(self);
-};
+}

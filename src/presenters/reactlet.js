@@ -3,7 +3,8 @@
 
 /* globals Set */
 
-const ReactletTemplate = require("../templates/reactlet");
+import ReactletTemplate from '../templates/reactlet';
+
 import {render} from 'react-dom';
 import React from 'react';
 let anchorId = 1;
@@ -11,8 +12,8 @@ let stack = [];
 let distinctIds = new Set();
 let batchPending = false;
 
-module.exports = function(Component, props, guid=null) {
-  const id = guid || `reactlet-${Component.name}-${anchorId++}`;
+export default function(Component, props, guid=null) {
+  const id = guid || `reactlet-${Component.name || "anon"}-${anchorId++}`;
   
   // Rather than rendering immediately, 
   // collect the invocations into a stack.
@@ -60,4 +61,4 @@ module.exports = function(Component, props, guid=null) {
   }
 
   return ReactletTemplate({id: id});
-};
+}

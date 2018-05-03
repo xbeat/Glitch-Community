@@ -1,13 +1,14 @@
-const Layout = require("../templates/layout");
+import Layout from '../templates/layout';
+import Header from './header';
+import Footer from './footer.jsx';
+import OverlayProject from './overlays/overlay-project';
+import OverlayVideo from './overlays/overlay-video';
+import Notifications from './notifications';
+import NewStuffPresenter from './overlays/new-stuff';
 
-const Header = require("./header");
-const Footer = require("../templates/includes/footer");
-const OverlayProject = require("./overlays/overlay-project");
-const OverlayVideo = require("./overlays/overlay-video");
-const Notifications = require("./notifications");
-const NewStuffPresenter = require("./overlays/new-stuff");
+import Reactlet from './reactlet';
 
-module.exports = (application, content) =>
+export default (application, content) =>
 
   Layout({
 
@@ -15,11 +16,10 @@ module.exports = (application, content) =>
     
     content,
 
-    footer: Footer(application),
+    footer: Reactlet(Footer),
     
     overlayProject: OverlayProject(application),
     overlayVideo: OverlayVideo(application),
     notifications: Notifications(application),
     newStuff: NewStuffPresenter(application),
-  })
-;
+  });

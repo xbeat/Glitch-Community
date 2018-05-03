@@ -1,20 +1,22 @@
-const Project = require("../../models/project");
-const Observable = require('o_0');
-import debounce from 'lodash-es/debounce';
-const md = require('markdown-it')({
+import Project from '../../models/project';
+import Observable from 'o_0';
+import {debounce} from 'lodash';
+import mdFactory from 'markdown-it';
+const md = mdFactory({
   breaks: true,
   linkify: true,
   typographer: true}).disable(['image']);
 
-const UserTemplate = require("../../templates/pages/user");
-const DeletedProjectsTemplate = require("../../templates/deleted-projects");
-const LayoutPresenter = require("../layout");
+import assets from '../../utils/assets';
+import UserTemplate from '../../templates/pages/user';
+import DeletedProjectsTemplate from '../../templates/deleted-projects';
+import LayoutPresenter from '../layout';
 
 import EntityPageProjects from "../entity-page-projects.jsx";
 import Reactlet from "../reactlet";
 
-module.exports = function(application, userLoginOrId) {
-  const assetUtils = require('../../utils/assets')(application);
+export default function(application, userLoginOrId) {
+  const assetUtils = assets(application);
 
   var self = {
 
@@ -350,4 +352,4 @@ module.exports = function(application, userLoginOrId) {
   const content = UserTemplate(self);
   
   return LayoutPresenter(application, content);
-};
+}

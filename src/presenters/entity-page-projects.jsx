@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
 import Observable from "o_0";
-import debounce from 'lodash-es/debounce';
+import {debounce} from 'lodash';
 
 
 /* globals Set */
@@ -17,6 +17,7 @@ const projectStateFromModels = (projectsModel, pinsModel) => {
 };
 
 export class EntityPageProjectsContainer extends React.Component {
+  
   constructor(props) {
     super(props);
      
@@ -54,6 +55,7 @@ export class EntityPageProjectsContainer extends React.Component {
     return <EntityPageProjects {...this.props} {...this.state}/>;
   }
 }
+
 EntityPageProjectsContainer.propTypes = {
   projectsObservable: PropTypes.func.isRequired,
   pinsObservable: PropTypes.func.isRequired,
@@ -81,7 +83,6 @@ const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects,
 };
 
 EntityPageProjects.propTypes = {
-  recentProjects: PropTypes.array.isRequired,
   pinnedProjects: PropTypes.array.isRequired,
   isAuthorizedUser: PropTypes.bool.isRequired,
 };

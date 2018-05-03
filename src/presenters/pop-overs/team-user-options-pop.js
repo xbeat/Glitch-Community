@@ -1,11 +1,12 @@
-//temp
+import UserResultPresenter from '../user-result';
 
-module.exports = function(application, user) {
+export default function(application, user) {
 
   return {
   
     application,
     user,
+    UserResultPresenter,
 
     stopPropagation(event) {
       return event.stopPropagation();
@@ -43,5 +44,5 @@ module.exports = function(application, user) {
       if (!user.isCurrentUser(application)) { return 'hidden'; }
     },
   };
-};
+}
 

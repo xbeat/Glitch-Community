@@ -5,9 +5,9 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const UserTemplate = require("../templates/includes/user-item");
+import UserTemplate from '../templates/includes/user-item';
 
-module.exports = function(application, user) {
+export default function(application, user) {
 
   var self = {
     application,
@@ -66,4 +66,4 @@ module.exports = function(application, user) {
   };
 
   return UserTemplate(self);
-};
+}

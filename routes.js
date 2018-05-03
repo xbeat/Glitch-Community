@@ -3,7 +3,7 @@ const fs = require("fs");
 const axios = require("axios");
 const util = require("util");
 const express = require('express');
-const CACHE_INTERVAL = 1000 * 60 * 30; // 30 minutes
+const CACHE_INTERVAL = 1000 * 60 * 10; // 10 minutes
 
 const fs_writeFile = util.promisify(fs.writeFile);
 
@@ -29,8 +29,14 @@ const updateCache = async type => {
   });
   let json = response.data;
   
+  if(type === 'teams') {
+    let teams = JSON.parse(json);
+    let reduced = teams.map(({id, name, url}) => ({id, name, url}));
+    json = JSON.stringify(reduced);
+  }
+  
   try {
-    let fileContents = `module.exports = ${json}`
+    let fileContents = `export default ${json}`
     await fs_writeFile(`./src/cache/${type}.js`, fileContents);
     console.log(`☂️ ${type} re-cached`);
   } catch (error) {

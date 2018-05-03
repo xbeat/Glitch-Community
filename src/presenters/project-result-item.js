@@ -1,10 +1,9 @@
-// temp
-const ProjectResultItemTemplate = require("../templates/includes/project-result-item");
+import ProjectResultTemplate from '../templates/includes/project-result-item';
 
 import UsersList from "./users-list.jsx";
 import Reactlet from "./reactlet";
 
-module.exports = function(application, project, options, analytics) {
+export default function(application, project, options, analytics) {
 
   options = options || {};
 
@@ -81,5 +80,10 @@ module.exports = function(application, project, options, analytics) {
     },
   };
     
+<<<<<<< HEAD:src/presenters/project-result-item.js
   return ProjectResultItemTemplate(self);
 };
+=======
+  return ProjectResultTemplate(self);
+}
+>>>>>>> future-riddle:src/presenters/project-result.js

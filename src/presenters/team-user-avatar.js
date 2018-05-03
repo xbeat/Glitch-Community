@@ -1,20 +1,16 @@
-const TeamUserTemplate = require("../templates/includes/team-user-avatar"); // rename
 const Observable = require('o_0');
-
-// const TeamUserOptionsPop = require("../templates/pop-overs/team-user-options-pop");
-// const TeamUserOptionsPopPresenter = require('./pop-overs/team-user-options-pop');
 
 import UserInfoPop from './pop-overs/user-info-pop.jsx';
 import Reactlet from "./reactlet";
+import TeamUserTemplate from '../templates/includes/team-user-avatar'; // rename
 
-module.exports = function(application, user) {
+export default function(application, user) {
 
   var self = { 
 
     team: application.team,
     userInfoPopVisible: Observable(false),
-    // teamUserOptionsPopPresenter: TeamUserOptionsPopPresenter(application, user),
-
+    
     hiddenUnlessUserInfoPopVisible() {
       if (!self.userInfoPopVisible()) {
         return 'hidden';
@@ -25,10 +21,6 @@ module.exports = function(application, user) {
       application.closeAllPopOvers();
       event.stopPropagation();
       self.userInfoPopVisible.toggle();
-      // const avatar = $(event.target).closest('.opens-pop-over');
-
-      // TODO instead of disposable, put the element under the avatar
-      // return avatar[0].appendChild(TeamUserOptionsPop(self.teamUserOptionsPopPresenter));
     },
 
     UserInfoPop() {
@@ -84,4 +76,4 @@ module.exports = function(application, user) {
   };
 
   return TeamUserTemplate(self);
-};
+}

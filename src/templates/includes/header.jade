@@ -14,15 +14,7 @@ header(role="banner")
         =@NewProjectPop
     
     span(class=@hiddenIfSignedIn)
-      button.button.button-small.opens-pop-over(click=@toggleSignInPopVisible) Sign in
-      span(class=@hiddenUnlessSignInPopVisible)
-        =@SignInPop
-    
+      =@SignInPop
     a(href="https://glitch.com/edit/" data-track="resume coding" class=@hiddenUnlessSignedIn)
       .button.button-small.button-cta Resume Coding
-
-    .button.user-options-pop-button.opens-pop-over(class=@hiddenUnlessSignedIn data-tooltip="User options" data-tooltip-right=true)
-      button.user(click=@toggleUserOptionsPopVisible)
-        img(src=@userAvatar width=30 height=30 alt="User options")
-        span.down-arrow.icon
-      = @UserOptionsPop(@application.userOptionsPopVisible())
+    = @UserOptionsPop

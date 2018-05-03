@@ -11,21 +11,20 @@ Example:
 },
 */
 
-module.exports =
-  [
-    {
-      title: '\'faithful-violet\' by mapk',
-      img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ffaithful-violet.jpg?1524500256206',
-      link: 'https://faithful-violet.glitch.me'
-    }
-    , {
-      title: '\'emoji-garden\' by Monica Dinculescu',
-      img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Femoji-garden.jpg?1524500256325",
-      link: 'https://emoji-garden.glitch.me'
-    }
-    , {
-      title: '\'molnar-x-ashby\' by Sean Catangui',
-      img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmolnar-x-ashby.jpg?1524500256073",
-      link: 'https://molnar-x-ashby.glitch.me'
-    }   
-  ];
+export default [
+  {
+    title: '"Speech Synthesis" by ericandrewlewis',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fspeech-synthesis-api-voices-demo.jpg?1525087633374',
+    link: 'https://speech-synthesis-api-voices-demo.glitch.me/'
+  }
+  , {
+    title: '"art-connoisseur" by oa495',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fart-connoisseur.jpg?1525087810179",
+    link: 'http://art-connoisseur.glitch.me'
+  }
+  , {
+    title: '"Biscuit Tin-der" by thisisjofrank',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fbiscuit-tinder.jpg?1525087899535",
+    link: 'https://biscuittinder.glitch.me'
+  }   
+];

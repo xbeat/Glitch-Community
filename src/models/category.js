@@ -13,9 +13,9 @@ If the id property is not given the model is not cached.
 let Category;
 const cache = {};
 
-const Model = require('./model');
+import Model from './model';
 
-module.exports = (Category = function(I, self) {
+export default Category = function(I, self) {
 
   if (I == null) { I = {}; }
   if (self == null) { self = Model(I); }
@@ -32,6 +32,18 @@ module.exports = (Category = function(I, self) {
     url: undefined,
     projects: [],
   });
+  
+  self.asProps = () => ({
+    id: self.id(),
+    avatarUrl: self.avatarUrl(),
+    backgroundColor: self.backgroundColor(),
+    color: self.color(),
+    description: self.description(),
+    name: self.name(),
+    url: self.url(),
+    projects: self.projects.map(projectModel => projectModel.asProps()),
+  });
+                        
 
   self.attrObservable(...Array.from(Object.keys(I) || []));
   
@@ -44,36 +56,15 @@ module.exports = (Category = function(I, self) {
   // console.log '☎️ category cache', cache
 
   return self;
-});
+};
 
-
-Category.getRandomCategories = function(api, numberOfCategories, projectsPerCategory) {
-  let categoriesPath;
-  console.log('🎷🎷🎷 get random categories');
-  if (numberOfCategories) {
-    categoriesPath = "categories/random?numCategories=2";
-  } else if (projectsPerCategory) {
-    categoriesPath = "categories/random?projectsPerCategory=2";
-  } else {
-    categoriesPath = "categories/random";
-  }
+Category.getRandomCategories = function(api) {
+  const categoriesPath = "categories/random";
   return api.get(categoriesPath)
     .then(({data}) =>
       data.map(categoryDatum => Category(categoryDatum).update(categoryDatum))
     );
 };
-
-/*
-
-Category.getCategories = function(application) {
-  console.log('🎷🎷🎷 get categories');
-  const categoriesPath = "categories";
-  return application.api().get(categoriesPath)
-    .then(({data}) =>
-      data.map(categoryDatum => Category(categoryDatum).update(categoryDatum))
-    );
-};
-*/
 
 Category.updateCategory = function(application, id) {
   const categoriesPath = `categories/${id}`;
@@ -90,4 +81,4 @@ Category.updateCategory = function(application, id) {
 Category._cache = cache;
 
 // Circular dependencies must go below module.exports
-var Project = require('./project');
+import Project from './project';

@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import PopoverContainer from './popover-container.jsx';
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
 function githubAuthLink() {
@@ -34,4 +36,22 @@ const SignInPop = () => (
   </div>
 );
 
-export default SignInPop;
+const SignInPopContainer = ({togglePopover, visible}) => (
+  <React.Fragment>
+    <button className="button button-small" onClick={togglePopover}>Sign in</button>
+    {visible && <SignInPop/>}
+  </React.Fragment>
+);
+
+SignInPopContainer.propTypes = {
+  togglePopover: PropTypes.func.isRequired,
+  visible: PropTypes.bool.isRequired,
+};
+
+export default function() {
+  return (
+    <PopoverContainer>
+      <SignInPopContainer/>
+    </PopoverContainer>
+  );
+}

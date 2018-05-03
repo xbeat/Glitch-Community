@@ -2,7 +2,7 @@
 
 // 🐈
 
-module.exports = function() {
+export default function() {
   var self = {
 
     // equal to most newest update.id
@@ -64,4 +64,4 @@ No forever-💔 here, every project has a second chance.
 
 
   return self;
-};
+}

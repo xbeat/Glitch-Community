@@ -1,21 +1,20 @@
-const IndexTemplate = require("../../templates/pages/index");
-const LayoutPresenter = require("../layout");
-const HeaderPresenter = require("../header");
-const FeaturedCollectionPresenter = require("../featured-collection");
-const RecentProjectsPresenter = require("../recent-projects");
-const QuestionsPresenter = require("../questions");
-const CategoryPresenter = require("../category");
-const CategoryModel = require("../../models/category");
-const ProjectModel = require("../../models/project");
-const Reactlet = require("../reactlet");
-const Observable = require('o_0');
-const EmbedHtml = require('../../curated/embed');
+import IndexTemplate from '../../templates/pages/index';
+import LayoutPresenter from '../layout';
+import HeaderPresenter from '../header';
+import FeaturedCollectionPresenter from '../featured-collection';
+import RecentProjectsPresenter from '../recent-projects';
+import QuestionsPresenter from '../questions';
+import CategoryModel from '../../models/category';
+import ProjectModel from '../../models/project';
+import Reactlet from '../reactlet';
+import EmbedHtml from '../../curated/embed';
 
 import Categories from "../categories.jsx";
+import RandomCategories from '../random-categories.jsx';
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
 
-module.exports = function(application) {
+export default function(application) {
   console.log("Presented index");
 
   const self = {
@@ -53,6 +52,7 @@ module.exports = function(application) {
     featuredCollections() {
       return application.featuredCollections.map(collection => FeaturedCollectionPresenter(application, collection));
     },
+<<<<<<< HEAD
 
     randomCategoriesObservable: Observable([]),
 
@@ -67,6 +67,15 @@ module.exports = function(application) {
       }
 
       return self.randomCategoriesObservable.map((categoryModel) =>CategoryPresenter(application, categoryModel));
+=======
+    
+    randomCategories() {
+      const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
+        getCategories: () => CategoryModel.getRandomCategories(application.api()),
+      };
+      return Reactlet(RandomCategories, props);
+>>>>>>> future-riddle
     },
 
     embed() {
@@ -99,4 +108,4 @@ module.exports = function(application) {
   const content = IndexTemplate(self);
 
   return LayoutPresenter(application, content);
-};
+}

@@ -4,6 +4,7 @@ dependencies:
   babel-core: 6.26.0
   babel-eslint: 8.2.3
   babel-loader: 7.1.4
+  babel-plugin-lodash: 3.3.2
   babel-preset-env: 1.6.1
   babel-preset-modern-browsers: 11.0.1
   babel-preset-react: 6.24.1
@@ -16,11 +17,12 @@ dependencies:
   eslint-plugin-react: 7.7.0
   express: 4.16.3
   jadelet: 0.8.0-pre.11
-  lodash-es: 4.17.10
+  lodash: 4.17.10
+  lodash-webpack-plugin: 0.11.5
   markdown-it: 8.4.1
   markdown-it-emoji: 1.4.0
   markdown-it-sanitizer: 0.4.3
-  moment: 2.22.1
+  moment-mini: 2.19.4
   nodemon: 1.17.3
   o_0: 0.4.0-pre.0
   prop-types: 15.6.1
@@ -29,10 +31,11 @@ dependencies:
   randomcolor: 0.5.3
   react: 16.3.2
   react-dom: 16.3.2
+  react-onclickoutside: 6.7.1
   stylus: 0.54.5
   uglifyjs-webpack-plugin: 1.2.5
   webpack: 4.6.0
-  webpack-cli: 2.0.14
+  webpack-cli: 2.0.15
 packages:
   /@babel/code-frame/7.0.0-beta.44:
     dependencies:
@@ -412,7 +415,7 @@ packages:
       integrity: sha1-7GphrlZIDAw8skHJVhjiCJL5Zyo=
   /async/2.6.0:
     dependencies:
-      lodash: 4.17.5
+      lodash: 4.17.10
     dev: false
     resolution:
       integrity: sha512-xAfGg1/NTLBBKlHFmnd7PlmUW9KhVQIUuSrYem9xzFUZy13ScvtyGGejaae9iAVRiRq9+Cx7DPFaAAhCpyxyPw==
@@ -597,6 +600,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-HssnaJydJVE+rbyZFKc/VAi+enY=
+  /babel-helper-module-imports/7.0.0-beta.3:
+    dependencies:
+      babel-types: 7.0.0-beta.3
+      lodash: 4.17.10
+    dev: false
+    resolution:
+      integrity: sha512-bdPrIXbUTYfREhRhjbN8SstwQaj0S4+rW4PKi1f2Wc5fizSh0hGYkfXUdiSSOgyTydm956tAyz4FrG61bqdQyw==
   /babel-helper-optimise-call-expression/6.24.1:
     dependencies:
       babel-runtime: 6.26.0
@@ -665,6 +675,16 @@ packages:
     dev: false
     resolution:
       integrity: sha1-NRV7EBQm/S/9PaP3XH0ekYNbv4o=
+  /babel-plugin-lodash/3.3.2:
+    dependencies:
+      babel-helper-module-imports: 7.0.0-beta.3
+      babel-types: 6.26.0
+      glob: 7.1.2
+      lodash: 4.17.10
+      require-package-name: 2.0.1
+    dev: false
+    resolution:
+      integrity: sha512-lNsptTRfc0FTdW56O087EiKEADVEjJo2frDQ97olMjCKbRZfZPu7MvdyxnZLOoDpuTCtavN8/4Zk65x4gT+C3Q==
   /babel-plugin-syntax-async-functions/6.13.0:
     dev: false
     resolution:
@@ -1167,6 +1187,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-o7Bz+Uq0nrb6Vc1lInozQ4BjJJc=
+  /babel-types/7.0.0-beta.3:
+    dependencies:
+      esutils: 2.0.2
+      lodash: 4.17.10
+      to-fast-properties: 2.0.0
+    dev: false
+    resolution:
+      integrity: sha512-36k8J+byAe181OmCMawGhw+DtKO7AwexPVtsPXoMfAkjtZgoCX3bEuHWfdE5sYxRM8dojvtG/+O08M0Z/YDC6w==
   /babylon/6.18.0:
     dev: false
     resolution:
@@ -1177,6 +1205,12 @@ packages:
       node: '>=4.2.0'
     resolution:
       integrity: sha512-5Hlm13BJVAioCHpImtFqNOF2H3ieTOHd0fmFGMxOJ9jgeFqeAwsv3u5P5cR7CSeFrkgHsT19DgFJkHV0/Mcd8g==
+  /babylon/7.0.0-beta.46:
+    dev: false
+    engines:
+      node: '>=6.0.0'
+    resolution:
+      integrity: sha512-WFJlg2WatdkXRFMpk7BN/Uzzkjkcjk+WaqnrSCpay+RYl4ypW9ZetZyT9kNt22IH/BQNst3M6PaaBn9IXsUNrg==
   /balanced-match/1.0.0:
     dev: false
     resolution:
@@ -1610,14 +1644,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-/xnt6Kml5XkyQUewwR8PvLq+1jk=
-  /cliui/4.0.0:
+  /cliui/4.1.0:
     dependencies:
       string-width: 2.1.1
       strip-ansi: 4.0.0
       wrap-ansi: 2.1.0
     dev: false
     resolution:
-      integrity: sha512-nY3W5Gu2racvdDk//ELReY+dHjb9PlIcVDFXP72nVIhq2Gy3LuVXYwJoPVudwQnv1shtohpgkdCKT2YaKY0CKw==
+      integrity: sha512-4FG+RSG9DL7uEwRUZXZn3SS34DiDPfzP0VOiEwtUWlE+AR2EIg+hSyvrIgUUfhdgR/UkAeW2QHgeP+hWrXs7jQ==
   /clone-buffer/1.0.0:
     dev: false
     engines:
@@ -3068,7 +3102,7 @@ packages:
       lowercase-keys: 1.0.1
       p-cancelable: 0.3.0
       p-timeout: 1.2.1
-      safe-buffer: 5.1.1
+      safe-buffer: 5.1.2
       timed-out: 4.0.1
       url-parse-lax: 1.0.0
       url-to-options: 1.0.1
@@ -3092,7 +3126,7 @@ packages:
       p-cancelable: 0.4.1
       p-timeout: 2.0.1
       pify: 3.0.0
-      safe-buffer: 5.1.1
+      safe-buffer: 5.1.2
       timed-out: 4.0.1
       url-parse-lax: 3.0.0
       url-to-options: 1.0.1
@@ -3109,7 +3143,7 @@ packages:
       integrity: sha1-Dovf5NHduIVNZOBOp8AOKgJuVlg=
   /grouped-queue/0.3.3:
     dependencies:
-      lodash: 4.17.5
+      lodash: 4.17.10
     dev: false
     resolution:
       integrity: sha1-wWfSpTGcWg4JZO9qJbfC34mWyFw=
@@ -3384,7 +3418,7 @@ packages:
       cli-width: 2.2.0
       external-editor: 2.2.0
       figures: 2.0.0
-      lodash: 4.17.5
+      lodash: 4.17.10
       mute-stream: 0.0.7
       run-async: 2.3.0
       rxjs: 5.5.10
@@ -3883,7 +3917,7 @@ packages:
       babylon: 6.18.0
       colors: 1.2.1
       flow-parser: 0.70.0
-      lodash: 4.17.5
+      lodash: 4.17.10
       micromatch: 2.3.11
       node-dir: 0.1.8
       nomnom: 1.8.1
@@ -3901,10 +3935,10 @@ packages:
       babel-preset-es2015: 6.24.1
       babel-preset-stage-1: 6.24.1
       babel-register: 6.26.0
-      babylon: 7.0.0-beta.44
+      babylon: 7.0.0-beta.46
       colors: 1.2.1
       flow-parser: 0.70.0
-      lodash: 4.17.5
+      lodash: 4.17.10
       micromatch: 2.3.11
       neo-async: 2.5.1
       node-dir: 0.1.8
@@ -4136,10 +4170,18 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-K1aLJl7slExtnA3pw9u7ygNUzY4=
-  /lodash-es/4.17.10:
+  /lodash-webpack-plugin/0.11.5:
+    dependencies:
+      lodash: 4.17.10
+    dev: false
+    peerDependencies:
+      webpack: ^2.0.0 || ^3.0.0 || ^4.0.0
+    resolution:
+      integrity: sha512-QWfEIYxpixOdbd6KBe5g6MDWcyTgP3trDXwKHFqTlXrWiLcs/67fGQ0IWeRyhWlTITQIgMpJAYd2oeIztuV5VA==
+  /lodash/4.17.10:
     dev: false
     resolution:
-      integrity: sha512-iesFYPmxYYGTcmQK0sL8bX3TGHyM6b2qREaB4kamHfQyfPJP0xgoGxp19nsH16nsfquLdiyKyX3mQkfiSGV8Rg==
+      integrity: sha512-UejweD1pDoXu+AD825lWwp4ZGtSwgnpZxb3JDViD7StjQz+Nb/6l093lx4OQ0foGWNRoc19mWy7BzL+UAK2iVg==
   /lodash/4.17.5:
     dev: false
     resolution:
@@ -4450,10 +4492,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
-  /moment/2.22.1:
+  /moment-mini/2.19.4:
     dev: false
     resolution:
-      integrity: sha512-shJkRTSebXvsVqk56I+lkb2latjBs8I+pc2TzWc545y2iFnSjm7Wg0QMh+ZWcdSLQyGEau5jI8ocnmkyTgr9YQ==
+      integrity: sha512-Rr3HPAgdMLUqq6TjCLnKu4+l1dShsIdyzJnTAnJJYMJ4KrgNmyj25srIGLbZkZPzhDvMd+rwOvsgxUnTQGZdbQ==
   /move-concurrently/1.0.1:
     dependencies:
       aproba: 1.2.0
@@ -5362,6 +5404,13 @@ packages:
       react: ^16.0.0
     resolution:
       integrity: sha512-MMPko3zYncNrz/7gG17wJWUREZDvskZHXOwbttzl0F0L3wDmToyuETuo/r8Y5yvDejwYcRyWI1lvVBjLJWFwKA==
+  /react-onclickoutside/6.7.1:
+    dev: false
+    peerDependencies:
+      react: ^15.5.x || ^16.x
+      react-dom: ^15.5.x || ^16.x
+    resolution:
+      integrity: sha512-p84kBqGaMoa7VYT0vZ/aOYRfJB+gw34yjpda1Z5KeLflg70HipZOT+MXQenEhdkPAABuE2Astq4zEPdMqUQxcg==
   /react/16.3.2:
     dependencies:
       fbjs: 0.8.16
@@ -5376,7 +5425,7 @@ packages:
   /read-chunk/2.1.0:
     dependencies:
       pify: 3.0.0
-      safe-buffer: 5.1.1
+      safe-buffer: 5.1.2
     dev: false
     engines:
       node: '>=4'
@@ -5573,6 +5622,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-l/cXtp1IeE9fUmpsWqj/3aBVpNE=
+  /require-package-name/2.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-wR6XJ2tluOKSP3Xav1+y7ww4Qbk=
   /require-uncached/1.0.3:
     dependencies:
       caller-path: 0.1.0
@@ -5704,6 +5757,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-kKvNJn6Mm93gAczWVJg7wH+wGYWNrDHdWvpUmHyEsgCtIwwo3bqPtV4tR5tuPaUhTOo/kvhVwd8XwwOllGYkbg==
+  /safe-buffer/5.1.2:
+    dev: false
+    resolution:
+      integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
   /safe-regex/1.1.0:
     dependencies:
       ret: 0.1.15
@@ -6643,7 +6700,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-MGO0nVniCLFAQz1qv22zM02QPjcpAoJdy7ED0i3Zy7SY1IecgXCm460ib7H/Wq7e9oL5VL6S2BxaObxwIcag0g==
-  /webpack-cli/2.0.14:
+  /webpack-cli/2.0.15:
     dependencies:
       chalk: 2.4.0
       cross-spawn: 6.0.5
@@ -6659,7 +6716,7 @@ packages:
       jscodeshift: 0.5.0
       listr: 0.13.0
       loader-utils: 1.1.0
-      lodash: 4.17.5
+      lodash: 4.17.10
       log-symbols: 2.2.0
       mkdirp: 0.5.1
       p-each-series: 1.0.0
@@ -6677,7 +6734,7 @@ packages:
     peerDependencies:
       webpack: ^4.0.0
     resolution:
-      integrity: sha512-gRoWaxSi2JWiYsn1QgOTb6ENwIeSvN1YExZ+kJ0STsTZK7bWPElW+BBBv1UnTbvcPC3v7E17mK8hlFX8DOYSGw==
+      integrity: sha512-bjNeIUO51D4OsmZ5ufzcpzVoacjxfWNfeBZKYL3jc+EMfCME3TyfdCPSUoKiOnebQChfupQuIRpAnx7L4l3Hew==
   /webpack-sources/1.1.0:
     dependencies:
       source-list-map: 2.0.0
@@ -6825,7 +6882,7 @@ packages:
       integrity: sha1-nHtKgv1dWVsr8Xq23MQxNUMv40s=
   /yargs/11.1.0:
     dependencies:
-      cliui: 4.0.0
+      cliui: 4.1.0
       decamelize: 1.2.0
       find-up: 2.1.0
       get-caller-file: 1.0.2
@@ -6850,7 +6907,7 @@ packages:
       grouped-queue: 0.3.3
       inquirer: 3.3.0
       is-scoped: 1.0.0
-      lodash: 4.17.5
+      lodash: 4.17.10
       log-symbols: 2.2.0
       mem-fs: 1.1.3
       text-table: 0.2.0
@@ -6872,7 +6929,7 @@ packages:
       find-up: 2.1.0
       github-username: 4.1.0
       istextorbinary: 2.2.1
-      lodash: 4.17.5
+      lodash: 4.17.10
       make-dir: 1.2.0
       mem-fs-editor: 3.0.2
       minimist: 1.2.0
@@ -6899,6 +6956,7 @@ specifiers:
   babel-core: ^6.26.0
   babel-eslint: ^8.2.3
   babel-loader: ^7.1.4
+  babel-plugin-lodash: ^3.3.2
   babel-preset-env: ^1.6.1
   babel-preset-modern-browsers: ^11.0.1
   babel-preset-react: ^6.24.1
@@ -6911,11 +6969,12 @@ specifiers:
   eslint-plugin-react: ^7.7.0
   express: ^4.16.3
   jadelet: ^0.8.0-pre.11
-  lodash-es: ^4.17.10
+  lodash: ^4.17.10
+  lodash-webpack-plugin: ^0.11.5
   markdown-it: ^8.4.1
   markdown-it-emoji: ^1.4.0
   markdown-it-sanitizer: ^0.4.3
-  moment: ^2.22.1
+  moment-mini: ^2.19.4
   nodemon: ^1.17.3
   o_0: ^0.4.0-pre.0
   prop-types: ^15.6.1
@@ -6924,7 +6983,8 @@ specifiers:
   randomcolor: ^0.5.3
   react: ^16.3.2
   react-dom: ^16.3.2
+  react-onclickoutside: ^6.7.1
   stylus: ^0.54.5
   uglifyjs-webpack-plugin: ^1.2.5
   webpack: ^4.6.0
-  webpack-cli: ^2.0.14
+  webpack-cli: ^2.0.15

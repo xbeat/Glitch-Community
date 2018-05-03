@@ -1,12 +1,14 @@
-const LayoutPresenter = require("../layout");
-const SearchPageTemplate = require("../../templates/pages/search");
+import LayoutPresenter from '../layout';
+import SearchPageTemplate from '../../templates/pages/search';
+import TeamItemPresenter from '../team-item';
+import UserItemPresenter from '../user-item';
 
 import Categories from "../categories.jsx";
 import Reactlet from "../reactlet";
 import ProjectsList from "../projects-list.jsx";
 
 
-module.exports = function(application) {
+export default function(application) {
 
   const self = { 
 
@@ -14,6 +16,8 @@ module.exports = function(application) {
     searchResultsProjects: application.searchResultsProjects,
     searchResultsUsers: application.searchResultsUsers,
     searchResultsTeams: application.searchResultsTeams,
+    TeamItemPresenter,
+    UserItemPresenter,
     
     hiddenIfSearchResultsTeamsLoaded() {
       if (application.searchResultsTeamsLoaded()) { return 'hidden'; }
@@ -65,4 +69,4 @@ module.exports = function(application) {
   const content = SearchPageTemplate(self);
         
   return LayoutPresenter(application, content);
-};
+}

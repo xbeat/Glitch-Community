@@ -1,17 +1,15 @@
-const Observable = require('o_0');
-import debounce from 'lodash-es/debounce';
+import Observable from 'o_0';
+import {debounce} from 'lodash';
 
-const AddTeamUserTemplate = require("../../templates/pop-overs/add-team-user-pop");
+import AddTeamUserTemplate from '../../templates/pop-overs/add-team-user-pop';
+import UserResultPresenter from '../user-result';
 
-import UserResultItem from "../includes/user-result-item.jsx";
-import Reactlet from "../reactlet";
-
-
-module.exports = function(application) {
+export default function(application) {
 
   var self = {
   
     application,
+    UserResultPresenter,
   
     query: Observable(""),
 
@@ -82,4 +80,4 @@ module.exports = function(application) {
   };
             
   return AddTeamUserTemplate(self);
-};
+}
