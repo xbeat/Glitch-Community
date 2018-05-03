@@ -17,7 +17,7 @@ dialog.pop-over.results-list.analytics-projects-pop.disposable(click=@stopPropag
 
       - options = {}
       - analytics = @analytics
-      - context = @
+      //- context = @
       - @teamProjects().forEach (project) ->
         // = context.ProjectResultItem(project)
-        = context.ProjectResultItemPresenter(application, project, options, analytics)
+        = ProjectResultItemPresenter(application, project, options, analytics)
