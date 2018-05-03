@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import UsersList from '../users-list.jsx';
 
 const ProjectResultItem = (props) => {
+  console.log('🕶',props);
   const {domain, description, avatar, action, users} = props;
   
   return (

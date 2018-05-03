@@ -39,7 +39,7 @@ const UserInfoPop = (props) => {
         </a>
         <div className="info-container">
           <p className="name" title={user.name}>{user.name}</p>
-          <p className="user-login" title={user.login}>{user.login}</p>
+          <p className="user-login" title={user.login}>@{user.login}</p>
         </div>
         { user.thanksCount > 0 && <UserThanks thanks={user.userThanks} />}
       </section>
