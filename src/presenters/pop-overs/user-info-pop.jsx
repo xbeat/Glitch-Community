@@ -18,7 +18,20 @@ const RemoveFromTeam = ({action}) => (
   </section>
 );
 
+const UserActions = ({user}) => (
+  <section className="pop-over-actions">
+    <a href={user.link}>
+      <button className="button button-small has-emoji button-tertiary">
+        <span>Profile </span>
+        <img className="emoji avatar" src={user.avatar} alt="Your avatar"></img>
+      </button>
+    </a>
+  </section>
+);
+
 const UserInfoPop = (user) => (
+  
+  
   <dialog className="pop-over user-info-pop">
     <section className="pop-over-info">
       <a href={user.link}>
@@ -29,21 +42,25 @@ const UserInfoPop = (user) => (
         <p className="user-login" title={user.login}>{user.login}</p>
       </div>
       { user.thanksCount > 0 && <UserThanks thanks={user.thanksString} />}
-    </section>
-    
-
-    <section className="pop-over-actions">
-      <a href={user.link}>
-        <button className="button button-small has-emoji button-tertiary">
-          <span>Profile </span>
-          <img className="emoji avatar" src={user.avatar} alt="Your avatar"></img>
-        </button>
-      </a>
-    </section>
-
+    </section>    
+    <UserActions user={user} />
     { user.currentUserIsOnTeam === true && <RemoveFromTeam action={user.removeUserFromTeam} />}
   </dialog>
 );
+
+const NewProjectPopContainer = (props) => {
+  return (
+    <PopoverContainer>
+      {({visible, togglePopover}) => (
+        <div className="button-wrap">
+          <button className="button-small" data-track="open new-project pop" onClick={togglePopover}>New Project</button>
+          {visible && <NewProjectPop {...props}/>}
+        </div>
+      )}
+    </PopoverContainer>
+  );
+};
+
 
 UserInfoPop.propTypes = {
   id: PropTypes.number.isRequired,
@@ -66,4 +83,4 @@ UserInfoPop.defaultProps = {
   removeUserFromTeam: () => undefined
 };
 
-export default UserInfoPop;
+export default UserInfoPopContainer;
