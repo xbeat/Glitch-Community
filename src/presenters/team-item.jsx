@@ -81,9 +81,13 @@ export function TeamItemPresenter(application, team) {
 }
 
 export default function TeamItem({team}) {
+  const style = {
+    backgroundImage: `url('${team.coverUrlSmall}')`,
+    backgroundColor: team.coverColor,
+  };
   return (
     <a href={team.url}>
-      <div className="item">
+      <div className="item" style={style}>
         <div className="content">
         </div>
       </div>

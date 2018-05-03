@@ -192,6 +192,8 @@ export default Team = function(I, self) {
       return {
         id: self.id(),
         url: self.url(),
+        backgroundColor: self.backgroundColor(),
+        backgroundUrl: self.backgroundUrl(),
       };
     },
   });
