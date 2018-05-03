@@ -36,23 +36,22 @@ const SignInPop = () => (
   </div>
 );
 
-const SignInPopContainer = ({togglePopover, visible}) => {
-  return (
-    <React.Fragment>
-      <button className="button button-small" onClick={togglePopover}>Sign in</button>
-      {visible && <SignInPop/>}
-    </React.Fragment>
-  );
-}
+const SignInPopContainer = ({togglePopover, visible}) => (
+  <React.Fragment>
+    <button className="button button-small" onClick={togglePopover}>Sign in</button>
+    {visible && <SignInPop/>}
+  </React.Fragment>
+);
 
-SignInPopContainer.propTypes({
+SignInPopContainer.propTypes = {
   togglePopover: PropTypes.func.isRequired,
-  visible: Prop
+  visible: PropTypes.bool.isRequired,
+};
 
 export default function() {
   return (
     <PopoverContainer>
       <SignInPopContainer/>
     </PopoverContainer>
-  )
-};
+  );
+}

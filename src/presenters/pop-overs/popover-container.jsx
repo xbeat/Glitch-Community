@@ -34,11 +34,16 @@ export default class PopoverContainer extends React.Component {
   render() {
     // Invoke the children as a react component, passing them the toggle visibility controls.
     // The <span> is needed because onClickOutside doesn't support React.Fragment
-    const Children = () => (
-      <span>
-        <this.props.children togglePopover={this.toggle} visible={this.state.visible}/>
-      </span>
-    );
+    let Children = null;
+    if(typeof(this.props.children) === "function") {
+      Children = () => (
+        <span>
+          <this.props.children togglePopover={this.toggle} visible={this.state.visible}/>
+        </span>
+      );
+    } else {
+      const { children } = this.props;
+    }
     
     // The rest of this logic sets up and configures the onClickOutside wrapper
     // https://github.com/Pomax/react-onclickoutside
