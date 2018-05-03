@@ -45,6 +45,6 @@ O RLY?  YA RLY   NO WAI!
 
 #### Remixing this project
 
-Once you remix this project, it'll come straight to life! The only external dependency that doesn't remix cleanly is OAauth login -- see the [FAQ](https://glitch.com/edit/#!/community?path=FAQ.md) for a workaround.
+Once you remix this project, it'll come straight to life! The only external dependency that doesn't remix cleanly is OAuth login -- see the [FAQ](https://glitch.com/edit/#!/community?path=FAQ.md) for a workaround.
   
 
