@@ -40,7 +40,7 @@ export default function(application) {
     TeamUser(user) {
       const currentUserIsOnTeam = application.team().currentUserIsOnTeam(application);
       const props =  {
-        user: user,
+        user: user.asProps(),
         currentUserIsOnTeam: currentUserIsOnTeam,
         removeUserFromTeam: () => application.team().removeUser(application, user),
       };
@@ -49,7 +49,6 @@ export default function(application) {
     
     TeamUsers() {
       const users = application.team().users();
-      console.log('team users', users);
       return (
         users.map(user =>
           self.TeamUser(user)

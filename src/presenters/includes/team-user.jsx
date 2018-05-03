@@ -2,8 +2,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import PopoverContainer from '../pop-overs/popover-container.jsx';
 
 const TeamUser = (props) => {
+  console.log(props);
   return (
     <p>yolo</p>
   );
