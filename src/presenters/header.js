@@ -34,44 +34,10 @@ export default function(application) {
 
     application,
     baseUrl: application.normalizedBaseUrl(),
-<<<<<<< HEAD
-      
-    toggleSignInPopVisible(event) {
-      application.signInPopVisibleOnHeader.toggle();
-      return event.stopPropagation();
-    },
-
-    toggleUserOptionsPopVisible(event) {
-      application.userOptionsPopVisible.toggle();
-      return event.stopPropagation();
-    },
-    
-    toggleNewProjectPopVisible(event) {
-      application.newProjectPopVisible.toggle();      
-      return event.stopPropagation();
-    },
-
-    hiddenUnlessUserIsExperienced() {
-      if (!application.currentUser().isAnExperiencedUser()) { return 'hidden'; }
-    },
-
-    hiddenUnlessSignInPopVisible() {
-      if (!application.signInPopVisibleOnHeader()) { return 'hidden'; }
-    },
-
-    hiddenUnlessNewProjectPopVisible(event) {
-      if (!application.newProjectPopVisible()) { return 'hidden'; }
-    },
-    
-    userAvatar() {
-      return application.currentUser().avatarUrl();
-    },
-=======
   
     hiddenUnlessUserIsExperienced() {
       if (!application.currentUser().isAnExperiencedUser()) { return 'hidden'; }
     },
->>>>>>> future-riddle
 
     logo() {
       const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";

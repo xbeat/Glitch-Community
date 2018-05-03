@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import _ from 'lodash-es';
 import axios from 'axios';
 const { CancelToken } = axios;
 const source = CancelToken.source();
 
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import Loader from '../includes/loader.jsx';
-import debounce from 'lodash-es/debounce';
+import {debounce} from 'lodash';
 
 // I wonder if our entity models should be attached to the api object?
 // Seems like we'd want to pass them together most of the time.
