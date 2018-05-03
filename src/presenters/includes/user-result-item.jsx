@@ -12,11 +12,12 @@ const UserThanks = ({thanksCount}) => {
 };
 
 const UserResultItem = (props) => {
-  console.log('💣',props);
   const {user, action} = props;
   const {userAvatarUrl, name, login, thanksCount} = user;
+  console.log('💣', action);
+
   return (
-    <li className="result" tabIndex="0" onClick={() => action(props)} >
+    <li className="result" tabIndex="0" onClick={() => action()} >
       <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
       <div className="result-name" title={name}>{name}</div>
       <div className="result-description" title={login}>@{login}</div>
