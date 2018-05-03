@@ -187,6 +187,13 @@ export default Team = function(I, self) {
       application.searchResultsTeams.push(self);
       return application.searchResultsTeamsLoaded(true);
     },
+    
+    asProps() {
+      return {
+        id: self.id(),
+        url: self.url(),
+      };
+    },
   });
 
   if (I.id) {
