@@ -10,7 +10,6 @@ main.user-page.team-page(role="main")
 
         .user-avatar-container(class=@hiddenUnlessTeamFetched)
           .user-avatar(style=@teamAvatarStyle)
-            - # img(src="#{@teamAvatarUrl()}")
             button.button-small.button-tertiary.upload-avatar-button(class=@hiddenUnlessCurrentUserIsOnTeam click=@uploadAvatar) Upload Avatar
 
           .user-information
@@ -19,12 +18,8 @@ main.user-page.team-page(role="main")
                 img.verified(src=@verifiedImage class=@hiddenUnlessVerified)
 
             .users-information
-                // TODO remove this condition and display user info pops to all ppl (with stuff hidden to non members)
-              //- if @currentUserIsOnTeam()
               .users.team-users
                 = @TeamUsers
-              //- else
-              //= @TeamUsers
 
               span.add-user-container
                 button.button.button-small.button-tertiary.add-user.opens-pop-over(class=@hiddenUnlessCurrentUserIsOnTeam click=@toggleAddTeamUserPop) Add

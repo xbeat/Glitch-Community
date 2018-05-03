@@ -17,9 +17,10 @@ import AddTeamUserPopPresenter from '../pop-overs/add-team-user-pop';
 import AnalyticsPresenter from '../analytics';
 
 import Reactlet from "../reactlet";
-// import UsersList from "../users-list.jsx";
 import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProjectPop from "../pop-overs/add-team-project-pop.jsx";
+
+import TeamUser from "../includes/team-user.jsx";
 
 export default function(application) {
   const assetUtils = assets(application);
@@ -36,9 +37,24 @@ export default function(application) {
       return application.team().verifiedTooltip();
     },
 
+    TeamUser(user) {
+      const currentUserIsOnTeam = application.team().currentUserIsOnTeam(application);
+      const props =  {
+        user: user,
+        currentUserIsOnTeam: currentUserIsOnTeam,
+        removeUserFromTeam: () => application.team().removeUser(application, user),
+      };
+      return Reactlet(TeamUser, props); 
+    },
+    
     TeamUsers() {
       const users = application.team().users();
       console.log('team users', users);
+      return (
+        users.map(user =>
+          self.TeamUser(user)
+        )
+      );
       // return users.map(user => TeamUserPresenter(application, user));
       
     },

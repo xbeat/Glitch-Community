@@ -3,11 +3,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TeamUserAvatar = (props) => {
+const TeamUser = (props) => {
   return (
     <p>yolo</p>
-  )
-}
+  );
+};
 
 // const TeamUserAvatar = (props) => {
 //   return (
@@ -23,7 +23,7 @@ const TeamUserAvatar = (props) => {
 // }
 
 
-export default TeamUserAvatar;
+export default TeamUser;
 
 
 // .user.team-user-avatar(title=@login data-tooltip=@tooltipName data-tooltip-left=true @style)
