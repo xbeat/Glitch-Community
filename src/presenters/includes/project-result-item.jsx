@@ -20,7 +20,7 @@ ProjectResultItem.propTypes = {
   domain: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
-  action: PropTypes.func.isRequired,
+  action: PropTypes.func,
   users: PropTypes.array,
 };
 
