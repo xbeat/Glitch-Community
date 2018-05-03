@@ -19,13 +19,13 @@ const TeamUser = (props) => {
 };
 
 TeamUser.propTypes = {
-  user: PropTypes.arrayOf(PropTypes.shape({
+  user: PropTypes.shape({
     login: PropTypes.string.isRequired,
     tooltipName: PropTypes.string.isRequired,
     style: PropTypes.object.isRequired,
     userAvatarUrl: PropTypes.string.isRequired,
-  })).isRequired,
-  currentUserIsOnTeam: PropTypes.func.isRequired,
+  }).isRequired,
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
 };
 

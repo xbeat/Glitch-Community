@@ -59,8 +59,8 @@ UserInfoPop.propTypes = {
     userThanks: PropTypes.string,
     isOnTeam: PropTypes.bool,
   }).isRequired,
-  currentUserIsOnTeam: PropTypes.bool,
-  removeUserFromTeam: PropTypes.func,
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
+  removeUserFromTeam: PropTypes.func.isRequired,
 };
 
 UserInfoPop.defaultProps = {
