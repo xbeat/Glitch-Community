@@ -4,26 +4,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 
+import UserInfoPop from '../pop-overs/user-info-pop.jsx';
+
+
 const TeamUser = (props) => {
   console.log(props);
+  // let {user} = props
   return (
-    <p>yolo</p>
+    <PopoverContainer>
+      {({visible, togglePopover}) => (
+        <div className="user team-user-avatar" title={props.user.login} data-tooltip={props.user.tooltipName} data-tooltip-left="true" style="background-color: {props.user.color};">
+          <img width="32" height="32" src={props.user.userAvatarUrl} onClick={togglePopover} />
+          {visible && <UserInfoPop {...props}/>}
+        </div>
+      )}
+    </PopoverContainer>
   );
 };
-
-// const TeamUserAvatar = (props) => {
-//   return (
-//     <PopoverContainer>
-//       {({visible, togglePopover}) => (
-//         <div className="user team-user-avatar">
-//           <button className="button-small" data-track="open new-project pop" onClick={togglePopover}>New Project</button>
-//           {visible && <UserInfoPop {...props}/>}
-//         </div>
-//       )}
-//     </PopoverContainer>
-//   );
-// }
-
 
 export default TeamUser;
 
