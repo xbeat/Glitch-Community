@@ -20,51 +20,55 @@ const RemoveFromTeam = ({action}) => (
 
 const UserActions = ({user}) => (
   <section className="pop-over-actions">
-    <a href={user.link}>
+    <a href={user.userLink}>
       <button className="button button-small has-emoji button-tertiary">
         <span>Profile </span>
-        <img className="emoji avatar" src={user.avatar} alt="Your avatar"></img>
+        <img className="emoji avatar" src={user.userAvatarUrl} alt={user.login}></img>
       </button>
     </a>
   </section>
 );
 
-const UserInfoPop = (user) => {
-  console.log('🌎',user);
+const UserInfoPop = (props) => {
+  let {user} = props;
+  console.log('🌎',props);
   return (
     <dialog className="pop-over user-info-pop">
       <section className="pop-over-info">
-        <a href={user.link}>
-          <img className="avatar" src={user.avatar} alt={`User avatar for ${user.login}`}/>
+        <a href={user.userLink}>
+          <img className="avatar" src={user.userAvatarUrl} alt={user.login}/>
         </a>
         <div className="info-container">
           <p className="name" title={user.name}>{user.name}</p>
           <p className="user-login" title={user.login}>{user.login}</p>
         </div>
-        { user.thanksCount > 0 && <UserThanks thanks={user.thanksString} />}
-      </section>    
+        { user.thanksCount > 0 && <UserThanks thanks={user.userThanks} />}
+      </section>
       <UserActions user={user} />
-      { user.currentUserIsOnTeam === true && <RemoveFromTeam action={user.removeUserFromTeam} />}
+      { props.currentUserIsOnTeam === true && <RemoveFromTeam action={props.removeUserFromTeam} />}
     </dialog>
   );
 };
 
 UserInfoPop.propTypes = {
-  id: PropTypes.number.isRequired,
-  color: PropTypes.string.isRequired, 
-  name: PropTypes.string,
-  login: PropTypes.string.isRequired,
-  avatar: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
-  thanksCount: PropTypes.number.isRequired,
-  thanksString: PropTypes.string,
-  isOnTeam: PropTypes.bool,
+  user: PropTypes.arrayOf(PropTypes.shape({
+    color: PropTypes.string.isRequired, 
+    name: PropTypes.string,
+    login: PropTypes.string.isRequired,
+    userAvatarUrl: PropTypes.string.isRequired,
+    userLink: PropTypes.string.isRequired,
+    thanksCount: PropTypes.number.isRequired,
+    userThanks: PropTypes.string,
+    isOnTeam: PropTypes.bool,
+  })).isRequired,
   currentUserIsOnTeam: PropTypes.bool,
   removeUserFromTeam: PropTypes.func,
 };
 
 UserInfoPop.defaultProps = {
-  isOnTeam: false,
+  user: {
+    isOnTeam: false
+  },
   currentUserIsOnTeam: false,
   removeUserFromTeam: () => undefined
 };

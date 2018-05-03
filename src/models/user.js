@@ -220,6 +220,7 @@ export default User = function(I, self) {
         name: self.name(),
         description: self.description(),
         thanksCount: self.thanksCount(),
+        userThanks: self.userThanks(),
         userLink: self.userLink(), 
         tooltipName: self.tooltipName(), 
         style: self.style(),
