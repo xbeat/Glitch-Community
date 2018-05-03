@@ -31,6 +31,7 @@ dependencies:
   randomcolor: 0.5.3
   react: 16.3.2
   react-dom: 16.3.2
+  react-onclickoutside: 6.7.1
   stylus: 0.54.5
   uglifyjs-webpack-plugin: 1.2.5
   webpack: 4.6.0
@@ -5403,6 +5404,13 @@ packages:
       react: ^16.0.0
     resolution:
       integrity: sha512-MMPko3zYncNrz/7gG17wJWUREZDvskZHXOwbttzl0F0L3wDmToyuETuo/r8Y5yvDejwYcRyWI1lvVBjLJWFwKA==
+  /react-onclickoutside/6.7.1:
+    dev: false
+    peerDependencies:
+      react: ^15.5.x || ^16.x
+      react-dom: ^15.5.x || ^16.x
+    resolution:
+      integrity: sha512-p84kBqGaMoa7VYT0vZ/aOYRfJB+gw34yjpda1Z5KeLflg70HipZOT+MXQenEhdkPAABuE2Astq4zEPdMqUQxcg==
   /react/16.3.2:
     dependencies:
       fbjs: 0.8.16
@@ -6975,6 +6983,7 @@ specifiers:
   randomcolor: ^0.5.3
   react: ^16.3.2
   react-dom: ^16.3.2
+  react-onclickoutside: ^6.7.1
   stylus: ^0.54.5
   uglifyjs-webpack-plugin: ^1.2.5
   webpack: ^4.6.0

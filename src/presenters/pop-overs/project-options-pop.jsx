@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Popover from './pop-over.jsx';
+import PopoverContainer from './popover-container.jsx';
 
 const PopoverButton = ({onClick, text, emoji}) => (
   <button className="button-small has-emoji button-tertiary" onClick={onClick}>
@@ -9,7 +9,7 @@ const PopoverButton = ({onClick, text, emoji}) => (
   </button>
 );
 
-export const ProjectOptionsPop = ({
+const ProjectOptionsPop = ({
   projectId,
   projectName, projectIsPinned, togglePopover, 
   togglePinnedState, deleteProject, 
@@ -91,7 +91,7 @@ export default function ProjectOptions({projectOptions={}, project}) {
   };
   
   return (
-    <Popover>
+    <PopoverContainer>
       {({togglePopover, visible}) => (
         <React.Fragment>
           <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
@@ -100,6 +100,6 @@ export default function ProjectOptions({projectOptions={}, project}) {
           { visible && <ProjectOptionsPop {...popupProps} {...projectOptions} togglePopover={togglePopover}/> }
         </React.Fragment>
       )}
-    </Popover>
+    </PopoverContainer>
   );
 }
