@@ -1,7 +1,7 @@
 import Observable from 'o_0';
 
 import AnalyticsProjectsPopTemplate from '../../templates/pop-overs/analytics-projects-pop';
-import ProjectResultPresenter from '../project-result';
+import ProjectResultPresenter from '../project-result-item';
 
 export default function(application, analytics) {
 
