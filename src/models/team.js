@@ -193,8 +193,13 @@ export default Team = function(I, self) {
         coverColor: self.coverColor(),
         coverUrlSmall: self.coverUrl('small'),
         id: self.id(),
+        isVerified: self.isVerified(),
+        name: self.name(),
         teamAvatarUrl: self.teamAvatarUrl(),
         url: self.url(),
+        users: self.users().map(user => user.asProps()),
+        verifiedImage: self.verifiedImage(),
+        verifiedTooltip: self.verifiedTooltip(),
       };
     },
   });

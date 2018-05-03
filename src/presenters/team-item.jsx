@@ -40,18 +40,6 @@ export function TeamItemPresenter(application, team) {
     hiddenUnlessDescription() {
       if (!team.description()) { return 'hidden'; }
     },
-  
-    verifiedImage() {
-      return team.verifiedImage();
-    },
-  
-    verifiedTeamTooltip() {
-      return team.verifiedTooltip();
-    },
-    
-    hiddenUnlessVerified() {
-      if (!team.isVerified()) { return 'hidden'; }
-    },
 
     style() {
       return {
@@ -75,7 +63,10 @@ export default function TeamItem({team}) {
         <div className="content">
           <img className="avatar" src={team.teamAvatarUrl} alt=""></img>
           <div className="information">
-            <div className="button"></div>
+            <div className="button">{team.name}</div>
+            {!!team.isVerified && <span data-tooltip={team.verifiedTooltip}>
+              <img className="verified" src={team.verifiedImage} alt={team.verifiedTooltip} />
+            </span>}
           </div>
         </div>
       </div>
@@ -86,9 +77,12 @@ TeamItem.propTypes = {
   team: PropTypes.shape({
     coverColor: PropTypes.string.isRequired,
     coverUrlSmall: PropTypes.string.isRequired,
+    isVerified: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     teamAvatarUrl: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
+    verifiedImage: PropTypes.string.isRequired,
+    verifiedTooltip: PropTypes.string.isRequired,
   }),
 };
 /*
