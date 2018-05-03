@@ -32,17 +32,8 @@ export default function(application) {
     application,
     baseUrl: application.normalizedBaseUrl(),
   
-    toggleSignInPopVisible(event) {
-      application.signInPopVisibleOnHeader.toggle();
-      return event.stopPropagation();
-    },
-
     hiddenUnlessUserIsExperienced() {
       if (!application.currentUser().isAnExperiencedUser()) { return 'hidden'; }
-    },
-      
-    hiddenUnlessSignInPopVisible() {
-      if (!application.signInPopVisibleOnHeader()) { return 'hidden'; }
     },
 
     logo() {
