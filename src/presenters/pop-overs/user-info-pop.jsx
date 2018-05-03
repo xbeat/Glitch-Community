@@ -30,8 +30,6 @@ const UserActions = ({user}) => (
 );
 
 const UserInfoPop = (user) => (
-  
-  
   <dialog className="pop-over user-info-pop">
     <section className="pop-over-info">
       <a href={user.link}>
@@ -48,20 +46,6 @@ const UserInfoPop = (user) => (
   </dialog>
 );
 
-const NewProjectPopContainer = (props) => {
-  return (
-    <PopoverContainer>
-      {({visible, togglePopover}) => (
-        <div className="button-wrap">
-          <button className="button-small" data-track="open new-project pop" onClick={togglePopover}>New Project</button>
-          {visible && <NewProjectPop {...props}/>}
-        </div>
-      )}
-    </PopoverContainer>
-  );
-};
-
-
 UserInfoPop.propTypes = {
   id: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired, 
@@ -74,7 +58,6 @@ UserInfoPop.propTypes = {
   isOnTeam: PropTypes.bool,
   currentUserIsOnTeam: PropTypes.bool,
   removeUserFromTeam: PropTypes.func,
-  // closeAllPopOvers: PropTypes.func,
 };
 
 UserInfoPop.defaultProps = {
@@ -83,4 +66,4 @@ UserInfoPop.defaultProps = {
   removeUserFromTeam: () => undefined
 };
 
-export default UserInfoPopContainer;
+export default UserInfoPop;

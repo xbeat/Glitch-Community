@@ -13,7 +13,7 @@ import Project from '../../models/project';
 import TeamTemplate from '../../templates/pages/team';
 import LayoutPresenter from '../layout';
 import AddTeamUserPopPresenter from '../pop-overs/add-team-user-pop';
-import TeamUserPresenter from '../team-user-avatar';
+// import TeamUserPresenter from '../team-user-avatar';
 import AnalyticsPresenter from '../analytics';
 
 import Reactlet from "../reactlet";
@@ -39,7 +39,8 @@ export default function(application) {
     TeamUsers() {
       const users = application.team().users();
       console.log('team users', users);
-      return users.map(user => TeamUserPresenter(application, user));
+      // return users.map(user => TeamUserPresenter(application, user));
+      
     },
 
     // TeamUsers() {
