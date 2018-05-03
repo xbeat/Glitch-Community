@@ -1,13 +1,15 @@
 // replaces analytics-projects-pop.jade/.js
-
+import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
 
 
-const AnalyticsProjectPop = (props) => (
-  
-);
+const AnalyticsProjectPop = (props) => {
+  return (
+    <p>yolo</p>
+  ); 
+};
 
 AnalyticsProjectPop.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
@@ -15,12 +17,13 @@ AnalyticsProjectPop.propTypes = {
     avatar: PropTypes.string.isRequired,
   })).isRequired,
   action: PropTypes.func.isRequired,
-}
+};
 
 
-// convert to stateful class
+// convert to stateful class, to update name, update loading state
 
 const AnalyticsProjectPopContainer = (props) => {
+  console.log('🏄‍♂️',props);
   return (
     <PopoverContainer>
       {({visible, togglePopover}) => (

@@ -10,7 +10,7 @@ import {throttle} from 'lodash';
 import moment from 'moment-mini';
 import AnalyticsTemplate from '../templates/includes/analytics';
 import AnalyticsTimePopPresenter from './pop-overs/analytics-time-pop';
-// import AnalyticsProjectsPopPresenter from './pop-overs/analytics-projects-pop';
+import AnalyticsProjectsPopPresenter from './pop-overs/analytics-projects-pop'; //temp
 
 const METRICS = ["remixes", "visits"];
 const REFERRER_FIELDS = ["remixReferrers", "referrers"];
@@ -387,28 +387,30 @@ export default function(application, teamOrProject) {
       }
     },
 
-    //     toggleAnalyticsProjectsPop(event) {
-    //       event.stopPropagation();
-    //       const element = event.currentTarget;
-    //       const existingPop = element.querySelector(".analytics-projects-pop");
-    //       application.closeAllPopOvers();
+    toggleAnalyticsProjectsPop(event) {ProjectResultItem;
+      event.stopPropagation();
+      const element = event.currentTarget;
+      const existingPop = element.querySelector(".analytics-projects-pop");
+      application.closeAllPopOvers();
 
-    //       if (!existingPop) {
-    //         return element.parentElement.appendChild(AnalyticsProjectsPopPresenter(application, self));
-    //       }
-    //     },
+      if (!existingPop) {ProjectResultItem;
+        return element.parentElement.appendChild(AnalyticsProjectsPopPresenter(application, self));
+      }
+    },
 
     AnalyticsProjectPop() {
       const action = () => {
         console.log('AnalyticsProjectPop action');
       };
       const projects = () => {
-        application.team().projects().map(project => {
-          project.asProps();
-        });
+        return (
+          application.team().projects().map(project => {
+            project.asProps();
+          })
+        );
       };
       const props = {
-        projects,
+        projects: projects(),
         action,
       };
       return Reactlet(AnalyticsProjectPop, props);
