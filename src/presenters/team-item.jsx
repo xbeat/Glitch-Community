@@ -83,6 +83,10 @@ export function TeamItemPresenter(application, team) {
 export default function TeamItem({team}) {
   return (
     <a href={team.url}>
+      <div className="item">
+        <div className="content">
+        </div>
+      </div>
     </a>
   );
 }
