@@ -14,7 +14,7 @@ export default function UserItem({user}) {
           <div className="information">
             {!!user.name && <h3 className="name">{user.name}</h3>}
             <div className="button">@{user.login}</div>
-            {!!user.thanksCount && <p className="thanks">{user.userThanks} <span className="emoji sparkling_heart"></span></p>}
+            {user.thanksCount > 0 && <p className="thanks">{user.userThanks} <span className="emoji sparkling_heart"></span></p>}
             {!!user.description && <p className="description" dangerouslySetInnerHTML={{__html: user.truncatedDescriptionHtml}}></p>}
           </div>
         </div>
