@@ -37,11 +37,6 @@ export default function(application) {
       return event.stopPropagation();
     },
 
-    toggleUserOptionsPopVisible(event) {
-      application.userOptionsPopVisible.toggle();
-      return event.stopPropagation();
-    },
-
     hiddenUnlessUserIsExperienced() {
       if (!application.currentUser().isAnExperiencedUser()) { return 'hidden'; }
     },
@@ -87,7 +82,6 @@ export default function(application) {
         profileLink: `/@${application.currentUser().login()}`,
         avatarUrl: application.currentUser().avatarUrl(),
         showNewStuffOverlay() {
-          application.userOptionsPopVisible(false);
           return application.overlayNewStuffVisible(true);
         },
         signOut() {

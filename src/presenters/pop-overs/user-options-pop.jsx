@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import PopoverContainer from './popover-container';
 
 const TeamButton = ({url, name, teamAvatarUrl}) => (
   <a className="button-link" href={url}>
@@ -9,6 +10,12 @@ const TeamButton = ({url, name, teamAvatarUrl}) => (
     </div>
   </a>
 );
+
+TeamButton.propTypes = {
+  url: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  teamAvatarUrl: PropTypes.string.isRequired,
+}
 
 const TeamButtons = ({teams}) => {
   const hasTeams = teams && teams.length;
@@ -24,6 +31,12 @@ const TeamButtons = ({teams}) => {
     </section>
   );
 };
+
+TeamButtons.propTypes = {
+  teams: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+  })),
+}
 
 const UserOptionsPop = ({togglePopover, profileLink, avatarUrl, teams, showNewStuffOverlay, signOut}) => {
   const clickNewStuff = (event) => {
@@ -74,6 +87,17 @@ UserOptionsPop.propTypes = {
   showNewStuffOverlay: PropTypes.func.isRequired,
   signOut: PropTypes.func.isRequired,
 };
+
+export default function UserOptionsPopContainer(props) {
+  return (
+    <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true"
+    <UserOptionsPop {...props}/>
+  );
+}
+.button.user-options-pop-button.opens-pop-over(class=@hiddenUnlessSignedIn data-tooltip="User options" data-tooltip-right=true)
+      button.user(click=@toggleUserOptionsPopVisible)
+        img(src=@userAvatar width=30 height=30 alt="User options")
+        span.down-arrow.icon
 
 
 export default UserOptionsPop;
