@@ -66,17 +66,24 @@ export default function(application) {
     hiddenUnlessSignedIn() {
       if (!application.currentUser().login()) { return 'hidden'; }
     },
+    
+    hiddenUnlessFetched() {
+      const fetched = application.currentUser().fetched();
+      return fetched ? '' : 'hidden';
+    },
         
     SignInPop() {
       return Reactlet(SignInPop);
     },
 
     UserOptionsPop() {
-      console.log("av url", application.currentUser().avatarUrl(), "current", application.currentUser());
-      
+      const user = application.currentUser();
+      if(!user.fetched()) {
+        return;
+      }
       const props = {
-        teams: getTeamsPojo(application.currentUser().teams()),
-        profileLink: `/@${application.currentUser().login()}`,
+        teams: getTeamsPojo(user.teams()),
+        profileLink: `/@${user.login()}`,
         avatarUrl: application.currentUser().avatarUrl(),
         showNewStuffOverlay() {
           return application.overlayNewStuffVisible(true);
@@ -89,7 +96,7 @@ export default function(application) {
         },
       };
 
-      return Reactlet(UserOptionsPop, props);
+      return Reactlet(UserOptionsPop, props, "widdershins");
     },
     
     submit(event) {
