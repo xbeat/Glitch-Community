@@ -52,22 +52,6 @@ export default function(application) {
     featuredCollections() {
       return application.featuredCollections.map(collection => FeaturedCollectionPresenter(application, collection));
     },
-<<<<<<< HEAD
-
-    randomCategoriesObservable: Observable([]),
-
-    randomCategories() {
-
-      if(!self.randomCategoriesObservable.length) {
-        self.randomCategoriesObservable(application.categories.map((category) => CategoryModel(category)));
-
-        CategoryModel.getRandomCategories(application.api()).then((categories) =>
-          self.randomCategoriesObservable(categories.filter(category => category.projects && category.projects.length))
-        );
-      }
-
-      return self.randomCategoriesObservable.map((categoryModel) =>CategoryPresenter(application, categoryModel));
-=======
     
     randomCategories() {
       const props = {
@@ -75,7 +59,6 @@ export default function(application) {
         getCategories: () => CategoryModel.getRandomCategories(application.api()),
       };
       return Reactlet(RandomCategories, props);
->>>>>>> future-riddle
     },
 
     embed() {
