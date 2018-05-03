@@ -5,7 +5,6 @@ import PopoverContainer from '../pop-overs/popover-container.jsx';
 import UserInfoPop from '../pop-overs/user-info-pop.jsx';
 
 const TeamUser = (props) => {
-  console.log(props);
   let {user} = props;
   return (
     <PopoverContainer>

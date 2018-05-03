@@ -31,12 +31,11 @@ const UserActions = ({user}) => (
 
 const UserInfoPop = (props) => {
   let {user} = props;
-  console.log('🌎',props);
   return (
     <dialog className="pop-over user-info-pop">
       <section className="pop-over-info">
         <a href={user.userLink}>
-          <img className="avatar" src={user.userAvatarUrl} alt={user.login}/>
+          <img className="avatar" src={user.userAvatarUrl} alt={user.login} style={user.style}/>
         </a>
         <div className="info-container">
           <p className="name" title={user.name}>{user.name}</p>
@@ -51,8 +50,7 @@ const UserInfoPop = (props) => {
 };
 
 UserInfoPop.propTypes = {
-  user: PropTypes.arrayOf(PropTypes.shape({
-    color: PropTypes.string.isRequired, 
+  user: PropTypes.shape({
     name: PropTypes.string,
     login: PropTypes.string.isRequired,
     userAvatarUrl: PropTypes.string.isRequired,
@@ -60,7 +58,7 @@ UserInfoPop.propTypes = {
     thanksCount: PropTypes.number.isRequired,
     userThanks: PropTypes.string,
     isOnTeam: PropTypes.bool,
-  })).isRequired,
+  }).isRequired,
   currentUserIsOnTeam: PropTypes.bool,
   removeUserFromTeam: PropTypes.func,
 };
