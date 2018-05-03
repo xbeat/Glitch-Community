@@ -1,4 +1,4 @@
-import ProjectResultItemTemplate from '../templates/includes/project-result-item';
+import ProjectResultTemplate from '../templates/includes/project-result';
 
 import UsersList from "./users-list.jsx";
 import Reactlet from "./reactlet";
@@ -31,7 +31,7 @@ export default function(application, project, options, analytics) {
       return project.description();
       
     },
-    
+      
     addProjectToTeam() {
       console.log(`adding ${project.name()} to ${application.team().id()}`);
       return application.team().addProject(application, project);
@@ -76,5 +76,6 @@ export default function(application, project, options, analytics) {
       return event.preventDefault();
     },
   };
-  return ProjectResultItemTemplate(self);
+    
+  return ProjectResultTemplate(self);
 }
