@@ -402,8 +402,14 @@ export default function(application, teamOrProject) {
       const action = () => {
         console.log('AnalyticsProjectPop action');
       };
+      const projects = () => {
+        application.team().projects().map(project => {
+          project.asProps();
+        });
+      };
       const props = {
-        
+        projects,
+        action,
       };
       return Reactlet(AnalyticsProjectPop, props);
     },
