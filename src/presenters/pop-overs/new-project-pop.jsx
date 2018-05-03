@@ -19,25 +19,22 @@ const NewProjectPop = ({newProjects}) => (
 
 NewProjectPop.propTypes = {
   newProjects: PropTypes.arrayOf(PropTypes.shape({
-     id: PropTypes.string.isRequired,
-     url: PropTypes.number.isRequired,
-   })).isRequired,
+    id: PropTypes.string.isRequired,
+    url: PropTypes.number.isRequired,
+  })).isRequired,
 };
-
-/*
-    .button-wrap
-      .button.button-small(data-track="open new-project pop" click=@toggleNewProjectPopVisible) New Project
-      span(class=@hiddenUnlessNewProjectPopVisible)
-        =@NewProjectPop
-  */
 
 const NewProjectPopContainer = (props) => {
   return (
-    <div className="button-wrap">
-      <button className="button-small"  data-track="open new-project pop" onClick={togglePopover}>New Project</button>
-    </div>
-    <NewProjectPop {...props}/>
+    <PopoverContainer>
+      {({visible, togglePopover}) => (
+        <div className="button-wrap">
+          <button className="button-small"  data-track="open new-project pop" onClick={togglePopover}>New Project</button>
+          {visible && <NewProjectPop {...props}/>}
+        </div>
+      )}
+    </PopoverContainer>
   );
-}
+};
 
 export default NewProjectPopContainer;
