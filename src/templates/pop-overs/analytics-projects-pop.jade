@@ -1,3 +1,5 @@
+- ProjectResultItemPresenter = require "../../presenters/project-result-item"
+
 - bentoBox = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743'
 
 dialog.pop-over.results-list.analytics-projects-pop.disposable(click=@stopPropagation)
@@ -13,9 +15,9 @@ dialog.pop-over.results-list.analytics-projects-pop.disposable(click=@stopPropag
             img.result-avatar(src=bentoBox)
             .result-name All Projects
 
-      //- options = {}
-      //- analytics = @analytics
+      - options = {}
+      - analytics = @analytics
       - context = @
       - @teamProjects().forEach (project) ->
-        = context.ProjectResultItem(project)
-        // = ProjectResultItemPresenter(application, project, options, analytics)
+        // = context.ProjectResultItem(project)
+        = context.ProjectResultItemPresenter(application, project, options, analytics)

@@ -387,13 +387,13 @@ export default function(application, teamOrProject) {
       }
     },
 
-    toggleAnalyticsProjectsPop(event) {ProjectResultItem;
+    toggleAnalyticsProjectsPop(event) {
       event.stopPropagation();
       const element = event.currentTarget;
       const existingPop = element.querySelector(".analytics-projects-pop");
       application.closeAllPopOvers();
 
-      if (!existingPop) {ProjectResultItem;
+      if (!existingPop) {
         return element.parentElement.appendChild(AnalyticsProjectsPopPresenter(application, self));
       }
     },
