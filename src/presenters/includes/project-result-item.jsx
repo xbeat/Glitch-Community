@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import UsersList from '../users-list.jsx';
 
 const ProjectResultItem = (props) => {
-  const {title, domain, description, avatar, action, users} = props;
+  const {domain, description, avatar, action, users} = props;
   
   return (
     <li className="result" tabIndex="0" onClick={() => action(props)}>
-      <img className="avatar" src={avatar} alt={`Project avatar for ${title}`}/>
+      <img className="avatar" src={avatar} alt={`Project avatar for ${domain}`}/>
       <div className="result-name" title={domain}>{domain}</div>
       <div className="result-description">{description}</div>
       { users.length > 0 && <UsersList users={users} /> }
@@ -16,7 +16,6 @@ const ProjectResultItem = (props) => {
 };
 
 ProjectResultItem.propTypes = {
-  title: PropTypes.string.isRequired, 
   domain: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,

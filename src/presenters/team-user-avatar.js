@@ -1,6 +1,6 @@
 import UserInfoPop from './pop-overs/user-info-pop.jsx';
 import Reactlet from "./reactlet";
-import TeamUserTemplate from '../templates/includes/team-user-avatar'; // rename
+import TeamUserTemplate from '../templates/includes/team-user-avatar';
 
 export default function(application, user) {
 
@@ -8,17 +8,17 @@ export default function(application, user) {
 
     team: application.team,
     
-    hiddenUnlessUserInfoPopVisible() {
-      if (!self.userInfoPopVisible()) {
-        return 'hidden';
-      }
-    },
+    //     hiddenUnlessUserInfoPopVisible() {
+    //       if (!self.userInfoPopVisible()) {
+    //         return 'hidden';
+    //       }
+    //     },
     
-    toggleUserInfoPop(event) {
-      application.closeAllPopOvers();
-      event.stopPropagation();
-      self.userInfoPopVisible.toggle();
-    },
+    //     toggleUserInfoPop(event) {
+    //       application.closeAllPopOvers();
+    //       event.stopPropagation();
+    //       self.userInfoPopVisible.toggle();
+    //     },
 
     UserInfoPop() {
       const currentUserIsOnTeam = application.team().currentUserIsOnTeam(application);

@@ -8,7 +8,7 @@ const NewProjectPop = ({newProjects}) => (
     <section className="pop-over-actions results-list">
       <div className="results">
         { newProjects.map((project) => (
-          <a key={project.id} href={project.url}>
+          <a key={project.id} href={project.link}>
             <ProjectResultItem {...project}/>
           </a>
         ))}
@@ -20,7 +20,7 @@ const NewProjectPop = ({newProjects}) => (
 NewProjectPop.propTypes = {
   newProjects: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    url: PropTypes.number.isRequired,
+    link: PropTypes.string.isRequired,
   })).isRequired,
 };
 
