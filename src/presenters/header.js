@@ -66,11 +66,6 @@ export default function(application) {
     hiddenUnlessSignedIn() {
       if (!application.currentUser().login()) { return 'hidden'; }
     },
-    
-    hiddenUnlessFetched() {
-      const fetched = application.currentUser().fetched();
-      return fetched ? '' : 'hidden';
-    },
         
     SignInPop() {
       return Reactlet(SignInPop);
@@ -84,7 +79,7 @@ export default function(application) {
       const props = {
         teams: getTeamsPojo(user.teams()),
         profileLink: `/@${user.login()}`,
-        avatarUrl: application.currentUser().avatarUrl(),
+        avatarUrl: user.avatarUrl(),
         showNewStuffOverlay() {
           return application.overlayNewStuffVisible(true);
         },
