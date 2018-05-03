@@ -75,7 +75,7 @@ export default function(application) {
       const fetchedProjects = projects.filter(project => project.fetched());
       const newProjects = fetchedProjects.map((project) => {
         const props = project.asProps();
-        
+
         //Deliberately hide the user list 
         props.users = [];
         return props;

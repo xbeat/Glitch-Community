@@ -8,10 +8,10 @@ header(role="banner")
       label.screen-reader-text(for="search-projects") Search Glitch projects
       input.search-input(name="q" id="search-projects" placeholder="bots, apps, users" value=@application.searchQuery)
 
-    =@NewProjectPop
+    = @NewProjectPop
     
     span(class=@hiddenIfSignedIn)
-      =@SignInPop
+      = @SignInPop
     a(href="https://glitch.com/edit/" data-track="resume coding" class=@hiddenUnlessSignedIn)
       .button.button-small.button-cta Resume Coding
     = @UserOptionsPop
