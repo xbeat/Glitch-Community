@@ -73,7 +73,13 @@ export default function(application) {
       ];
       const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
       const fetchedProjects = projects.filter(project => project.fetched());
-      const newProjects = fetchedProjects.map((project) => project.asProps());
+      const newProjects = fetchedProjects.map((project) => {
+        const props = project.asProps();
+        
+        //Deliberately hide the user list 
+        props.users = [];
+        return props;
+      });
 
       return Reactlet(NewProjectPop, {newProjects});
     },

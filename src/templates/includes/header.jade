@@ -8,10 +8,7 @@ header(role="banner")
       label.screen-reader-text(for="search-projects") Search Glitch projects
       input.search-input(name="q" id="search-projects" placeholder="bots, apps, users" value=@application.searchQuery)
 
-    .button-wrap
-      .button.button-small(data-track="open new-project pop" click=@toggleNewProjectPopVisible) New Project
-      span(class=@hiddenUnlessNewProjectPopVisible)
-        =@NewProjectPop
+    =@NewProjectPop
     
     span(class=@hiddenIfSignedIn)
       =@SignInPop
