@@ -64,13 +64,10 @@ export default function(application) {
     UserResultItem(user) {
       const action = () => {
         console.log('yoyo');
-        console.log('++',user.login());
+        console.log('++', user);
       };
       const props = {
-        avatar: user.userAvatarUrl('large'),
-        name: user.name(),
-        login: user.login(),
-        thanks: user.thanksCount(),
+        user: user.asProps(),
         action,
       };
       
