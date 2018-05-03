@@ -13,9 +13,9 @@ Example:
 
 export default [
   {
-    title: '"Speech Synthesis" by ericandrewlewis',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fspeech-synthesis-api-voices-demo.jpg?1525087633374',
-    link: 'https://speech-synthesis-api-voices-demo.glitch.me/'
+    title: '"awayboard" by voodoocode',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fawayboard.jpg?1525351432822',
+    link: 'https://awayboard.glitch.me/'
   }
   , {
     title: '"art-connoisseur" by oa495',
