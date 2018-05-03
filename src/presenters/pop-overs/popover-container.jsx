@@ -44,11 +44,11 @@ export default class PopoverContainer extends React.Component {
     // https://github.com/Pomax/react-onclickoutside
 
     // We do extra work with disableOnClickOutside and handleClickOutside
-    // to prevent event bindings frto occur until the popover is visible.
+    // to prevent event bindings from being created until the popover is opened.
     const clickOutsideConfig = {
-       handleClickOutside: () => this.handleClickOutside,
-       excludeScrollbar: true,
-    }
+      handleClickOutside: () => this.handleClickOutside,
+      excludeScrollbar: true,
+    };
     const MonitoredComponent = onClickOutside(Children, clickOutsideConfig);
     
     return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const TeamButton = ({url, name, teamAvatarUrl}) => (
   <a className="button-link" href={url}>
@@ -24,12 +25,9 @@ const TeamButtons = ({teams}) => {
   );
 };
 
-const UserOptionsPop = ({visible, profileLink, avatarUrl, teams, showNewStuffOverlay, signOut}) => {
-  if(!visible) {
-    return null;
-  }
-  
+const UserOptionsPop = ({togglePopover, profileLink, avatarUrl, teams, showNewStuffOverlay, signOut}) => {
   const clickNewStuff = (event) => {
+    togglePopover();
     showNewStuffOverlay();
     event.stopPropagation();
   };
@@ -67,6 +65,14 @@ const UserOptionsPop = ({visible, profileLink, avatarUrl, teams, showNewStuffOve
       </section>
     </dialog>
   );
+};
+
+UserOptionsPop.propTypes = {
+  togglePopover: PropTypes.func.isRequired,
+  profileLink: PropTypes.string.isRequired,
+  avatarUrl: PropTypes.string.isRequired,
+  showNewStuffOverlay: PropTypes.func.isRequired,
+  signOut: PropTypes.func.isRequired,
 };
 
 
