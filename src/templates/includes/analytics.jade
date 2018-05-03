@@ -12,10 +12,12 @@ section.analytics(class=@hiddenUnlessCurrentUserIsOnTeam)
       button.button-small.button-tertiary.button-select(click=@toggleAnalyticsTimePop)
         span= @analyticsTimeLabel
         span(class=@hiddenUnlessGettingAnalyticsFromDate)= Loader
-    .button-wrap
-      button.button-small.button-tertiary(click=@toggleAnalyticsProjectsPop)
-        span= @analyticsProjectDomain
-        span(class=@hiddenUnlessGettingAnalyticsProjectDomain)= Loader
+
+    = 
+    // .button-wrap
+    //   button.button-small.button-tertiary(click=@toggleAnalyticsProjectsPop)
+    //     span= @analyticsProjectDomain
+    //     span(class=@hiddenUnlessGettingAnalyticsProjectDomain)= Loader
       
     = @remixesChartElement
     
@@ -32,11 +34,12 @@ section.analytics(class=@hiddenUnlessCurrentUserIsOnTeam)
         span= @analyticsTimeLabel               
         span(class=@hiddenUnlessGettingAnalyticsFromDate)= Loader
       = @analyticsTimePop
-    .button-wrap
-      button.button-small.button-tertiary(click=@toggleAnalyticsProjectsPop)
-        span= @analyticsProjectDomain
-        span(class=@hiddenUnlessGettingAnalyticsProjectDomain)= Loader
-      = @analyticsProjectsPop
+
+    // .button-wrap
+    //   button.button-small.button-tertiary(click=@toggleAnalyticsProjectsPop)
+    //     span= @analyticsProjectDomain
+    //     span(class=@hiddenUnlessGettingAnalyticsProjectDomain)= Loader
+    //   = @analyticsProjectsPop
 
     = @visitsChartElement
 

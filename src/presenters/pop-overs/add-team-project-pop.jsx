@@ -40,8 +40,7 @@ export class AddTeamProjectPop extends React.Component {
         this.setState({searchResults: projects});
       });
   }
-  
-  
+
   render() {
     return (
       <dialog className="pop-over add-team-project-pop">
