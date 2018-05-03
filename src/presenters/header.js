@@ -45,10 +45,6 @@ export default function(application) {
       if (!application.signInPopVisibleOnHeader()) { return 'hidden'; }
     },
 
-    userAvatar() {
-      return application.currentUser().avatarUrl();
-    },
-
     logo() {
       const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
       const LOGO_SUNSET = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg";
@@ -75,9 +71,10 @@ export default function(application) {
       return Reactlet(SignInPop);
     },
 
-    UserOptionsPop(visible) {
+    UserOptionsPop() {
+      console.log("av url", application.currentUser().avatarUrl(), "current", application.currentUser());
+      
       const props = {
-        visible,
         teams: getTeamsPojo(application.currentUser().teams()),
         profileLink: `/@${application.currentUser().login()}`,
         avatarUrl: application.currentUser().avatarUrl(),

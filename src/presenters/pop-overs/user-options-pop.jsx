@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PopoverContainer from './popover-container';
+import PopoverContainer from './popover-container.jsx';
 
 const TeamButton = ({url, name, teamAvatarUrl}) => (
   <a className="button-link" href={url}>
@@ -15,7 +15,7 @@ TeamButton.propTypes = {
   url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   teamAvatarUrl: PropTypes.string.isRequired,
-}
+};
 
 const TeamButtons = ({teams}) => {
   const hasTeams = teams && teams.length;
@@ -36,7 +36,7 @@ TeamButtons.propTypes = {
   teams: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
   })),
-}
+};
 
 const UserOptionsPop = ({togglePopover, profileLink, avatarUrl, teams, showNewStuffOverlay, signOut}) => {
   const clickNewStuff = (event) => {
@@ -89,15 +89,22 @@ UserOptionsPop.propTypes = {
 };
 
 export default function UserOptionsPopContainer(props) {
+  const {avatarUrl} = props;
   return (
-    <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true"
-    <UserOptionsPop {...props}/>
+    <PopoverContainer>
+      {({togglePopover, visible}) => (
+        <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
+          <button className="user" onClick={togglePopover}>
+            <img src={avatarUrl} width="30px" height="30px" alt="User options"/>
+            <span className="down-arrow icon"/>
+          </button>
+          {visible && <UserOptionsPop {...props} togglePopover={togglePopover}/>}
+        </div>
+      )}
+    </PopoverContainer>
   );
 }
-.button.user-options-pop-button.opens-pop-over(class=@hiddenUnlessSignedIn data-tooltip="User options" data-tooltip-right=true)
-      button.user(click=@toggleUserOptionsPopVisible)
-        img(src=@userAvatar width=30 height=30 alt="User options")
-        span.down-arrow.icon
-
-
-export default UserOptionsPop;
+          
+UserOptionsPopContainer.propTypes = {
+  avatarUrl: PropTypes.string.isRequired,
+};
