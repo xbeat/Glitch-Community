@@ -4,7 +4,7 @@ import {debounce} from 'lodash';
 import AddTeamUserTemplate from '../../templates/pop-overs/add-team-user-pop';
 import UserResultPresenter from '../user-result';
 import Reactlet from '../reactlet';
-import UserResultItem from '../user-result-item.jsx';
+import UserResultItem from '../includes/user-result-item.jsx';
 
 export default function(application) {
 

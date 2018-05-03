@@ -4,7 +4,7 @@ import moment from 'moment-mini';
 
 import HeaderTemplate from '../templates/includes/header';
 
-const ProjectModel = require("../models/project");
+import ProjectModel from "../models/project";
 
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
@@ -71,21 +71,9 @@ export default function(application) {
         'cb519589-591c-474f-8986-a513f22dbf88', // 'hello-sqlite'
         '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
       ];
-      var props = {};
       const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
       const fetchedProjects = projects.filter(project => project.fetched());
-      const newProjects = fetchedProjects.map((project) => {
-        const {id, domain, description, avatar, remixUrl} = project;
-        return {
-          id: id(),
-          title: domain(),
-          domain: domain(),
-          description: description(),
-          avatar: avatar(),
-          url: remixUrl(),
-          action: (event) => { return null; },
-        };
-      });
+      const newProjects = fetchedProjects.map((project) => project.asProps());
 
       return Reactlet(NewProjectPop, {newProjects});
     },
@@ -110,7 +98,7 @@ export default function(application) {
         },
       };
 
-      return Reactlet(UserOptionsPop, props, "widdershins");
+      return Reactlet(UserOptionsPop, props);
     },
     
     submit(event) {

@@ -5,7 +5,6 @@ import FeaturedCollectionPresenter from '../featured-collection';
 import RecentProjectsPresenter from '../recent-projects';
 import QuestionsPresenter from '../questions';
 import CategoryModel from '../../models/category';
-import ProjectModel from '../../models/project';
 import Reactlet from '../reactlet';
 import EmbedHtml from '../../curated/embed';
 

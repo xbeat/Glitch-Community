@@ -43,7 +43,7 @@ const SignInPopContainerInnards = ({togglePopover, visible}) => (
   </React.Fragment>
 );
 
-SignInPopContainer.propTypes = {
+SignInPopContainerInnards.propTypes = {
   togglePopover: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
 };

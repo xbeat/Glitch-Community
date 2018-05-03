@@ -10,12 +10,12 @@ const UserThanks = (thanks) => (
 );
 
 const UserResultItem = (user) => (
-  <li className="result" tabIndex="0" onClick={() => user.action(user)}>
+  <button className="result" tabIndex="0" onClick={() => user.action(user)}>
     <img className="avatar" src={user.avatar} alt={`User avatar for ${user.login}`}/>
     <div className="result-name" title={user.name}>{user.name}</div>
     <div className="result-description" title={user.login}>@{user.login}</div>
     { user.thanks > 0 && <UserThanks thanks={user.thanks} />}
-  </li>
+  </button>
 );
 
 UserResultItem.propTypes = {
