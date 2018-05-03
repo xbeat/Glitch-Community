@@ -9,17 +9,28 @@ import UserInfoPop from '../pop-overs/user-info-pop.jsx';
 
 const TeamUser = (props) => {
   console.log(props);
-  // let {user} = props
+  let {user} = props;
   return (
     <PopoverContainer>
       {({visible, togglePopover}) => (
-        <div className="user team-user-avatar" title={props.user.login} data-tooltip={props.user.tooltipName} data-tooltip-left="true" style="background-color: {props.user.color};">
+        <div className="user team-user-avatar" title={props.user.login} data-tooltip={props.user.tooltipName} data-tooltip-left="true" style={props.user.style}>
           <img width="32" height="32" src={props.user.userAvatarUrl} onClick={togglePopover} />
           {visible && <UserInfoPop {...props}/>}
         </div>
       )}
     </PopoverContainer>
   );
+};
+
+TeamUser.propTypes = {
+  user: PropTypes.arrayOf(PropTypes.shape({
+    login: PropTypes.string.isRequired,
+    tooltipName: PropTypes.string.isRequired,
+    style: PropTypes.object.isRequired,
+    userAvatarUrl: PropTypes.string.isRequired,
+  })).isRequired,
+  currentUserIsOnTeam: PropTypes.func.isRequired,
+  removeUserFromTeam: PropTypes.func.isRequired,
 };
 
 export default TeamUser;

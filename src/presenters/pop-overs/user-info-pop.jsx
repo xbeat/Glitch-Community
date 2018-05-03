@@ -29,22 +29,25 @@ const UserActions = ({user}) => (
   </section>
 );
 
-const UserInfoPop = (user) => (
-  <dialog className="pop-over user-info-pop">
-    <section className="pop-over-info">
-      <a href={user.link}>
-        <img className="avatar" src={user.avatar} alt={`User avatar for ${user.login}`}/>
-      </a>
-      <div className="info-container">
-        <p className="name" title={user.name}>{user.name}</p>
-        <p className="user-login" title={user.login}>{user.login}</p>
-      </div>
-      { user.thanksCount > 0 && <UserThanks thanks={user.thanksString} />}
-    </section>    
-    <UserActions user={user} />
-    { user.currentUserIsOnTeam === true && <RemoveFromTeam action={user.removeUserFromTeam} />}
-  </dialog>
-);
+const UserInfoPop = (user) => {
+  console.log('🌎',user);
+  return (
+    <dialog className="pop-over user-info-pop">
+      <section className="pop-over-info">
+        <a href={user.link}>
+          <img className="avatar" src={user.avatar} alt={`User avatar for ${user.login}`}/>
+        </a>
+        <div className="info-container">
+          <p className="name" title={user.name}>{user.name}</p>
+          <p className="user-login" title={user.login}>{user.login}</p>
+        </div>
+        { user.thanksCount > 0 && <UserThanks thanks={user.thanksString} />}
+      </section>    
+      <UserActions user={user} />
+      { user.currentUserIsOnTeam === true && <RemoveFromTeam action={user.removeUserFromTeam} />}
+    </dialog>
+  );
+};
 
 UserInfoPop.propTypes = {
   id: PropTypes.number.isRequired,
