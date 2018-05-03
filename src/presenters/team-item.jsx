@@ -1,8 +1,6 @@
-import TeamItemTemplate from '../templates/includes/team-item';
 import UsersList from "./users-list.jsx";
 import PropTypes from 'prop-types';
 import React from 'react';
-import Reactlet from "./reactlet";
 
 export function TeamItemPresenter(application, team) {
 
@@ -16,13 +14,6 @@ export function TeamItemPresenter(application, team) {
 
     truncatedDescription() {
       return team.truncatedDescription();
-    },
-
-    UsersList() {
-      const props = {
-        users: team.users().map(user => user.asProps()),
-      };
-      return Reactlet(UsersList, props);
     },
 
     thanks() {
@@ -49,7 +40,7 @@ export function TeamItemPresenter(application, team) {
     },
   };
 
-  return TeamItemTemplate(self);
+  return self;
 }
 
 export default function TeamItem({team}) {
@@ -67,6 +58,7 @@ export default function TeamItem({team}) {
             {!!team.isVerified && <span data-tooltip={team.verifiedTooltip}>
               <img className="verified" src={team.verifiedImage} alt={team.verifiedTooltip} />
             </span>}
+            <UsersList users={team.users} />
           </div>
         </div>
       </div>
@@ -80,6 +72,7 @@ TeamItem.propTypes = {
     isVerified: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     teamAvatarUrl: PropTypes.string.isRequired,
+    users: PropTypes.array.isRequired,
     url: PropTypes.string.isRequired,
     verifiedImage: PropTypes.string.isRequired,
     verifiedTooltip: PropTypes.string.isRequired,
