@@ -1,15 +1,32 @@
 // replaces analytics-projects-pop.jade/.js
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
 
 const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
 
+const filteredProjects = (query) => {
+  console.log(query);
+};
+
 const AnalyticsProjectPop = (props) => {
   console.log('🐊',props);
   return (
-    <p>yolo</p>
+    <dialog className="pop-over analytics-projects-pop">
+      <section className="pop-over-info">
+        <input onChange={(event) => {filteredProjects(event.target.value);}} id="analytics-project-filter" className="pop-over-input search-input pop-over-search" placeholder="Filter projects" />
+      </section>
+      <section className="pop-over-actions results-list">
+        <ul className="results">
+          { props.projects.map((project, key) => (
+            <ProjectResultItem key={key} {...project}/>
+          ))}
+        </ul>
+      </section>
+    </dialog>
+
   ); 
 };
 
@@ -39,6 +56,8 @@ AnalyticsProjectPop.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     avatar: PropTypes.string.isRequired,
+    domain: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
   })).isRequired,
   action: PropTypes.func.isRequired,
 };

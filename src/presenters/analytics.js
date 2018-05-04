@@ -413,6 +413,7 @@ export default function(application, teamOrProject) {
         projects: projects(),
         action,
       };
+      console.log('🌹🌹🌹🌹', props.projects);
       return Reactlet(AnalyticsProjectPop, props);
     },
 
