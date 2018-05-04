@@ -25,11 +25,7 @@ ProjectResultItem.propTypes = {
   description: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
-  users: PropTypes.array,
-};
-
-ProjectResultItem.defaultProps = {
-  users: []
+  users: PropTypes.array.isRequired,
 };
 
 export default ProjectResultItem;

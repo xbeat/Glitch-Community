@@ -22,6 +22,11 @@ const AllProjectsItem = () => {
 
 const AnalyticsProjectPop = ({projects, action, togglePopover}) => {
   console.log(action);
+  const onClick = (...args) => {
+    togglePopover();
+    action(...args);
+  };
+  
   return (
     <dialog className="pop-over analytics-projects-pop">
       <section className="pop-over-info">
@@ -35,7 +40,7 @@ const AnalyticsProjectPop = ({projects, action, togglePopover}) => {
         <ul className="results">
           < AllProjectsItem />
           { projects.map((project) => (
-            <ProjectResultItem key={project.id} {...project}/>
+            <ProjectResultItem key={project.id} {...project} action={action}/>
           ))}
         </ul>
       </section>
