@@ -387,32 +387,32 @@ export default function(application, teamOrProject) {
       }
     },
 
-//     toggleAnalyticsProjectsPop(event) {
-//       event.stopPropagation();
-//       const element = event.currentTarget;
-//       const existingPop = element.querySelector(".analytics-projects-pop");
-//       application.closeAllPopOvers();
+    //     toggleAnalyticsProjectsPop(event) {
+    //       event.stopPropagation();
+    //       const element = event.currentTarget;
+    //       const existingPop = element.querySelector(".analytics-projects-pop");
+    //       application.closeAllPopOvers();
 
-//       if (!existingPop) {
-//         return element.parentElement.appendChild(AnalyticsProjectsPopPresenter(application, self));
-//       }
-//     },
+    //       if (!existingPop) {
+    //         return element.parentElement.appendChild(AnalyticsProjectsPopPresenter(application, self));
+    //       }
+    //     },
 
     AnalyticsProjectPop() {
       // TODO can't pass through action
       const action = () => {
-        return console.log('AnalyticsProjectPop action')
+        return console.log('AnalyticsProjectPop action');
       };
       const projects = 
           application.team().projects().map(project => {
-            project = project.asProps()
-            project.description = ""
+            project = project.asProps();
+            project.description = "";
             // console.log('👻👻👻',project)
-            project.users = []
+            project.users = [];
             return project;
           });
       const props = {
-        projects: projects,
+        projects,
         action,
       };
       // console.log('🌹🌹🌹🌹', props)

@@ -20,18 +20,22 @@ const AllProjectsItem = () => {
   );
 };
 
-const AnalyticsProjectPop = (props) => {
-  console.log('🐊',props);
+const AnalyticsProjectPop = ({projects, action, togglePopover}) => {
+  console.log(action);
   return (
     <dialog className="pop-over analytics-projects-pop">
       <section className="pop-over-info">
-        <input onChange={(event) => {filterProjects(event.target.value);}} id="analytics-project-filter" className="pop-over-input search-input pop-over-search" placeholder="Filter projects" />
+        <input 
+          onChange={(event) => {filterProjects(event.target.value);}} 
+          id="analytics-project-filter" 
+          className="pop-over-input search-input pop-over-search" 
+          placeholder="Filter projects" />
       </section>
       <section className="pop-over-actions results-list">
         <ul className="results">
           < AllProjectsItem />
-          { props.projects.map((project, key) => (
-            <ProjectResultItem key={key} {...project}/>
+          { projects.map((project) => (
+            <ProjectResultItem key={project.id} {...project}/>
           ))}
         </ul>
       </section>
@@ -47,6 +51,7 @@ AnalyticsProjectPop.propTypes = {
     description: PropTypes.string.isRequired,
   })).isRequired,
   action: PropTypes.func.isRequired,
+  togglePopover: PropTypes.func.isRequired,
 };
 
 // convert to stateful class, to update buttonname, update loading state
@@ -57,7 +62,7 @@ const AnalyticsProjectPopContainer = (props) => {
       {({visible, togglePopover}) => (
         <div className="button-wrap">
           <button className="button-small button-tertiary" onClick={togglePopover}>All Projects</button>
-          {visible && <AnalyticsProjectPop {...props} />}
+          {visible && <AnalyticsProjectPop {...props} togglePopover={togglePopover} />}
         </div>
       )}
     </PopoverContainer>
