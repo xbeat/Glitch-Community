@@ -408,8 +408,8 @@ export default function(application, teamOrProject) {
           application.team().projects().map(project => {
             project = project.asProps();
             project.description = "";
+            // console.log('👻👻👻',project)
             project.users = [];
-
             return project;
           })
         );
@@ -418,7 +418,7 @@ export default function(application, teamOrProject) {
         projects: projects(),
         action,
       };
-      console.log('🌹🌹🌹🌹', props);
+      // console.log('🌹🌹🌹🌹', props)
       return Reactlet(AnalyticsProjectPop, props);
     },
 

@@ -1,21 +1,27 @@
-// replaces analytics-projects-pop.jade/.js
+// replaces analytics-projects-pop.jade/.js, analytics-project-pop.js/.jade, 
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
 
-const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
 
 const filterProjects = (query) => {
   console.log(query);
 };
 
+const AllProjectsItem = () => {
+  const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
+  return (
+    <li className="result" tabIndex="0" onClick={null}>
+      <img className="avatar" src={BENTO_BOX} alt='Bento emoji'/>
+      <div className="result-name" title="All Projects">All Projects</div>
+    </li>
+  );
+};
+
 const AnalyticsProjectPop = (props) => {
   console.log('🐊',props);
-  
-  // let filteredProjects = props.projects
-    
   return (
     <dialog className="pop-over analytics-projects-pop">
       <section className="pop-over-info">
@@ -23,6 +29,7 @@ const AnalyticsProjectPop = (props) => {
       </section>
       <section className="pop-over-actions results-list">
         <ul className="results">
+          < AllProjectsItem />
           { props.projects.map((project, key) => (
             <ProjectResultItem key={key} {...project}/>
           ))}
@@ -32,28 +39,6 @@ const AnalyticsProjectPop = (props) => {
 
   ); 
 };
-
-// dialog.pop-over.results-list.analytics-projects-pop.disposable(click=@stopPropagation)
-
-//   section.pop-over-info
-//     input#analytics-project-search.pop-over-input.search-input.pop-over-search(input=@filter keyup=@spacekeyDoesntClosePop placeholder="Filter projects")
-
-//   section.pop-over-actions.last-section
-//     ul.results
-//       .result-container(class=@activeIfAllProjects click=@selectAllProjects)
-//         li.result
-//           .result-information
-//             img.result-avatar(src=bentoBox)
-//             .result-name All Projects
-
-//       //- options = {}
-//       //- analytics = @analytics
-//       - context = @
-//       - @teamProjects().forEach (project) ->
-//         = context.ProjectResultItem(project)
-//         // = ProjectResultItemPresenter(application, project, options, analytics)
-
-
 
 AnalyticsProjectPop.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
@@ -65,8 +50,7 @@ AnalyticsProjectPop.propTypes = {
   action: PropTypes.func.isRequired,
 };
 
-
-// convert to stateful class, to update name, update loading state
+// convert to stateful class, to update buttonname, update loading state
 
 const AnalyticsProjectPopContainer = (props) => {
   console.log('🏄‍♂️',props);
