@@ -4,12 +4,36 @@ import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
 
+const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
 
 const AnalyticsProjectPop = (props) => {
+  console.log('🐊',props);
   return (
     <p>yolo</p>
   ); 
 };
+
+// dialog.pop-over.results-list.analytics-projects-pop.disposable(click=@stopPropagation)
+
+//   section.pop-over-info
+//     input#analytics-project-search.pop-over-input.search-input.pop-over-search(input=@filter keyup=@spacekeyDoesntClosePop placeholder="Filter projects")
+
+//   section.pop-over-actions.last-section
+//     ul.results
+//       .result-container(class=@activeIfAllProjects click=@selectAllProjects)
+//         li.result
+//           .result-information
+//             img.result-avatar(src=bentoBox)
+//             .result-name All Projects
+
+//       //- options = {}
+//       //- analytics = @analytics
+//       - context = @
+//       - @teamProjects().forEach (project) ->
+//         = context.ProjectResultItem(project)
+//         // = ProjectResultItemPresenter(application, project, options, analytics)
+
+
 
 AnalyticsProjectPop.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
@@ -45,29 +69,8 @@ export default AnalyticsProjectPopContainer;
 //     span(class=@hiddenUnlessGettingAnalyticsProjectDomain)= Loader
 //   = @analyticsProjectsPop
 
-
-
 // - bentoBox = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743'
 
-// dialog.pop-over.results-list.analytics-projects-pop.disposable(click=@stopPropagation)
-
-//   section.pop-over-info
-//     input#analytics-project-search.pop-over-input.search-input.pop-over-search(input=@filter keyup=@spacekeyDoesntClosePop placeholder="Filter projects")
-
-//   section.pop-over-actions.last-section
-//     ul.results
-//       .result-container(class=@activeIfAllProjects click=@selectAllProjects)
-//         li.result
-//           .result-information
-//             img.result-avatar(src=bentoBox)
-//             .result-name All Projects
-
-//       //- options = {}
-//       //- analytics = @analytics
-//       - context = @
-//       - @teamProjects().forEach (project) ->
-//         = context.ProjectResultItem(project)
-//         // = ProjectResultItemPresenter(application, project, options, analytics)
 
 
 // import Observable from 'o_0';
