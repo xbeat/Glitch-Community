@@ -1,10 +1,10 @@
-// replaces analytics-projects-pop.jade/.js, analytics-project-pop.js/.jade, 
+// replaces analytics-projects-pop.jade/.js, analytics-project-pop.js/.jade, project-result.js
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
-
 
 const filterProjects = (query) => {
   console.log(query);
@@ -36,7 +36,6 @@ const AnalyticsProjectPop = (props) => {
         </ul>
       </section>
     </dialog>
-
   ); 
 };
 
@@ -53,7 +52,6 @@ AnalyticsProjectPop.propTypes = {
 // convert to stateful class, to update buttonname, update loading state
 
 const AnalyticsProjectPopContainer = (props) => {
-  console.log('🏄‍♂️',props);
   return (
     <PopoverContainer>
       {({visible, togglePopover}) => (
@@ -76,51 +74,3 @@ export default AnalyticsProjectPopContainer;
 //   = @analyticsProjectsPop
 
 // - bentoBox = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743'
-
-
-
-// import Observable from 'o_0';
-
-// import AnalyticsProjectsPopTemplate from '../../templates/pop-overs/analytics-projects-pop';
-// // import ProjectResultPresenter from '../project-result';
-
-// export default function(application, analytics) {
-
-//   var self = {
-  
-//     application,  
-//     teamProjects: Observable(application.team().projects()),
-//     analytics,
-//     // ProjectResultPresenter,
-    
-//     stopPropagation(event) {
-//       return event.stopPropagation();
-//     },
-
-//     filter(event) {
-//       const query = event.target.value.trim();
-//       const projects = application.team().projects();
-//       if (query.length) {
-//         const filtered = projects.filter(project => project.domain().match(query) || project.description().match(query));
-//         return self.teamProjects(filtered);
-//       } 
-//       return self.teamProjects(projects);
-      
-//     },
-
-//     spacekeyDoesntClosePop(event) {
-//       event.stopPropagation();
-//       return event.preventDefault();
-//     },
-
-//     activeIfAllProjects() {
-//       if (analytics.analyticsProjectDomain() === 'All Projects') { return 'active'; }
-//     },
-
-//     selectAllProjects() {
-//       return analytics.analyticsProjectDomain('All Projects');
-//     },
-//   };
-        
-//   return AnalyticsProjectsPopTemplate(self);
-// }
