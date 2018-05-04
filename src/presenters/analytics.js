@@ -387,25 +387,30 @@ export default function(application, teamOrProject) {
       }
     },
 
-    toggleAnalyticsProjectsPop(event) {
-      event.stopPropagation();
-      const element = event.currentTarget;
-      const existingPop = element.querySelector(".analytics-projects-pop");
-      application.closeAllPopOvers();
+    //     toggleAnalyticsProjectsPop(event) {
+    //       event.stopPropagation();
+    //       const element = event.currentTarget;
+    //       const existingPop = element.querySelector(".analytics-projects-pop");
+    //       application.closeAllPopOvers();
 
-      if (!existingPop) {
-        return element.parentElement.appendChild(AnalyticsProjectsPopPresenter(application, self));
-      }
-    },
+    //       if (!existingPop) {
+    //         return element.parentElement.appendChild(AnalyticsProjectsPopPresenter(application, self));
+    //       }
+    //     },
 
     AnalyticsProjectPop() {
+      // TODO can't pass through action
       const action = () => {
-        console.log('AnalyticsProjectPop action');
+        return console.log('AnalyticsProjectPop action');
       };
       const projects = () => {
         return (
           application.team().projects().map(project => {
-            project.asProps();
+            project = project.asProps();
+            project.description = "";
+            project.users = [];
+
+            return project;
           })
         );
       };
@@ -413,7 +418,7 @@ export default function(application, teamOrProject) {
         projects: projects(),
         action,
       };
-      console.log('🌹🌹🌹🌹', props.projects);
+      console.log('🌹🌹🌹🌹', props);
       return Reactlet(AnalyticsProjectPop, props);
     },
 
