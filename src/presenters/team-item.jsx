@@ -39,6 +39,7 @@ export default function TeamItem({team}) {
             {team.thanksCount > 0 && <p className="thanks">
               {team.teamThanks} <span className="emoji sparkling_heart"></span>
             </p>}
+            {team.description && <p className="description">{team.</p>
           </div>
         </div>
       </div>
@@ -49,11 +50,13 @@ TeamItem.propTypes = {
   team: PropTypes.shape({
     coverColor: PropTypes.string.isRequired,
     coverUrlSmall: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
     isVerified: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     teamAvatarUrl: PropTypes.string.isRequired,
     teamThanks: PropTypes.string.isRequired,
     thanksCount: PropTypes.number.isRequired,
+    
     users: PropTypes.array.isRequired,
     url: PropTypes.string.isRequired,
     verifiedImage: PropTypes.string.isRequired,
