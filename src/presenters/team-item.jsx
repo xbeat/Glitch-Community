@@ -1,6 +1,6 @@
-import UsersList from "./users-list.jsx";
 import PropTypes from 'prop-types';
 import React from 'react';
+import UsersList from "./users-list.jsx";
 
 export function TeamItemPresenter(application, team) {
 
@@ -8,35 +8,12 @@ export function TeamItemPresenter(application, team) {
     application,
     team,
 
-    name() {
-      return team.name();
-    },
-
     truncatedDescription() {
       return team.truncatedDescription();
-    },
-
-    thanks() {
-      return team.teamThanks();
-    },
-    
-    users() {
-      return team.users();
-    },
-
-    hiddenUnlessThanks() {
-      if (!(team.thanksCount() > 0)) { return 'hidden'; }
     },
     
     hiddenUnlessDescription() {
       if (!team.description()) { return 'hidden'; }
-    },
-
-    style() {
-      return {
-        backgroundImage: `url('${self.coverUrl()}')`,
-        backgroundColor: self.coverColor(),
-      };
     },
   };
 
@@ -59,6 +36,9 @@ export default function TeamItem({team}) {
               <img className="verified" src={team.verifiedImage} alt={team.verifiedTooltip} />
             </span>}
             <UsersList users={team.users} />
+            {team.thanksCount > 0 && <p className="thanks">
+              {team.teamThanks} <span className="emoji sparkling_heart"></span>
+            </p>}
           </div>
         </div>
       </div>
@@ -72,6 +52,8 @@ TeamItem.propTypes = {
     isVerified: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     teamAvatarUrl: PropTypes.string.isRequired,
+    teamThanks: PropTypes.number.isRequired,
+    thanksCount: PropTypes.number.isRequired,
     users: PropTypes.array.isRequired,
     url: PropTypes.string.isRequired,
     verifiedImage: PropTypes.string.isRequired,

@@ -196,6 +196,8 @@ export default Team = function(I, self) {
         isVerified: self.isVerified(),
         name: self.name(),
         teamAvatarUrl: self.teamAvatarUrl(),
+        teamThanks: self.teamThanks(),
+        thanksCount: self.thanksCount(),
         url: self.url(),
         users: self.users().map(user => user.asProps()),
         verifiedImage: self.verifiedImage(),
