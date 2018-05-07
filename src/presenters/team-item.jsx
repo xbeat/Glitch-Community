@@ -52,7 +52,7 @@ TeamItem.propTypes = {
     isVerified: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     teamAvatarUrl: PropTypes.string.isRequired,
-    teamThanks: PropTypes.number.isRequired,
+    teamThanks: PropTypes.string.isRequired,
     thanksCount: PropTypes.number.isRequired,
     users: PropTypes.array.isRequired,
     url: PropTypes.string.isRequired,
