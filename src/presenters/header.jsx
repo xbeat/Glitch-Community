@@ -7,6 +7,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {join as joinPath} from 'path';
 
+import {getProjectsByIds} from '../models/ProjectModel';
+
 const Logo = () => {
   const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
   const LOGO_SUNSET = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg";
@@ -61,26 +63,7 @@ const UserOptionsPopInstance = ({user, overlayNewStuffVisible}) => {
   return <UserOptionsPop {...props}/>;
 };
 
-const NewProjectPopInstance = ({ProjectModel, api}) => {
-  const projectIds = [
-    'a0fcd798-9ddf-42e5-8205-17158d4bf5bb', // 'hello-express'
-    'cb519589-591c-474f-8986-a513f22dbf88', // 'hello-sqlite'
-    '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
-  ];
-  const projects = ProjectModel.getProjectsByIds(api, projectIds);
-  const fetchedProjects = projects.filter(project => project.fetched());
-  const newProjects = fetchedProjects.map((project) => {
-  const props = project.asProps();
-
-    //Deliberately hide the user list 
-    props.users = [];
-    return props;
-  });
-
-  return <NewProjectPop newProjects={newProjects}/>
-}
-
-const Header = (application, ProjectModel) => {
+const Header = (application) => {
   
   const baseUrl = application.normalizedBaseUrl();
   const user = application.currentUser().asProps();
@@ -88,6 +71,7 @@ const Header = (application, ProjectModel) => {
   const searchQuery = application.searchQuery
   const api = application.api();;
   const overlayNewStuffVisible = application.overlayNewStuffVisible;
+  const getProjectsByIds = (projectIds) => getProjectsByIds(api, projectIds);
 
   return (
     <header role="banner">
@@ -99,7 +83,7 @@ const Header = (application, ProjectModel) => {
      
      <nav role="navigation">
         <SearchForm baseUrl={baseUrl} onSubmit={submitSearch} searchQuery={searchQuery}/>
-        <NewProjectPopInstance ProjectModel={ProjectModel} api={api}/>
+        <NewProjectPop getProjectsByIds={getProjectsByIds}/>
         { !signedIn && <SignInPop/> }
         <ResumeCoding/>
         <UserOptionsPopInstance user={user} overlayNewStuffVisible={overlayNewStuffVisible} />
