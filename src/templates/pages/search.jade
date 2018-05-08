@@ -1,11 +1,12 @@
 - cat = "https://cdn.gomix.com/us-east-1%3Acba180f4-ee65-4dfc-8dd5-f143280d3c10%2Fcat.svg"
 
 - TeamItemPresenter = @TeamItemPresenter
-- UserItemPresenter = @UserItemPresenter
 - Loader = require "../includes/loader"
 - ProjectListPresenter = @ProjectListPresenter
 
 - context = @application
+- Reactlet = @Reactlet
+- UserItem = @UserItem
 
 main.search-results(role="main")
 
@@ -22,7 +23,8 @@ main.search-results(role="main")
     h2 Users
     ul.users-container
       - @searchResultsUsers().forEach (user) ->
-        = UserItemPresenter(context, user)
+        li
+          = Reactlet(UserItem, {user: user.asProps()}, 'search-user-'+user.id())
     span(class=@hiddenIfSearchResultsUsersLoaded)
       = Loader(this)
 

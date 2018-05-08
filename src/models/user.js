@@ -212,12 +212,22 @@ export default User = function(I, self) {
     },
     
     asProps() {
-      return { 
-        userLink: self.userLink(), 
-        tooltipName: self.tooltipName(), 
-        style: self.style(),
+      return {
         alt: self.alt(),
-        userAvatarUrl:self.userAvatarUrl(), 
+        coverUrlSmall: self.coverUrl('small'),
+        coverColor: self.coverColor(),
+        description: self.description(),
+        id: self.id(),
+        login: self.login(),
+        name: self.name(),
+        style: self.style(),
+        thanksCount: self.thanksCount(),
+        tooltipName: self.tooltipName(),
+        truncatedDescriptionHtml: md.render(self.truncatedDescription()),
+        userAvatarUrl: self.userAvatarUrl(),
+        userAvatarUrlLarge: self.userAvatarUrl('large'),
+        userLink: self.userLink(),
+        userThanks: self.userThanks(),
       };
     },
   });

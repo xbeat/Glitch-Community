@@ -1,11 +1,11 @@
 import LayoutPresenter from '../layout';
 import SearchPageTemplate from '../../templates/pages/search';
 import TeamItemPresenter from '../team-item';
-import UserItemPresenter from '../user-item';
 
 import Categories from "../categories.jsx";
 import Reactlet from "../reactlet";
 import ProjectsList from "../projects-list.jsx";
+import UserItem from '../user-item.jsx';
 
 
 export default function(application) {
@@ -13,11 +13,12 @@ export default function(application) {
   const self = { 
 
     application,
+    Reactlet,
     searchResultsProjects: application.searchResultsProjects,
     searchResultsUsers: application.searchResultsUsers,
     searchResultsTeams: application.searchResultsTeams,
     TeamItemPresenter,
-    UserItemPresenter,
+    UserItem,
     
     hiddenIfSearchResultsTeamsLoaded() {
       if (application.searchResultsTeamsLoaded()) { return 'hidden'; }
