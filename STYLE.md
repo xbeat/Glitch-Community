@@ -19,7 +19,7 @@ Most importantly we shouldn't pass state into a module by way of an import().
 
 For example...
 
-Bad:
+Less clear/ less testable:
 ```
 // in Entry.js
 import TimeDisplay from './TimeDisplay'
@@ -35,7 +35,7 @@ export default function() {
 }
 ```
 
-Good:
+More clear / more testable:
 ```
 // in Entry.js
 import TimeDisplay from './TimeDisplay'
@@ -52,6 +52,8 @@ export default function(currentTime) {
 
 ```
 
+This example is trivial, but the pattern of "passing a module the things it needs" is a strong underlying pattern.
+
 
 Make the Most of ES6
 --------------------
@@ -63,9 +65,11 @@ Love your Linter
 ----------------
 ESLint is running and outputting to 'logs'.  We also have an experimental feature in place that allows ESLint to autoformat the code.  The linter is configured by src/.eslintrc.js
 
-Write A11y-Compliant Html
+Write A11Y-Compliant Html
 -------------------------
 Our linter runs a lovely jsx-a11y plugin which does a lot of the hard work for us.  It's still on us however to respect the spirit of the linter;  it's not enough to just pass, but we also want to be conscientious about using [quality alt-tags](https://a11yproject.com/posts/alt-text/), making sure you can accomplish all UI interactions via the keyboard (which often comes down to picking the right DOM elements), etc. 
+
+More details available at [The A11y Project](https://a11yproject.com/)
 
 
 Prefer React.js
@@ -74,7 +78,7 @@ This is a codebase in transition.  What started as coffeescript/jadelet/Observab
 
 Prefer Common React Patterns
 ----------------------------
-[React Patterns](https://reactpatterns.com/) is a great guide.  For the most part, our React code can all be written using the *stateless function* pattern.  When we need state, we can use the *container component* pattern.  It's rare that we need to build something that can't be factored out into those patterns.
+[React Patterns](https://reactpatterns.com/) is a great guide.  For the most part, our React code can all be written using the [stateless function pattern](https://reactpatterns.com/#stateless-function).  When we need state, we can use the [container component pattern](https://reactpatterns.com/#container-component).  It's rare that we need to build something that can't be factored out into those patterns.
 
 Avoid Components That Think Too Hard
 ------------------------------------
@@ -82,7 +86,7 @@ Think about React components like you do functions.  If the component is getting
 
 Use React Prop-Types
 --------------------
-Our rule for prop types use is this:
+Our rule for [prop types](https://www.npmjs.com/package/prop-types) use is this:
 
  - Any React Component that's not a stateless function should declare all of its parameters as prop types. This is done primarily as a form of documentation for the input parameters to the component.
  
