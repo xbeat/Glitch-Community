@@ -24,12 +24,22 @@ const Logo = () => {
   return <img className="logo" src={logo} alt="Glitch" />;
 }
 
-const Header = () => {
+const ResumeCoding = (
+  <a class="" href="https://glitch.com/edit/" data-track="resume coding">
+     <div class="button button-small button-cta">Resume Coding</div>
+  </a>
+);
+
+const submitSearch = (event) => {
+  if (event.target.children.q.value.trim().length === 0) {
+    return event.preventDefault();
+  }
+};
+
+const Header = (application) => {
   
   const baseUrl = application.normalizedBaseUrl();
-  
-  
-  
+
   const NewProjectPopInstance = () => {
     const projectIds = [
       'a0fcd798-9ddf-42e5-8205-17158d4bf5bb', // 'hello-express'
@@ -50,11 +60,7 @@ const Header = () => {
   }
   
   const signedIn = !!application.currentUser().login();
-  const ResumeCoding = (
-    <a class="" href="https://glitch.com/edit/" data-track="resume coding">
-       <div class="button button-small button-cta">Resume Coding</div>
-    </a>
-  );
+
   
   const getTeamsPojo = function(teams) { 
     
@@ -96,11 +102,14 @@ const Header = () => {
       return <UserOptionsPop {...props}/>;
     };
   
-  const submit = (event) => {
-      if (event.target.children.q.value.trim().length === 0) {
-        return event.preventDefault();
-      }
-    };
+  
+  
+  const SearchForm = ({baseUrl, join, onSubmit, searchQuery}) =>(
+      <form action={join(baseUrl, "search")} method="get" role="search" onSubmit={submitSearch}>
+        <label class="screen-reader-text" for="search-projects">Search Glitch projects</label>
+        <input id="search-projects" class="search-input" name="q" placeholder="bots, apps, users" value={application.searchQuery}/>
+      </form>
+    );
   
   return (
     <header role="banner">
@@ -111,10 +120,7 @@ const Header = () => {
       </div>
      
      <nav role="navigation">
-        <form action={join(baseUrl, "search")} method="get" role="search" onSubmit={submit}>
-          <label class="screen-reader-text" for="search-projects">Search Glitch projects</label>
-          <input id="search-projects" class="search-input" name="q" placeholder="bots, apps, users" value={application.searchQuery}/>
-        </form>
+        <SearchForm baseUrl={baseUrl} join={path.join}/>
         <NewProjectPopInstance/>
         { !signedIn && <SignInPop/> }
         <ResumeCoding/>
