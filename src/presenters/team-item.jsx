@@ -9,6 +9,7 @@ export default function TeamItem({team}) {
   };
   return (
     <div className="item" style={style}>
+      <a className="mask" href={team.url} role="presentation"></a>
       <div className="content">
         <img className="avatar" src={team.teamAvatarUrl} alt="" />
         <div className="information">
