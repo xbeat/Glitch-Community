@@ -14,6 +14,8 @@ import Reactlet from "./reactlet";
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {join} from 'path';
+
 
 
 
@@ -66,8 +68,7 @@ header(role="banner")
 
 */ 
   
-  //so what was that appearin link?
-  // https://appear.in/jude-greg
+  const baseUrl = application.normalizedBaseUrl();
   
   const Logo = () => {
     const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
@@ -111,6 +112,23 @@ header(role="banner")
     </a>
   );
   
+  const getTeamsPojo = function(teams) { 
+    
+    if (!teams || !teams.length) {
+      return [];
+    }
+    
+    // Teams load in two passes, first as an incomplete object,
+    // then as a model. Filter out the incomplete teams.
+    teams = teams.filter(team => team.I !== undefined);
+    
+    return teams.map(({name, url, teamAvatarUrl}) => ({
+      name: name(),
+      url: url(),
+      teamAvatarUrl: teamAvatarUrl(),
+    }));
+  };
+  
   const UserOptionsPopInstance = () => {
       const user = application.currentUser();
       if(!user.fetched()) {
@@ -137,11 +155,13 @@ header(role="banner")
   return (
     <header role="banner">
       <div class="header-info">
-        <a href="/"><img class="logo" src="https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg" alt="Glitch"/></a>
+        <a href={baseUrl}>
+          <Logo/>
+        </a>
       </div>
      
      <nav role="navigation">
-        <form action="/search" method="get" role="search">
+        <form action={join(baseUrl, "search")} method="get" role="search">
           <label class="screen-reader-text" for="search-projects">Search Glitch projects</label>
           <input id="search-projects" class="search-input" name="q" placeholder="bots, apps, users"/>
         </form>
@@ -158,22 +178,7 @@ export default Header;
 
 function oldPresenter(application) {
   
-  const getTeamsPojo = function(teams) { 
-    
-    if (!teams || !teams.length) {
-      return [];
-    }
-    
-    // Teams load in two passes, first as an incomplete object,
-    // then as a model. Filter out the incomplete teams.
-    teams = teams.filter(team => team.I !== undefined);
-    
-    return teams.map(({name, url, teamAvatarUrl}) => ({
-      name: name(),
-      url: url(),
-      teamAvatarUrl: teamAvatarUrl(),
-    }));
-  };
+
 
   var self = {
 
