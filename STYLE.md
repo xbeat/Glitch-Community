@@ -3,13 +3,13 @@ Style Guide (Draft)
 
 This is our coding style guide.  It's a draft.  It will _always be a draft_, because style guides on live codebases are never done.  For the moment, this is our best set of captured guidance on coding styles for this site. If ever that doesn't seem true, it's time to edit more!
 
+**How to understand this guide**:
 
-General
--------
-
-This is a codebase in transition.  What started as coffeescript/jadelet/Observables is making its way toward ES6/React.js.
+This guide doesn't (and cannot) stand on its own, it instead encourages you to find and use the best programming practices and idioms you know.  When there's meaningful choice or fork in direction, we try to set that here.  For more details on any of the practices in this guide, talk the topic through with one of the maintainers.  At present those people are: Jude, Greg, {...you?}
 
 We're not strict about enforcing the "latest styles" on any new code, we merely ask that new code heads in the right direction.  That direction being...
+
+
 
 Prefer Dependency Injection
 ---------------------------
@@ -63,6 +63,14 @@ Love your Linter
 ----------------
 ESLint is running and outputting to 'logs'.  We also have an experimental feature in place that allows ESLint to autoformat the code.  The linter is configured by src/.eslintrc.js
 
+Write A11y-Compliant Html
+-------------------------
+Our linter runs a lovely jsx-a11y plugin which does a lot of the hard work for us.  It's still on us however to respect the spirit of the linter;  it's not enough to just pass, but we also want to be conscientious about using [quality alt-tags](https://a11yproject.com/posts/alt-text/), making sure you can accomplish all UI interactions via the keyboard (which often comes down to picking the right DOM elements), etc. 
+
+
+Prefer React.js
+---------------------
+This is a codebase in transition.  What started as coffeescript/jadelet/Observables is making its way toward ES6/React.js.
 
 Prefer Common React Patterns
 ----------------------------
