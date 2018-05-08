@@ -226,7 +226,7 @@ export default User = function(I, self) {
         style: self.style(),
         alt: self.alt(),
         userAvatarUrl:self.userAvatarUrl(),
-        teams: (self.teams() || []).map(({asProps}) => asProps())
+        teams: (self.teams() || []).filter(({fetched}) => fetched()).map(({asProps}) => asProps())
       };
     },
   });

@@ -35,10 +35,10 @@ const submitSearch = (event) => {
   }
 };
 
-const SearchForm = ({baseUrl, onSubmit, searchQuery}) => (
+const SearchForm = ({baseUrl, onSubmit, defaultValue}) => (
   <form action={joinPath(baseUrl, "search")} method="get" role="search" onSubmit={onSubmit}>
     <label className="screen-reader-text" htmlFor="search-projects">Search Glitch projects</label>
-    <input id="search-projects" className="search-input" name="q" placeholder="bots, apps, users" value={searchQuery}/>
+    <input id="search-projects" className="search-input" name="q" placeholder="bots, apps, users" defaultValue={defaultValue}/>
   </form>
 );
 

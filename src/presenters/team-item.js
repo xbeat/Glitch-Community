@@ -18,7 +18,7 @@ export default function(application, team) {
 
     UsersList() {
       const props = {
-        users: team.users().map(user => user.asProps()),
+        users: team.users.filter(({fetched}) => fetched()).map(({asProps}) => asProps()),
       };
       return Reactlet(UsersList, props);
     },
