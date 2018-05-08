@@ -17,6 +17,32 @@ All modules receive their dependencies as arguments to their constructor.  This 
 
 Most importantly we shouldn't pass state into a module by way of an import().
 
+Example:
+
+``` entry.js:
+...
+import Time from './Time'
+export currentTime = new Date();
+
+render(Time);
+...
+
+Bad:
+```
+// in Time.js
+import {currentTime} from './entry'
+
+export default function() {
+  return `The time is ${currentTime}`;
+}
+
+
+```
+Good:
+```
+```
+
+
 Make the Most of ES6
 --------------------
 We're using it, and it's sweet!  Enjoy destructuring, ES6 classes, import/export, string literals, etc. 
