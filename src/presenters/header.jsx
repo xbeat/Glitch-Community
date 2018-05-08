@@ -18,7 +18,6 @@ import PropTypes from 'prop-types';
 
 
 
-
 const Header = () => {
   
 /*
@@ -43,7 +42,7 @@ header(role="banner")
     
     
     <header role="banner">
-   <div class="header-info"><a href="/"><img class="logo" src="https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg" alt="Glitch"></a></div>
+  <div class="header-info"><a href="/"><img class="logo" src="https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg" alt="Glitch"></a></div>
    <nav role="navigation">
       <form action="/search" method="get" role="search"><label class="screen-reader-text" for="search-projects">Search Glitch projects
          </label><input id="search-projects" class="search-input" name="q" placeholder="bots, apps, users">
@@ -63,26 +62,69 @@ header(role="banner")
          </span>
       </span>
    </nav>
-</header>
+  </header>
 
 */ 
+  
+  //so what was that appearin link?
+  // https://appear.in/jude-greg
+  
+  const Logo = () => {
+    const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
+    const LOGO_SUNSET = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg";
+    const LOGO_NIGHT = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-night.svg";
+
+    let logo = LOGO_DAY;
+    const hour = moment().format('HH');
+    if ((hour >= 16) && (hour <= 18)) {
+      logo = LOGO_SUNSET;
+    } else if ((hour > 18) || (hour <= 8)) {
+      logo = LOGO_NIGHT;
+    }
+
+    return <img className="logo" src={logo} alt="Glitch" />;
+  }
+  
+  const NewProjectPopInstance = () => {
+    const projectIds = [
+      'a0fcd798-9ddf-42e5-8205-17158d4bf5bb', // 'hello-express'
+      'cb519589-591c-474f-8986-a513f22dbf88', // 'hello-sqlite'
+      '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
+    ];
+    const projects = ProjectModel.getProjectsByIds(application.api(), projectIds);
+    const fetchedProjects = projects.filter(project => project.fetched());
+    const newProjects = fetchedProjects.map((project) => {
+      const props = project.asProps();
+
+      //Deliberately hide the user list 
+      props.users = [];
+      return props;
+    });
+
+    return <NewProjectPop newProjects={newProjects}/>
+  }
+  
+  const signedIn = !!application.currentUser().login();
+  const ConditionalSignInPop = () => {
+    if(signedIn) {
+      return null;
+    }
+    return <SignInPop/>
+  }
   
   return (
     <header role="banner">
       <div class="header-info">
-        <a href="/"><img class="logo" src="https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg" alt="Glitch"></a>
+        <a href="/"><img class="logo" src="https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg" alt="Glitch"/></a>
       </div>
      
      <nav role="navigation">
-        <form action="/search" method="get" role="search"><label class="screen-reader-text" for="search-projects">Search Glitch projects
-           </label><input id="search-projects" class="search-input" name="q" placeholder="bots, apps, users">
+        <form action="/search" method="get" role="search">
+          <label class="screen-reader-text" for="search-projects">Search Glitch projects</label>
+          <input id="search-projects" class="search-input" name="q" placeholder="bots, apps, users"/>
         </form>
-        <span id="reactlet-NewProjectPopContainer-24">
-           <span>
-              <div class="button-wrap"><button class="button-small" data-track="open new-project pop">New Project</button></div>
-           </span>
-        </span>
-        <span class="hidden"><span id="reactlet-SignInPopContainer-25"><span><button class="button button-small">Sign in</button></span></span></span>
+        <NewProjectPopInstance/>
+        <ConditionalSignInPop/>
         <a class="" href="https://glitch.com/edit/" data-track="resume coding">
            <div class="button button-small button-cta">Resume Coding</div>
         </a>
