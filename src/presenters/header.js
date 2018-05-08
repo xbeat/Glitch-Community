@@ -11,7 +11,94 @@ import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
 import Reactlet from "./reactlet";
 
-export default function(application) {
+import React from 'react';
+import PropTypes from 'prop-types';
+
+
+
+
+
+
+const Header = () => {
+  
+/*
+header(role="banner")
+  .header-info
+    a(href=@baseUrl)
+      img.logo(src=@logo alt="Glitch")
+
+  nav(role="navigation")  
+    form(action="#{@baseUrl}search" method="get" role="search" @submit)
+      label.screen-reader-text(for="search-projects") Search Glitch projects
+      input.search-input(name="q" id="search-projects" placeholder="bots, apps, users" value=@application.searchQuery)
+
+    = @NewProjectPop
+    
+    span(class=@hiddenIfSignedIn)
+      = @SignInPop
+    a(href="https://glitch.com/edit/" data-track="resume coding" class=@hiddenUnlessSignedIn)
+      .button.button-small.button-cta Resume Coding
+    = @UserOptionsPop
+    
+    
+    
+    <header role="banner">
+   <div class="header-info"><a href="/"><img class="logo" src="https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg" alt="Glitch"></a></div>
+   <nav role="navigation">
+      <form action="/search" method="get" role="search"><label class="screen-reader-text" for="search-projects">Search Glitch projects
+         </label><input id="search-projects" class="search-input" name="q" placeholder="bots, apps, users">
+      </form>
+      <span id="reactlet-NewProjectPopContainer-24">
+         <span>
+            <div class="button-wrap"><button class="button-small" data-track="open new-project pop">New Project</button></div>
+         </span>
+      </span>
+      <span class="hidden"><span id="reactlet-SignInPopContainer-25"><span><button class="button button-small">Sign in</button></span></span></span>
+      <a class="" href="https://glitch.com/edit/" data-track="resume coding">
+         <div class="button button-small button-cta">Resume Coding</div>
+      </a>
+      <span id="reactlet-UserOptionsPopContainer-26">
+         <span>
+            <div class="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true"><button class="user"><img src="https://avatars3.githubusercontent.com/u/12502380?v=4" width="30px" height="30px" alt="User options"><span class="down-arrow icon"></span></button></div>
+         </span>
+      </span>
+   </nav>
+</header>
+
+*/ 
+  
+  return (
+    <header role="banner">
+      <div class="header-info">
+        <a href="/"><img class="logo" src="https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg" alt="Glitch"></a>
+      </div>
+     
+     <nav role="navigation">
+        <form action="/search" method="get" role="search"><label class="screen-reader-text" for="search-projects">Search Glitch projects
+           </label><input id="search-projects" class="search-input" name="q" placeholder="bots, apps, users">
+        </form>
+        <span id="reactlet-NewProjectPopContainer-24">
+           <span>
+              <div class="button-wrap"><button class="button-small" data-track="open new-project pop">New Project</button></div>
+           </span>
+        </span>
+        <span class="hidden"><span id="reactlet-SignInPopContainer-25"><span><button class="button button-small">Sign in</button></span></span></span>
+        <a class="" href="https://glitch.com/edit/" data-track="resume coding">
+           <div class="button button-small button-cta">Resume Coding</div>
+        </a>
+        <span id="reactlet-UserOptionsPopContainer-26">
+           <span>
+              <div class="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true"><button class="user"><img src="https://avatars3.githubusercontent.com/u/12502380?v=4" width="30px" height="30px" alt="User options"><span class="down-arrow icon"></span></button></div>
+           </span>
+        </span>
+     </nav>
+  </header>
+    );
+};
+
+export default Header;
+
+function oldPresenter(application) {
   
   const getTeamsPojo = function(teams) { 
     
