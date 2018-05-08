@@ -234,30 +234,25 @@ Project.getProjectsByIds = function(api, ids) {
 };
 
 //getProjectsByIds, but wrapped in a promise until they're all fetched.
-Project.promiseProjectsByIds = function(api, ids) {
+Project.promiseProjectsByIds = (api, ids) => {
+  // Fetch all the project models.
   const projects = Project.getProjectsByIds(api, ids);
-  const promises = [];
   
-  for(let project of projects) {
-    if(project.fetched()) {
-      continue;
-    }
-    const promise = new Promise((resolve) => {
-      project
+  // Any that aren't already fetched(0, se
+  const promises = projects.filter(
+    ({fetched}) => !fetched()
+  ).map(project => {
+    return new Promise((resolve) => {
+      project.fetched.observe((isFetched) => {
+        isFetched && resolve();
+      });
     });
-    promises.push(promise);
-  }
-
+  });
+  
   return new Promise((resolve) => {
-    const tryResolve = () => {
-      unfetched = projects.filter((project) => !project.fetched());
-      if(unfetched.length === 0) {
-        return resolve(projects);
-      }
-      
-      setTimeout(tryResolve, 10);
-    };
-    tryResolve();
+    Promise.all(promises).then(()=> {
+      return resolve(projects);
+    });
   });
 };
 
