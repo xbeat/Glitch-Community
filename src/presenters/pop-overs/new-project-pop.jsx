@@ -28,7 +28,7 @@ class NewProjectPopContainer extends React.Component {
   constructor(props) {
     super(props);
     
-    this.state.projects = [];
+    this.state = {projects: []}
   }
   
   componentDidMount() {

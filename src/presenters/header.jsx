@@ -5,7 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {join as joinPath} from 'path';
 
-import {promiseProjectsByIds} from '../models/project';
+import ProjectModel from '../models/project';
 
 const Logo = () => {
   const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
@@ -45,7 +45,7 @@ const SearchForm = ({baseUrl, onSubmit, searchQuery}) => (
 SearchForm.propTypes = {
   baseUrl: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  searchQuery: PropTypes.string.isRequired,
+  defaultValue: PropTypes.string.isRequired,
 };
 
 const UserOptionsPopWrapper = ({user, overlayNewStuffVisible}) => {
@@ -69,7 +69,7 @@ UserOptionsPopWrapper.propTypes = {
 };
 
 const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promiseProjectsByIds}) => {
-  const signedIn = !!user.login;
+  const signedIn = maybeUser && !!maybeUser.login;
   return (
     <header role="banner">
       <div className="header-info">
@@ -79,7 +79,7 @@ const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promis
       </div>
      
      <nav role="navigation">
-        <SearchForm baseUrl={baseUrl} onSubmit={submitSearch} searchQuery={searchQuery}/>
+        <SearchForm baseUrl={baseUrl} onSubmit={submitSearch} defaultValue={searchQuery}/>
         <NewProjectPop promiseProjectsByIds={promiseProjectsByIds}/>
         { !signedIn && <SignInPop/> }
         <ResumeCoding/>
@@ -91,6 +91,7 @@ const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promis
 
 Header.propTypes = {
   baseUrl: PropTypes.string.isRequired,
+  maybeUser: PropTypes.object,
 };
 
 // Takes an 'application' and extracts the parts we need.
@@ -103,9 +104,19 @@ const BulkyHeader = ({application}) => {
   props.maybeUser = user.fetched() ? user.asProps () : null;
   props.searchQuery = application.searchQuery();
   props.overlayNewStuffVisible = application.overlayNewStuffVisible;
-  props.promiseProjectsByIds = (projectIds) => promiseProjectsByIds(application.api(), projectIds);
+  props.promiseProjectsByIds = (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds);
   
   return <Header {...props}/>
+}
+
+BulkyHeader.propTypes = {
+  application: PropTypes.shape({
+    normalizedBaseUrl: PropTypes.func.isRequired,
+    currentUser: PropTypes.func.isRequired,
+    searchQuery: PropTypes.func.isRequired,
+    overlayNewStuffVisible: PropTypes.func.isRequired,
+    api: PropTypes.func.isRequired,
+  }).isRequired,
 }
 
 export default BulkyHeader;
