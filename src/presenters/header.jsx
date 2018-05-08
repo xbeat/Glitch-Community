@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {join as joinPath} from 'path';
 
-import {promiseProjectsByIds} from '../models/ProjectModel';
+import {promiseProjectsByIds} from '../models/project';
 
 const Logo = () => {
   const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
@@ -63,16 +63,8 @@ const UserOptionsPopInstance = ({user, overlayNewStuffVisible}) => {
   return <UserOptionsPop {...props}/>;
 };
 
-const Header = (application) => {
-  
-  const baseUrl = application.normalizedBaseUrl();
-  const user = application.currentUser().asProps();
-  const signedIn = !!user.login();
-  const searchQuery = application.searchQuery
-  const api = application.api();;
-  const overlayNewStuffVisible = application.overlayNewStuffVisible;
-  const promiseProjectsByIds = (projectIds) => promiseProjectsByIds(api, projectIds);
-
+const Header = ({baseUrl, user, searchQuery, overlayNewStuffVisible, promiseProjectsByIds}) => {
+  const signedIn = !!user.login;
   return (
     <header role="banner">
       <div class="header-info">
@@ -92,4 +84,21 @@ const Header = (application) => {
     );
 };
 
-export default Header;
+Header.propTypes = {
+  
+};
+
+// Takes an 'application' and extracts the parts we need.
+// A shim until a higher level is able to pass us more specific subcomponents.
+const BulkyHeader = ({application}) => {
+  const props = {}
+  props.baseUrl = application.normalizedBaseUrl();
+  props.user = application.currentUser().asProps();
+  props.searchQuery = application.searchQuery
+  props.overlayNewStuffVisible = application.overlayNewStuffVisible;
+  props.promiseProjectsByIds = (projectIds) => promiseProjectsByIds(application.api(), projectIds);
+  
+  return <Header {...props}/>
+}
+
+export default BulkyHeader;

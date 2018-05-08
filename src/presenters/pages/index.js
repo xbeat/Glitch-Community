@@ -1,6 +1,5 @@
 import IndexTemplate from '../../templates/pages/index';
 import LayoutPresenter from '../layout';
-import HeaderPresenter from '../header';
 import FeaturedCollectionPresenter from '../featured-collection';
 import RecentProjectsPresenter from '../recent-projects';
 import QuestionsPresenter from '../questions';
@@ -36,10 +35,6 @@ export default function(application) {
       };
 
       return Reactlet(WhatIsGlitch, props);
-    },
-
-    header() {
-      return HeaderPresenter(application);
     },
 
     currentUser: application.currentUser,

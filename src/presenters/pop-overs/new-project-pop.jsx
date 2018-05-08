@@ -25,7 +25,7 @@ NewProjectPop.propTypes = {
 };
 
 class NewProjectPopContainer extends React.Component {
-  constuctor(props) {
+  constructor(props) {
     super(props);
     
     this.state.projects = [];
@@ -50,7 +50,6 @@ class NewProjectPopContainer extends React.Component {
   }
   
   render() {
-    const props = this.props;
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
@@ -66,6 +65,6 @@ class NewProjectPopContainer extends React.Component {
 
 NewProjectPopContainer.propTypes = {
   promiseProjectsByIds: PropTypes.func.isRequired,
-}
+};
 
 export default NewProjectPopContainer;
