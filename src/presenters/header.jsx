@@ -105,12 +105,34 @@ header(role="banner")
   }
   
   const signedIn = !!application.currentUser().login();
-  const ConditionalSignInPop = () => {
-    if(signedIn) {
-      return null;
-    }
-    return <SignInPop/>
-  }
+  const ResumeCoding = (
+    <a class="" href="https://glitch.com/edit/" data-track="resume coding">
+       <div class="button button-small button-cta">Resume Coding</div>
+    </a>
+  );
+  
+  const UserOptionsPopInstance = () => {
+      const user = application.currentUser();
+      if(!user.fetched()) {
+        return;
+      }
+      const props = {
+        teams: getTeamsPojo(user.teams()),
+        profileLink: `/@${user.login()}`,
+        avatarUrl: user.avatarUrl(),
+        showNewStuffOverlay() {
+          return application.overlayNewStuffVisible(true);
+        },
+        signOut() {
+          analytics.track("Logout");
+          analytics.reset();
+          localStorage.removeItem('cachedUser');
+          return location.reload();
+        },
+      };
+
+      return <UserOptionsPop {...props}/>;
+    };
   
   return (
     <header role="banner">
@@ -124,15 +146,9 @@ header(role="banner")
           <input id="search-projects" class="search-input" name="q" placeholder="bots, apps, users"/>
         </form>
         <NewProjectPopInstance/>
-        <ConditionalSignInPop/>
-        <a class="" href="https://glitch.com/edit/" data-track="resume coding">
-           <div class="button button-small button-cta">Resume Coding</div>
-        </a>
-        <span id="reactlet-UserOptionsPopContainer-26">
-           <span>
-              <div class="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true"><button class="user"><img src="https://avatars3.githubusercontent.com/u/12502380?v=4" width="30px" height="30px" alt="User options"><span class="down-arrow icon"></span></button></div>
-           </span>
-        </span>
+        { !signedIn && <SignInPop/> }
+        { signedIn && <ResumeCoding/> }
+        { signedIn && <UserOptionsPopInstance/> }
      </nav>
   </header>
     );
@@ -213,28 +229,7 @@ function oldPresenter(application) {
       return Reactlet(NewProjectPop, {newProjects});
     },
 
-    UserOptionsPop() {
-      const user = application.currentUser();
-      if(!user.fetched()) {
-        return;
-      }
-      const props = {
-        teams: getTeamsPojo(user.teams()),
-        profileLink: `/@${user.login()}`,
-        avatarUrl: user.avatarUrl(),
-        showNewStuffOverlay() {
-          return application.overlayNewStuffVisible(true);
-        },
-        signOut() {
-          analytics.track("Logout");
-          analytics.reset();
-          localStorage.removeItem('cachedUser');
-          return location.reload();
-        },
-      };
-
-      return Reactlet(UserOptionsPop, props);
-    },
+    
     
     submit(event) {
       if (event.target.children.q.value.trim().length === 0) {
