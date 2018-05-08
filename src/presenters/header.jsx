@@ -26,8 +26,8 @@ const Logo = () => {
 }
 
 const ResumeCoding = (
-  <a class="" href="https://glitch.com/edit/" data-track="resume coding">
-     <div class="button button-small button-cta">Resume Coding</div>
+  <a className="" href="https://glitch.com/edit/" data-track="resume coding">
+     <div className="button button-small button-cta">Resume Coding</div>
   </a>
 );
 
@@ -39,12 +39,18 @@ const submitSearch = (event) => {
 
 const SearchForm = ({baseUrl, onSubmit, searchQuery}) =>(
   <form action={joinPath(baseUrl, "search")} method="get" role="search" onSubmit={onSubmit}>
-    <label class="screen-reader-text" for="search-projects">Search Glitch projects</label>
-    <input id="search-projects" class="search-input" name="q" placeholder="bots, apps, users" value={searchQuery}/>
+    <label className="screen-reader-text" for="search-projects">Search Glitch projects</label>
+    <input id="search-projects" className="search-input" name="q" placeholder="bots, apps, users" value={searchQuery}/>
   </form>
 );
 
-const UserOptionsPopInstance = ({user, overlayNewStuffVisible}) => {
+SearchForm.propTypes = {
+  baseUrl: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  searchQuery: PropTypes.string.isRequired,
+};
+
+const UserOptionsPopWrapper = ({user, overlayNewStuffVisible}) => {
   const props = {
     teams: user.teams,
     profileLink: `/@${user.login}`,
@@ -63,11 +69,18 @@ const UserOptionsPopInstance = ({user, overlayNewStuffVisible}) => {
   return <UserOptionsPop {...props}/>;
 };
 
+UserOptionsPopWrapper.propTypes = {
+  user: PropTypes.shape({
+    login: PropTypes.string.isRequired,
+  }).isRequired,
+  overlayNewStuffVisible: PropTypes.func.isRequired,
+};
+
 const Header = ({baseUrl, user, searchQuery, overlayNewStuffVisible, promiseProjectsByIds}) => {
   const signedIn = !!user.login;
   return (
     <header role="banner">
-      <div class="header-info">
+      <div className="header-info">
         <a href={baseUrl}>
           <Logo/>
         </a>
@@ -78,14 +91,14 @@ const Header = ({baseUrl, user, searchQuery, overlayNewStuffVisible, promiseProj
         <NewProjectPop promiseProjectsByIds={promiseProjectsByIds}/>
         { !signedIn && <SignInPop/> }
         <ResumeCoding/>
-        <UserOptionsPopInstance user={user} overlayNewStuffVisible={overlayNewStuffVisible} />
+        <UserOptionsPopWrapper user={user} overlayNewStuffVisible={overlayNewStuffVisible} />
      </nav>
   </header>
     );
 };
 
 Header.propTypes = {
-  
+  baseUrl: PropTypes.string.isRequired,
 };
 
 // Takes an 'application' and extracts the parts we need.
@@ -94,7 +107,7 @@ const BulkyHeader = ({application}) => {
   const props = {}
   props.baseUrl = application.normalizedBaseUrl();
   props.user = application.currentUser().asProps();
-  props.searchQuery = application.searchQuery
+  props.searchQuery = application.searchQuery();
   props.overlayNewStuffVisible = application.overlayNewStuffVisible;
   props.promiseProjectsByIds = (projectIds) => promiseProjectsByIds(application.api(), projectIds);
   
