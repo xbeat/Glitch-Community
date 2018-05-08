@@ -6,7 +6,7 @@ import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
 import React from 'react';
 import PropTypes from 'prop-types';
-import {join} from 'path';
+import {join as joinPath} from 'path';
 
 const Logo = () => {
   const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
@@ -35,6 +35,13 @@ const submitSearch = (event) => {
     return event.preventDefault();
   }
 };
+
+const SearchForm = ({baseUrl, onSubmit, searchQuery}) =>(
+  <form action={joinPath(baseUrl, "search")} method="get" role="search" onSubmit={onSubmit}>
+    <label class="screen-reader-text" for="search-projects">Search Glitch projects</label>
+    <input id="search-projects" class="search-input" name="q" placeholder="bots, apps, users" value={searchQuery}/>
+  </form>
+);
 
 const Header = (application) => {
   
@@ -72,20 +79,26 @@ const Header = (application) => {
     // then as a model. Filter out the incomplete teams.
     teams = teams.filter(team => team.I !== undefined);
     
-    return teams.map(({name, url, teamAvatarUrl}) => ({
-      name: name(),
-      url: url(),
-      teamAvatarUrl: teamAvatarUrl(),
-    }));
+    return teams.map(({asProps}) => asProps());
   };
   
-  const UserOptionsPopInstance = () => {
+  const UserOptionsPopInstance = ({user, overlayNewStuffVisible}) => {
       const user = application.currentUser();
       if(!user.fetched()) {
-        return;
+        return null;
       }
+      let teams = user.teams() || [];
+      // Teams load in two passes, first as an incomplete object,
+      // then as a model. Filter out the incomplete teams.
+      teams = teams.filter(
+        team => team.I !== undefined
+      ).map(
+        ({asProps}) => asProps()
+      );
+    
+    
       const props = {
-        teams: getTeamsPojo(user.teams()),
+        teams: teams,
         profileLink: `/@${user.login()}`,
         avatarUrl: user.avatarUrl(),
         showNewStuffOverlay() {
@@ -101,16 +114,7 @@ const Header = (application) => {
 
       return <UserOptionsPop {...props}/>;
     };
-  
-  
-  
-  const SearchForm = ({baseUrl, join, onSubmit, searchQuery}) =>(
-      <form action={join(baseUrl, "search")} method="get" role="search" onSubmit={submitSearch}>
-        <label class="screen-reader-text" for="search-projects">Search Glitch projects</label>
-        <input id="search-projects" class="search-input" name="q" placeholder="bots, apps, users" value={application.searchQuery}/>
-      </form>
-    );
-  
+
   return (
     <header role="banner">
       <div class="header-info">
@@ -120,11 +124,11 @@ const Header = (application) => {
       </div>
      
      <nav role="navigation">
-        <SearchForm baseUrl={baseUrl} join={path.join}/>
+        <SearchForm baseUrl={baseUrl} onSubmit={submitSearch} searchQuery={application.searchQuery}/>
         <NewProjectPopInstance/>
         { !signedIn && <SignInPop/> }
         <ResumeCoding/>
-        <UserOptionsPopInstance/>
+        <UserOptionsPopInstance user={application.currentUser()} overlayNewStuffVisible={application.overlayNewStuffVisible} />
      </nav>
   </header>
     );

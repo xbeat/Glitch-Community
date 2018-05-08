@@ -42,6 +42,14 @@ export default Team = function(I, self) {
   self.attrObservable("localAvatarImage");
 
   self.extend({
+    
+    asProps() {
+      return {
+        name: self.name(),
+        url: self.url(),
+        teamAvatarUrl: self.teamAvatarUrl(),
+      }
+    },
   
     pins: self.teamPins,
   
