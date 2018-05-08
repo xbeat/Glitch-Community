@@ -8,22 +8,24 @@ export default function TeamItem({team}) {
     backgroundColor: team.coverColor,
   };
   return (
-    <div className="item" style={style}>
-      <div className="content">
-        <img className="avatar" src={team.teamAvatarUrl} alt=""></img>
-        <div className="information">
-          <a href={team.url} className="button">{team.name}</a>
-          {!!team.isVerified && <span data-tooltip={team.verifiedTooltip}>
-            <img className="verified" src={team.verifiedImage} alt={team.verifiedTooltip} />
-          </span>}
-          <UsersList users={team.users} />
-          {team.thanksCount > 0 && <p className="thanks">
-            {team.teamThanks} <span className="emoji sparkling_heart"></span>
-          </p>}
-          {!!team.description && <p className="description">{team.truncatedDescription}</p>}
+    <a href={team.url}>
+      <div className="item" style={style}>
+        <div className="content">
+          <img className="avatar" src={team.teamAvatarUrl} alt=""></img>
+          <div className="information">
+            <div className="button">{team.name}</div>
+            {!!team.isVerified && <span data-tooltip={team.verifiedTooltip}>
+              <img className="verified" src={team.verifiedImage} alt={team.verifiedTooltip} />
+            </span>}
+            <UsersList users={team.users} />
+            {team.thanksCount > 0 && <p className="thanks">
+              {team.teamThanks} <span className="emoji sparkling_heart"></span>
+            </p>}
+            {!!team.description && <p className="description">{team.truncatedDescription}</p>}
+          </div>
         </div>
       </div>
-    </div>
+    </a>
   );
 }
 
