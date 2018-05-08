@@ -38,11 +38,21 @@ TeamButtons.propTypes = {
   })),
 };
 
-const UserOptionsPop = ({togglePopover, profileLink, avatarUrl, teams, showNewStuffOverlay, signOut}) => {
+
+
+const UserOptionsPop = ({togglePopover, profileLink, avatarUrl, teams, showNewStuffOverlay}) => {
   const clickNewStuff = (event) => {
     togglePopover();
     showNewStuffOverlay();
     event.stopPropagation();
+  };
+  
+  const signOut = () => {
+    /* global analytics */
+    analytics.track("Logout");
+    analytics.reset();
+    localStorage.removeItem('cachedUser');
+    return location.reload();
   };
 
   return (
@@ -83,7 +93,6 @@ UserOptionsPop.propTypes = {
   profileLink: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
-  signOut: PropTypes.func.isRequired,
 };
 
 export default function UserOptionsPopContainer(props) {

@@ -1,5 +1,3 @@
-/* global analytics */
-
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
@@ -25,7 +23,7 @@ const Logo = () => {
   return <img className="logo" src={logo} alt="Glitch" />;
 }
 
-const ResumeCoding = (
+const ResumeCoding = () => (
   <a className="" href="https://glitch.com/edit/" data-track="resume coding">
      <div className="button button-small button-cta">Resume Coding</div>
   </a>
@@ -37,9 +35,9 @@ const submitSearch = (event) => {
   }
 };
 
-const SearchForm = ({baseUrl, onSubmit, searchQuery}) =>(
+const SearchForm = ({baseUrl, onSubmit, searchQuery}) => (
   <form action={joinPath(baseUrl, "search")} method="get" role="search" onSubmit={onSubmit}>
-    <label className="screen-reader-text" for="search-projects">Search Glitch projects</label>
+    <label className="screen-reader-text" htmlFor="search-projects">Search Glitch projects</label>
     <input id="search-projects" className="search-input" name="q" placeholder="bots, apps, users" value={searchQuery}/>
   </form>
 );
@@ -57,13 +55,7 @@ const UserOptionsPopWrapper = ({user, overlayNewStuffVisible}) => {
     avatarUrl: user.avatarUrl,
     showNewStuffOverlay() {
       return overlayNewStuffVisible(true);
-    },
-    signOut() {
-      analytics.track("Logout");
-      analytics.reset();
-      localStorage.removeItem('cachedUser');
-      return location.reload();
-    },
+    }
   };
 
   return <UserOptionsPop {...props}/>;
@@ -76,7 +68,7 @@ UserOptionsPopWrapper.propTypes = {
   overlayNewStuffVisible: PropTypes.func.isRequired,
 };
 
-const Header = ({baseUrl, user, searchQuery, overlayNewStuffVisible, promiseProjectsByIds}) => {
+const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promiseProjectsByIds}) => {
   const signedIn = !!user.login;
   return (
     <header role="banner">
@@ -91,7 +83,7 @@ const Header = ({baseUrl, user, searchQuery, overlayNewStuffVisible, promiseProj
         <NewProjectPop promiseProjectsByIds={promiseProjectsByIds}/>
         { !signedIn && <SignInPop/> }
         <ResumeCoding/>
-        <UserOptionsPopWrapper user={user} overlayNewStuffVisible={overlayNewStuffVisible} />
+        { maybeUser && <UserOptionsPopWrapper user={maybeUser} overlayNewStuffVisible={overlayNewStuffVisible} />}
      </nav>
   </header>
     );
@@ -104,9 +96,11 @@ Header.propTypes = {
 // Takes an 'application' and extracts the parts we need.
 // A shim until a higher level is able to pass us more specific subcomponents.
 const BulkyHeader = ({application}) => {
+  const user = application.currentUser();
+  
   const props = {}
   props.baseUrl = application.normalizedBaseUrl();
-  props.user = application.currentUser().asProps();
+  props.maybeUser = user.fetched() ? user.asProps () : null;
   props.searchQuery = application.searchQuery();
   props.overlayNewStuffVisible = application.overlayNewStuffVisible;
   props.promiseProjectsByIds = (projectIds) => promiseProjectsByIds(application.api(), projectIds);
