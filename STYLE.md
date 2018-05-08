@@ -13,33 +13,43 @@ We're not strict about enforcing the "latest styles" on any new code, we merely 
 
 Prefer Dependency Injection
 ---------------------------
-All modules receive their dependencies as arguments to their constructor.  This is most especially true for any modules that we write, but we make exceptions for stateless NPM modules and react components.
+All modules receive their dependencies as arguments to their constructor.  This is most especially true for any modules that we write, but we make exceptions for react components and stateless NPM modules.
 
 Most importantly we shouldn't pass state into a module by way of an import().
 
-Example:
-
-``` entry.js:
-...
-import Time from './Time'
-export currentTime = new Date();
-
-render(Time);
-...
+For example...
 
 Bad:
 ```
-// in Time.js
+// in Entry.js
+import TimeDisplay from './TimeDisplay'
+export const currentTime = new Date();
+render(TimeDisplay);
+
+
+// in TimeDisplay.js
 import {currentTime} from './entry'
 
 export default function() {
   return `The time is ${currentTime}`;
 }
-
-
 ```
+
 Good:
 ```
+// in Entry.js
+import TimeDisplay from './TimeDisplay'
+
+const currentTime = new Date();
+render(TimeDisplay(currentTime));
+
+
+// in TimeDisplay.js
+
+export default function(currentTime) {
+ return `The time is ${currentTime}`;
+}
+
 ```
 
 
