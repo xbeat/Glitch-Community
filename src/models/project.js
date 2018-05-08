@@ -233,6 +233,13 @@ Project.getProjectsByIds = function(api, ids) {
   return ids.map(id => Project({id}));
 };
 
+//getProjectsByIds, but wrapped in a promise until they're all fetched.
+Project.promiseProjectsByIds = function(api, ids) {
+  const projects = Project.getProjectsByIds(api, ids);
+  let u = projects.filter((project) => !project.feched());
+  
+}
+
 Project.getProjectOverlay = function(application, domain) {
   const projectPath = `projects/${domain}`;
   application.overlayProjectVisible(true);
