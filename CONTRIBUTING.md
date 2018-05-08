@@ -5,6 +5,8 @@ Hey, welcome!  This document should give you all the steps you need to make cont
 
 Please note we have a [code of conduct](https://glitch.com/edit/#!/community?path=CODE_OF_CONDUCT.md), please follow it in all your interactions with the project and the denizens thereof.
 
+We also having a [style guide](https://glitch.com/edit/#!/community?path=STYLE.md) discussing our coding conventions, styles, and goals.
+
 Contribution Mission
 --------------------
 Anyone in our community can feel welcome and supported in submitting improvements, fixes, and ideas to this Glitch community site.
