@@ -13,7 +13,7 @@ Example:
 
 export default [
   {
-    title: 'Remix to start your own blog',
+    title: 'Remix to blog',
     img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fghost.jpg?1525773248865',
     link: 'https://glitch.com/~ghost'
   }
