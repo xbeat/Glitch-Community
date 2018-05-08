@@ -15,15 +15,17 @@ export default (application, content) =>
 
     header() {
       const user = application.currentUser();
+      const maybeUser = user.fetched() ? user.asProps () : null;
+      
       const props = {
         baseUrl: application.normalizedBaseUrl(),
-        maybeUser: user.fetched() ? user.asProps () : null,
+        maybeUser,
         searchQuery: application.searchQuery(),
         overlayNewStuffVisible: application.overlayNewStuffVisible,
         promiseProjectsByIds: (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds),
       };
       return Reactlet(Header, props);
-    }
+    },
     
     content,
 

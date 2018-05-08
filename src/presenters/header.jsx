@@ -3,7 +3,9 @@ import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
 import React from 'react';
 import PropTypes from 'prop-types';
-import {join as joinPath} from 'path';
+import urlJoin from 'url-join';
+
+import ProjectModel from '../models/project';
 
 const Logo = () => {
   const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
@@ -19,11 +21,11 @@ const Logo = () => {
   }
 
   return <img className="logo" src={logo} alt="Glitch" />;
-}
+};
 
 const ResumeCoding = () => (
   <a className="" href="https://glitch.com/edit/" data-track="resume coding">
-     <div className="button button-small button-cta">Resume Coding</div>
+    <div className="button button-small button-cta">Resume Coding</div>
   </a>
 );
 
@@ -34,7 +36,7 @@ const submitSearch = (event) => {
 };
 
 const SearchForm = ({baseUrl, onSubmit, defaultValue}) => (
-  <form action={joinPath(baseUrl, "search")} method="get" role="search" onSubmit={onSubmit}>
+  <form action={urlJoin(baseUrl, "search")} method="get" role="search" onSubmit={onSubmit}>
     <label className="screen-reader-text" htmlFor="search-projects">Search Glitch projects</label>
     <input id="search-projects" className="search-input" name="q" placeholder="bots, apps, users" defaultValue={defaultValue}/>
   </form>
@@ -76,15 +78,15 @@ const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promis
         </a>
       </div>
      
-     <nav role="navigation">
+      <nav role="navigation">
         <SearchForm baseUrl={baseUrl} onSubmit={submitSearch} defaultValue={searchQuery}/>
         <NewProjectPop promiseProjectsByIds={promiseProjectsByIds}/>
         { !signedIn && <SignInPop/> }
         <ResumeCoding/>
         { maybeUser && <UserOptionsPopWrapper user={maybeUser} overlayNewStuffVisible={overlayNewStuffVisible} />}
-     </nav>
-  </header>
-    );
+      </nav>
+    </header>
+  );
 };
 
 Header.propTypes = {
