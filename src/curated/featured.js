@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: '"awayboard" by voodoocode',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fawayboard.jpg?1525351432822',
-    link: 'https://awayboard.glitch.me'
+    title: 'Remix to blog',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fghost.jpg?1525773248865',
+    link: 'https://glitch.com/~ghost'
   }
   , {
-    title: '"quotebot" by becckitt',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fquotebot.jpg?1525351432926",
-    link: 'https://quotebot.glitch.me'
+    title: '"rant" by harbichidian',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frant.jpg?1525701141421",
+    link: 'https://rant.glitch.me'
   }
   , {
-    title: '"embed-bud" by jagtalon',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fembed-bud.jpg?1525351432697",
-    link: 'https://embed-bud.glitch.me'
+    title: '"nomoji" by jcksncllwy',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fnomoji.jpg?1525701141565",
+    link: 'https://nomoji.glitch.me'
   }   
 ];
