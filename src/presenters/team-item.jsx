@@ -8,7 +8,7 @@ export default function TeamItem({team}) {
     backgroundColor: team.coverColor,
   };
   return (
-    <div className="item" style={style}>
+    <div className="item" style={style} onClick={() => window.location.assign(team.url)}>
       <div className="content">
         <img className="avatar" src={team.teamAvatarUrl} alt=""></img>
         <div className="information">
