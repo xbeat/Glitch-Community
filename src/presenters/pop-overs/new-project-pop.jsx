@@ -37,21 +37,15 @@ class NewProjectPopContainer extends React.Component {
       'cb519589-591c-474f-8986-a513f22dbf88', // 'hello-sqlite'
       '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
     ];
-    const projects = this.props.getProjectsByIds(projectIds);
-    for(let project of projects) {
-      project.observe(() => {
-        if(this.state.projects.length < projectIds.length) {
-          
-        if(p.fetched)
-        
-    }
-    const fetchedProjects = projects.filter(project => project.fetched());
-    const newProjects = fetchedProjects.map((project) => {
-    const props = project.asProps();
-
-      //Deliberately hide the user list 
-      props.users = [];
-      return props;
+    this.props.promiseProjectsByIds(projectIds).then((projects) => {
+      const projectProps = projects.map((project) => {
+        const props = project.asProps();
+        //Deliberately hide the user list 
+        props.users = [];
+        return props;
+      });
+      
+      this.setState({projects: projectProps});
     });
   }
   
@@ -71,7 +65,7 @@ class NewProjectPopContainer extends React.Component {
 }
 
 NewProjectPopContainer.propTypes = {
-  getProjectsByIds: PropTypes.func.isRequired,
+  promiseProjectsByIds: PropTypes.func.isRequired,
 }
 
 export default NewProjectPopContainer;

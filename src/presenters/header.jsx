@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {join as joinPath} from 'path';
 
-import {getProjectsByIds} from '../models/ProjectModel';
+import {promiseProjectsByIds} from '../models/ProjectModel';
 
 const Logo = () => {
   const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
@@ -71,7 +71,7 @@ const Header = (application) => {
   const searchQuery = application.searchQuery
   const api = application.api();;
   const overlayNewStuffVisible = application.overlayNewStuffVisible;
-  const getProjectsByIds = (projectIds) => getProjectsByIds(api, projectIds);
+  const promiseProjectsByIds = (projectIds) => promiseProjectsByIds(api, projectIds);
 
   return (
     <header role="banner">
@@ -83,7 +83,7 @@ const Header = (application) => {
      
      <nav role="navigation">
         <SearchForm baseUrl={baseUrl} onSubmit={submitSearch} searchQuery={searchQuery}/>
-        <NewProjectPop getProjectsByIds={getProjectsByIds}/>
+        <NewProjectPop promiseProjectsByIds={promiseProjectsByIds}/>
         { !signedIn && <SignInPop/> }
         <ResumeCoding/>
         <UserOptionsPopInstance user={user} overlayNewStuffVisible={overlayNewStuffVisible} />
