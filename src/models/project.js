@@ -238,10 +238,8 @@ Project.promiseProjectsByIds = (api, ids) => {
   // Fetch all the project models.
   const projects = Project.getProjectsByIds(api, ids);
   
-  // Any that aren't already fetched(0, se
-  const promises = projects.filter(
-    ({fetched}) => !fetched()
-  ).map(project => {
+  // Set up promises to listen to the fetched() state
+  const promises = projects.map(project => {
     return new Promise((resolve) => {
       project.fetched.observe((isFetched) => {
         isFetched && resolve();
@@ -249,8 +247,10 @@ Project.promiseProjectsByIds = (api, ids) => {
     });
   });
   
+  // Once they all report in as fetched,
+  // return the (now populated) original projects object
   return new Promise((resolve) => {
-    Promise.all(promises).then(()=> {
+    Promise.all(promises).then(() => {
       return resolve(projects);
     });
   });

@@ -5,8 +5,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {join as joinPath} from 'path';
 
-import ProjectModel from '../models/project';
-
 const Logo = () => {
   const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
   const LOGO_SUNSET = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg";
@@ -94,29 +92,4 @@ Header.propTypes = {
   maybeUser: PropTypes.object,
 };
 
-// Takes an 'application' and extracts the parts we need.
-// A shim until a higher level is able to pass us more specific subcomponents.
-const BulkyHeader = ({application}) => {
-  const user = application.currentUser();
-  
-  const props = {}
-  props.baseUrl = application.normalizedBaseUrl();
-  props.maybeUser = user.fetched() ? user.asProps () : null;
-  props.searchQuery = application.searchQuery();
-  props.overlayNewStuffVisible = application.overlayNewStuffVisible;
-  props.promiseProjectsByIds = (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds);
-  
-  return <Header {...props}/>
-}
-
-BulkyHeader.propTypes = {
-  application: PropTypes.shape({
-    normalizedBaseUrl: PropTypes.func.isRequired,
-    currentUser: PropTypes.func.isRequired,
-    searchQuery: PropTypes.func.isRequired,
-    overlayNewStuffVisible: PropTypes.func.isRequired,
-    api: PropTypes.func.isRequired,
-  }).isRequired,
-}
-
-export default BulkyHeader;
+export default Header;

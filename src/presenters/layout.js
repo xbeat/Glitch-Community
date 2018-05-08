@@ -5,6 +5,7 @@ import OverlayProject from './overlays/overlay-project';
 import OverlayVideo from './overlays/overlay-video';
 import Notifications from './notifications';
 import NewStuffPresenter from './overlays/new-stuff';
+import ProjectModel from '../models/project';
 
 import Reactlet from './reactlet';
 
@@ -12,7 +13,17 @@ export default (application, content) =>
 
   Layout({
 
-    header: Reactlet(Header, {application}),
+    header() {
+      const user = application.currentUser();
+      const props = {
+        baseUrl: application.normalizedBaseUrl(),
+        maybeUser: user.fetched() ? user.asProps () : null,
+        searchQuery: application.searchQuery(),
+        overlayNewStuffVisible: application.overlayNewStuffVisible,
+        promiseProjectsByIds: (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds),
+      };
+      return Reactlet(Header, props);
+    }
     
     content,
 
