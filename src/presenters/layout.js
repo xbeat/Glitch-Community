@@ -15,7 +15,7 @@ export default (application, content) =>
 
     header() {
       const user = application.currentUser();
-      const maybeUser = user.fetched() ? user.asProps () : null;
+      const maybeUser = user.fetched() ? user.asProps() : null;
       
       const props = {
         baseUrl: application.normalizedBaseUrl(),

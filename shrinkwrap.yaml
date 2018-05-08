@@ -34,6 +34,7 @@ dependencies:
   react-onclickoutside: 6.7.1
   stylus: 0.54.5
   uglifyjs-webpack-plugin: 1.2.5
+  url-join: 4.0.0
   webpack: 4.6.0
   webpack-cli: 2.0.15
 packages:
@@ -6574,6 +6575,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
+  /url-join/4.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-TTNA6AfTdzvamZH4MFrNzCpmXSo=
   /url-parse-lax/1.0.0:
     dependencies:
       prepend-http: 1.0.4
@@ -6986,5 +6991,6 @@ specifiers:
   react-onclickoutside: ^6.7.1
   stylus: ^0.54.5
   uglifyjs-webpack-plugin: ^1.2.5
+  url-join: ^4.0.0
   webpack: ^4.6.0
   webpack-cli: ^2.0.15
