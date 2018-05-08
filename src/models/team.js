@@ -48,7 +48,7 @@ export default Team = function(I, self) {
         name: self.name(),
         url: self.url(),
         teamAvatarUrl: self.teamAvatarUrl(),
-      }
+      };
     },
   
     pins: self.teamPins,

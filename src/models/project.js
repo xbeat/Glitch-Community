@@ -236,9 +236,19 @@ Project.getProjectsByIds = function(api, ids) {
 //getProjectsByIds, but wrapped in a promise until they're all fetched.
 Project.promiseProjectsByIds = function(api, ids) {
   const projects = Project.getProjectsByIds(api, ids);
-  let unfetched = projects;
+  const promises = [];
+  
+  for(let project of projects) {
+    if(project.fetched()) {
+      continue;
+    }
+    const promise = new Promise((resolve) => {
+      project
+    });
+    promises.push(promise);
+  }
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const tryResolve = () => {
       unfetched = projects.filter((project) => !project.fetched());
       if(unfetched.length === 0) {
@@ -246,10 +256,10 @@ Project.promiseProjectsByIds = function(api, ids) {
       }
       
       setTimeout(tryResolve, 10);
-    }
+    };
     tryResolve();
   });
-}
+};
 
 Project.getProjectOverlay = function(application, domain) {
   const projectPath = `projects/${domain}`;
