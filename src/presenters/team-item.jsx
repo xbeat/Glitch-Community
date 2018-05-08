@@ -8,9 +8,9 @@ export default function TeamItem({team}) {
     backgroundColor: team.coverColor,
   };
   return (
-    <div className="item" style={style} onClick={() => window.location.assign(team.url)}>
+    <div className="item" style={style}>
       <div className="content">
-        <img className="avatar" src={team.teamAvatarUrl} alt=""></img>
+        <img className="avatar" src={team.teamAvatarUrl} alt="" />
         <div className="information">
           <a href={team.url} className="button">{team.name}</a>
           {!!team.isVerified && <span data-tooltip={team.verifiedTooltip}>
