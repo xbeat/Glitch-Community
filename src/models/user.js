@@ -217,6 +217,7 @@ export default User = function(I, self) {
         hasCoverImage: self.hasCoverImage(),
         coverColor: self.coverColor(),
         login: self.login(),
+        profileUrl: `/@${self.login()}`,
         name: self.name(),
         description: self.description(),
         thanksCount: self.thanksCount(),
@@ -226,7 +227,7 @@ export default User = function(I, self) {
         style: self.style(),
         alt: self.alt(),
         userAvatarUrl:self.userAvatarUrl(),
-        teamsObservable: self.teams,
+        teams: self.teams(),
       }
     },
   });

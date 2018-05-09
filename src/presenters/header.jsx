@@ -47,39 +47,10 @@ SearchForm.propTypes = {
   defaultValue: PropTypes.string.isRequired,
 };
 
-class UserOptionsPopContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {teamCollection: {}};
-  }
-  
-  componentDidMount() {
-    const obs = this.props.user.teamsObservable;
-    
-    // H'ok, so! 
-    // Watch the teams array observable, and watch all of its children observables.
-    // When any children change, update our teamCollection dictionary.
-    obs.observe(teams => {
-      for(let team of teams) {
-        // 'team' here is an entity, not an observable...
-        // hm.
-        team.observe((team) => {
-          if(team.asProps){
-            this.setState(({teamCollection}) => {
-              const props = team.asProps();
-              teamCollection[props.id] = props;
-              return {teamCollection};
-            });
-          }
-        });
-      }
-    });
-  }
-  
-  const UserOptionsPopWrapper = ({user, overlayNewStuffVisible}) => {
+const UserOptionsPopWrapper = ({user, overlayNewStuffVisible}) => {
   const props = {
-    teams: user.teams.asProps(),
-    profileLink: `/@${user.login}`,
+    teams: user.teams,
+    profileLink: user.profileUrl,
     avatarUrl: user.userAvatarUrl,
     showNewStuffOverlay() {
       return overlayNewStuffVisible(true);
@@ -90,7 +61,10 @@ class UserOptionsPopContainer extends React.Component {
 };
 
 UserOptionsPopWrapper.propTypes = {
-
+  user: PropTypes.shape({
+    login: PropTypes.string.isRequired,
+  }).isRequired,
+  overlayNewStuffVisible: PropTypes.func.isRequired,
 };
 
 const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promiseProjectsByIds}) => {

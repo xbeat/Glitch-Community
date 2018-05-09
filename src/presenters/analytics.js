@@ -415,8 +415,7 @@ export default function(application, teamOrProject) {
       };
       // console.log('🌹🌹🌹🌹', props)
       let AnalyticsProjectPop = () => null; //placeholder
-      return Reactlet(AnalyticsProjectPop, props);
-      return "todo"
+      return Reactlet(AnalyticsProjectPop, props); //todo
     },
 
     
