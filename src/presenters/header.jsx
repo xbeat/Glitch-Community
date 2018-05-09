@@ -97,15 +97,12 @@ class HeaderContainer extends React.Component {
     this.state = { maybeUser: null };
   }
   componentDidMount() {
-    const obs = this.props.userObservable;
-
-    obs.observe((maybeUser) => {
+    this.props.userObservable.observe((maybeUser) => {
       this.setState({maybeUser: maybeUser});
     });
   }
   componentWillUnmount() {
-    // Todo: Garbage collect obs.
-    // (...not currently possible.)
+    this.props.userObservable.releaseDependencies();
   }
   render() {
     return <Header {...this.props} maybeUser={this.state.maybeUser}/>;

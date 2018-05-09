@@ -12,11 +12,11 @@ const UserThanks = ({thanksCount}) => {
 };
 
 const UserResultItem = ({user, action}) => {
-  const {userAvatarUrl, name, login, thanksCount} = user;
+  const {id, userAvatarUrl, name, login, thanksCount} = user;
   console.log('💣', action);
 
   return (
-    <button className="result" tabIndex="0" onClick={() => action()} >
+    <button className="result" tabIndex="0" onClick={() => action(id)} >
       <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
       <div className="result-name" title={name}>{name}</div>
       <div className="result-description" title={login}>@{login}</div>
@@ -27,6 +27,7 @@ const UserResultItem = ({user, action}) => {
 
 UserResultItem.propTypes = {
   user: PropTypes.shape({
+    id: PropTypes.number.isRequred,
     userAvatarUrl: PropTypes.string.isRequired,
     name: PropTypes.string,
     login: PropTypes.string.isRequired,

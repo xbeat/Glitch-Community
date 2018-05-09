@@ -3,6 +3,7 @@ import {debounce} from 'lodash';
 
 import AddTeamUserTemplate from '../../templates/pop-overs/add-team-user-pop';
 import Reactlet from '../reactlet';
+import User from '../../models/user';
 import UserResultItem from '../includes/user-result-item.jsx';
 
 export default function(application) {
@@ -64,7 +65,7 @@ export default function(application) {
     UserResultItem(user) {
       const action = (id) => {
         console.log('yoyo');
-        application.team().addUser(application, {id: () => id}); //hacky garbage to see what happens
+        application.team().addUser(application, User({id}));
         console.log('++', user);
       };
       const props = {

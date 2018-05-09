@@ -30,7 +30,7 @@ export default User = function(I, self) {
     description: "",
     initialDescription: "",
     projects: undefined,
-    teams: undefined,
+    teams: [],
     thanksCount: 0,
     fetched: false,
     showAsGlitchTeam: false,
@@ -227,7 +227,7 @@ export default User = function(I, self) {
         style: self.style(),
         alt: self.alt(),
         userAvatarUrl:self.userAvatarUrl(),
-        teams: (self.teams || []).filter(({asProps}) => !!asProps).map(({asProps}) => asProps()),
+        teams: self.teams.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()),
       };
     },
   });
