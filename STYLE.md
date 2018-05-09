@@ -15,44 +15,9 @@ Prefer Dependency Injection
 ---------------------------
 All modules receive their dependencies as arguments to their constructor.  This is most especially true for any modules that we write, but we make exceptions for react components and stateless NPM modules.
 
-Most importantly we shouldn't pass state into a module by way of an import().
+Most importantly we should avoid passing state into a module by having that module import from a different, stateful module.
 
-For example...
-
-Less clear/ less testable:
-```
-// in Entry.js
-import TimeDisplay from './TimeDisplay'
-export const currentTime = new Date();
-render(TimeDisplay);
-
-
-// in TimeDisplay.js
-import {currentTime} from './entry'
-
-export default function() {
-  return `The time is ${currentTime}`;
-}
-```
-
-More clear / more testable:
-```
-// in Entry.js
-import TimeDisplay from './TimeDisplay'
-
-const currentTime = new Date();
-render(TimeDisplay(currentTime));
-
-
-// in TimeDisplay.js
-
-export default function(currentTime) {
- return `The time is ${currentTime}`;
-}
-
-```
-
-This example is trivial, but the pattern of "passing a module the things it needs" is a strong underlying pattern.
+(e.g., if something wants access to the API, we should pass the API instance into it, not import the api from a global api session.)
 
 
 Make the Most of ES6
