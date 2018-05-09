@@ -80,8 +80,8 @@ const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promis
       <nav>
         <SearchForm baseUrl={baseUrl} onSubmit={submitSearch} defaultValue={searchQuery}/>
         <NewProjectPop promiseProjectsByIds={promiseProjectsByIds}/>
-        { !signedIn && <SignInPop/> }
         <ResumeCoding/>
+        { !signedIn && <SignInPop/> }
         { maybeUser && <UserOptionsPopWrapper user={maybeUser} overlayNewStuffVisible={overlayNewStuffVisible} />}
       </nav>
     </header>
@@ -100,12 +100,19 @@ class HeaderContainer extends React.Component {
   }
   componentDidMount() {
     const obs = this.props.userObservable;
+    const setState = () => {
+      this.setState({user: obs().asProps()});
+    };
+    
     obs().fetched.observe((isFetched) => {
       console.log("obs!", obs(), isFetched);
       if(isFetched) {
-        this.setState({user: obs().asProps()});
+        setState();
       }
     });
+    
+    ///also need to notice when the teams update.
+    obs().teams
   }
   componentDidUnmount() {
     // Todo: Garbage collect obs.

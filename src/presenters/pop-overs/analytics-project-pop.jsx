@@ -13,7 +13,7 @@ const filterProjects = (query) => {
 const AllProjectsItem = () => {
   const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
   return (
-    <li className="result" tabIndex="0" onClick={null}>
+    <li className="result">
       <img className="avatar" src={BENTO_BOX} alt='Bento emoji'/>
       <div className="result-name" title="All Projects">All Projects</div>
     </li>
@@ -40,7 +40,7 @@ const AnalyticsProjectPop = ({projects, action, togglePopover}) => {
         <ul className="results">
           < AllProjectsItem />
           { projects.map((project) => (
-            <ProjectResultItem key={project.id} {...project} action={action}/>
+            <ProjectResultItem key={project.id} {...project} action={onClick}/>
           ))}
         </ul>
       </section>
