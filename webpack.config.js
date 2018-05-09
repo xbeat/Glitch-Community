@@ -39,7 +39,7 @@ module.exports = () => {
           options: {
             //fix: true,
             cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so disable this when reconfiguring
-            emitError: true,
+            emitError: false,
             emitWarning: true,
             failOnError: false,
           }
