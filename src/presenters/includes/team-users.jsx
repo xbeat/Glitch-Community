@@ -18,7 +18,7 @@ const TeamUser = (props) => {
       )}
     </PopoverContainer>
   );
-};
+};jmhgk
 TeamUser.propTypes = {
   user: PropTypes.shape({
     login: PropTypes.string.isRequired,
