@@ -61,6 +61,8 @@ class UserOptionsPopContainer extends React.Component {
     // When any children change, update our teamCollection dictionary.
     obs.observe(teams => {
       for(let team of teams) {
+        // 'team' here is an entity, not an observable...
+        // hm.
         team.observe((team) => {
           if(team.asProps){
             this.setState(({teamCollection}) => {
@@ -76,7 +78,7 @@ class UserOptionsPopContainer extends React.Component {
   
   render() {
     const {user, overlayNewStuffVisible} = this.props;
-    const teams = Object.values(this.state.teamsCollection);
+    const teams = Object.values(this.state.teamCollection);
     const props = {
       teams: teams,
       profileLink: `/@${user.login}`,
@@ -95,7 +97,6 @@ UserOptionsPopContainer.propTypes = {
     login: PropTypes.string.isRequired,
   }).isRequired,
   overlayNewStuffVisible: PropTypes.func.isRequired,
-  teamsObservable: PropTypes.func.isRequired,
 };
 
 const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promiseProjectsByIds}) => {
