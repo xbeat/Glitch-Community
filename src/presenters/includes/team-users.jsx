@@ -7,6 +7,7 @@ import UserInfoPop from '../pop-overs/user-info-pop.jsx';
 const TeamUser = (props) => {
   const {user} = props;
   return (
+    <span className="user">
     <PopoverContainer>
       {({visible, togglePopover}) => (
         <React.Fragment>
@@ -17,6 +18,7 @@ const TeamUser = (props) => {
         </React.Fragment>
       )}
     </PopoverContainer>
+    </span>
   );
 };
 TeamUser.propTypes = {

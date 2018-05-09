@@ -15,7 +15,6 @@ export default (application, content) =>
   Layout({
 
     header() {
-      debugger;
       const userObservable = Observable(() => {
         const user = application.currentUser();
         const maybeUser = user.fetched() ? user.asProps() : null;
