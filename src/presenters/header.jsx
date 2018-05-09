@@ -101,18 +101,28 @@ class HeaderContainer extends React.Component {
   }
   componentDidMount() {
     const obs = this.props.userObservable;
-    const user = obs();
-    if(user.fetched()) {
-      this.setState({user: user.asProps()});
-      return;
-    }
-    
-    obs.observe((user) => {
-      if(user.fetched()) {
-        this.setState({user: user.asProps()});
+    obs().fetched.observe((isFetched) => {
+      console.log("obs!", obs(), isFetched);
+      if(isFetched) {
+        this.setState({user: obs().asProps()});
       }
     });
   }
+  componentDidUnmount() {
+    // Todo: Garbage collect obs.
+    // (...not currently possible.)
+  }
+  render() {
+    return <Header {...this.props} maybeUser={this.state.user}/>
+  }
 }
 
-export default Header;
+HeaderContainer.propTypes = {
+  baseUrl: PropTypes.string.isRequired,
+  userObservable: PropTypes.func.isRequired,
+  searchQuery: PropTypes.string.isRequired,
+  overlayNewStuffVisible: PropTypes.func.isRequired,
+  promiseProjectsByIds: PropTypes.func.isRequired,
+};
+
+export default HeaderContainer;
