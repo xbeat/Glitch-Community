@@ -18,7 +18,7 @@ export default [
     link: 'https://glitch.com/~ghost'
   }
   , {
-    title: '"rant" by harbichidian',
+    title: '"rant" by wersimmon',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frant.jpg?1525701141421",
     link: 'https://rant.glitch.me'
   }
