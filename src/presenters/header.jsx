@@ -76,27 +76,21 @@ class UserOptionsPopContainer extends React.Component {
     });
   }
   
-  render() {
-    const {user, overlayNewStuffVisible} = this.props;
-    const teams = Object.values(this.state.teamCollection);
-    const props = {
-      teams: teams,
-      profileLink: `/@${user.login}`,
-      avatarUrl: user.userAvatarUrl,
-      showNewStuffOverlay() {
-        return overlayNewStuffVisible(true);
-      }
-    };
+  const UserOptionsPopWrapper = ({user, overlayNewStuffVisible}) => {
+  const props = {
+    teams: user.teams.asProps(),
+    profileLink: `/@${user.login}`,
+    avatarUrl: user.userAvatarUrl,
+    showNewStuffOverlay() {
+      return overlayNewStuffVisible(true);
+    }
+  };
 
-    return <UserOptionsPop {...props}/>;
-  }
-}
+  return <UserOptionsPop {...props}/>;
+};
 
-UserOptionsPopContainer.propTypes = {
-  user: PropTypes.shape({
-    login: PropTypes.string.isRequired,
-  }).isRequired,
-  overlayNewStuffVisible: PropTypes.func.isRequired,
+UserOptionsPopWrapper.propTypes = {
+
 };
 
 const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promiseProjectsByIds}) => {
@@ -114,7 +108,7 @@ const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promis
         <NewProjectPop promiseProjectsByIds={promiseProjectsByIds}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
-        { maybeUser && <UserOptionsPopContainer user={maybeUser} overlayNewStuffVisible={overlayNewStuffVisible} />}
+        { maybeUser && <UserOptionsPopWrapper user={maybeUser} overlayNewStuffVisible={overlayNewStuffVisible} />}
       </nav>
     </header>
   );
