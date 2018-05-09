@@ -10,6 +10,7 @@ const md = mdFactory({
 });
 
 import Project from '../../models/project';
+import User from '../../models/user';
 import TeamTemplate from '../../templates/pages/team';
 import LayoutPresenter from '../layout';
 import AddTeamUserPopPresenter from '../pop-overs/add-team-user-pop';
@@ -19,7 +20,7 @@ import Reactlet from "../reactlet";
 import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProjectPop from "../pop-overs/add-team-project-pop.jsx";
 
-import TeamUser from "../includes/team-user.jsx";
+import TeamUsers from "../includes/team-users.jsx";
 
 export default function(application) {
   const assetUtils = assets(application);
@@ -43,28 +44,17 @@ export default function(application) {
         currentUserIsOnTeam: currentUserIsOnTeam,
         removeUserFromTeam: () => application.team().removeUser(application, user),
       };
-      return Reactlet(TeamUser, props); 
+      return Reactlet(TeamUserd, props); 
     },
     
     TeamUsers() {
-      const users = application.team().users();
-      return (
-        users.map(user =>
-          self.TeamUser(user)
-        )
-      );
-      // return users.map(user => TeamUserPresenter(application, user));
-      
+      const props = {
+        users: application.team().users(),
+        currentUserIsOnTeam: application.team().currentUserIsOnTeam(application),
+        removeUserFromTeam: (id) => application.team().removeUser(application, User({id})),
+      };
+      return Reactlet(TeamUsers, props);
     },
-
-    // TeamUsers() {
-    //   const users = application.team().users();
-    //   const props = {
-    //     users: users.map(user => user.asProps()),
-    //     extraClass: "team-users",
-    //   };
-    //   return Reactlet(UsersList, props);
-    // },
 
     TeamProjects() {
       const props = {

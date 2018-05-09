@@ -5,7 +5,7 @@ import PopoverContainer from '../pop-overs/popover-container.jsx';
 import UserInfoPop from '../pop-overs/user-info-pop.jsx';
 
 const TeamUser = (props) => {
-  let {user} = props;
+  const {user} = props;
   return (
     <PopoverContainer>
       {({visible, togglePopover}) => (
@@ -31,4 +31,10 @@ TeamUser.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
 };
 
-export default TeamUser;
+const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam}) => {
+  return users.map(user =>
+    <TeamUser user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUserFromTeam()} />
+  );
+};
+
+export default TeamUsers;

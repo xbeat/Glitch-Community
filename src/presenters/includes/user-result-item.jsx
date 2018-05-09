@@ -14,9 +14,22 @@ const UserThanks = ({thanksCount}) => {
 const UserResultItem = ({user, action}) => {
   const {id, userAvatarUrl, name, login, thanksCount} = user;
   console.log('💣', action);
+  
+  const handleClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    action(event);
+  };
+  const handleKeyPress = (event) => {
+    if(["Enter", " ", "Spacebar"].includes(event.key)) {
+      event.preventDefault();
+      event.stopPropagation();
+      action(event);
+    }
+  };
 
   return (
-    <li className="result" tabIndex="0" role="button" onClick={(event) => { console.log('clicked'); action(event)}}>
+    <li className="result" tabIndex="0" role="button" onClick={handleClick} onKeyPress={handleKeyPress}>
       <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
       <div className="result-name" title={name}>{name}</div>
       <div className="result-description" title={login}>@{login}</div>
