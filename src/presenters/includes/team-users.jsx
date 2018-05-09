@@ -19,7 +19,6 @@ const TeamUser = (props) => {
     </PopoverContainer>
   );
 };
-
 TeamUser.propTypes = {
   user: PropTypes.shape({
     login: PropTypes.string.isRequired,
@@ -31,10 +30,14 @@ TeamUser.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
 };
 
-const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam}) => {
-  return users.map(user =>
-    <TeamUser user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUserFromTeam()} />
+const TeamUsers = ({users, currentUserIsOnTeam}) => {
+  return users.map(({user, removeUserFromTeam}) => (
+    <TeamUser key={user.id} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={removeUserFromTeam} />
   );
+};
+TeamUsers.propTypes = {
+  users: PropTypes.shape({
+  }).isRequired,
 };
 
 export default TeamUsers;

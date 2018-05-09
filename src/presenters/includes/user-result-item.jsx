@@ -12,7 +12,7 @@ const UserThanks = ({thanksCount}) => {
 };
 
 const UserResultItem = ({user, action}) => {
-  const {id, userAvatarUrl, name, login, thanksCount} = user;
+  const {userAvatarUrl, name, login, thanksCount} = user;
   console.log('💣', action);
   
   const handleClick = (event) => {
@@ -40,7 +40,6 @@ const UserResultItem = ({user, action}) => {
 
 UserResultItem.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.number.isRequred,
     userAvatarUrl: PropTypes.string.isRequired,
     name: PropTypes.string,
     login: PropTypes.string.isRequired,

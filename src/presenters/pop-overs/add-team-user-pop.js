@@ -3,7 +3,6 @@ import {debounce} from 'lodash';
 
 import AddTeamUserTemplate from '../../templates/pop-overs/add-team-user-pop';
 import Reactlet from '../reactlet';
-import User from '../../models/user';
 import UserResultItem from '../includes/user-result-item.jsx';
 
 export default function(application) {

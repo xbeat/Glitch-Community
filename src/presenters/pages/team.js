@@ -36,16 +36,6 @@ export default function(application) {
     verifiedTeamTooltip() {
       return application.team().verifiedTooltip();
     },
-
-    TeamUser(user) {
-      const currentUserIsOnTeam = application.team().currentUserIsOnTeam(application);
-      const props =  {
-        user: user.asProps(),
-        currentUserIsOnTeam: currentUserIsOnTeam,
-        removeUserFromTeam: () => application.team().removeUser(application, user),
-      };
-      return Reactlet(TeamUserd, props); 
-    },
     
     TeamUsers() {
       const props = {
