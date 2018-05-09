@@ -47,7 +47,18 @@ SearchForm.propTypes = {
   defaultValue: PropTypes.string.isRequired,
 };
 
-const UserOptionsPopWrapper = ({user, overlayNewStuffVisible}) => {
+class UserOptionsPopContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {teams: []};
+  }
+  
+  componentDidMount() {
+    const obs = this.props.user.teamsObservable;
+    
+  }
+}
+const UserOptionsPopContainer = ({user, overlayNewStuffVisible}) => {
   const props = {
     teams: user.teams,
     profileLink: `/@${user.login}`,
@@ -82,7 +93,7 @@ const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promis
         <NewProjectPop promiseProjectsByIds={promiseProjectsByIds}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
-        { maybeUser && <UserOptionsPopWrapper user={maybeUser} overlayNewStuffVisible={overlayNewStuffVisible} />}
+        { maybeUser && <UserOptionsPopContainer user={maybeUser} overlayNewStuffVisible={overlayNewStuffVisible} />}
       </nav>
     </header>
   );
@@ -100,21 +111,11 @@ class HeaderContainer extends React.Component {
   }
   componentDidMount() {
     const obs = this.props.userObservable;
-    const setState = () => {
-      this.setState({user: obs().asProps()});
-    };
-    
+
     obs().fetched.observe((isFetched) => {
-      console.log("obs!", obs(), isFetched);
       if(isFetched) {
-        setState();
+        this.setState({user: obs().asProps()});
       }
-    });
-    
-    ///also need to notice when the teams update.
-    obs().teams.observe((teams) => {
-      console.log('teams!', teams);
-      setState();
     });
   }
   componentWillUnmount() {
