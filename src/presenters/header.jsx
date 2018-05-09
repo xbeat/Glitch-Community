@@ -63,10 +63,11 @@ class UserOptionsPopContainer extends React.Component {
       for(let team of teams) {
         team.observe((team) => {
           if(team.asProps){
-            const props = team.asProps();
-            const collection = this.state.teamCollection;
-            collection[props.id] = props;
-            this.setState({teamCollection: collection});
+            this.setState(({teamCollection}) => {
+              const props = team.asProps();
+              teamCollection[props.id] = props;
+              return {teamCollection};
+            });
           }
         });
       }
@@ -74,27 +75,27 @@ class UserOptionsPopContainer extends React.Component {
   }
   
   render() {
+    const {user, overlayNewStuffVisible} = this.props;
+    const teams = Object.values(this.state.teamsCollection);
     const props = {
-    teams: user.teams,
-    profileLink: `/@${user.login}`,
-    avatarUrl: user.userAvatarUrl,
-    showNewStuffOverlay() {
-      return overlayNewStuffVisible(true);
-    }
-  };
+      teams: teams,
+      profileLink: `/@${user.login}`,
+      avatarUrl: user.userAvatarUrl,
+      showNewStuffOverlay() {
+        return overlayNewStuffVisible(true);
+      }
+    };
 
-  return <UserOptionsPop {...props}/>;
+    return <UserOptionsPop {...props}/>;
   }
 }
-const UserOptionsPopContainer = ({user, overlayNewStuffVisible}) => {
-  
-};
 
-UserOptionsPopWrapper.propTypes = {
+UserOptionsPopContainer.propTypes = {
   user: PropTypes.shape({
     login: PropTypes.string.isRequired,
   }).isRequired,
   overlayNewStuffVisible: PropTypes.func.isRequired,
+  teamsObservable: PropTypes.func.isRequired,
 };
 
 const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promiseProjectsByIds}) => {

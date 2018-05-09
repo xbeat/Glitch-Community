@@ -227,6 +227,7 @@ export default User = function(I, self) {
         alt: self.alt(),
         userAvatarUrl:self.userAvatarUrl(),
         teamsObservable: self.teams,
+      }
     },
   });
 
