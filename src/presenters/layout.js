@@ -14,14 +14,18 @@ export default (application, content) =>
   Layout({
 
     header() {
+      let userForwarder = () => {
+      }
+      const user = application.currentUser();
+      const maybeUser = user.fetched() ? user.asProps() : null;
       const props = {
         baseUrl: application.normalizedBaseUrl(),
-        userObservable: application.currentUser,
+        maybeUser: maybeUser,
         searchQuery: application.searchQuery(),
         overlayNewStuffVisible: application.overlayNewStuffVisible,
         promiseProjectsByIds: (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds),
       };
-      return Reactlet(Header, props);
+      return Reactlet(Header, props, 'fixedzilla');
     },
     
     content,
