@@ -63,8 +63,9 @@ export default function(application) {
     }, 
 
     UserResultItem(user) {
-      const action = (id) => {
-        application.team().addUser(application, user);
+      const action = (event) => {
+        console.log("hi");
+        //application.team().addUser(application, user);
       };
       const props = {
         user: user.asProps(),
