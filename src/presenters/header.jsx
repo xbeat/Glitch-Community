@@ -50,16 +50,31 @@ SearchForm.propTypes = {
 class UserOptionsPopContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {teams: []};
+    this.state = {teamCollection: {}};
   }
   
   componentDidMount() {
     const obs = this.props.user.teamsObservable;
     
+    // H'ok, so! 
+    // Watch the teams array observable, and watch all of its children observables.
+    // When any children change, update our teamCollection dictionary.
+    obs.observe(teams => {
+      for(let team of teams) {
+        team.observe((team) => {
+          if(team.asProps){
+            const props = team.asProps();
+            const collection = this.state.teamCollection;
+            collection[props.id] = props;
+            this.setState({teamCollection: collection});
+          }
+        });
+      }
+    });
   }
-}
-const UserOptionsPopContainer = ({user, overlayNewStuffVisible}) => {
-  const props = {
+  
+  render() {
+    const props = {
     teams: user.teams,
     profileLink: `/@${user.login}`,
     avatarUrl: user.userAvatarUrl,
@@ -69,6 +84,10 @@ const UserOptionsPopContainer = ({user, overlayNewStuffVisible}) => {
   };
 
   return <UserOptionsPop {...props}/>;
+  }
+}
+const UserOptionsPopContainer = ({user, overlayNewStuffVisible}) => {
+  
 };
 
 UserOptionsPopWrapper.propTypes = {

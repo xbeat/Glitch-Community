@@ -45,6 +45,7 @@ export default Team = function(I, self) {
     
     asProps() {
       return {
+        id: self.id(),
         name: self.name(),
         url: self.url(),
         teamAvatarUrl: self.teamAvatarUrl(),
