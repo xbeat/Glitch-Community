@@ -11,8 +11,7 @@ const UserThanks = ({thanksCount}) => {
   );
 };
 
-const UserResultItem = (props) => {
-  const {user, action} = props;
+const UserResultItem = ({user, action}) => {
   const {userAvatarUrl, name, login, thanksCount} = user;
   console.log('💣', action);
 

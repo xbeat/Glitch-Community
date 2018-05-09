@@ -35,7 +35,7 @@ const submitSearch = (event) => {
 
 const SearchForm = ({baseUrl, onSubmit, defaultValue}) => (
   <form action={urlJoin(baseUrl, "search")} method="get" role="search" onSubmit={onSubmit}>
-    <input id="search-projects" className="search-input" name="q" placeholder="bots, apps, users" defaultValue={defaultValue}/>
+    <input className="search-input" name="q" placeholder="bots, apps, users" defaultValue={defaultValue}/>
   </form>
 );
 
@@ -89,9 +89,35 @@ const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promis
 Header.propTypes = {
   baseUrl: PropTypes.string.isRequired,
   maybeUser: PropTypes.object,
+};
+
+class HeaderContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { maybeUser: null };
+  }
+  componentDidMount() {
+    const obs = this.props.userObservable;
+
+    obs.observe((maybeUser) => {
+      this.setState({maybeUser: maybeUser});
+    });
+  }
+  componentWillUnmount() {
+    // Todo: Garbage collect obs.
+    // (...not currently possible.)
+  }
+  render() {
+    return <Header {...this.props} maybeUser={this.state.maybeUser}/>;
+  }
+}
+
+HeaderContainer.propTypes = {
+  baseUrl: PropTypes.string.isRequired,
+  userObservable: PropTypes.func.isRequired,
   searchQuery: PropTypes.string.isRequired,
   overlayNewStuffVisible: PropTypes.func.isRequired,
   promiseProjectsByIds: PropTypes.func.isRequired,
 };
 
-export default Header;
+export default HeaderContainer;

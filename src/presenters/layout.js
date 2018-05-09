@@ -6,6 +6,7 @@ import OverlayVideo from './overlays/overlay-video';
 import Notifications from './notifications';
 import NewStuffPresenter from './overlays/new-stuff';
 import ProjectModel from '../models/project';
+import Observable from 'o_0';
 
 import Reactlet from './reactlet';
 
@@ -14,13 +15,14 @@ export default (application, content) =>
   Layout({
 
     header() {
-      let userForwarder = () => {
-      }
-      const user = application.currentUser();
-      const maybeUser = user.fetched() ? user.asProps() : null;
+      const userObservable = Observable(() => {
+        const user = application.currentUser();
+        const maybeUser = user.fetched() ? user.asProps() : null;
+        return maybeUser;
+      });
       const props = {
         baseUrl: application.normalizedBaseUrl(),
-        maybeUser: maybeUser,
+        userObservable: userObservable,
         searchQuery: application.searchQuery(),
         overlayNewStuffVisible: application.overlayNewStuffVisible,
         promiseProjectsByIds: (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds),
