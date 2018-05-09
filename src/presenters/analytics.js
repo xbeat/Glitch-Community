@@ -9,7 +9,6 @@ import {throttle} from 'lodash';
 import moment from 'moment-mini';
 import AnalyticsTemplate from '../templates/includes/analytics';
 import AnalyticsTimePopPresenter from './pop-overs/analytics-time-pop';
-import AnalyticsProjectsPopPresenter from './pop-overs/analytics-projects-pop'; //temp
 
 const METRICS = ["remixes", "visits"];
 const REFERRER_FIELDS = ["remixReferrers", "referrers"];
@@ -415,7 +414,9 @@ export default function(application, teamOrProject) {
         action,
       };
       // console.log('🌹🌹🌹🌹', props)
+      let AnalyticsProjectPop = () => null; //placeholder
       return Reactlet(AnalyticsProjectPop, props);
+      return "todo"
     },
 
     

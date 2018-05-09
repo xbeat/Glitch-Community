@@ -35,7 +35,7 @@ const submitSearch = (event) => {
 
 const SearchForm = ({baseUrl, onSubmit, defaultValue}) => (
   <form action={urlJoin(baseUrl, "search")} method="get" role="search" onSubmit={onSubmit}>
-    <label className="screen-reader-text">Search Glitch projects
+    <label htmlFor="q">Search Glitch projects
       <input id="search-projects" className="search-input" name="q" placeholder="bots, apps, users" defaultValue={defaultValue}/>
     </label>
   </form>
@@ -112,9 +112,12 @@ class HeaderContainer extends React.Component {
     });
     
     ///also need to notice when the teams update.
-    obs().teams
+    obs().teams.observe((teams) => {
+      console.log('teams!', teams);
+      setState();
+    });
   }
-  componentDidUnmount() {
+  componentWillUnmount() {
     // Todo: Garbage collect obs.
     // (...not currently possible.)
   }
