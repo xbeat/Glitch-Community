@@ -18,8 +18,7 @@ main.user-page.team-page(role="main")
                 img.verified(src=@verifiedImage class=@hiddenUnlessVerified)
 
             .users-information
-              .users.team-users
-                = @TeamUsers
+              = @TeamUsers
 
               span.add-user-container
                 button.button.button-small.button-tertiary.add-user.opens-pop-over(class=@hiddenUnlessCurrentUserIsOnTeam click=@toggleAddTeamUserPop) Add

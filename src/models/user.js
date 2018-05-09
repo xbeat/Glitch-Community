@@ -213,6 +213,7 @@ export default User = function(I, self) {
     
     asProps() {
       return {
+        id: self.id(),
         color: self.color(),
         hasCoverImage: self.hasCoverImage(),
         coverColor: self.coverColor(),

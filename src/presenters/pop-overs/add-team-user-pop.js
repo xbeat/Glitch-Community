@@ -62,7 +62,7 @@ export default function(application) {
     }, 
 
     UserResultItem(user) {
-      const action = (event) => {
+      const action = () => {
         console.log("hi");
         //application.team().addUser(application, user);
       };

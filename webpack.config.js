@@ -54,6 +54,7 @@ module.exports = () => {
     },
     plugins: [
       new LodashModuleReplacementPlugin,
+      new webpack.NoEmitOnErrorsPlugin(),
     ],
   };
 }

@@ -31,13 +31,22 @@ TeamUser.propTypes = {
 };
 
 const TeamUsers = ({users, currentUserIsOnTeam}) => {
-  return users.map(({user, removeUserFromTeam}) => (
-    <TeamUser key={user.id} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={removeUserFromTeam} />
+  return (
+    <div className="users team-users">
+      {users.map(({user, removeUserFromTeam}) => (
+        <TeamUser key={user.id} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={removeUserFromTeam} />
+      ))}
+    </div>
   );
 };
 TeamUsers.propTypes = {
-  users: PropTypes.shape({
-  }).isRequired,
+  users: PropTypes.arrayOf(PropTypes.shape({
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    }).isRequired,
+    removeUserFromTeam: PropTypes.func.isRequired,
+  }).isRequired).isRequired,
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
 };
 
 export default TeamUsers;
