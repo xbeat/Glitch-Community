@@ -13,14 +13,7 @@ section.analytics(class=@hiddenUnlessCurrentUserIsOnTeam)
         span= @analyticsTimeLabel
         span(class=@hiddenUnlessGettingAnalyticsFromDate)= Loader
 
-    // new jsx thing, comment me out if i can't ship in time
     = @AnalyticsProjectPop
-    
-    //.button-wrap
-    //  button.button-small.button-tertiary(click=@toggleAnalyticsProjectsPop)
-    //    span= @analyticsProjectDomain
-    //    span(class=@hiddenUnlessGettingAnalyticsProjectDomain)= Loader
-    //  = @analyticsProjectsPop
       
     = @remixesChartElement
     

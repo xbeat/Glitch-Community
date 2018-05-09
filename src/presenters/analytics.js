@@ -3,6 +3,7 @@
 import Observable from 'o_0';
 
 import Reactlet from "./reactlet";
+import AnalyticsProjectPop from './pop-overs/analytics-project-pop.jsx';
 
 import axios from 'axios';
 import {throttle} from 'lodash';
@@ -400,6 +401,7 @@ export default function(application, teamOrProject) {
       // TODO can't pass through action
       const action = () => {
         return console.log('AnalyticsProjectPop action');
+        //this action should change both graphs to show only the target project.
       };
       const projects = 
           application.team().projects().map(project => {
@@ -414,7 +416,6 @@ export default function(application, teamOrProject) {
         action,
       };
       // console.log('🌹🌹🌹🌹', props)
-      let AnalyticsProjectPop = () => null; //placeholder
       return Reactlet(AnalyticsProjectPop, props); //todo
     },
 

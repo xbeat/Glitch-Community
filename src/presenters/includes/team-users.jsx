@@ -7,18 +7,16 @@ import UserInfoPop from '../pop-overs/user-info-pop.jsx';
 const TeamUser = (props) => {
   const {user} = props;
   return (
-    <span className="user">
     <PopoverContainer>
       {({visible, togglePopover}) => (
         <React.Fragment>
-          <button className="user team-user-avatar" title={user.login} onClick={togglePopover} data-tooltip={user.tooltipName} data-tooltip-left="true" style={user.style}>
+          <button className="team-user-avatar" title={user.login} onClick={togglePopover} data-tooltip={user.tooltipName} data-tooltip-left="true" style={user.style}>
             <img width="32" height="32" src={user.userAvatarUrl} alt={`User Properties for ${user.login}`}/>
           </button>
           {visible && <UserInfoPop {...props}/>}
         </React.Fragment>
       )}
     </PopoverContainer>
-    </span>
   );
 };
 TeamUser.propTypes = {
@@ -34,11 +32,13 @@ TeamUser.propTypes = {
 
 const TeamUsers = ({users, currentUserIsOnTeam}) => {
   return (
-    <div className="users team-users">
+    <ul className="users team-users">
       {users.map(({user, removeUserFromTeam}) => (
-        <TeamUser key={user.id} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={removeUserFromTeam} />
+        <li className="user">
+          <TeamUser key={user.id} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={removeUserFromTeam} />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 TeamUsers.propTypes = {
