@@ -16,12 +16,14 @@ const UserResultItem = ({user, action}) => {
   console.log('💣', action);
 
   return (
-    <button className="result" tabIndex="0" onClick={() => action(id)} >
-      <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
-      <div className="result-name" title={name}>{name}</div>
-      <div className="result-description" title={login}>@{login}</div>
-      { thanksCount > 0 && <UserThanks thanksCount={thanksCount} />}
-    </button>
+    <li className="result" >
+      <button onClick={(event) => action(event)}>
+        <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
+        <div className="result-name" title={name}>{name}</div>
+        <div className="result-description" title={login}>@{login}</div>
+        { thanksCount > 0 && <UserThanks thanksCount={thanksCount} />}
+      </button>
+    </li>
   );
 };
 

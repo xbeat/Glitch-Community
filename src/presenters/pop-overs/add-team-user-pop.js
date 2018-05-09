@@ -64,9 +64,7 @@ export default function(application) {
 
     UserResultItem(user) {
       const action = (id) => {
-        console.log('yoyo');
-        application.team().addUser(application, User({id}));
-        console.log('++', user);
+        application.team().addUser(application, user);
       };
       const props = {
         user: user.asProps(),
