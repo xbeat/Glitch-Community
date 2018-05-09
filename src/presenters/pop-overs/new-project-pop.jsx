@@ -8,7 +8,7 @@ const NewProjectPop = ({projects}) => (
     <section className="pop-over-actions results-list">
       <div className="results">
         { projects.map((project) => (
-          <a key={project.id} href={project.link}>
+          <a key={project.id} href={project.remixUrl}>
             <ProjectResultItem {...project}/>
           </a>
         ))}
@@ -53,10 +53,10 @@ class NewProjectPopContainer extends React.Component {
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
-          <div className="button-wrap">
+          <React.Fragment>
             <button className="button-small" data-track="open new-project pop" onClick={togglePopover}>New Project</button>
             {visible && <NewProjectPop projects={this.state.projects}/>}
-          </div>
+          </React.Fragment>
         )}
       </PopoverContainer>
     );

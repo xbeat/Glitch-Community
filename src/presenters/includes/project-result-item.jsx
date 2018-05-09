@@ -10,13 +10,13 @@ const ProjectResultItem = (props) => {
   const {domain, description, avatar, action, users} = props;
   
   return (
-    <button className="result" tabIndex="0" onClick={() => action(props)}>
+    <div className="result">
       <img className="avatar" src={avatar} alt={`Project avatar for ${domain}`}/>
       <div className="result-name" title={domain}>{domain}</div>
       
       { description.length > 0 && <Description description={description} /> }
       { users.length > 0 && <UsersList users={users} /> }
-    </button>
+    </div>
   );
 };
 
@@ -24,7 +24,6 @@ ProjectResultItem.propTypes = {
   domain: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
-  action: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
 };
 

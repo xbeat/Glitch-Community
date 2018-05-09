@@ -45,7 +45,7 @@ export default Project = function(I, self) {
         isPinnedByTeam: project.isPinnedByTeam(application),
         isPinnedByUser: project.isPinnedByUser(application),
         isRecentProject: !!(project.isRecentProject),
-        link: project.isRecentProject ? project.editUrl() : `/~${project.domain()}`,
+        link: `/~${project.domain()}`,
         name: project.name(),
         private: project.private(),
         showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
