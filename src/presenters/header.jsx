@@ -5,8 +5,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import urlJoin from 'url-join';
 
-import ProjectModel from '../models/project';
-
 const Logo = () => {
   const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
   const LOGO_SUNSET = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg";
@@ -37,8 +35,9 @@ const submitSearch = (event) => {
 
 const SearchForm = ({baseUrl, onSubmit, defaultValue}) => (
   <form action={urlJoin(baseUrl, "search")} method="get" role="search" onSubmit={onSubmit}>
-    <label className="screen-reader-text" htmlFor="search-projects">Search Glitch projects</label>
-    <input id="search-projects" className="search-input" name="q" placeholder="bots, apps, users" defaultValue={defaultValue}/>
+    <label className="screen-reader-text">Search Glitch projects
+      <input id="search-projects" className="search-input" name="q" placeholder="bots, apps, users" defaultValue={defaultValue}/>
+    </label>
   </form>
 );
 
@@ -52,7 +51,7 @@ const UserOptionsPopWrapper = ({user, overlayNewStuffVisible}) => {
   const props = {
     teams: user.teams,
     profileLink: `/@${user.login}`,
-    avatarUrl: user.avatarUrl,
+    avatarUrl: user.userAvatarUrl,
     showNewStuffOverlay() {
       return overlayNewStuffVisible(true);
     }
@@ -78,7 +77,7 @@ const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promis
         </a>
       </div>
      
-      <nav role="navigation">
+      <nav>
         <SearchForm baseUrl={baseUrl} onSubmit={submitSearch} defaultValue={searchQuery}/>
         <NewProjectPop promiseProjectsByIds={promiseProjectsByIds}/>
         { !signedIn && <SignInPop/> }
@@ -113,7 +112,7 @@ class HeaderContainer extends React.Component {
     // (...not currently possible.)
   }
   render() {
-    return <Header {...this.props} maybeUser={this.state.user}/>
+    return <Header {...this.props} maybeUser={this.state.user}/>;
   }
 }
 

@@ -3,7 +3,6 @@
 import Observable from 'o_0';
 
 import Reactlet from "./reactlet";
-import AnalyticsProjectPop from "./pop-overs/analytics-project-pop.jsx";
 
 import axios from 'axios';
 import {throttle} from 'lodash';

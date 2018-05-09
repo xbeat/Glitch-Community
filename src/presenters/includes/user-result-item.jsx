@@ -17,12 +17,12 @@ const UserResultItem = (props) => {
   console.log('💣', action);
 
   return (
-    <li className="result" tabIndex="0" onClick={() => action()} >
+    <button className="result" tabIndex="0" onClick={() => action()} >
       <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
       <div className="result-name" title={name}>{name}</div>
       <div className="result-description" title={login}>@{login}</div>
       { thanksCount > 0 && <UserThanks thanksCount={thanksCount} />}
-    </li>
+    </button>
   );
 };
 

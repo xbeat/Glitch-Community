@@ -10,13 +10,13 @@ const ProjectResultItem = (props) => {
   const {domain, description, avatar, action, users} = props;
   
   return (
-    <li className="result" tabIndex="0" onClick={() => action(props)}>
+    <button className="result" tabIndex="0" onClick={() => action(props)}>
       <img className="avatar" src={avatar} alt={`Project avatar for ${domain}`}/>
       <div className="result-name" title={domain}>{domain}</div>
       
       { description.length > 0 && <Description description={description} /> }
       { users.length > 0 && <UsersList users={users} /> }
-    </li>
+    </button>
   );
 };
 
