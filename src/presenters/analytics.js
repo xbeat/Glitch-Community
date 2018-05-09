@@ -398,7 +398,6 @@ export default function(application, teamOrProject) {
     //     },
 
     AnalyticsProjectPop() {
-      // TODO can't pass through action
       const action = () => {
         return console.log('AnalyticsProjectPop action');
         //this action should change both graphs to show only the target project.
