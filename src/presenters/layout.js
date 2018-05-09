@@ -14,12 +14,9 @@ export default (application, content) =>
   Layout({
 
     header() {
-      const user = application.currentUser();
-      const maybeUser = user.fetched() ? user.asProps() : null;
-      
       const props = {
         baseUrl: application.normalizedBaseUrl(),
-        maybeUser,
+        userObservable: application.currentUser,
         searchQuery: application.searchQuery(),
         overlayNewStuffVisible: application.overlayNewStuffVisible,
         promiseProjectsByIds: (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds),

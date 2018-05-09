@@ -94,4 +94,25 @@ Header.propTypes = {
   maybeUser: PropTypes.object,
 };
 
+class HeaderContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { user: null };
+  }
+  componentDidMount() {
+    const obs = this.props.userObservable;
+    const user = obs();
+    if(user.fetched()) {
+      this.setState({user: user.asProps()});
+      return;
+    }
+    
+    obs.observe((user) => {
+      if(user.fetched()) {
+        this.setState({user: user.asProps()});
+      }
+    });
+  }
+}
+
 export default Header;
