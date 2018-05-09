@@ -1,0 +1,17 @@
+- Loader = require "../includes/loader"
+
+dialog.pop-over.add-team-user-pop(class=@hiddenUnlessAddTeamUserPopVisible click=@stopPropagation)
+
+  section.pop-over-info
+    input#team-user-search.pop-over-input.search-input.pop-over-search(input=@search keyup=@spacekeyDoesntClosePop placeholder="Search for a user or email")
+
+  section.pop-over-actions.last-section.results-list(class=@hiddenIfNoSearch)
+
+    span(class=@hiddenUnlessSearching)
+      = Loader(this)
+
+    ul.results
+      - application = @application
+      - context = @
+      - @searchResults().forEach (user) ->
+        = context.UserResultItem(user)
