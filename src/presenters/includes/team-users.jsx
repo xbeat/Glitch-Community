@@ -33,9 +33,9 @@ TeamUser.propTypes = {
 const TeamUsers = ({users, currentUserIsOnTeam}) => {
   return (
     <ul className="users team-users">
-      {users.map(({user, removeUserFromTeam}) => (
-        <li className="user">
-          <TeamUser key={user.id} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={removeUserFromTeam} />
+      {users.map((data) => (
+        <li key={data.user.id} className="user">
+          <TeamUser {...data} currentUserIsOnTeam={currentUserIsOnTeam} />
         </li>
       ))}
     </ul>

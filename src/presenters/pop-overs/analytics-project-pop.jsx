@@ -21,8 +21,8 @@ const AllProjectsItem = () => {
 };
 
 const AnalyticsProjectPop = ({projects, action, togglePopover}) => {
-  console.log(action);
   const onClick = (...args) => {
+    console.log("I've been clicked!");
     togglePopover();
     action(...args);
   };
@@ -40,7 +40,9 @@ const AnalyticsProjectPop = ({projects, action, togglePopover}) => {
         <ul className="results">
           < AllProjectsItem />
           { projects.map((project) => (
-            <ProjectResultItem key={project.id} {...project} action={onClick}/>
+            <button key={project.id} className="button-flat" onClick={onClick}>
+              <ProjectResultItem {...project}/>
+            </button>
           ))}
         </ul>
       </section>
@@ -59,8 +61,6 @@ AnalyticsProjectPop.propTypes = {
   togglePopover: PropTypes.func.isRequired,
 };
 
-// convert to stateful class, to update buttonname, update loading state
-
 const AnalyticsProjectPopContainer = (props) => {
   return (
     <PopoverContainer>
@@ -75,12 +75,3 @@ const AnalyticsProjectPopContainer = (props) => {
 };
 
 export default AnalyticsProjectPopContainer;
-
-
-// .button-wrap
-//   button.button-small.button-tertiary(click=@toggleAnalyticsProjectsPop)
-//     span= @analyticsProjectDomain
-//     span(class=@hiddenUnlessGettingAnalyticsProjectDomain)= Loader
-//   = @analyticsProjectsPop
-
-// - bentoBox = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743'
