@@ -21,10 +21,9 @@ const AllProjectsItem = () => {
 };
 
 const AnalyticsProjectPop = ({projects, action, togglePopover}) => {
-  const onClick = (...args) => {
-    console.log("I've been clicked!");
+  const onClick = (event, project) => {
     togglePopover();
-    action(...args);
+    action(event, project);
   };
   
   return (
@@ -38,9 +37,11 @@ const AnalyticsProjectPop = ({projects, action, togglePopover}) => {
       </section>
       <section className="pop-over-actions results-list">
         <ul className="results">
-          < AllProjectsItem />
+          <button className="button-flat" onClick={(event) => {onClick(event, {domain: "All Projects"})}}>
+            < AllProjectsItem />
+          </button>
           { projects.map((project) => (
-            <button key={project.id} className="button-flat" onClick={onClick}>
+            <button key={project.id} className="button-flat" onClick={(event) => {onClick(event, project)}}>
               <ProjectResultItem {...project}/>
             </button>
           ))}
@@ -61,17 +62,21 @@ AnalyticsProjectPop.propTypes = {
   togglePopover: PropTypes.func.isRequired,
 };
 
-const AnalyticsProjectPopContainer = (props) => {
+const AnalyticsProjectPopContainer = ({currentDomain, ...props}) => {
   return (
     <PopoverContainer>
       {({visible, togglePopover}) => (
         <div className="button-wrap">
-          <button className="button-small button-tertiary" onClick={togglePopover}>All Projects</button>
+          <button className="button-small button-tertiary" onClick={togglePopover}>{currentDomain}</button>
           {visible && <AnalyticsProjectPop {...props} togglePopover={togglePopover} />}
         </div>
       )}
     </PopoverContainer>
   );
 };
+
+AnalyticsProjectPopContainer.propTypes = {
+  currentDomain: PropTypes.string.isRequired,
+}
 
 export default AnalyticsProjectPopContainer;

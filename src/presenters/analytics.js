@@ -398,9 +398,9 @@ export default function(application, teamOrProject) {
     //     },
 
     AnalyticsProjectPop() {
-      const action = () => {
-        return console.log('AnalyticsProjectPop action');
-        //this action should change both graphs to show only the target project.
+      const action = (event, project) => {
+        const domain = project ? project.domain : 'All Projects';
+        self.analyticsProjectDomain(domain);
       };
       const projects = 
           application.team().projects().map(project => {
@@ -413,6 +413,7 @@ export default function(application, teamOrProject) {
       const props = {
         projects,
         action,
+        currentDomain: self.analyticsProjectDomain(),
       };
       // console.log('🌹🌹🌹🌹', props)
       return Reactlet(AnalyticsProjectPop, props); //todo
