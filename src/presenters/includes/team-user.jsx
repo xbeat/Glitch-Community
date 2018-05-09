@@ -9,12 +9,12 @@ const TeamUser = (props) => {
   return (
     <PopoverContainer>
       {({visible, togglePopover}) => (
-        <React.Fragement>
+        <React.Fragment>
           <button className="user team-user-avatar" title={user.login} onClick={togglePopover} data-tooltip={user.tooltipName} data-tooltip-left="true" style={user.style}>
             <img width="32" height="32" src={user.userAvatarUrl} alt={`User Properties for ${user.login}`}/>
           </button>
           {visible && <UserInfoPop {...props}/>}
-        </React.Fragement>
+        </React.Fragment>
       )}
     </PopoverContainer>
   );
