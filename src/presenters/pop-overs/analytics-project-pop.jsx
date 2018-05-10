@@ -20,6 +20,10 @@ const AllProjectsItem = () => {
   );
 };
 
+class AnalyticsProjectPopContainer extends React.Component {
+  constructor(props)
+}
+
 const AnalyticsProjectPop = ({projects, action, togglePopover}) => {
   const onClick = (event, project) => {
     togglePopover();
@@ -37,11 +41,11 @@ const AnalyticsProjectPop = ({projects, action, togglePopover}) => {
       </section>
       <section className="pop-over-actions results-list">
         <ul className="results">
-          <button className="button-flat" onClick={(event) => {onClick(event, {domain: "All Projects"})}}>
+          <button className="button-flat" onClick={(event) => {onClick(event, {domain: "All Projects"});}}>
             < AllProjectsItem />
           </button>
           { projects.map((project) => (
-            <button key={project.id} className="button-flat" onClick={(event) => {onClick(event, project)}}>
+            <button key={project.id} className="button-flat" onClick={(event) => {onClick(event, project);}}>
               <ProjectResultItem {...project}/>
             </button>
           ))}
@@ -77,6 +81,6 @@ const AnalyticsProjectPopContainer = ({currentDomain, ...props}) => {
 
 AnalyticsProjectPopContainer.propTypes = {
   currentDomain: PropTypes.string.isRequired,
-}
+};
 
 export default AnalyticsProjectPopContainer;

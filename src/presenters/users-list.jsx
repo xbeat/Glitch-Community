@@ -1,19 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const PopulatedUsersList = ({users, extraClass="" }) => (
-  <div className={`users ${extraClass}`}>
-    { users.map((user, key) => (
-      <UserTile key={key} {...user}></UserTile>
-    ))}
-  </div>
-);
-
-PopulatedUsersList.propTypes = {
-  users: PropTypes.array.isRequired,
-  extraClass: PropTypes.string,
-};
-
 const UserTile = ({
   userLink,
   tooltipName, 
@@ -33,6 +20,19 @@ UserTile.propTypes = {
   style: PropTypes.object.isRequired,
   alt: PropTypes.string.isRequired,
   userAvatarUrl: PropTypes.string.isRequired,
+  extraClass: PropTypes.string,
+};
+
+export const PopulatedUsersList = ({users, extraClass="" }) => (
+  <div className={`users ${extraClass}`}>
+    { users.map((user, key) => (
+      <UserTile key={key} {...user}></UserTile>
+    ))}
+  </div>
+);
+
+PopulatedUsersList.propTypes = {
+  users: PropTypes.array.isRequired,
   extraClass: PropTypes.string,
 };
   

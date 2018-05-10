@@ -31,11 +31,7 @@ section.analytics(class=@hiddenUnlessCurrentUserIsOnTeam)
         span(class=@hiddenUnlessGettingAnalyticsFromDate)= Loader
       = @analyticsTimePop
 
-    //.button-wrap
-    //  button.button-small.button-tertiary(click=@toggleAnalyticsProjectsPop)
-    //    span= @analyticsProjectDomain
-    //    span(class=@hiddenUnlessGettingAnalyticsProjectDomain)= Loader
-    //  = @analyticsProjectsPop
+    = @AnalyticsProjectPop
 
     = @visitsChartElement
 

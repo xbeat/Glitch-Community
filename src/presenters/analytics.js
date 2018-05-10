@@ -386,17 +386,6 @@ export default function(application, teamOrProject) {
       }
     },
 
-    //     toggleAnalyticsProjectsPop(event) {
-    //       event.stopPropagation();
-    //       const element = event.currentTarget;
-    //       const existingPop = element.querySelector(".analytics-projects-pop");
-    //       application.closeAllPopOvers();
-
-    //       if (!existingPop) {
-    //         return element.parentElement.appendChild(AnalyticsProjectsPopPresenter(application, self));
-    //       }
-    //     },
-
     AnalyticsProjectPop() {
       const action = (event, project) => {
         const domain = project ? project.domain : 'All Projects';
