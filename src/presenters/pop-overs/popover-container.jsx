@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
+import ReactIs from 'react-is';
 
 /*
 A popover is a light, hollow roll made from an egg batter similar to
@@ -116,8 +117,14 @@ export class PopoverContainerV2 extends React.Component {
     // The <span> is needed because onClickOutside doesn't support React.Fragment
     //const Children = <this.props.children togglePopover={this.toggle} visible={this.state.visible}/>
     
+    //todo: if children is a fragment, warn.
     
-    
+    return (
+      <this.MonitoredComponent disableOnClickOutside={!this.state.visible} eventTypes={["mousedown", "touchstart", "keyup"]}>
+        {this.props.children({visible: this.state.visible, togglePopover: this.toggle})}
+      </this.MonitoredComponent>
+    );
+    /*
     return (
       <PopoverContext.Provider value={{visible: this.state.visible, togglePopover: this.toggle}}>
         <this.MonitoredComponent disableOnClickOutside={!this.state.visible} eventTypes={["mousedown", "touchstart", "keyup"]}>
@@ -126,7 +133,7 @@ export class PopoverContainerV2 extends React.Component {
           </PopoverContext.Consumer>
         </this.MonitoredComponent>
       </PopoverContext.Provider>
-    );
+    );*/
   }
 }
 
