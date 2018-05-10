@@ -63,11 +63,11 @@ export default class PopoverContainer extends React.Component {
     
     
     return (
-      <this.MonitoredComponent disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}>
-        <PopoverContext.Provider value={{visible: this.state.visible, togglePopover: this.toggle}}>
-          {this.props.children}
-        </PopoverContext.Provider>
-      </this.MonitoredComponent>
+      <PopoverContext.Provider value={{visible: this.state.visible, togglePopover: this.toggle}}>
+        <this.MonitoredComponent disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}>
+            {this.props.children}
+        </this.MonitoredComponent>
+      </PopoverContext.Provider>
     );
   }
 }

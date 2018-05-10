@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ProjectResultItem from '../includes/project-result-item.jsx';
-import PopoverContainer from './popover-container.jsx';
+import {PopoverContainer, PopoverContextConsumer} from './popover-container.jsx';
 
 const AllProjectsItem = () => {
   const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
