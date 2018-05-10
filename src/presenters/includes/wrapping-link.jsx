@@ -13,7 +13,6 @@ const handler = (evt) => {
   
   // Ok, this click is real. Do the thing
   window.location.assign(evt.currentTarget.dataset.href);
-  evt.preventDefault();
 };
 
 const WrappingLink = ({href, children, className, style}) => (
