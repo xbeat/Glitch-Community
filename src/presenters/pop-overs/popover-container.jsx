@@ -66,12 +66,12 @@ PopoverContainer.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-const Wrapper = ({children}) => (
-  {children}
+const Wrapper = ({innerComponent}) => (
+  <innerComponent/>
 );
 
 Wrapper.propTypes = {
-  children: PropTypes.element.isRequired
+  innerComponent: PropTypes.element.isRequired
 };
 
 
@@ -107,10 +107,6 @@ export class PopoverContainerV2 extends React.Component {
   }
 
   render() {
-    if(typeof(this.props.children) === "function") {
-      //shim until we convert to the new way
-      return <this.props.children/>
-    }
     // Invoke the children as a react component, passing them the toggle visibility controls.
     // The <span> is needed because onClickOutside doesn't support React.Fragment
     //const Children = <this.props.children togglePopover={this.toggle} visible={this.state.visible}/>
@@ -122,19 +118,10 @@ export class PopoverContainerV2 extends React.Component {
     // to prevent event bindings from being created until the popover is opened.
     
     return (
-      <this.MonitoredComponent disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}>
-        <PopoverContext.Provider value={{visible: this.state.visible, togglePopover: this.toggle}}>
-          {this.props.children}
-        </PopoverContext.Provider>
-      </this.MonitoredComponent>
-    );
-    
-    return (
-//      <PopoverContext.Provider value={{visible: this.state.visible, togglePopover: this.toggle}}>
-        <this.MonitoredComponent disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}>
-            {this.props.children}
-        </this.MonitoredComponent>
-//      </PopoverContext.Provider>
+      <this.MonitoredComponent 
+        disableOnClickOutside={!this.state.visible}
+        eventTypes={["mousedown", "touchstart", "keyup"]}
+        inner={this.props.children}/>
     );
   }
 }
@@ -143,3 +130,5 @@ PopoverContainer.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
+//      {/*<PopoverContext.Provider value={{visible: this.state.visible, togglePopover: this.toggle}}>*/}
+//      {/*</PopoverContext.Provider>*/}
