@@ -16,7 +16,6 @@ const UserResultItem = ({user, action}) => {
   console.log('💣', action);
   
   const handleClick = (event) => {
-    debugger;
     event.preventDefault();
     event.stopPropagation();
     action(event);

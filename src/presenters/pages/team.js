@@ -10,6 +10,7 @@ const md = mdFactory({
 });
 
 import Project from '../../models/project';
+import User from '../../models/user';
 import TeamTemplate from '../../templates/pages/team';
 import LayoutPresenter from '../layout';
 import AddTeamUserPopPresenter from '../pop-overs/add-team-user-pop';
@@ -38,11 +39,9 @@ export default function(application) {
     
     TeamUsers() {
       const props = {
-        users: application.team().users().map(user => ({
-          user: user.asProps(),
-          removeUserFromTeam: () => application.team().removeUser(application, user)
-        })),
+        users: application.team().users().map(user => user.asProps()),
         currentUserIsOnTeam: application.team().currentUserIsOnTeam(application),
+        removeUserFromTeam: ({id}) => application.team().removeUser(application, User({id}))
       };
       return Reactlet(TeamUsers, props);
     },

@@ -112,7 +112,7 @@ export const UserPopoversList = ({users, children}) => (
     {users.map((user, key) => (
       <li key={key}>
         <UserPopoverTile {...user}>
-          {children(user)}
+          {() => children(user)}
         </UserPopoverTile>
       </li>
     ))}

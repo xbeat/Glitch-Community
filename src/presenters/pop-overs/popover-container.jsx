@@ -82,6 +82,13 @@ export class PopoverContainerV2 extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     
+    // We need to set up and instantiate an onClickOutside wrapper
+    // It's important to instantiate it once and pass though its children,
+    // otherwise the diff algorithm won't be able to figureo out our hijinks.
+    // https://github.com/Pomax/react-onclickoutside
+
+    // We do extra work with disableOnClickOutside and handleClickOutside
+    // to prevent event bindings from being created until the popover is opened.
     const clickOutsideConfig = {
       handleClickOutside: () => this.handleClickOutside,
       excludeScrollbar: true,
@@ -109,18 +116,13 @@ export class PopoverContainerV2 extends React.Component {
     // The <span> is needed because onClickOutside doesn't support React.Fragment
     //const Children = <this.props.children togglePopover={this.toggle} visible={this.state.visible}/>
     
-    // The rest of this logic sets up and configures the onClickOutside wrapper
-    // https://github.com/Pomax/react-onclickoutside
-
-    // We do extra work with disableOnClickOutside and handleClickOutside
-    // to prevent event bindings from being created until the popover is opened.
+    
     
     return (
       <PopoverContext.Provider value={{visible: this.state.visible, togglePopover: this.toggle}}>
-        <this.MonitoredComponent 
-          disableOnClickOutside={!this.state.visible}
-          eventTypes={["mousedown", "touchstart", "keyup"]}
-          children={this.props.children}/>
+        <this.MonitoredComponent disableOnClickOutside={!this.state.visible} eventTypes={["mousedown", "touchstart", "keyup"]}>
+          {this.props.children}
+        </this.MonitoredComponent>
       </PopoverContext.Provider>
     );
   }
