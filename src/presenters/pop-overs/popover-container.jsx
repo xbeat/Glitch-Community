@@ -40,7 +40,8 @@ export default class PopoverContainer extends React.Component {
   
   handleClickOutside(event) {
     // On keyup events, only hide the popup if it was the 'esc' key (27).
-    if(event.type === "keyup" && event.keyCode !== 27) {
+    console.log("click outside!", event);
+    if(event.type === "keyup" && event.key !== "Escape") {
       return;
     }
     
