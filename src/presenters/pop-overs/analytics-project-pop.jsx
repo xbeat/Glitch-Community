@@ -18,7 +18,7 @@ const AllProjectsItem = () => {
 
 
 
-const AnalyticsProjectPop = ({projects, action, togglePopover, setFilter, filter, inputKey}) => {
+const AnalyticsProjectPop = ({projects, action, togglePopover, setFilter, filter}) => {
   const onClick = (event, project) => {
     togglePopover();
     action(event, project);
@@ -33,7 +33,6 @@ const AnalyticsProjectPop = ({projects, action, togglePopover, setFilter, filter
     <dialog className="pop-over analytics-projects-pop">
       <section className="pop-over-info">
         <input
-          key={"wiggles!"}
           onChange={(event) => {setFilter(event.target.value);}} 
           id="analytics-project-filter" 
           className="pop-over-input search-input pop-over-search" 
@@ -91,7 +90,7 @@ class AnalyticsProjectPopContainer extends React.Component {
         {({visible, togglePopover}) => (
           <div className="button-wrap">
             <button className="button-small button-tertiary" onClick={togglePopover}>{currentDomain}</button>
-            {visible && <AnalyticsProjectPop {...props} togglePopover={togglePopover} setFilter={this.setFilter} filter={this.state.filter} inputKey={this.inputKey}/>}
+            {visible && <AnalyticsProjectPop {...props} togglePopover={togglePopover} setFilter={this.setFilter} filter={this.state.filter}/>}
           </div>
         )}
       </PopoverContainer>

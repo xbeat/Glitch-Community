@@ -28,7 +28,7 @@ export default class PopoverContainer extends React.Component {
   }
   
   toggle() {
-    this.setState({visible: !this.state.visible});
+    this.setState(({visible}) => !visible);
   }
 
   render() {
