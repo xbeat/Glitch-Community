@@ -9,17 +9,6 @@ popover pans, which have straight-walled sides rather than angled.
 
 ...also it's a [Bootstrap UI pattern](https://www.w3schools.com/bootstrap/bootstrap_popover.asp)
 */
-
-const PopoverContext = React.createContext();
-
-export const PopoverContextConsumer = PopoverContext.Consumer;
-
-const Wrapper = ({children}) => (
-  <span>
-    {children}
-  </span>
-);
-
 export default class PopoverContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -27,12 +16,8 @@ export default class PopoverContainer extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
-    
-    const clickOutsideConfig = {
-      handleClickOutside: () => this.handleClickOutside,
-      excludeScrollbar: true,
-    };
-    this.MonitoredComponent = onClickOutside(Wrapper, clickOutsideConfig);
+    this.key = Date.now();
+    console.log("constructed; key is", this.key);
   }
   
   handleClickOutside(event) {
@@ -53,21 +38,26 @@ export default class PopoverContainer extends React.Component {
   render() {
     // Invoke the children as a react component, passing them the toggle visibility controls.
     // The <span> is needed because onClickOutside doesn't support React.Fragment
-    //const Children = <this.props.children togglePopover={this.toggle} visible={this.state.visible}/>
+    const Children = this.props.children;
+    const WrappedChildren = () => (
+      <span key={this.key+"wrapped"}>
+        <Children key={this.key+"kiddos"} togglePopover={this.toggle} visible={this.state.visible}/>
+      </span>
+    );
     
     // The rest of this logic sets up and configures the onClickOutside wrapper
     // https://github.com/Pomax/react-onclickoutside
 
     // We do extra work with disableOnClickOutside and handleClickOutside
     // to prevent event bindings from being created until the popover is opened.
-    
+    const clickOutsideConfig = {
+      handleClickOutside: () => this.handleClickOutside,
+      excludeScrollbar: true,
+    };
+    const MonitoredComponent = onClickOutside(WrappedChildren, clickOutsideConfig);
     
     return (
-      <PopoverContext.Provider value={{visible: this.state.visible, togglePopover: this.toggle}}>
-        <this.MonitoredComponent disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}>
-            {this.props.children}
-        </this.MonitoredComponent>
-      </PopoverContext.Provider>
+      <MonitoredComponent key={this.key+"monitored"} disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}/>
     );
   }
 }
