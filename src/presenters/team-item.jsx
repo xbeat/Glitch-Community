@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import UsersList from "./users-list.jsx";
+import UsersList from './users-list.jsx';
+import WrappingLink from './includes/wrapping-link.jsx';
 
 export default function TeamItem({team}) {
   const style = {
@@ -8,8 +9,7 @@ export default function TeamItem({team}) {
     backgroundColor: team.coverColor,
   };
   return (
-    <div className="item" style={style}>
-      <a className="mask" href={team.url}>&nbsp;</a>
+    <WrappingLink href={team.url} className="item" style={style}>
       <div className="content">
         <img className="avatar" src={team.teamAvatarUrl} alt="" />
         <div className="information">
@@ -24,7 +24,7 @@ export default function TeamItem({team}) {
           {!!team.description && <p className="description">{team.truncatedDescription}</p>}
         </div>
       </div>
-    </div>
+    </WrappingLink>
   );
 }
 
