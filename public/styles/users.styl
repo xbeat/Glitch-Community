@@ -1,31 +1,27 @@
 .users
   display: inline-flex
   margin-bottom: 8px
+  padding: 0;
   vertical-align: middle
   flex-wrap: wrap
-  height: 32px
 
   .user
-    cursor: pointer
     display: inline-grid
     border-radius: inherit
     width: 32px
     height: 32px
-    > img
-      height: auto
-      position: relative
-      display: inline
-      border-radius: inherit
-    &:first-child
-      &, .user-avatar
-        border-top-left-radius: 5px
-        border-bottom-left-radius: 5px
-    &:last-child
-      &, .user-avatar
-        border-top-right-radius: 5px
-        border-bottom-right-radius: 5px
-    &:focus
-      outline: transparent
+
+  .user-avatar
+    height: auto
+    position: relative
+    display: inline
+    border-radius: inherit
+  > :first-child .user-avatar
+      border-top-left-radius: 5px
+      border-bottom-left-radius: 5px
+  > :last-child .user-avatar
+      border-top-right-radius: 5px
+      border-bottom-right-radius: 5px
 
   .made-by-glitch
     border-radius: 5px

@@ -16,27 +16,36 @@ const AllProjectsItem = () => {
   );
 };
 
-const AnalyticsProjectPop = ({projects, action, togglePopover, filterProjects}) => {
+
+
+const AnalyticsProjectPop = ({projects, action, togglePopover, setFilter, filter, inputKey}) => {
   const onClick = (event, project) => {
     togglePopover();
     action(event, project);
+    setFilter("");
   };
+  
+  const filteredProjects = projects.filter(({name}) => {
+    return name.toLowerCase().includes(filter.toLowerCase());
+  });
   
   return (
     <dialog className="pop-over analytics-projects-pop">
       <section className="pop-over-info">
-        <input 
-          onChange={(event) => {filterProjects(event.target.value);}} 
+        <input
+          key={inputKey}
+          onChange={(event) => {setFilter(event.target.value);}} 
           id="analytics-project-filter" 
           className="pop-over-input search-input pop-over-search" 
-          placeholder="Filter projects" />
+          placeholder="Filter projects"
+          value={filter}/>
       </section>
       <section className="pop-over-actions results-list">
         <ul className="results">
           <button className="button-flat" onClick={(event) => {onClick(event, {domain: "All Projects"});}}>
             < AllProjectsItem />
           </button>
-          { projects.map((project) => (
+          { filteredProjects.map((project) => (
             <button key={project.id} className="button-flat" onClick={(event) => {onClick(event, project);}}>
               <ProjectResultItem {...project}/>
             </button>
@@ -65,6 +74,9 @@ class AnalyticsProjectPopContainer extends React.Component {
     super(props);
     this.state = {filter: ""};
     this.setFilter = this.setFilter.bind(this);
+    
+    // We need a guid-like key for the <input> so that react can keep its focus across renders.
+    this.inputKey = Date.now();
   }
   
   setFilter(query) {
@@ -78,7 +90,7 @@ class AnalyticsProjectPopContainer extends React.Component {
         {({visible, togglePopover}) => (
           <div className="button-wrap">
             <button className="button-small button-tertiary" onClick={togglePopover}>{currentDomain}</button>
-            {visible && <AnalyticsProjectPop {...props} togglePopover={togglePopover} setFilter={this.setFilter} filter={this.state.filter}/>}
+            {visible && <AnalyticsProjectPop {...props} togglePopover={togglePopover} setFilter={this.setFilter} filter={this.state.filter} inputKey={this.inputKey}/>}
           </div>
         )}
       </PopoverContainer>

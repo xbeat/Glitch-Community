@@ -7,7 +7,7 @@ const UserAvatar = ({
   alt, 
   userAvatarUrl,
 }) => (
-  <img width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
+  <img className="user-avatar" width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
 );
 
 UserAvatar.propTypes = {
@@ -85,7 +85,7 @@ const UserPopoverTile = ({
   style,
   alt, 
   userAvatarUrl,
-  popover,
+  children,
 }) => (
   <PopoverContainer>
     {({visible, togglePopover}) => (
@@ -93,21 +93,23 @@ const UserPopoverTile = ({
         <button onClick={togglePopover} className="user" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
           <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
         </button>
-        {!!visible && popover()}
+        {!!visible && children()}
       </React.Fragment>
     )}
   </PopoverContainer>
 );
 
 UserPopoverTile.propTypes = {
-  popover: PropTypes.func.isRequired,
+  children: PropTypes.func.isRequired,
 };
 
-const UserPopoversList = ({users, popover}) => (
+export const UserPopoversList = ({users, children}) => (
   <ul className="users">
     {users.map(user => (
       <li key={user.id}>
-        <UserPopoverTile {...user} />
+        <UserPopoverTile {...user}>
+          {children(user)}
+        </UserPopoverTile>
       </li>
     ))}
   </ul>
@@ -115,4 +117,5 @@ const UserPopoversList = ({users, popover}) => (
 
 UserPopoversList.propTypes = {
   users: PropTypes.array.isRequired,
+  children: PropTypes.func.isRequired,
 };
