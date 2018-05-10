@@ -23,8 +23,7 @@ export default class PopoverContainer extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
-    this.mounted = false;
-    
+   
     // We need to set up and instantiate an onClickOutside wrapper
     // It's important to instantiate it once and pass though its children,
     // otherwise the diff algorithm won't be able to figureo out our hijinks.
@@ -32,6 +31,7 @@ export default class PopoverContainer extends React.Component {
 
     // We do extra work with disableOnClickOutside and handleClickOutside
     // to prevent event bindings from being created until the popover is opened.
+    function HCOWrapper() { return this.HandleClickOutside };
     const clickOutsideConfig = {
       handleClickOutside: () => this.handleClickOutside,
       excludeScrollbar: true,
@@ -39,19 +39,7 @@ export default class PopoverContainer extends React.Component {
     this.MonitoredComponent = onClickOutside(Wrapper, clickOutsideConfig);
   }
   
-  componentDidMount() {
-    this.mounted = true;
-  }
-  
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-  
   handleClickOutside(event) {
-    if(!this.mounted) {
-      return;
-    }
-    
     // On keyup events, only hide the popup if it was the 'esc' key (27).
     console.log("click outside!", event);
     if(event.type === "keyup" && event.key !== "Escape") {
