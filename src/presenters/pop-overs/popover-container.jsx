@@ -66,9 +66,7 @@ PopoverContainer.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-const Wrapper = ({innerComponent}) => (
-  <innerComponent/>
-);
+const Wrapper = ({innerComponent}) => (innerComponent);
 
 Wrapper.propTypes = {
   innerComponent: PropTypes.element.isRequired
@@ -121,7 +119,7 @@ export class PopoverContainerV2 extends React.Component {
       <this.MonitoredComponent 
         disableOnClickOutside={!this.state.visible}
         eventTypes={["mousedown", "touchstart", "keyup"]}
-        inner={this.props.children}/>
+        innerComponent={this.props.children}/>
     );
   }
 }
