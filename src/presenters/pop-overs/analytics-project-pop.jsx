@@ -20,11 +20,7 @@ const AllProjectsItem = () => {
   );
 };
 
-class AnalyticsProjectPopContainer extends React.Component {
-  constructor(props)
-}
-
-const AnalyticsProjectPop = ({projects, action, togglePopover}) => {
+const AnalyticsProjectPop = ({projects, action, togglePopover, filterProjects}) => {
   const onClick = (event, project) => {
     togglePopover();
     action(event, project);
@@ -64,20 +60,29 @@ AnalyticsProjectPop.propTypes = {
   })).isRequired,
   action: PropTypes.func.isRequired,
   togglePopover: PropTypes.func.isRequired,
+  filterProjects: PropTypes.func.isRequired,
 };
 
-const AnalyticsProjectPopContainer = ({currentDomain, ...props}) => {
-  return (
-    <PopoverContainer>
-      {({visible, togglePopover}) => (
-        <div className="button-wrap">
-          <button className="button-small button-tertiary" onClick={togglePopover}>{currentDomain}</button>
-          {visible && <AnalyticsProjectPop {...props} togglePopover={togglePopover} />}
-        </div>
-      )}
-    </PopoverContainer>
-  );
-};
+class AnalyticsProjectPopContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {filter: ""};
+  }
+  
+  render() {
+    const {currentDo
+    return (
+      <PopoverContainer>
+        {({visible, togglePopover}) => (
+          <div className="button-wrap">
+            <button className="button-small button-tertiary" onClick={togglePopover}>{currentDomain}</button>
+            {visible && <AnalyticsProjectPop {...props} togglePopover={togglePopover} filterProjects={this.filter}/>}
+          </div>
+        )}
+      </PopoverContainer>
+    );
+  };
+}
 
 AnalyticsProjectPopContainer.propTypes = {
   currentDomain: PropTypes.string.isRequired,

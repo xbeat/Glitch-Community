@@ -1,6 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import PopoverContainer from './pop-overs/popover-container.jsx';
+
+const UserAvatar = ({
+  alt, 
+  userAvatarUrl,
+}) => (
+  <img width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
+);
+
+UserAvatar.propTypes = {
+  alt: PropTypes.string.isRequired,
+  userAvatarUrl: PropTypes.string.isRequired,
+};
+
 const UserTile = ({
   userLink,
   tooltipName, 
@@ -10,7 +24,7 @@ const UserTile = ({
   extraClass="",
 }) => (
   <a className={`user ${extraClass}`} href={userLink} data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
-    <img width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
+    <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
   </a>
 );
 
@@ -18,14 +32,12 @@ UserTile.propTypes = {
   userLink: PropTypes.string,
   tooltipName: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
-  alt: PropTypes.string.isRequired,
-  userAvatarUrl: PropTypes.string.isRequired,
   extraClass: PropTypes.string,
 };
 
 export const PopulatedUsersList = ({users, extraClass="" }) => (
   <div className={`users ${extraClass}`}>
-    { users.map((user, key) => (
+    {users.map((user, key) => (
       <UserTile key={key} {...user}></UserTile>
     ))}
   </div>
@@ -65,3 +77,16 @@ UsersList.propTypes = {
 };
 
 export default UsersList;
+
+const UserPopoverTile = ({
+  tooltipName, 
+  style,
+  alt, 
+  userAvatarUrl,
+}) => (
+  <PopoverContainer>
+    (({visible, togglePopover}) => (
+      <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
+    )
+  </PopoverContainer>
+);
