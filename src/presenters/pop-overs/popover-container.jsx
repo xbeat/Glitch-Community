@@ -9,6 +9,16 @@ popover pans, which have straight-walled sides rather than angled.
 
 ...also it's a [Bootstrap UI pattern](https://www.w3schools.com/bootstrap/bootstrap_popover.asp)
 */
+
+// Invoke the children as a react component, passing them the toggle visibility controls.
+// The <span> is needed because onClickOutside doesn't support React.Fragment
+const Wrapper = ({children}) => (
+  <span>
+    {/*<Children togglePopover={this.toggle} visible={this.state.visible}/>*/}
+    {children}
+  </span>
+);
+
 export default class PopoverContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -34,15 +44,7 @@ export default class PopoverContainer extends React.Component {
   }
 
   render() {
-    // Invoke the children as a react component, passing them the toggle visibility controls.
-    // The <span> is needed because onClickOutside doesn't support React.Fragment
-    const Children = this.props.children;
-    const WrappedChildren = () => (
-      <span>
-        {/*<Children togglePopover={this.toggle} visible={this.state.visible}/>*/}
-        {Children}
-      </span>
-    );
+
     
     // The rest of this logic sets up and configures the onClickOutside wrapper
     // https://github.com/Pomax/react-onclickoutside
@@ -53,9 +55,9 @@ export default class PopoverContainer extends React.Component {
       handleClickOutside: () => this.handleClickOutside,
       excludeScrollbar: true,
     };
-    const MonitoredComponent = WrappedChildren; //onClickOutside(WrappedChildren, clickOutsideConfig);
+    const MonitoredComponent = Wrapper; //onClickOutside(Wrapper, clickOutsideConfig);
     
-    return <WrappedChildren/>;
+    return <Wrapper>{this.props.children}</Wrapper>;
     /*
     return (
       <MonitoredComponent disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}/>
