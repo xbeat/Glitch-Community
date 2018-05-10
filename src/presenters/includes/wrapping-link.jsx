@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// react tells me that nested <a> tags is bad and I should not do it
+// so instead we will put the <a> tags in a special onclick <div>
+// which will act like a li
+
 const handler = (evt) => {
-  const target = evt.target.closest('a[href], button, input');
-  if (!target) {
-    evt.preventDefault();
-  }
+  if (evt.target.closest('a[href], button, input')) return;
+  if (evt.target.closest('[data-href]') !== evt.currentTarget) return;
+  window.location.assign(evt.currentTarget.dataset.href);
+  evt.preventDefault();
 };
 
 const WrappingLink = ({href, children, className, style}) => (
