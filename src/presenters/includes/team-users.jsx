@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 import UserInfoPop from '../pop-overs/user-info-pop.jsx';
+import UserPo
+
+//this file exists as a shim for the team page until it gets reactified and this can go inline
 
 const TeamUser = (props) => {
   const {user} = props;
@@ -32,18 +35,16 @@ TeamUser.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
 };
 
-const TeamUsers = ({users, currentUserIsOnTeam}) => {
-  return (
-    <ul className="users team-users">
-      {users.map((data) => (
-        <li key={data.user.id} className="user">
-          <TeamUser {...data} currentUserIsOnTeam={currentUserIsOnTeam} />
-        </li>
-      ))}
-    </ul>
-  );
-};
-TeamUsers.propTypes = {
+const TeamUsersOld = ({users, currentUserIsOnTeam}) => (
+  <ul className="users team-users">
+    {users.map((data) => (
+      <li key={data.user.id} className="user">
+        <TeamUser {...data} currentUserIsOnTeam={currentUserIsOnTeam} />
+      </li>
+    ))}
+  </ul>
+);
+TeamUsersOld.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape({
     user: PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -53,4 +54,8 @@ TeamUsers.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
 };
 
-export default TeamUsers;
+export default TeamUsersOld;
+
+const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam}) => (
+  
+);

@@ -37,8 +37,8 @@ UserTile.propTypes = {
 
 export const PopulatedUsersList = ({users, extraClass="" }) => (
   <ul className={`users ${extraClass}`}>
-    {users.map(user => (
-      <li key={user.id}>
+    {users.map((user, key) => (
+      <li key={key}>
         <UserTile {...user} />
       </li>
     ))}
@@ -105,8 +105,8 @@ UserPopoverTile.propTypes = {
 
 export const UserPopoversList = ({users, children}) => (
   <ul className="users">
-    {users.map(user => (
-      <li key={user.id}>
+    {users.map((user, key) => (
+      <li key={key}>
         <UserPopoverTile {...user}>
           {children(user)}
         </UserPopoverTile>

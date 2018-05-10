@@ -6,17 +6,18 @@
   flex-wrap: wrap
   > li
     display: inline-grid
+    &:first-child .user
+      border-top-left-radius: 5px
+      border-bottom-left-radius: 5px
+    &:last-child .user
+      border-top-right-radius: 5px
+      border-bottom-right-radius: 5px
 
   .user-list-avatar
     display: block
     width: 32px
     height: 32px
-  > :first-child .user-list-avatar
-      border-top-left-radius: 5px
-      border-bottom-left-radius: 5px
-  > :last-child .user-list-avatar
-      border-top-right-radius: 5px
-      border-bottom-right-radius: 5px
+    border-radius: inherit
 
   .made-by-glitch
     border-radius: 5px

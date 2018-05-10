@@ -39,7 +39,8 @@ export default class PopoverContainer extends React.Component {
     const Children = this.props.children;
     const WrappedChildren = () => (
       <span>
-        {Children togglePopover={this.toggle} visible={this.state.visible}/>
+        {/*<Children togglePopover={this.toggle} visible={this.state.visible}/>*/}
+        {Children}
       </span>
     );
     
@@ -52,7 +53,7 @@ export default class PopoverContainer extends React.Component {
       handleClickOutside: () => this.handleClickOutside,
       excludeScrollbar: true,
     };
-    const MonitoredComponent = onClickOutside(WrappedChildren, clickOutsideConfig);
+    const MonitoredComponent = WrappedChildren; //onClickOutside(WrappedChildren, clickOutsideConfig);
     
     return (
       <MonitoredComponent disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}/>
