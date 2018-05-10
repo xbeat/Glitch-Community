@@ -7,7 +7,7 @@ const UserAvatar = ({
   alt, 
   userAvatarUrl,
 }) => (
-  <img className="user-avatar" width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
+  <img className="user-list-avatar" width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
 );
 
 UserAvatar.propTypes = {

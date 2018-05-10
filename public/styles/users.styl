@@ -4,22 +4,17 @@
   padding: 0;
   vertical-align: middle
   flex-wrap: wrap
-
-  .user
+  > li
     display: inline-grid
-    border-radius: inherit
+
+  .user-list-avatar
+    display: block
     width: 32px
     height: 32px
-
-  .user-avatar
-    height: auto
-    position: relative
-    display: inline
-    border-radius: inherit
-  > :first-child .user-avatar
+  > :first-child .user-list-avatar
       border-top-left-radius: 5px
       border-bottom-left-radius: 5px
-  > :last-child .user-avatar
+  > :last-child .user-list-avatar
       border-top-right-radius: 5px
       border-bottom-right-radius: 5px
 

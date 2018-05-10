@@ -33,12 +33,13 @@ const AnalyticsProjectPop = ({projects, action, togglePopover, setFilter, filter
     <dialog className="pop-over analytics-projects-pop">
       <section className="pop-over-info">
         <input
-          key={inputKey}
+          key={"wiggles!"}
           onChange={(event) => {setFilter(event.target.value);}} 
           id="analytics-project-filter" 
           className="pop-over-input search-input pop-over-search" 
           placeholder="Filter projects"
-          value={filter}/>
+          value={filter}
+          />
       </section>
       <section className="pop-over-actions results-list">
         <ul className="results">
