@@ -86,7 +86,7 @@ class AnalyticsProjectPopContainer extends React.Component {
   render() {
     const {currentDomain, ...props} = this.props;
     return (
-      <PopoverContainer>
+      <PopoverContainer key={this.inputKey}>
         {({visible, togglePopover}) => (
           <div className="button-wrap">
             <button className="button-small button-tertiary" onClick={togglePopover}>{currentDomain}</button>

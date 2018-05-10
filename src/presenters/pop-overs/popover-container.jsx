@@ -28,7 +28,9 @@ export default class PopoverContainer extends React.Component {
   }
   
   toggle() {
-    this.setState(({visible}) => !visible);
+    this.setState((prevState) => {
+      return {visible: !prevState.visible};
+    });
   }
 
   render() {
@@ -53,7 +55,7 @@ export default class PopoverContainer extends React.Component {
     const MonitoredComponent = onClickOutside(WrappedChildren, clickOutsideConfig);
     
     return (
-      <MonitoredComponent disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}/>
+      <MonitoredComponent key={this.props.key} disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}/>
     );
   }
 }
