@@ -16,6 +16,8 @@ export default class PopoverContainer extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.key = Date.now();
+    console.log("constructed; key is", this.key);
   }
   
   handleClickOutside(event) {
@@ -38,8 +40,8 @@ export default class PopoverContainer extends React.Component {
     // The <span> is needed because onClickOutside doesn't support React.Fragment
     const Children = this.props.children;
     const WrappedChildren = () => (
-      <span>
-        <Children togglePopover={this.toggle} visible={this.state.visible}/>
+      <span key={this.key+"wrapped"}>
+        <Children key={this.key+"kiddos"} togglePopover={this.toggle} visible={this.state.visible}/>
       </span>
     );
     
@@ -55,7 +57,7 @@ export default class PopoverContainer extends React.Component {
     const MonitoredComponent = onClickOutside(WrappedChildren, clickOutsideConfig);
     
     return (
-      <MonitoredComponent key={this.props.key} disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}/>
+      <MonitoredComponent key={this.key+"monitored"} disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}/>
     );
   }
 }

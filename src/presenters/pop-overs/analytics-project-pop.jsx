@@ -38,7 +38,7 @@ const AnalyticsProjectPop = ({projects, action, togglePopover, setFilter, filter
           className="pop-over-input search-input pop-over-search" 
           placeholder="Filter projects"
           value={filter}
-          />
+        />
       </section>
       <section className="pop-over-actions results-list">
         <ul className="results">
@@ -95,7 +95,7 @@ class AnalyticsProjectPopContainer extends React.Component {
         )}
       </PopoverContainer>
     );
-  };
+  }
 }
 
 AnalyticsProjectPopContainer.propTypes = {
