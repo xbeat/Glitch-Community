@@ -90,7 +90,7 @@ const UserPopoverTile = ({
   <PopoverContainer>
     {({visible, togglePopover}) => (
       <React.Fragment>
-        <button onClick={togglePopover} className="user" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
+        <button onClick={togglePopover} className="user button-flat" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
           <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
         </button>
         {!!visible && children()}
@@ -100,6 +100,10 @@ const UserPopoverTile = ({
 );
 
 UserPopoverTile.propTypes = {
+  userLink: PropTypes.string,
+  tooltipName: PropTypes.string.isRequired,
+  style: PropTypes.object.isRequired,
+  extraClass: PropTypes.string,
   children: PropTypes.func.isRequired,
 };
 

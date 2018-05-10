@@ -66,10 +66,10 @@ PopoverContainer.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-const Wrapper = ({innerComponent}) => (innerComponent);
+const Wrapper = ({children}) => (children);
 
 Wrapper.propTypes = {
-  innerComponent: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired
 };
 
 
@@ -116,10 +116,12 @@ export class PopoverContainerV2 extends React.Component {
     // to prevent event bindings from being created until the popover is opened.
     
     return (
-      <this.MonitoredComponent 
-        disableOnClickOutside={!this.state.visible}
-        eventTypes={["mousedown", "touchstart", "keyup"]}
-        innerComponent={this.props.children}/>
+      <PopoverContext.Provider value={{visible: this.state.visible, togglePopover: this.toggle}}>
+        <this.MonitoredComponent 
+          disableOnClickOutside={!this.state.visible}
+          eventTypes={["mousedown", "touchstart", "keyup"]}
+          children={this.props.children}/>
+      </PopoverContext.Provider>
     );
   }
 }
@@ -127,6 +129,3 @@ export class PopoverContainerV2 extends React.Component {
 PopoverContainer.propTypes = {
   children: PropTypes.func.isRequired,
 };
-
-//      {/*<PopoverContext.Provider value={{visible: this.state.visible, togglePopover: this.toggle}}>*/}
-//      {/*</PopoverContext.Provider>*/}
