@@ -55,9 +55,12 @@ export default class PopoverContainer extends React.Component {
     };
     const MonitoredComponent = WrappedChildren; //onClickOutside(WrappedChildren, clickOutsideConfig);
     
+    return <WrappedChildren/>;
+    /*
     return (
       <MonitoredComponent disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}/>
     );
+    */
   }
 }
 
