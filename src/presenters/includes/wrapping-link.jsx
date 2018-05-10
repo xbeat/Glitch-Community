@@ -17,7 +17,7 @@ const handler = (evt) => {
 };
 
 const WrappingLink = ({href, children, className, style}) => (
-  <div data-href={href} onClick={handler} className={className} style={style}>
+  <div data-href={href} onClick={handler} className={className} style={style} role="presentation">
     {children}
   </div>
 );
