@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
 
+const Popove
+
 /*
 A popover is a light, hollow roll made from an egg batter similar to
 that of Yorkshire pudding, typically baked in muffin tins or dedicated
@@ -9,6 +11,13 @@ popover pans, which have straight-walled sides rather than angled.
 
 ...also it's a [Bootstrap UI pattern](https://www.w3schools.com/bootstrap/bootstrap_popover.asp)
 */
+
+const Wrapper = ({children}) => (
+  <span>
+    {children}
+  </span>
+);
+
 export default class PopoverContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -50,7 +59,13 @@ export default class PopoverContainer extends React.Component {
     const MonitoredComponent = onClickOutside(Children, clickOutsideConfig);
     
     return (
-      <MonitoredComponent key={this.key+"monitored"} disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}/>
+      <Wrapper>
+        {this.props.children}
+      </Wrapper>
+    );
+    
+    return (
+      <MonitoredComponent disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}/>
     );
   }
 }
