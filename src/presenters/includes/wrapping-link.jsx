@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const handler = (evt) => {
-  console.log(evt);
+  const target = evt.target.closest('a[href], button, input');
+  if (!target) {
+    evt.preventDefault();
+  }
 };
 
 const WrappingLink = ({href, children, className, style}) => (
