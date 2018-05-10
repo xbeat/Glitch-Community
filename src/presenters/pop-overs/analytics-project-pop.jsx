@@ -4,8 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ProjectResultItem from '../includes/project-result-item.jsx';
-import {PopoverContainerV2 as PopoverContainer, PopoverContext} from './popover-container.jsx';
-const PopoverContextConsumer = PopoverContext.Consumer;
+import PopoverContainer from './popover-container.jsx';
 
 const AllProjectsItem = () => {
   const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
@@ -86,11 +85,9 @@ class AnalyticsProjectPopContainer extends React.Component {
   
   render() {
     const {currentDomain, ...props} = this.props;
-    const visible= true;
-    const togglePopover = () => {};
     return (
       <PopoverContainer>
-        { ({visible, togglePopover}) => (
+        {({visible, togglePopover}) => (
           <div className="button-wrap">
             <button className="button-small button-tertiary" onClick={togglePopover}>{currentDomain}</button>
             {visible && <AnalyticsProjectPop {...props} togglePopover={togglePopover} setFilter={this.setFilter} filter={this.state.filter}/>}
