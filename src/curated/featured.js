@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Remix to blog',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fghost.jpg?1525773248865',
-    link: 'https://glitch.com/~ghost'
+    title: 'Learn Browser Positioning with Floats',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ffloat-layout.jpg?1525950518900',
+    link: 'https://float-layout.glitch.me/'
   }
   , {
-    title: '"rant" by wersimmon',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frant.jpg?1525701141421",
-    link: 'https://rant.glitch.me'
+    title: 'Find Your RPG Persona',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmyrpgpersona.jpg?1525950519050",
+    link: 'https://myrpgpersona.glitch.me/'
   }
   , {
-    title: '"nomoji" by jcksncllwy',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fnomoji.jpg?1525701141565",
-    link: 'https://nomoji.glitch.me'
+    title: 'Mesmerizing Moiré Patterns',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fp5-moireish-color.jpg?1525950519190",
+    link: 'https://p5-moireish-color.glitch.me/'
   }   
 ];
