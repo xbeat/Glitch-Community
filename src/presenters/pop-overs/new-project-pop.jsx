@@ -53,10 +53,10 @@ class NewProjectPopContainer extends React.Component {
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
-          <React.Fragment>
+          <div className="button-wrap">
             <button className="button-small" data-track="open new-project pop" onClick={togglePopover}>New Project</button>
             {visible && <NewProjectPop projects={this.state.projects}/>}
-          </React.Fragment>
+          </div>
         )}
       </PopoverContainer>
     );

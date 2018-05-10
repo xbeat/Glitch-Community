@@ -93,12 +93,12 @@ export default function ProjectOptions({projectOptions={}, project}) {
   return (
     <PopoverContainer>
       {({togglePopover, visible}) => (
-        <React.Fragment>
+        <div>
           <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
             <div className="down-arrow"></div>
           </button>
           { visible && <ProjectOptionsPop {...popupProps} {...projectOptions} togglePopover={togglePopover}/> }
-        </React.Fragment>
+        </div>
       )}
     </PopoverContainer>
   );

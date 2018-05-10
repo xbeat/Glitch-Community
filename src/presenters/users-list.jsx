@@ -89,12 +89,12 @@ const UserPopoverTile = ({
 }) => (
   <PopoverContainer>
     {({visible, togglePopover}) => (
-      <React.Fragment>
+      <div className="button-wrap">
         <button onClick={togglePopover} className="user button-flat" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
           <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
         </button>
         {!!visible && children()}
-      </React.Fragment>
+      </div>
     )}
   </PopoverContainer>
 );

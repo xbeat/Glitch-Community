@@ -37,10 +37,10 @@ const SignInPop = () => (
 );
 
 const SignInPopContainerInnards = ({togglePopover, visible}) => (
-  <React.Fragment>
+  <div className="button-wrap">
     <button className="button button-small" onClick={togglePopover}>Sign in</button>
     {visible && <SignInPop/>}
-  </React.Fragment>
+  </div>
 );
 
 SignInPopContainerInnards.propTypes = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
-import ReactIs from 'react-is';
+import {isFragment} from 'react-is';
 
 /*
 A popover is a light, hollow roll made from an egg batter similar to
@@ -55,8 +55,8 @@ export default class PopoverContainer extends React.Component {
 
   render() {
     const inner = this.props.children({visible: this.state.visible, togglePopover: this.toggle});
-    if(ReactIs.isFragment(inner)) {
-      console.error("PopoverContainer does not support Fragments as the top level item. Please use a different element.");
+    if(isFragment(inner)) {
+      console.error("PopoverContainer does not support React.Fragment as the top level item. Please use a different element.");
     }
     return (
       <this.MonitoredComponent disableOnClickOutside={!this.state.visible} eventTypes={["mousedown", "touchstart", "keyup"]}>
