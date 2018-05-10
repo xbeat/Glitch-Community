@@ -66,3 +66,80 @@ PopoverContainer.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
+const Wrapper = ({children}) => (
+  {children}
+);
+
+Wrapper.propTypes = {
+  children: PropTypes.element.isRequired
+};
+
+
+export const PopoverContext = React.createContext();
+export class PopoverContainerV2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { visible: false };
+
+    this.toggle = this.toggle.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+    
+    const clickOutsideConfig = {
+      handleClickOutside: () => this.handleClickOutside,
+      excludeScrollbar: true,
+    };
+    this.MonitoredComponent = onClickOutside(Wrapper, clickOutsideConfig);
+  }
+  
+  handleClickOutside(event) {
+    // On keyup events, only hide the popup if it was the 'esc' key (27).
+    if(event.type === "keyup" && event.keyCode !== 27) {
+      return;
+    }
+    
+    this.setState({visible: false});
+  }
+  
+  toggle() {
+    this.setState((prevState) => {
+      return {visible: !prevState.visible};
+    });
+  }
+
+  render() {
+    if(typeof(this.props.children) === "function") {
+      //shim until we convert to the new way
+      return <this.props.children/>
+    }
+    // Invoke the children as a react component, passing them the toggle visibility controls.
+    // The <span> is needed because onClickOutside doesn't support React.Fragment
+    //const Children = <this.props.children togglePopover={this.toggle} visible={this.state.visible}/>
+    
+    // The rest of this logic sets up and configures the onClickOutside wrapper
+    // https://github.com/Pomax/react-onclickoutside
+
+    // We do extra work with disableOnClickOutside and handleClickOutside
+    // to prevent event bindings from being created until the popover is opened.
+    
+    return (
+      <this.MonitoredComponent disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}>
+        <PopoverContext.Provider value={{visible: this.state.visible, togglePopover: this.toggle}}>
+          {this.props.children}
+        </PopoverContext.Provider>
+      </this.MonitoredComponent>
+    );
+    
+    return (
+//      <PopoverContext.Provider value={{visible: this.state.visible, togglePopover: this.toggle}}>
+        <this.MonitoredComponent disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}>
+            {this.props.children}
+        </this.MonitoredComponent>
+//      </PopoverContext.Provider>
+    );
+  }
+}
+
+PopoverContainer.propTypes = {
+  children: PropTypes.func.isRequired,
+};
+
