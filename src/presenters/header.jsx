@@ -48,7 +48,7 @@ SearchForm.propTypes = {
 const UserOptionsPopWrapper = ({user, overlayNewStuffVisible}) => {
   const props = {
     teams: user.teams,
-    profileLink: user.profileUrl,
+    profileUrl: user.profileUrl,
     avatarUrl: user.userAvatarUrl,
     showNewStuffOverlay() {
       return overlayNewStuffVisible(true);
@@ -60,7 +60,7 @@ const UserOptionsPopWrapper = ({user, overlayNewStuffVisible}) => {
 
 UserOptionsPopWrapper.propTypes = {
   user: PropTypes.shape({
-    login: PropTypes.string.isRequired,
+    login: PropTypes.string,
   }).isRequired,
   overlayNewStuffVisible: PropTypes.func.isRequired,
 };

@@ -33,6 +33,7 @@ const AnalyticsProjectPop = ({projects, action, togglePopover, setFilter, filter
     <dialog className="pop-over analytics-projects-pop">
       <section className="pop-over-info">
         <input
+          autoFocus
           onChange={(event) => {setFilter(event.target.value);}} 
           id="analytics-project-filter" 
           className="pop-over-input search-input pop-over-search" 

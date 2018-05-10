@@ -30,10 +30,12 @@ const UserResultItem = ({user, action}) => {
 
   return (
     <li className="result" tabIndex="0" role="button" onClick={handleClick} onKeyPress={handleKeyPress}>
-      <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
-      <div className="result-name" title={name}>{name}</div>
-      <div className="result-description" title={login}>@{login}</div>
-      { thanksCount > 0 && <UserThanks thanksCount={thanksCount} />}
+      <button>
+        <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
+        <div className="result-name" title={name}>{name}</div>
+        <div className="result-description" title={login}>@{login}</div>
+        { thanksCount > 0 && <UserThanks thanksCount={thanksCount} />}
+      </button>
     </li>
   );
 };
