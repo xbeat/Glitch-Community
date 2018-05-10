@@ -35,5 +35,8 @@ module.exports = exports = {
     // Overrides of react/recommended:
     "react/no-unescaped-entities": ["error", {"forbid": [`"`, ">", "}"]}], // permit ' in jsx html,
     "react/prop-types": [OFF], // disabled so we can use composed prop-types
+    
+    //Overrides of jsx-a11y/recommended:
+    "jsx-a11y/no-autofocus": [OFF], // disabled because we prefer autofocus in HTML to autofocus via JS callbacks.
   }
 }
