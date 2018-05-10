@@ -6,10 +6,6 @@ import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
 
-const filterProjects = (query) => {
-  console.log(query);
-};
-
 const AllProjectsItem = () => {
   const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
   return (
@@ -60,23 +56,29 @@ AnalyticsProjectPop.propTypes = {
   })).isRequired,
   action: PropTypes.func.isRequired,
   togglePopover: PropTypes.func.isRequired,
-  filterProjects: PropTypes.func.isRequired,
+  setFilter: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
 };
 
 class AnalyticsProjectPopContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {filter: ""};
+    this.setFilter = this.setFilter.bind(this);
+  }
+  
+  setFilter(query) {
+    this.setState({filter: query});
   }
   
   render() {
-    const {currentDo
+    const {currentDomain, ...props} = this.props;
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <div className="button-wrap">
             <button className="button-small button-tertiary" onClick={togglePopover}>{currentDomain}</button>
-            {visible && <AnalyticsProjectPop {...props} togglePopover={togglePopover} filterProjects={this.filter}/>}
+            {visible && <AnalyticsProjectPop {...props} togglePopover={togglePopover} setFilter={this.setFilter} filter={this.state.filter}/>}
           </div>
         )}
       </PopoverContainer>

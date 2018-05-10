@@ -36,11 +36,13 @@ UserTile.propTypes = {
 };
 
 export const PopulatedUsersList = ({users, extraClass="" }) => (
-  <div className={`users ${extraClass}`}>
-    {users.map((user, key) => (
-      <UserTile key={key} {...user}></UserTile>
+  <ul className={`users ${extraClass}`}>
+    {users.map(user => (
+      <li key={user.id}>
+        <UserTile {...user} />
+      </li>
     ))}
-  </div>
+  </ul>
 );
 
 PopulatedUsersList.propTypes = {
@@ -83,10 +85,34 @@ const UserPopoverTile = ({
   style,
   alt, 
   userAvatarUrl,
+  popover,
 }) => (
   <PopoverContainer>
-    (({visible, togglePopover}) => (
-      <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
-    )
+    {({visible, togglePopover}) => (
+      <React.Fragment>
+        <button onClick={togglePopover} className="user" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
+          <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
+        </button>
+        {!!visible && popover()}
+      </React.Fragment>
+    )}
   </PopoverContainer>
 );
+
+UserPopoverTile.propTypes = {
+  popover: PropTypes.func.isRequired,
+};
+
+const UserPopoversList = ({users, popover}) => (
+  <ul className="users">
+    {users.map(user => (
+      <li key={user.id}>
+        <UserPopoverTile {...user} />
+      </li>
+    ))}
+  </ul>
+);
+
+UserPopoversList.propTypes = {
+  users: PropTypes.array.isRequired,
+};
