@@ -30,7 +30,13 @@ class TeamDescription extends React.Component {
   }
   
   render() {
-    const {currentUserIsOnTeam,description,updateDescription,applyDescription,initialTeamDescription} = this.props;
+    const {
+      currentUserIsOnTeam,
+      description,
+      updateDescription,
+      applyDescription,
+      initialTeamDescription
+    } = this.props;
     
     if(!currentUserIsOnTeam) {
       if(!description) {
