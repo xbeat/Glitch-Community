@@ -3,21 +3,21 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 import Loader from '../includes/loader.jsx';
 
-const ResultLI = ({selectFrame, isActive, timeFrame}) => {
-  let resultClass = "result";
+const Result = ({selectFrame, isActive, timeFrame}) => {
+  let resultClass = "result button-flat";
   if(isActive) {
     resultClass += " active";
   }
   return (
-    <li className={resultClass} onClick={(event) => selectFrame(event, timeFrame)}>
+    <button className={resultClass} onClick={(event) => selectFrame(event, timeFrame)}>
       <div className="result-container">
         <div className="result-name">{timeFrame}</div>
       </div>
-    </li>
+    </button>
   );
 };
 
-ResultLI.propTypes = {
+Result.propTypes = {
   selectFrame: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
   timeFrame: PropTypes.string.isRequired,
@@ -47,9 +47,9 @@ const  AnalyticsTimePop = ({analyticsTimeLabelObservable, gettingAnalyticsFromDa
           { visible && (
             <dialog className="pop-over results-list analytics-time-pop">
               <section className="pop-over-actions last-section">
-                <ul className="results">
+                <div className="results">
                   { timeFrames.map(timeFrame => (
-                    <ResultLI 
+                    <Result 
                       key={timeFrame}
                       selectFrame={selectFrameFactory(analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable, togglePopover)} 
                       isActive={currentTimeFrame === timeFrame} 

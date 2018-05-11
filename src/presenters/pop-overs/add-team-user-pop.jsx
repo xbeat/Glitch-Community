@@ -106,9 +106,9 @@ class AddTeamUserPop extends React.Component {
     super(props);
     
     this.state = {
-      query: '',
-      request: null,
-      results: [],
+      query: '', //The actual search text
+      request: null, //The active request promise
+      results: null, //Null means still waiting vs empty
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -129,7 +129,7 @@ class AddTeamUserPop extends React.Component {
   clearSearch() {
     this.setState({
       request: null,
-      results: [],
+      results: null,
     });
   }
   
@@ -137,13 +137,15 @@ class AddTeamUserPop extends React.Component {
     if (!this.state.query) {
       return this.clearSearch();
     }
+    
     const request = this.props.search(this.state.query);
     this.setState({ request });
     const results = await request;
+    
     this.setState(prevState => {
       return (request === prevState.request) ? {
-        results: results.map(user => user.asProps()),
         request: null,
+        results: results.map(user => user.asProps()),
       } : {};
     });
   }
@@ -158,11 +160,13 @@ class AddTeamUserPop extends React.Component {
             placeholder="Search for a user or email"
           />
         </section>
-        {!!(this.state.request || this.state.results.length) && <section className="pop-over-actions last-section results-list">
-          {!!this.state.request && <Loader />}
-          {this.state.results.length > 0 ? <ul className="results">
-            {this.state.results.length}
-          </ul> : <p>nothing found</p>}
+        {!!this.state.query && <section className="pop-over-actions last-section results-list">
+          {(!!this.state.request || !this.state.results) && <Loader />}
+          {!!this.state.results && (this.state.results.length > 0 ? (
+            <ul className="results">
+              {this.state.results.length}
+            </ul>
+          ) : <p className="results">nothing found</p>)}
         </section>}
       </dialog>
     );
