@@ -15,7 +15,7 @@ const UserSearchResults = ({users, action}) => (
       ))}
     </ul>
   ) : (
-    <p className="results">nothing found</p>
+    <p className="results">nothing found <span role="img" aria-label="">💫</span></p>
   )
 );
 
