@@ -5,102 +5,6 @@ import {debounce} from 'lodash';
 import Loader from '../includes/loader.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
 
-/*
-function Old(application) {
-
-  var self = {
-  
-    application,
-  
-    query: Observable(""),
-
-    hiddenUnlessAddTeamUserPopVisible() {
-      if (!application.addTeamUserPopVisible()) { return 'hidden'; }
-    },
-
-    stopPropagation(event) {
-      return event.stopPropagation();
-    },
-    
-    hiddenUnlessSearching() {
-      if (!application.searchingForUsers()) { return 'hidden'; }
-    },
-
-    spacekeyDoesntClosePop(event) {
-      event.stopPropagation();
-      return event.preventDefault();
-    },      
-
-    search(event) {
-      const query = event.target.value.trim();
-      self.query(query);
-      application.searchingForUsers(true);
-      return self.searchUsers(query);
-    },
-
-    searchUsers: debounce(function(query) {
-      if (query.length) {
-        return application.searchUsers(self.query());
-      } 
-      return application.searchingForUsers(false);
-        
-    }
-      , 500),
-
-    searchResults() {
-      const MAX_RESULTS = 5;
-      if (self.query().length) {
-        return application.searchResultsUsers().slice(0, MAX_RESULTS);
-      } 
-      return [];
-      
-    },
-
-    hiddenIfNoSearch() {
-      if (!self.searchResults().length && !application.searchingForUsers()) {
-        return 'hidden';
-      }
-    }, 
-
-    UserResultItem(user) {
-      const action = () => {
-        console.log("hi");
-        //application.team().addUser(application, user);
-      };
-      const props = {
-        user: user.asProps(),
-        action,
-      };
-      
-      return Reactlet(UserResultItem, props, `add-user-${user.id()}`);
-    },
-    
-  };
-            
-  return AddTeamUserTemplate(self);
-}
-/*
-
-/*
-- Loader = require "../includes/loader"
-
-dialog.pop-over.add-team-user-pop(class=@hiddenUnlessAddTeamUserPopVisible click=@stopPropagation)
-
-  section.pop-over-info
-    input#team-user-search.pop-over-input.search-input.pop-over-search(input=@search keyup=@spacekeyDoesntClosePop placeholder="Search for a user or email")
-
-  section.pop-over-actions.last-section.results-list(class=@hiddenIfNoSearch)
-
-    span(class=@hiddenUnlessSearching)
-      = Loader(this)
-
-    ul.results
-      - application = @application
-      - context = @
-      - @searchResults().forEach (user) ->
-        = context.UserResultItem(user)
-*/
-
 const UserSearchResults = ({users, action}) => (
   (users.length > 0) ? (
     <ul className="results">
@@ -183,15 +87,16 @@ class AddTeamUserPop extends React.Component {
     return (
       <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">
-          <input id="team-user-search"
-            className="pop-over-input search-input pop-over-search"
+          <input id="team-user-search" 
+            autoFocus // eslint-ignore jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}
+            className="pop-over-input search-input pop-over-search"
             placeholder="Search for a user or email"
           />
         </section>
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
-          {!!this.state.maybeResults && <UserSearchResults users={this.state.maybeResults} action={this.props.action} />}
+          {!!this.state.maybeResults && <UserSearchResults users={this.state.maybeResults} action={this.props.add} />}
         </section>}
       </dialog>
     );
