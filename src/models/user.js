@@ -297,8 +297,6 @@ User.getSearchResults = function(application, query) {
   application.searchingForUsers(true);
   return User.getSearchResultsJSON(application, query)
     .then((data) => {
-      debugger;
-    
       application.searchingForUsers(false);
       data = data.slice(0 , MAX_RESULTS);
       if (data.length === 0) {

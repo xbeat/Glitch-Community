@@ -76,7 +76,7 @@ class AddTeamUserPop extends React.Component {
       this.setState(({ maybeRequest }) => {
         return (request === maybeRequest) ? {
           maybeRequest: null,
-          maybeResults: results.slice(0, 5),
+          maybeResults: results.filter(user => !this.props.members || !this.props.members.includes(user.id)).slice(0, 5),
         } : {};
       });
     });
@@ -106,6 +106,7 @@ class AddTeamUserPop extends React.Component {
 AddTeamUserPop.propTypes = {
   search: PropTypes.func.isRequired,
   add: PropTypes.func.isRequired,
+  members: PropTypes.arrayOf(PropTypes.number.isRequired),
 };
 
 export default AddTeamUserPop;

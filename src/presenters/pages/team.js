@@ -79,8 +79,9 @@ export default function(application) {
     addTeamUserButton() {
       //self.currentUserIsOnTeam && self.currentUserIsOnTeam.observe(item => console.log("current user on team update!", item));
       const props = {
-        search: (query) => User.getSearchResults(application, query),
+        search: (query) => User.getSearchResultsJSON(application, query).then(users => users.map(user => User(user).asProps())),
         add: (id) => application.team().addUser(application, User({id})),
+        members: application.team().users().map(user => user.id()),
       };
       return Reactlet(AddTeamUser, props, "TeamPageAddUserButton");
     },
