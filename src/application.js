@@ -38,7 +38,6 @@ var self = Model({
   overlayNewStuffVisible: Observable(false),
 
   // pop overs
-  addTeamUserPopVisible: Observable(false),
   addTeamProjectPopVisible: Observable(false),
 
   // search - users
@@ -109,7 +108,6 @@ var self = Model({
 
   closeAllPopOvers() {
     $(".pop-over.disposable, .overlay-background.disposable").remove();
-    self.addTeamUserPopVisible(false);
     self.addTeamProjectPopVisible(false);
     self.overlayProjectVisible(false);
     self.overlayVideoVisible(false);

@@ -5,6 +5,9 @@ import AddTeamUserTemplate from '../../templates/pop-overs/add-team-user-pop';
 import Reactlet from '../reactlet';
 import UserResultItem from '../includes/user-result-item.jsx';
 
+import React from 'react';
+import PropTypes from 'prop-types';
+
 export default function(application) {
 
   var self = {
@@ -77,4 +80,37 @@ export default function(application) {
   };
             
   return AddTeamUserTemplate(self);
+}
+
+/*
+- Loader = require "../includes/loader"
+
+dialog.pop-over.add-team-user-pop(class=@hiddenUnlessAddTeamUserPopVisible click=@stopPropagation)
+
+  section.pop-over-info
+    input#team-user-search.pop-over-input.search-input.pop-over-search(input=@search keyup=@spacekeyDoesntClosePop placeholder="Search for a user or email")
+
+  section.pop-over-actions.last-section.results-list(class=@hiddenIfNoSearch)
+
+    span(class=@hiddenUnlessSearching)
+      = Loader(this)
+
+    ul.results
+      - application = @application
+      - context = @
+      - @searchResults().forEach (user) ->
+        = context.UserResultItem(user)
+*/
+
+class AddTeamUserPop extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  
+  render() {
+    return (
+      <div className="pop-over add-team-user-pop">
+      </div>
+    );
+  }
 }

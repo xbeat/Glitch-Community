@@ -13,10 +13,10 @@ import Project from '../../models/project';
 import User from '../../models/user';
 import TeamTemplate from '../../templates/pages/team';
 import LayoutPresenter from '../layout';
-import AddTeamUserPopPresenter from '../pop-overs/add-team-user-pop';
 import AnalyticsPresenter from '../analytics';
 
 import Reactlet from "../reactlet";
+import AddTeamUser from '../includes/add-team-user.jsx';
 import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProjectPop from "../pop-overs/add-team-project-pop.jsx";
 
@@ -77,7 +77,7 @@ export default function(application) {
     },
 
     addTeamUserPop() {
-      return AddTeamUserPopPresenter(application);
+      return Reactlet(AddTeamUser, ;
     },
 
     addTeamProjectPop() {
@@ -241,13 +241,6 @@ export default function(application) {
 
     hiddenUnlessAddTeamProjectPopVisible() {
       if (!application.addTeamProjectPopVisible()) { return 'hidden'; }
-    },
-
-    toggleAddTeamUserPop() {
-      application.addTeamUserPopVisible.toggle();
-      if (application.addTeamUserPopVisible()) {
-        return $('#team-user-search').focus();
-      }
     },
 
     toggleAddTeamProjectPop() {
