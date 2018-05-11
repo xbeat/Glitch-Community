@@ -1,42 +1,68 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
-class TeamDescription extends React.Component() {
+import Thanks from './thanks.jsx';
+import TeamUsers from "../includes/team-users.jsx";
+
+/*TeamUsers() {
+      const props = {
+        users: application.team().users().map(user => user.asProps()),
+        currentUserIsOnTeam: application.team().currentUserIsOnTeam(application),
+        removeUserFromTeam: ({id}) => application.team().removeUser(application, User({id}))
+      };
+      return Reactlet(TeamUsers, props, "TeamPageUserList");
+    },
+    <TeamUsers {users, currentUserIsOnTeam, removeUserFromTeam}/>
+    */
+
+
+class TeamDescription extends React.Component {
   constructor(props) {
     super(props)
   }
   
   render() {
-    const {isCurrentUserOnTeam} = this.props;
-    if(!isCurrentUserOnTeam) {
+    const {currentUserIsOnTeam,description,updateDescription,applyDescription,initialTeamDescription} = this.props;
+    
+    if(!currentUserIsOnTeam) {
       if(!description) {
-        
-      return (
-        <p className="description read-only">{description}</p>
-        );
+        return null;
+      }
+      return <p className="description read-only">{description}</p>;
     }
+    
+    return (
+      <p 
+        className="description content-editable" 
+        onKeyUp={updateDescription} 
+        onBlur={applyDescription} 
+        placeHolder="Tell us about your team"
+        contentEditable="true"
+        role="textbox"
+        aria-multiline="true"
+        spellcheck="false">{initialTeamDescription}</p>
+        
+      );
   }
-/*
-  p.description.content-editable(class=@hiddenUnlessCurrentUserIsOnTeam keyup=@updateDescription blur=@applyDescription placeholder="Tell us about your team" contenteditable=true role="textbox" aria-multiline=true spellcheck=false)=@initialTeamDescription                
-  p.description.read-only(class=@hiddenIfCurrentUserIsOnTeam class=@hiddenIfNoDescription)= @description
-*/
 }
 
 const UserAvatarContainer = ({
   teamAvatarStyle,
-  isCurrentUserOnTeam,
+  currentUserIsOnTeam,
   uploadAvatar,
   teamName,
   verifiedTeamTooltip,
   isVerifiedTeam,
   verifiedImage,
   hasTeamThanks,
-  teamThanks,
+  thanksCount,
+  users,
+  removeUserFromTeam
 }) => {
   return (
     <div className="user-avatar-container">
       <div className="user-avatar" style={teamAvatarStyle}>
-        { isCurrentUserOnTeam && (
+        { currentUserIsOnTeam && (
           <button className="button-small button-tertiary upload-avatar-button" onClick={uploadAvatar}>
             Upload Avatar
           </button>
@@ -49,21 +75,17 @@ const UserAvatarContainer = ({
           </span>
         </h1>
         <div className="users-information">
-          <TeamUsers/>
+          <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
           <addTeamUserButton/>
         </div>
-        { hasTeamThanks && (
-          <p className="thanks">
-            {teamThanks} <span className="emoji sparkling_heart"/>
-          </p>
-        )}
+        { hasTeamThanks && <Thanks count={thanksCount} />}
       </div>
       <TeamDescription/>
     </div>
   );
 };
 
-const TeamProfile = ({teamProfileStyle,isTeamFetched, isCurrentUserOnTeam, ...props}) => {
+const TeamProfile = ({teamProfileStyle,isTeamFetched, currentUserIsOnTeam, uploadCover, ...props}) => {
   return (
     <section className="profile">
       <div className="profile-container" style={teamProfileStyle}>
@@ -73,7 +95,7 @@ const TeamProfile = ({teamProfileStyle,isTeamFetched, isCurrentUserOnTeam, ...pr
           { isTeamFetched && <UserAvatarContainer {...props}/>}
         </div>
       </div>
-      {isCurrentUserOnTeam && (
+      {currentUserIsOnTeam && (
         <button className="button-small button-tertiary upload-cover-button" onClick={uploadCover}>
           Upload Cover  
         </button>

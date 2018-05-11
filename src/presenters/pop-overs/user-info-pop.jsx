@@ -1,13 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const UserThanks = ({thanks}) => (
-  <p className="user-thanks">
-    {thanks}
-    &nbsp;
-    <span className="emoji sparkling_heart" />
-  </p>
-);
+import Thanks from '../includes/thanks.jsx';
 
 const RemoveFromTeam = ({action}) => (
   <section className="pop-over-actions danger-zone">
@@ -41,7 +35,7 @@ const UserInfoPop = (props) => {
           <p className="name" title={user.name}>{user.name}</p>
           <p className="user-login" title={user.login}>@{user.login}</p>
         </div>
-        { user.thanksCount > 0 && <UserThanks thanks={user.userThanks} />}
+        { user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
       </section>
       <UserActions user={user} />
       { props.currentUserIsOnTeam === true && <RemoveFromTeam action={props.removeUserFromTeam} />}
@@ -56,7 +50,6 @@ UserInfoPop.propTypes = {
     userAvatarUrl: PropTypes.string.isRequired,
     profileUrl: PropTypes.string.isRequired,
     thanksCount: PropTypes.number.isRequired,
-    userThanks: PropTypes.string,
     isOnTeam: PropTypes.bool,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,

@@ -1,15 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const UserThanks = ({thanksCount}) => {
-  return (
-    <div className="result-description">
-      {thanksCount}
-      &nbsp;
-      <span className="emoji sparkling_heart"></span>
-    </div>
-  );
-};
+import {ThanksShort} from './thanks.jsx';
 
 const UserResultItem = ({user, action}) => {
   const {userAvatarUrl, name, login, thanksCount} = user;
@@ -25,7 +17,7 @@ const UserResultItem = ({user, action}) => {
         <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
         <div className="result-name" title={name}>{name}</div>
         <div className="result-description" title={login}>@{login}</div>
-        { thanksCount > 0 && <UserThanks thanksCount={thanksCount} />}
+        { thanksCount > 0 && <ThanksShort count={thanksCount} />}
       </div>
     </button>
   );

@@ -16,12 +16,10 @@ import LayoutPresenter from '../layout';
 import AnalyticsPresenter from '../analytics';
 
 import Reactlet from "../reactlet";
-import AddTeamUser from '../includes/add-team-user.jsx';
 import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProjectPop from "../pop-overs/add-team-project-pop.jsx";
 
 import TeamProfile from "../includes/team-profile.jsx";
-import TeamUsers from "../includes/team-users.jsx";
 
 export default function(application) {
   const assetUtils = assets(application);
@@ -40,15 +38,6 @@ export default function(application) {
     
     TeamProfile() {
       return Reactlet(TeamProfile, {});
-    },
-    
-    TeamUsers() {
-      const props = {
-        users: application.team().users().map(user => user.asProps()),
-        currentUserIsOnTeam: application.team().currentUserIsOnTeam(application),
-        removeUserFromTeam: ({id}) => application.team().removeUser(application, User({id}))
-      };
-      return Reactlet(TeamUsers, props, "TeamPageUserList");
     },
 
     TeamProjects() {
@@ -79,16 +68,6 @@ export default function(application) {
       if (self.team().fetched()) {
         return AnalyticsPresenter(application, self.team());
       }
-    },
-
-    addTeamUserButton() {
-      //self.currentUserIsOnTeam && self.currentUserIsOnTeam.observe(item => console.log("current user on team update!", item));
-      const props = {
-        search: (query) => User.getSearchResultsJSON(application, query).then(users => users.map(user => User(user).asProps())),
-        add: (id) => application.team().addUser(application, User({id})),
-        members: application.team().users().map(user => user.id()),
-      };
-      return Reactlet(AddTeamUser, props, "TeamPageAddUserButton");
     },
 
     addTeamProjectPop() {
