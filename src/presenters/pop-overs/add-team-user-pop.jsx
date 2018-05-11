@@ -107,6 +107,7 @@ class AddTeamUserPop extends React.Component {
     
     this.state = {
       search: '',
+      request: null,
       results: [],
     };
     
@@ -119,8 +120,23 @@ class AddTeamUserPop extends React.Component {
     this.search();
   }
   
-  search() {
-    this.props.search(this.state.search).then((data) => console.log(data));
+  async search() {
+    if (!this.state.search) {
+      this.setState({
+        request: null,
+        results: [],
+      });
+      return;
+    }
+    const request = this.props.search(this.state.search);
+    this.setState({ request: request });
+    const results = await request;
+    if (request === this.state.request) {
+      this.setState(({request}) => ({
+        results: results.map(user => user.asProps()),
+        request: null,
+      }));
+    }
   }
   
   render() {
@@ -132,8 +148,11 @@ class AddTeamUserPop extends React.Component {
             value={this.state.search} onChange={this.handleChange} placeholder={placeholder}
           />
         </section>
-        {!!this.state.search && <section className="pop-over-actions last-section results-list">
-          {this.state.results.length > 0 ? this.state.results.toString() : <Loader />}
+        {!!(this.state.search || this.state.results.length) && <section className="pop-over-actions last-section results-list">
+          {!!this.state.results.length && <ul className="results">
+            {JSON.stringify(this.state.results)}
+          </ul>}
+          {!!this.state.request && <Loader />}
         </section>}
       </dialog>
     );

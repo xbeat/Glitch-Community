@@ -298,8 +298,12 @@ User.getSearchResults = function(application, query) {
       }
       data = data.map(function(datum) {
         datum.fetched = true;
-        return User(datum).update(datum).pushSearchResult(application);
+        return User(datum).update(datum);
+      })
+      data.forEach(function(userModel) {
+        return userModel.pushSearchResult(application);
       });
+    return data;
     }).catch(error => console.error('getSearchResults', error));
 };
 
