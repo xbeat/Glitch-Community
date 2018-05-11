@@ -20,6 +20,7 @@ import AddTeamUser from '../includes/add-team-user.jsx';
 import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProjectPop from "../pop-overs/add-team-project-pop.jsx";
 
+import TeamProfile from "../includes/team-profile.jsx";
 import TeamUsers from "../includes/team-users.jsx";
 
 export default function(application) {
@@ -35,6 +36,10 @@ export default function(application) {
 
     verifiedTeamTooltip() {
       return application.team().verifiedTooltip();
+    },
+    
+    TeamProfile() {
+      return Reactlet(TeamProfile, {});
     },
     
     TeamUsers() {
