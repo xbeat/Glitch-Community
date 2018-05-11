@@ -88,7 +88,7 @@ class AddTeamUserPop extends React.Component {
       <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">
           <input id="team-user-search" 
-            autoFocus // eslint-ignore jsx-a11y/no-autofocus
+            autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}
             className="pop-over-input search-input pop-over-search"
             placeholder="Search for a user or email"
@@ -105,7 +105,7 @@ class AddTeamUserPop extends React.Component {
 
 AddTeamUserPop.propTypes = {
   search: PropTypes.func.isRequired,
-  action: PropTypes.func.isRequired,
+  add: PropTypes.func.isRequired,
 };
 
 export default AddTeamUserPop;

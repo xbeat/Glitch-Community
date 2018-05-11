@@ -77,12 +77,12 @@ export default function(application) {
     },
 
     addTeamUserButton() {
-      self.currentUserIsOnTeam.observe(item => console.log("current user on team update!", item));
+      //self.currentUserIsOnTeam && self.currentUserIsOnTeam.observe(item => console.log("current user on team update!", item));
       const props = {
-        search: (query) => User.getSearchResults(application, query),
+        search: (query) => User.getSearchResultsJSON(application, query),
         add: (id) => application.team().addUser(application, User({id})),
       };
-      return self.currentUserIsOnTeam() ? Reactlet(AddTeamUser, props) : '';
+      return Reactlet(AddTeamUser, props);
     },
 
     addTeamProjectPop() {

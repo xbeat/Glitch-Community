@@ -282,6 +282,16 @@ User.getUsersById = function(api, ids) {
     });
 };
 
+User.getSearchResultsJSON = function(application, query) {
+  const { CancelToken } = axios;
+  const source = CancelToken.source();
+  const searchPath = `users/search?q=${query}`;
+  return application.api(source).get(searchPath)
+    .then(function({data}) {
+      return data;
+  }).catch(error => console.error('getSearchResultsJSON', error));
+};
+
 User.getSearchResults = function(application, query) {
   const MAX_RESULTS = 20;
   const { CancelToken } = axios;
