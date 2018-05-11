@@ -107,20 +107,20 @@ class AddTeamUserPop extends React.Component {
     
     this.state = {
       search: '',
-      searching: false,
+      results: [],
     };
     
     this.handleChange = this.handleChange.bind(this);
-    this.updateSearch = debounce(this.updateSearch.bind(this), 200);
+    this.search = debounce(this.search.bind(this), 200);
   }
   
   handleChange(evt) {
     this.setState({ search: evt.currentTarget.value.trim() });
-    this.updateSearch();
+    this.search();
   }
   
-  updateSearch() {
-    console.log(this.props.search(this.state.search));
+  search() {
+    this.props.search(this.state.search).then((data) => console.log(data));
   }
   
   render() {
@@ -133,7 +133,7 @@ class AddTeamUserPop extends React.Component {
           />
         </section>
         {!!this.state.search && <section className="pop-over-actions last-section results-list">
-          {this.state.searching && <Loader />}
+          {this.state.results.length > 0 ? this.state.results.toString() : <Loader />}
         </section>}
       </dialog>
     );
