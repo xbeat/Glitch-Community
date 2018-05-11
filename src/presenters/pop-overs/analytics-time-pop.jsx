@@ -3,84 +3,62 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 import Loader from '../includes/loader.jsx';
 
-const ResultLI = ({selectFrame, isActive, timeFrame}) => {
-  return (
-    <li className={"result" + isActive ? " active" : ""} onClick={(event) => selectFrame(event, timeFrame)}>
-       <div class="result-container">
-          <div class="result-name">{timeFrame}</div>
-       </div>
-    </li>
-    );
+const ResultLI = ({selectFrame, isActive, timeFrame}) => (
+  <li className={"result" + isActive ? " active" : ""} onClick={(event) => selectFrame(event, timeFrame)}>
+     <div className="result-container">
+        <div className="result-name">{timeFrame}</div>
+     </div>
+  </li>
+);
+
+ResultLI.propTypes = {
+  selectFrame: PropTypes
 };
 
-const selectFrameFactory = (analytics, togglePopover) => {
+const selectFrameFactory = (analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable, togglePopover) => {
   return (event, timeFrame) => {
     event.preventDefault();
-    analytics.analyticsTimeLabel(timeFrame)
-    analytics.gettingAnalyticsFromDate(true);
+    analyticsTimeLabelObservable(timeFrame)
+    gettingAnalyticsFromDateObservable(true);
     togglePopover();
   }
 }
 
-export default class AnalyticsTimePopContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  
-  render() {
-    const {application, analytics} = this.props;
-    const timeFrames = [
-      "Last 4 Weeks",
-      "Last 2 Weeks",
-      "Last 24 Hours",
-    ];
+const  AnalyticsTimePop = ({analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable}) => {
+  const timeFrames = [
+    "Last 4 Weeks",
+    "Last 2 Weeks",
+    "Last 24 Hours",
+  ];
+  const currentTimeFrame = analyticsTimeLabelObservable();
+  const gettingAnalyticsFromDate = gettingAnalyticsFromDateObservable();
 
-    return (
-      <PopoverContainer>
-        {({visible, togglePopover}) => (
-          <div className="button-wrap">
-            <button className="button-small button-tertiary button-select" onClick={togglePopover}>
-              <span>{analyticsTimeLabel}</span>
-              { !hiddenUnlessGettingAnalyticsFromDate && <Loader/> }
-            </button>
-            { visible && (
-              <dialog className="pop-over results-list analytics-time-pop">
-                <section class="pop-over-actions last-section">
-                  <ul class="results">
-                    { timeFrames.map(timeFrame => (
-                     <ResultLI 
-                       selectFrame={selectFrameFactory(analytics, togglePopover)} 
-                       isActive={activeIfLabelIsMonths} timeFrame={timeFrame}/>
-                    ))}
-                  </ul>
-                </section>
-              </dialog>
-            )}
-          </div>
-        )}
-      </PopoverContainer>
-    );
-  }
-}
+  return (
+    <PopoverContainer>
+      {({visible, togglePopover}) => (
+        <div className="button-wrap">
+          <button className="button-small button-tertiary button-select" onClick={togglePopover}>
+            <span>{currentTimeFrame}</span>
+            { gettingAnalyticsFromDate && <Loader/> }
+          </button>
+          { visible && (
+            <dialog className="pop-over results-list analytics-time-pop">
+              <section className="pop-over-actions last-section">
+                <ul className="results">
+                  { timeFrames.map(timeFrame => (
+                   <ResultLI 
+                     selectFrame={selectFrameFactory(analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable, togglePopover)} 
+                     isActive={currentTimeFrame === timeFrame} 
+                     timeFrame={timeFrame}/>
+                  ))}
+                </ul>
+              </section>
+            </dialog>
+          )}
+        </div>
+      )}
+    </PopoverContainer>
+  );
+};
 
-
-
-
-    activeIfLabelIsMonths() {
-      if (analytics.analyticsTimeLabel() === 'Last 4 Weeks') { return 'active'; }
-    },
-
-    activeIfLabelIsWeeks() {
-      if (analytics.analyticsTimeLabel() === 'Last 2 Weeks') { return 'active'; }
-    },
-
-    activeIfLabelIsHours() {
-      if (analytics.analyticsTimeLabel() === 'Last 24 Hours') { return 'active'; }
-    },
-  };
-
-
-  return AnalyticsTimePopTemplate(self);
-}
-
-
+export default AnalyticsTimePop;
