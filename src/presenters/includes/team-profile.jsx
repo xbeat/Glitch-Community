@@ -1,19 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
+import Loader from '../includes/loader.jsx';
 import Thanks from './thanks.jsx';
 import TeamUsers from "../includes/team-users.jsx";
-
 /*TeamUsers() {
+  const props = {
+    users: application.team().users().map(user => user.asProps()),
+    currentUserIsOnTeam: application.team().currentUserIsOnTeam(application),
+    removeUserFromTeam: ({id}) => application.team().removeUser(application, User({id}))
+  };
+*/
+
+import AddTeamUser from '../includes/add-team-user.jsx';
+/* addTeamUserButton() {
       const props = {
-        users: application.team().users().map(user => user.asProps()),
-        currentUserIsOnTeam: application.team().currentUserIsOnTeam(application),
-        removeUserFromTeam: ({id}) => application.team().removeUser(application, User({id}))
+        search: (query) => User.getSearchResultsJSON(application, query).then(users => users.map(user => User(user).asProps())),
+        add: (id) => application.team().addUser(application, User({id})),
+        members: application.team().users().map(user => user.id()),
       };
-      return Reactlet(TeamUsers, props, "TeamPageUserList");
-    },
-    <TeamUsers {users, currentUserIsOnTeam, removeUserFromTeam}/>
-    */
+      return Reactlet(AddTeamUser, props, "TeamPageAddUserButton");
+      <AddTeamUser {search, add, members}/>
+    },*/
 
 
 class TeamDescription extends React.Component {
@@ -40,8 +48,7 @@ class TeamDescription extends React.Component {
         contentEditable="true"
         role="textbox"
         aria-multiline="true"
-        spellcheck="false">{initialTeamDescription}</p>
-        
+        spellCheck="false">{initialTeamDescription}</p>
       );
   }
 }
@@ -57,7 +64,9 @@ const UserAvatarContainer = ({
   hasTeamThanks,
   thanksCount,
   users,
-  removeUserFromTeam
+  removeUserFromTeam,
+  search,
+  addUserToTeam
 }) => {
   return (
     <div className="user-avatar-container">
@@ -76,7 +85,7 @@ const UserAvatarContainer = ({
         </h1>
         <div className="users-information">
           <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
-          <addTeamUserButton/>
+          <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>
         </div>
         { hasTeamThanks && <Thanks count={thanksCount} />}
       </div>
