@@ -129,14 +129,14 @@ class AddTeamUserPop extends React.Component {
       return;
     }
     const request = this.props.search(this.state.search);
-    this.setState({ request: request });
+    this.setState({ request });
     const results = await request;
-    if (request === this.state.request) {
-      this.setState(({request}) => ({
+    this.setState(prevState => {
+      return request === prevState.request ? {
         results: results.map(user => user.asProps()),
         request: null,
-      }));
-    }
+      } : prevState;
+    });
   }
   
   render() {
@@ -148,10 +148,10 @@ class AddTeamUserPop extends React.Component {
             value={this.state.search} onChange={this.handleChange} placeholder={placeholder}
           />
         </section>
-        {!!(this.state.search || this.state.results.length) && <section className="pop-over-actions last-section results-list">
-          {!!this.state.results.length && <ul className="results">
-            {JSON.stringify(this.state.results)}
-          </ul>}
+        {!!(this.state.request || this.state.results.length) && <section className="pop-over-actions last-section results-list">
+          {this.state.results.length > 0 ? <ul className="results">
+            {this.state.results.length}
+          </ul> : <p>nothing found</p>}
           {!!this.state.request && <Loader />}
         </section>}
       </dialog>
