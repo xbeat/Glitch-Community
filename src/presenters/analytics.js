@@ -28,6 +28,17 @@ const TIME_FRAMES = {
   LAST_2_WEEKS: 'Last 2 Weeks',
   LAST_24_HOURS: 'Last 24 Hours',
 }
+
+const dtFromTimeFrame = (timeFrame) => {
+  if (timeFrame === TIME_FRAMES.LAST_4_WEEKS) {
+    return fourWeeks;
+  }
+  if (timeFrame === TIME_FRAMES.LAST_24_HOURS) {
+    return oneDay;
+  } 
+  return twoWeeks;
+};
+  
 // Crack open a promise so anyone can resolve or reject it later
 const OpenPromise = function() {
   let resolve = null;
@@ -70,13 +81,7 @@ export default function(application, teamOrProject) {
     analyticsTimeLabel: Observable(TIME_FRAMES.LAST_2_WEEKS),
     
     analyticsFromDate() {
-      if (self.analyticsTimeLabel() === TIME_FRAMES.LAST_4_WEEKS) {
-        return fourWeeks;
-      } else if (self.analyticsTimeLabel() === TIME_FRAMES.LAST_24_HOURS) {
-        return oneDay;
-      } 
-      return twoWeeks;
-      
+      return dtFromTimeFrame(self.analyticsTimeLabel());      
     },
     
     // showRemixesReferrers: Observable false

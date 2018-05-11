@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 import Loader from '../includes/loader.jsx';
 
-const ResultLI = ({selectFrame, isActive, timeFrame}) => (
-  <li className={"result" + isActive ? " active" : ""} onClick={(event) => selectFrame(event, timeFrame)}>
-     <div className="result-container">
-        <div className="result-name">{timeFrame}</div>
-     </div>
+const ResultLI = ({selectFrame, isActive, timeFrame}) => {
+  <li className={"result" + (isActive ? " active" : "")} onClick={(event) => selectFrame(event, timeFrame)}>
+    <div className="result-container">
+      <div className="result-name">{timeFrame}</div>
+    </div>
   </li>
-);
+};
 
 ResultLI.propTypes = {
   selectFrame: PropTypes.func.isRequired,
@@ -20,11 +20,11 @@ ResultLI.propTypes = {
 const selectFrameFactory = (analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable, togglePopover) => {
   return (event, timeFrame) => {
     event.preventDefault();
-    analyticsTimeLabelObservable(timeFrame)
+    analyticsTimeLabelObservable(timeFrame);
     gettingAnalyticsFromDateObservable(true);
     togglePopover();
-  }
-}
+  };
+};
 
 const  AnalyticsTimePop = ({analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable, timeFrames}) => {
   const currentTimeFrame = analyticsTimeLabelObservable();
@@ -43,10 +43,11 @@ const  AnalyticsTimePop = ({analyticsTimeLabelObservable, gettingAnalyticsFromDa
               <section className="pop-over-actions last-section">
                 <ul className="results">
                   { timeFrames.map(timeFrame => (
-                   <ResultLI 
-                     selectFrame={selectFrameFactory(analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable, togglePopover)} 
-                     isActive={currentTimeFrame === timeFrame} 
-                     timeFrame={timeFrame}/>
+                    <ResultLI 
+                      key={timeFrame}
+                      selectFrame={selectFrameFactory(analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable, togglePopover)} 
+                      isActive={currentTimeFrame === timeFrame} 
+                      timeFrame={timeFrame}/>
                   ))}
                 </ul>
               </section>
