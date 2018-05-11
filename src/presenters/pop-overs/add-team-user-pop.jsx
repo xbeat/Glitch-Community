@@ -112,30 +112,39 @@ class AddTeamUserPop extends React.Component {
     };
     
     this.handleChange = this.handleChange.bind(this);
-    this.search = debounce(this.search.bind(this), 200);
+    this.clearSearch = this.clearSearch.bind(this);
+    this.startSearch = debounce(this.startSearch.bind(this), 300);
   }
   
   handleChange(evt) {
-    this.setState({ search: evt.currentTarget.value.trim() });
-    this.search();
+    const search = evt.currentTarget.value.trim();
+    this.setState({ search });
+    if (search) {
+      this.startSearch();
+    } else {
+      this.clearSearch()
+    }
   }
   
-  async search() {
+  clearSearch() {
+    this.setState({
+      request: null,
+      results: [],
+    });
+  }
+  
+  async startSearch() {
     if (!this.state.search) {
-      this.setState({
-        request: null,
-        results: [],
-      });
-      return;
+      return this.clearSearch();
     }
     const request = this.props.search(this.state.search);
     this.setState({ request });
     const results = await request;
     this.setState(prevState => {
-      return request === prevState.request ? {
+      return (request === prevState.request) ? {
         results: results.map(user => user.asProps()),
         request: null,
-      } : prevState;
+      } : {};
     });
   }
   
@@ -149,10 +158,10 @@ class AddTeamUserPop extends React.Component {
           />
         </section>
         {!!(this.state.request || this.state.results.length) && <section className="pop-over-actions last-section results-list">
+          {!!this.state.request && <Loader />}
           {this.state.results.length > 0 ? <ul className="results">
             {this.state.results.length}
           </ul> : <p>nothing found</p>}
-          {!!this.state.request && <Loader />}
         </section>}
       </dialog>
     );
