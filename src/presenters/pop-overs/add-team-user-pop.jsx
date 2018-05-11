@@ -1,13 +1,14 @@
 import Observable from 'o_0';
 import {debounce} from 'lodash';
 
-import AddTeamUserTemplate from '../../templates/pop-overs/add-team-user-pop';
 import Reactlet from '../reactlet';
+import Loader from '../includes/loader.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
 
 import React from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
+/*
 function Old(application) {
 
   var self = {
@@ -81,6 +82,7 @@ function Old(application) {
             
   return AddTeamUserTemplate(self);
 }
+/*
 
 /*
 - Loader = require "../includes/loader"
@@ -105,12 +107,37 @@ dialog.pop-over.add-team-user-pop(class=@hiddenUnlessAddTeamUserPopVisible click
 class AddTeamUserPop extends React.Component {
   constructor(props) {
     super(props);
+    
+    this.state = {
+      search: '',
+      searching: false,
+    };
+    
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(evt) {
+    this.setState({ search: evt.currentTarget.value });
+    console.log(evt.currentTarget.value);
+  }
+  
+  updateSearch() {
+    
   }
   
   render() {
+    const placeholder = "Search for a user or email";
     return (
-      <div className="pop-over add-team-user-pop">
-      </div>
+      <dialog className="pop-over add-team-user-pop">
+        <section className="pop-over-info">
+          <input id="team-user-search" className="pop-over-input search-input pop-over-search"
+            value={this.state.search} onChange={this.handleChange} placeholder={placeholder}
+          />
+        </section>
+        {!!this.state.searching && <section className="pop-over-actions last-section results-list">
+          <Loader />
+        </section>}
+      </dialog>
     );
   }
 }

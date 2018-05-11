@@ -21,7 +21,7 @@ const UserResultItem = ({user, action}) => {
 
   return (
     <li>
-      <button onClick={() => console.log('💣')} className="button-flat">
+      <button onClick={handleClick} className="button-flat">
         <div className="result">
           <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
           <div className="result-name" title={name}>{name}</div>
