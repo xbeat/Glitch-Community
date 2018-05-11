@@ -101,6 +101,20 @@ dialog.pop-over.add-team-user-pop(class=@hiddenUnlessAddTeamUserPopVisible click
         = context.UserResultItem(user)
 */
 
+const UserSearchResults = ({users}) => (
+  (users.length > 0) ? (
+    <ul className="results">
+      {users.map(user => (
+        <li key={user.id}>
+          <UserResultItem user={user} />
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p className="results">nothing found</p>
+  )
+);
+
 class AddTeamUserPop extends React.Component {
   constructor(props) {
     super(props);
@@ -108,7 +122,7 @@ class AddTeamUserPop extends React.Component {
     this.state = {
       query: '', //The actual search text
       request: null, //The active request promise
-      results: null, //Null means still waiting vs empty
+      results: null, //Null means still waiting vs empty -- [jude: i suggest the 'maybe' convention for nullable fields with meaning.  'maybeResults']
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -133,6 +147,7 @@ class AddTeamUserPop extends React.Component {
     });
   }
   
+  // I wish you could use async!
   async startSearch() {
     if (!this.state.query) {
       return this.clearSearch();
@@ -164,11 +179,7 @@ class AddTeamUserPop extends React.Component {
         </section>
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
-          {hasResults && this.state.results.length > 0 ? (
-            <ul className="results">
-              {this.state.results.length}
-            </ul>
-          ) : (hasResults && <p className="results">nothing found</p>)}
+          {hasResults && <UserSearch}
         </section>}
       </dialog>
     );

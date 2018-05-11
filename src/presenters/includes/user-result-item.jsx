@@ -20,16 +20,14 @@ const UserResultItem = ({user, action}) => {
   };
 
   return (
-    <li>
-      <button onClick={handleClick} className="button-flat">
-        <div className="result">
-          <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
-          <div className="result-name" title={name}>{name}</div>
-          <div className="result-description" title={login}>@{login}</div>
-          { thanksCount > 0 && <UserThanks thanksCount={thanksCount} />}
-        </div>
-      </button>
-    </li>
+    <button onClick={handleClick} className="button-flat">
+      <div className="result">
+        <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
+        <div className="result-name" title={name}>{name}</div>
+        <div className="result-description" title={login}>@{login}</div>
+        { thanksCount > 0 && <UserThanks thanksCount={thanksCount} />}
+      </div>
+    </button>
   );
 };
 
