@@ -114,15 +114,18 @@ class AddTeamUserPop extends React.Component {
     };
     
     this.handleChange = this.handleChange.bind(this);
+    this.updateSearch = debounce(this.updateSearch.bind(this), 200);
   }
   
   handleChange(evt) {
-    this.setState({ search: evt.currentTarget.value });
-    console.log(evt.currentTarget.value);
+    this.setState({ search: evt.currentTarget.value.trim() });
+    this.updateSearch();
   }
   
   updateSearch() {
-    
+    this.setState(({search}) => {
+      return { searching: !!search };
+    });
   }
   
   render() {
@@ -134,8 +137,8 @@ class AddTeamUserPop extends React.Component {
             value={this.state.search} onChange={this.handleChange} placeholder={placeholder}
           />
         </section>
-        {!!this.state.searching && <section className="pop-over-actions last-section results-list">
-          <Loader />
+        {!!this.state.search && <section className="pop-over-actions last-section results-list">
+          {this.state.searching && <Loader />}
         </section>}
       </dialog>
     );

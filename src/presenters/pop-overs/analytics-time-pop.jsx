@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
+import Loader from '../includes/loader.jsx';
 
 export default class AnalyticsTimePopContainer extends React.Component {
   constructor(props) {
@@ -12,19 +13,50 @@ export default class AnalyticsTimePopContainer extends React.Component {
     
     return (
       <PopoverContainer>
-        <div className="button-wrap">
-        </div>
+        {({visible, togglePopover}) => (
+          <div className="button-wrap">
+            <button className="button-small button-tertiary button-select" onClick={togglePopover}>
+              <span>{analyticsTimeLabel}</span>
+              { !hiddenUnlessGettingAnalyticsFromDate && <Loader/> }
+            </button>
+           <dialog className="pop-over results-list analytics-time-pop">
+            <section class="pop-over-actions last-section">
+               <ul class="results">
+                  <li class={`result ${activeIfLabelIsMonths}`} onClick={selectMonthFrame}>
+                     <div class="result-container">
+                        <div class="result-name">Last 4 Weeks</div>
+                     </div>
+                  </li>
+                  <li class="result active">
+                     <div class="result-container">
+                        <div class="result-name">Last 2 Weeks</div>
+                     </div>
+                  </li>
+                  <li class="result">
+                     <div class="result-container">
+                        <div class="result-name">Last 24 Hours</div>
+                     </div>
+                  </li>
+               </ul>
+            </section>
+          </dialog>
+          </div>
+        )}
       </PopoverContainer>
     );
   }
 }
 
+const ResultLI = ({onClick, isActive, text}) => (
+  <li class="result">
+     <div class="result-container">
+        <div class="result-name">Last 24 Hours</div>
+     </div>
+  </li>
+);
+
 /*
 
-    .button-wrap
-      button.button-small.button-tertiary.button-select(click=@toggleAnalyticsTimePop)
-        span= @analyticsTimeLabel               
-        span(class=@hiddenUnlessGettingAnalyticsFromDate)= Loader
       dialog.pop-over.results-list.analytics-time-pop.disposable(click=@stopPropagation)
 
         section.pop-over-actions.last-section
