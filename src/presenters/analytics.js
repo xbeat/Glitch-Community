@@ -27,7 +27,7 @@ const TIME_FRAMES = {
   LAST_4_WEEKS: 'Last 4 Weeks',
   LAST_2_WEEKS: 'Last 2 Weeks',
   LAST_24_HOURS: 'Last 24 Hours',
-}
+};
 
 const dtFromTimeFrame = (timeFrame) => {
   if (timeFrame === TIME_FRAMES.LAST_4_WEEKS) {
@@ -394,7 +394,7 @@ export default function(application, teamOrProject) {
         analyticsTimeLabelObservable: self.analyticsTimeLabel,
         gettingAnalyticsFromDateObservable: self.gettingAnalyticsFromDate,
         timeFrames: Object.values(TIME_FRAMES),
-      }
+      };
       return Reactlet(AnalyticsTimePop, props);
     },
 

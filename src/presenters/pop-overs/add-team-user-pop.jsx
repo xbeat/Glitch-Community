@@ -122,7 +122,7 @@ class AddTeamUserPop extends React.Component {
     if (query) {
       this.startSearch();
     } else {
-      this.clearSearch()
+      this.clearSearch();
     }
   }
   
@@ -151,6 +151,8 @@ class AddTeamUserPop extends React.Component {
   }
   
   render() {
+    const isLoading = !!(this.state.request || !this.state.results);
+    const hasResults = !!this.state.results;
     return (
       <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">
@@ -161,12 +163,12 @@ class AddTeamUserPop extends React.Component {
           />
         </section>
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
-          {(!!this.state.request || !this.state.results) && <Loader />}
-          {!!this.state.results && (this.state.results.length > 0 ? (
+          {isLoading && <Loader />}
+          {hasResults && this.state.results.length > 0 ? (
             <ul className="results">
               {this.state.results.length}
             </ul>
-          ) : <p className="results">nothing found</p>)}
+          ) : (hasResults && <p className="results">nothing found</p>)}
         </section>}
       </dialog>
     );

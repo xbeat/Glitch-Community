@@ -55,7 +55,7 @@ const  AnalyticsTimePop = ({analyticsTimeLabelObservable, gettingAnalyticsFromDa
                       isActive={currentTimeFrame === timeFrame} 
                       timeFrame={timeFrame}/>
                   ))}
-                </ul>
+                </div>
               </section>
             </dialog>
           )}
