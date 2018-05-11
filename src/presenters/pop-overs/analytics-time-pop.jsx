@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 import Loader from '../includes/loader.jsx';
 
+const ResultLI = ({onClick, isActive, text}) => (
+  <li className={"result" + isActive ? " active" : ""} onClick={onClick}>
+     <div class="result-container">
+        <div class="result-name">{text}</div>
+     </div>
+  </li>
+);
+
 export default class AnalyticsTimePopContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -11,77 +19,6 @@ export default class AnalyticsTimePopContainer extends React.Component {
   render() {
     const {application, analytics} = this.props;
     
-    return (
-      <PopoverContainer>
-        {({visible, togglePopover}) => (
-          <div className="button-wrap">
-            <button className="button-small button-tertiary button-select" onClick={togglePopover}>
-              <span>{analyticsTimeLabel}</span>
-              { !hiddenUnlessGettingAnalyticsFromDate && <Loader/> }
-            </button>
-           <dialog className="pop-over results-list analytics-time-pop">
-            <section class="pop-over-actions last-section">
-               <ul class="results">
-                  <li class={`result ${activeIfLabelIsMonths}`} onClick={selectMonthFrame}>
-                     <div class="result-container">
-                        <div class="result-name">Last 4 Weeks</div>
-                     </div>
-                  </li>
-                  <li class="result active">
-                     <div class="result-container">
-                        <div class="result-name">Last 2 Weeks</div>
-                     </div>
-                  </li>
-                  <li class="result">
-                     <div class="result-container">
-                        <div class="result-name">Last 24 Hours</div>
-                     </div>
-                  </li>
-               </ul>
-            </section>
-          </dialog>
-          </div>
-        )}
-      </PopoverContainer>
-    );
-  }
-}
-
-const ResultLI = ({onClick, isActive, text}) => (
-  <li class="result">
-     <div class="result-container">
-        <div class="result-name">Last 24 Hours</div>
-     </div>
-  </li>
-);
-
-/*
-
-      dialog.pop-over.results-list.analytics-time-pop.disposable(click=@stopPropagation)
-
-        section.pop-over-actions.last-section
-          ul.results
-            li.result(click=@selectMonthFrame class=@activeIfLabelIsMonths)
-              .result-container
-                .result-name Last 4 Weeks
-            li.result(click=@selectWeeksFrame class=@activeIfLabelIsWeeks)
-              .result-container
-                .result-name Last 2 Weeks
-            li.result(click=@selectHoursFrame class=@activeIfLabelIsHours)
-              .result-container
-                .result-name Last 24 Hours      
-*/
-
-export default function(application, analytics) {
-
-  const self = {
-  
-    application,
-
-    stopPropagation(event) {
-      return event.stopPropagation();
-    },
-
     selectMonthFrame() {
       analytics.analyticsTimeLabel('Last 4 Weeks');
       return analytics.gettingAnalyticsFromDate(true);
@@ -96,6 +33,40 @@ export default function(application, analytics) {
       analytics.analyticsTimeLabel('Last 24 Hours');
       return analytics.gettingAnalyticsFromDate(true);
     },
+      
+    const selectFrame(timeLabel) {
+      analytics.analyticsTimeLabel(timeLabel)
+      analytics.gettingAnalyticsFromDate(true);
+    }
+    
+    return (
+      <PopoverContainer>
+        {({visible, togglePopover}) => (
+          <div className="button-wrap">
+            <button className="button-small button-tertiary button-select" onClick={togglePopover}>
+              <span>{analyticsTimeLabel}</span>
+              { !hiddenUnlessGettingAnalyticsFromDate && <Loader/> }
+            </button>
+            { visible && (
+              <dialog className="pop-over results-list analytics-time-pop">
+                <section class="pop-over-actions last-section">
+                  <ul class="results">
+                   <ResultLI selectFrame={selectFrame} togglePopover={isActive={activeIfLabelIsMonths} text="Last 4 Weeks"/>
+                   <ResultLI onClick={selectFrame} isActive={activeIfLabelIsWeeks} text="Last 2 Weeks"/>
+                   <ResultLI onClick={selectFrame} isActive={activeIfLabelIsHours} text="Last 24 Hours"/>
+                  </ul>
+                </section>
+              </dialog>
+            )}
+          </div>
+        )}
+      </PopoverContainer>
+    );
+  }
+}
+
+
+
 
     activeIfLabelIsMonths() {
       if (analytics.analyticsTimeLabel() === 'Last 4 Weeks') { return 'active'; }

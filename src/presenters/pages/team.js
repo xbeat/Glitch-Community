@@ -77,7 +77,10 @@ export default function(application) {
     },
 
     addTeamUserButton() {
-      return self.currentUserIsOnTeam() ? Reactlet(AddTeamUser, {}) : '';
+      const props = {
+        search: (query) => User.getSearchResults(application, query),
+      };
+      return self.currentUserIsOnTeam() ? Reactlet(AddTeamUser, props) : '';
     },
 
     addTeamProjectPop() {

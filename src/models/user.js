@@ -299,7 +299,8 @@ User.getSearchResults = function(application, query) {
       return data.forEach(function(datum) {
         datum.fetched = true;
         return User(datum).update(datum).pushSearchResult(application);
-      });}).catch(error => console.error('getSearchResults', error));
+      });
+    }).catch(error => console.error('getSearchResults', error));
 };
 
 

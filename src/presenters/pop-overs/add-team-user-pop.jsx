@@ -1,12 +1,9 @@
-import Observable from 'o_0';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
-import Reactlet from '../reactlet';
 import Loader from '../includes/loader.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
-
-import React from 'react';
-//import PropTypes from 'prop-types';
 
 /*
 function Old(application) {
@@ -123,9 +120,7 @@ class AddTeamUserPop extends React.Component {
   }
   
   updateSearch() {
-    this.setState(({search}) => {
-      return { searching: !!search };
-    });
+    console.log(this.props.search(this.state.search));
   }
   
   render() {
@@ -144,5 +139,9 @@ class AddTeamUserPop extends React.Component {
     );
   }
 }
+
+AddTeamUserPop.propTypes = {
+  search: PropTypes.func.isRequired,
+};
 
 export default AddTeamUserPop;

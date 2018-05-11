@@ -4,15 +4,19 @@ import PropTypes from 'prop-types';
 import AddTeamUserPop from '../pop-overs/add-team-user-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 
-const AddTeamUser = () => (
+const AddTeamUser = ({search}) => (
   <PopoverContainer>
     {({visible, togglePopover}) => (
       <span className="add-user-container">
         <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
-        {visible && <AddTeamUserPop />}
+        {visible && <AddTeamUserPop search={search} />}
       </span>
     )}
   </PopoverContainer>
 );
+
+AddTeamUser.propTypes = {
+  search: PropTypes.func.isRequired,
+};
 
 export default AddTeamUser;
