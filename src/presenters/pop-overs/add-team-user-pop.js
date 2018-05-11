@@ -71,7 +71,7 @@ export default function(application) {
         action,
       };
       
-      return Reactlet(UserResultItem, props);
+      return Reactlet(UserResultItem, props, `add-user-${user.id()}`);
     },
     
   };
