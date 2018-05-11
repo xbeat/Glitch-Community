@@ -386,6 +386,10 @@ export default function(application, teamOrProject) {
     },
 
     AnalyticsTimePop() {
+      // Subscribe to these observables:
+      self.analyticsTimeLabel();
+      self.gettingAnalyticsFromDate();
+      
       const props = {
         analyticsTimeLabelObservable: self.analyticsTimeLabel,
         gettingAnalyticsFromDateObservable: self.gettingAnalyticsFromDate,

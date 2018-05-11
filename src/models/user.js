@@ -296,7 +296,7 @@ User.getSearchResults = function(application, query) {
       if (data.length === 0) {
         application.searchResultsHaveNoUsers(true);
       }
-      return data.forEach(function(datum) {
+      data = data.map(function(datum) {
         datum.fetched = true;
         return User(datum).update(datum).pushSearchResult(application);
       });

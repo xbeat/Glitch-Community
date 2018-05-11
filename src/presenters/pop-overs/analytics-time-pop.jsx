@@ -4,11 +4,17 @@ import PopoverContainer from './popover-container.jsx';
 import Loader from '../includes/loader.jsx';
 
 const ResultLI = ({selectFrame, isActive, timeFrame}) => {
-  <li className={"result" + (isActive ? " active" : "")} onClick={(event) => selectFrame(event, timeFrame)}>
-    <div className="result-container">
-      <div className="result-name">{timeFrame}</div>
-    </div>
-  </li>
+  let resultClass = "result";
+  if(isActive) {
+    resultClass += " active";
+  }
+  return (
+    <li className={resultClass} onClick={(event) => selectFrame(event, timeFrame)}>
+      <div className="result-container">
+        <div className="result-name">{timeFrame}</div>
+      </div>
+    </li>
+  );
 };
 
 ResultLI.propTypes = {
