@@ -76,7 +76,7 @@ class AddTeamUserPop extends React.Component {
       this.setState(({ maybeRequest }) => {
         return (request === maybeRequest) ? {
           maybeRequest: null,
-          maybeResults: results.slice(0, 5).map(user => user.asProps()),
+          maybeResults: results.slice(0, 5),
         } : {};
       });
     });

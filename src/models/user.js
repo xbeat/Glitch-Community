@@ -287,20 +287,18 @@ User.getSearchResultsJSON = function(application, query) {
   const source = CancelToken.source();
   const searchPath = `users/search?q=${query}`;
   return application.api(source).get(searchPath)
-    .then(function({data}) {
-      return data;
-  }).catch(error => console.error('getSearchResultsJSON', error));
+    .then(({data}) => data)
+    .catch(error => console.error('getSearchResultsJSON', error));
 };
 
 User.getSearchResults = function(application, query) {
   const MAX_RESULTS = 20;
-  const { CancelToken } = axios;
-  const source = CancelToken.source();
   application.searchResultsUsers([]);
   application.searchingForUsers(true);
-  const searchPath = `users/search?q=${query}`;
-  return application.api(source).get(searchPath)
-    .then(function({data}) {
+  return User.getSearchResultsJSON(application, query)
+    .then((data) => {
+      debugger;
+    
       application.searchingForUsers(false);
       data = data.slice(0 , MAX_RESULTS);
       if (data.length === 0) {
@@ -309,11 +307,11 @@ User.getSearchResults = function(application, query) {
       data = data.map(function(datum) {
         datum.fetched = true;
         return User(datum).update(datum);
-      })
+      });
       data.forEach(function(userModel) {
         return userModel.pushSearchResult(application);
       });
-    return data;
+      return data;
     }).catch(error => console.error('getSearchResults', error));
 };
 
