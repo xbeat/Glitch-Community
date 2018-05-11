@@ -8,10 +8,7 @@ section.analytics(class=@hiddenUnlessCurrentUserIsOnTeam)
     h3
       span= "#{@totalRemixes()} Remixes Over the #{@analyticsTimeLabel()}"
       span.emoji.emoji-in-title.microphone
-    .button-wrap
-      button.button-small.button-tertiary.button-select(click=@toggleAnalyticsTimePop)
-        span= @analyticsTimeLabel
-        span(class=@hiddenUnlessGettingAnalyticsFromDate)= Loader
+    = @AnalyticsTimePop
 
     = @AnalyticsProjectPop
       
@@ -25,11 +22,7 @@ section.analytics(class=@hiddenUnlessCurrentUserIsOnTeam)
     h3
       span= "#{@totalVisits()} Visits Over the #{@analyticsTimeLabel()}"
       span.emoji.emoji-in-title.eyes
-    .button-wrap
-      button.button-small.button-tertiary.button-select(click=@toggleAnalyticsTimePop)
-        span= @analyticsTimeLabel               
-        span(class=@hiddenUnlessGettingAnalyticsFromDate)= Loader
-      = @analyticsTimePop
+    = @AnalyticsTimePop
 
     = @AnalyticsProjectPop
 

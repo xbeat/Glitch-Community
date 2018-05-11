@@ -12,7 +12,9 @@ const ResultLI = ({selectFrame, isActive, timeFrame}) => (
 );
 
 ResultLI.propTypes = {
-  selectFrame: PropTypes
+  selectFrame: PropTypes.func.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  timeFrame: PropTypes.string.isRequired,
 };
 
 const selectFrameFactory = (analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable, togglePopover) => {
@@ -24,12 +26,7 @@ const selectFrameFactory = (analyticsTimeLabelObservable, gettingAnalyticsFromDa
   }
 }
 
-const  AnalyticsTimePop = ({analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable}) => {
-  const timeFrames = [
-    "Last 4 Weeks",
-    "Last 2 Weeks",
-    "Last 24 Hours",
-  ];
+const  AnalyticsTimePop = ({analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable, timeFrames}) => {
   const currentTimeFrame = analyticsTimeLabelObservable();
   const gettingAnalyticsFromDate = gettingAnalyticsFromDateObservable();
 
@@ -59,6 +56,12 @@ const  AnalyticsTimePop = ({analyticsTimeLabelObservable, gettingAnalyticsFromDa
       )}
     </PopoverContainer>
   );
+};
+
+AnalyticsTimePop.propTypes = {
+  analyticsTimeLabelObservable: PropTypes.func.isRequired, 
+  gettingAnalyticsFromDateObservable: PropTypes.func.isRequired,
+  timeFrames: PropTypes.array.isRequired,
 };
 
 export default AnalyticsTimePop;
