@@ -106,7 +106,7 @@ class AddTeamUserPop extends React.Component {
     super(props);
     
     this.state = {
-      search: '',
+      query: '',
       request: null,
       results: [],
     };
@@ -117,9 +117,9 @@ class AddTeamUserPop extends React.Component {
   }
   
   handleChange(evt) {
-    const search = evt.currentTarget.value.trim();
-    this.setState({ search });
-    if (search) {
+    const query = evt.currentTarget.value.trim();
+    this.setState({ query });
+    if (query) {
       this.startSearch();
     } else {
       this.clearSearch()
@@ -134,10 +134,10 @@ class AddTeamUserPop extends React.Component {
   }
   
   async startSearch() {
-    if (!this.state.search) {
+    if (!this.state.query) {
       return this.clearSearch();
     }
-    const request = this.props.search(this.state.search);
+    const request = this.props.search(this.state.query);
     this.setState({ request });
     const results = await request;
     this.setState(prevState => {
@@ -149,12 +149,13 @@ class AddTeamUserPop extends React.Component {
   }
   
   render() {
-    const placeholder = "Search for a user or email";
     return (
       <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">
-          <input id="team-user-search" className="pop-over-input search-input pop-over-search"
-            value={this.state.search} onChange={this.handleChange} placeholder={placeholder}
+          <input id="team-user-search"
+            className="pop-over-input search-input pop-over-search"
+            value={this.state.query} onChange={this.handleChange}
+            placeholder="Search for a user or email"
           />
         </section>
         {!!(this.state.request || this.state.results.length) && <section className="pop-over-actions last-section results-list">
