@@ -76,8 +76,8 @@ export default function(application) {
       }
     },
 
-    addTeamUserPop() {
-      return Reactlet(AddTeamUser, ;
+    addTeamUserButton() {
+      return self.currentUserIsOnTeam() ? Reactlet(AddTeamUser, {}) : '';
     },
 
     addTeamProjectPop() {

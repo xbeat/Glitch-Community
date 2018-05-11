@@ -8,7 +8,7 @@ import UserResultItem from '../includes/user-result-item.jsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function(application) {
+function Old(application) {
 
   var self = {
   
@@ -114,3 +114,5 @@ class AddTeamUserPop extends React.Component {
     );
   }
 }
+
+export default AddTeamUserPop;
