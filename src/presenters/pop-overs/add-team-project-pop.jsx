@@ -32,7 +32,6 @@ export class AddTeamProjectPop extends React.Component {
         const projects = data.map((project) => {
           let projectProps = ProjectModel(project).asProps();
           Object.assign(projectProps, {
-            action: () => this.props.action(projectProps),
             title: projectProps.domain
           });
           return projectProps;
@@ -45,13 +44,18 @@ export class AddTeamProjectPop extends React.Component {
     return (
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
-          <input onChange={(event) => {this.searchProjects(event.target.value);}} id="team-project-search" className="pop-over-input search-input pop-over-search" placeholder="Search for a project" />
+          <input
+            onChange={(event) => {this.searchProjects(event.target.value);}}
+            id="team-project-search" className="pop-over-input search-input pop-over-search"
+            placeholder="Search for a project"
+            autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+          />
         </section>
         <section className="pop-over-actions results-list">
           { this.state.isSearching && <Loader /> }
           <ul className="results">
             { this.state.searchResults.map((project, key) => (
-              <li key={key}><ProjectResultItem {...project}/></li>
+              <li key={key}><ProjectResultItem action={() => this.props.action(project)} {...project}/></li>
             ))}
           </ul>
         </section>

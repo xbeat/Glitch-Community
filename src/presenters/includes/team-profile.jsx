@@ -159,12 +159,12 @@ class TeamProfileContainer extends React.Component {
   constructor(props) {
     super(props);
     this.propsObservable = props.propsObservable;
-    this.state = { observedProps: {} };
+    this.state = { maybeProps: null };
   }
   
   componentDidMount() {
     this.propsObservable.observe((props) => {
-      this.setState({observedProps: props});
+      this.setState({maybeProps: props});
     });
   }
   componentWillUnmount() {
@@ -172,7 +172,11 @@ class TeamProfileContainer extends React.Component {
   }
   
   render() {
-    return <TeamProfile {...this.state.observedProps}/>;
+    if(!this.state.maybeProps) {
+      return null;
+    }
+    
+    return <TeamProfile {...this.state.maybeProps}/>;
   }
 }
 
