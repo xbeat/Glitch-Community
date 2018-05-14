@@ -23,18 +23,16 @@ import TeamProfile from "../includes/team-profile.jsx";
 
 export default function(application) {
   const assetUtils = assets(application);
-
+  
   var self = {
 
     application,
     team: application.team,
-    hiddenIfTeamFetched() { return application.team().hiddenIfFetched(); },
-    hiddenUnlessTeamFetched() { return application.team().hiddenUnlessFetched(); },
     initialTeamDescription: Observable(undefined),
     
     TeamProfile() {
-      //observe team:
-      self.team();
+      //observin' it.
+      console.log('rendering team profile',self.team());
       
       const propsObservable = Observable(() => {
         const team = self.team().asProps();
@@ -52,7 +50,6 @@ export default function(application) {
           uploadAvatar: self.uploadAvatar,
           uploadCover: self.uploadCover,
         };
-        console.log("I have observed:", props);
         return props;
       });
       

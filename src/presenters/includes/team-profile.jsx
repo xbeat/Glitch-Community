@@ -163,12 +163,11 @@ class TeamProfileContainer extends React.Component {
   
   componentDidMount() {
     this.props.propsObservable.observe((props) => {
-      console.log("I have received", props, this.props.propsObservable());
       this.setState({maybeProps: props});
     });
   }
   componentWillUnmount() {
-    //this.props.propsObservable.releaseDependencies();
+    this.props.propsObservable.releaseDependencies();
   }
   
   render() {
