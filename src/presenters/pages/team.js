@@ -36,7 +36,7 @@ export default function(application) {
       const team = self.team().asProps();
       const props = {
         ...team,
-        style: self.teamProfileStyle(),
+        style: team.teamProfileStyle,
         currentUserIsOnTeam: self.currentUserIsOnTeam(),
         addUserToTeam: (userId) => { self.team().addUser(application, User({id:userId})); },
         avatarStyle: team.teamAvatarStyle,
