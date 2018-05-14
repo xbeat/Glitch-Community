@@ -39,7 +39,7 @@ class NewProjectPopContainer extends React.Component {
     ];
     this.props.promiseProjectsByIds(projectIds).then((projects) => {
       const projectProps = projects.map((project) => {
-        const props = project.asProps();
+        const {...props} = project.asProps();
         //Deliberately hide the user list 
         props.users = [];
         return props;

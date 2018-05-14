@@ -191,6 +191,8 @@ export default Team = function(I, self) {
     
     asProps() {
       return {
+        get users() { return self.users().map(user => user.asProps()) },
+        
         coverColor: self.coverColor(),
         coverUrlSmall: self.coverUrl('small'),
         description: self.description(),
@@ -202,7 +204,6 @@ export default Team = function(I, self) {
         thanksCount: self.thanksCount(),
         truncatedDescription: self.truncatedDescription(),
         url: self.url(),
-        getUsers: () => self.users().map(user => user.asProps()),
         verifiedImage: self.verifiedImage(),
         verifiedTooltip: self.verifiedTooltip(),
       };

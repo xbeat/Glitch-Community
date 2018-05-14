@@ -13,9 +13,9 @@ main.search-results(role="main")
   article(class=@hiddenIfSearchResultsHaveNoTeams)
     h2 Teams
     ul.teams-container
-      - @searchResultsTeams().forEach (teamProps) ->
+      - @searchResultsTeams().forEach (team) ->
         li
-          = Reactlet(TeamItem, {team: teamProps}, 'search-team-'+teamProps.id)
+          = Reactlet(TeamItem, {team: team.asProps()}, 'search-team-'+team.id())
     span(class=@hiddenIfSearchResultsTeamsLoaded)
       = Loader(this)
 
@@ -23,9 +23,9 @@ main.search-results(role="main")
   article(class=@hiddenIfSearchResultsHaveNoUsers)
     h2 Users
     ul.users-container
-      - @searchResultsUsers().forEach (userProps) ->
+      - @searchResultsUsers().forEach (user) ->
         li
-          = Reactlet(UserItem, {user: userProps}, 'search-user-'+userProps.id)
+          = Reactlet(UserItem, {user: user.asProps()}, 'search-user-'+user.id())
     span(class=@hiddenIfSearchResultsUsersLoaded)
       = Loader(this)
 

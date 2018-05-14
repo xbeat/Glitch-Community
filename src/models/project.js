@@ -38,6 +38,8 @@ export default Project = function(I, self) {
       const project = self;
 
       return {
+        get users() { return project.users().map(user => user.asProps()) },
+        
         avatar: project.avatar(),
         description: project.description(),
         domain: project.domain(),
@@ -53,7 +55,6 @@ export default Project = function(I, self) {
         showOverlay: () => {
           project.showOverlay(application);
         },
-        getUsers: () => project.users().map(user => user.asProps()),
       };
     },
 
