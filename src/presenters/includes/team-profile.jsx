@@ -27,16 +27,21 @@ import AddTeamUser from '../includes/add-team-user.jsx';
 class TeamDescription extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      description: props.description,
+    };
   }
   
   render() {
     const {
       applyDescription,
       currentUserIsOnTeam,
-      description,
       initialTeamDescription,
       updateDescription,
     } = this.props;
+    const {
+      description
+    } = this.state;
     
     if(!currentUserIsOnTeam) {
       if(!description) {
@@ -64,7 +69,6 @@ class TeamDescription extends React.Component {
 TeamDescription.propTypes = {
   applyDescription: PropTypes.func.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
-  description: PropTypes.string.isRequired,
   initialTeamDescription: PropTypes.string.isRequired,
   updateDescription: PropTypes.func.isRequired,
 };
