@@ -13,7 +13,7 @@ Example:
 
 export default [
   {
-    title: 'Learn Browser Positioning with Floats',
+    title: 'Get Started with the Tumblr API',
     img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ffloat-layout.jpg?1525950518900',
     link: 'https://float-layout.glitch.me/'
   }
