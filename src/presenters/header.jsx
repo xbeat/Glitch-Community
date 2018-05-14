@@ -22,8 +22,8 @@ const Logo = () => {
 };
 
 const ResumeCoding = () => (
-  <a className="" href="https://glitch.com/edit/" data-track="resume coding">
-    <div className="button button-small button-cta">Resume Coding</div>
+  <a className="button button-small button-cta" href="https://glitch.com/edit/" data-track="resume coding">
+    <div className="">Resume Coding</div>
   </a>
 );
 
