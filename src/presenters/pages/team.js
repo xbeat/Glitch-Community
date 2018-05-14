@@ -84,7 +84,7 @@ export default function(application) {
     },
 
     addTeamProjectButton() {
-      const action = (projectData) => {
+      const action = (event, projectData) => {
         const project = Project(projectData);
         application.team().addProject(application, project);
       };

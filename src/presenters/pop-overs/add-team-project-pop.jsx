@@ -20,6 +20,7 @@ export class AddTeamProjectPop extends React.Component {
     };
     
     this.searchProjects = debounce(this.searchProjects, 400);
+    this.onClick = this.onClick.bind(this);
   }
   searchProjects(query) {
     if(!query) {
@@ -39,6 +40,12 @@ export class AddTeamProjectPop extends React.Component {
         this.setState({searchResults: projects});
       });
   }
+  
+  onClick(event, p) {
+    event.preventDefault();
+    this.togglePopover();
+    this.props.addProject(project);
+  }
 
   render() {
     const showResults = this.state.isSearching || this.state.searchResults.length > 0;
@@ -57,7 +64,13 @@ export class AddTeamProjectPop extends React.Component {
             { this.state.isSearching && <Loader /> }
             <ul className="results">
               { this.state.searchResults.map((project, key) => (
-                <li key={key}><ProjectResultItem action={() => this.props.action(project)} {...project}/></li>
+                <li key={key}>
+                  <a href={project.link}>
+                    <ProjectResultItem 
+                      action={(event) => this.onClick(event, project.id)} 
+                      {...project}/>
+                  </a>
+                </li>
               ))}
             </ul>
           </section>
@@ -70,7 +83,7 @@ export class AddTeamProjectPop extends React.Component {
 AddTeamProjectPop.propTypes = {
   api: PropTypes.func.isRequired,
   teamUsers: PropTypes.array.isRequired,
-  action: PropTypes.func.isRequired,
+  addProject: PropTypes.func.isRequired,
 };
 
 

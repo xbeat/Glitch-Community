@@ -10,7 +10,7 @@ const AddTeamProject = (props) => (
         <button className="button add-project has-emoji opens-pop-over" onClick={togglePopover}>
           Add Project <span className="emoji bento-box" role="img" aria-label=""></span>
         </button>
-        { visible && <AddTeamProjectPop {...props} /> }
+        { visible && <AddTeamProjectPop {...props} togglePopover={togglePopover} /> }
       </div>
     )}
   </PopoverContainer>
