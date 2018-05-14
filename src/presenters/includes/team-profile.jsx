@@ -60,23 +60,22 @@ class TeamDescription extends React.Component {
 }
 
 const UserAvatarContainer = ({
-  teamAvatarStyle,
+  addUserToTeam,
+  avatarStyle,
   currentUserIsOnTeam,
-  uploadAvatar,
-  teamName,
-  verifiedTeamTooltip,
-  isVerifiedTeam,
-  verifiedImage,
-  hasTeamThanks,
-  thanksCount,
-  users,
+  name,
   removeUserFromTeam,
   search,
-  addUserToTeam
+  teamUsers,
+  thanksCount,
+  uploadAvatar,
+  verified,
+  verifiedImage,
+  verifiedTooltip,
 }) => {
   return (
     <div className="user-avatar-container">
-      <div className="user-avatar" style={teamAvatarStyle}>
+      <div className="user-avatar" style={avatarStyle}>
         { currentUserIsOnTeam && (
           <button className="button-small button-tertiary upload-avatar-button" onClick={uploadAvatar}>
             Upload Avatar
@@ -84,16 +83,16 @@ const UserAvatarContainer = ({
         )}
       </div>
       <div className="user-information">
-        <h1 className="username">{teamName}
-          <span data-tooltip={verifiedTeamTooltip}>
-            { isVerifiedTeam && <img className="verified" src={verifiedImage}/> }
+        <h1 className="username">{name}
+          <span data-tooltip={verifiedTooltip}>
+            { verified && <img className="verified" src={verifiedImage}/> }
           </span>
         </h1>
         <div className="users-information">
-          <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
-          <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>
+          <TeamUsers {...{teamUsers, currentUserIsOnTeam, removeUserFromTeam}}/>
+          <AddTeamUser {...{search, add: addUserToTeam, teamUsers: teamUsers.map(({id}) => id)}}/>
         </div>
-        { hasTeamThanks && <Thanks count={thanksCount} />}
+        { thanksCount > 0 && <Thanks count={thanksCount}/> }
       </div>
       <TeamDescription/>
     </div>
@@ -101,7 +100,18 @@ const UserAvatarContainer = ({
 };
 
 UserAvatarContainer.propTypes = {
-  
+  addUserToTeam: PropTypes.func.isRequired,
+  avatarStyle: PropTypes.object.isRequired,
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
+  removeUserFromTeam: PropTypes.func.isRequired,
+  search: PropTypes.func.isRequired,
+  teamUsers: PropTypes.string.isRequired,
+  thanksCount: PropTypes.string.isRequired,
+  uploadAvatar: PropTypes.func.isRequired,
+  verified: PropTypes.bool.isRequired,
+  verifiedImage: PropTypes.string.isRequired,
+  verifiedTooltip: PropTypes.string.isRequired,
 };
 
 const TeamProfile = ({style, fetched, currentUserIsOnTeam, uploadCover, ...props}) => {
