@@ -33,17 +33,17 @@ export default function(application) {
     initialTeamDescription: Observable(undefined),
     
     TeamProfile() {
-      let propsObservable = Observable(() => {
+      const propsObservable = Observable(() => {
         const team = self.team().asProps();
         const props = {
           ...team,
           style: team.teamProfileStyle,
           currentUserIsOnTeam: self.currentUserIsOnTeam(),
-          addUserToTeam: (userId) => { self.team().addUser(application, User({id:userId})); },
+          addUserToTeam: (id) => { self.team().addUser(application, User({id})); },
           applyDescription: self.applyDescription,
           avatarStyle: team.teamAvatarStyle,
-          removeUserFromTeam: (user) => { self.team().removeUser(application, User(user)); },
-          search: (query) => User.getSearchResults(application, query).then(data => data.map(({asProps}) => asProps())),
+          removeUserFromTeam: ({id}) => { self.team().removeUser(application, User({id})); },
+          search: (query) => User.getSearchResultsJSON(application, query).then(users => users.map(user => User(user).asProps())),
           thanksCount: team.teamThanks,
           updateDescription: self.updateDescription,
           uploadAvatar: self.uploadAvatar,

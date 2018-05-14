@@ -157,18 +157,28 @@ TeamProfile.propTypes = {
 
 class TeamProfileContainer extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
+    this.propsObservable = props.propsObservable;
+    this.state = { observedProps: {} };
   }
   
   componentDidMount() {
+    this.propsObservable.observe((props) => {
+      this.setState({observedProps: props});
+    });
   }
   componentWillUnmount() {
+    this.propsObservable.releaseDependencies();
   }
   
   render() {
-    return <TeamProfile {...this.props}/>
+    return <TeamProfile {...this.state.observedProps}/>;
   }
 }
+
+TeamProfileContainer.propTypes = {
+  propsObservable: PropTypes.func.isRequired,
+};
 
 export default TeamProfileContainer;
 

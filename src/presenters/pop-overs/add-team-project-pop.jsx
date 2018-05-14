@@ -32,7 +32,7 @@ export class AddTeamProjectPop extends React.Component {
         const projects = data.map((project) => {
           let projectProps = ProjectModel(project).asProps();
           Object.assign(projectProps, {
-            action: this.props.action,
+            action: () => this.props.action(projectProps),
             title: projectProps.domain
           });
           return projectProps;
@@ -51,7 +51,7 @@ export class AddTeamProjectPop extends React.Component {
           { this.state.isSearching && <Loader /> }
           <ul className="results">
             { this.state.searchResults.map((project, key) => (
-              <ProjectResultItem key={key} {...project}/>
+              <li key={key}><ProjectResultItem {...project}/></li>
             ))}
           </ul>
         </section>
