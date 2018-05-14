@@ -45,13 +45,15 @@ export default Team = function(I, self) {
     
     pins: self.teamPins,
   
-    coverUrl(size) {
-      size = size || 'large';
+    coverUrl(size='large') {
+      if(self.localCoverImage()) {
+        return self.localCoverImage();
+      }
+      
       if (self.hasCoverImage()) {
         return `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-cover/${self.id()}/${size}?${cacheBuster}`;           
       } 
       return "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
-      
     },
 
     teamAvatarUrl(size) {
@@ -188,14 +190,6 @@ export default Team = function(I, self) {
       application.searchResultsTeams.push(self);
       return application.searchResultsTeamsLoaded(true);
     },
-      
-    coverUrl() {
-      if (self.localCoverImage()) {
-        return self.localCoverImage();
-      }
-      return self.coverUrl();
-
-    },
 
     teamProfileStyle() {
       return {
@@ -208,11 +202,7 @@ export default Team = function(I, self) {
       if (self.hasAvatarImage()) {
         return {backgroundImage: `url('${self.teamAvatarUrl()}')`};
       }
-      return {backgroundColor: application.team().backgroundColor()};
-    },
-
-    teamThanks() {
-      return application.team().teamThanks();
+      return {backgroundColor: self.backgroundColor()};
     },
     
     asProps() {
@@ -221,12 +211,15 @@ export default Team = function(I, self) {
         
         coverColor: self.coverColor(),
         coverUrlSmall: self.coverUrl('small'),
+        coverUrl: self.coverUrl(),
         description: self.description(),
         fetched: self.fetched(),
         id: self.id(),
         isVerified: self.isVerified(),
         name: self.name(),
+        teamAvatarStyle: self.teamAvatarStyle(),
         teamAvatarUrl: self.teamAvatarUrl(),
+        teamProfileStyle: self.teamProfileStyle(),
         teamThanks: self.teamThanks(),
         thanksCount: self.thanksCount(),
         truncatedDescription: self.truncatedDescription(),

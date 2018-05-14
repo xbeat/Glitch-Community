@@ -17,7 +17,7 @@ import AnalyticsPresenter from '../analytics';
 
 import Reactlet from "../reactlet";
 import EntityPageProjects from "../entity-page-projects.jsx";
-import AddTeamProjectPop from "../pop-overs/add-team-project-pop.jsx";
+import AddTeamProject from "../includes/add-team-project.jsx";
 
 import TeamProfile from "../includes/team-profile.jsx";
 
@@ -39,7 +39,7 @@ export default function(application) {
         style: self.teamProfileStyle(),
         currentUserIsOnTeam: self.currentUserIsOnTeam(),
         addUserToTeam: (userId) => { self.team().addUser(application, User({id:userId})); },
-        avatarStyle: self.teamAvatarStyle(),
+        avatarStyle: team.teamAvatarStyle,
         removeUserFromTeam: (userId) => { self.team().removeUser(application, User({id:userId})); },
         search: User.getSearchResultsJSON,
         thanksCount: team.teamThanks,
@@ -81,7 +81,7 @@ export default function(application) {
       }
     },
 
-    addTeamProjectPop() {
+    addTeamProjectButton() {
       const action = (projectData) => {
         const project = Project(projectData);
         application.team().addProject(application, project);
@@ -93,7 +93,7 @@ export default function(application) {
         action,
       };
 
-      return Reactlet(AddTeamProjectPop, props);
+      return Reactlet(AddTeamProject, props);
     },
 
     currentUserIsOnTeam() {
@@ -175,17 +175,6 @@ export default function(application) {
 
     hiddenIfOnTeam() {
       if (self.currentUserIsOnTeam()) { return 'hidden'; }
-    },
-
-    hiddenUnlessAddTeamProjectPopVisible() {
-      if (!application.addTeamProjectPopVisible()) { return 'hidden'; }
-    },
-
-    toggleAddTeamProjectPop() {
-      application.addTeamProjectPopVisible.toggle();
-      if (application.addTeamProjectPopVisible()) {
-        return $('#team-project-search').focus();
-      }
     },
   };
 
