@@ -29,7 +29,7 @@ export default function(application) {
     application,
     team: application.team,
     initialTeamDescription: Observable(undefined),
-    
+
     TeamProfile() {
       const propsObservable = Observable(() => {
         const team = self.team().asProps();
@@ -50,7 +50,7 @@ export default function(application) {
         return props;
       });
       
-      return Reactlet(TeamProfile, {propsObservable});
+      return Reactlet(TeamProfile, {propsObservable}, "Team-Profile");
     },
 
     TeamProjects() {
