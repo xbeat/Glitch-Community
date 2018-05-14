@@ -24,31 +24,17 @@ import AddTeamUser from '../includes/add-team-user.jsx';
     },*/
 
 
-class TeamDescription extends React.Component {
+class EditableTeamDescription extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      description: props.description,
-    };
   }
   
   render() {
     const {
       applyDescription,
-      currentUserIsOnTeam,
       initialTeamDescription,
       updateDescription,
     } = this.props;
-    const {
-      description
-    } = this.state;
-    
-    if(!currentUserIsOnTeam) {
-      if(!description) {
-        return null;
-      }
-      return <p className="description read-only">{description}</p>;
-    }
     
     return (
       <p 
@@ -66,11 +52,17 @@ class TeamDescription extends React.Component {
     );
   }
 }
-TeamDescription.propTypes = {
+EditableTeamDescription.propTypes = {
   applyDescription: PropTypes.func.isRequired,
-  currentUserIsOnTeam: PropTypes.bool.isRequired,
   initialTeamDescription: PropTypes.string.isRequired,
   updateDescription: PropTypes.func.isRequired,
+};
+
+const StaticTeamDescription = ({description}) => (
+  !!description ? <p className="description read-only">{description}</p> : null
+);
+StaticTeamDescription.propTypes = {
+  description: PropTypes.string.isRequired,
 };
 
 const UserAvatarContainer = ({
@@ -108,7 +100,9 @@ const UserAvatarContainer = ({
         </div>
         { thanksCount > 0 && <Thanks count={thanksCount}/> }
       </div>
-      <TeamDescription/>
+      {currentUserIsOnTeam
+        ? <EditableTeamDescription initialTeamDescription={""} />
+        : <StaticTeamDescription description={""} />}
     </div>
   );
 };
@@ -128,14 +122,18 @@ UserAvatarContainer.propTypes = {
   verifiedTooltip: PropTypes.string.isRequired,
 };
 
-const TeamProfile = ({style, fetched, currentUserIsOnTeam, uploadCover, ...props}) => {
+const TeamProfile = (props) => {
+  const {
+    currentUserIsOnTeam,
+    fetched,
+    style,
+    uploadCover,
+  } = props;
   return (
     <section className="profile">
       <div className="profile-container" style={style}>
         <div className="profile-info">
-          { !fetched && <Loader/> }
-          
-          { fetched && <UserAvatarContainer {...props}/>}
+          { fetched ? <UserAvatarContainer {...props}/> : <Loader />}
         </div>
       </div>
       {currentUserIsOnTeam && (
