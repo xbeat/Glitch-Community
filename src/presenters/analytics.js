@@ -405,11 +405,11 @@ export default function(application, teamOrProject) {
       };
       const projects = 
           application.team().projects().map(project => {
-            project = project.asProps();
-            project.description = "";
+            const {...props} = project.asProps();
+            props.description = "";
             // console.log('👻👻👻',project)
-            project.users = [];
-            return project;
+            props.users = [];
+            return props;
           });
       const props = {
         projects,
