@@ -39,10 +39,12 @@ export default function(application) {
         style: team.teamProfileStyle,
         currentUserIsOnTeam: self.currentUserIsOnTeam(),
         addUserToTeam: (userId) => { self.team().addUser(application, User({id:userId})); },
+        applyDescription: self.applyDescription,
         avatarStyle: team.teamAvatarStyle,
         removeUserFromTeam: (userId) => { self.team().removeUser(application, User({id:userId})); },
         search: User.getSearchResultsJSON,
         thanksCount: team.teamThanks,
+        updateDescription: self.updateDescription,
         uploadAvatar: self.uploadAvatar,
         verifiedImage: team.verifiedImage,
         verifiedTooltip: team.verifiedTooltip,
@@ -63,7 +65,7 @@ export default function(application) {
       return Reactlet(EntityPageProjects, props, "UserPageProjectsContainer");
     },
 
-    projectOptions(){
+    projectOptions() {
       const userHasProjectOptions = self.currentUserIsOnTeam();
       if(!userHasProjectOptions) {
         return {};

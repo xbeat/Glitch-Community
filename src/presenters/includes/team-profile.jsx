@@ -41,7 +41,7 @@ class EditableTeamDescription extends React.Component {
         className="description content-editable" 
         onKeyUp={updateDescription} 
         onBlur={applyDescription} 
-        placeHolder="Tell us about your team"
+        placeholder="Tell us about your team"
         contentEditable="true"
         role="textbox"
         aria-multiline="true"
@@ -59,7 +59,7 @@ EditableTeamDescription.propTypes = {
 };
 
 const StaticTeamDescription = ({description}) => (
-  !!description ? <p className="description read-only">{description}</p> : null
+  description ? <p className="description read-only">{description}</p> : null
 );
 StaticTeamDescription.propTypes = {
   description: PropTypes.string.isRequired,
