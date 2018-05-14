@@ -27,17 +27,21 @@ import AddTeamUser from '../includes/add-team-user.jsx';
 class EditableTeamDescription extends React.Component {
   constructor(props) {
     super(props);
+    this.ref = React.createRef();
+  }
+  
+  componentDidMount() {
+    this.ref.current.textContent = this.props.initialTeamDescription;
   }
   
   render() {
     const {
       applyDescription,
-      initialTeamDescription,
       updateDescription,
     } = this.props;
     
     return (
-      <p 
+      <p ref={this.ref}
         className="description content-editable" 
         onKeyUp={updateDescription} 
         onBlur={applyDescription} 
@@ -47,7 +51,6 @@ class EditableTeamDescription extends React.Component {
         aria-multiline="true"
         spellCheck="false"
       >
-        {initialTeamDescription}
       </p>
     );
   }
@@ -158,12 +161,12 @@ TeamProfile.propTypes = {
 class TeamProfileContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { maybeProps: null };
+    this.state = { observedProps: this.props.propsObservable() };
   }
   
   componentDidMount() {
     this.props.propsObservable.observe((props) => {
-      this.setState({maybeProps: props});
+      this.setState({observedProps: props});
     });
   }
   componentWillUnmount() {
@@ -171,11 +174,7 @@ class TeamProfileContainer extends React.Component {
   }
   
   render() {
-    if(!this.state.maybeProps) {
-      return null;
-    }
-    
-    return <TeamProfile {...this.state.maybeProps}/>;
+    return <TeamProfile {...this.state.observedProps}/>;
   }
 }
 
