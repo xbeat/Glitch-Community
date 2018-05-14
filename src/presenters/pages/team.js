@@ -88,7 +88,7 @@ export default function(application) {
         api: application.api,
         teamUsers: application.team().users(),
         addProject: (id) => {
-          application.team().addProject(application, Project({id}));
+          application.team().addProject(application, id);
         },
       };
 

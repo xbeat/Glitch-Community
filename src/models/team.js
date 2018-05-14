@@ -169,11 +169,11 @@ export default Team = function(I, self) {
           return console.log('removed user. team users are now', self.users());}).catch(error => console.error('removeUser', error));
     },
 
-    addProject(application, project) {
-      const teamProjectPath = `/teams/${self.id()}/projects/${project.id()}`;
+    addProject(application, projectId) {
+      const teamProjectPath = `/teams/${self.id()}/projects/${projectId}`;
       return application.api().post(teamProjectPath)
         .then(function() {
-          self.projects.push(project);
+          self.projects.push(Project({id: projectId}));
           return console.log('added project. team projects are now', self.projects());}).catch(error => console.error('addProject', error));
     },
 
