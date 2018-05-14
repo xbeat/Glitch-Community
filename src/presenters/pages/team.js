@@ -42,10 +42,11 @@ export default function(application) {
         applyDescription: self.applyDescription,
         avatarStyle: team.teamAvatarStyle,
         removeUserFromTeam: (userId) => { self.team().removeUser(application, User({id:userId})); },
-        search: User.getSearchResultsJSON,
+        search: (query) => User.getSearchResults(application, query).map(,
         thanksCount: team.teamThanks,
         updateDescription: self.updateDescription,
         uploadAvatar: self.uploadAvatar,
+        uploadCover: self.uploadCover,
         verifiedImage: team.verifiedImage,
         verifiedTooltip: team.verifiedTooltip,
       };

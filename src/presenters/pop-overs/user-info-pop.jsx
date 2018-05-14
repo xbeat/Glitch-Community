@@ -14,7 +14,7 @@ const RemoveFromTeam = ({action}) => (
 
 const UserActions = ({user}) => (
   <section className="pop-over-actions">
-    <a href={user.profileUrl}>
+    <a href={user.userLink}>
       <button className="button button-small has-emoji button-tertiary">
         <span>Profile </span>
         <img className="emoji avatar" src={user.userAvatarUrl} alt={user.login}></img>
@@ -28,7 +28,7 @@ const UserInfoPop = (props) => {
   return (
     <dialog className="pop-over user-info-pop">
       <section className="pop-over-info">
-        <a href={user.profileUrl}>
+        <a href={user.userLink}>
           <img className="avatar" src={user.userAvatarUrl} alt={user.login} style={user.style}/>
         </a>
         <div className="info-container">
@@ -48,7 +48,7 @@ UserInfoPop.propTypes = {
     name: PropTypes.string,
     login: PropTypes.string.isRequired,
     userAvatarUrl: PropTypes.string.isRequired,
-    profileUrl: PropTypes.string.isRequired,
+    userLink: PropTypes.string.isRequired,
     thanksCount: PropTypes.number.isRequired,
     isOnTeam: PropTypes.bool,
   }).isRequired,

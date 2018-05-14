@@ -67,13 +67,16 @@ StaticTeamDescription.propTypes = {
 
 const UserAvatarContainer = ({
   addUserToTeam,
+  applyDescription,
   avatarStyle,
   currentUserIsOnTeam,
+  description,
   name,
   removeUserFromTeam,
   search,
   users,
   thanksCount,
+  updateDescription,
   uploadAvatar,
   isVerified,
   verifiedImage,
@@ -101,8 +104,8 @@ const UserAvatarContainer = ({
         { thanksCount > 0 && <Thanks count={thanksCount}/> }
       </div>
       {currentUserIsOnTeam
-        ? <EditableTeamDescription initialTeamDescription={""} />
-        : <StaticTeamDescription description={""} />}
+        ? <EditableTeamDescription initialTeamDescription={description} applyDescription={applyDescription} updateDescription={updateDescription} />
+        : <StaticTeamDescription description={description} />}
     </div>
   );
 };
@@ -114,7 +117,7 @@ UserAvatarContainer.propTypes = {
   name: PropTypes.string.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
-  users: PropTypes.string.isRequired,
+  users: PropTypes.array.isRequired,
   thanksCount: PropTypes.string.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
   isVerified: PropTypes.bool.isRequired,
