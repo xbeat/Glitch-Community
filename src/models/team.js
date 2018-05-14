@@ -174,7 +174,11 @@ export default Team = function(I, self) {
       return application.api().post(teamProjectPath)
         .then(function() {
           self.projects.push(Project({id: projectId}));
-          return console.log('added project. team projects are now', self.projects());}).catch(error => console.error('addProject', error));
+          // asynchronously populate the project we just added.
+          Project.getProjectsByIds(application.api(), [projectId]);
+        
+          console.log('added project. team projects are now', self.projects());
+      }).catch(error => console.error('addProject', error));
     },
 
     removeProject(application, projectId) {
@@ -183,7 +187,8 @@ export default Team = function(I, self) {
         .then(function() {
           const newProjects = reject(self.projects(), removedProject => removedProject.id() === projectId);
           self.projects(newProjects);
-          return console.log('removed project. team projects are now', self.projects());}).catch(error => console.error('addProject', error));
+          console.log('removed project. team projects are now', self.projects());
+      }).catch(error => console.error('removeProject', error));
     },
 
     pushSearchResult(application) {
