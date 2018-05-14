@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 import Loader from '../includes/loader.jsx';
 import Thanks from './thanks.jsx';
@@ -26,16 +26,16 @@ import AddTeamUser from '../includes/add-team-user.jsx';
 
 class TeamDescription extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
   
   render() {
     const {
+      applyDescription,
       currentUserIsOnTeam,
       description,
+      initialTeamDescription,
       updateDescription,
-      applyDescription,
-      initialTeamDescription
     } = this.props;
     
     if(!currentUserIsOnTeam) {
@@ -54,10 +54,18 @@ class TeamDescription extends React.Component {
         contentEditable="true"
         role="textbox"
         aria-multiline="true"
-        spellCheck="false">{initialTeamDescription}</p>
-      );
+        spellCheck="false">{initialTeamDescription}
+      </p>
+    );
   }
 }
+TeamDescription.propTypes = {
+  applyDescription: PropTypes.func.isRequired,
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
+  description: PropTypes.string.isRequired,
+  initialTeamDescription: PropTypes.string.isRequired,
+  updateDescription: PropTypes.func.isRequired,
+};
 
 const UserAvatarContainer = ({
   addUserToTeam,
@@ -85,7 +93,7 @@ const UserAvatarContainer = ({
       <div className="user-information">
         <h1 className="username">{name}
           <span data-tooltip={verifiedTooltip}>
-            { verified && <img className="verified" src={verifiedImage}/> }
+            { verified && <img className="verified" src={verifiedImage} alt={verifiedTooltip}/> }
           </span>
         </h1>
         <div className="users-information">
@@ -130,15 +138,15 @@ const TeamProfile = ({style, fetched, currentUserIsOnTeam, uploadCover, ...props
         </button>
       )}
     </section>
-  )
-}
+  );
+};
 
 TeamProfile.propTypes = {
   style: PropTypes.object.isRequired,
   fetched: PropTypes.bool.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   uploadCover: PropTypes.func.isRequired,
-}
+};
 
 export default TeamProfile;
 
