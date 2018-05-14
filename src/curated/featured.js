@@ -14,17 +14,17 @@ Example:
 export default [
   {
     title: 'Get Started with the Tumblr API',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ffloat-layout.jpg?1525950518900',
-    link: 'https://float-layout.glitch.me/'
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftumblr-api-example.jpg?1526298957569',
+    link: 'https://glitch.com/edit/#!/tumblr-api-example?path=README.md:1:0'
   }
   , {
-    title: 'Find Your RPG Persona',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmyrpgpersona.jpg?1525950519050",
-    link: 'https://myrpgpersona.glitch.me/'
+    title: 'xor by sjoerdvisscher',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fxor.jpg?1526298957454",
+    link: 'https://xor.glitch.me/'
   }
   , {
-    title: 'Mesmerizing Moiré Patterns',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fp5-moireish-color.jpg?1525950519190",
-    link: 'https://p5-moireish-color.glitch.me/'
+    title: 'How angry are your Tweets?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fyou-mad-bro.jpg?1526298957692",
+    link: 'https://you-mad-bro.glitch.me/'
   }   
 ];
