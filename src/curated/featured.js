@@ -23,8 +23,8 @@ export default [
     link: 'https://xor.glitch.me/'
   }
   , {
-    title: 'How angry are your Tweets?',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fyou-mad-bro.jpg?1526298957692",
-    link: 'https://you-mad-bro.glitch.me/'
+    title: 'Try out the FaceApp API',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ffaceapp-api.jpg?1526308089454",
+    link: 'https://faceapp-api.glitch.me'
   }   
 ];
