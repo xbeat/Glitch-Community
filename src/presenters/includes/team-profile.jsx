@@ -100,14 +100,18 @@ const UserAvatarContainer = ({
   );
 };
 
-const TeamProfile = ({teamProfileStyle,isTeamFetched, currentUserIsOnTeam, uploadCover, ...props}) => {
+UserAvatarContainer.propTypes = {
+  
+};
+
+const TeamProfile = ({style, fetched, currentUserIsOnTeam, uploadCover, ...props}) => {
   return (
     <section className="profile">
-      <div className="profile-container" style={teamProfileStyle}>
+      <div className="profile-container" style={style}>
         <div className="profile-info">
-          { !isTeamFetched && <Loader/> }
+          { !fetched && <Loader/> }
           
-          { isTeamFetched && <UserAvatarContainer {...props}/>}
+          { fetched && <UserAvatarContainer {...props}/>}
         </div>
       </div>
       {currentUserIsOnTeam && (
@@ -117,6 +121,13 @@ const TeamProfile = ({teamProfileStyle,isTeamFetched, currentUserIsOnTeam, uploa
       )}
     </section>
   )
+}
+
+TeamProfile.propTypes = {
+  style: PropTypes.object.isRequired,
+  fetched: PropTypes.bool.isRequired,
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
+  uploadCover: PropTypes.func.isRequired,
 }
 
 export default TeamProfile;

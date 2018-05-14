@@ -213,6 +213,8 @@ export default User = function(I, self) {
     
     asProps() {
       return {
+        get teams() { return self.teams.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()); },
+
         alt: self.alt(),
         color: self.color(),
         coverColor: self.coverColor(),
@@ -223,7 +225,6 @@ export default User = function(I, self) {
         login: self.login(),
         name: self.name(),
         style: self.style(),
-        get teams() { return self.teams.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()); },
         thanksCount: self.thanksCount(),
         tooltipName: self.tooltipName(),
         truncatedDescriptionHtml: md.render(self.truncatedDescription()),

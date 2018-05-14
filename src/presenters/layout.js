@@ -17,6 +17,7 @@ export default (application, content) =>
     header() {
       const userObservable = Observable(() => {
         const user = application.currentUser();
+        user.teams();
         const maybeUser = user.fetched() ? user.asProps() : null;
         return maybeUser;
       });
@@ -27,7 +28,7 @@ export default (application, content) =>
         overlayNewStuffVisible: application.overlayNewStuffVisible,
         promiseProjectsByIds: (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds),
       };
-      return Reactlet(Header, props, 'fixedzilla');
+      return Reactlet(Header, props);
     },
     
     content,
