@@ -40,7 +40,7 @@ TeamButtons.propTypes = {
 
 
 
-const UserOptionsPop = ({togglePopover, profileUrl, avatarUrl, teams, showNewStuffOverlay}) => {
+const UserOptionsPop = ({togglePopover, userLink, avatarUrl, teams, showNewStuffOverlay}) => {
   const clickNewStuff = (event) => {
     togglePopover();
     showNewStuffOverlay();
@@ -58,7 +58,7 @@ const UserOptionsPop = ({togglePopover, profileUrl, avatarUrl, teams, showNewStu
   return (
     <dialog className="pop-over user-options-pop">
       <section className="pop-over-actions">
-        <a className="button-link" href={profileUrl}>
+        <a className="button-link" href={userLink}>
           <div className="button button-small has-emoji button-tertiary">
             <span>Your Profile </span>
             <img className="emoji avatar" src={avatarUrl} alt="Your avatar"></img>
@@ -90,7 +90,7 @@ const UserOptionsPop = ({togglePopover, profileUrl, avatarUrl, teams, showNewStu
 
 UserOptionsPop.propTypes = {
   togglePopover: PropTypes.func.isRequired,
-  profileUrl: PropTypes.string.isRequired,
+  userLink: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
