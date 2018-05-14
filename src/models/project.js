@@ -38,7 +38,7 @@ export default Project = function(I, self) {
       const project = self;
 
       return {
-        get users() { return project.users().map(user => user.asProps()) },
+        get users() { return project.users().map(user => user.asProps()); },
         
         avatar: project.avatar(),
         description: project.description(),

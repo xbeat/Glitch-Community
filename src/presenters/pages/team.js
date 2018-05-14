@@ -38,7 +38,7 @@ export default function(application) {
     TeamProfile() {
       const props = {
         style: self.teamProfileStyle(),
-        fetched: self.fetched(),
+        fetched: self.team().fetched(),
         currentUserIsOnTeam: self.currentUserIsOnTeam(),
         uploadCover: self.uploadCover,
       };

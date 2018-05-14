@@ -54,7 +54,9 @@ class TeamDescription extends React.Component {
         contentEditable="true"
         role="textbox"
         aria-multiline="true"
-        spellCheck="false">{initialTeamDescription}
+        spellCheck="false"
+      >
+        {initialTeamDescription}
       </p>
     );
   }
