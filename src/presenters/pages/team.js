@@ -39,7 +39,8 @@ export default function(application) {
       const props = {
         style: self.teamProfileStyle(),
         fetched: self.fetched(),
-        currentUserIsOnTeam: 
+        currentUserIsOnTeam: self.currentUserIsOnTeam(),
+        uploadCover: self.uploadCover,
       };
       
       return Reactlet(TeamProfile, props);
@@ -48,7 +49,7 @@ export default function(application) {
     TeamProjects() {
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
-        isAuthorizedUser: application.team().currentUserIsOnTeam(application),
+        isAuthorizedUser: self.currentUserIsOnTeam(),
         projectsObservable: application.team().projects,
         pinsObservable: application.team().pins,
         projectOptions: self.projectOptions(),
@@ -58,7 +59,7 @@ export default function(application) {
     },
 
     projectOptions(){
-      const userHasProjectOptions = application.team().currentUserIsOnTeam(application);
+      const userHasProjectOptions = self.currentUserIsOnTeam();
       if(!userHasProjectOptions) {
         return {};
       }
@@ -142,11 +143,11 @@ export default function(application) {
     },
 
     hiddenUnlessCurrentUserIsOnTeam() {
-      if (!self.currentUserIsOnTeam(application)) { return 'hidden'; }
+      if (!self.currentUserIsOnTeam()) { return 'hidden'; }
     },
 
     hiddenIfCurrentUserIsOnTeam() {
-      if (self.currentUserIsOnTeam(application)) { return 'hidden'; }
+      if (self.currentUserIsOnTeam()) { return 'hidden'; }
     },
 
     description() {

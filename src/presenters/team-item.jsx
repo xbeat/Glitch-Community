@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Thanks from './includes/thanks.jsx';
 import UsersList from './users-list.jsx';
 import WrappingLink from './includes/wrapping-link.jsx';
 
@@ -18,9 +19,7 @@ export default function TeamItem({team}) {
             <img className="verified" src={team.verifiedImage} alt={team.verifiedTooltip} />
           </span>}
           <UsersList users={team.users} />
-          {team.thanksCount > 0 && <p className="thanks">
-            {team.teamThanks} <span className="emoji sparkling_heart"></span>
-          </p>}
+          {team.thanksCount > 0 && <Thanks count={team.thanksCount} />}
           {!!team.description && <p className="description">{team.truncatedDescription}</p>}
         </div>
       </div>

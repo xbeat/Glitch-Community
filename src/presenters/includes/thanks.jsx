@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ThanksRaw = ({children}) => (
-  <p className="user-thanks">
+  <p className="thanks">
     {children}
     &nbsp;
     <span className="emoji sparkling_heart" />
