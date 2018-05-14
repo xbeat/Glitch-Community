@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const Thanks = ({count}) => {
+const Loader = () => {
   return (
     <div className="loader">
       <div className="moon"></div>
@@ -12,8 +11,4 @@ const Thanks = ({count}) => {
   );
 };
 
-Thanks.propTypes = {
-  count: PropTypes.number.isRequired,
-};
-
-export default Thanks;
+export default Loader;

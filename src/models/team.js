@@ -43,15 +43,6 @@ export default Team = function(I, self) {
 
   self.extend({
     
-    asProps() {
-      return {
-        id: self.id(),
-        name: self.name(),
-        url: self.url(),
-        teamAvatarUrl: self.teamAvatarUrl(),
-      };
-    },
-  
     pins: self.teamPins,
   
     coverUrl(size) {

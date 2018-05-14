@@ -10,7 +10,6 @@ const md = mdFactory({
 });
 
 import Project from '../../models/project';
-import User from '../../models/user';
 import TeamTemplate from '../../templates/pages/team';
 import LayoutPresenter from '../layout';
 import AnalyticsPresenter from '../analytics';
