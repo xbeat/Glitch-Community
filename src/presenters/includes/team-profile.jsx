@@ -76,10 +76,10 @@ const UserAvatarContainer = ({
   name,
   removeUserFromTeam,
   search,
-  teamUsers,
+  users,
   thanksCount,
   uploadAvatar,
-  verified,
+  isVerified,
   verifiedImage,
   verifiedTooltip,
 }) => {
@@ -95,12 +95,12 @@ const UserAvatarContainer = ({
       <div className="user-information">
         <h1 className="username">{name}
           <span data-tooltip={verifiedTooltip}>
-            { verified && <img className="verified" src={verifiedImage} alt={verifiedTooltip}/> }
+            { isVerified && <img className="verified" src={verifiedImage} alt={verifiedTooltip}/> }
           </span>
         </h1>
         <div className="users-information">
-          <TeamUsers {...{teamUsers, currentUserIsOnTeam, removeUserFromTeam}}/>
-          <AddTeamUser {...{search, add: addUserToTeam, teamUsers: teamUsers.map(({id}) => id)}}/>
+          <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
+          <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>
         </div>
         { thanksCount > 0 && <Thanks count={thanksCount}/> }
       </div>
@@ -116,10 +116,10 @@ UserAvatarContainer.propTypes = {
   name: PropTypes.string.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
-  teamUsers: PropTypes.string.isRequired,
+  users: PropTypes.string.isRequired,
   thanksCount: PropTypes.string.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
-  verified: PropTypes.bool.isRequired,
+  isVerified: PropTypes.bool.isRequired,
   verifiedImage: PropTypes.string.isRequired,
   verifiedTooltip: PropTypes.string.isRequired,
 };

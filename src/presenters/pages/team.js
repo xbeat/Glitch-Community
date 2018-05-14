@@ -31,30 +31,21 @@ export default function(application) {
     hiddenIfTeamFetched() { return application.team().hiddenIfFetched(); },
     hiddenUnlessTeamFetched() { return application.team().hiddenUnlessFetched(); },
     initialTeamDescription: Observable(undefined),
-
-    verifiedTeamTooltip() {
-      return application.team().verifiedTooltip();
-    },
     
     TeamProfile() {
       const team = self.team().asProps();
       const props = {
+        ...team,
         style: self.teamProfileStyle(),
-        fetched: team.fetched,
         currentUserIsOnTeam: self.currentUserIsOnTeam(),
-        uploadCover: self.uploadCover,
-        addUserToTeam: (userId) => {team.addUser(application, User({id:userId}))},
+        addUserToTeam: (userId) => { self.team().addUser(application, User({id:userId})); },
         avatarStyle: self.teamAvatarStyle(),
-        name: team.name,
-        removeUserFromTeam: (userId) => {team.removeUser(application, User({id:userId}))},
+        removeUserFromTeam: (userId) => { self.team().removeUser(application, User({id:userId})); },
         search: User.getSearchResultsJSON,
-        teamUsers: team.users,
-        thanksCount: self.teamThanks,
+        thanksCount: team.teamThanks,
         uploadAvatar: self.uploadAvatar,
-        verified: team.isVerified,
         verifiedImage: team.verifiedImage,
         verifiedTooltip: team.verifiedTooltip,
-        
       };
       
       return Reactlet(TeamProfile, props);
@@ -105,45 +96,6 @@ export default function(application) {
       return Reactlet(AddTeamProjectPop, props);
     },
 
-    coverUrl() {
-      if (application.team().localCoverImage()) {
-        return application.team().localCoverImage();
-      }
-      return application.team().coverUrl();
-
-    },
-
-    teamProfileStyle() {
-      return {
-        backgroundColor: application.team().coverColor(),
-        backgroundImage: `url('${self.coverUrl()}')`,
-      };
-    },
-
-    teamAvatarStyle() {
-      if (application.team().hasAvatarImage()) {
-        return {backgroundImage: `url('${self.teamAvatarUrl()}')`};
-      }
-      return {backgroundColor: application.team().backgroundColor()};
-
-    },
-
-    teamName() {
-      return application.team().name();
-    },
-
-    teamThanks() {
-      return application.team().teamThanks();
-    },
-
-    isVerified() {
-      return application.team().isVerified();
-    },
-
-    verifiedImage() {
-      return application.team().verifiedImage();
-    },
-
     currentUserIsOnTeam() {
       return application.team().currentUserIsOnTeam(application);
     },
@@ -182,14 +134,6 @@ export default function(application) {
       return event.target.innerHTML = md.render(application.team().description());
     },
     // application.notifyUserDescriptionUpdated true
-
-    teamAvatarUrl() {
-      if (application.team().localAvatarImage()) {
-        return application.team().localAvatarImage();
-      }
-      return application.team().teamAvatarUrl('large');
-
-    },
 
 
     uploadCover() {

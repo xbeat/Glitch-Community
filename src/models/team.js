@@ -188,6 +188,32 @@ export default Team = function(I, self) {
       application.searchResultsTeams.push(self);
       return application.searchResultsTeamsLoaded(true);
     },
+      
+    coverUrl() {
+      if (self.localCoverImage()) {
+        return self.localCoverImage();
+      }
+      return self.coverUrl();
+
+    },
+
+    teamProfileStyle() {
+      return {
+        backgroundColor: self.coverColor(),
+        backgroundImage: `url('${self.coverUrl()}')`,
+      };
+    },
+
+    teamAvatarStyle() {
+      if (self.hasAvatarImage()) {
+        return {backgroundImage: `url('${self.teamAvatarUrl()}')`};
+      }
+      return {backgroundColor: application.team().backgroundColor()};
+    },
+
+    teamThanks() {
+      return application.team().teamThanks();
+    },
     
     asProps() {
       return {
@@ -196,6 +222,7 @@ export default Team = function(I, self) {
         coverColor: self.coverColor(),
         coverUrlSmall: self.coverUrl('small'),
         description: self.description(),
+        fetched: self.fetched(),
         id: self.id(),
         isVerified: self.isVerified(),
         name: self.name(),
