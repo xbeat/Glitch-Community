@@ -53,7 +53,7 @@ export default Project = function(I, self) {
         showOverlay: () => {
           project.showOverlay(application);
         },
-        users: project.users().map(user => user.asProps()),
+        getUsers: () => project.users().map(user => user.asProps()),
       };
     },
 

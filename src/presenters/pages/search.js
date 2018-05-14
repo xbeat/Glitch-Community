@@ -15,10 +15,17 @@ export default function(application) {
     application,
     Reactlet,
     searchResultsProjects: application.searchResultsProjects,
-    searchResultsUsers: application.searchResultsUsers,
-    searchResultsTeams: application.searchResultsTeams,
     TeamItem,
     UserItem,
+    
+    searchResultsUsers() {
+      const users = application.searchResultsUsers() || [];
+      return users.map(user => {
+        const props = user.asProps();
+        
+      });
+    }
+    searchResultsTeams: application.searchResultsTeams,
     
     hiddenIfSearchResultsTeamsLoaded() {
       if (application.searchResultsTeamsLoaded()) { return 'hidden'; }
@@ -51,7 +58,11 @@ export default function(application) {
     ProjectListPresenter() {
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
-        projects: self.searchResultsProjects().map(project => project.asProps()),
+        projects: self.searchResultsProjects().map(project => {
+          const props = project.asProps()
+          props.users = props.getUsers();
+          return props;
+        }),
         title: "Projects"
       };
       return Reactlet(ProjectsList, props);

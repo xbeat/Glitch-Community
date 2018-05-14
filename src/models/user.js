@@ -223,7 +223,7 @@ export default User = function(I, self) {
         login: self.login(),
         name: self.name(),
         style: self.style(),
-        teams: self.teams.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()),
+        getTeams: () => self.teams.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()),
         thanksCount: self.thanksCount(),
         tooltipName: self.tooltipName(),
         truncatedDescriptionHtml: md.render(self.truncatedDescription()),

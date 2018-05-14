@@ -202,7 +202,7 @@ export default Team = function(I, self) {
         thanksCount: self.thanksCount(),
         truncatedDescription: self.truncatedDescription(),
         url: self.url(),
-        users: self.users().map(user => user.asProps()),
+        getUsers: () => self.users().map(user => user.asProps()),
         verifiedImage: self.verifiedImage(),
         verifiedTooltip: self.verifiedTooltip(),
       };
