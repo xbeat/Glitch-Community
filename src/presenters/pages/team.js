@@ -84,15 +84,12 @@ export default function(application) {
     },
 
     addTeamProjectButton() {
-      const action = (event, projectData) => {
-        const project = Project(projectData);
-        application.team().addProject(application, project);
-      };
-
       const props = {
         api: application.api,
         teamUsers: application.team().users(),
-        action,
+        addProject: (id) => {
+          application.team().addProject(application, Project({id}));
+        },
       };
 
       return Reactlet(AddTeamProject, props);

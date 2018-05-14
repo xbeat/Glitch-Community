@@ -22,6 +22,7 @@ export class AddTeamProjectPop extends React.Component {
     this.searchProjects = debounce(this.searchProjects, 400);
     this.onClick = this.onClick.bind(this);
   }
+  
   searchProjects(query) {
     if(!query) {
       return;
@@ -41,10 +42,10 @@ export class AddTeamProjectPop extends React.Component {
       });
   }
   
-  onClick(event, p) {
+  onClick(event, projectId) {
     event.preventDefault();
-    this.togglePopover();
-    this.props.addProject(project);
+    this.props.togglePopover();
+    this.props.addProject(projectId);
   }
 
   render() {
@@ -65,11 +66,9 @@ export class AddTeamProjectPop extends React.Component {
             <ul className="results">
               { this.state.searchResults.map((project, key) => (
                 <li key={key}>
-                  <a href={project.link}>
-                    <ProjectResultItem 
-                      action={(event) => this.onClick(event, project.id)} 
-                      {...project}/>
-                  </a>
+                  <ProjectResultItem 
+                    action={(event) => this.onClick(event, project.id)} 
+                    {...project}/>
                 </li>
               ))}
             </ul>
@@ -84,6 +83,7 @@ AddTeamProjectPop.propTypes = {
   api: PropTypes.func.isRequired,
   teamUsers: PropTypes.array.isRequired,
   addProject: PropTypes.func.isRequired,
+  togglePopover: PropTypes.func.isRequired,
 };
 
 
