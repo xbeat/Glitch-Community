@@ -197,6 +197,25 @@ export default Team = function(I, self) {
       application.searchResultsTeams.push(self);
       return application.searchResultsTeamsLoaded(true);
     },
+    
+    asProps() {
+      return {
+        coverColor: self.coverColor(),
+        coverUrlSmall: self.coverUrl('small'),
+        description: self.description(),
+        id: self.id(),
+        isVerified: self.isVerified(),
+        name: self.name(),
+        teamAvatarUrl: self.teamAvatarUrl(),
+        teamThanks: self.teamThanks(),
+        thanksCount: self.thanksCount(),
+        truncatedDescription: self.truncatedDescription(),
+        url: self.url(),
+        users: self.users().map(user => user.asProps()),
+        verifiedImage: self.verifiedImage(),
+        verifiedTooltip: self.verifiedTooltip(),
+      };
+    },
   });
 
   if (I.id) {

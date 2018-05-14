@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: '"Speech Synthesis" by ericandrewlewis',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fspeech-synthesis-api-voices-demo.jpg?1525087633374',
-    link: 'https://speech-synthesis-api-voices-demo.glitch.me/'
+    title: 'Get Started with the Tumblr API',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftumblr-api-example.jpg?1526298957569',
+    link: 'https://glitch.com/edit/#!/tumblr-api-example?path=README.md:1:0'
   }
   , {
-    title: '"art-connoisseur" by oa495',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fart-connoisseur.jpg?1525087810179",
-    link: 'http://art-connoisseur.glitch.me'
+    title: 'xor by sjoerdvisscher',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fxor.jpg?1526298957454",
+    link: 'https://xor.glitch.me/'
   }
   , {
-    title: '"Biscuit Tin-der" by thisisjofrank',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fbiscuit-tinder.jpg?1525087899535",
-    link: 'https://biscuittinder.glitch.me'
+    title: 'Try out the FaceApp API',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ffaceapp-api.jpg?1526308089454",
+    link: 'https://faceapp-api.glitch.me'
   }   
 ];
