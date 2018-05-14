@@ -36,7 +36,13 @@ export default function(application) {
     },
     
     TeamProfile() {
-      return Reactlet(TeamProfile, {});
+      const props = {
+        style: self.teamProfileStyle(),
+        fetched: self.fetched(),
+        currentUserIsOnTeam: 
+      };
+      
+      return Reactlet(TeamProfile, props);
     },
 
     TeamProjects() {
