@@ -35,7 +35,6 @@ TeamItem.propTypes = {
     isVerified: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     teamAvatarUrl: PropTypes.string.isRequired,
-    teamThanks: PropTypes.string.isRequired,
     thanksCount: PropTypes.number.isRequired,
     truncatedDescription: PropTypes.string.isRequired,
     users: PropTypes.array.isRequired,
