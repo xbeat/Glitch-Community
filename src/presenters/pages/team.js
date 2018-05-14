@@ -9,6 +9,7 @@ const md = mdFactory({
   typographer: true,
 });
 
+import User from '../../models/user';
 import Project from '../../models/project';
 import TeamTemplate from '../../templates/pages/team';
 import LayoutPresenter from '../layout';
@@ -36,11 +37,24 @@ export default function(application) {
     },
     
     TeamProfile() {
+      const team = self.team().asProps();
       const props = {
         style: self.teamProfileStyle(),
-        fetched: self.team().fetched(),
+        fetched: team.fetched,
         currentUserIsOnTeam: self.currentUserIsOnTeam(),
         uploadCover: self.uploadCover,
+        addUserToTeam: (userId) => {team.addUser(application, User({id:userId}))},
+        avatarStyle: self.teamAvatarStyle(),
+        name: team.name,
+        removeUserFromTeam: (userId) => {team.removeUser(application, User({id:userId}))},
+        search: User.getSearchResultsJSON,
+        teamUsers: team.users,
+        thanksCount: self.teamThanks,
+        uploadAvatar: self.uploadAvatar,
+        verified: team.isVerified,
+        verifiedImage: team.verifiedImage,
+        verifiedTooltip: team.verifiedTooltip,
+        
       };
       
       return Reactlet(TeamProfile, props);
@@ -130,24 +144,12 @@ export default function(application) {
       return application.team().verifiedImage();
     },
 
-    hiddenUnlessVerified() {
-      if (!self.isVerified()) { return 'hidden'; }
-    },
-
-    hiddenUnlessTeamHasThanks() {
-      if (!(application.team().thanksCount() > 0)) { return 'hidden'; }
-    },
-
     currentUserIsOnTeam() {
       return application.team().currentUserIsOnTeam(application);
     },
 
     hiddenUnlessCurrentUserIsOnTeam() {
       if (!self.currentUserIsOnTeam()) { return 'hidden'; }
-    },
-
-    hiddenIfCurrentUserIsOnTeam() {
-      if (self.currentUserIsOnTeam()) { return 'hidden'; }
     },
 
     description() {
@@ -189,10 +191,6 @@ export default function(application) {
 
     },
 
-
-    hiddenIfNoDescription() {
-      if (application.team().description().length === 0) { return 'hidden'; }
-    },
 
     uploadCover() {
       const input = document.createElement("input");
