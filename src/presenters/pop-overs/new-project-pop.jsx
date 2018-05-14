@@ -9,7 +9,7 @@ const NewProjectPop = ({projects}) => (
       <div className="results">
         { projects.map((project) => (
           <a key={project.id} href={project.remixUrl}>
-            <ProjectResultItem {...project}/>
+            <ProjectResultItem {...project} action={()=>{}} />
           </a>
         ))}
       </div>

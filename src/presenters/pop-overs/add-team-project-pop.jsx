@@ -41,6 +41,7 @@ export class AddTeamProjectPop extends React.Component {
   }
 
   render() {
+    const showResults = this.state.isSearching || this.state.searchResults.length > 0;
     return (
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
@@ -51,14 +52,16 @@ export class AddTeamProjectPop extends React.Component {
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>
-        <section className="pop-over-actions results-list">
-          { this.state.isSearching && <Loader /> }
-          <ul className="results">
-            { this.state.searchResults.map((project, key) => (
-              <li key={key}><ProjectResultItem action={() => this.props.action(project)} {...project}/></li>
-            ))}
-          </ul>
-        </section>
+        { showResults && (
+          <section className="pop-over-actions results-list">
+            { this.state.isSearching && <Loader /> }
+            <ul className="results">
+              { this.state.searchResults.map((project, key) => (
+                <li key={key}><ProjectResultItem action={() => this.props.action(project)} {...project}/></li>
+              ))}
+            </ul>
+          </section>
+        )}
       </dialog>
     );
   }
