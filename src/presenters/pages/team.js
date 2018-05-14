@@ -48,9 +48,8 @@ export default function(application) {
           updateDescription: self.updateDescription,
           uploadAvatar: self.uploadAvatar,
           uploadCover: self.uploadCover,
-          verifiedImage: team.verifiedImage,
-          verifiedTooltip: team.verifiedTooltip,
         };
+        console.log("I have observed:", props);
         return props;
       });
       

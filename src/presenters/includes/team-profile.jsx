@@ -168,7 +168,7 @@ class TeamProfileContainer extends React.Component {
     });
   }
   componentWillUnmount() {
-    this.propsObservable.releaseDependencies();
+    //this.propsObservable.releaseDependencies();
   }
   
   render() {
