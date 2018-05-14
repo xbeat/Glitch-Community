@@ -155,5 +155,20 @@ TeamProfile.propTypes = {
   uploadCover: PropTypes.func.isRequired,
 };
 
-export default TeamProfile;
+class TeamProfileContainer extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  
+  componentDidMount() {
+  }
+  componentWillUnmount() {
+  }
+  
+  render() {
+    return <TeamProfile {...this.props}/>
+  }
+}
+
+export default TeamProfileContainer;
 

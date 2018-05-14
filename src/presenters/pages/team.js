@@ -33,25 +33,28 @@ export default function(application) {
     initialTeamDescription: Observable(undefined),
     
     TeamProfile() {
-      const team = self.team().asProps();
-      const props = {
-        ...team,
-        style: team.teamProfileStyle,
-        currentUserIsOnTeam: self.currentUserIsOnTeam(),
-        addUserToTeam: (userId) => { self.team().addUser(application, User({id:userId})); },
-        applyDescription: self.applyDescription,
-        avatarStyle: team.teamAvatarStyle,
-        removeUserFromTeam: (user) => { self.team().removeUser(application, User(user)); },
-        search: (query) => User.getSearchResults(application, query).then(data => data.map(({asProps}) => asProps())),
-        thanksCount: team.teamThanks,
-        updateDescription: self.updateDescription,
-        uploadAvatar: self.uploadAvatar,
-        uploadCover: self.uploadCover,
-        verifiedImage: team.verifiedImage,
-        verifiedTooltip: team.verifiedTooltip,
-      };
+      let propsObservable = Observable(() => {
+        const team = self.team().asProps();
+        const props = {
+          ...team,
+          style: team.teamProfileStyle,
+          currentUserIsOnTeam: self.currentUserIsOnTeam(),
+          addUserToTeam: (userId) => { self.team().addUser(application, User({id:userId})); },
+          applyDescription: self.applyDescription,
+          avatarStyle: team.teamAvatarStyle,
+          removeUserFromTeam: (user) => { self.team().removeUser(application, User(user)); },
+          search: (query) => User.getSearchResults(application, query).then(data => data.map(({asProps}) => asProps())),
+          thanksCount: team.teamThanks,
+          updateDescription: self.updateDescription,
+          uploadAvatar: self.uploadAvatar,
+          uploadCover: self.uploadCover,
+          verifiedImage: team.verifiedImage,
+          verifiedTooltip: team.verifiedTooltip,
+        };
+        return props;
+      });
       
-      return Reactlet(TeamProfile, props);
+      return Reactlet(TeamProfile, {propsObservable: propsObservable});
     },
 
     TeamProjects() {
