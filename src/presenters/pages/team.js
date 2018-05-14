@@ -33,6 +33,9 @@ export default function(application) {
     initialTeamDescription: Observable(undefined),
     
     TeamProfile() {
+      //observe team:
+      self.team();
+      
       const propsObservable = Observable(() => {
         const team = self.team().asProps();
         const props = {
