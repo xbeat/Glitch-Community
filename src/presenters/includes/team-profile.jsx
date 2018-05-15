@@ -1,57 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import TextArea from 'react-textarea-autosize';
 
 import Loader from '../includes/loader.jsx';
 import Thanks from './thanks.jsx';
 import TeamUsers from "../includes/team-users.jsx";
-/*TeamUsers() {
-  const props = {
-    users: application.team().users().map(user => user.asProps()),
-    currentUserIsOnTeam: application.team().currentUserIsOnTeam(application),
-    removeUserFromTeam: ({id}) => application.team().removeUser(application, User({id}))
-  };
-*/
-
 import AddTeamUser from '../includes/add-team-user.jsx';
-/* addTeamUserButton() {
-      const props = {
-        search: (query) => User.getSearchResultsJSON(application, query).then(users => users.map(user => User(user).asProps())),
-        add: (id) => application.team().addUser(application, User({id})),
-        members: application.team().users().map(user => user.id()),
-      };
-      return Reactlet(AddTeamUser, props, "TeamPageAddUserButton");
-      <AddTeamUser {search, add, members}/>
-    },*/
 
 
 class EditableTeamDescription extends React.Component {
   constructor(props) {
     super(props);
-    this.ref = React.createRef();
+    this.state = { description: this.props.initialTeamDescription };
+    this.onChange = this.onChange.bind(this);
+    this.onBlur = this.onBlur.bind(this);
   }
   
-  componentDidMount() {
-    this.ref.current.textContent = this.props.initialTeamDescription;
+  onChange(evt) {
+    this.setState({ description: evt.currentTarget.value });
+    this.props.updateDescription(evt);
+  }
+  
+  onBlur(evt) {
+    this.props.applyDescription(evt);
   }
   
   render() {
-    const {
-      applyDescription,
-      updateDescription,
-    } = this.props;
-    
     return (
-      <p ref={this.ref}
+      <TextArea
         className="description content-editable"
-        onKeyUp={updateDescription}
-        onBlur={applyDescription}
+        value={this.state.description}
+        onChange={this.onChange}
+        onBlur={this.onBlur}
         placeholder="Tell us about your team"
-        contentEditable="true"
-        role="textbox"
-        aria-multiline="true"
         spellCheck="false"
-      >
-      </p>
+      />
     );
   }
 }
@@ -102,7 +85,7 @@ const UserAvatarContainer = ({
         </h1>
         <div className="users-information">
           <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
-          <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>
+          { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
         </div>
         { thanksCount > 0 && <Thanks count={thanksCount}/> }
       </div>

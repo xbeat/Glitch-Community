@@ -15,10 +15,10 @@ const RemoveFromTeam = ({action}) => (
 const UserActions = ({user}) => (
   <section className="pop-over-actions">
     <a href={user.userLink}>
-      <button className="button button-small has-emoji button-tertiary">
+      <div className="button button-small has-emoji button-tertiary">
         <span>Profile </span>
         <img className="emoji avatar" src={user.userAvatarUrl} alt={user.login}></img>
-      </button>
+      </div>
     </a>
   </section>
 );
