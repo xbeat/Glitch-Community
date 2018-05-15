@@ -1,11 +1,8 @@
-- Loader = require "../includes/loader"
-
 main.user-page.team-page(role="main")
 
   = @TeamProfile
 
-  section.add-project-container(class=@hiddenUnlessCurrentUserIsOnTeam)
-    = @addTeamProjectButton
+  = @addTeamProjectButton
 
   = @TeamProjects
 

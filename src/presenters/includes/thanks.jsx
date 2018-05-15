@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ThanksRaw = ({children}) => (
+const ThanksWrap = ({children}) => (
   <p className="thanks">
     {children}
     &nbsp;
     <span className="emoji sparkling_heart" />
   </p>
 );
-ThanksRaw.propTypes = {
+ThanksWrap.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
@@ -24,12 +24,12 @@ ThanksText.propTypes = {
   count: PropTypes.number.isRequired,
 };
 
-const Thanks = ({count}) => <ThanksRaw><ThanksText count={count} /></ThanksRaw>;
+const Thanks = ({count}) => <ThanksWrap><ThanksText count={count} /></ThanksWrap>;
 Thanks.propTypes = {
   count: PropTypes.number.isRequired,
 };
 
-const ThanksShort = ({count}) => <ThanksRaw>{count}</ThanksRaw>;
+const ThanksShort = ({count}) => <ThanksWrap>{count}</ThanksWrap>;
 ThanksShort.propTypes = {
   count: PropTypes.number.isRequired,
 };

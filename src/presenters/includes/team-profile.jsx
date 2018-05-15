@@ -102,29 +102,5 @@ TeamProfile.propTypes = {
   uploadCover: PropTypes.func.isRequired,
 };
 
-class TeamProfileContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { observedProps: this.props.propsObservable() };
-  }
-  
-  componentDidMount() {
-    this.props.propsObservable.observe((props) => {
-      this.setState({observedProps: props});
-    });
-  }
-  componentWillUnmount() {
-    this.props.propsObservable.releaseDependencies();
-  }
-  
-  render() {
-    return <TeamProfile {...this.state.observedProps}/>;
-  }
-}
-
-TeamProfileContainer.propTypes = {
-  propsObservable: PropTypes.func.isRequired,
-};
-
-export default TeamProfileContainer;
+export default TeamProfile;
 

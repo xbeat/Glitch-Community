@@ -79,7 +79,6 @@ export default Team = function(I, self) {
         return self.description().substring(0, MAX_CHARACTERS) + "…";
       } 
       return self.description();
-      
     },
 
     thanksCount() {

@@ -11,6 +11,7 @@ import AnalyticsPresenter from '../analytics';
 import Reactlet from "../reactlet";
 import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
+import Observed from "../includes/observed.jsx";
 
 import TeamProfile from "../includes/team-profile.jsx";
 
@@ -23,9 +24,7 @@ export default function(application) {
     team: application.team,
 
     TeamProfile() {
-      console.log("outer observation");
       const propsObservable = Observable(() => {
-        console.log("inner observation");
         const team = self.team().asProps();
         const props = {
           ...team,
@@ -42,20 +41,22 @@ export default function(application) {
         };
         return props;
       });
-      
-      return Reactlet(TeamProfile, {propsObservable}, "Team-Profile");
+
+      return Reactlet(Observed, {propsObservable, component:TeamProfile});
     },
 
     TeamProjects() {
-      const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
-        isAuthorizedUser: self.currentUserIsOnTeam(),
-        projectsObservable: application.team().projects,
-        pinsObservable: application.team().pins,
-        projectOptions: self.projectOptions(),
-      };
+      const propsObservable = Observable(() => {
+        return {
+          closeAllPopOvers: application.closeAllPopOvers,
+          isAuthorizedUser: self.currentUserIsOnTeam(),
+          projectsObservable: application.team().projects,
+          pinsObservable: application.team().pins,
+          projectOptions: self.projectOptions(),
+        };
+      });
 
-      return Reactlet(EntityPageProjects, props, "UserPageProjectsContainer");
+      return Reactlet(Observed, {propsObservable, component:EntityPageProjects});
     },
 
     projectOptions() {
@@ -77,15 +78,18 @@ export default function(application) {
     },
 
     addTeamProjectButton() {
-      const props = {
-        api: application.api,
-        teamUsers: application.team().users(),
-        addProject: (id) => {
-          application.team().addProject(application, id);
-        },
-      };
+      const propsObservable = Observable(() => {
+         return {
+          api: application.api,
+          teamUsers: application.team().users(),
+          currentUserIsOnTeam: self.currentUserIsOnTeam(),
+          addProject: (id) => {
+            application.team().addProject(application, id);
+          },
+        };
+      });
 
-      return Reactlet(AddTeamProject, props);
+      return Reactlet(Observed, {propsObservable, component:AddTeamProject});
     },
 
     currentUserIsOnTeam() {

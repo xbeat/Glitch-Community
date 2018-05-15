@@ -23,6 +23,12 @@ const UserActions = ({user}) => (
   </section>
 );
 
+const ThanksCount = ({user}) => (
+  <section className="pop-over-info">
+    <Thanks count={user.thanksCount} />
+  </section>
+);
+
 const UserInfoPop = (props) => {
   let {user} = props;
   return (
@@ -34,9 +40,9 @@ const UserInfoPop = (props) => {
         <div className="info-container">
           <p className="name" title={user.name}>{user.name}</p>
           <p className="user-login" title={user.login}>@{user.login}</p>
-          { user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
         </div>
       </section>
+      { user.thanksCount > 0 && <ThanksCount user={user} /> }
       <UserActions user={user} />
       { props.currentUserIsOnTeam === true && <RemoveFromTeam action={props.removeUserFromTeam} />}
     </dialog>
