@@ -23,7 +23,7 @@ class EditableDescription extends React.Component {
   }
   
   onChange(evt) {
-    const description = evt.currentTarget.value;
+    const description = evt.currentTarget.value.trim();
     this.setState({ description });
     this.props.updateDescription(description);
   }
@@ -51,8 +51,9 @@ class EditableDescription extends React.Component {
       :
       <p
         className="description content-editable"
-        tabIndex={0} onFocus={this.onFocus} onBlur={this.onBlur}
-        dangerouslySetInnerHTML={{__html: md.render(this.state.description)}}
+        role="textbox" tabIndex={0}
+        onFocus={this.onFocus} onBlur={this.onBlur}
+        dangerouslySetInnerHTML={{__html: md.render(this.state.description || this.props.placeholder)}}
       ></p>
     );
   }
