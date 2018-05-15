@@ -21,7 +21,7 @@ TeamUsers.propTypes = {
 };
 
 
-const UserAvatarContainer = ({
+const UserAvatar = ({
   addUserToTeam,
   avatarStyle,
   currentUserIsOnTeam,
@@ -71,7 +71,7 @@ const UserAvatarContainer = ({
   );
 };
 
-UserAvatarContainer.propTypes = {
+UserAvatar.propTypes = {
   addUserToTeam: PropTypes.func.isRequired,
   avatarStyle: PropTypes.object.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
@@ -97,7 +97,7 @@ const TeamProfile = (props) => {
     <section className="profile">
       <div className="profile-container" style={style}>
         <div className="profile-info">
-          { fetched ? <UserAvatarContainer {...props}/> : <Loader />}
+          { fetched ? <UserAvatar {...props}/> : <Loader />}
         </div>
       </div>
       {currentUserIsOnTeam && (

@@ -435,7 +435,7 @@ export default function(application, teamOrProject) {
     },
 
     hiddenUnlessCurrentUserIsOnTeam() {
-      if (!self.currentUserIsOnTeam(application)) { return 'hidden'; }
+      if (!self.currentUserIsOnTeam()) { return 'hidden'; }
     },
   };
 
