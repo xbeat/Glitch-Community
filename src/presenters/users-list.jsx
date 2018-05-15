@@ -93,7 +93,7 @@ const UserPopoverTile = ({
         <button onClick={togglePopover} className="user button-unstyled" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
           <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
         </button>
-        {!!visible && children()}
+        {!!visible && children(togglePopover)}
       </div>
     )}
   </PopoverContainer>
@@ -112,7 +112,7 @@ export const UserPopoversList = ({users, children}) => (
     {users.map((user, key) => (
       <li key={key}>
         <UserPopoverTile {...user}>
-          {() => children(user)}
+          {(togglePopover) => children(user, togglePopover)}
         </UserPopoverTile>
       </li>
     ))}

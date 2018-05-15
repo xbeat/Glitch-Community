@@ -30,6 +30,11 @@ const ThanksCount = ({user}) => (
 );
 
 const UserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopover}) => {
+  const removeFromTeamAction = () => {
+    togglePopover();
+    removeUserFromTeam();
+  };
+  
   return (
     <dialog className="pop-over user-info-pop">
       <section className="pop-over-info">
@@ -43,7 +48,7 @@ const UserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopov
       </section>
       { user.thanksCount > 0 && <ThanksCount user={user} /> }
       <UserActions user={user} />
-      { currentUserIsOnTeam && <RemoveFromTeam action={removeUserFromTeam} />}
+      { currentUserIsOnTeam && <RemoveFromTeam action={removeFromTeamAction} />}
     </dialog>
   );
 };
@@ -59,7 +64,6 @@ UserInfoPop.propTypes = {
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
-  togglePopover: PropTypes.func.isRequired,
 };
 
 UserInfoPop.defaultProps = {

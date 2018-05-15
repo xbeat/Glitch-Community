@@ -10,7 +10,7 @@ import {UserPopoversList} from '../users-list.jsx';
 
 const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam}) => (
   <UserPopoversList users={users}>
-    {user => <UserInfoPop user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUserFromTeam(user)} />}
+    {(user, togglePopover) => <UserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUserFromTeam(user)} />}
   </UserPopoversList>
 );
 
@@ -20,9 +20,6 @@ TeamUsers.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
 };
 
-export default TeamUsers;
-
-//...
 
 const UserAvatarContainer = ({
   addUserToTeam,
