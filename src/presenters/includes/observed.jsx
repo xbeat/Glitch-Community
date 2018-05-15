@@ -26,5 +26,5 @@ export default class Observed extends React.Component {
 
 Observed.propTypes = {
   propsObservable: PropTypes.func.isRequired,
-  component: PropTypes.element.isRequired,
+  component: PropTypes.func.isRequired,
 };

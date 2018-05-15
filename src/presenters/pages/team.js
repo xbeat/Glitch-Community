@@ -79,7 +79,7 @@ export default function(application) {
 
     addTeamProjectButton() {
       const propsObservable = Observable(() => {
-         return {
+        return {
           api: application.api,
           teamUsers: application.team().users(),
           currentUserIsOnTeam: self.currentUserIsOnTeam(),
