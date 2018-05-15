@@ -9,6 +9,10 @@ const md = mdFactory({
   typographer: true,
 });
 
+const RenderedDescription = ({description, ...props}) => (
+  <p className="description" {...props} dangerouslySetInnerHTML={{__html: md.render(description)}}></p>
+);
+
 class EditableDescription extends React.Component {
   constructor(props) {
     super(props);
@@ -68,7 +72,7 @@ EditableDescription.propTypes = {
 };
 
 const StaticDescription = ({description}) => (
-  description ? <p className="description read-only" dangerouslySetInnerHTML={{__html: md.render(description)}}></p> : null
+  description ? <RenderedDescription description={description} className="read-only" /> : null
 );
 StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
