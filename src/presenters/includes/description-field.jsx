@@ -23,9 +23,9 @@ class EditableDescription extends React.Component {
   }
   
   onChange(evt) {
-    const description = evt.currentTarget.value.trim();
+    const description = evt.currentTarget.value;
     this.setState({ description });
-    this.props.updateDescription(description);
+    this.props.updateDescription(description.trim());
   }
   
   onFocus() {
@@ -37,14 +37,16 @@ class EditableDescription extends React.Component {
   }
   
   render() {
+    const {placeholder} = this.props;
+    const {description} = this.state;
     return (this.state.focused
       ?
       <TextArea
         className="description content-editable"
-        value={this.state.description}
+        value={description}
         onChange={this.onChange}
         onFocus={this.onFocus} onBlur={this.onBlur}
-        placeholder={this.props.placeholder}
+        placeholder={placeholder}
         spellCheck={false}
         autoFocus
       />
@@ -53,7 +55,8 @@ class EditableDescription extends React.Component {
         className="description content-editable"
         role="textbox" tabIndex={0}
         onFocus={this.onFocus} onBlur={this.onBlur}
-        dangerouslySetInnerHTML={{__html: md.render(this.state.description || this.props.placeholder)}}
+        placeholder={placeholder}
+        dangerouslySetInnerHTML={{__html: md.render(description)}}
       ></p>
     );
   }
