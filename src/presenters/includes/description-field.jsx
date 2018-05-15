@@ -18,8 +18,9 @@ class EditableDescription extends React.Component {
   }
   
   onChange(evt) {
-    this.setState({ description: evt.currentTarget.value });
-    this.props.updateDescription(evt);
+    const description = evt.currentTarget.value;
+    this.setState({ description });
+    this.props.updateDescription(description);
   }
   
   onBlur(evt) {

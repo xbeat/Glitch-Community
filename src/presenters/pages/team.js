@@ -104,11 +104,9 @@ export default function(application) {
       if (!self.currentUserIsOnTeam()) { return 'hidden'; }
     },
 
-    updateDescription(event) {
-      const text = event.target.textContent;
+    updateDescription(text) {
       application.team().description(text);
-      return self.updateTeam({
-        description: text});
+      return self.updateTeam({description: text});
     },
 
     updateTeam: debounce(data => application.team().updateTeam(application, data)
