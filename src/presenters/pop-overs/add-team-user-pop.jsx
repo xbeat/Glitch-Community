@@ -39,7 +39,7 @@ class AddTeamUserPop extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.startSearch = debounce(this.startSearch.bind(this), 300);
-    this.onClick = this.
+    this.onClick = this.onClick.bind(this);
   }
   
   handleChange(evt) {
