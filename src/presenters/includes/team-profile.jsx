@@ -42,9 +42,9 @@ class EditableTeamDescription extends React.Component {
     
     return (
       <p ref={this.ref}
-        className="description content-editable" 
-        onKeyUp={updateDescription} 
-        onBlur={applyDescription} 
+        className="description content-editable"
+        onKeyUp={updateDescription}
+        onBlur={applyDescription}
         placeholder="Tell us about your team"
         contentEditable="true"
         role="textbox"
