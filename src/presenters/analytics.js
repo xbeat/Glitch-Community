@@ -399,7 +399,7 @@ export default function(application, teamOrProject) {
     },
 
     AnalyticsProjectPop() {
-      const action = (event, project) => {
+      const action = (project) => {
         const domain = project ? project.domain : 'All Projects';
         self.analyticsProjectDomain(domain);
       };
