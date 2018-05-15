@@ -12,7 +12,7 @@ const UserResultItem = ({user, action}) => {
   };
 
   return (
-    <button onClick={handleClick} className="button-flat">
+    <button onClick={handleClick} className="button-unstyled">
       <div className="result">
         <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
         <div className="result-name" title={name}>{name}</div>

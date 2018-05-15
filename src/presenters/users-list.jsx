@@ -90,7 +90,7 @@ const UserPopoverTile = ({
   <PopoverContainer>
     {({visible, togglePopover}) => (
       <div className="button-wrap">
-        <button onClick={togglePopover} className="user button-flat" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
+        <button onClick={togglePopover} className="user button-unstyled" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
           <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
         </button>
         {!!visible && children()}

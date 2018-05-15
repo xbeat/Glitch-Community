@@ -1,55 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextArea from 'react-textarea-autosize';
 
 import Loader from '../includes/loader.jsx';
 import Thanks from './thanks.jsx';
 import TeamUsers from "../includes/team-users.jsx";
 import AddTeamUser from '../includes/add-team-user.jsx';
-
-
-class EditableTeamDescription extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { description: this.props.initialTeamDescription };
-    this.onChange = this.onChange.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-  }
-  
-  onChange(evt) {
-    this.setState({ description: evt.currentTarget.value });
-    this.props.updateDescription(evt);
-  }
-  
-  onBlur(evt) {
-    this.props.applyDescription(evt);
-  }
-  
-  render() {
-    return (
-      <TextArea
-        className="description content-editable"
-        value={this.state.description}
-        onChange={this.onChange}
-        onBlur={this.onBlur}
-        placeholder="Tell us about your team"
-        spellCheck="false"
-      />
-    );
-  }
-}
-EditableTeamDescription.propTypes = {
-  applyDescription: PropTypes.func.isRequired,
-  initialTeamDescription: PropTypes.string.isRequired,
-  updateDescription: PropTypes.func.isRequired,
-};
-
-const StaticTeamDescription = ({description}) => (
-  description ? <p className="description read-only">{description}</p> : null
-);
-StaticTeamDescription.propTypes = {
-  description: PropTypes.string.isRequired,
-};
+import {EditableDescription, StaticDescription} from './description-field.jsx';
 
 const UserAvatarContainer = ({
   addUserToTeam,
@@ -90,8 +46,13 @@ const UserAvatarContainer = ({
         { thanksCount > 0 && <Thanks count={thanksCount}/> }
       </div>
       {currentUserIsOnTeam
-        ? <EditableTeamDescription initialTeamDescription={description} applyDescription={applyDescription} updateDescription={updateDescription} />
-        : <StaticTeamDescription description={description} />}
+        ? <EditableDescription
+            initialDescription={description}
+            applyDescription={applyDescription}
+            updateDescription={updateDescription}
+            placeholder="Tell us about your team"
+          />
+        : <StaticDescription description={description} />}
     </div>
   );
 };

@@ -31,7 +31,9 @@ export default function(application) {
     initialTeamDescription: Observable(undefined),
 
     TeamProfile() {
+      console.log("outer observation");
       const propsObservable = Observable(() => {
+        console.log("inner observation");
         const team = self.team().asProps();
         const props = {
           ...team,
@@ -101,22 +103,6 @@ export default function(application) {
 
     hiddenUnlessCurrentUserIsOnTeam() {
       if (!self.currentUserIsOnTeam()) { return 'hidden'; }
-    },
-
-    description() {
-      const text = application.team().description();
-      const node = document.createElement('span');
-      node.innerHTML = md.render(text);
-      return node;
-    },
-
-    setInitialTeamDescription() {
-      const description = application.team().description();
-      const node = document.createElement('span');
-      node.innerHTML = md.render(description);
-      if (description) {
-        return self.initialTeamDescription(node);
-      }
     },
 
     updateDescription(event) {

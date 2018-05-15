@@ -4,7 +4,7 @@ import PopoverContainer from './popover-container.jsx';
 import Loader from '../includes/loader.jsx';
 
 const Result = ({selectFrame, isActive, timeFrame}) => {
-  let resultClass = "result button-flat";
+  let resultClass = "result button-unstyled";
   if(isActive) {
     resultClass += " active";
   }

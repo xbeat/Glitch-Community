@@ -43,11 +43,11 @@ const AnalyticsProjectPop = ({projects, action, togglePopover, setFilter, filter
       </section>
       <section className="pop-over-actions results-list">
         <ul className="results">
-          <button className="button-flat" onClick={(event) => {onClick(event, {domain: "All Projects"});}}>
+          <button className="button-unstyled" onClick={(event) => {onClick(event, {domain: "All Projects"});}}>
             < AllProjectsItem />
           </button>
           { filteredProjects.map((project) => (
-            <button key={project.id} className="button-flat" onClick={(event) => {onClick(event, project);}}>
+            <button key={project.id} className="button-unstyled" onClick={(event) => {onClick(event, project);}}>
               <ProjectResultItem {...project}/>
             </button>
           ))}

@@ -4,7 +4,7 @@ import UsersList from '../users-list.jsx';
 
 const ProjectResultItem = ({domain, description, avatar, users, action}) => {
   return (
-    <button className="button-flat result" onClick={action}>
+    <button className="button-unstyled result" onClick={action}>
       <img className="avatar" src={avatar} alt={`Project avatar for ${domain}`}/>
       <div className="result-name" title={domain}>{domain}</div>
       
