@@ -17,6 +17,7 @@ class EditableTeamDescription extends React.Component {
   }
   
   onChange(evt) {
+    console.log(evt.currentTarget.value);
     this.setState({ description: evt.currentTarget.value });
     this.props.updateDescription(evt);
   }

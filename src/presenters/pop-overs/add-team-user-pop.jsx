@@ -39,6 +39,7 @@ class AddTeamUserPop extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.startSearch = debounce(this.startSearch.bind(this), 300);
+    this.onClick = this.
   }
   
   handleChange(evt) {
@@ -58,12 +59,6 @@ class AddTeamUserPop extends React.Component {
     });
   }
   
-  // jude: I wish you could use async!  it won't work well. :-'( 
-  // for the moment only promises are supported, but we can chat obout if we want to target async/await
-  // the main problem is that Babel has to fake it, and it fakes it rather brutally
-  // :`(
-  // right! but we have es6 promises at least.
-  
   startSearch() {
     if (!this.state.query) {
       return this.clearSearch();
@@ -82,6 +77,11 @@ class AddTeamUserPop extends React.Component {
     });
   }
   
+  onClick(userId) {
+    this.props.togglePopover();
+    this.props.add(userId);
+  }
+  
   render() {
     const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
     return (
@@ -96,7 +96,7 @@ class AddTeamUserPop extends React.Component {
         </section>
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
-          {!!this.state.maybeResults && <UserSearchResults users={this.state.maybeResults} action={this.props.add} />}
+          {!!this.state.maybeResults && <UserSearchResults users={this.state.maybeResults} action={this.onClick} />}
         </section>}
       </dialog>
     );
@@ -107,6 +107,7 @@ AddTeamUserPop.propTypes = {
   search: PropTypes.func.isRequired,
   add: PropTypes.func.isRequired,
   members: PropTypes.arrayOf(PropTypes.number.isRequired),
+  togglePopover: PropTypes.func.isRequired,
 };
 
 export default AddTeamUserPop;

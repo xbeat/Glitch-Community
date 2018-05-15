@@ -104,9 +104,10 @@ var self = Model({
   },
 
   closeAllPopOvers() {
-    $(".pop-over.disposable, .overlay-background.disposable").remove();
+    $(".overlay-background.disposable").remove();
     self.overlayProjectVisible(false);
     self.overlayVideoVisible(false);
+    self.overlayNewStuffVisible(false);
   },
 
   searchProjects(query) {
