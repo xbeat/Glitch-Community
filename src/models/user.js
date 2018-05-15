@@ -76,7 +76,7 @@ export default User = function(I, self) {
       } else if (self.facebookId()) {
         return `https://graph.facebook.com/${self.facebookId()}/picture?type=${size}`;
       } 
-      return self.avatarUrl();
+      return self.avatarUrl() || self.anonAvatar();
       
     },
     // self.avatarUrl size
