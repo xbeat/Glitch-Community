@@ -12,13 +12,11 @@ const UserResultItem = ({user, action}) => {
   };
 
   return (
-    <button onClick={handleClick} className="button-unstyled">
-      <div className="result">
-        <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
-        <div className="result-name" title={name}>{name}</div>
-        <div className="result-description" title={login}>@{login}</div>
-        { thanksCount > 0 && <ThanksShort count={thanksCount} />}
-      </div>
+    <button onClick={handleClick} className="button-unstyled result">
+      <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
+      <div className="result-name" title={name}>{name}</div>
+      <div className="result-description" title={login}>@{login}</div>
+      { thanksCount > 0 && <ThanksShort count={thanksCount} />}
     </button>
   );
 };
