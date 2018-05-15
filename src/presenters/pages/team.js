@@ -12,7 +12,6 @@ import Reactlet from "../reactlet";
 import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
 import Observed from "../includes/observed.jsx";
-
 import TeamProfile from "../includes/team-profile.jsx";
 
 export default function(application) {
@@ -60,8 +59,7 @@ export default function(application) {
     },
 
     projectOptions() {
-      const userHasProjectOptions = self.currentUserIsOnTeam();
-      if(!userHasProjectOptions) {
+      if(!self.currentUserIsOnTeam()) {
         return {};
       }
 
