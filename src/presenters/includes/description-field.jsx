@@ -37,18 +37,20 @@ class EditableDescription extends React.Component {
   }
   
   render() {
-    return (
-      this.state.focused ?
+    return (this.state.focused
+      ?
       <TextArea
         className="description content-editable"
         value={this.state.description}
         onChange={this.onChange}
         onFocus={this.onFocus} onBlur={this.onBlur}
         placeholder={this.props.placeholder}
-        spellCheck="false"
-      /> :
+        spellCheck={false}
+        autoFocus
+      />
+      :
       <p
-        className="description"
+        className="description content-editable"
         tabIndex={0} onFocus={this.onFocus} onBlur={this.onBlur}
         dangerouslySetInnerHTML={{__html: md.render(this.state.description)}}
       ></p>
