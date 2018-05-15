@@ -46,13 +46,15 @@ const UserAvatarContainer = ({
         { thanksCount > 0 && <Thanks count={thanksCount}/> }
       </div>
       {currentUserIsOnTeam
-        ? <EditableDescription
-            initialDescription={description}
-            applyDescription={applyDescription}
-            updateDescription={updateDescription}
-            placeholder="Tell us about your team"
-          />
-        : <StaticDescription description={description} />}
+        ?
+        <EditableDescription
+          initialDescription={description}
+          applyDescription={applyDescription}
+          updateDescription={updateDescription}
+          placeholder="Tell us about your team"
+        />
+        :
+        <StaticDescription description={description} />}
     </div>
   );
 };

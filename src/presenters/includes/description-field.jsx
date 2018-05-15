@@ -1,6 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
+import mdFactory from 'markdown-it';
+
+const md = mdFactory({
+  breaks: true,
+  linkify: true,
+  typographer: true,
+});
 
 class EditableDescription extends React.Component {
   constructor(props) {
@@ -40,7 +47,7 @@ EditableDescription.propTypes = {
 };
 
 const StaticDescription = ({description, ...props}) => (
-  description ? <p className="description read-only">{description}</p> : null
+  description ? <p className="description read-only" dangerouslySetInnerHtml={{html: md.render(description)}}></p> : null
 );
 StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
