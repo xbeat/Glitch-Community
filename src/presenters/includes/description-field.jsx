@@ -40,14 +40,14 @@ class EditableDescription extends React.Component {
   }
 }
 EditableDescription.propTypes = {
-  initialTeamDescription: PropTypes.string.isRequired,
+  initialDescription: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   applyDescription: PropTypes.func.isRequired,
   updateDescription: PropTypes.func.isRequired,
 };
 
-const StaticDescription = ({description, ...props}) => (
-  description ? <p className="description read-only" dangerouslySetInnerHtml={{html: md.render(description)}}></p> : null
+const StaticDescription = ({description}) => (
+  description ? <p className="description read-only" dangerouslySetInnerHTML={{__html: md.render(description)}}></p> : null
 );
 StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,

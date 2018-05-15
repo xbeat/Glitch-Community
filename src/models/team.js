@@ -178,7 +178,7 @@ export default Team = function(I, self) {
           Project.getProjectsByIds(application.api(), [projectId]);
         
           console.log('added project. team projects are now', self.projects());
-      }).catch(error => console.error('addProject', error));
+        }).catch(error => console.error('addProject', error));
     },
 
     removeProject(application, projectId) {
@@ -188,7 +188,7 @@ export default Team = function(I, self) {
           const newProjects = reject(self.projects(), removedProject => removedProject.id() === projectId);
           self.projects(newProjects);
           console.log('removed project. team projects are now', self.projects());
-      }).catch(error => console.error('removeProject', error));
+        }).catch(error => console.error('removeProject', error));
     },
 
     pushSearchResult(application) {

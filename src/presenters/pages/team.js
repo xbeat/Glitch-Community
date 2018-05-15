@@ -28,7 +28,6 @@ export default function(application) {
 
     application,
     team: application.team,
-    initialTeamDescription: Observable(undefined),
 
     TeamProfile() {
       console.log("outer observation");
@@ -162,12 +161,6 @@ export default function(application) {
       if (self.currentUserIsOnTeam()) { return 'hidden'; }
     },
   };
-
-  application.team.observe(function(newVal) {
-    if (newVal) {
-      return self.setInitialTeamDescription();
-    }
-  });
 
   const content = TeamTemplate(self);
 
