@@ -48,7 +48,7 @@ class EditableDescription extends React.Component {
         onFocus={this.onFocus} onBlur={this.onBlur}
         placeholder={placeholder}
         spellCheck={false}
-        autoFocus
+        autoFocus // eslint-ignore-line a11y/no-autofocus
       />
       :
       <p
