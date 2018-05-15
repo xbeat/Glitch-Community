@@ -29,6 +29,13 @@ As long as you like.
     updates() {
       return [
         {
+          id: 3,
+          title: "A Quicker Way to a New Project",
+          body: `
+Sometimes you have an web-based itch that you want to scratch – right now. To get you closer to your dreams, we've added a <pre>New Projects</pre> button to the header. It works just like the editor. Enjoy those hot new dreams.
+`,
+        },
+        {
           id: 2,
           title: "Glitch for Teams",
           body: `
