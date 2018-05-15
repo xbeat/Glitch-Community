@@ -2,8 +2,7 @@
 
 import Observable from 'o_0';
 
-import {find} from "lodash";
-import {keys} from "lodash";
+import {find, keys} from "lodash";
 import axios from 'axios';
 import cachedCategories from './cache/categories.js';
 import cachedTeams from './cache/teams.js';
@@ -125,10 +124,6 @@ var self = Model({
     return Team.getSearchResults(application, query);
   },
   
-  newProjects() {
-    return Project.newProjects();
-  },
-    
   api(source) {
     const persistentToken = self.currentUser() && self.currentUser().persistentToken();
     if (persistentToken) {

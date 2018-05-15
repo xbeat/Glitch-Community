@@ -403,21 +403,18 @@ export default function(application, teamOrProject) {
         const domain = project ? project.domain : 'All Projects';
         self.analyticsProjectDomain(domain);
       };
-      const projects = 
-          application.team().projects().map(project => {
-            const {...props} = project.asProps();
-            props.description = "";
-            // console.log('👻👻👻',project)
-            props.users = [];
-            return props;
-          });
+      const projects = application.team().projects().map(project => {
+        const {...props} = project.asProps();
+        props.description = "";
+        props.users = [];
+        return props;
+      });
       const props = {
         projects,
         action,
         currentDomain: self.analyticsProjectDomain(),
       };
-      // console.log('🌹🌹🌹🌹', props)
-      return Reactlet(AnalyticsProjectPop, props); //todo
+      return Reactlet(AnalyticsProjectPop, props);
     },
 
     
@@ -438,7 +435,7 @@ export default function(application, teamOrProject) {
     },
 
     hiddenUnlessCurrentUserIsOnTeam() {
-      if (!self.currentUserIsOnTeam(application)) { return 'hidden'; }
+      if (!self.currentUserIsOnTeam()) { return 'hidden'; }
     },
   };
 

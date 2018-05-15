@@ -1,5 +1,3 @@
-// replaces analytics-projects-pop.jade/.js, analytics-project-pop.js/.jade, project-result.js
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -75,9 +73,6 @@ class AnalyticsProjectPopContainer extends React.Component {
     super(props);
     this.state = {filter: ""};
     this.setFilter = this.setFilter.bind(this);
-    
-    // We need a guid-like key for the <input> so that react can keep its focus across renders.
-    this.inputKey = Date.now();
   }
   
   setFilter(query) {

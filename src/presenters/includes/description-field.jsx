@@ -36,7 +36,10 @@ class EditableDescription extends React.Component {
     this.props.updateDescription(description.trim());
   }
   
-  onFocus() {
+  onFocus(evt) {
+    if (evt.target.closest('a')) {
+      return;
+    }
     this.setState({focused: true});
   }
   

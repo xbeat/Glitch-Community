@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
@@ -36,22 +35,15 @@ const SignInPop = () => (
   </div>
 );
 
-const SignInPopContainerInnards = ({togglePopover, visible}) => (
-  <div className="button-wrap">
-    <button className="button button-small" onClick={togglePopover}>Sign in</button>
-    {visible && <SignInPop/>}
-  </div>
-);
-
-SignInPopContainerInnards.propTypes = {
-  togglePopover: PropTypes.func.isRequired,
-  visible: PropTypes.bool.isRequired,
-};
-
 export default function SignInPopContainer() {
   return (
     <PopoverContainer>
-      {SignInPopContainerInnards}
+      {({togglePopover, visible}) => (
+        <div className="button-wrap">
+          <button className="button button-small" onClick={togglePopover}>Sign in</button>
+          {visible && <SignInPop/>}
+        </div>
+      )}
     </PopoverContainer>
   );
 }

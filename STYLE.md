@@ -5,7 +5,7 @@ This is our coding style guide.  It's a draft.  It will _always be a draft_, bec
 
 **How to understand this guide**:
 
-This guide doesn't (and cannot) stand on its own, it instead encourages you to find and use the best programming practices and idioms you know.  When there's meaningful choice or fork in direction, we try to set that here.  For more details on any of the practices in this guide, talk the topic through with one of the maintainers.  At present those people are: Jude, Greg, {...you?}
+This guide doesn't (and cannot) stand on its own, it instead encourages you to find and use the best programming practices and idioms you know.  When there's meaningful choice or fork in direction, we try to set that here.  For more details on any of the practices in this guide, talk the topic through with one of the maintainers.  At present those people are: Jude, Greg, Pirijan
 
 We're not strict about enforcing the "latest styles" on any new code, we merely ask that new code heads in the right direction.  That direction being...
 
