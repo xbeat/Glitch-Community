@@ -48,14 +48,14 @@ class EditableDescription extends React.Component {
         onFocus={this.onFocus} onBlur={this.onBlur}
         placeholder={placeholder}
         spellCheck={false}
-        autoFocus // eslint-ignore-line a11y/no-autofocus
+        autoFocus // eslint-disable-line jsx-a11y/no-autofocus
       />
       :
       <p
         className="description content-editable"
-        role="textbox" tabIndex={0}
-        onFocus={this.onFocus} onBlur={this.onBlur}
         placeholder={placeholder}
+        role="textbox" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
+        tabIndex={0} onFocus={this.onFocus} onBlur={this.onBlur}
         dangerouslySetInnerHTML={{__html: md.render(description)}}
       ></p>
     );
