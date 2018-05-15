@@ -34,8 +34,8 @@ const UserInfoPop = (props) => {
         <div className="info-container">
           <p className="name" title={user.name}>{user.name}</p>
           <p className="user-login" title={user.login}>@{user.login}</p>
+          { user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
         </div>
-        { user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
       </section>
       <UserActions user={user} />
       { props.currentUserIsOnTeam === true && <RemoveFromTeam action={props.removeUserFromTeam} />}

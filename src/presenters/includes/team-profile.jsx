@@ -65,7 +65,7 @@ UserAvatarContainer.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
-  thanksCount: PropTypes.string.isRequired,
+  thanksCount: PropTypes.number.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
   isVerified: PropTypes.bool.isRequired,
   verifiedImage: PropTypes.string.isRequired,

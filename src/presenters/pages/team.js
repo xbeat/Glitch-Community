@@ -35,7 +35,7 @@ export default function(application) {
           avatarStyle: team.teamAvatarStyle,
           removeUserFromTeam: ({id}) => { self.team().removeUser(application, User({id})); },
           search: (query) => User.getSearchResultsJSON(application, query).then(users => users.map(user => User(user).asProps())),
-          thanksCount: team.teamThanks,
+          thanksCount: team.thanksCount,
           updateDescription: self.updateDescription,
           uploadAvatar: self.uploadAvatar,
           uploadCover: self.uploadCover,

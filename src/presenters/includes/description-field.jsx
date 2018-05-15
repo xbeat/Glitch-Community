@@ -9,9 +9,13 @@ const md = mdFactory({
   typographer: true,
 });
 
-const RenderedDescription = ({description, ...props}) => (
-  <p className="description" {...props} dangerouslySetInnerHTML={{__html: md.render(description)}}></p>
+const RenderedDescription = ({description, className, ...props}) => (
+  <p className={`description ${className}`} {...props} dangerouslySetInnerHTML={{__html: md.render(description)}}></p>
 );
+RenderedDescription.propTypes = {
+  description: PropTypes.string.isRequired,
+  className: PropTypes.string,
+};
 
 class EditableDescription extends React.Component {
   constructor(props) {
@@ -55,13 +59,13 @@ class EditableDescription extends React.Component {
         autoFocus // eslint-disable-line jsx-a11y/no-autofocus
       />
       :
-      <p
-        className="description content-editable"
+      <RenderedDescription
+        description={description}
+        className="content-editable"
         placeholder={placeholder}
         role="textbox" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
         tabIndex={0} onFocus={this.onFocus} onBlur={this.onBlur}
-        dangerouslySetInnerHTML={{__html: md.render(description)}}
-      ></p>
+      />
     );
   }
 }
