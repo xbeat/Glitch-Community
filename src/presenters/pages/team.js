@@ -1,13 +1,6 @@
 import Observable from 'o_0';
 import {debounce} from 'lodash';
-import mdFactory from 'markdown-it';
 import assets from '../../utils/assets';
-
-const md = mdFactory({
-  breaks: true,
-  linkify: true,
-  typographer: true,
-});
 
 import User from '../../models/user';
 import Project from '../../models/project';
@@ -39,7 +32,6 @@ export default function(application) {
           style: team.teamProfileStyle,
           currentUserIsOnTeam: self.currentUserIsOnTeam(),
           addUserToTeam: (id) => { self.team().addUser(application, User({id})); },
-          applyDescription: self.applyDescription,
           avatarStyle: team.teamAvatarStyle,
           removeUserFromTeam: ({id}) => { self.team().removeUser(application, User({id})); },
           search: (query) => User.getSearchResultsJSON(application, query).then(users => users.map(user => User(user).asProps())),
@@ -112,9 +104,6 @@ export default function(application) {
     updateTeam: debounce(data => application.team().updateTeam(application, data)
       , 250),
 
-    applyDescription(event) {
-      return event.target.innerHTML = md.render(application.team().description());
-    },
     // application.notifyUserDescriptionUpdated true
 
 

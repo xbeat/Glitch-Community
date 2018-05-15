@@ -9,7 +9,6 @@ import {EditableDescription, StaticDescription} from './description-field.jsx';
 
 const UserAvatarContainer = ({
   addUserToTeam,
-  applyDescription,
   avatarStyle,
   currentUserIsOnTeam,
   description,
@@ -44,17 +43,16 @@ const UserAvatarContainer = ({
           { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
         </div>
         { thanksCount > 0 && <Thanks count={thanksCount}/> }
+        {currentUserIsOnTeam
+          ?
+          <EditableDescription
+            initialDescription={description}
+            updateDescription={updateDescription}
+            placeholder="Tell us about your team"
+          />
+          :
+          <StaticDescription description={description} />}
       </div>
-      {currentUserIsOnTeam
-        ?
-        <EditableDescription
-          initialDescription={description}
-          applyDescription={applyDescription}
-          updateDescription={updateDescription}
-          placeholder="Tell us about your team"
-        />
-        :
-        <StaticDescription description={description} />}
     </div>
   );
 };

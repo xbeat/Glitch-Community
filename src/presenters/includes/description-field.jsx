@@ -12,8 +12,13 @@ const md = mdFactory({
 class EditableDescription extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { description: this.props.initialDescription };
+    this.state = {
+      focused: false,
+      description: this.props.initialDescription,
+    };
+    
     this.onChange = this.onChange.bind(this);
+    this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
   }
   
@@ -23,27 +28,36 @@ class EditableDescription extends React.Component {
     this.props.updateDescription(description);
   }
   
-  onBlur(evt) {
-    this.props.applyDescription(evt);
+  onFocus() {
+    this.setState({focused: true});
+  }
+  
+  onBlur() {
+    this.setState({focused: false});
   }
   
   render() {
     return (
+      this.state.focused ?
       <TextArea
         className="description content-editable"
         value={this.state.description}
         onChange={this.onChange}
-        onBlur={this.onBlur}
-        placeholder={this.props.description}
+        onFocus={this.onFocus} onBlur={this.onBlur}
+        placeholder={this.props.placeholder}
         spellCheck="false"
-      />
+      /> :
+      <p
+        className="description"
+        tabIndex={0} onFocus={this.onFocus} onBlur={this.onBlur}
+        dangerouslySetInnerHTML={{__html: md.render(this.state.description)}}
+      ></p>
     );
   }
 }
 EditableDescription.propTypes = {
   initialDescription: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  applyDescription: PropTypes.func.isRequired,
   updateDescription: PropTypes.func.isRequired,
 };
 
