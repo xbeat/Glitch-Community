@@ -13,15 +13,17 @@ button
   cursor: pointer
   position: relative
   vertical-align: middle
-  &:hover
-    background-color: secondary-background
-    text-decoration: none
-  &:active
-    background-color: secondary-background-active
-    color: primary
-  &.has-emoji
-    padding-top: 5px
-    padding-bottom: 5px
+
+  :not(.button-unstyled)
+    &:hover
+      background-color: secondary-background
+      text-decoration: none
+    &:active
+      background-color: secondary-background-active
+      color: primary
+    &.has-emoji
+      padding-top: 5px
+      padding-bottom: 5px
     
 .button-cta
   color: primary
@@ -80,14 +82,13 @@ button
     .down-arrow
       opacity: 1
 
-button.button-unstyled {
+button.button-unstyled
   margin: 0 !important
   border-radius: 0
   padding: 0
   width: 100%
   border: none
   font-weight: normal
-}
 
 .button-checkbox
   width: auto
