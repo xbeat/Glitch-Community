@@ -8,7 +8,7 @@ const TimeFrameItem = ({selectTimeFrame, isActive, timeFrame}) => {
     resultClass += " active";
   }
   return (
-    <button className={resultClass} onClick={selectTimeFrame()}>
+    <button className={resultClass} onClick={selectTimeFrame}>
       <div className="result-container">
         <div className="result-name">{timeFrame}</div>
       </div>
@@ -30,7 +30,6 @@ const timeFrames = [
 
 const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
   const selectTimeFrame = (timeFrame, togglePopover) => {
-    console.log ('🌴')
     return () => { 
       updateTimeFrame(timeFrame)
       togglePopover()
@@ -56,7 +55,6 @@ const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
                       timeFrame={timeFrame}
                     />
                   ))}
-                  <p>asdlfkjasdf</p>
                 </div>
               </section>
             </dialog>

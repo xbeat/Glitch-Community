@@ -1,13 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import Loader from '../includes/loader.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx'
+import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx'
 
-// import AnalyticsTimePop from './pop-overs/analytics-time-pop.jsx';
-// import AnalyticsProjectPop from './pop-overs/analytics-project-pop.jsx';
-// temps: analytics.js, analytics.jade, analytics.styl
+// 🗑: analytics.js, analytics.jade, analytics.styl, analytics-time-pop.jsx, analytics-project-pop.jsx
 
+const timeFrames = [
+  {
+    name: "Last 4 Weeks",
+    time: moment().subtract(4, 'weeks').valueOf(),
+  },
+  {
+    name: "Last 2 Weeks",
+    time: moment().subtract(2, 'weeks').valueOf(),
+  },
+  {
+    name: "Last 24 Hours",
+    time: moment().subtract(24, 'hours').valueOf(),
+  },
+];
 
 const getAnalytics = async ({id, api}) => {
   let path = `analytics/${id}/team`
