@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 
@@ -26,6 +27,23 @@ module.exports = () => {
     output: {
       filename: '[name].js',
       path: PUBLIC
+    },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          react: {
+            name: 'react-bundle',
+            test: /[\\/]node_modules[\\/]react/,
+            chunks: 'all',
+          },
+          modules: {
+            name: 'dependencies',
+            test: /[\\/]node_modules[\\/]/,
+            chunks: 'all',
+            priority: -1,
+          },
+        },
+      },
     },
     devtool: 'source-map',
     module: {
@@ -55,23 +73,13 @@ module.exports = () => {
     plugins: [
       new LodashModuleReplacementPlugin,
       new webpack.NoEmitOnErrorsPlugin(),
-    ],
-    optimization: {
-      splitChunks: {
-        cacheGroups: {
-          react: {
-            name: 'react-bundle',
-            test: /[\\/]node_modules[\\/]react/,
-            chunks: 'all',
-          },
-          modules: {
-            name: 'dependencies',
-            test: /[\\/]node_modules[\\/]/,
-            chunks: 'all',
-            priority: -1,
-          },
+      new HtmlWebpackPlugin({
+        filename: `${PUBLIC}/index.html`,
+        template: `${BASE}/views/index.ejs`,
+        templateParameters: {
+          
         },
-      },
-    },
+      }),
+    ],
   };
 }

@@ -81,8 +81,6 @@ module.exports = function() {
     response.render('index', {
       route: request.path,
       baseUrl: request.baseUrl,
-      clientJs: 'client-bundle.js',
-      dependencyJs: 'dependencies.js',
       API_URL,
       APP_URL,
       EDITOR_URL,
