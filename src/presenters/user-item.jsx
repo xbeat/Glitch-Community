@@ -2,6 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Thanks from './includes/thanks.jsx';
 
+function addDefaultSrc(event) {
+  const AnonAvatarUrl = "https://cdn.glitch.com/f6949da2-781d-4fd5-81e6-1fdd56350165%2Fanon-user-on-project-avatar.svg";
+  event.target.src = AnonAvatarUrl;
+}
+
 export default function UserItem({user}) {
   const style = {
     backgroundImage: `url('${user.coverUrlSmall}')`,
@@ -11,7 +16,7 @@ export default function UserItem({user}) {
     <a href={user.userLink}>
       <div className="item" style={style}>
         <div className="content">
-          <img className="avatar" src={user.userAvatarUrlLarge} alt=""></img>
+          <img onError={addDefaultSrc} className="avatar" src={user.userAvatarUrlLarge} alt=""></img>
           <div className="information">
             {!!user.name && <h3 className="name">{user.name}</h3>}
             <div className="button">@{user.login}</div>
