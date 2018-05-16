@@ -24,24 +24,6 @@ TeamUsers.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
 };
 
-const TeamAvatar = ({currentUserIsOnTeam, removeUserFromTeam, search, addUserToTeam, users, ...props}) => {
-  const UserInformation = (
-    <div className="users-information">
-      <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
-      { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
-    </div>
-  );
-  
-  return <Avatar {...props} TeamFields={UserInformation} UserFields={null}/>
-};
-
-const UserAvatar = ({userLoginOrId, ...props}) => {
-  const UserID = (
-    <h2 className="login">@{userLoginOrId}</h2>
-  );
-  return <Avatar {...props} TeamFields={null} UserFields={UserID}/>
-};
-
 const Avatar = ({
   avatarStyle,
   isAuthorized,
@@ -103,6 +85,34 @@ Avatar.propTypes = {
   descriptionPlaceholder: PropTypes.string.isRequired,
   TeamFields: PropTypes.element.isRequired,
   UserFields: PropTypes.element.isRequired,
+};
+
+
+const TeamAvatar = ({isAuthorized, removeUserFromTeam, search, addUserToTeam, users, ...props}) => {
+  const UserInformation = (
+    <div className="users-information">
+      <TeamUsers {...{users, currentUserIsOnTeam: isAuthorized, removeUserFromTeam}}/>
+      { isAuthorized && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
+    </div>
+  );
+  
+  return <Avatar {...props} TeamFields={UserInformation} UserFields={null}/>
+};
+TeamAvatar.propTypes = {
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  })),
+};
+
+const UserAvatar = ({userLoginOrId, ...props}) => {
+  const UserID = (
+    <h2 className="login">@{userLoginOrId}</h2>
+  );
+  return <Avatar {...props} TeamFields={null} UserFields={UserID}/>
+};
+UserAvatar.propTypes = {
+  userLoginOrId: PropTypes.string.isRequired,
 };
 
 export const Profile = ({isAuthorized, style, uploadCover, Avatar}) => {

@@ -237,6 +237,7 @@ export default User = function(I, self) {
         coverColor: self.coverColor(),
         coverUrlSmall: self.coverUrl('small'),
         description: self.description(),
+        initialDescription: self.initialDescription(),
         hasCoverImage: self.hasCoverImage(),
         id: self.id(),
         login: self.login(),
