@@ -9,12 +9,12 @@ import Loader from '../includes/loader.jsx';
 // console.log(props)
 
 const getAnalytics = async ({id, api}) => {
-  console.log ('📟', id, api)
+  // console.log ('📟', id, api)
   let path = `analytics/${id}/team`
-  api().get(path)
-  .then(({data}) => {
-    return data
-  })
+  return await api().get(path)
+  // .then(({data}) => {
+  //   return data
+  // })
 
 }
 
@@ -35,12 +35,16 @@ class TeamAnalytics extends React.Component {
 
   componentDidMount() {
     // loading c3 lib
-    console.log('🌹ls;j', this.props); //{id: 74, api: ƒ}
+    console.log('🌹lsj', this.props); //{id: 74, api: ƒ}
     
     getAnalytics(this.props)
-    // .then(({data}) => {
-    //   console.log('🚒', data)
-    // })
+    .then(({data}) => {
+      console.log('🚒', data)
+      
+    })
+    .catch(error => 
+      console.error('getAnalytics', error)
+    )
   }
 
   // componentWillUnmount() {
