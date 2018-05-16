@@ -55,18 +55,18 @@ const AnalyticsProjectPop = ({projects, action, togglePopover, setFilter, filter
   ); 
 };
 
-AnalyticsProjectPop.propTypes = {
-  projects: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    avatar: PropTypes.string.isRequired,
-    domain: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  })).isRequired,
-  action: PropTypes.func.isRequired,
-  togglePopover: PropTypes.func.isRequired,
-  setFilter: PropTypes.func.isRequired,
-  filter: PropTypes.string.isRequired,
-};
+// AnalyticsProjectPop.propTypes = {
+//   projects: PropTypes.arrayOf(PropTypes.shape({
+//     id: PropTypes.string.isRequired,
+//     avatar: PropTypes.string.isRequired,
+//     domain: PropTypes.string.isRequired,
+//     description: PropTypes.string.isRequired,
+//   })).isRequired,
+//   action: PropTypes.func.isRequired,
+//   togglePopover: PropTypes.func.isRequired,
+//   setFilter: PropTypes.func.isRequired,
+//   filter: PropTypes.string.isRequired,
+// };
 
 class TeamAnalyticsProjectPop extends React.Component {
   constructor(props) {
@@ -86,6 +86,15 @@ class TeamAnalyticsProjectPop extends React.Component {
         {({visible, togglePopover}) => (
           <div className="button-wrap">
             <button className="button-small button-tertiary" onClick={togglePopover}>{currentProjectDomain}</button>
+            {visible && 
+              <AnalyticsProjectPop 
+                {...props}
+                togglePopover={togglePopover}
+                currentProjectDomain={currentProjectDomain}
+                setFilter={this.setFilter}
+                filter={this.state.filter}
+              />
+            }
           </div>
         )}
       </PopoverContainer>
@@ -93,7 +102,6 @@ class TeamAnalyticsProjectPop extends React.Component {
   }
 }
 
-// unused: pass 
 TeamAnalyticsProjectPop.propTypes = {
   updateProjectdomain: PropTypes.func.isRequired,
   currentProjectDomain: PropTypes.string.isRequired,

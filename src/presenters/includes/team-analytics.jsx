@@ -1,28 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+// import moment from 'moment';
 
-import Loader from '../includes/loader.jsx';
+import Loader from './loader.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx'
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx'
 
 // 🗑: analytics.js, analytics.jade, analytics.styl, analytics-time-pop.jsx, analytics-project-pop.jsx
 
 // unused yet
-const timeFrames = [
-  {
-    name: "Last 4 Weeks",
-    time: moment().subtract(4, 'weeks').valueOf(),
-  },
-  {
-    name: "Last 2 Weeks",
-    time: moment().subtract(2, 'weeks').valueOf(),
-  },
-  {
-    name: "Last 24 Hours",
-    time: moment().subtract(24, 'hours').valueOf(),
-  },
-];
+// const timeFrames = [
+//   {
+//     name: "Last 4 Weeks",
+//     time: moment().subtract(4, 'weeks').valueOf(),
+//   },
+//   {
+//     name: "Last 2 Weeks",
+//     time: moment().subtract(2, 'weeks').valueOf(),
+//   },
+//   {
+//     name: "Last 24 Hours",
+//     time: moment().subtract(24, 'hours').valueOf(),
+//   },
+// ];
 
 const getAnalytics = async ({id, api}) => {
   let path = `analytics/${id}/team`
@@ -83,7 +83,7 @@ class TeamAnalytics extends React.Component {
   render() {
     return (
       <section>
-        <p>i am team analyticsyolo</p>
+        <p>i am team analytics</p>
         <p>{this.state.currentTimeFrame}</p>
         <TeamAnalyticsTimePop 
           updateTimeFrame = {this.updateTimeFrame.bind(this)}
