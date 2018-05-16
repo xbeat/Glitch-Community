@@ -12,6 +12,7 @@ import Reactlet from "../reactlet";
 import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
 import Observed from "../includes/observed.jsx";
+
 import {TeamProfile} from "../includes/profile.jsx";
 
 export default function(application) {
@@ -28,7 +29,7 @@ export default function(application) {
         const props = {
           ...team,
           style: team.teamProfileStyle,
-          currentUserIsOnTeam: self.currentUserIsOnTeam(),
+          isAuthorized: self.currentUserIsOnTeam(),
           addUserToTeam: (id) => { self.team().addUser(application, User({id})); },
           avatarStyle: team.teamAvatarStyle,
           removeUserFromTeam: ({id}) => { self.team().removeUser(application, User({id})); },

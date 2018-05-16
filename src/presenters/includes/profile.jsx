@@ -41,6 +41,7 @@ const UserAvatar = ({
   verifiedTooltip,
   userAvatarIsAnon,
   userLoginOrId,
+  descriptionPlaceholder
 }) => {
   return (
     <div className="user-avatar-container">
@@ -78,28 +79,11 @@ const UserAvatar = ({
     </div>
   );
 };
-/*        .user-avatar-container(class=@hiddenUnlessUserFetched)
-            .user-avatar(class=@userAvatarIsAnon style=@userAvatarStyle)
-              - # img(src="#{@userAvatarUrl()}")
-              button.hidden.button-small.button-tertiary.upload-avatar-button(class=@hiddenUnlessCurrentUserIsOnTeam click=@uploadAvatar) Upload Avatar
-
-            .user-information
-              h1.username(class=@hiddenUnlessUserHasName)= @userName()
-              h2.login
-                span= "@"
-                span= @userLoginOrId()
-
-              p.description.content-editable(class=@hiddenUnlessUserIsCurrentUser class=@hiddenIfEditingDescription focus=@focusOnEditableDescription placeholder="Tell us about yourself" contenteditable=true role="textbox" aria-multiline=true spellcheck=false)=@editableDescriptionMarkdown
-              p#description-markdown.description.content-editable(class=@hiddenUnlessUserIsCurrentUser class=@hiddenUnlessEditingDescription blur=@defocusOnEditableDescription keyup=@updateDescription placeholder="Tell us about yourself" contenteditable=true role="textbox" aria-multiline=true spellcheck=false)=@editableDescription                
-              
-              p.description.read-only(class=@hiddenIfUserIsNotCurrentUser class=@hiddenIfNoDescription)= @description
-              p.description.anon-user-description(class=@hiddenUnlessUserIsAnon) This user is anonymous until they sign in
-*/
 
 UserAvatar.propTypes = {
   addUserToTeam: PropTypes.func.isRequired,
   avatarStyle: PropTypes.object.isRequired,
-  currentUserIsOnTeam: PropTypes.bool.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
@@ -109,6 +93,7 @@ UserAvatar.propTypes = {
   isVerified: PropTypes.bool.isRequired,
   verifiedImage: PropTypes.string.isRequired,
   verifiedTooltip: PropTypes.string.isRequired,
+  descriptionPlaceholder: PropTypes.string.isRequired,
 };
 
 export const Profile = (props) => {
@@ -134,19 +119,19 @@ export const Profile = (props) => {
   );
 };
 
-TeamProfile.propTypes = {
+Profile.propTypes = {
   style: PropTypes.object.isRequired,
   fetched: PropTypes.bool.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   uploadCover: PropTypes.func.isRequired,
 };
 
-export const TeamProfile = ({currentUserIsOnTeam, ...props}) => {
-  return <Profile isAuthorized={currentUserIsOnTeam} {...props}/>
+export const TeamProfile = (props) => {
+  return <Profile {...props} descriptionPlaceholder="Tell us about your team"/>
 };
 
 export const UserProfile = (props) => {
-  return <Profile {...props}/>
+  return <Profile {...props} descriptionPlaceholder="Tell us about yourself"/>
 };
                             
 UserProfile.propTypes = {

@@ -15,6 +15,7 @@ import LayoutPresenter from '../layout';
 import EntityPageProjects from "../entity-page-projects.jsx";
 import {UserProfile} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
+import Observed from "../includes/observed.jsx";
 
 export default function(application, userLoginOrId) {
   const assetUtils = assets(application);
@@ -34,24 +35,22 @@ export default function(application, userLoginOrId) {
     application,
     
     Profile() {
-      return Reactlet(UserProfile, {});
+const propsObservable = Observable(() => {
+        const user = self.user().asProps();
+        const props = {
+          ...user,
+          style: user.profileStyle,
+          isAuthorized: self.isCurrentUser(),
+          updateDescription: self.updateDescription,
+          uploadAvatar: self.uploadAvatar,
+          uploadCover: self.uploadCover,
+        };
+        return props;
+      });
+
+      return Reactlet(Observed, {propsObservable, component:UserProfile});
     },
   
-    coverUrl() {
-      if (application.user().localCoverImage()) {
-        return application.user().localCoverImage();
-      } 
-      return application.user().coverUrl();
-      
-    },
-
-    userProfileStyle() {
-      return {
-        backgroundColor: application.user().coverColor(),
-        backgroundImage: `url('${self.coverUrl()}')`,
-      };
-    },
-
     userName() {
       return application.user().name();
     },
@@ -64,7 +63,6 @@ export default function(application, userLoginOrId) {
       if (!(application.user().thanksCount() > 0)) { return 'hidden'; }
     },
 
-    userThanks() { return application.user().userThanks(); },
     
     hiddenIfEditingDescription() {
       if (self.editingDescription()) { return 'hidden'; }
