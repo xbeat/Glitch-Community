@@ -65,13 +65,17 @@ import Loader from '../includes/loader.jsx';
 //     );
 // };
 
+const timeFrames = [
+  "Last 4 Weeks",
+  "Last 2 Weeks",
+  "Last 24 Hours",
+]
+
 const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
-  const clicked = () => {
-    console.log('i have been clicked and im changing time', currentTimeFrame)
-    // time = "Last 24 Hours"
-    updateTimeFrame("Last 24 Hours")
+  
+  const selectTimeFrame = (timeFrame) => {
+    updateTimeFrame(timeFrame)
   }
-  // /<p onClick={clicked}>time pop</p>
 
   return (
     <PopoverContainer>
@@ -87,10 +91,12 @@ const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
                   { timeFrames.map(timeFrame => (
                     <Result 
                       key={timeFrame}
-                      selectFrame={selectFrameFactory(analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable, togglePopover)} 
+                      select={selectFrameFactory(analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable, togglePopover)} 
                       isActive={currentTimeFrame === timeFrame} 
                       timeFrame={timeFrame}/>
                   ))}
+
+                  <p onClick={selectTimeFrame('Last 24 Hours')}>sdf</p>
                 </div>
               </section>
             </dialog>
@@ -103,11 +109,8 @@ const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
 })
 
 TeamAnalyticsTimePop.propTypes = {
-  updateTime: PropTypes.func.isRequired,
-  time: PropTypes.string.isRequired,
-  // analyticsTimeLabelObservable: PropTypes.func.isRequired, 
-  // gettingAnalyticsFromDateObservable: PropTypes.func.isRequired,
-  // timeFrames: PropTypes.array.isRequired,
+  updateTimeFrame: PropTypes.func.isRequired,
+  currentTimeFrame: PropTypes.string.isRequired,
 };
 
 export default TeamAnalyticsTimePop;
