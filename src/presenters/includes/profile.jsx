@@ -32,12 +32,10 @@ const Avatar = ({
   thanksCount,
   updateDescription,
   uploadAvatar,
-  isVerified,
-  verifiedImage,
-  verifiedTooltip,
   descriptionPlaceholder,
   TeamFields,
   UserFields,
+  UsernameTooltip,
 }) => {
   return (
     <div className="user-avatar-container">
@@ -50,9 +48,7 @@ const Avatar = ({
       </div>
       <div className="user-information">
         <h1 className="username">{name}
-          <span data-tooltip={verifiedTooltip}>
-            { isVerified && <img className="verified" src={verifiedImage} alt={verifiedTooltip}/> }
-          </span>
+          {UsernameTooltip}
         </h1>
         {UserFields}
         {TeamFields}
@@ -77,18 +73,21 @@ Avatar.propTypes = {
   name: PropTypes.string.isRequired,
   thanksCount: PropTypes.number.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
-  isVerified: PropTypes.bool.isRequired,
-  verifiedImage: PropTypes.string.isRequired,
-  verifiedTooltip: PropTypes.string.isRequired,
   initialDescription: PropTypes.string.isRequired,
   updateDescription: PropTypes.func.isRequired,
   descriptionPlaceholder: PropTypes.string.isRequired,
-  TeamFields: PropTypes.element.isRequired,
-  UserFields: PropTypes.element.isRequired,
+  TeamFields: PropTypes.element,
+  UserFields: PropTypes.element,
+  UsernameTooltip: PropTypes.element,
 };
 
 
-const TeamAvatar = ({isAuthorized, removeUserFromTeam, search, addUserToTeam, users, ...props}) => {
+const TeamAvatar = ({
+  isAuthorized, removeUserFromTeam, search, addUserToTeam, users,
+  isVerified, verifiedTooltip, verifiedImage,
+  ...props
+}) => {
+  
   const UserInformation = (
     <div className="users-information">
       <TeamUsers {...{users, currentUserIsOnTeam: isAuthorized, removeUserFromTeam}}/>
@@ -96,20 +95,29 @@ const TeamAvatar = ({isAuthorized, removeUserFromTeam, search, addUserToTeam, us
     </div>
   );
   
-  return <Avatar {...props} TeamFields={UserInformation} UserFields={null}/>
+  const UsernameTooltip = (
+    <span data-tooltip={verifiedTooltip}>
+      { isVerified && <img className="verified" src={verifiedImage} alt={verifiedTooltip}/> }
+    </span>
+  );
+  
+  return <Avatar {...props} TeamFields={UserInformation} UserFields={null} UsernameTooltip={UsernameTooltip}/>
 };
 TeamAvatar.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
   })),
+  isVerified: PropTypes.bool.isRequired,
+  verifiedImage: PropTypes.string.isRequired,
+  verifiedTooltip: PropTypes.string.isRequired,
 };
 
 const UserAvatar = ({userLoginOrId, ...props}) => {
   const UserID = (
     <h2 className="login">@{userLoginOrId}</h2>
   );
-  return <Avatar {...props} TeamFields={null} UserFields={UserID}/>
+  return <Avatar {...props} TeamFields={null} UserFields={UserID} UsernameTooltip={null}/>
 };
 UserAvatar.propTypes = {
   userLoginOrId: PropTypes.string.isRequired,
