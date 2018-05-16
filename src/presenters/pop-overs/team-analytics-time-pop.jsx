@@ -67,6 +67,12 @@ const TimeFrameItem = ({selectTimeFrame, isActive, timeFrame}) => {
   );
 };
 
+TimeFrameItem.propTypes = {
+  selectTimeFrame: PropTypes.func.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  timeFrame: PropTypes.string.isRequired,  
+}
+
 const timeFrames = [
   "Last 4 Weeks",
   "Last 2 Weeks",
@@ -76,8 +82,12 @@ const timeFrames = [
 const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
 
   const selectTimeFrame = (timeFrame, togglePopover) => {
-    updateTimeFrame(timeFrame)
-    // togglePopover()
+    return () => { 
+      console.log('🌴',timeFrame, togglePopover)
+      updateTimeFrame(timeFrame)
+      togglePopover()
+
+    }
   }
 
   return (
@@ -94,9 +104,10 @@ const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
                   { timeFrames.map(timeFrame => (
                     <TimeFrameItem 
                       key={timeFrame}
-                      selectTimeFrame={selectTimeFrame(timeFrame, togglePopover)} 
+                      selectTimeFrame={selectTimeFrame(timeFrame, togglePopover)}
                       isActive={currentTimeFrame === timeFrame} 
-                      timeFrame={timeFrame}/>
+                      timeFrame={timeFrame}
+                      togglePopover={togglePopover} />
                   ))}
                   <p onClick={selectTimeFrame('Last 24 Hours')}>blahhhh</p>
 
