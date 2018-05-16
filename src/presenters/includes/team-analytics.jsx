@@ -8,6 +8,13 @@ import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx'
 // import AnalyticsTimePop from './pop-overs/analytics-time-pop.jsx';
 // import AnalyticsProjectPop from './pop-overs/analytics-project-pop.jsx';
 
+// unused yet
+const times = [
+  "Last 4 Weeks",
+  "Last 2 Weeks",
+  "Last 24 Hours",
+]
+
 const getAnalytics = async ({id, api}) => {
   let path = `analytics/${id}/team`
   try {
@@ -25,13 +32,19 @@ class TeamAnalytics extends React.Component {
   constructor(props) {
     super(props);
       this.state = {
-      time: '',
-      projects: '',
+      time: 'Last 2 Weeks',
+      projects: 'All Projects',
       analytics: [],
       isLoading: true
     }
   }
 
+  changeTime(time) {
+    this.setState({
+      
+    })
+  }
+  
   componentDidMount() {
     // loading c3 lib here?
     getAnalytics(this.props)
@@ -46,7 +59,10 @@ class TeamAnalytics extends React.Component {
 
   render() {
     return (
-      <TeamAnalyticsTimePop time={this.state.time} />
+      <section>
+        <p>i am team analytics</p>
+        <TeamAnalyticsTimePop time={this.state.time} />
+      </section>
     );
   }
 }

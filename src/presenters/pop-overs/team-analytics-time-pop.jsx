@@ -66,14 +66,17 @@ import Loader from '../includes/loader.jsx';
 // };
 
 const TeamAnalyticsTimePop = (({time}) => {
+  const changeTime = () => {
+    time = "Last 24 Hours"
+  }
+
   return (
     <PopoverContainer>
       {({visible, togglePopover}) => (
-        <p>time pop</p>
-      )
+        <p onClick={changeTime}>time pop</p>
+      )}
     </PopoverContainer>
-  
-  })
+  )
 })
 
 TeamAnalyticsTimePop.propTypes = {
@@ -83,4 +86,4 @@ TeamAnalyticsTimePop.propTypes = {
   // timeFrames: PropTypes.array.isRequired,
 };
 
-export default AnalyticsTimePop;
+export default TeamAnalyticsTimePop;
