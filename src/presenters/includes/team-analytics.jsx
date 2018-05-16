@@ -8,9 +8,14 @@ import Loader from '../includes/loader.jsx';
 
 // console.log(props)
 
-const AnalyticsData = ({id, api}) => {
+const getAnalytics = async ({id, api}) => {
+  console.log ('📟', id, api)
   let path = `analytics/${id}/team`
-  return new Promise(api().get(path)
+  api().get(path)
+  .then(({data}) => {
+    
+  })
+
 }
 
 // Controls
@@ -31,7 +36,8 @@ class TeamAnalytics extends React.Component {
   componentDidMount() {
     // loading c3 lib
     console.log('🌹', this.props); //{id: 74, api: ƒ}
-    AnalyticsData(this.props)
+    
+    getAnalytics(this.props)
     .then(({data}) => {
       console.log('🚒', data)
     })
