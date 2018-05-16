@@ -27,7 +27,7 @@ TeamUsers.propTypes = {
 const UserAvatar = ({
   addUserToTeam,
   avatarStyle,
-  currentUserIsOnTeam,
+  isAuthorized,
   description,
   name,
   removeUserFromTeam,
@@ -41,12 +41,12 @@ const UserAvatar = ({
   verifiedTooltip,
   userAvatarIsAnon,
   userLoginOrId,
-  descriptionPlaceholder
+  descriptionPlaceholder,
 }) => {
   return (
     <div className="user-avatar-container">
       <div className="user-avatar" style={avatarStyle}>
-        { currentUserIsOnTeam && (
+        { isAuthorized && (
           <button className="button-small button-tertiary upload-avatar-button" onClick={uploadAvatar}>
             Upload Avatar
           </button>
@@ -62,16 +62,16 @@ const UserAvatar = ({
           <h2 className="login">@{userLoginOrId}</h2>
         )}
         <div className="users-information">
-          <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
+          <TeamUsers {...{users, currentUserIsOnTeam:isAuthorized, removeUserFromTeam}}/>
           { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
         </div>
         { thanksCount > 0 && <Thanks count={thanksCount}/> }
-        {currentUserIsOnTeam
+        {isAuthorized
           ?
           <EditableDescription
             initialDescription={description}
             updateDescription={updateDescription}
-            placeholder="Tell us about your team"
+            placeholder={descriptionPlaceholder}
           />
           :
           <StaticDescription description={description} />}
@@ -96,18 +96,13 @@ UserAvatar.propTypes = {
   descriptionPlaceholder: PropTypes.string.isRequired,
 };
 
-export const Profile = (props) => {
-  const {
-    isAuthorized,
-    fetched,
-    style,
-    uploadCover,
-  } = props;
+export const Profile = ({style, uploadCover, fetched, Avatar, ...props}) => {
+  const {isAuthorized} = props;
   return (
     <section className="profile">
       <div className="profile-container" style={style}>
         <div className="profile-info">
-          { fetched ? <UserAvatar {...props}/> : <Loader />}
+          {Avatar}
         </div>
       </div>
       {isAuthorized && (
@@ -124,6 +119,7 @@ Profile.propTypes = {
   fetched: PropTypes.bool.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   uploadCover: PropTypes.func.isRequired,
+  Avatar: PropTypes.element.isRequired,
 };
 
 export const TeamProfile = (props) => {
