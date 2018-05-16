@@ -9,11 +9,11 @@ import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx'
 // import AnalyticsProjectPop from './pop-overs/analytics-project-pop.jsx';
 
 // unused yet
-const timeOptions = [
-  "Last 4 Weeks",
-  "Last 2 Weeks",
-  "Last 24 Hours",
-]
+// const timeFrames = [
+//   "Last 4 Weeks",
+//   "Last 2 Weeks",
+//   "Last 24 Hours",
+// ]
 
 const getAnalytics = async ({id, api}) => {
   let path = `analytics/${id}/team`
@@ -32,21 +32,23 @@ class TeamAnalytics extends React.Component {
   constructor(props) {
     super(props);
       this.state = {
-      time: 'Last 2 Weeks',
+      currentTimeFrame: 'Last 2 Weeks',
       projects: 'All Projects',
       analytics: [],
-      isLoading: true
+      isLoading: true,
     }
   }
 
-  updateTime(newTime) {
+  updateTimeFrame(newTime) {
     this.setState({
-      time: newTime
+      currentTimeFrame: newTime
     })
   }
   
-  componentDidMount() {
-    // loading c3 lib here?
+  updateAnalytics() {
+    this.setState({
+      isLoading: true,
+    })
     getAnalytics(this.props)
     .then(({data}) => {
       this.setState({
@@ -56,15 +58,20 @@ class TeamAnalytics extends React.Component {
       console.log('🚒', this.state, this.state.analytics)
     })
   }
+  
+  componentDidMount() {
+    // loading c3 lib here?
+    this.updateAnalytics()
+  }
 
   render() {
     return (
       <section>
         <p>i am team analytics</p>
-        <p>{this.state.time}</p>
+        <p>{this.state.currentTimeFrame}</p>
         <TeamAnalyticsTimePop 
-          updateTime = {this.updateTime.bind(this)}
-          time = {this.state.time} 
+          updateTime = {this.updateTimeFrame.bind(this)}
+          currentTimeFrame = {this.state.currentTimeFrame}
         />
       </section>
     );

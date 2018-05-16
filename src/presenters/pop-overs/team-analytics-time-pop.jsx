@@ -65,18 +65,38 @@ import Loader from '../includes/loader.jsx';
 //     );
 // };
 
-const TeamAnalyticsTimePop = (({updateTime, time}) => {
+const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
   const clicked = () => {
-    console.log(updateTime)
-    console.log('i have been clicked and im changing time', time)
+    console.log('i have been clicked and im changing time', currentTimeFrame)
     // time = "Last 24 Hours"
-    updateTime("Last 24 Hours")
+    updateTimeFrame("Last 24 Hours")
   }
+  // /<p onClick={clicked}>time pop</p>
 
   return (
     <PopoverContainer>
       {({visible, togglePopover}) => (
-        <p onClick={clicked}>time pop</p>
+        <div className="button-wrap">
+          <button className="button-small button-tertiary button-select" onClick={togglePopover}>
+            <span>{currentTimeFrame}</span>
+          </button>
+          { visible && (
+            <dialog className="pop-over results-list analytics-time-pop">
+              <section className="pop-over-actions last-section">
+                <div className="results">
+                  { timeFrames.map(timeFrame => (
+                    <Result 
+                      key={timeFrame}
+                      selectFrame={selectFrameFactory(analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable, togglePopover)} 
+                      isActive={currentTimeFrame === timeFrame} 
+                      timeFrame={timeFrame}/>
+                  ))}
+                </div>
+              </section>
+            </dialog>
+          )}
+        </div>
+
       )}
     </PopoverContainer>
   )
