@@ -12,7 +12,7 @@ import Reactlet from "../reactlet";
 import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
 import Observed from "../includes/observed.jsx";
-import {TeamProfile} from "../includes/team-profile.jsx";
+import {TeamProfile} from "../includes/profile.jsx";
 
 export default function(application) {
   const assetUtils = assets(application);
