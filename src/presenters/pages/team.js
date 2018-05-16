@@ -70,6 +70,18 @@ export default function(application) {
       };
     },
 
+    teamAnalytics() {
+      const propsObservable = Observable(() => {
+        const team = self.team().asProps();
+        const props = {
+          ...team,
+        };
+        return props;
+      });
+
+      return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
+    },
+      
     teamAnalyticsOld() {
       if (self.team().fetched()) {
         return AnalyticsPresenter(application, self.team());

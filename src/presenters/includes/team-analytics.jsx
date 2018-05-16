@@ -3,18 +3,27 @@ import PropTypes from 'prop-types';
 
 import Loader from '../includes/loader.jsx';
 
-const TeamAnalytics = () => (
-  //<span>
-  //  <Loader />
-  //</span>
-  <p>yoyo</p>
-);
+// console.log(props)
 
-// TeamUsers.propTypes = {
-//   users: PropTypes.array.isRequired,
-//   currentUserIsOnTeam: PropTypes.bool.isRequired,
-//   removeUserFromTeam: PropTypes.func.isRequired,
-// };
+const AnalyticsData = (id) => {
+  
+}
+
+// Activity
+// Referrers
+
+const TeamAnalytics = ({team}) => {
+  console.log('🌹',team);
+  return (
+    <p>yoyo</p>
+  )
+};
+
+TeamAnalytics.propTypes = {
+  team: PropTypes.shape({
+    number: PropTypes.number.isRequired,
+  }).isRequired,
+};
 
 
 export default TeamAnalytics;
