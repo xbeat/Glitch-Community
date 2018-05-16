@@ -12,6 +12,10 @@ const RemoveFromTeam = ({action}) => (
   </section>
 );
 
+RemoveFromTeam.propTypes = {
+  action: PropTypes.func.isRequired,
+};
+
 const UserActions = ({user}) => (
   <section className="pop-over-actions">
     <a href={user.userLink}>
@@ -23,9 +27,17 @@ const UserActions = ({user}) => (
   </section>
 );
 
-const ThanksCount = ({user}) => (
+UserActions.propTypes = {
+  user: PropTypes.shape({
+    userLink: PropTypes.string.isRequired,
+    userAvatarUrl: PropTypes.string.isRequired,
+    login: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+const ThanksCount = ({count}) => (
   <section className="pop-over-info">
-    <Thanks count={user.thanksCount} />
+    <Thanks count={count} />
   </section>
 );
 
@@ -46,7 +58,7 @@ const UserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopov
           <p className="user-login" title={user.login}>@{user.login}</p>
         </div>
       </section>
-      { user.thanksCount > 0 && <ThanksCount user={user} /> }
+      { user.thanksCount > 0 && <ThanksCount count={user.thanksCount} /> }
       <UserActions user={user} />
       { currentUserIsOnTeam && <RemoveFromTeam action={removeFromTeamAction} />}
     </dialog>
@@ -71,7 +83,6 @@ UserInfoPop.defaultProps = {
     isOnTeam: false
   },
   currentUserIsOnTeam: false,
-  removeUserFromTeam: () => undefined
 };
 
 export default UserInfoPop;
