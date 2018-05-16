@@ -82,6 +82,7 @@ module.exports = function() {
       route: request.path,
       baseUrl: request.baseUrl,
       clientJs: 'client-bundle.js',
+      dependencyJs: 'dependencies.js',
       API_URL,
       APP_URL,
       EDITOR_URL,
@@ -89,6 +90,5 @@ module.exports = function() {
       GITHUB_CLIENT_ID,
       FACEBOOK_CLIENT_ID
     }
-    )
-  );
+  ));
 };

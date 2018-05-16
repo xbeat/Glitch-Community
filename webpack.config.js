@@ -58,9 +58,12 @@ module.exports = () => {
     ],
     optimization: {
       splitChunks: {
-        chunks: 'initial',
         cacheGroups: {
-          default: false,
+          modules: {
+            name: 'dependencies',
+            test: /[\\/]node_modules[\\/]/,
+            chunks: 'all',
+          },
         },
       },
     },
