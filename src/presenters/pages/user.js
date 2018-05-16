@@ -13,6 +13,7 @@ import DeletedProjectsTemplate from '../../templates/deleted-projects';
 import LayoutPresenter from '../layout';
 
 import EntityPageProjects from "../entity-page-projects.jsx";
+import {UserProfile} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
 
 export default function(application, userLoginOrId) {
@@ -31,6 +32,10 @@ export default function(application, userLoginOrId) {
     },
 
     application,
+    
+    Profile() {
+      return 
+    }
   
     coverUrl() {
       if (application.user().localCoverImage()) {

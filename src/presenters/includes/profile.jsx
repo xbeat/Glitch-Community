@@ -1,3 +1,7 @@
+//
+// Profile.jsx!  I export TeamProfile and UserProfile.
+//
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -19,7 +23,6 @@ TeamUsers.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
 };
-
 
 const UserAvatar = ({
   addUserToTeam,
@@ -86,7 +89,7 @@ UserAvatar.propTypes = {
   verifiedTooltip: PropTypes.string.isRequired,
 };
 
-const TeamProfile = (props) => {
+export const TeamProfile = (props) => {
   const {
     currentUserIsOnTeam,
     fetched,
@@ -116,5 +119,13 @@ TeamProfile.propTypes = {
   uploadCover: PropTypes.func.isRequired,
 };
 
-export default TeamProfile;
-
+export const UserProfile = (props) => {
+  return <TeamProfile {...props}/>
+};
+                            
+UserProfile.propTypes = {
+  style: PropTypes.object.isRequired,
+  fetched: PropTypes.bool.isRequired,
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
+  uploadCover: PropTypes.func.isRequired,
+};
