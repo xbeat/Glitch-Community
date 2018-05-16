@@ -38,13 +38,14 @@ class TeamAnalytics extends React.Component {
   }
 
   componentDidMount() {
-    // loading c3 lib
-    console.log('🌹lsjs', this.props); //{id: 74, api: ƒ}
-    
+    // loading c3 lib here?
     getAnalytics(this.props)
     .then(({data}) => {
-      console.log('🚒', data)
-      this.state.isLoading = false
+      this.state({
+        isLoading: false,
+        analytics: data,
+      });
+      console.log('🚒', this.state)
     })
   }
 
