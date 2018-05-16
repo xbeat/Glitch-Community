@@ -3,23 +3,18 @@ import PropTypes from 'prop-types';
 
 import Loader from '../includes/loader.jsx';
 
+import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx'
+
 // import AnalyticsTimePop from './pop-overs/analytics-time-pop.jsx';
 // import AnalyticsProjectPop from './pop-overs/analytics-project-pop.jsx';
 
-// console.log(props)
-
 const getAnalytics = async ({id, api}) => {
-  // console.log ('📟', id, api)
   let path = `analytics/${id}/team`
   try {
     return await api().get(path)     
   } catch (error) {
     console.error('getAnalytics', error)
   }
-  // .then(({data}) => {
-  //   return data
-  // })
-
 }
 
 // Controls
@@ -49,12 +44,9 @@ class TeamAnalytics extends React.Component {
     })
   }
 
-  // componentWillUnmount() {
-  // }
-  
   render() {
     return (
-      <p>yoyoyo1</p>
+      <TeamAnalyticsTimePop time={this.state.time} />
     );
   }
 }
