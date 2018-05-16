@@ -9,7 +9,7 @@ import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx'
 // import AnalyticsProjectPop from './pop-overs/analytics-project-pop.jsx';
 
 // unused yet
-const times = [
+const timeOptions = [
   "Last 4 Weeks",
   "Last 2 Weeks",
   "Last 24 Hours",
@@ -49,11 +49,11 @@ class TeamAnalytics extends React.Component {
     // loading c3 lib here?
     getAnalytics(this.props)
     .then(({data}) => {
-      this.state({
+      this.setState({
         isLoading: false,
         analytics: data,
       });
-      console.log('🚒', this.state)
+      console.log('🚒', this.state, this.state.analytics)
     })
   }
 
@@ -61,6 +61,7 @@ class TeamAnalytics extends React.Component {
     return (
       <section>
         <p>i am team analytics</p>
+        <p>{this.state.time}</p>
         <TeamAnalyticsTimePop 
           updateTime = {this.updateTime.bind(this)}
           time = {this.state.time} 
