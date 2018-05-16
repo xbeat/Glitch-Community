@@ -110,8 +110,8 @@ export default function(application) {
     // application.notifyUserDescriptionUpdated true
 
 
-    uploadCover: () => {assetUtils.uploader(assetUtils.addCoverFile)},
-    uploadAvatar: () => {assetUtils.uploader(assetUtils.addAvatarFile)},
+    uploadCover: assetUtils.uploadCoverFile,
+    uploadAvatar: assetUtils.uploadAvatarFile,
 
     togglePinnedState(projectId) {
       const action = Project.isPinnedByTeam(application.team(), projectId) ? "removePin" : "addPin";

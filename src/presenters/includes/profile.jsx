@@ -101,7 +101,7 @@ const TeamAvatar = ({
     </span>
   );
   
-  return <Avatar {...props} isAuthorized={currentUserIsOnTeam} TeamFields={UserInformation} UserFields={null} UsernameTooltip={UsernameTooltip}/>
+  return <Avatar {...props} isAuthorized={currentUserIsOnTeam} TeamFields={UserInformation} UserFields={null} UsernameTooltip={UsernameTooltip}/>;
 };
 TeamAvatar.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
@@ -117,7 +117,7 @@ const UserAvatar = ({userLoginOrId, ...props}) => {
   const UserID = (
     <h2 className="login">@{userLoginOrId}</h2>
   );
-  return <Avatar {...props} TeamFields={null} UserFields={UserID} UsernameTooltip={null}/>
+  return <Avatar {...props} TeamFields={null} UserFields={UserID} UsernameTooltip={null}/>;
 };
 UserAvatar.propTypes = {
   userLoginOrId: PropTypes.string.isRequired,
@@ -149,7 +149,7 @@ Profile.propTypes = {
 
 export const TeamProfile = ({fetched, currentUserIsOnTeam, ...props}) => {
   const Avatar = fetched ? <TeamAvatar {...props} currentUserIsOnTeam={currentUserIsOnTeam} descriptionPlaceholder="Tell us about your team"/> : <Loader />;
-  return <Profile {...props} isAuthorized={currentUserIsOnTeam} Avatar={Avatar}/>
+  return <Profile {...props} isAuthorized={currentUserIsOnTeam} Avatar={Avatar}/>;
 };
 
 TeamProfile.propTypes = {
@@ -159,7 +159,7 @@ TeamProfile.propTypes = {
 
 export const UserProfile = ({fetched, ...props}) => {
   const Avatar = fetched ? <UserAvatar {...props} descriptionPlaceholder="Tell us about yourself"/> : <Loader />;
-  return <Profile {...props} Avatar={Avatar}/>
+  return <Profile {...props} Avatar={Avatar}/>;
 };
                             
 UserProfile.propTypes = {

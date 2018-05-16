@@ -170,8 +170,8 @@ export default function(application, userLoginOrId) {
       if (cover) { return `url(${cover})`; }
     },
 
-    uploadCover: () => {assetUtils.uploader(assetUtils.addCoverFile);},
-    uploadAvatar: () => {assetUtils.uploader(assetUtils.addAvatarFile);},
+    uploadCover: assetUtils.uploadCoverFile,
+    uploadAvatar: assetUtils.uploadAvatarFile,
     
     userProjects() {
       const props = {

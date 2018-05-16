@@ -76,7 +76,7 @@ const resizeImage = function(file, size) {
 
 const getDominantColor = function(image) {
   const {width, height} = image;
-  const PIXELS_FROM_EDGE = 10;
+  const PIXELS_FROM_EDGE = 11;
   const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
@@ -93,10 +93,8 @@ const getDominantColor = function(image) {
   Iterate through edge pixels and get the average color, then conditionally
   handle edge colors and transparent images
   */
-  const xPixels = __range__(0, PIXELS_FROM_EDGE, true);
-  const yPixels = __range__(0, PIXELS_FROM_EDGE, true);
-  for (let x of Array.from(xPixels)) {
-    for (let y of Array.from(yPixels)) {
+  for (let x = 0; x < PIXELS_FROM_EDGE; x++) {
+    for (let y = 0; y < PIXELS_FROM_EDGE; y++) {
       const pixelData = context.getImageData(x, y, 1, 1).data;
       const color = [
         pixelData[0], // r
@@ -277,6 +275,14 @@ export default function(application) {
         });
     },
   
+    uploadAvatarFile() {
+      return self.uploader(self.addAvatarFile);
+    },
+    
+    uploadCoverFile() {
+      return self.uploader(self.addCoverFile);
+    },
+    
     uploader(uploadReceiver) {
       const input = document.createElement("input");
       input.type = 'file';
@@ -284,22 +290,11 @@ export default function(application) {
       input.onchange = function(event) {
         const file = event.target.files[0];
         console.log('☔️☔️☔️ input onchange', file);
-        return self[uploadReceiver](file);
+        uploadReceiver(file);
       };
       input.click();
       console.log('input created: ', input);
       return false;
     },
   };
-}
-
-
-function __range__(left, right, inclusive) {
-  let range = [];
-  let ascending = left < right;
-  let end = !inclusive ? right : ascending ? right + 1 : right - 1;
-  for (let i = left; ascending ? i < end : i > end; ascending ? i++ : i--) {
-    range.push(i);
-  }
-  return range;
 }
