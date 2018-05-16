@@ -55,10 +55,14 @@ module.exports = () => {
     plugins: [
       new LodashModuleReplacementPlugin,
       new webpack.NoEmitOnErrorsPlugin(),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'modules',
-        minChunks: (module) => module.context && module.context.includes('node_modules'),
-      }),
     ],
+    optimization: {
+      splitChunks: {
+        chunks: 'initial',
+        cacheGroups: {
+          default: false,
+        },
+      },
+    },
   };
 }
