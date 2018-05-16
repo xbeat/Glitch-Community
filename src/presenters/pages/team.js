@@ -72,17 +72,14 @@ export default function(application) {
 
     teamAnalytics() {
       const id = self.team().id()
-      const api = application.api()
-      const propsObservable = Observable(() => {
-        const props = {
-          id: id,
-          api: api
-        };
-        return props;
-      });
+      const api = application.api
+      const props = {
+        id: id,
+        api: api
+      };
 
       if (id) {
-        return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
+        return Reactlet(TeamAnalytics, props);
       }
     },
     

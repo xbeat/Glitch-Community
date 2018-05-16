@@ -13,7 +13,7 @@ const getAnalytics = async ({id, api}) => {
   let path = `analytics/${id}/team`
   api().get(path)
   .then(({data}) => {
-    
+    return data
   })
 
 }
@@ -35,12 +35,12 @@ class TeamAnalytics extends React.Component {
 
   componentDidMount() {
     // loading c3 lib
-    console.log('🌹', this.props); //{id: 74, api: ƒ}
+    console.log('🌹ls;j', this.props); //{id: 74, api: ƒ}
     
     getAnalytics(this.props)
-    .then(({data}) => {
-      console.log('🚒', data)
-    })
+    // .then(({data}) => {
+    //   console.log('🚒', data)
+    // })
   }
 
   // componentWillUnmount() {
