@@ -71,17 +71,22 @@ export default function(application) {
     },
 
     teamAnalytics() {
+      const id = self.team().id()
+      const api = application.api
       const propsObservable = Observable(() => {
-        const team = self.team().asProps();
         const props = {
-          ...team,
+          id: id,
+          api: api
         };
         return props;
       });
 
-      return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
+      if (id) {
+        return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
+      }
     },
-      
+    
+    //temp
     teamAnalyticsOld() {
       if (self.team().fetched()) {
         return AnalyticsPresenter(application, self.team());

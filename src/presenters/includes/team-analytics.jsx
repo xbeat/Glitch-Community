@@ -5,8 +5,9 @@ import Loader from '../includes/loader.jsx';
 
 // console.log(props)
 
-const AnalyticsData = (id) => {
+const AnalyticsData = ({id, api}) => {
   let path = `/analytics/${id}/team`
+  console.log('🚒',path, api)
 }
 
 // Activity
@@ -25,7 +26,8 @@ class TeamAnalytics extends React.Component {
   }
 
   componentDidMount() {
-    console.log('🌹', this.props.id);
+    console.log('🌹', this.props);
+    AnalyticsData(this.props)
   }
 
   // componentWillUnmount() {
@@ -33,17 +35,15 @@ class TeamAnalytics extends React.Component {
   
   render() {
     return (
-      <p>yoyoyo</p>
+      <p>yoyoyo1</p>
     );
   }
 }
 
 
 TeamAnalytics.propTypes = {
-  // team: PropTypes.shape({
-  //   number: PropTypes.number.isRequired,
-  // }).isRequired,
-  id: PropTypes.number.isRequired
+  id: PropTypes.number.isRequired,
+  api: PropTypes.func.isRequired,
 };
 
 
