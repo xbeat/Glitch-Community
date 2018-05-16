@@ -24,39 +24,38 @@ TeamUsers.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
 };
 
-const TeamAvatar = ({currentUserIsOnTeam, removeUserFromTeam, search, addUserToTeam, ...props}) => {
-  const TeamUsers = (
+const TeamAvatar = ({currentUserIsOnTeam, removeUserFromTeam, search, addUserToTeam, users, ...props}) => {
+  const UserInformation = (
     <div className="users-information">
       <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
       { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
     </div>
   );
   
-  return <Avatar {...props} TeamUsers={TeamUsers}/>
+  return <Avatar {...props} TeamFields={UserInformation} UserFields={null}/>
 };
-const UserAvatar = (props) => {
-return <Avatar {...props} TeamUsers={null}/>
+
+const UserAvatar = ({userLoginOrId, ...props}) => {
+  const UserID = (
+    <h2 className="login">@{userLoginOrId}</h2>
+  );
+  return <Avatar {...props} TeamFields={null} UserFields={UserID}/>
 };
 
 const Avatar = ({
-  addUserToTeam,
   avatarStyle,
   isAuthorized,
   description,
   name,
-  removeUserFromTeam,
-  search,
-  users,
   thanksCount,
   updateDescription,
   uploadAvatar,
   isVerified,
   verifiedImage,
   verifiedTooltip,
-  userAvatarIsAnon,
-  userLoginOrId,
   descriptionPlaceholder,
-  TeamUsers
+  TeamFields,
+  UserFields,
 }) => {
   return (
     <div className="user-avatar-container">
@@ -73,10 +72,8 @@ const Avatar = ({
             { isVerified && <img className="verified" src={verifiedImage} alt={verifiedTooltip}/> }
           </span>
         </h1>
-        { !!userLoginOrId && (
-          <h2 className="login">@{userLoginOrId}</h2>
-        )}
-        {TeamUsers}
+        {UserFields}
+        {TeamFields}
         { thanksCount > 0 && <Thanks count={thanksCount}/> }
         {isAuthorized
           ?
@@ -93,23 +90,22 @@ const Avatar = ({
 };
 
 Avatar.propTypes = {
-  addUserToTeam: PropTypes.func.isRequired,
   avatarStyle: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
-  removeUserFromTeam: PropTypes.func.isRequired,
-  search: PropTypes.func.isRequired,
-  users: PropTypes.array.isRequired,
   thanksCount: PropTypes.number.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
   isVerified: PropTypes.bool.isRequired,
   verifiedImage: PropTypes.string.isRequired,
   verifiedTooltip: PropTypes.string.isRequired,
+  initialDescription: PropTypes.string.isRequired,
+  updateDescription: PropTypes.func.isRequired,
   descriptionPlaceholder: PropTypes.string.isRequired,
+  TeamFields: PropTypes.element.isRequired,
+  UserFields: PropTypes.element.isRequired,
 };
 
-export const Profile = ({style, uploadCover, Avatar, ...props}) => {
-  const {isAuthorized} = props;
+export const Profile = ({isAuthorized, style, uploadCover, Avatar}) => {
   return (
     <section className="profile">
       <div className="profile-container" style={style}>
@@ -134,12 +130,12 @@ Profile.propTypes = {
 };
 
 export const TeamProfile = ({fetched, ...props}) => {
-  const Avatar = fetched ? <Avatar {...props} descriptionPlaceholder="Tell us about your team"/> : <Loader />;
+  const Avatar = fetched ? <TeamAvatar {...props} descriptionPlaceholder="Tell us about your team"/> : <Loader />;
   return <Profile {...props} Avatar={Avatar}/>
 };
 
 export const UserProfile = ({fetched, ...props}) => {
-  const Avatar = fetched ? <Avatar {...props} descriptionPlaceholder="Tell us about yourself"/> : <Loader />;
+  const Avatar = fetched ? <UserAvatar {...props} descriptionPlaceholder="Tell us about yourself"/> : <Loader />;
   return <Profile {...props} Avatar={Avatar}/>
 };
                             
