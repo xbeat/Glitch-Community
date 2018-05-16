@@ -3,19 +3,7 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 import Loader from '../includes/loader.jsx';
 
-// const Result = ({selectFrame, isActive, timeFrame}) => {
-//   let resultClass = "result button-unstyled";
-//   if(isActive) {
-//     resultClass += " active";
-//   }
-//   return (
-//     <button className={resultClass} onClick={(event) => selectFrame(event, timeFrame)}>
-//       <div className="result-container">
-//         <div className="result-name">{timeFrame}</div>
-//       </div>
-//     </button>
-//   );
-// };
+
 
 // Result.propTypes = {
 //   selectFrame: PropTypes.func.isRequired,
@@ -65,6 +53,20 @@ import Loader from '../includes/loader.jsx';
 //     );
 // };
 
+const TimeFrameItem = ({selectTimeFrame, isActive, timeFrame}) => {
+  let resultClass = "result button-unstyled";
+  if(isActive) {
+    resultClass += " active";
+  }
+  return (
+    <button className={resultClass} onClick={() => selectTimeFrame(timeFrame)}>
+      <div className="result-container">
+        <div className="result-name">{timeFrame}</div>
+      </div>
+    </button>
+  );
+};
+
 const timeFrames = [
   "Last 4 Weeks",
   "Last 2 Weeks",
@@ -72,9 +74,10 @@ const timeFrames = [
 ]
 
 const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
-  
-  const selectTimeFrame = (timeFrame) => {
+
+  const selectTimeFrame = (timeFrame, togglePopover) => {
     updateTimeFrame(timeFrame)
+    // togglePopover()
   }
 
   return (
@@ -89,14 +92,14 @@ const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
               <section className="pop-over-actions last-section">
                 <div className="results">
                   { timeFrames.map(timeFrame => (
-                    <Result 
+                    <TimeFrameItem 
                       key={timeFrame}
-                      select={selectFrameFactory(analyticsTimeLabelObservable, gettingAnalyticsFromDateObservable, togglePopover)} 
+                      selectTimeFrame={selectTimeFrame(timeFrame, togglePopover)} 
                       isActive={currentTimeFrame === timeFrame} 
                       timeFrame={timeFrame}/>
                   ))}
+                  <p onClick={selectTimeFrame('Last 24 Hours')}>blahhhh</p>
 
-                  <p onClick={selectTimeFrame('Last 24 Hours')}>sdf</p>
                 </div>
               </section>
             </dialog>

@@ -67,7 +67,7 @@ class TeamAnalytics extends React.Component {
   render() {
     return (
       <section>
-        <p>i am team analytics</p>
+        <p>i am team analyticsyolo</p>
         <p>{this.state.currentTimeFrame}</p>
         <TeamAnalyticsTimePop 
           updateTimeFrame = {this.updateTimeFrame.bind(this)}
