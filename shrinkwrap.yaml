@@ -31,8 +31,12 @@ dependencies:
   randomcolor: 0.5.3
   react: 16.3.2
   react-dom: 16.3.2
+  react-is: 16.3.2
+  react-onclickoutside: 6.7.1
+  react-textarea-autosize: 6.1.0
   stylus: 0.54.5
   uglifyjs-webpack-plugin: 1.2.5
+  url-join: 4.0.0
   webpack: 4.6.0
   webpack-cli: 2.0.15
 packages:
@@ -5403,6 +5407,25 @@ packages:
       react: ^16.0.0
     resolution:
       integrity: sha512-MMPko3zYncNrz/7gG17wJWUREZDvskZHXOwbttzl0F0L3wDmToyuETuo/r8Y5yvDejwYcRyWI1lvVBjLJWFwKA==
+  /react-is/16.3.2:
+    dev: false
+    resolution:
+      integrity: sha512-ybEM7YOr4yBgFd6w8dJqwxegqZGJNBZl6U27HnGKuTZmDvVrD5quWOK/wAnMywiZzW+Qsk+l4X2c70+thp/A8Q==
+  /react-onclickoutside/6.7.1:
+    dev: false
+    peerDependencies:
+      react: ^15.5.x || ^16.x
+      react-dom: ^15.5.x || ^16.x
+    resolution:
+      integrity: sha512-p84kBqGaMoa7VYT0vZ/aOYRfJB+gw34yjpda1Z5KeLflg70HipZOT+MXQenEhdkPAABuE2Astq4zEPdMqUQxcg==
+  /react-textarea-autosize/6.1.0:
+    dependencies:
+      prop-types: 15.6.1
+    dev: false
+    peerDependencies:
+      react: '>=0.14.0 <17.0.0'
+    resolution:
+      integrity: sha512-F6bI1dgib6fSvG8so1HuArPUv+iVEfPliuLWusLF+gAKz0FbB4jLrWUrTAeq1afnPT2c9toEZYUdz/y1uKMy4A==
   /react/16.3.2:
     dependencies:
       fbjs: 0.8.16
@@ -6566,6 +6589,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
+  /url-join/4.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-TTNA6AfTdzvamZH4MFrNzCpmXSo=
   /url-parse-lax/1.0.0:
     dependencies:
       prepend-http: 1.0.4
@@ -6975,7 +7002,11 @@ specifiers:
   randomcolor: ^0.5.3
   react: ^16.3.2
   react-dom: ^16.3.2
+  react-is: ^16.3.2
+  react-onclickoutside: ^6.7.1
+  react-textarea-autosize: ^6.1.0
   stylus: ^0.54.5
   uglifyjs-webpack-plugin: ^1.2.5
+  url-join: ^4.0.0
   webpack: ^4.6.0
   webpack-cli: ^2.0.15

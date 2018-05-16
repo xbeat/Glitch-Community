@@ -29,6 +29,17 @@ As long as you like.
     updates() {
       return [
         {
+          id: 3,
+          title: "A Quicker Way to a New Project",
+          body: `
+We added a <code>New Projects</code> button to the header. Because sometimes you have a new web-based dream to explore – right now.
+
+![New Project button in the header](https://cdn.glitch.com/ecc11a20-0b0d-490f-85ac-edf82f8d1a53%2Fupdate-new-project.png?1526413635223)
+
+It works just like the editor. Enjoy those hot new dreams.
+`,
+        },
+        {
           id: 2,
           title: "Glitch for Teams",
           body: `

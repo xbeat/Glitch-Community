@@ -58,15 +58,6 @@ export default function(application) {
       if (application.currentUser().isAnon()) { return 'anon-user-avatar'; }
     },
 
-    toggleSignInPopVisible(event) {
-      application.signInPopVisibleOnRecentProjects.toggle();
-      return event.stopPropagation();
-    },
-
-    hiddenUnlessSignInPopVisible() {
-      if (!application.signInPopVisibleOnRecentProjects()) { return 'hidden'; }
-    },
-
     userLink() {
       return application.currentUser().userLink();
     },

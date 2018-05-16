@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Thanks from './includes/thanks.jsx';
 
 export default function UserItem({user}) {
   const style = {
@@ -14,7 +15,7 @@ export default function UserItem({user}) {
           <div className="information">
             {!!user.name && <h3 className="name">{user.name}</h3>}
             <div className="button">@{user.login}</div>
-            {user.thanksCount > 0 && <p className="thanks">{user.userThanks} <span className="emoji sparkling_heart"></span></p>}
+            {user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
             {!!user.description && <p className="description" dangerouslySetInnerHTML={{__html: user.truncatedDescriptionHtml}}></p>}
           </div>
         </div>
@@ -33,6 +34,5 @@ UserItem.propTypes = {
     thanksCount: PropTypes.number.isRequired,
     truncatedDescriptionHtml: PropTypes.string,
     userLink: PropTypes.string.isRequired,
-    userThanks: PropTypes.string.isRequired,
   }),
 };

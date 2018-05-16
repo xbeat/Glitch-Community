@@ -38,6 +38,8 @@ export default Project = function(I, self) {
       const project = self;
 
       return {
+        get users() { return project.users().map(user => user.asProps()); },
+        
         avatar: project.avatar(),
         description: project.description(),
         domain: project.domain(),
@@ -45,14 +47,14 @@ export default Project = function(I, self) {
         isPinnedByTeam: project.isPinnedByTeam(application),
         isPinnedByUser: project.isPinnedByUser(application),
         isRecentProject: !!(project.isRecentProject),
-        link: project.isRecentProject ? project.editUrl() : `/~${project.domain()}`,
+        link: `/~${project.domain()}`,
         name: project.name(),
         private: project.private(),
         showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
+        remixUrl: project.remixUrl(), 
         showOverlay: () => {
           project.showOverlay(application);
         },
-        users: project.users().map(user => user.asProps()),
       };
     },
 
@@ -65,6 +67,10 @@ export default Project = function(I, self) {
         return `${EDITOR_URL}#!/${I.domain}?path=${I.path}:${I.line}:${I.character}`;
       }
       return `${EDITOR_URL}#!/${I.domain}`;
+    },
+    
+    remixUrl() {
+      return `${EDITOR_URL}#!/remix/${I.domain}`;
     },
 
     userIsCurrentUser(application) {
@@ -226,6 +232,29 @@ Project.getProjectsByIds = function(api, ids) {
   });
   
   return ids.map(id => Project({id}));
+};
+
+//getProjectsByIds, but wrapped in a promise until they're all fetched.
+Project.promiseProjectsByIds = (api, ids) => {
+  // Fetch all the project models.
+  const projects = Project.getProjectsByIds(api, ids);
+  
+  // Set up promises to listen to the fetched() state
+  const promises = projects.map(project => {
+    return new Promise((resolve) => {
+      project.fetched.observe((isFetched) => {
+        isFetched && resolve();
+      });
+    });
+  });
+  
+  // Once they all report in as fetched,
+  // return the (now populated) original projects object
+  return new Promise((resolve) => {
+    Promise.all(promises).then(() => {
+      return resolve(projects);
+    });
+  });
 };
 
 Project.getProjectOverlay = function(application, domain) {

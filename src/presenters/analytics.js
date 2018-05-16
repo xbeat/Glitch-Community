@@ -2,12 +2,14 @@
 
 import Observable from 'o_0';
 
+import Reactlet from "./reactlet";
+import AnalyticsProjectPop from './pop-overs/analytics-project-pop.jsx';
+
 import axios from 'axios';
 import {throttle} from 'lodash';
 import moment from 'moment-mini';
 import AnalyticsTemplate from '../templates/includes/analytics';
-import AnalyticsTimePopPresenter from './pop-overs/analytics-time-pop';
-import AnalyticsProjectsPopPresenter from './pop-overs/analytics-projects-pop';
+import AnalyticsTimePop from './pop-overs/analytics-time-pop.jsx';
 
 const METRICS = ["remixes", "visits"];
 const REFERRER_FIELDS = ["remixReferrers", "referrers"];
@@ -21,6 +23,22 @@ const twoWeeks = moment().subtract(2, 'weeks').valueOf();
 const fourWeeks = moment().subtract(4, 'weeks').valueOf();
 const oneDay = moment().subtract(24, 'hours').valueOf();
 
+const TIME_FRAMES = {
+  LAST_4_WEEKS: 'Last 4 Weeks',
+  LAST_2_WEEKS: 'Last 2 Weeks',
+  LAST_24_HOURS: 'Last 24 Hours',
+};
+
+const dtFromTimeFrame = (timeFrame) => {
+  if (timeFrame === TIME_FRAMES.LAST_4_WEEKS) {
+    return fourWeeks;
+  }
+  if (timeFrame === TIME_FRAMES.LAST_24_HOURS) {
+    return oneDay;
+  } 
+  return twoWeeks;
+};
+  
 // Crack open a promise so anyone can resolve or reject it later
 const OpenPromise = function() {
   let resolve = null;
@@ -60,16 +78,10 @@ export default function(application, teamOrProject) {
     gettingAnalyticsProjectDomain: Observable(false),
     // analyticsFromDate: Observable twoWeeks
     analyticsProjectDomain: Observable('All Projects'),
-    analyticsTimeLabel: Observable('Last 2 Weeks'),
+    analyticsTimeLabel: Observable(TIME_FRAMES.LAST_2_WEEKS),
     
     analyticsFromDate() {
-      if (self.analyticsTimeLabel() === 'Last 4 Weeks') {
-        return fourWeeks;
-      } else if (self.analyticsTimeLabel() === 'Last 24 Hours') {
-        return oneDay;
-      } 
-      return twoWeeks;
-      
+      return dtFromTimeFrame(self.analyticsTimeLabel());      
     },
     
     // showRemixesReferrers: Observable false
@@ -373,28 +385,39 @@ export default function(application, teamOrProject) {
         );
     },
 
-    toggleAnalyticsTimePop(event) {
-      event.stopPropagation();
-      const element = event.currentTarget;
-      const existingPop = element.querySelector(".analytics-time-pop");
-      application.closeAllPopOvers();
-
-      if (!existingPop) {
-        return element.parentElement.appendChild(AnalyticsTimePopPresenter(application, self));
-      }
+    AnalyticsTimePop() {
+      // Subscribe to these observables:
+      self.analyticsTimeLabel();
+      self.gettingAnalyticsFromDate();
+      
+      const props = {
+        analyticsTimeLabelObservable: self.analyticsTimeLabel,
+        gettingAnalyticsFromDateObservable: self.gettingAnalyticsFromDate,
+        timeFrames: Object.values(TIME_FRAMES),
+      };
+      return Reactlet(AnalyticsTimePop, props);
     },
 
-    toggleAnalyticsProjectsPop(event) {
-      event.stopPropagation();
-      const element = event.currentTarget;
-      const existingPop = element.querySelector(".analytics-projects-pop");
-      application.closeAllPopOvers();
-
-      if (!existingPop) {
-        return element.parentElement.appendChild(AnalyticsProjectsPopPresenter(application, self));
-      }
+    AnalyticsProjectPop() {
+      const action = (project) => {
+        const domain = project ? project.domain : 'All Projects';
+        self.analyticsProjectDomain(domain);
+      };
+      const projects = application.team().projects().map(project => {
+        const {...props} = project.asProps();
+        props.description = "";
+        props.users = [];
+        return props;
+      });
+      const props = {
+        projects,
+        action,
+        currentDomain: self.analyticsProjectDomain(),
+      };
+      return Reactlet(AnalyticsProjectPop, props);
     },
 
+    
     hiddenUnlessGettingAnalytics() {
       if (!self.gettingAnalytics()) { return 'hidden'; }
     },
@@ -412,7 +435,7 @@ export default function(application, teamOrProject) {
     },
 
     hiddenUnlessCurrentUserIsOnTeam() {
-      if (!self.currentUserIsOnTeam(application)) { return 'hidden'; }
+      if (!self.currentUserIsOnTeam()) { return 'hidden'; }
     },
   };
 

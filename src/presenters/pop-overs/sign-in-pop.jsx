@@ -1,4 +1,5 @@
 import React from 'react';
+import PopoverContainer from './popover-container.jsx';
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
 function githubAuthLink() {
@@ -34,4 +35,15 @@ const SignInPop = () => (
   </div>
 );
 
-export default SignInPop;
+export default function SignInPopContainer() {
+  return (
+    <PopoverContainer>
+      {({togglePopover, visible}) => (
+        <div className="button-wrap">
+          <button className="button button-small" onClick={togglePopover}>Sign in</button>
+          {visible && <SignInPop/>}
+        </div>
+      )}
+    </PopoverContainer>
+  );
+}

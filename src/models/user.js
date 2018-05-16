@@ -30,7 +30,7 @@ export default User = function(I, self) {
     description: "",
     initialDescription: "",
     projects: undefined,
-    teams: undefined,
+    teams: [],
     thanksCount: 0,
     fetched: false,
     showAsGlitchTeam: false,
@@ -194,7 +194,7 @@ export default User = function(I, self) {
       return `Thanked ${thanksCount} times`;
       
     },
-
+    
     addPin(application, projectId) {
       self.pins.push({
         projectId});
@@ -213,10 +213,14 @@ export default User = function(I, self) {
     
     asProps() {
       return {
+        get teams() { return self.teams.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()); },
+
         alt: self.alt(),
-        coverUrlSmall: self.coverUrl('small'),
+        color: self.color(),
         coverColor: self.coverColor(),
+        coverUrlSmall: self.coverUrl('small'),
         description: self.description(),
+        hasCoverImage: self.hasCoverImage(),
         id: self.id(),
         login: self.login(),
         name: self.name(),
@@ -282,24 +286,35 @@ User.getUsersById = function(api, ids) {
     });
 };
 
-User.getSearchResults = function(application, query) {
-  const MAX_RESULTS = 20;
+User.getSearchResultsJSON = function(application, query) {
   const { CancelToken } = axios;
   const source = CancelToken.source();
-  application.searchResultsUsers([]);
-  application.searchingForUsers(true);
   const searchPath = `users/search?q=${query}`;
   return application.api(source).get(searchPath)
-    .then(function({data}) {
+    .then(({data}) => data)
+    .catch(error => console.error('getSearchResultsJSON', error));
+};
+
+User.getSearchResults = function(application, query) {
+  const MAX_RESULTS = 20;
+  application.searchResultsUsers([]);
+  application.searchingForUsers(true);
+  return User.getSearchResultsJSON(application, query)
+    .then((data) => {
       application.searchingForUsers(false);
       data = data.slice(0 , MAX_RESULTS);
       if (data.length === 0) {
         application.searchResultsHaveNoUsers(true);
       }
-      return data.forEach(function(datum) {
+      data = data.map(function(datum) {
         datum.fetched = true;
-        return User(datum).update(datum).pushSearchResult(application);
-      });}).catch(error => console.error('getSearchResults', error));
+        return User(datum).update(datum);
+      });
+      data.forEach(function(userModel) {
+        return userModel.pushSearchResult(application);
+      });
+      return data;
+    }).catch(error => console.error('getSearchResults', error));
 };
 
 

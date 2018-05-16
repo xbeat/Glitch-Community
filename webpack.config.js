@@ -37,9 +37,9 @@ module.exports = () => {
           include: SRC,
           loader: "eslint-loader",
           options: {
-            fix: true,
+            //fix: true,
             cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so disable this when reconfiguring
-            emitError: true,
+            emitError: false,
             emitWarning: true,
             failOnError: false,
           }
@@ -54,6 +54,7 @@ module.exports = () => {
     },
     plugins: [
       new LodashModuleReplacementPlugin,
+      new webpack.NoEmitOnErrorsPlugin(),
     ],
   };
 }

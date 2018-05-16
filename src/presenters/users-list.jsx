@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const PopulatedUsersList = ({users, extraClass="" }) => (
-  <div className={`users ${extraClass}`}>
-    { users.map((user, key) => (
-      <UserTile key={key} {...user}></UserTile>
-    ))}
-  </div>
+import PopoverContainer from './pop-overs/popover-container.jsx';
+
+const UserAvatar = ({
+  alt, 
+  userAvatarUrl,
+}) => (
+  <img className="user-list-avatar" width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
 );
 
-PopulatedUsersList.propTypes = {
-  users: PropTypes.array.isRequired,
-  extraClass: PropTypes.string,
+UserAvatar.propTypes = {
+  alt: PropTypes.string.isRequired,
+  userAvatarUrl: PropTypes.string.isRequired,
 };
 
 const UserTile = ({
@@ -23,7 +24,7 @@ const UserTile = ({
   extraClass="",
 }) => (
   <a className={`user ${extraClass}`} href={userLink} data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
-    <img width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
+    <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
   </a>
 );
 
@@ -31,8 +32,21 @@ UserTile.propTypes = {
   userLink: PropTypes.string,
   tooltipName: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
-  alt: PropTypes.string.isRequired,
-  userAvatarUrl: PropTypes.string.isRequired,
+  extraClass: PropTypes.string,
+};
+
+export const PopulatedUsersList = ({users, extraClass="" }) => (
+  <ul className={`users ${extraClass}`}>
+    {users.map((user, key) => (
+      <li key={key}>
+        <UserTile {...user} />
+      </li>
+    ))}
+  </ul>
+);
+
+PopulatedUsersList.propTypes = {
+  users: PropTypes.array.isRequired,
   extraClass: PropTypes.string,
 };
   
@@ -65,3 +79,47 @@ UsersList.propTypes = {
 };
 
 export default UsersList;
+
+const UserPopoverTile = ({
+  tooltipName, 
+  style,
+  alt, 
+  userAvatarUrl,
+  children,
+}) => (
+  <PopoverContainer>
+    {({visible, togglePopover}) => (
+      <div className="button-wrap">
+        <button onClick={togglePopover} className="user button-unstyled" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
+          <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
+        </button>
+        {!!visible && children(togglePopover)}
+      </div>
+    )}
+  </PopoverContainer>
+);
+
+UserPopoverTile.propTypes = {
+  userLink: PropTypes.string,
+  tooltipName: PropTypes.string.isRequired,
+  style: PropTypes.object.isRequired,
+  extraClass: PropTypes.string,
+  children: PropTypes.func.isRequired,
+};
+
+export const UserPopoversList = ({users, children}) => (
+  <ul className="users">
+    {users.map((user, key) => (
+      <li key={key}>
+        <UserPopoverTile {...user}>
+          {(togglePopover) => children(user, togglePopover)}
+        </UserPopoverTile>
+      </li>
+    ))}
+  </ul>
+);
+
+UserPopoversList.propTypes = {
+  users: PropTypes.array.isRequired,
+  children: PropTypes.func.isRequired,
+};

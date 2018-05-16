@@ -2,8 +2,7 @@
 
 import Observable from 'o_0';
 
-import {find} from "lodash";
-import {keys} from "lodash";
+import {find, keys} from "lodash";
 import axios from 'axios';
 import cachedCategories from './cache/categories.js';
 import cachedTeams from './cache/teams.js';
@@ -36,13 +35,6 @@ var self = Model({
   overlayProject: Observable(undefined),
   overlayVideoVisible: Observable(false),
   overlayNewStuffVisible: Observable(false),
-
-  // pop overs
-  signInPopVisibleOnHeader: Observable(false),
-  signInPopVisibleOnRecentProjects: Observable(false),
-  userOptionsPopVisible: Observable(false),
-  addTeamUserPopVisible: Observable(false),
-  addTeamProjectPopVisible: Observable(false),
 
   // search - users
   searchQuery: Observable(""),
@@ -110,36 +102,12 @@ var self = Model({
     
   },
 
-  // Call this function to close all active popovers and overlays.
-  // Pass a callback to this function to register a callback
-  // to be invoked when this function is called (e.g., so you can close yourself.);
-  // Callbacks are only invoked once.
-  closeAllPopOvers: (() => {
-    const callbacks = [];
-    
-    return (cb) => {
-      if(cb) {
-        callbacks.push(cb);
-        return;
-      }
-      
-      callbacks.forEach(cb => cb());
-      
-      //delete all the callbacks
-      callbacks.length = 0;
-      
-      $(".pop-over.disposable, .overlay-background.disposable").remove();
-      self.signInPopVisibleOnHeader(false);
-      self.signInPopVisibleOnRecentProjects(false);
-      self.userOptionsPopVisible(false);
-      self.addTeamUserPopVisible(false);
-      self.addTeamProjectPopVisible(false);
-      self.overlayProjectVisible(false);
-      self.overlayVideoVisible(false);
-      return self.overlayNewStuffVisible(false);
-    };
-  
-  })(),
+  closeAllPopOvers() {
+    $(".overlay-background.disposable").remove();
+    self.overlayProjectVisible(false);
+    self.overlayVideoVisible(false);
+    self.overlayNewStuffVisible(false);
+  },
 
   searchProjects(query) {
     self.searchResultsProjects([]);
@@ -155,8 +123,7 @@ var self = Model({
     self.searchResultsTeams([]);
     return Team.getSearchResults(application, query);
   },
-    
-    
+  
   api(source) {
     const persistentToken = self.currentUser() && self.currentUser().persistentToken();
     if (persistentToken) {

@@ -42,19 +42,25 @@ export default Team = function(I, self) {
   self.attrObservable("localAvatarImage");
 
   self.extend({
-  
+    
     pins: self.teamPins,
   
-    coverUrl(size) {
-      size = size || 'large';
+    coverUrl(size='large') {
+      if(self.localCoverImage()) {
+        return self.localCoverImage();
+      }
+      
       if (self.hasCoverImage()) {
         return `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-cover/${self.id()}/${size}?${cacheBuster}`;           
       } 
       return "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
-      
     },
 
     teamAvatarUrl(size) {
+      if(self.localAvatarImage()) {
+        return self.localAvatarImage();
+      }
+      
       size = size || 'small';
       if (self.hasAvatarImage()) {
         return `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-avatar/${self.id()}/${size}?${cacheBuster}`;
@@ -77,7 +83,6 @@ export default Team = function(I, self) {
         return self.description().substring(0, MAX_CHARACTERS) + "…";
       } 
       return self.description();
-      
     },
 
     thanksCount() {
@@ -101,6 +106,7 @@ export default Team = function(I, self) {
 
     currentUserIsOnTeam(application) {
       return -1 !== self.users().findIndex(user => user.id() === application.currentUser().id());
+
     },
 
     updateCoverColor(application, color) {
@@ -166,12 +172,16 @@ export default Team = function(I, self) {
           return console.log('removed user. team users are now', self.users());}).catch(error => console.error('removeUser', error));
     },
 
-    addProject(application, project) {
-      const teamProjectPath = `/teams/${self.id()}/projects/${project.id()}`;
+    addProject(application, projectId) {
+      const teamProjectPath = `/teams/${self.id()}/projects/${projectId}`;
       return application.api().post(teamProjectPath)
         .then(function() {
-          self.projects.push(project);
-          return console.log('added project. team projects are now', self.projects());}).catch(error => console.error('addProject', error));
+          self.projects.push(Project({id: projectId}));
+          // asynchronously populate the project we just added.
+          Project.getProjectsByIds(application.api(), [projectId]);
+        
+          console.log('added project. team projects are now', self.projects());
+        }).catch(error => console.error('addProject', error));
     },
 
     removeProject(application, projectId) {
@@ -180,28 +190,48 @@ export default Team = function(I, self) {
         .then(function() {
           const newProjects = reject(self.projects(), removedProject => removedProject.id() === projectId);
           self.projects(newProjects);
-          return console.log('removed project. team projects are now', self.projects());}).catch(error => console.error('addProject', error));
+          console.log('removed project. team projects are now', self.projects());
+        }).catch(error => console.error('removeProject', error));
     },
 
     pushSearchResult(application) {
       application.searchResultsTeams.push(self);
       return application.searchResultsTeamsLoaded(true);
     },
+
+    teamProfileStyle() {
+      return {
+        backgroundColor: self.coverColor(),
+        backgroundImage: `url('${self.coverUrl()}')`,
+      };
+    },
+
+    teamAvatarStyle() {
+      if (self.hasAvatarImage()) {
+        return {backgroundImage: `url('${self.teamAvatarUrl()}')`};
+      }
+      return {backgroundColor: self.backgroundColor()};
+    },
     
     asProps() {
       return {
+        get users() { return self.users().map(({asProps}) => asProps()); },
+        
         coverColor: self.coverColor(),
         coverUrlSmall: self.coverUrl('small'),
+        coverUrl: self.coverUrl(),
         description: self.description(),
+        fetched: self.fetched(),
         id: self.id(),
         isVerified: self.isVerified(),
         name: self.name(),
+        teamAvatarStyle: self.teamAvatarStyle(),
         teamAvatarUrl: self.teamAvatarUrl(),
+        teamProfileStyle: self.teamProfileStyle(),
         teamThanks: self.teamThanks(),
         thanksCount: self.thanksCount(),
         truncatedDescription: self.truncatedDescription(),
         url: self.url(),
-        users: self.users().map(user => user.asProps()),
         verifiedImage: self.verifiedImage(),
         verifiedTooltip: self.verifiedTooltip(),
       };

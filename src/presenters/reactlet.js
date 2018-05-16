@@ -13,7 +13,7 @@ let distinctIds = new Set();
 let batchPending = false;
 
 export default function(Component, props, guid=null) {
-  const id = guid || `reactlet-${Component.name}-${anchorId++}`;
+  const id = guid || `reactlet-${Component.name || "anon"}-${anchorId++}`;
   
   // Rather than rendering immediately, 
   // collect the invocations into a stack.

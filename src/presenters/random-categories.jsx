@@ -52,7 +52,7 @@ export default class CategoryContainer extends React.Component {
       models = sampleSize(models, 3);
       
       const categories = models.map(categoryModel => {
-        const category = categoryModel.asProps();
+        const {...category} = categoryModel.asProps();
         category.projects = sampleSize(category.projects, 3);
         return category;
       });
