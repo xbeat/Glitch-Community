@@ -72,7 +72,7 @@ export default function(application) {
 
     teamAnalytics() {
       const id = self.team().id()
-      const api = application.api
+      const api = application.api()
       const propsObservable = Observable(() => {
         const props = {
           id: id,

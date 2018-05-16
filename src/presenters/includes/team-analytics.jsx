@@ -6,13 +6,16 @@ import Loader from '../includes/loader.jsx';
 // console.log(props)
 
 const AnalyticsData = ({id, api}) => {
-  let path = `/analytics/${id}/team`
-  console.log('🚒',path, api)
+  let path = `analytics/${id}/team`
+  api().get(path)
+  .then(({data}) => {
+    console.log('🚒', data)
+  })
 }
 
-// Activity
-// Referrers
 // Controls
+// Activity (TeamAnalyticsActivity)
+// Referrers
 
 class TeamAnalytics extends React.Component {
   constructor(props) {
@@ -26,7 +29,8 @@ class TeamAnalytics extends React.Component {
   }
 
   componentDidMount() {
-    console.log('🌹', this.props);
+    // loading c3 lib
+    // console.log('🌹', this.props); {id: 74, api: ƒ}
     AnalyticsData(this.props)
   }
 
