@@ -123,17 +123,6 @@ const propsObservable = Observable(() => {
       if (application.user().id()) { return true; }
     },
 
-    userAvatarUrl() {
-      return application.user().userAvatarUrl('large');
-    },
-
-    userAvatarStyle() {
-      return {
-        backgroundColor: application.user().color(),
-        backgroundImage: `url('${self.userAvatarUrl()}')`,
-      };
-    },
-
     hiddenIfUserFetched() { 
       return application.user().hiddenIfFetched();
     },
