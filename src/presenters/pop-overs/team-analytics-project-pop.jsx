@@ -80,13 +80,12 @@ class TeamAnalyticsProjectPop extends React.Component {
   }
   
   render() {
-    const {currentDomain, ...props} = this.props;
+    const {currentProjectDomain, ...props} = this.props;
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <div className="button-wrap">
-            <button className="button-small button-tertiary" onClick={togglePopover}>{currentDomain}</button>
-            {visible && <AnalyticsProjectPop {...props} togglePopover={togglePopover} setFilter={this.setFilter} filter={this.state.filter}/>}
+            <button className="button-small button-tertiary" onClick={togglePopover}>{currentProjectDomain}</button>
           </div>
         )}
       </PopoverContainer>
