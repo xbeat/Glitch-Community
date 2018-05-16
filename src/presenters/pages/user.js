@@ -39,6 +39,7 @@ const propsObservable = Observable(() => {
         const user = self.user().asProps();
         const props = {
           ...user,
+          fetched: self.user().fetched(),
           style: user.profileStyle,
           isAuthorized: self.isCurrentUser(),
           updateDescription: self.updateDescription,

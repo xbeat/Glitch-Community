@@ -221,7 +221,6 @@ export default Team = function(I, self) {
         coverUrlSmall: self.coverUrl('small'),
         coverUrl: self.coverUrl(),
         description: self.description(),
-        fetched: self.fetched(),
         id: self.id(),
         isVerified: self.isVerified(),
         name: self.name(),

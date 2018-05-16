@@ -28,13 +28,13 @@ export default function(application) {
         const team = self.team().asProps();
         const props = {
           ...team,
+          fetched: self.team().fetched(),
           style: team.teamProfileStyle,
           isAuthorized: self.currentUserIsOnTeam(),
           addUserToTeam: (id) => { self.team().addUser(application, User({id})); },
           avatarStyle: team.teamAvatarStyle,
           removeUserFromTeam: ({id}) => { self.team().removeUser(application, User({id})); },
           search: (query) => User.getSearchResultsJSON(application, query).then(users => users.map(user => User(user).asProps())),
-          thanksCount: team.thanksCount,
           updateDescription: self.updateDescription,
           uploadAvatar: self.uploadAvatar,
           uploadCover: self.uploadCover,
