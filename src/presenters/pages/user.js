@@ -170,18 +170,8 @@ const propsObservable = Observable(() => {
       if (cover) { return `url(${cover})`; }
     },
 
-    uploadCover() {
-      const input = document.createElement("input");
-      input.type = 'file';
-      input.accept = "image/*";
-      input.onchange = function(event) {   
-        const file = event.target.files[0];
-        console.log('☔️☔️☔️ input onchange', file);
-        return assetUtils.addCoverFile(file);
-      };
-      input.click();
-      return false;
-    },
+    uploadCover: () => {assetUtils.uploader(assetUtils.addCoverFile)},
+    uploadAvatar: () => {assetUtils.uploader(assetUtils.addAvatarFile)},
     
     userProjects() {
       const props = {

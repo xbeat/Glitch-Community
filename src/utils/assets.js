@@ -249,14 +249,10 @@ export default function(application) {
       return blobToImage(file)
         .then(function(image) {
           const dominantColor = getDominantColor(image);
-          if (application.pageIsTeamPage()) {
-            application.team().localCoverImage(image.src);
-            application.team().hasCoverImage(true);
-            return application.team().updateCoverColor(application, dominantColor);
-          } 
-          application.user().localCoverImage(image.src);
-          application.user().hasCoverImage(true);
-          return application.user().updateCoverColor(application, dominantColor);
+          const entity = application.pageIsTeamPage() ? application.team() : application.user();
+          entity.localCoverImage(image.src);
+          entity.hasCoverImage(true);
+          entity.updateCoverColor(application, dominantColor);
         }).catch(function(error) {
           application.notifyUploadFailure(true);
           return console.error('addCoverFile', error);
@@ -272,13 +268,27 @@ export default function(application) {
       return blobToImage(file)
         .then(function(image) {
           const dominantColor = getDominantColor(image);
-          if (application.pageIsTeamPage()) {
-            application.team().localAvatarImage(image.src);
-            return application.team().updateAvatarColor(application, dominantColor);
-          }}).catch(function(error) {
+          const entity = application.pageIsTeamPage() ? application.team() : application.user();
+          entity.localAvatarImage(image.src);
+          entity.updateAvatarColor(application, dominantColor);
+        }).catch(function(error) {
           application.notifyUploadFailure(true);
           return console.error('addAvatarFile', error);
         });
+    },
+  
+    uploader(uploadReceiver) {
+      const input = document.createElement("input");
+      input.type = 'file';
+      input.accept = "image/*";
+      input.onchange = function(event) {
+        const file = event.target.files[0];
+        console.log('☔️☔️☔️ input onchange', file);
+        return self[uploadReceiver](file);
+      };
+      input.click();
+      console.log('input created: ', input);
+      return false;
     },
   };
 }

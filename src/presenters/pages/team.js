@@ -110,33 +110,8 @@ export default function(application) {
     // application.notifyUserDescriptionUpdated true
 
 
-    uploadCover() {
-      const input = document.createElement("input");
-      input.type = 'file';
-      input.accept = "image/*";
-      input.onchange = function(event) {
-        const file = event.target.files[0];
-        console.log('☔️☔️☔️ input onchange', file);
-        return assetUtils.addCoverFile(file);
-      };
-      input.click();
-      console.log('input created: ', input);
-      return false;
-    },
-
-    uploadAvatar() {
-      const input = document.createElement("input");
-      input.type = 'file';
-      input.accept = "image/*";
-      input.onchange = function(event) {
-        const file = event.target.files[0];
-        console.log('☔️☔️☔️ input onchange', file);
-        return assetUtils.addAvatarFile(file);
-      };
-      input.click();
-      console.log('input created: ', input);
-      return false;
-    },
+    uploadCover: () => {assetUtils.uploader(assetUtils.addCoverFile)},
+    uploadAvatar: () => {assetUtils.uploader(assetUtils.addAvatarFile)},
 
     togglePinnedState(projectId) {
       const action = Project.isPinnedByTeam(application.team(), projectId) ? "removePin" : "addPin";
