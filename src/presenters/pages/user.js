@@ -34,8 +34,8 @@ export default function(application, userLoginOrId) {
     application,
     
     Profile() {
-      return 
-    }
+      return Reactlet(UserProfile, {});
+    },
   
     coverUrl() {
       if (application.user().localCoverImage()) {
