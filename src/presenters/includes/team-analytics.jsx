@@ -2,18 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Loader from '../includes/loader.jsx';
-
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx'
 
 // import AnalyticsTimePop from './pop-overs/analytics-time-pop.jsx';
 // import AnalyticsProjectPop from './pop-overs/analytics-project-pop.jsx';
+// temps: analytics.js, analytics.jade, analytics.styl
 
-// unused yet
-// const timeFrames = [
-//   "Last 4 Weeks",
-//   "Last 2 Weeks",
-//   "Last 24 Hours",
-// ]
 
 const getAnalytics = async ({id, api}) => {
   let path = `analytics/${id}/team`
