@@ -78,7 +78,7 @@ module.exports = function() {
   );
 
   return app.get('*', (request, response) =>
-    response.render('index', {
+    response.render('../public/index', {
       route: request.path,
       baseUrl: request.baseUrl,
       API_URL,

@@ -30,6 +30,7 @@ dependencies:
   quantize: 1.0.2
   querystringify: 2.0.0
   randomcolor: 0.5.3
+  raw-loader: 0.5.1
   react: 16.3.2
   react-dom: 16.3.2
   react-is: 16.3.2
@@ -5554,6 +5555,10 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha1-vNYMd9Prk83gBQKVw/N5OJvIj4k=
+  /raw-loader/0.5.1:
+    dev: false
+    resolution:
+      integrity: sha1-DD0L6u2KAclm2Xh793goElKpeao=
   /rc/1.2.6:
     dependencies:
       deep-extend: 0.4.2
@@ -7229,6 +7234,7 @@ specifiers:
   quantize: ^1.0.2
   querystringify: ^2.0.0
   randomcolor: ^0.5.3
+  raw-loader: ^0.5.1
   react: ^16.3.2
   react-dom: ^16.3.2
   react-is: ^16.3.2
