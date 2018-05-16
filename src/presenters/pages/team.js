@@ -75,7 +75,8 @@ export default function(application) {
       const api = application.api
       const props = {
         id: id,
-        api: api
+        api: api,
+        projects: self.team().projects(),
       };
 
       if (id) {

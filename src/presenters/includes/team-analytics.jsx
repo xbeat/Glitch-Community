@@ -83,8 +83,9 @@ class TeamAnalytics extends React.Component {
   render() {
     return (
       <section>
-        <p>i am team analytics</p>
+        <h2>Analytics</h2>
         <p>{this.state.currentTimeFrame}</p>
+        <p>{this.state.currentProjectDomain}</p>
         <TeamAnalyticsTimePop 
           updateTimeFrame = {this.updateTimeFrame.bind(this)}
           currentTimeFrame = {this.state.currentTimeFrame}
@@ -92,6 +93,7 @@ class TeamAnalytics extends React.Component {
         <TeamAnalyticsProjectPop
           updateProjectdomain = {this.updateProjectdomain.bind(this)}
           currentProjectDomain = {this.state.currentProjectDomain}
+          projects = {this.props.projects}
         />
       </section>
     );
@@ -101,6 +103,7 @@ class TeamAnalytics extends React.Component {
 TeamAnalytics.propTypes = {
   id: PropTypes.number.isRequired,
   api: PropTypes.func.isRequired,
+  projects: PropTypes.array.isRequired,
 };
 
 export default TeamAnalytics;
