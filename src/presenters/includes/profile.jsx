@@ -73,7 +73,7 @@ Avatar.propTypes = {
   name: PropTypes.string.isRequired,
   thanksCount: PropTypes.number.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
-  initialDescription: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   updateDescription: PropTypes.func.isRequired,
   descriptionPlaceholder: PropTypes.string.isRequired,
   TeamFields: PropTypes.element,
@@ -83,15 +83,15 @@ Avatar.propTypes = {
 
 
 const TeamAvatar = ({
-  isAuthorized, removeUserFromTeam, search, addUserToTeam, users,
+  currentUserIsOnTeam, removeUserFromTeam, search, addUserToTeam, users,
   isVerified, verifiedTooltip, verifiedImage,
   ...props
 }) => {
   
   const UserInformation = (
     <div className="users-information">
-      <TeamUsers {...{users, currentUserIsOnTeam: isAuthorized, removeUserFromTeam}}/>
-      { isAuthorized && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
+      <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
+      { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
     </div>
   );
   
@@ -101,12 +101,12 @@ const TeamAvatar = ({
     </span>
   );
   
-  return <Avatar {...props} isAuthorized={isAuthorized} TeamFields={UserInformation} UserFields={null} UsernameTooltip={UsernameTooltip}/>
+  return <Avatar {...props} isAuthorized={currentUserIsOnTeam} TeamFields={UserInformation} UserFields={null} UsernameTooltip={UsernameTooltip}/>
 };
 TeamAvatar.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
   })),
   isVerified: PropTypes.bool.isRequired,
   verifiedImage: PropTypes.string.isRequired,
@@ -123,7 +123,7 @@ UserAvatar.propTypes = {
   userLoginOrId: PropTypes.string.isRequired,
 };
 
-export const Profile = ({isAuthorized, style, uploadCover, Avatar}) => {
+const Profile = ({isAuthorized, style, uploadCover, Avatar}) => {
   return (
     <section className="profile">
       <div className="profile-container" style={style}>
