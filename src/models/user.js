@@ -10,6 +10,8 @@ import Model from './model';
 const cache = {};
 const cacheBuster = Math.floor(Math.random() * 1000);
 
+export const ANON_AVATAR_URL = "https://cdn.glitch.com/f6949da2-781d-4fd5-81e6-1fdd56350165%2Fanon-user-on-project-avatar.svg?1488556279399";
+
 export default User = function(I, self) {
 
   if (I == null) { I = {}; }
@@ -130,7 +132,7 @@ export default User = function(I, self) {
     },
 
     anonAvatar() {
-      return "https://cdn.glitch.com/f6949da2-781d-4fd5-81e6-1fdd56350165%2Fanon-user-on-project-avatar.svg?1488556279399";
+      return ANON_AVATAR_URL;
     },
 
     glitchTeamAvatar() {

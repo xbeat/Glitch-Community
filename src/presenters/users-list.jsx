@@ -2,12 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import PopoverContainer from './pop-overs/popover-container.jsx';
+import {ANON_AVATAR_URL} from '../models/user.js';
+
+function addDefaultSrc(event) {
+  event.target.src = ANON_AVATAR_URL;
+}
 
 const UserAvatar = ({
   alt, 
   userAvatarUrl,
 }) => (
-  <img className="user-list-avatar" width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
+  <img onError={addDefaultSrc} className="user-list-avatar" width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
 );
 
 UserAvatar.propTypes = {

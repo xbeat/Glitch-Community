@@ -2,9 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Thanks from './includes/thanks.jsx';
 
+import {ANON_AVATAR_URL} from '../models/user.js';
+
 function addDefaultSrc(event) {
-  const AnonAvatarUrl = "https://cdn.glitch.com/f6949da2-781d-4fd5-81e6-1fdd56350165%2Fanon-user-on-project-avatar.svg";
-  event.target.src = AnonAvatarUrl;
+  event.target.src = ANON_AVATAR_URL;
 }
 
 export default function UserItem({user}) {
