@@ -35,7 +35,7 @@ export default function(application, userLoginOrId) {
     application,
     
     Profile() {
-const propsObservable = Observable(() => {
+      const propsObservable = Observable(() => {
         const user = self.user().asProps();
         const props = {
           ...user,
@@ -170,8 +170,8 @@ const propsObservable = Observable(() => {
       if (cover) { return `url(${cover})`; }
     },
 
-    uploadCover: () => {assetUtils.uploader(assetUtils.addCoverFile)},
-    uploadAvatar: () => {assetUtils.uploader(assetUtils.addAvatarFile)},
+    uploadCover: () => {assetUtils.uploader(assetUtils.addCoverFile);},
+    uploadAvatar: () => {assetUtils.uploader(assetUtils.addAvatarFile);},
     
     userProjects() {
       const props = {

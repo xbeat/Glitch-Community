@@ -30,7 +30,7 @@ export default function(application) {
           ...team,
           fetched: self.team().fetched(),
           style: team.teamProfileStyle,
-          isAuthorized: self.currentUserIsOnTeam(),
+          currentUserIsOnTeam: self.currentUserIsOnTeam(),
           addUserToTeam: (id) => { self.team().addUser(application, User({id})); },
           avatarStyle: team.teamAvatarStyle,
           removeUserFromTeam: ({id}) => { self.team().removeUser(application, User({id})); },
