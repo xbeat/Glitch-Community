@@ -39,9 +39,9 @@ class TeamAnalytics extends React.Component {
     }
   }
 
-  changeTime(time) {
+  updateTime(newTime) {
     this.setState({
-      
+      time: newTime
     })
   }
   
@@ -61,7 +61,10 @@ class TeamAnalytics extends React.Component {
     return (
       <section>
         <p>i am team analytics</p>
-        <TeamAnalyticsTimePop time={this.state.time} />
+        <TeamAnalyticsTimePop 
+          updateTime = {this.updateTime.bind(this)}
+          time = {this.state.time} 
+        />
       </section>
     );
   }

@@ -65,21 +65,25 @@ import Loader from '../includes/loader.jsx';
 //     );
 // };
 
-const TeamAnalyticsTimePop = (({time}) => {
-  const changeTime = () => {
-    time = "Last 24 Hours"
+const TeamAnalyticsTimePop = (({updateTime, time}) => {
+  const clicked = () => {
+    console.log(updateTime)
+    console.log('i have been clicked and im changing time', time)
+    // time = "Last 24 Hours"
+    updateTime("Last 24 Hours")
   }
 
   return (
     <PopoverContainer>
       {({visible, togglePopover}) => (
-        <p onClick={changeTime}>time pop</p>
+        <p onClick={clicked}>time pop</p>
       )}
     </PopoverContainer>
   )
 })
 
 TeamAnalyticsTimePop.propTypes = {
+  updateTime: PropTypes.func.isRequired,
   time: PropTypes.string.isRequired,
   // analyticsTimeLabelObservable: PropTypes.func.isRequired, 
   // gettingAnalyticsFromDateObservable: PropTypes.func.isRequired,
