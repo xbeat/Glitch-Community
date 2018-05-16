@@ -11,7 +11,11 @@ import Loader from '../includes/loader.jsx';
 const getAnalytics = async ({id, api}) => {
   // console.log ('📟', id, api)
   let path = `analytics/${id}/team`
-  return await api().get(path)
+  try {
+    return await api().get(path)     
+  } catch (error) {
+    console.error('getAnalytics', error)
+  }
   // .then(({data}) => {
   //   return data
   // })
@@ -35,16 +39,13 @@ class TeamAnalytics extends React.Component {
 
   componentDidMount() {
     // loading c3 lib
-    console.log('🌹lsj', this.props); //{id: 74, api: ƒ}
+    console.log('🌹lsjs', this.props); //{id: 74, api: ƒ}
     
     getAnalytics(this.props)
     .then(({data}) => {
       console.log('🚒', data)
-      
+      this.state.isLoading = false
     })
-    .catch(error => 
-      console.error('getAnalytics', error)
-    )
   }
 
   // componentWillUnmount() {
