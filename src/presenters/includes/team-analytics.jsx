@@ -8,6 +8,7 @@ import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx
 
 // 🗑: analytics.js, analytics.jade, analytics.styl, analytics-time-pop.jsx, analytics-project-pop.jsx
 
+// unused yet
 const timeFrames = [
   {
     name: "Last 4 Weeks",
@@ -32,16 +33,17 @@ const getAnalytics = async ({id, api}) => {
   }
 }
 
-// Controls
-// Activity (TeamAnalyticsActivity)
-// Referrers
+// layout:
+  // Controls
+  // Activity (TeamAnalyticsActivity)
+  // Referrers
 
 class TeamAnalytics extends React.Component {
   constructor(props) {
     super(props);
       this.state = {
       currentTimeFrame: 'Last 2 Weeks',
-      projects: 'All Projects',
+      currentProjectDomain: 'All Projects',
       analytics: [],
       isLoading: true,
     }
@@ -52,7 +54,13 @@ class TeamAnalytics extends React.Component {
       currentTimeFrame: newTime
     })
   }
-  
+
+  updateProjectdomain(newDomain) {
+    this.setState({
+      currentProjectDomain: newDomain
+    })
+  }
+
   updateAnalytics() {
     this.setState({
       isLoading: true,
@@ -81,16 +89,18 @@ class TeamAnalytics extends React.Component {
           updateTimeFrame = {this.updateTimeFrame.bind(this)}
           currentTimeFrame = {this.state.currentTimeFrame}
         />
+        <TeamAnalyticsProjectPop
+          updateProjectdomain = {this.updateProjectdomain.bind(this)}
+          currentProjectDomain = {this.state.currentProjectDomain}
+        />
       </section>
     );
   }
 }
 
-
 TeamAnalytics.propTypes = {
   id: PropTypes.number.isRequired,
   api: PropTypes.func.isRequired,
 };
-
 
 export default TeamAnalytics;

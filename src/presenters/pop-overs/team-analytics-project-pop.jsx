@@ -68,7 +68,7 @@ AnalyticsProjectPop.propTypes = {
   filter: PropTypes.string.isRequired,
 };
 
-class AnalyticsProjectPopContainer extends React.Component {
+class TeamAnalyticsProjectPop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {filter: ""};
@@ -94,8 +94,10 @@ class AnalyticsProjectPopContainer extends React.Component {
   }
 }
 
-AnalyticsProjectPopContainer.propTypes = {
-  currentDomain: PropTypes.string.isRequired,
+// unused: pass 
+TeamAnalyticsProjectPop.propTypes = {
+  updateProjectdomain: PropTypes.func.isRequired,
+  currentProjectDomain: PropTypes.string.isRequired,
 };
 
-export default AnalyticsProjectPopContainer;
+export default TeamAnalyticsProjectPop;
