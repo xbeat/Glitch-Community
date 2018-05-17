@@ -38,6 +38,8 @@ export default function(application) {
           updateDescription: self.updateDescription,
           uploadAvatar: self.uploadAvatar,
           uploadCover: self.uploadCover,
+          clearAvatar: self.clearAvatar,
+          clearCover: self.clearCover,
         };
         return props;
       });
@@ -110,7 +112,7 @@ export default function(application) {
     // application.notifyUserDescriptionUpdated true
 
     clearCover: () => assetUtils.updateHasCoverImage(false),
-    clearAvatar: () => () => assetUtils.updateHasAvatarImage(false),
+    clearAvatar: () => assetUtils.updateHasAvatarImage(false),
 
     uploadCover: assetUtils.uploadCoverFile,
     uploadAvatar: assetUtils.uploadAvatarFile,

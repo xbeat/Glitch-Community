@@ -32,6 +32,7 @@ const Avatar = ({
   thanksCount,
   updateDescription,
   uploadAvatar,
+  clearAvatar,
   descriptionPlaceholder,
   TeamFields,
   UserFields,
@@ -41,9 +42,14 @@ const Avatar = ({
     <div className="user-avatar-container">
       <div className="user-avatar" style={avatarStyle}>
         { isAuthorized && (
-          <button className="button-small button-tertiary upload-avatar-button" onClick={uploadAvatar}>
-            Upload Avatar
-          </button>
+          <div className="upload-avatar-button">
+            <button className="button-small button-tertiary" onClick={uploadAvatar}>
+              Upload Avatar
+            </button>
+            <button className="button-small button-tertiary" onClick={clearAvatar}>
+              Clear Avatar
+            </button>
+          </div>
         )}
       </div>
       <div className="user-information">
@@ -73,6 +79,7 @@ Avatar.propTypes = {
   name: PropTypes.string.isRequired,
   thanksCount: PropTypes.number.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
+  clearAvatar: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
   updateDescription: PropTypes.func.isRequired,
   descriptionPlaceholder: PropTypes.string.isRequired,
@@ -132,14 +139,14 @@ const Profile = ({isAuthorized, style, uploadCover, clearCover, Avatar}) => {
         </div>
       </div>
       {isAuthorized && (
-        <React.Fragment>
-          <button className="button-small button-tertiary upload-cover-button" onClick={uploadCover}>
+        <div className="upload-cover-button">
+          <button className="button-small button-tertiary" onClick={uploadCover}>
             Upload Cover  
           </button>
-          <button className="button-small button-tertiary upload-cover-button" onClick={clearCover}>
+          <button className="button-small button-tertiary" onClick={clearCover}>
             Clear Cover  
           </button>
-        </React.Fragment>
+        </div>
       )}
     </section>
   );
