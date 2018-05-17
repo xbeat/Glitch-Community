@@ -52,7 +52,8 @@ module.exports = function() {
   });
   
   // js files include a hash, so they can cache strongly
-  app.use(express.static('public', { maxAge: '30d' }));
+  app.use('*.js', express.static('public'));
+  app.use(express.static('public'));
 
   // Log all requests for diagnostics
   app.use(function(request, response, next) {
