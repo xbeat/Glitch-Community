@@ -30,7 +30,7 @@ const timeFrames = [
 
 const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
   const selectTimeFrame = (timeFrame, togglePopover) => {
-    return () => { 
+    return () => {
       updateTimeFrame(timeFrame)
       togglePopover()
     }

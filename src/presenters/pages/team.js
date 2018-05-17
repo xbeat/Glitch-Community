@@ -71,12 +71,18 @@ export default function(application) {
     },
 
     teamAnalytics() {
+      const projects = self.team().projects().map(function (project) {
+        project = project.asProps()
+        project.description = null
+        project.users = []
+        return project
+      })
       const id = self.team().id()
       const api = application.api
       const props = {
         id: id,
         api: api,
-        projects: self.team().projects(),
+        projects: projects,
       };
 
       if (id) {
