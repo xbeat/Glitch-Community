@@ -31,20 +31,15 @@ const Avatar = ({
   name,
   thanksCount,
   updateDescription,
-  uploadAvatar,
   descriptionPlaceholder,
-  TeamFields,
-  UserFields,
+  Fields,
+  AvatarButtons,
   UsernameTooltip,
 }) => {
   return (
     <div className="user-avatar-container">
       <div className="user-avatar" style={avatarStyle}>
-        { isAuthorized && (
-          <button className="button-small button-tertiary upload-avatar-button" onClick={uploadAvatar}>
-            Upload Avatar
-          </button>
-        )}
+        { isAuthorized && AvatarButtons }
       </div>
       <div className="user-information">
         { !!name && (
@@ -52,8 +47,7 @@ const Avatar = ({
             {UsernameTooltip}
           </h1>
         )}
-        {UserFields}
-        {TeamFields}
+        {Fields}
         { thanksCount > 0 && <Thanks count={thanksCount}/> }
         {isAuthorized
           ?
@@ -74,12 +68,11 @@ Avatar.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   name: PropTypes.string,
   thanksCount: PropTypes.number.isRequired,
-  uploadAvatar: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
   updateDescription: PropTypes.func.isRequired,
   descriptionPlaceholder: PropTypes.string.isRequired,
-  TeamFields: PropTypes.element,
-  UserFields: PropTypes.element,
+  Fields: PropTypes.element,
+  AvatarButtons: PropTypes.element,
   UsernameTooltip: PropTypes.element,
 };
 
@@ -87,6 +80,7 @@ Avatar.propTypes = {
 const TeamAvatar = ({
   currentUserIsOnTeam, removeUserFromTeam, search, addUserToTeam, users,
   isVerified, verifiedTooltip, verifiedImage,
+  uploadAvatar,
   ...props
 }) => {
   
@@ -103,7 +97,13 @@ const TeamAvatar = ({
     </span>
   );
   
-  return <Avatar {...props} isAuthorized={currentUserIsOnTeam} TeamFields={UserInformation} UserFields={null} UsernameTooltip={UsernameTooltip}/>;
+  const AvatarButtons = (
+    <button className="button-small button-tertiary upload-avatar-button" onClick={uploadAvatar}>
+      Upload Avatar
+    </button>
+  );
+  
+  return <Avatar {...props} isAuthorized={currentUserIsOnTeam} AvatarButtons={AvatarButtons} Fields={UserInformation} UsernameTooltip={UsernameTooltip}/>;
 };
 TeamAvatar.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
@@ -113,13 +113,14 @@ TeamAvatar.propTypes = {
   isVerified: PropTypes.bool.isRequired,
   verifiedImage: PropTypes.string.isRequired,
   verifiedTooltip: PropTypes.string.isRequired,
+  uploadAvatar: PropTypes.func.isRequired,
 };
 
 const UserAvatar = ({userLoginOrId, ...props}) => {
   const UserID = (
     <h2 className="login">@{userLoginOrId}</h2>
   );
-  return <Avatar {...props} TeamFields={null} UserFields={UserID} UsernameTooltip={null}/>;
+  return <Avatar {...props} Fields={UserID}/>;
 };
 UserAvatar.propTypes = {
   userLoginOrId: PropTypes.PropTypes.oneOfType([

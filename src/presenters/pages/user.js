@@ -44,7 +44,6 @@ export default function(application, userLoginOrId) {
           style: user.profileStyle,
           isAuthorized: self.isCurrentUser(),
           updateDescription: self.updateDescription,
-          uploadAvatar: self.uploadAvatar,
           uploadCover: self.uploadCover,
           clearCover: self.clearCover,
         };
