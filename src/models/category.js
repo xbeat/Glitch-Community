@@ -34,7 +34,7 @@ export default Category = function(I, self) {
   });
   
   self.asProps = () => ({
-    get projects() { return self.projects.map(({asProps}) => asProps()); },
+    get projects() { return self.projects.filter(({fetched}) => !fetched()).map(({asProps}) => asProps()); },
 
     id: self.id(),
     avatarUrl: self.avatarUrl(),
