@@ -50,7 +50,9 @@ module.exports = function() {
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     return next();
   });
-    
+  
+  // js files include a hash, so they can cache strongly
+  app.use(/.*\.js/, express.static('public', { maxAge: 1 }));
   app.use(express.static('public'));
 
   // Log all requests for diagnostics
