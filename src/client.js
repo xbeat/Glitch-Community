@@ -1,4 +1,4 @@
-/* globals EDITOR_URL baseUrl analytics */
+/* globals EDITOR_URL analytics */
 import application from './application';
 
 import qs from 'querystringify';
@@ -34,7 +34,7 @@ Promise.resolve()
     if (normalizedRoute.startsWith("login/")) {
       return application.login(normalizedRoute.substring("login/".length), queryString.code)
         .then(function() {
-          history.replaceState(null, null, `${baseUrl}/`);
+          history.replaceState(null, null, "/");
           return normalizedRoute = "";
         });
     }}).then(function() {

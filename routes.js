@@ -77,15 +77,5 @@ module.exports = function() {
     .then(() => response.sendStatus(200))
   );
 
-  return app.get('*', (request, response) =>
-    response.render('../public/index', {
-      baseUrl: request.baseUrl,
-      API_URL,
-      APP_URL,
-      EDITOR_URL,
-      CDN_URL,
-      GITHUB_CLIENT_ID,
-      FACEBOOK_CLIENT_ID
-    }
-  ));
+  return app.get('*', express.static('public/index.html'));
 };
