@@ -49,13 +49,12 @@ export default class CategoryContainer extends React.Component {
   componentDidMount() {
     this.props.getCategories().then((categoriesJSON) => {
       const categoriesWithProjects = categoriesJSON.filter(category => !!category.projects);
-      const categories = sampleSize(categoriesWithProjects, 3);
-      /*
-      const categories = models.map(categoryModel => {
-        const {...category} = categoryModel.asProps();
+      const sampledCategories = sampleSize(categoriesWithProjects, 3);
+      const categories = sampledCategories.map(categoryJSON => {
+        const {...category} = this.props.categoryModel(categoryJSON).asProps();
         category.projects = sampleSize(category.projects, 3);
         return category;
-      });*/
+      });
       this.setState({categories});
     });
   }
@@ -73,4 +72,5 @@ export default class CategoryContainer extends React.Component {
 CategoryContainer.propTypes = {
   getCategories: PropTypes.func.isRequired,
   closeAllPopOvers: PropTypes.func.isRequired,
+  categoryModel: PropTypes.func.isRequired,
 };
