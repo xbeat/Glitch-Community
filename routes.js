@@ -4,8 +4,6 @@ const util = require("util");
 const express = require('express');
 const moment = require('moment-mini');
 
-const CACHE_INTERVAL = 1000 * 60 * 10; // 10 minutes
-
 const fs_writeFile = util.promisify(fs.writeFile);
 
 const API_URL = ((process.env.RUNNING_ON === 'staging')
@@ -39,8 +37,9 @@ const updateCaches = async () => {
   console.log("☂️ cache updated");
 };
 
-updateCaches();
+const CACHE_INTERVAL = moment.duration(10, 'minutes').asMilliseconds();
 setInterval(updateCaches, CACHE_INTERVAL);
+updateCaches();
 
 module.exports = function() {
   
@@ -55,8 +54,8 @@ module.exports = function() {
   
   // Caching - js files have a hash in their name, so they last a long time
   app.use('/*.js', (request, response, next) => {
-    const ms = moment.duration(30, 'days').milliseconds();
-    response.header("Cache-Control", `public, max-age=${ms}`);
+    const ms = moment.duration(1, 'months').asMilliseconds();
+    response.header('Cache-Control', `public, max-age=${ms}`);
     return next();
   });
   
