@@ -50,6 +50,7 @@ const UserOptionsPopWrapper = ({user, overlayNewStuffVisible}) => {
     teams: user.teams,
     userLink: user.userLink,
     avatarUrl: user.userAvatarUrl,
+    avatarStyle: {backgroundColor: user.color},
     showNewStuffOverlay() {
       return overlayNewStuffVisible(true);
     }
