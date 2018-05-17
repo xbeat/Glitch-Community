@@ -9,7 +9,7 @@ const md = mdFactory({
 });
 
 const Markdown = ({children, ...props}) => (
-  <span {...props} dangerouslySetInnerHTML={{__html: md.render(children)}}></span>
+  <span dangerouslySetInnerHTML={{__html: md.render(children)}} {...props}></span>
 );
 Markdown.propTypes = {
   children: PropTypes.string.isRequired,
