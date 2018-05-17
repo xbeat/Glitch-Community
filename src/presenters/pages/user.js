@@ -46,6 +46,7 @@ export default function(application, userLoginOrId) {
           updateDescription: self.updateDescription,
           uploadAvatar: self.uploadAvatar,
           uploadCover: self.uploadCover,
+          clearCover: self.clearCover,
         };
         return props;
       });
@@ -168,6 +169,10 @@ export default function(application, userLoginOrId) {
     cover() {
       const cover = self.coverUrl();
       if (cover) { return `url(${cover})`; }
+    },
+    
+    clearCover() {
+      self.user().updateUser(application, {'hasCoverImage': false});
     },
 
     uploadCover: assetUtils.uploadCoverFile,

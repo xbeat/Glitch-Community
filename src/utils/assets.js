@@ -218,23 +218,28 @@ export default function(application) {
         });
     },
 
-    updateHasCoverImage() {
+    updateHasCoverImage(hasCover=true) {
       const HAS_COVER_IMAGE = 
-        {'hasCoverImage': true};
+        {'hasCoverImage': hasCover};
       if (application.pageIsTeamPage()) {
-        return application.team().updateTeam(application, HAS_COVER_IMAGE);          
+        application.team().updateTeam(application, HAS_COVER_IMAGE);          
+        !hasCover && application.team().localCoverImage(null);
+        return;
       } 
-      return application.user().updateUser(application, HAS_COVER_IMAGE);
-      
+      application.user().updateUser(application, HAS_COVER_IMAGE);
+      !hasCover && application.user().localCoverImage(null);
     },
 
-    updateHasAvatarImage() {
+    updateHasAvatarImage(hasCover=true) {
       const HAS_AVATAR_IMAGE = 
-        {'hasAvatarImage': true};
+        {'hasAvatarImage': hasCover};
       if (application.pageIsTeamPage()) {
-        return application.team().updateTeam(application, HAS_AVATAR_IMAGE);          
+        application.team().updateTeam(application, HAS_AVATAR_IMAGE);          
+        !hasCover && application.team().localAvatarImage(null);
+        return;
       } 
-      return application.user().updateUser(application, HAS_AVATAR_IMAGE);
+      application.user().updateUser(application, HAS_AVATAR_IMAGE);
+      !hasCover && application.user().localAvatarImage(null);
       
     },
 

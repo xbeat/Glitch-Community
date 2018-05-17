@@ -109,6 +109,8 @@ export default function(application) {
 
     // application.notifyUserDescriptionUpdated true
 
+    clearCover: () => assetUtils.updateHasCoverImage(false),
+    clearAvatar: () => () => assetUtils.updateHasAvatarImage(false),
 
     uploadCover: assetUtils.uploadCoverFile,
     uploadAvatar: assetUtils.uploadAvatarFile,

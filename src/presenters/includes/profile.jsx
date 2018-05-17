@@ -132,9 +132,14 @@ const Profile = ({isAuthorized, style, uploadCover, clearCover, Avatar}) => {
         </div>
       </div>
       {isAuthorized && (
-        <button className="button-small button-tertiary upload-cover-button" onClick={uploadCover}>
-          Upload Cover  
-        </button>
+        <React.Fragment>
+          <button className="button-small button-tertiary upload-cover-button" onClick={uploadCover}>
+            Upload Cover  
+          </button>
+          <button className="button-small button-tertiary upload-cover-button" onClick={clearCover}>
+            Clear Cover  
+          </button>
+        </React.Fragment>
       )}
     </section>
   );
@@ -144,6 +149,7 @@ Profile.propTypes = {
   style: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   uploadCover: PropTypes.func.isRequired,
+  clearCover: PropTypes.func.isRequired,
   Avatar: PropTypes.element.isRequired,
 };
 
