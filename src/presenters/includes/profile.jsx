@@ -47,9 +47,11 @@ const Avatar = ({
         )}
       </div>
       <div className="user-information">
-        <h1 className="username">{name}
-          {UsernameTooltip}
-        </h1>
+        { !!name && (
+          <h1 className="username">{name}
+            {UsernameTooltip}
+          </h1>
+        )}
         {UserFields}
         {TeamFields}
         { thanksCount > 0 && <Thanks count={thanksCount}/> }
@@ -70,7 +72,7 @@ const Avatar = ({
 Avatar.propTypes = {
   avatarStyle: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   thanksCount: PropTypes.number.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
@@ -120,7 +122,10 @@ const UserAvatar = ({userLoginOrId, ...props}) => {
   return <Avatar {...props} TeamFields={null} UserFields={UserID} UsernameTooltip={null}/>;
 };
 UserAvatar.propTypes = {
-  userLoginOrId: PropTypes.string.isRequired,
+  userLoginOrId: PropTypes.PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    ]).isRequired,
 };
 
 const Profile = ({isAuthorized, style, uploadCover, clearCover, hasCoverImage, Avatar}) => {
