@@ -24,6 +24,7 @@ const PopOver = ({projects, action, togglePopover, setFilter, filter}) => {
   };
   
   const filteredProjects = projects.filter(({name}) => {
+    console.log('🍕',name)
     return name.toLowerCase().includes(filter.toLowerCase());
   });
   
