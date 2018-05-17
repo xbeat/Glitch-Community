@@ -111,11 +111,9 @@ export default function(application, userLoginOrId) {
       return application.user().descriptionMarkdown();
     },
 
-    updateDescription(event) {
-      const text = event.target.textContent;
+    updateDescription(text) {
       application.user().description(text);
-      return self.updateUser({
-        description: text});
+      return self.updateUser({description: text});
     },
 
     updateUser: debounce(data => application.user().updateUser(application, data)

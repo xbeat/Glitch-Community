@@ -108,8 +108,6 @@ export default function(application) {
     updateTeam: debounce(data => application.team().updateTeam(application, data)
       , 250),
 
-    // application.notifyUserDescriptionUpdated true
-
     clearCover: () => assetUtils.updateHasCoverImage(false),
 
     uploadCover: assetUtils.uploadCoverFile,
