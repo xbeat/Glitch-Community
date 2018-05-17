@@ -222,10 +222,12 @@ export default function(application) {
       const HAS_COVER_IMAGE = 
         {'hasCoverImage': hasCover};
       if (application.pageIsTeamPage()) {
-        application.team().updateTeam(application, HAS_COVER_IMAGE);          
+        application.team().updateTeam(application, HAS_COVER_IMAGE);
+        application.team().hasCoverImage(hasCover);
         !hasCover && application.team().localCoverImage(null);
         return;
       } 
+      application.user().hasCoverImage(hasCover);
       application.user().updateUser(application, HAS_COVER_IMAGE);
       !hasCover && application.user().localCoverImage(null);
     },

@@ -230,6 +230,7 @@ export default Team = function(I, self) {
         teamThanks: self.teamThanks(),
         thanksCount: self.thanksCount(),
         truncatedDescription: self.truncatedDescription(),
+        hasCoverImage: self.hasCoverImage(),
         url: self.url(),
         verifiedImage: self.verifiedImage(),
         verifiedTooltip: self.verifiedTooltip(),

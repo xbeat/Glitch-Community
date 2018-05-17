@@ -123,7 +123,7 @@ UserAvatar.propTypes = {
   userLoginOrId: PropTypes.string.isRequired,
 };
 
-const Profile = ({isAuthorized, style, uploadCover, clearCover, Avatar}) => {
+const Profile = ({isAuthorized, style, uploadCover, clearCover, hasCoverImage, Avatar}) => {
   return (
     <section className="profile">
       <div className="profile-container" style={style}>
@@ -132,13 +132,15 @@ const Profile = ({isAuthorized, style, uploadCover, clearCover, Avatar}) => {
         </div>
       </div>
       {isAuthorized && (
-        <div className="upload-cover-button">
+        <div className="upload-cover-buttons">
           <button className="button-small button-tertiary" onClick={uploadCover}>
             Upload Cover  
           </button>
-          <button className="button-small button-tertiary" onClick={clearCover}>
-            Clear Cover  
-          </button>
+          { hasCoverImage && (
+            <button className="button-small button-tertiary" onClick={clearCover}>
+              Clear Cover  
+            </button>
+          )}
         </div>
       )}
     </section>
@@ -150,6 +152,7 @@ Profile.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   uploadCover: PropTypes.func.isRequired,
   clearCover: PropTypes.func.isRequired,
+  hasCoverImage: PropTypes.bool.isRequired,
   Avatar: PropTypes.element.isRequired,
 };
 
