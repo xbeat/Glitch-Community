@@ -47,15 +47,15 @@ export default class CategoryContainer extends React.Component {
   }
   
   componentDidMount() {
-    this.props.getCategories().then((categoryModels) => {
-      let models = categoryModels.filter(model => !!model.projects.length);
-      models = sampleSize(models, 3);
-      
+    this.props.getCategories().then((categoriesJSON) => {
+      const categoriesWithProjects = categoriesJSON.filter(category => !!category.projects);
+      const categories = sampleSize(categoriesWithProjects, 3);
+      /*
       const categories = models.map(categoryModel => {
         const {...category} = categoryModel.asProps();
         category.projects = sampleSize(category.projects, 3);
         return category;
-      });
+      });*/
       this.setState({categories});
     });
   }

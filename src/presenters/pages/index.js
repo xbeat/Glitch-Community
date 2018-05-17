@@ -50,7 +50,7 @@ export default function(application) {
     randomCategories() {
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
-        getCategories: () => CategoryModel.getRandomCategories(application.api()),
+        getCategories: () => CategoryModel.getRandomCategoriesJSON(application.api()),
       };
       return Reactlet(RandomCategories, props);
     },
