@@ -65,7 +65,7 @@ project-avatar-size = 42px
     // overflow: auto
     overflow: hidden
 
-    li
+    > li
       
       float: left
       display: block
@@ -84,6 +84,7 @@ project-avatar-size = 42px
       margin: 0
     
   .project
+    margin-top: 4px
     font-size: 0.9rem
     background-color: section-line
     border-bottom-color: section-line
@@ -204,7 +205,7 @@ project-avatar-size = 42px
     outline: transparent
     background: #efefef
 
-.user-page .projects-container li
+.user-page .projects-container > li
   // Permit a 2-column layout on the user-page
   // in between mediumViewport and largeViewport
   @media (max-width: largeViewport)
@@ -213,34 +214,3 @@ project-avatar-size = 42px
   @media (max-width: mediumViewport)
     width: 100%
     
-
-
-.starter-apps
-  position: relative
-  padding: 0px
-  img.starter-apps-graphic
-    position: absolute
-    right: 0px;
-    
-  .starter-project
-    max-width: 370px
-  .starter-project:after
-   content: none
-  
-  // Special two-column no-graphics display on larger screens
-  @media (min-width: mediumViewport)
-    header.category
-      float: none
-      display: block
-      width: auto
-
-    h2
-      margin-top: 0
-    .projects-container
-      display: inline-block
-      white-space: nowrap
-
-      li
-        display: inline-block
-        white-space: normal
-        float: none

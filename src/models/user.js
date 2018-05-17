@@ -10,6 +10,8 @@ import Model from './model';
 const cache = {};
 const cacheBuster = Math.floor(Math.random() * 1000);
 
+export const ANON_AVATAR_URL = "https://cdn.glitch.com/f6949da2-781d-4fd5-81e6-1fdd56350165%2Fanon-user-on-project-avatar.svg?1488556279399";
+
 export default User = function(I, self) {
 
   if (I == null) { I = {}; }
@@ -30,7 +32,7 @@ export default User = function(I, self) {
     description: "",
     initialDescription: "",
     projects: undefined,
-    teams: undefined,
+    teams: [],
     thanksCount: 0,
     fetched: false,
     showAsGlitchTeam: false,
@@ -60,13 +62,30 @@ export default User = function(I, self) {
       }
     },
 
-    coverUrl(size) {
-      size = size || 'large';
+    coverUrl(size='large') {
+      if (self.localCoverImage()) {
+        return self.localCoverImage();
+      } 
+
       if (self.hasCoverImage()) {
         return `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-cover/${self.id()}/${size}?${cacheBuster}`;
       } 
       return "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
       
+    },
+    
+    profileStyle() {
+      return {
+        backgroundColor: self.coverColor(),
+        backgroundImage: `url('${self.coverUrl()}')`,
+      };
+    },
+
+    avatarStyle() {
+      return {
+        backgroundColor: self.color(),
+        backgroundImage: `url('${self.userAvatarUrl('large')}')`,
+      };
     },
 
     userAvatarUrl(size) {
@@ -76,10 +95,8 @@ export default User = function(I, self) {
       } else if (self.facebookId()) {
         return `https://graph.facebook.com/${self.facebookId()}/picture?type=${size}`;
       } 
-      return self.avatarUrl();
-      
+      return self.avatarUrl() || self.anonAvatar();
     },
-    // self.avatarUrl size
 
     isCurrentUser(application) {
       return self.id() === application.currentUser().id();
@@ -130,7 +147,7 @@ export default User = function(I, self) {
     },
 
     anonAvatar() {
-      return "https://cdn.glitch.com/f6949da2-781d-4fd5-81e6-1fdd56350165%2Fanon-user-on-project-avatar.svg?1488556279399";
+      return ANON_AVATAR_URL;
     },
 
     glitchTeamAvatar() {
@@ -194,7 +211,7 @@ export default User = function(I, self) {
       return `Thanked ${thanksCount} times`;
       
     },
-
+    
     addPin(application, projectId) {
       self.pins.push({
         projectId});
@@ -212,12 +229,30 @@ export default User = function(I, self) {
     },
     
     asProps() {
-      return { 
-        userLink: self.userLink(), 
-        tooltipName: self.tooltipName(), 
-        style: self.style(),
+      return {
+        get teams() { return self.teams.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()); },
+
         alt: self.alt(),
-        userAvatarUrl:self.userAvatarUrl(), 
+        color: self.color(),
+        coverColor: self.coverColor(),
+        coverUrlSmall: self.coverUrl('small'),
+        description: self.description(),
+        initialDescription: self.initialDescription(),
+        hasCoverImage: self.hasCoverImage(),
+        id: self.id(),
+        login: self.login(),
+        name: self.name(),
+        style: self.style(),
+        profileStyle: self.profileStyle(),
+        avatarStyle: self.avatarStyle(),
+        thanksCount: self.thanksCount(),
+        tooltipName: self.tooltipName(),
+        truncatedDescriptionHtml: md.render(self.truncatedDescription()),
+        userAvatarUrl: self.userAvatarUrl(),
+        userAvatarUrlLarge: self.userAvatarUrl('large'),
+        userLink: self.userLink(),
+        userThanks: self.userThanks(),
+        
       };
     },
   });
@@ -272,24 +307,35 @@ User.getUsersById = function(api, ids) {
     });
 };
 
-User.getSearchResults = function(application, query) {
-  const MAX_RESULTS = 20;
+User.getSearchResultsJSON = function(application, query) {
   const { CancelToken } = axios;
   const source = CancelToken.source();
-  application.searchResultsUsers([]);
-  application.searchingForUsers(true);
   const searchPath = `users/search?q=${query}`;
   return application.api(source).get(searchPath)
-    .then(function({data}) {
+    .then(({data}) => data)
+    .catch(error => console.error('getSearchResultsJSON', error));
+};
+
+User.getSearchResults = function(application, query) {
+  const MAX_RESULTS = 20;
+  application.searchResultsUsers([]);
+  application.searchingForUsers(true);
+  return User.getSearchResultsJSON(application, query)
+    .then((data) => {
       application.searchingForUsers(false);
       data = data.slice(0 , MAX_RESULTS);
       if (data.length === 0) {
         application.searchResultsHaveNoUsers(true);
       }
-      return data.forEach(function(datum) {
+      data = data.map(function(datum) {
         datum.fetched = true;
-        return User(datum).update(datum).pushSearchResult(application);
-      });}).catch(error => console.error('getSearchResults', error));
+        return User(datum).update(datum);
+      });
+      data.forEach(function(userModel) {
+        return userModel.pushSearchResult(application);
+      });
+      return data;
+    }).catch(error => console.error('getSearchResults', error));
 };
 
 

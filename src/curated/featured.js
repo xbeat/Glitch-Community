@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: '"awayboard" by voodoocode',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fawayboard.jpg?1525351432822',
-    link: 'https://awayboard.glitch.me'
+    title: 'Get Started with the Tumblr API',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftumblr-api-example.jpg?1526298957569',
+    link: 'https://glitch.com/edit/#!/tumblr-api-example?path=README.md:1:0'
   }
   , {
-    title: '"quotebot" by becckitt',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fquotebot.jpg?1525351432926",
-    link: 'https://quotebot.glitch.me'
+    title: 'xor by sjoerdvisscher',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fxor.jpg?1526298957454",
+    link: 'https://xor.glitch.me/'
   }
   , {
-    title: '"embed-bud" by jagtalon',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fembed-bud.jpg?1525351432697",
-    link: 'https://embed-bud.glitch.me'
+    title: 'Try out the FaceApp API',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ffaceapp-api.jpg?1526308089454",
+    link: 'https://faceapp-api.glitch.me'
   }   
 ];

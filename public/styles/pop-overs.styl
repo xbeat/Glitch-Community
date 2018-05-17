@@ -33,6 +33,8 @@
       border-bottom: none
       border-bottom-left-radius: 3px
       border-bottom-right-radius: 3px
+  .results-list
+    padding: 6px
 
   .description-section
     margin: 0
@@ -60,33 +62,33 @@
     margin: 0
     border-bottom: 1px solid secondary
     position: relative
-    // div
-    //   display: block
-    .emoji
-      display: inline-block
-    .button,button
-      display: inline-block
-      margin-bottom: 12px
-      margin-left: 0
-      max-width: initial
-    .button-link
-      color: #000
-    .button-link:last-child
-      .button
-        margin: 0
-    button:last-child
-      margin-bottom: 0
-    &.last-section
-      border-bottom: none
+
+  .emoji
+    display: inline-block
+  .button,button
+    display: inline-block
+    margin-bottom: 12px
+    margin-left: 0
+    max-width: initial
+  .button-small
+    margin-bottom: 10px
+  .button-link
+    color: #000
+  .button-link:last-child
+    .button
+      margin: 0
+  button:last-child
+    margin-bottom: 0
+  &.last-section
+    border-bottom: none
 
   .danger-zone
     background-color: warning-background
 
-      
-    
 .sign-in-pop
   width: 205px
-  right: 10px
+  right: 0
+  top: 26px;
 
 .user-options-pop
   right: 0
@@ -103,41 +105,42 @@
   top: 26px
   width: 215px
 
-.team-user-options-pop
+.user-info-pop
   left: 2px
-  top: 26px
-  a
-    color: primary
-  .user-result
-    border-radius: 3px
-    border: none
-    background-color: transparent
-    padding: 6px
-  .results
-    padding: 0
-    margin: 0
-  .result
-    &:hover
-      box-shadow: 4px 4px 0 input-border
-    &:active
-      box-shadow: none
-  .result-information
-    background-color: section-line
-  .result-container
-    .result-avatar
+  top: 28px
+  .pop-over-info
+    .avatar
       width: 44px
-      border-radius: 5px
-      vertical-align: top
-    .sparkling_heart
-      margin-left: 2px
-
+      height: 44px
+      border-radius: 8px
+      vertical-align: middle
+      margin-right: 10px
+    .info-container
+      display: inline-block
+      vertical-align: middle
+    .name,
+    .user-login
+      margin: 0
+    .name
+      font-weight: bold
+    .user-login
+      font-weight: 600
+      color: text-on-secondary-background
+    .thanks
+      margin: 0 !important
+      
 .add-team-user-pop
   left: 5px
-  top: 8px
+  top: 100%
   @media(max-width: mediumViewport)
     left: initial
 
-.add-team-project-pop,
+.add-team-project-pop
+  left: 2px
+  top: 30px
+
+  
+// todo simplify to use project-result/results-list code/styles instead
 .analytics-projects-pop
   left: 2px
   top: 25px
@@ -147,27 +150,22 @@
     .result-container
       &:hover
         .result
-          background-color: section-line
+          background-color: general-link
       &:active,
       &.active
         .result
-          background-color: section-line
+          background-color: general-link
     .result-avatar
       width: 40px
       margin-right: 10px
       vertical-align: middle
-      // display: block
     .result-information
       display: inline-block
       width: 76%
       vertical-align: top
-      // button
-      //   margin-left: 0
     .users
       display: block
       margin-bottom: 3px
-      // margin-top: 8px
-      // margin-bottom: 2px
       project-result-avatar-size = 22px
       .user
         width: project-result-avatar-size
@@ -178,14 +176,11 @@
     .result-name
       margin-left: 0 !important
 
-.add-team-project-pop
-  top: 30px
-  
+      
 .analytics-projects-pop    
   top: 22px
   left: 8px
-          
-// revisit the blue selection
+
 .analytics-time-pop
   top: 22px
   left: 8px
@@ -193,10 +188,10 @@
     padding-top: 3px
   .result
     &:hover
-      background-color: section-line
+      background-color: general-link
     &:active,
     &.active
-      background-color: section-line
+      background-color: general-link
       // .result-name
       //   color: primary-background
 
@@ -206,26 +201,9 @@
     left: initial
 
 
-// refactor this: used on user page for project-options-pop (only?)
-.project
-  overflow-y: auto
-  max-height: 500px
-  &:hover,
-  &:active,
-  &:focus
-    .pop-over
-      button
-        background-color: initial
-        box-shadow: none
-  .pop-over
-    top: initial
-    left: 12px
-    bottom: 12px
-    button
-      padding-bottom: 3px
-      &:hover,
-      &:focus
-        background-color: secondary-background
-      &:active
-        background-color: secondary-background-active
+.new-project-pop
+  top: 26px
+  @media(max-width: smallViewport)
+    right: -70px
+
 

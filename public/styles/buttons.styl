@@ -15,6 +15,7 @@ button
   vertical-align: middle
   &:hover
     background-color: secondary-background
+    text-decoration: none
   &:active
     background-color: secondary-background-active
     color: primary
@@ -38,6 +39,9 @@ button
   font-size: 12px
   padding: 3px 8px
   padding-top: 5px
+  &.has-emoji
+    padding-top: 3px
+    padding-bottom: 3px
   // &.button-cta
   //   padding: 5px 10px
   
@@ -62,7 +66,6 @@ button
   &:active,
   &:focus
     border-color: primary
-    outline: none
 
 .button-borderless
   cursor: pointer
@@ -76,6 +79,14 @@ button
     border: none;
     .down-arrow
       opacity: 1
+
+button.button-unstyled
+  margin: 0 !important
+  border-radius: 0
+  padding: 0
+  width: 100%
+  border: none
+  font-weight: normal
 
 .button-checkbox
   width: auto

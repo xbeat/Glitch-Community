@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
+import {isFragment} from 'react-is';
 
 /*
 A popover is a light, hollow roll made from an egg batter similar to
@@ -9,6 +10,12 @@ popover pans, which have straight-walled sides rather than angled.
 
 ...also it's a [Bootstrap UI pattern](https://www.w3schools.com/bootstrap/bootstrap_popover.asp)
 */
+const Wrapper = ({children}) => (children);
+
+Wrapper.propTypes = {
+  children: PropTypes.element.isRequired
+};
+
 export default class PopoverContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -16,11 +23,24 @@ export default class PopoverContainer extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+   
+    // We need to set up and instantiate an onClickOutside wrapper
+    // It's important to instantiate it once and pass though its children,
+    // otherwise the diff algorithm won't be able to figureo out our hijinks.
+    // https://github.com/Pomax/react-onclickoutside
+
+    // We do extra work with disableOnClickOutside and handleClickOutside
+    // to prevent event bindings from being created until the popover is opened.
+    const clickOutsideConfig = {
+      handleClickOutside: (function() { return this.handleClickOutside; }).bind(this),
+      excludeScrollbar: true,
+    };
+    this.MonitoredComponent = onClickOutside(Wrapper, clickOutsideConfig);
   }
   
   handleClickOutside(event) {
-    // On keyup events, only hide the popup if it was the 'esc' key (27).
-    if(event.type === "keyup" && event.keyCode !== 27) {
+    // On keyup events, only hide the popup if it was the Escape key
+    if(event.type === "keyup" && !["Escape", "Esc"].includes(event.key)) {
       return;
     }
     
@@ -28,36 +48,20 @@ export default class PopoverContainer extends React.Component {
   }
   
   toggle() {
-    this.setState({visible: !this.state.visible});
+    this.setState((prevState) => {
+      return {visible: !prevState.visible};
+    });
   }
 
   render() {
-    // Invoke the children as a react component, passing them the toggle visibility controls.
-    // The <span> is needed because onClickOutside doesn't support React.Fragment
-    let Children = null;
-    if(typeof(this.props.children) === "function") {
-      Children = () => (
-        <span>
-          <this.props.children togglePopover={this.toggle} visible={this.state.visible}/>
-        </span>
-      );
-    } else {
-      const { children } = this.props;
+    const inner = this.props.children({visible: this.state.visible, togglePopover: this.toggle});
+    if(isFragment(inner)) {
+      console.error("PopoverContainer does not support React.Fragment as the top level item. Please use a different element.");
     }
-    
-    // The rest of this logic sets up and configures the onClickOutside wrapper
-    // https://github.com/Pomax/react-onclickoutside
-
-    // We do extra work with disableOnClickOutside and handleClickOutside
-    // to prevent event bindings from being created until the popover is opened.
-    const clickOutsideConfig = {
-      handleClickOutside: () => this.handleClickOutside,
-      excludeScrollbar: true,
-    };
-    const MonitoredComponent = onClickOutside(Children, clickOutsideConfig);
-    
     return (
-      <MonitoredComponent disableOnClickOutside={!this.state.visible}  eventTypes={["mousedown", "touchstart", "keyup"]}/>
+      <this.MonitoredComponent disableOnClickOutside={!this.state.visible} eventTypes={["mousedown", "touchstart", "keyup"]}>
+        {inner}
+      </this.MonitoredComponent>
     );
   }
 }
@@ -65,4 +69,3 @@ export default class PopoverContainer extends React.Component {
 PopoverContainer.propTypes = {
   children: PropTypes.func.isRequired,
 };
-

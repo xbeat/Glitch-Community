@@ -2,8 +2,7 @@
 
 import Observable from 'o_0';
 
-import {find} from "lodash";
-import {keys} from "lodash";
+import {find, keys} from "lodash";
 import axios from 'axios';
 import cachedCategories from './cache/categories.js';
 import cachedTeams from './cache/teams.js';
@@ -36,13 +35,6 @@ var self = Model({
   overlayProject: Observable(undefined),
   overlayVideoVisible: Observable(false),
   overlayNewStuffVisible: Observable(false),
-
-  // pop overs
-  signInPopVisibleOnHeader: Observable(false),
-  signInPopVisibleOnRecentProjects: Observable(false),
-  userOptionsPopVisible: Observable(false),
-  addTeamUserPopVisible: Observable(false),
-  addTeamProjectPopVisible: Observable(false),
 
   // search - users
   searchQuery: Observable(""),
@@ -111,15 +103,10 @@ var self = Model({
   },
 
   closeAllPopOvers() {
-    $(".pop-over.disposable, .overlay-background.disposable").remove();
-    self.signInPopVisibleOnHeader(false);
-    self.signInPopVisibleOnRecentProjects(false);
-    self.userOptionsPopVisible(false);
-    self.addTeamUserPopVisible(false);
-    self.addTeamProjectPopVisible(false);
+    $(".overlay-background.disposable").remove();
     self.overlayProjectVisible(false);
     self.overlayVideoVisible(false);
-    return self.overlayNewStuffVisible(false);
+    self.overlayNewStuffVisible(false);
   },
 
   searchProjects(query) {
@@ -136,8 +123,7 @@ var self = Model({
     self.searchResultsTeams([]);
     return Team.getSearchResults(application, query);
   },
-    
-    
+  
   api(source) {
     const persistentToken = self.currentUser() && self.currentUser().persistentToken();
     if (persistentToken) {
