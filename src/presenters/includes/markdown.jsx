@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import mdFactory from 'markdown-it';
+import markdownIt from 'markdown-it';
+import markdownEmoji from 'markdown-it-emoji';
 
-const md = mdFactory({
+const md = markdownIt({
   breaks: true,
   linkify: true,
   typographer: true,
-});
+}).use(markdownEmoji);
 
 const Markdown = ({children, ...props}) => (
   <span dangerouslySetInnerHTML={{__html: md.render(children)}} {...props}></span>
