@@ -37,7 +37,7 @@ class EditableDescription extends React.Component {
   }
   
   onFocus(evt) {
-    if (evt.currenTarget === evt.target) {
+    if (evt.currentTarget === evt.target) {
       this.setState({focused: true});
     }
   }

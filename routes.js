@@ -64,5 +64,7 @@ module.exports = function() {
     .then(() => response.sendStatus(200))
   );
 
-  return app.get('*', express.static('public'));
+  return app.get('*', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html')
+  });
 };
