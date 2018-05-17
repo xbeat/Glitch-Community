@@ -20,7 +20,7 @@ const cachedUser =
       return JSON.parse(localStorage.cachedUser);
     } catch (error) {
       // empty
-    } 
+    }
     })() : undefined;
 
 var self = Model({
