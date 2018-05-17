@@ -14,7 +14,7 @@ const AllProjectsItem = () => {
   );
 };
 
-const PopOver = ({projects, action, togglePopover, setFilter, filter}) => {
+const PopOver = ({projects, action, togglePopover, setFilter, filter, updateProjectdomain, currentProjectDomain}) => {
   console.log('🚒', projects)
   const onClick = (project) => {
     togglePopover();
@@ -46,7 +46,7 @@ const PopOver = ({projects, action, togglePopover, setFilter, filter}) => {
           </button>
           { filteredProjects.map((project) => (
             <li key={project.id} className="button-unstyled">
-              <ProjectResultItem {...project} action={() => { onClick(project); }} />
+              <ProjectResultItem {...project} action={updateProjectdomain(currentProjectDomain, togglePopover)} />
             </li>
           ))}
         </ul>
@@ -62,10 +62,11 @@ PopOver.propTypes = {
     domain: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
   })).isRequired,
-  action: PropTypes.func.isRequired,
   togglePopover: PropTypes.func.isRequired,
   setFilter: PropTypes.func.isRequired,
   filter: PropTypes.string.isRequired,
+  updateProjectdomain: PropTypes.func.isRequired,
+  currentProjectDomain: PropTypes.string.isRequired,
 };
 
 class TeamAnalyticsProjectPop extends React.Component {
@@ -91,7 +92,7 @@ class TeamAnalyticsProjectPop extends React.Component {
             {visible && 
               <PopOver 
                 projects={projects}
-                updateProjectdomain={updateProjectdomain}
+                action={updateProjectdomain}
                 currentProjectDomain={currentProjectDomain}
                 togglePopover={togglePopover}
                 setFilter={this.setFilter}
