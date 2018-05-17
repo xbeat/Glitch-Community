@@ -85,7 +85,9 @@ export default function(application) {
           projects: projects,
         }
       });
-      if (!propsObservable.id) { return null; }
+      console.log ('🌎', propsObservable().id)
+      if (!propsObservable().id) { return null; }
+      console.log('yolo test')
       return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
     },
     
