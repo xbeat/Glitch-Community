@@ -74,8 +74,9 @@ export default function(application) {
       const projects = self.team().projects().map(function (project) {
         project = project.asProps()
         project.description = null
-        project.users = []
+        project.users.length = 0
         return project
+
       })
       const id = self.team().id()
       const api = application.api
@@ -91,11 +92,11 @@ export default function(application) {
     },
     
     //temp
-    teamAnalyticsOld() {
-      if (self.team().fetched()) {
-        return AnalyticsPresenter(application, self.team());
-      }
-    },
+    // teamAnalyticsOld() {
+    //   if (self.team().fetched()) {
+    //     return AnalyticsPresenter(application, self.team());
+    //   }
+    // },
 
     addTeamProjectButton() {
       const propsObservable = Observable(() => {

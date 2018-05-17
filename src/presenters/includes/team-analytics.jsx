@@ -6,7 +6,7 @@ import Loader from './loader.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx'
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx'
 
-// 🗑: analytics.js, analytics.jade, analytics.styl, analytics-time-pop.jsx, analytics-project-pop.jsx
+// 🗑: analytics.js, analytics.jade, analytics.styl, analytics-time-pop.jsx, analytics-project-pop.jsx, clean up team.js/jade
 
 // unused yet
 // const timeFrames = [
