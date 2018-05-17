@@ -232,12 +232,13 @@ export default function(application) {
       !hasCover && application.user().localCoverImage(null);
     },
 
-    updateHasAvatarImage(hasCover=true) {
+    updateHasAvatarImage(hasAvatar=true) {
       const HAS_AVATAR_IMAGE = 
-        {'hasAvatarImage': hasCover};
+        {'hasAvatarImage': hasAvatar};
       if (application.pageIsTeamPage()) {
-        application.team().updateTeam(application, HAS_AVATAR_IMAGE);          
-        !hasCover && application.team().localAvatarImage(null);
+        application.team().updateTeam(application, HAS_AVATAR_IMAGE); 
+        application.team().hasAvatarImage(hasAvatar);
+        !hasAvatar && application.team().localAvatarImage(null);
         return;
       } 
       console.error("hasAvatarImage does not exist in the user model.");
