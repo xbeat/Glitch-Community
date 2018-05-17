@@ -14,11 +14,12 @@ const AllProjectsItem = () => {
   );
 };
 
-const PopOver = ({projects, action, togglePopover, setFilter, filter, updateProjectdomain, currentProjectDomain}) => {
-  console.log('🚒', projects)
+const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectdomain, currentProjectDomain}) => {
+  console.log('📟', currentProjectDomain, updateProjectdomain)
   const onClick = (project) => {
     togglePopover();
-    action(project);
+    console.log(project)
+    updateProjectdomain(project.domain)
     setFilter("");
   };
   
@@ -46,7 +47,7 @@ const PopOver = ({projects, action, togglePopover, setFilter, filter, updateProj
           </button>
           { filteredProjects.map((project) => (
             <li key={project.id} className="button-unstyled">
-              <ProjectResultItem {...project} action={updateProjectdomain(currentProjectDomain, togglePopover)} />
+              <ProjectResultItem {...project} action={() => { onClick(project); }} />
             </li>
           ))}
         </ul>
@@ -92,7 +93,7 @@ class TeamAnalyticsProjectPop extends React.Component {
             {visible && 
               <PopOver 
                 projects={projects}
-                action={updateProjectdomain}
+                updateProjectdomain={updateProjectdomain}
                 currentProjectDomain={currentProjectDomain}
                 togglePopover={togglePopover}
                 setFilter={this.setFilter}
