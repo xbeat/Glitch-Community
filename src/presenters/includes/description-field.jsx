@@ -81,7 +81,7 @@ EditableDescription.propTypes = {
 };
 
 const StaticDescription = ({description}) => (
-  description ? <Markdown className="description read-only">{description}</Markdown> : null
+  description ? <p className="description read-only"><Markdown>{description}</Markdown></p> : null
 );
 StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,

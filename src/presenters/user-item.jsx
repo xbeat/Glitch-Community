@@ -33,7 +33,6 @@ UserItem.propTypes = {
     login: PropTypes.string.isRequired,
     name: PropTypes.string,
     thanksCount: PropTypes.number.isRequired,
-    truncatedDescriptionHtml: PropTypes.string,
     userLink: PropTypes.string.isRequired,
   }),
 };
