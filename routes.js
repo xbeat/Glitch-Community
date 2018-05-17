@@ -2,6 +2,8 @@ const fs = require("fs");
 const axios = require("axios");
 const util = require("util");
 const express = require('express');
+const moment = require('moment-mini');
+
 const CACHE_INTERVAL = 1000 * 60 * 10; // 10 minutes
 
 const fs_writeFile = util.promisify(fs.writeFile);
@@ -53,8 +55,8 @@ module.exports = function() {
   
   // Caching - js files have a hash in their name, so they last a long time
   app.use('/*.js', (request, response, next) => {
-    const cacheTimeMs = 3
-    response.header("Cache-Control", "public, max-age=2592000000");
+    const ms = moment.duration(30, 'days').milliseconds();
+    response.header("Cache-Control", `public, max-age=${ms}`);
     return next();
   });
   
