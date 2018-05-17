@@ -7,11 +7,13 @@ import CategoryModel from '../../models/category';
 import Reactlet from '../reactlet';
 import EmbedHtml from '../../curated/embed';
 import Observable from 'o_0';
+import {sampleSize} from 'lodash';
 
 import Categories from "../categories.jsx";
 import RandomCategories from '../random-categories.jsx';
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
+import Observed from "../includes/observed.jsx";
 
 export default function(application) {
   console.log("Presented index");
@@ -51,24 +53,22 @@ export default function(application) {
     randomCategoriesObservable: Observable([]),
     
     randomCategories() {
-      
-      const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
-        categories: self.randomCategoriesObservable().asProps(),
-      };
-      
-      let categoryModels = randomCategoriesObservable().filter(model => !!model.projects.length);
-      models = sampleSize(models, 3);
-            
-      const categories = models.map(categoryModel => {
-        const {...category} = categoryModel.asProps();
-        category.projects = sampleSize(category.projects, 3);
-        return category;
+
+      const propsObservable = Observable(() => {
+        let categoryModels = self.randomCategoriesObservable().filter(model => !!model.projects.length);
+        categoryModels = sampleSize(categoryModels, 3);          
+        const categories = categoryModels.map(categoryModel => {
+          const {...category} = categoryModel.asProps();
+          category.projects = sampleSize(category.projects, 3);
+          return category;
+        });
+
+        return {
+          closeAllPopOvers: application.closeAllPopOvers,
+          categories,
+        };
       });
-      this.setState({categories});
-    });
-      
-      return Reactlet(RandomCategories, props);
+      return Reactlet(Observed, {propsObservable, component:RandomCategories});
     },
 
     embed() {

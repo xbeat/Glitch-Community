@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {ProjectsUL} from "./projects-list.jsx";
-import {sampleSize} from 'lodash';
 
 const Category = ({closeAllPopOvers, category}) => {
   const ulProps = {
@@ -40,16 +39,16 @@ Category.propTypes = {
 
 const Categories = ({categories, closeAllPopOvers}) => (
   <React.Fragment>
-    { this.props.categories.map((category) => (
-      <Category key={category.id} category={category} closeAllPopOvers={this.props.closeAllPopOvers}/>
+    { categories.map((category) => (
+      <Category key={category.id} category={category} closeAllPopOvers={closeAllPopOvers}/>
     ))}
   </React.Fragment>
 );
 
 Categories.propTypes = {
-  categories: PropTypes.arrayOf({
+  categories: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
-  }).isRequired,
+  })).isRequired,
   closeAllPopOvers: PropTypes.func.isRequired,
 };
 
