@@ -73,10 +73,9 @@ export default function(application) {
     teamAnalytics() {
       const projects = self.team().projects().map(function (project) {
         project = project.asProps()
-        project.description = null
-        project.users.length = 0
+        project.description = ""
+        project.users = []
         return project
-
       })
       const id = self.team().id()
       const api = application.api
@@ -87,6 +86,7 @@ export default function(application) {
       };
 
       if (id) {
+        console.log ('has id')
         return Reactlet(TeamAnalytics, props);
       }
     },
