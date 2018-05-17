@@ -123,7 +123,7 @@ UserAvatar.propTypes = {
   userLoginOrId: PropTypes.string.isRequired,
 };
 
-const Profile = ({isAuthorized, style, uploadCover, Avatar}) => {
+const Profile = ({isAuthorized, style, uploadCover, clearCover, Avatar}) => {
   return (
     <section className="profile">
       <div className="profile-container" style={style}>
