@@ -57,18 +57,18 @@ const PopOver = ({projects, action, togglePopover, setFilter, filter}) => {
   ); 
 };
 
-// PopOver.propTypes = {
-//   projects: PropTypes.arrayOf(PropTypes.shape({
-//     id: PropTypes.string.isRequired,
-//     avatar: PropTypes.string.isRequired,
-//     domain: PropTypes.string.isRequired,
-//     description: PropTypes.string.isRequired,
-//   })).isRequired,
-//   action: PropTypes.func.isRequired,
-//   togglePopover: PropTypes.func.isRequired,
-//   setFilter: PropTypes.func.isRequired,
-//   filter: PropTypes.string.isRequired,
-// };
+PopOver.propTypes = {
+  projects: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired,
+    domain: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  })).isRequired,
+  action: PropTypes.func.isRequired,
+  togglePopover: PropTypes.func.isRequired,
+  setFilter: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
+};
 
 class TeamAnalyticsProjectPop extends React.Component {
   constructor(props) {
