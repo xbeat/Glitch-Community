@@ -51,8 +51,13 @@ module.exports = function() {
     return next();
   });
   
-  // js files include a hash, so they can cache strongly
-  app.use('*.js', express.static('public'));
+  // Caching - js files have a hash in their name, so they last a long time
+  app.use('/*.js', (request, response, next) => {
+    const cacheTimeMs = 3
+    response.header("Cache-Control", "public, max-age=2592000000");
+    return next();
+  });
+  
   app.use(express.static('public'));
 
   // Log all requests for diagnostics
