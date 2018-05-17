@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
 import mdFactory from 'markdown-it';
+import Markdown from './markdown.jsx';
 
 const md = mdFactory({
   breaks: true,
@@ -62,13 +63,14 @@ class EditableDescription extends React.Component {
         autoFocus // eslint-disable-line jsx-a11y/no-autofocus
       />
       :
-      <RenderedDescription
-        description={description}
-        className="content-editable"
+      <Markdown
+        className="description content-editable"
         placeholder={placeholder}
         role="textbox" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
         tabIndex={0} onFocus={this.onFocus} onBlur={this.onBlur}
-      />
+      >
+        {description}
+      </Markdown>
     );
   }
 }
@@ -79,7 +81,7 @@ EditableDescription.propTypes = {
 };
 
 const StaticDescription = ({description}) => (
-  description ? <RenderedDescription description={description} className="read-only" /> : null
+  description ? <Markdown className="description read-only">{description}</Markdown> : null
 );
 StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
