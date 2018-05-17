@@ -56,8 +56,12 @@ export default function(application) {
 
       const propsObservable = Observable(() => {
         let categoryModels = self.randomCategoriesObservable().filter(model => !!model.projects.length);
-        categoryModels = sampleSize(categoryModels, 3);          
+        categoryModels = sampleSize(categoryModels, 3);
+               
         const categories = categoryModels.map(categoryModel => {
+          //touch all the projects to observe them
+          categoryModel.projects.forEach(({fetched}) => fetched());
+          
           const {...category} = categoryModel.asProps();
           category.projects = sampleSize(category.projects, 3);
           return category;
@@ -68,6 +72,7 @@ export default function(application) {
           categories,
         };
       });
+      console.log("YO!");
       return Reactlet(Observed, {propsObservable, component:RandomCategories});
     },
 
