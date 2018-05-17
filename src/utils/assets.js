@@ -238,9 +238,7 @@ export default function(application) {
         !hasCover && application.team().localAvatarImage(null);
         return;
       } 
-      application.user().updateUser(application, HAS_AVATAR_IMAGE);
-      !hasCover && application.user().localAvatarImage(null);
-      
+      console.error("hasAvatarImage does not exist in the user model.");
     },
 
     addCoverFile(file) {

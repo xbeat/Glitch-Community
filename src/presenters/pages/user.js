@@ -46,7 +46,6 @@ export default function(application, userLoginOrId) {
           updateDescription: self.updateDescription,
           uploadAvatar: self.uploadAvatar,
           uploadCover: self.uploadCover,
-          clearAvatar: self.clearAvatar,
           clearCover: self.clearCover,
         };
         return props;
@@ -173,7 +172,6 @@ export default function(application, userLoginOrId) {
     },
     
     clearCover: () => assetUtils.updateHasCoverImage(false),
-    clearAvatar: () => assetUtils.updateHasAvatarImage(false),
 
     uploadCover: assetUtils.uploadCoverFile,
     uploadAvatar: assetUtils.uploadAvatarFile,
