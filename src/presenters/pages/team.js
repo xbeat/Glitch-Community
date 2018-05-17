@@ -85,7 +85,7 @@ export default function(application) {
           projects: projects,
         }
       });
-
+      if (!propsObservable.id) { return null; }
       return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
     },
     

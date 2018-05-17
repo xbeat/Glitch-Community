@@ -81,7 +81,6 @@ class TeamAnalytics extends React.Component {
   }
 
   render() {
-    if (!this.props.id) { return null; }
     return (
       <section>
         <h2>Analytics</h2>
