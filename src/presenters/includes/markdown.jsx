@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import truncate from 'html-truncate';
 import markdownIt from 'markdown-it';
 import markdownEmoji from 'markdown-it-emoji';
 
@@ -9,12 +10,24 @@ const md = markdownIt({
   typographer: true,
 }).use(markdownEmoji);
 
-const Markdown = ({children, ...props}) => (
-  <span dangerouslySetInnerHTML={{__html: md.render(children)}} {...props}></span>
+const RawHTML = ({children}) => (
+  <span dangerouslySetInnerHTML={{__html: children}}></span>
+);
+
+const Markdown = ({children}) => (
+  <RawHTML>{md.render(children)}</RawHTML>
 );
 Markdown.propTypes = {
   children: PropTypes.string.isRequired,
 };
 
-export { Markdown };
+const TruncatedMarkdown = ({children, length}) => (
+  <RawHTML>{truncate(md.render(children), length, {ellipsis: '…'})}</RawHTML>
+);
+TruncatedMarkdown.propTypes = {
+  children: PropTypes.string.isRequired,
+  length: PropTypes.number.isRequired,
+};
+
+export { Markdown, TruncatedMarkdown };
 export default Markdown;
