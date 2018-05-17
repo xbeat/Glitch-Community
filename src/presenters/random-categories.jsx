@@ -38,19 +38,19 @@ Category.propTypes = {
   }).isRequired,
 };
 
-export default class CategoryContainer extends React.Component {
-  render() {
-    return (
-      <React.Fragment>
-        { this.props.categories.map((category) => (
-          <Category key={category.id} category={category} closeAllPopOvers={this.props.closeAllPopOvers}/>
-        ))}
-      </React.Fragment>
-    );
-  }
-}
+const Categories = ({categories, closeAllPopOvers}) => (
+  <React.Fragment>
+    { this.props.categories.map((category) => (
+      <Category key={category.id} category={category} closeAllPopOvers={this.props.closeAllPopOvers}/>
+    ))}
+  </React.Fragment>
+);
 
-CategoryContainer.propTypes = {
-  categories: PropTypes.array.isRequired,
+Categories.propTypes = {
+  categories: PropTypes.arrayOf({
+    id: PropTypes.number.isRequired,
+  }).isRequired,
   closeAllPopOvers: PropTypes.func.isRequired,
 };
+
+export default Categories;
