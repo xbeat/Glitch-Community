@@ -14,8 +14,6 @@ const AllProjectsItem = () => {
   );
 };
 
-
-
 const PopOver = ({projects, action, togglePopover, setFilter, filter}) => {
   console.log('🚒', projects)
   const onClick = (project) => {
