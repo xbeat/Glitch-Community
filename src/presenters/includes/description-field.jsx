@@ -63,14 +63,14 @@ class EditableDescription extends React.Component {
         autoFocus // eslint-disable-line jsx-a11y/no-autofocus
       />
       :
-      <Markdown
+      <p
         className="description content-editable"
         placeholder={placeholder}
         role="textbox" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
         tabIndex={0} onFocus={this.onFocus} onBlur={this.onBlur}
       >
-        {description}
-      </Markdown>
+        <Markdown>{description}</Markdown>
+      </p>
     );
   }
 }
