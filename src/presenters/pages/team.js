@@ -71,6 +71,7 @@ export default function(application) {
     },
 
     teamAnalytics() {
+      // temp/todo: still flickering
       const projects = self.team().projects().map(function (project) {
         project = project.asProps()
         project.description = ""
@@ -85,9 +86,6 @@ export default function(application) {
           projects: projects,
         }
       });
-      console.log ('🌎', propsObservable().id)
-      if (!propsObservable().id) { return null; }
-      console.log('yolo test')
       return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
     },
     
