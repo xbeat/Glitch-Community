@@ -44,7 +44,7 @@ module.exports = () => {
       "client-bundle": `${SRC}/client.js`
     },
     output: {
-      filename: '[name].js',
+      filename: '[name]-[chunkhash].js',
       path: PUBLIC
     },
     optimization: {
