@@ -126,7 +126,7 @@ UserAvatar.propTypes = {
   userLoginOrId: PropTypes.PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-    ]).isRequired,
+  ]).isRequired,
 };
 
 const Profile = ({isAuthorized, style, uploadCover, clearCover, hasCoverImage, Avatar}) => {
