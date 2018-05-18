@@ -64,9 +64,8 @@ class TeamAnalytics extends React.Component {
   updateAnalytics() {
     this.setState({
       isGettingData: true,
-    })
-    getAnalytics(this.props)
-    .then(({data}) => {
+    });
+    getAnalytics(this.props).then(({data}) => {
       this.setState({
         isGettingData: false,
         analytics: data,
