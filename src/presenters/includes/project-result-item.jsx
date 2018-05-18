@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import UsersList from '../users-list.jsx';
 
 const ProjectResultItem = ({domain, description, avatar, users, action, isActive}) => {
-  const resultClass = "button-unstyled result ";
+  var resultClass = "button-unstyled result ";
   if(isActive) {
     resultClass += " active";
   }

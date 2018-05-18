@@ -4,13 +4,18 @@ import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
 
-const AllProjectsItem = () => {
+const AllProjectsItem = (currentProjectDomain) => {
+  console.l
+  var resultsClass = "result "
+  if (currentProjectDomain === "All Projects") {
+    resultsClass += "active"
+  }
   const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
   return (
-    <li className="result">
+    <button className={resultsClass}>
       <img className="avatar" src={BENTO_BOX} alt='Bento emoji'/>
       <div className="result-name" title="All Projects">All Projects</div>
-    </li>
+    </button>
   );
 };
 
@@ -25,7 +30,6 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectdomai
   console.log('📟', currentProjectDomain, updateProjectdomain)
   const onClick = (project) => {
     togglePopover();
-    console.log(project)
     updateProjectdomain(project.domain)
     setFilter("");
   };
@@ -49,12 +53,18 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectdomai
       </section>
       <section className="pop-over-actions results-list">
         <ul className="results">
-          <button className="button-unstyled" onClick={() => {onClick({domain: "All Projects"});}}>
-            < AllProjectsItem />
-          </button>
+          <li className="button-unstyled" onClick={() => {onClick({domain: "All Projects"});}}>
+            < AllProjectsItem 
+              currentProjectDomain = {currentProjectDomain}
+            />
+          </li>
           { filteredProjects.map((project) => (
             <li key={project.id} className="button-unstyled">
-              <ProjectResultItem {...project} action={() => { onClick(project); }} isActive={isActive(currentProjectDomain, project)}/>
+              <ProjectResultItem 
+                {...project} 
+                action={() => { onClick(project); }} 
+                isActive={isActive(currentProjectDomain, project)}
+              />
             </li>
           ))}
         </ul>
@@ -77,6 +87,7 @@ PopOver.propTypes = {
   currentProjectDomain: PropTypes.string.isRequired,
 };
 
+
 class TeamAnalyticsProjectPop extends React.Component {
   constructor(props) {
     super(props);
@@ -90,6 +101,7 @@ class TeamAnalyticsProjectPop extends React.Component {
   
   render() {
     const {updateProjectdomain, currentProjectDomain, projects} = this.props;
+    console.log(currentProjectDomain)
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
