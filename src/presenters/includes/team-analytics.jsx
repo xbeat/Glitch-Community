@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import moment from 'moment-mini';
 
 import Loader from './loader.jsx';
-import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx;
+import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx';
 
 // 🗑: analytics.js, analytics.jade, analytics.styl, analytics-time-pop.jsx, analytics-project-pop.jsx, clean up team.js/jade
@@ -75,8 +75,10 @@ class TeamAnalytics extends React.Component {
   }
   
   componentDidMount() {
+    /*eslint-disable */
     import("c3" /* webpackChunkName: "c3-bundle" */ ).then(c3 => {
       console.log('c3 loaded', c3);
+    /*eslint-enable */
       this.updateAnalytics();
     });
   }
