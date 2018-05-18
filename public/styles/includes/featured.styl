@@ -1,0 +1,76 @@
+//smallViewport = 414px
+//mediumViewport = 670px
+//largeViewport = 900px
+
+.featured-collections
+
+  h2
+    background-color: rgba(255,255,255,0.9) // So the graphic hurt text readibility on small screens
+    border-radius: 5px;
+    margin-top: 0
+    display: inline-block
+  
+  ul
+    padding: 0
+    margin-top: 0.5rem
+    margin-bottom: 0
+    display: flex
+    overflow-x: auto
+    @media (max-width: mediumViewport)
+      flex-wrap: nowrap
+      -webkit-overflow-scrolling: touch
+
+  li
+    list-style-type: none
+    margin-right: 10px
+    display: inline-block
+    min-width: 280px
+    &:last-child
+      margin-right: 0
+
+    -webkit-overflow-scrolling: touch
+
+  .featured
+    margin-right: 10px
+    background-color: section-line
+    display: block
+    width: 100%
+    max-width: 375px
+    height: auto
+    border-radius: 5px
+    @media (max-width: largeViewport)
+      max-width: 425px
+    &:last-child
+      margin-right: 0
+
+  .badge
+    margin-left: 5px
+  
+  .featured-container
+    position: relative
+    &:hover
+      .project-name
+        text-decoration: underline
+    
+    .project-name
+      position: absolute
+      margin: 0
+      padding: 16px
+      padding-bottom: 8px
+      bottom: 0
+      left: 0
+      font-weight: 600
+      color: white
+      @media (max-width: smallViewport)
+        padding: 10px
+        
+  .community-pick-embed-container
+    position: relative
+    .witch
+      position:absolute
+      z-index: -1
+      right: 0px
+      top: -72px
+      
+    .glitch-embed-wrap
+      //max-height: 500px !important //override the Embed's configurable height.
