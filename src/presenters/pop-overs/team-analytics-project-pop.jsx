@@ -14,6 +14,13 @@ const AllProjectsItem = () => {
   );
 };
 
+const isActive = (currentProjectDomain, project) => {
+  console.log ('isActive', project)
+  if (currentProjectDomain === project.domain) {
+    return true
+  }
+}
+
 const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectdomain, currentProjectDomain}) => {
   console.log('📟', currentProjectDomain, updateProjectdomain)
   const onClick = (project) => {
@@ -47,7 +54,7 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectdomai
           </button>
           { filteredProjects.map((project) => (
             <li key={project.id} className="button-unstyled">
-              <ProjectResultItem {...project} action={() => { onClick(project); }} />
+              <ProjectResultItem {...project} action={() => { onClick(project); }} isActive={isActive(currentProjectDomain, project)}/>
             </li>
           ))}
         </ul>
