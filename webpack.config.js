@@ -49,6 +49,7 @@ module.exports = () => {
     },
     optimization: {
       splitChunks: {
+        minSize: 0,
         cacheGroups: {
           cache: {
             name: 'cache',
