@@ -52,7 +52,7 @@ module.exports = () => {
         cacheGroups: {
           cache: {
             name: 'cache',
-            test: /[\\/]src[\\/]cache[\\/]?/,
+            test: /[\\/]src[\\/]cache/,
             chunks: 'all',
           },
           react: {
