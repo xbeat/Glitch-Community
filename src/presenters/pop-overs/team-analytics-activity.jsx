@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const  TeamAnalyticsActivity = ({c3}) => {
-  console.log('🚧',c3)
+const  TeamAnalyticsActivity = ({c3, analytics}) => {
+  console.log('🚧',c3, analytics)
   return (
     <p>i am chart</p>
   );
@@ -10,6 +10,7 @@ const  TeamAnalyticsActivity = ({c3}) => {
 
 TeamAnalyticsActivity.propTypes = {
   c3: PropTypes.object.isRequired, 
+  analytics: PropTypes.array.isRequired, 
 };
 
 export default TeamAnalyticsActivity;

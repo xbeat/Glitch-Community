@@ -109,9 +109,12 @@ class TeamAnalytics extends React.Component {
         
         <section className="activity">        
           { (this.state.isGettingData || this.state.isGettingC3) && <Loader /> }
-          <TeamAnalyticsActivity 
-            c3 = {this.state.c3}
-          />
+          { (this.state.isGettingC3 === false && this.state.isGettingC3 === false) &&
+            <TeamAnalyticsActivity 
+              c3 = {this.state.c3}
+              analytics = {this.state.analytics}
+            />
+          }
         </section>
       </section>
     );
