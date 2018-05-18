@@ -6,10 +6,9 @@ import Loader from './loader.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx'
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx'
 
-// todo: remove c3 from package.json
-// import ("c3").then(c3 => {
-//   console.log('c3 loaded', c3);
-// })
+import ("c3").then(c3 => {
+  console.log('c3 loaded', c3);
+})
 
 // 🗑: analytics.js, analytics.jade, analytics.styl, analytics-time-pop.jsx, analytics-project-pop.jsx, clean up team.js/jade
 
@@ -76,7 +75,7 @@ class TeamAnalytics extends React.Component {
         isLoading: false,
         analytics: data,
       });
-      console.log('🚒', this.state, this.state.analytics)
+      console.log('🌎', this.state, this.state.analytics)
     })
   }
   
