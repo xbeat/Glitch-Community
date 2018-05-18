@@ -56,5 +56,9 @@ module.exports = () => {
       new LodashModuleReplacementPlugin,
       new webpack.NoEmitOnErrorsPlugin(),
     ],
+    externals: {
+      c3: 'c3' // c3 is conditionally loaded on the team page only
+    },
+
   };
 }
