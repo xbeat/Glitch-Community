@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
 
-const AllProjectsItem = (currentProjectDomain) => {
-  console.l
-  var resultsClass = "result "
+const AllProjectsItem = ({currentProjectDomain}) => {
+  const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
+  var resultsClass = "button-unstyled result "
   if (currentProjectDomain === "All Projects") {
     resultsClass += "active"
   }
-  const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
   return (
     <button className={resultsClass}>
       <img className="avatar" src={BENTO_BOX} alt='Bento emoji'/>
@@ -20,14 +19,12 @@ const AllProjectsItem = (currentProjectDomain) => {
 };
 
 const isActive = (currentProjectDomain, project) => {
-  console.log ('isActive', project)
   if (currentProjectDomain === project.domain) {
     return true
   }
 }
 
 const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectdomain, currentProjectDomain}) => {
-  console.log('📟', currentProjectDomain, updateProjectdomain)
   const onClick = (project) => {
     togglePopover();
     updateProjectdomain(project.domain)
@@ -35,7 +32,6 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectdomai
   };
   
   const filteredProjects = projects.filter(({name}) => {
-    console.log('🍕',name)
     return name.toLowerCase().includes(filter.toLowerCase());
   });
   
