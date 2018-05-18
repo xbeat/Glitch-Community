@@ -6,9 +6,13 @@ import Loader from './loader.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx'
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx'
 
+var c3IsLoaded = false
+
 import("c3").then(c3 => {
   console.log('c3 loaded', c3);
-})
+  c3IsLoaded = true
+});
+console.log('async so i am first!');
 
 // 🗑: analytics.js, analytics.jade, analytics.styl, analytics-time-pop.jsx, analytics-project-pop.jsx, clean up team.js/jade
 
@@ -49,7 +53,7 @@ class TeamAnalytics extends React.Component {
       currentTimeFrame: 'Last 2 Weeks',
       currentProjectDomain: 'All Projects',
       analytics: [],
-      isLoading: true,
+      isGettingData: true,
     }
   }
 
@@ -67,12 +71,12 @@ class TeamAnalytics extends React.Component {
 
   updateAnalytics() {
     this.setState({
-      isLoading: true,
+      isGettingData: true,
     })
     getAnalytics(this.props)
     .then(({data}) => {
       this.setState({
-        isLoading: false,
+        isGettingData: false,
         analytics: data,
       });
       console.log('🌎', this.state, this.state.analytics)

@@ -4,19 +4,25 @@ import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
 
-const AllProjectsItem = ({currentProjectDomain}) => {
+const AllProjectsItem = ({currentProjectDomain, action}) => {
   const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
   var resultsClass = "button-unstyled result ";
   if (currentProjectDomain === "All Projects") {
     resultsClass += "active";
   }
   return (
-    <button className={resultsClass}>
+    <button className={resultsClass} onClick={action}>
       <img className="avatar" src={BENTO_BOX} alt='Bento emoji'/>
       <div className="result-name" title="All Projects">All Projects</div>
     </button>
   );
 };
+
+AllProjectsItem.propTypes = {
+  currentProjectDomain: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired,
+}
+
 
 const isActive = (currentProjectDomain, project) => {
   if (currentProjectDomain === project.domain) {
@@ -49,17 +55,18 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectdomai
       </section>
       <section className="pop-over-actions results-list">
         <ul className="results">
-          <li className="button-unstyled" onClick={() => {onClick({domain: "All Projects"});}}>
+          <li className="button-unstyled">
             < AllProjectsItem 
               currentProjectDomain = {currentProjectDomain}
+              action = {() => {onClick({domain: "All Projects"});}}
             />
           </li>
           { filteredProjects.map((project) => (
             <li key={project.id} className="button-unstyled">
               <ProjectResultItem 
                 {...project} 
-                action={() => { onClick(project); }} 
-                isActive={isActive(currentProjectDomain, project)}
+                action = {() => { onClick(project); }} 
+                isActive = {isActive(currentProjectDomain, project)}
               />
             </li>
           ))}
@@ -97,7 +104,6 @@ class TeamAnalyticsProjectPop extends React.Component {
   
   render() {
     const {updateProjectdomain, currentProjectDomain, projects} = this.props;
-    console.log(currentProjectDomain)
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
