@@ -19,16 +19,15 @@ header
         width: 250px
         @media (max-width: smallViewport)
           width: 160px
-    button,
-    .button
+    button:not(:first-child),
+    .button:not(:first-child)
       margin-left: 10px
-
+      @media (max-width: smallViewport)
+        display: block
         
 
     @media (max-width: smallViewport)
-      display: block
-      margin-left: 0
-      margin-bottom: 0.5rem
+      position: relative;
       form
         display: block
         input
