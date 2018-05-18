@@ -3,12 +3,8 @@ import PropTypes from 'prop-types';
 // import moment from 'moment-mini';
 
 import Loader from './loader.jsx';
-import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx'
-import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx'
-
-import("c3").then(c3 => {
-  console.log('c3 loaded', c3);
-});
+import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx;
+import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx';
 
 // 🗑: analytics.js, analytics.jade, analytics.styl, analytics-time-pop.jsx, analytics-project-pop.jsx, clean up team.js/jade
 
@@ -29,11 +25,11 @@ import("c3").then(c3 => {
 // ];
 
 const getAnalytics = async ({id, api}) => {
-  let path = `analytics/${id}/team`
+  let path = `analytics/${id}/team`;
   try {
-    return await api().get(path)     
+    return await api().get(path);
   } catch (error) {
-    console.error('getAnalytics', error)
+    console.error('getAnalytics', error);
   }
 }
 
@@ -50,19 +46,19 @@ class TeamAnalytics extends React.Component {
       currentProjectDomain: 'All Projects',
       analytics: [],
       isGettingData: true,
-    }
+    };
   }
 
   updateTimeFrame(newTime) {
     this.setState({
       currentTimeFrame: newTime
-    })
+    });
   }
 
   updateProjectdomain(newDomain) {
     this.setState({
       currentProjectDomain: newDomain
-    })
+    });
   }
 
   updateAnalytics() {
@@ -75,12 +71,15 @@ class TeamAnalytics extends React.Component {
         isGettingData: false,
         analytics: data,
       });
-      console.log('🌎', this.state, this.state.analytics)
-    })
+      console.log('🌎', this.state, this.state.analytics);
+    });
   }
   
   componentDidMount() {
-    this.updateAnalytics()
+    import("c3" /* webpackChunkName: "c3-bundle" */ ).then(c3 => {
+      console.log('c3 loaded', c3);
+      this.updateAnalytics();
+    });
   }
 
   render() {
