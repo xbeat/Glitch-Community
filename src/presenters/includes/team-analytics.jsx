@@ -46,7 +46,7 @@ class TeamAnalytics extends React.Component {
       this.state = {
       currentTimeFrame: 'Last 2 Weeks',
       currentProjectDomain: 'All Projects',
-      analytics: [],
+      analytics: {},
       c3: {},
       isGettingData: true,
       isGettingC3: true,
@@ -109,7 +109,7 @@ class TeamAnalytics extends React.Component {
         
         <section className="activity">        
           { (this.state.isGettingData || this.state.isGettingC3) && <Loader /> }
-          { (this.state.isGettingC3 === false && this.state.isGettingC3 === false) &&
+          { this.state.isGettingC3 === false &&
             <TeamAnalyticsActivity 
               c3 = {this.state.c3}
               analytics = {this.state.analytics}

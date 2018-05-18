@@ -10,7 +10,7 @@ const  TeamAnalyticsActivity = ({c3, analytics}) => {
 
 TeamAnalyticsActivity.propTypes = {
   c3: PropTypes.object.isRequired, 
-  analytics: PropTypes.array.isRequired, 
+  analytics: PropTypes.object.isRequired, 
 };
 
 export default TeamAnalyticsActivity;
