@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Loader from './loader.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx';
+import TeamAnalyticsActivity from '../pop-overs/team-analytics-activity.jsx';
 
 // 🗑: analytics.js, analytics.jade, analytics.styl, analytics-time-pop.jsx, analytics-project-pop.jsx, clean up team.js/jade
 
@@ -46,6 +47,7 @@ class TeamAnalytics extends React.Component {
       currentTimeFrame: 'Last 2 Weeks',
       currentProjectDomain: 'All Projects',
       analytics: [],
+      c3: {},
       isGettingData: true,
       isGettingC3: true,
     };
@@ -79,7 +81,8 @@ class TeamAnalytics extends React.Component {
   componentDidMount() {
     import("c3").then(c3 => { // eslint-disable-line
       this.setState({
-        isGettingC3: false
+        c3: c3,
+        isGettingC3: false,
       })
       this.updateAnalytics();
     });
@@ -106,11 +109,9 @@ class TeamAnalytics extends React.Component {
         
         <section className="activity">        
           { (this.state.isGettingData || this.state.isGettingC3) && <Loader /> }
-          { !!this.state.isGettingData && 
-            <TeamAnalyticsActivity 
-              
-            />
-          }
+          <TeamAnalyticsActivity 
+            c3 = {this.state.c3}
+          />
         </section>
       </section>
     );
