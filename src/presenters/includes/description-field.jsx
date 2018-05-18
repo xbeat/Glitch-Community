@@ -1,22 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
-import mdFactory from 'markdown-it';
 import Markdown from './markdown.jsx';
-
-const md = mdFactory({
-  breaks: true,
-  linkify: true,
-  typographer: true,
-});
-
-const RenderedDescription = ({description, className, ...props}) => (
-  <p className={`description ${className}`} {...props} dangerouslySetInnerHTML={{__html: md.render(description)}}></p>
-);
-RenderedDescription.propTypes = {
-  description: PropTypes.string.isRequired,
-  className: PropTypes.string,
-};
 
 class EditableDescription extends React.Component {
   constructor(props) {
