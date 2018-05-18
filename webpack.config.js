@@ -57,7 +57,7 @@ module.exports = () => {
           },
           react: {
             name: 'react-bundle',
-            test: /[\\/]node_modules[\\/]react[-\\/]/,
+            test: /[\\/]node_modules[\\/]react/,
             chunks: 'all',
           },
           modules: {
