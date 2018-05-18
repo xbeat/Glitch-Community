@@ -37,10 +37,9 @@ class EditableDescription extends React.Component {
   }
   
   onFocus(evt) {
-    if (evt.target.closest('a')) {
-      return;
+    if (evt.currentTarget === evt.target) {
+      this.setState({focused: true});
     }
-    this.setState({focused: true});
   }
   
   onBlur() {
