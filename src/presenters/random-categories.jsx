@@ -48,6 +48,9 @@ export default class CategoryContainer extends React.Component {
   
   componentDidMount() {
     this.props.getCategories().then((categoriesJSON) => {
+      // The API gives us a json blob with all of the categories, but only
+      // the 'projects' field on 3 of them.  If the field is present,
+      // then it's an array of projects.
       const categoriesWithProjects = categoriesJSON.filter(category => !!category.projects);
       const sampledCategories = sampleSize(categoriesWithProjects, 3);
       const categories = sampledCategories.map(categoryJSON => {
