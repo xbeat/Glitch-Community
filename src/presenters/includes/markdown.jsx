@@ -13,6 +13,9 @@ const md = markdownIt({
 const RawHTML = ({children}) => (
   <span dangerouslySetInnerHTML={{__html: children}}></span>
 );
+RawHTML.propTypes = {
+  children: PropTypes.string.isRequired,
+};
 
 const Markdown = ({children}) => (
   <RawHTML>{md.render(children)}</RawHTML>

@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 
+
 const PUBLIC = path.resolve(__dirname, 'public');
 const SRC = path.resolve(__dirname, 'src');
 const BASE = path.resolve(__dirname, '.');
