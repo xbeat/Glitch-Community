@@ -5,7 +5,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 class OutputOnBuildStart {
   apply(compiler) {
-    compiler.hooks.watchRun.tap("OutputWatchStart", () => console.log('starting new build'));
+    compiler.hooks.watchRun.tap("OutputWatchStart", () => console.log('Files changed, rebuilding...'));
   }
 }
 
