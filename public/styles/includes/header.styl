@@ -7,12 +7,13 @@ header
     margin-right: 5px
     margin-bottom: 1rem
     width: 70px
+    position: absolute;
     
   nav
-    position: absolute
     right: 0
     top: 0
     text-align: right
+    margin-left: 80px
     form
       margin-bottom: 0.5rem
       input
@@ -22,12 +23,11 @@ header
     button:not(:first-child),
     .button:not(:first-child)
       margin-left: 10px
-      @media (max-width: smallViewport)
-        display: block
+      margin-bottom: 0.5rem
+        
         
 
     @media (max-width: smallViewport)
-      position: relative;
       form
         display: block
         input
