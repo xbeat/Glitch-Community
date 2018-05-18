@@ -6,9 +6,10 @@ import Loader from './loader.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx'
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx'
 
-import ("c3").then(c3 => {
-  console.log('c3 loaded', c3);
-})
+// todo: remove c3 from package.json
+// import ("c3").then(c3 => {
+//   console.log('c3 loaded', c3);
+// })
 
 // 🗑: analytics.js, analytics.jade, analytics.styl, analytics-time-pop.jsx, analytics-project-pop.jsx, clean up team.js/jade
 
@@ -80,7 +81,6 @@ class TeamAnalytics extends React.Component {
   }
   
   componentDidMount() {
-    // loading c3 lib here?
     this.updateAnalytics()
   }
 
@@ -90,15 +90,17 @@ class TeamAnalytics extends React.Component {
         <h2>Analytics</h2>
         <p>{this.state.currentTimeFrame}</p>
         <p>{this.state.currentProjectDomain}</p>
-        <TeamAnalyticsTimePop 
-          updateTimeFrame = {this.updateTimeFrame.bind(this)}
-          currentTimeFrame = {this.state.currentTimeFrame}
-        />
-        <TeamAnalyticsProjectPop
-          updateProjectdomain = {this.updateProjectdomain.bind(this)}
-          currentProjectDomain = {this.state.currentProjectDomain}
-          projects = {this.props.projects}
-        />
+        <section className="controls">
+          <TeamAnalyticsTimePop 
+            updateTimeFrame = {this.updateTimeFrame.bind(this)}
+            currentTimeFrame = {this.state.currentTimeFrame}
+          />
+          <TeamAnalyticsProjectPop
+            updateProjectdomain = {this.updateProjectdomain.bind(this)}
+            currentProjectDomain = {this.state.currentProjectDomain}
+            projects = {this.props.projects}
+          />
+        </section>
       </section>
     );
   }
