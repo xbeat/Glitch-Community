@@ -3,13 +3,6 @@ const webpack = require('webpack');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 
-class OutputOnBuildStart {
-  apply(compiler) {
-    compiler.hooks.watchRun.tap("OutputWatchStart", () => console.log('Files changed, rebuilding...'));
-  }
-}
-
-
 const PUBLIC = path.resolve(__dirname, 'public');
 const SRC = path.resolve(__dirname, 'src');
 const BASE = path.resolve(__dirname, '.');
@@ -61,7 +54,6 @@ module.exports = () => {
     plugins: [
       new LodashModuleReplacementPlugin,
       new webpack.NoEmitOnErrorsPlugin(),
-      new OutputOnBuildStart,
     ],
   };
 }
