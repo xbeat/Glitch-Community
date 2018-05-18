@@ -78,7 +78,6 @@ class TeamAnalytics extends React.Component {
   
   componentDidMount() {
     import("c3").then(c3 => { // eslint-disable-line
-      console.log('c3 loaded', c3, this.state.isGettingS3);
       this.setState({
         isGettingC3: false
       })
@@ -106,7 +105,12 @@ class TeamAnalytics extends React.Component {
         </section>
         
         <section className="activity">        
-          { (this.state.isGettingData || this.state.isGettingC3)  && <Loader /> }
+          { (this.state.isGettingData || this.state.isGettingC3) && <Loader /> }
+          { !!this.state.isGettingData && 
+            <TeamAnalyticsActivity 
+              
+            />
+          }
         </section>
       </section>
     );
