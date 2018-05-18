@@ -46,6 +46,7 @@ class TeamAnalytics extends React.Component {
       currentProjectDomain: 'All Projects',
       analytics: [],
       isGettingData: true,
+      isGettingC3: true,
     };
   }
 
@@ -75,10 +76,11 @@ class TeamAnalytics extends React.Component {
   }
   
   componentDidMount() {
-    /*eslint-disable */
-    import("c3" /* webpackChunkName: "c3-bundle" */ ).then(c3 => {
+    import("c3").then(c3 => { // eslint-disable-line
       console.log('c3 loaded', c3);
-    /*eslint-enable */
+      this.setState({
+        isGettingC3: true
+      })
       this.updateAnalytics();
     });
   }
