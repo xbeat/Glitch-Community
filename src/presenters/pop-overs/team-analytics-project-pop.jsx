@@ -6,9 +6,9 @@ import PopoverContainer from './popover-container.jsx';
 
 const AllProjectsItem = ({currentProjectDomain}) => {
   const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
-  var resultsClass = "button-unstyled result "
+  var resultsClass = "button-unstyled result ";
   if (currentProjectDomain === "All Projects") {
-    resultsClass += "active"
+    resultsClass += "active";
   }
   return (
     <button className={resultsClass}>
@@ -20,14 +20,14 @@ const AllProjectsItem = ({currentProjectDomain}) => {
 
 const isActive = (currentProjectDomain, project) => {
   if (currentProjectDomain === project.domain) {
-    return true
+    return true;
   }
-}
+};
 
 const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectdomain, currentProjectDomain}) => {
   const onClick = (project) => {
     togglePopover();
-    updateProjectdomain(project.domain)
+    updateProjectdomain(project.domain);
     setFilter("");
   };
   

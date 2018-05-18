@@ -31,10 +31,10 @@ const timeFrames = [
 const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
   const selectTimeFrame = (timeFrame, togglePopover) => {
     return () => {
-      updateTimeFrame(timeFrame)
-      togglePopover()
-    }
-  }
+      updateTimeFrame(timeFrame);
+      togglePopover();
+    };
+  };
 
   return (
     <PopoverContainer>
@@ -62,8 +62,8 @@ const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
         </div>
       )}
     </PopoverContainer>
-  )
-})
+  );
+});
 
 TeamAnalyticsTimePop.propTypes = {
   updateTimeFrame: PropTypes.func.isRequired,

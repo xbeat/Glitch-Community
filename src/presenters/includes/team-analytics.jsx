@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import moment from 'moment';
+// import moment from 'moment-mini';
 
 import Loader from './loader.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx'
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx'
 
-import ("c3").then(c3 => {
+import("c3").then(c3 => {
   console.log('c3 loaded', c3);
 })
 
