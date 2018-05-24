@@ -14,7 +14,7 @@ Example:
 export default [
   {
     title: 'snekbirb by RobinGuichelaar',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsnekbirb.jpg?1527165679441',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsnekbirb.jpg?1527165679441",
     link: 'https://snekbirb.glitch.me/'
   }
   , {
@@ -23,8 +23,8 @@ export default [
     link: 'https://curved-violin.glitch.me'
   }
   , {
-    title: 'Create a Custom Slack Slash Release Command',
+    title: 'Custom Slack Slash Release Commands',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffeatured-slack-slash-bot.svg?1494429489069",
-    link: 'https://microbit-pixel-creator.glitch.me/'
+    link: 'https://glitch.com/edit/#!/slack-google-releases?path=README.md:62:0'
   }   
 ];
