@@ -1,4 +1,4 @@
-/* globals baseUrl API_URL APP_URL EDITOR_URL analytics application*/
+/* globals API_URL APP_URL EDITOR_URL analytics application*/
 
 import Observable from 'o_0';
 
@@ -20,7 +20,7 @@ const cachedUser =
       return JSON.parse(localStorage.cachedUser);
     } catch (error) {
       // empty
-    } 
+    }
     })() : undefined;
 
 var self = Model({
@@ -90,16 +90,7 @@ var self = Model({
   },
   
   normalizedBaseUrl() {
-    const urlLength = baseUrl.length;
-    const lastCharacter = baseUrl.charAt(urlLength-1);
-    if (baseUrl === "") {
-      return "/";
-    }
-    if (lastCharacter === !"/") {
-      return baseUrl + "/";
-    } 
-    return baseUrl;
-    
+    return "/";
   },
 
   closeAllPopOvers() {

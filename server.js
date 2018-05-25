@@ -10,7 +10,6 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(compression());
-app.set('view engine', 'ejs');
 
 const router = require('./routes')();
 app.use('/', router);

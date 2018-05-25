@@ -10,6 +10,8 @@ import Model from './model';
 const cache = {};
 const cacheBuster = Math.floor(Math.random() * 1000);
 
+export const ANON_AVATAR_URL = "https://cdn.glitch.com/f6949da2-781d-4fd5-81e6-1fdd56350165%2Fanon-user-on-project-avatar.svg?1488556279399";
+
 export default User = function(I, self) {
 
   if (I == null) { I = {}; }
@@ -60,13 +62,30 @@ export default User = function(I, self) {
       }
     },
 
-    coverUrl(size) {
-      size = size || 'large';
+    coverUrl(size='large') {
+      if (self.localCoverImage()) {
+        return self.localCoverImage();
+      } 
+
       if (self.hasCoverImage()) {
         return `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-cover/${self.id()}/${size}?${cacheBuster}`;
       } 
       return "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
       
+    },
+    
+    profileStyle() {
+      return {
+        backgroundColor: self.coverColor(),
+        backgroundImage: `url('${self.coverUrl()}')`,
+      };
+    },
+
+    avatarStyle() {
+      return {
+        backgroundColor: self.color(),
+        backgroundImage: `url('${self.userAvatarUrl('large')}')`,
+      };
     },
 
     userAvatarUrl(size) {
@@ -77,9 +96,7 @@ export default User = function(I, self) {
         return `https://graph.facebook.com/${self.facebookId()}/picture?type=${size}`;
       } 
       return self.avatarUrl() || self.anonAvatar();
-      
     },
-    // self.avatarUrl size
 
     isCurrentUser(application) {
       return self.id() === application.currentUser().id();
@@ -130,7 +147,7 @@ export default User = function(I, self) {
     },
 
     anonAvatar() {
-      return "https://cdn.glitch.com/f6949da2-781d-4fd5-81e6-1fdd56350165%2Fanon-user-on-project-avatar.svg?1488556279399";
+      return ANON_AVATAR_URL;
     },
 
     glitchTeamAvatar() {
@@ -220,11 +237,14 @@ export default User = function(I, self) {
         coverColor: self.coverColor(),
         coverUrlSmall: self.coverUrl('small'),
         description: self.description(),
+        initialDescription: self.initialDescription(),
         hasCoverImage: self.hasCoverImage(),
         id: self.id(),
         login: self.login(),
         name: self.name(),
         style: self.style(),
+        profileStyle: self.profileStyle(),
+        avatarStyle: self.avatarStyle(),
         thanksCount: self.thanksCount(),
         tooltipName: self.tooltipName(),
         truncatedDescriptionHtml: md.render(self.truncatedDescription()),
@@ -232,6 +252,7 @@ export default User = function(I, self) {
         userAvatarUrlLarge: self.userAvatarUrl('large'),
         userLink: self.userLink(),
         userThanks: self.userThanks(),
+        
       };
     },
   });

@@ -1,4 +1,4 @@
-/* globals route EDITOR_URL baseUrl analytics */
+/* globals EDITOR_URL analytics */
 import application from './application';
 
 import qs from 'querystringify';
@@ -12,7 +12,7 @@ import QuestionsPage from './presenters/pages/questions';
 import SearchPage from './presenters/pages/search';
 import errorPageTemplate from './templates/pages/error';
 
-let normalizedRoute = route.replace(/^\/|\/$/g, "").toLowerCase();
+let normalizedRoute = window.location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
 console.log("#########");
 console.log(`normalizedRoute is ${normalizedRoute}`);
 console.log("❓ query strings are", queryString);
@@ -34,7 +34,7 @@ Promise.resolve()
     if (normalizedRoute.startsWith("login/")) {
       return application.login(normalizedRoute.substring("login/".length), queryString.code)
         .then(function() {
-          history.replaceState(null, null, `${baseUrl}/`);
+          history.replaceState(null, null, "/");
           return normalizedRoute = "";
         });
     }}).then(function() {

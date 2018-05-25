@@ -47,12 +47,14 @@ export default class CategoryContainer extends React.Component {
   }
   
   componentDidMount() {
-    this.props.getCategories().then((categoryModels) => {
-      let models = categoryModels.filter(model => !!model.projects.length);
-      models = sampleSize(models, 3);
-      
-      const categories = models.map(categoryModel => {
-        const {...category} = categoryModel.asProps();
+    this.props.getCategories().then((categoriesJSON) => {
+      // The API gives us a json blob with all of the categories, but only
+      // the 'projects' field on 3 of them.  If the field is present,
+      // then it's an array of projects.
+      const categoriesWithProjects = categoriesJSON.filter(category => !!category.projects);
+      const sampledCategories = sampleSize(categoriesWithProjects, 3);
+      const categories = sampledCategories.map(categoryJSON => {
+        const {...category} = this.props.categoryModel(categoryJSON).asProps();
         category.projects = sampleSize(category.projects, 3);
         return category;
       });
@@ -73,4 +75,5 @@ export default class CategoryContainer extends React.Component {
 CategoryContainer.propTypes = {
   getCategories: PropTypes.func.isRequired,
   closeAllPopOvers: PropTypes.func.isRequired,
+  categoryModel: PropTypes.func.isRequired,
 };

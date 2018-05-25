@@ -13,7 +13,9 @@ import DeletedProjectsTemplate from '../../templates/deleted-projects';
 import LayoutPresenter from '../layout';
 
 import EntityPageProjects from "../entity-page-projects.jsx";
+import {UserProfile} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
+import Observed from "../includes/observed.jsx";
 
 export default function(application, userLoginOrId) {
   const assetUtils = assets(application);
@@ -31,22 +33,26 @@ export default function(application, userLoginOrId) {
     },
 
     application,
+    
+    Profile() {
+      const propsObservable = Observable(() => {
+        const user = self.user().asProps();
+        const props = {
+          ...user,
+          userLoginOrId: user.login || user.id,
+          fetched: self.user().fetched(),
+          style: user.profileStyle,
+          isAuthorized: self.isCurrentUser(),
+          updateDescription: self.updateDescription,
+          uploadCover: self.uploadCover,
+          clearCover: self.clearCover,
+        };
+        return props;
+      });
+
+      return Reactlet(Observed, {propsObservable, component:UserProfile});
+    },
   
-    coverUrl() {
-      if (application.user().localCoverImage()) {
-        return application.user().localCoverImage();
-      } 
-      return application.user().coverUrl();
-      
-    },
-
-    userProfileStyle() {
-      return {
-        backgroundColor: application.user().coverColor(),
-        backgroundImage: `url('${self.coverUrl()}')`,
-      };
-    },
-
     userName() {
       return application.user().name();
     },
@@ -59,7 +65,6 @@ export default function(application, userLoginOrId) {
       if (!(application.user().thanksCount() > 0)) { return 'hidden'; }
     },
 
-    userThanks() { return application.user().userThanks(); },
     
     hiddenIfEditingDescription() {
       if (self.editingDescription()) { return 'hidden'; }
@@ -106,11 +111,9 @@ export default function(application, userLoginOrId) {
       return application.user().descriptionMarkdown();
     },
 
-    updateDescription(event) {
-      const text = event.target.textContent;
+    updateDescription(text) {
       application.user().description(text);
-      return self.updateUser({
-        description: text});
+      return self.updateUser({description: text});
     },
 
     updateUser: debounce(data => application.user().updateUser(application, data)
@@ -118,17 +121,6 @@ export default function(application, userLoginOrId) {
 
     userHasData() {
       if (application.user().id()) { return true; }
-    },
-
-    userAvatarUrl() {
-      return application.user().userAvatarUrl('large');
-    },
-
-    userAvatarStyle() {
-      return {
-        backgroundColor: application.user().color(),
-        backgroundImage: `url('${self.userAvatarUrl()}')`,
-      };
     },
 
     hiddenIfUserFetched() { 
@@ -175,19 +167,11 @@ export default function(application, userLoginOrId) {
       const cover = self.coverUrl();
       if (cover) { return `url(${cover})`; }
     },
+    
+    clearCover: () => assetUtils.updateHasCoverImage(false),
 
-    uploadCover() {
-      const input = document.createElement("input");
-      input.type = 'file';
-      input.accept = "image/*";
-      input.onchange = function(event) {   
-        const file = event.target.files[0];
-        console.log('☔️☔️☔️ input onchange', file);
-        return assetUtils.addCoverFile(file);
-      };
-      input.click();
-      return false;
-    },
+    uploadCover: assetUtils.uploadCoverFile,
+    uploadAvatar: assetUtils.uploadAvatarFile,
     
     userProjects() {
       const props = {
