@@ -13,13 +13,13 @@ Example:
 
 export default [
   {
-    title: 'snekbirb by RobinGuichelaar',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsnekbirb.jpg?1527165679441",
-    link: 'https://snekbirb.glitch.me/'
+    title: '\"coffee-talks\" by pketh & rosamcgee',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcoffee-talks.jpg?1527521560950",
+    link: 'https://coffee-talks.glitch.me'
   }
   , {
-    title: 'Take to the Slopes with Redux Skifree',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcurved-violin.jpg?1527165679985",
+    title: 'Make pixelated gradiemt GIFs',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fanimated-pixel-gradients.jpg?1527521667400",
     link: 'https://curved-violin.glitch.me'
   }
   , {
