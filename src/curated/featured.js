@@ -18,13 +18,13 @@ export default [
     link: 'https://coffee-talks.glitch.me'
   }
   , {
-    title: 'Make pixelated gradiemt GIFs',
+    title: '\"animated-pixel-gradients\" by noahleigh',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fanimated-pixel-gradients.jpg?1527521667400",
-    link: 'https://curved-violin.glitch.me'
+    link: 'https://animated-pixel-gradients.glitch.me'
   }
   , {
-    title: 'Custom Slack Slash Release Commands',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffeatured-slack-slash-bot.svg?1494429489069",
-    link: 'https://glitch.com/edit/#!/slack-google-releases?path=README.md:62:0'
+    title: 'Tweet or RT? by oa495',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ftwit-original.jpg?1527521829771",
+    link: 'https://twit-original.glitch.me'
   }   
 ];
