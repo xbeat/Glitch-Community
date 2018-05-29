@@ -25,8 +25,7 @@ console.log("#########");
 
 // client-side routing:
 
-function routePage(normalizedRoute, application) {
-  let indexPage, userPage;
+function identifyUser(application, analytics) {
   const currentUserId = application.currentUser().id();
   if (currentUserId) {
     application.getCurrentUserById(currentUserId);
@@ -41,7 +40,9 @@ function routePage(normalizedRoute, application) {
     }
     );
   }
-  
+}
+
+function routePage(normalizedRoute, application) {
     // index page ✅
   if ((normalizedRoute === "index.html") || (normalizedRoute === "")) {
     application.getQuestions();
@@ -101,18 +102,18 @@ function routePage(normalizedRoute, application) {
     // category page ✅
   if (application.isCategoryUrl(normalizedRoute)) {
     application.getCategory(normalizedRoute);
-    const p = CategoryPage(application);
-    document.body.appendChild(categoryPage);
-    return document.title = application.category().name();    
+    const page = CategoryPage(application);
+    return {page, title: application.category().name()};
   }
 
   // error page ✅
-  const errorPage = errorPageTemplate(application);
-  document.body.appendChild(errorPage);
-  return document.title = "👻 Page not found";
+  return {
+    page: errorPageTemplate(application),
+    title: "👻 Page not found",
+  };
 }
 
-function route(document) {
+function route(document, application) {
   //
   // Redirects
   //
@@ -141,6 +142,11 @@ function route(document) {
   }
   
   //
+  // If we have a session, load it and notify our analytics:
+  //
+  identifyUser(application, analytics);
+  
+  //
   //  Page Routing
   //
   
@@ -148,7 +154,8 @@ function route(document) {
   document.title = title;
   document.body.appendChild(page);
 }
-route(document);
+
+route(document, application);
 
 document.addEventListener("click", event => globalclick(event));
 document.addEventListener("keyup", function(event) {
