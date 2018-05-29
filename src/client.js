@@ -106,7 +106,7 @@ function routePage(pageUrl, application) {
 
   // error page ✅
   return {
-    page: errorPageTemplate(application),
+    page: errorPageTemplate(),
     title: "👻 Page not found",
   };
 }
@@ -130,8 +130,11 @@ function route(location, application) {
     const provider = normalizedRoute.substring("login/".length);
     const code = queryString.code;
     
-    if(queryString.error) {
-      alert(queryString.error);
+    if(!code) {
+      console.error("OAuth login error.", {provider}, queryString);
+
+      document.title = "OAuth Login Error";
+      document.body.appendChild(errorPageTemplate({}));
       return;
     }
     
