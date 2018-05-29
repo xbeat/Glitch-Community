@@ -112,31 +112,6 @@ export default Project = function(I, self) {
         });
     },
 
-    showOverlay(application) {
-      console.log('showOverlay');
-      application.overlayProject(self);
-      self.getReadme(application);
-      originalUrlPath = window.location.pathname;
-      originalQueryString = window.location.search;
-      if((originalUrlPath+originalQueryString).includes("~")) {
-        //They navigated here directly.
-        originalUrlPath = "/";
-        originalQueryString = '';
-      }
-      if(!self.domain()) {
-        return;
-      }
-      const target = `/~${self.domain()}`;
-      history.replaceState(null, `${self.domain()} – Glitch`, target);
-      application.overlayProjectVisible(true);
-      return document.getElementsByClassName('project-overlay')[0].focus();
-    },
-
-    hideOverlay() {
-      source.cancel('Operation canceled by the user.');
-      return history.replaceState(null, null, originalUrlPath + originalQueryString);
-    },
-
     pushSearchResult(application) {
       application.searchResultsProjects.push(self);
       return application.searchResultsProjectsLoaded(true);
@@ -255,21 +230,6 @@ Project.promiseProjectsByIds = (api, ids) => {
       return resolve(projects);
     });
   });
-};
-
-Project.getProjectOverlay = function(application, domain) {
-  const projectPath = `projects/${domain}`;
-  application.overlayProjectVisible(true);
-  return application.api().get(projectPath)
-    .then(function({data}) {
-      if (!data) {
-        const project = Project({domain});
-        project.projectNotFound(true);
-        project.showOverlay(application);
-        return;
-      }
-    
-      return Project(data).showOverlay(application);}).catch(error => console.error("getProjectOverlay", error));
 };
 
 Project.getSearchResults = function(application, query) {
