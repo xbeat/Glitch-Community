@@ -138,12 +138,12 @@ function route(location, application) {
         history.replaceState(null, null, "/");
         window.location = "";
       }).catch((error) => {
-        console.error("OAuth login error.", {provider, queryString, error});
+        console.error("OAuth login error.", {provider, queryString, error: error.response.data});
 
         document.title = "OAuth Login Error";
         document.body.appendChild(errorPageTemplate({
           title: "OAuth Login Problem",
-          description: "Hard to say what happened, but we couldn't log you in.",
+          description: "Hard to say what happened, but we couldn't log you in.  Try again?",
         }));
       });
   }
