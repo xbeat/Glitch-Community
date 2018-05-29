@@ -6,6 +6,7 @@ import _ from 'lodash';
 // ??const binning - 
   // group into days, but in prev charts you'll have data where you have no ticks
 
+
 const chartColumns = (analytics) => {
   if (!_.isEmpty(analytics)) {
     const buckets = analytics.buckets
@@ -20,7 +21,7 @@ const chartColumns = (analytics) => {
       timestamps.push(bucket['@timestamp'])
       remixes.push(bucket.analytics.remixes)
       appViews.push(bucket.analytics.visits)
-    })  
+    })
     return [timestamps, remixes, appViews]
   } else {
     return []

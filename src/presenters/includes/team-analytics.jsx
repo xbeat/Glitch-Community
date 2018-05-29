@@ -109,9 +109,19 @@ class TeamAnalytics extends React.Component {
           />
         </section>
         
+          <section className="summary">
+            <p>123temp Remixes </p>
+            <p>123temp App views </p>
+            { (this.state.isGettingData) &&
+              <Loader />
+            }
+          </section>
+        
         <section className="activity">
           <figure id="chart" className="c3"/>
-          { (this.state.isGettingData || this.state.isGettingC3) && <Loader /> }
+          { (this.state.isGettingData || this.state.isGettingC3) && 
+            <Loader /> 
+          }
           { (!this.state.isGettingC3) &&
             <TeamAnalyticsActivity 
               c3 = {this.state.c3}
