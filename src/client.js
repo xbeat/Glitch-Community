@@ -128,7 +128,6 @@ function route(location, application) {
   //
   // OAuth Handling
   //
-
   if (normalizedRoute.startsWith("login/")) {
     const provider = normalizedRoute.substring("login/".length);
     const code = queryString.code;
@@ -138,7 +137,8 @@ function route(location, application) {
         history.replaceState(null, null, "/");
         window.location = "";
       }).catch((error) => {
-        console.error("OAuth login error.", {provider, queryString, error: error.response.data});
+        const errorData = error && error.response && error.response.data;
+        console.error("OAuth login error.", {provider, queryString, error: errorData});
 
         document.title = "OAuth Login Error";
         document.body.appendChild(errorPageTemplate({
