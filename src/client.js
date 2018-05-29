@@ -103,14 +103,13 @@ function routePage(pageUrl, application) {
     const page = CategoryPage(application);
     return {page, title: application.category().name()};
   }
-
-  - title = @title || "Page Not Found"
-- description = @description || "Maybe a typo? Or perhaps it's moved?"
-- details = @details
-  
+ 
   // error page ✅
   return {
-    page: errorPageTemplate({title: "Page Not Found", description: "Maybe a typo? Or perhaps it's moved?"}),
+    page: errorPageTemplate({
+      title: "Page Not Found",
+      description: "Maybe a typo? Or perhaps it's moved?"
+    }),
     title: "👻 Page not found",
   };
 }
@@ -138,7 +137,11 @@ function route(location, application) {
       console.error("OAuth login error.", {provider}, queryString);
 
       document.title = "OAuth Login Error";
-      document.body.appendChild(errorPageTemplate({}));
+      document.body.appendChild(errorPageTemplate({
+        title: "OAuth Login Problem",
+        description: "Hard to say what happened, but we couldn't log you in.",
+        details: JSON.stringify({provider, ...queryString}, null, 2),
+      }));
       return;
     }
     
