@@ -49,10 +49,7 @@ export default Project = function(I, self) {
         name: project.name(),
         private: project.private(),
         showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
-        remixUrl: project.remixUrl(), 
-        showOverlay: () => {
-          project.showOverlay(application);
-        },
+        remixUrl: project.remixUrl(),
       };
     },
 
@@ -80,7 +77,7 @@ export default Project = function(I, self) {
       return `${CDN_URL}/project-avatar/${self.id()}.png`;
     },
         
-    getReadme(application) {
+    /*getReadme(application) {
       if (self.id() === undefined) {
         self.readmeNotFound(true);
         self.projectNotFound(true);
@@ -108,7 +105,7 @@ export default Project = function(I, self) {
           return self.projectNotFound(true);
         
         });
-    },
+    },*/
 
     pushSearchResult(application) {
       application.searchResultsProjects.push(self);
