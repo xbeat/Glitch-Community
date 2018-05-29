@@ -26,6 +26,8 @@ import TeamAnalyticsActivity from '../pop-overs/team-analytics-activity.jsx';
 // ];
 
 const getAnalytics = async ({id, api}) => {
+  // update to ask for individual projects:
+  // analytics/${id}/project/${domain or id}
   let path = `analytics/${id}/team`;
   try {
     return await api().get(path);

@@ -6,21 +6,28 @@ import _ from 'lodash';
 // ??const binning - 
   // group into days, but in prev charts you'll have data where you have no ticks
 
-const chartColumns = ({buckets}) => {
-  let timestamps = ['x']
-  let remixes = ['Remixes']
-  let appViews = ['App Views']
-  // let codeViews = ['Code Views']
-  buckets.forEach(bucket => {
-    console.log (bucket)
-    timestamps.push(bucket['@timestamp'])
-    remixes.push(bucket.analytics.remixes)
-    appViews.push(bucket.analytics.visits)
-  })  
-  return [timestamps, remixes, appViews]
+const chartColumns = (analytics) => {
+  if (!_.isEmpty(analytics)) {
+    const buckets = analytics.buckets
+
+    let timestamps = ['x']
+    let remixes = ['Remixes']
+    let appViews = ['App Views']
+    // let codeViews = ['Code Views']
+    // buckets = 
+    buckets.pop()
+    buckets.forEach(bucket => {
+      timestamps.push(bucket['@timestamp'])
+      remixes.push(bucket.analytics.remixes)
+      appViews.push(bucket.analytics.visits)
+    })  
+    return [timestamps, remixes, appViews]
+  } else {
+    return []
+  }
 }
 
-const renderC3 = (c3) => {
+const renderChart = (c3, analytics) => {
   var chart = c3.generate({
     size: {
         height: 200,
@@ -28,11 +35,7 @@ const renderC3 = (c3) => {
     data: {
         x: 'x',
         xFormat: '%b-%d',
-        columns: [
-            ['x', 1527580801000, 1527541201000, 1527544801000, 1527548401000, 1527552001000, 1527555601000],
-            ['Code Views', 30, 200, 100, 400, 150, 250],
-            ['App Views', 130, 340, 200, 500, 250, 350],
-        ]
+        columns: chartColumns(analytics)
     },
     axis: {
         x: {
@@ -45,15 +48,15 @@ const renderC3 = (c3) => {
                 },
             }
         },
-        y: {
-          tick: {
-            count: 5,
-            // fit: true,
-            // culling: {
-            //   max: 8
-            // },
-          }
-        },
+        // y: {
+        //   tick: {
+        //     count: 5,
+        //     // fit: true,
+        //     // culling: {
+        //     //   max: 8
+        //     // },
+        //   }
+        // },
     },
     // legend: {
     //   item: {
@@ -68,10 +71,7 @@ const renderC3 = (c3) => {
 const  TeamAnalyticsActivity = ({c3, analytics}) => {
   console.log('🚧🛑',c3, analytics, _.isEmpty(analytics))
 
-  if (!_.isEmpty(analytics)) {
-    console.log(chartColumns(analytics))
-  }
-  renderC3(c3)
+  renderChart(c3, analytics)
 
   return (null)
 
