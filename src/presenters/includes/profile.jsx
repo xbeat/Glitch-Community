@@ -28,7 +28,6 @@ const AvatarContainer = ({
   avatarStyle,
   isAuthorized,
   description,
-  thanksCount,
   updateDescription,
   descriptionPlaceholder,
   children,
@@ -40,7 +39,6 @@ const AvatarContainer = ({
     </div>
     <div className="user-information">
       {children}
-      { thanksCount > 0 && <Thanks count={thanksCount}/> }
       {isAuthorized
         ?
         <EditableDescription
@@ -57,7 +55,6 @@ const AvatarContainer = ({
 AvatarContainer.propTypes = {
   avatarStyle: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  thanksCount: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
   updateDescription: PropTypes.func.isRequired,
   descriptionPlaceholder: PropTypes.string.isRequired,
@@ -68,7 +65,7 @@ AvatarContainer.propTypes = {
 
 const TeamAvatar = ({
   currentUserIsOnTeam, removeUserFromTeam, search, addUserToTeam,
-  name, users,
+  name, users, thanksCount,
   isVerified, verifiedTooltip, verifiedImage,
   uploadAvatar,
   ...props
@@ -92,6 +89,7 @@ const TeamAvatar = ({
         <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
         { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
       </div>
+      <Thanks count={thanksCount}/>
     </AvatarContainer>
   );
 };
@@ -101,19 +99,22 @@ TeamAvatar.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
   })),
+  thanksCount: PropTypes.number.isRequired,
   isVerified: PropTypes.bool.isRequired,
   verifiedImage: PropTypes.string.isRequired,
   verifiedTooltip: PropTypes.string.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
 };
 
-const UserAvatar = ({userLoginOrId, ...props}) => (
+const UserAvatar = ({name, userLoginOrId, thanksCount, ...props}) => (
   <AvatarContainer {...props}>
-    { !!name ? (
-      <h1 className="username">{name}</h1>
-      <h2 className="login">@{userLoginOrId}</h2>
-    ) : <h1 className="login">@{userLoginOrId}</h1>
-    }
+    { name ?
+      <React.Fragment>
+        <h1 className="username">{name}</h1>
+        <h2 className="login">@{userLoginOrId}</h2>
+      </React.Fragment>
+      : <h1 className="login">@{userLoginOrId}</h1> }
+    <Thanks count={thanksCount}/>
   </AvatarContainer>
 );
 UserAvatar.propTypes = {
@@ -122,6 +123,7 @@ UserAvatar.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  thanksCount: PropTypes.number.isRequired,
 };
 
 const CoverContainer = ({isAuthorized, style, uploadCover, clearCover, hasCoverImage, children}) => {
