@@ -13,7 +13,7 @@ import Reactlet from '../reactlet';
 const ProjectPage = ({project}) => (
   <article className="profile">
     <section className="profile-info">
-      <img className="avatar"
+      <img className="avatar" src={project.avatar} alt="" />
       <h1>{project.domain}</h1>
       <UsersList users={project.users} />
       <p>{project.description}</p>
