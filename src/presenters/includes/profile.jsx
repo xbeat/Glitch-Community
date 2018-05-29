@@ -99,31 +99,6 @@ TeamAvatar.propTypes = {
   uploadAvatar: PropTypes.func.isRequired,
 };
 
-const UserAvatar = ({
-  name, userLoginOrId, thanksCount, description,
-  isAuthorized, updateDescription, descriptionPlaceholder,
-  ...props
-}) => (
-  <AvatarContainer {...props}>
-    { name ?
-      <React.Fragment>
-        <h1 className="username">{name}</h1>
-        <h2 className="login">@{userLoginOrId}</h2>
-      </React.Fragment>
-      : <h1 className="login">@{userLoginOrId}</h1> }
-    <Thanks count={thanksCount}/>
-    <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder={descriptionPlaceholder}/>
-  </AvatarContainer>
-);
-UserAvatar.propTypes = {
-  name: PropTypes.string,
-  userLoginOrId: PropTypes.PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
-  thanksCount: PropTypes.number.isRequired,
-};
-
 const CoverContainer = ({style, CoverButtons, children}) => {
   return (
     <section className="profile" style={style}>
@@ -173,22 +148,35 @@ TeamProfile.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
 };
 
-export const UserProfile = ({fetched, style, ...props}) => (
-  <CoverContainer style={style} CoverButtons={<CoverButtons {...props}/>}>
+export const UserProfile = ({
+  fetched, style, avatarStyle, isAuthorized, updateDescription,
+  name, userLoginOrId, thanksCount, description,
+  ...props
+}) => (
+  <CoverContainer style={style} CoverButtons={<CoverButtons {...props} isAuthorized={isAuthorized}/>}>
     {fetched ?
-      <AvatarContainer {...props}>
+      <AvatarContainer avatarStyle={avatarStyle}>
         { name ?
           <React.Fragment>
             <h1 className="username">{name}</h1>
             <h2 className="login">@{userLoginOrId}</h2>
           </React.Fragment>
-          : <h1 className="login">@{userLoginOrId}</h1> }
+          : <h1 className="login">@{userLoginOrId}</h1>
+        }
         <Thanks count={thanksCount}/>
         <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
-      </AvatarContainer> : <Loader />}
+      </AvatarContainer> :
+      <Loader />
+    }
   </CoverContainer>
 );
                             
 UserProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
+  name: PropTypes.string,
+  userLoginOrId: PropTypes.PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  thanksCount: PropTypes.number.isRequired,
 };
