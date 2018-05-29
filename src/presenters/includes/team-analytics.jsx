@@ -50,6 +50,7 @@ class TeamAnalytics extends React.Component {
       c3: {},
       isGettingData: true,
       isGettingC3: true,
+      hasData: false,
     };
   }
 
@@ -72,6 +73,7 @@ class TeamAnalytics extends React.Component {
     getAnalytics(this.props).then(({data}) => {
       this.setState({
         isGettingData: false,
+        hasData: true,
         analytics: data,
       });
       console.log('🌎', this.state, this.state.analytics);
@@ -87,7 +89,7 @@ class TeamAnalytics extends React.Component {
       this.updateAnalytics();
     });
   }
-
+  
   render() {
     return (
       <section>
@@ -109,7 +111,7 @@ class TeamAnalytics extends React.Component {
         
         <section className="activity">        
           { (this.state.isGettingData || this.state.isGettingC3) && <Loader /> }
-          { (this.state.isGettingC3 === false) &&
+          { (!this.state.isGettingC3 && this.state.hasData) &&
             <TeamAnalyticsActivity 
               c3 = {this.state.c3}
               analytics = {this.state.analytics}
