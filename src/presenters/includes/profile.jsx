@@ -45,6 +45,17 @@ AvatarContainer.propTypes = {
   AvatarButtons: PropTypes.element,
 };
 
+const AvatarButtons = ({isAuthorized, uploadAvatar}) => (
+  isAuthorized ?
+    <button className="button-small button-tertiary upload-avatar-button" onClick={uploadAvatar}>
+      Upload Avatar
+    </button> :
+    null
+);
+AvatarButtons.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
+  uploadAvatar: PropTypes.func.isRequired,
+};
 
 const TeamAvatar = ({
   currentUserIsOnTeam, removeUserFromTeam, search, addUserToTeam,
@@ -55,17 +66,8 @@ const TeamAvatar = ({
   ...props
 }) => {
   const isAuthorized = currentUserIsOnTeam;
-  
-  const AvatarButtons = (
-    isAuthorized ? 
-      <button className="button-small button-tertiary upload-avatar-button" onClick={uploadAvatar}>
-        Upload Avatar
-      </button> :
-      null
-  );
-  
   return (
-    <AvatarContainer {...props} isAuthorized={currentUserIsOnTeam} AvatarButtons={AvatarButtons}>
+    <AvatarContainer {...props} isAuthorized={currentUserIsOnTeam} AvatarButtons={<AvatarButtons isAuthorized={isAuthorized} uploadAvatar={uploadAvatar}/>}>
       <h1 className="username">
         {name}
         { isVerified && <span data-tooltip={verifiedTooltip}>
@@ -173,7 +175,17 @@ TeamProfile.propTypes = {
 
 export const UserProfile = ({fetched, style, ...props}) => (
   <CoverContainer style={style} CoverButtons={<CoverButtons {...props}/>}>
-    {fetched ? <UserAvatar {...props} descriptionPlaceholder="Tell us about yourself"/> : <Loader />}
+    {fetched ?
+      <AvatarContainer {...props}>
+        { name ?
+          <React.Fragment>
+            <h1 className="username">{name}</h1>
+            <h2 className="login">@{userLoginOrId}</h2>
+          </React.Fragment>
+          : <h1 className="login">@{userLoginOrId}</h1> }
+        <Thanks count={thanksCount}/>
+        <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
+      </AvatarContainer> : <Loader />}
   </CoverContainer>
 );
                             
