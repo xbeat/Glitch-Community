@@ -3,21 +3,33 @@ import PropTypes from 'prop-types';
 
 import _ from 'lodash';
 
-// const binning - 
+// ??const binning - 
   // group into days, but in prev charts you'll have data where you have no ticks
 
-const chartColumns = (analytics) => {
-  console.log('📈', analytics)
-  analytics.buckets.map (buckets => {
-    console.log ('🍕', buckets)
+const chartColumns = ({buckets}) => {
+  // console.log('📈', buckets)
+  let x = []
+  
+  buckets.forEach(bucket => {
+    console.log (bucket)
+    
   })
+  
+//   analytics.buckets.map (buckets => {
+//     console.log ('🍕', buckets)
+    
+//   })
+  
+  
+  
+  // return columns
   // map buckets into the format 
   //   columns: [
   //     ['x', time, time]
   //     ['App Views', num, num]
   //     ['Code Views', num, num]
   //   ]
-  // return columns = []
+  return [timestamps, remixes, ]
 }
 
 const renderC3 = (c3) => {
@@ -69,7 +81,7 @@ const  TeamAnalyticsActivity = ({c3, analytics}) => {
   console.log('🚧🛑',c3, analytics, _.isEmpty(analytics))
 
   if (!_.isEmpty(analytics)) {
-    chartColumns(analytics)
+    console.log(chartColumns(analytics))
   }
   renderC3(c3)
 
