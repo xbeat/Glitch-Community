@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 
 const mapAnalytics = (analytics) => {
-  ;
+  console.log('📈', analytics)
 }
 
-const renderC3 = () => {
+const renderC3 = (c3) => {
   var chart = c3.generate({
     size: {
         height: 240,
@@ -33,11 +33,13 @@ const renderC3 = () => {
       }
     }
   });
-
+}
 
 const  TeamAnalyticsActivity = ({c3, analytics}) => {
   console.log('🚧🛑',c3, analytics)
-  
+
+  mapAnalytics(analytics)
+  renderC3(c3)
 
   return (null)
 

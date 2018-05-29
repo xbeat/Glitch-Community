@@ -37,7 +37,7 @@ const getAnalytics = async ({id, api}) => {
 // layout:
   // Controls
   // Activity (TeamAnalyticsActivity)
-  // Remixed Projects
+  // Project Overview/Details (projects remixed, etc. from weak-particle)
   // Referrers
 
 class TeamAnalytics extends React.Component {
@@ -108,7 +108,7 @@ class TeamAnalytics extends React.Component {
         </section>
         
         <section className="activity">
-          <div id="chart" className="c3"/>
+          <figure id="chart" className="c3"/>
           { (this.state.isGettingData || this.state.isGettingC3) && <Loader /> }
           { (!this.state.isGettingC3) &&
             <TeamAnalyticsActivity 
