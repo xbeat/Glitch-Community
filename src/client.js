@@ -135,18 +135,15 @@ function route(location, application) {
    
     return application.login(provider, code)
       .then(() => {
-        window.location = "";
         history.replaceState(null, null, "/");
+        window.location = "";
       }).catch((error) => {
-        console.error("OAuth login error.", provider, queryString, error);
-      
-        const details = null;
+        console.error("OAuth login error.", {provider, queryString, error});
 
         document.title = "OAuth Login Error";
         document.body.appendChild(errorPageTemplate({
           title: "OAuth Login Problem",
           description: "Hard to say what happened, but we couldn't log you in.",
-          details,
         }));
       });
   }
