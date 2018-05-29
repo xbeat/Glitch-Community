@@ -40,7 +40,7 @@ TeamButtons.propTypes = {
 
 
 
-const UserOptionsPop = ({togglePopover, userLink, avatarUrl, teams, showNewStuffOverlay}) => {
+const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay}) => {
   const clickNewStuff = (event) => {
     togglePopover();
     showNewStuffOverlay();
@@ -61,7 +61,7 @@ const UserOptionsPop = ({togglePopover, userLink, avatarUrl, teams, showNewStuff
         <a className="button-link" href={userLink}>
           <div className="button button-small has-emoji button-tertiary">
             <span>Your Profile </span>
-            <img className="emoji avatar" src={avatarUrl} alt="Your avatar"></img>
+            <img className="emoji avatar" src={avatarUrl} style={avatarStyle} alt="Your avatar"></img>
           </div>
         </a>
       </section>
@@ -92,17 +92,18 @@ UserOptionsPop.propTypes = {
   togglePopover: PropTypes.func.isRequired,
   userLink: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string.isRequired,
+  avatarStyle: PropTypes.object.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
 export default function UserOptionsPopContainer(props) {
-  const {avatarUrl} = props;
+  const {avatarUrl, avatarStyle} = props;
   return (
     <PopoverContainer>
       {({togglePopover, visible}) => (
         <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
           <button className="user" onClick={togglePopover}>
-            <img src={avatarUrl} width="30px" height="30px" alt="User options"/>
+            <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
             <span className="down-arrow icon"/>
           </button>
           {visible && <UserOptionsPop {...props} togglePopover={togglePopover}/>}
@@ -114,4 +115,5 @@ export default function UserOptionsPopContainer(props) {
           
 UserOptionsPopContainer.propTypes = {
   avatarUrl: PropTypes.string.isRequired,
+  avatarStyle: PropTypes.object.isRequired,
 };

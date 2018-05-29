@@ -1,27 +1,14 @@
-let API_URL, APP_URL, CDN_URL, EDITOR_URL, FACEBOOK_CLIENT_ID, GITHUB_CLIENT_ID;
 const fs = require("fs");
 const axios = require("axios");
 const util = require("util");
 const express = require('express');
-const CACHE_INTERVAL = 1000 * 60 * 10; // 10 minutes
+const moment = require('moment-mini');
 
 const fs_writeFile = util.promisify(fs.writeFile);
 
-if (process.env.RUNNING_ON === 'staging') {
-  APP_URL = 'https://staging.glitch.com';
-  API_URL = 'https://api.staging.glitch.com/';
-  EDITOR_URL = 'https://staging.glitch.com/edit/';
-  CDN_URL = 'https://cdn.staging.glitch.com';
-  GITHUB_CLIENT_ID = "65efbd87382354ca25e7";
-  FACEBOOK_CLIENT_ID = "1858825521057112";
-} else {
-  APP_URL = 'https://glitch.com';
-  API_URL = 'https://api.glitch.com/';
-  EDITOR_URL = 'https://glitch.com/edit/';
-  CDN_URL = 'https://cdn.glitch.com';
-  GITHUB_CLIENT_ID = "b4cb743ed07e20abf0b2";
-  FACEBOOK_CLIENT_ID = "660180164153542";
-}
+const API_URL = ((process.env.RUNNING_ON === 'staging')
+                 ? 'https://api.staging.glitch.com/'
+                 : 'https://api.glitch.com/');
 
 const updateCache = async type => {
   let response = await axios.get(`${API_URL}${type}`, {
@@ -50,8 +37,9 @@ const updateCaches = async () => {
   console.log("☂️ cache updated");
 };
 
-updateCaches();
+const CACHE_INTERVAL = moment.duration(10, 'minutes').asMilliseconds();
 setInterval(updateCaches, CACHE_INTERVAL);
+updateCaches();
 
 module.exports = function() {
   
@@ -63,7 +51,14 @@ module.exports = function() {
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     return next();
   });
-    
+  
+  // Caching - js files have a hash in their name, so they last a long time
+  app.use('/*.js', (request, response, next) => {
+    const ms = moment.duration(1, 'months').asMilliseconds();
+    response.header('Cache-Control', `public, max-age=${ms}`);
+    return next();
+  });
+  
   app.use(express.static('public'));
 
   // Log all requests for diagnostics
@@ -77,18 +72,7 @@ module.exports = function() {
     .then(() => response.sendStatus(200))
   );
 
-  return app.get('*', (request, response) =>
-    response.render('index', {
-      route: request.path,
-      baseUrl: request.baseUrl,
-      clientJs: 'client-bundle.js',
-      API_URL,
-      APP_URL,
-      EDITOR_URL,
-      CDN_URL,
-      GITHUB_CLIENT_ID,
-      FACEBOOK_CLIENT_ID
-    }
-    )
-  );
+  return app.get('*', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html')
+  });
 };
