@@ -45,7 +45,8 @@ module.exports = () => {
     },
     output: {
       filename: '[name].js?[chunkhash]',
-      path: PUBLIC
+      path: PUBLIC,
+      publicPath: '/',
     },
     optimization: {
       splitChunks: {

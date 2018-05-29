@@ -40,12 +40,11 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
     background-size: cover
     background-repeat: no-repeat
     background-position: center
-
-  .anon-user-avatar
-    background-image: url(anonAvatar)
-    background-position: center
-    background-size: 65%
-    background-color: cyan
+    
+    &:hover,
+    &:active
+      .upload-avatar-button
+        visibility: visible;
 
   .projects
     display: inline
@@ -66,15 +65,19 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
     width: 18px
     height: 18px
 
-  .upload-cover-button
+  .upload-cover-buttons
     position: absolute
     top: 5px
     right: 5px
+    
+    button
+      margin-left: 5px
 
   .upload-avatar-button
     position: absolute
-    top: -5%
-    right: 0
+    top: 5px
+    right: 5px
+    visibility: hidden
 
 
 .recent-projects
