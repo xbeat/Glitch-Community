@@ -118,6 +118,8 @@ class TeamAnalytics extends React.Component {
             />
           }
         </section>
+        
+        <section className="Referrers">analytics.referrers</section>
       </section>
     );
   }
