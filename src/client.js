@@ -25,12 +25,11 @@ console.log("#########");
 
 // client-side routing:
 
-Promise.resolve()
-  .then(function() {
-    if (document.location.hash.startsWith("#!/")) {
-      document.location = EDITOR_URL + document.location.hash;
-      return;
-    }}).then(function() {
+if (document.location.hash.startsWith("#!/")) {
+  document.location = EDITOR_URL + document.location.hash;
+  return;
+}
+}).then(function() {
     if (normalizedRoute.startsWith("login/")) {
       return application.login(normalizedRoute.substring("login/".length), queryString.code)
         .then(function() {
