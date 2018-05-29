@@ -111,7 +111,7 @@ function routePage(normalizedRoute, application) {
   };
 }
 
-(() => {
+function route() {
   let normalizedRoute = window.location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
   console.log(`normalizedRoute is ${normalizedRoute}`);
 
@@ -120,11 +120,6 @@ function routePage(normalizedRoute, application) {
   //
   if (window.location.hash.startsWith("#!/")) {
     return window.location = EDITOR_URL + window.location.hash;
-  }
-
-  // lol wut
-  if (normalizedRoute === 'wp-login.php') {
-    return location.assign('https://www.youtube.com/embed/DLzxrzFCyOs?autoplay=1');
   }
   
   //
@@ -153,7 +148,9 @@ function routePage(normalizedRoute, application) {
   const {page, title=document.title} = routePage(normalizedRoute, application);
   document.title = title;
   document.body.appendChild(page);
-})();
+};
+
+route();
 
 document.addEventListener("click", event => globalclick(event));
 document.addEventListener("keyup", function(event) {
