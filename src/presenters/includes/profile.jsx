@@ -129,12 +129,12 @@ UserAvatar.propTypes = {
   ]).isRequired,
 };
 
-const Profile = ({isAuthorized, style, uploadCover, clearCover, hasCoverImage, Avatar}) => {
+const Profile = ({isAuthorized, style, uploadCover, clearCover, hasCoverImage, children}) => {
   return (
     <section className="profile">
       <div className="profile-container" style={style}>
         <div className="profile-info">
-          {Avatar}
+          {children}
         </div>
       </div>
       {isAuthorized && (
@@ -159,23 +159,25 @@ Profile.propTypes = {
   uploadCover: PropTypes.func.isRequired,
   clearCover: PropTypes.func.isRequired,
   hasCoverImage: PropTypes.bool.isRequired,
-  Avatar: PropTypes.element.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
-export const TeamProfile = ({fetched, currentUserIsOnTeam, ...props}) => {
-  const Avatar = fetched ? <TeamAvatar {...props} currentUserIsOnTeam={currentUserIsOnTeam} descriptionPlaceholder="Tell us about your team"/> : <Loader />;
-  return <Profile {...props} isAuthorized={currentUserIsOnTeam} Avatar={Avatar}/>;
-};
+export const TeamProfile = ({fetched, currentUserIsOnTeam, ...props}) => (
+  <Profile {...props} isAuthorized={currentUserIsOnTeam} Avatar={Avatar}>
+    {fetched ? <TeamAvatar {...props} currentUserIsOnTeam={currentUserIsOnTeam} descriptionPlaceholder="Tell us about your team"/> : <Loader />}
+  </Profile>
+);
 
 TeamProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
 };
 
-export const UserProfile = ({fetched, ...props}) => {
-  const Avatar = fetched ? <UserAvatar {...props} descriptionPlaceholder="Tell us about yourself"/> : <Loader />;
-  return <Profile {...props} Avatar={Avatar}/>;
-};
+export const UserProfile = ({fetched, ...props}) => (
+  <Profile {...props} Avatar={Avatar}>
+    {fetched ? <UserAvatar {...props} descriptionPlaceholder="Tell us about yourself"/> : <Loader />}
+  </Profile>
+);
                             
 UserProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
