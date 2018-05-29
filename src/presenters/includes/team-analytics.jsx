@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import moment from 'moment-mini';
+import moment from 'moment-mini';
 
 import Loader from './loader.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx';
@@ -28,7 +28,11 @@ import TeamAnalyticsActivity from '../pop-overs/team-analytics-activity.jsx';
 const getAnalytics = async ({id, api}) => {
   // update to ask for individual projects:
   // analytics/${id}/project/${domain or id}
-  let path = `analytics/${id}/team`;
+  // update to specify time frames (see above)
+  lastTwoWeeks = moment().subtract(2, 'weeks').valueOf()
+  console.log (lastTwoWeeks)
+  
+  let path = `analytics/${id}/team?from=${lastTwoWeeks}`;
   try {
     return await api().get(path);
   } catch (error) {
