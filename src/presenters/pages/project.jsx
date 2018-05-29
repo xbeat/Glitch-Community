@@ -57,7 +57,7 @@ ProjectPageLoader.propTypes = {
 // Let's keep layout in jade until all pages are react
 export default function(application, name) {
   const props = {
-    get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).asProps() : null)),
+    get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     name,
   };
   const content = Reactlet(ProjectPageLoader, props, 'projectpage');
