@@ -29,7 +29,9 @@ const renderC3 = (c3) => {
     },
     legend: {
       item: {
-        onclick: function (id) { console.log('legend toggled', id) }
+        onclick: function (id) { 
+          console.log('legend toggled', id) 
+        }
       }
     }
   });
