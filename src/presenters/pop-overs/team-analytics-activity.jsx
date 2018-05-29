@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 import _ from 'lodash';
 
-const bin
+// const binning - 
+  // group into days, but in prev charts you'll have data where you have no ticks
 
 const chartColumns = (analytics) => {
   console.log('📈', analytics)
@@ -30,19 +31,27 @@ const renderC3 = (c3) => {
         columns: [
             ['x', 1527580801000, 1527541201000, 1527544801000, 1527548401000, 1527552001000, 1527555601000],
             ['Code Views', 30, 200, 100, 400, 150, 250],
-            ['App Views', 130, 340, 200, 500, 250, 350]
+            ['App Views', 130, 340, 200, 500, 250, 350],
         ]
     },
     axis: {
         x: {
             type: 'timeseries',
             tick: {
-                format: '%b-%d'
+                format: '%b-%d',
+                fit: true,
+                culling: {
+                  max: 12
+                },
             }
         },
         y: {
           tick: {
-            count: 8
+            count: 5,
+            // fit: true,
+            // culling: {
+            //   max: 8
+            // },
           }
         },
     },
