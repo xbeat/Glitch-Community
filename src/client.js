@@ -41,7 +41,7 @@ function identifyUser(application) {
 }
 
 function routePage(pageUrl, application) {
-    // index page ✅
+  // index page ✅
   if ((pageUrl === "index.html") || (pageUrl === "")) {
     application.getQuestions();
     return {page: IndexPage(application)};
@@ -68,7 +68,7 @@ function routePage(pageUrl, application) {
     return {page, title:decodeURI(pageUrl)};
   }
 
-    // anon user page ✅
+  // anon user page ✅
   if (application.isAnonUserProfileUrl(pageUrl)) {
     application.pageIsUserPage(true);
     const userId = application.anonProfileIdFromUrl(pageUrl);
@@ -77,7 +77,7 @@ function routePage(pageUrl, application) {
     return {page, title: pageUrl};
   }
 
-    // team page ✅
+  // team page ✅
   if (application.isTeamUrl(pageUrl)) {
     application.pageIsTeamPage(true);
     const team = application.getCachedTeamByUrl(pageUrl);
@@ -97,7 +97,7 @@ function routePage(pageUrl, application) {
     return {page, title: `Search for ${query}`};
   }
 
-    // category page ✅
+  // category page ✅
   if (application.isCategoryUrl(pageUrl)) {
     application.getCategory(pageUrl);
     const page = CategoryPage(application);
@@ -111,7 +111,7 @@ function routePage(pageUrl, application) {
   };
 }
 
-function route(location) {
+function route(location, application) {
   let normalizedRoute = location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
   console.log(`normalizedRoute is ${normalizedRoute}`);
 
@@ -148,9 +148,9 @@ function route(location) {
   const {page, title=document.title} = routePage(normalizedRoute, application);
   document.title = title;
   document.body.appendChild(page);
-};
+}
 
-route(window.location);
+route(window.location, application);
 
 document.addEventListener("click", event => globalclick(event));
 document.addEventListener("keyup", function(event) {
@@ -158,7 +158,8 @@ document.addEventListener("keyup", function(event) {
   const tabKey = 9;
   if (event.keyCode === escapeKey) {
     return application.closeAllPopOvers();
-  } else if (event.keyCode === tabKey) {
+  }
+  if (event.keyCode === tabKey) {
     return globalclick(event);
   }
 });
