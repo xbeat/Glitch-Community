@@ -7,29 +7,17 @@ import _ from 'lodash';
   // group into days, but in prev charts you'll have data where you have no ticks
 
 const chartColumns = ({buckets}) => {
-  // console.log('📈', buckets)
-  let x = []
-  
+  let timestamps = ['x']
+  let remixes = ['Remixes']
+  let appViews = ['App Views']
+  // let codeViews = ['Code Views']
   buckets.forEach(bucket => {
     console.log (bucket)
-    
-  })
-  
-//   analytics.buckets.map (buckets => {
-//     console.log ('🍕', buckets)
-    
-//   })
-  
-  
-  
-  // return columns
-  // map buckets into the format 
-  //   columns: [
-  //     ['x', time, time]
-  //     ['App Views', num, num]
-  //     ['Code Views', num, num]
-  //   ]
-  return [timestamps, remixes, ]
+    timestamps.push(bucket['@timestamp'])
+    remixes.push(bucket.analytics.remixes)
+    appViews.push(bucket.analytics.visits)
+  })  
+  return [timestamps, remixes, appViews]
 }
 
 const renderC3 = (c3) => {
