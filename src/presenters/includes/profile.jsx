@@ -35,19 +35,10 @@ const AvatarContainer = ({
 }) => (
   <div className="user-avatar-container">
     <div className="user-avatar" style={avatarStyle}>
-      { isAuthorized && AvatarButtons }
+      {AvatarButtons}
     </div>
     <div className="user-information">
       {children}
-      {isAuthorized
-        ?
-        <EditableDescription
-          initialDescription={description}
-          updateDescription={updateDescription}
-          placeholder={descriptionPlaceholder}
-        />
-        :
-        <StaticDescription description={description} />}
     </div>
   </div>
 );
@@ -70,11 +61,14 @@ const TeamAvatar = ({
   uploadAvatar,
   ...props
 }) => {
+  const isAuthorized = currentUserIsOnTeam;
   
   const AvatarButtons = (
+    isAuthorized ? 
     <button className="button-small button-tertiary upload-avatar-button" onClick={uploadAvatar}>
       Upload Avatar
-    </button>
+    </button> :
+    null
   );
   
   return (
@@ -90,6 +84,14 @@ const TeamAvatar = ({
         { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
       </div>
       <Thanks count={thanksCount}/>
+      { isAuthorized ?
+        <EditableDescription
+          initialDescription={description}
+          updateDescription={updateDescription}
+          placeholder={descriptionPlaceholder}
+        /> :
+        <StaticDescription description={description} />
+      }
     </AvatarContainer>
   );
 };
