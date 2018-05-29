@@ -29,7 +29,7 @@ const getAnalytics = async ({id, api}) => {
   // update to ask for individual projects:
   // analytics/${id}/project/${domain or id}
   // update to specify time frames (see above)
-  lastTwoWeeks = moment().subtract(2, 'weeks').valueOf()
+  let lastTwoWeeks = moment().subtract(2, 'weeks').valueOf()
   console.log (lastTwoWeeks)
   
   let path = `analytics/${id}/team?from=${lastTwoWeeks}`;
@@ -113,13 +113,13 @@ class TeamAnalytics extends React.Component {
           />
         </section>
         
-          <section className="summary">
-            <p>123temp Remixes </p>
-            <p>123temp App views </p>
-            { (this.state.isGettingData) &&
-              <Loader />
-            }
-          </section>
+        <section className="summary">
+          <p>123temp Remixes </p>
+          <p>123temp App views </p>
+          { (this.state.isGettingData) &&
+            <Loader />
+          }
+        </section>
         
         <section className="activity">
           <figure id="chart" className="c3"/>
