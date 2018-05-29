@@ -143,7 +143,7 @@ function route(location, application) {
         document.title = "OAuth Login Error";
         document.body.appendChild(errorPageTemplate({
           title: "OAuth Login Problem",
-          description: "Hard to say what happened, but we couldn't log you in.  Try again?",
+          description: "Hard to say what happened, but we couldn't log you in. Try again?",
         }));
       });
   }
