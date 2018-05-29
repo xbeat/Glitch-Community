@@ -113,6 +113,7 @@ class TeamAnalytics extends React.Component {
             <TeamAnalyticsActivity 
               c3 = {this.state.c3}
               analytics = {this.state.analytics}
+              isGettingData = {this.state.isGettingData}
             />
           }
         </section>

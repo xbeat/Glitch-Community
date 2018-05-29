@@ -12,6 +12,7 @@ const  TeamAnalyticsActivity = ({c3, analytics}) => {
 TeamAnalyticsActivity.propTypes = {
   c3: PropTypes.object.isRequired, 
   analytics: PropTypes.object.isRequired, 
+  isGettingData: PropTypes.bool.isRequired,
 };
 
 export default TeamAnalyticsActivity;
