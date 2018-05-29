@@ -3353,10 +3353,6 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-lIbgIIQA3lz5XaB6vxakj6sDHADJiZadYEJB+FgA+C4nubM1NwcuvUr9EJPmnH1skZqpqUzWborWo8EIUi0Sdw==
-  /html-truncate/1.2.2:
-    dev: false
-    resolution:
-      integrity: sha1-2y4zHc8cugvUMqUH0W6YhgnyV18=
   /html-minifier/3.5.15:
     dependencies:
       camel-case: 3.0.0
@@ -3371,6 +3367,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-OZa4rfb6tZOZ3Z8Xf0jKxXkiDcFWldQePGYFDcgKqES2sXeWaEv9y6QQvWUtX3ySI3feApQi5uCsHLINQ6NoAw==
+  /html-truncate/1.2.2:
+    dev: false
+    resolution:
+      integrity: sha1-2y4zHc8cugvUMqUH0W6YhgnyV18=
   /html-webpack-plugin/3.2.0:
     dependencies:
       html-minifier: 3.5.15
