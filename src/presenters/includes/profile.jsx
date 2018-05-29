@@ -129,13 +129,11 @@ UserAvatar.propTypes = {
   ]).isRequired,
 };
 
-const Profile = ({isAuthorized, style, uploadCover, clearCover, hasCoverImage, children}) => {
+const CoverContainer = ({isAuthorized, style, uploadCover, clearCover, hasCoverImage, children}) => {
   return (
-    <section className="profile">
-      <div className="profile-container" style={style}>
-        <div className="profile-info">
-          {children}
-        </div>
+    <section className="profile" style={style}>
+      <div className="profile-info">
+        {children}
       </div>
       {isAuthorized && (
         <div className="upload-cover-buttons">
@@ -153,7 +151,7 @@ const Profile = ({isAuthorized, style, uploadCover, clearCover, hasCoverImage, c
   );
 };
 
-Profile.propTypes = {
+CoverContainer.propTypes = {
   style: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   uploadCover: PropTypes.func.isRequired,
@@ -163,9 +161,9 @@ Profile.propTypes = {
 };
 
 export const TeamProfile = ({fetched, currentUserIsOnTeam, ...props}) => (
-  <Profile {...props} isAuthorized={currentUserIsOnTeam} Avatar={Avatar}>
+  <CoverContainer {...props} isAuthorized={currentUserIsOnTeam}>
     {fetched ? <TeamAvatar {...props} currentUserIsOnTeam={currentUserIsOnTeam} descriptionPlaceholder="Tell us about your team"/> : <Loader />}
-  </Profile>
+  </CoverContainer>
 );
 
 TeamProfile.propTypes = {
@@ -174,9 +172,9 @@ TeamProfile.propTypes = {
 };
 
 export const UserProfile = ({fetched, ...props}) => (
-  <Profile {...props} Avatar={Avatar}>
+  <CoverContainer {...props}>
     {fetched ? <UserAvatar {...props} descriptionPlaceholder="Tell us about yourself"/> : <Loader />}
-  </Profile>
+  </CoverContainer>
 );
                             
 UserProfile.propTypes = {
