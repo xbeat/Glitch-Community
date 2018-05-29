@@ -6,8 +6,9 @@ const queryString = qs.parse(window.location.search);
 
 import IndexPage from './presenters/pages/index';
 import CategoryPage from './presenters/pages/category';
-import UserPage from './presenters/pages/user';
+import ProjectPage from './presenters/pages/project.jsx';
 import TeamPage from './presenters/pages/team';
+import UserPage from './presenters/pages/user';
 import QuestionsPage from './presenters/pages/questions';
 import SearchPage from './presenters/pages/search';
 import errorPageTemplate from './templates/pages/error';
@@ -69,15 +70,15 @@ Promise.resolve()
       return document.title = "Questions";
 
 
-      // ~project overlay page ✅
+      // ~project page ✅
     } else if (application.isProjectUrl(normalizedRoute)) {
       const projectDomain = application.removeFirstCharacter(normalizedRoute);
-      application.showProjectOverlayPage(projectDomain);
-      indexPage = IndexPage(application);
-      return document.body.appendChild(indexPage);
+      const projectPage = ProjectPage(application, projectDomain);
+      document.body.appendChild(projectPage);
+      return document.title = decodeURI(normalizedRoute);
 
   
-      // user page ✅
+      // @user page ✅
     } else if (application.isUserProfileUrl(normalizedRoute)) {
       application.pageIsUserPage(true);
       const userLogin = normalizedRoute.substring(1, normalizedRoute.length);
