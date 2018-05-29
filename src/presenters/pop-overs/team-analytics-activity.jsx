@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import _ from 'lodash';
 
+const bin
+
 const chartColumns = (analytics) => {
   console.log('📈', analytics)
   analytics.buckets.map (buckets => {
@@ -24,9 +26,9 @@ const renderC3 = (c3) => {
     },
     data: {
         x: 'x',
-        xFormat: '%Y-%mm-%d',
+        xFormat: '%b-%d',
         columns: [
-            ['x', 1527580801000, '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06'],
+            ['x', 1527580801000, 1527541201000, 1527544801000, 1527548401000, 1527552001000, 1527555601000],
             ['Code Views', 30, 200, 100, 400, 150, 250],
             ['App Views', 130, 340, 200, 500, 250, 350]
         ]
@@ -35,7 +37,7 @@ const renderC3 = (c3) => {
         x: {
             type: 'timeseries',
             tick: {
-                format: '%Y-%mm-%d'
+                format: '%b-%d'
             }
         },
         y: {
