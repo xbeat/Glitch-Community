@@ -8,14 +8,15 @@
     h2
       =@description
     
-    - if @details
-      p If it keeps happening, these details might help:
-      pre
-        =@details
-
     .actions
       a(href="https://glitch.com")
         img(src=logo width=80)
+        
+    - if @details
+      .error-details
+        p If it keeps happening, these details might help:
+        pre
+          =@details
 
     canvas#stars
     script(src="https://glitch.com/edit/error-page.js")
