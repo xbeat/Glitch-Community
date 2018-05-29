@@ -1,19 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-//import Project from '../../models/project';
+import Project from '../../models/project';
 
 import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
+import UsersList from '../users-list.jsx';
 
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
 
-const ProjectPage = ({name}) => (
-  <React.Fragment>{name}</React.Fragment>
+const ProjectPage = ({project}) => (
+  <article>
+    <p>{project.domain}</p>
+    <UsersList users={project.users} />
+  </article>
 );
 ProjectPage.propTypes = {
-  name: PropTypes.string.isRequired,
+  project: PropTypes.object.isRequired,
 };
 
 class ProjectPageLoader extends React.Component {
@@ -28,8 +32,8 @@ class ProjectPageLoader extends React.Component {
   
   componentDidMount() {
     this.props.get().then(
-      ({data}) => this.setState({
-        maybeProject: data,
+      project => this.setState({
+        maybeProject: project,
         loaded: true,
       })
     ).catch(error => {
@@ -41,7 +45,7 @@ class ProjectPageLoader extends React.Component {
   render() {
     return (this.state.loaded
       ? (this.state.maybeProject
-        ? <ProjectPage name={this.props.name} />
+        ? <ProjectPage project={this.state.maybeProject} />
         : <NotFound name={this.props.name} />)
       : <Loader />);
   }
@@ -53,7 +57,7 @@ ProjectPageLoader.propTypes = {
 // Let's keep layout in jade until all pages are react
 export default function(application, name) {
   const props = {
-    get: () => application.api().get(`projects/${name}`),
+    get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).asProps() : null)),
     name,
   };
   const content = Reactlet(ProjectPageLoader, props, 'projectpage');
