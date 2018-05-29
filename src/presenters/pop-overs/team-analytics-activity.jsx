@@ -27,12 +27,12 @@ const renderC3 = (c3) => {
             }
         }
     },
-    legend: {
-      item: {
-        onclick: function (id) { 
-          console.log('legend toggled', id) 
-        }
-      }
+    // legend: {
+    //   item: {
+    //     onclick: function (id) { 
+    //       console.log('legend toggled', id) 
+    //     }
+    //   }
     }
   });
 }
