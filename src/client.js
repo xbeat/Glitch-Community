@@ -1,4 +1,4 @@
-/* globals EDITOR_URL analytics */
+/* globals EDITOR_URL */
 import application from './application';
 
 import qs from 'querystringify';
@@ -23,20 +23,20 @@ console.log("#########");
 
 // client-side routing:
 
-function identifyUser(application, analytics) {
+function identifyUser(application) {
   const currentUserId = application.currentUser().id();
   if (currentUserId) {
     application.getCurrentUserById(currentUserId);
   }
   const user = application.currentUser();
-  if (application.currentUser().isSignedIn()) {
+  const analytics = window.analytics;
+  if (analytics && application.currentUser().isSignedIn()) {
     analytics.identify(user.id(), {
       name: user.name(),
       login: user.login(),
       email: user.email(),
       created_at: user.createdAt(),
-    }
-    );
+    });
   }
 }
 
@@ -145,12 +145,11 @@ function routePage(normalizedRoute, application) {
   //
   // If we have a session, load it and notify our analytics:
   //
-  identifyUser(application, analytics);
+  identifyUser(application);
   
   //
   //  Page Routing
   //
-  
   const {page, title=document.title} = routePage(normalizedRoute, application);
   document.title = title;
   document.body.appendChild(page);
