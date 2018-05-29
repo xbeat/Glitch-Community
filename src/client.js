@@ -104,9 +104,13 @@ function routePage(pageUrl, application) {
     return {page, title: application.category().name()};
   }
 
+  - title = @title || "Page Not Found"
+- description = @description || "Maybe a typo? Or perhaps it's moved?"
+- details = @details
+  
   // error page ✅
   return {
-    page: errorPageTemplate(),
+    page: errorPageTemplate({title: "Page Not Found", description: "Maybe a typo? Or perhaps it's moved?"}),
     title: "👻 Page not found",
   };
 }
