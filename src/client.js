@@ -40,54 +40,54 @@ function identifyUser(application) {
   }
 }
 
-function routePage(normalizedRoute, application) {
+function routePage(pageUrl, application) {
     // index page ✅
-  if ((normalizedRoute === "index.html") || (normalizedRoute === "")) {
+  if ((pageUrl === "index.html") || (pageUrl === "")) {
     application.getQuestions();
     return {page: IndexPage(application)};
   }
 
   // questions page ✅
-  if (application.isQuestionsUrl(normalizedRoute)) {
+  if (application.isQuestionsUrl(pageUrl)) {
     return {page: QuestionsPage(application), title: "Questions"};
   }
 
   // ~project overlay page ✅
-  if (application.isProjectUrl(normalizedRoute)) {
-    const projectDomain = application.removeFirstCharacter(normalizedRoute);
+  if (application.isProjectUrl(pageUrl)) {
+    const projectDomain = application.removeFirstCharacter(pageUrl);
     application.showProjectOverlayPage(projectDomain);
     return {page: IndexPage(application)};
   }
 
   // user page ✅
-  if (application.isUserProfileUrl(normalizedRoute)) {
+  if (application.isUserProfileUrl(pageUrl)) {
     application.pageIsUserPage(true);
-    const userLogin = normalizedRoute.substring(1, normalizedRoute.length);
+    const userLogin = pageUrl.substring(1, pageUrl.length);
     const page = UserPage(application, userLogin);
     application.getUserByLogin(userLogin);
-    return {page, title:decodeURI(normalizedRoute)};
+    return {page, title:decodeURI(pageUrl)};
   }
 
     // anon user page ✅
-  if (application.isAnonUserProfileUrl(normalizedRoute)) {
+  if (application.isAnonUserProfileUrl(pageUrl)) {
     application.pageIsUserPage(true);
-    const userId = application.anonProfileIdFromUrl(normalizedRoute);
+    const userId = application.anonProfileIdFromUrl(pageUrl);
     const page = UserPage(application, userId);
     application.getUserById(userId);
-    return {page, title: normalizedRoute};
+    return {page, title: pageUrl};
   }
 
     // team page ✅
-  if (application.isTeamUrl(normalizedRoute)) {
+  if (application.isTeamUrl(pageUrl)) {
     application.pageIsTeamPage(true);
-    const team = application.getCachedTeamByUrl(normalizedRoute);
+    const team = application.getCachedTeamByUrl(pageUrl);
     const page = TeamPage(application);
     application.getTeamById(team.id);
     return {page, title: team.name};
   }
 
   // search page ✅
-  if (application.isSearchUrl(normalizedRoute, queryString)) {
+  if (application.isSearchUrl(pageUrl, queryString)) {
     const query = queryString.q;
     application.searchQuery(query);
     application.searchTeams(query);
@@ -98,8 +98,8 @@ function routePage(normalizedRoute, application) {
   }
 
     // category page ✅
-  if (application.isCategoryUrl(normalizedRoute)) {
-    application.getCategory(normalizedRoute);
+  if (application.isCategoryUrl(pageUrl)) {
+    application.getCategory(pageUrl);
     const page = CategoryPage(application);
     return {page, title: application.category().name()};
   }
@@ -111,14 +111,14 @@ function routePage(normalizedRoute, application) {
   };
 }
 
-function route() {
-  let normalizedRoute = window.location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
+function route(location) {
+  let normalizedRoute = location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
   console.log(`normalizedRoute is ${normalizedRoute}`);
 
   //
   // Redirects
   //
-  if (window.location.hash.startsWith("#!/")) {
+  if (location.hash.startsWith("#!/")) {
     return window.location = EDITOR_URL + window.location.hash;
   }
   
@@ -128,10 +128,10 @@ function route() {
 
   if (normalizedRoute.startsWith("login/")) {
     return application.login(normalizedRoute.substring("login/".length), queryString.code)
-      .then(function() {
+      .then(() => {
         history.replaceState(null, null, "/");
-        return normalizedRoute = "";
-      }).catch(function(error) {
+        window.location = "";
+      }).catch((error) => {
         console.error(error);
         throw error;
       });
@@ -150,7 +150,7 @@ function route() {
   document.body.appendChild(page);
 };
 
-route();
+route(window.location);
 
 document.addEventListener("click", event => globalclick(event));
 document.addEventListener("keyup", function(event) {
