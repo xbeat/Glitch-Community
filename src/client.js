@@ -25,89 +25,94 @@ console.log("#########");
 
 // client-side routing:
 
-if (document.location.hash.startsWith("#!/")) {
-  document.location = EDITOR_URL + document.location.hash;
-  return;
-}
-}).then(function() {
-    if (normalizedRoute.startsWith("login/")) {
-      return application.login(normalizedRoute.substring("login/".length), queryString.code)
-        .then(function() {
-          history.replaceState(null, null, "/");
-          return normalizedRoute = "";
-        });
-    }}).then(function() {
-    let indexPage, userPage;
-    const currentUserId = application.currentUser().id();
-    if (currentUserId) {
-      application.getCurrentUserById(currentUserId);
+function route(document) {
+  if (document.location.hash.startsWith("#!/")) {
+    document.location = EDITOR_URL + document.location.hash;
+    return;
+  }
+
+  if (normalizedRoute.startsWith("login/")) {
+    return application.login(normalizedRoute.substring("login/".length), queryString.code)
+      .then(function() {
+        history.replaceState(null, null, "/");
+        return normalizedRoute = "";
+      }).catch(function(error) {
+        console.error(error);
+        throw error;
+      });
+  }
+  
+  let indexPage, userPage;
+  const currentUserId = application.currentUser().id();
+  if (currentUserId) {
+    application.getCurrentUserById(currentUserId);
+  }
+  const user = application.currentUser();
+  if (application.currentUser().isSignedIn()) {
+    analytics.identify(user.id(), {
+      name: user.name(),
+      login: user.login(),
+      email: user.email(),
+      created_at: user.createdAt(),
     }
-    const user = application.currentUser();
-    if (application.currentUser().isSignedIn()) {
-      analytics.identify(user.id(), {
-        name: user.name(),
-        login: user.login(),
-        email: user.email(),
-        created_at: user.createdAt(),
-      }
-      );
-    }
+    );
+  }
 
     // index page ✅
     if ((normalizedRoute === "index.html") || (normalizedRoute === "")) {
       application.getQuestions();
       indexPage = IndexPage(application);
       return document.body.appendChild(indexPage);
+    }
 
-
-      // questions page ✅
-    } else if (application.isQuestionsUrl(normalizedRoute)) {
+    // questions page ✅
+    if (application.isQuestionsUrl(normalizedRoute)) {
       const questionsPage = QuestionsPage(application);
       document.body.appendChild(questionsPage);
       // TODO append active projects count to document.title . i.e. Questions (12)
       return document.title = "Questions";
+    }
 
-
-      // ~project overlay page ✅
-    } else if (application.isProjectUrl(normalizedRoute)) {
+    // ~project overlay page ✅
+    if (application.isProjectUrl(normalizedRoute)) {
       const projectDomain = application.removeFirstCharacter(normalizedRoute);
       application.showProjectOverlayPage(projectDomain);
       indexPage = IndexPage(application);
       return document.body.appendChild(indexPage);
-
+    }
   
-      // user page ✅
-    } else if (application.isUserProfileUrl(normalizedRoute)) {
+    // user page ✅
+    if (application.isUserProfileUrl(normalizedRoute)) {
       application.pageIsUserPage(true);
       const userLogin = normalizedRoute.substring(1, normalizedRoute.length);
       userPage = UserPage(application, userLogin);
       application.getUserByLogin(userLogin);
       document.body.appendChild(userPage);
       return document.title = decodeURI(normalizedRoute);
-
+    }
 
       // anon user page ✅
-    } else if (application.isAnonUserProfileUrl(normalizedRoute)) {
+    if (application.isAnonUserProfileUrl(normalizedRoute)) {
       application.pageIsUserPage(true);
       const userId = application.anonProfileIdFromUrl(normalizedRoute);
       userPage = UserPage(application, userId);
       application.getUserById(userId);
       document.body.appendChild(userPage);
       return document.title = normalizedRoute;
-
+    }
     
       // team page ✅
-    } else if (application.isTeamUrl(normalizedRoute)) {
+    if (application.isTeamUrl(normalizedRoute)) {
       application.pageIsTeamPage(true);
       const team = application.getCachedTeamByUrl(normalizedRoute);
       const teamPage = TeamPage(application);
       application.getTeamById(team.id);
       document.body.appendChild(teamPage);
       return document.title = team.name;
-
+    }
     
-      // search page ✅
-    } else if (application.isSearchUrl(normalizedRoute, queryString)) {
+    // search page ✅
+    if (application.isSearchUrl(normalizedRoute, queryString)) {
       const query = queryString.q;
       application.searchQuery(query);
       application.searchTeams(query);
@@ -116,29 +121,27 @@ if (document.location.hash.startsWith("#!/")) {
       const searchPage = SearchPage(application);
       document.body.appendChild(searchPage);
       return document.title = `Search for ${query}`;
-
+    }
 
       // category page ✅
-    } else if (application.isCategoryUrl(normalizedRoute)) {
+    if (application.isCategoryUrl(normalizedRoute)) {
       application.getCategory(normalizedRoute);
       const categoryPage = CategoryPage(application);
       document.body.appendChild(categoryPage);
       return document.title = application.category().name();    
-
+    }
     
       // lol wut
-    } else if (normalizedRoute === 'wp-login.php') {
+    if (normalizedRoute === 'wp-login.php') {
       return location.assign('https://www.youtube.com/embed/DLzxrzFCyOs?autoplay=1');
-
-      // error page ✅
-    } 
+    }
+    // error page ✅
     const errorPage = errorPageTemplate(application);
     document.body.appendChild(errorPage);
     return document.title = "👻 Page not found";
-  }).catch(function(error) {
-    console.error(error);
-    throw error;
-  });
+  }
+}
+route(document);
 
 document.addEventListener("click", event => globalclick(event));
 document.addEventListener("keyup", function(event) {
