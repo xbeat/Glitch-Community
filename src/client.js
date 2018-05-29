@@ -127,7 +127,15 @@ function route(location, application) {
   //
 
   if (normalizedRoute.startsWith("login/")) {
-    return application.login(normalizedRoute.substring("login/".length), queryString.code)
+    const provider = normalizedRoute.substring("login/".length);
+    const code = queryString.code;
+    
+    if(queryString.error) {
+      alert(queryString.error);
+      return;
+    }
+    
+    return application.login(provider, code)
       .then(() => {
         history.replaceState(null, null, "/");
         window.location = "";
