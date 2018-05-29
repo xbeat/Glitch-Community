@@ -2,8 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-const mapAnalytics = (analytics) => {
+const chartColumns = (analytics) => {
   console.log('📈', analytics)
+  
+  // map buckets into the format 
+  //   columns: [
+  //     ['x', time, time]
+  //     ['App Views', num, num]
+  //     ['Code Views', num, num]
+  //   ]
+  // return columns = []
 }
 
 const renderC3 = (c3) => {
@@ -15,8 +23,8 @@ const renderC3 = (c3) => {
         x: 'x',
         columns: [
             ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06'],
-            ['Code 👀', 30, 200, 100, 400, 150, 250],
-            ['App 👀', 130, 340, 200, 500, 250, 350]
+            ['Code Views', 30, 200, 100, 400, 150, 250],
+            ['App Views', 130, 340, 200, 500, 250, 350]
         ]
     },
     axis: {
@@ -40,7 +48,7 @@ const renderC3 = (c3) => {
 const  TeamAnalyticsActivity = ({c3, analytics}) => {
   console.log('🚧🛑',c3, analytics)
 
-  mapAnalytics(analytics)
+  chartColumns(analytics)
   renderC3(c3)
 
   return (null)
