@@ -132,26 +132,27 @@ function route(location, application) {
   if (normalizedRoute.startsWith("login/")) {
     const provider = normalizedRoute.substring("login/".length);
     const code = queryString.code;
-    
-    if(!code) {
-      console.error("OAuth login error.", {provider}, queryString);
-
-      document.title = "OAuth Login Error";
-      document.body.appendChild(errorPageTemplate({
-        title: "OAuth Login Problem",
-        description: "Hard to say what happened, but we couldn't log you in.",
-        details: JSON.stringify({provider, ...queryString}, null, 2),
-      }));
-      return;
-    }
-    
+   
     return application.login(provider, code)
       .then(() => {
         history.replaceState(null, null, "/");
         window.location = "";
       }).catch((error) => {
-        console.error(error);
-        throw error;
+        const details = {
+          provider,
+          ...queryString,
+          code:"...",
+          glitch_error: error,
+        }
+      
+        console.error("OAuth login error.", details);
+
+        document.title = "OAuth Login Error";
+        document.body.appendChild(errorPageTemplate({
+          title: "OAuth Login Problem",
+          description: "Hard to say what happened, but we couldn't log you in.",
+          details: JSON.stringify(details, null, 2),
+        }));
       });
   }
   
