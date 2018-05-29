@@ -12,9 +12,7 @@ import QuestionsPage from './presenters/pages/questions';
 import SearchPage from './presenters/pages/search';
 import errorPageTemplate from './templates/pages/error';
 
-let normalizedRoute = window.location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
 console.log("#########");
-console.log(`normalizedRoute is ${normalizedRoute}`);
 console.log("❓ query strings are", queryString);
 console.log("🎏 application is", application);
 console.log("👻 current user is", application.currentUser());
@@ -113,12 +111,15 @@ function routePage(normalizedRoute, application) {
   };
 }
 
-function route(document, application) {
+(() => {
+  let normalizedRoute = window.location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
+  console.log(`normalizedRoute is ${normalizedRoute}`);
+
   //
   // Redirects
   //
-  if (document.location.hash.startsWith("#!/")) {
-    return document.location = EDITOR_URL + document.location.hash;
+  if (window.location.hash.startsWith("#!/")) {
+    return window.location = EDITOR_URL + window.location.hash;
   }
 
   // lol wut
@@ -153,9 +154,7 @@ function route(document, application) {
   const {page, title=document.title} = routePage(normalizedRoute, application);
   document.title = title;
   document.body.appendChild(page);
-}
-
-route(document, application);
+})();
 
 document.addEventListener("click", event => globalclick(event));
 document.addEventListener("keyup", function(event) {
