@@ -32,7 +32,7 @@ const AvatarContainer = ({
   thanksCount,
   updateDescription,
   descriptionPlaceholder,
-  Fields,
+  children,
   AvatarButtons,
   UsernameTooltip,
 }) => (
@@ -42,11 +42,14 @@ const AvatarContainer = ({
     </div>
     <div className="user-information">
       { !!name && (
-        <h1 className="username">{name}
-          {UsernameTooltip}
+        <h1 className="username">
+          {name}
+          { isVerified && <span data-tooltip={verifiedTooltip}>
+            <img className="verified" src={verifiedImage} alt={verifiedTooltip}/>
+          </span> }
         </h1>
       )}
-      {Fields}
+      {children}
       { thanksCount > 0 && <Thanks count={thanksCount}/> }
       {isAuthorized
         ?
@@ -69,9 +72,9 @@ AvatarContainer.propTypes = {
   description: PropTypes.string.isRequired,
   updateDescription: PropTypes.func.isRequired,
   descriptionPlaceholder: PropTypes.string.isRequired,
-  Fields: PropTypes.element,
+  children: PropTypes.element,
   AvatarButtons: PropTypes.element,
-  UsernameTooltip: PropTypes.element,
+  isVerified: PropTypes.bool,
 };
 
 
@@ -82,17 +85,8 @@ const TeamAvatar = ({
   ...props
 }) => {
   
-  const UserInformation = (
-    <div className="users-information">
-      <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
-      { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
-    </div>
-  );
-  
   const UsernameTooltip = (
-    <span data-tooltip={verifiedTooltip}>
-      { isVerified && <img className="verified" src={verifiedImage} alt={verifiedTooltip}/> }
-    </span>
+    
   );
   
   const AvatarButtons = (
@@ -101,7 +95,14 @@ const TeamAvatar = ({
     </button>
   );
   
-  return <AvatarContainer {...props} isAuthorized={currentUserIsOnTeam} AvatarButtons={AvatarButtons} Fields={UserInformation} UsernameTooltip={UsernameTooltip}/>;
+  return (
+    <AvatarContainer {...props} isAuthorized={currentUserIsOnTeam} AvatarButtons={AvatarButtons} UsernameTooltip={UsernameTooltip}>
+      <div className="users-information">
+        <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
+        { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
+      </div>
+    </AvatarContainer>
+  );
 };
 TeamAvatar.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
@@ -114,12 +115,11 @@ TeamAvatar.propTypes = {
   uploadAvatar: PropTypes.func.isRequired,
 };
 
-const UserAvatar = ({userLoginOrId, ...props}) => {
-  const UserID = (
+const UserAvatar = ({userLoginOrId, ...props}) => (
+  <AvatarContainer {...props}>
     <h2 className="login">@{userLoginOrId}</h2>
-  );
-  return <AvatarContainer {...props} Fields={UserID}/>;
-};
+  </AvatarContainer>
+);
 UserAvatar.propTypes = {
   userLoginOrId: PropTypes.PropTypes.oneOfType([
     PropTypes.string,
