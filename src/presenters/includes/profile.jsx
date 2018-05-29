@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import Loader from '../includes/loader.jsx';
 import Thanks from './thanks.jsx';
 import AddTeamUser from '../includes/add-team-user.jsx';
-import {EditableDescription, StaticDescription} from './description-field.jsx';
+import {AuthDescription} from './description-field.jsx';
 import UserInfoPop from '../pop-overs/user-info-pop.jsx';
 import {UserPopoversList} from '../users-list.jsx';
 
@@ -26,10 +26,6 @@ TeamUsers.propTypes = {
 
 const AvatarContainer = ({
   avatarStyle,
-  isAuthorized,
-  description,
-  updateDescription,
-  descriptionPlaceholder,
   children,
   AvatarButtons,
 }) => (
@@ -45,10 +41,6 @@ const AvatarContainer = ({
 
 AvatarContainer.propTypes = {
   avatarStyle: PropTypes.object.isRequired,
-  isAuthorized: PropTypes.bool.isRequired,
-  description: PropTypes.string.isRequired,
-  updateDescription: PropTypes.func.isRequired,
-  descriptionPlaceholder: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   AvatarButtons: PropTypes.element,
 };
@@ -56,7 +48,8 @@ AvatarContainer.propTypes = {
 
 const TeamAvatar = ({
   currentUserIsOnTeam, removeUserFromTeam, search, addUserToTeam,
-  name, users, thanksCount,
+  name, users, thanksCount, description,
+  updateDescription, descriptionPlaceholder,
   isVerified, verifiedTooltip, verifiedImage,
   uploadAvatar,
   ...props
@@ -65,10 +58,10 @@ const TeamAvatar = ({
   
   const AvatarButtons = (
     isAuthorized ? 
-    <button className="button-small button-tertiary upload-avatar-button" onClick={uploadAvatar}>
-      Upload Avatar
-    </button> :
-    null
+      <button className="button-small button-tertiary upload-avatar-button" onClick={uploadAvatar}>
+        Upload Avatar
+      </button> :
+      null
   );
   
   return (
@@ -84,14 +77,7 @@ const TeamAvatar = ({
         { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
       </div>
       <Thanks count={thanksCount}/>
-      { isAuthorized ?
-        <EditableDescription
-          initialDescription={description}
-          updateDescription={updateDescription}
-          placeholder={descriptionPlaceholder}
-        /> :
-        <StaticDescription description={description} />
-      }
+      <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder={descriptionPlaceholder}/>
     </AvatarContainer>
   );
 };
@@ -102,13 +88,20 @@ TeamAvatar.propTypes = {
     id: PropTypes.number.isRequired,
   })),
   thanksCount: PropTypes.number.isRequired,
+  description: PropTypes.string.isRequired,
+  updateDescription: PropTypes.func.isRequired,
+  descriptionPlaceholder: PropTypes.string.isRequired,
   isVerified: PropTypes.bool.isRequired,
   verifiedImage: PropTypes.string.isRequired,
   verifiedTooltip: PropTypes.string.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
 };
 
-const UserAvatar = ({name, userLoginOrId, thanksCount, ...props}) => (
+const UserAvatar = ({
+  name, userLoginOrId, thanksCount, description,
+  isAuthorized, updateDescription, descriptionPlaceholder,
+  ...props
+}) => (
   <AvatarContainer {...props}>
     { name ?
       <React.Fragment>
@@ -117,6 +110,7 @@ const UserAvatar = ({name, userLoginOrId, thanksCount, ...props}) => (
       </React.Fragment>
       : <h1 className="login">@{userLoginOrId}</h1> }
     <Thanks count={thanksCount}/>
+    <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder={descriptionPlaceholder}/>
   </AvatarContainer>
 );
 UserAvatar.propTypes = {
