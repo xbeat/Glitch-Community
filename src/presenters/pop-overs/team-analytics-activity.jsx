@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import _ from 'lodash';
 
 const chartColumns = (analytics) => {
   console.log('📈', analytics)
-  
+  analytics.buckets.map (buckets => {
+    console.log ('🍕', buckets)
+  })
   // map buckets into the format 
   //   columns: [
   //     ['x', time, time]
@@ -46,9 +49,11 @@ const renderC3 = (c3) => {
 }
 
 const  TeamAnalyticsActivity = ({c3, analytics}) => {
-  console.log('🚧🛑',c3, analytics)
+  console.log('🚧🛑',c3, analytics, _.isEmpty(analytics))
 
-  chartColumns(analytics)
+  if (!_.isEmpty(analytics)) {
+    chartColumns(analytics)
+  }
   renderC3(c3)
 
   return (null)
