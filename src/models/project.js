@@ -8,8 +8,6 @@ import Model from './model';
 import axios from 'axios';
 
 let source = undefined; // reference to cancel token
-let originalUrlPath = "/";
-let originalQueryString = "";
 
 export default Project = function(I, self) {
   
