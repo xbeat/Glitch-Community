@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 //import Project from '../../models/project';
 
 import Loader from '../includes/loader.jsx';
+import NotFound from '../includes/not-found.jsx';
 
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
@@ -21,24 +22,28 @@ class ProjectPageLoader extends React.Component {
     this.state = {
       maybeProject: null,
       loaded: false,
+      error: null,
     };
   }
   
   componentDidMount() {
-    application.api().get(`projects/${name}`)
-    .then(function({data}) {
-      if (!data) {
-        //const project = Project({domain: name});
-        //project.projectNotFound(true);
-        return;
-      }
-
-      //return Project(data).showOverlay(application);
-    }).catch(error => console.error("getProjectOverlay", error));
+    this.props.get().then(
+      ({data}) => this.setState({
+        maybeProject: data,
+        loaded: true,
+      })
+    ).catch(error => {
+      console.error(error);
+      this.setState({error});
+    });
   }
   
   render() {
-    return this.state.loaded ? <ProjectPage name={this.props.name} /> : <Loader />;
+    return (this.state.loaded
+      ? (this.state.maybeProject
+        ? <ProjectPage name={this.props.name} />
+        : <NotFound name={this.props.name} />)
+      : <Loader />);
   }
 }
 ProjectPageLoader.propTypes = {
@@ -47,19 +52,10 @@ ProjectPageLoader.propTypes = {
 
 // Let's keep layout in jade until all pages are react
 export default function(application, name) {
-  application.api().get(`projects/${name}`)
-    .then(function({data}) {
-      if (!data) {
-        //const project = Project({domain: name});
-        //project.projectNotFound(true);
-        return;
-      }
-
-      //return Project(data).showOverlay(application);
-    }).catch(error => console.error("getProjectOverlay", error));
   const props = {
+    get: () => application.api().get(`projects/${name}`),
     name,
-    
-  const content = Reactlet(ProjectPageLoader, {name}, 'projectpage');
+  };
+  const content = Reactlet(ProjectPageLoader, props, 'projectpage');
   return LayoutPresenter(application, content);
 }
