@@ -107,7 +107,8 @@ class TeamAnalytics extends React.Component {
           />
         </section>
         
-        <section className="activity">        
+        <section className="activity">
+          <div id="chart" className="c3"/>
           { (this.state.isGettingData || this.state.isGettingC3) && <Loader /> }
           { (!this.state.isGettingC3) &&
             <TeamAnalyticsActivity 
