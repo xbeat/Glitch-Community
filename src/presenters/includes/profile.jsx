@@ -28,27 +28,17 @@ const AvatarContainer = ({
   avatarStyle,
   isAuthorized,
   description,
-  name,
   thanksCount,
   updateDescription,
   descriptionPlaceholder,
   children,
   AvatarButtons,
-  UsernameTooltip,
 }) => (
   <div className="user-avatar-container">
     <div className="user-avatar" style={avatarStyle}>
       { isAuthorized && AvatarButtons }
     </div>
     <div className="user-information">
-      { !!name && (
-        <h1 className="username">
-          {name}
-          { isVerified && <span data-tooltip={verifiedTooltip}>
-            <img className="verified" src={verifiedImage} alt={verifiedTooltip}/>
-          </span> }
-        </h1>
-      )}
       {children}
       { thanksCount > 0 && <Thanks count={thanksCount}/> }
       {isAuthorized
@@ -67,27 +57,22 @@ const AvatarContainer = ({
 AvatarContainer.propTypes = {
   avatarStyle: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  name: PropTypes.string,
   thanksCount: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
   updateDescription: PropTypes.func.isRequired,
   descriptionPlaceholder: PropTypes.string.isRequired,
-  children: PropTypes.element,
+  children: PropTypes.node.isRequired,
   AvatarButtons: PropTypes.element,
-  isVerified: PropTypes.bool,
 };
 
 
 const TeamAvatar = ({
-  currentUserIsOnTeam, removeUserFromTeam, search, addUserToTeam, users,
+  currentUserIsOnTeam, removeUserFromTeam, search, addUserToTeam,
+  name, users,
   isVerified, verifiedTooltip, verifiedImage,
   uploadAvatar,
   ...props
 }) => {
-  
-  const UsernameTooltip = (
-    
-  );
   
   const AvatarButtons = (
     <button className="button-small button-tertiary upload-avatar-button" onClick={uploadAvatar}>
@@ -96,7 +81,13 @@ const TeamAvatar = ({
   );
   
   return (
-    <AvatarContainer {...props} isAuthorized={currentUserIsOnTeam} AvatarButtons={AvatarButtons} UsernameTooltip={UsernameTooltip}>
+    <AvatarContainer {...props} isAuthorized={currentUserIsOnTeam} AvatarButtons={AvatarButtons}>
+      <h1 className="username">
+        {name}
+        { isVerified && <span data-tooltip={verifiedTooltip}>
+          <img className="verified" src={verifiedImage} alt={verifiedTooltip}/>
+        </span> }
+      </h1>
       <div className="users-information">
         <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
         { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
@@ -106,6 +97,7 @@ const TeamAvatar = ({
 };
 TeamAvatar.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
   users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
   })),
@@ -117,10 +109,15 @@ TeamAvatar.propTypes = {
 
 const UserAvatar = ({userLoginOrId, ...props}) => (
   <AvatarContainer {...props}>
-    <h2 className="login">@{userLoginOrId}</h2>
+    { !!name ? (
+      <h1 className="username">{name}</h1>
+      <h2 className="login">@{userLoginOrId}</h2>
+    ) : <h1 className="login">@{userLoginOrId}</h1>
+    }
   </AvatarContainer>
 );
 UserAvatar.propTypes = {
+  name: PropTypes.string,
   userLoginOrId: PropTypes.PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
