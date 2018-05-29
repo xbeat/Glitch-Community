@@ -41,7 +41,6 @@ ProjectItem.propTypes = {
     name: PropTypes.string.isRequired,
     private: PropTypes.bool.isRequired,
     showAsGlitchTeam: PropTypes.bool.isRequired,
-    showOverlay: PropTypes.func.isRequired,
     users: PropTypes.array.isRequired,
   }).isRequired,
   categoryColor: PropTypes.string,
