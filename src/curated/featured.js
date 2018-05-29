@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Tic Tac Toe Meets Reversi',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ftic-tac-tic-tac.jpg?1526562567620',
-    link: 'https://tic-tac-tic-tac.glitch.me/'
+    title: 'snekbirb by RobinGuichelaar',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsnekbirb.jpg?1527165679441",
+    link: 'https://snekbirb.glitch.me/'
   }
   , {
-    title: '\"fluffy-shanks\" by bryanrieger',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffluffy-shanks.jpg?1526562567757",
-    link: 'https://fluffy-shanks.glitch.me/'
+    title: 'Take to the Slopes with Redux Skifree',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcurved-violin.jpg?1527165679985",
+    link: 'https://curved-violin.glitch.me'
   }
   , {
-    title: 'Create a Ribbon for Your Website',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fribbon.jpg?1526562567948",
-    link: 'https://ribbon.glitch.me/'
+    title: 'Custom Slack Slash Release Commands',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffeatured-slack-slash-bot.svg?1494429489069",
+    link: 'https://glitch.com/edit/#!/slack-google-releases?path=README.md:62:0'
   }   
 ];
