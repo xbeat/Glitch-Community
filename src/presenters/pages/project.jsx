@@ -11,9 +11,13 @@ import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
 
 const ProjectPage = ({project}) => (
-  <article>
-    <p>{project.domain}</p>
-    <UsersList users={project.users} />
+  <article className="profile">
+    <section className="profile-info">
+      <img className="avatar"
+      <h1>{project.domain}</h1>
+      <UsersList users={project.users} />
+      <p>{project.description}</p>
+    </section>
   </article>
 );
 ProjectPage.propTypes = {
