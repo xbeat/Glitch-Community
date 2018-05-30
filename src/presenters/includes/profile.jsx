@@ -168,7 +168,7 @@ LoadedUserProfile.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
-    login: PropTypes.PropTypes.string,
+    login: PropTypes.string,
     id: PropTypes.number.isRequired,
     thanksCount: PropTypes.number.isRequired,
     hasCoverImage: PropTypes.bool.isRequired,
