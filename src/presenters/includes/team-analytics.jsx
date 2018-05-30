@@ -55,6 +55,8 @@ class TeamAnalytics extends React.Component {
       c3: {},
       isGettingData: true,
       isGettingC3: true,
+      totalRemixes: 0,
+      totalAppViews: 0,
     };
   }
 
@@ -69,6 +71,19 @@ class TeamAnalytics extends React.Component {
       currentProjectDomain: newDomain
     });
   }
+
+  updateTotalRemixes(newValue) {
+    this.setState({
+      totalRemixes: newValue
+    });
+  }
+
+  updateTotalAppViews(newValue) {
+    this.setState({
+      totalAppViews: newValue
+    });
+  }
+
 
   updateAnalytics() {
     this.setState({
@@ -135,6 +150,8 @@ class TeamAnalytics extends React.Component {
               c3 = {this.state.c3}
               analytics = {this.state.analytics}
               isGettingData = {this.state.isGettingData}
+              updateTotalRemixes = {this.updateTotalRemixes}
+              updateTotalAppViews = {this.updateTotalAppViews}
             />
           }
         </section>

@@ -32,13 +32,18 @@ const createHistogram = (buckets) => {
   return histogram
 }
 
-const chartColumns = (analytics) => {
+const chartColumns = (analytics, updateTotalRemixes, updateTotalAppViews) => {
   const buckets = analytics.buckets
   let histogram = createHistogram(buckets)
   let timestamps = ['x']
   let remixes = ['Remixes']
   let appViews = ['App Views']
   // let codeViews = ['Code Views']
+  
+  
+  // updateTotalRemixes, updateTotalAppViews
+  
+  
   histogram.forEach(bucket => {
     timestamps.push(bucket.time)
     remixes.push(bucket.remixes)
@@ -47,7 +52,7 @@ const chartColumns = (analytics) => {
   return [timestamps, remixes, appViews]
 }
 
-const renderChart = (c3, analytics) => {
+const TeamAnalyticsActivity = ({c3, analytics, isGettingData, updateTotalRemixes, updateTotalAppViews}) => {
   let columns = []
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics)
@@ -72,39 +77,17 @@ const renderChart = (c3, analytics) => {
                 },
             }
         },
-        // y: {
-        //   tick: {
-        //     count: 5,
-        //     // fit: true,
-        //     // culling: {
-        //     //   max: 8
-        //     // },
-        //   }
-        // },
     },
-    // legend: {
-    //   item: {
-    //     onclick: function (id) { 
-    //       console.log('legend toggled', id) 
-    //     }
-    //   }
-    // }
   });
-}
-
-const  TeamAnalyticsActivity = ({c3, analytics}) => {
-  // console.log('🚧🛑',c3, analytics)
-
-  renderChart(c3, analytics)
-
   return (null)
-
 };
 
 TeamAnalyticsActivity.propTypes = {
   c3: PropTypes.object.isRequired, 
   analytics: PropTypes.object.isRequired, 
   isGettingData: PropTypes.bool.isRequired,
+  updateTotalRemixes: PropTypes.func.isRequired,
+  updateTotalAppViews: PropTypes.func.isRequired,
 };
 
 export default TeamAnalyticsActivity;
