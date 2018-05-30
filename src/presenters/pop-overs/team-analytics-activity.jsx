@@ -6,10 +6,17 @@ import * as d3Array from 'd3-array';
 
 // ??const binning - 
   // group into days, but in prev charts you'll have data where you have no ticks
+const createHistogram = (buckets) => {
+  console.log(buckets)
+}
 
 
 const chartColumns = (analytics) => {
   const buckets = analytics.buckets
+  const histogram = createHistogram(buckets)
+  
+  
+  
   let timestamps = ['x']
   let remixes = ['Remixes']
   let appViews = ['App Views']
@@ -69,8 +76,7 @@ const renderChart = (c3, analytics) => {
 }
 
 const  TeamAnalyticsActivity = ({c3, analytics}) => {
-  console.log('🚧🛑',c3, analytics)
-  console.log(d3Array)
+  // console.log('🚧🛑',c3, analytics)
 
   renderChart(c3, analytics)
 
