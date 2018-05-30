@@ -29,7 +29,7 @@ const dateFromTime = (newTime) => {
 
 // getAnalyticsProjectOverview = () (based on current project, not for all)
 
-const getAnalytics = async ({id, api, requestDate}) => {
+const getAnalytics = async ({id, api}, requestDate) => {
   console.log (requestDate)
   let path = `analytics/${id}/team?from=${requestDate}`;
   try {
@@ -110,7 +110,7 @@ class TeamAnalytics extends React.Component {
     this.setState({
       isGettingData: true,
     });
-    getAnalytics(this.props).then(({data}) => {
+    getAnalytics(this.props, this.state.requestDate).then(({data}) => {
       this.setState({
         isGettingData: false,
         analytics: data,
