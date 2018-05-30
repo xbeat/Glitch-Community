@@ -21,13 +21,16 @@ const consolidateHistogram = (histogram) => {
       totalAppViews += data.analytics.visits
       referrers.push(data.analytics.referrers)
     })
+    console.log('yo', totalRemixes, totalAppViews)
     return {
       time: bin.x0,
       remixes: totalRemixes,
       appViews: totalAppViews,
-      referrers: referrers
+      referrers: _.flatten(referrers)
     }
   })
+  console.log (histogram)
+  return histogram
 }
 
 
@@ -37,7 +40,7 @@ const createHistogram = (buckets) => {
   
   
   console.log('🎨' ,histogram)
-  console.log (consolidateHistogram(histogram))
+  return consolidateHistogram(histogram)
   
 }
 
@@ -45,6 +48,7 @@ const createHistogram = (buckets) => {
 const chartColumns = (analytics) => {
   const buckets = analytics.buckets
   let histogram = createHistogram(buckets)
+  console.log ('✅', histogram)
   
   
   
@@ -55,8 +59,8 @@ const chartColumns = (analytics) => {
   // buckets.pop()
   histogram.forEach(bucket => {
     timestamps.push(bucket.time)
-    remixes.push(bucket.analytics.remixes)
-    appViews.push(bucket.analytics.appViews)
+    remixes.push(bucket.remixes)
+    appViews.push(bucket.appViews)
   })
   return [timestamps, remixes, appViews]
 }
