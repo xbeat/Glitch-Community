@@ -1,44 +1,26 @@
 anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-avatar.svg"
 
-.profile-container
+.cover-container
   position: relative
   border-radius: 5px
   padding: 16px
   // overflow: auto
   background-size: 100%
   background-position: center
-  
-  .profile-info
-    width: 100%
-    max-width: 460px
-    background-color: section-line
-    border-radius: 5px
-    padding: 12px
-    .user-avatar-container
-      .user-avatar
-        width: 35%
-        padding-bottom: 35%
-        display: inline-block
-        margin-bottom: 2px
-        vertical-align: top
 
-      .profile-information
-        display: inline-block
-        width: 65%
-        padding-left: 16px
-        vertical-align: middle
-        > *
-          margin: 0
-          margin-bottom: 12px
-          width: 100%
-          p
-            margin: 0
+.profile-info
+  width: 100%
+  max-width: 460px
+  background-color: section-line
+  border-radius: 5px
+  padding: 12px
 
-  .user-avatar-container
-    width: 100%
+.avatar-container
+  width: 100%
 
   .user-avatar
     position: relative
+    width: 35%
     height: 0
     padding-bottom: 100%
     margin-bottom: 1rem
@@ -46,21 +28,36 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
     background-size: cover
     background-repeat: no-repeat
     background-position: center
-    
+    padding-bottom: 35%
+    display: inline-block
+    margin-bottom: 2px
+    vertical-align: top
     &:not(:hover)
       .upload-image-buttons
         visibility: hidden
+        
+  .profile-information
+    display: inline-block
+    width: 65%
+    padding-left: 16px
+    vertical-align: middle
+    > *
+      margin: 0
+      margin-bottom: 12px
+      width: 100%
+      p
+        margin: 0
   
   .sparkling_heart
     width: 18px
     height: 18px
 
-  .upload-image-buttons
-    position: absolute
-    top: 5px
-    right: 5px
-    > *
-      margin-left: 5px
+.upload-image-buttons
+  position: absolute
+  top: 5px
+  right: 5px
+  > *
+    margin-left: 5px
 
 
 .recent-projects

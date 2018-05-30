@@ -13,7 +13,7 @@ import UserInfoPop from '../pop-overs/user-info-pop.jsx';
 import {UserPopoversList} from '../users-list.jsx';
 
 const ImageButtons = ({name, uploadImage, clearImage}) => (
-  <React.Fragment>
+  <div className="upload-image-buttons">
     { !!uploadImage && (
       <button className="button-small button-tertiary" onClick={uploadImage}>
         Upload {name}  
@@ -24,7 +24,7 @@ const ImageButtons = ({name, uploadImage, clearImage}) => (
         Clear {name}  
       </button>
     )}
-  </React.Fragment>
+  </div>
 );
 ImageButtons.propTypes = {
   name: PropTypes.string.isRequired,
@@ -37,9 +37,9 @@ const AvatarContainer = ({
   children,
   buttons,
 }) => (
-  <div className="user-avatar-container">
+  <div className="avatar-container">
     <div className="user-avatar" style={style}>
-      {!!buttons && <div className="upload-image-buttons">{buttons}</div>}
+      {buttons}
     </div>
     <div className="profile-information">
       {children}
@@ -56,11 +56,11 @@ const CoverContainer = ({
   style, buttons,
   children,
 }) => (
-  <section className="profile-container" style={style}>
+  <section className="cover-container" style={style}>
     <div className="profile-info">
       {children}
     </div>
-    {!!buttons && <div className="upload-image-buttons">{buttons}</div>}
+    {buttons}
   </section>
 );
 CoverContainer.propTypes = {
