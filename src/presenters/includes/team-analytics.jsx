@@ -8,7 +8,7 @@ import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx';
 import TeamAnalyticsActivity from '../pop-overs/team-analytics-activity.jsx';
 
-const dateFrom = (newTime) => {
+const dateFromTime = (newTime) => {
   const timeMap = [
     {
       time: "Last 4 Weeks",
@@ -27,13 +27,11 @@ const dateFrom = (newTime) => {
   return time.date
 ;}
 
-const getAnalytics = async ({id, api, dateFrom}) => {
-  // update to ask for individual projects:
-  // analytics/${id}/project/${domain or id}
-  // update to specify time frames (see above) ⏰
-  // let lastTwoWeeks = moment().subtract(2, 'weeks').valueOf()
-  
-  let path = `analytics/${id}/team?from=${dateFrom}`;
+// getAnalyticsProjectOverview = () (based on current project, not for all)
+
+const getAnalytics = async ({id, api, requestDate}) => {
+  console.log (requestDate)
+  let path = `analytics/${id}/team?from=${requestDate}`;
   try {
     return await api().get(path);
   } catch (error) {
@@ -52,7 +50,7 @@ class TeamAnalytics extends React.Component {
     super(props);
       this.state = {
       currentTimeFrame: 'Last 2 Weeks',
-      dateFrom: moment().subtract(2, 'weeks').valueOf(),
+      requestDate: moment().subtract(2, 'weeks').valueOf(),
       currentProjectDomain: 'All Projects',
       analytics: {},
       c3: {},
@@ -73,7 +71,7 @@ class TeamAnalytics extends React.Component {
     
     this.setState({
       currentTimeFrame: newTime,
-      dateFrom: dateFrom(newTime)
+      requestDate: dateFromTime(newTime)
     });
   }
 
@@ -178,8 +176,6 @@ class TeamAnalytics extends React.Component {
               c3 = {this.state.c3}
               analytics = {this.state.analytics}
               isGettingData = {this.state.isGettingData}
-<!--               updateTotalRemixes = {this.updateTotalRemixes.bind(this)}
-              updateTotalAppViews = {this.updateTotalAppViews.bind(this)} -->
             />
           }
         </section>
