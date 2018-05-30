@@ -10,6 +10,18 @@ import UsersList from '../users-list.jsx';
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
 
+const Embed = ({domain}) => (
+  <div className="glitch-embed-wrap" style={{height: '600px', width: '100%',}}>
+    <iframe
+      title="embed" alt="project embed" style={{height: '100%', width: '100%', border: '0',}}
+      src={`https://glitch.com/embed/#!/embed/${domain}?path=README.md&previewSize=0&attributionHidden=true`}
+    ></iframe>
+  </div>
+);
+Embed.propTypes = {
+  domain: PropTypes.string.isRequired,
+};
+
 const ProjectPage = ({project}) => (
   <article className="profile">
     <section className="profile-info">
@@ -18,6 +30,7 @@ const ProjectPage = ({project}) => (
       <UsersList users={project.users} />
       <p>{project.description}</p>
     </section>
+    <section><Embed domain={project.domain}/></section>
   </article>
 );
 ProjectPage.propTypes = {
