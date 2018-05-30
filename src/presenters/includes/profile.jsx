@@ -81,20 +81,22 @@ CoverContainer.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export const TeamProfile = ({
-  fetched, currentUserIsOnTeam, style,
-  uploadCover, clearCover, hasCoverImage,
-  removeUserFromTeam, search, addUserToTeam,
-  name, users, thanksCount, avatarStyle,
-  description, updateDescription,
-  isVerified, verifiedTooltip, verifiedImage,
-  uploadAvatar,
+const LoadedTeamProfile = ({
+  team: {
+    name, users, description, thanksCount,
+    teamAvatarStyle, teamProfileStyle, hasCoverImage,
+    isVerified, verifiedTooltip, verifiedImage,
+  },
+  fetched, currentUserIsOnTeam,
+  uploadCover, clearCover, uploadAvatar,
+  search, addUserToTeam, removeUserFromTeam,
+  updateDescription,
 }) => (
-  <CoverContainer style={style}
+  <CoverContainer style={teamProfileStyle}
     buttons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage && clearCover}/> : null}
   >
     {fetched ?
-      <AvatarContainer style={avatarStyle} buttons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}>
+      <AvatarContainer style={teamAvatarStyle} buttons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}>
         <h1 className="username">
           {name}
           { isVerified && <span data-tooltip={verifiedTooltip}>
@@ -112,52 +114,52 @@ export const TeamProfile = ({
     }
   </CoverContainer>
 );
-TeamProfile.propTypes = {
+LoadedTeamProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
-  name: PropTypes.string.isRequired,
-  users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-  })),
-  thanksCount: PropTypes.number.isRequired,
-  description: PropTypes.string.isRequired,
+  team: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    users: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    })).isRequired,
+    thanksCount: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    isVerified: PropTypes.bool.isRequired,
+    verifiedImage: PropTypes.string.isRequired,
+    verifiedTooltip: PropTypes.string.isRequired,
+  }).isRequired,
   updateDescription: PropTypes.func.isRequired,
-  isVerified: PropTypes.bool.isRequired,
-  verifiedImage: PropTypes.string.isRequired,
-  verifiedTooltip: PropTypes.string.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
 };
+
+export const TeamProfile = ({fetched, team, ...
 
 const LoadedUserProfile = ({
   user: { //has science gone too far?
     name, login, description, thanksCount,
     profileStyle, avatarStyle, hasCoverImage,
   },
-  fetched, isAuthorized,
+  isAuthorized,
   updateDescription,
   uploadCover, clearCover,
 }) => (
   <CoverContainer style={profileStyle}
     buttons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
   >
-    {fetched ?
-      <AvatarContainer style={avatarStyle}>
-        {name ?
-          <React.Fragment>
-            <h1 className="username">{name}</h1>
-            <h2 className="login">@{login}</h2>
-          </React.Fragment>
-          : <h1 className="login">@{login}</h1>
-        }
-        <Thanks count={thanksCount}/>
-        <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
-      </AvatarContainer>
-      : <Loader />
-    }
+    <AvatarContainer style={avatarStyle}>
+      {name ?
+        <React.Fragment>
+          <h1 className="username">{name}</h1>
+          <h2 className="login">@{login}</h2>
+        </React.Fragment>
+        : <h1 className="login">@{login}</h1>
+      }
+      <Thanks count={thanksCount}/>
+      <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
+    </AvatarContainer>
   </CoverContainer>
 );
 LoadedUserProfile.propTypes = {
-  fetched: PropTypes.bool.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
@@ -170,3 +172,9 @@ LoadedUserProfile.propTypes = {
 export const UserProfile = ({fetched, user, ...props}) => (
   fetched ? <LoadedUserProfile user={user} {...props}/> : <CoverContainer style={user.profileStyle}><Loader/></CoverContainer>
 );
+UserProfile.propTypes = {
+  fetched: PropTypes.bool.isRequired,
+  user: PropTypes.shape({
+    profileStyle: PropTypes.object.isRequired,
+  }).isRequired,
+};
