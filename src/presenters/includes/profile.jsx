@@ -94,7 +94,7 @@ const LoadedTeamProfile = ({
   updateDescription,
 }) => (
   <CoverContainer style={teamProfileStyle}
-    buttons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage && clearCover}/> : null}
+    buttons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
   >
     <AvatarContainer style={teamAvatarStyle} buttons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}>
       <h1 className="username">
