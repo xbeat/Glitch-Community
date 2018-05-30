@@ -1,6 +1,6 @@
 anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-avatar.svg"
 
-.profile
+.profile-container
   position: relative
   border-radius: 5px
   padding: 16px
@@ -38,10 +38,9 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
     background-repeat: no-repeat
     background-position: center
     
-    &:hover,
-    &:active
-      .upload-avatar-buttons
-        visibility: visible;
+    &:not(:hover)
+      .upload-image-buttons
+        visibility: hidden
 
   .projects
     display: inline
@@ -62,19 +61,13 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
     width: 18px
     height: 18px
 
-  .upload-cover-buttons
+  .upload-image-buttons
     position: absolute
     top: 5px
     right: 5px
     
     button
       margin-left: 5px
-
-  .upload-avatar-buttons
-    position: absolute
-    top: 5px
-    right: 5px
-    visibility: hidden
 
 
 .recent-projects

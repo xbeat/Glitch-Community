@@ -39,7 +39,7 @@ const AvatarContainer = ({
 }) => (
   <div className="user-avatar-container">
     <div className="user-avatar" style={style}>
-      {!!buttons && <div className="upload-avatar-buttons">{buttons}</div>}
+      {!!buttons && <div className="upload-image-buttons">{buttons}</div>}
     </div>
     <div className="user-information">
       {children}
@@ -56,11 +56,11 @@ const CoverContainer = ({
   style, buttons,
   children,
 }) => (
-  <section className="profile" style={style}>
+  <section className="profile-container" style={style}>
     <div className="profile-info">
       {children}
     </div>
-    {!!buttons && <div className="upload-cover-buttons">{buttons}</div>}
+    {!!buttons && <div className="upload-image-buttons">{buttons}</div>}
   </section>
 );
 CoverContainer.propTypes = {
