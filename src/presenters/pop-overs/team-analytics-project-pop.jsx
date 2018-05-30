@@ -21,7 +21,7 @@ const AllProjectsItem = ({currentProjectDomain, action}) => {
 AllProjectsItem.propTypes = {
   currentProjectDomain: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
-}
+};
 
 
 const isActive = (currentProjectDomain, project) => {

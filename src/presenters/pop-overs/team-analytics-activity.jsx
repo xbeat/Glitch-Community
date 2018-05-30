@@ -33,8 +33,12 @@ const createHistogram = (buckets) => {
 }
 
 const updateTotals = (histogram, updateTotalRemixes, updateTotalAppViews) => {
-  let totalRemixes = histogram.reduce(function (item) {
-                                      })
+  // [[r],[r]]
+  let totalRemixes = histogram.map(item => {
+    console.log (item)
+    // item.remixes
+  })
+  console.log (totalRemixes)
   
 }
 
