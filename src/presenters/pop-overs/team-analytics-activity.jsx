@@ -11,13 +11,25 @@ import * as d3Array from 'd3-array';
 const generateHistogram = d3Array.histogram().value(function(data) {
   return data['@timestamp']
 })
+const consolidateHistogram = (histogram) => {
+  histogram.map(bin => {
+    bin.forEach (d
+    //     bin.map(item => {
+    //       console.log('🌹', item)
+
+    //     })
+  })
+}
+
 
 const createHistogram = (buckets) => {
   console.log(buckets, d3Array)
   let histogram = generateHistogram(buckets)
   
   
-  console.log(histogram)
+  console.log('🎨' ,histogram)
+  return consolidateHistogram(histogram)
+  
 }
 
 
