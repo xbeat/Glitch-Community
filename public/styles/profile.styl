@@ -7,9 +7,6 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
   // overflow: auto
   background-size: 100%
   background-position: center
-
-  .user-names
-    display: none
   
   .profile-info
     width: 100%
@@ -17,13 +14,25 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
     background-color: section-line
     border-radius: 5px
     padding: 12px
-    
-    .user-information > *
-      margin: 0
-      margin-bottom: 12px
-      width: 100%
-      p
-        margin: 0
+    .user-avatar-container
+      .user-avatar
+        width: 35%
+        padding-bottom: 35%
+        display: inline-block
+        margin-bottom: 2px
+        vertical-align: top
+
+      .profile-information
+        display: inline-block
+        width: 65%
+        padding-left: 16px
+        vertical-align: middle
+        > *
+          margin: 0
+          margin-bottom: 12px
+          width: 100%
+          p
+            margin: 0
 
   .user-avatar-container
     width: 100%

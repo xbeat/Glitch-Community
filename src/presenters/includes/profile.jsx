@@ -41,7 +41,7 @@ const AvatarContainer = ({
     <div className="user-avatar" style={style}>
       {!!buttons && <div className="upload-image-buttons">{buttons}</div>}
     </div>
-    <div className="user-information">
+    <div className="profile-information">
       {children}
     </div>
   </div>
