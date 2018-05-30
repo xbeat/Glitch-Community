@@ -59,7 +59,7 @@ const chartColumns = (analytics) => {
   return [timestamps, remixes, appViews]
 }
 
-const TeamAnalyticsActivity = ({c3, analytics, isGettingData, updateTotalRemixes, updateTotalAppViews}) => {
+const TeamAnalyticsActivity = ({c3, analytics, isGettingData,}) => {
   let columns = []
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics)
@@ -93,8 +93,8 @@ TeamAnalyticsActivity.propTypes = {
   c3: PropTypes.object.isRequired, 
   analytics: PropTypes.object.isRequired, 
   isGettingData: PropTypes.bool.isRequired,
-  updateTotalRemixes: PropTypes.func.isRequired,
-  updateTotalAppViews: PropTypes.func.isRequired,
+  // updateTotalRemixes: PropTypes.func.isRequired,
+  // updateTotalAppViews: PropTypes.func.isRequired,
 };
 
 export default TeamAnalyticsActivity;

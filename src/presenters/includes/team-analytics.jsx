@@ -7,23 +7,21 @@ import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx';
 import TeamAnalyticsActivity from '../pop-overs/team-analytics-activity.jsx';
 
-// 🗑: analytics.js, analytics.jade, analytics.styl, analytics-time-pop.jsx, analytics-project-pop.jsx, clean up team.js/jade
-
 // unused yet
-const currentTime = [
-  {
-    name: "Last 4 Weeks",
-    time: moment().subtract(4, 'weeks').valueOf(),
-  },
-  {
-    name: "Last 2 Weeks",
-    time: moment().subtract(2, 'weeks').valueOf(),
-  },
-  {
-    name: "Last 24 Hours",
-    time: moment().subtract(24, 'hours').valueOf(),
-  },
-];
+// const currentTime = [
+//   {
+//     name: "Last 4 Weeks",
+//     time: moment().subtract(4, 'weeks').valueOf(),
+//   },
+//   {
+//     name: "Last 2 Weeks",
+//     time: moment().subtract(2, 'weeks').valueOf(),
+//   },
+//   {
+//     name: "Last 24 Hours",
+//     time: moment().subtract(24, 'hours').valueOf(),
+//   },
+// ];
 
 const getAnalytics = async ({id, api}) => {
   // update to ask for individual projects:
@@ -50,6 +48,7 @@ class TeamAnalytics extends React.Component {
     super(props);
       this.state = {
       currentTimeFrame: 'Last 2 Weeks',
+      requestDate: 0,
       currentProjectDomain: 'All Projects',
       analytics: {},
       c3: {},
@@ -72,18 +71,30 @@ class TeamAnalytics extends React.Component {
     });
   }
 
-  updateTotalRemixes(newValue) {
-    console.log(yolo, newValue)
-    this.setState({
-      totalRemixes: newValue
-    });
-  }
+//   updateTotalRemixes(newValue) {
+//     console.log(yolo, newValue)
+//     this.setState({
+//       totalRemixes: newValue
+//     });
+//   }
 
-  updateTotalAppViews(newValue) {
-    this.setState({
-      totalAppViews: newValue
-    });
-  }
+//   updateTotalAppViews(newValue) {
+//     this.setState({
+//       totalAppViews: newValue
+//     });
+//   }
+
+  dateFrom() {
+    let time = this.state.currentTimeFrame
+    if (time === "Last 4 Weeks") {
+      return moment().subtract(4, 'weeks').valueOf()
+    } else if (time === "Last 2 Weeks") {
+      return moment().subtract(2, 'weeks').valueOf()
+    } else if (time === "Last 24 Hours") {
+      return moment().subtract(24, 'hours').valueOf()
+    }
+  };
+
 
   updateAnalytics() {
     this.setState({
@@ -97,6 +108,9 @@ class TeamAnalytics extends React.Component {
       // console.log('🌎', this.state, this.state.analytics);
     });
   }
+  
+
+
   
   componentDidMount() {
     import("c3").then(c3 => { // eslint-disable-line
@@ -152,8 +166,8 @@ class TeamAnalytics extends React.Component {
               c3 = {this.state.c3}
               analytics = {this.state.analytics}
               isGettingData = {this.state.isGettingData}
-              updateTotalRemixes = {this.updateTotalRemixes.bind(this)}
-              updateTotalAppViews = {this.updateTotalAppViews.bind(this)}
+<!--               updateTotalRemixes = {this.updateTotalRemixes.bind(this)}
+              updateTotalAppViews = {this.updateTotalAppViews.bind(this)} -->
             />
           }
         </section>
