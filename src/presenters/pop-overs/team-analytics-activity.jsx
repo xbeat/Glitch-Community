@@ -12,12 +12,21 @@ const generateHistogram = d3Array.histogram().value(function(data) {
   return data['@timestamp']
 })
 const consolidateHistogram = (histogram) => {
-  histogram.map(bin => {
-    bin.forEach (d
-    //     bin.map(item => {
-    //       console.log('🌹', item)
-
-    //     })
+  histogram.map (bin => {
+    let totalRemixes = 0
+    let totalAppViews = 0
+    let referrers = []
+    bin.forEach (data => {
+      totalRemixes += data.analytics.remixes
+      totalAppViews += data.analytics.visits
+      referrers.push(data.analytics.referrers)
+    })
+    return {
+      time: bin.x0,
+      remixes: totalRemixes,
+      appViews: totalAppViews,
+      referrers: referrers
+    }
   })
 }
 
@@ -28,7 +37,7 @@ const createHistogram = (buckets) => {
   
   
   console.log('🎨' ,histogram)
-  return consolidateHistogram(histogram)
+  console.log (consolidateHistogram(histogram))
   
 }
 
@@ -43,11 +52,11 @@ const chartColumns = (analytics) => {
   let remixes = ['Remixes']
   let appViews = ['App Views']
   // let codeViews = ['Code Views']
-  buckets.pop()
-  buckets.forEach(bucket => {
-    timestamps.push(bucket['@timestamp'])
+  // buckets.pop()
+  histogram.forEach(bucket => {
+    timestamps.push(bucket.time)
     remixes.push(bucket.analytics.remixes)
-    appViews.push(bucket.analytics.visits)
+    appViews.push(bucket.analytics.appViews)
   })
   return [timestamps, remixes, appViews]
 }
