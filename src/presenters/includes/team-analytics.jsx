@@ -73,6 +73,7 @@ class TeamAnalytics extends React.Component {
   }
 
   updateTotalRemixes(newValue) {
+    console.log(yolo, newValue)
     this.setState({
       totalRemixes: newValue
     });

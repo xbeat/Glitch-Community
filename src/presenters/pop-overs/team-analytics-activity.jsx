@@ -51,8 +51,7 @@ const chartColumns = (analytics, updateTotalRemixes, updateTotalAppViews) => {
   let remixes = ['Remixes']
   let appViews = ['App Views']
   // let codeViews = ['Code Views']
-  console.log ('hist', histogram)
-  
+  console.log(histogram)
   histogram.forEach(bucket => {
     timestamps.push(bucket.time)
     remixes.push(bucket.remixes)
@@ -64,13 +63,18 @@ const chartColumns = (analytics, updateTotalRemixes, updateTotalAppViews) => {
   }
 }
 
+// # convert to statefull component , class etc.
+
 const TeamAnalyticsActivity = ({c3, analytics, isGettingData, updateTotalRemixes, updateTotalAppViews}) => {
-  let columns = []
+  let columns = {
+    data: []
+  }
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics)
     console.log (columns.totals)
+    // console.log(updateTotalRemixes)
+    // updateTotalRemixes(columns.totals.totalRemixes)
   }
-  console.log (columns)
   var chart = c3.generate({
     size: {
         height: 200,
