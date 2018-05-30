@@ -59,23 +59,10 @@ const AvatarContainer = ({
     </div>
   </div>
 );
-
 AvatarContainer.propTypes = {
   avatarStyle: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
   AvatarButtons: PropTypes.element,
-};
-
-const AvatarButtons = ({isAuthorized, uploadAvatar}) => (
-  isAuthorized ?
-    <button className="button-small button-tertiary" onClick={uploadAvatar}>
-      Upload Avatar
-    </button> :
-    null
-);
-AvatarButtons.propTypes = {
-  isAuthorized: PropTypes.bool.isRequired,
-  uploadAvatar: PropTypes.func.isRequired,
 };
 
 const TeamAvatar = ({
@@ -130,32 +117,10 @@ const CoverContainer = ({style, CoverButtons, children}) => {
     </section>
   );
 };
-
 CoverContainer.propTypes = {
   style: PropTypes.object.isRequired,
   CoverButtons: PropTypes.node,
   children: PropTypes.element.isRequired,
-};
-
-export const CoverButtons = ({ isAuthorized, uploadCover, clearCover, hasCoverImage }) => (
-  isAuthorized ?
-    <React.Fragment>
-      <button className="button-small button-tertiary" onClick={uploadCover}>
-        Upload Cover  
-      </button>
-      { hasCoverImage && (
-        <button className="button-small button-tertiary" onClick={clearCover}>
-          Clear Cover  
-        </button>
-      )}
-    </React.Fragment> :
-    null
-);
-CoverButtons.propTypes = {
-  isAuthorized: PropTypes.bool.isRequired,
-  uploadCover: PropTypes.func.isRequired,
-  clearCover: PropTypes.func.isRequired,
-  hasCoverImage: PropTypes.bool.isRequired,
 };
 
 export const TeamProfile = ({fetched, currentUserIsOnTeam, style, uploadCover, clearCover, hasCoverImage, ...props}) => (
@@ -165,7 +130,6 @@ export const TeamProfile = ({fetched, currentUserIsOnTeam, style, uploadCover, c
     {fetched ? <TeamAvatar {...props} currentUserIsOnTeam={currentUserIsOnTeam} descriptionPlaceholder="Tell us about your team"/> : <Loader />}
   </CoverContainer>
 );
-
 TeamProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
@@ -173,10 +137,12 @@ TeamProfile.propTypes = {
 
 export const UserProfile = ({
   fetched, style, avatarStyle, isAuthorized, updateDescription,
+  uploadCoverImage, clearCoverImage, hasCoverImage,
   name, userLoginOrId, thanksCount, description,
-  ...props
 }) => (
-  <CoverContainer style={style} CoverButtons={<CoverButtons {...props} isAuthorized={isAuthorized}/>}>
+  <CoverContainer style={style}
+    CoverButtons={isAuthorized && <ImageButtons name="Avatar" uploadImage={uploadCoverImage} clearImage={clearCoverImage} hasImage={hasCoverImage}/>}
+  >
     {fetched ?
       <AvatarContainer avatarStyle={avatarStyle}>
         { name ?
@@ -188,18 +154,15 @@ export const UserProfile = ({
         }
         <Thanks count={thanksCount}/>
         <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
-      </AvatarContainer> :
-      <Loader />
+      </AvatarContainer>
+      : <Loader />
     }
   </CoverContainer>
 );
-                            
 UserProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
   name: PropTypes.string,
-  userLoginOrId: PropTypes.PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  userLoginOrId: PropTypes.PropTypes.node.isRequired,
   thanksCount: PropTypes.number.isRequired,
 };
