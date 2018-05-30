@@ -10,7 +10,6 @@ const binData = d3Array.histogram().value(function(data) {
 
 const createHistogram = (buckets) => {
   let data = binData(buckets)
-  console.log('buckets',buckets)
   let histogram = []
   data.forEach (bin => {
     let totalRemixes = 0
@@ -22,7 +21,6 @@ const createHistogram = (buckets) => {
       totalAppViews += data.analytics.visits
       referrers.push(data.analytics.referrers)
     })
-    console.log('🌴',totalAppViews)
     histogram.push({
       time: bin.x0,
       remixes: totalRemixes,
@@ -34,6 +32,7 @@ const createHistogram = (buckets) => {
 }
 
 // pass histogram up instead and do totals calc in parent, also referrers
+// or do a summary call instead
 // const updateTotals = (histogram) => {
 //   let totalRemixes = 0
 //   let totalAppViews = 0
@@ -50,13 +49,13 @@ const chartColumns = (analytics) => {
   let remixes = ['Remixes']
   let appViews = ['App Views']
   // let codeViews = ['Code Views']
-  console.log ('hist', histogram)
-  // updateTotals(histogram, updateTotalRemixes, updateTotalAppViews)
+  histogram.shift()
   histogram.forEach(bucket => {
     timestamps.push(bucket.time)
     remixes.push(bucket.remixes)
     appViews.push(bucket.appViews)
   })
+  console.log ('📈 histogram', histogram)
   return [timestamps, remixes, appViews]
 }
 

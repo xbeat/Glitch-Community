@@ -10,20 +10,20 @@ import TeamAnalyticsActivity from '../pop-overs/team-analytics-activity.jsx';
 // 🗑: analytics.js, analytics.jade, analytics.styl, analytics-time-pop.jsx, analytics-project-pop.jsx, clean up team.js/jade
 
 // unused yet
-// const timeFrames = [
-//   {
-//     name: "Last 4 Weeks",
-//     time: moment().subtract(4, 'weeks').valueOf(),
-//   },
-//   {
-//     name: "Last 2 Weeks",
-//     time: moment().subtract(2, 'weeks').valueOf(),
-//   },
-//   {
-//     name: "Last 24 Hours",
-//     time: moment().subtract(24, 'hours').valueOf(),
-//   },
-// ];
+const currentTime = [
+  {
+    name: "Last 4 Weeks",
+    time: moment().subtract(4, 'weeks').valueOf(),
+  },
+  {
+    name: "Last 2 Weeks",
+    time: moment().subtract(2, 'weeks').valueOf(),
+  },
+  {
+    name: "Last 24 Hours",
+    time: moment().subtract(24, 'hours').valueOf(),
+  },
+];
 
 const getAnalytics = async ({id, api}) => {
   // update to ask for individual projects:
