@@ -84,7 +84,6 @@ class TeamAnalytics extends React.Component {
     });
   }
 
-
   updateAnalytics() {
     this.setState({
       isGettingData: true,
@@ -114,6 +113,8 @@ class TeamAnalytics extends React.Component {
         <h2>Analytics</h2>
         <p>{this.state.currentTimeFrame}</p>
         <p>{this.state.currentProjectDomain}</p>
+        <p>{this.state.totalAppViews}</p>
+        <p>{this.state.totalRemixes}</p>        
         
         <section className="controls">
           <TeamAnalyticsTimePop 
@@ -150,8 +151,8 @@ class TeamAnalytics extends React.Component {
               c3 = {this.state.c3}
               analytics = {this.state.analytics}
               isGettingData = {this.state.isGettingData}
-              updateTotalRemixes = {this.updateTotalRemixes}
-              updateTotalAppViews = {this.updateTotalAppViews}
+              updateTotalRemixes = {this.updateTotalRemixes.bind(this)}
+              updateTotalAppViews = {this.updateTotalAppViews.bind(this)}
             />
           }
         </section>

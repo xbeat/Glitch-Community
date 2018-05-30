@@ -28,18 +28,18 @@ const createHistogram = (buckets) => {
       referrers: _.flatten(referrers)
     })
   })
-  console.log (histogram)
   return histogram
 }
 
 const updateTotals = (histogram, updateTotalRemixes, updateTotalAppViews) => {
-  // [[r],[r]]
-  let totalRemixes = histogram.map(item => {
-    console.log (item)
-    // item.remixes
+  let totalRemixes = 0
+  let totalAppViews = 0
+  histogram.forEach (item => {
+    totalRemixes += item.remixes
+    totalAppViews += item.appViews    
   })
-  console.log (totalRemixes)
-  
+  updateTotalRemixes(totalRemixes)
+  updateTotalAppViews(totalAppViews)
 }
 
 const chartColumns = (analytics, updateTotalRemixes, updateTotalAppViews) => {
@@ -62,7 +62,7 @@ const chartColumns = (analytics, updateTotalRemixes, updateTotalAppViews) => {
 const TeamAnalyticsActivity = ({c3, analytics, isGettingData, updateTotalRemixes, updateTotalAppViews}) => {
   let columns = []
   if (!_.isEmpty(analytics)) {
-    columns = chartColumns(analytics)
+    columns = chartColumns(analytics, updateTotalRemixes, updateTotalAppViews)
   }
   var chart = c3.generate({
     size: {
