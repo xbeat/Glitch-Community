@@ -4,59 +4,41 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as d3Array from 'd3-array';
 
-// ??const binning - 
-  // group into days, but in prev charts you'll have data where you have no ticks
-
-// data binning consolidates buckets
-const generateHistogram = d3Array.histogram().value(function(data) {
+const binData = d3Array.histogram().value(function(data) {
   return data['@timestamp']
 })
-const consolidateHistogram = (histogram) => {
-  histogram.map (bin => {
+
+const createHistogram = (buckets) => {
+  let data = binData(buckets)
+  let histogram = []
+  data.forEach (bin => {
     let totalRemixes = 0
     let totalAppViews = 0
     let referrers = []
+    // let codeViews = []
     bin.forEach (data => {
       totalRemixes += data.analytics.remixes
       totalAppViews += data.analytics.visits
       referrers.push(data.analytics.referrers)
     })
-    console.log('yo', totalRemixes, totalAppViews)
-    return {
+    histogram.push({
       time: bin.x0,
       remixes: totalRemixes,
       appViews: totalAppViews,
       referrers: _.flatten(referrers)
-    }
+    })
   })
   console.log (histogram)
   return histogram
 }
 
-
-const createHistogram = (buckets) => {
-  console.log(buckets, d3Array)
-  let histogram = generateHistogram(buckets)
-  
-  
-  console.log('🎨' ,histogram)
-  return consolidateHistogram(histogram)
-  
-}
-
-
 const chartColumns = (analytics) => {
   const buckets = analytics.buckets
   let histogram = createHistogram(buckets)
-  console.log ('✅', histogram)
-  
-  
-  
   let timestamps = ['x']
   let remixes = ['Remixes']
   let appViews = ['App Views']
   // let codeViews = ['Code Views']
-  // buckets.pop()
   histogram.forEach(bucket => {
     timestamps.push(bucket.time)
     remixes.push(bucket.remixes)
