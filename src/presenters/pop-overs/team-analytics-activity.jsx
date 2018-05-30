@@ -32,6 +32,12 @@ const createHistogram = (buckets) => {
   return histogram
 }
 
+const updateTotals = (histogram, updateTotalRemixes, updateTotalAppViews) => {
+  let totalRemixes = histogram.reduce(function (item) {
+                                      })
+  
+}
+
 const chartColumns = (analytics, updateTotalRemixes, updateTotalAppViews) => {
   const buckets = analytics.buckets
   let histogram = createHistogram(buckets)
@@ -39,11 +45,8 @@ const chartColumns = (analytics, updateTotalRemixes, updateTotalAppViews) => {
   let remixes = ['Remixes']
   let appViews = ['App Views']
   // let codeViews = ['Code Views']
-  
-  
-  // updateTotalRemixes, updateTotalAppViews
-  
-  
+  console.log ('hist', histogram)
+  updateTotals(histogram, updateTotalRemixes, updateTotalAppViews)
   histogram.forEach(bucket => {
     timestamps.push(bucket.time)
     remixes.push(bucket.remixes)
