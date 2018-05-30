@@ -24,6 +24,27 @@ TeamUsers.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
 };
 
+const ImageButtons = ({name, hasImage, uploadImage, clearImage}) => (
+  <React.Fragment>
+    { !!uploadImage && (
+      <button className="button-small button-tertiary" onClick={uploadImage}>
+        Upload {name}  
+      </button>
+    )}
+    { hasImage && !!clearImage && (
+      <button className="button-small button-tertiary" onClick={clearImage}>
+        Clear {name}  
+      </button>
+    )}
+  </React.Fragment>
+);
+ImageButtons.propTypes = {
+  name: PropTypes.string.isRequired,
+  hasImage: PropTypes.bool.isRequired,
+  uploadImage: PropTypes.func,
+  clearImage: PropTypes.func,
+};
+
 const AvatarContainer = ({
   avatarStyle,
   children,
@@ -31,7 +52,7 @@ const AvatarContainer = ({
 }) => (
   <div className="user-avatar-container">
     <div className="user-avatar" style={avatarStyle}>
-      {AvatarButtons}
+      {!!AvatarButtons && <div className="upload-avatar-buttons">{AvatarButtons}</div>}
     </div>
     <div className="user-information">
       {children}
@@ -47,7 +68,7 @@ AvatarContainer.propTypes = {
 
 const AvatarButtons = ({isAuthorized, uploadAvatar}) => (
   isAuthorized ?
-    <button className="button-small button-tertiary upload-avatar-button" onClick={uploadAvatar}>
+    <button className="button-small button-tertiary" onClick={uploadAvatar}>
       Upload Avatar
     </button> :
     null
@@ -67,7 +88,7 @@ const TeamAvatar = ({
 }) => {
   const isAuthorized = currentUserIsOnTeam;
   return (
-    <AvatarContainer {...props} isAuthorized={currentUserIsOnTeam} AvatarButtons={<AvatarButtons isAuthorized={isAuthorized} uploadAvatar={uploadAvatar}/>}>
+    <AvatarContainer {...props} isAuthorized={currentUserIsOnTeam} AvatarButtons={isAuthorized && <ImageButtons name="Avatar" uploadImage={uploadAvatar}/>}>
       <h1 className="username">
         {name}
         { isVerified && <span data-tooltip={verifiedTooltip}>
@@ -137,8 +158,10 @@ CoverButtons.propTypes = {
   hasCoverImage: PropTypes.bool.isRequired,
 };
 
-export const TeamProfile = ({fetched, currentUserIsOnTeam, style, ...props}) => (
-  <CoverContainer style={style} CoverButtons={<CoverButtons {...props} isAuthorized={currentUserIsOnTeam}/>}>
+export const TeamProfile = ({fetched, currentUserIsOnTeam, style, uploadCover, clearCover, hasCoverImage, ...props}) => (
+  <CoverContainer style={style}
+    CoverButtons={currentUserIsOnTeam && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={clearCover} hasImage={hasCoverImage}/>}
+  >
     {fetched ? <TeamAvatar {...props} currentUserIsOnTeam={currentUserIsOnTeam} descriptionPlaceholder="Tell us about your team"/> : <Loader />}
   </CoverContainer>
 );
