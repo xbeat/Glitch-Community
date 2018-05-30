@@ -128,12 +128,13 @@ TeamProfile.propTypes = {
   uploadAvatar: PropTypes.func.isRequired,
 };
 
-export const UserProfile = ({
+const LoadedUserProfile = ({
   user: { //has science gone too far?
     name, login, description, thanksCount,
-    profileStyle, avatarStyle, hasCoverImage
+    profileStyle, avatarStyle, hasCoverImage,
   },
-  fetched, isAuthorized, updateDescription,
+  fetched, isAuthorized,
+  updateDescription,
   uploadCover, clearCover,
 }) => (
   <CoverContainer style={profileStyle}
@@ -155,12 +156,17 @@ export const UserProfile = ({
     }
   </CoverContainer>
 );
-UserProfile.propTypes = {
+LoadedUserProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
     login: PropTypes.PropTypes.node.isRequired,
     thanksCount: PropTypes.number.isRequired,
-  }),
+    hasCoverImage: PropTypes.bool.isRequired,
+  }).isRequired,
 };
+
+export const UserProfile = ({fetched, user, ...props}) => (
+  fetched ? <LoadedUserProfile user={user} {...props}/> : <CoverContainer style={user.profileStyle}><Loader/></CoverContainer>
+);
