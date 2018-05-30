@@ -6,7 +6,6 @@ import User from '../../models/user';
 import Project from '../../models/project';
 import TeamTemplate from '../../templates/pages/team';
 import LayoutPresenter from '../layout';
-import AnalyticsPresenter from '../analytics';
 
 import Reactlet from "../reactlet";
 import EntityPageProjects from "../entity-page-projects.jsx";
@@ -90,13 +89,6 @@ export default function(application) {
       return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
     },
     
-    //temp
-    // teamAnalyticsOld() {
-    //   if (self.team().fetched()) {
-    //     return AnalyticsPresenter(application, self.team());
-    //   }
-    // },
-
     addTeamProjectButton() {
       const propsObservable = Observable(() => {
         return {
