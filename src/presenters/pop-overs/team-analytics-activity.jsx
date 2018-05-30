@@ -7,13 +7,15 @@ import * as d3Array from 'd3-array';
 // ??const binning - 
   // group into days, but in prev charts you'll have data where you have no ticks
 const createHistogram = (buckets) => {
-  console.log(buckets)
+  console.log(buckets, d3Array)
+  let histogram = d3Array.histogram(buckets)
+  console.log(histogram)
 }
 
 
 const chartColumns = (analytics) => {
   const buckets = analytics.buckets
-  const histogram = createHistogram(buckets)
+  let histogram = createHistogram(buckets)
   
   
   
