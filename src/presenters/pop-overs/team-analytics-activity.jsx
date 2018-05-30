@@ -10,6 +10,7 @@ const binData = d3Array.histogram().value(function(data) {
 
 const createHistogram = (buckets) => {
   let data = binData(buckets)
+  console.log('buckets',buckets)
   let histogram = []
   data.forEach (bin => {
     let totalRemixes = 0
@@ -21,6 +22,7 @@ const createHistogram = (buckets) => {
       totalAppViews += data.analytics.visits
       referrers.push(data.analytics.referrers)
     })
+    console.log('🌴',totalAppViews)
     histogram.push({
       time: bin.x0,
       remixes: totalRemixes,
@@ -31,49 +33,37 @@ const createHistogram = (buckets) => {
   return histogram
 }
 
-const totals = (histogram) => {
-  let totalRemixes = 0
-  let totalAppViews = 0
-  histogram.forEach (item => {
-    totalRemixes += item.remixes
-    totalAppViews += item.appViews    
-  })
-  return {
-    totalRemixes: totalRemixes,
-    totalAppViews: totalAppViews,
-  }
-}
+// pass histogram up instead and do totals calc in parent, also referrers
+// const updateTotals = (histogram) => {
+//   let totalRemixes = 0
+//   let totalAppViews = 0
+//   histogram.forEach (item => {
+//     totalRemixes += item.remixes
+//     totalAppViews += item.appViews    
+//   })
+// }
 
-const chartColumns = (analytics, updateTotalRemixes, updateTotalAppViews) => {
+const chartColumns = (analytics) => {
   const buckets = analytics.buckets
   let histogram = createHistogram(buckets)
   let timestamps = ['x']
   let remixes = ['Remixes']
   let appViews = ['App Views']
   // let codeViews = ['Code Views']
-  console.log(histogram)
+  console.log ('hist', histogram)
+  // updateTotals(histogram, updateTotalRemixes, updateTotalAppViews)
   histogram.forEach(bucket => {
     timestamps.push(bucket.time)
     remixes.push(bucket.remixes)
     appViews.push(bucket.appViews)
   })
-  return {
-    data: [timestamps, remixes, appViews],
-    totals: totals(histogram)
-  }
+  return [timestamps, remixes, appViews]
 }
 
-// # convert to statefull component , class etc.
-
 const TeamAnalyticsActivity = ({c3, analytics, isGettingData, updateTotalRemixes, updateTotalAppViews}) => {
-  let columns = {
-    data: []
-  }
+  let columns = []
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics)
-    console.log (columns.totals)
-    // console.log(updateTotalRemixes)
-    // updateTotalRemixes(columns.totals.totalRemixes)
   }
   var chart = c3.generate({
     size: {
@@ -82,7 +72,7 @@ const TeamAnalyticsActivity = ({c3, analytics, isGettingData, updateTotalRemixes
     data: {
         x: 'x',
         xFormat: '%b-%d',
-        columns: columns.data
+        columns: columns
     },
     axis: {
         x: {
