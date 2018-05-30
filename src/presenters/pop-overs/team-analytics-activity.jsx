@@ -59,7 +59,7 @@ const chartColumns = (analytics) => {
   return [timestamps, remixes, appViews]
 }
 
-const TeamAnalyticsActivity = ({c3, analytics, isGettingData,}) => {
+const TeamAnalyticsActivity = ({c3, analytics, isGettingData}) => {
   let columns = []
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics)

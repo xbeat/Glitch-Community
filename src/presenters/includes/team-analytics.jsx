@@ -1,35 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment-mini';
+import _ from 'lodash';
 
 import Loader from './loader.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx';
 import TeamAnalyticsActivity from '../pop-overs/team-analytics-activity.jsx';
 
-// unused yet
-// const currentTime = [
-//   {
-//     name: "Last 4 Weeks",
-//     time: moment().subtract(4, 'weeks').valueOf(),
-//   },
-//   {
-//     name: "Last 2 Weeks",
-//     time: moment().subtract(2, 'weeks').valueOf(),
-//   },
-//   {
-//     name: "Last 24 Hours",
-//     time: moment().subtract(24, 'hours').valueOf(),
-//   },
-// ];
+const dateFrom = (newTime) => {
+  const timeMap = [
+    {
+      time: "Last 4 Weeks",
+      date: moment().subtract(4, 'weeks').valueOf(),
+    },
+    {
+      time: "Last 2 Weeks",
+      date: moment().subtract(2, 'weeks').valueOf(),
+    },
+    {
+      time: "Last 24 Hours",
+      date: moment().subtract(24, 'hours').valueOf(),
+    },
+  ]
+  let time = _.find(timeMap, {time: newTime})
+  return time.date
+;}
 
-const getAnalytics = async ({id, api}) => {
+const getAnalytics = async ({id, api, dateFrom}) => {
   // update to ask for individual projects:
   // analytics/${id}/project/${domain or id}
   // update to specify time frames (see above) ⏰
-  let lastTwoWeeks = moment().subtract(2, 'weeks').valueOf()
+  // let lastTwoWeeks = moment().subtract(2, 'weeks').valueOf()
   
-  let path = `analytics/${id}/team?from=${lastTwoWeeks}`;
+  let path = `analytics/${id}/team?from=${dateFrom}`;
   try {
     return await api().get(path);
   } catch (error) {
@@ -48,7 +52,7 @@ class TeamAnalytics extends React.Component {
     super(props);
       this.state = {
       currentTimeFrame: 'Last 2 Weeks',
-      requestDate: 0,
+      dateFrom: moment().subtract(2, 'weeks').valueOf(),
       currentProjectDomain: 'All Projects',
       analytics: {},
       c3: {},
@@ -60,8 +64,16 @@ class TeamAnalytics extends React.Component {
   }
 
   updateTimeFrame(newTime) {
+    // let dateFrom = 0
+    // if (newTime === "Last 4 Weeks") {
+    //   dateFrom = moment().subtract(4, 'weeks').valueOf()
+    // } else if (newTime === "Last 2 Weeks") {
+    //   dateFrom = moment().subtract(4, 'weeks').valueOf() 
+    // }
+    
     this.setState({
-      currentTimeFrame: newTime
+      currentTimeFrame: newTime,
+      dateFrom: dateFrom(newTime)
     });
   }
 
