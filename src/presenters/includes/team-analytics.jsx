@@ -118,7 +118,7 @@ class TeamAnalytics extends React.Component {
           ||
             <p>
               <span className="total remixes">123</span>
-              Remixes, 
+              Remixes,&nbsp;
               <span className="total app-views">456</span>
               App views
             </p>
