@@ -28,7 +28,7 @@ import TeamAnalyticsActivity from '../pop-overs/team-analytics-activity.jsx';
 const getAnalytics = async ({id, api}) => {
   // update to ask for individual projects:
   // analytics/${id}/project/${domain or id}
-  // update to specify time frames (see above)
+  // update to specify time frames (see above) ⏰
   let lastTwoWeeks = moment().subtract(2, 'weeks').valueOf()
   console.log (lastTwoWeeks)
   
@@ -114,10 +114,10 @@ class TeamAnalytics extends React.Component {
         </section>
         
         <section className="summary">
-          <p>123temp Remixes </p>
-          <p>123temp App views </p>
           { (this.state.isGettingData) &&
             <Loader />
+          ||
+            <p>123 Remixes, 456 App views</p>
           }
         </section>
         
