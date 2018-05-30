@@ -31,15 +31,17 @@ const createHistogram = (buckets) => {
   return histogram
 }
 
-const updateTotals = (histogram, updateTotalRemixes, updateTotalAppViews) => {
+const totals = (histogram) => {
   let totalRemixes = 0
   let totalAppViews = 0
   histogram.forEach (item => {
     totalRemixes += item.remixes
     totalAppViews += item.appViews    
   })
-  updateTotalRemixes(totalRemixes)
-  updateTotalAppViews(totalAppViews)
+  return {
+    totalRemixes: totalRemixes,
+    totalAppViews: totalAppViews,
+  }
 }
 
 const chartColumns = (analytics, updateTotalRemixes, updateTotalAppViews) => {
@@ -50,20 +52,25 @@ const chartColumns = (analytics, updateTotalRemixes, updateTotalAppViews) => {
   let appViews = ['App Views']
   // let codeViews = ['Code Views']
   console.log ('hist', histogram)
-  updateTotals(histogram, updateTotalRemixes, updateTotalAppViews)
+  
   histogram.forEach(bucket => {
     timestamps.push(bucket.time)
     remixes.push(bucket.remixes)
     appViews.push(bucket.appViews)
   })
-  return [timestamps, remixes, appViews]
+  return {
+    data: [timestamps, remixes, appViews],
+    totals: totals(histogram)
+  }
 }
 
 const TeamAnalyticsActivity = ({c3, analytics, isGettingData, updateTotalRemixes, updateTotalAppViews}) => {
   let columns = []
   if (!_.isEmpty(analytics)) {
-    columns = chartColumns(analytics, updateTotalRemixes, updateTotalAppViews)
+    columns = chartColumns(analytics)
+    console.log (columns.totals)
   }
+  console.log (columns)
   var chart = c3.generate({
     size: {
         height: 200,
@@ -71,7 +78,7 @@ const TeamAnalyticsActivity = ({c3, analytics, isGettingData, updateTotalRemixes
     data: {
         x: 'x',
         xFormat: '%b-%d',
-        columns: columns
+        columns: columns.data
     },
     axis: {
         x: {
