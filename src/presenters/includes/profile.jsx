@@ -69,6 +69,8 @@ CoverContainer.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
+// stuff below this line is page specific and hopefully won't stay in this file forever
+
 const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam}) => (
   <UserPopoversList users={users}>
     {(user, togglePopover) => <UserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUserFromTeam(user)} />}
