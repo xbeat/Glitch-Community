@@ -30,7 +30,6 @@ const getAnalytics = async ({id, api}) => {
   // analytics/${id}/project/${domain or id}
   // update to specify time frames (see above) ⏰
   let lastTwoWeeks = moment().subtract(2, 'weeks').valueOf()
-  console.log (lastTwoWeeks)
   
   let path = `analytics/${id}/team?from=${lastTwoWeeks}`;
   try {
@@ -80,7 +79,7 @@ class TeamAnalytics extends React.Component {
         isGettingData: false,
         analytics: data,
       });
-      console.log('🌎', this.state, this.state.analytics);
+      // console.log('🌎', this.state, this.state.analytics);
     });
   }
   
@@ -117,7 +116,12 @@ class TeamAnalytics extends React.Component {
           { (this.state.isGettingData) &&
             <Loader />
           ||
-            <p>123 Remixes, 456 App views</p>
+            <p>
+              <span className="total remixes">123</span>
+              Remixes, 
+              <span className="total app-views">456</span>
+              App views
+            </p>
           }
         </section>
         
