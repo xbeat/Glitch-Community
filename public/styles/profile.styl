@@ -50,21 +50,6 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
     &:not(:hover)
       .upload-image-buttons
         visibility: hidden
-
-  .projects
-    display: inline
-    padding: 0
-  
-  .projects-container
-    overflow: hidden
-    
-  .project
-    &:hover,
-    &:active
-      button
-        background-color: cta
-    &:after
-      border-bottom-color: section-line
   
   .sparkling_heart
     width: 18px
@@ -74,8 +59,7 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
     position: absolute
     top: 5px
     right: 5px
-    
-    button
+    > *
       margin-left: 5px
 
 
@@ -93,9 +77,21 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
   .projects
     display: inline-block
     margin: 0
+    padding: 0
     width: 78%
     @media(max-width: 800px)
       width: 100%
+  
+  .projects-container
+    overflow: hidden
+    
+  .project
+    &:hover,
+    &:active
+      button
+        background-color: cta
+    &:after
+      border-bottom-color: section-line
 
   .anon-user-sign-up
     position: relative
