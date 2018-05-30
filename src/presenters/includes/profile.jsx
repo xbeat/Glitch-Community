@@ -47,11 +47,11 @@ ImageButtons.propTypes = {
 const AvatarContainer = ({
   style,
   children,
-  Buttons,
+  buttons,
 }) => (
   <div className="user-avatar-container">
     <div className="user-avatar" style={style}>
-      {!!Buttons && <div className="upload-avatar-buttons">{Buttons}</div>}
+      {!!buttons && <div className="upload-avatar-buttons">{buttons}</div>}
     </div>
     <div className="user-information">
       {children}
@@ -61,29 +61,23 @@ const AvatarContainer = ({
 AvatarContainer.propTypes = {
   style: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
-  Buttons: PropTypes.element,
+  buttons: PropTypes.element,
 };
 
 const CoverContainer = ({
-  coverStyle, coverButtons,
-  avatarStyle, avatarButtons,
-  children, fetched,
-}) => {
-  return (
-    <section className="profile" style={coverStyle}>
-      <div className="profile-info">
-        { fetched ? <AvatarContainer style={avatarStyle} Buttons={avatarButtons}>
-          {children}
-        </AvatarContainer> : <Loader/> }
-      </div>
-      {!!coverButtons && <div className="upload-cover-buttons">{coverButtons}</div>}
-    </section>
-  );
-};
+  style, buttons,
+  children,
+}) => (
+  <section className="profile" style={style}>
+    <div className="profile-info">
+      {children}
+    </div>
+    {!!buttons && <div className="upload-cover-buttons">{buttons}</div>}
+  </section>
+);
 CoverContainer.propTypes = {
-  fetched: PropTypes.bool.isRequired,
-  coverStyle: PropTypes.object.isRequired,
-  coverButtons: PropTypes.node,
+  style: PropTypes.object.isRequired,
+  buttons: PropTypes.node,
   children: PropTypes.element.isRequired,
 };
 
@@ -96,10 +90,11 @@ export const TeamProfile = ({
   isVerified, verifiedTooltip, verifiedImage,
   uploadAvatar,
 }) => (
-  <CoverContainer coverStyle={style} avatarStyle={avatarStyle} fetched={fetched}
-    coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage && clearCover}/> : null}
+  <CoverContainer style={style}
+    buttons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage && clearCover}/> : null}
   >
-      <AvatarContainer style={avatarStyle} Buttons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}>
+    {fetched ?
+      <AvatarContainer style={avatarStyle} buttons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}>
         <h1 className="username">
           {name}
           { isVerified && <span data-tooltip={verifiedTooltip}>
@@ -113,6 +108,8 @@ export const TeamProfile = ({
         <Thanks count={thanksCount}/>
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
       </AvatarContainer>
+      : <Loader/>
+    }
   </CoverContainer>
 );
 TeamProfile.propTypes = {
@@ -132,21 +129,20 @@ TeamProfile.propTypes = {
 };
 
 export const UserProfile = ({
-  fetched, style, avatarStyle, isAuthorized, updateDescription,
+  fetched, isAuthorized, updateDescription,
   uploadCover, clearCover, hasCoverImage,
-  name, userLoginOrId, thanksCount, description,
 }) => (
   <CoverContainer style={style}
-    Buttons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage && clearCover}/>}
+    buttons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
   >
     {fetched ?
       <AvatarContainer style={avatarStyle}>
-        { name ?
+        {name ?
           <React.Fragment>
             <h1 className="username">{name}</h1>
-            <h2 className="login">@{userLoginOrId}</h2>
+            <h2 className="login">@{login}</h2>
           </React.Fragment>
-          : <h1 className="login">@{userLoginOrId}</h1>
+          : <h1 className="login">@{login}</h1>
         }
         <Thanks count={thanksCount}/>
         <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
@@ -158,7 +154,9 @@ export const UserProfile = ({
 UserProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  name: PropTypes.string,
-  userLoginOrId: PropTypes.PropTypes.node.isRequired,
-  thanksCount: PropTypes.number.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    login: PropTypes.PropTypes.node.isRequired,
+    thanksCount: PropTypes.number.isRequired,
+  }),
 };
