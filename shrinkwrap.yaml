@@ -12,6 +12,7 @@ dependencies:
   body-parser: 1.18.2
   c3: 0.6.1
   compression: 1.7.2
+  d3-array: 1.2.1
   ejs: 2.5.9
   eslint: 4.19.1
   eslint-loader: 2.0.0
@@ -7203,7 +7204,7 @@ packages:
     resolution:
       integrity: sha512-Sgvz3MAkOpEIobcpW3rjEl6bOTNnl8SkibP9z7hYKfIGIlw0QDC2k0MAeXvyE2pLqc2M0Duql+6R7/W9GrJojg==
 registry: 'https://registry.npmjs.org/'
-shrinkwrapMinorVersion: 6
+shrinkwrapMinorVersion: 7
 shrinkwrapVersion: 3
 specifiers:
   autoprefixer-stylus: ^0.14.0
@@ -7219,6 +7220,7 @@ specifiers:
   body-parser: ^1.18.2
   c3: ^0.6.1
   compression: ^1.7.2
+  d3-array: ^1.2.1
   ejs: ^2.5.9
   eslint: ^4.19.1
   eslint-loader: ^2.0.0

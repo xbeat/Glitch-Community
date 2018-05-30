@@ -48,7 +48,8 @@
     "react-is": "^16.3.2",
     "react-textarea-autosize": "^6.1.0",
     "c3": "^0.6.1",
-    "babel-plugin-syntax-dynamic-import": "^6.18.0"
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "d3-array": "^1.2.1"
   },
   "engines": {
     "node": "8.x"

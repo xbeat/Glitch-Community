@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import _ from 'lodash';
+import d3 from 'd3-array'
 
 // ??const binning - 
   // group into days, but in prev charts you'll have data where you have no ticks
@@ -29,6 +30,11 @@ const chartColumns = (analytics) => {
 }
 
 const renderChart = (c3, analytics) => {
+    if (!_.isEmpty(analytics)) {
+      let columns = chartColumns(analytics)
+    } else {
+      let columns = []
+    }
   var chart = c3.generate({
     size: {
         height: 200,
@@ -70,7 +76,7 @@ const renderChart = (c3, analytics) => {
 }
 
 const  TeamAnalyticsActivity = ({c3, analytics}) => {
-  console.log('🚧🛑',c3, analytics, _.isEmpty(analytics))
+  console.log('🚧🛑',c3, analytics, d3)
 
   renderChart(c3, analytics)
 
