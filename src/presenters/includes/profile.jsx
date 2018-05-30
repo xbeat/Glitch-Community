@@ -141,7 +141,7 @@ TeamProfile.propTypes = {
 
 const LoadedUserProfile = ({
   user: { //has science gone too far?
-    name, login, description, thanksCount,
+    name, login, id, description, thanksCount,
     profileStyle, avatarStyle, hasCoverImage,
   },
   isAuthorized,
@@ -155,9 +155,9 @@ const LoadedUserProfile = ({
       {name ?
         <React.Fragment>
           <h1 className="username">{name}</h1>
-          <h2 className="login">@{login}</h2>
+          <h2 className="login">@{login || id}</h2>
         </React.Fragment>
-        : <h1 className="login">@{login}</h1>
+        : <h1 className="login">@{login || id}</h1>
       }
       <Thanks count={thanksCount}/>
       <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
@@ -168,7 +168,8 @@ LoadedUserProfile.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
-    login: PropTypes.PropTypes.node.isRequired,
+    login: PropTypes.PropTypes.string,
+    id: PropTypes.number.isRequired,
     thanksCount: PropTypes.number.isRequired,
     hasCoverImage: PropTypes.bool.isRequired,
   }).isRequired,
