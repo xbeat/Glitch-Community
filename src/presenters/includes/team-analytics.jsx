@@ -159,10 +159,10 @@ class TeamAnalytics extends React.Component {
             <Loader />
           ||
             <p>
-              <span className="total remixes">123</span>
-              Remixes,&nbsp;
               <span className="total app-views">456</span>
-              App views
+              App views,&nbsp;
+              <span className="total remixes">123</span>
+              Remixes
             </p>
           }
         </section>

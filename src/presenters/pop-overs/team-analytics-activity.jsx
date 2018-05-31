@@ -56,7 +56,7 @@ const chartColumns = (analytics) => {
     remixes.push(bucket.remixes)
   })
   console.log ('📈 histogram', histogram)
-  return [timestamps, remixes, appViews]
+  return [timestamps, appViews, remixes]
 }
 
 const TeamAnalyticsActivity = ({c3, analytics, isGettingData}) => {
