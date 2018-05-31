@@ -46,7 +46,15 @@ const chartColumns = (analytics) => {
   return [timestamps, appViews, remixes]
 }
 
-const TeamAnalyticsActivity = ({c3, analytics, isGettingData}) => {
+const dateFormat = (currentTimeFrame) => {
+  if (currentTimeFrame === "Last 24 Hours") {
+    return "%H:%M %p"
+  } else {
+    return "%b-%d"
+  }
+}
+
+const TeamAnalyticsActivity = ({c3, analytics, isGettingData, currentTimeFrame}) => {
   let columns = []
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics)
@@ -57,14 +65,14 @@ const TeamAnalyticsActivity = ({c3, analytics, isGettingData}) => {
     },
     data: {
         x: 'x',
-        xFormat: '%b-%d',
+        xFormat: dateFormat(currentTimeFrame),
         columns: columns
     },
     axis: {
         x: {
             type: 'timeseries',
             tick: {
-                format: '%b-%d',
+                format: dateFormat(currentTimeFrame),
                 fit: true,
                 culling: {
                   max: 12
@@ -80,8 +88,7 @@ TeamAnalyticsActivity.propTypes = {
   c3: PropTypes.object.isRequired, 
   analytics: PropTypes.object.isRequired, 
   isGettingData: PropTypes.bool.isRequired,
-  // updateTotalRemixes: PropTypes.func.isRequired,
-  // updateTotalAppViews: PropTypes.func.isRequired,
+  currentTimeFrame: PropTypes.string.isRequired,
 };
 
 export default TeamAnalyticsActivity;

@@ -31,8 +31,7 @@ const dateFromTime = (newTime) => {
 
 // getAnalyticsProjectOverview = () (based on current project, not for all)
 
-const getAnalytics = async ({id, api}, requestDate) => {
-  console.log ('🍕', requestDate)
+const getAnalytics = async ({id, api}, requestDate, currentProjectDomain) => {
   let path = `analytics/${id}/team?from=${requestDate}`;
   try {
     return await api().get(path);
@@ -69,11 +68,9 @@ class TeamAnalytics extends React.Component {
   updateTimeFrame(newTime) {
     this.setState({
       currentTimeFrame: newTime,
-      requestDate: dateFromTime(newTime),
-      () => 
-      console.log ('afterDateChange')
+      requestDate: dateFromTime(newTime)
+    }, () => {
       this.updateAnalytics()
-      
     })
   }
 
@@ -87,12 +84,11 @@ class TeamAnalytics extends React.Component {
     this.setState({
       isGettingData: true,
     });
-    getAnalytics(this.props, this.state.requestDate).then(({data}) => {
+    getAnalytics(this.props, this.state.requestDate, this.state.currentProjectDomain).then(({data}) => {
       this.setState({
         isGettingData: false,
         analytics: data,
       });
-      console.log('🌎', this.state.analytics);
     });
   }
   
@@ -154,6 +150,7 @@ class TeamAnalytics extends React.Component {
               c3 = {this.state.c3}
               analytics = {this.state.analytics}
               isGettingData = {this.state.isGettingData}
+              currentTimeFrame = {this.state.currentTimeFrame}
             />
           }
         </section>
