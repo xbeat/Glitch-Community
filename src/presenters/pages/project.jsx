@@ -42,11 +42,8 @@ ProjectButtons.propTypes = {
 };
 
 const Embed = ({domain}) => (
-  <div className="glitch-embed-wrap" style={{height: '500px', width: '100%',}}>
-    <iframe
-      title="embed" style={{height: '100%', width: '100%', border: '0',}}
-      src={`https://glitch.com/embed/#!/embed/${domain}?path=README.md`}
-    ></iframe>
+  <div className="glitch-embed-wrap">
+    <iframe title="embed" src={`https://glitch.com/embed/#!/embed/${domain}?path=README.md`}></iframe>
   </div>
 );
 Embed.propTypes = {
