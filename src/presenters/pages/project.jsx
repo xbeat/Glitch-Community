@@ -29,18 +29,24 @@ const ProjectPage = ({
     userIsCurrentUser, users,
   },
 }) => (
-  <article>
+  <article className="project-page">
     <section>
       <img className="avatar" src={avatar} alt="" />
       <h1>{domain}</h1>
       <UsersList users={users} />
       <p>{description}</p>
     </section>
-    <PreviewButton name={domain}/>{' '}
-    <EditButton name={domain} isMember={userIsCurrentUser}/>{' '}
-    <RemixButton name={domain} isMember={userIsCurrentUser} className="button-cta"/>
-    <Embed domain={domain}/>
-    <FeedbackButton name={domain} id={id}/>
+    <section>
+      <PreviewButton name={domain}/>{' '}
+      <EditButton name={domain} isMember={userIsCurrentUser}/>{' '}
+      <RemixButton name={domain} isMember={userIsCurrentUser} className="button-cta"/>
+    </section>
+    <section>
+      <Embed domain={domain}/>
+    </section>
+    <section>
+      <FeedbackButton name={domain} id={id}/>
+    </section>
   </article>
 );
 ProjectPage.propTypes = {
