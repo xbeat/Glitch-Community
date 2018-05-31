@@ -11,6 +11,7 @@ class EditableField extends React.Component {
     };
     
     this.onChange = this.onChange.bind(this);
+    this.update = debounce(this.props.update, 1000);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
   }
@@ -18,7 +19,7 @@ class EditableField extends React.Component {
   onChange(evt) {
     const value = evt.currentTarget.value.trim();
     this.setState({ value });
-    this.props.update(value);
+    this.update(value);
   }
   
   onFocus(evt) {
