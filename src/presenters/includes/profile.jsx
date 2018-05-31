@@ -147,21 +147,26 @@ TeamProfile.propTypes = {
 };
 
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
-  if(!login) {
+  if(!login || !name) {
     // Just an ID? We're anonymous.
-    return <h1 className="login">@{id}</h1>
+    return <h1 className="login">@{id}</h1>;
   }
-  
+
   return (
-    {name ?
-        <React.Fragment>
-          <h1 className="username"><{name}</h1>
-          <h2 className="login">@{login || id}</h2>
-        </React.Fragment>
-        : <h1 className="login">@{login || id}</h1>
-      }
+      <React.Fragment>
+        <h1 className="username"><AuthField authorized={isAuthorized} value={name} update={updateName}/></h1>
+        <h2 className="login">@<AuthField authorized={isAuthorized} value={login} update={updateLogin}/></h2>
+      </React.Fragment>
     );
-}
+};
+NameAndLogin.propTypes = {
+  name: PropTypes.string,
+  login: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
+  updateName: PropTypes.func,
+  updateLogin: PropTypes.func,
+};
 
 const LoadedUserProfile = ({
   user: { //has science gone too far?
@@ -170,6 +175,7 @@ const LoadedUserProfile = ({
   },
   isAuthorized,
   updateDescription,
+  updateName, updateLogin,
   uploadCover, clearCover,
 }) => (
   <CoverContainer style={profileStyle}
