@@ -85,18 +85,15 @@ class TeamAnalytics extends React.Component {
 
   updateTotals() {
     console.log ('update totals', this.state.analytics)
-    // TODO iterate over this.state.analytics.buckets to get the totals 
     let totalAppViews = 0
     let totalRemixes = 0
     this.state.analytics.buckets.forEach(bucket => {
-      console.log ('🌎',bucket)
-      
-    }
-    
-    
+      totalAppViews += bucket.analytics.visits
+      totalRemixes += bucket.analytics.remixes
+    });
     this.setState({
-      totalAppViews: 5,
-      totalRemixes: 3,
+      totalAppViews: totalAppViews,
+      totalRemixes: totalRemixes,
     });
   }
   
@@ -128,6 +125,22 @@ class TeamAnalytics extends React.Component {
   //   console.log ('componentDidUpdate')
   // }
   
+  appViewsLabel() {
+    if (this.state.totalAppViews > 1) {
+      'App Views'
+    } else {
+      'App View'
+    }
+  }
+  
+  remixesLabel() {
+    if (this.state.totalRemixes > 1) {
+      'Remixes'
+    } else {
+      'Remix'
+    }
+  }
+  
   render() {
     return (
       <section>
@@ -148,12 +161,16 @@ class TeamAnalytics extends React.Component {
           { (this.state.isGettingData) &&
             <Loader />
           ||
-            <p>
-              <span className="total app-views">{this.state.totalAppViews}</span>
-              &nbsp;App views,&nbsp;
-              <span className="total remixes">{this.state.totalRemixes}</span>
-              &nbsp;Remixes
-            </p>
+            <div>
+              <span className="total app-views">
+                {this.state.totalAppViews.toLocaleString('en')}
+              </span>
+              &nbsp;{appViewsLabel()},&nbsp;
+              <span className="total remixes">
+                {this.state.totalRemixes.toLocaleString('en')}
+              </span>
+              &nbsp;{remixesLabel()}
+            </div>
           }
         </section>
         
