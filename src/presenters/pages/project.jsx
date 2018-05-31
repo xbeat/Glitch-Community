@@ -40,17 +40,17 @@ const ProjectPage = ({
         </AvatarContainer>
       </InfoContainer>
     </section>
-    <section>
+    <section className="project-buttons">
       <PreviewButton name={domain}/>{' '}
-      <EditButton name={domain} isMember={userIsCurrentUser}/>{' '}
-      <RemixButton name={domain} isMember={userIsCurrentUser} className="button-cta"/>
+      <EditButton name={domain} isMember={userIsCurrentUser} className={userIsCurrentUser ? "button-cta" : null}/>{' '}
+      <RemixButton name={domain} isMember={userIsCurrentUser} className={userIsCurrentUser ? null : "button-cta"}/>
     </section>
     <section>
       <Embed domain={domain}/>
     </section>
-    <section>
+    <div className="feedback-button">
       <FeedbackButton name={domain} id={id}/>
-    </section>
+    </div>
   </article>
 );
 ProjectPage.propTypes = {
