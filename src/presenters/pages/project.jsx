@@ -5,6 +5,7 @@ import Project from '../../models/project';
 
 import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
+import {Preview} from '../includes/
 import UsersList from '../users-list.jsx';
 
 import LayoutPresenter from '../layout';
