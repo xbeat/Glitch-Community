@@ -5,7 +5,7 @@ import Project from '../../models/project';
 
 import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
-import ProjectButtons from '../includes/project-buttons.jsx';
+import {PreviewButton, EditButton, RemixButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
 
 import LayoutPresenter from '../layout';
@@ -37,7 +37,9 @@ const ProjectPage = ({
       <p>{description}</p>
     </section>
     <section>
-      <ProjectButtons name={domain} isMember={userIsCurrentUser}/>
+      <PreviewButton name={domain}/>
+      <EditButton name={domain} isMember={userIsCurrentUser}/>
+      <RemixButton name={domain} isMember={userIsCurrentUser} className="button-cta"/>
     </section>
     <section>
       <Embed domain={domain}/>
