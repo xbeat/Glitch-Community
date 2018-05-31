@@ -60,7 +60,7 @@ class TeamAnalytics extends React.Component {
     };
   }
 
-    updateTotals() {
+  updateTotals() {
     console.log ('update totals', this.state.analytics)
     let totalAppViews = 0
     let totalRemixes = 0
@@ -105,8 +105,6 @@ class TeamAnalytics extends React.Component {
     });
   }
 
-  
-
   componentDidMount() {
     import("c3").then(c3 => { // eslint-disable-line
       this.setState({
@@ -116,9 +114,10 @@ class TeamAnalytics extends React.Component {
       this.updateAnalytics();
     });
   }
-  
+
+  // TODO too many updates
   // componentDidUpdate(object prevProps, object prevState) {
-  //   console.log ('componentDidUpdate')
+  //   console.log ('componentDidUpdate') 
   // }
   
   render() {
