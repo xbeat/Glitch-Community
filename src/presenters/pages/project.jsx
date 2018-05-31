@@ -5,7 +5,7 @@ import Project from '../../models/project';
 
 import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
-import {Preview} from '../includes/project-buttons.jsx';
+import ProjectButtons from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
 
 import LayoutPresenter from '../layout';
@@ -32,7 +32,7 @@ const ProjectPage = ({project}) => (
       <p>{project.description}</p>
     </section>
     <section>
-      <Preview name={project.domain}/>
+      <ProjectButtons name={project.domain}/>
     </section>
     <section>
       <Embed domain={project.domain}/>
