@@ -1,4 +1,4 @@
-/* globals EDITOR_URL analytics */
+/* globals EDITOR_URL */
 import application from './application';
 
 import qs from 'querystringify';
@@ -13,9 +13,7 @@ import QuestionsPage from './presenters/pages/questions';
 import SearchPage from './presenters/pages/search';
 import errorPageTemplate from './templates/pages/error';
 
-let normalizedRoute = window.location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
 console.log("#########");
-console.log(`normalizedRoute is ${normalizedRoute}`);
 console.log("❓ query strings are", queryString);
 console.log("🎏 application is", application);
 console.log("👻 current user is", application.currentUser());
@@ -26,121 +24,145 @@ console.log("#########");
 
 // client-side routing:
 
-Promise.resolve()
-  .then(function() {
-    if (document.location.hash.startsWith("#!/")) {
-      document.location = EDITOR_URL + document.location.hash;
-      return;
-    }}).then(function() {
-    if (normalizedRoute.startsWith("login/")) {
-      return application.login(normalizedRoute.substring("login/".length), queryString.code)
-        .then(function() {
-          history.replaceState(null, null, "/");
-          return normalizedRoute = "";
-        });
-    }}).then(function() {
-    let indexPage, userPage;
-    const currentUserId = application.currentUser().id();
-    if (currentUserId) {
-      application.getCurrentUserById(currentUserId);
-    }
-    const user = application.currentUser();
-    if (application.currentUser().isSignedIn()) {
-      analytics.identify(user.id(), {
-        name: user.name(),
-        login: user.login(),
-        email: user.email(),
-        created_at: user.createdAt(),
-      }
-      );
-    }
+function identifyUser(application) {
+  const currentUserId = application.currentUser().id();
+  if (currentUserId) {
+    application.getCurrentUserById(currentUserId);
+  }
+  const user = application.currentUser();
+  const analytics = window.analytics;
+  if (analytics && application.currentUser().isSignedIn()) {
+    analytics.identify(user.id(), {
+      name: user.name(),
+      login: user.login(),
+      email: user.email(),
+      created_at: user.createdAt(),
+    });
+  }
+}
 
-    // index page ✅
-    if ((normalizedRoute === "index.html") || (normalizedRoute === "")) {
-      application.getQuestions();
-      indexPage = IndexPage(application);
-      return document.body.appendChild(indexPage);
+function routePage(pageUrl, application) {
+  // index page ✅
+  if ((pageUrl === "index.html") || (pageUrl === "")) {
+    application.getQuestions();
+    return {page: IndexPage(application)};
+  }
 
+  // questions page ✅
+  if (application.isQuestionsUrl(pageUrl)) {
+    return {page: QuestionsPage(application), title: "Questions"};
+  }
 
-      // questions page ✅
-    } else if (application.isQuestionsUrl(normalizedRoute)) {
-      const questionsPage = QuestionsPage(application);
-      document.body.appendChild(questionsPage);
-      // TODO append active projects count to document.title . i.e. Questions (12)
-      return document.title = "Questions";
+  // ~project overlay page ✅
+  if (application.isProjectUrl(pageUrl)) {
+    const projectDomain = application.removeFirstCharacter(normalizedRoute);
+    const projectPage = ProjectPage(application, projectDomain);
+    document.body.appendChild(projectPage);
+    return document.title = decodeURI(normalizedRoute);
+  }
 
+  // user page ✅
+  if (application.isUserProfileUrl(pageUrl)) {
+    application.pageIsUserPage(true);
+    const userLogin = pageUrl.substring(1, pageUrl.length);
+    const page = UserPage(application, userLogin);
+    application.getUserByLogin(userLogin);
+    return {page, title:decodeURI(pageUrl)};
+  }
 
-      // ~project page ✅
-    } else if (application.isProjectUrl(normalizedRoute)) {
-      const projectDomain = application.removeFirstCharacter(normalizedRoute);
-      const projectPage = ProjectPage(application, projectDomain);
-      document.body.appendChild(projectPage);
-      return document.title = decodeURI(normalizedRoute);
+  // anon user page ✅
+  if (application.isAnonUserProfileUrl(pageUrl)) {
+    application.pageIsUserPage(true);
+    const userId = application.anonProfileIdFromUrl(pageUrl);
+    const page = UserPage(application, userId);
+    application.getUserById(userId);
+    return {page, title: pageUrl};
+  }
 
+  // team page ✅
+  if (application.isTeamUrl(pageUrl)) {
+    application.pageIsTeamPage(true);
+    const team = application.getCachedTeamByUrl(pageUrl);
+    const page = TeamPage(application);
+    application.getTeamById(team.id);
+    return {page, title: team.name};
+  }
+
+  // search page ✅
+  if (application.isSearchUrl(pageUrl, queryString)) {
+    const query = queryString.q;
+    application.searchQuery(query);
+    application.searchTeams(query);
+    application.searchUsers(query);
+    application.searchProjects(query);
+    const page = SearchPage(application);
+    return {page, title: `Search for ${query}`};
+  }
+
+  // category page ✅
+  if (application.isCategoryUrl(pageUrl)) {
+    application.getCategory(pageUrl);
+    const page = CategoryPage(application);
+    return {page, title: application.category().name()};
+  }
+ 
+  // error page ✅
+  return {
+    page: errorPageTemplate({
+      title: "Page Not Found",
+      description: "Maybe a typo? Or perhaps it's moved?"
+    }),
+    title: "👻 Page not found",
+  };
+}
+
+function route(location, application) {
+  let normalizedRoute = location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
+  console.log(`normalizedRoute is ${normalizedRoute}`);
+
+  //
+  // Redirects
+  //
+  if (location.hash.startsWith("#!/")) {
+    return window.location = EDITOR_URL + window.location.hash;
+  }
   
-      // @user page ✅
-    } else if (application.isUserProfileUrl(normalizedRoute)) {
-      application.pageIsUserPage(true);
-      const userLogin = normalizedRoute.substring(1, normalizedRoute.length);
-      userPage = UserPage(application, userLogin);
-      application.getUserByLogin(userLogin);
-      document.body.appendChild(userPage);
-      return document.title = decodeURI(normalizedRoute);
+  //
+  // OAuth Handling
+  //
+  if (normalizedRoute.startsWith("login/")) {
+    const provider = normalizedRoute.substring("login/".length);
+    const code = queryString.code;
+   
+    return application.login(provider, code)
+      .then(() => {
+        window.location.replace("/");
+      }).catch((error) => {
+        const errorData = error && error.response && error.response.data;
+        console.error("OAuth login error.", {provider, queryString, error: errorData});
 
+        document.title = "OAuth Login Error";
+        document.body.appendChild(errorPageTemplate({
+          title: "OAuth Login Problem",
+          description: "Hard to say what happened, but we couldn't log you in. Try again?",
+        }));
+      });
+  }
+  
+  //
+  // If we have a session, load it and notify our analytics:
+  //
+  identifyUser(application);
+  
+  //
+  //  Page Routing
+  //
+  const {page, title=document.title} = routePage(normalizedRoute, application);
+  document.title = title;
+  document.body.appendChild(page);
+}
 
-      // anon user page ✅
-    } else if (application.isAnonUserProfileUrl(normalizedRoute)) {
-      application.pageIsUserPage(true);
-      const userId = application.anonProfileIdFromUrl(normalizedRoute);
-      userPage = UserPage(application, userId);
-      application.getUserById(userId);
-      document.body.appendChild(userPage);
-      return document.title = normalizedRoute;
-
-    
-      // team page ✅
-    } else if (application.isTeamUrl(normalizedRoute)) {
-      application.pageIsTeamPage(true);
-      const team = application.getCachedTeamByUrl(normalizedRoute);
-      const teamPage = TeamPage(application);
-      application.getTeamById(team.id);
-      document.body.appendChild(teamPage);
-      return document.title = team.name;
-
-    
-      // search page ✅
-    } else if (application.isSearchUrl(normalizedRoute, queryString)) {
-      const query = queryString.q;
-      application.searchQuery(query);
-      application.searchTeams(query);
-      application.searchUsers(query);
-      application.searchProjects(query);
-      const searchPage = SearchPage(application);
-      document.body.appendChild(searchPage);
-      return document.title = `Search for ${query}`;
-
-
-      // category page ✅
-    } else if (application.isCategoryUrl(normalizedRoute)) {
-      application.getCategory(normalizedRoute);
-      const categoryPage = CategoryPage(application);
-      document.body.appendChild(categoryPage);
-      return document.title = application.category().name();    
-
-    
-      // lol wut
-    } else if (normalizedRoute === 'wp-login.php') {
-      return location.assign('https://www.youtube.com/embed/DLzxrzFCyOs?autoplay=1');
-
-      // error page ✅
-    } 
-    const errorPage = errorPageTemplate(application);
-    document.body.appendChild(errorPage);
-    return document.title = "👻 Page not found";
-  }).catch(function(error) {
-    console.error(error);
-    throw error;
-  });
+route(window.location, application);
 
 document.addEventListener("click", event => globalclick(event));
 document.addEventListener("keyup", function(event) {
@@ -148,7 +170,8 @@ document.addEventListener("keyup", function(event) {
   const tabKey = 9;
   if (event.keyCode === escapeKey) {
     return application.closeAllPopOvers();
-  } else if (event.keyCode === tabKey) {
+  }
+  if (event.keyCode === tabKey) {
     return globalclick(event);
   }
 });

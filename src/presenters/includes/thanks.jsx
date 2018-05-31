@@ -24,12 +24,12 @@ ThanksText.propTypes = {
   count: PropTypes.number.isRequired,
 };
 
-const Thanks = ({count}) => <ThanksWrap><ThanksText count={count} /></ThanksWrap>;
+const Thanks = ({count}) => (count > 0 ? <ThanksWrap><ThanksText count={count} /></ThanksWrap> : null);
 Thanks.propTypes = {
   count: PropTypes.number.isRequired,
 };
 
-const ThanksShort = ({count}) => <ThanksWrap>{count}</ThanksWrap>;
+const ThanksShort = ({count}) => (count > 0 ? <ThanksWrap>{count}</ThanksWrap> : null);
 ThanksShort.propTypes = {
   count: PropTypes.number.isRequired,
 };

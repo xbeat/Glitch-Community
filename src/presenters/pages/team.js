@@ -27,12 +27,10 @@ export default function(application) {
       const propsObservable = Observable(() => {
         const team = self.team().asProps();
         const props = {
-          ...team,
+          team,
           fetched: self.team().fetched(),
-          style: team.teamProfileStyle,
           currentUserIsOnTeam: self.currentUserIsOnTeam(),
           addUserToTeam: (id) => { self.team().addUser(application, User({id})); },
-          avatarStyle: team.teamAvatarStyle,
           removeUserFromTeam: ({id}) => { self.team().removeUser(application, User({id})); },
           search: (query) => User.getSearchResultsJSON(application, query).then(users => users.map(user => User(user).asProps())),
           updateDescription: self.updateDescription,

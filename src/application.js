@@ -14,17 +14,16 @@ import Category from './models/category';
 import Team from './models/team';
 import Question from './models/question';
 
-const cachedUser = 
-  localStorage.cachedUser ? (
-    () => { try {
-      return JSON.parse(localStorage.cachedUser);
-    } catch (error) {
-      // empty
-    }
-    })() : undefined;
+let cachedUser = undefined;
+if(localStorage.cachedUser) {
+  try {
+    cachedUser = JSON.parse(localStorage.cachedUser);
+  } catch (error) {
+    // empty
+  }
+}
 
 var self = Model({
-  // featuredProjects: featuredProjects
   currentUser: cachedUser,
 }).extend({
 

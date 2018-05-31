@@ -3,12 +3,14 @@
 .content.error-page
   .container
   
-    h1 Page Not Found
-    h2 Maybe a typo? Or perhaps it's moved?
-
+    h1
+      =@title
+    h2
+      =@description
+    
     .actions
-      a(href="https://glitch.com")
-        img(src=logo width=80)
+      a(href="/")
+        img(src=logo width="80px" height="66px")
 
     canvas#stars
     script(src="https://glitch.com/edit/error-page.js")
