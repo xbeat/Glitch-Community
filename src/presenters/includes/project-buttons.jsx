@@ -43,7 +43,7 @@ RemixButton.propTypes = {
   className: PropTypes.string,
 };
 
-export const FeedbackButton = ({name, projectId}) => {
+export const FeedbackButton = ({name, id}) => {
   const support = "customer-service@fogcreek.com";
   const subject = `[Glitch] I have feelings about ${name}`;
   const body = `\
@@ -62,7 +62,12 @@ Thanks 💖
 
 – Glitch Team
 
-(project id: ${projectId})\
+(project id: ${id})\
 `;
   const mailto = encodeURI(`mailto:${support}?subject=${subject}&body=${body}`);
+  return <a className="button-small" href={mailto}>What do you think?</a>;
+};
+FeedbackButton.propTypes = {
+  name: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };

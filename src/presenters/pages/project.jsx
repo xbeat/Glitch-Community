@@ -5,7 +5,7 @@ import Project from '../../models/project';
 
 import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
-import {PreviewButton, EditButton, RemixButton} from '../includes/project-buttons.jsx';
+import {PreviewButton, EditButton, RemixButton, FeedbackButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
 
 import LayoutPresenter from '../layout';
@@ -25,7 +25,7 @@ Embed.propTypes = {
 
 const ProjectPage = ({
   project: {
-    avatar, description, domain,
+    avatar, description, domain, id,
     userIsCurrentUser, users,
   },
 }) => (
@@ -40,9 +40,8 @@ const ProjectPage = ({
       <PreviewButton name={domain}/>{' '}
       <EditButton name={domain} isMember={userIsCurrentUser}/>{' '}
       <RemixButton name={domain} isMember={userIsCurrentUser} className="button-cta"/>
-    </section>
-    <section>
       <Embed domain={domain}/>
+      <FeedbackButton name={domain} id={id}/>
     </section>
   </article>
 );
