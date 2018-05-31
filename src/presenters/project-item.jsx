@@ -6,7 +6,7 @@ import UsersList from "./users-list.jsx";
 
 export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOptions}) => (
   <li>
-    <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users}/>
+    <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
     <ProjectOptionsContainer project={project} closeAllPopOvers={closeAllPopOvers} projectOptions={projectOptions}></ProjectOptionsContainer>
 
     <a href={project.link}>

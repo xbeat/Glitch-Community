@@ -33,10 +33,11 @@ const ProjectPage = ({
   <article className="project-page">
     <section>
       <InfoContainer>
-        <img className="avatar" src={avatar} alt="" />
-        <h1>{domain}</h1>
-        <UsersList users={users} />
-        <p>{description}</p>
+        <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
+          <h1>{domain}</h1>
+          <UsersList users={users} />
+          <p>{description}</p>
+        </AvatarContainer>
       </InfoContainer>
     </section>
     <section>
