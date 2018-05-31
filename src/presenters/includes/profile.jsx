@@ -153,10 +153,12 @@ const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) 
   }
   
   if(!isAuthorized) {
-    <React.Fragment>
-      <h1 className="username">{name}</h1>
-      <h2 className="login">@{login}</h2>
-    </React.Fragment>
+    return (
+      <React.Fragment>
+        <h1 className="username">{name}</h1>
+        <h2 className="login">@{login}</h2>
+      </React.Fragment>
+    );
   }
 
   return (
