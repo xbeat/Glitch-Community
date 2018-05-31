@@ -8,6 +8,7 @@ import Loader from './loader.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx';
 import TeamAnalyticsActivity from '../pop-overs/team-analytics-activity.jsx';
+import TeamAnalyticsReferrers from '../pop-overs/team-analytics-referrers.jsx';
 
 const dateFromTime = (newTime) => {
   const timeMap = [
@@ -164,15 +165,13 @@ class TeamAnalytics extends React.Component {
           }
         </section>
         
-        <section className="Referrers">
-          analytics.referrers
+        <section className="referrers">
+          <h3>Referrers</h3>
           { (this.state.isGettingData) &&
             <Loader />
           ||
             <TeamAnalyticsReferrers 
               analytics = {this.state.analytics}
-              isGettingData = {this.state.isGettingData}
-              currentTimeFrame = {this.state.currentTimeFrame}
             />
           }
         </section>
