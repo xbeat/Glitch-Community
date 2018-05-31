@@ -9,7 +9,7 @@ import Loader from './loader.jsx';
 import Thanks from './thanks.jsx';
 import AddTeamUser from './add-team-user.jsx';
 import {AuthDescription} from './description-field.jsx';
-import {AuthField} from './editable-field.jsx';
+import EditableField from './editable-field.jsx';
 import UserInfoPop from '../pop-overs/user-info-pop.jsx';
 import {UserPopoversList} from '../users-list.jsx';
 
@@ -151,18 +151,25 @@ const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) 
     // Just an ID? We're anonymous.
     return <h1 className="login">@{id}</h1>;
   }
+  
+  if(!isAuthorized) {
+    <React.Fragment>
+      <h1 className="username">{name}</h1>
+      <h2 className="login">@{login}</h2>
+    </React.Fragment>
+  }
 
   return (
-      <React.Fragment>
-        <h1 className="username"><AuthField authorized={isAuthorized} value={name} update={updateName}/></h1>
-        <h2 className="login">@<AuthField authorized={isAuthorized} value={login} update={updateLogin}/></h2>
-      </React.Fragment>
-    );
+    <React.Fragment>
+      <h1 className="username"><EditableField value={name} update={updateName} placeholder='Your display name, e.g. "Rick Sanchez"'/></h1>
+      <h2 className="login">@<EditableField value={login} update={updateLogin} placeholder='Your unique login name'/></h2>
+    </React.Fragment>
+  );
 };
 NameAndLogin.propTypes = {
   name: PropTypes.string,
   login: PropTypes.string,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   updateName: PropTypes.func,
   updateLogin: PropTypes.func,

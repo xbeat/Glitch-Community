@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
-class EditableField extends React.Component {
+export default class EditableField extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -50,18 +50,3 @@ EditableField.propTypes = {
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
 };
-
-const AuthField = ({authorized, value, placeholder, update}) => {
-  if(!authorized) {
-    return <span>{value}</span>
-  }
-  return <EditableField {...{value, update, placeholder}}/>
-};
-AuthField.propTypes = {
-  authorized: PropTypes.bool.isRequired,
-  value: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
-  update: PropTypes.func,
-};
-
-export { EditableField, AuthField };
