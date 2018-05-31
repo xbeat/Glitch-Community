@@ -29,16 +29,16 @@ const ProjectPage = ({
     userIsCurrentUser, users,
   },
 }) => (
-  <article className="profile">
-    <section className="profile-info">
+  <article>
+    <section>
       <img className="avatar" src={avatar} alt="" />
       <h1>{domain}</h1>
       <UsersList users={users} />
       <p>{description}</p>
     </section>
     <section>
-      <PreviewButton name={domain}/>
-      <EditButton name={domain} isMember={userIsCurrentUser}/>
+      <PreviewButton name={domain}/>{' '}
+      <EditButton name={domain} isMember={userIsCurrentUser}/>{' '}
       <RemixButton name={domain} isMember={userIsCurrentUser} className="button-cta"/>
     </section>
     <section>

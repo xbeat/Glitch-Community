@@ -20,12 +20,12 @@ PreviewButton.propTypes = {
   className: PropTypes.string,
 };
 
-export const EditorButton = ({name, isMember, className}) => (
+export const EditButton = ({name, isMember, className}) => (
   <a className={`button button-link ${className}`} href={editUrl(name)}>
     {isMember ? 'Edit Project' : 'View Source'}
   </a>
 );
-EditorButton.propTypes = {
+EditButton.propTypes = {
   name: PropTypes.string.isRequired,
   isMember: PropTypes.bool,
   className: PropTypes.string,
@@ -41,4 +41,28 @@ RemixButton.propTypes = {
   name: PropTypes.string.isRequired,
   isMember: PropTypes.bool,
   className: PropTypes.string,
+};
+
+export const FeedbackButton = ({name, projectId}) => {
+  const support = "customer-service@fogcreek.com";
+  const subject = `[Glitch] I have feelings about ${name}`;
+  const body = `\
+What do you think of the ${name} project? 
+Is it great? Should we feature it? Is it malicious?
+
+Let us know:
+
+
+
+
+
+--------------------
+
+Thanks 💖
+
+– Glitch Team
+
+(project id: ${projectId})\
+`;
+  const mailto = encodeURI(`mailto:${support}?subject=${subject}&body=${body}`);
 };
