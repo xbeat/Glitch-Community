@@ -78,7 +78,7 @@ export default Project = function(I, self) {
       return `${CDN_URL}/project-avatar/${self.id()}.png`;
     },
         
-    /*getReadme(application) {
+    getReadme(application) {
       if (self.id() === undefined) {
         self.readmeNotFound(true);
         self.projectNotFound(true);
@@ -106,7 +106,7 @@ export default Project = function(I, self) {
           return self.projectNotFound(true);
         
         });
-    },*/
+    },
 
     pushSearchResult(application) {
       application.searchResultsProjects.push(self);
