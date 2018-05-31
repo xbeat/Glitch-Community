@@ -13,17 +13,17 @@ Example:
 
 export default [
   {
-    title: '\"coffee-talks\" by pketh & rosamcgee',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcoffee-talks.jpg?1527521560950",
-    link: 'https://coffee-talks.glitch.me'
+    title: 'Get Your Own Emoji Avatar',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Femoji-avatars.jpg?1527769665035",
+    link: 'http://emoji-avatars.glitch.me/'
   }
   , {
-    title: '\"animated-pixel-gradients\" by noahleigh',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fanimated-pixel-gradients.jpg?1527521667400",
-    link: 'https://animated-pixel-gradients.glitch.me'
+    title: 'Create Beautiful Phyllotaxies',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fpattern-school.jpg?1527769664891",
+    link: 'http://pattern-school.glitch.me'
   }
   , {
-    title: 'Tweet or RT? by oa495',
+    title: 'Can You Find All The Pairs',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ftwit-original.jpg?1527521829771",
     link: 'https://twit-original.glitch.me'
   }   
