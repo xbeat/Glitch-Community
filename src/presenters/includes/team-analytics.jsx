@@ -23,15 +23,16 @@ const dateFromTime = (newTime) => {
       date: moment().subtract(24, 'hours').valueOf(),
     },
   ]
-  let time = _.find(timeMap, {time: newTime})
-  console.log ('time', time)
+  let time = _.find(timeMap, (object) => {
+    return object.time === newTime
+  })
   return time.date
 ;}
 
 // getAnalyticsProjectOverview = () (based on current project, not for all)
 
 const getAnalytics = async ({id, api}, requestDate) => {
-  console.log (requestDate)
+  console.log ('🍕', requestDate)
   let path = `analytics/${id}/team?from=${requestDate}`;
   try {
     return await api().get(path);
@@ -63,13 +64,6 @@ class TeamAnalytics extends React.Component {
   }
 
   updateTimeFrame(newTime) {
-    // let dateFrom = 0
-    // if (newTime === "Last 4 Weeks") {
-    //   dateFrom = moment().subtract(4, 'weeks').valueOf()
-    // } else if (newTime === "Last 2 Weeks") {
-    //   dateFrom = moment().subtract(4, 'weeks').valueOf() 
-    // }
-    
     this.setState({
       currentTimeFrame: newTime,
       requestDate: dateFromTime(newTime)
@@ -99,7 +93,6 @@ class TeamAnalytics extends React.Component {
       isGettingData: true,
     });
     getAnalytics(this.props, this.state.requestDate).then(({data}) => {
-      // let histogram = createHistogram(data.buckets)
       this.setState({
         isGettingData: false,
         analytics: data,
@@ -107,9 +100,6 @@ class TeamAnalytics extends React.Component {
       console.log('🌎', this.state.analytics);
     });
   }
-  
-
-
   
   componentDidMount() {
     import("c3").then(c3 => { // eslint-disable-line
@@ -119,6 +109,10 @@ class TeamAnalytics extends React.Component {
       })
       this.updateAnalytics();
     });
+  }
+  
+  componentDidUpdate(object nextProps, object nextState) {
+    console.log ('componentDidUpdate')
   }
   
   render() {
