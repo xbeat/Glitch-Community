@@ -134,8 +134,7 @@ function route(location, application) {
    
     return application.login(provider, code)
       .then(() => {
-        history.replaceState(null, null, "/");
-        window.location = "";
+        window.location.replace("/");
       }).catch((error) => {
         const errorData = error && error.response && error.response.data;
         console.error("OAuth login error.", {provider, queryString, error: errorData});
