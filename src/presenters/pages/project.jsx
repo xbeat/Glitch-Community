@@ -5,6 +5,7 @@ import Project from '../../models/project';
 
 import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
+import {AvatarContainer, InfoContainer} from '../includes/profile.jsx';
 import {PreviewButton, EditButton, RemixButton, FeedbackButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
 
@@ -31,10 +32,12 @@ const ProjectPage = ({
 }) => (
   <article className="project-page">
     <section>
-      <img className="avatar" src={avatar} alt="" />
-      <h1>{domain}</h1>
-      <UsersList users={users} />
-      <p>{description}</p>
+      <InfoContainer>
+        <img className="avatar" src={avatar} alt="" />
+        <h1>{domain}</h1>
+        <UsersList users={users} />
+        <p>{description}</p>
+      </InfoContainer>
     </section>
     <section>
       <PreviewButton name={domain}/>{' '}
