@@ -24,6 +24,7 @@ const dateFromTime = (newTime) => {
     },
   ]
   let time = _.find(timeMap, {time: newTime})
+  console.log ('time', time)
   return time.date
 ;}
 
@@ -80,19 +81,6 @@ class TeamAnalytics extends React.Component {
       currentProjectDomain: newDomain
     });
   }
-
-//   updateTotalRemixes(newValue) {
-//     console.log(yolo, newValue)
-//     this.setState({
-//       totalRemixes: newValue
-//     });
-//   }
-
-//   updateTotalAppViews(newValue) {
-//     this.setState({
-//       totalAppViews: newValue
-//     });
-//   }
 
   dateFrom() {
     let time = this.state.currentTimeFrame

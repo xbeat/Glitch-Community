@@ -14,7 +14,6 @@ const createHistogram = (buckets) => {
   data.forEach (bin => {
     let totalAppViews = 0
     let totalRemixes = 0
-    // let referrers = []
     // let codeViews = []
     bin.forEach (data => {
       totalRemixes += data.analytics.remixes
@@ -25,22 +24,10 @@ const createHistogram = (buckets) => {
       time: bin.x0,
       appViews: totalAppViews,
       remixes: totalRemixes,
-      // referrers: _.flatten(referrers)
     })
   })
   return histogram
 }
-
-// pass histogram up instead and do totals calc in parent, also referrers
-// or do a summary call instead
-// const updateTotals = (histogram) => {
-//   let totalRemixes = 0
-//   let totalAppViews = 0
-//   histogram.forEach (item => {
-//     totalRemixes += item.remixes
-//     totalAppViews += item.appViews    
-//   })
-// }
 
 const chartColumns = (analytics) => {
   const buckets = analytics.buckets
