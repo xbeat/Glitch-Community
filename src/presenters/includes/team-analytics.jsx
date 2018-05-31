@@ -60,22 +60,7 @@ class TeamAnalytics extends React.Component {
     };
   }
 
-  updateTimeFrame(newTime) {
-    this.setState({
-      currentTimeFrame: newTime,
-      fromDate: dateFromTime(newTime)
-    }, () => {
-      this.updateAnalytics()
-    })
-  }
-
-  updateProjectdomain(newDomain) {
-    this.setState({
-      currentProjectDomain: newDomain
-    });
-  }
-
-  updateTotals() {
+    updateTotals() {
     console.log ('update totals', this.state.analytics)
     let totalAppViews = 0
     let totalRemixes = 0
@@ -88,7 +73,7 @@ class TeamAnalytics extends React.Component {
       totalRemixes: totalRemixes,
     });
   }
-  
+
   updateAnalytics() {
     this.setState({
       isGettingData: true,
@@ -102,7 +87,26 @@ class TeamAnalytics extends React.Component {
       });
     });
   }
+
+  updateTimeFrame(newTime) {
+    this.setState({
+      currentTimeFrame: newTime,
+      fromDate: dateFromTime(newTime)
+    }, () => {
+      this.updateAnalytics()
+    })
+  }
+
+  updateProjectdomain(newDomain) {
+    this.setState({
+      currentProjectDomain: newDomain
+    }, () => {
+      this.updateAnalytics()
+    });
+  }
+
   
+
   componentDidMount() {
     import("c3").then(c3 => { // eslint-disable-line
       this.setState({
@@ -176,12 +180,19 @@ class TeamAnalytics extends React.Component {
           }
         </section>
 
-
-        <TeamAnalyticsProjectPop
-          updateProjectdomain = {this.updateProjectdomain.bind(this)}
-          currentProjectDomain = {this.state.currentProjectDomain}
-          projects = {this.props.projects}
-        />
+        <section className="project-details">
+          <h3>Project Details</h3>
+          <TeamAnalyticsProjectPop
+            updateProjectdomain = {this.updateProjectdomain.bind(this)}
+            currentProjectDomain = {this.state.currentProjectDomain}
+            projects = {this.props.projects}
+          />
+          { (this.state.currentProjectDomain === "All Projects") &&
+            <p>Select a project for details and the latest remixes</p>
+            ||
+            <p>time for details and remixes!!</p>
+          }
+        </section>
 
       </section>
     );
