@@ -31,8 +31,11 @@ const dateFromTime = (newTime) => {
 
 // getAnalyticsProjectOverview = () (based on current project, not for all)
 
-const getAnalytics = async ({id, api}, requestDate, currentProjectDomain) => {
-  let path = `analytics/${id}/team?from=${requestDate}`;
+const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
+  let path = `analytics/${id}/team?from=${fromDate}`;
+  if (currentProjectDomain !== "All Projects") {
+    path = `analytics/${id}/project/${currentProjectDomain}?from=${fromDate}`;
+  }
   try {
     return await api().get(path);
   } catch (error) {
@@ -54,7 +57,7 @@ class TeamAnalytics extends React.Component {
     super(props);
       this.state = {
       currentTimeFrame: 'Last 2 Weeks',
-      requestDate: moment().subtract(2, 'weeks').valueOf(),
+      fromDate: moment().subtract(2, 'weeks').valueOf(),
       currentProjectDomain: 'All Projects',
       analytics: {},
       c3: {},
@@ -68,7 +71,7 @@ class TeamAnalytics extends React.Component {
   updateTimeFrame(newTime) {
     this.setState({
       currentTimeFrame: newTime,
-      requestDate: dateFromTime(newTime)
+      fromDate: dateFromTime(newTime)
     }, () => {
       this.updateAnalytics()
     })
@@ -84,7 +87,7 @@ class TeamAnalytics extends React.Component {
     this.setState({
       isGettingData: true,
     });
-    getAnalytics(this.props, this.state.requestDate, this.state.currentProjectDomain).then(({data}) => {
+    getAnalytics(this.props, this.state.fromDate, this.state.currentProjectDomain).then(({data}) => {
       this.setState({
         isGettingData: false,
         analytics: data,
