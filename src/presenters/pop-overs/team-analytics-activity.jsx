@@ -54,7 +54,7 @@ const dateFormat = (currentTimeFrame) => {
   }
 }
 
-const TeamAnalyticsActivity = ({c3, analytics, isGettingData, currentTimeFrame}) => {
+const TeamAnalyticsActivity = ({c3, analytics, currentTimeFrame}) => {
   let columns = []
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics)
@@ -87,7 +87,6 @@ const TeamAnalyticsActivity = ({c3, analytics, isGettingData, currentTimeFrame})
 TeamAnalyticsActivity.propTypes = {
   c3: PropTypes.object.isRequired, 
   analytics: PropTypes.object.isRequired, 
-  isGettingData: PropTypes.bool.isRequired,
   currentTimeFrame: PropTypes.string.isRequired,
 };
 

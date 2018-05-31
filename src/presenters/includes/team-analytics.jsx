@@ -30,8 +30,6 @@ const dateFromTime = (newTime) => {
   return time.date
 ;}
 
-// getAnalyticsProjectOverview = () (based on current project, not for all)
-
 const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
   let path = `analytics/${id}/team?from=${fromDate}`;
   if (currentProjectDomain !== "All Projects") {
@@ -44,16 +42,6 @@ const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
   }
 }
 
-
-
-
-// layout:
-  // Controls
-
-  // CONDITIONAL Project Overview/Details (projects remixed, etc. from weak-particle)
-
-  // Activity (TeamAnalyticsActivity)
-  // Referrers
 
 class TeamAnalytics extends React.Component {
   constructor(props) {
@@ -151,15 +139,12 @@ class TeamAnalytics extends React.Component {
             <div>
               <span className="total app-views">
                 {this.state.totalAppViews.toLocaleString('en')}
-              </span>
-              &nbsp;
-              <Pluralize singular="App View" plural="App Views" count={this.state.totalAppViews} showCount='false' />
-              ,&nbsp;
+              </span>{' '}
+              <Pluralize singular="App View" plural="App Views" count={this.state.totalAppViews} showCount={false} />,{' '}
               <span className="total remixes">
                 {this.state.totalRemixes.toLocaleString('en')}
-              </span>
-              &nbsp;
-              <Pluralize singular="Remix" plural="Remixes" count={this.state.totalRemixes} showCount='false' />
+              </span>{' '}
+              <Pluralize singular="Remix" plural="Remixes" count={this.state.totalRemixes} showCount={false} />
             </div>
           }
         </section>
@@ -181,6 +166,15 @@ class TeamAnalytics extends React.Component {
         
         <section className="Referrers">
           analytics.referrers
+          { (this.state.isGettingData) &&
+            <Loader />
+          ||
+            <TeamAnalyticsReferrers 
+              analytics = {this.state.analytics}
+              isGettingData = {this.state.isGettingData}
+              currentTimeFrame = {this.state.currentTimeFrame}
+            />
+          }
         </section>
         
         <TeamAnalyticsProjectPop
