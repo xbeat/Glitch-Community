@@ -1,51 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Loader from '../includes/loader.jsx';
 
-const ReferrersLists = ({analytics}) => {
+const ReferrerItem = ({referrer, countProperty}) => {
   return (
-    <React.Fragment>
+    <p>{referrer.domain}, {referrer[countProperty]}</p>
+  )
+}
+
+const TeamAnalyticsReferrers = ({analytics}) => {
+  const appViewReferrers = analytics.referrers.slice(0, 5)
+  const remixReferrers = analytics.remixReferrers.slice(0, 5)
+  return (
       <article className="referrers-column">
         <h4>App Views</h4>
         <ul>
-          { analytics.referrers.map(referrer => (
+          { appViewReferrers.map((referrer, key) => (
             <ReferrerItem
+              key={key}
               referrer = {referrer}
-              c
+              countProperty = "request"
             />
           ))}
         </ul>
+        <h4>App Views</h4>
+        <ul>
+          { remixReferrers.map((referrer, key) => (
+            <ReferrerItem
+              key={key}
+              referrer = {referrer}
+              countProperty = "remixes"
+            />
+          ))}
+        </ul>
+
       </article> 
-    </React.Fragment>
-  )
-}
-
-const ReferrerItem = ({referrer}) => {
-  return (
-    <p>{referrer.domain}</p>
-  )
-}
-
-const TeamAnalyticsReferrers = ({analytics, isGettingData}) => {
-  return (
-    <section className="referrers">
-      <h3>Referrers</h3>
-      { (isGettingData) &&
-        <Loader />
-      ||
-        <ReferrersLists
-          analytics = {analytics}
-        />
-      }
-    </section>
-
   )
 };
 
 TeamAnalyticsReferrers.propTypes = {
   analytics: PropTypes.object.isRequired,
-  isGettingData: PropTypes.bool.isRequired,
 };
 
 export default TeamAnalyticsReferrers;
