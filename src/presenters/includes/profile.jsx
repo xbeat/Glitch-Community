@@ -146,6 +146,23 @@ TeamProfile.propTypes = {
   }).isRequired,
 };
 
+const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
+  if(!login) {
+    // Just an ID? We're anonymous.
+    return <h1 className="login">@{id}</h1>
+  }
+  
+  return (
+    {name ?
+        <React.Fragment>
+          <h1 className="username"><{name}</h1>
+          <h2 className="login">@{login || id}</h2>
+        </React.Fragment>
+        : <h1 className="login">@{login || id}</h1>
+      }
+    );
+}
+
 const LoadedUserProfile = ({
   user: { //has science gone too far?
     name, login, id, description, thanksCount,
@@ -159,13 +176,7 @@ const LoadedUserProfile = ({
     buttons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
   >
     <AvatarContainer style={avatarStyle}>
-      {name ?
-        <React.Fragment>
-          <h1 className="username">{name}</h1>
-          <h2 className="login">@{login || id}</h2>
-        </React.Fragment>
-        : <h1 className="login">@{login || id}</h1>
-      }
+      <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
       <Thanks count={thanksCount}/>
       <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
     </AvatarContainer>
