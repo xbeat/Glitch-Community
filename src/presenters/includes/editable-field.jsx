@@ -14,10 +14,19 @@ export default class EditableField extends React.Component {
     this.update = debounce(this.props.update, 1000);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
+    this.unmask = this.unmask.bind(this);
+  }
+  
+  unmask(value) {
+    const mask = this.props.mask;
+    const trimmed = value.trim();
+    if(value.startsWith(mask)){
+      return value.substring(mask.length);
+    }
   }
   
   onChange(evt) {
-    const value = evt.currentTarget.value.trim();
+    const value = unmask(evt.currentTarget.value);
     this.setState({ value });
     this.update(value);
   }
@@ -33,10 +42,11 @@ export default class EditableField extends React.Component {
   }
   
   render() {
+    const value = this.props.mask + this.state.value;
     return (
       <input
         className="content-editable"
-        value={this.state.value}
+        value={value}
         onChange={this.onChange}
         autoComplete="off"
         spellCheck={false}
@@ -50,4 +60,7 @@ EditableField.propTypes = {
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
   mask: PropTypes.string,
+};
+EditableField.defaultProps = {
+  mask: "",
 };
