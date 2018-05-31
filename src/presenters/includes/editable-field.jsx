@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {debounce} from 'lodash';
+import {debounce, uniqueId} from 'lodash';
 
 export default class EditableField extends React.Component {
   constructor(props) {
@@ -8,6 +8,7 @@ export default class EditableField extends React.Component {
     this.state = {
       focused: false,
       value: this.props.value,
+      inputId: null,
     };
     
     this.onChange = this.onChange.bind(this);
@@ -32,19 +33,24 @@ export default class EditableField extends React.Component {
     this.setState({focused: false});
   }
   
+  componentDidMount() {
+    this.setState({inputId: uniqueId()});
+  }
+  
   render() {
     return (
-      <React.Fragment>
-      { !!this.props.mask && <label className="content-editable-mask" data-mask={this.props.mask}/> }
-      <input
-        className="content-editable"
-        value={this.state.value}
-        onChange={this.onChange}
-        autoComplete="off"
-        spellCheck={false}
-        placeholder={this.props.placeholder}
-        />
-      </React.Fragment>
+      <div className="content-editable-container">
+        { !!this.props.mask && <label htmlFor={this.state.inputId} className="content-editable-mask">{this.props.mask}</label> }
+        <input
+          id={this.state.inputId}
+          className="content-editable"
+          value={this.state.value}
+          onChange={this.onChange}
+          autoComplete="off"
+          spellCheck={false}
+          placeholder={this.props.placeholder}
+          />
+        </div>
     );
   }
 }

@@ -70,9 +70,12 @@ input
     color: text-on-secondary-background
     display: block /* For Firefox */
 
+
+.content-editable-container
+  position: relative
+  
 .content-editable-mask
   position: absolute
-  &:before
-    content: attr(data-mask)
+  top: 0.4rem
   + .content-editable
     padding-left: 1rem
