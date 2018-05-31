@@ -12,11 +12,14 @@ const countTotals = (data, countProperty) => {
 }
 
 const ReferrerItem = ({referrer, countProperty, data}) => {
-  // const total = 0 gotta get totals and compare them to set progress bars
   const total = countTotals(data, countProperty)
-  console.log ('total', total, countProperty)
+  const count = referrer[countProperty]
+  const progress = Math.min(Math.round(count / total * 100), 5)
   return (
-    <p>{referrer.domain}, {referrer[countProperty]}</p>
+    <li>
+      {referrer.domain}, {count}
+      <progress value={progress} max="100" />
+    </li>
   )
 }
 
@@ -25,12 +28,12 @@ const filterReferrers = (referrers) => {
   let filteredReferrers = referrers.filter(referrer =>
     !referrer.self
   )
+  filteredReferrers = filteredReferrers.slice(0,5)
   console.log ('filteredReferrers', filteredReferrers)
-  return filteredReferrers.slice(0.5)
+  return filteredReferrers
 }
 
 const TeamAnalyticsReferrers = ({analytics}) => {
-  console.log ('analytics', analytics)
   const appViewReferrers = filterReferrers(analytics.referrers)
   const remixReferrers = filterReferrers(analytics.remixReferrers)
   return (
