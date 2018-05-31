@@ -1,4 +1,4 @@
-/* global EDITOR_URL analytics */
+/* global EDITOR_URL */
 
 import React from 'react';
 import PropTypes from 'prop-types';

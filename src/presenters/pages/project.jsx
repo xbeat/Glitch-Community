@@ -1,3 +1,5 @@
+/* global analytics */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -49,8 +51,11 @@ const ProjectPage = ({
       </InfoContainer>
     </section>
     <section className="project-buttons">
-      <PreviewButton name={domain}/>{' '}
-      <EditButton name={domain} isMember={userIsCurrentUser} className={userIsCurrentUser ? "button-cta" : null}/>{' '}
+      <PreviewButton name={domain}/>
+      <EditButton
+        name={domain} isMember={userIsCurrentUser}
+        className={userIsCurrentUser ? "button-cta" : null}
+      />
       <RemixButton
         name={domain} isMember={userIsCurrentUser}
         className={userIsCurrentUser ? null : "button-cta"}
