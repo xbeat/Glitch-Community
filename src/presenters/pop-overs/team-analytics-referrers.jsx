@@ -13,32 +13,35 @@ const countTotals = (data, countProperty) => {
 
 const ReferrerItem = ({referrer, countProperty, data}) => {
   const total = countTotals(data, countProperty)
+  console.log ('total', countProperty, total)
   const count = referrer[countProperty]
-  const progress = Math.min(Math.round(count / total * 100), 5)
+  const progress = Math.max(Math.round(count / total * 100), 5)
   return (
     <li>
-      {referrer.domain}, {count}
+      {referrer.domain}, {count.toLocaleString('en')}
       <progress value={progress} max="100" />
     </li>
   )
 }
 
 const filterReferrers = (referrers) => {
-  console.log ('referrers', referrers)
   let filteredReferrers = referrers.filter(referrer =>
     !referrer.self
   )
   filteredReferrers = filteredReferrers.slice(0,5)
-  console.log ('filteredReferrers', filteredReferrers)
   return filteredReferrers
 }
 
 const TeamAnalyticsReferrers = ({analytics}) => {
+  console.log ('🌹 analytics.referrers', analytics.referrers)
   const appViewReferrers = filterReferrers(analytics.referrers)
   const remixReferrers = filterReferrers(analytics.remixReferrers)
   return (
       <article className="referrers-column">
-        <h4>App Views</h4>
+        <h4>
+          <div className="legend-item"/>
+          App Views
+        </h4>
         <ul>
           { appViewReferrers.map((referrer, key) => (
             <ReferrerItem
@@ -49,7 +52,10 @@ const TeamAnalyticsReferrers = ({analytics}) => {
             />
           ))}
         </ul>
-        <h4>App Views</h4>
+        <h4>
+          <div className="legend-item"/>
+          App Views
+        </h4>
         <ul>
           { remixReferrers.map((referrer, key) => (
             <ReferrerItem
