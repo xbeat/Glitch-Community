@@ -7,6 +7,7 @@ import Project from '../../models/project';
 
 import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
+import {StaticDescription} from '../includes/description-field.jsx';
 import {AvatarContainer, InfoContainer} from '../includes/profile.jsx';
 import {PreviewButton, EditButton, RemixButton, FeedbackButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
@@ -46,7 +47,7 @@ const ProjectPage = ({
         <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
           <h1>{domain}</h1>
           <UsersList users={users} />
-          <p>{description}</p>
+          <StaticDescription description={description}/>
         </AvatarContainer>
       </InfoContainer>
     </section>
