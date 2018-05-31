@@ -22,6 +22,24 @@ function trackRemix(domain, id) {
     baseDomain: domain,
   });
 }
+const ProjectButtons = ({domain, id, isMember}) => (
+  <React.Fragment>
+    <PreviewButton name={domain}/>
+    <EditButton
+      name={domain} isMember={isMember}
+      className={isMember ? "button-cta" : null}
+    />
+    <RemixButton
+      name={domain} isMember={isMember}
+      className={isMember ? null : "button-cta"}
+      onClick={() => trackRemix(domain, id)}
+    />
+  </React.Fragment>
+);
+ProjectButtons.propTypes = {
+  id: PropTypes.string.isRequired,
+  isMember: PropTypes.bool.isRequired,
+};
 
 const Embed = ({domain}) => (
   <div className="glitch-embed-wrap" style={{height: '500px', width: '100%',}}>
@@ -52,16 +70,7 @@ const ProjectPage = ({
       </InfoContainer>
     </section>
     <section className="project-buttons">
-      <PreviewButton name={domain}/>
-      <EditButton
-        name={domain} isMember={userIsCurrentUser}
-        className={userIsCurrentUser ? "button-cta" : null}
-      />
-      <RemixButton
-        name={domain} isMember={userIsCurrentUser}
-        className={userIsCurrentUser ? null : "button-cta"}
-        onClick={() => trackRemix(domain, id)}
-      />
+      <ProjectButtons domain={domain} id={id} isMember={userIsCurrentUser}/>
     </section>
     <section>
       <Embed domain={domain}/>
