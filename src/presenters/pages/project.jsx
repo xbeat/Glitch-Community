@@ -48,7 +48,7 @@ const ProjectPage = ({
     <section>
       <Embed domain={domain}/>
     </section>
-    <div className="feedback-button">
+    <div className="feedback-buttons">
       <FeedbackButton name={domain} id={id}/>
     </div>
   </article>
