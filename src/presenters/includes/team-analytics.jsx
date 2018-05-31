@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Pluralize from 'react-pluralize'
 import moment from 'moment-mini';
 import _ from 'lodash';
 
@@ -48,8 +49,10 @@ const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
 
 // layout:
   // Controls
+
+  // CONDITIONAL Project Overview/Details (projects remixed, etc. from weak-particle)
+
   // Activity (TeamAnalyticsActivity)
-  // Project Overview/Details (projects remixed, etc. from weak-particle)
   // Referrers
 
 class TeamAnalytics extends React.Component {
@@ -125,21 +128,21 @@ class TeamAnalytics extends React.Component {
   //   console.log ('componentDidUpdate')
   // }
   
-  appViewsLabel() {
-    if (this.state.totalAppViews > 1) {
-      'App Views'
-    } else {
-      'App View'
-    }
-  }
+//   appViewsLabel() {
+//     if (this.state.totalAppViews > 1) {
+//       'App Views'
+//     } else {
+//       'App View'
+//     }
+//   }
   
-  remixesLabel() {
-    if (this.state.totalRemixes > 1) {
-      'Remixes'
-    } else {
-      'Remix'
-    }
-  }
+//   remixesLabel() {
+//     if (this.state.totalRemixes > 1) {
+//       'Remixes'
+//     } else {
+//       'Remix'
+//     }
+//   }
   
   render() {
     return (
@@ -165,11 +168,14 @@ class TeamAnalytics extends React.Component {
               <span className="total app-views">
                 {this.state.totalAppViews.toLocaleString('en')}
               </span>
-              &nbsp;{appViewsLabel()},&nbsp;
+              &nbsp;
+              <Pluralize singular="App View" plural="App Views" count={this.state.totalAppViews} />
+              ,&nbsp;
               <span className="total remixes">
                 {this.state.totalRemixes.toLocaleString('en')}
               </span>
-              &nbsp;{remixesLabel()}
+              &nbsp;
+              <Pluralize singular="Remix" plural="Remixes" count={this.state.totalRemixes} />
             </div>
           }
         </section>
