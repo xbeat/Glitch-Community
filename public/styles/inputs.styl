@@ -71,5 +71,8 @@ input
     display: block /* For Firefox */
 
 .content-editable-mask
+  position: absolute
   &:before
     content: attr(data-mask)
+  + .content-editable
+    padding-left: 1rem

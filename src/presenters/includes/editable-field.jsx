@@ -34,16 +34,17 @@ export default class EditableField extends React.Component {
   
   render() {
     return (
-      <label className="content-editable-mask" data-mask={this.props.mask}>
-        <input
-          className="content-editable"
-          value={this.state.value}
-          onChange={this.onChange}
-          autoComplete="off"
-          spellCheck={false}
-          placeholder={this.props.placeholder}
-          />
-      </label>
+      <React.Fragment>
+      { !!this.props.mask && <label className="content-editable-mask" data-mask={this.props.mask}/> }
+      <input
+        className="content-editable"
+        value={this.state.value}
+        onChange={this.onChange}
+        autoComplete="off"
+        spellCheck={false}
+        placeholder={this.props.placeholder}
+        />
+      </React.Fragment>
     );
   }
 }
