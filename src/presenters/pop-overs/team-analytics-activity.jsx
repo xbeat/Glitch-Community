@@ -12,20 +12,20 @@ const createHistogram = (buckets) => {
   let data = binData(buckets)
   let histogram = []
   data.forEach (bin => {
-    let totalRemixes = 0
     let totalAppViews = 0
-    let referrers = []
+    let totalRemixes = 0
+    // let referrers = []
     // let codeViews = []
     bin.forEach (data => {
       totalRemixes += data.analytics.remixes
       totalAppViews += data.analytics.visits
-      referrers.push(data.analytics.referrers)
+      // referrers.push(data.analytics.referrers)
     })
     histogram.push({
       time: bin.x0,
-      remixes: totalRemixes,
       appViews: totalAppViews,
-      referrers: _.flatten(referrers)
+      remixes: totalRemixes,
+      // referrers: _.flatten(referrers)
     })
   })
   return histogram
@@ -52,8 +52,8 @@ const chartColumns = (analytics) => {
   histogram.shift()
   histogram.forEach(bucket => {
     timestamps.push(bucket.time)
-    remixes.push(bucket.remixes)
     appViews.push(bucket.appViews)
+    remixes.push(bucket.remixes)
   })
   console.log ('📈 histogram', histogram)
   return [timestamps, remixes, appViews]

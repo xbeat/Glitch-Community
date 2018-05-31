@@ -111,11 +111,12 @@ class TeamAnalytics extends React.Component {
       isGettingData: true,
     });
     getAnalytics(this.props, this.state.requestDate).then(({data}) => {
+      // let histogram = createHistogram(data.buckets)
       this.setState({
         isGettingData: false,
         analytics: data,
       });
-      // console.log('🌎', this.state, this.state.analytics);
+      console.log('🌎', this.state.analytics);
     });
   }
   
