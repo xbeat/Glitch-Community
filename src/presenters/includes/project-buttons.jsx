@@ -9,21 +9,36 @@ const previewUrl = (name) => `https://${name}.glitch.me`;
 const editUrl = (name) => `${EDITOR_URL}#!/${name}`;
 const remixUrl = (name) => `${EDITOR_URL}#!/remix/${name}`;
 
-export const PreviewButton = ({name, className}) => (
-  <a className={`button button-link ${className}`} href={previewUrl(name)}>
+const ButtonLink = ({href, children, className, onClick}) => (
+  <a
+    href={href} target="_blank"
+    className={`button button-link ${className}`}
+    onClick={onClick}
+  >
+    {children}
+  </a>
+);
+ButtonLink.propTypes = {
+  href: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+};
+
+export const PreviewButton = ({name, ...props}) => (
+  <ButtonLink href={previewUrl(name)} {...props}>
     <img src={showIcon} alt=""/>
     {' '}Preview
-  </a>
+  </ButtonLink>
 );
 PreviewButton.propTypes = {
   name: PropTypes.string.isRequired,
-  className: PropTypes.string,
 };
 
-export const EditButton = ({name, isMember, className}) => (
-  <a className={`button button-link ${className}`} href={editUrl(name)}>
+export const EditButton = ({name, isMember, ...props}) => (
+  <ButtonLink href={editUrl(name)} {...props}>
     {isMember ? 'Edit Project' : 'View Source'}
-  </a>
+  </ButtonLink>
 );
 EditButton.propTypes = {
   name: PropTypes.string.isRequired,
@@ -31,17 +46,15 @@ EditButton.propTypes = {
   className: PropTypes.string,
 };
 
-export const RemixButton = ({name, isMember, className, onClick}) => (
-  <a className={`button button-link ${className}`} href={remixUrl(name)} onClick={onClick}>
+export const RemixButton = ({name, isMember, ...props}) => (
+  <ButtonLink href={remixUrl(name)} {...props}>
     {isMember ? 'Remix This' : 'Remix your own'}{' '}
     <span className="emoji microphone" role="presentation"></span>
-  </a>
+  </ButtonLink>
 );
 RemixButton.propTypes = {
   name: PropTypes.string.isRequired,
   isMember: PropTypes.bool,
-  className: PropTypes.string,
-  onClick: PropTypes.func,
 };
 
 export const FeedbackButton = ({name, id}) => {
