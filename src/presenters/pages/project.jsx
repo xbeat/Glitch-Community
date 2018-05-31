@@ -13,7 +13,7 @@ import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
 
 const Embed = ({domain}) => (
-  <div className="glitch-embed-wrap" style={{height: '400px', width: '100%',}}>
+  <div className="glitch-embed-wrap" style={{height: '600px', width: '100%',}}>
     <iframe
       title="embed" style={{height: '100%', width: '100%', border: '0',}}
       src={`https://glitch.com/embed/#!/embed/${domain}?path=README.md`}
