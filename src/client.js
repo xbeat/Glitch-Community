@@ -55,10 +55,9 @@ function routePage(pageUrl, application) {
 
   // ~project overlay page ✅
   if (application.isProjectUrl(pageUrl)) {
-    const projectDomain = application.removeFirstCharacter(normalizedRoute);
-    const projectPage = ProjectPage(application, projectDomain);
-    document.body.appendChild(projectPage);
-    return document.title = decodeURI(normalizedRoute);
+    const projectDomain = application.removeFirstCharacter(pageUrl);
+    const page = ProjectPage(application, projectDomain);
+    return {page, title:decodeURI(pageUrl)};
   }
 
   // user page ✅
