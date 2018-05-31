@@ -23,10 +23,11 @@ export default class EditableField extends React.Component {
     if(value.startsWith(mask)){
       return value.substring(mask.length);
     }
+    return trimmed;
   }
   
   onChange(evt) {
-    const value = unmask(evt.currentTarget.value);
+    const value = this.unmask(evt.currentTarget.value);
     this.setState({ value });
     this.update(value);
   }

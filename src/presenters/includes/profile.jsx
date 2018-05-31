@@ -147,7 +147,7 @@ TeamProfile.propTypes = {
 };
 
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
-  if(!login || !name) {
+  if(!login) {
     // Just an ID? We're anonymous.
     return <h1 className="login">@{id}</h1>;
   }
@@ -161,8 +161,8 @@ const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) 
 
   return (
     <React.Fragment>
-      <h1 className="username"><EditableField value={name} update={updateName} placeholder='Your display name, e.g. "Rainbow Dash"'/></h1>
-      <h2 className="login">@<EditableField value={login} update={updateLogin} placeholder='Your unique login name, e.g. "@TheBestPony"'/></h2>
+      <h1 className="username"><EditableField value={name} update={updateName} placeholder='Display name?'/></h1>
+      <h2 className="login">@<EditableField value={login} update={updateLogin} placeholder='Username?'/></h2>
     </React.Fragment>
   );
 };
