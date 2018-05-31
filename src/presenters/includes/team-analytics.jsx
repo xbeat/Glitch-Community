@@ -128,21 +128,6 @@ class TeamAnalytics extends React.Component {
   //   console.log ('componentDidUpdate')
   // }
   
-//   appViewsLabel() {
-//     if (this.state.totalAppViews > 1) {
-//       'App Views'
-//     } else {
-//       'App View'
-//     }
-//   }
-  
-//   remixesLabel() {
-//     if (this.state.totalRemixes > 1) {
-//       'Remixes'
-//     } else {
-//       'Remix'
-//     }
-//   }
   
   render() {
     return (
