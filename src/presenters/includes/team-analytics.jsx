@@ -86,6 +86,14 @@ class TeamAnalytics extends React.Component {
   updateTotals() {
     console.log ('update totals', this.state.analytics)
     // TODO iterate over this.state.analytics.buckets to get the totals 
+    let totalAppViews = 0
+    let totalRemixes = 0
+    this.state.analytics.buckets.forEach(bucket => {
+      console.log ('🌎',bucket)
+      
+    }
+    
+    
     this.setState({
       totalAppViews: 5,
       totalRemixes: 3,
