@@ -82,6 +82,16 @@ TeamUsers.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
 };
 
+const TeamVerified = ({image, tooltip}) => (
+  <span data-tooltip={tooltip}>
+    <img className="verified" src={image} alt={tooltip}/>
+  </span>
+);
+TeamVerified.propTypes = {
+  image: PropTypes.string.isRequired,
+  tooltip: PropTypes.string.isRequired,
+};
+
 const LoadedTeamProfile = ({
   team: {
     name, users, description, thanksCount,
@@ -99,9 +109,7 @@ const LoadedTeamProfile = ({
     <AvatarContainer style={teamAvatarStyle} buttons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}>
       <h1 className="username">
         {name}
-        { isVerified && <span data-tooltip={verifiedTooltip}>
-          <img className="verified" src={verifiedImage} alt={verifiedTooltip}/>
-        </span> }
+        { isVerified && <TeamVerified image={verifiedImage} tooltip={verifiedTooltip}/> }
       </h1>
       <div className="users-information">
         <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
@@ -121,8 +129,6 @@ LoadedTeamProfile.propTypes = {
     thanksCount: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
     isVerified: PropTypes.bool.isRequired,
-    verifiedImage: PropTypes.string.isRequired,
-    verifiedTooltip: PropTypes.string.isRequired,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   updateDescription: PropTypes.func.isRequired,
