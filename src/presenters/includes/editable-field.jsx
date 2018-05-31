@@ -34,8 +34,7 @@ export default class EditableField extends React.Component {
   
   render() {
     return (
-      <label>
-        {this.props.label}
+      <label className="content-editable-mask" data-mask={this.props.mask}>
         <input
           className="content-editable"
           value={this.state.value}
@@ -52,8 +51,8 @@ EditableField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
-  label: PropTypes.string,
+  mask: PropTypes.string,
 };
 EditableField.defaultProps = {
-  label: "",
+  mask: "",
 };

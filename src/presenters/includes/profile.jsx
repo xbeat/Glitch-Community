@@ -162,7 +162,7 @@ const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) 
   return (
     <React.Fragment>
       <h1 className="username"><EditableField value={name} update={updateName} placeholder='Display name?'/></h1>
-      <h2 className="login"><EditableField value={login} update={updateLogin} label="@" placeholder='User ID?'/></h2>
+      <h2 className="login"><EditableField value={login} update={updateLogin} mask="@" placeholder='User ID?'/></h2>
     </React.Fragment>
   );
 };
