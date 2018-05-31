@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import {TruncatedMarkdown} from './includes/markdown.jsx';
 import Thanks from './includes/thanks.jsx';
 
 import {ANON_AVATAR_URL} from '../models/user.js';
@@ -22,7 +23,7 @@ export default function UserItem({user}) {
             {!!user.name && <h3 className="name">{user.name}</h3>}
             <div className="button">@{user.login}</div>
             {user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
-            {!!user.description && <p className="description" dangerouslySetInnerHTML={{__html: user.truncatedDescriptionHtml}}></p>}
+            {!!user.description && <p className="description"><TruncatedMarkdown length={96}>{user.description}</TruncatedMarkdown></p>}
           </div>
         </div>
       </div>
@@ -38,7 +39,6 @@ UserItem.propTypes = {
     login: PropTypes.string.isRequired,
     name: PropTypes.string,
     thanksCount: PropTypes.number.isRequired,
-    truncatedDescriptionHtml: PropTypes.string,
     userLink: PropTypes.string.isRequired,
   }),
 };

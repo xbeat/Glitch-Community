@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'snekbirb by RobinGuichelaar',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsnekbirb.jpg?1527165679441",
-    link: 'https://snekbirb.glitch.me/'
+    title: 'Get Your Own Emoji Avatar',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Femoji-avatars.jpg?1527769665035",
+    link: 'http://emoji-avatars.glitch.me/'
   }
   , {
-    title: 'Take to the Slopes with Redux Skifree',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcurved-violin.jpg?1527165679985",
-    link: 'https://curved-violin.glitch.me'
+    title: 'Create Beautiful Phyllotaxies',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fpattern-school.jpg?1527769664891",
+    link: 'http://pattern-school.glitch.me'
   }
   , {
-    title: 'Custom Slack Slash Release Commands',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffeatured-slack-slash-bot.svg?1494429489069",
-    link: 'https://glitch.com/edit/#!/slack-google-releases?path=README.md:62:0'
+    title: 'Can You Find All The Pairs?',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fdpla-pairs.jpg?1527769664755",
+    link: 'https://dpla-pairs.glitch.me/'
   }   
 ];
