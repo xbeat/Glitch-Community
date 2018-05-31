@@ -65,7 +65,7 @@ Thanks 💖
 (project id: ${id})\
 `;
   const mailto = encodeURI(`mailto:${support}?subject=${subject}&body=${body}`);
-  return <a className="button-small" href={mailto}>What do you think?</a>;
+  return <a className="button button-link button-small" href={mailto}>What do you think?</a>;
 };
 FeedbackButton.propTypes = {
   name: PropTypes.string.isRequired,

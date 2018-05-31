@@ -36,13 +36,11 @@ const ProjectPage = ({
       <UsersList users={users} />
       <p>{description}</p>
     </section>
-    <section>
-      <PreviewButton name={domain}/>{' '}
-      <EditButton name={domain} isMember={userIsCurrentUser}/>{' '}
-      <RemixButton name={domain} isMember={userIsCurrentUser} className="button-cta"/>
-      <Embed domain={domain}/>
-      <FeedbackButton name={domain} id={id}/>
-    </section>
+    <PreviewButton name={domain}/>{' '}
+    <EditButton name={domain} isMember={userIsCurrentUser}/>{' '}
+    <RemixButton name={domain} isMember={userIsCurrentUser} className="button-cta"/>
+    <Embed domain={domain}/>
+    <FeedbackButton name={domain} id={id}/>
   </article>
 );
 ProjectPage.propTypes = {
