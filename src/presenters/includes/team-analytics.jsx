@@ -128,7 +128,6 @@ class TeamAnalytics extends React.Component {
   //   console.log ('componentDidUpdate')
   // }
   
-  
   render() {
     return (
       <section>
@@ -154,13 +153,13 @@ class TeamAnalytics extends React.Component {
                 {this.state.totalAppViews.toLocaleString('en')}
               </span>
               &nbsp;
-              <Pluralize singular="App View" plural="App Views" count={this.state.totalAppViews} />
+              <Pluralize singular="App View" plural="App Views" count={this.state.totalAppViews} showCount='false' />
               ,&nbsp;
               <span className="total remixes">
                 {this.state.totalRemixes.toLocaleString('en')}
               </span>
               &nbsp;
-              <Pluralize singular="Remix" plural="Remixes" count={this.state.totalRemixes} />
+              <Pluralize singular="Remix" plural="Remixes" count={this.state.totalRemixes} showCount='false' />
             </div>
           }
         </section>
@@ -180,7 +179,16 @@ class TeamAnalytics extends React.Component {
           }
         </section>
         
-        <section className="Referrers">analytics.referrers</section>
+        <section className="Referrers">
+          analytics.referrers
+        </section>
+        
+        <TeamAnalyticsProjectPop
+          updateProjectdomain = {this.updateProjectdomain.bind(this)}
+          currentProjectDomain = {this.state.currentProjectDomain}
+          projects = {this.props.projects}
+        />
+
       </section>
     );
   }
