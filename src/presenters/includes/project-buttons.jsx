@@ -25,10 +25,22 @@ EditorButton.propTypes = {
   isMember: PropTypes.bool,
 };
 
+export const RemixButton = ({name, isMember}) => (
+  <a className="button button-link" href={`${EDITOR_URL}#!/${name}`} onClick={() => console.log('click!')}>
+    {isMember ? 'Remix This' : 'Remix your own'}
+    <span className="emoji microphone"></span>
+  </a>
+);
+RemixButton.propTypes = {
+  name: PropTypes.string.isRequired,
+  isMember: PropTypes.bool,
+};
+
 export const Buttons = ({name, isMember}) => (
   <React.Fragment>
     <PreviewButton name={name}/>
     <EditorButton name={name} isMember={isMember}/>
+    <RemixButton name={name} isMember={isMember}/>
   </React.Fragment>
 );
 Buttons.propTypes = {

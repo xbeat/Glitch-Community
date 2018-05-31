@@ -50,6 +50,7 @@ export default Project = function(I, self) {
         private: project.private(),
         showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
         remixUrl: project.remixUrl(),
+        userIsCurrentUser: project.userIsCurrentUser(application),
       };
     },
 

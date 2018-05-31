@@ -23,19 +23,24 @@ Embed.propTypes = {
   domain: PropTypes.string.isRequired,
 };
 
-const ProjectPage = ({project}) => (
+const ProjectPage = ({
+  project: {
+    avatar, description, domain,
+    userIsCurrentUser, users,
+  },
+}) => (
   <article className="profile">
     <section className="profile-info">
-      <img className="avatar" src={project.avatar} alt="" />
-      <h1>{project.domain}</h1>
-      <UsersList users={project.users} />
-      <p>{project.description}</p>
+      <img className="avatar" src={avatar} alt="" />
+      <h1>{domain}</h1>
+      <UsersList users={users} />
+      <p>{description}</p>
     </section>
     <section>
-      <ProjectButtons name={project.domain}/>
+      <ProjectButtons name={domain} isMember={userIsCurrentUser}/>
     </section>
     <section>
-      <Embed domain={project.domain}/>
+      <Embed domain={domain}/>
     </section>
   </article>
 );
