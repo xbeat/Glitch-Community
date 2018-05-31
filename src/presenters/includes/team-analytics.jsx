@@ -177,11 +177,6 @@ class TeamAnalytics extends React.Component {
         </section
 
 
-        <TeamAnalyticsProjectPop
-          updateProjectdomain = {this.updateProjectdomain.bind(this)}
-          currentProjectDomain = {this.state.currentProjectDomain}
-          projects = {this.props.projects}
-        />
 
       </section>
     );
