@@ -23,7 +23,7 @@ export default [
     link: 'http://pattern-school.glitch.me'
   }
   , {
-    title: 'Can You Find All The Pairs (of Pears)?',
+    title: 'Can You Find All The Pairs?',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fdpla-pairs.jpg?1527769664755",
     link: 'https://dpla-pairs.glitch.me/'
   }   
