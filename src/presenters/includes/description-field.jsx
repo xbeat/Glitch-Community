@@ -71,4 +71,16 @@ StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-export { EditableDescription, StaticDescription };
+const AuthDescription = ({authorized, description, placeholder, update}) => (
+  authorized ?
+    <EditableDescription initialDescription={description} updateDescription={update} placeholder={placeholder}/> :
+    <StaticDescription description={description}/>
+);
+AuthDescription.propTypes = {
+  authorized: PropTypes.bool.isRequired,
+  description: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  update: PropTypes.func.isRequired,
+};
+
+export { EditableDescription, StaticDescription, AuthDescription };
