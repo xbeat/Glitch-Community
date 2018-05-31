@@ -164,18 +164,12 @@ class TeamAnalytics extends React.Component {
             />
           }
         </section>
-        
-        <section className="referrers">
-          <h3>Referrers</h3>
-          { (this.state.isGettingData) &&
-            <Loader />
-          ||
-            <TeamAnalyticsReferrers 
-              analytics = {this.state.analytics}
-            />
-          }
-        </section>
-        
+
+        <TeamAnalyticsReferrers 
+          analytics = {this.state.analytics}
+          isGettingData = {this.state.isGettingData}
+        />
+
         <TeamAnalyticsProjectPop
           updateProjectdomain = {this.updateProjectdomain.bind(this)}
           currentProjectDomain = {this.state.currentProjectDomain}
