@@ -41,6 +41,9 @@ const getAnalytics = async ({id, api}, requestDate) => {
   }
 }
 
+
+
+
 // layout:
   // Controls
   // Activity (TeamAnalyticsActivity)
@@ -66,8 +69,12 @@ class TeamAnalytics extends React.Component {
   updateTimeFrame(newTime) {
     this.setState({
       currentTimeFrame: newTime,
-      requestDate: dateFromTime(newTime)
-    });
+      requestDate: dateFromTime(newTime),
+      () => 
+      console.log ('afterDateChange')
+      this.updateAnalytics()
+      
+    })
   }
 
   updateProjectdomain(newDomain) {
@@ -75,18 +82,6 @@ class TeamAnalytics extends React.Component {
       currentProjectDomain: newDomain
     });
   }
-
-  dateFrom() {
-    let time = this.state.currentTimeFrame
-    if (time === "Last 4 Weeks") {
-      return moment().subtract(4, 'weeks').valueOf()
-    } else if (time === "Last 2 Weeks") {
-      return moment().subtract(2, 'weeks').valueOf()
-    } else if (time === "Last 24 Hours") {
-      return moment().subtract(24, 'hours').valueOf()
-    }
-  };
-
 
   updateAnalytics() {
     this.setState({
@@ -111,9 +106,9 @@ class TeamAnalytics extends React.Component {
     });
   }
   
-  componentDidUpdate(object nextProps, object nextState) {
-    console.log ('componentDidUpdate')
-  }
+  // componentDidUpdate(object prevProps, object prevState) {
+  //   console.log ('componentDidUpdate')
+  // }
   
   render() {
     return (
