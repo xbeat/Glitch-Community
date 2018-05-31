@@ -83,6 +83,14 @@ class TeamAnalytics extends React.Component {
     });
   }
 
+  updateTotals() {
+    // TODO iterate over this.state.analytics.buckets to get the totals 
+    this.setState({
+      totalAppViews: 5,
+      totalRemixes: 3,
+    });
+  }
+  
   updateAnalytics() {
     this.setState({
       isGettingData: true,
@@ -91,6 +99,8 @@ class TeamAnalytics extends React.Component {
       this.setState({
         isGettingData: false,
         analytics: data,
+      }, () => {
+        this.updateTotals()
       });
     });
   }
@@ -113,11 +123,6 @@ class TeamAnalytics extends React.Component {
     return (
       <section>
         <h2>Analytics</h2>
-        <p>{this.state.currentTimeFrame}</p>
-        <p>{this.state.currentProjectDomain}</p>
-        <p>{this.state.totalAppViews}</p>
-        <p>{this.state.totalRemixes}</p>        
-        
         <section className="controls">
           <TeamAnalyticsTimePop 
             updateTimeFrame = {this.updateTimeFrame.bind(this)}
@@ -135,10 +140,10 @@ class TeamAnalytics extends React.Component {
             <Loader />
           ||
             <p>
-              <span className="total app-views">456</span>
-              App views,&nbsp;
-              <span className="total remixes">123</span>
-              Remixes
+              <span className="total app-views">{this.state.totalAppViews}</span>
+              &nbsp;App views,&nbsp;
+              <span className="total remixes">{this.state.totalRemixes}</span>
+              &nbsp;Remixes
             </p>
           }
         </section>
