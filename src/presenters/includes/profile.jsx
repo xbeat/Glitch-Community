@@ -161,8 +161,8 @@ const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) 
 
   return (
     <React.Fragment>
-      <h1 className="username"><EditableField value={name} update={updateName} placeholder='Your display name, e.g. "Rick Sanchez"'/></h1>
-      <h2 className="login">@<EditableField value={login} update={updateLogin} placeholder='Your unique login name'/></h2>
+      <h1 className="username"><EditableField value={name} update={updateName} placeholder='Your display name, e.g. "Rainbow Dash"'/></h1>
+      <h2 className="login">@<EditableField value={login} update={updateLogin} placeholder='Your unique login name, e.g. "@TheBestPony"'/></h2>
     </React.Fragment>
   );
 };

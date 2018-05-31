@@ -42,6 +42,8 @@ export default function(application, userLoginOrId) {
           fetched: self.user().fetched(),
           isAuthorized: self.isCurrentUser(),
           updateDescription: self.updateDescription,
+          updateName: self.updateName,
+          updateLogin: self.updateLogin,
           uploadCover: self.uploadCover,
           clearCover: self.clearCover,
         };
@@ -110,8 +112,20 @@ export default function(application, userLoginOrId) {
     },
 
     updateDescription(text) {
-      application.user().description(text);
-      return self.updateUser({description: text});
+      return this.updateField("description", text);
+    },
+    
+    updateName(text) {
+      return this.updateField("name", text);
+    },
+    
+    updateLogin(text) {
+      return this.updateField("login", text);
+    },
+    
+    updateField(field, value) {
+      application.user()[field](value);
+      return self.updateUser({[field]: value});
     },
 
     updateUser: debounce(data => application.user().updateUser(application, data)
