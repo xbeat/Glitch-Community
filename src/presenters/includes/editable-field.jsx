@@ -49,4 +49,5 @@ EditableField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
+  mask: PropTypes.string,
 };

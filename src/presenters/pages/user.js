@@ -112,15 +112,15 @@ export default function(application, userLoginOrId) {
     },
 
     updateDescription(text) {
-      return this.updateField("description", text);
+      return self.updateField("description", text);
     },
     
     updateName(text) {
-      return this.updateField("name", text);
+      return self.updateField("name", text);
     },
     
     updateLogin(text) {
-      return this.updateField("login", text);
+      return self.updateField("login", text);
     },
     
     updateField(field, value) {
