@@ -12,6 +12,14 @@ import UsersList from '../users-list.jsx';
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
 
+function trackRemix(domain, id) {
+  analytics.track("Click Remix", {
+    origin: "project page",
+    baseProjectId: id,
+    baseDomain: domain,
+  });
+}
+
 const Embed = ({domain}) => (
   <div className="glitch-embed-wrap" style={{height: '500px', width: '100%',}}>
     <iframe
@@ -43,7 +51,11 @@ const ProjectPage = ({
     <section className="project-buttons">
       <PreviewButton name={domain}/>{' '}
       <EditButton name={domain} isMember={userIsCurrentUser} className={userIsCurrentUser ? "button-cta" : null}/>{' '}
-      <RemixButton name={domain} isMember={userIsCurrentUser} className={userIsCurrentUser ? null : "button-cta"}/>
+      <RemixButton
+        name={domain} isMember={userIsCurrentUser}
+        className={userIsCurrentUser ? null : "button-cta"}
+        onClick={() => trackRemix(domain, id)}
+      />
     </section>
     <section>
       <Embed domain={domain}/>

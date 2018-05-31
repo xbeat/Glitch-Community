@@ -1,4 +1,4 @@
-/* global EDITOR_URL */
+/* global EDITOR_URL analytics */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -31,8 +31,8 @@ EditButton.propTypes = {
   className: PropTypes.string,
 };
 
-export const RemixButton = ({name, isMember, className}) => (
-  <a className={`button button-link ${className}`} href={remixUrl(name)} onClick={() => console.log('click!')}>
+export const RemixButton = ({name, isMember, className, onClick}) => (
+  <a className={`button button-link ${className}`} href={remixUrl(name)} onClick={onClick}>
     {isMember ? 'Remix This' : 'Remix your own'}{' '}
     <span className="emoji microphone" role="presentation"></span>
   </a>
@@ -41,6 +41,7 @@ RemixButton.propTypes = {
   name: PropTypes.string.isRequired,
   isMember: PropTypes.bool,
   className: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export const FeedbackButton = ({name, id}) => {
