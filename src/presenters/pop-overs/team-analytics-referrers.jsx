@@ -3,9 +3,27 @@ import PropTypes from 'prop-types';
 
 import Loader from '../includes/loader.jsx';
 
-const ReferrersList = ({referrers}) => {
+const ReferrersLists = ({analytics}) => {
   return (
-    <p>yolo</p>
+    <React.Fragment>
+      <article className="referrers-column">
+        <h4>App Views</h4>
+        <ul>
+          { analytics.referrers.map(referrer => (
+            <ReferrerItem
+              referrer = {referrer}
+              c
+            />
+          ))}
+        </ul>
+      </article> 
+    </React.Fragment>
+  )
+}
+
+const ReferrerItem = ({referrer}) => {
+  return (
+    <p>{referrer.domain}</p>
   )
 }
 
@@ -16,20 +34,9 @@ const TeamAnalyticsReferrers = ({analytics, isGettingData}) => {
       { (isGettingData) &&
         <Loader />
       ||
-        <React.Fragment>
-          <div className="referrers-column">
-            <h4>App Views</h4>
-            <ReferrersList
-              referrers = {analytics.referrers}
-            />
-          </div>
-          <div className="referrers-column">
-            <h4>Remixes</h4>
-            <ReferrersList
-              referrers = {analytics.remixReferrers}
-            />
-          </div>
-        </React.Fragment>
+        <ReferrersLists
+          analytics = {analytics}
+        />
       }
     </section>
 
