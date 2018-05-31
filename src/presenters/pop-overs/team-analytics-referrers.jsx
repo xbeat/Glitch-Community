@@ -8,9 +8,15 @@ const ReferrerItem = ({referrer, countProperty}) => {
   )
 }
 
+const filterReferrers = ({referrers}) => {
+  return referrers.filter(referrer =>
+    !referrer.self
+  ).slice(0.5)
+}
+
 const TeamAnalyticsReferrers = ({analytics}) => {
-  const appViewReferrers = analytics.referrers.slice(0, 5)
-  const remixReferrers = analytics.remixReferrers.slice(0, 5)
+  const appViewReferrers = filterReferrers(analytics.referrers)
+  const remixReferrers = filterReferrers(analytics.remixReferrers)
   return (
       <article className="referrers-column">
         <h4>App Views</h4>
