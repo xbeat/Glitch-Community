@@ -1,20 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import _ from 'lodash'
 
 const ReferrerItem = ({referrer, countProperty}) => {
+  console.log ('🚗', referrer, countProperty, referrer[countProperty])
   return (
-    <p>{referrer.domain}, {referrer[countProperty]}</p>
+    <p>{referrer.domain}, {countProperty}</p>
   )
 }
 
-const filterReferrers = ({referrers}) => {
-  return referrers.filter(referrer =>
+const filterReferrers = (referrers) => {
+  console.log ('referrers', referrers)
+  let filteredReferrers = referrers.filter(referrer =>
     !referrer.self
   ).slice(0.5)
+  return filteredReferrers
 }
 
 const TeamAnalyticsReferrers = ({analytics}) => {
+  console.log ('analytics', analytics)
   const appViewReferrers = filterReferrers(analytics.referrers)
   const remixReferrers = filterReferrers(analytics.remixReferrers)
   return (
