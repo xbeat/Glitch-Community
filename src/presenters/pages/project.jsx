@@ -66,14 +66,14 @@ const ProjectPage = ({
         </AvatarContainer>
       </InfoContainer>
     </section>
+    <section className="project-buttons">
+      <ProjectButtons domain={domain} id={id} isMember={userIsCurrentUser}/>
+    </section>
     <section>
-      <div className="project-buttons">
-        <ProjectButtons domain={domain} id={id} isMember={userIsCurrentUser}/>
-      </div>
       <Embed domain={domain}/>
-      <div className="feedback-buttons">
-        <FeedbackButton name={domain} id={id} className="button-small button-tertiary"/>
-      </div>
+    </section>
+    <section className="feedback-buttons">
+      <FeedbackButton name={domain} id={id} className="button-small button-tertiary"/>
     </section>
   </article>
 );
