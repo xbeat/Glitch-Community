@@ -5,7 +5,7 @@ import Project from '../../models/project';
 
 import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
-import {Markdown} from '../includes/markdown.jsx';
+import {ReadmeLoader} from '../includes/readme.jsx';
 import {StaticDescription} from '../includes/description-field.jsx';
 import {AvatarContainer, InfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, ReportButton} from '../includes/project-buttons.jsx';
@@ -103,19 +103,21 @@ class ProjectPageLoader extends React.Component {
   render() {
     return (this.state.loaded
       ? (this.state.maybeProject
-        ? <ProjectPage project={this.state.maybeProject} />
+        ? <ProjectPage project={this.state.maybeProject} readme="" />
         : <NotFound name={this.props.name} />)
       : <Loader />);
   }
 }
 ProjectPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
+  get: PropTypes.func.isRequired,
 };
 
 // Let's keep layout in jade until all pages are react
 export default function(application, name) {
   const props = {
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
+    getReadme: () => console.log('oops!'),
     name,
   };
   const content = Reactlet(ProjectPageLoader, props, 'projectpage');
