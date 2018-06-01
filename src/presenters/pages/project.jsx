@@ -41,13 +41,22 @@ PrivateBadge.propTypes = {
   domain: PropTypes.string.isRequired,
 };
 
+const ReadmeLoader = ({getReadme}) => (
+  <DataLoader get={getReadme} error={() => 'oops!'}>
+    {readme => <Markdown>{readme}</Markdown>}
+  </DataLoader>
+);
+ReadmeLoader.propTypes = {
+  getReadme: PropTypes.func.isRequired,
+};
+
 const ProjectPage = ({
   project: {
     avatar, description, domain, id,
     userIsCurrentUser, users,
     ...project // 'private' can't be used as a variable name
   },
-  readme,
+  getReadme,
 }) => (
   <article className="project-page">
     <section id="info">
@@ -65,52 +74,21 @@ const ProjectPage = ({
     <section id="embed">
       <Embed domain={domain}/>
     </section>
-    <section id="readme">
-      <Markdown>{readme}</Markdown>
-    </section>
     <section id="feedback">
       <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
+    </section>
+    <section id="readme">
+      <ReadmeLoader getReadme={getReadme}/>
     </section>
   </article>
 );
 ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
-  readme: PropTypes.string,
 };
 
-class ProjectPageLoader extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      maybeProject: null,
-      loaded: false,
-      error: null,
-    };
-  }
-  
-  componentDidMount() {
-    this.props.get().then(
-      project => this.setState({
-        maybeProject: project,
-        loaded: true,
-      })
-    ).catch(error => {
-      console.error(error);
-      this.setState({error});
-    });
-  }
-  
-  render() {
-    return (this.state.loaded
-      ? (this.state.maybeProject
-        ? <ProjectPage project={this.state.maybeProject} />
-        : <NotFound name={this.props.name} />)
-      : <Loader />);
-  }
-}
-const ProjectPageLoader = ({get, name}) => (
+const ProjectPageLoader = ({name, get, getReadme}) => (
   <DataLoader get={get} error={() => <NotFound name={name}/>}>
-    {project => 
+    {project => <ProjectPage project={project} getReadme={getReadme}/>}
   </DataLoader>
 );
 ProjectPageLoader.propTypes = {
@@ -121,6 +99,7 @@ ProjectPageLoader.propTypes = {
 export default function(application, name) {
   const props = {
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
+    getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
     name,
   };
   const content = Reactlet(ProjectPageLoader, props, 'projectpage');
