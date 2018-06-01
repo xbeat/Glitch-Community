@@ -51,19 +51,24 @@ export default class EditableField extends React.Component {
   }
   
   render() {
+    // We're using a textarea here instead of an <input/> because it's difficult
+    // to get browsers to disable autocomplete for inputs.
+    // ...So this is a textarea that
     return (
-      <div className="content-editable-container">
-        <textarea
-          style={{resize: "none"}}
-          rows="1"
-          id={this.state.inputId}
-          className="content-editable"
-          value={this.props.mask + this.state.value}
-          onChange={this.onChange}
-          spellCheck={false}
-          placeholder={this.props.placeholder}
-        />
-      </div>
+      <textarea
+        style={{
+          resize: "none",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+        }}
+        rows="1"
+        id={this.state.inputId}
+        className="content-editable"
+        value={this.props.mask + this.state.value}
+        onChange={this.onChange}
+        spellCheck={false}
+        placeholder={this.props.placeholder}
+      />
     );
   }
 }

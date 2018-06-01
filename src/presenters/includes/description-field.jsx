@@ -53,7 +53,7 @@ class EditableDescription extends React.Component {
         role="textbox" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
         tabIndex={0} onFocus={this.onFocus} onBlur={this.onBlur}
       >
-        <Markdown>{description}</Markdown>
+        {!!description && <Markdown>{description}</Markdown>}
       </p>
     );
   }
