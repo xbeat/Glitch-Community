@@ -123,14 +123,11 @@ export default function(application, userLoginOrId) {
     },
     
     updateField(field, value) {
-      // n.b. there's a bug here--
-      // the user model isn't being corrected when the api either fails or
-      // modifies the input.
-      // Best to fix with model simplifications.
-      
-      application.user()[field](value);
       return self.updateUser({[field]: value}).then(result => {
         result.data = result.data[field];
+        if(result.success) {
+          application.user()[field](result.data);
+        }
         return result;
       });
     },
