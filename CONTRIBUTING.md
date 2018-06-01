@@ -7,6 +7,10 @@ Please note we have a [code of conduct](https://glitch.com/edit/#!/community?pat
 
 We also having a [style guide](https://glitch.com/edit/#!/community?path=STYLE.md) discussing our coding conventions, styles, and goals.
 
+Wish List
+--------
+Check out our [Wish List](https://glitch.com/edit/#!/community?path=WISH_LIST.md) for ideas of things to get started on.
+
 Contribution Mission
 --------------------
 Anyone in our community can feel welcome and supported in submitting improvements, fixes, and ideas to this Glitch community site.
