@@ -72,5 +72,7 @@ input
     color: text-on-secondary-background
     display: block /* For Firefox */
     
-.content-editable.error:after
-  content: "danger!" 
+.content-editable.error
+  background-color: red
+  &:after
+    content: "danger!" 

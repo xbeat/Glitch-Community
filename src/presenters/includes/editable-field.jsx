@@ -7,18 +7,19 @@ export default class EditableField extends React.Component {
     super(props);
     this.state = {
       value: this.props.value,
-      error: "",
+      error: "fish!",
     };
     
     this.onChange = this.onChange.bind(this);
     this.update = debounce((value) => {
-      this.props.update(value).then(this.handleUpdate);
+      this.props.update(value).then(this.handleUpdate)
     }, 1000);
     this.handleUpdate = this.handleUpdate.bind(this);
   }
   
   handleUpdate({success, data, message}) {
     if(success) {
+      this.setState({error: message||""});
       return;
     }
     
@@ -58,20 +59,23 @@ export default class EditableField extends React.Component {
     // to get browsers to disable autocomplete for inputs.
     // ...So this is a textarea that
     return (
-      <textarea
-        style={{
-          resize: "none",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-        }}
-        rows="1"
-        className={["content-editable", this.state.error ? "error" : "error"].join(" ")}
-        data-error={this.state.error}
-        value={this.props.mask + this.state.value}
-        onChange={this.onChange}
-        spellCheck={false}
-        placeholder={this.props.placeholder}
-      />
+      <React.Fragment>
+        <textarea
+          style={{
+            resize: "none",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+          }}
+          rows="1"
+          className={["content-editable", this.state.error ? "error" : "error"].join(" ")}
+          data-error={this.state.error}
+          value={this.props.mask + this.state.value}
+          onChange={this.onChange}
+          spellCheck={false}
+          placeholder={this.props.placeholder}
+        />
+        {!!this.state.error && <small>:warning:{this.state.error}</small>}
+      </React.Fragment>
     );
   }
 }
