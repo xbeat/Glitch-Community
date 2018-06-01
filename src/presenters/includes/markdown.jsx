@@ -11,7 +11,7 @@ const md = markdownIt({
 }).use(markdownEmoji);
 
 const RawHTML = ({children}) => (
-  <span dangerouslySetInnerHTML={{__html: children}}></span>
+  <span className="markdown-content" dangerouslySetInnerHTML={{__html: children}}></span>
 );
 RawHTML.propTypes = {
   children: PropTypes.string.isRequired,
