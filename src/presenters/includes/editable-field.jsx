@@ -22,6 +22,15 @@ export default class EditableField extends React.Component {
     // https://stackoverflow.com/a/10805198/1388
     value = value.replace(/(\r\n\t|\n|\r\t)/gm,"");
     
+    const mask = this.props.mask;
+    if(mask) {
+      if(value.startsWith(mask)) {
+        //All is ok, the mask is still there.
+      } else if (value.includes(mask)) {
+        //it got moved over; shift it back:
+      }
+    }
+    
     this.setState({ value });
     this.update(value.trim());
   }
@@ -43,13 +52,12 @@ export default class EditableField extends React.Component {
   render() {
     return (
       <div className="content-editable-container">
-        { !!this.props.mask && <label htmlFor={this.state.inputId} className="content-editable-mask">{this.props.mask}</label> }
         <textarea
           style={{resize: "none"}}
           rows="1"
           id={this.state.inputId}
           className="content-editable"
-          value={this.state.value}
+          value={this.props.mask + this.state.value}
           onChange={this.onChange}
           spellCheck={false}
           placeholder={this.props.placeholder}
