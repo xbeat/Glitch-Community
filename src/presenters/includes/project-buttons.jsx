@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const showIcon = "https://cdn.gomix.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg";
 
-const previewUrl = (name) => `https://${name}.glitch.me`;
+const showUrl = (name) => `https://${name}.glitch.me`;
 const editUrl = (name) => `${EDITOR_URL}#!/${name}`;
 const remixUrl = (name) => `${EDITOR_URL}#!/remix/${name}`;
 
@@ -25,13 +25,13 @@ ButtonLink.propTypes = {
   onClick: PropTypes.func,
 };
 
-export const PreviewButton = ({name, ...props}) => (
-  <ButtonLink href={previewUrl(name)} {...props}>
+export const ShowButton = ({name, ...props}) => (
+  <ButtonLink href={showUrl(name)} {...props}>
     <img src={showIcon} alt=""/>
-    {' '}Preview
+    {' '}Show
   </ButtonLink>
 );
-PreviewButton.propTypes = {
+ShowButton.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
@@ -57,7 +57,7 @@ RemixButton.propTypes = {
   isMember: PropTypes.bool,
 };
 
-export const FeedbackButton = ({name, id}) => {
+export const FeedbackButton = ({name, id, ...props}) => {
   const support = "customer-service@fogcreek.com";
   const subject = `[Glitch] I have feelings about ${name}`;
   const body = `\
@@ -79,7 +79,7 @@ Thanks 💖
 (project id: ${id})\
 `;
   const mailto = encodeURI(`mailto:${support}?subject=${subject}&body=${body}`);
-  return <a className="button button-link button-small" href={mailto}>What do you think?</a>;
+  return <ButtonLink href={mailto} {...props}>What do you think?</ButtonLink>;
 };
 FeedbackButton.propTypes = {
   name: PropTypes.string.isRequired,

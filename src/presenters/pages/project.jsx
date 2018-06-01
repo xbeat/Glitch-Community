@@ -9,7 +9,7 @@ import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {StaticDescription} from '../includes/description-field.jsx';
 import {AvatarContainer, InfoContainer} from '../includes/profile.jsx';
-import {PreviewButton, EditButton, RemixButton, FeedbackButton} from '../includes/project-buttons.jsx';
+import {ShowButton, EditButton, RemixButton, FeedbackButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
 
 import LayoutPresenter from '../layout';
@@ -24,7 +24,7 @@ function trackRemix(domain, id) {
 }
 const ProjectButtons = ({domain, id, isMember}) => (
   <React.Fragment>
-    <PreviewButton name={domain}/>
+    <ShowButton name={domain}/>
     <EditButton
       name={domain} isMember={isMember}
       className={isMember ? "button-cta" : null}
@@ -66,15 +66,15 @@ const ProjectPage = ({
         </AvatarContainer>
       </InfoContainer>
     </section>
-    <section className="project-buttons">
-      <ProjectButtons domain={domain} id={id} isMember={userIsCurrentUser}/>
-    </section>
     <section>
+      <div className="project-buttons">
+        <ProjectButtons domain={domain} id={id} isMember={userIsCurrentUser}/>
+      </div>
       <Embed domain={domain}/>
+      <div className="feedback-buttons">
+        <FeedbackButton name={domain} id={id} className="button-small button-tertiary"/>
+      </div>
     </section>
-    <div className="feedback-buttons">
-      <FeedbackButton name={domain} id={id}/>
-    </div>
   </article>
 );
 ProjectPage.propTypes = {
