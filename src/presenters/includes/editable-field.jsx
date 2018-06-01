@@ -12,7 +12,15 @@ export default class EditableField extends React.Component {
     
     this.onChange = this.onChange.bind(this);
     this.update = debounce(this.props.update, 1000);
-    this.handlleUpdate = this.handleUpdate.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+  }
+  
+  handleUpdate({success, data, message}) {
+    if(success) {
+      return;
+    }
+    
+    console.log(message, data);
   }
   
   onChange(evt) {

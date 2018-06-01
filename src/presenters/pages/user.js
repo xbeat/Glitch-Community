@@ -125,7 +125,10 @@ export default function(application, userLoginOrId) {
     
     updateField(field, value) {
       application.user()[field](value);
-      return self.updateUser({[field]: value});
+      return self.updateUser({[field]: value}).then(result => {
+        result.data = result.data[field];
+        return result;
+      });
     },
 
     updateUser: debounce(data => application.user().updateUser(application, data)
