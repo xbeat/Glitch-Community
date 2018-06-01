@@ -50,10 +50,13 @@ Embed.propTypes = {
   domain: PropTypes.string.isRequired,
 };
 
-const privateTooltip = "This project is private";
-const PrivateBadge = () => (
-  <span className="private-project-badge" aria-label={privateTooltip} data-tooltip={privateTooltip}></span>
-);
+const PrivateBadge = ({domain}) => {
+  const tooltip = `Only members of ${domain} can see this page and its code`;
+  return <span className="private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
+};
+PrivateBadge.propTypes = {
+  domain: PropTypes.string.isRequired,
+};
 
 const ProjectPage = ({
   project: {
@@ -66,7 +69,7 @@ const ProjectPage = ({
     <section>
       <InfoContainer>
         <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
-          <h1>{domain} {project.private && <PrivateBadge/>}</h1>
+          <h1>{domain} {project.private && <PrivateBadge domain={domain}/>}</h1>
           <UsersList users={users} />
           <StaticDescription description={description}/>
         </AvatarContainer>
