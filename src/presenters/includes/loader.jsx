@@ -28,21 +28,24 @@ export class DataLoader extends React.Component {
       data => this.setState({
         maybeData: data,
         loaded: true,
-      })
+      }),
       error => {
-      console.error(error);
-      this.setState({
-        maybeError: error
-      });
-    });
+        console.error(error);
+        this.setState({
+          maybeError: error,
+        });
+      }
+    );
   }
   
   render() {
     return (this.state.loaded
-      ? (this.state.maybeData
-        ? this.props.children(this.state.maybeData)
-        : this.props.error(this.state.maybeError))
-      : <Loader />);
+      ? this.props.children(this.state.maybeData)
+      : (this.state.maybeError
+        ? this.props.error(this.state.maybeError)
+        : <Loader/>
+      )
+    );
   }
 }
 DataLoader.propTypes = {

@@ -41,11 +41,11 @@ PrivateBadge.propTypes = {
   domain: PropTypes.string.isRequired,
 };
 
-const ReadmeError = ({response: {status}}) => (
+const ReadmeError = (error) => (console.log(error));/*
   status === 404
     ? <React.Fragment>This project would be even better with a <code>README.md</code></React.Fragment>
     : <React.Fragment>We couldn't load the readme. Try refreshing?</React.Fragment>
-);
+);*/
 const ReadmeLoader = ({getReadme}) => (
   <DataLoader get={getReadme} error={ReadmeError}>
     {readme => <Markdown>{readme}</Markdown>}
@@ -93,7 +93,7 @@ ProjectPage.propTypes = {
 
 const ProjectPageLoader = ({name, get, getReadme}) => (
   <DataLoader get={get} error={() => <NotFound name={name}/>}>
-    {project => <ProjectPage project={project} getReadme={getReadme}/>}
+    {project => project ? <ProjectPage project={project} getReadme={getReadme}/> : <NotFound name={name}/>}
   </DataLoader>
 );
 ProjectPageLoader.propTypes = {
