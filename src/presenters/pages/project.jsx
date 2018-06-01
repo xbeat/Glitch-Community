@@ -50,22 +50,23 @@ Embed.propTypes = {
   domain: PropTypes.string.isRequired,
 };
 
+const privateTooltip = "This project is private";
 const PrivateBadge = () => (
-  <span className="private-project-badge" aria-label="private" data-tooltip="This project is private"></span>
+  <span className="private-project-badge" aria-label={privateTooltip} data-tooltip={privateTooltip}></span>
 );
 
 const ProjectPage = ({
   project: {
     avatar, description, domain, id,
     userIsCurrentUser, users,
-    ...project
+    ...project // 'private' can't be used as a variable name
   },
 }) => (
   <article className="project-page">
     <section>
       <InfoContainer>
         <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
-          <h1>{project.private && <PrivateBadge/>} {domain}</h1>
+          <h1>{domain} {project.private && <PrivateBadge/>}</h1>
           <UsersList users={users} />
           <StaticDescription description={description}/>
         </AvatarContainer>
