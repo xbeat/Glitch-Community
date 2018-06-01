@@ -6,21 +6,24 @@ export default class EditableField extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      focused: false,
       value: this.props.value,
       inputId: null,
     };
     
     this.onChange = this.onChange.bind(this);
     this.update = debounce(this.props.update, 1000);
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
   }
   
   onChange(evt) {
-    const value = evt.currentTarget.value.trim();
+    let value = evt.currentTarget.value;
+
+    // We're pretending to be a single-line input,
+    // so do not permit line breaks
+    // https://stackoverflow.com/a/10805198/1388
+    value = value.replace(/(\r\n\t|\n|\r\t)/gm,"");
+    
     this.setState({ value });
-    this.update(value);
+    this.update(value.trim());
   }
   
   onFocus(evt) {
@@ -41,12 +44,13 @@ export default class EditableField extends React.Component {
     return (
       <div className="content-editable-container">
         { !!this.props.mask && <label htmlFor={this.state.inputId} className="content-editable-mask">{this.props.mask}</label> }
-        <input
+        <textarea
+          style={{resize: "none"}}
+          rows="1"
           id={this.state.inputId}
           className="content-editable"
           value={this.state.value}
           onChange={this.onChange}
-          autoComplete="off"
           spellCheck={false}
           placeholder={this.props.placeholder}
         />
