@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Loader = () => {
   return (
@@ -10,5 +11,40 @@ const Loader = () => {
     </div>    
   );
 };
-
 export default Loader;
+
+export class DataLoader extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      maybeData: null,
+      loaded: false,
+      maybeError: null,
+    };
+  }
+  
+  componentDidMount() {
+    this.props.get().then(
+      data => this.setState({
+        maybeData: data,
+        loaded: true,
+      })
+    ).catch(error => {
+      console.error(error);
+      this.setState({maybeError: error});
+    });
+  }
+  
+  render() {
+    return (this.state.loaded
+      ? (this.state.maybeData
+        ? this.props.children(this.state.maybeData)
+        : this.props.error(this.state.maybeError))
+      : <Loader />);
+  }
+}
+DataLoader.propTypes = {
+  children: PropTypes.func.isRequired,
+  error: PropTypes.func.isRequired,
+  get: PropTypes.func.isRequired,
+};

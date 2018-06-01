@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Project from '../../models/project';
 
-import Loader from '../includes/loader.jsx';
+import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
 import {StaticDescription} from '../includes/description-field.jsx';
@@ -108,6 +108,11 @@ class ProjectPageLoader extends React.Component {
       : <Loader />);
   }
 }
+const ProjectPageLoader = ({get, name}) => (
+  <DataLoader get={get} error={() => <NotFound name={name}/>}>
+    {project => 
+  </DataLoader>
+);
 ProjectPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
