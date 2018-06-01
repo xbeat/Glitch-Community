@@ -1,5 +1,3 @@
-/* global analytics */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -9,35 +7,24 @@ import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {StaticDescription} from '../includes/description-field.jsx';
 import {AvatarContainer, InfoContainer} from '../includes/profile.jsx';
-import {ShowButton, EditButton, RemixButton, FeedbackButton} from '../includes/project-buttons.jsx';
+import {ShowButton, EditButton, ReportButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
 
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
 
-function trackRemix(domain, id) {
-  analytics.track("Click Remix", {
-    origin: "project page",
-    baseProjectId: id,
-    baseDomain: domain,
-  });
-}
-const ProjectButtons = ({domain, id, isMember}) => (
+const ProjectButtons = ({domain, isMember}) => (
   <React.Fragment>
-    <ShowButton name={domain}/>
+    <ShowButton name={domain}
+      className={isMember ? null : "button-cta"}
+    />
     <EditButton
       name={domain} isMember={isMember}
       className={isMember ? "button-cta" : null}
     />
-    <RemixButton
-      name={domain} isMember={isMember}
-      className={isMember ? null : "button-cta"}
-      onClick={() => trackRemix(domain, id)}
-    />
   </React.Fragment>
 );
 ProjectButtons.propTypes = {
-  id: PropTypes.string.isRequired,
   isMember: PropTypes.bool.isRequired,
 };
 
@@ -51,7 +38,7 @@ Embed.propTypes = {
 };
 
 const PrivateBadge = ({domain}) => {
-  const tooltip = `Only members of ${domain} can see this page and its code`;
+  const tooltip = `Only members of ${domain} can see its code`;
   return <span className="private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
 };
 PrivateBadge.propTypes = {
@@ -76,13 +63,13 @@ const ProjectPage = ({
       </InfoContainer>
     </section>
     <section className="project-buttons">
-      <ProjectButtons domain={domain} id={id} isMember={userIsCurrentUser}/>
+      <ProjectButtons domain={domain} isMember={userIsCurrentUser}/>
     </section>
     <section>
       <Embed domain={domain}/>
     </section>
     <section className="feedback-buttons">
-      <FeedbackButton name={domain} id={id} className="button-small button-tertiary"/>
+      <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
     </section>
   </article>
 );

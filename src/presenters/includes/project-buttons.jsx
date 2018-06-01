@@ -57,12 +57,12 @@ RemixButton.propTypes = {
   isMember: PropTypes.bool,
 };
 
-export const FeedbackButton = ({name, id, ...props}) => {
+export const ReportButton = ({name, id, ...props}) => {
   const support = "customer-service@fogcreek.com";
-  const subject = `[Glitch] I have feelings about ${name}`;
+  const subject = `[Glitch] I want to report ${name}`;
   const body = `\
 What do you think of the ${name} project? 
-Is it great? Should we feature it? Is it malicious?
+How is it malicious?
 
 Let us know:
 
@@ -79,9 +79,9 @@ Thanks 💖
 (project id: ${id})\
 `;
   const mailto = encodeURI(`mailto:${support}?subject=${subject}&body=${body}`);
-  return <ButtonLink href={mailto} {...props}>What do you think?</ButtonLink>;
+  return <ButtonLink href={mailto} {...props}>Report Abuse</ButtonLink>;
 };
-FeedbackButton.propTypes = {
+ReportButton.propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
