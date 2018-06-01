@@ -12,3 +12,5 @@ Without further ado,  our wishlist:
 - conversions of .jade files to .jsx files
 - extraction of 'new-stuff'.jade/js into a seperate glitch project with a simple API to power the 'new stuff' content both in this side and in the glitch editor.  Consider RSS. 
 - Small, fun feature ideas for @user, @team, or ~project pages
+- Contributions to our Starter Projects (see items in the 'new project' list) to help them feel more fun, welcoming, instructive, creative, etc. ...Or if you make a new one, pitch it to us and we'll consider it for the list.
+- Design and content contributions to our /search page; prototypes of better/more awesome search.
