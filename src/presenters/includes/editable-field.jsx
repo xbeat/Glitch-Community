@@ -28,8 +28,12 @@ export default class EditableField extends React.Component {
       value = value.split(mask).join("");
     }
     
-    this.setState({ value });
-    this.update(value.trim());
+    this.setState((lastState) => {
+      if(lastState.value.trim() !== value.trim()) {
+        this.update(value.trim());
+      }
+      return {value};
+    });
   }
   
   onFocus(evt) {
