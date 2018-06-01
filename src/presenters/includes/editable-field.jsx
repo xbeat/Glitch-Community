@@ -12,6 +12,7 @@ export default class EditableField extends React.Component {
     
     this.onChange = this.onChange.bind(this);
     this.update = debounce(this.props.update, 1000);
+    this.handlleUpdate = this.handleUpdate.bind(this);
   }
   
   onChange(evt) {
@@ -30,7 +31,7 @@ export default class EditableField extends React.Component {
     
     this.setState((lastState) => {
       if(lastState.value.trim() !== value.trim()) {
-        this.update(value.trim());
+        this.update(value.trim()).then(this.handleUpdate);
       }
       return {value};
     });

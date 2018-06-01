@@ -157,7 +157,25 @@ export default User = function(I, self) {
     updateUser(application, updateData) {
       const userPath = `users/${self.id()}`;
       return application.api().patch(userPath, updateData)
-        .then(() => console.log('updatedUser')).catch(error => console.error(`updateUser PATCH ${userPath}`, error));
+        .then((data) => {
+          console.log('updatedUser');
+          return {
+            success: true,
+            data: updateData,
+            message: null
+          };
+        }).catch(error => {
+          console.error(`updateUser PATCH ${userPath}`, error);
+          let message = "Unable to update :-(";
+          if(error && error.response && error.response.data && error.response.data.message) {
+            message = error.response.data.message;
+          }
+          return {
+            success: false,
+            data: updateData,
+            message,
+          };
+        });
     },
 
     updateCoverColor(application, color) {
