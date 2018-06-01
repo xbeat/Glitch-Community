@@ -7,7 +7,7 @@ export default class EditableField extends React.Component {
     super(props);
     this.state = {
       value: this.props.value,
-      inputId: null,
+      error: "",
     };
     
     this.onChange = this.onChange.bind(this);
@@ -22,7 +22,14 @@ export default class EditableField extends React.Component {
       return;
     }
     
-    console.log(message, data);
+    // The update failed; we can ignore this if our state has already moved on
+    if(data !== this.state.value.trim()){
+      return;
+    }
+    
+    // Ah, we haven't moved on, and we know the last edit failed.
+    // Ok, display an error.
+    this.setState({error: message||""});
   }
   
   onChange(evt) {
@@ -45,22 +52,7 @@ export default class EditableField extends React.Component {
       }
       return {value};
     });
-  }
-  
-  onFocus(evt) {
-    if (evt.currentTarget === evt.target) {
-      this.setState({focused: true});
-    }
-  }
-  
-  onBlur() {
-    this.setState({focused: false});
-  }
-  
-  componentDidMount() {
-    this.setState({inputId: uniqueId()});
-  }
-  
+  }  
   render() {
     // We're using a textarea here instead of an <input/> because it's difficult
     // to get browsers to disable autocomplete for inputs.
@@ -73,8 +65,8 @@ export default class EditableField extends React.Component {
           overflow: "hidden",
         }}
         rows="1"
-        id={this.state.inputId}
-        className="content-editable"
+        className={["content-editable", this.state.error ? "error" : "error"].join(" ")}
+        data-error={this.state.error}
         value={this.props.mask + this.state.value}
         onChange={this.onChange}
         spellCheck={false}
