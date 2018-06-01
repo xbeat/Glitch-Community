@@ -12,7 +12,7 @@ export default class EditableField extends React.Component {
     
     this.onChange = this.onChange.bind(this);
     this.update = debounce((value) => {
-      this.props.update(value).then(this.handleUpdate);
+      this.props.update(value).then(this.handleUpdate)
     }, 1000);
     this.handleUpdate = this.handleUpdate.bind(this);
   }
@@ -73,7 +73,12 @@ export default class EditableField extends React.Component {
           spellCheck={false}
           placeholder={this.props.placeholder}
         />
-        {!!this.state.error && <span className="error-message"><span role="img" alt="warning">⚠️</span>{this.state.error}</span>}
+        {!!this.state.error && (
+          <span className="error-message">
+            <span role="img" aria-label="Warning">⚠️</span>
+            {this.state.error}
+          </span>
+        )}
       </React.Fragment>
     );
   }

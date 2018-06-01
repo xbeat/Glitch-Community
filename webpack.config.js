@@ -75,7 +75,7 @@ module.exports = () => {
           include: SRC,
           loader: "eslint-loader",
           options: {
-            fix: true,
+            fix: false,
             cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so disable this when reconfiguring
             emitError: false,
             emitWarning: true,
