@@ -24,11 +24,8 @@ export default class EditableField extends React.Component {
     
     const mask = this.props.mask;
     if(mask) {
-      if(value.startsWith(mask)) {
-        //All is ok, the mask is still there.
-      } else if (value.includes(mask)) {
-        //it got moved over; shift it back:
-      }
+      // The mask character is not permitted to occur in the string:
+      value = value.split(mask).join("");
     }
     
     this.setState({ value });
