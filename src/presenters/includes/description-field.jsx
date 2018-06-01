@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
 import Markdown from './markdown.jsx';
+import {debounce} from 'lodash';
 
 class EditableDescription extends React.Component {
   constructor(props) {
@@ -14,12 +15,13 @@ class EditableDescription extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
+    this.update = debounce(this.props.updateDescription, 1000);
   }
   
   onChange(evt) {
     const description = evt.currentTarget.value;
     this.setState({ description });
-    this.props.updateDescription(description.trim());
+    this.update(description.trim());
   }
   
   onFocus(evt) {
