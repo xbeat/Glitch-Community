@@ -98,7 +98,8 @@ export default Project = function(I, self) {
       return application.api(source).get(path)
         .then(function(response) {
           self.readme(response.data);
-          return application.overlayProject(self);}).catch(function(error) {
+          return application.overlayProject(self);
+        }).catch(function(error) {
           console.error("getReadme", error);
           if (error.response.status === 404) {
             return self.readmeNotFound(true);

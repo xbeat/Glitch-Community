@@ -48,7 +48,7 @@ const ProjectPage = ({
   },
 }) => (
   <article className="project-page">
-    <section>
+    <section id="info">
       <InfoContainer>
         <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
           <h1>{domain} {project.private && <PrivateBadge domain={domain}/>}</h1>
@@ -57,13 +57,13 @@ const ProjectPage = ({
         </AvatarContainer>
       </InfoContainer>
     </section>
-    <section className="project-buttons">
+    <section id="buttons">
       <ProjectButtons domain={domain} isMember={userIsCurrentUser}/>
     </section>
-    <section>
+    <section id="embed">
       <Embed domain={domain}/>
     </section>
-    <section className="feedback-buttons">
+    <section id="feedback">
       <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
     </section>
   </article>
