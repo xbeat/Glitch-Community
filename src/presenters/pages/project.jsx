@@ -15,13 +15,8 @@ import Reactlet from '../reactlet';
 
 const ProjectButtons = ({domain, isMember}) => (
   <React.Fragment>
-    <ShowButton name={domain}
-      className={isMember ? null : "button-cta"}
-    />
-    <EditButton
-      name={domain} isMember={isMember}
-      className={isMember ? "button-cta" : null}
-    />
+    <ShowButton name={domain}/>
+    <EditButton name={domain} isMember={isMember}/>
   </React.Fragment>
 );
 ProjectButtons.propTypes = {
