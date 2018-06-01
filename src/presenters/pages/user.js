@@ -131,8 +131,7 @@ export default function(application, userLoginOrId) {
       });
     },
 
-    updateUser: debounce(data => application.user().updateUser(application, data)
-      , 250),
+    updateUser: (data => application.user().updateUser(application, data)),
 
     userHasData() {
       if (application.user().id()) { return true; }

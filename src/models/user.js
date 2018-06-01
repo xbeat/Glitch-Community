@@ -161,11 +161,11 @@ export default User = function(I, self) {
         return {
           success: true,
           data: updateData,
-          message: null
-        }
+          message: null,
+        };
       }).catch(error => {
         console.error(`updateUser PATCH ${userPath}`, error);
-        let message = "Unable to update :-("
+        let message = "Unable to update :-(";
         if(error && error.response && error.response.data && error.response.data.message) {
           message = error.response.data.message;
         }
@@ -173,7 +173,7 @@ export default User = function(I, self) {
           success: false,
           data: updateData,
           message,
-        }
+        };
       });
     },
 
