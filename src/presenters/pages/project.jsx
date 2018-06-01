@@ -5,6 +5,7 @@ import Project from '../../models/project';
 
 import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
+import {Markdown} from '../includes/markdown.jsx';
 import {StaticDescription} from '../includes/description-field.jsx';
 import {AvatarContainer, InfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, ReportButton} from '../includes/project-buttons.jsx';
@@ -46,6 +47,7 @@ const ProjectPage = ({
     userIsCurrentUser, users,
     ...project // 'private' can't be used as a variable name
   },
+  readme,
 }) => (
   <article className="project-page">
     <section id="info">
@@ -63,6 +65,9 @@ const ProjectPage = ({
     <section id="embed">
       <Embed domain={domain}/>
     </section>
+    <section id="readme">
+      <Markdown>{readme}</Markdown>
+    </section>
     <section id="feedback">
       <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
     </section>
@@ -70,6 +75,7 @@ const ProjectPage = ({
 );
 ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
+  readme: PropTypes.string,
 };
 
 class ProjectPageLoader extends React.Component {
