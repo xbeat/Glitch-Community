@@ -29,9 +29,11 @@ export class DataLoader extends React.Component {
         maybeData: data,
         loaded: true,
       })
-    ).catch(error => {
+      error => {
       console.error(error);
-      this.setState({maybeError: error});
+      this.setState({
+        maybeError: error
+      });
     });
   }
   

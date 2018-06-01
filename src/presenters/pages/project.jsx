@@ -26,7 +26,7 @@ ProjectButtons.propTypes = {
 
 const Embed = ({domain}) => (
   <div className="glitch-embed-wrap">
-    <iframe title="embed" src={`https://glitch.com/embed/#!/embed/${domain}?path=README.md`}></iframe>
+    <iframe title="embed" src={`https://glitch.com/embed/#!/embed/${domain}?path=README.md&previewSize=100`}></iframe>
   </div>
 );
 Embed.propTypes = {
@@ -41,8 +41,13 @@ PrivateBadge.propTypes = {
   domain: PropTypes.string.isRequired,
 };
 
+const ReadmeError = ({response: {status}}) => (
+  status === 404
+    ? <React.Fragment>This project would be even better with a <code>README.md</code></React.Fragment>
+    : <React.Fragment>We couldn't load the readme. Try refreshing?</React.Fragment>
+);
 const ReadmeLoader = ({getReadme}) => (
-  <DataLoader get={getReadme} error={() => 'oops!'}>
+  <DataLoader get={getReadme} error={ReadmeError}>
     {readme => <Markdown>{readme}</Markdown>}
   </DataLoader>
 );
