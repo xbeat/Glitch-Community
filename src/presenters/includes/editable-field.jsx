@@ -49,8 +49,8 @@ export default class EditableField extends React.Component {
           autoComplete="off"
           spellCheck={false}
           placeholder={this.props.placeholder}
-          />
-        </div>
+        />
+      </div>
     );
   }
 }
