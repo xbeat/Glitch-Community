@@ -13,7 +13,7 @@ Example:
 
 export default [
   {
-    title: 'Play A Super-Powered Game of Tic-Tac-Toe',
+    title: 'Super-Powered Tic-Tac-Toe',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fnoughts-and-crosses.jpg?1528110244781",
     link: 'https://noughts-and-crosses.glitch.me/'
   }
