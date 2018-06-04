@@ -22,35 +22,40 @@ const ProjectDetails = ({projectDetails}) => (
       </tr>
       <tr>
         <td>Created</td>
+        <td>{projectDetails.createdAt}</td>
+      </tr>
+      <tr>
+        <td>Last code view</td>
+        <td>{projectDetails.lastAccess}</td>
+      </tr>
+
+      <tr>
+        <td>Last edited</td>
+        <td>{projectDetails.lastEditedAt}</td>
+      </tr>
+      <tr>
+        <td>Last remixed</td>
+        <td>{projectDetails.lastRemixedAt}</td>
+      </tr>
+      <tr>
+        <td>Avatar</td>
+        <td>https://cdn.glitch.com/project-avatar/${projectDetails.id}.png</td>
+      </tr>
+      <tr>
+        <td>Total app views</td>
         <td>{projectDetails.description}</td>
       </tr>
       <tr>
-        <td>Description</td>
+        <td>Total code views</td>
+        <td>{projectDetails.numUniqueEditorVisits}</td>
+      </tr>
+      <tr>
+        <td>Total </td>
         <td>{projectDetails.description}</td>
       </tr>
       <tr>
-        <td>Description</td>
-        <td>{projectDetails.description}</td>
-      </tr>
-      <tr>
-        <td>Description</td>
-        <td>{projectDetails.description}</td>
-      </tr>
-      <tr>
-        <td>Description</td>
-        <td>{projectDetails.description}</td>
-      </tr>
-      <tr>
-        <td>Description</td>
-        <td>{projectDetails.description}</td>
-      </tr>
-      <tr>
-        <td>Description</td>
-        <td>{projectDetails.description}</td>
-      </tr>
-      <tr>
-        <td>Description</td>
-        <td>{projectDetails.description}</td>
+        <td>Number of editors</td>
+        <td>{projectDetails.numMembers}</td>
       </tr>
       <tr>
         <td>Description</td>
