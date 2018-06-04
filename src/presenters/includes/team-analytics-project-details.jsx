@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Loader from './loader.jsx';
 
-const getProjectOverview = async (id, api, currentProjectDomain) => {
+const getProjectOverview = async ({id, api, currentProjectDomain}) => {
   let path = `analytics/${id}/project/${currentProjectDomain}/overview`;
   try {
     return await api().get(path);
@@ -23,24 +23,38 @@ class TeamAnalyticsProjectDetails extends React.Component {
 
   
   componentDidMount() {
+    console.log ('getProjectOverview: componentDidMount')
+    getProjectOverview(this.props).then(({data}) => {
+      this.setState({
+        isGettingData: false,
+      }, () => {
+        console.log ('hihi i have data now', data)
+      });
+    });
+
   }
   
   componentWillUpdate() {
-    this.setState({
-      isGettingData: true,
-    }, () => {
-      console.log('get data, update deets')
-    });
+    console.log ('getProjectOverview: componentWillUpdate')
+    // this.setState({
+    //   isGettingData: true,
+    // }, () => {
+    //   console.log('get data, update deets')
+    // });
 
   }
 
   
   render() {
-    { (this.state.isGettingData) &&
-      <Loader />
-    ||
-      <p>yolooo data</p>
-    }
+    return (
+      <React.Fragment>
+        { (this.state.isGettingData) &&
+          <Loader />
+        ||
+          <p>yolooo data</p>
+        }
+      </React.Fragment>
+    )
   }
 };
 
