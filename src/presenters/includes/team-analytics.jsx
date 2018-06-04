@@ -7,8 +7,10 @@ import _ from 'lodash';
 import Loader from './loader.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx';
-import TeamAnalyticsActivity from '../pop-overs/team-analytics-activity.jsx';
-import TeamAnalyticsReferrers from '../pop-overs/team-analytics-referrers.jsx';
+
+import TeamAnalyticsActivity from '../includes/team-analytics-activity.jsx';
+import TeamAnalyticsReferrers from '../includes/team-analytics-referrers.jsx';
+import TeamAnalyticsProjectDetails from '../includes/team-analytics-project-details.jsx';
 
 const dateFromTime = (newTime) => {
   const timeMap = [
@@ -189,7 +191,9 @@ class TeamAnalytics extends React.Component {
           { (this.state.currentProjectDomain === "All Projects") &&
             <p>Select a project for details and the latest remixes</p>
             ||
-            <p>time for details and remixes!!</p>
+            <TeamAnalyticsProjectDetails
+              currentProjectDomain = {this.state.currentProjectDomain}
+            />
           }
         </section>
 
