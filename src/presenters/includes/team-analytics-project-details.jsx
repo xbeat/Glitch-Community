@@ -73,8 +73,11 @@ const ProjectDetails = ({projectDetails, projectAvatar}) => (
   </article>
 )
 
-const ProjectRemix = ({remix}) => (
-  <p>projectRemix item {remix.domain}</p>
+const ProjectRemix = ({remix, projectAvatar}) => (
+  <li>
+    <img src={projectAvatar} />
+    <p>{remix.domain}</p>
+  </li>
 )
 
 class TeamAnalyticsProjectDetails extends React.Component {
@@ -84,18 +87,6 @@ class TeamAnalyticsProjectDetails extends React.Component {
       isGettingData: true,
       projectDetails: {},
       projectRemixes: [],
-      // projectId: "",
-      // projectCreatedAt: "",
-      // projectDescription: "",
-      // projectAvatar: "", // https://cdn.glitch.com/project-avatar/${id}.png 
-      // projectLastAccess: "",
-      // projectLastEdited: "",
-      // projectLastRemixed: "",
-      // projectTotalAppVisits: 0,
-      // projectTotalCodeVisits: 0,
-      // projectDirectRemixes: 0,
-      // projectTotalRemixes: 0,
-      // projectRemixes: [],
     };
   }
 
@@ -132,15 +123,17 @@ class TeamAnalyticsProjectDetails extends React.Component {
           <React.Fragment>
             <ProjectDetails 
               projectDetails = {this.state.projectDetails}
-              projectAvatar = {`https://cdn.glitch.com/project-avatar/${this.state.projectDetails.id}.png`}
+              projectAvatar = {avatarUrl(this.state.projectDetails.id)}
             />
-            <p>iterate here</p>
             <h4>Latest Remixes</h4>
-            { this.state.projectRemixes.map(remix => (
-              <ProjectRemix
-                remix = {remix}
-              />
-            ))}
+            <ul>
+              { this.state.projectRemixes.map(remix => (
+                <ProjectRemix
+                  remix = {remix}
+                  projectAvatar = {avatarUrl(remix.id)}
+                />
+              ))}
+            </ul>
           </React.Fragment>
         }
       </React.Fragment>
