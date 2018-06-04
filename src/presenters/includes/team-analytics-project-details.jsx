@@ -70,7 +70,9 @@ const ProjectDetails = ({projectDetails}) => {
   )
 }
 
-const ProjectRemix = ({remix}) => {
+const ProjectRemixItem = ({remix}) => {
+  // should i expose more info (dates, views, users, remixes), or be more visually impactful with a grid of imgs?
+  // impact vs substance (ppl are Actually using these)
   let projectAvatar = avatarUrl(remix.id)
   let url = `/~${remix.domain}`
   return (
@@ -130,7 +132,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
             <h4>Latest Remixes</h4>
             <ul>
               { this.state.projectRemixes.map(remix => (
-                <ProjectRemix
+                <ProjectRemixItem
                   remix = {remix}
                 />
               ))}
