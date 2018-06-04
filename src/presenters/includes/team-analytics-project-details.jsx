@@ -21,7 +21,6 @@ const avatarUrl = (id) => {
 const ProjectDetails = ({projectDetails}) => {
   let projectAvatar = avatarUrl(projectDetails.id)
   let projectUrl = `/~${projectDetails.domain}`
-
   // convert to a paragraph?
   return (
     <article className="project-details">
@@ -29,38 +28,40 @@ const ProjectDetails = ({projectDetails}) => {
         <img className="project-avatar" src={projectAvatar} />
       </a>
       <p>{projectDetails.description}</p>
+
+      
       <table>
         <tr>
           <td>Created</td>
-          <td><span className="emoji sparkles" /> {moment(projectDetails.createdAt).fromNow()}</td>
+          <td>{moment(projectDetails.createdAt).fromNow()}</td>
         </tr>
         <tr>
           <td>Last code view</td>
-          <td><span className="emoji clock" /> {moment(projectDetails.lastAccess).fromNow()}</td>
+          <td>{moment(projectDetails.lastAccess).fromNow()}</td>
         </tr>
         <tr>
           <td>Last edited</td>
-          <td><span className="emoji clock" /> {moment(projectDetails.lastEditedAt).fromNow()}</td>
+          <td>{moment(projectDetails.lastEditedAt).fromNow()}</td>
         </tr>
         <tr>
           <td>Last remixed</td>
-          <td><span className="emoji clock" /> {moment(projectDetails.lastRemixedAt).fromNow()}</td>
+          <td>{moment(projectDetails.lastRemixedAt).fromNow()}</td>
         </tr>
         <tr>
           <td>Total app views</td>
-          <td><span className="emoji eyes" /> {projectDetails.numAppVisits}</td>
+          <td>{projectDetails.numAppVisits}</td>
         </tr>
         <tr>
           <td>Total code views</td>
-          <td><span className="emoji eyes" /> {projectDetails.numUniqueEditorVisits}</td>
+          <td>{projectDetails.numUniqueEditorVisits}</td>
         </tr>
         <tr>
           <td>Total direct remixes</td>
-          <td><span className="emoji microphone" /> {projectDetails.numDirectRemixes}</td>
+          <td>{projectDetails.numDirectRemixes}</td>
         </tr>
         <tr>
           <td>Total remixes</td>
-          <td><span className="emoji microphone" /> {projectDetails.numTotalRemixes}</td>
+          <td>{projectDetails.numTotalRemixes}</td>
         </tr>
         { (projectDetails.baseProject.domain) &&
           <tr>
@@ -69,6 +70,7 @@ const ProjectDetails = ({projectDetails}) => {
           </tr>
         }
       </table>
+      
       
       
       
@@ -110,7 +112,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
       this.setState({
         isGettingData: false,
         projectDetails: data,
-        projectRemixes: data.remixes.slice(0, RECENT_REMIXES_COUNT)
+        projectRemixes: data.remixes.slice(0, RECENT_REMIXES_COUNT),
       }, () => {
         console.log ('update project details', data)
         // <ProjectDetails 
