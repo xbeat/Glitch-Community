@@ -15,16 +15,18 @@ const getProjectDetails = async ({id, api, currentProjectDomain}) => {
 
 const ProjectDetails = ({projectDetails, projectAvatar}) => (
   <article className="project-details">
-    <img src="https://cdn.glitch.com/project-avatar/${projectDetails.id}.png" />
+    <img className="project-avatar" src={projectAvatar} />
     <table>
       <tr>
         <td>Description</td>
         <td>{projectDetails.description}</td>
       </tr>
+
       <tr>
         <td>Created</td>
         <td>{projectDetails.createdAt}</td>
       </tr>
+
       <tr>
         <td>Last code view</td>
         <td>{projectDetails.lastAccess}</td>
@@ -50,10 +52,12 @@ const ProjectDetails = ({projectDetails, projectAvatar}) => (
         <td>Total direct remixes</td>
         <td>{projectDetails.numDirectRemixes}</td>
       </tr>
+
       <tr>
         <td>Total remixes</td>
         <td>{projectDetails.numTotalRemixes}</td>
       </tr>
+
       { (projectDetails.baseProject.domain) &&
         <tr>
           <td>Originally remixed from</td>
@@ -125,11 +129,11 @@ class TeamAnalyticsProjectDetails extends React.Component {
           <React.Fragment>
             <ProjectDetails 
               projectDetails = {this.state.projectDetails}
-              projectAvatar = "https://cdn.glitch.com/project-avatar/${this.state.projectDetails.id}.png"
+              projectAvatar = {"https://cdn.glitch.com/project-avatar/" + this.state.projectDetails.id + ".png"}
             />
             <p>iterate here</p>
             <ProjectRemixes 
-              projectRemixes = {this.state.projectRemixes}            
+              projectRemixes = {this.state.projectRemixes}
             />            
           </React.Fragment>
         }
