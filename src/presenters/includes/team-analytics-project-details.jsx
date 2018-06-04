@@ -17,68 +17,71 @@ const avatarUrl = (id) => {
   return `https://cdn.glitch.com/project-avatar/${id}.png`
 }
 
-const ProjectDetails = ({projectDetails, projectAvatar}) => (
-  <article className="project-details">
-    <img className="project-avatar" src={projectAvatar} />
-    <table>
-      <tr>
-        <td>Description</td>
-        <td>{projectDetails.description}</td>
-      </tr>
-
-      <tr>
-        <td>Created</td>
-        <td>{moment(projectDetails.createdAt).fromNow()}</td>
-      </tr>
-
-      <tr>
-        <td>Last code view</td>
-        <td>{moment(projectDetails.lastAccess).fromNow()}</td>
-      </tr>
-
-      <tr>
-        <td>Last edited</td>
-        <td>{moment(projectDetails.lastEditedAt).fromNow()}</td>
-      </tr>
-      <tr>
-        <td>Last remixed</td>
-        <td>{moment(projectDetails.lastRemixedAt).fromNow()}</td>
-      </tr>
-      <tr>
-        <td>Total app views</td>
-        <td>{projectDetails.description}</td>
-      </tr>
-      <tr>
-        <td>Total code views</td>
-        <td>{projectDetails.numUniqueEditorVisits}</td>
-      </tr>
-      <tr>
-        <td>Total direct remixes</td>
-        <td>{projectDetails.numDirectRemixes}</td>
-      </tr>
-
-      <tr>
-        <td>Total remixes</td>
-        <td>{projectDetails.numTotalRemixes}</td>
-      </tr>
-
-      { (projectDetails.baseProject.domain) &&
+const ProjectDetails = ({projectDetails}) => {
+  const projectAvatar = avatarUrl(projectDetails.id)
+  return (
+    <article className="project-details">
+      <img className="project-avatar" src={projectAvatar} />
+      <table>
         <tr>
-          <td>Originally remixed from</td>
-          <td>{projectDetails.baseProject.domain}</td>
+          <td>Description</td>
+          <td>{projectDetails.description}</td>
         </tr>
-      }
+        <tr>
+          <td>Created</td>
+          <td>{moment(projectDetails.createdAt).fromNow()}</td>
+        </tr>
+        <tr>
+          <td>Last code view</td>
+          <td>{moment(projectDetails.lastAccess).fromNow()}</td>
+        </tr>
+        <tr>
+          <td>Last edited</td>
+          <td>{moment(projectDetails.lastEditedAt).fromNow()}</td>
+        </tr>
+        <tr>
+          <td>Last remixed</td>
+          <td>{moment(projectDetails.lastRemixedAt).fromNow()}</td>
+        </tr>
+        <tr>
+          <td>Total app views</td>
+          <td>{projectDetails.description}</td>
+        </tr>
+        <tr>
+          <td>Total code views</td>
+          <td>{projectDetails.numUniqueEditorVisits}</td>
+        </tr>
+        <tr>
+          <td>Total direct remixes</td>
+          <td>{projectDetails.numDirectRemixes}</td>
+        </tr>
+        <tr>
+          <td>Total remixes</td>
+          <td>{projectDetails.numTotalRemixes}</td>
+        </tr>
+        { (projectDetails.baseProject.domain) &&
+          <tr>
+            <td>Originally remixed from</td>
+            <td>{projectDetails.baseProject.domain}</td>
+          </tr>
+        }
+      </table>
+    </article>
+  )
+}
 
-    </table>
-  </article>
-)
-
-const ProjectRemix = ({remix, projectAvatar}) => (
-  <li>
-    <img src={projectAvatar} />
-    <p>{remix.domain}</p>
-  </li>
-)
+const ProjectRemix = ({remix}) => {
+  let projectAvatar = avatarUrl(remix.id)
+  let url = `/~${remix.domain}`
+  return (
+    <li>
+      <a href={url}>
+        <img src={projectAvatar} />
+        <p>{remix.domain}</p>
+      </a>
+    </li>
+  )
+}
 
 class TeamAnalyticsProjectDetails extends React.Component {
   constructor(props) {
@@ -123,14 +126,12 @@ class TeamAnalyticsProjectDetails extends React.Component {
           <React.Fragment>
             <ProjectDetails 
               projectDetails = {this.state.projectDetails}
-              projectAvatar = {avatarUrl(this.state.projectDetails.id)}
             />
             <h4>Latest Remixes</h4>
             <ul>
               { this.state.projectRemixes.map(remix => (
                 <ProjectRemix
                   remix = {remix}
-                  projectAvatar = {avatarUrl(remix.id)}
                 />
               ))}
             </ul>
