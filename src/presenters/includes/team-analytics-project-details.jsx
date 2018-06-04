@@ -95,11 +95,6 @@ const ProjectDetails = ({projectDetails}) => {
       
       
       
-      <table>
-        <th>
-          <t
-        </th>
-      </table>
       
       
       
@@ -115,13 +110,9 @@ const ProjectRemixItem = ({remix}) => {
   let projectAvatar = avatarUrl(remix.id)
   let projectUrl = `/~${remix.domain}`
   return (
-    <li>
-      <a href={projectUrl}>
-        <img src={projectAvatar} />
-      </a>
-      <p>{remix.domain}</p>
-
-    </li>
+    <a href={projectUrl}>
+      <img src={projectAvatar} />
+    </a>
   )
 }
 
@@ -170,14 +161,12 @@ class TeamAnalyticsProjectDetails extends React.Component {
               projectDetails = {this.state.projectDetails}
             />
             <h4>Latest Remixes</h4>
-            <ul>
-              { this.state.projectRemixes.map(remix => (
-                <ProjectRemixItem
-                  key = {remix.id}
-                  remix = {remix}
-                />
-              ))}
-            </ul>
+            { this.state.projectRemixes.map(remix => (
+              <ProjectRemixItem
+                key = {remix.id}
+                remix = {remix}
+              />
+            ))}
           </React.Fragment>
         }
       </React.Fragment>
