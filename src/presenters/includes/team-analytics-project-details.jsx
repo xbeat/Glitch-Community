@@ -92,18 +92,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
       isGettingData: true,
       projectDetails: {},
       projectRemixes: [],
-      previousProjectDomain: "",
     };
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    console.log ('🌴 getDerivedStateFromProps', nextProps, prevState)
-    if (nextProps.currentProjectDomain !== prevState.previousProjectDomain) {
-      return {
-        previousProjectDomain: nextProps.currentProjectDomain,
-      };
-    }
-    return null;
   }
 
   updateProjectDetails() {
@@ -124,7 +113,9 @@ class TeamAnalyticsProjectDetails extends React.Component {
   }
   
   componentDidUpdate(prevProps, prevState) {
-    console.log ('componentDidUpdate', prevProps, prevState)
+    if (this.props.currentProjectDomain !== prevProps.currentProjectDomain) {
+      this.updateProjectDetails()
+    }
   }
     
   render() {
