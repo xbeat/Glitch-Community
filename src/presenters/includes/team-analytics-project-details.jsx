@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 
 import Loader from './loader.jsx';
 
-const getProjectOverview = async ({id, api, currentProjectDomain}) => {
+const getProjectDetails = async ({id, api, currentProjectDomain}) => {
   let path = `analytics/${id}/project/${currentProjectDomain}/overview`;
   try {
     return await api().get(path);
   } catch (error) {
-    console.error('getProjectOverview', error);
+    console.error('getProjectDetails', error);
   }
 }
+
 
 
 class TeamAnalyticsProjectDetails extends React.Component {
@@ -23,13 +24,12 @@ class TeamAnalyticsProjectDetails extends React.Component {
 
   
   componentDidMount() {
-    console.log ('getProjectOverview: componentDidMount')
-    getProjectOverview(this.props).then(({data}) => {
-      console.log ('hihi i have data now', data)
+    console.log ('getProjectOverview: componentDidMount')    
+    getProjectDetails(this.props).then(({data}) => {
       this.setState({
         isGettingData: false,
       }, () => {
-        console.log ('hihi i have data now???', data)
+        console.log ('hihi i have data now', data)
       });
     });
 
