@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 
 import Loader from './loader.jsx';
-const RECENT_REMIXES_COUNT = 60
+const RECENT_REMIXES_COUNT = 100
 
 const getProjectDetails = async ({id, api, currentProjectDomain}) => {
   let path = `analytics/${id}/project/${currentProjectDomain}/overview`;
@@ -73,13 +73,11 @@ const ProjectDetails = ({projectDetails}) => {
 }
 
 const ProjectRemixItem = ({remix}) => {
-  // should i expose more info (dates, views, users, remixes), or be more visually impactful with a grid of imgs?
-  // impact vs substance (ppl are Actually using these)
   let projectAvatar = avatarUrl(remix.id)
   let projectUrl = `/~${remix.domain}`
   return (
-    <a href={projectUrl} dataTooltip={remix.domain} dataTooltipLeft="true">
-      <img className="avatar" src={projectAvatar} alt={remix.domain} />
+    <a href={projectUrl}>
+      <img className="avatar" src={projectAvatar} alt={remix.domain} dataTooltip={remix.domain} dataTooltipLeft="true"/>
     </a>
   )
 }
@@ -110,7 +108,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
   }
   
   componentWillUpdate() {
-    console.log ('🚗 getProjectOverview: componentWillUpdate')
+    console.log ('🚗🖼 getProjectOverview: componentWillUpdate', this.props.currentProjectDomain)
     // this.setState({
     //   isGettingData: true,
     // }, () => {
