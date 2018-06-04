@@ -20,6 +20,67 @@ const ProjectDetails = ({projectDetails}) => (
         <td>Description</td>
         <td>{projectDetails.description}</td>
       </tr>
+      <tr>
+        <td>Created</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+
+      
+      { (projectDetails.baseProject.domain) &&
+        <tr>
+          <td>Remixed from</td>
+          <td>{projectDetails.baseProject.domain}</td>
+        </tr>
+      }
+
     </table>
   </article>
 //   let details = {
