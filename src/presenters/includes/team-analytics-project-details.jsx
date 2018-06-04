@@ -79,7 +79,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
       // projectId: "",
       // projectCreatedAt: "",
       // projectDescription: "",
-      // projectAvatar: "", // https://cdn.glitch.com/project-avatar/${id}.png
+      // projectAvatar: "", // https://cdn.glitch.com/project-avatar/${id}.png 
       // projectLastAccess: "",
       // projectLastEdited: "",
       // projectLastRemixed: "",
@@ -124,7 +124,8 @@ class TeamAnalyticsProjectDetails extends React.Component {
         ||
           <React.Fragment>
             <ProjectDetails 
-              projectDetails = {this.state.projectDetails}            
+              projectDetails = {this.state.projectDetails}
+              projectAvatar = "https://cdn.glitch.com/project-avatar/${this.state.projectDetails.id}.png"
             />
             <p>iterate here</p>
             <ProjectRemixes 
