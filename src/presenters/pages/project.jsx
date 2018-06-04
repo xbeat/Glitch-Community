@@ -70,11 +70,9 @@ const ProjectPage = ({
           <h1>{domain} {project.private && <PrivateBadge domain={domain}/>}</h1>
           <UsersList users={users} />
           <StaticDescription description={description}/>
+          <p id="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/></p>
         </AvatarContainer>
       </InfoContainer>
-    </section>
-    <section id="buttons">
-      <ProjectButtons domain={domain} isMember={userIsCurrentUser}/>
     </section>
     <section id="embed">
       <Embed domain={domain}/>
