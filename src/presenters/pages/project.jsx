@@ -79,11 +79,11 @@ const ProjectPage = ({
     <section id="embed">
       <Embed domain={domain}/>
     </section>
-    <section id="feedback">
-      <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
-    </section>
     <section id="readme">
       <ReadmeLoader getReadme={getReadme}/>
+    </section>
+    <section id="feedback">
+      <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
     </section>
   </article>
 );
