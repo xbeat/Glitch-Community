@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment-mini';
 
 import Loader from './loader.jsx';
 
@@ -19,6 +20,18 @@ class TeamAnalyticsProjectDetails extends React.Component {
     super(props);
       this.state = {
       isGettingData: true,
+      projectId: "",
+      projectCreatedAt: "",
+      projectDescription: "",
+      projectAvatar: "", // https://cdn.glitch.com/project-avatar/${id}.png
+      projectLastAccess: "",
+      projectLastEdited: "",
+      projectLastRemixed: "",
+      projectTotalAppVisits: 0,
+      projectTotalCodeVisits: 0,
+      projectDirectRemixes: 0,
+      projectTotalRemixes: 0,
+      projectRemixes: [],
     };
   }
 
@@ -28,8 +41,25 @@ class TeamAnalyticsProjectDetails extends React.Component {
     getProjectDetails(this.props).then(({data}) => {
       this.setState({
         isGettingData: false,
+        projectId: ,
+        projectCreatedAt: ,
+        projectDescription: ,
+        projectAvatar: ,
+        projectLastAccess: ,
+        projectLastEdited: ,
+        projectId: ,
+        projectId: ,
+        projectId: ,
+        projectId: ,
+        projectId: ,
+        projectId: ,
+        projectId: ,
+        projectId: ,
+        
       }, () => {
-        console.log ('hihi i have data now', data)
+        console.log ('update project details', data)
+        // <ProjectDetails 
+        // />
       });
     });
 
@@ -42,7 +72,6 @@ class TeamAnalyticsProjectDetails extends React.Component {
     // }, () => {
     //   console.log('get data, update deets')
     // });
-
   }
 
   
