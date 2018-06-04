@@ -27,46 +27,47 @@ const ProjectDetails = ({projectDetails}) => {
       <a href={projectUrl}>
         <img className="avatar" src={projectAvatar} />
       </a>
-      <p>{projectDetails.description}</p>
       <table>
-        <tr>
-          <td className="label">Created</td>
-          <td>{moment(projectDetails.createdAt).fromNow()}</td>
-        </tr>
-        <tr>
-          <td>Last code view</td>
-          <td>{moment(projectDetails.lastAccess).fromNow()}</td>
-        </tr>
-        <tr>
-          <td>Last edited</td>
-          <td>{moment(projectDetails.lastEditedAt).fromNow()}</td>
-        </tr>
-        <tr>
-          <td>Last remixed</td>
-          <td>{moment(projectDetails.lastRemixedAt).fromNow()}</td>
-        </tr>
-        <tr>
-          <td>Total app views</td>
-          <td>{projectDetails.numAppVisits}</td>
-        </tr>
-        <tr>
-          <td>Total code views</td>
-          <td>{projectDetails.numUniqueEditorVisits}</td>
-        </tr>
-        <tr>
-          <td>Total direct remixes</td>
-          <td>{projectDetails.numDirectRemixes}</td>
-        </tr>
-        <tr>
-          <td>Total remixes</td>
-          <td>{projectDetails.numTotalRemixes}</td>
-        </tr>
-        { (projectDetails.baseProject.domain) &&
+        <tbody>
           <tr>
-            <td>Originally remixed from</td>
-            <td>{projectDetails.baseProject.domain}</td>
+            <td className="label">Created</td>
+            <td>{moment(projectDetails.createdAt).fromNow()}</td>
           </tr>
-        }
+          <tr>
+            <td className="label">Last code view</td>
+            <td>{moment(projectDetails.lastAccess).fromNow()}</td>
+          </tr>
+          <tr>
+            <td className="label">Last edited</td>
+            <td>{moment(projectDetails.lastEditedAt).fromNow()}</td>
+          </tr>
+          <tr>
+            <td className="label">Last remixed</td>
+            <td>{moment(projectDetails.lastRemixedAt).fromNow()}</td>
+          </tr>
+          <tr>
+            <td className="label">Total app views</td>
+            <td>{projectDetails.numAppVisits}</td>
+          </tr>
+          <tr>
+            <td className="label">Total code views</td>
+            <td>{projectDetails.numUniqueEditorVisits}</td>
+          </tr>
+          <tr>
+            <td className="label">Total direct remixes</td>
+            <td>{projectDetails.numDirectRemixes}</td>
+          </tr>
+          <tr>
+            <td className="label">Total remixes</td>
+            <td>{projectDetails.numTotalRemixes}</td>
+          </tr>
+          { (projectDetails.baseProject.domain) &&
+            <tr>
+              <td className="label">Originally remixed from</td>
+              <td>{projectDetails.baseProject.domain}</td>
+            </tr>
+          }
+        </tbody>
       </table>
     </article>
   )
@@ -94,18 +95,13 @@ class TeamAnalyticsProjectDetails extends React.Component {
     };
   }
 
-  
   componentDidMount() {
     getProjectDetails(this.props).then(({data}) => {
       this.setState({
         isGettingData: false,
         projectDetails: data,
         projectRemixes: data.remixes.slice(0, RECENT_REMIXES_COUNT),
-      }, () => {
-        console.log ('update project details', data)
-        // <ProjectDetails 
-        // />
-      });
+      })
     });
   }
   

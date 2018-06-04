@@ -54,7 +54,7 @@ const TeamAnalyticsReferrers = ({analytics}) => {
         </ul>
         <h4>
           <div className="legend-item"/>
-          App Views
+          Remixes
         </h4>
         <ul>
           { remixReferrers.map((referrer, key) => (
