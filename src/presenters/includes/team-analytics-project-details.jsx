@@ -88,13 +88,26 @@ const ProjectRemixItem = ({remix}) => {
 class TeamAnalyticsProjectDetails extends React.Component {
   constructor(props) {
     super(props);
-      this.state = {
+    this.state = {
       isGettingData: true,
       projectDetails: {},
       projectRemixes: [],
     };
   }
 
+  updateProjectDetails() {
+    this.setState({
+      isGettingData: true
+    })    
+    getProjectDetails(this.props).then(({data}) => {
+      this.setState({
+        isGettingData: false,
+        projectDetails: data,
+        projectRemixes: data.remixes.slice(0, RECENT_REMIXES_COUNT),
+      })
+    });
+  }
+  
   componentDidMount() {
     getProjectDetails(this.props).then(({data}) => {
       this.setState({
