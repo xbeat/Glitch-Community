@@ -30,7 +30,7 @@ const ProjectDetails = ({projectDetails}) => {
       <p>{projectDetails.description}</p>
       <table>
         <tr>
-          <td>Created</td>
+          <td className="label">Created</td>
           <td>{moment(projectDetails.createdAt).fromNow()}</td>
         </tr>
         <tr>
@@ -77,7 +77,9 @@ const ProjectRemixItem = ({remix}) => {
   let projectUrl = `/~${remix.domain}`
   return (
     <a href={projectUrl}>
-      <img className="avatar" src={projectAvatar} alt={remix.domain} dataTooltip={remix.domain} dataTooltipLeft="true"/>
+      <span data-tooltip={remix.domain} data-tooltip-left="true">
+        <img className="avatar" src={projectAvatar} alt={remix.domain}/>
+      </span>
     </a>
   )
 }
@@ -109,11 +111,6 @@ class TeamAnalyticsProjectDetails extends React.Component {
   
   componentWillUpdate() {
     console.log ('🚗🖼 getProjectOverview: componentWillUpdate', this.props.currentProjectDomain)
-    // this.setState({
-    //   isGettingData: true,
-    // }, () => {
-    //   console.log('get data, update deets')
-    // });
   }
   
   render() {
