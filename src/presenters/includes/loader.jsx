@@ -38,6 +38,9 @@ export class DataLoader extends React.Component {
     );
   }
   
+  renderLoading() {
+    
+  
   render() {
     return (this.state.loaded
       ? this.props.children(this.state.maybeData)
