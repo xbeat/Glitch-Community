@@ -13,25 +13,29 @@ const getProjectDetails = async ({id, api, currentProjectDomain}) => {
   }
 }
 
-
+const ProjectDetails = (props) => (
+  <p>blah</p>
+)
 
 class TeamAnalyticsProjectDetails extends React.Component {
   constructor(props) {
     super(props);
       this.state = {
       isGettingData: true,
-      projectId: "",
-      projectCreatedAt: "",
-      projectDescription: "",
-      projectAvatar: "", // https://cdn.glitch.com/project-avatar/${id}.png
-      projectLastAccess: "",
-      projectLastEdited: "",
-      projectLastRemixed: "",
-      projectTotalAppVisits: 0,
-      projectTotalCodeVisits: 0,
-      projectDirectRemixes: 0,
-      projectTotalRemixes: 0,
+      projectDetails: {},
       projectRemixes: [],
+      // projectId: "",
+      // projectCreatedAt: "",
+      // projectDescription: "",
+      // projectAvatar: "", // https://cdn.glitch.com/project-avatar/${id}.png
+      // projectLastAccess: "",
+      // projectLastEdited: "",
+      // projectLastRemixed: "",
+      // projectTotalAppVisits: 0,
+      // projectTotalCodeVisits: 0,
+      // projectDirectRemixes: 0,
+      // projectTotalRemixes: 0,
+      // projectRemixes: [],
     };
   }
 
@@ -41,28 +45,14 @@ class TeamAnalyticsProjectDetails extends React.Component {
     getProjectDetails(this.props).then(({data}) => {
       this.setState({
         isGettingData: false,
-        projectId: ,
-        projectCreatedAt: ,
-        projectDescription: ,
-        projectAvatar: ,
-        projectLastAccess: ,
-        projectLastEdited: ,
-        projectId: ,
-        projectId: ,
-        projectId: ,
-        projectId: ,
-        projectId: ,
-        projectId: ,
-        projectId: ,
-        projectId: ,
-        
+        projectDetails: data,
+        projectRemixes: data.remixes
       }, () => {
         console.log ('update project details', data)
         // <ProjectDetails 
         // />
       });
     });
-
   }
   
   componentWillUpdate() {
@@ -81,7 +71,14 @@ class TeamAnalyticsProjectDetails extends React.Component {
         { (this.state.isGettingData) &&
           <Loader />
         ||
-          <p>yolooo data</p>
+          <React.Fragment>
+            <ProjectDetails 
+              projectDetails = {this.state.projectDetails}            
+            />
+            <ProjectRemixes 
+              projectRemixes = {this.state.projectRemixes}            
+            />            
+          </React.Fragment>
         }
       </React.Fragment>
     )
