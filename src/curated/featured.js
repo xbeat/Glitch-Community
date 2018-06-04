@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Get Your Own Emoji Avatar',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Femoji-avatars.jpg?1527769665035",
-    link: 'http://emoji-avatars.glitch.me/'
+    title: 'Play A Super-Powered Game of Tic-Tac-Toe',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fnoughts-and-crosses.jpg?1528110244781",
+    link: 'https://noughts-and-crosses.glitch.me/'
   }
   , {
-    title: 'Create Beautiful Phyllotaxies',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fpattern-school.jpg?1527769664891",
-    link: 'http://pattern-school.glitch.me'
+    title: 'Test Your Spy Skills with Slaccusation',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fslaccusation.jpg?1528110244558",
+    link: 'http://slaccusation.glitch.me/'
   }
   , {
-    title: 'Can You Find All The Pairs?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fdpla-pairs.jpg?1527769664755",
-    link: 'https://dpla-pairs.glitch.me/'
+    title: 'Patrick Weaver\'s Record Player',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frecord-player.jpg?1528110244910",
+    link: 'http://record-player.glitch.me/'
   }   
 ];
