@@ -17,7 +17,7 @@ const ImageButtons = ({name, uploadImage, clearImage}) => (
   <div className="upload-image-buttons">
     { !!uploadImage && (
       <button className="button-small button-tertiary" onClick={uploadImage}>
-        Upload {name}  
+        Upload {name}
       </button>
     )}
     { !!clearImage && (
