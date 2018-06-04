@@ -129,7 +129,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
           <React.Fragment>
             <ProjectDetails 
               projectDetails = {this.state.projectDetails}
-              projectAvatar = {"https://cdn.glitch.com/project-avatar/" + this.state.projectDetails.id + ".png"}
+              projectAvatar = {`https://cdn.glitch.com/project-avatar/${this.state.projectDetails.id}.png`}
             />
             <p>iterate here</p>
             <ProjectRemixes 
