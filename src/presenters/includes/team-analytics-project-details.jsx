@@ -13,8 +13,9 @@ const getProjectDetails = async ({id, api, currentProjectDomain}) => {
   }
 }
 
-const ProjectDetails = ({projectDetails}) => (
+const ProjectDetails = ({projectDetails, projectAvatar}) => (
   <article className="project-details">
+    <img src="https://cdn.glitch.com/project-avatar/${projectDetails.id}.png" />
     <table>
       <tr>
         <td>Description</td>
@@ -38,10 +39,6 @@ const ProjectDetails = ({projectDetails}) => (
         <td>{projectDetails.lastRemixedAt}</td>
       </tr>
       <tr>
-        <td>Avatar</td>
-        <td>https://cdn.glitch.com/project-avatar/${projectDetails.id}.png</td>
-      </tr>
-      <tr>
         <td>Total app views</td>
         <td>{projectDetails.description}</td>
       </tr>
@@ -50,61 +47,22 @@ const ProjectDetails = ({projectDetails}) => (
         <td>{projectDetails.numUniqueEditorVisits}</td>
       </tr>
       <tr>
-        <td>Total </td>
-        <td>{projectDetails.description}</td>
+        <td>Total direct remixes</td>
+        <td>{projectDetails.numDirectRemixes}</td>
       </tr>
       <tr>
-        <td>Number of editors</td>
-        <td>{projectDetails.numMembers}</td>
+        <td>Total remixes</td>
+        <td>{projectDetails.numTotalRemixes}</td>
       </tr>
-      <tr>
-        <td>Description</td>
-        <td>{projectDetails.description}</td>
-      </tr>
-      <tr>
-        <td>Description</td>
-        <td>{projectDetails.description}</td>
-      </tr>
-      <tr>
-        <td>Description</td>
-        <td>{projectDetails.description}</td>
-      </tr>
-      <tr>
-        <td>Description</td>
-        <td>{projectDetails.description}</td>
-      </tr>
-      <tr>
-        <td>Description</td>
-        <td>{projectDetails.description}</td>
-      </tr>
-
-      
       { (projectDetails.baseProject.domain) &&
         <tr>
-          <td>Remixed from</td>
+          <td>Originally remixed from</td>
           <td>{projectDetails.baseProject.domain}</td>
         </tr>
       }
 
     </table>
   </article>
-//   let details = {
-//         // projectId: "",
-//       // projectCreatedAt: "",
-//       // projectDescription: "",
-//       // projectAvatar: "", // https://cdn.glitch.com/project-avatar/${id}.png
-//       // projectLastAccess: "",
-//       // projectLastEdited: "",
-//       // projectLastRemixed: "",
-//       // projectTotalAppVisits: 0,
-//       // projectTotalCodeVisits: 0,
-//       // projectDirectRemixes: 0,
-//       // projectTotalRemixes: 0,
-//       // projectRemixes: [],
-
-//   }
-  
-  // <p>{projectDetails.domain}</p>
 )
 
 const ProjectRemixes = ({projectRemixes}) => (
