@@ -12,7 +12,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(compression());
 
-app.use('/help', proxy('help-center.glitch.me'));
+app.use('/help', proxy('help-center.glitch.me', {
+  preserveHostHdr: false,
+  https: true,
+}));
 
 const router = require('./routes')();
 app.use('/', router);
