@@ -8,7 +8,7 @@ const md = markdownIt({
   breaks: true,
   linkify: true,
   typographer: true,
-}).use(markdownEmoji);
+}).disable('smartquotes').use(markdownEmoji);
 
 const RawHTML = ({children}) => (
   children ? <span dangerouslySetInnerHTML={{__html: children}}></span> : null
