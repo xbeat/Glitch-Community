@@ -38,16 +38,21 @@ export class DataLoader extends React.Component {
     );
   }
   
+  renderLoader() {
+    return <Loader/>;
+  }
+  
   renderLoading() {
-    
+    return (this.state.maybeError
+      ? this.props.error(this.state.maybeError)
+      : this.renderLoader()
+    );
+  }
   
   render() {
     return (this.state.loaded
       ? this.props.children(this.state.maybeData)
-      : (this.state.maybeError
-        ? this.props.error(this.state.maybeError)
-        : <Loader/>
-      )
+      : this.renderLoading()
     );
   }
 }
