@@ -124,7 +124,7 @@ class TeamAnalytics extends React.Component {
   
   render() {
     return (
-      <section>
+      <section className="analytics">
         <h2>Analytics</h2>
         <section className="controls">
           <TeamAnalyticsTimePop 
