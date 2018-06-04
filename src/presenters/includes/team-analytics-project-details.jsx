@@ -32,7 +32,10 @@ const ProjectDetails = ({projectDetails}) => {
           <td>{moment(projectDetails.createdAt).fromNow()}</td>
         </tr>
         <tr>
-          <td>Last code view</td>
+          <td>
+            <span className="emoji eyes" />
+            Last code view
+          </td>
           <td>{moment(projectDetails.lastAccess).fromNow()}</td>
         </tr>
         <tr>
@@ -44,15 +47,24 @@ const ProjectDetails = ({projectDetails}) => {
           <td>{moment(projectDetails.lastRemixedAt).fromNow()}</td>
         </tr>
         <tr>
-          <td>Total app views</td>
+          <td>
+            <span className="emoji eyes" />
+            Total app views
+          </td>
           <td>{projectDetails.description}</td>
         </tr>
         <tr>
-          <td>Total code views</td>
+          <td>
+            <span className="emoji eyes" />
+            Total code views
+          </td>
           <td>{projectDetails.numUniqueEditorVisits}</td>
         </tr>
         <tr>
-          <td>Total direct remixes</td>
+          <td>
+            <span className="emoji eyes" />
+            Total direct remixes
+          </td>
           <td>{projectDetails.numDirectRemixes}</td>
         </tr>
         <tr>
