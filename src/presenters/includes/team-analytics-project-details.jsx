@@ -25,11 +25,9 @@ const ProjectDetails = ({projectDetails}) => {
   return (
     <article className="project-details">
       <a href={projectUrl}>
-        <img className="project-avatar" src={projectAvatar} />
+        <img className="avatar" src={projectAvatar} />
       </a>
       <p>{projectDetails.description}</p>
-
-      
       <table>
         <tr>
           <td>Created</td>
@@ -70,16 +68,6 @@ const ProjectDetails = ({projectDetails}) => {
           </tr>
         }
       </table>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
     </article>
   )
 }
@@ -90,8 +78,8 @@ const ProjectRemixItem = ({remix}) => {
   let projectAvatar = avatarUrl(remix.id)
   let projectUrl = `/~${remix.domain}`
   return (
-    <a href={projectUrl}>
-      <img src={projectAvatar} alt={remix.domain} dataTooltip={remix.domain} dataTooltipLeft="true" />
+    <a href={projectUrl} dataTooltip={remix.domain} dataTooltipLeft="true">
+      <img className="avatar" src={projectAvatar} alt={remix.domain} />
     </a>
   )
 }
