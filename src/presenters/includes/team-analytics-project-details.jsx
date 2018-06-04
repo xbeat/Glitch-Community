@@ -109,13 +109,12 @@ class TeamAnalyticsProjectDetails extends React.Component {
   }
   
   componentDidMount() {
-    getProjectDetails(this.props).then(({data}) => {
-      this.setState({
-        isGettingData: false,
-        projectDetails: data,
-        projectRemixes: data.remixes.slice(0, RECENT_REMIXES_COUNT),
-      })
-    });
+    this.updateProjectDetails()
+  }
+  
+  static getDerivedStateFromProps(props, state) {
+    console.log ('🌴update time', props)
+    this.updateProjectDetails()
   }
   
   componentWillUpdate() {

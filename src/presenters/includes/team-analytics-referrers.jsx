@@ -13,7 +13,6 @@ const countTotals = (data, countProperty) => {
 
 const ReferrerItem = ({referrer, countProperty, data}) => {
   const total = countTotals(data, countProperty)
-  console.log ('total', countProperty, total)
   const count = referrer[countProperty]
   const progress = Math.max(Math.round(count / total * 100), 5)
   return (
@@ -33,7 +32,6 @@ const filterReferrers = (referrers) => {
 }
 
 const TeamAnalyticsReferrers = ({analytics}) => {
-  console.log ('🌹 analytics.referrers', analytics.referrers)
   const appViewReferrers = filterReferrers(analytics.referrers)
   const remixReferrers = filterReferrers(analytics.remixReferrers)
   return (
