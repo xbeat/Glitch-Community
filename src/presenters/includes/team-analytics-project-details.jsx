@@ -13,6 +13,10 @@ const getProjectDetails = async ({id, api, currentProjectDomain}) => {
   }
 }
 
+const avatarUrl = (id) => {
+  return `https://cdn.glitch.com/project-avatar/${id}.png`
+}
+
 const ProjectDetails = ({projectDetails, projectAvatar}) => (
   <article className="project-details">
     <img className="project-avatar" src={projectAvatar} />
@@ -24,21 +28,21 @@ const ProjectDetails = ({projectDetails, projectAvatar}) => (
 
       <tr>
         <td>Created</td>
-        <td>{projectDetails.createdAt}</td>
+        <td>{moment(projectDetails.createdAt).fromNow()}</td>
       </tr>
 
       <tr>
         <td>Last code view</td>
-        <td>{projectDetails.lastAccess}</td>
+        <td>{moment(projectDetails.lastAccess).fromNow()}</td>
       </tr>
 
       <tr>
         <td>Last edited</td>
-        <td>{projectDetails.lastEditedAt}</td>
+        <td>{moment(projectDetails.lastEditedAt).fromNow()}</td>
       </tr>
       <tr>
         <td>Last remixed</td>
-        <td>{projectDetails.lastRemixedAt}</td>
+        <td>{moment(projectDetails.lastRemixedAt).fromNow()}</td>
       </tr>
       <tr>
         <td>Total app views</td>
@@ -69,8 +73,8 @@ const ProjectDetails = ({projectDetails, projectAvatar}) => (
   </article>
 )
 
-const ProjectRemixes = ({projectRemixes}) => (
-  <p>projectRemix item</p>
+const ProjectRemix = ({remix}) => (
+  <p>projectRemix item {remix.domain}</p>
 )
 
 class TeamAnalyticsProjectDetails extends React.Component {
@@ -101,7 +105,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
       this.setState({
         isGettingData: false,
         projectDetails: data,
-        projectRemixes: data.remixes
+        projectRemixes: data.remixes.slice(0, 30)
       }, () => {
         console.log ('update project details', data)
         // <ProjectDetails 
@@ -118,7 +122,6 @@ class TeamAnalyticsProjectDetails extends React.Component {
     //   console.log('get data, update deets')
     // });
   }
-
   
   render() {
     return (
@@ -132,9 +135,12 @@ class TeamAnalyticsProjectDetails extends React.Component {
               projectAvatar = {`https://cdn.glitch.com/project-avatar/${this.state.projectDetails.id}.png`}
             />
             <p>iterate here</p>
-            <ProjectRemixes 
-              projectRemixes = {this.state.projectRemixes}
-            />            
+            <h4>Latest Remixes</h4>
+            { this.state.projectRemixes.map(remix => (
+              <ProjectRemix
+                remix = {remix}
+              />
+            ))}
           </React.Fragment>
         }
       </React.Fragment>
