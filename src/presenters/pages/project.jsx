@@ -47,7 +47,7 @@ const ReadmeError = (error) => (
     : <React.Fragment>We couldn't load the readme. Try refreshing?</React.Fragment>
 );
 const ReadmeLoader = ({getReadme}) => (
-  <DataLoader get={getReadme} error={ReadmeError}>
+  <DataLoader get={getReadme} renderError={ReadmeError}>
     {readme => <Markdown>{readme}</Markdown>}
   </DataLoader>
 );
@@ -90,7 +90,7 @@ ProjectPage.propTypes = {
 };
 
 const ProjectPageLoader = ({name, get, getReadme}) => (
-  <DataLoader get={get} error={() => <NotFound name={name}/>}>
+  <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
     {project => project ? <ProjectPage project={project} getReadme={getReadme}/> : <NotFound name={name}/>}
   </DataLoader>
 );
