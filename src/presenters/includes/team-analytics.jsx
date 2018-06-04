@@ -193,6 +193,8 @@ class TeamAnalytics extends React.Component {
             ||
             <TeamAnalyticsProjectDetails
               currentProjectDomain = {this.state.currentProjectDomain}
+              id = {this.props.id}
+              api = {this.props.api}
             />
           }
         </section>
