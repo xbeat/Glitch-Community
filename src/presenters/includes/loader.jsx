@@ -38,26 +38,12 @@ export class DataLoader extends React.Component {
     );
   }
   
-  renderLoader() {
-    return (this.props.renderLoader
-      ? this.props.renderLoader()
-      : <Loader/>
-    );
-  }
-  
-  renderError(error) {
-    return (this.props.renderError
-      ? this.props.renderError(error)
-      : 'Something went wrong, try refreshing?'
-    );
-  }
-  
   render() {
     return (this.state.loaded
       ? this.props.children(this.state.maybeData)
       : (this.state.maybeError
-        ? this.renderError(this.state.maybeError)
-        : this.renderLoader()
+        ? this.props.renderError(this.state.maybeError)
+        : this.props.renderLoader()
       )
     );
   }
@@ -67,4 +53,8 @@ DataLoader.propTypes = {
   get: PropTypes.func.isRequired,
   renderError: PropTypes.func,
   renderLoader: PropTypes.func,
+};
+DataLoader.defaultProps = {
+  renderError: () => 'Something went wrong, try refreshing?',
+  renderLoader: () => <Loader/>,
 };
