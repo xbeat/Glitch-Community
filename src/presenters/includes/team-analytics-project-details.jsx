@@ -25,10 +25,11 @@ class TeamAnalyticsProjectDetails extends React.Component {
   componentDidMount() {
     console.log ('getProjectOverview: componentDidMount')
     getProjectOverview(this.props).then(({data}) => {
+      console.log ('hihi i have data now', data)
       this.setState({
         isGettingData: false,
       }, () => {
-        console.log ('hihi i have data now', data)
+        console.log ('hihi i have data now???', data)
       });
     });
 
