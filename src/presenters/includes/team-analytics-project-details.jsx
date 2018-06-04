@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 
 import Loader from './loader.jsx';
+const RECENT_REMIXES_COUNT = 60
 
 const getProjectDetails = async ({id, api, currentProjectDomain}) => {
   let path = `analytics/${id}/project/${currentProjectDomain}/overview`;
@@ -21,6 +22,7 @@ const ProjectDetails = ({projectDetails}) => {
   let projectAvatar = avatarUrl(projectDetails.id)
   let projectUrl = `/~${projectDetails.domain}`
 
+  // convert to a paragraph?
   return (
     <article className="project-details">
       <a href={projectUrl}>
@@ -29,60 +31,36 @@ const ProjectDetails = ({projectDetails}) => {
       <p>{projectDetails.description}</p>
       <table>
         <tr>
-          <td>
-            <span className="emoji sparkles" />
-            Created
-          </td>
-          <td>{moment(projectDetails.createdAt).fromNow()}</td>
+          <td>Created</td>
+          <td><span className="emoji sparkles" /> {moment(projectDetails.createdAt).fromNow()}</td>
         </tr>
         <tr>
-          <td>
-            <span className="emoji clock" />
-            Last code view
-          </td>
-          <td>{moment(projectDetails.lastAccess).fromNow()}</td>
+          <td>Last code view</td>
+          <td><span className="emoji clock" /> {moment(projectDetails.lastAccess).fromNow()}</td>
         </tr>
         <tr>
-          <td>
-            <span className="emoji clock" />
-            Last edited
-          </td>
-          <td>{moment(projectDetails.lastEditedAt).fromNow()}</td>
+          <td>Last edited</td>
+          <td><span className="emoji clock" /> {moment(projectDetails.lastEditedAt).fromNow()}</td>
         </tr>
         <tr>
-          <td>
-            <span className="emoji clock" />
-            Last remixed
-          </td>
-          <td>{moment(projectDetails.lastRemixedAt).fromNow()}</td>
+          <td>Last remixed</td>
+          <td><span className="emoji clock" /> {moment(projectDetails.lastRemixedAt).fromNow()}</td>
         </tr>
         <tr>
-          <td>
-            <span className="emoji eyes" />
-            Total app views
-          </td>
-          <td>{projectDetails.numAppVisits}</td>
+          <td>Total app views</td>
+          <td><span className="emoji eyes" /> {projectDetails.numAppVisits}</td>
         </tr>
         <tr>
-          <td>
-            <span className="emoji eyes" />
-            Total code views
-          </td>
-          <td>{projectDetails.numUniqueEditorVisits}</td>
+          <td>Total code views</td>
+          <td><span className="emoji eyes" /> {projectDetails.numUniqueEditorVisits}</td>
         </tr>
         <tr>
-          <td>
-            <span className="emoji microphone" />
-            Total direct remixes
-          </td>
-          <td>{projectDetails.numDirectRemixes}</td>
+          <td>Total direct remixes</td>
+          <td><span className="emoji microphone" /> {projectDetails.numDirectRemixes}</td>
         </tr>
         <tr>
-          <td>
-            <span className="emoji microphone" />
-            Total remixes
-          </td>
-          <td>{projectDetails.numTotalRemixes}</td>
+          <td>Total remixes</td>
+          <td><span className="emoji microphone" /> {projectDetails.numTotalRemixes}</td>
         </tr>
         { (projectDetails.baseProject.domain) &&
           <tr>
@@ -111,7 +89,7 @@ const ProjectRemixItem = ({remix}) => {
   let projectUrl = `/~${remix.domain}`
   return (
     <a href={projectUrl}>
-      <img src={projectAvatar} />
+      <img src={projectAvatar} alt={remix.domain} dataTooltip={remix.domain} dataTooltipLeft="true" />
     </a>
   )
 }
@@ -132,7 +110,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
       this.setState({
         isGettingData: false,
         projectDetails: data,
-        projectRemixes: data.remixes.slice(0, 30)
+        projectRemixes: data.remixes.slice(0, RECENT_REMIXES_COUNT)
       }, () => {
         console.log ('update project details', data)
         // <ProjectDetails 
