@@ -13,8 +13,36 @@ const getProjectDetails = async ({id, api, currentProjectDomain}) => {
   }
 }
 
-const ProjectDetails = (props) => (
-  <p>blah</p>
+const ProjectDetails = ({projectDetails}) => (
+  <article className="project-details">
+    <table>
+      <tr>
+        <td>Description</td>
+        <td>{projectDetails.description}</td>
+      </tr>
+    </table>
+  </article>
+//   let details = {
+//         // projectId: "",
+//       // projectCreatedAt: "",
+//       // projectDescription: "",
+//       // projectAvatar: "", // https://cdn.glitch.com/project-avatar/${id}.png
+//       // projectLastAccess: "",
+//       // projectLastEdited: "",
+//       // projectLastRemixed: "",
+//       // projectTotalAppVisits: 0,
+//       // projectTotalCodeVisits: 0,
+//       // projectDirectRemixes: 0,
+//       // projectTotalRemixes: 0,
+//       // projectRemixes: [],
+
+//   }
+  
+  // <p>{projectDetails.domain}</p>
+)
+
+const ProjectRemixes = ({projectRemixes}) => (
+  <p>projectRemix item</p>
 )
 
 class TeamAnalyticsProjectDetails extends React.Component {
@@ -41,7 +69,6 @@ class TeamAnalyticsProjectDetails extends React.Component {
 
   
   componentDidMount() {
-    console.log ('getProjectOverview: componentDidMount')    
     getProjectDetails(this.props).then(({data}) => {
       this.setState({
         isGettingData: false,
@@ -56,7 +83,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
   }
   
   componentWillUpdate() {
-    console.log ('getProjectOverview: componentWillUpdate')
+    console.log ('🚗 getProjectOverview: componentWillUpdate')
     // this.setState({
     //   isGettingData: true,
     // }, () => {
@@ -75,6 +102,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
             <ProjectDetails 
               projectDetails = {this.state.projectDetails}            
             />
+            <p>iterate here</p>
             <ProjectRemixes 
               projectRemixes = {this.state.projectRemixes}            
             />            
