@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Loader = () => {
-  return (
-    <div className="loader">
-      <div className="moon"></div>
-      <div className="earth"></div>
-      <div className="asteroid"></div>    
-      <div className="asteroid-dust"></div>    
-    </div>    
-  );
-};
+const Loader = () => (
+  <div className="loader">
+    <div className="moon"></div>
+    <div className="earth"></div>
+    <div className="asteroid"></div>    
+    <div className="asteroid-dust"></div>    
+  </div>    
+);
 export default Loader;
 
 export class DataLoader extends React.Component {
@@ -56,5 +54,5 @@ DataLoader.propTypes = {
 };
 DataLoader.defaultProps = {
   renderError: () => 'Something went wrong, try refreshing?',
-  renderLoader: () => <Loader/>,
+  renderLoader: Loader,
 };
