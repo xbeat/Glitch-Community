@@ -13,9 +13,9 @@ Example:
 
 export default [
   {
-    title: 'Super-Powered Tic-Tac-Toe',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fnoughts-and-crosses.jpg?1528110244781",
-    link: 'https://noughts-and-crosses.glitch.me/'
+    title: 'Bringing your code to Glitch',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-github-social-coding.jpg?1528120414579",
+    link: 'https://medium.com/glitch/github-glitch-and-the-future-of-social-coding-5e6faa45c8f2'
   }
   , {
     title: 'Test Your Spy Skills with Slaccusation',
