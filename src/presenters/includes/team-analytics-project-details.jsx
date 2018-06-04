@@ -24,26 +24,38 @@ const ProjectDetails = ({projectDetails}) => {
       <img className="project-avatar" src={projectAvatar} />
       <table>
         <tr>
-          <td>Description</td>
+          <td>
+            <span className="emoji carp_streamer" />
+            Description
+          </td>
           <td>{projectDetails.description}</td>
         </tr>
         <tr>
-          <td>Created</td>
+          <td>
+            <span className="emoji sparkles" />
+            Created
+          </td>
           <td>{moment(projectDetails.createdAt).fromNow()}</td>
         </tr>
         <tr>
           <td>
-            <span className="emoji eyes" />
+            <span className="emoji clock" />
             Last code view
           </td>
           <td>{moment(projectDetails.lastAccess).fromNow()}</td>
         </tr>
         <tr>
-          <td>Last edited</td>
+          <td>
+            <span className="emoji clock" />
+            Last edited
+          </td>
           <td>{moment(projectDetails.lastEditedAt).fromNow()}</td>
         </tr>
         <tr>
-          <td>Last remixed</td>
+          <td>
+            <span className="emoji clock" />
+            Last remixed
+          </td>
           <td>{moment(projectDetails.lastRemixedAt).fromNow()}</td>
         </tr>
         <tr>
@@ -62,13 +74,16 @@ const ProjectDetails = ({projectDetails}) => {
         </tr>
         <tr>
           <td>
-            <span className="emoji eyes" />
+            <span className="emoji microphone" />
             Total direct remixes
           </td>
           <td>{projectDetails.numDirectRemixes}</td>
         </tr>
         <tr>
-          <td>Total remixes</td>
+          <td>
+            <span className="emoji microphone" />
+            Total remixes
+          </td>
           <td>{projectDetails.numTotalRemixes}</td>
         </tr>
         { (projectDetails.baseProject.domain) &&
