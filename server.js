@@ -1,5 +1,6 @@
 const express = require("express");
 const compression = require("compression");
+const proxy = require('express-http-proxy');
 
 require("./webpack.config.js"); // So that webpack lints itself
 
@@ -10,6 +11,8 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(compression());
+
+app.use('/help', proxy('help-center.glitch.me'));
 
 const router = require('./routes')();
 app.use('/', router);
