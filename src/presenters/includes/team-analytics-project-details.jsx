@@ -18,18 +18,16 @@ const avatarUrl = (id) => {
 }
 
 const ProjectDetails = ({projectDetails}) => {
-  const projectAvatar = avatarUrl(projectDetails.id)
+  let projectAvatar = avatarUrl(projectDetails.id)
+  let projectUrl = `/~${projectDetails.domain}`
+
   return (
     <article className="project-details">
-      <img className="project-avatar" src={projectAvatar} />
+      <a href={projectUrl}>
+        <img className="project-avatar" src={projectAvatar} />
+      </a>
+      <p>{projectDetails.description}</p>
       <table>
-        <tr>
-          <td>
-            <span className="emoji carp_streamer" />
-            Description
-          </td>
-          <td>{projectDetails.description}</td>
-        </tr>
         <tr>
           <td>
             <span className="emoji sparkles" />
@@ -63,7 +61,7 @@ const ProjectDetails = ({projectDetails}) => {
             <span className="emoji eyes" />
             Total app views
           </td>
-          <td>{projectDetails.description}</td>
+          <td>{projectDetails.numAppVisits}</td>
         </tr>
         <tr>
           <td>
@@ -93,6 +91,20 @@ const ProjectDetails = ({projectDetails}) => {
           </tr>
         }
       </table>
+      
+      
+      
+      
+      <table>
+        <th>
+          <t
+        </th>
+      </table>
+      
+      
+      
+      
+      
     </article>
   )
 }
@@ -101,13 +113,14 @@ const ProjectRemixItem = ({remix}) => {
   // should i expose more info (dates, views, users, remixes), or be more visually impactful with a grid of imgs?
   // impact vs substance (ppl are Actually using these)
   let projectAvatar = avatarUrl(remix.id)
-  let url = `/~${remix.domain}`
+  let projectUrl = `/~${remix.domain}`
   return (
     <li>
-      <a href={url}>
+      <a href={projectUrl}>
         <img src={projectAvatar} />
-        <p>{remix.domain}</p>
       </a>
+      <p>{remix.domain}</p>
+
     </li>
   )
 }
@@ -160,6 +173,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
             <ul>
               { this.state.projectRemixes.map(remix => (
                 <ProjectRemixItem
+                  key = {remix.id}
                   remix = {remix}
                 />
               ))}
