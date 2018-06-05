@@ -162,7 +162,7 @@ const NameAndLogin = ({name="", login, id, isAuthorized, updateName, updateLogin
   if(!isAuthorized) {
     if(!name) {
       //promote login to an h1.
-      return <h1 className="login">@{login}</h1>
+      return <h1 className="login">@{login}</h1>;
     }
     return (
       <React.Fragment>
