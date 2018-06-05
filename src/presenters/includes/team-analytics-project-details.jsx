@@ -112,7 +112,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
     this.updateProjectDetails();
   }
   
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (this.props.currentProjectDomain !== prevProps.currentProjectDomain) {
       this.updateProjectDetails();
     }
