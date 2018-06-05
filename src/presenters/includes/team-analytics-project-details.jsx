@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 
 import Loader from './loader.jsx';
-const RECENT_REMIXES_COUNT = 100
+const RECENT_REMIXES_COUNT = 100;
 
 const getProjectDetails = async ({id, api, currentProjectDomain}) => {
   let path = `analytics/${id}/project/${currentProjectDomain}/overview`;
@@ -12,20 +12,20 @@ const getProjectDetails = async ({id, api, currentProjectDomain}) => {
   } catch (error) {
     console.error('getProjectDetails', error);
   }
-}
+};
 
 const avatarUrl = (id) => {
-  return `https://cdn.glitch.com/project-avatar/${id}.png`
-}
+  return `https://cdn.glitch.com/project-avatar/${id}.png`;
+};
 
 const ProjectDetails = ({projectDetails}) => {
-  let projectAvatar = avatarUrl(projectDetails.id)
-  let projectUrl = `/~${projectDetails.domain}`
+  let projectAvatar = avatarUrl(projectDetails.id);
+  let projectUrl = `/~${projectDetails.domain}`;
   // convert to a paragraph?
   return (
     <article className="project-details">
       <a href={projectUrl}>
-        <img className="avatar" src={projectAvatar} />
+        <img className="avatar" src={projectAvatar} alt="" />
       </a>
       <table>
         <tbody>
@@ -70,20 +70,20 @@ const ProjectDetails = ({projectDetails}) => {
         </tbody>
       </table>
     </article>
-  )
-}
+  );
+};
 
 const ProjectRemixItem = ({remix}) => {
-  let projectAvatar = avatarUrl(remix.id)
-  let projectUrl = `/~${remix.domain}`
+  let projectAvatar = avatarUrl(remix.id);
+  let projectUrl = `/~${remix.domain}`;
   return (
     <a href={projectUrl}>
       <span data-tooltip={remix.domain} data-tooltip-left="true">
         <img className="avatar" src={projectAvatar} alt={remix.domain}/>
       </span>
     </a>
-  )
-}
+  );
+};
 
 class TeamAnalyticsProjectDetails extends React.Component {
   constructor(props) {
@@ -98,23 +98,23 @@ class TeamAnalyticsProjectDetails extends React.Component {
   updateProjectDetails() {
     this.setState({
       isGettingData: true
-    })    
+    }); 
     getProjectDetails(this.props).then(({data}) => {
       this.setState({
         isGettingData: false,
         projectDetails: data,
         projectRemixes: data.remixes.slice(0, RECENT_REMIXES_COUNT),
-      })
+      });
     });
   }
   
   componentDidMount() {
-    this.updateProjectDetails()
+    this.updateProjectDetails();
   }
   
   componentDidUpdate(prevProps, prevState) {
     if (this.props.currentProjectDomain !== prevProps.currentProjectDomain) {
-      this.updateProjectDetails()
+      this.updateProjectDetails();
     }
   }
     
@@ -138,9 +138,9 @@ class TeamAnalyticsProjectDetails extends React.Component {
           </React.Fragment>
         }
       </React.Fragment>
-    )
+    );
   }
-};
+}
 
 TeamAnalyticsProjectDetails.propTypes = {
   currentProjectDomain: PropTypes.string.isRequired,

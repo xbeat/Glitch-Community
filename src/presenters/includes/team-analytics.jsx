@@ -108,6 +108,7 @@ class TeamAnalytics extends React.Component {
   }
 
   componentDidMount() {
+    console.log('doing the thing');
     import(
       /* webpackChunkName: "c3" */
       /* webpackMode: "lazy" */
