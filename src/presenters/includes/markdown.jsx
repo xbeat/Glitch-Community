@@ -8,10 +8,10 @@ const md = markdownIt({
   breaks: true,
   linkify: true,
   typographer: true,
-}).use(markdownEmoji);
+}).disable('smartquotes').use(markdownEmoji);
 
 const RawHTML = ({children}) => (
-  <span className="markdown-content" dangerouslySetInnerHTML={{__html: children}}></span>
+  children ? <span className="markdown-content" dangerouslySetInnerHTML={{__html: children}}></span> : null
 );
 RawHTML.propTypes = {
   children: PropTypes.string.isRequired,

@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Get Your Own Emoji Avatar',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Femoji-avatars.jpg?1527769665035",
-    link: 'http://emoji-avatars.glitch.me/'
+    title: 'Bringing your code to Glitch',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-github-social-coding.jpg?1528120414579",
+    link: 'https://help-center.glitch.me/github/'
   }
   , {
-    title: 'Create Beautiful Phyllotaxies',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fpattern-school.jpg?1527769664891",
-    link: 'http://pattern-school.glitch.me'
+    title: 'Test Your Spy Skills with Slaccusation',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fslaccusation.jpg?1528110244558",
+    link: 'http://slaccusation.glitch.me/'
   }
   , {
-    title: 'Can You Find All The Pairs?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fdpla-pairs.jpg?1527769664755",
-    link: 'https://dpla-pairs.glitch.me/'
+    title: 'Like Shazam for Album Covers',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frecord-player.jpg?1528110244910",
+    link: 'http://record-player.glitch.me/'
   }   
 ];
