@@ -30,8 +30,6 @@ var self = Model({
   featuredCollections,
 
   // overlays
-  overlayProjectVisible: Observable(false),
-  overlayProject: Observable(undefined),
   overlayVideoVisible: Observable(false),
   overlayNewStuffVisible: Observable(false),
 
@@ -94,7 +92,6 @@ var self = Model({
 
   closeAllPopOvers() {
     $(".overlay-background.disposable").remove();
-    self.overlayProjectVisible(false);
     self.overlayVideoVisible(false);
     self.overlayNewStuffVisible(false);
   },
@@ -256,10 +253,6 @@ var self = Model({
 
   getQuestions() {
     return Question.getQuestions(self).then(questions => self.questions(questions));
-  },
-    
-  showProjectOverlayPage(domain) {
-    return Project.getProjectOverlay(application, domain);
   },
 
   // client.coffee routing helpers

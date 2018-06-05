@@ -16,7 +16,7 @@ const md = markdownIt({
   .use(markdownSanitizer);
 
 const RawHTML = ({children}) => (
-  children ? <span dangerouslySetInnerHTML={{__html: children}}></span> : null
+  children ? <span className="markdown-content" dangerouslySetInnerHTML={{__html: children}}></span> : null
 );
 RawHTML.propTypes = {
   children: PropTypes.string.isRequired,
