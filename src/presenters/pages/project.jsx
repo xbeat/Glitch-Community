@@ -72,7 +72,7 @@ const ProjectPage = ({
           <UsersList users={users} />
           <AuthDescription
             authorized={userIsCurrentUser} description={description}
-            update={updateDescription} placeholder="Tell us about your app"
+            update={desc => updateDescription(id, desc)} placeholder="Tell us about your app"
           />
           <p id="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/></p>
         </AvatarContainer>
@@ -93,9 +93,9 @@ ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
 };
 
-const ProjectPageLoader = ({name, get, getReadme}) => (
+const ProjectPageLoader = ({name, get, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {project => project ? <ProjectPage project={project} getReadme={getReadme}/> : <NotFound name={name}/>}
+    {project => project ? <ProjectPage project={project} {...props}/> : <NotFound name={name}/>}
   </DataLoader>
 );
 ProjectPageLoader.propTypes = {
@@ -107,7 +107,7 @@ export default function(application, name) {
   const props = {
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
-    updateDescription: description => undefined,
+    updateDescription: (id, description) => application.api().patch(`projects/${id}`, {description}),
     name,
   };
   const content = Reactlet(ProjectPageLoader, props, 'projectpage');
