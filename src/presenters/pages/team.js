@@ -12,7 +12,7 @@ import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
 import Observed from "../includes/observed.jsx";
 import {TeamProfile} from "../includes/profile.jsx";
-import TeamAnalytics from "../includes/team-analytics.jsx"
+import TeamAnalytics from "../includes/team-analytics.jsx";
 
 export default function(application) {
   const assetUtils = assets(application);
@@ -70,18 +70,18 @@ export default function(application) {
 
     teamAnalytics() {
       const projects = self.team().projects().map(function (project) {
-        project = project.asProps()
-        project.description = ""
-        project.users = []
-        return project
-      })
-      const id = self.team().id()
+        project = project.asProps();
+        project.description = "";
+        project.users = [];
+        return project;
+      });
+      const id = self.team().id();
       const propsObservable = Observable(() => {
         return {
           id: id,
           api: application.api,
           projects: projects,
-        }
+        };
       });
       // temp/todo: still flickering
       if (!propsObservable().id) { return null; }

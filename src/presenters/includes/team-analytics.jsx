@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Pluralize from 'react-pluralize'
+import Pluralize from 'react-pluralize';
 import moment from 'moment-mini';
 import _ from 'lodash';
 
@@ -26,12 +26,12 @@ const dateFromTime = (newTime) => {
       time: "Last 24 Hours",
       date: moment().subtract(24, 'hours').valueOf(),
     },
-  ]
+  ];
   let time = _.find(timeMap, (object) => {
-    return object.time === newTime
-  })
-  return time.date
-;}
+    return object.time === newTime;
+  });
+  return time.date;
+};
 
 const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
   let path = `analytics/${id}/team?from=${fromDate}`;
@@ -43,7 +43,7 @@ const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
   } catch (error) {
     console.error('getAnalytics', error);
   }
-}
+};
 
 
 class TeamAnalytics extends React.Component {
@@ -63,12 +63,12 @@ class TeamAnalytics extends React.Component {
   }
 
   updateTotals() {
-    console.log ('update totals', this.state.analytics)
-    let totalAppViews = 0
-    let totalRemixes = 0
+    console.log ('update totals', this.state.analytics);
+    let totalAppViews = 0;
+    let totalRemixes = 0;
     this.state.analytics.buckets.forEach(bucket => {
-      totalAppViews += bucket.analytics.visits
-      totalRemixes += bucket.analytics.remixes
+      totalAppViews += bucket.analytics.visits;
+      totalRemixes += bucket.analytics.remixes;
     });
     this.setState({
       totalAppViews: totalAppViews,
@@ -85,7 +85,7 @@ class TeamAnalytics extends React.Component {
         isGettingData: false,
         analytics: data,
       }, () => {
-        this.updateTotals()
+        this.updateTotals();
       });
     });
   }
@@ -95,15 +95,15 @@ class TeamAnalytics extends React.Component {
       currentTimeFrame: newTime,
       fromDate: dateFromTime(newTime)
     }, () => {
-      this.updateAnalytics()
-    })
+      this.updateAnalytics();
+    });
   }
 
   updateProjectdomain(newDomain) {
     this.setState({
       currentProjectDomain: newDomain
     }, () => {
-      this.updateAnalytics()
+      this.updateAnalytics();
     });
   }
 
@@ -116,7 +116,7 @@ class TeamAnalytics extends React.Component {
       this.setState({
         c3: c3,
         isGettingC3: false,
-      })
+      });
       this.updateAnalytics();
     });
   }
