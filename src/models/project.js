@@ -8,8 +8,6 @@ import Model from './model';
 import axios from 'axios';
 
 let source = undefined; // reference to cancel token
-let originalUrlPath = "/";
-let originalQueryString = "";
 
 export default Project = function(I, self) {
   
@@ -51,10 +49,8 @@ export default Project = function(I, self) {
         name: project.name(),
         private: project.private(),
         showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
-        remixUrl: project.remixUrl(), 
-        showOverlay: () => {
-          project.showOverlay(application);
-        },
+        remixUrl: project.remixUrl(),
+        userIsCurrentUser: project.userIsCurrentUser(application),
       };
     },
 
@@ -102,7 +98,8 @@ export default Project = function(I, self) {
       return application.api(source).get(path)
         .then(function(response) {
           self.readme(response.data);
-          return application.overlayProject(self);}).catch(function(error) {
+          return application.overlayProject(self);
+        }).catch(function(error) {
           console.error("getReadme", error);
           if (error.response.status === 404) {
             return self.readmeNotFound(true);
@@ -110,31 +107,6 @@ export default Project = function(I, self) {
           return self.projectNotFound(true);
         
         });
-    },
-
-    showOverlay(application) {
-      console.log('showOverlay');
-      application.overlayProject(self);
-      self.getReadme(application);
-      originalUrlPath = window.location.pathname;
-      originalQueryString = window.location.search;
-      if((originalUrlPath+originalQueryString).includes("~")) {
-        //They navigated here directly.
-        originalUrlPath = "/";
-        originalQueryString = '';
-      }
-      if(!self.domain()) {
-        return;
-      }
-      const target = `/~${self.domain()}`;
-      history.replaceState(null, `${self.domain()} – Glitch`, target);
-      application.overlayProjectVisible(true);
-      return document.getElementsByClassName('project-overlay')[0].focus();
-    },
-
-    hideOverlay() {
-      source.cancel('Operation canceled by the user.');
-      return history.replaceState(null, null, originalUrlPath + originalQueryString);
     },
 
     pushSearchResult(application) {
@@ -255,21 +227,6 @@ Project.promiseProjectsByIds = (api, ids) => {
       return resolve(projects);
     });
   });
-};
-
-Project.getProjectOverlay = function(application, domain) {
-  const projectPath = `projects/${domain}`;
-  application.overlayProjectVisible(true);
-  return application.api().get(projectPath)
-    .then(function({data}) {
-      if (!data) {
-        const project = Project({domain});
-        project.projectNotFound(true);
-        project.showOverlay(application);
-        return;
-      }
-    
-      return Project(data).showOverlay(application);}).catch(error => console.error("getProjectOverlay", error));
 };
 
 Project.getSearchResults = function(application, query) {

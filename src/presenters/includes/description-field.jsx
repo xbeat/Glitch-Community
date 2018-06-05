@@ -51,7 +51,7 @@ class EditableDescription extends React.Component {
       :
       <p
         className="description content-editable"
-        placeholder={placeholder}
+        placeholder={placeholder} aria-label={placeholder}
         role="textbox" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
         tabIndex={0} onFocus={this.onFocus} onBlur={this.onBlur}
       >

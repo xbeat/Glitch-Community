@@ -51,9 +51,15 @@ module.exports = () => {
     optimization: {
       splitChunks: {
         cacheGroups: {
+          cache: {
+            name: 'cache',
+            test: /[\\/]src[\\/]cache/,
+            chunks: 'all',
+            minSize: 0,
+          },
           react: {
             name: 'react-bundle',
-            test: /[\\/]node_modules[\\/]react[-\\/]/,
+            test: /[\\/]node_modules[\\/]react/,
             chunks: 'all',
           },
           modules: {

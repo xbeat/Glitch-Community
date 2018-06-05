@@ -3,10 +3,8 @@
 
 main.profile-page.user-page(role="main")
 
-  section.hidden(class=@visibleIfUserNotFound)
-    p we didn't find
-      span= @userLoginOrId
-    img(src=cat)
+  span.hidden(class=@visibleIfUserNotFound)
+    = @userNotFound
 
   span(class=@hiddenIfUserNotFound)
     =@Profile

@@ -33,7 +33,7 @@ ImageButtons.propTypes = {
   clearImage: PropTypes.func,
 };
 
-const AvatarContainer = ({
+export const AvatarContainer = ({
   style,
   children,
   buttons,
@@ -53,14 +53,21 @@ AvatarContainer.propTypes = {
   buttons: PropTypes.element,
 };
 
-const CoverContainer = ({
+export const InfoContainer = ({children}) => (
+  <div className="profile-info">
+    {children}
+  </div>
+);
+InfoContainer.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export const CoverContainer = ({
   style, buttons,
   children,
 }) => (
   <section className="cover-container" style={style}>
-    <div className="profile-info">
-      {children}
-    </div>
+    <InfoContainer>{children}</InfoContainer>
     {buttons}
   </section>
 );

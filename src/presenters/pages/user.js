@@ -12,6 +12,7 @@ import DeletedProjectsTemplate from '../../templates/deleted-projects';
 import LayoutPresenter from '../layout';
 
 import EntityPageProjects from "../entity-page-projects.jsx";
+import NotFound from '../includes/not-found.jsx';
 import {UserProfile} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
 import Observed from "../includes/observed.jsx";
@@ -165,6 +166,10 @@ export default function(application, userLoginOrId) {
       if (application.user().notFound()) {
         return 'hidden';
       }
+    },
+    
+    userNotFound() {
+      return Reactlet(NotFound, {name: self.userLoginOrId()});
     },
 
     isCurrentUser() {
