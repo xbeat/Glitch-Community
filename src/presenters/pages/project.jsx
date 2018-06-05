@@ -105,7 +105,7 @@ ProjectPageLoader.propTypes = {
 // Let's keep layout in jade until all pages are react
 export default function(application, name) {
   const props = {
-    get: () => application.api().get(`projects/${name}`).then(({data}) => console.log(data)||(data ? Project(data).update(data).asProps() : null)),
+    get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
     updateDescription: (id, description) => application.api().patch(`projects/${id}`, {description}),
     name,
