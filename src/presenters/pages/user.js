@@ -121,10 +121,11 @@ export default function(application, userLoginOrId) {
     updateLogin(text) {
       return self.updateField("login", text).then((result) => {
         if(result.success){
-          const login = `@${result.value}`;
-          history.replaceState(null, login, `/${login}`);
+          const login = `@${result.data}`;
+          history.replaceState(null, null, `/${login}`);
           
           //https://stackoverflow.com/questions/13955520/page-title-is-not-changed-by-history-pushstate
+          document.title = login;
         }
         return result;
       });
