@@ -6,8 +6,9 @@ const queryString = qs.parse(window.location.search);
 
 import IndexPage from './presenters/pages/index';
 import CategoryPage from './presenters/pages/category';
-import UserPage from './presenters/pages/user';
+import ProjectPage from './presenters/pages/project.jsx';
 import TeamPage from './presenters/pages/team';
+import UserPage from './presenters/pages/user';
 import QuestionsPage from './presenters/pages/questions';
 import SearchPage from './presenters/pages/search';
 import errorPageTemplate from './templates/pages/error';
@@ -55,8 +56,8 @@ function routePage(pageUrl, application) {
   // ~project overlay page ✅
   if (application.isProjectUrl(pageUrl)) {
     const projectDomain = application.removeFirstCharacter(pageUrl);
-    application.showProjectOverlayPage(projectDomain);
-    return {page: IndexPage(application)};
+    const page = ProjectPage(application, projectDomain);
+    return {page, title:decodeURI(pageUrl)};
   }
 
   // user page ✅
