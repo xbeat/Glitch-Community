@@ -74,7 +74,7 @@ export default class EditableField extends React.Component {
           placeholder={this.props.placeholder}
         />
         {!!this.state.error && (
-          <span className="error-message">
+          <span className="field-error-message">
             <span role="img" aria-label="Warning">⚠️</span>
             {this.state.error}
           </span>
