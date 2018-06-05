@@ -73,13 +73,16 @@ input
     display: block /* For Firefox */
     
 .content-editable.error
-  background-image: url(thumbsdown) // from emoji.styl
-  background-repeat: no-repeat
-  background-size: 18px
-  background-position-x: 99%
   border-color: warning
   
-.field-error-message
+.editable-field-container
+  position:relative
+  
+.editable-field-error-icon
+  position: absolute
+  right: 0px
+ 
+.editable-field-error-message
   width: 100%
   color: error-text
   background-color: error

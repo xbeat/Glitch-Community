@@ -56,7 +56,7 @@ export default class EditableField extends React.Component {
   }  
   render() {
     return (
-      <div className="editable-field-container>
+      <div className="editable-field-container">
         <input
           className={["content-editable", this.state.error ? "error" : ""].join(" ")}
           value={this.props.mask + this.state.value}
@@ -67,8 +67,8 @@ export default class EditableField extends React.Component {
         />
         {!!this.state.error && (
           <React.Fragment>
-            <span role="img" aria-label="Warning">⚠️</span>
-            <div className="field-error-message">
+            <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
+            <div className="editable-field-error-message">
               {this.state.error}
             </div>
           </React.Fragment>
