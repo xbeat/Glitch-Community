@@ -3,12 +3,17 @@ import PropTypes from 'prop-types';
 import truncate from 'html-truncate';
 import markdownIt from 'markdown-it';
 import markdownEmoji from 'markdown-it-emoji';
+import markdownSanitizer from 'markdown-it-sanitizer';
 
 const md = markdownIt({
+  html: true,
   breaks: true,
   linkify: true,
   typographer: true,
-}).disable('smartquotes').use(markdownEmoji);
+})
+  .disable('smartquotes')
+  .use(markdownEmoji)
+  .use(markdownSanitizer);
 
 const RawHTML = ({children}) => (
   children ? <span dangerouslySetInnerHTML={{__html: children}}></span> : null
