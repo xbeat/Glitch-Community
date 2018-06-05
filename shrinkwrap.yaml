@@ -12,11 +12,8 @@ dependencies:
   body-parser: 1.18.2
   c3: 0.6.1
   compression: 1.7.2
-<<<<<<< HEAD
   d3-array: 1.2.1
   ejs: 2.5.9
-=======
->>>>>>> e0110b4ac768266cb397032a4092c6983d9b859b
   eslint: 4.19.1
   eslint-loader: 2.0.0
   eslint-plugin-jsx-a11y: 6.0.3
@@ -7483,11 +7480,8 @@ specifiers:
   body-parser: ^1.18.2
   c3: ^0.6.1
   compression: ^1.7.2
-<<<<<<< HEAD
   d3-array: ^1.2.1
   ejs: ^2.5.9
-=======
->>>>>>> e0110b4ac768266cb397032a4092c6983d9b859b
   eslint: ^4.19.1
   eslint-loader: ^2.0.0
   eslint-plugin-jsx-a11y: ^6.0.3
