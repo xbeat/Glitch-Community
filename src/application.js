@@ -1,4 +1,4 @@
-/* globals baseUrl API_URL APP_URL EDITOR_URL analytics application*/
+/* globals API_URL APP_URL EDITOR_URL analytics application*/
 
 import Observable from 'o_0';
 
@@ -14,17 +14,16 @@ import Category from './models/category';
 import Team from './models/team';
 import Question from './models/question';
 
-const cachedUser = 
-  localStorage.cachedUser ? (
-    () => { try {
-      return JSON.parse(localStorage.cachedUser);
-    } catch (error) {
-      // empty
-    } 
-    })() : undefined;
+let cachedUser = undefined;
+if(localStorage.cachedUser) {
+  try {
+    cachedUser = JSON.parse(localStorage.cachedUser);
+  } catch (error) {
+    // empty
+  }
+}
 
 var self = Model({
-  // featuredProjects: featuredProjects
   currentUser: cachedUser,
 }).extend({
 
@@ -90,16 +89,7 @@ var self = Model({
   },
   
   normalizedBaseUrl() {
-    const urlLength = baseUrl.length;
-    const lastCharacter = baseUrl.charAt(urlLength-1);
-    if (baseUrl === "") {
-      return "/";
-    }
-    if (lastCharacter === !"/") {
-      return baseUrl + "/";
-    } 
-    return baseUrl;
-    
+    return "/";
   },
 
   closeAllPopOvers() {

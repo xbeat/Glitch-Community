@@ -59,12 +59,10 @@ export default Category = function(I, self) {
   return self;
 };
 
-Category.getRandomCategories = function(api) {
-  const categoriesPath = "categories/random";
+Category.getRandomCategoriesJSON = function(api) {
+  const categoriesPath = "categories/random?numCategories=3&projectsPerCategory=3";
   return api.get(categoriesPath)
-    .then(({data}) =>
-      data.map(categoryDatum => Category(categoryDatum).update(categoryDatum))
-    );
+    .then(({data}) => data);
 };
 
 Category.updateCategory = function(application, id) {

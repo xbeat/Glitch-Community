@@ -11,7 +11,7 @@ import Reactlet from "../reactlet";
 import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
 import Observed from "../includes/observed.jsx";
-import TeamProfile from "../includes/team-profile.jsx";
+import {TeamProfile} from "../includes/profile.jsx";
 import TeamAnalytics from "../includes/team-analytics.jsx"
 
 export default function(application) {
@@ -26,17 +26,16 @@ export default function(application) {
       const propsObservable = Observable(() => {
         const team = self.team().asProps();
         const props = {
-          ...team,
-          style: team.teamProfileStyle,
+          team,
+          fetched: self.team().fetched(),
           currentUserIsOnTeam: self.currentUserIsOnTeam(),
           addUserToTeam: (id) => { self.team().addUser(application, User({id})); },
-          avatarStyle: team.teamAvatarStyle,
           removeUserFromTeam: ({id}) => { self.team().removeUser(application, User({id})); },
           search: (query) => User.getSearchResultsJSON(application, query).then(users => users.map(user => User(user).asProps())),
-          thanksCount: team.thanksCount,
           updateDescription: self.updateDescription,
           uploadAvatar: self.uploadAvatar,
           uploadCover: self.uploadCover,
+          clearCover: self.clearCover,
         };
         return props;
       });
@@ -120,36 +119,10 @@ export default function(application) {
     updateTeam: debounce(data => application.team().updateTeam(application, data)
       , 250),
 
-    // application.notifyUserDescriptionUpdated true
+    clearCover: () => assetUtils.updateHasCoverImage(false),
 
-
-    uploadCover() {
-      const input = document.createElement("input");
-      input.type = 'file';
-      input.accept = "image/*";
-      input.onchange = function(event) {
-        const file = event.target.files[0];
-        console.log('☔️☔️☔️ input onchange', file);
-        return assetUtils.addCoverFile(file);
-      };
-      input.click();
-      console.log('input created: ', input);
-      return false;
-    },
-
-    uploadAvatar() {
-      const input = document.createElement("input");
-      input.type = 'file';
-      input.accept = "image/*";
-      input.onchange = function(event) {
-        const file = event.target.files[0];
-        console.log('☔️☔️☔️ input onchange', file);
-        return assetUtils.addAvatarFile(file);
-      };
-      input.click();
-      console.log('input created: ', input);
-      return false;
-    },
+    uploadCover: assetUtils.uploadCoverFile,
+    uploadAvatar: assetUtils.uploadAvatarFile,
 
     togglePinnedState(projectId) {
       const action = Project.isPinnedByTeam(application.team(), projectId) ? "removePin" : "addPin";

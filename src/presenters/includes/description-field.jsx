@@ -1,21 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
-import mdFactory from 'markdown-it';
-
-const md = mdFactory({
-  breaks: true,
-  linkify: true,
-  typographer: true,
-});
-
-const RenderedDescription = ({description, className, ...props}) => (
-  <p className={`description ${className}`} {...props} dangerouslySetInnerHTML={{__html: md.render(description)}}></p>
-);
-RenderedDescription.propTypes = {
-  description: PropTypes.string.isRequired,
-  className: PropTypes.string,
-};
+import Markdown from './markdown.jsx';
 
 class EditableDescription extends React.Component {
   constructor(props) {
@@ -37,10 +23,9 @@ class EditableDescription extends React.Component {
   }
   
   onFocus(evt) {
-    if (evt.target.closest('a')) {
-      return;
+    if (evt.currentTarget === evt.target) {
+      this.setState({focused: true});
     }
-    this.setState({focused: true});
   }
   
   onBlur() {
@@ -62,13 +47,14 @@ class EditableDescription extends React.Component {
         autoFocus // eslint-disable-line jsx-a11y/no-autofocus
       />
       :
-      <RenderedDescription
-        description={description}
-        className="content-editable"
-        placeholder={placeholder}
+      <p
+        className="description content-editable"
+        placeholder={placeholder} aria-label={placeholder}
         role="textbox" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
         tabIndex={0} onFocus={this.onFocus} onBlur={this.onBlur}
-      />
+      >
+        <Markdown>{description}</Markdown>
+      </p>
     );
   }
 }
@@ -79,10 +65,22 @@ EditableDescription.propTypes = {
 };
 
 const StaticDescription = ({description}) => (
-  description ? <RenderedDescription description={description} className="read-only" /> : null
+  description ? <p className="description read-only"><Markdown>{description}</Markdown></p> : null
 );
 StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-export { EditableDescription, StaticDescription };
+const AuthDescription = ({authorized, description, placeholder, update}) => (
+  authorized ?
+    <EditableDescription initialDescription={description} updateDescription={update} placeholder={placeholder}/> :
+    <StaticDescription description={description}/>
+);
+AuthDescription.propTypes = {
+  authorized: PropTypes.bool.isRequired,
+  description: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  update: PropTypes.func.isRequired,
+};
+
+export { EditableDescription, StaticDescription, AuthDescription };

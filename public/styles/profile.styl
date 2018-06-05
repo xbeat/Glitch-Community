@@ -1,55 +1,107 @@
 anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-avatar.svg"
 
-.profile
+.cover-container
+  position: relative
+  border-radius: 5px
+  padding: 16px
   // overflow: auto
-  // margin-top: 1rem
-  
-  .profile-container
-    border-radius: 5px
-    padding: 16px
-    // overflow: auto
-    background-size: 100%
-    background-position: center
-    
-    .user-names
-      display: none
-  
-  .profile-info
-    width: 22%
-    margin-top: 0
-    margin-right: 3%
-    @media (max-width: 800px)
-      width: 100%
-      float: none
-    
-    .description
-      margin-top: 0
+  background-size: 100%
+  background-position: center
+
+.profile-info
+  width: 100%
+  max-width: 460px
+  background-color: section-line
+  border-radius: 5px
+  padding: 12px
+
+.avatar-container
+  width: 100%
+
+  .user-avatar
+    display: inline-block
+    width: 35%
+    height: 0
+    padding-bottom: 35%
+    margin-bottom: 2px
+    &:not(:hover)
+      .upload-image-buttons
+        visibility: hidden
+        
+  .profile-information
+    display: inline-block
+    width: 65%
+    padding-left: 16px
+    vertical-align: middle
+    > *
+      margin: 0
+      margin-bottom: 12px
       width: 100%
       p
         margin: 0
+    .sparkling_heart
+      width: 18px
+      height: 18px
 
-  .user-avatar-container
-    width: 80%
+.user-avatar
+  position: relative
+  vertical-align: top
+  background-size: cover
+  background-repeat: no-repeat
+  background-position: center
+  border-radius: 5px
 
+.upload-image-buttons
+  position: absolute
+  top: 5px
+  right: 5px
+  > *
+    margin-left: 5px
+
+
+.profile-page
+  .projects
+    padding: 0
+    margin-bottom: 1rem
+    display: block
+    overflow: auto
+
+    .project-options
+      display: block
+
+    // .projects-container
+    //   overflow: visible
+
+    .slide-up
+      animation: slideUp 0.1s ease-out
+      animation-fill-mode: forwards
+
+    .slide-down
+      animation: slideDown 0.1s ease-out
+      animation-fill-mode: forwards
+
+
+.recent-projects
+
+  .profile-avatar
+    display: inline-block
+    width: 18%
+    margin: 0
+    margin-right: 4%
+    @media(max-width: 800px)
+      display:none
+  
   .user-avatar
-    position: relative
     height: 0
     padding-bottom: 100%
-    margin-bottom: 1rem
-    border-radius: 5px
-    background-size: cover
-    background-repeat: no-repeat
-    background-position: center
-
-  .anon-user-avatar
-    background-image: url(anonAvatar)
-    background-position: center
-    background-size: 65%
-    background-color: cyan
-
+  
   .projects
-    display: inline
+    display: inline-block
+    margin: 0
     padding: 0
+    width: 78%
+    @media(max-width: 800px)
+      width: 100%
   
   .projects-container
     overflow: hidden
@@ -61,39 +113,6 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
         background-color: cta
     &:after
       border-bottom-color: section-line
-  
-  .sparkling_heart
-    width: 18px
-    height: 18px
-
-  .upload-cover-button
-    position: absolute
-    top: 5px
-    right: 5px
-
-  .upload-avatar-button
-    position: absolute
-    top: -5%
-    right: 0
-
-
-.recent-projects
-
-  .profile-info
-    margin: 0
-    display: inline-block    
-      
-  .user-avatar-container
-    @media(max-width: 800px)
-      display:none
-
-  
-  .projects
-    display: inline-block
-    margin: 0
-    width: 78%
-    @media(max-width: 800px)
-      width: 100%
 
   .anon-user-sign-up
     position: relative
