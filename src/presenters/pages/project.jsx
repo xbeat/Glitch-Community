@@ -6,7 +6,7 @@ import Project from '../../models/project';
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
-import {StaticDescription} from '../includes/description-field.jsx';
+import {AuthDescription} from '../includes/description-field.jsx';
 import {AvatarContainer, InfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, ReportButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
@@ -62,6 +62,7 @@ const ProjectPage = ({
     ...project // 'private' can't be used as a variable name
   },
   getReadme,
+  updateDescription,
 }) => (
   <article className="project-page">
     <section id="info">
@@ -69,7 +70,10 @@ const ProjectPage = ({
         <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
           <h1>{domain} {project.private && <PrivateBadge domain={domain}/>}</h1>
           <UsersList users={users} />
-          <StaticDescription description={description}/>
+          <AuthDescription
+            authorized={userIsCurrentUser} description={description}
+            update={updateDescription} placeholder="Tell us about your app"
+          />
           <p id="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/></p>
         </AvatarContainer>
       </InfoContainer>
@@ -103,6 +107,7 @@ export default function(application, name) {
   const props = {
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
+    updateDescription: description => undefined,
     name,
   };
   const content = Reactlet(ProjectPageLoader, props, 'projectpage');
