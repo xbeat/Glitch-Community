@@ -108,7 +108,7 @@ class TeamAnalytics extends React.Component {
   }
 
   componentDidMount() {
-    import("c3").then(c3 => { // eslint-disable-line
+    import(/* webpackChunkName: "c3" */ "c3").then(c3 => { // eslint-disable-line
       this.setState({
         c3: c3,
         isGettingC3: false,
