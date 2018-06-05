@@ -119,7 +119,13 @@ export default function(application, userLoginOrId) {
     },
     
     updateLogin(text) {
-      return self.updateField("login", text);
+      return self.updateField("login", text).then((result) => {
+        if(result.success){
+          
+          
+        }
+        return result;
+      });
     },
     
     updateField(field, value) {
