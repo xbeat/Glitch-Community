@@ -63,7 +63,7 @@ module.exports = () => {
             chunks: 'all',
           },
           modules: {
-            name: 'dependencies-bundle',
+            name: 'dependencies',
             test: /[\\/]node_modules[\\/]/,
             chunks: 'all',
             priority: -1,
