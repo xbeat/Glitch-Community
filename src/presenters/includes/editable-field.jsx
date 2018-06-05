@@ -16,7 +16,7 @@ export default class EditableField extends React.Component {
   }
   
   update(value){
-    this.props.update(value).then(this.handleUpdate)
+    this.props.update(value).then(this.handleUpdate);
   }
   
   handleUpdate({success, data, message}) {
