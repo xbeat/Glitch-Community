@@ -11,7 +11,9 @@ const RelatedProjectsList = ({
   <React.Fragment>
     <h2><a href={url}>More by {name} →</a></h2>
     <CoverContainer style={coverStyle}>
-      <ProjectsUL projects={projects}/>
+      <div className="projects">
+        <ProjectsUL projects={projects}/>
+      </div>
     </CoverContainer>
   </React.Fragment>
 );
@@ -21,7 +23,7 @@ class RelatedUserProjects extends React.Component {
     super(props);
     console.log(props);
     this.state = {
-      projects: [],
+      projects: props.projects.slice(0, 3),
     };
   }
   
@@ -34,7 +36,7 @@ class RelatedUserProjects extends React.Component {
     const {
       projects,
     } = this.state;
-    return !projects.length && <RelatedProjectsList name={tooltipName} url={userLink} coverStyle={profileStyle} projects={projects}/>;
+    return !!projects.length && <RelatedProjectsList name={tooltipName} url={userLink} coverStyle={profileStyle} projects={projects}/>;
   }
 }
 
@@ -48,9 +50,8 @@ class RelatedProjects extends React.Component {
   
   render() {
     const {getUsers} = this.props;
-    const {users} = this.state;
     return (
-      <DataLoader get={() => getUsers(users.map(user => user.id))}>
+      <DataLoader get={() => getUsers(this.state.users.map(user => user.id))}>
         {users => (
           <ul className="related-projects">
             {users.map(user =>

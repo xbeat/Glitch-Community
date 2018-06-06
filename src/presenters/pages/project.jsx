@@ -114,7 +114,7 @@ export default function(application, name) {
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
     updateDescription: (id, description) => application.api().patch(`projects/${id}`, {description}),
-    getUsers: (ids) => application.api().get(`users/byIds?ids=${ids}`).then(({data}) => User(data).update(data).asProps()),
+    getUsers: (ids) => application.api().get(`users/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(item => User(item).update(item).asProps())),
     name,
   };
   const content = Reactlet(ProjectPageLoader, props, 'projectpage');
