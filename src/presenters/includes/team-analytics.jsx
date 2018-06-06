@@ -63,7 +63,6 @@ class TeamAnalytics extends React.Component {
   }
 
   updateTotals() {
-    console.log ('update totals', this.state.analytics);
     let totalAppViews = 0;
     let totalRemixes = 0;
     this.state.analytics.buckets.forEach(bucket => {
@@ -108,10 +107,11 @@ class TeamAnalytics extends React.Component {
   }
 
   componentDidMount() {
+    // eslint-disable-next-line
     import(
       /* webpackChunkName: "c3-bundle" */
       "c3"
-    ).then(c3 => { // eslint-disable-line
+    ).then(c3 => {
       this.setState({
         c3: c3,
         isGettingC3: false,
@@ -125,14 +125,14 @@ class TeamAnalytics extends React.Component {
       <section className="team-analytics">
         <h2>Analytics</h2>
         <section className="controls">
-          <TeamAnalyticsTimePop 
-            updateTimeFrame = {this.updateTimeFrame.bind(this)}
-            currentTimeFrame = {this.state.currentTimeFrame}
-          />
           <TeamAnalyticsProjectPop
             updateProjectdomain = {this.updateProjectdomain.bind(this)}
             currentProjectDomain = {this.state.currentProjectDomain}
             projects = {this.props.projects}
+          />
+          <TeamAnalyticsTimePop 
+            updateTimeFrame = {this.updateTimeFrame.bind(this)}
+            currentTimeFrame = {this.state.currentTimeFrame}
           />
         </section>
         

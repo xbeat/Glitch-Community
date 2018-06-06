@@ -18,6 +18,8 @@ const avatarUrl = (id) => {
   return `https://cdn.glitch.com/project-avatar/${id}.png`;
 };
 
+
+
 const ProjectDetails = ({projectDetails}) => {
   let projectAvatar = avatarUrl(projectDetails.id);
   let projectUrl = `/~${projectDetails.domain}`;
@@ -65,7 +67,7 @@ const ProjectDetails = ({projectDetails}) => {
             <tr>
               <td className="label">Originally remixed from</td>
               <td>
-                <img className="avatar" scr={avatarUrl(projectDetails.baseProject.id)} />
+                <img className="avatar baseproject-avatar" src={avatarUrl(projectDetails.baseProject.id)} />
                 {projectDetails.baseProject.domain}
               </td>
             </tr>
@@ -132,6 +134,9 @@ class TeamAnalyticsProjectDetails extends React.Component {
               projectDetails = {this.state.projectDetails}
             />
             <h4>Latest Remixes</h4>
+            { (this.state.projectRemixes.length === 0) &&
+              <p>No remixes yet (／_^)／ ●</p>
+            }
             { this.state.projectRemixes.map(remix => (
               <ProjectRemixItem
                 key = {remix.id}
