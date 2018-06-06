@@ -6,40 +6,14 @@ import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 
-class RelatedProjectsList extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log(props);
-    this.state = {
-      projectIds: sampleSize(props.projectIds, 3),
-    };
-  }
-  
-  render() {
-    const {
-      name, url, coverStyle,
-    } = this.props;
-    const {
-      projectIds,
-    } = this.state;
-    return (
-      <React.Fragment>
-        <h2><a href={url}>More by {name} →</a></h2>
-        <CoverContainer style={coverStyle}>
-          <div className="projects">
-            {JSON.stringify(projectIds)}
-          </div>
-        </CoverContainer>
-      </React.Fragment>
-    );
-  }
-}
-
 class RelatedProjects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: this.props.users, //todo: filter dupe projects, drop users with no projects
+      users: this.props.users.map(({projectIds, ...user}) => ({
+        projectIds: sampleSize(projectIds, 3),
+        ...user,
+      })),
     };
   }
   
@@ -47,11 +21,22 @@ class RelatedProjects extends React.Component {
     const {users} = this.state;
     return !!users.length && (
       <ul className="related-projects">
-        {users.map(({owner: {id, ...owner}, projectIds}) =>
+        {users.map(({id, name, url, coverStyle, projectIds}) => (
           <li key={id}>
-            <RelatedProjectsList {...owner} projectIds={projectIds} getProjects/>
+            <h2><a href={url}>More by {name} →</a></h2>
+            {!!projectIds.length && (
+              <DataLoader get={() => this.props.getProjects(projectIds)}>
+                {projects => (
+                  <CoverContainer style={coverStyle}>
+                    <div className="projects">
+                      <ProjectsUL projects={projects}/>
+                    </div>
+                  </CoverContainer>
+                )}
+              </DataLoader>
+            )}
           </li>
-        )}
+        ))}
       </ul>
     );
   }
@@ -68,13 +53,11 @@ class RelatedProjectsLoader extends React.Component {
   
   getUserPins(user) {
     return this.props.getUserPins(user.id).then(pins => ({
+      id: user.id,
+      name: user.name || user.login || user.tooltipName,
+      url: user.userLink,
+      coverStyle: user.profileStyle,
       projectIds: pins.map(pin => pin.projectId),
-      owner: {
-        id: user.id,
-        name: user.name || user.login || user.tooltipName,
-        url: user.userLink,
-        coverStyle: user.profileStyle,
-      },
     }));
   }
   
