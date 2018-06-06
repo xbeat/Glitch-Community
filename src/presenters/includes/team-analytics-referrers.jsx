@@ -15,8 +15,14 @@ const ReferrerItem = ({referrer, countProperty, data}) => {
   const progress = Math.max(Math.round(count / total * 100), 5);
   return (
     <li>
-      {referrer.domain}, {count.toLocaleString('en')}
-      <progress value={progress} max="100" />
+      {referrer.domain}
+      <div className="referrer-data">
+        <span className="referrer-count">
+          {count.toLocaleString('en')}
+        </span>
+        
+        <progress value={progress} max="100" />
+      </div>
     </li>
   );
 };
