@@ -49,9 +49,9 @@ class RelatedProjects extends React.Component {
       <DataLoader get={() => getUsers(this.state.users.map(user => user.id))}>
         {users => (
           <ul className="related-projects">
-            {users.map(({id, tooltipName, userLink, profileStyle, projects}) =>
+            {users.map(({id, name, login, tooltipName, userLink, profileStyle, projects}) =>
               <li key={id}>
-                <RelatedProjectsList name={tooltipName} url={userLink} coverStyle={profileStyle} projects={projects}/>
+                <RelatedProjectsList name={name || login || tooltipName} url={userLink} coverStyle={profileStyle} projects={projects}/>
               </li>
             )}
           </ul>
