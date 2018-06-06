@@ -6,20 +6,7 @@ import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 
-const RelatedProjectsList = ({
-  name, url, coverStyle, projects
-}) => (
-  <React.Fragment>
-    <h2><a href={url}>More by {name} →</a></h2>
-    <CoverContainer style={coverStyle}>
-      <div className="projects">
-        <ProjectsUL projects={projects}/>
-      </div>
-    </CoverContainer>
-  </React.Fragment>
-);
-
-class RelatedUserProjects extends React.Component {
+class RelatedProjectsList extends React.Component {
   constructor(props) {
     super(props);
     console.log(props);
@@ -30,14 +17,21 @@ class RelatedUserProjects extends React.Component {
   
   render() {
     const {
-      tooltipName,
-      profileStyle,
-      userLink,
+      name, url, coverStyle,
     } = this.props;
     const {
       projects,
     } = this.state;
-    return !!projects.length && <RelatedProjectsList name={tooltipName} url={userLink} coverStyle={profileStyle} projects={projects}/>;
+    return (
+      <React.Fragment>
+        <h2><a href={url}>More by {name} →</a></h2>
+        <CoverContainer style={coverStyle}>
+          <div className="projects">
+            <ProjectsUL projects={projects}/>
+          </div>
+        </CoverContainer>
+      </React.Fragment>
+    );
   }
 }
 
@@ -55,9 +49,9 @@ class RelatedProjects extends React.Component {
       <DataLoader get={() => getUsers(this.state.users.map(user => user.id))}>
         {users => (
           <ul className="related-projects">
-            {users.map(user =>
-              <li key={user.id}>
-                <RelatedUserProjects {...user}/>
+            {users.map(({id, tooltipName, userLink, profileStyle, projects}) =>
+              <li key={id}>
+                <RelatedProjectsList name={tooltipName} url={userLink} coverStyle={profileStyle} projects={projects}/>
               </li>
             )}
           </ul>
