@@ -17,7 +17,7 @@ app.use(compression());
 // which is a Ghost blog.
 app.use('/help', proxy('help-center.glitch.me', {
   preserveHostHdr: false,
-  https: true,
+  https: false,
   proxyReqPathResolver: function(req) {
     const path = '/help' + url.parse(req.url).path;
     console.log("Proxied:", path);
