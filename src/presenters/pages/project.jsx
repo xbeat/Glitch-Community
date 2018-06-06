@@ -10,6 +10,7 @@ import {AuthDescription} from '../includes/description-field.jsx';
 import {AvatarContainer, InfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, ReportButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
+import RelatedProjects from '../includes/related-projects.jsx';
 
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
@@ -80,6 +81,9 @@ const ProjectPage = ({
     </section>
     <section id="embed">
       <Embed domain={domain}/>
+    </section>
+    <section id="related">
+      <RelatedProjects users={users}/>
     </section>
     <section id="readme">
       <ReadmeLoader getReadme={getReadme}/>
