@@ -23,10 +23,13 @@ analytics-remixes = #ff7f0f
   .referrers
     margin-top: 0
   
-  .referrers-columns
+  .referrers-content
     display: flex
-  .referrer-column
+    
+  .referrers-column
+    width: calc(33% - 20px)
     max-width: calc(50% - 20px)
+    margin: 0
     margin-right: 20px
     
   ul
@@ -36,6 +39,10 @@ analytics-remixes = #ff7f0f
     
   progress
     border-color: input-border
+    display: block
+    width: 100%
+    margin-bottom: 0.5rem
+    
     &::-webkit-progress-value
       background-color: input-border
     &::-moz-progress-bar
@@ -43,3 +50,7 @@ analytics-remixes = #ff7f0f
 
   h3
     margin-top: 0
+
+  h4
+    margin: 0
+    
