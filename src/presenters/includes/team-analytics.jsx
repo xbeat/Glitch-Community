@@ -187,7 +187,7 @@ class TeamAnalytics extends React.Component {
             projects = {this.props.projects}
           />
           { (this.state.currentProjectDomain === "All Projects") &&
-            <p>Select a project for details and the latest remixes</p>
+            <p>↑ Select a project for details and the latest remixes</p>
             ||
             <TeamAnalyticsProjectDetails
               currentProjectDomain = {this.state.currentProjectDomain}
