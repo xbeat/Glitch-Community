@@ -33,7 +33,7 @@ const TeamAnalyticsReferrers = ({analytics}) => {
   const appViewReferrers = filterReferrers(analytics.referrers);
   const remixReferrers = filterReferrers(analytics.remixReferrers);
   return (
-    <div className="referrers-container">
+    <div className="referrers-columns">
       <article className="referrers-column">
         <h4>
           <div className="legend-item"/>
