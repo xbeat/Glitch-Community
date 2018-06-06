@@ -1,22 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
-
-const PrefixedInput = ({prefix, ...props}) => {
-  let className = props.className || "";
-  return (
-    <div style={{display: 'flex'}}>
-      <label className={className}>
-        {prefix}
-        <input {...props}/>
-      </label>
-    </div>
-  );
-}
-
-PrefixedInput.propTypes = {
-  prefix: PropTypes.string.isRequired,
-};
+import PrefixedInput from './prefixed-input.jsx';
 
 export default class EditableField extends React.Component {
   constructor(props) {
