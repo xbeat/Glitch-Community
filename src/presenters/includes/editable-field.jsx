@@ -2,6 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
+const PrefixedInput = ({prefix, ...props}) => {
+  return (
+    <div>
+      <prefix>{prefix}</prefix>
+      <input {...props}/>
+    </div>
+  );
+}
+
+PrefixedInput.propTypes = {
+  prefix: PropTypes.string.isRequired,
+};
+
 export default class EditableField extends React.Component {
   constructor(props) {
     super(props);
@@ -45,18 +58,21 @@ export default class EditableField extends React.Component {
     });
   }  
   render() {
+    const inputProps = {
+      className: ["content-editable", this.state.error ? "error" : ""].join(" "),
+      value:this.state.value,
+      onChange: this.onChange,
+      spellCheck: false,
+      autoComplete: "off",
+      placeholder: this.props.placeholder,
+    };
+    
     return (
       <div className="editable-field-container">
-        <input
-          className={["content-editable", this.state.error ? "error" : ""].join(" ")}
-          value={this.state.value}
-          onChange={this.onChange}
-          spellCheck={false}
-          autoComplete="off"
-          placeholder={this.props.placeholder}
-        />
-        { this.props.prefix && (
-          <span className="editable-field-prefix">{this.props.prefix}</span>
+        { this.props.prefix ? (
+          <PrefixedInput {...inputProps} prefix={this.props.prefix}/>
+        ) : (
+          <input {...inputProps}/>
         )}
         {!!this.state.error && (
           <React.Fragment>
