@@ -39,7 +39,7 @@ module.exports = exports = {
     // Overridse of jsx-a11y/recommended
     "jsx-a11y/label-has-for": [ 2, {
       "required": {
-        "some": [ "nesting", "id" ] // permit sibling labels with id, or no-id if nested.
+        "every": [ "id" ] // permit un-nested labels
       },
     }],
   }
