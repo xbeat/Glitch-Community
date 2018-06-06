@@ -19,7 +19,6 @@ app.use(compression());
 // node matches /help and /help/;
 // we need to force /help/ so that relative links in Ghost work. 
 app.all('/help', (req, res, next) => {
-    console.log("path is ",req.path);
     const path = req.path;
     if(!path.toLowerCase().startsWith("/help/")) {
        //therefore, path is "/help[^/]"/i
