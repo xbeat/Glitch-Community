@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
-import Cleave from 'cleave.js/react';
 
 export default class EditableField extends React.Component {
   constructor(props) {
@@ -57,7 +56,8 @@ export default class EditableField extends React.Component {
           placeholder={this.props.placeholder}
         />
         { this.props.prefix && (
-          )}
+          <span className="editable-field-prefix">{this.props.prefix}</span>
+        )}
         {!!this.state.error && (
           <React.Fragment>
             <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
