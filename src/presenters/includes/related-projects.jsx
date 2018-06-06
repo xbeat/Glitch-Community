@@ -35,20 +35,16 @@ class RelatedProjectsList extends React.Component {
   }
 }
 
-class RelatedProjects extends React.Component {
+class RelatedProjectsLoader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      remainingUsers: props.users,
-      pendingUsers: [],
-      users: [],
+      users: sampleSize(,
     };
   }
   
-  componentDidMount
-  
   render() {
-    const {users, pendingUsers} = this.state;
+    const {users, pending} = this.state;
     return (
       <React.Fragment>
         {!!users.length && (
@@ -60,13 +56,13 @@ class RelatedProjects extends React.Component {
             )}
           </ul>
         )}
-        {!!pendingUsers.length && <Loader/>}
+        {!!pending.length && <Loader/>}
       </React.Fragment>
     );
   }
 }
-RelatedProjects.propTypes = {
+RelatedProjectsLoader.propTypes = {
   getUserPinnedProjects: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
 };
-export default RelatedProjects;
+export default RelatedProjectsLoader;
