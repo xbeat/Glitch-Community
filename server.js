@@ -16,15 +16,19 @@ app.use(compression());
 // Proxy the /help/ section of our site over to help-center,
 // which is a Ghost blog.
 
+// node matches /help and /help/;
+// we need to force /help/ so that relative links in Ghost work. 
 app.all('/help', (req, res, next) => {
     console.log("path is ",req.path);
     const path = req.path;
-    if(!path.toLowerCase().startsWith("/help/") {
+    if(!path.toLowerCase().startsWith("/help/")) {
+       //therefore, path is "/help[^/]"/i
        const rest = path.substring(5);
        return res.redirect(301, "/help/" + rest);
-   }
+    }
     return next();
 });
+
 app.use('/help/', proxy('help-center.glitch.me', {
   preserveHostHdr: false, // glitch routes based on this, so we have to reset it
   https: false, // allows the proxy to do less work
