@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {sampleSize} from 'lodash';
 
-import {DataLoader} from './loader.jsx';
+import Loader from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 
@@ -39,15 +39,19 @@ class RelatedProjects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: sampleSize(this.props.users, 3),
+      remainingUsers: props.users,
+      pendingUsers: [],
+      users: [],
     };
   }
   
+  componentDidMount
+  
   render() {
-    const {getUsers} = this.props;
+    const {users, pendingUsers} = this.state;
     return (
-      <DataLoader get={() => getUsers(this.state.users.map(user => user.id))}>
-        {users => (
+      <React.Fragment>
+        {!!users.length && (
           <ul className="related-projects">
             {users.map(({id, name, login, tooltipName, userLink, profileStyle, projects}) =>
               <li key={id}>
@@ -56,12 +60,13 @@ class RelatedProjects extends React.Component {
             )}
           </ul>
         )}
-      </DataLoader>
+        {!!pendingUsers.length && <Loader/>}
+      </React.Fragment>
     );
   }
 }
 RelatedProjects.propTypes = {
-  getUsers: PropTypes.func.isRequired,
+  getUserPinnedProjects: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
 };
 export default RelatedProjects;

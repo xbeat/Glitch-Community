@@ -64,7 +64,7 @@ const ProjectPage = ({
     ...project // 'private' can't be used as a variable name
   },
   getReadme,
-  getUsers,
+  getUserPinnedProjects,
   updateDescription,
 }) => (
   <main className="project-page">
@@ -85,7 +85,7 @@ const ProjectPage = ({
       <Embed domain={domain}/>
     </section>
     <section id="related">
-      <RelatedProjects users={users} getUsers={getUsers}/>
+      <RelatedProjects users={users} getUserPinnedProjects={getUserPinnedProjects}/>
     </section>
     <section id="readme">
       <ReadmeLoader getReadme={getReadme}/>
@@ -114,7 +114,7 @@ export default function(application, name) {
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
     updateDescription: (id, description) => application.api().patch(`projects/${id}`, {description}),
-    getUsers: (ids) => application.api().get(`users/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(item => User(item).update(item).asProps())),
+    getUserPinnedProjects: (id) => application.api().get(`users/${id}/pinned-projects`).then(({data}) => data),
     name,
   };
   const content = Reactlet(ProjectPageLoader, props, 'projectpage');
