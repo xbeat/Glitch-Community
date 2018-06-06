@@ -15,18 +15,22 @@ const RelatedProjectsList = ({
 class RelatedUserProjects extends React.Component {
   constructor({...props}) {
     super(props);
-    console.log(...props);
+    console.log({...props});
+    this.state = {
+      projects: [],
+    };
   }
   
   render() {
-    return <RelatedProjectsList coverStyle={this.props.profileStyle}
+    return <RelatedProjectsList coverStyle={this.props.profileStyle} projects={this.state.projects}/>;
+  }
 }
 
 const RelatedProjects = ({users}) => (
   <ul className="related-projects">
-    {users.map(({id, profileStyle, projects}) =>
-      <li key={id}>
-        <RelatedProjectsList coverStyle={profileStyle} projects={projects}/>
+    {users.map(user =>
+      <li key={user.id}>
+        <RelatedUserProjects {...user}/>
       </li>
     )}
   </ul>
