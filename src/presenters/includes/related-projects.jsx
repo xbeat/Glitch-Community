@@ -2,18 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {CoverContainer} from './profile.jsx';
+import {ProjectsUL} from '../projects-list.jsx';
 
-const ProjectList = ({
-  id, coverStyle
+const RelatedProjectsList = ({
+  coverStyle, projects
 }) => (
-  <CoverContainer style={coverStyle}>{id}</CoverContainer>
+  <CoverContainer style={coverStyle}>
+    <ProjectsUL projects={projects}/>
+  </CoverContainer>
 );
+
+class RelatedUserProjects extends React.Component {
+  constructor({...props}) {
+    super(props);
+    console.log(...props);
+  }
+  
+  render() {
+    return <RelatedProjectsList coverStyle={this.props.profileStyle}
+}
 
 const RelatedProjects = ({users}) => (
   <ul className="related-projects">
-    {users.map(({id, profileStyle}) =>
+    {users.map(({id, profileStyle, projects}) =>
       <li key={id}>
-        <ProjectList id={id} coverStyle={profileStyle}/>
+        <RelatedProjectsList coverStyle={profileStyle} projects={projects}/>
       </li>
     )}
   </ul>
