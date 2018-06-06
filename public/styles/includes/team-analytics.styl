@@ -21,7 +21,6 @@ analytics-remixes = #ff7f0f
     margin-bottom: 0
 
   progress
-    // border-color: input-border
     display: block
     width: 100%
     margin-top: 2px
@@ -39,24 +38,18 @@ analytics-remixes = #ff7f0f
     max-width: calc(50% - 20px)
     margin: 0
     margin-right: 20px
-
     &.app-views    
       progress
         &::-webkit-progress-value
           background-color: analytics-app-views
         &::-moz-progress-bar
           background-color: analytics-app-views
-
-
-      
     &.remixes
       progress
         &::-webkit-progress-value
           background-color: analytics-remixes
         &::-moz-progress-bar
           background-color: analytics-remixes
-
-
 
   ul
     padding: 0
@@ -72,3 +65,11 @@ analytics-remixes = #ff7f0f
 
   h4
     margin: 0
+
+  .project-details
+    table
+      font-size: 14px
+    .label
+      color: secondary
+      padding-left: 20px
+    

@@ -64,7 +64,10 @@ const ProjectDetails = ({projectDetails}) => {
           { (projectDetails.baseProject.domain) &&
             <tr>
               <td className="label">Originally remixed from</td>
-              <td>{projectDetails.baseProject.domain}</td>
+              <td>
+                <img className="avatar" scr={avatarUrl(projectDetails.baseProject.id)} />
+                {projectDetails.baseProject.domain}
+              </td>
             </tr>
           }
         </tbody>
