@@ -18,11 +18,13 @@ const avatarUrl = (id) => {
   return `https://cdn.glitch.com/project-avatar/${id}.png`;
 };
 
-
+const communityProjectUrl = (domain) => {
+  return `/~${domain}`
+}
 
 const ProjectDetails = ({projectDetails}) => {
   let projectAvatar = avatarUrl(projectDetails.id);
-  let projectUrl = `/~${projectDetails.domain}`;
+  let projectUrl = communityProjectUrl(projectDetails.domain);
   // convert to a paragraph?
   return (
     <article className="project-details">
@@ -67,7 +69,9 @@ const ProjectDetails = ({projectDetails}) => {
             <tr>
               <td className="label">Originally remixed from</td>
               <td>
-                <img className="avatar baseproject-avatar" src={avatarUrl(projectDetails.baseProject.id)} />
+                <a href={communityProjectUrl(projectDetails.baseProject.domain)}>
+                  <img className="avatar baseproject-avatar" src={avatarUrl(projectDetails.baseProject.id)} />
+                </a>
                 {projectDetails.baseProject.domain}
               </td>
             </tr>
@@ -80,7 +84,7 @@ const ProjectDetails = ({projectDetails}) => {
 
 const ProjectRemixItem = ({remix}) => {
   let projectAvatar = avatarUrl(remix.id);
-  let projectUrl = `/~${remix.domain}`;
+  let projectUrl = communityProjectUrl(remix.domain);
   return (
     <a href={projectUrl}>
       <span data-tooltip={remix.domain} data-tooltip-left="true">
