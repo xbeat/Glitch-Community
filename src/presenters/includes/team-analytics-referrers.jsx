@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const MAX_REFERRERS = 5
+
 const countTotals = (data, countProperty) => {
   let total = 0;
   data.forEach(referrer => {
@@ -25,7 +27,7 @@ const filterReferrers = (referrers) => {
   let filteredReferrers = referrers.filter(referrer =>
     !referrer.self
   );
-  filteredReferrers = filteredReferrers.slice(0,5);
+  filteredReferrers = filteredReferrers.slice(0, MAX_REFERRERS);
   return filteredReferrers;
 };
 
