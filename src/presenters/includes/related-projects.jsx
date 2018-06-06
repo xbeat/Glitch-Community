@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {sampleSize} from 'lodash';
 
-import Loader from './loader.jsx';
+import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 
@@ -47,9 +47,9 @@ class RelatedProjects extends React.Component {
     const {users} = this.state;
     return !!users.length && (
       <ul className="related-projects">
-        {users.map(({id, name, login, tooltipName, userLink, profileStyle, projects}) =>
+        {users.map(({owner: {id, ...owner}, projectIds}) =>
           <li key={id}>
-            <RelatedProjectsList name={name || login || tooltipName} url={userLink} coverStyle={profileStyle} projects={projects}/>
+            <RelatedProjectsList {...owner} projectIds={projectIds}/>
           </li>
         )}
       </ul>
@@ -63,17 +63,30 @@ class RelatedProjectsLoader extends React.Component {
     this.state = {
       users: sampleSize(props.users, 3),
     };
+    this.getAllUserPins = this.getAllUserPins.bind(this);
   }
   
   getUserPins(user) {
     return this.props.getUserPins(user.id).then(pins => ({
-      projects: pins.map(pin => pin.projectId),
-      user,
-    })
+      projectIds: pins.map(pin => pin.projectId),
+      owner: {
+        id: user.id,
+        name: user.name || user.login || user.tooltipName,
+        url: user.userLink,
+        coverStyle: user.profileStyle,
+      },
+    }));
+  }
+  
+  getAllUserPins() {
+    return Promise.all(this.state.users.map(
+      user => this.getUserPins(user)
+    ));
+  }
   
   render() {
     return (
-      <DataLoader get={() => []}>
+      <DataLoader get={this.getAllUserPins}>
         {users => <RelatedProjects users={users}/>}
       </DataLoader>
     );
