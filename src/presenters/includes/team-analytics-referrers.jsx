@@ -16,13 +16,8 @@ const ReferrerItem = ({referrer, countProperty, data}) => {
   return (
     <li>
       {referrer.domain}
-      <div className="referrer-data">
-        <span className="referrer-count">
-          {count.toLocaleString('en')}
-        </span>
-        
-        <progress value={progress} max="100" />
-      </div>
+      <div className="referrer-count">{count.toLocaleString('en')}</div>
+      <progress value={progress} max="100" />
     </li>
   );
 };
