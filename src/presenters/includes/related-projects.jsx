@@ -41,22 +41,31 @@ class RelatedUserProjects extends React.Component {
 class RelatedProjects extends React.Component {
   constructor(props) {
     super(props);
-    this.state = props
+    this.state = {
+      users: this.props.users.slice(0, 3),
+    };
   }
   
   render() {
+    const {getUsers} = this.props;
+    const {users} = this.state;
     return (
-      <ul className="related-projects">
-        {this.props.users.map(user =>
-          <li key={user.id}>
-            <RelatedUserProjects {...user}/>
-          </li>
+      <DataLoader get={() => getUsers(users.map(user => user.id))}>
+        {users => (
+          <ul className="related-projects">
+            {users.map(user =>
+              <li key={user.id}>
+                <RelatedUserProjects {...user}/>
+              </li>
+            )}
+          </ul>
         )}
-      </ul>
+      </DataLoader>
     );
   }
 }
 RelatedProjects.propTypes = {
+  getUsers: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
 };
 export default RelatedProjects;
