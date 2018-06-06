@@ -35,34 +35,52 @@ class RelatedProjectsList extends React.Component {
   }
 }
 
-class RelatedProjectsLoader extends React.Component {
+class RelatedProjects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: sampleSize(,
+      users: this.props.users,
     };
   }
   
   render() {
-    const {users, pending} = this.state;
-    return (
-      <React.Fragment>
-        {!!users.length && (
-          <ul className="related-projects">
-            {users.map(({id, name, login, tooltipName, userLink, profileStyle, projects}) =>
-              <li key={id}>
-                <RelatedProjectsList name={name || login || tooltipName} url={userLink} coverStyle={profileStyle} projects={projects}/>
-              </li>
-            )}
-          </ul>
+    const {users} = this.state;
+    return !!users.length && (
+      <ul className="related-projects">
+        {users.map(({id, name, login, tooltipName, userLink, profileStyle, projects}) =>
+          <li key={id}>
+            <RelatedProjectsList name={name || login || tooltipName} url={userLink} coverStyle={profileStyle} projects={projects}/>
+          </li>
         )}
-        {!!pending.length && <Loader/>}
-      </React.Fragment>
+      </ul>
+    );
+  }
+}
+
+class RelatedProjectsLoader extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: sampleSize(props.users, 3),
+    };
+  }
+  
+  getUserPins(user) {
+    return this.props.getUserPins(user.id).then(pins => ({
+      projects: pins.map(pin => pin.projectId),
+      user,
+    })
+  
+  render() {
+    return (
+      <DataLoader get={() => []}>
+        {users => <RelatedProjects users={users}/>}
+      </DataLoader>
     );
   }
 }
 RelatedProjectsLoader.propTypes = {
-  getUserPinnedProjects: PropTypes.func.isRequired,
+  getUserPins: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
 };
 export default RelatedProjectsLoader;

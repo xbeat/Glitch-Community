@@ -63,7 +63,7 @@ const ProjectPage = ({
     ...project // 'private' can't be used as a variable name
   },
   getReadme,
-  getUserPinnedProjects,
+  getUserPins,
   updateDescription,
 }) => (
   <main className="project-page">
@@ -84,7 +84,7 @@ const ProjectPage = ({
       <Embed domain={domain}/>
     </section>
     <section id="related">
-      <RelatedProjects users={users} getUserPinnedProjects={getUserPinnedProjects}/>
+      <RelatedProjects users={users} getUserPins={getUserPins}/>
     </section>
     <section id="readme">
       <ReadmeLoader getReadme={getReadme}/>
