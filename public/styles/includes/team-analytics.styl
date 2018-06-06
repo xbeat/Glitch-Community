@@ -20,27 +20,43 @@ analytics-remixes = #ff7f0f
   .activity
     margin-bottom: 0
 
+  progress
+    // border-color: input-border
+    display: block
+    width: 100%
+    margin-top: 2px
+    margin-bottom: 0.5rem
+    height: 5px
+    
   .referrers
     margin-top: 0
 
-  .legend-item
-    width: 10px
-    height: 10px
-    display: inline-block
-    margin-right: 5px
-    &.app-views    
-      background-color: analytics-app-views
-    &.remixes
-      background-color: analytics-remixes
-
   .referrers-content
     display: flex
-
+    
   .referrers-column
     width: calc(33% - 20px)
     max-width: calc(50% - 20px)
     margin: 0
     margin-right: 20px
+
+    &.app-views    
+      progress
+        &::-webkit-progress-value
+          background-color: analytics-app-views
+        &::-moz-progress-bar
+          background-color: analytics-app-views
+
+
+      
+    &.remixes
+      progress
+        &::-webkit-progress-value
+          background-color: analytics-remixes
+        &::-moz-progress-bar
+          background-color: analytics-remixes
+
+
 
   ul
     padding: 0
@@ -50,18 +66,7 @@ analytics-remixes = #ff7f0f
     list-style-type: none
     font-size: 14px
 
-  progress
-    border-color: input-border
-    display: block
-    width: 100%
-    margin-bottom: 0.5rem
-    height: 5px
     
-    &::-webkit-progress-value
-      background-color: input-border
-    &::-moz-progress-bar
-      background-color: input-border
-
   h3
     margin-top: 0
 
