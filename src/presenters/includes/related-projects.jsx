@@ -5,24 +5,35 @@ import {CoverContainer} from './profile.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 
 const RelatedProjectsList = ({
-  coverStyle, projects
+  name, url, coverStyle, projects
 }) => (
-  <CoverContainer style={coverStyle}>
-    <ProjectsUL projects={projects}/>
-  </CoverContainer>
+  <React.Fragment>
+    <h2><a href={url}>More by {name}</a></h2>
+    <CoverContainer style={coverStyle}>
+      <ProjectsUL projects={projects}/>
+    </CoverContainer>
+  </React.Fragment>
 );
 
 class RelatedUserProjects extends React.Component {
-  constructor({...props}) {
+  constructor(props) {
     super(props);
-    console.log({...props});
+    console.log(props);
     this.state = {
       projects: [],
     };
   }
   
   render() {
-    return <RelatedProjectsList coverStyle={this.props.profileStyle} projects={this.state.projects}/>;
+    const {
+      tooltipName,
+      profileStyle,
+      userLink,
+    } = this.props;
+    const {
+      projects,
+    } = this.state;
+    return <RelatedProjectsList name={tooltipName} url={userLink} coverStyle={profileStyle} projects={projects}/>;
   }
 }
 
