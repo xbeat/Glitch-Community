@@ -16,8 +16,8 @@ app.use(compression());
 // Proxy the /help/ section of our site over to help-center,
 // which is a Ghost blog.
 app.use('/help', proxy('help-center.glitch.me', {
-  preserveHostHdr: false,
-  https: false,
+  preserveHostHdr: false, // glitch routes based on this, so we have to reset it
+  https: false, // to allow the proxy to do less work
   proxyReqPathResolver: function(req) {
     const path = '/help' + url.parse(req.url).path;
     console.log("Proxied:", path);
