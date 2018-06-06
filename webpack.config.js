@@ -58,6 +58,11 @@ module.exports = () => {
       splitChunks: {
         chunks: 'initial',
         cacheGroups: {
+          cache: {
+            name: 'cache',
+            test: /[\\/]src[\\/]cache/,
+            minSize: 0,
+          },
           react: {
             name: 'react-bundle',
             test: /[\\/]node_modules[\\/]react[-\\/]/,

@@ -1,41 +1,32 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
+
+import Markdown from './includes/markdown.jsx';
 import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
-export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOptions}) => {
+export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOptions}) => (
+  <li>
+    <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
+    <ProjectOptionsContainer project={project} closeAllPopOvers={closeAllPopOvers} projectOptions={projectOptions}></ProjectOptionsContainer>
 
-  function showProject(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    return project.showOverlay();
-  }
-  
-  return ( 
-
-    <li>
-      <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users}/>
-      <ProjectOptionsContainer project={project} closeAllPopOvers={closeAllPopOvers} projectOptions={projectOptions}></ProjectOptionsContainer>
-    
-      <a href={project.link} onClick={showProject}>
-        <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
-          style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
-          data-track="project" data-track-label={project.domain}>
-          <div className="project-container">
-            <img className="avatar" src={project.avatar} alt={`${project.domain} avatar`}/>
-            <button className={project.isRecentProject ? "button-cta" : ""}>
-              <span className="private-project-badge"></span>
-              <div className="project-name">{project.domain}</div>
-            </button>
-            <div className="description">{project.description}</div>
-            <div className="overflow-mask" style={{backgroundColor: categoryColor}}></div>
-          </div>
+    <a href={project.link}>
+      <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
+        style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
+        data-track="project" data-track-label={project.domain}>
+        <div className="project-container">
+          <img className="avatar" src={project.avatar} alt={`${project.domain} avatar`}/>
+          <button className={project.isRecentProject ? "button-cta" : ""}>
+            <span className="private-project-badge"></span>
+            <div className="project-name">{project.domain}</div>
+          </button>
+          <div className="description"><Markdown>{project.description}</Markdown></div>
+          <div className="overflow-mask" style={{backgroundColor: categoryColor}}></div>
         </div>
-      </a>
-    </li>
-  );
-};
+      </div>
+    </a>
+  </li>
+);
 
 ProjectItem.propTypes = {
   closeAllPopOvers: PropTypes.func.isRequired,
@@ -51,7 +42,6 @@ ProjectItem.propTypes = {
     name: PropTypes.string.isRequired,
     private: PropTypes.bool.isRequired,
     showAsGlitchTeam: PropTypes.bool.isRequired,
-    showOverlay: PropTypes.func.isRequired,
     users: PropTypes.array.isRequired,
   }).isRequired,
   categoryColor: PropTypes.string,
