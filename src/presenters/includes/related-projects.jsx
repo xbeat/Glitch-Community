@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {CoverContainer} from './profile.jsx';
 
 const ProjectList = ({
-  id, avatarStyle, coverStyle, projects
+  id, coverStyle
 }) => (
   <CoverContainer style={coverStyle}>{id}</CoverContainer>
 );
@@ -13,7 +13,7 @@ const RelatedProjects = ({users}) => (
   <ul className="related-projects">
     {users.map(({id, profileStyle}) =>
       <li key={id}>
-        <ProjectList c/>
+        <ProjectList id={id} coverStyle={profileStyle}/>
       </li>
     )}
   </ul>
