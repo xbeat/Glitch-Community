@@ -57,11 +57,7 @@ export default class EditableField extends React.Component {
     
     return (
       <div className="editable-field-container">
-        { this.props.prefix ? (
-          <PrefixedInput {...inputProps} prefix={this.props.prefix}/>
-        ) : (
-          <input {...inputProps}/>
-        )}
+        <PrefixedInput {...inputProps} prefix={this.props.prefix}/>
         {!!this.state.error && (
           <React.Fragment>
             <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>

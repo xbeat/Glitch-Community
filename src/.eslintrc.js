@@ -35,5 +35,12 @@ module.exports = exports = {
     // Overrides of react/recommended:
     "react/no-unescaped-entities": ["error", {"forbid": [`"`, ">", "}"]}], // permit ' in jsx html,
     "react/prop-types": [OFF], // disabled so we can use composed prop-types
+    
+    // Overridse of jsx-a11y/recommended
+    "jsx-a11y/label-has-for": [ 2, {
+      "required": {
+        "some": [ "nesting", "id" ] // permit sibling labels with id, or no-id if nested.
+      },
+    }],
   }
 }
