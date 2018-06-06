@@ -4,12 +4,21 @@ import PropTypes from 'prop-types';
 import {CoverContainer} from './profile.jsx';
 
 const ProjectList = ({
-  name, avatarStyle, coverStyle, projects
+  id, avatarStyle, coverStyle, projects
 }) => (
-  <CoverContainer>{name}</CoverContainer>
+  <CoverContainer style={coverStyle}>{id}</CoverContainer>
 );
 
 const RelatedProjects = ({users}) => (
-  'asdf'
+  <ul className="related-projects">
+    {users.map(user =>
+      <li key={user.id}>
+        <ProjectList {...user}/>
+      </li>
+    )}
+  </ul>
 );
+RelatedProjects.propTypes = {
+  users: PropTypes.array.isRequired,
+};
 export default RelatedProjects;

@@ -76,6 +76,19 @@ CoverContainer.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
+const ProfileContainer = ({
+  avatarStyle, avatarButtons,
+  coverStyle, coverButtons,
+  children,
+}) => (
+  <CoverContainer style={coverStyle} buttons={coverButtons}>
+    <InfoContainer>
+      <AvatarContainer style={avatarStyle} buttons={avatarButtons}>
+      </AvatarContainer>
+    </InfoContainer>
+  </CoverContainer>
+);
+
 // stuff below this line is page specific and hopefully won't stay in this file forever
 
 const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam}) => (
