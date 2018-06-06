@@ -8,7 +8,7 @@ const PrefixedInput = ({prefix, ...props}) => {
   }
   
   const className = props.className || "";
-  const inputId = props.id || uniqueId('prefixed-input');
+  const inputId = props.id || uniqueId('prefixed-input-');
   return (
     <div style={{display: 'flex'}}>
       <label htmlFor={inputId} style={{width: 'auto'}} className={className}>{prefix}</label>
