@@ -15,8 +15,7 @@ const ReferrerItem = ({referrer, countProperty, data}) => {
   const progress = Math.max(Math.round(count / total * 100), 5);
   return (
     <li>
-      {referrer.domain}
-      <div className="referrer-count">{count.toLocaleString('en')}</div>
+      {referrer.domain}, {count.toLocaleString('en')}
       <progress value={progress} max="100" />
     </li>
   );
@@ -37,7 +36,7 @@ const TeamAnalyticsReferrers = ({analytics}) => {
     <div className="referrers-content">
       <article className="referrers-column">
         <h4>
-          <div className="legend-item"/>
+          <div className="legend-item app-views"/>
           App Views
         </h4>
         <ul>
@@ -54,7 +53,7 @@ const TeamAnalyticsReferrers = ({analytics}) => {
       
       <article className="referrers-column">
         <h4>
-          <div className="legend-item"/>
+          <div className="legend-item remixes"/>
           Remixes
         </h4>
         <ul>

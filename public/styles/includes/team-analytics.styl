@@ -23,6 +23,16 @@ analytics-remixes = #ff7f0f
   .referrers
     margin-top: 0
 
+  .legend-item
+    width: 10px
+    height: 10px
+    display: inline-block
+    margin-right: 5px
+    &.app-views    
+      background-color: analytics-app-views
+    &.remixes
+      background-color: analytics-remixes
+
   .referrers-content
     display: flex
 
@@ -38,6 +48,7 @@ analytics-remixes = #ff7f0f
 
   li
     list-style-type: none
+    font-size: 14px
 
   progress
     border-color: input-border
