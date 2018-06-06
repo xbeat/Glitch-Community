@@ -33,36 +33,41 @@ const TeamAnalyticsReferrers = ({analytics}) => {
   const appViewReferrers = filterReferrers(analytics.referrers);
   const remixReferrers = filterReferrers(analytics.remixReferrers);
   return (
-    <article className="referrers-column">
-      <h4>
-        <div className="legend-item"/>
-        App Views
-      </h4>
-      <ul>
-        { appViewReferrers.map((referrer, key) => (
-          <ReferrerItem
-            key={key}
-            referrer = {referrer}
-            countProperty = "requests"
-            data = {appViewReferrers}
-          />
-        ))}
-      </ul>
-      <h4>
-        <div className="legend-item"/>
-        Remixes
-      </h4>
-      <ul>
-        { remixReferrers.map((referrer, key) => (
-          <ReferrerItem
-            key={key}
-            referrer = {referrer}
-            countProperty = "remixes"
-            data = {remixReferrers}
-          />
-        ))}
-      </ul>
-    </article> 
+    <div className="referrers-container">
+      <article className="referrers-column">
+        <h4>
+          <div className="legend-item"/>
+          App Views
+        </h4>
+        <ul>
+          { appViewReferrers.map((referrer, key) => (
+            <ReferrerItem
+              key={key}
+              referrer = {referrer}
+              countProperty = "requests"
+              data = {appViewReferrers}
+            />
+          ))}
+        </ul>
+      </article>
+      
+      <article className="referrers-column">
+        <h4>
+          <div className="legend-item"/>
+          Remixes
+        </h4>
+        <ul>
+          { remixReferrers.map((referrer, key) => (
+            <ReferrerItem
+              key={key}
+              referrer = {referrer}
+              countProperty = "remixes"
+              data = {remixReferrers}
+            />
+          ))}
+        </ul>
+      </article> 
+    </div>
   );
 };
 
