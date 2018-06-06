@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 
@@ -33,19 +34,28 @@ class RelatedUserProjects extends React.Component {
     const {
       projects,
     } = this.state;
-    return <RelatedProjectsList name={tooltipName} url={userLink} coverStyle={profileStyle} projects={projects}/>;
+    return !projects.length && <RelatedProjectsList name={tooltipName} url={userLink} coverStyle={profileStyle} projects={projects}/>;
   }
 }
 
-const RelatedProjects = ({users}) => (
-  <ul className="related-projects">
-    {users.map(user =>
-      <li key={user.id}>
-        <RelatedUserProjects {...user}/>
-      </li>
-    )}
-  </ul>
-);
+class RelatedProjects extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = props
+  }
+  
+  render() {
+    return (
+      <ul className="related-projects">
+        {this.props.users.map(user =>
+          <li key={user.id}>
+            <RelatedUserProjects {...user}/>
+          </li>
+        )}
+      </ul>
+    );
+  }
+}
 RelatedProjects.propTypes = {
   users: PropTypes.array.isRequired,
 };

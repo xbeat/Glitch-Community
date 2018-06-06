@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Project from '../../models/project';
+import User from '../../modules/user';
 
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
@@ -63,6 +64,7 @@ const ProjectPage = ({
     ...project // 'private' can't be used as a variable name
   },
   getReadme,
+  getUser,
   updateDescription,
 }) => (
   <main className="project-page">
@@ -83,7 +85,7 @@ const ProjectPage = ({
       <Embed domain={domain}/>
     </section>
     <section id="related">
-      <RelatedProjects users={users}/>
+      <RelatedProjects users={users} getUser={getUser}/>
     </section>
     <section id="readme">
       <ReadmeLoader getReadme={getReadme}/>
@@ -112,6 +114,7 @@ export default function(application, name) {
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
     updateDescription: (id, description) => application.api().patch(`projects/${id}`, {description}),
+    getUser: (id) => application.api().get(`users/${id}`).then(({data}) => User(data).update(data).asProps()),
     name,
   };
   const content = Reactlet(ProjectPageLoader, props, 'projectpage');
