@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {sampleSize} from 'lodash';
 
 import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
@@ -23,7 +24,7 @@ class RelatedUserProjects extends React.Component {
     super(props);
     console.log(props);
     this.state = {
-      projects: props.projects.slice(0, 3),
+      projects: sampleSize(props.projects, 3),
     };
   }
   
@@ -44,7 +45,7 @@ class RelatedProjects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: this.props.users.slice(0, 3),
+      users: sampleSize(this.props.users, 3),
     };
   }
   

@@ -5,10 +5,10 @@ import {TruncatedMarkdown} from './includes/markdown.jsx';
 import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
-export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOptions}) => (
+export const ProjectItem = ({project, categoryColor, projectOptions}) => (
   <li>
     <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
-    <ProjectOptionsContainer project={project} closeAllPopOvers={closeAllPopOvers} projectOptions={projectOptions}></ProjectOptionsContainer>
+    <ProjectOptionsContainer project={project} projectOptions={projectOptions}></ProjectOptionsContainer>
 
     <a href={project.link}>
       <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
@@ -29,7 +29,6 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
 );
 
 ProjectItem.propTypes = {
-  closeAllPopOvers: PropTypes.func.isRequired,
   project: PropTypes.shape({
     avatar: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
