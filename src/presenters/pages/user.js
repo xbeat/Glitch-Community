@@ -116,7 +116,9 @@ export default function(application, userLoginOrId) {
     },
     
     updateName(text) {
-      return self.updateField("name", text);
+      const maybeText = text === "" ? null : text;
+      //Api permits the name to be null, but not empty.
+      return self.updateField("name", maybeText);
     },
     
     updateLogin(text) {
