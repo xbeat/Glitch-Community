@@ -65,10 +65,10 @@ export const CoverContainer = ({
   style, buttons,
   children,
 }) => (
-  <section className="cover-container" style={style}>
+  <div className="cover-container" style={style}>
     {children}
     {buttons}
-  </section>
+  </div>
 );
 CoverContainer.propTypes = {
   style: PropTypes.object.isRequired,

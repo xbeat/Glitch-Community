@@ -65,7 +65,7 @@ const ProjectPage = ({
   getReadme,
   updateDescription,
 }) => (
-  <article className="project-page">
+  <main className="project-page">
     <section id="info">
       <InfoContainer>
         <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
@@ -91,7 +91,7 @@ const ProjectPage = ({
     <section id="feedback">
       <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
     </section>
-  </article>
+  </main>
 );
 ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,

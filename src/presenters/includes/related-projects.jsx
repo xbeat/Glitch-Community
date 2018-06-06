@@ -8,7 +8,7 @@ const RelatedProjectsList = ({
   name, url, coverStyle, projects
 }) => (
   <React.Fragment>
-    <h2><a href={url}>More by {name}</a></h2>
+    <h2><a href={url}>More by {name} →</a></h2>
     <CoverContainer style={coverStyle}>
       <ProjectsUL projects={projects}/>
     </CoverContainer>
