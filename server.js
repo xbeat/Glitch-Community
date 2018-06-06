@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(compression());
 
+// Proxy the /help/ section of our site over to help-center,
+// which is a Ghost blog.
 app.use('/help', proxy('help-center.glitch.me', {
   preserveHostHdr: false,
   https: true,
