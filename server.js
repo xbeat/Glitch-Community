@@ -1,6 +1,7 @@
 const express = require("express");
 const compression = require("compression");
 const proxy = require('express-http-proxy');
+const url = require('url');
 
 require("./webpack.config.js"); // So that webpack lints itself
 
@@ -15,6 +16,11 @@ app.use(compression());
 app.use('/help', proxy('help-center.glitch.me', {
   preserveHostHdr: false,
   https: true,
+  proxyReqPathResolver: function(req) {
+    const path = '/help' + url.parse(req.url).path;
+    console.log("Proxied:", path);
+    return path;
+  }
 }));
 
 const router = require('./routes')();
