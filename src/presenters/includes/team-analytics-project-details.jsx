@@ -19,8 +19,8 @@ const avatarUrl = (id) => {
 };
 
 const communityProjectUrl = (domain) => {
-  return `/~${domain}`
-}
+  return `/~${domain}`;
+};
 
 const ProjectDetails = ({projectDetails}) => {
   let projectAvatar = avatarUrl(projectDetails.id);
@@ -70,7 +70,7 @@ const ProjectDetails = ({projectDetails}) => {
               <td className="label">Originally remixed from</td>
               <td>
                 <a href={communityProjectUrl(projectDetails.baseProject.domain)}>
-                  <img className="avatar baseproject-avatar" src={avatarUrl(projectDetails.baseProject.id)} />
+                  <img alt="project avatar" className="avatar baseproject-avatar" src={avatarUrl(projectDetails.baseProject.id)} />
                 </a>
                 {projectDetails.baseProject.domain}
               </td>

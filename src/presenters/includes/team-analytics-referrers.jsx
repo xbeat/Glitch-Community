@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const MAX_REFERRERS = 5
+const MAX_REFERRERS = 5;
 
 const countTotals = (data, countProperty) => {
   let total = 0;
