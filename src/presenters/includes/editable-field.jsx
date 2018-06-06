@@ -46,11 +46,9 @@ export default class EditableField extends React.Component {
     });
   }  
   render() {
-    const prefix = this.props.prefix || "";
     return (
       <div className="editable-field-container">
-        <Cleave
-          options={{prefix: prefix}}
+        <input
           className={["content-editable", this.state.error ? "error" : ""].join(" ")}
           value={this.state.value}
           onChange={this.onChange}
@@ -58,6 +56,8 @@ export default class EditableField extends React.Component {
           autoComplete="off"
           placeholder={this.props.placeholder}
         />
+        { this.props.prefix && (
+          )}
         {!!this.state.error && (
           <React.Fragment>
             <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
