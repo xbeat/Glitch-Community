@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Markdown from './includes/markdown.jsx';
+import {TruncatedMarkdown} from './includes/markdown.jsx';
 import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
@@ -20,7 +20,7 @@ export const ProjectItem = ({closeAllPopOvers, project, categoryColor, projectOp
             <span className="private-project-badge"></span>
             <div className="project-name">{project.domain}</div>
           </button>
-          <div className="description"><Markdown>{project.description}</Markdown></div>
+          <div className="description"><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
           <div className="overflow-mask" style={{backgroundColor: categoryColor}}></div>
         </div>
       </div>
