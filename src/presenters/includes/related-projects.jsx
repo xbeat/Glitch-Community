@@ -11,9 +11,9 @@ const ProjectList = ({
 
 const RelatedProjects = ({users}) => (
   <ul className="related-projects">
-    {users.map(user =>
-      <li key={user.id}>
-        <ProjectList {...user}/>
+    {users.map(({id, profileStyle}) =>
+      <li key={id}>
+        <ProjectList c/>
       </li>
     )}
   </ul>
