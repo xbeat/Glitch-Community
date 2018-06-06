@@ -33,6 +33,7 @@ dependencies:
   react: 16.3.2
   react-dom: 16.3.2
   react-is: 16.3.2
+  react-maskedinput: 4.0.1
   react-onclickoutside: 6.7.1
   react-textarea-autosize: 6.1.0
   stylus: 0.54.5
@@ -3514,6 +3515,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-RZY5huIKCMRWDUqZlEi72f/lmXKMvuszcMBduliQ3nnWbx9X/ZBQO7DijMEYS9EhHBb2qacRUMtC7svLwe0lcw==
+  /inputmask-core/2.2.0:
+    dev: false
+    resolution:
+      integrity: sha1-eadffzpNMxKulf0rVaI2anyR37o=
   /inquirer/3.3.0:
     dependencies:
       ansi-escapes: 3.1.0
@@ -5582,6 +5587,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ybEM7YOr4yBgFd6w8dJqwxegqZGJNBZl6U27HnGKuTZmDvVrD5quWOK/wAnMywiZzW+Qsk+l4X2c70+thp/A8Q==
+  /react-maskedinput/4.0.1:
+    dependencies:
+      inputmask-core: 2.2.0
+      prop-types: 15.6.1
+    dev: false
+    peerDependencies:
+      react: ^0.14.9 || ^15.3.0 || ^16.0.0
+    resolution:
+      integrity: sha512-wWIGtJOYmFJFJl7ojJgE2oB7MKLE3QkXtB54UoXyYtvGL3Jni51a1LKAK39U/6Gh5OR3VAgFMdiPApbFw2ALrg==
   /react-onclickoutside/6.7.1:
     dev: false
     peerDependencies:
@@ -7236,6 +7250,7 @@ specifiers:
   react: ^16.3.2
   react-dom: ^16.3.2
   react-is: ^16.3.2
+  react-maskedinput: ^4.0.1
   react-onclickoutside: ^6.7.1
   react-textarea-autosize: ^6.1.0
   stylus: ^0.54.5

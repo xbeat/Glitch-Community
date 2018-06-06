@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
+import CurrencyInput from 'react-currency-input'; // Use this for its 'prefix' functionality
 
 export default class EditableField extends React.Component {
   constructor(props) {
@@ -59,7 +60,8 @@ export default class EditableField extends React.Component {
   render() {
     return (
       <div className="editable-field-container">
-        <input
+        <CurrencyInput
+          prefix={this.props.mask}
           className={["content-editable", this.state.error ? "error" : ""].join(" ")}
           value={this.props.mask + this.state.value}
           onChange={this.onChange}
