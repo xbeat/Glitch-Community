@@ -41,7 +41,6 @@ const chartColumns = (analytics) => {
     appViews.push(bucket.appViews);
     remixes.push(bucket.remixes);
   });
-  console.log ('📈 histogram', histogram);
   return [timestamps, appViews, remixes];
 };
 
