@@ -15,16 +15,16 @@ app.use(compression());
 
 // Proxy the /help/ section of our site over to help-center,
 // which is a Ghost blog.
-/*
+
 app.all('/help', (req, res, next) => {
-    //https://stackoverflow.com/questions/13442377/redirect-all-trailing-slashes-globally-in-express
-    if (req.path.substr(-1) == '/' && req.path.length > 1) {
-        var query = req.url.slice(req.path.length);
-        res.redirect(301, req.path.slice(0, -1) + query);
-    } else {
-        next();
-    }
-});*/
+    console.log("path is ",req.path);
+    const path = req.path;
+    if(!path.toLowerCase().startsWith("/help/") {
+       const rest = path.substring(5);
+       return res.redirect(301, "/help/" + rest);
+   }
+    return next();
+});
 app.use('/help/', proxy('help-center.glitch.me', {
   preserveHostHdr: false, // glitch routes based on this, so we have to reset it
   https: false, // allows the proxy to do less work
