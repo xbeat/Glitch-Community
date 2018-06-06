@@ -119,11 +119,6 @@ class TeamAnalytics extends React.Component {
       this.updateAnalytics();
     });
   }
-
-  // TODO too many updates
-  // componentDidUpdate(object prevProps, object prevState) {
-  //   console.log ('componentDidUpdate') 
-  // }
   
   render() {
     return (
