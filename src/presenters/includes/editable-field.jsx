@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
 const PrefixedInput = ({prefix, ...props}) => {
+  let className = props.className || "";
   return (
-    <div>
-      <prefix>{prefix}</prefix>
-      <input {...props}/>
+    <div style={{display: 'flex'}}>
+      <label className={className}>
+        {prefix}
+        <input {...props}/>
+      </label>
     </div>
   );
 }
