@@ -66,7 +66,7 @@ export default class EditableField extends React.Component {
           value={this.props.mask + this.state.value}
           onChange={this.onChange}
           spellCheck={false}
-          autoComplete="false"
+          autoComplete="off"
           placeholder={this.props.placeholder}
         />
         {!!this.state.error && (
