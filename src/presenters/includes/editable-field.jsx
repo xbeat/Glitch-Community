@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
-import CurrencyInput from 'react-currency-input'; // Use this for its 'prefix' functionality
+import Cleave from 'cleave.js/react';
 
 export default class EditableField extends React.Component {
   constructor(props) {
@@ -38,18 +38,6 @@ export default class EditableField extends React.Component {
   
   onChange(evt) {
     let value = evt.currentTarget.value;
-
-    // We're pretending to be a single-line input,
-    // so do not permit line breaks
-    // https://stackoverflow.com/a/10805198/1388
-    value = value.replace(/(\r\n\t|\n|\r\t)/gm,"");
-    
-    const mask = this.props.mask;
-    if(mask) {
-      // The mask character is not permitted to occur in the string:
-      value = value.split(mask).join("");
-    }
-    
     this.setState((lastState) => {
       if(lastState.value.trim() !== value.trim()) {
         this.update(value.trim());
@@ -58,12 +46,13 @@ export default class EditableField extends React.Component {
     });
   }  
   render() {
+    const prefix = this.props.prefix || "";
     return (
       <div className="editable-field-container">
-        <CurrencyInput
-          prefix={this.props.mask}
+        <Cleave
+          options={{prefix: prefix}}
           className={["content-editable", this.state.error ? "error" : ""].join(" ")}
-          value={this.props.mask + this.state.value}
+          value={this.state.value}
           onChange={this.onChange}
           spellCheck={false}
           autoComplete="off"
@@ -85,8 +74,5 @@ EditableField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
-  mask: PropTypes.string,
-};
-EditableField.defaultProps = {
-  mask: "",
+  prefix: PropTypes.string,
 };
