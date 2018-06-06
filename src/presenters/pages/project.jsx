@@ -113,7 +113,8 @@ export default function(application, name) {
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
     updateDescription: (id, description) => application.api().patch(`projects/${id}`, {description}),
-    getUserPinnedProjects: (id) => application.api().get(`users/${id}/pinned-projects`).then(({data}) => data),
+    getUserPins: (id) => application.api().get(`users/${id}/pinned-projects`).then(({data}) => data),
+    getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => Project(d).update(d).asProps())),
     name,
   };
   const content = Reactlet(ProjectPageLoader, props, 'projectpage');

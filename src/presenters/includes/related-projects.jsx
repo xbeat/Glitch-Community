@@ -11,7 +11,7 @@ class RelatedProjectsList extends React.Component {
     super(props);
     console.log(props);
     this.state = {
-      projects: sampleSize(props.projects, 3),
+      projectIds: sampleSize(props.projectIds, 3),
     };
   }
   
@@ -20,14 +20,14 @@ class RelatedProjectsList extends React.Component {
       name, url, coverStyle,
     } = this.props;
     const {
-      projects,
+      projectIds,
     } = this.state;
     return (
       <React.Fragment>
         <h2><a href={url}>More by {name} →</a></h2>
         <CoverContainer style={coverStyle}>
           <div className="projects">
-            <ProjectsUL projects={projects}/>
+            {JSON.stringify(projectIds)}
           </div>
         </CoverContainer>
       </React.Fragment>
@@ -39,7 +39,7 @@ class RelatedProjects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: this.props.users,
+      users: this.props.users, //todo: filter dupe projects, drop users with no projects
     };
   }
   
@@ -49,7 +49,7 @@ class RelatedProjects extends React.Component {
       <ul className="related-projects">
         {users.map(({owner: {id, ...owner}, projectIds}) =>
           <li key={id}>
-            <RelatedProjectsList {...owner} projectIds={projectIds}/>
+            <RelatedProjectsList {...owner} projectIds={projectIds} getProjects/>
           </li>
         )}
       </ul>
@@ -87,7 +87,7 @@ class RelatedProjectsLoader extends React.Component {
   render() {
     return (
       <DataLoader get={this.getAllUserPins}>
-        {users => <RelatedProjects users={users}/>}
+        {users => <RelatedProjects users={users} getProjects={this.props.getProjects}/>}
       </DataLoader>
     );
   }
