@@ -59,10 +59,11 @@ ReadmeLoader.propTypes = {
 const ProjectPage = ({
   project: {
     avatar, description, domain, id,
-    userIsCurrentUser, users,
+    userIsCurrentUser, users, teams,
     ...project // 'private' can't be used as a variable name
   },
   getReadme,
+  getTeamPins,
   getUserPins,
   getProjects,
   updateDescription,
@@ -85,7 +86,7 @@ const ProjectPage = ({
       <Embed domain={domain}/>
     </section>
     <section id="related">
-      <RelatedProjects ignoreProjectId={id} users={users} getUserPins={getUserPins} getProjects={getProjects}/>
+      <RelatedProjects ignoreProjectId={id} {...{teams, users, getTeamPins, getUserPins, getProjects}}/>
     </section>
     <section id="readme">
       <ReadmeLoader getReadme={getReadme}/>
@@ -111,9 +112,10 @@ ProjectPageLoader.propTypes = {
 // Let's keep layout in jade until all pages are react
 export default function(application, name) {
   const props = {
-    get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
+    get: () => application.api().get(`projects/${name}`).then(({data}) => console.log(data)||(data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
     updateDescription: (id, description) => application.api().patch(`projects/${id}`, {description}),
+    getTeamPins: (id) => application.api().get(`teams/${id}/pinned-projects`).then(({data}) => data),
     getUserPins: (id) => application.api().get(`users/${id}/pinned-projects`).then(({data}) => data),
     getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => Project(d).update(d).asProps())),
     name,

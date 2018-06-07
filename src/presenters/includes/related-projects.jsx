@@ -41,18 +41,23 @@ class RelatedProjects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      teams: [],
       users: sampleSize(props.users, 2),
     };
-    this.getAllUserPins = this.getAllUserPins.bind(this);
+    this.getAllPins = this.getAllPins.bind(this);
+  }
+  
+  selectProjects(pins) {
+    return sampleSize(without(pins.map(pin => pin.projectId), this.props.ignoreProjectId), 3);
   }
   
   getTeamPins(team) {
     return this.props.getTeamPins(team.id).then(pins => ({
       id: team.id,
-      name: user.name || user.login || user.tooltipName,
-      url: user.userLink,
-      coverStyle: user.profileStyle,
-      projectIds: sampleSize(without(pins.map(pin => pin.projectId), this.props.ignoreProjectId), 3),
+      name: team.name,
+      url: team.url,
+      coverStyle: team.teamProfileStyle,
+      projectIds: this.selectProjects(pins),
     }));
   }
   
@@ -62,14 +67,16 @@ class RelatedProjects extends React.Component {
       name: user.name || user.login || user.tooltipName,
       url: user.userLink,
       coverStyle: user.profileStyle,
-      projectIds: sampleSize(without(pins.map(pin => pin.projectId), this.props.ignoreProjectId), 3),
+      projectIds: this.selectProjects(pins),
     }));
   }
   
   getAllPins() {
-    return Promise.all(this.state.users.map(
-      user => this.getUserPins(user)
-    ));
+    return Promise.all(
+      this.state.teams.map(team => this.getTeamPins(team)).concat(
+        this.state.users.map(user => this.getUserPins(user))
+      )
+    );
   }
   
   render() {
