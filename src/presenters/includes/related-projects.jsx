@@ -40,10 +40,9 @@ RelatedProjectsPresenter.propTypes = {
 class RelatedProjects extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      teams: [],
-      users: sampleSize(props.users, 2),
-    };
+    const teams = sampleSize(props.teams, 1);
+    const users = sampleSize(props.users, 2 - teams.length);
+    this.state = {teams, users};
     this.getAllPins = this.getAllPins.bind(this);
   }
   
