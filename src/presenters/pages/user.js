@@ -205,6 +205,8 @@ export default function(application, userLoginOrId) {
     uploadAvatar: assetUtils.uploadAvatarFile,
     
     userProjects() {
+      // observe login so that avatars get updates when the login changes.
+      self.user().login();
       const props = {
         closeAllPopOvers: application.closeAllPopOvers,
         isAuthorizedUser: self.isCurrentUser(),
