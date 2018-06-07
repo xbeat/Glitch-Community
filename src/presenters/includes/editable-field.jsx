@@ -1,7 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {debounce, unique} from 'lodash';
-import PrefixedInput from './prefixed-input.jsx';
+import {debounce, uniqueId} from 'lodash';
+
+const PrefixedInput = ({prefix, inputId, children}) => {
+  if(!prefix) {
+    return children;
+  }
+
+  return (
+    <label htmlFor={inputId} className="content-editable-prefix-container">
+      <span className="content-editable content-editable-prefix">{prefix}</span>
+      {children}
+    </label>
+  );
+};
+PrefixedInput.propTypes = {
+  prefix: PropTypes.string,
+  inputId: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
+};
 
 export default class EditableField extends React.Component {
   constructor(props) {
@@ -53,23 +70,25 @@ export default class EditableField extends React.Component {
       spellCheck: false,
       autoComplete: "off",
       placeholder: this.props.placeholder,
-      id: unique("editable-field-"),
+      id: uniqueId("editable-field-"),
     };
     
+    const 
+    
     return (
-      <div className="editable-field-container">
-        <PrefixedInput inputId={inputProps.id} prefix={this.props.prefix}>
+      <label htmlFor={inputProps.id} className="editable-field-container">
+        <div class="flex">
           <input {...inputProps}/>
+          {!!this.state.error && (
+            <React.Fragment>
+              <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
+              <div className="editable-field-error-message">
+                {this.state.error}
+              </div>
+            </React.Fragment>
+          )}
         </PrefixedInput>
-        {!!this.state.error && (
-          <React.Fragment>
-            <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
-            <div className="editable-field-error-message">
-              {this.state.error}
-            </div>
-          </React.Fragment>
-        )}
-      </div>
+      </label>
     );
   }
 }
@@ -79,3 +98,8 @@ EditableField.propTypes = {
   update: PropTypes.func.isRequired,
   prefix: PropTypes.string,
 };
+
+    <label htmlFor={inputId} className="content-editable-prefix-container">
+      <span className="content-editable content-editable-prefix">{prefix}</span>
+      {children}
+    </label>
