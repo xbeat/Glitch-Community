@@ -18,13 +18,13 @@ export default [
     link: 'https://help-center.glitch.me/help/github/'
   }
   , {
-    title: 'Test Your Spy Skills with Slaccusation',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fslaccusation.jpg?1528110244558",
-    link: 'http://slaccusation.glitch.me/'
+    title: 'Minimal Retro Album Covers',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fretro-album-covers.jpg?1528372135662",
+    link: 'https://retro-album-covers.glitch.me/'
   }
   , {
-    title: 'Like Shazam for Album Covers',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frecord-player.jpg?1528110244910",
-    link: 'http://record-player.glitch.me/'
+    title: 'Gauge Your Team\'s Stress Levels',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcapacimeter.jpg?1528372135454",
+    link: 'https://capacimeter.glitch.me/'
   }   
 ];
