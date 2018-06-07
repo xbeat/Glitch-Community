@@ -62,16 +62,14 @@ InfoContainer.propTypes = {
 };
 
 export const CoverContainer = ({
-  style, buttons,
-  children,
+  buttons, children, className, ...props
 }) => (
-  <div className="cover-container" style={style}>
+  <div className={`cover-container ${className}`} {...props}>
     {children}
     {buttons}
   </div>
 );
 CoverContainer.propTypes = {
-  style: PropTypes.object.isRequired,
   buttons: PropTypes.node,
   children: PropTypes.node.isRequired,
 };

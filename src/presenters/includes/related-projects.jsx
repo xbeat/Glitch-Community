@@ -14,10 +14,8 @@ const RelatedProjectsPresenter = ({users, getProjects}) => (
         {!!projectIds.length && (
           <DataLoader get={() => getProjects(projectIds)}>
             {projects => (
-              <CoverContainer style={coverStyle}>
-                <div className="projects">
-                  <ProjectsUL projects={projects}/>
-                </div>
+              <CoverContainer style={coverStyle} className="projects">
+                <ProjectsUL projects={projects}/>
               </CoverContainer>
             )}
           </DataLoader>
@@ -43,7 +41,7 @@ class RelatedProjects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: sampleSize(props.users, 3),
+      users: sampleSize(props.users, 2),
     };
     this.getAllUserPins = this.getAllUserPins.bind(this);
   }
