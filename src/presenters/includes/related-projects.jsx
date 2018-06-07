@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {sampleSize} from 'lodash';
+import {sampleSize, without} from 'lodash';
 
 import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 
-const RelatedProjects = ({users}) => (
-  !!users.length &&
+const RelatedProjectsPresenter = ({users}) => (
   <ul className="related-projects">
     {users.map(({id, name, url, coverStyle, projectIds}) => (
       <li key={id}>
@@ -27,7 +26,7 @@ const RelatedProjects = ({users}) => (
     ))}
   </ul>
 );
-RelatedProjects.propTypes = {
+RelatedProjectsPresenter.propTypes = {
   users: PropTypes.arrayOf({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -37,14 +36,16 @@ RelatedProjects.propTypes = {
       PropTypes.string.isRequired
     ).isRequired,
   }).isRequired,
+  getProjects: PropTypes.func.isRequired,
 };
 
-class RelatedProjectsLoader extends React.Component {
+class RelatedProjects extends React.Component {
   constructor(props) {
     super(props);
+    const {ignoreProjectId, users} = props;
     this.state = {
-      users: sampleSize(props.users, 3).map(({projectIds, ...user}) => ({
-        projectIds: sampleSize(projectIds, 3),
+      users: sampleSize(users, 3).map(({projectIds, ...user}) => ({
+        projectIds: sampleSize(without(projectIds, ignoreProjectId), 3),
         ...user,
       })),
     };
@@ -70,13 +71,18 @@ class RelatedProjectsLoader extends React.Component {
   render() {
     return (
       <DataLoader get={this.getAllUserPins}>
-        {users => <RelatedProjects users={users} getProjects={this.props.getProjects}/>}
+        {users => !!users.length && <RelatedProjectsPresenter users={users} getProjects={this.props.getProjects}/>}
       </DataLoader>
     );
   }
 }
-RelatedProjectsLoader.propTypes = {
+RelatedProjects.propTypes = {
+  ignoreProjectId: PropTypes.string.isRequired,
   getUserPins: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
 };
-export default RelatedProjectsLoader;
+RelatedProjects.defaultProps = {
+  ignoreProjects: [],
+};
+
+export default RelatedProjects;

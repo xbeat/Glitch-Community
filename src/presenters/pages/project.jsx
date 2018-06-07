@@ -85,7 +85,7 @@ const ProjectPage = ({
       <Embed domain={domain}/>
     </section>
     <section id="related">
-      <RelatedProjects users={users} getUserPins={getUserPins} getProjects={getProjects}/>
+      <RelatedProjects ignoreProjectId={id} users={users} getUserPins={getUserPins} getProjects={getProjects}/>
     </section>
     <section id="readme">
       <ReadmeLoader getReadme={getReadme}/>
