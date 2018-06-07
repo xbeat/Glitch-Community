@@ -32,16 +32,16 @@ As long as you like.
           id: 5,
           title: "What's in a @name?",
           body: `
-That which we call a user  
-By another letter could be spelled in l33t;  
-So @user would, were he not @user call'd,  
-Retain that dear perfection which he owes  
+&nbsp;&nbsp;&nbsp;*That which we call a @user  
+By any other w0rd was spelled in l33t;  
+So @user would, were she not @user call'd,  
+Retain that dear perfection which she owes  
 Without that title. @user, doff thy name,  
 And for that name which is no part of thee  
-rename thyself._ 
+rename thyself.* 
 
 ![](https://cdn.glitch.com/41bc522e-d971-486e-b08e-7c12034743f9%2FSpeareShaker2000.PNG?1528404038461)
-( You can now edit your @user and display names on your profile page 🎭 )
+(You can now edit your @user and display names. 🎭)
 `,
         },
         {
