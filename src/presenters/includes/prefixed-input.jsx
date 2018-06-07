@@ -7,13 +7,12 @@ const PrefixedInput = ({prefix, ...props}) => {
     return <input {...props}/>;
   }
   
-  const className = props.className || "";
   const inputId = props.id || uniqueId('prefixed-input-');
   return (
-    <div style={{display: 'flex'}}>
-      <label htmlFor={inputId} style={{width: 'auto'}} className={className}>{prefix}</label>
+    <label htmlFor={inputId} className="content-editable-prefix-label">
+      <span className="content-editable-prefix">{prefix}</span>
       <input id={inputId} {...props}/>
-    </div>
+    </label>
   );
 };
 PrefixedInput.propTypes = {
