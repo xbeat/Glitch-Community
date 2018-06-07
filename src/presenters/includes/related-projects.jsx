@@ -6,13 +6,13 @@ import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 
-const RelatedProjectsPresenter = ({users}) => (
+const RelatedProjectsPresenter = ({users, getProjects}) => (
   <ul className="related-projects">
     {users.map(({id, name, url, coverStyle, projectIds}) => (
       <li key={id}>
         <h2><a href={url}>More by {name} →</a></h2>
         {!!projectIds.length && (
-          <DataLoader get={() => this.props.getProjects(projectIds)}>
+          <DataLoader get={() => getProjects(projectIds)}>
             {projects => (
               <CoverContainer style={coverStyle}>
                 <div className="projects">
@@ -42,12 +42,8 @@ RelatedProjectsPresenter.propTypes = {
 class RelatedProjects extends React.Component {
   constructor(props) {
     super(props);
-    const {ignoreProjectId, users} = props;
     this.state = {
-      users: sampleSize(users, 3).map(({projectIds, ...user}) => ({
-        projectIds: sampleSize(without(projectIds, ignoreProjectId), 3),
-        ...user,
-      })),
+      users: sampleSize(props.users, 3),
     };
     this.getAllUserPins = this.getAllUserPins.bind(this);
   }
@@ -58,7 +54,7 @@ class RelatedProjects extends React.Component {
       name: user.name || user.login || user.tooltipName,
       url: user.userLink,
       coverStyle: user.profileStyle,
-      projectIds: pins.map(pin => pin.projectId),
+      projectIds: sampleSize(without(pins.map(pin => pin.projectId), this.props.ignoreProjectId), 3),
     }));
   }
   
