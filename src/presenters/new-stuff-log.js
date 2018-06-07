@@ -19,7 +19,7 @@ export default function() {
 Your markdown body, here.
 
 As long as you like.
-`,
+`,Dev at Fog Creek, living the dream of a Glitchy  future. [@blinkymach12](https://twitter.com/@blinkymach12)
         },
         
         
@@ -32,13 +32,16 @@ As long as you like.
           id: 5,
           title: "What's in a @name?",
           body: `
-That which we call a user
-By another letter would be spelled in l33t;
-So @user would, were he not @user call'd,
-Retain that dear perfection which he owes
-Without that title. Romeo, doff thy name,
-And for that name which is no part of thee
-Take all myself.
+That which we call a user  
+By another letter could be spelled in l33t;  
+So @user would, were he not @user call'd,  
+Retain that dear perfection which he owes  
+Without that title. @user, doff thy name,  
+And for that name which is no part of thee  
+rename thyself._ 
+
+![](https://cdn.glitch.com/41bc522e-d971-486e-b08e-7c12034743f9%2FSpeareShaker2000.PNG?1528404038461)
+( You can now edit your @user and display names on your profile page 🎭 )
 `,
         },
         {
