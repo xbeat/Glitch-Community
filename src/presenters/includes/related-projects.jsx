@@ -6,9 +6,9 @@ import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 
-const RelatedProjectsPresenter = ({users, getProjects}) => (
+const RelatedProjectsPresenter = ({groups, getProjects}) => (
   <ul className="related-projects">
-    {users.map(({id, name, url, coverStyle, projectIds}) => (
+    {groups.map(({id, name, url, coverStyle, projectIds}) => (
       <li key={id}>
         <h2><a href={url}>More by {name} →</a></h2>
         {!!projectIds.length && (
@@ -25,7 +25,7 @@ const RelatedProjectsPresenter = ({users, getProjects}) => (
   </ul>
 );
 RelatedProjectsPresenter.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape({
+  groups: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.node.isRequired,
     name: PropTypes.node.isRequired,
     url: PropTypes.string.isRequired,
@@ -81,7 +81,7 @@ class RelatedProjects extends React.Component {
   render() {
     return (
       <DataLoader get={this.getAllPins}>
-        {users => !!users.length && <RelatedProjectsPresenter users={users} getProjects={this.props.getProjects}/>}
+        {groups => !!groups.length && <RelatedProjectsPresenter groups={groups} getProjects={this.props.getProjects}/>}
       </DataLoader>
     );
   }
