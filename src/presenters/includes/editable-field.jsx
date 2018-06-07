@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {debounce} from 'lodash';
+import {debounce, unique} from 'lodash';
 import PrefixedInput from './prefixed-input.jsx';
 
 export default class EditableField extends React.Component {
@@ -53,11 +53,14 @@ export default class EditableField extends React.Component {
       spellCheck: false,
       autoComplete: "off",
       placeholder: this.props.placeholder,
+      id: unique("editable-field-"),
     };
     
     return (
       <div className="editable-field-container">
-        <PrefixedInput {...inputProps} prefix={this.props.prefix}/>
+        <PrefixedInput inputId={inputProps.id} prefix={this.props.prefix}>
+          <input {...inputProps}/>
+        </PrefixedInput>
         {!!this.state.error && (
           <React.Fragment>
             <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>

@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {uniqueId} from 'lodash';
 
-const PrefixedInput = ({prefix, ...props}) => {
+const PrefixedInput = ({prefix, inputId, children}) => {
   if(!prefix) {
-    return <input {...props}/>;
+    return children;
   }
-  
-  const inputId = props.id || uniqueId('prefixed-input-');
+
   return (
-    <label htmlFor={inputId} className="content-editable-prefix-label">
+    <label htmlFor={inputId} className="content-editable-prefix-container">
       <span className="content-editable-prefix">{prefix}</span>
-      <input id={inputId} {...props}/>
+      {children}
     </label>
   );
 };
 PrefixedInput.propTypes = {
   prefix: PropTypes.string,
+  inputId: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default PrefixedInput;
