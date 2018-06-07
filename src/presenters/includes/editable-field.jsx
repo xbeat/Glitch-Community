@@ -2,24 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce, uniqueId} from 'lodash';
 
-const PrefixedInput = ({prefix, inputId, children}) => {
-  if(!prefix) {
-    return children;
-  }
-
-  return (
-    <label htmlFor={inputId} className="content-editable-prefix-container">
-      <span className="content-editable content-editable-prefix">{prefix}</span>
-      {children}
-    </label>
-  );
-};
-PrefixedInput.propTypes = {
-  prefix: PropTypes.string,
-  inputId: PropTypes.string.isRequired,
-  children: PropTypes.element.isRequired,
-};
-
 export default class EditableField extends React.Component {
   constructor(props) {
     super(props);
@@ -90,7 +72,7 @@ export default class EditableField extends React.Component {
     
     return (
       <label htmlFor={inputProps.id}>
-        <div className="editable-field-container">
+        <div className="editable-field-flex">
           {maybePrefix}
           <input {...inputProps}/>
           {maybeErrorIcon}
