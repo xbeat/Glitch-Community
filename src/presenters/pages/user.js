@@ -205,17 +205,21 @@ export default function(application, userLoginOrId) {
     uploadAvatar: assetUtils.uploadAvatarFile,
     
     userProjects() {
-      // observe login so that avatars get updates when the login changes.
-      self.user().login();
-      const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
-        isAuthorizedUser: self.isCurrentUser(),
-        projectsObservable: self.user().projects,
-        pinsObservable: self.user().pins,
-        projectOptions: self.projectOptions(),
-      };
+      const propsObservable = Observable(() => {
+        // observe login so that our project user links update as the user does.
+        self.user().login();
+
+        const props = {
+          closeAllPopOvers: application.closeAllPopOvers,
+          isAuthorizedUser: self.isCurrentUser(),
+          projectsObservable: self.user().projects,
+          pinsObservable: self.user().pins,
+          projectOptions: self.projectOptions(),
+        };
+        return props;
+      });
       
-      return Reactlet(EntityPageProjects, props, "UserPageProjectsContainer");
+      return Reactlet(Observed, {propsObservable, component:EntityPageProjects}, "UserPageProjectsContainer");
     },
     
     hiddenUnlessUserIsAnon() {
