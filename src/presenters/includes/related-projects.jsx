@@ -27,15 +27,15 @@ const RelatedProjectsPresenter = ({users}) => (
   </ul>
 );
 RelatedProjectsPresenter.propTypes = {
-  users: PropTypes.arrayOf({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.node.isRequired,
+    name: PropTypes.node.isRequired,
     url: PropTypes.string.isRequired,
     coverStyle: PropTypes.object.isRequired,
     projectIds: PropTypes.arrayOf(
       PropTypes.string.isRequired
     ).isRequired,
-  }).isRequired,
+  }).isRequired).isRequired,
   getProjects: PropTypes.func.isRequired,
 };
 
@@ -80,9 +80,6 @@ RelatedProjects.propTypes = {
   ignoreProjectId: PropTypes.string.isRequired,
   getUserPins: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
-};
-RelatedProjects.defaultProps = {
-  ignoreProjects: [],
 };
 
 export default RelatedProjects;
