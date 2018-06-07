@@ -63,8 +63,9 @@ export default class EditableField extends React.Component {
     });
   }  
   render() {
+    const classes = ["content-editable", this.state.error ? "error" : ""].join(" ");
     const inputProps = {
-      className: ["content-editable", this.state.error ? "error" : ""].join(" "),
+      className: classes,
       value:this.state.value,
       onChange: this.onChange,
       spellCheck: false,
@@ -73,21 +74,28 @@ export default class EditableField extends React.Component {
       id: uniqueId("editable-field-"),
     };
     
-    const 
+    const maybeErrorIcon = !!this.state.error && (
+      <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
+    );
+    
+    const maybeErrorMessage = !!this.state.error && (
+      <div className="editable-field-error-message">
+        {this.state.error}
+      </div>
+    );
+    
+    const maybePrefix = !!this.props.prefix && (
+      <span className={"content-editable-prefix " + classes}>{this.props.prefix}</span>
+    );
     
     return (
-      <label htmlFor={inputProps.id} className="editable-field-container">
-        <div class="flex">
+      <label htmlFor={inputProps.id}>
+        <div className="editable-field-container">
+          {maybePrefix}
           <input {...inputProps}/>
-          {!!this.state.error && (
-            <React.Fragment>
-              <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
-              <div className="editable-field-error-message">
-                {this.state.error}
-              </div>
-            </React.Fragment>
-          )}
-        </PrefixedInput>
+          {maybeErrorIcon}
+        </div>
+        {maybeErrorMessage}
       </label>
     );
   }
@@ -98,8 +106,3 @@ EditableField.propTypes = {
   update: PropTypes.func.isRequired,
   prefix: PropTypes.string,
 };
-
-    <label htmlFor={inputId} className="content-editable-prefix-container">
-      <span className="content-editable content-editable-prefix">{prefix}</span>
-      {children}
-    </label>
