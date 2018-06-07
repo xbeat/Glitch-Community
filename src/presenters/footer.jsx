@@ -21,7 +21,7 @@ export default function Footer() {
         Blog <span role="img" aria-label="">📰</span>
       </FooterLine>
       <FooterLine href="https://glitch.com/faq" track="faq">
-        FAQ <span role="img" aria-label="">☂️</span>
+        Help Center <span role="img" aria-label="">☂️</span>
       </FooterLine>
       <FooterLine href="http://status.glitch.com/" track="system status">
         System Status <span role="img" aria-label="">🚥</span>
