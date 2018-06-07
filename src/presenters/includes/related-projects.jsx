@@ -46,6 +46,16 @@ class RelatedProjects extends React.Component {
     this.getAllUserPins = this.getAllUserPins.bind(this);
   }
   
+  getTeamPins(team) {
+    return this.props.getTeamPins(team.id).then(pins => ({
+      id: team.id,
+      name: user.name || user.login || user.tooltipName,
+      url: user.userLink,
+      coverStyle: user.profileStyle,
+      projectIds: sampleSize(without(pins.map(pin => pin.projectId), this.props.ignoreProjectId), 3),
+    }));
+  }
+  
   getUserPins(user) {
     return this.props.getUserPins(user.id).then(pins => ({
       id: user.id,
@@ -56,7 +66,7 @@ class RelatedProjects extends React.Component {
     }));
   }
   
-  getAllUserPins() {
+  getAllPins() {
     return Promise.all(this.state.users.map(
       user => this.getUserPins(user)
     ));
@@ -64,7 +74,7 @@ class RelatedProjects extends React.Component {
   
   render() {
     return (
-      <DataLoader get={this.getAllUserPins}>
+      <DataLoader get={this.getAllPins}>
         {users => !!users.length && <RelatedProjectsPresenter users={users} getProjects={this.props.getProjects}/>}
       </DataLoader>
     );
@@ -72,7 +82,9 @@ class RelatedProjects extends React.Component {
 }
 RelatedProjects.propTypes = {
   ignoreProjectId: PropTypes.string.isRequired,
+  getTeamPins: PropTypes.func.isRequired,
   getUserPins: PropTypes.func.isRequired,
+  teams: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,
 };
 
