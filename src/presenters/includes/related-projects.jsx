@@ -6,47 +6,47 @@ import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 
-class RelatedProjects extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      users: this.props.users.map(({projectIds, ...user}) => ({
-        projectIds: sampleSize(projectIds, 3),
-        ...user,
-      })),
-    };
-  }
-  
-  render() {
-    const {users} = this.state;
-    return !!users.length && (
-      <ul className="related-projects">
-        {users.map(({id, name, url, coverStyle, projectIds}) => (
-          <li key={id}>
-            <h2><a href={url}>More by {name} →</a></h2>
-            {!!projectIds.length && (
-              <DataLoader get={() => this.props.getProjects(projectIds)}>
-                {projects => (
-                  <CoverContainer style={coverStyle}>
-                    <div className="projects">
-                      <ProjectsUL projects={projects}/>
-                    </div>
-                  </CoverContainer>
-                )}
-              </DataLoader>
+const RelatedProjects = ({users}) => (
+  !!users.length &&
+  <ul className="related-projects">
+    {users.map(({id, name, url, coverStyle, projectIds}) => (
+      <li key={id}>
+        <h2><a href={url}>More by {name} →</a></h2>
+        {!!projectIds.length && (
+          <DataLoader get={() => this.props.getProjects(projectIds)}>
+            {projects => (
+              <CoverContainer style={coverStyle}>
+                <div className="projects">
+                  <ProjectsUL projects={projects}/>
+                </div>
+              </CoverContainer>
             )}
-          </li>
-        ))}
-      </ul>
-    );
-  }
-}
+          </DataLoader>
+        )}
+      </li>
+    ))}
+  </ul>
+);
+RelatedProjects.propTypes = {
+  users: PropTypes.arrayOf({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    coverStyle: PropTypes.object.isRequired,
+    projectIds: PropTypes.arrayOf(
+      PropTypes.string.isRequired
+    ).isRequired,
+  }).isRequired,
+};
 
 class RelatedProjectsLoader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: sampleSize(props.users, 3),
+      users: sampleSize(props.users, 3).map(({projectIds, ...user}) => ({
+        projectIds: sampleSize(projectIds, 3),
+        ...user,
+      })),
     };
     this.getAllUserPins = this.getAllUserPins.bind(this);
   }
