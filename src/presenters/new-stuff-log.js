@@ -29,6 +29,19 @@ As long as you like.
     updates() {
       return [
         {
+          id: 5,
+          title: "What's in a @name?",
+          body: `
+That which we call a user
+By another letter would be spelled in l33t;
+So @user would, were he not @user call'd,
+Retain that dear perfection which he owes
+Without that title. Romeo, doff thy name,
+And for that name which is no part of thee
+Take all myself.
+`,
+        },
+        {
           id: 4,
           title: "Preview Project Apps and Code",
           body: `
