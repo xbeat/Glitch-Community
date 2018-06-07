@@ -32,9 +32,6 @@ export default function Footer() {
       <FooterLine href="https://glitch.com/legal" track="legal stuff">
         Legal Stuff <span role="img" aria-label="">👮‍</span>
       </FooterLine>
-      <FooterLine href="https://www.fogcreek.com/jobs/GlitchDesignEngineer" track="hiring">
-        Pssst... we're hiring a Design Engineer! <span role="img" aria-label="">🙋‍</span>
-      </FooterLine>
       <hr/>
       <FooterLine href="https://glitch.com/forteams" track="platforms">
         <img className="for-platforms-icon" src={srcForPlatforms} alt=""/>
