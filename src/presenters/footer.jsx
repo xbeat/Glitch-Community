@@ -20,7 +20,7 @@ export default function Footer() {
       <FooterLine href="https://medium.com/glitch" track="blog">
         Blog <span role="img" aria-label="">📰</span>
       </FooterLine>
-      <FooterLine href="https://glitch.com/faq" track="faq">
+      <FooterLine href="/help/" track="faq">
         FAQ <span role="img" aria-label="">☂️</span>
       </FooterLine>
       <FooterLine href="http://status.glitch.com/" track="system status">
