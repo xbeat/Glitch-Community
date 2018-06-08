@@ -81,6 +81,7 @@ export default function(application) {
           id: id,
           api: application.api,
           projects: projects,
+          currentUserIsOnTeam: self.currentUserIsOnTeam(),
         };
       });
       // temp/todo: still flickering
