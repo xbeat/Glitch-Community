@@ -15,7 +15,7 @@ export default [
   {
     title: 'Bringing your code to Glitch',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-github-social-coding.jpg?1528120414579",
-    link: 'https://help-center.glitch.me/help/github/'
+    link: 'http://help-center.glitch.me/help/import-git/'
   }
   , {
     title: 'Minimal Retro Album Covers',
