@@ -29,6 +29,22 @@ As long as you like.
     updates() {
       return [
         {
+          id: 5,
+          title: "What's in a @name?",
+          body: `
+*&nbsp;&nbsp;&nbsp;&nbsp;That which we call a @user  
+&nbsp;&nbsp;&nbsp;&nbsp;Or any other w0rd if spelled in l33t;  
+&nbsp;&nbsp;&nbsp;&nbsp;So @user would, were she not @user call'd,  
+&nbsp;&nbsp;&nbsp;&nbsp;Retain that dear perfection which she owes  
+&nbsp;&nbsp;&nbsp;&nbsp;Without that title. @User, doff thy name,  
+&nbsp;&nbsp;&nbsp;&nbsp;And for that name which is no part of thee  
+&nbsp;&nbsp;&nbsp;&nbsp;rename thyself.* 
+
+![](https://cdn.glitch.com/41bc522e-d971-486e-b08e-7c12034743f9%2FSpeareShaker2000.PNG?1528404038461)
+(You can now edit your @user and display names. 🎭)
+`,
+        },
+        {
           id: 4,
           title: "Preview Project Apps and Code",
           body: `
