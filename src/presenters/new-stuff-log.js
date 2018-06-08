@@ -48,7 +48,7 @@ As long as you like.
           id: 4,
           title: "Preview Project Apps and Code",
           body: `
-Clicking on a project now shows you a preview of that project and it’s code. Find just the right [beautiful-cube](https://glitch.com/~beautiful-cubes) or [NASA logo](https://glitch.com/~nasa) for you.
+Clicking on a project now shows you a preview of that project and its code. Find just the right [beautiful-cube](https://glitch.com/~beautiful-cubes) or [NASA logo](https://glitch.com/~nasa) for you.
 
 ![](https://cdn.glitch.com/ebc03e27-d75d-42a2-9741-66496be988d9%2Fgiphy%5B1%5D.gif?1528218891010)
 `,
