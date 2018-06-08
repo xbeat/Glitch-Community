@@ -1,3 +1,5 @@
+/* global analytics */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -24,6 +26,14 @@ const ProjectButtons = ({domain, isMember}) => (
 ProjectButtons.propTypes = {
   isMember: PropTypes.bool.isRequired,
 };
+
+function trackRemix(id, domain) {
+  analytics.track("Click Remix", {
+    origin: "project page",
+    baseProjectId: id,
+    baseDomain: domain,
+  });
+}
 
 const Embed = ({domain}) => (
   <div className="glitch-embed-wrap">
@@ -84,7 +94,12 @@ const ProjectPage = ({
     </section>
     <section id="embed">
       <Embed domain={domain}/>
-      <div className="buttons buttons-right"><RemixButton className="button-small" name={domain} isMember={userIsCurrentUser}/></div>
+      <div className="buttons buttons-right">
+        <RemixButton className="button-small"
+          name={domain} isMember={userIsCurrentUser}
+          onClick={() => trackRemix(id, domain)}
+        />
+      </div>
     </section>
     <section id="related">
       <RelatedProjects ignoreProjectId={id} {...{teams, users, getTeamPins, getUserPins, getProjects}}/>
