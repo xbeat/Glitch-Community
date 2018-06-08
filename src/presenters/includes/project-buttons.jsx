@@ -25,8 +25,8 @@ ButtonLink.propTypes = {
   onClick: PropTypes.func,
 };
 
-export const ShowButton = ({name, ...props}) => (
-  <ButtonLink href={showUrl(name)} {...props}>
+export const ShowButton = ({name, className, ...props}) => (
+  <ButtonLink href={showUrl(name)} className={`has-emoji ${className}`} {...props}>
     <img src={showIcon} alt=""/>
     {' '}Show
   </ButtonLink>
