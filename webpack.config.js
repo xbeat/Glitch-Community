@@ -51,9 +51,15 @@ module.exports = () => {
     optimization: {
       splitChunks: {
         cacheGroups: {
+          cache: {
+            name: 'cache',
+            test: /[\\/]src[\\/]cache/,
+            chunks: 'all',
+            minSize: 0,
+          },
           react: {
             name: 'react-bundle',
-            test: /[\\/]node_modules[\\/]react[-\\/]/,
+            test: /[\\/]node_modules[\\/]react/,
             chunks: 'all',
           },
           modules: {
@@ -75,7 +81,7 @@ module.exports = () => {
           include: SRC,
           loader: "eslint-loader",
           options: {
-            //fix: true,
+            fix: false,
             cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so disable this when reconfiguring
             emitError: false,
             emitWarning: true,

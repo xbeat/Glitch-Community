@@ -1,6 +1,5 @@
 import Project from '../../models/project';
 import Observable from 'o_0';
-import {debounce} from 'lodash';
 import mdFactory from 'markdown-it';
 const md = mdFactory({
   breaks: true,
@@ -13,6 +12,7 @@ import DeletedProjectsTemplate from '../../templates/deleted-projects';
 import LayoutPresenter from '../layout';
 
 import EntityPageProjects from "../entity-page-projects.jsx";
+import NotFound from '../includes/not-found.jsx';
 import {UserProfile} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
 import Observed from "../includes/observed.jsx";
@@ -42,6 +42,8 @@ export default function(application, userLoginOrId) {
           fetched: self.user().fetched(),
           isAuthorized: self.isCurrentUser(),
           updateDescription: self.updateDescription,
+          updateName: self.updateName,
+          updateLogin: self.updateLogin,
           uploadCover: self.uploadCover,
           clearCover: self.clearCover,
         };
@@ -110,12 +112,39 @@ export default function(application, userLoginOrId) {
     },
 
     updateDescription(text) {
-      application.user().description(text);
-      return self.updateUser({description: text});
+      return self.updateField("description", text);
+    },
+    
+    updateName(text) {
+      const maybeText = text === "" ? null : text;
+      //Api permits the name to be null, but not empty.
+      return self.updateField("name", maybeText);
+    },
+    
+    updateLogin(text) {
+      return self.updateField("login", text).then((result) => {
+        if(result.success){
+          const login = `@${result.data}`;
+          history.replaceState(null, null, `/${login}`);
+          
+          //https://stackoverflow.com/questions/13955520/page-title-is-not-changed-by-history-pushstate
+          document.title = login;
+        }
+        return result;
+      });
+    },
+    
+    updateField(field, value) {
+      return self.updateUser({[field]: value}).then(result => {
+        result.data = result.data[field];
+        if(result.success) {
+          application.user()[field](result.data);
+        }
+        return result;
+      });
     },
 
-    updateUser: debounce(data => application.user().updateUser(application, data)
-      , 250),
+    updateUser: (data => application.user().updateUser(application, data)),
 
     userHasData() {
       if (application.user().id()) { return true; }
@@ -139,6 +168,10 @@ export default function(application, userLoginOrId) {
       if (application.user().notFound()) {
         return 'hidden';
       }
+    },
+    
+    userNotFound() {
+      return Reactlet(NotFound, {name: self.userLoginOrId()});
     },
 
     isCurrentUser() {
@@ -172,15 +205,21 @@ export default function(application, userLoginOrId) {
     uploadAvatar: assetUtils.uploadAvatarFile,
     
     userProjects() {
-      const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
-        isAuthorizedUser: self.isCurrentUser(),
-        projectsObservable: self.user().projects,
-        pinsObservable: self.user().pins,
-        projectOptions: self.projectOptions(),
-      };
+      const propsObservable = Observable(() => {
+        // observe login so that our project user links update as the user does.
+        self.user().login();
+
+        const props = {
+          closeAllPopOvers: application.closeAllPopOvers,
+          isAuthorizedUser: self.isCurrentUser(),
+          projectsObservable: self.user().projects,
+          pinsObservable: self.user().pins,
+          projectOptions: self.projectOptions(),
+        };
+        return props;
+      });
       
-      return Reactlet(EntityPageProjects, props, "UserPageProjectsContainer");
+      return Reactlet(Observed, {propsObservable, component:EntityPageProjects}, "UserPageProjectsContainer");
     },
     
     hiddenUnlessUserIsAnon() {

@@ -874,6 +874,15 @@ packages:
     dev: false
     resolution:
       integrity: sha1-DYOUApt9xqvhqX7xgeAHWN0uXYo=
+  /babel-plugin-transform-es2015-modules-commonjs/6.26.2:
+    dependencies:
+      babel-plugin-transform-strict-mode: 6.24.1
+      babel-runtime: 6.26.0
+      babel-template: 6.26.0
+      babel-types: 6.26.0
+    dev: false
+    resolution:
+      integrity: sha512-CV9ROOHEdrjcwhIaJNBGMBCodN+1cfkwtM1SbUHmvyy35KGT7fohbpOxkE2uLz1o6odKK2Ck/tz47z+VqQfi9Q==
   /babel-plugin-transform-es2015-modules-systemjs/6.24.1:
     dependencies:
       babel-helper-hoist-variables: 6.24.1
@@ -1068,7 +1077,7 @@ packages:
       babel-plugin-transform-es2015-function-name: 6.24.1
       babel-plugin-transform-es2015-literals: 6.22.0
       babel-plugin-transform-es2015-modules-amd: 6.24.1
-      babel-plugin-transform-es2015-modules-commonjs: 6.26.0
+      babel-plugin-transform-es2015-modules-commonjs: 6.26.2
       babel-plugin-transform-es2015-modules-systemjs: 6.24.1
       babel-plugin-transform-es2015-modules-umd: 6.24.1
       babel-plugin-transform-es2015-object-super: 6.24.1
@@ -6131,7 +6140,7 @@ packages:
   /sha.js/2.4.11:
     dependencies:
       inherits: 2.0.3
-      safe-buffer: 5.1.1
+      safe-buffer: 5.1.2
     dev: false
     resolution:
       integrity: sha512-QMEp5B7cftE7APOjk5Y6xgrbWu+WkLVQwk8JNjZ8nKRciZaByEW6MubieAiToS7+dwvrjGhH8jRXz3MVd0AYqQ==

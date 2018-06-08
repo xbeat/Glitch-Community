@@ -21,7 +21,7 @@ export default function Footer() {
         Blog <span role="img" aria-label="">📰</span>
       </FooterLine>
       <FooterLine href="/help/" track="faq">
-        FAQ <span role="img" aria-label="">☂️</span>
+        Help Center <span role="img" aria-label="">☂️</span>
       </FooterLine>
       <FooterLine href="http://status.glitch.com/" track="system status">
         System Status <span role="img" aria-label="">🚥</span>
@@ -31,9 +31,6 @@ export default function Footer() {
       </FooterLine>
       <FooterLine href="https://glitch.com/legal" track="legal stuff">
         Legal Stuff <span role="img" aria-label="">👮‍</span>
-      </FooterLine>
-      <FooterLine href="https://www.fogcreek.com/jobs/GlitchDesignEngineer" track="hiring">
-        Pssst... we're hiring a Design Engineer! <span role="img" aria-label="">🙋‍</span>
       </FooterLine>
       <hr/>
       <FooterLine href="https://glitch.com/forteams" track="platforms">
