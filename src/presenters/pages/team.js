@@ -13,6 +13,7 @@ import AddTeamProject from "../includes/add-team-project.jsx";
 import Observed from "../includes/observed.jsx";
 import {TeamProfile} from "../includes/profile.jsx";
 import TeamAnalytics from "../includes/team-analytics.jsx";
+import TeamMarketing from "../includes/team-marketing.jsx";
 
 export default function(application) {
   const assetUtils = assets(application);
@@ -84,11 +85,19 @@ export default function(application) {
           currentUserIsOnTeam: self.currentUserIsOnTeam(),
         };
       });
-      // temp/todo: still flickering
       if (!propsObservable().id) { return null; }
       return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
     },
-    
+
+    teamMarketing() {
+      const propsObservable = Observable(() => {
+        return {
+          currentUserIsOnTeam: self.currentUserIsOnTeam(),
+        };
+      });
+      return Reactlet(Observed, {propsObservable, component:TeamMarketing});
+    },
+
     addTeamProjectButton() {
       const propsObservable = Observable(() => {
         return {
@@ -100,7 +109,6 @@ export default function(application) {
           },
         };
       });
-
       return Reactlet(Observed, {propsObservable, component:AddTeamProject});
     },
 

@@ -121,6 +121,10 @@ class TeamAnalytics extends React.Component {
   }
   
   render() {
+    if(!this.props.currentUserIsOnTeam) {
+      return null;
+    }
+
     return (
       <section className="team-analytics">
         <h2>Analytics</h2>
@@ -206,7 +210,7 @@ TeamAnalytics.propTypes = {
   id: PropTypes.number.isRequired,
   api: PropTypes.func.isRequired,
   projects: PropTypes.array.isRequired,
-  currentUserIsOnTeam: self.currentUserIsOnTeam
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
 };
 
 export default TeamAnalytics;
