@@ -22,7 +22,6 @@ export default User = function(I, self) {
   
   self.defaults(I, {
     id: undefined,
-    facebookId: undefined,
     avatarUrl: undefined,
     avatarThumbnailUrl: undefined,
     color: undefined,
