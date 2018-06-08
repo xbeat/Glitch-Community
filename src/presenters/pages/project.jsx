@@ -84,7 +84,7 @@ const ProjectPage = ({
     </section>
     <section id="embed">
       <Embed domain={domain}/>
-      <div className="buttons buttons-right"><RemixButton className="domain={domain} isMember={userIsCurrentUser}/></div>
+      <div className="buttons buttons-right"><RemixButton className="button-small" name={domain} isMember={userIsCurrentUser}/></div>
     </section>
     <section id="related">
       <RelatedProjects ignoreProjectId={id} {...{teams, users, getTeamPins, getUserPins, getProjects}}/>

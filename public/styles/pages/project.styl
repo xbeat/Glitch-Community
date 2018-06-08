@@ -1,11 +1,12 @@
 .project-page
-  
-  .buttons .button
-    margin-right: 7px
-  
-  .buttons-right
-    text-align: right
-  
+
+  .buttons
+    margin-top: 10px
+    &.buttons-right
+      text-align: right
+    .button + .button
+      margin-left: 7px
+
   .glitch-embed-wrap
     width: 100%
     height: 640px
@@ -13,7 +14,7 @@
       border: none
       width: 100%
       height: 100%
-  
+
   .related-projects
     padding: 0
     > li
