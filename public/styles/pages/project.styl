@@ -1,11 +1,12 @@
 .project-page
 
   .buttons
-    margin-top: 10px
     &.buttons-right
       text-align: right
-    .button + .button
-      margin-left: 7px
+    .button
+      margin-top: 10px
+      &:not(:last-child)
+        margin-right: 7px
 
   .glitch-embed-wrap
     width: 100%
