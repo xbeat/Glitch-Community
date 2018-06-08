@@ -24,6 +24,7 @@ export default User = function(I, self) {
     id: undefined,
     facebookId: undefined,
     avatarUrl: undefined,
+    avatarThumbnailUrl: undefined,
     color: undefined,
     hasCoverImage: false,
     coverColor: "#1F33D9",
@@ -90,12 +91,13 @@ export default User = function(I, self) {
 
     userAvatarUrl(size) {
       size = size || 'small';
-      if (self.isAnon()) {
+      if (self.isAnon() || ! self.avatarUrl()) {
         return self.anonAvatar();
-      } else if (self.facebookId()) {
-        return `https://graph.facebook.com/${self.facebookId()}/picture?type=${size}`;
-      } 
-      return self.avatarUrl() || self.anonAvatar();
+      } else if (size === "large") {
+        return self.avatarUrl();
+      } else {
+        return self.avatarThumbnailUrl();
+      }
     },
 
     isCurrentUser(application) {
