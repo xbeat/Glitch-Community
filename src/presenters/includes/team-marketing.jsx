@@ -1,7 +1,7 @@
-import React from 'React';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-const TeamAnalyticsActivity = ({currentUserIsOnTeam}) => {
+const TeamMarketing = ({currentUserIsOnTeam}) => {
   if (currentUserIsOnTeam) {
     return (null);
   }
@@ -10,8 +10,8 @@ const TeamAnalyticsActivity = ({currentUserIsOnTeam}) => {
   )
 };
 
-TeamAnalyticsActivity.propTypes = {
+TeamMarketing.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
 };
 
-export default TeamAnalyticsActivity;
+export default TeamMarketing;
