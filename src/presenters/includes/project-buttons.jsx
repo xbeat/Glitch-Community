@@ -46,8 +46,8 @@ EditButton.propTypes = {
   className: PropTypes.string,
 };
 
-export const RemixButton = ({name, isMember, ...props}) => (
-  <ButtonLink href={remixUrl(name)} {...props}>
+export const RemixButton = ({name, isMember, className, ...props}) => (
+  <ButtonLink href={remixUrl(name)} className={`has-emoji ${className}`} {...props}>
     {isMember ? 'Remix This' : 'Remix your own'}{' '}
     <span className="emoji microphone" role="presentation"></span>
   </ButtonLink>
