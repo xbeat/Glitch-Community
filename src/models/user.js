@@ -91,13 +91,13 @@ export default User = function(I, self) {
 
     userAvatarUrl(size) {
       size = size || 'small';
-      if (self.isAnon() || ! self.avatarUrl()) {
+      if (self.isAnon() || !self.avatarUrl()) {
         return self.anonAvatar();
-      } else if (size === "large") {
-        return self.avatarUrl();
-      } else {
-        return self.avatarThumbnailUrl();
       }
+      if (size === "large") {
+        return self.avatarUrl();
+      }
+      return self.avatarThumbnailUrl();
     },
 
     isCurrentUser(application) {
