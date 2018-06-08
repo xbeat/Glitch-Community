@@ -13,8 +13,8 @@
   padding: 0;
   vertical-align: middle
   &.single-line
-    height: 32px
-    overflow: hidden
+    white-space: nowrap
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 200% 100%, 200% 200%, 0% 200%)
   > li
     display: inline-grid
     &:first-child .user
