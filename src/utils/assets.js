@@ -202,9 +202,9 @@ export default function(application) {
             key: size,
             blob: file}).progress(
             self.generateUploadProgressEventHandler(uploadData));
-      }).finally(
-        () => application.pendingUploads.remove(uploadData)
-      ).catch(function(error) {
+        }).finally(
+          () => application.pendingUploads.remove(uploadData)
+        ).catch(function(error) {
           application.notifyUploadFailure(true);
           return console.error("uploadAsset", error);
         });
