@@ -221,7 +221,7 @@ const LoadedUserProfile = ({
 }) => (
   <ProfileContainer avatarStyle={avatarStyle} coverStyle={profileStyle}
     coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
-    avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }>
+    avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }
   >
     <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
     <Thanks count={thanksCount}/>
