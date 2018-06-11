@@ -73,6 +73,8 @@ const TeamAnalyticsReferrers = ({analytics}) => {
 
 TeamAnalyticsReferrers.propTypes = {
   analytics: PropTypes.object.isRequired,
+  totalRemixes: PropTypes.number.isRequired,
+  totalAppViews: PropTypes.number.isRequired,
 };
 
 export default TeamAnalyticsReferrers;
