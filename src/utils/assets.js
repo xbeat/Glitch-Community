@@ -189,8 +189,8 @@ export default function(application) {
 
     // Returns a promise that will be fulfilled with the url of the uploaded
     // asset or rejected with an error.
-    uploadAsset(file, size, assetType) {
-      size = size || 'original';
+    uploadAsset(file, key, assetType) {
+      key = key || 'original';
       const uploadData = {ratio: Observable(0)};
       application.pendingUploads.push(uploadData);
       return self.getImagePolicy(assetType)
@@ -199,7 +199,7 @@ export default function(application) {
           console.log('got the policy', policy);
           console.log('uploading', file);
           return S3Uploader(policy).upload({
-            key: size,
+            key,
             blob: file}).progress(
             self.generateUploadProgressEventHandler(uploadData));
         }).finally(

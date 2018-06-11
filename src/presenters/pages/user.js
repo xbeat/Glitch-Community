@@ -210,7 +210,6 @@ export default function(application, userLoginOrId) {
             return self.updateUser({"avatar_url": uploadedUrl});
           })
           .then((response) => {
-            console.log(response);
             self.user().avatarUrl(response.data.avatarUrl);
             self.user().avatarThumbnailUrl(response.data.avatarThumbnailUrl);
           });
