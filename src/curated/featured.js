@@ -13,14 +13,14 @@ Example:
 
 export default [
   {
-    title: 'Bringing your code to Glitch',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-github-social-coding.jpg?1528120414579",
-    link: 'http://help-center.glitch.me/help/import-git/'
+    title: 'Building with Actions - 6\'12 at 10am PT',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FslackWebinarFeatureBanner.png?1519739395528",
+    link: 'https://buildingwithactions.splashthat.com/blog-post'
   }
   , {
-    title: 'Minimal Retro Album Covers',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fretro-album-covers.jpg?1528372135662",
-    link: 'https://retro-album-covers.glitch.me/'
+    title: 'Master Machine Learning with tensorflow',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhello-tensorflow.jpg?1528715708433",
+    link: 'https://hello-tensorflow.glitch.me/'
   }
   , {
     title: 'Gauge Your Team\'s Stress Levels',
