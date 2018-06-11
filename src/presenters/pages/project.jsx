@@ -8,6 +8,7 @@ import Project from '../../models/project';
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
+import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {AvatarContainer, InfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-buttons.jsx';
@@ -76,13 +77,19 @@ const ProjectPage = ({
   getTeamPins,
   getUserPins,
   getProjects,
+  updateDomain,
   updateDescription,
 }) => (
   <main className="project-page">
     <section id="info">
       <InfoContainer>
         <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
-          <h1>{domain} {project.private && <PrivateBadge domain={domain}/>}</h1>
+          <h1>
+            {(userIsCurrentUser
+              ? <EditableField value={domain} update={updateDomain} placeholder=""/>
+              : <React.Fragment>{domain} {project.private && <PrivateBadge domain={domain}/>}</React.Fragment>
+            )}
+          </h1>
           <UsersList users={users} />
           <AuthDescription
             authorized={userIsCurrentUser} description={description}
