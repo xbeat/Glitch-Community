@@ -157,11 +157,11 @@ export default User = function(I, self) {
 
     updateUser(application, updateData) {
       const userPath = `users/${self.id()}`;
-      return application.api().patch(userPath, updateData).then(() => {
+      return application.api().patch(userPath, updateData).then((updatedData) => {
         console.log('updatedUser');
         return {
           success: true,
-          data: updateData,
+          data: updatedData,
           message: null,
         };
       }).catch(error => {

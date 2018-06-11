@@ -207,10 +207,11 @@ export default function(application, userLoginOrId) {
       assetUtils.uploader((file) => {
         assetUtils.uploadAsset(file, "original", "userAvatar")
         .then((uploadedUrl) => {
-          return self.updateField("avatar_url", uploadedUrl);
+          return self.updateUser({"avatar_url": uploadedUrl});
         })
-        .then((modifiedFields) => {
-          return self.localAvatarImage(modifiedFields.avatarUrl);
+        .then((response) => {
+          self.avatarUrl(response.data.avatarUrl);
+          self.avatarThumbnailUrl(response.data.avatarThumbnailUrl);
         });
       });
     },
