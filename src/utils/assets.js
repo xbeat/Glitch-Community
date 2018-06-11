@@ -191,8 +191,7 @@ export default function(application) {
     // asset or rejected with an error.
     uploadAsset(file, size, assetType) {
       size = size || 'original';
-      const uploadData =
-        {ratio: Observable(0)};
+      const uploadData = {ratio: Observable(0)};
       application.pendingUploads.push(uploadData);
       return self.getImagePolicy(assetType)
         .then(function({data}) {
@@ -201,7 +200,11 @@ export default function(application) {
           console.log('uploading', file);
           return S3Uploader(policy).upload({
             key: size,
-            blob: file}).progress(self.generateUploadProgressEventHandler(uploadData));}).finally(() => application.pendingUploads.remove(uploadData)).catch(function(error) {
+            blob: file}).progress(
+            self.generateUploadProgressEventHandler(uploadData));
+      }).finally(
+        () => application.pendingUploads.remove(uploadData)
+      ).catch(function(error) {
           application.notifyUploadFailure(true);
           return console.error("uploadAsset", error);
         });
@@ -279,10 +282,6 @@ export default function(application) {
           application.notifyUploadFailure(true);
           return console.error('addAvatarFile', error);
         });
-    },
-    
-    addUserAvatarFile(file) {
-      
     },
   
     uploadAvatarFile() {

@@ -203,7 +203,17 @@ export default function(application, userLoginOrId) {
     clearCover: () => assetUtils.updateHasCoverImage(false),
 
     uploadCover: assetUtils.uploadCoverFile,
-    uploadAvatar: assetUtils.uploadAvatarFile,
+    uploadAvatar() {
+      assetUtils.uploader((file) => {
+        assetUtils.uploadAsset(file, "original", "userAvatar")
+        .then((uploadedUrl) => {
+          return self.updateField("avatar_url", uploadedUrl);
+        })
+        .then((modifiedFields) => {
+          return self.localAvatarImage(modifiedFields.avatarUrl);
+        });
+      });
+    },
     
     userProjects() {
       const propsObservable = Observable(() => {
