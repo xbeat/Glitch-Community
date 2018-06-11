@@ -23,8 +23,8 @@ export default [
     link: 'https://hello-tensorflow.glitch.me/'
   }
   , {
-    title: 'Unravel Machine-Generated Poetry',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhouse-of-dust.jpg?1528715873531",
-    link: 'https://house-of-dust.glitch.me'
+    title: 'Build Your Schedule for World Cup 2018',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwc18.jpg?1528716860364",
+    link: 'https://wc18.glitch.me/'
   }   
 ];
