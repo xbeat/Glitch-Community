@@ -48,20 +48,6 @@ const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
   }
 };
 
-const clickAppViews = (event) => {
-  console.log (event.target)
-  let element = document.querySelector('.c3-legend-item-App-Views')
-  element.dispatchEvent(clickEvent)
-  element.dispatchEvent(blurEvent)
-}
-
-const clickRemixes = (event) => {
-  console.log (event.target)
-  let element = document.querySelector('.c3-legend-item-Remixes')
-  element.dispatchEvent(clickEvent)
-  element.dispatchEvent(blurEvent)
-}
-
 class TeamAnalytics extends React.Component {
   constructor(props) {
     super(props);
@@ -78,6 +64,20 @@ class TeamAnalytics extends React.Component {
     };
   }
 
+toggleGraph(summaryType) {
+  let element = document.querySelector(".c3-legend-item-${summaryType}")
+  element.dispatchEvent(clickEvent)
+  element.dispatchEvent(blurEvent)
+}
+
+// const clickRemixes = (event) => {
+//   console.log (event.target)
+//   let element = document.querySelector('.c3-legend-item-Remixes')
+//   element.dispatchEvent(clickEvent)
+//   element.dispatchEvent(blurEvent)
+// }
+
+  
   updateTotals() {
     let totalAppViews = 0;
     let totalRemixes = 0;
@@ -161,14 +161,14 @@ class TeamAnalytics extends React.Component {
             <Loader />
           ||
             <div>
-              <span className="" onClick={clickAppViews}>
+              <span className="summary-app-views" onClick={toggleGraph('App-Views')}>
                 <span className="total app-views">
                   {this.state.totalAppViews.toLocaleString('en')}
                 </span>{' '}
                 <Pluralize singular="App View" plural="App Views" count={this.state.totalAppViews} showCount={false} />
               </span>
               ,{' '}
-              <span className="" onClick={clickRemixes}>
+              <span className="summary-remixes" onClick={toggleGraph('Remixes')}>
                 <span className="total remixes">
                   {this.state.totalRemixes.toLocaleString('en')}
                 </span>{' '}
