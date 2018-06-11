@@ -132,9 +132,9 @@ ProjectPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-function updateUrlOnDomainChange(response) {
-  history.replaceState(null, null, `/~${response.data.domain}`);
-  return response;
+function updateUrlOnDomainChange(domain) {
+  history.replaceState(null, null, `/~${domain}`);
+  return {success: true};
 }
 
 // Let's keep layout in jade until all pages are react
@@ -142,7 +142,7 @@ export default function(application, name) {
   const props = {
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
-    updateDomain: (id, domain) => application.api().patch(`projects/${id}`, {domain}).then(updateUrlOnDomainChange),
+    updateDomain: (id, domain) => application.api().patch(`projects/${id}`, {domain}).then(() => updateUrlOnDomainChange(domain)),
     updateDescription: (id, description) => application.api().patch(`projects/${id}`, {description}),
     getTeamPins: (id) => application.api().get(`teams/${id}/pinned-projects`).then(({data}) => data),
     getUserPins: (id) => application.api().get(`users/${id}/pinned-projects`).then(({data}) => data),
