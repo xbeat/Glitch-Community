@@ -31,9 +31,22 @@ const filterReferrers = (referrers) => {
   return filteredReferrers;
 };
 
-const TeamAnalyticsReferrers = ({analytics}) => {
+const directReferrersTotal = (referrers, total, countProperty) => {
+  console.log ('referrers', referrers, 'total', total, 'countProperty', countProperty)
+  let totalReferrers = referrers.reduce(function(referrer, value) {
+    return referrer[countProperty] + value
+  })
+  console.log ('++', totalReferrers)
+}
+
+// const directReferrerItem
+
+const TeamAnalyticsReferrers = ({analytics, totalRemixes, totalAppViews}) => {
   const appViewReferrers = filterReferrers(analytics.referrers);
   const remixReferrers = filterReferrers(analytics.remixReferrers);
+  const directAppViews = directReferrersTotal(appViewReferrers, totalAppViews, 'requests')
+  const directRemixes = directReferrersTotal(appViewReferrers, totalAppViews, 'remixes')
+
   return (
     <div className="referrers-content">
       <article className="referrers-column app-views">
