@@ -12,6 +12,8 @@ import TeamAnalyticsActivity from '../includes/team-analytics-activity.jsx';
 import TeamAnalyticsReferrers from '../includes/team-analytics-referrers.jsx';
 import TeamAnalyticsProjectDetails from '../includes/team-analytics-project-details.jsx';
 
+const clickEvent = new CustomEvent('click', {bubbles: true, cancelable: true})
+
 const dateFromTime = (newTime) => {
   const timeMap = [
     {
@@ -45,6 +47,15 @@ const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
   }
 };
 
+const clickAppViews = () => {
+  let element = document.querySelector('.c3-legend-item-App-Views')
+  element.dispatchEvent(clickEvent)
+}
+
+const clickRemixes = () => {
+  let element = document.querySelector('.c3-legend-item-Remixes')
+  element.dispatchEvent(clickEvent)
+}
 
 class TeamAnalytics extends React.Component {
   constructor(props) {
@@ -145,14 +156,19 @@ class TeamAnalytics extends React.Component {
             <Loader />
           ||
             <div>
-              <span className="total app-views">
-                {this.state.totalAppViews.toLocaleString('en')}
-              </span>{' '}
-              <Pluralize singular="App View" plural="App Views" count={this.state.totalAppViews} showCount={false} />,{' '}
-              <span className="total remixes">
-                {this.state.totalRemixes.toLocaleString('en')}
-              </span>{' '}
-              <Pluralize singular="Remix" plural="Remixes" count={this.state.totalRemixes} showCount={false} />
+              <span onClick={clickAppViews}>
+                <span className="total app-views">
+                  {this.state.totalAppViews.toLocaleString('en')}
+                </span>{' '}
+                <Pluralize singular="App View" plural="App Views" count={this.state.totalAppViews} showCount={false} />
+              </span>
+              ,{' '}
+              <span onClick={clickRemixes}>
+                <span className="total remixes">
+                  {this.state.totalRemixes.toLocaleString('en')}
+                </span>{' '}
+                <Pluralize singular="Remix" plural="Remixes" count={this.state.totalRemixes} showCount={false} />
+              </span>
             </div>
           }
         </section>
