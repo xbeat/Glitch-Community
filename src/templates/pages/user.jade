@@ -7,7 +7,8 @@ main.profile-page.user-page(role="main")
     = @userNotFound
 
   span(class=@hiddenIfUserNotFound)
-    =@Profile
+    section
+      =@Profile
 
     =@userProjects
     - if @isCurrentUser()

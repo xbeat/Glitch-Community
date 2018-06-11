@@ -63,19 +63,39 @@ InfoContainer.propTypes = {
 };
 
 export const CoverContainer = ({
-  style, buttons,
-  children,
+  buttons, children, className, ...props
 }) => (
-  <section className="cover-container" style={style}>
-    <InfoContainer>{children}</InfoContainer>
+  <div className={`cover-container ${className}`} {...props}>
+    {children}
     {buttons}
-  </section>
+  </div>
 );
 CoverContainer.propTypes = {
-  style: PropTypes.object.isRequired,
   buttons: PropTypes.node,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
+
+const ProfileContainer = ({
+  avatarStyle, avatarButtons,
+  coverStyle, coverButtons,
+  children,
+}) => (
+  <CoverContainer style={coverStyle} buttons={coverButtons}>
+    <InfoContainer>
+      <AvatarContainer style={avatarStyle} buttons={avatarButtons}>
+        {children}
+      </AvatarContainer>
+    </InfoContainer>
+  </CoverContainer>
+);
+
+const LoadingProfile = ({coverStyle}) => (
+  <CoverContainer style={coverStyle}>
+    <InfoContainer>
+      <Loader/>
+    </InfoContainer>
+  </CoverContainer>
+);
 
 // stuff below this line is page specific and hopefully won't stay in this file forever
 
@@ -111,22 +131,22 @@ const LoadedTeamProfile = ({
   search, addUserToTeam, removeUserFromTeam,
   updateDescription,
 }) => (
-  <CoverContainer style={teamProfileStyle}
-    buttons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
+  <ProfileContainer
+    avatarStyle={teamAvatarStyle} coverStyle={teamProfileStyle}
+    avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}
+    coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
   >
-    <AvatarContainer style={teamAvatarStyle} buttons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}>
-      <h1 className="username">
-        {name}
-        { isVerified && <TeamVerified image={verifiedImage} tooltip={verifiedTooltip}/> }
-      </h1>
-      <div className="users-information">
-        <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
-        { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
-      </div>
-      <Thanks count={thanksCount}/>
-      <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
-    </AvatarContainer>
-  </CoverContainer>
+    <h1 className="username">
+      {name}
+      { isVerified && <TeamVerified image={verifiedImage} tooltip={verifiedTooltip}/> }
+    </h1>
+    <div className="users-information">
+      <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
+      { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
+    </div>
+    <Thanks count={thanksCount}/>
+    <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
+  </ProfileContainer>
 );
 LoadedTeamProfile.propTypes = {
   team: PropTypes.shape({
@@ -144,7 +164,7 @@ LoadedTeamProfile.propTypes = {
 };
 
 export const TeamProfile = ({fetched, team, ...props}) => (
-  fetched ? <LoadedTeamProfile team={team} {...props}/> : <CoverContainer style={team.teamProfileStyle}><Loader/></CoverContainer>
+  fetched ? <LoadedTeamProfile team={team} {...props}/> : <LoadingProfile coverStyle={team.teamProfileStyle}/>
 );
 TeamProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
@@ -198,15 +218,13 @@ const LoadedUserProfile = ({
   updateName, updateLogin,
   uploadCover, clearCover,
 }) => (
-  <CoverContainer style={profileStyle}
-    buttons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
+  <ProfileContainer avatarStyle={avatarStyle} coverStyle={profileStyle}
+    coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
   >
-    <AvatarContainer style={avatarStyle}>
-      <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
-      <Thanks count={thanksCount}/>
-      <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
-    </AvatarContainer>
-  </CoverContainer>
+    <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
+    <Thanks count={thanksCount}/>
+    <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
+  </ProfileContainer>
 );
 LoadedUserProfile.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
@@ -220,7 +238,7 @@ LoadedUserProfile.propTypes = {
 };
 
 export const UserProfile = ({fetched, user, ...props}) => (
-  fetched ? <LoadedUserProfile user={user} {...props}/> : <CoverContainer style={user.profileStyle}><Loader/></CoverContainer>
+  fetched ? <LoadedUserProfile user={user} {...props}/> : <LoadingProfile coverStyle={user.profileStyle}/>
 );
 UserProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
