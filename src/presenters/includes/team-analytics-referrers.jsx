@@ -23,7 +23,8 @@ const ReferrerItem = ({referrer, countProperty, data}) => {
   );
 };
 
-const DirectReferrerItem = (count, description, total) => {
+const DirectReferrerItem = ({count, description, total}) => {
+  console.log ('🍕', count, description, total)
   const progress = Math.max(Math.round(count / total * 100), 5);
   return (
     <li>
@@ -55,8 +56,8 @@ const TeamAnalyticsReferrers = ({analytics, totalRemixes, totalAppViews}) => {
   const appViewReferrers = filterReferrers(analytics.referrers);
   const remixReferrers = filterReferrers(analytics.remixReferrers);
   
-  const directAppViews = totalAppViews - totalReferrers(appViewReferrers, 'requests')
-  const directRemixes = totalRemixes - totalReferrers(remixReferrers, 'remixes')
+  const totalDirectAppViews = totalAppViews - totalReferrers(appViewReferrers, 'requests')
+  const totalDirectRemixes = totalRemixes - totalReferrers(remixReferrers, 'remixes')
 
   return (
     <div className="referrers-content">
@@ -66,7 +67,7 @@ const TeamAnalyticsReferrers = ({analytics, totalRemixes, totalAppViews}) => {
         </h4>
         <ul>
           <DirectReferrerItem
-            count = {directAppViews}
+            count = {totalDirectAppViews}
             description = "direct views"
             total = {totalAppViews}
           />
