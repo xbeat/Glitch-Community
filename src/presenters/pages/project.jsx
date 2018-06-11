@@ -86,7 +86,7 @@ const ProjectPage = ({
         <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
           <h1>
             {(userIsCurrentUser
-              ? <EditableField value={domain} update={domain => updateDomain(id, domain)} placeholder=""/>
+              ? <EditableField value={domain} update={domain => updateDomain(id, domain)} placeholder="What's it called?"/>
               : <React.Fragment>{domain} {project.private && <PrivateBadge domain={domain}/>}</React.Fragment>
             )}
           </h1>
