@@ -23,7 +23,7 @@ const ReferrerItem = ({referrer, countProperty, data}) => {
   );
 };
 
-const directReferrerItem = (count, description, total) => {
+const DirectReferrerItem = (count, description, total) => {
   const progress = Math.max(Math.round(count / total * 100), 5);
   return (
     <li>
@@ -41,21 +41,22 @@ const filterReferrers = (referrers) => {
   return filteredReferrers;
 };
 
-const directReferrersTotal = (referrers, total, countProperty) => {
-  console.log ('referrers', referrers, 'total', total, 'countProperty', countProperty)
+const totalReferrers = (referrers, countProperty) => {
   let totalReferrers = 0;
   referrers.forEach(referrer => {
     totalReferrers += referrer[countProperty];
   })
-  console.log ('totalReferrers', totalReferrers)
+  console.log ('totalReferrers', totalReferrers, 'referrers', referrers, 'countProperty', countProperty)
+  return totalReferrers
 }
 
 
 const TeamAnalyticsReferrers = ({analytics, totalRemixes, totalAppViews}) => {
   const appViewReferrers = filterReferrers(analytics.referrers);
   const remixReferrers = filterReferrers(analytics.remixReferrers);
-  const directAppViews = directReferrersTotal(appViewReferrers, totalAppViews, 'requests')
-  const directRemixes = directReferrersTotal(remixReferrers, totalAppViews, 'remixes')
+  
+  const directAppViews = totalAppViews - totalReferrers(appViewReferrers, 'requests')
+  const directRemixes = totalRemixes - totalReferrers(remixReferrers, 'remixes')
 
   return (
     <div className="referrers-content">
@@ -64,6 +65,11 @@ const TeamAnalyticsReferrers = ({analytics, totalRemixes, totalAppViews}) => {
           App Views
         </h4>
         <ul>
+          <DirectReferrerItem
+            count = {directAppViews}
+            description = "direct views"
+            total = {totalAppViews}
+          />
           { appViewReferrers.map((referrer, key) => (
             <ReferrerItem
               key={key}
