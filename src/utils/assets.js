@@ -136,9 +136,8 @@ export default function(application) {
         if (application.pageIsTeamPage()) {
           return self.getTeamAvatarImagePolicy();
         }
-      } else {
-        return self.getCoverImagePolicy();
       }
+      return self.getCoverImagePolicy();
     },
 
     getCoverImagePolicy() {
@@ -167,6 +166,7 @@ export default function(application) {
         });
     },
     
+    // We also use this cover bucket as a temp location for user avatars.
     getUserCoverImagePolicy() {
       const policyPath = `users/${application.user().id()}/cover/policy`;
       return application.api().get(policyPath)
@@ -189,10 +189,9 @@ export default function(application) {
 
     // Returns a promise that will be fulfilled with the url of the uploaded
     // asset or rejected with an error.
-    uploadAsset(file, size, assetType) {
-      size = size || 'original';
-      const uploadData =
-        {ratio: Observable(0)};
+    uploadAsset(file, key, assetType) {
+      key = key || 'original';
+      const uploadData = {ratio: Observable(0)};
       application.pendingUploads.push(uploadData);
       return self.getImagePolicy(assetType)
         .then(function({data}) {
@@ -200,8 +199,12 @@ export default function(application) {
           console.log('got the policy', policy);
           console.log('uploading', file);
           return S3Uploader(policy).upload({
-            key: size,
-            blob: file}).progress(self.generateUploadProgressEventHandler(uploadData));}).finally(() => application.pendingUploads.remove(uploadData)).catch(function(error) {
+            key,
+            blob: file}).progress(
+            self.generateUploadProgressEventHandler(uploadData));
+        }).finally(
+          () => application.pendingUploads.remove(uploadData)
+        ).catch(function(error) {
           application.notifyUploadFailure(true);
           return console.error("uploadAsset", error);
         });

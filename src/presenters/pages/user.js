@@ -46,6 +46,7 @@ export default function(application, userLoginOrId) {
           updateLogin: self.updateLogin,
           uploadCover: self.uploadCover,
           clearCover: self.clearCover,
+          uploadAvatar: self.uploadAvatar,
         };
         return props;
       });
@@ -202,12 +203,24 @@ export default function(application, userLoginOrId) {
     clearCover: () => assetUtils.updateHasCoverImage(false),
 
     uploadCover: assetUtils.uploadCoverFile,
-    uploadAvatar: assetUtils.uploadAvatarFile,
+    uploadAvatar() {
+      assetUtils.uploader((file) => {
+        assetUtils.uploadAsset(file, "temporary-user-avatar", "avatar")
+          .then((uploadedUrl) => {
+            return self.updateUser({"avatar_url": uploadedUrl});
+          })
+          .then((response) => {
+            self.user().avatarUrl(response.data.avatarUrl);
+            self.user().avatarThumbnailUrl(response.data.avatarThumbnailUrl);
+          });
+      });
+    },
     
     userProjects() {
       const propsObservable = Observable(() => {
         // observe login so that our project user links update as the user does.
         self.user().login();
+        self.user().avatarThumbnailUrl();
 
         const props = {
           closeAllPopOvers: application.closeAllPopOvers,

@@ -22,8 +22,8 @@ export default User = function(I, self) {
   
   self.defaults(I, {
     id: undefined,
-    facebookId: undefined,
     avatarUrl: undefined,
+    avatarThumbnailUrl: undefined,
     color: undefined,
     hasCoverImage: false,
     coverColor: "#1F33D9",
@@ -90,12 +90,13 @@ export default User = function(I, self) {
 
     userAvatarUrl(size) {
       size = size || 'small';
-      if (self.isAnon()) {
+      if (self.isAnon() || !self.avatarUrl()) {
         return self.anonAvatar();
-      } else if (self.facebookId()) {
-        return `https://graph.facebook.com/${self.facebookId()}/picture?type=${size}`;
-      } 
-      return self.avatarUrl() || self.anonAvatar();
+      }
+      if (size === "large") {
+        return self.avatarUrl();
+      }
+      return self.avatarThumbnailUrl();
     },
 
     isCurrentUser(application) {
@@ -156,11 +157,11 @@ export default User = function(I, self) {
 
     updateUser(application, updateData) {
       const userPath = `users/${self.id()}`;
-      return application.api().patch(userPath, updateData).then(() => {
-        console.log('updatedUser');
+      return application.api().patch(userPath, updateData).then(({data}) => {
+        console.log('updatedUser', data);
         return {
           success: true,
-          data: updateData,
+          data: data,
           message: null,
         };
       }).catch(error => {
@@ -248,6 +249,7 @@ export default User = function(I, self) {
     asProps() {
       return {
         get teams() { return self.teams.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()); },
+        get projects() { return self.projects.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()); },
 
         alt: self.alt(),
         color: self.color(),
