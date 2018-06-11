@@ -65,6 +65,14 @@ class TeamAnalytics extends React.Component {
   updateTotals() {
     let totalAppViews = 0;
     let totalRemixes = 0;
+    this.state.analytics.referrers.forEach(referrer => {
+      if (referrer.self) {
+        return;
+      }
+      totalAppViews += referrer.requests;
+    });
+    
+    
     this.state.analytics.buckets.forEach(bucket => {
       totalAppViews += bucket.analytics.visits;
       totalRemixes += bucket.analytics.remixes;
