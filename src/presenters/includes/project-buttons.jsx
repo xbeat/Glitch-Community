@@ -11,9 +11,8 @@ const remixUrl = (name) => `${EDITOR_URL}#!/remix/${name}`;
 
 const ButtonLink = ({href, children, className, onClick}) => (
   <a
-    href={href} target="_blank"
+    href={href} onClick={onClick}
     className={`button button-link ${className}`}
-    onClick={onClick}
   >
     {children}
   </a>
@@ -25,8 +24,8 @@ ButtonLink.propTypes = {
   onClick: PropTypes.func,
 };
 
-export const ShowButton = ({name, ...props}) => (
-  <ButtonLink href={showUrl(name)} {...props}>
+export const ShowButton = ({name, className, ...props}) => (
+  <ButtonLink href={showUrl(name)} className={`has-emoji ${className}`} {...props}>
     <img src={showIcon} alt=""/>
     {' '}Show
   </ButtonLink>
@@ -46,8 +45,8 @@ EditButton.propTypes = {
   className: PropTypes.string,
 };
 
-export const RemixButton = ({name, isMember, ...props}) => (
-  <ButtonLink href={remixUrl(name)} {...props}>
+export const RemixButton = ({name, isMember, className, ...props}) => (
+  <ButtonLink href={remixUrl(name)} className={`has-emoji ${className}`} {...props}>
     {isMember ? 'Remix This' : 'Remix your own'}{' '}
     <span className="emoji microphone" role="presentation"></span>
   </ButtonLink>
