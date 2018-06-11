@@ -46,6 +46,7 @@ export default function(application, userLoginOrId) {
           updateLogin: self.updateLogin,
           uploadCover: self.uploadCover,
           clearCover: self.clearCover,
+          uploadAvatar: self.uploadAvatar,
         };
         return props;
       });

@@ -197,11 +197,12 @@ const LoadedUserProfile = ({
   updateDescription,
   updateName, updateLogin,
   uploadCover, clearCover,
+  uploadAvatar,
 }) => (
   <CoverContainer style={profileStyle}
     buttons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
   >
-    <AvatarContainer style={avatarStyle}>
+    <AvatarContainer style={avatarStyle} buttons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }>
       <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
       <Thanks count={thanksCount}/>
       <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
@@ -217,6 +218,7 @@ LoadedUserProfile.propTypes = {
     thanksCount: PropTypes.number.isRequired,
     hasCoverImage: PropTypes.bool.isRequired,
   }).isRequired,
+  uploadAvatar: PropTypes.func.isRequired,
 };
 
 export const UserProfile = ({fetched, user, ...props}) => (
