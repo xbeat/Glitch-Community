@@ -160,10 +160,9 @@ class TeamAnalytics extends React.Component {
           ||
             <div>
               <span 
-                className={ (this.state.disabledAppViews === true) && 'disabled-summary-item' } 
+                className={ (this.state.disabledAppViews) && 'disabled-summary-item' } 
                 onClick={() => {
-                  this.toggleGraph('App-Views');
-                }}>
+                  this.toggleGraph('App-Views') }}>
                 <span className="total app-views">
                   {this.state.totalAppViews.toLocaleString('en')}
                 </span>{' '}
