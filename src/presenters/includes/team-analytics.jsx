@@ -65,9 +65,12 @@ class TeamAnalytics extends React.Component {
   }
 
 toggleGraph(summaryType) {
-  let element = document.querySelector(".c3-legend-item-${summaryType}")
-  element.dispatchEvent(clickEvent)
-  element.dispatchEvent(blurEvent)
+  let element = document.querySelector(`.c3-legend-item-${summaryType}`)
+  console.log (`.c3-legend-item-${summaryType}`, element)
+  if (element) {
+    element.dispatchEvent(clickEvent)
+    element.dispatchEvent(blurEvent)
+  }
 }
 
 // const clickRemixes = (event) => {
@@ -161,14 +164,14 @@ toggleGraph(summaryType) {
             <Loader />
           ||
             <div>
-              <span className="summary-app-views" onClick={toggleGraph('App-Views')}>
+              <span className="summary-app-views" onClick={this.toggleGraph('App-Views')}>
                 <span className="total app-views">
                   {this.state.totalAppViews.toLocaleString('en')}
                 </span>{' '}
                 <Pluralize singular="App View" plural="App Views" count={this.state.totalAppViews} showCount={false} />
               </span>
               ,{' '}
-              <span className="summary-remixes" onClick={toggleGraph('Remixes')}>
+              <span className="summary-remixes" onClick={this.toggleGraph('Remixes')}>
                 <span className="total remixes">
                   {this.state.totalRemixes.toLocaleString('en')}
                 </span>{' '}
