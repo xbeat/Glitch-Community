@@ -11,10 +11,12 @@ const countTotals = (data, countProperty) => {
   return total;
 };
 
-const ReferrerItem = ({referrer, countProperty, data}) => {
-  const total = countTotals(data, countProperty);
+const ReferrerItem = ({referrer, countProperty, data, total}) => {
   const count = referrer[countProperty];
   const progress = Math.max(Math.round(count / total * 100), 5);
+  if (count <= 0) {
+    return null
+  }
   return (
     <li>
       {count.toLocaleString('en')} – {referrer.domain}
@@ -24,7 +26,6 @@ const ReferrerItem = ({referrer, countProperty, data}) => {
 };
 
 const DirectReferrerItem = ({count, description, total}) => {
-  console.log ('🍕', count, description, total)
   const progress = Math.max(Math.round(count / total * 100), 5);
   return (
     <li>
@@ -77,6 +78,7 @@ const TeamAnalyticsReferrers = ({analytics, totalRemixes, totalAppViews}) => {
               referrer = {referrer}
               countProperty = "requests"
               data = {appViewReferrers}
+              total = {totalAppViews}
             />
           ))}
         </ul>
