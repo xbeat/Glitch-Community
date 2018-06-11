@@ -61,26 +61,11 @@ class TeamAnalytics extends React.Component {
       isGettingC3: true,
       totalRemixes: 0,
       totalAppViews: 0,
+      disabledAppViews: false,
+      disabledRemixes: false,
     };
   }
 
-toggleGraph(summaryType) {
-  let element = document.querySelector(`.c3-legend-item-${summaryType}`)
-  console.log (`.c3-legend-item-${summaryType}`, element)
-  if (element) {
-    element.dispatchEvent(clickEvent)
-    element.dispatchEvent(blurEvent)
-  }
-}
-
-// const clickRemixes = (event) => {
-//   console.log (event.target)
-//   let element = document.querySelector('.c3-legend-item-Remixes')
-//   element.dispatchEvent(clickEvent)
-//   element.dispatchEvent(blurEvent)
-// }
-
-  
   updateTotals() {
     let totalAppViews = 0;
     let totalRemixes = 0;
@@ -125,6 +110,15 @@ toggleGraph(summaryType) {
     });
   }
 
+  
+  toggleGraph(summaryType) {
+    console.log ('toggle graph clicked');
+    let element = document.querySelector(`.c3-legend-item-${summaryType}`)
+    console.log (`.c3-legend-item-${summaryType}`, element)
+    element.dispatchEvent(clickEvent)
+    element.dispatchEvent(blurEvent)
+  }
+
   componentDidMount() {
     // eslint-disable-next-line
     import(
@@ -164,14 +158,14 @@ toggleGraph(summaryType) {
             <Loader />
           ||
             <div>
-              <span className="summary-app-views" onClick={this.toggleGraph('App-Views')}>
+              <span className="summary-app-views {}` onClick={() => {this.toggleGraph('App-Views') }}>
                 <span className="total app-views">
                   {this.state.totalAppViews.toLocaleString('en')}
                 </span>{' '}
                 <Pluralize singular="App View" plural="App Views" count={this.state.totalAppViews} showCount={false} />
               </span>
               ,{' '}
-              <span className="summary-remixes" onClick={this.toggleGraph('Remixes')}>
+              <span className="summary-remixes" onClick={() => {this.toggleGraph('Remixes') }}>
                 <span className="total remixes">
                   {this.state.totalRemixes.toLocaleString('en')}
                 </span>{' '}
