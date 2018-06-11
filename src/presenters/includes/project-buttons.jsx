@@ -11,9 +11,8 @@ const remixUrl = (name) => `${EDITOR_URL}#!/remix/${name}`;
 
 const ButtonLink = ({href, children, className, onClick}) => (
   <a
-    href={href} target="_blank"
+    href={href} onClick={onClick}
     className={`button button-link ${className}`}
-    onClick={onClick}
   >
     {children}
   </a>
