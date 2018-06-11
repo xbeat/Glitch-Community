@@ -117,6 +117,7 @@ class TeamAnalytics extends React.Component {
     console.log (`.c3-legend-item-${summaryType}`, element)
     element.dispatchEvent(clickEvent)
     element.dispatchEvent(blurEvent)
+    // toggle this state summaryType
   }
 
   componentDidMount() {
@@ -158,7 +159,11 @@ class TeamAnalytics extends React.Component {
             <Loader />
           ||
             <div>
-              <span className="summary-app-views {}` onClick={() => {this.toggleGraph('App-Views') }}>
+              <span 
+                className={ (this.state.disabledAppViews === true) && 'disabled-summary-item' } 
+                onClick={() => {
+                  this.toggleGraph('App-Views');
+                }}>
                 <span className="total app-views">
                   {this.state.totalAppViews.toLocaleString('en')}
                 </span>{' '}
