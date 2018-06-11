@@ -205,13 +205,13 @@ export default function(application, userLoginOrId) {
     uploadCover: assetUtils.uploadCoverFile,
     uploadAvatar() {
       assetUtils.uploader((file) => {
-        assetUtils.uploadAsset(file, "original", "userAvatar")
+        assetUtils.uploadAsset(file, "temporary-user-avatar", "avatar")
         .then((uploadedUrl) => {
           return self.updateUser({"avatar_url": uploadedUrl});
         })
         .then((response) => {
-          self.avatarUrl(response.data.avatarUrl);
-          self.avatarThumbnailUrl(response.data.avatarThumbnailUrl);
+          self.user().avatarUrl(response.data.avatarUrl);
+          self.user().avatarThumbnailUrl(response.data.avatarThumbnailUrl);
         });
       });
     },

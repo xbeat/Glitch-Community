@@ -136,9 +136,8 @@ export default function(application) {
         if (application.pageIsTeamPage()) {
           return self.getTeamAvatarImagePolicy();
         }
-      } else {
-        return self.getCoverImagePolicy();
       }
+      return self.getCoverImagePolicy();
     },
 
     getCoverImagePolicy() {
@@ -167,6 +166,7 @@ export default function(application) {
         });
     },
     
+    // We also use this cover bucket as a temp location for user avatars.
     getUserCoverImagePolicy() {
       const policyPath = `users/${application.user().id()}/cover/policy`;
       return application.api().get(policyPath)
