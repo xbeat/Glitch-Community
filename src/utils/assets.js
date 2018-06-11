@@ -280,6 +280,10 @@ export default function(application) {
           return console.error('addAvatarFile', error);
         });
     },
+    
+    addUserAvatarFile(file) {
+      
+    },
   
     uploadAvatarFile() {
       return self.uploader(self.addAvatarFile);
