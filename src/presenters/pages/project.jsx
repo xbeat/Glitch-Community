@@ -137,6 +137,7 @@ export default function(application, name) {
   const props = {
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
+    updateDomain: (domain) => Promise.reject('nope!'),
     updateDescription: (id, description) => application.api().patch(`projects/${id}`, {description}),
     getTeamPins: (id) => application.api().get(`teams/${id}/pinned-projects`).then(({data}) => data),
     getUserPins: (id) => application.api().get(`users/${id}/pinned-projects`).then(({data}) => data),
