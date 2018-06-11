@@ -42,22 +42,22 @@ const filterReferrers = (referrers) => {
   return filteredReferrers;
 };
 
-const totalReferrers = (referrers, countProperty) => {
-  let totalReferrers = 0;
-  referrers.forEach(referrer => {
-    totalReferrers += referrer[countProperty];
-  })
-  console.log ('totalReferrers', totalReferrers, 'referrers', referrers, 'countProperty', countProperty)
-  return totalReferrers
-}
+// const totalReferrers = (referrers, countProperty) => {
+//   let totalReferrers = 0;
+//   referrers.forEach(referrer => {
+//     totalReferrers += referrer[countProperty];
+//   })
+//   console.log ('totalReferrers', totalReferrers, 'referrers', referrers, 'countProperty', countProperty)
+//   return totalReferrers
+// }
 
 
 const TeamAnalyticsReferrers = ({analytics, totalRemixes, totalAppViews}) => {
   const appViewReferrers = filterReferrers(analytics.referrers);
   const remixReferrers = filterReferrers(analytics.remixReferrers);
   
-  const totalDirectAppViews = totalAppViews - totalReferrers(appViewReferrers, 'requests')
-  const totalDirectRemixes = totalRemixes - totalReferrers(remixReferrers, 'remixes')
+  const totalDirectAppViews = totalAppViews - countTotals(appViewReferrers, 'requests')
+  const totalDirectRemixes = totalRemixes - countTotals(remixReferrers, 'remixes')
 
   return (
     <div className="referrers-content">
