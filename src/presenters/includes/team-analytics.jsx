@@ -13,6 +13,7 @@ import TeamAnalyticsReferrers from '../includes/team-analytics-referrers.jsx';
 import TeamAnalyticsProjectDetails from '../includes/team-analytics-project-details.jsx';
 
 const clickEvent = new CustomEvent('click', {bubbles: true, cancelable: true})
+const blurEvent = new CustomEvent('blur', {bubbles: true, cancelable: true})
 
 const dateFromTime = (newTime) => {
   const timeMap = [
@@ -47,14 +48,18 @@ const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
   }
 };
 
-const clickAppViews = () => {
+const clickAppViews = (event) => {
+  console.log (event.target)
   let element = document.querySelector('.c3-legend-item-App-Views')
   element.dispatchEvent(clickEvent)
+  element.dispatchEvent(blurEvent)
 }
 
-const clickRemixes = () => {
+const clickRemixes = (event) => {
+  console.log (event.target)
   let element = document.querySelector('.c3-legend-item-Remixes')
   element.dispatchEvent(clickEvent)
+  element.dispatchEvent(blurEvent)
 }
 
 class TeamAnalytics extends React.Component {
@@ -156,14 +161,14 @@ class TeamAnalytics extends React.Component {
             <Loader />
           ||
             <div>
-              <span onClick={clickAppViews}>
+              <span className="" onClick={clickAppViews}>
                 <span className="total app-views">
                   {this.state.totalAppViews.toLocaleString('en')}
                 </span>{' '}
                 <Pluralize singular="App View" plural="App Views" count={this.state.totalAppViews} showCount={false} />
               </span>
               ,{' '}
-              <span onClick={clickRemixes}>
+              <span className="" onClick={clickRemixes}>
                 <span className="total remixes">
                   {this.state.totalRemixes.toLocaleString('en')}
                 </span>{' '}
