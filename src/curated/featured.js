@@ -13,7 +13,7 @@ Example:
 
 export default [
   {
-    title: 'Building with Actions - 6\'12 at 10am PT',
+    title: 'Building with Actions - June 12 at 10am PT',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FslackWebinarFeatureBanner.png?1519739395528",
     link: 'https://buildingwithactions.splashthat.com/blog-post'
   }
@@ -23,8 +23,8 @@ export default [
     link: 'https://hello-tensorflow.glitch.me/'
   }
   , {
-    title: 'Gauge Your Team\'s Stress Levels',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcapacimeter.jpg?1528372135454",
-    link: 'https://capacimeter.glitch.me/'
+    title: 'Unravel Machine-Generated Poetry',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhouse-of-dust.jpg?1528715873531",
+    link: 'https://house-of-dust.glitch.me'
   }   
 ];
