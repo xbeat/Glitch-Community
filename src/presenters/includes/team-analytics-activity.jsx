@@ -49,7 +49,6 @@ const dateFormat = (currentTimeFrame) => {
     return "%H:%M %p";
   } 
   return "%b-%d";
-  
 };
 
 const TeamAnalyticsActivity = ({c3, analytics, currentTimeFrame}) => {

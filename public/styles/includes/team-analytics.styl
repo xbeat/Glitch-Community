@@ -40,6 +40,8 @@ analytics-remixes = #ff7f0f
 
   .referrers-content
     display: flex
+    @media (max-width: smallViewport)
+      display: block
     
   .referrers-column
     width: calc(33% - 20px)
@@ -58,6 +60,13 @@ analytics-remixes = #ff7f0f
           background-color: analytics-remixes
         &::-moz-progress-bar
           background-color: analytics-remixes
+    @media (max-width: mediumSmallViewport)
+      width: calc(50% - 20px)
+    @media (max-width: smallViewport)
+      width: 100%
+
+
+
 
   ul
     padding: 0
