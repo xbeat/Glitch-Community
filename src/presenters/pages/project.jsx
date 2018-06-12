@@ -87,10 +87,13 @@ const ProjectPage = ({
           <h1>
             {(userIsCurrentUser
               ? <EditableField value={domain} update={domain => updateDomain(id, domain)} placeholder="What's it called?"/>
-              : <React.Fragment>{domain} {project.private && <PrivateBadge domain={domain}/>}</React.Fragment>
+              : domain
             )}
           </h1>
-          <UsersList users={users} />
+          <div>
+            {project.private && <PrivateBadge domain={domain}/>}
+            <UsersList users={users} />
+          </div>
           <AuthDescription
             authorized={userIsCurrentUser} description={description}
             update={desc => updateDescription(id, desc)} placeholder="Tell us about your app"
