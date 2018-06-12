@@ -158,6 +158,9 @@ class TeamAnalytics extends React.Component {
           { (this.state.isGettingData) &&
             <Loader />
           ||
+            <TeamAnalyticsSummary
+              
+            />
             <div>
               <span 
                 className={ (this.state.disabledAppViews) && 'disabled-summary-item' } 
