@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
+import Observable from "o_0";
 import {debounce} from 'lodash';
 
 
@@ -15,10 +16,56 @@ const projectStateFromModels = (projectsModel, pinsModel) => {
   return {pinnedProjects, recentProjects};
 };
 
-const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projectsModel, pinsModel, projectOptions}) => {
-
-  const {pinnedProjects, recentProjects} =  projectStateFromModels(projectsModel, pinsModel)
+export class EntityPageProjectsContainer extends React.Component {
   
+  constructor(props) {
+    super(props);
+     
+    this.state = {
+      recentProjects: [],
+      pinnedProjects: [],
+    };
+    
+    this.aggregateObservable = null;
+    this.setStateFromModels = debounce((projectsModel, pinsModel, Component) => {
+      Component.setState(projectStateFromModels(projectsModel, pinsModel));
+    }, 10);
+  }
+  
+  componentDidMount() {
+    this.aggregateObservable = Observable(() => {
+      const projectsModel = this.props.projectsObservable();
+      const pinsModel = this.props.pinsObservable();
+      
+      // Subscribe just to the 'fetched' subcomponent of the projects.
+      for(let {fetched} of projectsModel) {
+        fetched && fetched();
+      }
+      
+      this.setStateFromModels(projectsModel, pinsModel, this);
+    });
+  }
+  
+  componentWillUnmount(){
+    this.aggregateObservable && this.aggregateObservable.releaseDependencies();
+    this.aggregateObservable = null;
+  }
+
+  render() {
+    return <EntityPageProjects {...this.props} {...this.state}/>;
+  }
+}
+
+EntityPageProjectsContainer.propTypes = {
+  projectsObservable: PropTypes.func.isRequired,
+  pinsObservable: PropTypes.func.isRequired,
+  isAuthorizedUser: PropTypes.bool.isRequired,
+  closeAllPopOvers: PropTypes.func.isRequired,
+  projectOptions: PropTypes.object.isRequired,
+};
+
+const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects, pinnedProjects, projectOptions}) => {
+
   const commonProps = {
     closeAllPopOvers,
     projectOptions,
@@ -36,8 +83,8 @@ const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projectsModel, 
 };
 
 EntityPageProjects.propTypes = {
-  pinsModel: PropTypes.array.isRequired,
+  pinnedProjects: PropTypes.array.isRequired,
   isAuthorizedUser: PropTypes.bool.isRequired,
 };
 
-export default EntityPageProjects;
+export default EntityPageProjectsContainer;

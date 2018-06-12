@@ -18,7 +18,7 @@ export default function UserItem({user}) {
     <a href={user.userLink}>
       <div className="item" style={style}>
         <div className="content">
-          <img onError={addDefaultSrc} className="avatar" src={user.userAvatarUrl('large')} alt=""></img>
+          <img onError={addDefaultSrc} className="avatar" src={user.userAvatarUrlLarge} alt=""></img>
           <div className="information">
             {!!user.name && <h3 className="name">{user.name}</h3>}
             <div className="button">@{user.login}</div>
