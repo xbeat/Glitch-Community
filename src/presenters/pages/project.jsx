@@ -26,18 +26,23 @@ function trackRemix(id, domain) {
   });
 }
 
-const PrivateBadge = ({domain, isPrivate, isMember}) => {
-  if (isMember) {
-  } else if (isPrivate) {
-    const tooltip = `Only members of ${domain} can see its code`;
-    return <span className="private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
-  }
-  return null;
+const PrivateTooltip = (domain) => `Only members of ${domain} can see its code`;
+
+const PrivateBadge = ({domain}) => {
+  const tooltip = PrivateTooltip(domain);
+  return <span className="private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
 };
 PrivateBadge.propTypes = {
   domain: PropTypes.string.isRequired,
+};
+
+const PrivateToggle = ({domain, isPrivate}) => {
+  const tooltip = PrivateTooltip(domain);
+  return <span className="private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
+};
+PrivateToggle.propTypes = {
+  domain: PropTypes.string.isRequired,
   isPrivate: PropTypes.bool.isRequired,
-  isMember: PropTypes.bool.isRequired,
 };
 
 const Embed = ({domain}) => (
@@ -83,10 +88,12 @@ const ProjectPage = ({
           <h1>
             {(userIsCurrentUser
               ? <EditableField value={domain} update={updateDomain} placeholder="What's it called?"/>
-              : domain
+              : <React.Fragment>{domain} {project.private && <PrivateBadge domain={domain}/>}</React.Fragment>
             )}
           </h1>
+          <div>
             <PrivateBadge domain={domain} isPrivate={project.private} isMember={false}/>
+          </div>
           <UsersList users={users} />
           <AuthDescription
             authorized={userIsCurrentUser} description={description}
