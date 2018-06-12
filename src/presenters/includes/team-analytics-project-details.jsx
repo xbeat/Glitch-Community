@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 
 import Loader from './loader.jsx';
+import {FALLBACK_AVATAR_URL} from '../models/project.js';
+
 const RECENT_REMIXES_COUNT = 100;
 
 const getProjectDetails = async ({id, api, currentProjectDomain}) => {
@@ -13,6 +15,11 @@ const getProjectDetails = async ({id, api, currentProjectDomain}) => {
     console.error('getProjectDetails', error);
   }
 };
+
+function addFallbackSrc(event) {
+  console.log ('🚚', event, event.target.src)
+  event.target.src = FALLBACK_AVATAR_URL
+}
 
 const avatarUrl = (id) => {
   return `https://cdn.glitch.com/project-avatar/${id}.png`;
@@ -29,7 +36,7 @@ const ProjectDetails = ({projectDetails}) => {
   return (
     <article className="project-details">
       <a href={projectUrl}>
-        <img className="avatar" src={projectAvatar} alt="" />
+        <img className="avatar" src={projectAvatar} onError={addFallbackSrc} alt="project avatar" />
       </a>
       <table>
         <tbody>
@@ -70,7 +77,7 @@ const ProjectDetails = ({projectDetails}) => {
               <td className="label">Originally remixed from</td>
               <td>
                 <a href={communityProjectUrl(projectDetails.baseProject.domain)}>
-                  <img alt="project avatar" className="avatar baseproject-avatar" src={avatarUrl(projectDetails.baseProject.id)} />
+                  <img alt="project avatar" className="avatar baseproject-avatar" src={avatarUrl(projectDetails.baseProject.id)} onError={addFallbackSrc} />
                 </a>
                 {projectDetails.baseProject.domain}
               </td>
@@ -88,7 +95,7 @@ const ProjectRemixItem = ({remix}) => {
   return (
     <a href={projectUrl}>
       <span data-tooltip={remix.domain} data-tooltip-left="true">
-        <img className="avatar" src={projectAvatar} alt={remix.domain}/>
+        <img className="avatar" src={projectAvatar} alt={remix.domain} onError={addFallbackSrc} />
       </span>
     </a>
   );
