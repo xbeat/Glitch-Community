@@ -27,6 +27,7 @@ function trackRemix(id, domain) {
 }
 
 const PrivateTooltip = (domain) => `Only members of ${domain} can see its code`;
+const PublicTooltip = (domain) => `${domain} is visible to everyone`;
 
 const PrivateBadge = ({domain}) => {
   const tooltip = PrivateTooltip(domain);
@@ -38,10 +39,10 @@ PrivateBadge.propTypes = {
 
 const PrivateToggle = ({domain, isPrivate, setPrivate}) => {
   const handleChange = (evt) => setPrivate(evt.target.checked);
-  const tooltip = isPrivate ? PrivateTooltip(domain) : null;
+  const tooltip = isPrivate ? PrivateTooltip(domain) : PublicTooltip(domain);
   return (
-    <label htmlFor="private" className="button button-tertiary private-project-badge" aria-label={tooltip} data-tooltip={tooltip}>
-      <input id="private" type="checkbox" checked={isPrivate} onChange={handleChange}/>
+    <label htmlFor="private" className="button button-tertiary private-project-badge" data-tooltip={tooltip}>
+      <input id="private" type="checkbox" checked={isPrivate} onChange={handleChange} aria-label={tooltip}/>
     </label>
   );
 };
@@ -146,9 +147,7 @@ class ProjectPageEditor extends React.Component {
   }
   
   updateDomain(domain) {
-    const {id} = this.state;
-    return this.props.api.patch(`projects/${id}`, {domain}).then(() => {
-      this.setState({domain});
+    return this.updateField('domain', domain).then(() => {
       history.replaceState(null, null, `/~${domain}`);
       document.title = `~${domain}`;
       return {success: true, data: domain};
@@ -157,17 +156,11 @@ class ProjectPageEditor extends React.Component {
     ));
   }
   
-  updateDescription(description) {
+  updateField(field, value) {
     const {id} = this.state;
-    return this.props.api.patch(`projects/${id}`, {description}).then(() => {
-      this.setState({description});
-    });
-  }
-  
-  updatePrivate(isPrivate) {
-    const {id} = this.state;
-    return this.props.api.patch(`projects/${id}`, {private: isPrivate}).then(() => {
-      this.setState({private: isPrivate});
+    const change = {[field]: value};
+    return this.props.api.patch(`projects/${id}`, change).then(() => {
+      this.setState(change);
     });
   }
   
@@ -175,8 +168,8 @@ class ProjectPageEditor extends React.Component {
     const props = {
       project: this.state,
       updateDomain: this.updateDomain.bind(this),
-      updateDescription: this.updateDescription.bind(this),
-      updatePrivate: this.updatePrivate.bind(this),
+      updateDescription: this.updateField.bind(this, 'description'),
+      updatePrivate: this.updateField.bind(this, 'private'),
     };
     return <ProjectPage {...props} {...this.props}/>;
   }
