@@ -34,8 +34,8 @@ export class EntityPageProjectsContainer extends React.Component {
   
   componentDidMount() {
     this.aggregateObservable = Observable(() => {
-      const projectsModel = this.props.projectsObservable();
-      const pinsModel = this.props.pinsObservable();
+      const projectsModel = this.props.projects();
+      const pinsModel = this.props.pins();
       
       // Subscribe just to the 'fetched' subcomponent of the projects.
       for(let {fetched} of projectsModel) {
@@ -57,8 +57,8 @@ export class EntityPageProjectsContainer extends React.Component {
 }
 
 EntityPageProjectsContainer.propTypes = {
-  projectsObservable: PropTypes.func.isRequired,
-  pinsObservable: PropTypes.func.isRequired,
+  projects: PropTypes.array.isRequired,
+  pins: PropTypes.array.isRequired,
   isAuthorizedUser: PropTypes.bool.isRequired,
   closeAllPopOvers: PropTypes.func.isRequired,
   projectOptions: PropTypes.object.isRequired,
