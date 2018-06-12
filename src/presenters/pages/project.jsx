@@ -86,14 +86,14 @@ const ProjectPage = ({
         <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
           <h1>
             {(userIsCurrentUser
-              ? <EditableField value={domain} update={domain => updateDomain(id, domain)} placeholder="What's it called?"/>
+              ? <EditableField value={domain} update={updateDomain} placeholder="What's it called?"/>
               : domain
             )}
           </h1>
           <UsersList users={users} />
           <AuthDescription
             authorized={userIsCurrentUser} description={description}
-            update={desc => updateDescription(id, desc)} placeholder="Tell us about your app"
+            update={updateDescription} placeholder="Tell us about your app"
           />
           <p className="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/>{project.private && <PrivateBadge domain={domain}/>}</p>
         </AvatarContainer>
@@ -126,13 +126,34 @@ ProjectPage.propTypes = {
 class ProjectPageEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      project: this.props.initialProject,
-    };
+    this.state = this.props.initialProject;
+  }
+  
+  updateDomain(domain) {
+    const {id} = this.state;
+    return this.props.api.patch(`projects/${id}`, {domain}).then(() => {
+      this.state.project.domain = domain;
+      history.replaceState(null, null, `/~${domain}`);
+      return {success: true, data: domain};
+    }).catch(({response: {data: {message}}}) => (
+      {success: false, data: domain, message}
+    ));
+  }
+  
+  updateDescription(description) {
+    const {id} = this.state;
+    return this.props.api.patch(`projects/${id}`, {description}).then(() => {
+      this.state.description = description;
+    });
   }
   
   render() {
-    return <ProjectPage {...this.state} {...this.props}/>;
+    const props = {
+      project: this.state,
+      updateDomain: this.updateDomain.bind(this),
+      updateDescription: this.updateDescription.bind(this),
+    };
+    return <ProjectPage {...props} {...this.props}/>;
   }
 }
 
@@ -145,23 +166,12 @@ ProjectPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-async function updateDomain(api, id, domain) {
-  try {
-    await api.patch(`projects/${id}`, {domain});
-  } catch ({response: {data: {message}}}) {
-    return {success: false, data: domain, message};
-  }
-  history.replaceState(null, null, `/~${domain}`);
-  return {success: true, data: domain};
-}
-
 // Let's keep layout in jade until all pages are react
 export default function(application, name) {
   const props = {
+    api: application.api(),
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
-    updateDomain: (id, domain) => updateDomain(application.api(), id, domain),
-    updateDescription: (id, description) => application.api().patch(`projects/${id}`, {description}),
     getTeamPins: (id) => application.api().get(`teams/${id}/pinned-projects`).then(({data}) => data),
     getUserPins: (id) => application.api().get(`users/${id}/pinned-projects`).then(({data}) => data),
     getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => Project(d).update(d).asProps())),
