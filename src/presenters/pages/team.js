@@ -46,6 +46,7 @@ export default function(application) {
 
     TeamProjects() {
       const propsObservable = Observable(() => {
+        application.team().projects();
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.currentUserIsOnTeam(),
@@ -71,9 +72,7 @@ export default function(application) {
 
     teamAnalytics() {
       const projects = self.team().projects().map(function (project) {
-        project = project.asProps();
-        project.description = "";
-        project.users = [];
+        {description: "", users: []} = project.asProps();
         return project;
       });
       const id = self.team().id();
