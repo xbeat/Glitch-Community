@@ -1,6 +1,5 @@
 import Project from '../../models/project';
 import Observable from 'o_0';
-import {debounce} from 'lodash';
 import mdFactory from 'markdown-it';
 const md = mdFactory({
   breaks: true,
@@ -43,8 +42,11 @@ export default function(application, userLoginOrId) {
           fetched: self.user().fetched(),
           isAuthorized: self.isCurrentUser(),
           updateDescription: self.updateDescription,
+          updateName: self.updateName,
+          updateLogin: self.updateLogin,
           uploadCover: self.uploadCover,
           clearCover: self.clearCover,
+          uploadAvatar: self.uploadAvatar,
         };
         return props;
       });
@@ -111,12 +113,39 @@ export default function(application, userLoginOrId) {
     },
 
     updateDescription(text) {
-      application.user().description(text);
-      return self.updateUser({description: text});
+      return self.updateField("description", text);
+    },
+    
+    updateName(text) {
+      const maybeText = text === "" ? null : text;
+      //Api permits the name to be null, but not empty.
+      return self.updateField("name", maybeText);
+    },
+    
+    updateLogin(text) {
+      return self.updateField("login", text).then((result) => {
+        if(result.success){
+          const login = `@${result.data}`;
+          history.replaceState(null, null, `/${login}`);
+          
+          //https://stackoverflow.com/questions/13955520/page-title-is-not-changed-by-history-pushstate
+          document.title = login;
+        }
+        return result;
+      });
+    },
+    
+    updateField(field, value) {
+      return self.updateUser({[field]: value}).then(result => {
+        result.data = result.data[field];
+        if(result.success) {
+          application.user()[field](result.data);
+        }
+        return result;
+      });
     },
 
-    updateUser: debounce(data => application.user().updateUser(application, data)
-      , 250),
+    updateUser: (data => application.user().updateUser(application, data)),
 
     userHasData() {
       if (application.user().id()) { return true; }
@@ -174,18 +203,36 @@ export default function(application, userLoginOrId) {
     clearCover: () => assetUtils.updateHasCoverImage(false),
 
     uploadCover: assetUtils.uploadCoverFile,
-    uploadAvatar: assetUtils.uploadAvatarFile,
+    uploadAvatar() {
+      assetUtils.uploader((file) => {
+        assetUtils.uploadAsset(file, "temporary-user-avatar", "avatar")
+          .then((uploadedUrl) => {
+            return self.updateUser({"avatar_url": uploadedUrl});
+          })
+          .then((response) => {
+            self.user().avatarUrl(response.data.avatarUrl);
+            self.user().avatarThumbnailUrl(response.data.avatarThumbnailUrl);
+          });
+      });
+    },
     
     userProjects() {
-      const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
-        isAuthorizedUser: self.isCurrentUser(),
-        projectsObservable: self.user().projects,
-        pinsObservable: self.user().pins,
-        projectOptions: self.projectOptions(),
-      };
+      const propsObservable = Observable(() => {
+        // observe login so that our project user links update as the user does.
+        self.user().login();
+        self.user().avatarThumbnailUrl();
+
+        const props = {
+          closeAllPopOvers: application.closeAllPopOvers,
+          isAuthorizedUser: self.isCurrentUser(),
+          projectsObservable: self.user().projects,
+          pinsObservable: self.user().pins,
+          projectOptions: self.projectOptions(),
+        };
+        return props;
+      });
       
-      return Reactlet(EntityPageProjects, props, "UserPageProjectsContainer");
+      return Reactlet(Observed, {propsObservable, component:EntityPageProjects}, "UserPageProjectsContainer");
     },
     
     hiddenUnlessUserIsAnon() {

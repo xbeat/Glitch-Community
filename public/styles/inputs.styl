@@ -1,3 +1,5 @@
+$input-padding = 4px 0px 2px 0px
+
 input
   border-color: input-border
   width: 200px
@@ -5,9 +7,8 @@ input
   border-radius: 3px
   border-style: solid
   border-width: 1px
+  padding: $input-padding
   padding-left: 10px
-  padding-top: 4px
-  padding-bottom: 2px
   font-size: 13px
   background-repeat: no-repeat
   background-position: right 5px center
@@ -58,14 +59,46 @@ input
   border: 1px solid input-border
 
 .content-editable
+  padding-left: 0
   font-family: monospace
-  font-size: 15px
+  font-size: inherit
+  font-weight: inherit
   cursor: text
   border: none
+  border-radius: 0
   border-bottom: 1px solid line-on-secondary-background
   background: none
   resize: none
+  width: 100%
+    
   &:empty:before
     content: attr(placeholder)
     color: text-on-secondary-background
     display: block /* For Firefox */
+
+  &.error
+    border-color: warning
+
+.content-editable-prefix
+    padding: $input-padding
+    width: auto
+    
+.editable-field-flex
+  position:relative
+  display: flex
+  
+.editable-field-error-icon
+  position: absolute
+  right: 0px
+ 
+.editable-field-error-message
+  width: 100%
+  color: error-text
+  background-color: error
+  display: block
+  padding: 3px 6px
+  border-radius: 5px
+  border-top-left-radius: 0
+  border-top-right-radius: 0
+  font-weight: 600
+  font-size: 0.8rem

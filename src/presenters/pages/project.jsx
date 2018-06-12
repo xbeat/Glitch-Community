@@ -1,3 +1,5 @@
+/* global analytics */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -6,10 +8,11 @@ import Project from '../../models/project';
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
-import {StaticDescription} from '../includes/description-field.jsx';
+import {AuthDescription} from '../includes/description-field.jsx';
 import {AvatarContainer, InfoContainer} from '../includes/profile.jsx';
-import {ShowButton, EditButton, ReportButton} from '../includes/project-buttons.jsx';
+import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
+import RelatedProjects from '../includes/related-projects.jsx';
 
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
@@ -23,6 +26,14 @@ const ProjectButtons = ({domain, isMember}) => (
 ProjectButtons.propTypes = {
   isMember: PropTypes.bool.isRequired,
 };
+
+function trackRemix(id, domain) {
+  analytics.track("Click Remix", {
+    origin: "project page",
+    baseProjectId: id,
+    baseDomain: domain,
+  });
+}
 
 const Embed = ({domain}) => (
   <div className="glitch-embed-wrap">
@@ -58,40 +69,56 @@ ReadmeLoader.propTypes = {
 const ProjectPage = ({
   project: {
     avatar, description, domain, id,
-    userIsCurrentUser, users,
+    userIsCurrentUser, users, teams,
     ...project // 'private' can't be used as a variable name
   },
   getReadme,
+  getTeamPins,
+  getUserPins,
+  getProjects,
+  updateDescription,
 }) => (
-  <article className="project-page">
+  <main className="project-page">
     <section id="info">
       <InfoContainer>
         <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
           <h1>{domain} {project.private && <PrivateBadge domain={domain}/>}</h1>
           <UsersList users={users} />
-          <StaticDescription description={description}/>
-          <p id="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/></p>
+          <AuthDescription
+            authorized={userIsCurrentUser} description={description}
+            update={desc => updateDescription(id, desc)} placeholder="Tell us about your app"
+          />
+          <p className="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/></p>
         </AvatarContainer>
       </InfoContainer>
     </section>
     <section id="embed">
       <Embed domain={domain}/>
+      <div className="buttons buttons-right">
+        <RemixButton className="button-small"
+          name={domain} isMember={userIsCurrentUser}
+          onClick={() => trackRemix(id, domain)}
+        />
+      </div>
+    </section>
+    <section id="related">
+      <RelatedProjects ignoreProjectId={id} {...{teams, users, getTeamPins, getUserPins, getProjects}}/>
     </section>
     <section id="readme">
       <ReadmeLoader getReadme={getReadme}/>
     </section>
-    <section id="feedback">
+    <section id="feedback" className="buttons buttons-right">
       <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
     </section>
-  </article>
+  </main>
 );
 ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
 };
 
-const ProjectPageLoader = ({name, get, getReadme}) => (
+const ProjectPageLoader = ({name, get, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {project => project ? <ProjectPage project={project} getReadme={getReadme}/> : <NotFound name={name}/>}
+    {project => project ? <ProjectPage project={project} {...props}/> : <NotFound name={name}/>}
   </DataLoader>
 );
 ProjectPageLoader.propTypes = {
@@ -103,6 +130,10 @@ export default function(application, name) {
   const props = {
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
+    updateDescription: (id, description) => application.api().patch(`projects/${id}`, {description}),
+    getTeamPins: (id) => application.api().get(`teams/${id}/pinned-projects`).then(({data}) => data),
+    getUserPins: (id) => application.api().get(`users/${id}/pinned-projects`).then(({data}) => data),
+    getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => Project(d).update(d).asProps())),
     name,
   };
   const content = Reactlet(ProjectPageLoader, props, 'projectpage');

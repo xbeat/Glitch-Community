@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Bringing your code to Glitch',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-github-social-coding.jpg?1528120414579",
-    link: 'https://help-center.glitch.me/github/'
+    title: 'Build Actions: June 12, 10am PT',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FslackWebinarFeatureBanner.png?1519739395528",
+    link: 'https://buildingwithactions.splashthat.com/blog-post'
   }
   , {
-    title: 'Test Your Spy Skills with Slaccusation',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fslaccusation.jpg?1528110244558",
-    link: 'http://slaccusation.glitch.me/'
+    title: 'Master Machine Learning',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhello-tensorflow.jpg?1528715708433",
+    link: 'https://glitch.com/~hello-tensorflow'
   }
   , {
-    title: 'Like Shazam for Album Covers',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frecord-player.jpg?1528110244910",
-    link: 'http://record-player.glitch.me/'
+    title: 'Get Ready for the World Cup',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwc18.jpg?1528716860364",
+    link: 'https://wc18.glitch.me/'
   }   
 ];

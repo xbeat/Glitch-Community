@@ -11,6 +11,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(compression());
 
+const proxy = require('./proxy');
+proxy(app);
+
 const router = require('./routes')();
 app.use('/', router);
 
