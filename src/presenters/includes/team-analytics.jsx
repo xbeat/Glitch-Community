@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Pluralize from 'react-pluralize';
 import moment from 'moment-mini';
 import _ from 'lodash';
 
@@ -8,12 +7,10 @@ import Loader from './loader.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx';
 
+import TeamAnalyticsSummary from '../includes/team-analytics-summary.jsx';
 import TeamAnalyticsActivity from '../includes/team-analytics-activity.jsx';
 import TeamAnalyticsReferrers from '../includes/team-analytics-referrers.jsx';
 import TeamAnalyticsProjectDetails from '../includes/team-analytics-project-details.jsx';
-
-const clickEvent = new CustomEvent('click', {bubbles: true, cancelable: true})
-const blurEvent = new CustomEvent('blur', {bubbles: true, cancelable: true})
 
 const dateFromTime = (newTime) => {
   const timeMap = [
@@ -61,8 +58,6 @@ class TeamAnalytics extends React.Component {
       isGettingC3: true,
       totalRemixes: 0,
       totalAppViews: 0,
-      disabledAppViews: false,
-      disabledRemixes: false,
     };
   }
 
@@ -110,16 +105,6 @@ class TeamAnalytics extends React.Component {
     });
   }
 
-  
-  toggleGraph(summaryType) {
-    console.log ('toggle graph clicked');
-    let element = document.querySelector(`.c3-legend-item-${summaryType}`)
-    console.log (`.c3-legend-item-${summaryType}`, element)
-    element.dispatchEvent(clickEvent)
-    element.dispatchEvent(blurEvent)
-    // toggle this state summaryType
-  }
-
   componentDidMount() {
     // eslint-disable-next-line
     import(
@@ -159,7 +144,8 @@ class TeamAnalytics extends React.Component {
             <Loader />
           ||
             <TeamAnalyticsSummary
-              
+              totalAppViews = this.state.totalAppViews
+              totalRemixes = this.state.totalRemixes}
             />
             <div>
               <span 
