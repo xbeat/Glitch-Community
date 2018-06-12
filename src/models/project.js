@@ -9,7 +9,7 @@ import axios from 'axios';
 
 let source = undefined; // reference to cancel token
 
-export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528811021156";
+export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528812042222";
 
 export default Project = function(I, self) {
   

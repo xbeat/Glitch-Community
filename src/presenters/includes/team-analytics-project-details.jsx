@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 
 import Loader from './loader.jsx';
-import {FALLBACK_AVATAR_URL} from '../models/project.js';
+import {FALLBACK_AVATAR_URL} from '../../models/project.js';
 
 const RECENT_REMIXES_COUNT = 100;
 
@@ -16,8 +16,7 @@ const getProjectDetails = async ({id, api, currentProjectDomain}) => {
   }
 };
 
-function addFallbackSrc(event) {
-  console.log ('🚚', event, event.target.src)
+const addFallbackSrc = (event) => {
   event.target.src = FALLBACK_AVATAR_URL
 }
 
