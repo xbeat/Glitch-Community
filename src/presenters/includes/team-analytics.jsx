@@ -79,7 +79,7 @@ class TeamAnalytics extends React.Component {
       isGettingData: true,
     });
     getAnalytics(this.props, this.state.fromDate, this.state.currentProjectDomain).then(({data}) => {
-      console.log ('dataaaa', data)
+      console.log ('💣 dataaaa', data)
       this.setState({
         isGettingData: false,
         analytics: data,
@@ -121,10 +121,6 @@ class TeamAnalytics extends React.Component {
   }
   
   render() {
-    if(!this.props.currentUserIsOnTeam) {
-      return null;
-    }
-
     return (
       <section className="team-analytics">
         <h2>Analytics</h2>
@@ -208,7 +204,6 @@ TeamAnalytics.propTypes = {
   id: PropTypes.number.isRequired,
   api: PropTypes.func.isRequired,
   projects: PropTypes.array.isRequired,
-  currentUserIsOnTeam: PropTypes.bool.isRequired,
 };
 
 export default TeamAnalytics;

@@ -82,10 +82,9 @@ export default function(application) {
           id: id,
           api: application.api,
           projects: projects,
-          currentUserIsOnTeam: self.currentUserIsOnTeam(),
         };
       });
-      if (!propsObservable().id) { return null; }
+      if (!propsObservable().id || !self.currentUserIsOnTeam()) { return null; }
       return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
     },
 
