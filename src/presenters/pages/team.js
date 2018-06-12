@@ -49,8 +49,8 @@ export default function(application) {
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.currentUserIsOnTeam(),
-          projects: application.team().projects(),
-          pins: application.team().pins(),
+          projectsModel: application.team().projects(),
+          pinsModel: application.team().pins(),
           projectOptions: self.projectOptions(),
         };
       });
