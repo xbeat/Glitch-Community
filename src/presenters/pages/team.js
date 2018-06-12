@@ -72,8 +72,10 @@ export default function(application) {
 
     teamAnalytics() {
       const projects = self.team().projects().map(function (project) {
-        {description: "", users: []} = project.asProps();
-        return project;
+        let {...projectProps} = project.asProps();
+        projectProps.description = "";
+        projectProps.users = [];
+        return projectProps;
       });
       const id = self.team().id();
       const propsObservable = Observable(() => {
