@@ -18,16 +18,6 @@ import RelatedProjects from '../includes/related-projects.jsx';
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
 
-const ProjectButtons = ({domain, isMember}) => (
-  <React.Fragment>
-    <ShowButton name={domain}/>
-    <EditButton name={domain} isMember={isMember}/>
-  </React.Fragment>
-);
-ProjectButtons.propTypes = {
-  isMember: PropTypes.bool.isRequired,
-};
-
 function trackRemix(id, domain) {
   analytics.track("Click Remix", {
     origin: "project page",
@@ -36,20 +26,20 @@ function trackRemix(id, domain) {
   });
 }
 
+const PrivateBadge = ({domain}) => {
+  const tooltip = `Only members of ${domain} can see its code`;
+  return <span className="private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
+};
+PrivateBadge.propTypes = {
+  domain: PropTypes.string.isRequired,
+};
+
 const Embed = ({domain}) => (
   <div className="glitch-embed-wrap">
     <iframe title="embed" src={`https://glitch.com/embed/#!/embed/${domain}?path=README.md&previewSize=100`}></iframe>
   </div>
 );
 Embed.propTypes = {
-  domain: PropTypes.string.isRequired,
-};
-
-const PrivateBadge = ({domain}) => {
-  const tooltip = `Only members of ${domain} can see its code`;
-  return <span className="private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
-};
-PrivateBadge.propTypes = {
   domain: PropTypes.string.isRequired,
 };
 
@@ -95,7 +85,11 @@ const ProjectPage = ({
             authorized={userIsCurrentUser} description={description}
             update={updateDescription} placeholder="Tell us about your app"
           />
-          <p className="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/>{project.private && <PrivateBadge domain={domain}/>}</p>
+          <p className="buttons">
+            <ShowButton name={domain}/>
+            <EditButton name={domain} isMember={userIsCurrentUser}/>
+            {project.private && <PrivateBadge domain={domain}/>}
+          </p>
         </AvatarContainer>
       </InfoContainer>
     </section>
