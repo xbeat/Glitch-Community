@@ -31,7 +31,6 @@ const communityProjectUrl = (domain) => {
 const ProjectDetails = ({projectDetails}) => {
   let projectAvatar = avatarUrl(projectDetails.id);
   let projectUrl = communityProjectUrl(projectDetails.domain);
-  // convert to a paragraph?
   return (
     <article className="project-details">
       <a href={projectUrl}>
