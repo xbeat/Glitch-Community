@@ -50,14 +50,9 @@
     "stylus": "^0.54.5",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-join": "^4.0.0",
-<<<<<<< HEAD
     "webpack": "^4.11.0",
-    "webpack-cli": "^3.0.2"
-=======
-    "webpack": "^4.6.0",
-    "webpack-cli": "^2.0.15",
+    "webpack-cli": "^3.0.2",
     "express-http-proxy": "^1.2.0"
->>>>>>> 450bd49a9901dd169d702629385a45b4541123c9
   },
   "engines": {
     "node": "8.x"
