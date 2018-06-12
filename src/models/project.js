@@ -43,6 +43,7 @@ export default Project = function(I, self) {
       return {
         get teams() { return project.teams().map(team => team.asProps()); },
         get users() { return project.users().map(user => user.asProps()); },
+        users: project.users().map(user => user.asProps()),
         avatar: project.avatar(),
         description: project.description(),
         domain: project.domain(),
