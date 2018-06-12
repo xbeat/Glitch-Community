@@ -37,8 +37,8 @@ PrivateBadge.propTypes = {
 };
 
 const PrivateToggle = ({domain, isPrivate}) => {
-  const tooltip = PrivateTooltip(domain);
-  return <span className="private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
+  const tooltip = isPrivate ? PrivateTooltip(domain) : null;
+  return <span className="button button-tertiary private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
 };
 PrivateToggle.propTypes = {
   domain: PropTypes.string.isRequired,
@@ -91,9 +91,11 @@ const ProjectPage = ({
               : <React.Fragment>{domain} {project.private && <PrivateBadge domain={domain}/>}</React.Fragment>
             )}
           </h1>
-          <div>
-            <PrivateBadge domain={domain} isPrivate={project.private} isMember={false}/>
-          </div>
+          {(userIsCurrentUser &&
+            <div>
+              <PrivateToggle domain={domain} isPrivate={project.private} isMember={userIsCurrentUser}/>
+            </div>
+          )}
           <UsersList users={users} />
           <AuthDescription
             authorized={userIsCurrentUser} description={description}
