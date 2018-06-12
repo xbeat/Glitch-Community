@@ -26,12 +26,18 @@ function trackRemix(id, domain) {
   });
 }
 
-const PrivateBadge = ({domain}) => {
-  const tooltip = `Only members of ${domain} can see its code`;
-  return <span className="private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
+const PrivateBadge = ({domain, isPrivate, isMember}) => {
+  if (isMember) {
+  } else if (isPrivate) {
+    const tooltip = `Only members of ${domain} can see its code`;
+    return <span className="private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
+  }
+  return null;
 };
 PrivateBadge.propTypes = {
   domain: PropTypes.string.isRequired,
+  isPrivate: PropTypes.bool.isRequired,
+  isMember: PropTypes.bool.isRequired,
 };
 
 const Embed = ({domain}) => (
@@ -88,7 +94,7 @@ const ProjectPage = ({
           <p className="buttons">
             <ShowButton name={domain}/>
             <EditButton name={domain} isMember={userIsCurrentUser}/>
-            {project.private && <PrivateBadge domain={domain}/>}
+            <PrivateBadge domain={domain} isPrivate={project.private} isMember={false}/>
           </p>
         </AvatarContainer>
       </InfoContainer>
