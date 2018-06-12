@@ -123,9 +123,22 @@ ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
 };
 
+class ProjectPageEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      project: this.props.initialProject,
+    };
+  }
+  
+  render() {
+    return <ProjectPage {...this.state} {...this.props}/>;
+  }
+}
+
 const ProjectPageLoader = ({name, get, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {project => project ? <ProjectPage project={project} {...props}/> : <NotFound name={name}/>}
+    {project => project ? <ProjectPageEditor initialProject={project} {...props}/> : <NotFound name={name}/>}
   </DataLoader>
 );
 ProjectPageLoader.propTypes = {
