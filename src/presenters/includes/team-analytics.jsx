@@ -144,27 +144,9 @@ class TeamAnalytics extends React.Component {
             <Loader />
           ||
             <TeamAnalyticsSummary
-              totalAppViews = this.state.totalAppViews
-              totalRemixes = this.state.totalRemixes}
+              totalAppViews = {this.state.totalAppViews}
+              totalRemixes = {this.state.totalRemixes}
             />
-            <div>
-              <span 
-                className={ (this.state.disabledAppViews) && 'disabled-summary-item' } 
-                onClick={() => {
-                  this.toggleGraph('App-Views') }}>
-                <span className="total app-views">
-                  {this.state.totalAppViews.toLocaleString('en')}
-                </span>{' '}
-                <Pluralize singular="App View" plural="App Views" count={this.state.totalAppViews} showCount={false} />
-              </span>
-              ,{' '}
-              <span className="summary-remixes" onClick={() => {this.toggleGraph('Remixes') }}>
-                <span className="total remixes">
-                  {this.state.totalRemixes.toLocaleString('en')}
-                </span>{' '}
-                <Pluralize singular="Remix" plural="Remixes" count={this.state.totalRemixes} showCount={false} />
-              </span>
-            </div>
           }
         </section>
         

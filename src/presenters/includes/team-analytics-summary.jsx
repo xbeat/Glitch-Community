@@ -15,16 +15,17 @@ class TeamAnalyticsSummary extends React.Component {
   }
   
   toggleGraph(summaryType) {
-    console.log ('toggle graph clicked');
     let element = document.querySelector(`.c3-legend-item-${summaryType}`)
-    console.log (`.c3-legend-item-${summaryType}`, element)
+
+    console.log ('🌹', `.c3-legend-item-${summaryType}`, element)
+    
     element.dispatchEvent(clickEvent)
     element.dispatchEvent(blurEvent)
     // toggle this state summaryType
   }
 
-  componentDidMount() {
-  }
+//   componentDidMount() {
+//   }
   
   render() {
     if(!this.props.currentUserIsOnTeam) {
@@ -32,22 +33,37 @@ class TeamAnalyticsSummary extends React.Component {
     }
 
     return (
-          <TeamAnalyticsProjectPop
-            updateProjectdomain = {this.updateProjectdomain.bind(this)}
-            currentProjectDomain = {this.state.currentProjectDomain}
-            projects = {this.props.projects}
-          />
-          <TeamAnalyticsTimePop 
-            updateTimeFrame = {this.updateTimeFrame.bind(this)}
-            currentTimeFrame = {this.state.currentTimeFrame}
-          />
+      <React.Fragment>
+        <span 
+          className={ this.state.AppViewsActivityHidden ? null : 'disabled-summary-item' }
+          onClick={() => {
+            this.toggleGraph('App-Views') 
+        }}>
+          <span className="total app-views">
+            {this.props.totalAppViews.toLocaleString('en')}
+          </span>{' '}
+          <Pluralize singular="App View" plural="App Views" count={this.props.totalAppViews} showCount={false} />
+        </span>
+        
+        ,{' '}
 
+        <span className="summary-remixes"
+          onClick={() => {
+            this.toggleGraph('Remixes')
+         }}>
+          <span className="total remixes">
+            {this.props.totalRemixes.toLocaleString('en')}
+          </span>{' '}
+          <Pluralize singular="Remix" plural="Remixes" count={this.props.totalRemixes} showCount={false} />
+        </span>
+      </React.Fragment>
     );
   }
 }
 
 TeamAnalyticsSummary.propTypes = {
-  currentUserIsOnTeam: PropTypes.bool.isRequired,
+  totalAppViews: PropTypes.number.isRequired,
+  totalRemixes: PropTypes.number.isRequired,
 };
 
 export default TeamAnalyticsSummary;
