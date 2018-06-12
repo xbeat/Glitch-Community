@@ -36,7 +36,7 @@ export default Project = function(I, self) {
   self.attrModels('users', User);
 
   self.extend({
-    
+
     asProps() {
       const project = self;
 
