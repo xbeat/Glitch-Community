@@ -86,6 +86,7 @@ const ProjectPage = ({
               : domain
             )}
           </h1>
+            <PrivateBadge domain={domain} isPrivate={project.private} isMember={false}/>
           <UsersList users={users} />
           <AuthDescription
             authorized={userIsCurrentUser} description={description}
@@ -94,7 +95,6 @@ const ProjectPage = ({
           <p className="buttons">
             <ShowButton name={domain}/>
             <EditButton name={domain} isMember={userIsCurrentUser}/>
-            <PrivateBadge domain={domain} isPrivate={project.private} isMember={false}/>
           </p>
         </AvatarContainer>
       </InfoContainer>
