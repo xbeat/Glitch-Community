@@ -132,8 +132,9 @@ class ProjectPageEditor extends React.Component {
   updateDomain(domain) {
     const {id} = this.state;
     return this.props.api.patch(`projects/${id}`, {domain}).then(() => {
-      this.state.project.domain = domain;
+      this.setState({domain});
       history.replaceState(null, null, `/~${domain}`);
+      document.title = `~${domain}`;
       return {success: true, data: domain};
     }).catch(({response: {data: {message}}}) => (
       {success: false, data: domain, message}
@@ -143,7 +144,7 @@ class ProjectPageEditor extends React.Component {
   updateDescription(description) {
     const {id} = this.state;
     return this.props.api.patch(`projects/${id}`, {description}).then(() => {
-      this.state.description = description;
+      this.setState({description});
     });
   }
   
@@ -156,6 +157,12 @@ class ProjectPageEditor extends React.Component {
     return <ProjectPage {...props} {...this.props}/>;
   }
 }
+ProjectPageEditor.propTypes = {
+  api: PropTypes.any.isRequired,
+  initialProject: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 const ProjectPageLoader = ({name, get, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
