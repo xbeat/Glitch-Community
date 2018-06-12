@@ -38,13 +38,16 @@ PrivateBadge.propTypes = {
 };
 
 const PrivateToggle = ({domain, isPrivate, setPrivate}) => {
-  const handleChange = (evt) => setPrivate(evt.target.checked);
   const tooltip = isPrivate ? PrivateTooltip(domain) : PublicTooltip(domain);
   const className = isPrivate ? 'private-project-badge' : 'public-project-badge';
   return (
-    <label htmlFor="private" className={`button button-tertiary ${className}`} data-tooltip={tooltip}>
-      <input id="private" type="checkbox" checked={isPrivate} onChange={handleChange} className="private-project-toggle" aria-label={tooltip}/>
-    </label>
+    <span data-tooltip={tooltip}>
+      <button
+        onClick={() => setPrivate(!isPrivate)}
+        className={`button button-tertiary ${className}`}
+        aria-label={tooltip}
+      />
+    </span>
   );
 };
 PrivateToggle.propTypes = {
