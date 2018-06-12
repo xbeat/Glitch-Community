@@ -90,15 +90,12 @@ const ProjectPage = ({
               : domain
             )}
           </h1>
-          <div>
-            {project.private && <PrivateBadge domain={domain}/>}
-            <UsersList users={users} />
-          </div>
+          <UsersList users={users} />
           <AuthDescription
             authorized={userIsCurrentUser} description={description}
             update={desc => updateDescription(id, desc)} placeholder="Tell us about your app"
           />
-          <p className="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/></p>
+          <p className="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/>{project.private && <PrivateBadge domain={domain}/>}</p>
         </AvatarContainer>
       </InfoContainer>
     </section>
