@@ -36,13 +36,19 @@ PrivateBadge.propTypes = {
   domain: PropTypes.string.isRequired,
 };
 
-const PrivateToggle = ({domain, isPrivate}) => {
+const PrivateToggle = ({domain, isPrivate, setPrivate}) => {
+  const handleChange = (evt) => setPrivate(evt.target.checked);
   const tooltip = isPrivate ? PrivateTooltip(domain) : null;
-  return <span className="button button-tertiary private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
+  return (
+    <label htmlFor="private" className="button button-tertiary private-project-badge" aria-label={tooltip} data-tooltip={tooltip}>
+      <input id="private" type="checkbox" checked={isPrivate} onChange={handleChange}/>
+    </label>
+  );
 };
 PrivateToggle.propTypes = {
   domain: PropTypes.string.isRequired,
   isPrivate: PropTypes.bool.isRequired,
+  setPrivate: PropTypes.func.isRequired,
 };
 
 const Embed = ({domain}) => (
@@ -80,6 +86,7 @@ const ProjectPage = ({
   getProjects,
   updateDomain,
   updateDescription,
+  updatePrivate,
 }) => (
   <main className="project-page">
     <section id="info">
@@ -93,7 +100,7 @@ const ProjectPage = ({
           </h1>
           {(userIsCurrentUser &&
             <div>
-              <PrivateToggle domain={domain} isPrivate={project.private} isMember={userIsCurrentUser}/>
+              <PrivateToggle domain={domain} isPrivate={project.private} isMember={userIsCurrentUser} setPrivate={updatePrivate}/>
             </div>
           )}
           <UsersList users={users} />
@@ -157,11 +164,19 @@ class ProjectPageEditor extends React.Component {
     });
   }
   
+  updatePrivate(isPrivate) {
+    const {id} = this.state;
+    return this.props.api.patch(`projects/${id}`, {private: isPrivate}).then(() => {
+      this.setState({private: isPrivate});
+    });
+  }
+  
   render() {
     const props = {
       project: this.state,
       updateDomain: this.updateDomain.bind(this),
       updateDescription: this.updateDescription.bind(this),
+      updatePrivate: this.updatePrivate.bind(this),
     };
     return <ProjectPage {...props} {...this.props}/>;
   }
