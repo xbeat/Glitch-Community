@@ -94,6 +94,7 @@ class TeamAnalytics extends React.Component {
       currentTimeFrame: newTime,
       fromDate: dateFromTime(newTime)
     }, () => {
+      console.log('updateTimeFrame')
       this.updateAnalytics();
     });
   }
@@ -102,6 +103,7 @@ class TeamAnalytics extends React.Component {
     this.setState({
       currentProjectDomain: newDomain
     }, () => {
+      console.log('updateProjectdomain')
       this.updateAnalytics();
     });
   }
@@ -116,6 +118,7 @@ class TeamAnalytics extends React.Component {
         c3: c3,
         isGettingC3: false,
       });
+      console.log ('componentDidMount')
       this.updateAnalytics();
     });
   }
