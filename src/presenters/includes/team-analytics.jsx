@@ -107,16 +107,6 @@ class TeamAnalytics extends React.Component {
     });
   }
   
-  // shouldComponentUpdate(nextProps) {
-  //   // only rerender analytics if team projects have changed
-  //   if (this.props.projects.length !== nextProps.projects.length) {
-  //     console.log(this.props.projects.length, nextProps.projects.length)
-  //     return true
-  //   } else {
-  //     return false
-  //   }
-  // }
-
   componentDidMount() {
     // eslint-disable-next-line
     import(
