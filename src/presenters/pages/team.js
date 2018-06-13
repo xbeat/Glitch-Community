@@ -43,7 +43,10 @@ export default function(application) {
       });
 
       console.log("team profile reactlet");
-      return Reactlet(Observed, {propsObservable, component:TeamProfile});
+      // if propsObservable().fetched is true
+      // (prevObservable.fetched ===true) && (prevObservable.fetched === propsObservable().fetched)
+      // prevObservable = propsObservable
+      return Reactlet(Observed, {propsObservable, component:TeamProfile}, 'team-profile');
     },
 
     TeamProjects() {

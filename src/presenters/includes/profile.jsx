@@ -167,7 +167,13 @@ export const TeamProfile = ({fetched, currentUserIsOnTeam, userFetched, team, ..
   if (!fetched || (currentUserIsOnTeam && !userFetched)) {
     return <LoadingProfile coverStyle={team.teamProfileStyle}/>
   } else {
-    return <LoadedTeamProfile team={team} {...props}/>
+    return (
+      <LoadedTeamProfile 
+        team={team} 
+        currentUserIsOnTeam={currentUserIsOnTeam}
+        {...props}
+      />
+    )
   }
 };
 TeamProfile.propTypes = {
