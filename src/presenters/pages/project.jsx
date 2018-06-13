@@ -91,7 +91,7 @@ const ProjectPage = ({
   updateDescription,
   updatePrivate,
 }) => (
-  <main className="project-page">
+  <main className={`project-page ${project.private ? 'private-project' : ''}`}>
     <section id="info">
       <InfoContainer>
         <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
