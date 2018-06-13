@@ -102,6 +102,9 @@ const LoadingProfile = ({coverStyle}) => (
   </CoverContainer>
 );
 
+
+
+
 // stuff below this line is page specific and hopefully won't stay in this file forever
 
 const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam}) => (
