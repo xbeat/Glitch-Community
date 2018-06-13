@@ -11,7 +11,7 @@ import Reactlet from "../reactlet";
 import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
 import Observed from "../includes/observed.jsx";
-import TeamProfile from "../includes/team-profile.jsx";
+import {TeamProfile} from "../includes/profile.jsx";
 import TeamAnalytics from "../includes/team-analytics.jsx";
 import TeamMarketing from "../includes/team-marketing.jsx";
 
