@@ -71,7 +71,7 @@ const ReadmeError = (error) => (
 );
 const ReadmeLoader = ({getReadme}) => (
   <DataLoader get={getReadme} renderError={ReadmeError}>
-    {readme => <Expander height={150}><Markdown>{readme}</Markdown></Expander>}
+    {readme => <Expander height={200}><Markdown>{readme}</Markdown></Expander>}
   </DataLoader>
 );
 ReadmeLoader.propTypes = {

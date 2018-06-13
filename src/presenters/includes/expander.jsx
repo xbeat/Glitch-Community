@@ -11,6 +11,12 @@ export default class Expander extends React.Component {
     this.ref = React.createRef();
   }
   
+  componentDidMount() {
+    if (this.ref.current.scrollHeight <= this.props.height) {
+      this.expand();
+    }
+  }
+  
   expand() {
     this.setState({
       expanding: true,
