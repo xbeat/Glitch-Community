@@ -108,13 +108,28 @@ class TeamAnalytics extends React.Component {
     });
   }
   
-  teamProjectsChanged(prevProps) {
-    
+  teamProjectsIsUnchanged(prevProps) {
+    console.log('🌴', prevProps) 
+    // console.log ('teamProjectsIsUnchanged', this.props.projects, this.prevProps.projects)
+    if (this.props.projects.length === this.prevProps.projects.length) {
+      console.log('teamProjectsIsUnchanged true')
+      return true
+    }
+  }
+  
+  shouldComponentUpdate(nextProps) {
+    // only rerender analytics if team projects have changed
+    if (this.props.projects.length !== nextProps.projects.length) {
+      return false
+    }
   }
 
-  componentDidMount(prevProps) {
+  componentDidMount() {
+    // console.log('🚚', prevProps)
+    // if (this.teamProjectsIsUnchanged(prevProps)) {
+    //   return null
+    // }
     // eslint-disable-next-line
-    
     import(
       /* webpackChunkName: "c3-bundle" */
       "c3"
