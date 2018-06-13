@@ -13,9 +13,9 @@ Example:
 
 export default [
   {
-    title: 'Build Actions: June 12, 10am PT',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FslackWebinarFeatureBanner.png?1519739395528",
-    link: 'https://buildingwithactions.splashthat.com/blog-post'
+    title: 'Read Computer-Generated Poetry',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhouse-of-dust.jpg?1528715873531",
+    link: 'https://house-of-dust.glitch.me/'
   }
   , {
     title: 'Master Machine Learning',
