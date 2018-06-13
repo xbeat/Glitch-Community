@@ -39,9 +39,8 @@ export const AvatarContainer = ({
   buttons,
 }) => (
   <div className="avatar-container">
-    <div className="user-avatar" style={style}>
-      {buttons}
-    </div>
+    <div className="user-avatar" style={style} />
+    {buttons}
     <div className="profile-information">
       {children}
     </div>
@@ -165,16 +164,16 @@ LoadedTeamProfile.propTypes = {
 
 export const TeamProfile = ({fetched, currentUserIsOnTeam, userFetched, team, ...props}) => {
   if (!fetched || (currentUserIsOnTeam && !userFetched)) {
-    return <LoadingProfile coverStyle={team.teamProfileStyle}/>;
-  } 
-  return (
-    <LoadedTeamProfile 
-      team={team} 
-      currentUserIsOnTeam={currentUserIsOnTeam}
-      {...props}
-    />
-  );
-  
+    return <LoadingProfile coverStyle={team.teamProfileStyle}/>
+  } else {
+    return (
+      <LoadedTeamProfile 
+        team={team} 
+        currentUserIsOnTeam={currentUserIsOnTeam}
+        {...props}
+      />
+    )
+  }
 };
 TeamProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
@@ -254,10 +253,10 @@ LoadedUserProfile.propTypes = {
 
 export const UserProfile = ({fetched, user, ...props}) => {
   if (!fetched) {
-    return <LoadingProfile coverStyle={user.profileStyle}/>;
-  } 
-  return <LoadedUserProfile user={user} {...props}/>;
-  
+    return <LoadingProfile coverStyle={user.profileStyle}/>
+  } else {
+    return <LoadedUserProfile user={user} {...props}/>
+  }
 };
     
 UserProfile.propTypes = {
