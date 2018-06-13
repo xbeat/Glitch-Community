@@ -205,6 +205,7 @@ TeamAnalytics.propTypes = {
   id: PropTypes.number,
   api: PropTypes.func.isRequired,
   projects: PropTypes.array.isRequired,
+  currentUserOnTeam: PropTypes.bool.isRequired,
 };
 
 export default TeamAnalytics;

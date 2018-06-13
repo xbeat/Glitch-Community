@@ -84,6 +84,7 @@ export default function(application) {
           id: id,
           api: application.api,
           projects: projects,
+          currentUserOnTeam: self.currentUserIsOnTeam(),
         };
       });
       //if (!propsObservable().id || !self.currentUserIsOnTeam()) { return null; } // move this into the reactlet
