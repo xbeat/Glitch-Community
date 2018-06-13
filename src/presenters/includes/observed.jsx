@@ -7,21 +7,20 @@ import PropTypes from 'prop-types';
 export default class Observed extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { observedProps: null };
+    this.state = { observedProps: this.props.propsObservable() };
   }
   
   componentDidMount() {
     this.props.propsObservable.observe((props) => {
       this.setState({observedProps: props});
     });
-    this.setState({observedProps: this.props.propsObservable()});
   }
   componentWillUnmount() {
     this.props.propsObservable.releaseDependencies();
   }
   
   render() {
-    return this.state.observedProps ? <this.props.component {...this.state.observedProps}/> : null;
+    return <this.props.component {...this.state.observedProps}/>;
   }
 }
 
