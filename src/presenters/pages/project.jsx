@@ -8,6 +8,7 @@ import Project from '../../models/project';
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
+import Expander from '../includes/expander.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {AvatarContainer, InfoContainer} from '../includes/profile.jsx';
@@ -70,7 +71,7 @@ const ReadmeError = (error) => (
 );
 const ReadmeLoader = ({getReadme}) => (
   <DataLoader get={getReadme} renderError={ReadmeError}>
-    {readme => <Markdown>{readme}</Markdown>}
+    {readme => <Expander height={150}><Markdown>{readme}</Markdown></Expander>}
   </DataLoader>
 );
 ReadmeLoader.propTypes = {
@@ -127,11 +128,11 @@ const ProjectPage = ({
         />
       </div>
     </section>
-    <section id="related">
-      <RelatedProjects ignoreProjectId={id} {...{teams, users, getTeamPins, getUserPins, getProjects}}/>
-    </section>
     <section id="readme">
       <ReadmeLoader getReadme={getReadme}/>
+    </section>
+    <section id="related">
+      <RelatedProjects ignoreProjectId={id} {...{teams, users, getTeamPins, getUserPins, getProjects}}/>
     </section>
     <section id="feedback" className="buttons buttons-right">
       <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
