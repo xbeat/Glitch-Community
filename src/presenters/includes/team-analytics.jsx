@@ -45,7 +45,7 @@ const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
   }
 };
 
-class TeamAnalytics extends React.Component {
+class TeamAnalytics extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -108,27 +108,17 @@ class TeamAnalytics extends React.Component {
     });
   }
   
-  teamProjectsIsUnchanged(prevProps) {
-    console.log('🌴', prevProps) 
-    // console.log ('teamProjectsIsUnchanged', this.props.projects, this.prevProps.projects)
-    if (this.props.projects.length === this.prevProps.projects.length) {
-      console.log('teamProjectsIsUnchanged true')
-      return true
-    }
-  }
-  
-  shouldComponentUpdate(nextProps) {
-    // only rerender analytics if team projects have changed
-    if (this.props.projects.length !== nextProps.projects.length) {
-      return false
-    }
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   // only rerender analytics if team projects have changed
+  //   if (this.props.projects.length !== nextProps.projects.length) {
+  //     console.log(this.props.projects.length, nextProps.projects.length)
+  //     return true
+  //   } else {
+  //     return false
+  //   }
+  // }
 
   componentDidMount() {
-    // console.log('🚚', prevProps)
-    // if (this.teamProjectsIsUnchanged(prevProps)) {
-    //   return null
-    // }
     // eslint-disable-next-line
     import(
       /* webpackChunkName: "c3-bundle" */
