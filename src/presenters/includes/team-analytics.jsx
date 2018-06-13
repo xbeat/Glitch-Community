@@ -108,6 +108,7 @@ class TeamAnalytics extends React.Component {
   }
   
   componentDidMount() {
+    console.log ('componentDidMount', this.props.id, this.props.projects, this.props.api )
     // eslint-disable-next-line
     import(
       /* webpackChunkName: "c3-bundle" */
@@ -202,7 +203,7 @@ class TeamAnalytics extends React.Component {
 }
 
 TeamAnalytics.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.number,
   api: PropTypes.func.isRequired,
   projects: PropTypes.array.isRequired,
 };
