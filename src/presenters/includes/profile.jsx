@@ -240,11 +240,18 @@ LoadedUserProfile.propTypes = {
   uploadAvatar: PropTypes.func.isRequired,
 };
 
-export const UserProfile = ({fetched, user, ...props}) => (
-  fetched ? <LoadedUserProfile user={user} {...props}/> : <LoadingProfile coverStyle={user.profileStyle}/>
-);
+export const UserProfile = ({fetched, userFetched, currentUserIsOnTeam, user, ...props}) => {
+  if (!fetched || (currentUserIsOnTeam && !userFetched)) {
+    return <LoadingProfile coverStyle={user.profileStyle}/>
+  } else {
+    return <LoadedUserProfile user={user} {...props}/>
+  }
+};
+    
 UserProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
+  userFetched: PropTypes.bool.isRequired,
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     profileStyle: PropTypes.object.isRequired,
   }).isRequired,

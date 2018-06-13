@@ -28,8 +28,8 @@ export default function(application) {
         const team = self.team().asProps();
         const props = {
           team,
-          fetched: self.team().fetched(), //&& userFetched
-          // userFetched: userFetched,
+          fetched: self.team().fetched(),
+          userFetched: application.currentUser().fetched(),
           currentUserIsOnTeam: self.currentUserIsOnTeam(),
           addUserToTeam: (id) => { self.team().addUser(application, User({id})); },
           removeUserFromTeam: ({id}) => { self.team().removeUser(application, User({id})); },
