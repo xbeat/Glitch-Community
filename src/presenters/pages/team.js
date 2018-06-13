@@ -71,6 +71,7 @@ export default function(application) {
     },
 
     teamAnalytics() {
+      
       const propsObservable = Observable(() => {
         const projects = self.team().projects().map(function (project) {
           let {...projectProps} = project.asProps();
