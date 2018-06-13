@@ -45,7 +45,7 @@ const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
   }
 };
 
-class TeamAnalytics extends React.PureComponent {
+class TeamAnalytics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
