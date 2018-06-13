@@ -107,9 +107,14 @@ class TeamAnalytics extends React.Component {
       this.updateAnalytics();
     });
   }
+  
+  teamProjectsChanged(prevProps) {
+    
+  }
 
-  componentDidMount() {
+  componentDidMount(prevProps) {
     // eslint-disable-next-line
+    
     import(
       /* webpackChunkName: "c3-bundle" */
       "c3"

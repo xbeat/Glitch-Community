@@ -85,6 +85,7 @@ export default function(application) {
         };
       });
       if (!propsObservable().id || !self.currentUserIsOnTeam()) { return null; }
+      console.log ('🎨🎨', 'teamAnalytics2', propsObservable().projects)
       return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
     },
 
