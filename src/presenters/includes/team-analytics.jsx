@@ -108,10 +108,6 @@ class TeamAnalytics extends React.Component {
   }
   
   componentDidMount() {
-    console.log ('componentDidMount', this.props.id, this.props.projects )
-    if (this.props.id === undefined || this.props.projects.length === 0) {
-      return null
-    }
     // eslint-disable-next-line
     import(
       /* webpackChunkName: "c3-bundle" */
