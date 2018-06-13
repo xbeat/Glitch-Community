@@ -9,7 +9,7 @@ import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
-import {AvatarContainer, ProjectInfoContainer} from '../includes/profile.jsx';
+import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
@@ -89,8 +89,8 @@ const ProjectPage = ({
             update={desc => updateDescription(id, desc)} placeholder="Tell us about your app"
           />
           <p className="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/></p>
-        </AvatarContainer>
-      </ProjectInfoContainer>
+        </ProjectInfoContainer>
+      </InfoContainer>
     </section>
     
     <section id="embed">
