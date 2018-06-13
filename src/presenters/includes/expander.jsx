@@ -12,7 +12,10 @@ export default class Expander extends React.Component {
   }
   
   componentDidMount() {
-    if (this.ref.current.scrollHeight <= this.props.height) {
+    // If the area is only slightly too big don't bother cutting it off
+    const maxHeight = this.props.height + 50;
+    console.log(this.ref.current.scrollHeight, maxHeight);
+    if (this.ref.current.scrollHeight <= maxHeight) {
       this.setState({
         expanded: true,
         maxHeight: undefined,
