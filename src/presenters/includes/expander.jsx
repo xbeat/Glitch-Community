@@ -13,6 +13,16 @@ export default class Expander extends React.Component {
     return (
       <div className="expander" style={style}>
         {this.props.children}
+        {collapsed && (
+          <div className="expander-button">
+            <button
+              onClick={() => this.setState({collapsed: false})}
+              className="button button-small button-tertiary"
+            >
+              Show All
+            </button>
+          </div>
+        )}}
       </div>
     );
   }
