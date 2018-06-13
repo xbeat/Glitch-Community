@@ -9,7 +9,7 @@ import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
-import {AvatarContainer, InfoContainer} from '../includes/profile.jsx';
+import {InfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
@@ -80,18 +80,17 @@ const ProjectPage = ({
 }) => (
   <main className="project-page">
     <section id="info">
-      <InfoContainer>
-        <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
-          <h1>{domain} {project.private && <PrivateBadge domain={domain}/>}</h1>
-          <UsersList users={users} />
-          <AuthDescription
-            authorized={userIsCurrentUser} description={description}
-            update={desc => updateDescription(id, desc)} placeholder="Tell us about your app"
-          />
-          <p className="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/></p>
-        </AvatarContainer>
+      <InfoContainer style={{backgroundImage: `url('${avatar}')`}}>
+        <h1>{domain} {project.private && <PrivateBadge domain={domain}/>}</h1>
+        <UsersList users={users} />
+        <AuthDescription
+          authorized={userIsCurrentUser} description={description}
+          update={desc => updateDescription(id, desc)} placeholder="Tell us about your app"
+        />
+        <p className="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/></p>
       </InfoContainer>
     </section>
+    
     <section id="embed">
       <Embed domain={domain}/>
       <div className="buttons buttons-right">
