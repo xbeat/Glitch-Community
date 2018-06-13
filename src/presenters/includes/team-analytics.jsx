@@ -75,6 +75,9 @@ class TeamAnalytics extends React.Component {
   }
 
   updateAnalytics() {
+    if (!this.props.currentUserOnTeam) {
+      return null
+    }
     this.setState({
       isGettingData: true,
     });
@@ -122,9 +125,9 @@ class TeamAnalytics extends React.Component {
   }
   
   render() {
-    // if (!this.props.currentUserOnTeam) {
-    //   return null
-    // }
+    if (!this.props.currentUserOnTeam) {
+      return null
+    }
     return (
       <section className="team-analytics">
         <h2>Analytics</h2>
