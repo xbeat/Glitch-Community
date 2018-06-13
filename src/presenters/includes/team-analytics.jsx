@@ -75,9 +75,6 @@ class TeamAnalytics extends React.Component {
   }
 
   updateAnalytics() {
-    if (!this.props.currentUserOnTeam) {
-      return null
-    }
     this.setState({
       isGettingData: true,
     });
@@ -111,6 +108,9 @@ class TeamAnalytics extends React.Component {
   }
   
   componentDidMount() {
+    if (!this.props.currentUserOnTeam) {
+      return null
+    }
     // eslint-disable-next-line
     import(
       /* webpackChunkName: "c3-bundle" */

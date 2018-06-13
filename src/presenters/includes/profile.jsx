@@ -193,6 +193,8 @@ TeamProfile.propTypes = {
   }).isRequired,
 };
 
+
+
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
   if(!login) {
     // Just an ID? We're anonymous.
