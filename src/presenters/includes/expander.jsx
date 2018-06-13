@@ -13,7 +13,10 @@ export default class Expander extends React.Component {
   
   componentDidMount() {
     if (this.ref.current.scrollHeight <= this.props.height) {
-      this.expand();
+      this.setState({
+        expanded: true,
+        maxHeight: undefined,
+      });
     }
   }
   
@@ -32,9 +35,9 @@ export default class Expander extends React.Component {
     return (
       <div className="expander" style={{maxHeight}} ref={this.ref}>
         {this.props.children}
-        {maxHeight && (
+        {!!maxHeight && (
           <div className="expander-bottom">
-            {expanded && (
+            {!expanded && (
               <button
                 onClick={this.expand.bind(this)}
                 className="button button-small button-tertiary"
