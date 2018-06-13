@@ -90,7 +90,7 @@ export default function(application) {
           projects: projects,
         };
       });
-      if (!propsObservable().id || !self.currentUserIsOnTeam()) { return null; }
+      //if (!propsObservable().id || !self.currentUserIsOnTeam()) { return null; } // move this into the reactlet
       return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
     },
 
