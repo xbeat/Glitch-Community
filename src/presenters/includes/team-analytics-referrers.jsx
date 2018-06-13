@@ -14,7 +14,7 @@ const countTotals = (data, countProperty) => {
 const ReferrerItem = ({count, total, description}) => {
   const progress = Math.max(Math.round(count / total * 100), 3);
   if (count <= 0) {
-    return null
+    return null;
   }
   return (
     <li>
@@ -35,8 +35,8 @@ const filterReferrers = (referrers) => {
 const TeamAnalyticsReferrers = ({analytics, totalRemixes, totalAppViews}) => {
   const appViewReferrers = filterReferrers(analytics.referrers);
   const remixReferrers = filterReferrers(analytics.remixReferrers);
-  const totalDirectAppViews = totalAppViews - countTotals(appViewReferrers, 'requests')
-  const totalDirectRemixes = totalRemixes - countTotals(remixReferrers, 'remixes')
+  const totalDirectAppViews = totalAppViews - countTotals(appViewReferrers, 'requests');
+  const totalDirectRemixes = totalRemixes - countTotals(remixReferrers, 'remixes');
   return (
     <div className="referrers-content">
       <article className="referrers-column app-views">

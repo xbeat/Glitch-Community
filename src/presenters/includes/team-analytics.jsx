@@ -93,7 +93,7 @@ class TeamAnalytics extends React.Component {
       currentTimeFrame: newTime,
       fromDate: dateFromTime(newTime)
     }, () => {
-      console.log('updateTimeFrame')
+      console.log('updateTimeFrame');
       this.updateAnalytics();
     });
   }
@@ -102,7 +102,7 @@ class TeamAnalytics extends React.Component {
     this.setState({
       currentProjectDomain: newDomain
     }, () => {
-      console.log('updateProjectdomain')
+      console.log('updateProjectdomain');
       this.updateAnalytics();
     });
   }

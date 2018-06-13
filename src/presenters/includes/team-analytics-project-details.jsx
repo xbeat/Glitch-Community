@@ -17,8 +17,8 @@ const getProjectDetails = async ({id, api, currentProjectDomain}) => {
 };
 
 const addFallbackSrc = (event) => {
-  event.target.src = FALLBACK_AVATAR_URL
-}
+  event.target.src = FALLBACK_AVATAR_URL;
+};
 
 const avatarUrl = (id) => {
   return `https://cdn.glitch.com/project-avatar/${id}.png`;
