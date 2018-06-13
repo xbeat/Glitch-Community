@@ -33,26 +33,26 @@ ImageButtons.propTypes = {
   clearImage: PropTypes.func,
 };
 
-// export const AvatarContainer = ({
-//   style,
-//   children,
-//   buttons,
-// }) => (
-//   <React.Fragment>
-//     <div className="avatar-container">
-//       <div className="user-avatar" style={style} />
-//       {buttons}
-//     </div>
-//     <div className="profile-information">
-//       {children}
-//     </div>
-//   </React.Fragment>
-// );
-// AvatarContainer.propTypes = {
-//   style: PropTypes.object.isRequired,
-//   children: PropTypes.node.isRequired,
-//   buttons: PropTypes.element,
-// };
+export const ProjectInfoContainer = ({
+  style,
+  children,
+  buttons,
+}) => (
+  <React.Fragment>
+    <div className="avatar-container">
+      <div className="user-avatar" style={style} />
+      {buttons}
+    </div>
+    <div className="profile-information">
+      {children}
+    </div>
+  </React.Fragment>
+);
+ProjectInfoContainer.propTypes = {
+  style: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
+  buttons: PropTypes.element,
+};
 
 export const InfoContainer = ({children}) => (
   <div className="profile-info">
