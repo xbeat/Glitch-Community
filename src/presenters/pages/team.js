@@ -46,6 +46,7 @@ export default function(application) {
     },
 
     TeamProjects() {
+      console.log ('✅', application.team().projects) // temp needed so that projects will get passed
       const propsObservable = Observable(() => {
         return {
           closeAllPopOvers: application.closeAllPopOvers,

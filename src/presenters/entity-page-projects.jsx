@@ -65,6 +65,7 @@ EntityPageProjectsContainer.propTypes = {
 };
 
 const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects, pinnedProjects, projectOptions}) => {
+  console.log ('recentProjects',recentProjects)
 
   const commonProps = {
     closeAllPopOvers,
