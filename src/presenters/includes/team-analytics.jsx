@@ -108,6 +108,9 @@ class TeamAnalytics extends React.Component {
   }
   
   componentDidMount() {
+    if (!this.props.currentUserOnTeam) {
+      return null
+    }
     // eslint-disable-next-line
     import(
       /* webpackChunkName: "c3-bundle" */
@@ -122,6 +125,9 @@ class TeamAnalytics extends React.Component {
   }
   
   render() {
+    if (!this.props.currentUserOnTeam) {
+      return null
+    }
     return (
       <section className="team-analytics">
         <h2>Analytics</h2>
