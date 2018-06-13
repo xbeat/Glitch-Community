@@ -5,7 +5,7 @@ export default class Expander extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanding: false,
+      expanded: false,
       maxHeight: props.height,
     };
     this.ref = React.createRef();
@@ -19,7 +19,7 @@ export default class Expander extends React.Component {
   
   expand() {
     this.setState({
-      expanding: true,
+      expanded: true,
       maxHeight: this.ref.current.scrollHeight,
     });
     setTimeout(() => {
@@ -28,18 +28,20 @@ export default class Expander extends React.Component {
   }
   
   render() {
-    const {expanding, maxHeight} = this.state;
+    const {expanded, maxHeight} = this.state;
     return (
       <div className="expander" style={{maxHeight}} ref={this.ref}>
         {this.props.children}
-        {!expanding && (
-          <div className="expander-button">
-            <button
-              onClick={this.expand.bind(this)}
-              className="button button-small button-tertiary"
-            >
-              Show More
-            </button>
+        {maxHeight && (
+          <div className="expander-bottom">
+            {expanded && (
+              <button
+                onClick={this.expand.bind(this)}
+                className="button button-small button-tertiary"
+              >
+                Show More
+              </button>
+            )}
           </div>
         )}
       </div>
