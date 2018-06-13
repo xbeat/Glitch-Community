@@ -41,6 +41,7 @@ export default function(application) {
         return props;
       });
 
+      console.log("team profile reactlet");
       return Reactlet(Observed, {propsObservable, component:TeamProfile});
     },
 
@@ -70,14 +71,15 @@ export default function(application) {
     },
 
     teamAnalytics() {
-      const projects = self.team().projects().map(function (project) {
-        let {...projectProps} = project.asProps();
-        projectProps.description = "";
-        projectProps.users = [];
-        return projectProps;
-      });
-      const id = self.team().id();
       const propsObservable = Observable(() => {
+        const projects = self.team().projects().map(function (project) {
+          let {...projectProps} = project.asProps();
+          projectProps.description = "";
+          projectProps.users = [];
+          return projectProps;
+        });
+        const id = self.team().id();
+
         return {
           id: id,
           api: application.api,
@@ -85,7 +87,6 @@ export default function(application) {
         };
       });
       if (!propsObservable().id || !self.currentUserIsOnTeam()) { return null; }
-      console.log ('🎨🎨', 'teamAnalytics2', propsObservable().projects)
       return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
     },
 

@@ -79,7 +79,6 @@ class TeamAnalytics extends React.Component {
       isGettingData: true,
     });
     getAnalytics(this.props, this.state.fromDate, this.state.currentProjectDomain).then(({data}) => {
-      console.log ('💣 dataaaa', data)
       this.setState({
         isGettingData: false,
         analytics: data,
@@ -128,7 +127,6 @@ class TeamAnalytics extends React.Component {
         c3: c3,
         isGettingC3: false,
       });
-      console.log ('componentDidMount')
       this.updateAnalytics();
     });
   }
