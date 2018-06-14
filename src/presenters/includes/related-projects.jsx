@@ -53,8 +53,8 @@ class RelatedProjects extends React.Component {
       const ids = sampleSize(difference(pinIds, [this.props.ignoreProjectId]), PROJECT_COUNT);
       if (ids.length < PROJECT_COUNT) {
         return getAll().then(allIds => {
-          const viableIds = difference(allIds, [this.props.ignoreProjectId, ...ids]);
-          return [...ids, ...sampleSize(viableIds, PROJECT_COUNT - ids.length)];
+          const moreIds = difference(allIds, [this.props.ignoreProjectId, ...ids]);
+          return [...ids, ...sampleSize(moreIds, PROJECT_COUNT - ids.length)];
         });
       }
       return ids;
