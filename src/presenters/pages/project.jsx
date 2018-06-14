@@ -78,7 +78,6 @@ const ProjectPage = ({
   getProjects,
   updateDescription,
 }) => {
-  console.log ('🚒', users )
   return (
     <main className="project-page">
       <section id="info">
