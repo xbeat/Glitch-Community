@@ -78,7 +78,7 @@ const ProjectPage = ({
   getProjects,
   updateDescription,
 }) => {
-  console.log ('🚒', project.users, project )
+  console.log ('🚒', project.users, project, users )
   return (
   <main className="project-page">
     <section id="info">
@@ -120,11 +120,14 @@ ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
 };
 
-const ProjectPageLoader = ({name, get, ...props}) => (
+const ProjectPageLoader = ({name, get, ...props}) => {
+  console.log ('get', get())
+  return (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
     {project => project ? <ProjectPage project={project} {...props}/> : <NotFound name={name}/>}
   </DataLoader>
-);
+  )
+};
 ProjectPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };

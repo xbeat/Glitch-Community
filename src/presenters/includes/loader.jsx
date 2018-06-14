@@ -37,6 +37,7 @@ export class DataLoader extends React.Component {
   }
   
   render() {
+    console.log ('🖼', this.state.maybeData)
     return (this.state.loaded
       ? this.props.children(this.state.maybeData)
       : (this.state.maybeError
