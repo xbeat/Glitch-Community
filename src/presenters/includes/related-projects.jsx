@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {sampleSize, without} from 'lodash';
+import {sampleSize, difference} from 'lodash';
 
 import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
+
+const PROJECT_COUNT = 3;
 
 const RelatedProjectsPresenter = ({groups, getProjects}) => (
   <ul className="related-projects">
@@ -43,36 +45,47 @@ class RelatedProjects extends React.Component {
     const teams = sampleSize(props.teams, 1);
     const users = sampleSize(props.users, 2 - teams.length);
     this.state = {teams, users};
-    this.getAllPins = this.getAllPins.bind(this);
+    this.getAllProjectIds = this.getAllProjectIds.bind(this);
   }
   
-  selectProjects(ids) {
-    return sampleSize(without(ids, this.props.ignoreProjectId), 3);
+  getProjectIds(getPins, getAll) {
+    return getPins().then(pinIds => {
+      const ids = sampleSize(difference(pinIds, [this.props.ignoreProjectId]), PROJECT_COUNT);
+      if (ids.length < PROJECT_COUNT) {
+        return getAll().then(allIds => {
+          const viableIds = difference(allIds, [this.props.ignoreProjectId, ...ids]);
+          return [...ids, sampleSize(viableIds, PROJECT_COUNT - ids.length)];
+        });
+      }
+      return ids;
+    });
   }
   
-  getTeamProjectIds(team) {
-    return this.props.getTeamPins(team.id).then(pins => ({
-      id: team.id,
-      name: team.name,
-      url: team.url,
-      coverStyle: team.teamProfileStyle,
-      projectIds: this.selectProjects(pins),
+  getTeamProjectIds({id, name, url, teamProfileStyle}) {
+    return this.getProjectIds(
+      () => this.props.getTeamPins(id).then(pins => pins.map(pin => pin.projectId)),
+      () => this.props.getTeam(id).then(({projects}) => projects.map(({id}) => id)),
+    ).then(projectIds => ({
+      id, name, url,
+      coverStyle: teamProfileStyle,
+      projectIds,
     }));
   }
   
-  getUserProjectIds(user) {
-    const data = {
-      id: user.id,
-      name: user.name || user.login || user.tooltipName,
+  getUserProjectIds({id, name, login, tooltipName, userLink, profileStyle}) {
+    return this.getProjectIds(
+    ).then(projectIds => ({
+      id: id,
+      name: name || login || user.tooltipName,
       url: user.userLink,
       coverStyle: user.profileStyle,
     };
     return this.props.getUserPins(user.id).then(pins => {
-      return without(pins.map(pin => pin.projectId), this.props.ignoreProjectId);
+      const projects = this.selectProjects
     });
   }
   
-  getAllPins() {
+  getAllProjectIds() {
     return Promise.all(
       this.state.teams.map(team => this.getTeamProjectIds(team)).concat(
         this.state.users.map(user => this.getUserProjectIds(user))
@@ -82,7 +95,7 @@ class RelatedProjects extends React.Component {
   
   render() {
     return (
-      <DataLoader get={this.getAllPins}>
+      <DataLoader get={this.getAllProjectIds}>
         {groups => !!groups.length && <RelatedProjectsPresenter groups={groups} getProjects={this.props.getProjects}/>}
       </DataLoader>
     );
