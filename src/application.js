@@ -91,7 +91,6 @@ var self = Model({
   },
 
   closeAllPopOvers() {
-    console.log('closeAllPopOvers')
     $(".overlay-background.disposable").remove();
     self.overlayVideoVisible(false);
     self.overlayNewStuffVisible(false);

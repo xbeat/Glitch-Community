@@ -164,6 +164,7 @@ function route(location, application) {
 route(window.location, application);
 
 document.addEventListener("click", event => globalclick(event));
+document.addEventListener("touchend", event => globalclick(event));
 document.addEventListener("keyup", function(event) {
   const escapeKey = 27;
   const tabKey = 9;
