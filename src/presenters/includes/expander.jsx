@@ -29,7 +29,7 @@ export default class Expander extends React.Component {
     });
     setTimeout(() => {
       this.setState({maxHeight: undefined});
-    }, 500); // <- the css transition should match this
+    }, 600); // <- make this very slightly larger than the css transition
   }
   
   render() {
@@ -37,19 +37,19 @@ export default class Expander extends React.Component {
     return (
       <div className="expander" style={{maxHeight}} ref={this.ref}>
         {this.props.children}
-        {!expanded ? (
-          <div className="expander-mask">
-            <div className="expander-gradient">
+        {!expanded && (
+          <div className="expander-mask" onClick={this.expand.bind(this)} role="presentation"></div>
+        )}
+        {!!maxHeight && (
+          <div className="expander-gradient">
+            {!expanded && (
               <button
                 onClick={this.expand.bind(this)}
                 className="button button-small button-tertiary"
               >
                 Show More
               </button>
-            </div>
-          </div>
-        ) : (!!maxHeight && 
-          <div className="expander-gradient">
+            )}
           </div>
         )}
       </div>
