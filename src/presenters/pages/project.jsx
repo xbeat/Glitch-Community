@@ -40,7 +40,7 @@ PrivateBadge.propTypes = {
 
 const PrivateToggle = ({domain, isPrivate, setPrivate}) => {
   const tooltip = isPrivate ? PrivateTooltip(domain) : PublicTooltip(domain);
-  const classBase = "button button-tertiary button-on-secondary-background";
+  const classBase = "button-tertiary button-on-secondary-background project-badge";
   const className = isPrivate ? 'private-project-badge' : 'public-project-badge';
   return (
     <span data-tooltip={tooltip}>
@@ -94,7 +94,7 @@ const ProjectPage = ({
   updateDescription,
   updatePrivate,
 }) => (
-  <main className={`project-page ${project.private ? 'private-project' : ''}`}>
+  <main className="project-page">
     <section id="info">
       <InfoContainer>
         <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
