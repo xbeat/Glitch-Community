@@ -48,7 +48,7 @@ export default function(application) {
     TeamProjects() {
       const propsObservable = Observable(() => {
         // observe projects so that our project update as the user does.
-        application.team().projects
+        application.team().projects()
         
         return {
           closeAllPopOvers: application.closeAllPopOvers,
