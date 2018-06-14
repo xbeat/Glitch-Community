@@ -247,7 +247,6 @@ export default User = function(I, self) {
     },
     
     asProps() {
-      console.log('avatar', self.userAvatarUrl())
       return {
         get teams() { return self.teams.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()); },
         get projects() { return self.projects.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()); },

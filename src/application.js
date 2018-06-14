@@ -206,7 +206,7 @@ var self = Model({
   // and that 'saveUser' will clobber 'getCurrentUserById'
   // but not necessarily the other way around.
   saveUser(userData) {
-    
+    console.log('saveuser', userData)
     const user = self.loadUser(userData);
     self.user(user);
   },
