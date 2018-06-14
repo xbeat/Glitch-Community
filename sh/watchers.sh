@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-exit 0
-
 nodemon --exec "bash sh/compile-jade.sh" --watch src/templates --ext .jade &
 pnpx webpack --watch &
 bash sh/stylus.sh &
