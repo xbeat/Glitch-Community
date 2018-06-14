@@ -50,7 +50,7 @@ class RelatedProjects extends React.Component {
     return sampleSize(without(pins.map(pin => pin.projectId), this.props.ignoreProjectId), 3);
   }
   
-  getTeamPins(team) {
+  getTeamProjectIds(team) {
     return this.props.getTeamPins(team.id).then(pins => ({
       id: team.id,
       name: team.name,
@@ -60,7 +60,7 @@ class RelatedProjects extends React.Component {
     }));
   }
   
-  getUserPins(user) {
+  getUserProjectIds(user) {
     return this.props.getUserPins(user.id).then(pins => ({
       id: user.id,
       name: user.name || user.login || user.tooltipName,
@@ -72,8 +72,8 @@ class RelatedProjects extends React.Component {
   
   getAllPins() {
     return Promise.all(
-      this.state.teams.map(team => this.getTeamPins(team)).concat(
-        this.state.users.map(user => this.getUserPins(user))
+      this.state.teams.map(team => this.getTeamProjectIds(team)).concat(
+        this.state.users.map(user => this.getUserProjectIds(user))
       )
     );
   }
