@@ -54,7 +54,7 @@ class RelatedProjects extends React.Component {
       if (ids.length < PROJECT_COUNT) {
         return getAll().then(allIds => {
           const viableIds = difference(allIds, [this.props.ignoreProjectId, ...ids]);
-          return [...ids, sampleSize(viableIds, PROJECT_COUNT - ids.length)];
+          return [...ids, ...sampleSize(viableIds, PROJECT_COUNT - ids.length)];
         });
       }
       return ids;
@@ -74,15 +74,15 @@ class RelatedProjects extends React.Component {
   
   getUserProjectIds({id, name, login, tooltipName, userLink, profileStyle}) {
     return this.getProjectIds(
+      () => this.props.getUserPins(id).then(pins => pins.map(pin => pin.projectId)),
+      () => this.props.getUser(id).then(({projects}) => projects.map(({id}) => id)),
     ).then(projectIds => ({
       id: id,
-      name: name || login || user.tooltipName,
-      url: user.userLink,
-      coverStyle: user.profileStyle,
-    };
-    return this.props.getUserPins(user.id).then(pins => {
-      const projects = this.selectProjects
-    });
+      name: name || login || tooltipName,
+      url: userLink,
+      coverStyle: profileStyle,
+      projectIds,
+    }));
   }
   
   getAllProjectIds() {
