@@ -78,42 +78,42 @@ const ProjectPage = ({
   getProjects,
   updateDescription,
 }) => {
-  console.log ('🚒', project.users, project, users )
+  console.log ('🚒', users )
   return (
-  <main className="project-page">
-    <section id="info">
-      <InfoContainer>
-        <ProjectInfoContainer style={{backgroundImage: `url('${avatar}')`}}>
-          <h1>{domain} {project.private && <PrivateBadge domain={domain}/>}</h1>
-          <UsersList users={users} />
-          <AuthDescription
-            authorized={userIsCurrentUser} description={description}
-            update={desc => updateDescription(id, desc)} placeholder="Tell us about your app"
+    <main className="project-page">
+      <section id="info">
+        <InfoContainer>
+          <ProjectInfoContainer style={{backgroundImage: `url('${avatar}')`}}>
+            <h1>{domain} {project.private && <PrivateBadge domain={domain}/>}</h1>
+            <UsersList users={users} />
+            <AuthDescription
+              authorized={userIsCurrentUser} description={description}
+              update={desc => updateDescription(id, desc)} placeholder="Tell us about your app"
+            />
+            <p className="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/></p>
+          </ProjectInfoContainer>
+        </InfoContainer>
+      </section>
+
+      <section id="embed">
+        <Embed domain={domain}/>
+        <div className="buttons buttons-right">
+          <RemixButton className="button-small"
+            name={domain} isMember={userIsCurrentUser}
+            onClick={() => trackRemix(id, domain)}
           />
-          <p className="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/></p>
-        </ProjectInfoContainer>
-      </InfoContainer>
-    </section>
-    
-    <section id="embed">
-      <Embed domain={domain}/>
-      <div className="buttons buttons-right">
-        <RemixButton className="button-small"
-          name={domain} isMember={userIsCurrentUser}
-          onClick={() => trackRemix(id, domain)}
-        />
-      </div>
-    </section>
-    <section id="related">
-      <RelatedProjects ignoreProjectId={id} {...{teams, users, getTeamPins, getUserPins, getProjects}}/>
-    </section>
-    <section id="readme">
-      <ReadmeLoader getReadme={getReadme}/>
-    </section>
-    <section id="feedback" className="buttons buttons-right">
-      <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
-    </section>
-  </main>
+        </div>
+      </section>
+      <section id="related">
+        <RelatedProjects ignoreProjectId={id} {...{teams, users, getTeamPins, getUserPins, getProjects}}/>
+      </section>
+      <section id="readme">
+        <ReadmeLoader getReadme={getReadme}/>
+      </section>
+      <section id="feedback" className="buttons buttons-right">
+        <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
+      </section>
+    </main>
   )
 };
 ProjectPage.propTypes = {
@@ -121,11 +121,10 @@ ProjectPage.propTypes = {
 };
 
 const ProjectPageLoader = ({name, get, ...props}) => {
-  console.log ('get', get())
   return (
-  <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {project => project ? <ProjectPage project={project} {...props}/> : <NotFound name={name}/>}
-  </DataLoader>
+    <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
+      {project => project ? <ProjectPage project={project} {...props}/> : <NotFound name={name}/>}
+    </DataLoader>
   )
 };
 ProjectPageLoader.propTypes = {
