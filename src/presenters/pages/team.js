@@ -49,7 +49,7 @@ export default function(application) {
       // observe projects so that our project update as the user does.
       application.team().projects()
       console.log('asdf')
-      console.log('y')
+      console.log('yasdfgh')
 
       const propsObservable = Observable(() => {
         return {
