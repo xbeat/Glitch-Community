@@ -3,14 +3,6 @@
   position: relative
   overflow: hidden
   
-  .expander-mask
-    position: absolute
-    top: 0
-    bottom: 0
-    left: 0
-    right: 0
-    cursor: pointer
-  
   .expander-gradient
     background: linear-gradient(to bottom, transparent, white)
     position: absolute
@@ -20,10 +12,12 @@
     right: 0
     pointer-events: none
   
-  .expander-button
+  .expander-mask
     position: absolute
+    top: 0
     bottom: 0
     left: 0
-
-  .expander-mask:hover ~ .expander-button
-    background-color: green
+    right: 0
+  
+  .expander-button
+    position: initial

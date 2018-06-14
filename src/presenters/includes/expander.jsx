@@ -41,15 +41,15 @@ export default class Expander extends React.Component {
           <div className="expander-gradient"></div>
         )}
         {!expanded && (
-          <React.Fragment>
-            <div className="expander-mask" onClick={this.expand.bind(this)} role="presentation"></div>
+          <div className="expander-mask">
             <button
               onClick={this.expand.bind(this)}
               className="expander-button button button-small button-tertiary"
             >
               Show More
+              <div className="expander-mask" role="presentation"></div>
             </button>
-          </React.Fragment>
+          </div>
         )}
       </div>
     );
