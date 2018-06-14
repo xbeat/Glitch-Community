@@ -36,12 +36,10 @@ export class EntityPageProjectsContainer extends React.Component {
     this.aggregateObservable = Observable(() => {
       const projectsModel = this.props.projectsObservable();
       const pinsModel = this.props.pinsObservable();
-      console.log ('✌️✌️', this.props.projectsObservable)
       // Subscribe just to the 'fetched' subcomponent of the projects.
       for(let {fetched} of projectsModel) {
         fetched && fetched();
       }
-      console.log ('✌️', projectsModel)
       this.setStateFromModels(projectsModel, pinsModel, this);
     });
   }
@@ -65,8 +63,6 @@ EntityPageProjectsContainer.propTypes = {
 };
 
 const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects, pinnedProjects, projectOptions}) => {
-  console.log ('recentProjects',recentProjects)
-
   const commonProps = {
     closeAllPopOvers,
     projectOptions,
