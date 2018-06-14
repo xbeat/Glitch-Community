@@ -48,10 +48,10 @@ export default function(application) {
     TeamProjects() {
       // observe projects so that our project update as the user does.
       application.team().projects()
+      console.log('asdf')
+      console.log('y')
 
       const propsObservable = Observable(() => {
-        // console.log ('🌴', application.team().projects)
-        
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.currentUserIsOnTeam(),
