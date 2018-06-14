@@ -191,6 +191,7 @@ var self = Model({
   
   getCurrentUserById(id) {
     User.getUserById(application, id).then((userData) => {
+      self.storeLocal('cachedUser', userData);
       const user = self.loadUser(userData);
       self.currentUser(user);
     });

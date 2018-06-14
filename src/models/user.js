@@ -17,7 +17,6 @@ export default User = function(I, self) {
   if (I == null) { I = {}; }
   if (self == null) { self = Model(I); }
   if (cache[I.id]) {
-    console.log('cache user', I.name, cache[I.id].userAvatarUrl())
     return cache[I.id];
   }
   
