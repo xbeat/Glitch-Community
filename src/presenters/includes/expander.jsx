@@ -37,20 +37,19 @@ export default class Expander extends React.Component {
     return (
       <div className="expander" style={{maxHeight}} ref={this.ref}>
         {this.props.children}
-        {!expanded && (
-          <div className="expander-mask" onClick={this.expand.bind(this)} role="presentation"></div>
-        )}
         {!!maxHeight && (
-          <div className="expander-gradient">
-            {!expanded && (
-              <button
-                onClick={this.expand.bind(this)}
-                className="button button-small button-tertiary"
-              >
-                Show More
-              </button>
-            )}
-          </div>
+          <div className="expander-gradient"></div>
+        )}
+        {!expanded && (
+          <React.Fragment>
+            <div className="expander-mask" onClick={this.expand.bind(this)} role="presentation"></div>
+            <button
+              onClick={this.expand.bind(this)}
+              className="expander-button button button-small button-tertiary"
+            >
+              Show More
+            </button>
+          </React.Fragment>
         )}
       </div>
     );
