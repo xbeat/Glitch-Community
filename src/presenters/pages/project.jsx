@@ -77,7 +77,9 @@ const ProjectPage = ({
   getUserPins,
   getProjects,
   updateDescription,
-}) => (
+}) => {
+  console.log ('🚒', project.users, project )
+  return (
   <main className="project-page">
     <section id="info">
       <InfoContainer>
@@ -112,7 +114,8 @@ const ProjectPage = ({
       <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
     </section>
   </main>
-);
+  )
+};
 ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
 };
