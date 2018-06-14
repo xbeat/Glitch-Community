@@ -40,13 +40,15 @@ PrivateBadge.propTypes = {
 
 const PrivateToggle = ({domain, isPrivate, setPrivate}) => {
   const tooltip = isPrivate ? PrivateTooltip(domain) : PublicTooltip(domain);
+  const classBase = "button button-tertiary button-on-secondary-background";
   const className = isPrivate ? 'private-project-badge' : 'public-project-badge';
   return (
-    <button
-      onClick={() => setPrivate(!isPrivate)}
-      className={`button button-tertiary ${className}`}
-      data-tooltip={tooltip} aria-label={tooltip}
-    />
+    <span data-tooltip={tooltip}>
+      <button aria-label={tooltip}
+        onClick={() => setPrivate(!isPrivate)}
+        className={`${classBase} ${className}`}
+      />
+    </span>
   );
 };
 PrivateToggle.propTypes = {
