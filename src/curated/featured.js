@@ -18,13 +18,13 @@ export default [
     link: 'https://house-of-dust.glitch.me/'
   }
   , {
-    title: 'Master Machine Learning',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhello-tensorflow.jpg?1528715708433",
-    link: 'https://glitch.com/~hello-tensorflow'
+    title: '\'pointer-thing\' by ericnakagawa',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpointer-thing.jpg?1528974565717",
+    link: 'https://pointer-thing.glitch.me'
   }
   , {
-    title: 'Get Ready for the World Cup',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwc18.jpg?1528716860364",
-    link: 'https://wc18.glitch.me/'
+    title: 'Make and Watch YouTube Video Mashups',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fvideoisdoomed.jpg?1528974565423",
+    link: 'https://videoisdoomed.glitch.me/'
   }   
 ];
