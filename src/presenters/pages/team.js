@@ -47,7 +47,7 @@ export default function(application) {
 
     TeamProjects() {
       // observe projects so that our project update as the user does.
-      application.team().projects()
+      // application.team().projects()
 
       const propsObservable = Observable(() => {
         return {
@@ -75,15 +75,12 @@ export default function(application) {
 
     teamAnalytics() {
       const propsObservable = Observable(() => {
-        return self.team().projects
-      });
-      // const propsObservable = Observable(() => {
-      //   const projects = projectsObservable().map(function (project) {
-      //     let {...projectProps} = project.asProps();
-      //     projectProps.description = "";
-      //     projectProps.users = [];
-      //     return projectProps;
-      //   });
+        const projects = self.team().projects().map(function (project) {
+          let {...projectProps} = project.asProps();
+          projectProps.description = "";
+          projectProps.users = [];
+          return projectProps;
+        });
         const id = self.team().id();
 
         return {
@@ -93,7 +90,6 @@ export default function(application) {
           currentUserOnTeam: self.currentUserIsOnTeam(),
         };
       });
-      //if (!propsObservable().id || !self.currentUserIsOnTeam()) { return null; } // move this into the reactlet
       return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
     },
 
