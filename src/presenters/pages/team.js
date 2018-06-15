@@ -45,29 +45,7 @@ export default function(application) {
       return Reactlet(Observed, {propsObservable, component:TeamProfile}, 'team-profile');
     },
 
-    // projectsAsProps() {
-    //   let projects = application.team().projects()
-    //   let projectsAsProps = []
-    //   if (projects.length > 0) {
-    //     projectsAsProps = projects.map(project => {
-    //       console.log ('🍲', project)
-    //       ProjectModel(project).asProps()
-    //     })
-    //   }
-    //   return (projectsAsProps)
-    // },
-    
     TeamProjects() {
-      // observe projects so that our project update as the user does.
-      // application.team().projects()
-      // 💣 this also causes a full rerender when projects changes
-      // observing projects, also causes projects to fully rerender
-      // let projects = application.team().projects().map(project => {
-      //   ProjectModel(project).asProps()
-      // })
-      
-      // console.log('🍕',application.team().projects(), projects)
-
       const propsObservable = Observable(() => {
         const projects = self.team().projects().map(function (project) {
           let {...projectProps} = project.asProps();

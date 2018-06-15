@@ -217,16 +217,23 @@ export default function(application, userLoginOrId) {
     },
     
     userProjects() {
-      const propsObservable = Observable(() => {
-        // observe login so that our project user links update as the user does.
-        self.user().login();
-        self.user().avatarThumbnailUrl();
+      // observe login so that our project user links update as the user does.
+      self.user().login();
+      self.user().avatarThumbnailUrl();
 
+      const propsObservable = Observable(() => {
+
+        const projects = self.user().projects().map(function (project) {
+          let {...projectProps} = project.asProps();
+          return projectProps;
+        });
+
+        console.log ('🌎',projects)
         const props = {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.isCurrentUser(),
-          projectsObservable: self.user().projects,
-          pinsObservable: self.user().pins,
+          projects: projects,
+          pins: self.user().pins(),
           projectOptions: self.projectOptions(),
         };
         return props;

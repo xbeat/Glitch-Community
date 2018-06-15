@@ -6,7 +6,6 @@ import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
 export const ProjectItem = ({project, categoryColor, projectOptions}) => {
-  console.log ('🤷‍♂️',project)
   return (
     <li>
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
