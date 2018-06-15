@@ -5,6 +5,8 @@ import ProjectItem from "./project-item.jsx";
 export const ProjectsList = ({closeAllPopOvers, title, isPinned=false, projects, projectOptions}) => {
   const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
+  console.log ('🚗', projects, title)
+  
   return (
     <article className="projects">
       <h2>

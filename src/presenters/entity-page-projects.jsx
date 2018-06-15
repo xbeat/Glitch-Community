@@ -6,7 +6,7 @@ import Loader from "./includes/loader.jsx"
 // import {debounce} from 'lodash';
 
 
-globals Set
+// /* globals Set */
 
 // const projectStateFromModels = (projectsModel, pinsModel) => {
 //   const pinnedIds = pinsModel.map(({projectId}) => projectId);
@@ -77,7 +77,7 @@ globals Set
 
 
 
-const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pinnedProjects, projectOptions}) => {
+const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pins, projectOptions}) => {
   // if (projects.length === 0) {
   //   return <Loader/>
   // }
@@ -89,13 +89,13 @@ const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pinne
     closeAllPopOvers,
     projectOptions,
   };
-  let pinIds = pinnedProjects.map(pin => {
+  let pinIds = pins.map(pin => {
     return pin.projectId
   });
   let recentProjects = projects.filter(project => {
     return !pinIds.includes(project.id)
   });
-
+  let pinnedProjects = proj
   
   console.log ('👍', recentProjects)
 
@@ -112,7 +112,7 @@ const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pinne
 };
 
 EntityPageProjects.propTypes = {
-  pinnedProjects: PropTypes.array.isRequired,
+  pins: PropTypes.array.isRequired,
   projects: PropTypes.array.isRequired,
   isAuthorizedUser: PropTypes.bool.isRequired,
   closeAllPopOvers: PropTypes.func.isRequired,
