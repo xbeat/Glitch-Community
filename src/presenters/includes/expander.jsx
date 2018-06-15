@@ -29,7 +29,7 @@ export default class Expander extends React.Component {
     });
     setTimeout(() => {
       this.setState({maxHeight: undefined});
-    }, 600); // <- make this very slightly larger than the css transition
+    }, 200); // <- make this slightly larger than the css transition
   }
   
   render() {

@@ -27,19 +27,15 @@ function trackRemix(id, domain) {
   });
 }
 
-const PrivateTooltip = (domain) => `Only members of ${domain} can see its code`;
-const PublicTooltip = (domain) => `${domain} is visible to everyone`;
+const PrivateTooltip = "Only members can view code";
+const PublicTooltip = "Visible to everyone";
 
-const PrivateBadge = ({domain}) => {
-  const tooltip = PrivateTooltip(domain);
-  return <span className="private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
-};
-PrivateBadge.propTypes = {
-  domain: PropTypes.string.isRequired,
-};
+const PrivateBadge = () => (
+  <span className="private-project-badge" aria-label={PrivateTooltip} data-tooltip={PrivateTooltip}></span>
+);
 
-const PrivateToggle = ({domain, isPrivate, setPrivate}) => {
-  const tooltip = isPrivate ? PrivateTooltip(domain) : PublicTooltip(domain);
+const PrivateToggle = ({isPrivate, setPrivate}) => {
+  const tooltip = isPrivate ? PrivateTooltip : PublicTooltip;
   const classBase = "button-tertiary button-on-secondary-background project-badge";
   const className = isPrivate ? 'private-project-badge' : 'public-project-badge';
   return (
@@ -52,7 +48,6 @@ const PrivateToggle = ({domain, isPrivate, setPrivate}) => {
   );
 };
 PrivateToggle.propTypes = {
-  domain: PropTypes.string.isRequired,
   isPrivate: PropTypes.bool.isRequired,
   setPrivate: PropTypes.func.isRequired,
 };
@@ -101,12 +96,12 @@ const ProjectPage = ({
           <h1>
             {(userIsCurrentUser
               ? <EditableField value={domain} update={updateDomain} placeholder="What's it called?"/>
-              : <React.Fragment>{domain} {project.private && <PrivateBadge domain={domain}/>}</React.Fragment>
+              : <React.Fragment>{domain} {project.private && <PrivateBadge/>}</React.Fragment>
             )}
           </h1>
           {(userIsCurrentUser &&
             <div>
-              <PrivateToggle domain={domain} isPrivate={project.private} isMember={userIsCurrentUser} setPrivate={updatePrivate}/>
+              <PrivateToggle isPrivate={project.private} isMember={userIsCurrentUser} setPrivate={updatePrivate}/>
             </div>
           )}
           <UsersList users={users} />
