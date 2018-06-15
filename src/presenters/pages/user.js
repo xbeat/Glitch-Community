@@ -233,7 +233,6 @@ export default function(application, userLoginOrId) {
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.isCurrentUser(),
-          projects: projects,
           pins: self.user().pins(),
           projectOptions: self.projectOptions(),
         };
