@@ -223,8 +223,9 @@ export default function(application, userLoginOrId) {
         self.user().avatarThumbnailUrl();
 
         const projects = self.user().projects().map(function (project) {
-          console.log ('💣', project)
+          console.log ('💣',project)
           let {...projectProps} = project.asProps();
+          console.log ('🖼', projectProps)
           return projectProps;
         });
         
