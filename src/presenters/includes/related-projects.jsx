@@ -35,13 +35,13 @@ class RelatedProjects extends React.Component {
     this.state = {teams, users};
   }
   
-  getProjectIds(getPins, getProjects) {
-    return getPins().then(pins => {
+  getProjectIds(id, getPins, getProjects) {
+    return getPins(id).then(pins => {
       const pinIds = pins.map(pin => pin.projectId);
       const ids = sampleSize(difference(pinIds, [this.props.ignoreProjectId]), PROJECT_COUNT);
       
       if (ids.length < PROJECT_COUNT) {
-        return getProjects().then(({projects}) => {
+        return getProjects(id).then(({projects}) => {
           const allIds = projects.map(({id}) => id);
           const remainingIds = difference(allIds, [this.props.ignoreProjectId, ...ids]);
           return [...ids, ...sampleSize(remainingIds, PROJECT_COUNT - ids.length)];
@@ -50,22 +50,16 @@ class RelatedProjects extends React.Component {
       
       return ids;
     }).then(projectIds => (
-      projectIds ? this.props.getProjects(projectIds) : []
+      projectIds.length ? this.props.getProjects(projectIds) : []
     ));
   }
   
   getTeamProjects(id) {
-    return this.getProjectIds(
-      () => this.props.getTeamPins(id),
-      () => this.props.getTeam(id),
-    );
+    return this.getProjectIds(id, this.props.getTeamPins, this.props.getTeam);
   }
   
   getUserProjects(id) {
-    return this.getProjectIds(
-      () => this.props.getUserPins(id),
-      () => this.props.getUser(id),
-    );
+    return this.getProjectIds(id, this.props.getUserPins, this.props.getUser);
   }
   
   render() {
