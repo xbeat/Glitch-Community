@@ -74,14 +74,16 @@ export default function(application) {
     },
 
     teamAnalytics() {
-      
       const propsObservable = Observable(() => {
-        const projects = self.team().projects().map(function (project) {
-          let {...projectProps} = project.asProps();
-          projectProps.description = "";
-          projectProps.users = [];
-          return projectProps;
-        });
+        return self.team().projects
+      });
+      // const propsObservable = Observable(() => {
+      //   const projects = projectsObservable().map(function (project) {
+      //     let {...projectProps} = project.asProps();
+      //     projectProps.description = "";
+      //     projectProps.users = [];
+      //     return projectProps;
+      //   });
         const id = self.team().id();
 
         return {
