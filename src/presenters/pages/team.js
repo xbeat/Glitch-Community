@@ -48,7 +48,8 @@ export default function(application) {
     TeamProjects() {
       // observe projects so that our project update as the user does.
       // application.team().projects()
-      // 🌴 this also causes a full rerender when projects changes
+      // 💣 this also causes a full rerender when projects changes
+      // observing projects, also causes projects to fully rerender
 
       const propsObservable = Observable(() => {
         return {
