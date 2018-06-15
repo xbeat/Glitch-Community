@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
+import Loader from "./includes/loader.jsx"
 // import Observable from "o_0";
 // import {debounce} from 'lodash';
 
@@ -75,29 +76,23 @@ import ProjectsList from "./projects-list.jsx";
 
 
 
-const recentProjectsArray = (projects, pinnedProjects) => {
-  return recents
-};
 
 const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pinnedProjects, projectOptions}) => {
   if (projects.length === 0) {
-    console.log ('💣')
-    return null
+    return <Loader/>
   }
-
+  
+  console.log ('🌹', projects)
+  debugger
   
   const commonProps = {
     closeAllPopOvers,
     projectOptions,
   };
-  
-  let recentProjects = recentProjectsArray(projects, pinnedProjects)
-  
-    let pinIds = pinnedProjects.map(pin => {
+  let pinIds = pinnedProjects.map(pin => {
     return pin.projectId
   });
-  
-  let recents = projects.filter(project => {
+  let recentProjects = projects.filter(project => {
     return !pinIds.includes(project.id)
   });
 

@@ -45,6 +45,15 @@ export default function(application) {
       return Reactlet(Observed, {propsObservable, component:TeamProfile}, 'team-profile');
     },
 
+    projectsAsProps() {
+      let projects = application.team().projects()
+      if (projects.length > 0) {
+        let projectsAsProps = projects.map(project => {
+          ProjectModel(project).asProps()
+        })
+      } else {}
+    },
+    
     TeamProjects() {
       // observe projects so that our project update as the user does.
       // application.team().projects()
@@ -60,12 +69,7 @@ export default function(application) {
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.currentUserIsOnTeam(),
-          projects: application.team().projects().map(project => {
-            if (project.length > 0) {
-              console.log ('🚒',project)
-              ProjectModel(project).asProps()
-            }
-          }),
+          projects: self.projectsAsProps(),
           pinnedProjects: application.team().pins(),
           projectOptions: self.projectOptions(),
         };
