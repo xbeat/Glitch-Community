@@ -55,7 +55,7 @@ export default function(application) {
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.currentUserIsOnTeam(),
-          projectsObservable: application.team().projects,
+          projectsObservable: application.team().projects(),
           pinsObservable: application.team().pins,
           projectOptions: self.projectOptions(),
         };
