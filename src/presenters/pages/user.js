@@ -238,7 +238,7 @@ export default function(application, userLoginOrId) {
         };
       });
       
-      return Reactlet(Observed, {propsObservable, component:EntityPageProjects});
+      // return Reactlet(Observed, {propsObservable, component:EntityPageProjects});
     },
     
     hiddenUnlessUserIsAnon() {
