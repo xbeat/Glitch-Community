@@ -48,13 +48,15 @@ class RelatedProjects extends React.Component {
     this.getAllProjectIds = this.getAllProjectIds.bind(this);
   }
   
-  getProjectIds(getPins, getAll) {
-    return getPins().then(pinIds => {
+  getProjectIds(getPins, getProjects) {
+    return getPins().then(pins => {
+      const pinIds = pins.map(pin => pin.projectId);
       const ids = sampleSize(difference(pinIds, [this.props.ignoreProjectId]), PROJECT_COUNT);
       if (ids.length < PROJECT_COUNT) {
-        return getAll().then(allIds => {
-          const moreIds = difference(allIds, [this.props.ignoreProjectId, ...ids]);
-          return [...ids, ...sampleSize(moreIds, PROJECT_COUNT - ids.length)];
+        return getProjects().then(({projects}) => {
+          const allIds = projects.map(({id}) => id);
+          const remainingIds = difference(allIds, [this.props.ignoreProjectId, ...ids]);
+          return [...ids, ...sampleSize(remainingIds, PROJECT_COUNT - ids.length)];
         });
       }
       return ids;
@@ -63,8 +65,8 @@ class RelatedProjects extends React.Component {
   
   getTeamProjectIds({id, name, url, teamProfileStyle}) {
     return this.getProjectIds(
-      () => this.props.getTeamPins(id).then(pins => pins.map(pin => pin.projectId)),
-      () => this.props.getTeam(id).then(({projects}) => projects.map(({id}) => id)),
+      () => this.props.getTeamPins(id),
+      () => this.props.getTeam(id),
     ).then(projectIds => ({
       id, name, url,
       coverStyle: teamProfileStyle,
@@ -74,10 +76,10 @@ class RelatedProjects extends React.Component {
   
   getUserProjectIds({id, name, login, tooltipName, userLink, profileStyle}) {
     return this.getProjectIds(
-      () => this.props.getUserPins(id).then(pins => pins.map(pin => pin.projectId)),
-      () => this.props.getUser(id).then(({projects}) => projects.map(({id}) => id)),
+      () => this.props.getUserPins(id),
+      () => this.props.getUser(id),
     ).then(projectIds => ({
-      id: id,
+      id,
       name: name || login || tooltipName,
       url: userLink,
       coverStyle: profileStyle,
