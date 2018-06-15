@@ -67,9 +67,24 @@ import ProjectsList from "./projects-list.jsx";
 //   let x = projects.filter( (project) => !pinnedSet.has(project.id))
 // }
 
-const pinIdsSet = (pinnedProjects) => {
+// const pinIds = (pinnedProjects) => {
   
-}
+// }
+
+
+
+
+
+const recentProjects = (projects, pinnedProjects) => {
+  let pinIds = pinnedProjects.map(pin => {
+    return pin.projectId
+  });
+  
+  let recents = projects.filter(project => {
+    return !pinIds.includes(project.id())
+  });
+  return recents
+};
 
 const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pinnedProjects, projectOptions}) => {
   const commonProps = {
@@ -77,8 +92,10 @@ const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pinne
     projectOptions,
   };
   
+  const recentProjects = recent(projects, pinnedProjects)
   
-  const recentProjects = projects.filter
+    console.log recents
+
   
   const showPinnedProjects = isAuthorizedUser || pinnedProjects.length !== 0;
   return (
