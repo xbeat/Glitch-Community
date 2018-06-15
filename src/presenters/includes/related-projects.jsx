@@ -52,6 +52,7 @@ class RelatedProjects extends React.Component {
     return getPins().then(pins => {
       const pinIds = pins.map(pin => pin.projectId);
       const ids = sampleSize(difference(pinIds, [this.props.ignoreProjectId]), PROJECT_COUNT);
+      
       if (ids.length < PROJECT_COUNT) {
         return getProjects().then(({projects}) => {
           const allIds = projects.map(({id}) => id);
@@ -59,6 +60,7 @@ class RelatedProjects extends React.Component {
           return [...ids, ...sampleSize(remainingIds, PROJECT_COUNT - ids.length)];
         });
       }
+      
       return ids;
     });
   }
