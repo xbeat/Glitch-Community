@@ -54,7 +54,6 @@ export default class Expander extends React.Component {
               className="expander-button button button-small button-tertiary"
             >
               Show More
-              <div className="expander-mask" role="presentation"></div>
             </button>
           </div>
         )}
