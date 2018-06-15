@@ -6,7 +6,7 @@ import Loader from "./includes/loader.jsx"
 // import {debounce} from 'lodash';
 
 
-/* globals Set */
+globals Set
 
 // const projectStateFromModels = (projectsModel, pinsModel) => {
 //   const pinnedIds = pinsModel.map(({projectId}) => projectId);
@@ -78,12 +78,12 @@ import Loader from "./includes/loader.jsx"
 
 
 const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pinnedProjects, projectOptions}) => {
-  if (projects.length === 0) {
-    return <Loader/>
-  }
+  // if (projects.length === 0) {
+  //   return <Loader/>
+  // }
   
-  console.log ('🌹', projects)
-  debugger
+  // console.log ('🌹', projects)
+  // debugger
   
   const commonProps = {
     closeAllPopOvers,
