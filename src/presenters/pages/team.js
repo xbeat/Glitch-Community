@@ -2,8 +2,8 @@ import Observable from 'o_0';
 import {debounce} from 'lodash';
 import assets from '../../utils/assets';
 
-import User from '../../models/user';
-import Project from '../../models/project';
+import UserModel from '../../models/user';
+import ProjectModel from '../../models/project';
 import TeamTemplate from '../../templates/pages/team';
 import LayoutPresenter from '../layout';
 
@@ -31,9 +31,9 @@ export default function(application) {
           fetched: self.team().fetched(),
           userFetched: application.currentUser().fetched(),
           currentUserIsOnTeam: self.currentUserIsOnTeam(),
-          addUserToTeam: (id) => { self.team().addUser(application, User({id})); },
-          removeUserFromTeam: ({id}) => { self.team().removeUser(application, User({id})); },
-          search: (query) => User.getSearchResultsJSON(application, query).then(users => users.map(user => User(user).asProps())),
+          addUserToTeam: (id) => { self.team().addUser(application, UserModel({id})); },
+          removeUserFromTeam: ({id}) => { self.team().removeUser(application, UserModel({id})); },
+          search: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
           updateDescription: self.updateDescription,
           uploadAvatar: self.uploadAvatar,
           uploadCover: self.uploadCover,
@@ -50,17 +50,22 @@ export default function(application) {
       // application.team().projects()
       // 💣 this also causes a full rerender when projects changes
       // observing projects, also causes projects to fully rerender
-      let projects = application.team().projects().map(project => {
-        Project(project).asProps()
-      })
+      // let projects = application.team().projects().map(project => {
+      //   ProjectModel(project).asProps()
+      // })
       
-      console.log('🍕',application.team().projects(), projects)
+      // console.log('🍕',application.team().projects(), projects)
 
       const propsObservable = Observable(() => {
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.currentUserIsOnTeam(),
-          projects: projects,
+          projects: application.team().projects().map(project => {
+            if (project.length > 0) {
+              console.log ('🚒',project)
+              ProjectModel(project).asProps()
+            }
+          }),
           pinnedProjects: application.team().pins(),
           projectOptions: self.projectOptions(),
         };
@@ -145,7 +150,7 @@ export default function(application) {
     uploadAvatar: assetUtils.uploadAvatarFile,
 
     togglePinnedState(projectId) {
-      const action = Project.isPinnedByTeam(application.team(), projectId) ? "removePin" : "addPin";
+      const action = ProjectModel.isPinnedByTeam(application.team(), projectId) ? "removePin" : "addPin";
       return application.team()[action](application, projectId);
     },
 
