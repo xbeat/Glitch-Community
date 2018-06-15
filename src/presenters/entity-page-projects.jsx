@@ -55,7 +55,7 @@ export class EntityPageProjectsContainer extends React.Component {
 }
 
 EntityPageProjectsContainer.propTypes = {
-  projectsObservable: PropTypes.func.isRequired,
+  projectsObservable: PropTypes.array.isRequired,
   pinsObservable: PropTypes.func.isRequired,
   isAuthorizedUser: PropTypes.bool.isRequired,
   closeAllPopOvers: PropTypes.func.isRequired,
