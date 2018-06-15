@@ -217,29 +217,27 @@ export default function(application, userLoginOrId) {
     },
     
     userProjects() {
-      // observe login so that our project user links update as the user does.
-      self.user().login();
-      self.user().avatarThumbnailUrl();
-
       const propsObservable = Observable(() => {
+        // observe login so that our project user links update as the user does.
+        self.user().login();
+        self.user().avatarThumbnailUrl();
 
         const projects = self.user().projects().map(function (project) {
           let {...projectProps} = project.asProps();
           return projectProps;
         });
+        console.log (projects)
 
-        console.log ('🌎',projects)
-        const props = {
+        return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.isCurrentUser(),
           projects: projects,
           pins: self.user().pins(),
           projectOptions: self.projectOptions(),
         };
-        return props;
       });
       
-      return Reactlet(Observed, {propsObservable, component:EntityPageProjects}, "UserPageProjectsContainer");
+      return Reactlet(Observed, {propsObservable, component:EntityPageProjects});
     },
     
     hiddenUnlessUserIsAnon() {
