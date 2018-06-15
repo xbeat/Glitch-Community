@@ -27,15 +27,22 @@ export default class Expander extends React.Component {
       expanded: true,
       maxHeight: this.ref.current.scrollHeight,
     });
-    setTimeout(() => {
+  }
+  
+  onExpandEnd(evt) {
+    if (evt.propertyName === 'max-height') {
       this.setState({maxHeight: undefined});
-    }, 200); // <- make this slightly larger than the css transition
+    }
   }
   
   render() {
     const {expanded, maxHeight} = this.state;
     return (
-      <div className="expander" style={{maxHeight}} ref={this.ref}>
+      <div
+        className="expander" style={{maxHeight}}
+        onTransitionEnd={(expanded && !!maxHeight) ? this.onExpandEnd.bind(this) : null}
+        ref={this.ref}
+      >
         {this.props.children}
         {!!maxHeight && (
           <div className="expander-gradient"></div>
