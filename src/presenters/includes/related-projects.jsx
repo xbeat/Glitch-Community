@@ -35,7 +35,7 @@ class RelatedProjects extends React.Component {
     this.state = {teams, users};
   }
   
-  getProjectIds(id, getPins, getProjects) {
+  getProjects(id, getPins, getProjects) {
     return getPins(id).then(pins => {
       const pinIds = pins.map(pin => pin.projectId);
       const ids = sampleSize(difference(pinIds, [this.props.ignoreProjectId]), PROJECT_COUNT);
@@ -54,15 +54,8 @@ class RelatedProjects extends React.Component {
     ));
   }
   
-  getTeamProjects(id) {
-    return this.getProjectIds(id, this.props.getTeamPins, this.props.getTeam);
-  }
-  
-  getUserProjects(id) {
-    return this.getProjectIds(id, this.props.getUserPins, this.props.getUser);
-  }
-  
   render() {
+    const {getTeam, getTeamPins, getUser, getUserPins} = this.props;
     const {teams, users} = this.state;
     if (!teams.length && !users.length) {
       return null;
@@ -72,7 +65,7 @@ class RelatedProjects extends React.Component {
         {teams.map(({id, name, url, teamProfileStyle}) => (
           <li key={id}>
             <RelatedProjectsHeader name={name} url={url}/>
-            <DataLoader get={() => this.getTeamProjects(id)}>
+            <DataLoader get={() => this.getProjects(id, getTeamPins, getTeam)}>
               {projects => <RelatedProjectsBody projects={projects} coverStyle={teamProfileStyle}/>}
             </DataLoader>
           </li>
@@ -80,7 +73,7 @@ class RelatedProjects extends React.Component {
         {users.map(({id, name, login, tooltipName, userLink, profileStyle}) => (
           <li key={id}>
             <RelatedProjectsHeader name={name || login || tooltipName} url={userLink}/>
-            <DataLoader get={() => this.getUserProjects(id)}>
+            <DataLoader get={() => this.getProjects(id, getUserPins, getUser)}>
               {projects => <RelatedProjectsBody projects={projects} coverStyle={profileStyle}/>}
             </DataLoader>
           </li>
