@@ -62,7 +62,9 @@ class RelatedProjects extends React.Component {
       }
       
       return ids;
-    });
+    }).then(projectIds => (
+      projectIds ? this.props.getProjects(projectIds) : []
+    ));
   }
   
   getTeamProjectIds({id, name, url, teamProfileStyle}) {
@@ -98,6 +100,21 @@ class RelatedProjects extends React.Component {
   }
   
   render() {
+    const {getTeam, getTeamPins, getUser, getUserPins, getProjects} = this.props;
+    const {teams, users} = this.state;
+    if (!teams.length || users.length) {
+      return null;
+    }
+    return (
+      <ul className="related-projects">
+        {teams.map(({id, name, url, teamProfileStyle}) => (
+          <li key={id}>
+            <h2><a href={url}>More by {name} →</a></h2>
+            <DataLoader get={this.
+          </li>
+        ))}
+      </ul>
+    );
     return (
       <DataLoader get={this.getAllProjectIds}>
         {groups => !!groups.length && <RelatedProjectsPresenter groups={groups} getProjects={this.props.getProjects}/>}
