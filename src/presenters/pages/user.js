@@ -223,11 +223,12 @@ export default function(application, userLoginOrId) {
         self.user().avatarThumbnailUrl();
 
         const projects = self.user().projects().map(function (project) {
+          console.log ('💣', project)
           let {...projectProps} = project.asProps();
           return projectProps;
         });
-        console.log (projects)
-
+        
+        console.log ('🚗',projects)
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.isCurrentUser(),
