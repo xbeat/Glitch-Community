@@ -50,12 +50,17 @@ export default function(application) {
       // application.team().projects()
       // 💣 this also causes a full rerender when projects changes
       // observing projects, also causes projects to fully rerender
+      let projects = application.team().projects().map(project => {
+        Project(project).asProps()
+      })
+      
+      console.log('🍕',application.team().projects(), projects)
 
       const propsObservable = Observable(() => {
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.currentUserIsOnTeam(),
-          projects: application.team().projects(),
+          projects: projects,
           pinnedProjects: application.team().pins(),
           projectOptions: self.projectOptions(),
         };

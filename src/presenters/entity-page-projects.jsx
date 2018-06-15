@@ -75,13 +75,13 @@ import ProjectsList from "./projects-list.jsx";
 
 
 
-const recentProjects = (projects, pinnedProjects) => {
+const recentProjectsArray = (projects, pinnedProjects) => {
   let pinIds = pinnedProjects.map(pin => {
     return pin.projectId
   });
   
   let recents = projects.filter(project => {
-    return !pinIds.includes(project.id())
+    return !pinIds.includes(project.id)
   });
   return recents
 };
@@ -92,9 +92,9 @@ const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pinne
     projectOptions,
   };
   
-  const recentProjects = recent(projects, pinnedProjects)
+  let recentProjects = recentProjectsArray(projects, pinnedProjects)
   
-    console.log recents
+  console.log ('👍', recentProjects)
 
   
   const showPinnedProjects = isAuthorizedUser || pinnedProjects.length !== 0;
