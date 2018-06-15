@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
-import Observable from "o_0";
-import {debounce} from 'lodash';
+// import Observable from "o_0";
+// import {debounce} from 'lodash';
 
 
 /* globals Set */
@@ -62,11 +62,23 @@ import {debounce} from 'lodash';
 //   projectOptions: PropTypes.object.isRequired,
 // };
 
-const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects, pinnedProjects, projectOptions}) => {
+// const recentProjects = (projects, pinnedProjects) => {
+  
+//   let x = projects.filter( (project) => !pinnedSet.has(project.id))
+// }
+
+const pinIdsSet = (pinnedProjects) => {
+  
+}
+
+const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pinnedProjects, projectOptions}) => {
   const commonProps = {
     closeAllPopOvers,
     projectOptions,
   };
+  
+  
+  const recentProjects = projects.filter
   
   const showPinnedProjects = isAuthorizedUser || pinnedProjects.length !== 0;
   return (
@@ -80,7 +92,7 @@ const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects,
 };
 
 EntityPageProjects.propTypes = {
-  pins: PropTypes.array.isRequired,
+  pinnedProjects: PropTypes.array.isRequired,
   projects: PropTypes.array.isRequired,
   isAuthorizedUser: PropTypes.bool.isRequired,
   closeAllPopOvers: PropTypes.func.isRequired,
