@@ -217,13 +217,15 @@ export default function(application, userLoginOrId) {
     },
         
     userProjects() {
-      console.log ('🌴 userprojects')
+      console.log ('🌴 userprojects') // this isn't updatign again , cuz of the crash --> dont pass incomplete stuff down
+      // is there anotther request happening here?
       const propsObservable = Observable(() => {
         // observe login so that our project user links update as the user does.
         self.user().login();
         self.user().avatarThumbnailUrl();
         
-        console.log(self.user().projects())
+        // console.log(self.user().projects())
+        // debugger
         // this is prob causing the loop by circular observable reference
         // const projects = self.user().projects().map(function (project) {
         //   console.log ('💣',project)

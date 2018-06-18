@@ -4,21 +4,33 @@ import ProjectsList from "./projects-list.jsx";
 import Loader from "./includes/loader.jsx"
 
 export const UserPageProjects = ({...props}) => {
+  const EVALUATE_PROJECTS = true
   console.log ('⛵️', props.projects.length)
   
   // ?normalize user projects format into something that matches project.js as Props (ugh)
   
   const projects = props.projects.map(function (project) {
-    console.log ('1', project.users()) // at evaluation time, it doesn't have this data
-    debugger
-    let {...projectProps} = project.asProps();
+      if (!project.isFetched) {
+        EVALUATE_PROJECTS = false
+        return null
+      }
+    console.log ('1', project.users())
+
+    // debugger // at evaluation time, it doesn't have data on users, description
+    let {...projectProps} = project.asProps()
     console.log ('2', projectProps.users)
+
     return projectProps;
   });
   console.log ('✅',projects)
-  return (
+
+  if (!EVALUATE_PROJECTS) {
+    console.log ('💰')
+  
+    return (
     <EntityPageProjects {...props} projects={projects} />
-  )
+
+  }
 }
 UserPageProjects.propTypes = {
   projects: PropTypes.array.isRequired,
