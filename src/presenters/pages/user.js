@@ -5,6 +5,7 @@ const md = mdFactory({
   breaks: true,
   linkify: true,
   typographer: true}).disable(['image']);
+import _ from "underscore"
 
 import assets from '../../utils/assets';
 import UserTemplate from '../../templates/pages/user';
@@ -16,6 +17,7 @@ import NotFound from '../includes/not-found.jsx';
 import {UserProfile} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
 import Observed from "../includes/observed.jsx";
+
 
 export default function(application, userLoginOrId) {
   const assetUtils = assets(application);
@@ -227,27 +229,24 @@ export default function(application, userLoginOrId) {
           return project.fetched()
         });
 
-        // projectsObservable.map(function (project) {
+        // const projects = projectsObservable.map(function (project) {
+        //   console.log (fetchedProjects)
         //   if (!fetchedProjects.includes(project.id())) {
+        //     let projectProps = project.asProps();
         //     fetchedProjects.push(project.id())
+        //     return projectProps;
         //   }
         // });
         
-        const projects = projectsObservable.map(function (project) {
-          console.log (fetchedProjects)
-          if (!fetchedProjects.includes(project.id())) {
-            console.log (project.id())
-            let projectProps = project.asProps();
-            return projectProps;
-          }
-          fetchedProjects.push(project.id())
-        });
+        // console.log (projects)
+        
+        
         
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.isCurrentUser(),
           pins: self.user().pins(),
-          projects: projects,
+          projects: [],
           projectOptions: self.projectOptions(),
         };
       });
