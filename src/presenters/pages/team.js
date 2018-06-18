@@ -8,7 +8,7 @@ import TeamTemplate from '../../templates/pages/team';
 import LayoutPresenter from '../layout';
 
 import Reactlet from "../reactlet";
-import EntityPageProjects from "../entity-page-projects.jsx";
+import EntityPageProjectsContainer from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
 import Observed from "../includes/observed.jsx";
 import {TeamProfile} from "../includes/profile.jsx";
@@ -47,21 +47,22 @@ export default function(application) {
 
     TeamProjects() {
       const propsObservable = Observable(() => {
-        const projects = self.team().projects().map(function (project) {
-          let {...projectProps} = project.asProps();
-          return projectProps;
-        });
+        // const projects = self.team().projects().map(function (project) {
+        //   let {...projectProps} = project.asProps();
+        //   return projectProps;
+        // });
+        self.team().projects()
 
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.currentUserIsOnTeam(),
-          projects: projects,
-          pins: application.team().pins(),
+          projectsObservable: self.team().projects,
+          pinsObservable: self.team().pins,
           projectOptions: self.projectOptions(),
         };
       });
 
-      return Reactlet(Observed, {propsObservable, component:EntityPageProjects});
+      return Reactlet(Observed, {propsObservable, component:EntityPageProjectsContainer});
     },
 
     projectOptions() {

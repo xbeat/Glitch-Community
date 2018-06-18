@@ -36,6 +36,7 @@ export class EntityPageProjectsContainer extends React.Component {
     this.aggregateObservable = Observable(() => {
       const projectsModel = this.props.projectsObservable();
       const pinsModel = this.props.pinsObservable();
+      console.log ('👯‍♀️', projectsModel)
       
       // Subscribe just to the 'fetched' subcomponent of the projects.
       for(let {fetched} of projectsModel) {

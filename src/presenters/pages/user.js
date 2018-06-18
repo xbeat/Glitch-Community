@@ -12,7 +12,7 @@ import UserTemplate from '../../templates/pages/user';
 import DeletedProjectsTemplate from '../../templates/deleted-projects';
 import LayoutPresenter from '../layout';
 
-import {EntityPageProjects, EntityPageProjectsContainer} from "../entity-page-projects.jsx";
+import EntityPageProjectsContainer from "../entity-page-projects.jsx";
 import NotFound from '../includes/not-found.jsx';
 import {UserProfile} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
@@ -220,16 +220,9 @@ export default function(application, userLoginOrId) {
         
     userProjects() {
       const propsObservable = Observable(() => {
+        // observe login so that our project user links update as the user does.
         self.user().login();
         self.user().avatarThumbnailUrl();
-        
-//         const projectsObservable = self.user().projects().filter(function (project) {
-//           return project.fetched()
-//         });
-
-//         const projects = projectsObservable.map(function (project) {
-//             return project.asProps();
-//         });
 
         return {
           closeAllPopOvers: application.closeAllPopOvers,
