@@ -217,32 +217,33 @@ export default function(application, userLoginOrId) {
     },
         
     userProjects() {
-      // this is not updating when projects are fetched
-      console.log ('🌴 userprojects') // this isn't updatign again , cuz of the crash --> dont pass incomplete stuff down
-      // is there anotther request happening here?
-      // self.user().projects()
       const propsObservable = Observable(() => {
-        // observe login so that our project user links update as the user does.
         self.user().login();
         self.user().avatarThumbnailUrl();
         
-        // self.user().projects() // didn't make a difference
-        // console.log()
-        // debugger
-        // this is prob causing the loop by circular observable reference
+        let fetchedProjects = []
+        
         const projectsObservable = self.user().projects().filter(function (project) {
           return project.fetched()
         });
         
+        
         const projects = projectsObservable.map(function (project) {
-          console.log ('🏃‍♂️')
-          let {...projectProps} = project.asProps();
-          return projectProps;
+          if (fetchedProjects.includes(project.id)) {
+            let projectProps = project.asProps();
+            return projectProps;
+          }
+          fetchedProjects.push(project.id)
         });
-        
-        console.log ('🚗',projects)
-        
-        // passing in the projects directly doesn't update 
+
+        // projectsObservable.map(function (project) {
+        //   fetchedProjects.push(project.id)
+        //   // if (!fetchedProjects.includes(project.id)) {
+        //   //   fetchedProjects.push(project.id)
+        //   // }
+        // }
+
+        console.log (projects)
         
         return {
           closeAllPopOvers: application.closeAllPopOvers,

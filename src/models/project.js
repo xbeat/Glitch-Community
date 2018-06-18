@@ -192,7 +192,7 @@ Project.getProjectsByIds = function(api, ids) {
   
   // fetch the ids in groups so they fit into max allowable url length
   const projectIdGroups = newProjectIds.map(function(id, index) {
-    if ((index % NUMBER_OF_PROJECTS_PER_REQUEST) === 0) { 
+    if ((index % NUMBER_OF_PROJECTS_PER_REQUEST) === 0) {
       return newProjectIds.slice(index, index + NUMBER_OF_PROJECTS_PER_REQUEST);       
     }  return null; }).filter(id => id);
   
