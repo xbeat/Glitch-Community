@@ -11,7 +11,7 @@ import UserTemplate from '../../templates/pages/user';
 import DeletedProjectsTemplate from '../../templates/deleted-projects';
 import LayoutPresenter from '../layout';
 
-import EntityPageProjects from "../entity-page-projects.jsx";
+import {EntityPageProjects, UserPageProjects} from "../entity-page-projects.jsx";
 import NotFound from '../includes/not-found.jsx';
 import {UserProfile} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
@@ -216,6 +216,15 @@ export default function(application, userLoginOrId) {
       });
     },
     
+    projectsAsProps() {
+        return self.user().projects().map(function (project) {
+          console.log ('💣',project)
+          let {...projectProps} = project.asProps();
+          console.log ('🖼', projectProps)
+          return projectProps;
+        });
+    },
+    
     userProjects() {
       console.log ('🌴 userprojects')
       const propsObservable = Observable(() => {
@@ -223,24 +232,25 @@ export default function(application, userLoginOrId) {
         self.user().login();
         self.user().avatarThumbnailUrl();
 
-        // this is prob ca
-        const projects = self.user().projects().map(function (project) {
-          console.log ('💣',project)
-          let {...projectProps} = project.asProps();
-          console.log ('🖼', projectProps)
-          return projectProps;
-        });
+        // this is prob causing the loop by circular observable reference
+        // const projects = self.user().projects().map(function (project) {
+        //   console.log ('💣',project)
+        //   let {...projectProps} = project.asProps();
+        //   console.log ('🖼', projectProps)
+        //   return projectProps;
+        // });
         
-        console.log ('🚗',projects)
+        // console.log ('🚗',projects)
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.isCurrentUser(),
           pins: self.user().pins(),
+          projects: self.user().projects(),
           projectOptions: self.projectOptions(),
         };
       });
       
-      // return Reactlet(Observed, {propsObservable, component:EntityPageProjects});
+      return Reactlet(Observed, {propsObservable, component:UserPageProjects});
     },
     
     hiddenUnlessUserIsAnon() {

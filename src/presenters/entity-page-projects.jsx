@@ -3,7 +3,15 @@ import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
 import Loader from "./includes/loader.jsx"
 
-const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pins, projectOptions}) => {
+export const UserPageProjects = (props) => {
+  //
+}
+UserPageProjects.propTypes = {
+  projects: PropTypes.func.isRequired
+}
+
+
+export const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pins, projectOptions}) => {
   const commonProps = {
     closeAllPopOvers,
     projectOptions,
