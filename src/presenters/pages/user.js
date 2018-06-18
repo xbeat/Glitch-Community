@@ -230,7 +230,12 @@ export default function(application, userLoginOrId) {
         // console.log()
         // debugger
         // this is prob causing the loop by circular observable reference
-        const projects = self.user().projects().map(function (project) {
+        const projectsObservable = self.user().projects().filter(function (project) {
+          return project.fetched()
+        });
+        
+        const projects = projectsObservable.map(function (project) {
+          console.log ('🏃‍♂️')
           let {...projectProps} = project.asProps();
           return projectProps;
         });
