@@ -5,6 +5,7 @@ const md = mdFactory({
   breaks: true,
   linkify: true,
   typographer: true}).disable(['image']);
+import _ from 'lodash'
 
 import assets from '../../utils/assets';
 import UserTemplate from '../../templates/pages/user';
@@ -218,7 +219,7 @@ export default function(application, userLoginOrId) {
     },
         
     userProjects() {
-      const propsObservable = Observable(() => {
+      const _.throttle(propsObservable = Observable(() => {
         self.user().login();
         self.user().avatarThumbnailUrl();
         
@@ -229,7 +230,7 @@ export default function(application, userLoginOrId) {
         const projects = projectsObservable.map(function (project) {
             return project.asProps();
         });
-                
+
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.isCurrentUser(),
