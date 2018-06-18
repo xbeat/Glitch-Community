@@ -219,7 +219,7 @@ export default function(application, userLoginOrId) {
     },
         
     userProjects() {
-      const _.throttle(propsObservable = Observable(() => {
+      const propsObservable = Observable(() => {
         self.user().login();
         self.user().avatarThumbnailUrl();
         

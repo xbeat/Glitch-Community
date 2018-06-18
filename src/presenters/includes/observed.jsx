@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import throttle from 'lodash';
+import {throttle} from 'lodash';
 
 // This is a shim component that helps us allow observables to be
 // monitored from inside react, rather than at the jade level.
@@ -13,9 +13,11 @@ export default class Observed extends React.Component {
   }
   
   componentDidMount() {
-    this.props.propsObservable.observe((props) => {
+    const update = (props) => {
       this.setState({observedProps: props});
-    });
+    };
+    const throttled = throttle(update, 150);
+    this.props.propsObservable.observe(throttled);
   }
   componentWillUnmount() {
     this.props.propsObservable.releaseDependencies();
