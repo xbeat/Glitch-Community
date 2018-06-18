@@ -217,11 +217,13 @@ export default function(application, userLoginOrId) {
     },
     
     userProjects() {
+      console.log ('🌴 userprojects')
       const propsObservable = Observable(() => {
         // observe login so that our project user links update as the user does.
         self.user().login();
         self.user().avatarThumbnailUrl();
 
+        // this is prob ca
         const projects = self.user().projects().map(function (project) {
           console.log ('💣',project)
           let {...projectProps} = project.asProps();
