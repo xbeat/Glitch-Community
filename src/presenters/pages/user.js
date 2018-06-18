@@ -235,10 +235,7 @@ export default function(application, userLoginOrId) {
           return projectProps;
         });
         
-        console.log ('🚗',projects) 
-        debugger
-        
-        const s = []
+        console.log ('🚗',projects)
         
         // passing in the projects directly doesn't update 
         
@@ -246,7 +243,7 @@ export default function(application, userLoginOrId) {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.isCurrentUser(),
           pins: self.user().pins(),
-          projects: s,
+          projects: projects,
           projectOptions: self.projectOptions(),
         };
       });
