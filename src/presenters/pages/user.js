@@ -5,7 +5,6 @@ const md = mdFactory({
   breaks: true,
   linkify: true,
   typographer: true}).disable(['image']);
-import _ from "lodash"
 
 import assets from '../../utils/assets';
 import UserTemplate from '../../templates/pages/user';
@@ -219,39 +218,18 @@ export default function(application, userLoginOrId) {
     },
         
     userProjects() {
-      let my = (project) =>
-        project.asProps()
-      let cache = _.memoize(my)
-      
       const propsObservable = Observable(() => {
         self.user().login();
         self.user().avatarThumbnailUrl();
-        
-        // let fetchedProjects = []
         
         const projectsObservable = self.user().projects().filter(function (project) {
           return project.fetched()
         });
 
-        
-
         const projects = projectsObservable.map(function (project) {
-          // console.log(cache)
-          return cache(project)
-
-        //   console.log (fetchedProjects)
-        //   if (!fetchedProjects.includes(project.id())) {
-        //     let projectProps = project.asProps();
-        //     fetchedProjects.push(project.id())
-        //     return projectProps;
-        //   }
+            return project.asProps();
         });
-        
-        // console.log (projects)
-        
-        // const projects = self.user().projects()
-        
-        
+                
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.isCurrentUser(),

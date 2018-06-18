@@ -266,7 +266,7 @@ export default User = function(I, self) {
         avatarStyle: self.avatarStyle(),
         thanksCount: self.thanksCount(),
         tooltipName: self.tooltipName(),
-        truncatedDescriptionHtml: md.render(self.truncatedDescription()),
+        // truncatedDescriptionHtml: md.render(self.truncatedDescription()),
         userAvatarUrl: self.userAvatarUrl(),
         userAvatarUrlLarge: self.userAvatarUrl('large'),
         userLink: self.userLink(),
