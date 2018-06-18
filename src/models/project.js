@@ -40,8 +40,6 @@ export default Project = function(I, self) {
     asProps() {
       const project = self;
 
-      console.log ('as props called', project.description())
-
       return {
         get teams() { return project.teams().map(team => team.asProps()); },
         get users() { return project.users().map(user => user.asProps()); },

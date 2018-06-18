@@ -222,8 +222,8 @@ export default function(application, userLoginOrId) {
         // observe login so that our project user links update as the user does.
         self.user().login();
         self.user().avatarThumbnailUrl();
-        // self.user().projects();
         
+        console.log(self.user().projects())
         // this is prob causing the loop by circular observable reference
         // const projects = self.user().projects().map(function (project) {
         //   console.log ('💣',project)
@@ -235,6 +235,7 @@ export default function(application, userLoginOrId) {
         // console.log ('🚗',projects)
         
         // passing in the projects directly doesn't update 
+        
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.isCurrentUser(),
