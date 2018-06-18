@@ -14,12 +14,12 @@ Example:
 export default [
   {
     title: 'Read Computer-Generated Poetry',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhouse-of-dust.jpg?1528715873531",
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftwitter-likes-backup.jpg?1529320668955",
     link: 'https://house-of-dust.glitch.me/'
   }
   , {
     title: '\'pointer-thing\' by ericnakagawa',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpointer-thing.jpg?1528974565717",
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Flumpy-gull.jpg?1529320669076",
     link: 'https://pointer-thing.glitch.me'
   }
   , {
