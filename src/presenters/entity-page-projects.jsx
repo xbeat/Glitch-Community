@@ -4,8 +4,10 @@ import ProjectsList from "./projects-list.jsx";
 import Loader from "./includes/loader.jsx"
 
 export const UserPageProjects = ({...props}) => {
-  console.log ('UserPageProjects', props)
-  const projects = self.user().projects().map(function (project) {
+  console.log ('⛵️', props.projects)
+  const projects = props.projects.map(function (project) {
+    // console.log (project.I, project.users())
+    // debugger
     let {...projectProps} = project.asProps();
     return projectProps;
   });

@@ -38,6 +38,7 @@ export default Project = function(I, self) {
   self.extend({
 
     asProps() {
+      console.log ('as props called')
       const project = self;
 
       return {
