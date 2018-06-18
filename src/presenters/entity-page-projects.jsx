@@ -3,11 +3,23 @@ import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
 import Loader from "./includes/loader.jsx"
 
-export const UserPageProjects = (props) => {
-  //
+export const UserPageProjects = ({...props}) => {
+  console.log ('UserPageProjects', props)
+  const projects = self.user().projects().map(function (project) {
+    let {...projectProps} = project.asProps();
+    return projectProps;
+  });
+  console.log ('✅',projects)
+  return (
+    <EntityPageProjects {...props} projects={projects} />
+  )
 }
 UserPageProjects.propTypes = {
-  projects: PropTypes.func.isRequired
+  projects: PropTypes.array.isRequired,
+  pins: PropTypes.array.isRequired,
+  isAuthorizedUser: PropTypes.bool.isRequired,
+  closeAllPopOvers: PropTypes.func.isRequired,
+  projectOptions: PropTypes.object.isRequired,
 }
 
 

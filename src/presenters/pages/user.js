@@ -215,16 +215,7 @@ export default function(application, userLoginOrId) {
           });
       });
     },
-    
-    projectsAsProps() {
-        return self.user().projects().map(function (project) {
-          console.log ('💣',project)
-          let {...projectProps} = project.asProps();
-          console.log ('🖼', projectProps)
-          return projectProps;
-        });
-    },
-    
+        
     userProjects() {
       console.log ('🌴 userprojects')
       const propsObservable = Observable(() => {
