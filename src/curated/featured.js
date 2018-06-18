@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Read Computer-Generated Poetry',
+    title: 'Back Up Your Twitter Likes',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftwitter-likes-backup.jpg?1529320668955",
-    link: 'https://house-of-dust.glitch.me/'
+    link: 'https://twitter-likes-backup.glitch.me/'
   }
   , {
-    title: '\'pointer-thing\' by ericnakagawa',
+    title: 'Hello Kitty Calculator',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Flumpy-gull.jpg?1529320669076",
-    link: 'https://pointer-thing.glitch.me'
+    link: 'https://lumpy-gull.glitch.me/'
   }
   , {
-    title: 'Make and Watch YouTube Video Mashups',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fvideoisdoomed.jpg?1528974565423",
-    link: 'https://videoisdoomed.glitch.me/'
+    title: 'A Series of Daily Sketches',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fliquidx-genart.jpg?1529320669317",
+    link: 'https://liquidx-genart.glitch.me/'
   }   
 ];
