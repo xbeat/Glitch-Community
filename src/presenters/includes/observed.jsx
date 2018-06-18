@@ -13,11 +13,9 @@ export default class Observed extends React.Component {
   }
   
   componentDidMount() {
-    const update = (props) => {
+    this.props.propsObservable.observe((props) => {
       this.setState({observedProps: props});
-    };
-    const throttled = throttle(update, 150);
-    this.props.propsObservable.observe(throttled);
+    });
   }
   componentWillUnmount() {
     this.props.propsObservable.releaseDependencies();

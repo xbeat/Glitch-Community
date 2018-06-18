@@ -12,7 +12,7 @@ import UserTemplate from '../../templates/pages/user';
 import DeletedProjectsTemplate from '../../templates/deleted-projects';
 import LayoutPresenter from '../layout';
 
-import {EntityPageProjects, UserPageProjects} from "../entity-page-projects.jsx";
+import {EntityPageProjects, EntityPageProjectsContainer} from "../entity-page-projects.jsx";
 import NotFound from '../includes/not-found.jsx';
 import {UserProfile} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
@@ -223,24 +223,24 @@ export default function(application, userLoginOrId) {
         self.user().login();
         self.user().avatarThumbnailUrl();
         
-        const projectsObservable = self.user().projects().filter(function (project) {
-          return project.fetched()
-        });
+//         const projectsObservable = self.user().projects().filter(function (project) {
+//           return project.fetched()
+//         });
 
-        const projects = projectsObservable.map(function (project) {
-            return project.asProps();
-        });
+//         const projects = projectsObservable.map(function (project) {
+//             return project.asProps();
+//         });
 
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.isCurrentUser(),
-          pins: self.user().pins(),
-          projects: projects,
+          projectsObservable: self.user().projects,
+          pinsObservable: self.user().pins,
           projectOptions: self.projectOptions(),
         };
       });
       
-      return Reactlet(Observed, {propsObservable, component:EntityPageProjects});
+      return Reactlet(Observed, {propsObservable, component:EntityPageProjectsContainer});
     },
     
     hiddenUnlessUserIsAnon() {
