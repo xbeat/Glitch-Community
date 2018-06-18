@@ -226,25 +226,22 @@ export default function(application, userLoginOrId) {
         const projectsObservable = self.user().projects().filter(function (project) {
           return project.fetched()
         });
-        console.log ('🚃', projectsObservable)
 
-        projectsObservable.map(function (project) {
-          if (!fetchedProjects.includes(project.id)) {
-            fetchedProjects.push(project.id)
-          }
-        });
-        console.log (fetchedProjects)
+        // projectsObservable.map(function (project) {
+        //   if (!fetchedProjects.includes(project.id())) {
+        //     fetchedProjects.push(project.id())
+        //   }
+        // });
         
         const projects = projectsObservable.map(function (project) {
-          if (fetchedProjects.includes(project.id)) {
+          console.log (fetchedProjects)
+          if (!fetchedProjects.includes(project.id())) {
+            console.log (project.id())
             let projectProps = project.asProps();
             return projectProps;
           }
-          fetchedProjects.push(project.id)
+          fetchedProjects.push(project.id())
         });
-
-
-        console.log ('💰',projects)
         
         return {
           closeAllPopOvers: application.closeAllPopOvers,
