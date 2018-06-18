@@ -226,7 +226,14 @@ export default function(application, userLoginOrId) {
         const projectsObservable = self.user().projects().filter(function (project) {
           return project.fetched()
         });
-        
+        console.log ('🚃', projectsObservable)
+
+        projectsObservable.map(function (project) {
+          if (!fetchedProjects.includes(project.id)) {
+            fetchedProjects.push(project.id)
+          }
+        });
+        console.log (fetchedProjects)
         
         const projects = projectsObservable.map(function (project) {
           if (fetchedProjects.includes(project.id)) {
@@ -236,14 +243,8 @@ export default function(application, userLoginOrId) {
           fetchedProjects.push(project.id)
         });
 
-        // projectsObservable.map(function (project) {
-        //   fetchedProjects.push(project.id)
-        //   // if (!fetchedProjects.includes(project.id)) {
-        //   //   fetchedProjects.push(project.id)
-        //   // }
-        // }
 
-        console.log (projects)
+        console.log ('💰',projects)
         
         return {
           closeAllPopOvers: application.closeAllPopOvers,

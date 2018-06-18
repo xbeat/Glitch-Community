@@ -184,6 +184,7 @@ Project.isPinnedByTeam = function(team, projectId) {
 
 // Fetch projects and populate them into the local cache
 Project.getProjectsByIds = function(api, ids) {
+  console.log ('getProjectsByIds')
   const NUMBER_OF_PROJECTS_PER_REQUEST = 40;
   const newProjectIds = ids.filter(function(id) {
     const project = cache[id];
