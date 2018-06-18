@@ -38,8 +38,9 @@ export default Project = function(I, self) {
   self.extend({
 
     asProps() {
-      console.log ('as props called')
       const project = self;
+
+      console.log ('as props called', project.description())
 
       return {
         get teams() { return project.teams().map(team => team.asProps()); },
