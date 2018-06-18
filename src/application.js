@@ -23,7 +23,7 @@ if(localStorage.cachedUser) {
     }
   } catch (error) {
     //Something bad happened in the past to get us here!
-    //Act natural, pretend we're logged out so nothing breaks
+    //Act natural and pretend we're logged out
     cachedUser = undefined;
   }
 }
