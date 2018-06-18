@@ -3,42 +3,43 @@ import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
 import Loader from "./includes/loader.jsx"
 
-export const UserPageProjects = ({...props}) => {
-  const EVALUATE_PROJECTS = true
-  console.log ('⛵️', props.projects.length)
+// export const UserPageProjects = ({...props}) => {
+//   let evaluateProjects = true
+//   console.log ('⛵️', props.projects)
+//   // debugger
   
-  // ?normalize user projects format into something that matches project.js as Props (ugh)
+//   // ?normalize user projects format into something that matches project.js as Props (ugh)
   
-  const projects = props.projects.map(function (project) {
-      if (!project.isFetched) {
-        EVALUATE_PROJECTS = false
-        return null
-      }
-    console.log ('1', project.users())
+//   const projects = props.projects.map(function (project) {
+//       if (project.isFetched === undefined) {
+//         evaluateProjects = false
+//         return null
+//       }
+//     console.log ('1', project.users())
 
-    // debugger // at evaluation time, it doesn't have data on users, description
-    let {...projectProps} = project.asProps()
-    console.log ('2', projectProps.users)
+//     // debugger // at evaluation time, it doesn't have data on users, description
+//     let {...projectProps} = project.asProps()
+//     console.log ('2', projectProps.users)
 
-    return projectProps;
-  });
-  console.log ('✅',projects)
-
-  if (!EVALUATE_PROJECTS) {
-    console.log ('💰')
+//     return projectProps;
+//   });
+//   console.log ('✅',projects, evaluateProjects)
   
-    return (
-    <EntityPageProjects {...props} projects={projects} />
+//   if (!evaluateProjects) return null
 
-  }
-}
-UserPageProjects.propTypes = {
-  projects: PropTypes.array.isRequired,
-  pins: PropTypes.array.isRequired,
-  isAuthorizedUser: PropTypes.bool.isRequired,
-  closeAllPopOvers: PropTypes.func.isRequired,
-  projectOptions: PropTypes.object.isRequired,
-}
+  
+  
+//   return (
+//     <EntityPageProjects {...props} projects={projects} />
+//   )
+// }
+// UserPageProjects.propTypes = {
+//   projects: PropTypes.array.isRequired,
+//   pins: PropTypes.array.isRequired,
+//   isAuthorizedUser: PropTypes.bool.isRequired,
+//   closeAllPopOvers: PropTypes.func.isRequired,
+//   projectOptions: PropTypes.object.isRequired,
+// }
 
 
 export const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pins, projectOptions}) => {

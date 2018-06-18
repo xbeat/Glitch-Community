@@ -217,24 +217,28 @@ export default function(application, userLoginOrId) {
     },
         
     userProjects() {
+      // this is not updating when projects are fetched
       console.log ('🌴 userprojects') // this isn't updatign again , cuz of the crash --> dont pass incomplete stuff down
       // is there anotther request happening here?
+      // self.user().projects()
       const propsObservable = Observable(() => {
         // observe login so that our project user links update as the user does.
         self.user().login();
         self.user().avatarThumbnailUrl();
         
-        // console.log(self.user().projects())
+        // self.user().projects() // didn't make a difference
+        // console.log()
         // debugger
         // this is prob causing the loop by circular observable reference
-        // const projects = self.user().projects().map(function (project) {
-        //   console.log ('💣',project)
-        //   let {...projectProps} = project.asProps();
-        //   console.log ('🖼', projectProps)
-        //   return projectProps;
-        // });
+        const projects = self.user().projects().map(function (project) {
+          let {...projectProps} = project.asProps();
+          return projectProps;
+        });
         
-        // console.log ('🚗',projects)
+        console.log ('🚗',projects) 
+        debugger
+        
+        const s = []
         
         // passing in the projects directly doesn't update 
         
@@ -242,12 +246,12 @@ export default function(application, userLoginOrId) {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.isCurrentUser(),
           pins: self.user().pins(),
-          projects: self.user().projects(),
+          projects: s,
           projectOptions: self.projectOptions(),
         };
       });
       
-      return Reactlet(Observed, {propsObservable, component:UserPageProjects});
+      return Reactlet(Observed, {propsObservable, component:EntityPageProjects});
     },
     
     hiddenUnlessUserIsAnon() {
