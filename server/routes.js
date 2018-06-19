@@ -50,24 +50,21 @@ module.exports = function() {
   
   app.get('/~:domain', async (req, res) => {
     const {domain} = req.params;
-    const title = `${domain} - Glitch`;
     const {data} = await axios.get(`${API_URL}/projects/${domain}`);
     if (!data) {
-      return render(res, title, `We couldn't find ~${domain}`);
+      return render(res, domain, `We couldn't find ~${domain}`);
     }
     const avatar = `${CDN_URL}/project-avatar/${data.id}.png`;
-    render(res, title, data.description, avatar);
+    render(res, domain, data.description, avatar);
   });
   
   app.get('/@:name', async (req, res) => {
     const {name} = req.params;
     const {data} = await axios.get(`${API_URL}/users/byLogins?logins=${name}`);
     if (!data.length) {
-      const title = `@${name} - Glitch`;
-      return render(res, title, `We couldn't find @${name}`);
+      return render(res, `@${name}`, `We couldn't find @${name}`);
     }
-    const title = `${data[0].name} - Glitch`;
-    render(res, title, data[0].description);
+    render(res, data[0].name, data[0].description);
   });
 
   app.get('*', (req, res) => {
