@@ -1,7 +1,7 @@
 // Define a bunch of variables based on our environment
 
 let APP_URL = 'https://glitch.com';
-let API_URL = 'https://api.glitch.com';
+let API_URL = 'https://api.glitch.com/';
 let EDITOR_URL = 'https://glitch.com/edit/';
 let CDN_URL = 'https://cdn.glitch.com';
 let GITHUB_CLIENT_ID = "b4cb743ed07e20abf0b2";

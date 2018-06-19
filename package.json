@@ -4,7 +4,7 @@
   "description": "Find cool projects and people using Glitch",
   "scripts": {
     "prestart": "bash sh/watchers.sh &",
-    "start": "nodemon ./server.js --watch server.js --watch routes.js --watch proxy.js -L"
+    "start": "nodemon ./server/server.js --watch server -L"
   },
   "dependencies": {
     "autoprefixer-stylus": "^0.14.0",

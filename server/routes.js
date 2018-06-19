@@ -37,7 +37,7 @@ module.exports = function() {
   );
 
   return app.get('*', (req, res) => {
-    res.render(__dirname + '/public/index.ejs', {
+    res.render(__dirname + '/../public/index.ejs', {
       ...constants
     });
   });
