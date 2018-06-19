@@ -24,6 +24,7 @@ dependencies:
   markdown-it: 8.4.1
   markdown-it-emoji: 1.4.0
   markdown-it-sanitizer: 0.4.3
+  memory-cache: 0.2.0
   moment-mini: 2.19.4
   nodemon: 1.17.3
   o_0: 0.4.0-pre.0
@@ -4509,6 +4510,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-Xt1StIXKHZAP5kiVUFOZoN+kX3Y=
+  /memory-cache/0.2.0:
+    dev: false
+    resolution:
+      integrity: sha1-eJCwHVLADI68nVM+H46xfjA0hxo=
   /memory-fs/0.4.1:
     dependencies:
       errno: 0.1.7
@@ -7275,6 +7280,7 @@ specifiers:
   markdown-it: ^8.4.1
   markdown-it-emoji: ^1.4.0
   markdown-it-sanitizer: ^0.4.3
+  memory-cache: ^0.2.0
   moment-mini: ^2.19.4
   nodemon: ^1.17.3
   o_0: ^0.4.0-pre.0
