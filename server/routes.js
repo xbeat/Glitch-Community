@@ -37,10 +37,12 @@ module.exports = function() {
   );
 
   return app.get('*', (req, res) => {
+    //This will do proper server-side react in the future, but we're not there yet
     const title = "Glitch - The Friendly, Creative Community";
-    const description = "We can't wait to see what you create!";
+    const description = "The friendly community where you’ll build the app of your dreams";
+    const image = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
     res.render(__dirname + '/../public/index.ejs', {
-      title, description,
+      title, description, image,
       ...constants
     });
   });
