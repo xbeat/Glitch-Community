@@ -46,8 +46,13 @@ module.exports = function() {
     });
   }
   
+  const {API_URL} = constants;
+  
   app.get('/~:domain', async (req, res) => {
-    const title = `${req.params.domain} - Glitch`;
+    const {domain} = req.params;
+    const payload = await axios.get(`${API_URL}/projects/${domain}`);
+    console.log(payload);
+    const title = `${domain} - Glitch`;
     render(res, title);
   });
 
