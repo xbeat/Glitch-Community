@@ -37,7 +37,10 @@ module.exports = function() {
   );
 
   return app.get('*', (req, res) => {
+    const title = "Glitch - The Friendly, Creative Community";
+    const description = "We can't wait to see what you create!";
     res.render(__dirname + '/../public/index.ejs', {
+      title, description,
       ...constants
     });
   });
