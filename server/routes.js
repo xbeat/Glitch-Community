@@ -57,6 +57,17 @@ module.exports = function() {
     }
     render(res, title, data.description);
   });
+  
+  app.get('/@:name', async (req, res) => {
+    const {name} = req.params;
+    const {data} = await axios.get(`${API_URL}/users/byLogins?logins=${name}`);
+    if (!data.length) {
+      const title = `@${name} - Glitch`;
+      return render(res, title, `We couldn't find @${name}`);
+    }
+    const title = `${data[0].name} - Glitch`;
+    render(res, title, data[0].description);
+  });
 
   app.get('*', (req, res) => {
     render(res);
