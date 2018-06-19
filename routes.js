@@ -4,43 +4,6 @@ const util = require("util");
 const express = require('express');
 const moment = require('moment-mini');
 
-const fs_writeFile = util.promisify(fs.writeFile);
-
-const API_URL = ((process.env.RUNNING_ON === 'staging')
-                 ? 'https://api.staging.glitch.com/'
-                 : 'https://api.glitch.com/');
-
-const updateCache = async type => {
-  let response = await axios.get(`${API_URL}${type}`, {
-    transformResponse: (data) => data // Override the default object transform
-  });
-  let json = response.data;
-  
-  if(type === 'teams') {
-    let teams = JSON.parse(json);
-    let reduced = teams.map(({id, name, url}) => ({id, name, url}));
-    json = JSON.stringify(reduced);
-  }
-  
-  try {
-    let fileContents = `export default ${json}`
-    await fs_writeFile(`./src/cache/${type}.js`, fileContents);
-    console.log(`☂️ ${type} re-cached`);
-  } catch (error) {
-    console.error("☔️", error);
-  }
-};
-
-const updateCaches = async () => {
-  await updateCache('categories');
-  await updateCache('teams');
-  console.log("☂️ cache updated");
-};
-
-const CACHE_INTERVAL = moment.duration(10, 'minutes').asMilliseconds();
-setInterval(updateCaches, CACHE_INTERVAL);
-updateCaches();
-
 module.exports = function() {
   
   const app = express.Router();
@@ -73,6 +36,7 @@ module.exports = function() {
   );
 
   return app.get('*', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html')
+    res.render(__dirname + '/public/index.ejs', {
+    });
   });
 };
