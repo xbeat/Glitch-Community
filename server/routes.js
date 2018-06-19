@@ -46,16 +46,17 @@ module.exports = function() {
     });
   }
   
-  const {API_URL} = constants;
+  const {API_URL, CDN_URL} = constants;
   
   app.get('/~:domain', async (req, res) => {
     const {domain} = req.params;
     const title = `${domain} - Glitch`;
     const {data} = await axios.get(`${API_URL}/projects/${domain}`);
     if (!data) {
-      return render(res, title, `We couldn't find ${domain}`);
+      return render(res, title, `We couldn't find ~${domain}`);
     }
-    render(res, title, data.description);
+    const avatar = `${CDN_URL}/project-avatar/${data.id}.png`;
+    render(res, title, data.description, avatar);
   });
   
   app.get('/@:name', async (req, res) => {
