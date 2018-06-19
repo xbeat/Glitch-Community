@@ -31,10 +31,10 @@ module.exports = function() {
     return next();
   });
 
-  app.post('/update-caches', (request, response) =>
-    updateCaches()
-    .then(() => response.sendStatus(200))
-  );
+  app.post('/update-caches', async (request, response) => {
+    await updateCaches();
+    response.sendStatus(200);
+  });
   
   function render(res, title, description, image) {
     title = title || "Glitch - The Friendly, Creative Community";
