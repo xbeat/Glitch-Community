@@ -1,40 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {sampleSize, without} from 'lodash';
+import {sampleSize, difference} from 'lodash';
 
 import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 
-const RelatedProjectsPresenter = ({groups, getProjects}) => (
-  <ul className="related-projects">
-    {groups.map(({id, name, url, coverStyle, projectIds}) => (
-      <li key={id}>
-        <h2><a href={url}>More by {name} →</a></h2>
-        {!!projectIds.length && (
-          <DataLoader get={() => getProjects(projectIds)}>
-            {projects => (
-              <CoverContainer style={coverStyle} className="projects">
-                <ProjectsUL projects={projects}/>
-              </CoverContainer>
-            )}
-          </DataLoader>
-        )}
-      </li>
-    ))}
-  </ul>
+const PROJECT_COUNT = 3;
+
+const RelatedProjectsHeader = ({name, url}) => (
+  <h2><a href={url}>More by {name} →</a></h2>
 );
-RelatedProjectsPresenter.propTypes = {
-  groups: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.node.isRequired,
-    name: PropTypes.node.isRequired,
-    url: PropTypes.string.isRequired,
-    coverStyle: PropTypes.object.isRequired,
-    projectIds: PropTypes.arrayOf(
-      PropTypes.string.isRequired
-    ).isRequired,
-  }).isRequired).isRequired,
-  getProjects: PropTypes.func.isRequired,
+RelatedProjectsHeader.propTypes = {
+  name: PropTypes.node.isRequired,
+  url: PropTypes.string.isRequired,
+};
+
+const RelatedProjectsBody = ({projects, coverStyle}) => (
+  projects.length ? (
+    <CoverContainer style={coverStyle} className="projects">
+      <ProjectsUL projects={projects}/>
+    </CoverContainer>
+  ) : null
+);
+RelatedProjectsBody.propTypes = {
+  projects: PropTypes.array.isRequired,
 };
 
 class RelatedProjects extends React.Component {
@@ -43,52 +33,60 @@ class RelatedProjects extends React.Component {
     const teams = sampleSize(props.teams, 1);
     const users = sampleSize(props.users, 2 - teams.length);
     this.state = {teams, users};
-    this.getAllPins = this.getAllPins.bind(this);
   }
   
-  selectProjects(pins) {
-    return sampleSize(without(pins.map(pin => pin.projectId), this.props.ignoreProjectId), 3);
-  }
-  
-  getTeamPins(team) {
-    return this.props.getTeamPins(team.id).then(pins => ({
-      id: team.id,
-      name: team.name,
-      url: team.url,
-      coverStyle: team.teamProfileStyle,
-      projectIds: this.selectProjects(pins),
-    }));
-  }
-  
-  getUserPins(user) {
-    return this.props.getUserPins(user.id).then(pins => ({
-      id: user.id,
-      name: user.name || user.login || user.tooltipName,
-      url: user.userLink,
-      coverStyle: user.profileStyle,
-      projectIds: this.selectProjects(pins),
-    }));
-  }
-  
-  getAllPins() {
-    return Promise.all(
-      this.state.teams.map(team => this.getTeamPins(team)).concat(
-        this.state.users.map(user => this.getUserPins(user))
-      )
-    );
+  getProjects(id, getPins, getProjects) {
+    return getPins(id).then(pins => {
+      const pinIds = pins.map(pin => pin.projectId);
+      const ids = sampleSize(difference(pinIds, [this.props.ignoreProjectId]), PROJECT_COUNT);
+      
+      if (ids.length < PROJECT_COUNT) {
+        return getProjects(id).then(({projects}) => {
+          const allIds = projects.map(({id}) => id);
+          const remainingIds = difference(allIds, [this.props.ignoreProjectId, ...ids]);
+          return [...ids, ...sampleSize(remainingIds, PROJECT_COUNT - ids.length)];
+        });
+      }
+      
+      return ids;
+    }).then(projectIds => (
+      projectIds.length ? this.props.getProjects(projectIds) : []
+    ));
   }
   
   render() {
+    const {getTeam, getTeamPins, getUser, getUserPins} = this.props;
+    const {teams, users} = this.state;
+    if (!teams.length && !users.length) {
+      return null;
+    }
     return (
-      <DataLoader get={this.getAllPins}>
-        {groups => !!groups.length && <RelatedProjectsPresenter groups={groups} getProjects={this.props.getProjects}/>}
-      </DataLoader>
+      <ul className="related-projects">
+        {teams.map(({id, name, url, teamProfileStyle}) => (
+          <li key={id}>
+            <RelatedProjectsHeader name={name} url={url}/>
+            <DataLoader get={() => this.getProjects(id, getTeamPins, getTeam)}>
+              {projects => <RelatedProjectsBody projects={projects} coverStyle={teamProfileStyle}/>}
+            </DataLoader>
+          </li>
+        ))}
+        {users.map(({id, name, login, tooltipName, userLink, profileStyle}) => (
+          <li key={id}>
+            <RelatedProjectsHeader name={name || login || tooltipName} url={userLink}/>
+            <DataLoader get={() => this.getProjects(id, getUserPins, getUser)}>
+              {projects => <RelatedProjectsBody projects={projects} coverStyle={profileStyle}/>}
+            </DataLoader>
+          </li>
+        ))}
+      </ul>
     );
   }
 }
 RelatedProjects.propTypes = {
   ignoreProjectId: PropTypes.string.isRequired,
+  getTeam: PropTypes.func.isRequired,
   getTeamPins: PropTypes.func.isRequired,
+  getUser: PropTypes.func.isRequired,
   getUserPins: PropTypes.func.isRequired,
   teams: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,

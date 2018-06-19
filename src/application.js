@@ -18,8 +18,13 @@ let cachedUser = undefined;
 if(localStorage.cachedUser) {
   try {
     cachedUser = JSON.parse(localStorage.cachedUser);
+    if (cachedUser.id <= 0) {
+      throw 'invalid id';
+    }
   } catch (error) {
-    // empty
+    //Something bad happened in the past to get us here!
+    //Act natural and pretend we're logged out
+    cachedUser = undefined;
   }
 }
 
@@ -173,6 +178,9 @@ var self = Model({
     }
     return self.api().post(`${authURL}`)
       .then(function(response) {
+        if (response.data.id <= 0) {
+          return Promise.reject(response.data);
+        }
         analytics.track("Signed In",
           {provider});
         console.log("LOGGED IN", response.data);

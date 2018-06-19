@@ -32,6 +32,7 @@ export const ShowButton = ({name, className, ...props}) => (
 );
 ShowButton.propTypes = {
   name: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 export const EditButton = ({name, isMember, ...props}) => (
@@ -54,6 +55,7 @@ export const RemixButton = ({name, isMember, className, ...props}) => (
 RemixButton.propTypes = {
   name: PropTypes.string.isRequired,
   isMember: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export const ReportButton = ({name, id, ...props}) => {
@@ -83,4 +85,5 @@ Thanks 💖
 ReportButton.propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };

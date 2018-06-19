@@ -17,7 +17,7 @@ export const ProjectItem = ({project, categoryColor, projectOptions}) => (
         <div className="project-container">
           <img className="avatar" src={project.avatar} alt={`${project.domain} avatar`}/>
           <button className={project.isRecentProject ? "button-cta" : ""}>
-            <span className="private-project-badge"></span>
+            <span className="project-badge private-project-badge"></span>
             <div className="project-name">{project.domain}</div>
           </button>
           <div className="description"><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
