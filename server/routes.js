@@ -50,10 +50,12 @@ module.exports = function() {
   
   app.get('/~:domain', async (req, res) => {
     const {domain} = req.params;
-    const payload = await axios.get(`${API_URL}/projects/${domain}`);
-    console.log(payload);
     const title = `${domain} - Glitch`;
-    render(res, title);
+    const {data} = await axios.get(`${API_URL}/projects/${domain}`);
+    if (!data) {
+      return render(res, title, `We couldn't find ${domain}`);
+    }
+    render(res, title, data.description);
   });
 
   app.get('*', (req, res) => {
