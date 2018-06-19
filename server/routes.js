@@ -2,6 +2,7 @@ const axios = require("axios");
 const express = require('express');
 const moment = require('moment-mini');
 
+const {getProject} = require('./api');
 const {updateCaches} = require('./cache');
 const constants = require('./constants');
 
@@ -48,12 +49,12 @@ module.exports = function() {
   
   app.get('/~:domain', async (req, res) => {
     const {domain} = req.params;
-    const {data} = await axios.get(`${API_URL}/projects/${domain}`);
-    if (!data) {
+    const project = await getProject(domain);
+    if (!project) {
       return render(res, domain, `We couldn't find ~${domain}`);
     }
-    const avatar = `${CDN_URL}/project-avatar/${data.id}.png`;
-    render(res, domain, data.description, avatar);
+    const avatar = `${CDN_URL}/project-avatar/${project.id}.png`;
+    render(res, domain, project.description, avatar);
   });
   
   app.get('/@:name', async (req, res) => {
