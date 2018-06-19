@@ -1,8 +1,9 @@
-const fs = require("fs");
 const axios = require("axios");
-const util = require("util");
 const express = require('express');
 const moment = require('moment-mini');
+
+const {updateCaches} = require('./cache');
+const constants = require('./constants');
 
 module.exports = function() {
   
@@ -37,6 +38,7 @@ module.exports = function() {
 
   return app.get('*', (req, res) => {
     res.render(__dirname + '/public/index.ejs', {
+      ...constants
     });
   });
 };

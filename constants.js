@@ -16,7 +16,7 @@ if (process.env.RUNNING_ON === 'staging') {
   FACEBOOK_CLIENT_ID = "1858825521057112";
 }
 
-export {
+module.exports = {
   APP_URL,
   API_URL,
   EDITOR_URL,
