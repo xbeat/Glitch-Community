@@ -35,8 +35,18 @@ module.exports = function() {
     updateCaches()
     .then(() => response.sendStatus(200))
   );
+  
+  async function render(res, title, description, image) => {
+    //This will do proper server-side react in the future, but we're not there yet
+    title = title || "Glitch - The Friendly, Creative Community";
+    description = desc"The friendly community where you’ll build the app of your dreams";
+    const image = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
+    res.render(__dirname + '/../public/index.ejs', {
+      title, description, image,
+      ...constants
+    });
 
-  return app.get('*', (req, res) => {
+  return app.get('*', async (req, res) => {
     //This will do proper server-side react in the future, but we're not there yet
     const title = "Glitch - The Friendly, Creative Community";
     const description = "The friendly community where you’ll build the app of your dreams";
