@@ -2,7 +2,7 @@ const axios = require("axios");
 const express = require('express');
 const moment = require('moment-mini');
 
-const {getProject} = require('./api');
+const {getProject, getUser} = require('./api');
 const {updateCaches} = require('./cache');
 const constants = require('./constants');
 
@@ -59,11 +59,11 @@ module.exports = function() {
   
   app.get('/@:name', async (req, res) => {
     const {name} = req.params;
-    const {data} = await axios.get(`${API_URL}/users/byLogins?logins=${name}`);
-    if (!data.length) {
+    const user = await getUser(name);
+    if (!user) {
       return render(res, `@${name}`, `We couldn't find @${name}`);
     }
-    render(res, data[0].name, data[0].description);
+    render(res, user.name, user.description);
   });
 
   app.get('*', (req, res) => {
