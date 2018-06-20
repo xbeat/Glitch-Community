@@ -77,16 +77,13 @@ class TeamAnalytics extends React.Component {
   updateAnalytics() {
     // when currentUserOnTeam is false, it stops the request,
     // which is incorrect when the page loads, but it does'nt update
-    console.log('updateanalytics currentUserOnTeam', this.props.currentUserOnTeam)
     if (!this.props.currentUserOnTeam) {
       return null
     }
     this.setState({
       isGettingData: true,
     });
-    console.log ('getting analytics')
     getAnalytics(this.props, this.state.fromDate, this.state.currentProjectDomain).then(({data}) => {
-      console.log ('data')
       this.setState({
         isGettingData: false,
         analytics: data,
@@ -101,7 +98,6 @@ class TeamAnalytics extends React.Component {
       currentTimeFrame: newTime,
       fromDate: dateFromTime(newTime)
     }, () => {
-      console.log('updateTimeFrame');
       this.updateAnalytics();
     });
   }
@@ -110,13 +106,11 @@ class TeamAnalytics extends React.Component {
     this.setState({
       currentProjectDomain: newDomain
     }, () => {
-      console.log('updateProjectdomain');
       this.updateAnalytics();
     });
   }
   
   componentDidMount() {
-    console.log('componentDidMount')
     // eslint-disable-next-line
     import(
       /* webpackChunkName: "c3-bundle" */
@@ -131,7 +125,13 @@ class TeamAnalytics extends React.Component {
   }
   
   componentDidUpdate(prevProps) {
-    console.log (componentDidUpdate, this.prevProps.currentUserOnTeam, this.props.currentUserOnTeam)
+    if (
+      prevProps.currentUserOnTeam === false && 
+      this.props.currentUserOnTeam === true &&
+      this.state.isGettingC3 === false
+    ) {
+      this.updateAnalytics();
+    }
   }
   
   render() {
