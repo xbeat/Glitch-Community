@@ -52,22 +52,14 @@ const dateFormat = (currentTimeFrame) => {
 };
 
 const TeamAnalyticsActivity = ({c3, analytics, currentTimeFrame}) => {
+  console.log ('c3', c3)
   let columns = [];
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics);
   }
   
-  let flushChart = () => {
-    console.log ('flushchart;')
-    chart.flush()
-  }
-  
   // eslint-disable-next-line no-unused-vars
   var chart = c3.generate({
-    oninit: function() {
-      console.log (this)
-      flushChart()
-    },
     size: {
       height: 200,
     },
