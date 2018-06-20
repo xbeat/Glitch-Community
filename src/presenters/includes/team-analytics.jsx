@@ -75,13 +75,18 @@ class TeamAnalytics extends React.Component {
   }
 
   updateAnalytics() {
+    // when currentUserOnTeam is false, it stops the request,
+    // which is incorrect when
+    console.log('updateanalytics currentUserOnTeam', this.props.currentUserOnTeam)
     if (!this.props.currentUserOnTeam) {
       return null
     }
     this.setState({
       isGettingData: true,
     });
+    console.log ('getting analytics')
     getAnalytics(this.props, this.state.fromDate, this.state.currentProjectDomain).then(({data}) => {
+      console.log ('data')
       this.setState({
         isGettingData: false,
         analytics: data,
