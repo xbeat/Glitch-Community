@@ -12,7 +12,7 @@ const CACHE_TIMEOUT = moment.duration(15, 'minutes').asMilliseconds()
 const projectCache = new Cache();
 const userCache = new Cache();
 
-async function getFromCacheOrApi(cache, id, api) {
+async function getFromCacheOrApi(id, cache, api) {
   let item = cache.get(id);
   if (item === null) {
     item = (await api(id)) || NOT_FOUND;
@@ -32,6 +32,6 @@ async function getUserFromApi(login) {
 }
 
 module.exports = {
-  getProject: domai,
-  getUser,
+  getProject: domain => getFromCacheOrApi(domain, projectCache, getProjectFromApi),
+  getUser: login => getFromCacheOrApi(login, userCache, getUserFromApi),
 };
