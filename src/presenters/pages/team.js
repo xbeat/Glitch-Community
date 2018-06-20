@@ -84,7 +84,7 @@ export default function(application) {
           return projectProps;
         });
         const id = self.team().id();
-        console.log('self.currentUserIsOnTeam()', self.currentUserIsOnTeam())
+        // console.log('self.currentUserIsOnTeam()', self.currentUserIsOnTeam())
         return {
           id: id,
           api: application.api,
@@ -119,7 +119,9 @@ export default function(application) {
     },
 
     currentUserIsOnTeam() {
-      return application.team().currentUserIsOnTeam(application);
+      let isOnTeam = application.team().currentUserIsOnTeam(application);
+      console.log (isOnTeam)
+      return isOnTeam
     },
 
     hiddenUnlessCurrentUserIsOnTeam() {

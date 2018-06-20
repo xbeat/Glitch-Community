@@ -134,6 +134,9 @@ class TeamAnalytics extends React.Component {
     if (!this.props.currentUserOnTeam) {
       return null
     }
+    if (this.state.isGettingC3 === false) {
+    this.updateAnalytics()
+    }
     return (
       <section className="team-analytics">
         <h2>Analytics</h2>
