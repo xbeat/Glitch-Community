@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import _ from 'lodash';
@@ -51,8 +52,7 @@ const dateFormat = (currentTimeFrame) => {
   return "%b-%d";
 };
 
-const TeamAnalyticsActivity = ({c3, analytics, currentTimeFrame}) => {
-  console.log ('c3', c3)
+const renderChart = (c3, analytics, currentTimeFrame) => {
   let columns = [];
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics);
@@ -81,6 +81,18 @@ const TeamAnalyticsActivity = ({c3, analytics, currentTimeFrame}) => {
       },
     },
   });
+
+}
+
+class TeamAnalyticsActivity extends React.Component {
+}
+
+const TeamAnalyticsActivity = ({c3, analytics, currentTimeFrame}) => {
+  
+  // check if analytics , currentyime changed, 
+  console.log ('c3', c3, analytics, currentTimeFrame)
+  renderChart(c3, analytics, currentTimeFrame)
+  
   return (null);
 };
 

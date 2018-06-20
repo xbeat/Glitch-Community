@@ -75,9 +75,7 @@ class TeamAnalytics extends React.Component {
   }
 
   updateAnalytics() {
-    if (!this.props.currentUserOnTeam) {
-      return null
-    }
+    console.log ('updateAnalytics')
     this.setState({
       isGettingData: true,
     });
@@ -118,7 +116,9 @@ class TeamAnalytics extends React.Component {
         c3: c3,
         isGettingC3: false,
       });
-      this.updateAnalytics();
+      if (this.props.currentUserOnTeam) {
+        this.updateAnalytics();
+      }
     });
   }
   
@@ -136,9 +136,6 @@ class TeamAnalytics extends React.Component {
     if (!this.props.currentUserOnTeam) {
       return null
     }
-    // if (this.state.isGettingC3 === false) {
-    //   this.updateAnalytics()
-    // }
     return (
       <section className="team-analytics">
         <h2>Analytics</h2>
