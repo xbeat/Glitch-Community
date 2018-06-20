@@ -8,6 +8,8 @@ import Project from '../../models/project';
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
+import Expander from '../includes/expander.jsx';
+import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-buttons.jsx';
@@ -17,16 +19,6 @@ import RelatedProjects from '../includes/related-projects.jsx';
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
 
-const ProjectButtons = ({domain, isMember}) => (
-  <React.Fragment>
-    <ShowButton name={domain}/>
-    <EditButton name={domain} isMember={isMember}/>
-  </React.Fragment>
-);
-ProjectButtons.propTypes = {
-  isMember: PropTypes.bool.isRequired,
-};
-
 function trackRemix(id, domain) {
   analytics.track("Click Remix", {
     origin: "project page",
@@ -34,6 +26,31 @@ function trackRemix(id, domain) {
     baseDomain: domain,
   });
 }
+
+const PrivateTooltip = "Only members can view code";
+const PublicTooltip = "Visible to everyone";
+
+const PrivateBadge = () => (
+  <span className="private-project-badge" aria-label={PrivateTooltip} data-tooltip={PrivateTooltip}></span>
+);
+
+const PrivateToggle = ({isPrivate, setPrivate}) => {
+  const tooltip = isPrivate ? PrivateTooltip : PublicTooltip;
+  const classBase = "button-tertiary button-on-secondary-background project-badge";
+  const className = isPrivate ? 'private-project-badge' : 'public-project-badge';
+  return (
+    <span data-tooltip={tooltip}>
+      <button aria-label={tooltip}
+        onClick={() => setPrivate(!isPrivate)}
+        className={`${classBase} ${className}`}
+      />
+    </span>
+  );
+};
+PrivateToggle.propTypes = {
+  isPrivate: PropTypes.bool.isRequired,
+  setPrivate: PropTypes.func.isRequired,
+};
 
 const Embed = ({domain}) => (
   <div className="glitch-embed-wrap">
@@ -44,14 +61,6 @@ Embed.propTypes = {
   domain: PropTypes.string.isRequired,
 };
 
-const PrivateBadge = ({domain}) => {
-  const tooltip = `Only members of ${domain} can see its code`;
-  return <span className="private-project-badge" aria-label={tooltip} data-tooltip={tooltip}></span>;
-};
-PrivateBadge.propTypes = {
-  domain: PropTypes.string.isRequired,
-};
-
 const ReadmeError = (error) => (
   (error && error.response && error.response.status === 404)
     ? <React.Fragment>This project would be even better with a <code>README.md</code></React.Fragment>
@@ -59,7 +68,7 @@ const ReadmeError = (error) => (
 );
 const ReadmeLoader = ({getReadme}) => (
   <DataLoader get={getReadme} renderError={ReadmeError}>
-    {readme => <Markdown>{readme}</Markdown>}
+    {readme => <Expander height={200}><Markdown>{readme}</Markdown></Expander>}
   </DataLoader>
 );
 ReadmeLoader.propTypes = {
@@ -73,59 +82,110 @@ const ProjectPage = ({
     ...project // 'private' can't be used as a variable name
   },
   getReadme,
-  getTeamPins,
-  getUserPins,
+  getTeam, getTeamPins,
+  getUser, getUserPins,
   getProjects,
+  updateDomain,
   updateDescription,
-}) => {
-  return (
-    <main className="project-page">
-      <section id="info">
-        <InfoContainer>
-          <ProjectInfoContainer style={{backgroundImage: `url('${avatar}')`}}>
-            <h1>{domain} {project.private && <PrivateBadge domain={domain}/>}</h1>
-            <UsersList users={users} />
-            <AuthDescription
-              authorized={userIsCurrentUser} description={description}
-              update={desc => updateDescription(id, desc)} placeholder="Tell us about your app"
-            />
-            <p className="buttons"><ProjectButtons domain={domain} isMember={userIsCurrentUser}/></p>
-          </ProjectInfoContainer>
-        </InfoContainer>
-      </section>
-
-      <section id="embed">
-        <Embed domain={domain}/>
-        <div className="buttons buttons-right">
-          <RemixButton className="button-small"
-            name={domain} isMember={userIsCurrentUser}
-            onClick={() => trackRemix(id, domain)}
+  updatePrivate,
+}) => (
+  <main className="project-page">
+    <section id="info">
+      <InfoContainer>
+        <ProjectInfoContainer style={{backgroundImage: `url('${avatar}')`}}>
+          <h1>
+            {(userIsCurrentUser
+              ? <EditableField value={domain} update={updateDomain} placeholder="Name your project"/>
+              : <React.Fragment>{domain} {project.private && <PrivateBadge/>}</React.Fragment>
+            )}
+          </h1>
+          {(userIsCurrentUser &&
+            <div>
+              <PrivateToggle isPrivate={project.private} isMember={userIsCurrentUser} setPrivate={updatePrivate}/>
+            </div>
+          )}
+          <UsersList users={users} />
+          <AuthDescription
+            authorized={userIsCurrentUser} description={description}
+            update={updateDescription} placeholder="Tell us about your app"
           />
-        </div>
-      </section>
-      <section id="related">
-        <RelatedProjects ignoreProjectId={id} {...{teams, users, getTeamPins, getUserPins, getProjects}}/>
-      </section>
-      <section id="readme">
-        <ReadmeLoader getReadme={getReadme}/>
-      </section>
-      <section id="feedback" className="buttons buttons-right">
-        <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
-      </section>
-    </main>
-  );
-};
+          <p className="buttons">
+            <ShowButton name={domain}/>
+            <EditButton name={domain} isMember={userIsCurrentUser}/>
+          </p>
+        </ProjectInfoContainer>
+      </InfoContainer>
+    </section>
+    <section id="embed">
+      <Embed domain={domain}/>
+      <div className="buttons buttons-right">
+        <RemixButton className="button-small"
+          name={domain} isMember={userIsCurrentUser}
+          onClick={() => trackRemix(id, domain)}
+        />
+      </div>
+    </section>
+    <section id="readme">
+      <ReadmeLoader getReadme={getReadme}/>
+    </section>
+    <section id="related">
+      <RelatedProjects ignoreProjectId={id} {...{teams, users, getTeam, getTeamPins, getUser, getUserPins, getProjects}}/>
+    </section>
+    <section id="feedback" className="buttons buttons-right">
+      <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
+    </section>
+  </main>
+);
 ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
 };
 
-const ProjectPageLoader = ({name, get, ...props}) => {
-  return (
-    <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-      {project => project ? <ProjectPage project={project} {...props}/> : <NotFound name={name}/>}
-    </DataLoader>
-  );
+class ProjectPageEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.props.initialProject;
+  }
+  
+  updateDomain(domain) {
+    return this.updateField('domain', domain).then(() => {
+      history.replaceState(null, null, `/~${domain}`);
+      document.title = `~${domain}`;
+      return {success: true, data: domain};
+    }).catch(({response: {data: {message}}}) => (
+      {success: false, data: domain, message}
+    ));
+  }
+  
+  updateField(field, value) {
+    const {id} = this.state;
+    const change = {[field]: value};
+    return this.props.api.patch(`projects/${id}`, change).then(() => {
+      this.setState(change);
+    });
+  }
+  
+  render() {
+    const props = {
+      project: this.state,
+      updateDomain: this.updateDomain.bind(this),
+      updateDescription: this.updateField.bind(this, 'description'),
+      updatePrivate: this.updateField.bind(this, 'private'),
+    };
+    return <ProjectPage {...props} {...this.props}/>;
+  }
+}
+ProjectPageEditor.propTypes = {
+  api: PropTypes.any.isRequired,
+  initialProject: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
 };
+
+const ProjectPageLoader = ({name, get, ...props}) => (
+  <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
+    {project => project ? <ProjectPageEditor initialProject={project} {...props}/> : <NotFound name={name}/>}
+  </DataLoader>
+);
 ProjectPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
@@ -133,10 +193,12 @@ ProjectPageLoader.propTypes = {
 // Let's keep layout in jade until all pages are react
 export default function(application, name) {
   const props = {
+    api: application.api(),
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
-    updateDescription: (id, description) => application.api().patch(`projects/${id}`, {description}),
+    getTeam: (id) => application.api().get(`teams/${id}`).then(({data}) => data),
     getTeamPins: (id) => application.api().get(`teams/${id}/pinned-projects`).then(({data}) => data),
+    getUser: (id) => application.api().get(`users/${id}`).then(({data}) => data),
     getUserPins: (id) => application.api().get(`users/${id}/pinned-projects`).then(({data}) => data),
     getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => Project(d).update(d).asProps())),
     name,

@@ -6,6 +6,6 @@ pnpx webpack --watch &
 bash sh/stylus.sh &
 
 # ESLint the server files:
-nodemon --exec "eslint --config .eslintrc.server.js server.js routes.js --cache" --watch server.js --watch routes.js &
+nodemon --exec "eslint --config server/.eslintrc.server.js server --cache" --watch server &
   
 wait

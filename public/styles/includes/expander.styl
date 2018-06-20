@@ -1,0 +1,26 @@
+.expander
+  transition: max-height 150ms ease-out
+  position: relative
+  overflow: hidden
+  
+  .expander-mask
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    display: flex
+    flex-direction: row
+    align-items: flex-end
+    background: linear-gradient(to bottom, transparent calc(100% - 25px), white)
+  
+  .expander-button
+    position: initial
+    &::before
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      content: ""
+      

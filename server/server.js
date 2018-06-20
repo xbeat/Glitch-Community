@@ -1,7 +1,9 @@
 const express = require("express");
 const compression = require("compression");
 
-require("./webpack.config.js"); // So that webpack lints itself
+require("../webpack.config.js"); // So that webpack lints itself
+
+require("./cache").initCache();
 
 const app = express();
 

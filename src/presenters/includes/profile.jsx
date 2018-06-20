@@ -74,6 +74,7 @@ export const CoverContainer = ({
 CoverContainer.propTypes = {
   buttons: PropTypes.node,
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
 };
 
 const ProfileContainer = ({
