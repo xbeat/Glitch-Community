@@ -79,10 +79,6 @@ module.exports = () => {
     plugins: [
       new LodashModuleReplacementPlugin,
       new webpack.NoEmitOnErrorsPlugin(),
-      new HtmlWebpackPlugin({
-        filename: 'index.ejs',
-        template: '!!raw-loader!views/index.ejs',
-      }),
     ],
   };
 }
