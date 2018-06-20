@@ -130,13 +130,17 @@ class TeamAnalytics extends React.Component {
     });
   }
   
+  componentDidUpdate(prevProps) {
+    console.log (componentDidUpdate, this.prevProps.currentUserOnTeam, this.props.currentUserOnTeam)
+  }
+  
   render() {
     if (!this.props.currentUserOnTeam) {
       return null
     }
-    if (this.state.isGettingC3 === false) {
-    this.updateAnalytics()
-    }
+    // if (this.state.isGettingC3 === false) {
+    //   this.updateAnalytics()
+    // }
     return (
       <section className="team-analytics">
         <h2>Analytics</h2>
