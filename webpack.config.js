@@ -17,25 +17,6 @@ module.exports = () => {
     mode = 'production';
   }
   
-  let clientConstants = {
-    APP_URL: 'https://glitch.com',
-    API_URL: 'https://api.glitch.com/',
-    EDITOR_URL: 'https://glitch.com/edit/',
-    CDN_URL: 'https://cdn.glitch.com',
-    GITHUB_CLIENT_ID: "b4cb743ed07e20abf0b2",
-    FACEBOOK_CLIENT_ID: "660180164153542",
-  };
-  if (process.env.RUNNING_ON === 'staging') {
-    clientConstants = {
-      APP_URL: 'https://staging.glitch.com',
-      API_URL: 'https://api.staging.glitch.com/',
-      EDITOR_URL: 'https://staging.glitch.com/edit/',
-      CDN_URL: 'https://cdn.staging.glitch.com',
-      GITHUB_CLIENT_ID: "65efbd87382354ca25e7",
-      FACEBOOK_CLIENT_ID: "1858825521057112",
-    };
-  }
-  
   console.log(`Starting Webpack in ${mode} mode.`);
   
   return {
@@ -100,9 +81,8 @@ module.exports = () => {
       new LodashModuleReplacementPlugin,
       new webpack.NoEmitOnErrorsPlugin(),
       new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: 'views/index.ejs',
-        templateParameters: clientConstants,
+        filename: 'index.ejs',
+        template: '!!raw-loader!views/index.ejs',
       }),
     ],
   };
