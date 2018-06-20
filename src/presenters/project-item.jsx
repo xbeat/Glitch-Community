@@ -11,7 +11,6 @@ export const ProjectItem = ({project, categoryColor, projectOptions}) => {
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
       <ProjectOptionsContainer project={project} projectOptions={projectOptions}></ProjectOptionsContainer>
 
-<<<<<<< HEAD
       <a href={project.link}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
           style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
@@ -19,26 +18,12 @@ export const ProjectItem = ({project, categoryColor, projectOptions}) => {
           <div className="project-container">
             <img className="avatar" src={project.avatar} alt={`${project.domain} avatar`}/>
             <button className={project.isRecentProject ? "button-cta" : ""}>
-              <span className="private-project-badge"></span>
+              <span className="project-badge private-project-badge"></span>
               <div className="project-name">{project.domain}</div>
             </button>
             <div className="description"><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
             <div className="overflow-mask" style={{backgroundColor: categoryColor}}></div>
           </div>
-=======
-    <a href={project.link}>
-      <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
-        style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
-        data-track="project" data-track-label={project.domain}>
-        <div className="project-container">
-          <img className="avatar" src={project.avatar} alt={`${project.domain} avatar`}/>
-          <button className={project.isRecentProject ? "button-cta" : ""}>
-            <span className="project-badge private-project-badge"></span>
-            <div className="project-name">{project.domain}</div>
-          </button>
-          <div className="description"><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
-          <div className="overflow-mask" style={{backgroundColor: categoryColor}}></div>
->>>>>>> b8b1ce19a5a2756dc23977e0c4730d980c00a5c4
         </div>
       </a>
     </li>
