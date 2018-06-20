@@ -40,7 +40,6 @@
     "quantize": "^1.0.2",
     "querystringify": "^2.0.0",
     "randomcolor": "^0.5.3",
-    "raw-loader": "^0.5.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-is": "^16.3.2",
