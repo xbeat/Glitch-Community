@@ -34,7 +34,7 @@ module.exports = () => {
         cacheGroups: {
           cache: {
             name: 'cache',
-            test: /[\\/]src[\\/]cache/,
+            test: /[\\/]src[\\/]cache[\\/]/,
             chunks: 'all',
             minSize: 0,
           },
@@ -47,6 +47,7 @@ module.exports = () => {
             name: 'dependencies',
             test: /[\\/]node_modules[\\/]/,
             chunks: 'all',
+            priority: -1,
           },
         },
       },
