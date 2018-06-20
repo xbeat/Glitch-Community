@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {throttle} from 'lodash';
-
 // This is a shim component that helps us allow observables to be
 // monitored from inside react, rather than at the jade level.
 

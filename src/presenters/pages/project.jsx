@@ -113,7 +113,7 @@ const ProjectPage = ({
         <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
       </section>
     </main>
-  )
+  );
 };
 ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
@@ -124,7 +124,7 @@ const ProjectPageLoader = ({name, get, ...props}) => {
     <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
       {project => project ? <ProjectPage project={project} {...props}/> : <NotFound name={name}/>}
     </DataLoader>
-  )
+  );
 };
 ProjectPageLoader.propTypes = {
   name: PropTypes.string.isRequired,

@@ -17,11 +17,17 @@ class TeamAnalyticsSummary extends React.Component {
     element.dispatchEvent(clickEvent);
     element.dispatchEvent(blurEvent);
   }
+  
+  toggleGraphOnKeyPress(event, summaryType) {
+    console.log(event)
+    
+    this.toggleGraph(summaryType)
+  }
 
   render() {
     return (
       <React.Fragment>
-        <span className="summary-item" onClick={() => {this.toggleGraph('App-Views');}}>
+        <span className="summary-item" onClick={() => {this.toggleGraph('App-Views');}} onKeyPress={() => {this.toggleGraphOnKeyPress('App-Views');}} role="button" tabIndex={0}>
           <span className="total app-views">
             {this.props.totalAppViews.toLocaleString('en')}
           </span>{' '}
@@ -30,7 +36,7 @@ class TeamAnalyticsSummary extends React.Component {
         
         ,{' '}
 
-        <span className="summary-item" onClick={() => {this.toggleGraph('Remixes');}}>
+        <span className="summary-item" onClick={() => {this.toggleGraph('Remixes');}} onKeyPress={() => {this.toggleGraphOnKeyPress('Remixes');}} role="button" tabIndex={0}>
           <span className="total remixes">
             {this.props.totalRemixes.toLocaleString('en')}
           </span>{' '}

@@ -27,7 +27,7 @@ export const ProjectItem = ({project, categoryColor, projectOptions}) => {
         </div>
       </a>
     </li>
-  )
+  );
 };
 
 ProjectItem.propTypes = {

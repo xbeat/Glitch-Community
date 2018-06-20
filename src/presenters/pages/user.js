@@ -5,7 +5,6 @@ const md = mdFactory({
   breaks: true,
   linkify: true,
   typographer: true}).disable(['image']);
-import _ from 'lodash'
 
 import assets from '../../utils/assets';
 import UserTemplate from '../../templates/pages/user';

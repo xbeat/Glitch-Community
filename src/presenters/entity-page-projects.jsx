@@ -22,13 +22,13 @@ export const TeamEntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, proj
     projectOptions,
   };
   let pinIds = pins.map(pin => {
-    return pin.projectId
+    return pin.projectId;
   });
   let recentProjects = projects.filter(project => {
-    return !pinIds.includes(project.id)
+    return !pinIds.includes(project.id);
   });
   let pinnedProjects = projects.filter(project => {
-    return pinIds.includes(project.id)
+    return pinIds.includes(project.id);
   });
   
   const showPinnedProjects = isAuthorizedUser || pinnedProjects.length !== 0;
