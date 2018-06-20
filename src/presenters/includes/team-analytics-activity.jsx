@@ -53,6 +53,7 @@ const dateFormat = (currentTimeFrame) => {
 };
 
 const renderChart = (c3, analytics, currentTimeFrame) => {
+  console.log ('🌎 renderchart', c3, analytics, currentTimeFrame)
   let columns = [];
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics);
@@ -85,16 +86,24 @@ const renderChart = (c3, analytics, currentTimeFrame) => {
 }
 
 class TeamAnalyticsActivity extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  
+  componentDidUpdate(prevProps) {
+    // force renderChart to only happen if props are changed
+    
+    if (prevProps !== this.props) {
+      console.log (prevProps, this.props)
+      renderChart(this.props.c3, this.props.analytics, this.props.currentTimeFrame)
+    }
+  }
+  
+  render() {
+    return null
+  }
 }
 
-const TeamAnalyticsActivity = ({c3, analytics, currentTimeFrame}) => {
-  
-  // check if analytics , currentyime changed, 
-  console.log ('c3', c3, analytics, currentTimeFrame)
-  renderChart(c3, analytics, currentTimeFrame)
-  
-  return (null);
-};
 
 TeamAnalyticsActivity.propTypes = {
   c3: PropTypes.object.isRequired, 
