@@ -23,7 +23,7 @@ module.exports = function() {
     return next();
   });
   
-  app.use(express.static('public'));
+  app.use(express.static('public', { index: false }));
 
   // Log all requests for diagnostics
   app.use(function(request, response, next) {
