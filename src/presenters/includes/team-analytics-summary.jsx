@@ -8,8 +8,6 @@ const blurEvent = new CustomEvent('mouseout', {bubbles: true, cancelable: true})
 class TeamAnalyticsSummary extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    // };
   }
   
   toggleGraph(summaryType) {
@@ -18,16 +16,10 @@ class TeamAnalyticsSummary extends React.Component {
     element.dispatchEvent(blurEvent);
   }
   
-  toggleGraphOnKeyPress(event, summaryType) {
-    console.log(event)
-    
-    this.toggleGraph(summaryType)
-  }
-
   render() {
     return (
       <React.Fragment>
-        <span className="summary-item" onClick={() => {this.toggleGraph('App-Views');}} onKeyPress={() => {this.toggleGraphOnKeyPress('App-Views');}} role="button" tabIndex={0}>
+        <span className="summary-item" onClick={() => {this.toggleGraph('App-Views');}} onKeyPress={() => {this.toggleGraph('App-Views');}} role="button" tabIndex={0}>
           <span className="total app-views">
             {this.props.totalAppViews.toLocaleString('en')}
           </span>{' '}
@@ -36,7 +28,7 @@ class TeamAnalyticsSummary extends React.Component {
         
         ,{' '}
 
-        <span className="summary-item" onClick={() => {this.toggleGraph('Remixes');}} onKeyPress={() => {this.toggleGraphOnKeyPress('Remixes');}} role="button" tabIndex={0}>
+        <span className="summary-item" onClick={() => {this.toggleGraph('Remixes');}} onKeyPress={() => {this.toggleGraph('Remixes');}} role="button" tabIndex={0}>
           <span className="total remixes">
             {this.props.totalRemixes.toLocaleString('en')}
           </span>{' '}

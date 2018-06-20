@@ -81,7 +81,7 @@ const renderChart = (c3, analytics, currentTimeFrame) => {
       },
     },
   });
-}
+};
 
 class TeamAnalyticsActivity extends React.Component {
   constructor(props) {
@@ -93,12 +93,12 @@ class TeamAnalyticsActivity extends React.Component {
       prevProps.isGettingData === true && 
       this.props.isGettingData === false
     ) {
-      renderChart(this.props.c3, this.props.analytics, this.props.currentTimeFrame)
+      renderChart(this.props.c3, this.props.analytics, this.props.currentTimeFrame);
     }
   }
   
   render() {
-    return null
+    return null;
   }
 }
 
