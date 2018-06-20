@@ -1,4 +1,3 @@
-const axios = require("axios");
 const express = require('express');
 const moment = require('moment-mini');
 
@@ -45,7 +44,7 @@ module.exports = function() {
     });
   }
   
-  const {API_URL, CDN_URL} = constants;
+  const {CDN_URL} = constants;
   
   app.get('/~:domain', async (req, res) => {
     const {domain} = req.params;

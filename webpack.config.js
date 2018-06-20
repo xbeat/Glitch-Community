@@ -47,7 +47,6 @@ module.exports = () => {
             name: 'dependencies',
             test: /[\\/]node_modules[\\/]/,
             chunks: 'all',
-            priority: -1,
           },
         },
       },
