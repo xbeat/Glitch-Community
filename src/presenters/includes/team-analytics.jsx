@@ -76,7 +76,7 @@ class TeamAnalytics extends React.Component {
 
   updateAnalytics() {
     // when currentUserOnTeam is false, it stops the request,
-    // which is incorrect when
+    // which is incorrect when the page loads, but it does'nt update
     console.log('updateanalytics currentUserOnTeam', this.props.currentUserOnTeam)
     if (!this.props.currentUserOnTeam) {
       return null

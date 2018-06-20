@@ -84,7 +84,7 @@ export default function(application) {
           return projectProps;
         });
         const id = self.team().id();
-
+        console.log('self.currentUserIsOnTeam()', self.currentUserIsOnTeam())
         return {
           id: id,
           api: application.api,
