@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const moment = require('moment-mini');
 
 const {getProject, getUser} = require('./api');
@@ -37,9 +38,10 @@ module.exports = function() {
   });
   
   function render(res, title, description, image) {
-    image = image || 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
-    res.render(__dirname + '/../public/index.ejs', {
-      title, description, image,
+    res.render('index.ejs', {
+      title, description,
+      image: image || 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png',
+      scripts: fs.readFileSync('public/manifest.json'),
       ...constants
     });
   }

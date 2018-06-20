@@ -79,7 +79,9 @@ module.exports = () => {
     plugins: [
       new LodashModuleReplacementPlugin,
       new webpack.NoEmitOnErrorsPlugin(),
-      new ManifestPlugin(),
+      new ManifestPlugin({
+        filter: ({isInitial, name}) => isInitial && !name.endsWith('.map'),
+      }),
     ],
   };
 }
