@@ -21,6 +21,7 @@
     "c3": "^0.6.1",
     "compression": "^1.7.2",
     "d3-array": "^1.2.1",
+    "ejs": "^2.6.1",
     "eslint": "^4.19.1",
     "eslint-loader": "^2.0.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
@@ -53,8 +54,7 @@
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-join": "^4.0.0",
     "webpack": "^4.6.0",
-    "webpack-cli": "^3.0.2",
-    "ejs": "^2.6.1"
+    "webpack-cli": "^3.0.2"
   },
   "engines": {
     "node": "8.x"
