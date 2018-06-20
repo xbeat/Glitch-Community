@@ -10,6 +10,7 @@ dependencies:
   babel-preset-react: 6.24.1
   body-parser: 1.18.2
   compression: 1.7.2
+  ejs: 2.6.1
   eslint: 4.19.1
   eslint-loader: 2.0.0
   eslint-plugin-jsx-a11y: 6.0.3
@@ -24,6 +25,7 @@ dependencies:
   markdown-it: 8.4.1
   markdown-it-emoji: 1.4.0
   markdown-it-sanitizer: 0.4.3
+  memory-cache: 0.2.0
   moment-mini: 2.19.4
   nodemon: 1.17.3
   o_0: 0.4.0-pre.0
@@ -2281,6 +2283,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-GJCAeDBKfREgkBtgrYSf9hQy9kTb3helv0zGdzqhM7iAkW8FA/ZF97VQDbwFiwIT8MQLLOe5VlPZOEvZAqtUAQ==
+  /ejs/2.6.1:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha512-0xy4A/twfrRCnkhfk8ErDi5DqdAsAqeGxht4xkCUrsvhhbQNs7E+4jV0CN7+NKIY0aHE72+XvqtBIXzD31ZbXQ==
   /electron-to-chromium/1.3.42:
     dev: false
     resolution:
@@ -4509,6 +4517,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-Xt1StIXKHZAP5kiVUFOZoN+kX3Y=
+  /memory-cache/0.2.0:
+    dev: false
+    resolution:
+      integrity: sha1-eJCwHVLADI68nVM+H46xfjA0hxo=
   /memory-fs/0.4.1:
     dependencies:
       errno: 0.1.7
@@ -7261,6 +7273,7 @@ specifiers:
   babel-preset-react: ^6.24.1
   body-parser: ^1.18.2
   compression: ^1.7.2
+  ejs: ^2.6.1
   eslint: ^4.19.1
   eslint-loader: ^2.0.0
   eslint-plugin-jsx-a11y: ^6.0.3
@@ -7275,6 +7288,7 @@ specifiers:
   markdown-it: ^8.4.1
   markdown-it-emoji: ^1.4.0
   markdown-it-sanitizer: ^0.4.3
+  memory-cache: ^0.2.0
   moment-mini: ^2.19.4
   nodemon: ^1.17.3
   o_0: ^0.4.0-pre.0

@@ -1,7 +1,7 @@
-const axios = require("axios");
 const express = require('express');
 const moment = require('moment-mini');
 
+const {getProject, getUser} = require('./api');
 const {updateCaches} = require('./cache');
 const constants = require('./constants');
 
@@ -37,8 +37,6 @@ module.exports = function() {
   });
   
   function render(res, title, description, image) {
-    title = title || "Glitch - The Friendly, Creative Community";
-    description = description || "The friendly community where you’ll build the app of your dreams";
     image = image || 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
     res.render(__dirname + '/../public/index.ejs', {
       title, description, image,
@@ -46,29 +44,31 @@ module.exports = function() {
     });
   }
   
-  const {API_URL, CDN_URL} = constants;
+  const {CDN_URL} = constants;
   
   app.get('/~:domain', async (req, res) => {
     const {domain} = req.params;
-    const {data} = await axios.get(`${API_URL}/projects/${domain}`);
-    if (!data) {
+    const project = await getProject(domain);
+    if (!project) {
       return render(res, domain, `We couldn't find ~${domain}`);
     }
-    const avatar = `${CDN_URL}/project-avatar/${data.id}.png`;
-    render(res, domain, data.description, avatar);
+    const avatar = `${CDN_URL}/project-avatar/${project.id}.png`;
+    render(res, domain, project.description, avatar);
   });
   
   app.get('/@:name', async (req, res) => {
     const {name} = req.params;
-    const {data} = await axios.get(`${API_URL}/users/byLogins?logins=${name}`);
-    if (!data.length) {
+    const user = await getUser(name);
+    if (!user) {
       return render(res, `@${name}`, `We couldn't find @${name}`);
     }
-    render(res, data[0].name, data[0].description);
+    render(res, user.name, user.description);
   });
 
   app.get('*', (req, res) => {
-    render(res);
+    render(res,
+      "Glitch - The Friendly, Creative Community",
+      "The friendly community where you’ll build the app of your dreams");
   });
   
   return app;

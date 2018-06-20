@@ -31,22 +31,21 @@ module.exports = () => {
     },
     optimization: {
       splitChunks: {
+        chunks: 'initial',
+        maxInitialRequests: 5,
         cacheGroups: {
           cache: {
             name: 'cache',
-            test: /[\\/]src[\\/]cache/,
-            chunks: 'all',
+            test: /[\\/]src[\\/]cache[\\/]/,
             minSize: 0,
           },
           react: {
             name: 'react-bundle',
             test: /[\\/]node_modules[\\/]react/,
-            chunks: 'all',
           },
           modules: {
             name: 'dependencies',
             test: /[\\/]node_modules[\\/]/,
-            chunks: 'all',
             priority: -1,
           },
         },
