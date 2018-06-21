@@ -36,6 +36,7 @@
     "markdown-it": "^8.4.1",
     "markdown-it-emoji": "^1.4.0",
     "markdown-it-sanitizer": "^0.4.3",
+    "memory-cache": "^0.2.0",
     "moment-mini": "^2.19.4",
     "nodemon": "^1.17.3",
     "o_0": "^0.4.0-pre.0",

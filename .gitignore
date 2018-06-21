@@ -3,7 +3,7 @@ public/*.css.map
 public/*.ks
 public/*.js.map
 public/*.js
-public/index.*
+public/index.ejs
 *.gz
 src/cache/*
 src/templates/**/*.js

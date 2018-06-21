@@ -28,6 +28,7 @@ dependencies:
   markdown-it: 8.4.1
   markdown-it-emoji: 1.4.0
   markdown-it-sanitizer: 0.4.3
+  memory-cache: 0.2.0
   moment-mini: 2.22.1
   nodemon: 1.17.5
   o_0: 0.4.0-pre.0
@@ -1331,14 +1332,14 @@ packages:
   /browserslist/2.11.3:
     dependencies:
       caniuse-lite: 1.0.30000856
-      electron-to-chromium: 1.3.48
+      electron-to-chromium: 1.3.49
     dev: false
     resolution:
       integrity: sha512-yWu5cXT7Av6mVwzWc8lMsJMHWn4xyjSuGYi4IozbVTLUOEYPSagUB8kiMDUHA1fS3zjr8nkxkn9jdvug4BBRmA==
   /browserslist/3.2.8:
     dependencies:
       caniuse-lite: 1.0.30000856
-      electron-to-chromium: 1.3.48
+      electron-to-chromium: 1.3.49
     dev: false
     resolution:
       integrity: sha512-WHVocJYavUwVgVViC0ORikPHQquXwVh939TaelZ4WDqpWgTX/FsGhl/+P4qBUAGcRvtOgDgC+xftNWWp2RUTAQ==
@@ -1911,12 +1912,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-dmL9Zr/v39aSSMnLOTd58in2RbregCg4UtGyUArvEKTTN6S3HKEy+ziBWVYo9PTzRyVW+pUBHUtRKz0HYX+SQg==
-  /d3-contour/1.2.0:
+  /d3-contour/1.3.0:
     dependencies:
       d3-array: 1.2.1
     dev: false
     resolution:
-      integrity: sha512-nDzZ2KDnrgTrhMjV8TH0RNrljk6uPNAGkG/v/1SKNVvJa2JU8szjh7o2ZYTX8yufA2oCI5HyeMqbzwiB+oDoIA==
+      integrity: sha512-6zccxidQRtcydx0lWqHawdW1UcBzKZTxv0cW90Dlx98pY/L7GjQJmftH1tWopYFDaLCoXU0ECg9x/z2EuFT8tg==
   /d3-dispatch/1.0.3:
     dev: false
     resolution:
@@ -2066,7 +2067,7 @@ packages:
       d3-chord: 1.0.4
       d3-collection: 1.0.4
       d3-color: 1.2.0
-      d3-contour: 1.2.0
+      d3-contour: 1.3.0
       d3-dispatch: 1.0.3
       d3-drag: 1.2.1
       d3-dsv: 1.0.8
@@ -2317,10 +2318,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-0xy4A/twfrRCnkhfk8ErDi5DqdAsAqeGxht4xkCUrsvhhbQNs7E+4jV0CN7+NKIY0aHE72+XvqtBIXzD31ZbXQ==
-  /electron-to-chromium/1.3.48:
+  /electron-to-chromium/1.3.49:
     dev: false
     resolution:
-      integrity: sha1-07DYWTgUBE4JLs4hCPw6ya6kuQA=
+      integrity: sha1-ZROEsNgfB4qWY5srNpdRQbeRUAQ=
   /elliptic/6.4.0:
     dependencies:
       bn.js: 4.11.8
@@ -2504,7 +2505,7 @@ packages:
       functional-red-black-tree: 1.0.1
       glob: 7.1.2
       globals: 11.7.0
-      ignore: 3.3.8
+      ignore: 3.3.10
       imurmurhash: 0.1.4
       inquirer: 3.3.0
       is-resolvable: 1.1.0
@@ -3265,10 +3266,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-SMptcvbGo68Aqa1K5odr44ieKwk=
-  /ignore/3.3.8:
+  /ignore/3.3.10:
     dev: false
     resolution:
-      integrity: sha512-pUh+xUQQhQzevjRHHFqqcTy0/dP/kS9I8HSrUydhihjuD09W6ldVWFtIrwhXdUJHis3i2rZNqEHpZH/cbinFbg==
+      integrity: sha512-Pgs951kaMm5GXP7MOvxERINe3gsaVjUWFm+UZPSq9xYriQAksyhg0csnS0KXSNRD5NmNdapXEpjxG49+AKh/ug==
   /import-lazy/2.1.0:
     dev: false
     engines:
@@ -4000,6 +4001,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-Xt1StIXKHZAP5kiVUFOZoN+kX3Y=
+  /memory-cache/0.2.0:
+    dev: false
+    resolution:
+      integrity: sha1-eJCwHVLADI68nVM+H46xfjA0hxo=
   /memory-fs/0.4.1:
     dependencies:
       errno: 0.1.7
@@ -6200,6 +6205,7 @@ specifiers:
   markdown-it: ^8.4.1
   markdown-it-emoji: ^1.4.0
   markdown-it-sanitizer: ^0.4.3
+  memory-cache: ^0.2.0
   moment-mini: ^2.19.4
   nodemon: ^1.17.3
   o_0: ^0.4.0-pre.0

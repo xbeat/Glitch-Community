@@ -38,10 +38,11 @@ module.exports = () => {
     optimization: {
       splitChunks: {
         chunks: 'initial',
+        maxInitialRequests: 5,
         cacheGroups: {
           cache: {
             name: 'cache',
-            test: /[\\/]src[\\/]cache/,
+            test: /[\\/]src[\\/]cache[\\/]/,
             minSize: 0,
           },
           react: {
