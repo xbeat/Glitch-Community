@@ -88,7 +88,7 @@ function routePage(pageUrl, application) {
   }
 
   // search page ✅
-  if (application.isSearchUrl(pageUrl, queryString)) {
+  if (pageUrl === 'search' && queryString.q) {
     const query = queryString.q;
     application.searchQuery(query);
     application.searchTeams(query);
