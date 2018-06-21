@@ -60,7 +60,7 @@ function routePage(pageUrl, application) {
     return {page, title:decodeURI(pageUrl)};
   }
 
-  // user page ✅
+  // @user page ✅
   if (pageUrl.charAt(0) === '@') {
     application.pageIsUserPage(true);
     const userLogin = pageUrl.substring(1, pageUrl.length);
@@ -78,8 +78,8 @@ function routePage(pageUrl, application) {
     return {page, title: pageUrl};
   }
 
-  // team page ✅
-  if (application.isTeamUrl(pageUrl)) {
+  // root team page ✅
+  if (application.getCachedTeamByUrl(pageUrl)) {
     application.pageIsTeamPage(true);
     const team = application.getCachedTeamByUrl(pageUrl);
     const page = TeamPage(application);
@@ -99,7 +99,7 @@ function routePage(pageUrl, application) {
   }
 
   // category page ✅
-  if (application.isCategoryUrl(pageUrl)) {
+  if (application.categories.some(({url}) => pageUrl === url)) {
     application.getCategory(pageUrl);
     const page = CategoryPage(application);
     return {page, title: application.category().name()};

@@ -277,14 +277,6 @@ var self = Model({
     return url.replace(/^(user\/)/g, '');
   },
 
-  isCategoryUrl(url) {
-    if (find(cachedCategories, category => category.url === url)) { return true; }
-  },
-
-  isTeamUrl(url) {
-    return !!find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
-  },
-
   getCachedTeamByUrl(url) {
     return find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
   },
