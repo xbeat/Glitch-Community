@@ -2,7 +2,7 @@
 
 import Observable from 'o_0';
 
-import {find, keys} from "lodash";
+import {find} from "lodash";
 import axios from 'axios';
 import cachedCategories from './cache/categories.js';
 import cachedTeams from './cache/teams.js';
@@ -281,13 +281,6 @@ var self = Model({
   
   anonProfileIdFromUrl(url) {
     return url.replace(/^(user\/)/g, '');
-  },
-  
-  isSearchUrl(url, queryString) {
-    const queryStringKeys = keys(queryString); // ['q', 'blah']
-    if ((url === 'search') && (queryStringKeys.includes('q'))) {
-      return true;
-    }
   },
 
   isCategoryUrl(url) {
