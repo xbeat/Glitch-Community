@@ -272,12 +272,6 @@ var self = Model({
     const end = string.length;
     return string.substring(firstCharacterPosition, end);
   },
-
-  isAnonUserProfileUrl(url) {
-    if (url.match(/^(user\/)/g)) { // matches "user/" at beginning of url
-      return true;
-    }
-  },
   
   anonProfileIdFromUrl(url) {
     return url.replace(/^(user\/)/g, '');
