@@ -81,25 +81,6 @@ export default function(application, userLoginOrId) {
       const element = document.getElementById('description-markdown');
       return element.focus();
     },
-    
-    defocusOnEditableDescription(event) {
-      self.editingDescription(false);
-      const text = event.target.textContent;
-      return self.newDescription(text);
-    },
-
-    editableDescriptionMarkdown() {
-      if (application.user().description().trim().length === 0) {
-        return "";
-      } else if (self.newDescription()) {
-        const text = self.newDescription();
-        const node = document.createElement('span');
-        node.innerHTML = md.render(text);
-        return node;
-      } 
-      return application.user().initialDescriptionMarkdown();
-      
-    },
 
     editableDescription() {
       if (self.newDescription()) {
