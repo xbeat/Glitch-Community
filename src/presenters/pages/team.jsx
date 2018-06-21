@@ -1,3 +1,6 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import Observable from 'o_0';
 import {debounce} from 'lodash';
 import assets from '../../utils/assets';
@@ -15,6 +18,7 @@ import {TeamProfile} from "../includes/profile.jsx";
 import TeamAnalytics from "../includes/team-analytics.jsx";
 import TeamMarketing from "../includes/team-marketing.jsx";
 
+/*
 export default function(application) {
   const assetUtils = assets(application);
   
@@ -122,10 +126,6 @@ export default function(application) {
       return application.team().currentUserIsOnTeam(application);
     },
 
-    hiddenUnlessCurrentUserIsOnTeam() {
-      if (!self.currentUserIsOnTeam()) { return 'hidden'; }
-    },
-
     updateDescription(text) {
       application.team().description(text);
       return self.updateTeam({description: text});
@@ -147,13 +147,26 @@ export default function(application) {
     removeProjectFromTeam(projectId) {
       application.team().removeProject(application, projectId);
     },
-
-    hiddenIfOnTeam() {
-      if (self.currentUserIsOnTeam()) { return 'hidden'; }
-    },
   };
 
   const content = TeamTemplate(self);
 
   return LayoutPresenter(application, content);
 }
+*/
+
+const TeamPage = ({team}) => (
+  JSON.stringify(team)
+);
+
+const TeamPageLoader = ({get}) => (
+  <DataLoader get={get} renderError={() => <NotFound name="that team"/>}>
+    {team => team ? <TeamPage team={team}/> : 
+  </DataLoader>
+);
+
+export default function(application, id) {
+  const props = {};
+  const content = Reactlet(TeamPage, props, 'teampage');
+  return LayoutPresenter(application, content);
+};

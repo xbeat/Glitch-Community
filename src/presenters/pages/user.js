@@ -25,8 +25,6 @@ export default function(application, userLoginOrId) {
 
     user: application.user,    
     
-    newDescription: Observable(""),
-    editingDescription: Observable(false),
     deletedProjectsLoadingState: Observable(""),
     
     userLoginOrId() {
@@ -57,37 +55,6 @@ export default function(application, userLoginOrId) {
   
     userName() {
       return application.user().name();
-    },
-
-    hiddenUnlessUserHasName() {
-      if (!self.userName()) { return 'hidden'; }
-    },
-
-    hiddenUnlessUserHasThanks() {
-      if (!(application.user().thanksCount() > 0)) { return 'hidden'; }
-    },
-
-    
-    hiddenIfEditingDescription() {
-      if (self.editingDescription()) { return 'hidden'; }
-    },
-
-    hiddenUnlessEditingDescription() {
-      if (!self.editingDescription()) { return 'hidden'; }
-    },
-
-    focusOnEditableDescription() {
-      self.editingDescription(true);
-      const element = document.getElementById('description-markdown');
-      return element.focus();
-    },
-
-    editableDescription() {
-      if (self.newDescription()) {
-        return self.newDescription();
-      } 
-      return application.user().initialDescription();
-      
     },
 
     description() {
@@ -161,27 +128,6 @@ export default function(application, userLoginOrId) {
       return application.user().isCurrentUser(application);
     },
 
-    hiddenUnlessUserIsCurrentUser() {
-      if (!self.isCurrentUser()) { return 'hidden'; }
-    },
-
-    hiddenIfUserIsNotCurrentUser() {
-      if (self.isCurrentUser()) { return 'hidden'; }
-    },
-
-    hiddenIfNoDescription() {
-      if (application.user().description().length === 0) { return 'hidden'; }
-    },
-
-    possessivePronoun() {
-      if (self.isCurrentUser()) { return 'Your '; }
-    },
-
-    cover() {
-      const cover = self.coverUrl();
-      if (cover) { return `url(${cover})`; }
-    },
-    
     clearCover: () => assetUtils.updateHasCoverImage(false),
 
     uploadCover: assetUtils.uploadCoverFile,
