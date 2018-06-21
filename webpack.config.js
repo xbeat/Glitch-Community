@@ -4,6 +4,12 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 
+class OutputOnBuildStart {
+  apply(compiler) {
+    compiler.hooks.watchRun.tap("OutputWatchStart", () => console.log('Files changed, rebuilding...'));
+  }
+}
+
 
 const PUBLIC = path.resolve(__dirname, 'public');
 const SRC = path.resolve(__dirname, 'src');
@@ -41,7 +47,7 @@ module.exports = () => {
           },
           react: {
             name: 'react-bundle',
-            test: /[\\/]node_modules[\\/]react/,
+            test: /[\\/]node_modules[\\/]react[-\\/]/,
           },
           modules: {
             name: 'dependencies',
@@ -77,11 +83,13 @@ module.exports = () => {
       ],
     },
     plugins: [
+      new OutputOnBuildStart,
       new LodashModuleReplacementPlugin,
       new webpack.NoEmitOnErrorsPlugin(),
       new ManifestPlugin({
         filter: ({isInitial, name}) => isInitial && !name.endsWith('.map'),
       }),
     ],
+
   };
 }

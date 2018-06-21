@@ -10,7 +10,8 @@ main.profile-page.user-page(role="main")
     section
       =@Profile
 
-    =@userProjects
-    - if @isCurrentUser()
-      = @deletedProjects
+    span
+      =@userProjects
+      - if @isCurrentUser()
+        = @deletedProjects
 

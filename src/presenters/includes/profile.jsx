@@ -33,21 +33,22 @@ ImageButtons.propTypes = {
   clearImage: PropTypes.func,
 };
 
-export const AvatarContainer = ({
+export const ProjectInfoContainer = ({
   style,
   children,
   buttons,
 }) => (
-  <div className="avatar-container">
-    <div className="user-avatar" style={style}>
+  <React.Fragment>
+    <div className="avatar-container">
+      <div className="user-avatar" style={style} />
       {buttons}
     </div>
     <div className="profile-information">
       {children}
     </div>
-  </div>
+  </React.Fragment>
 );
-AvatarContainer.propTypes = {
+ProjectInfoContainer.propTypes = {
   style: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
   buttons: PropTypes.element,
@@ -83,9 +84,13 @@ const ProfileContainer = ({
 }) => (
   <CoverContainer style={coverStyle} buttons={coverButtons}>
     <InfoContainer>
-      <AvatarContainer style={avatarStyle} buttons={avatarButtons}>
+      <div className="avatar-container">
+        <div className="user-avatar" style={avatarStyle} />
+        {avatarButtons}
+      </div>
+      <div className="profile-information">
         {children}
-      </AvatarContainer>
+      </div>
     </InfoContainer>
   </CoverContainer>
 );
@@ -97,6 +102,9 @@ const LoadingProfile = ({coverStyle}) => (
     </InfoContainer>
   </CoverContainer>
 );
+
+
+
 
 // stuff below this line is page specific and hopefully won't stay in this file forever
 
@@ -164,15 +172,29 @@ LoadedTeamProfile.propTypes = {
   uploadAvatar: PropTypes.func.isRequired,
 };
 
-export const TeamProfile = ({fetched, team, ...props}) => (
-  fetched ? <LoadedTeamProfile team={team} {...props}/> : <LoadingProfile coverStyle={team.teamProfileStyle}/>
-);
+export const TeamProfile = ({fetched, currentUserIsOnTeam, userFetched, team, ...props}) => {
+  if (!fetched || (currentUserIsOnTeam && !userFetched)) {
+    return <LoadingProfile coverStyle={team.teamProfileStyle}/>;
+  } 
+  return (
+    <LoadedTeamProfile 
+      team={team} 
+      currentUserIsOnTeam={currentUserIsOnTeam}
+      {...props}
+    />
+  );
+  
+};
 TeamProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
+  userFetched: PropTypes.bool.isRequired,
   team: PropTypes.shape({
     teamProfileStyle: PropTypes.object.isRequired,
   }).isRequired,
 };
+
+
 
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
   if(!login) {
@@ -241,9 +263,14 @@ LoadedUserProfile.propTypes = {
   uploadAvatar: PropTypes.func.isRequired,
 };
 
-export const UserProfile = ({fetched, user, ...props}) => (
-  fetched ? <LoadedUserProfile user={user} {...props}/> : <LoadingProfile coverStyle={user.profileStyle}/>
-);
+export const UserProfile = ({fetched, user, ...props}) => {
+  if (!fetched) {
+    return <LoadingProfile coverStyle={user.profileStyle}/>;
+  } 
+  return <LoadedUserProfile user={user} {...props}/>;
+  
+};
+    
 UserProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
   user: PropTypes.shape({

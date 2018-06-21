@@ -11,11 +11,12 @@ import UserTemplate from '../../templates/pages/user';
 import DeletedProjectsTemplate from '../../templates/deleted-projects';
 import LayoutPresenter from '../layout';
 
-import EntityPageProjects from "../entity-page-projects.jsx";
+import EntityPageProjectsContainer from "../entity-page-projects.jsx";
 import NotFound from '../includes/not-found.jsx';
 import {UserProfile} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
 import Observed from "../includes/observed.jsx";
+
 
 export default function(application, userLoginOrId) {
   const assetUtils = assets(application);
@@ -215,24 +216,23 @@ export default function(application, userLoginOrId) {
           });
       });
     },
-    
+        
     userProjects() {
       const propsObservable = Observable(() => {
         // observe login so that our project user links update as the user does.
         self.user().login();
         self.user().avatarThumbnailUrl();
 
-        const props = {
+        return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.isCurrentUser(),
           projectsObservable: self.user().projects,
           pinsObservable: self.user().pins,
           projectOptions: self.projectOptions(),
         };
-        return props;
       });
       
-      return Reactlet(Observed, {propsObservable, component:EntityPageProjects}, "UserPageProjectsContainer");
+      return Reactlet(Observed, {propsObservable, component:EntityPageProjectsContainer});
     },
     
     hiddenUnlessUserIsAnon() {

@@ -37,13 +37,13 @@ export class DataLoader extends React.Component {
   }
   
   render() {
-    return (this.state.loaded
-      ? this.props.children(this.state.maybeData)
-      : (this.state.maybeError
-        ? this.props.renderError(this.state.maybeError)
-        : this.props.renderLoader()
-      )
-    );
+    if (this.state.loaded) {
+      return this.props.children(this.state.maybeData);
+    } else if (this.state.maybeError) {
+      return this.props.renderError(this.state.maybeError);
+    } 
+    return this.props.renderLoader();
+    
   }
 }
 DataLoader.propTypes = {

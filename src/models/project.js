@@ -10,6 +10,8 @@ import axios from 'axios';
 
 let source = undefined; // reference to cancel token
 
+export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528812220123";
+
 export default Project = function(I, self) {
   
   if (I == null) { I = {}; }
@@ -34,14 +36,13 @@ export default Project = function(I, self) {
   self.attrModels('users', User);
 
   self.extend({
-    
+
     asProps() {
       const project = self;
 
       return {
         get teams() { return project.teams().map(team => team.asProps()); },
         get users() { return project.users().map(user => user.asProps()); },
-        
         avatar: project.avatar(),
         description: project.description(),
         domain: project.domain(),
@@ -191,7 +192,7 @@ Project.getProjectsByIds = function(api, ids) {
   
   // fetch the ids in groups so they fit into max allowable url length
   const projectIdGroups = newProjectIds.map(function(id, index) {
-    if ((index % NUMBER_OF_PROJECTS_PER_REQUEST) === 0) { 
+    if ((index % NUMBER_OF_PROJECTS_PER_REQUEST) === 0) {
       return newProjectIds.slice(index, index + NUMBER_OF_PROJECTS_PER_REQUEST);       
     }  return null; }).filter(id => id);
   

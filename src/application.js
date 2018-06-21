@@ -199,6 +199,7 @@ var self = Model({
   
   getCurrentUserById(id) {
     User.getUserById(application, id).then((userData) => {
+      self.storeLocal('cachedUser', userData);
       const user = self.loadUser(userData);
       self.currentUser(user);
     });
@@ -214,7 +215,6 @@ var self = Model({
   // and that 'saveUser' will clobber 'getCurrentUserById'
   // but not necessarily the other way around.
   saveUser(userData) {
-    
     const user = self.loadUser(userData);
     self.user(user);
   },

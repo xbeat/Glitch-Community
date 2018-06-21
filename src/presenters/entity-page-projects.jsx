@@ -16,6 +16,41 @@ const projectStateFromModels = (projectsModel, pinsModel) => {
   return {pinnedProjects, recentProjects};
 };
 
+export const TeamEntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pins, projectOptions}) => {
+  const commonProps = {
+    closeAllPopOvers,
+    projectOptions,
+  };
+  let pinIds = pins.map(pin => {
+    return pin.projectId;
+  });
+  let recentProjects = projects.filter(project => {
+    return !pinIds.includes(project.id);
+  });
+  let pinnedProjects = projects.filter(project => {
+    return pinIds.includes(project.id);
+  });
+  
+  const showPinnedProjects = isAuthorizedUser || pinnedProjects.length !== 0;
+  return (
+    <React.Fragment>
+      { showPinnedProjects && (
+        <ProjectsList title="Pinned Projects" isPinned={true} projects={pinnedProjects} {...commonProps}/>
+      )}
+      <ProjectsList title="Recent Projects" projects={recentProjects} {...commonProps}/>
+    </React.Fragment>
+  );
+};
+
+TeamEntityPageProjects.propTypes = {
+  pins: PropTypes.array.isRequired,
+  projects: PropTypes.array.isRequired,
+  isAuthorizedUser: PropTypes.bool.isRequired,
+  closeAllPopOvers: PropTypes.func.isRequired,
+  projectOptions: PropTypes.object.isRequired,
+};
+
+
 export class EntityPageProjectsContainer extends React.Component {
   
   constructor(props) {
@@ -64,7 +99,7 @@ EntityPageProjectsContainer.propTypes = {
   projectOptions: PropTypes.object.isRequired,
 };
 
-const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects, pinnedProjects, projectOptions}) => {
+export const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects, pinnedProjects, projectOptions}) => {
 
   const commonProps = {
     closeAllPopOvers,

@@ -2,18 +2,18 @@ import Observable from 'o_0';
 import {debounce} from 'lodash';
 import assets from '../../utils/assets';
 
-import User from '../../models/user';
-import Project from '../../models/project';
+import UserModel from '../../models/user';
+import ProjectModel from '../../models/project';
 import TeamTemplate from '../../templates/pages/team';
 import LayoutPresenter from '../layout';
-import AnalyticsPresenter from '../analytics';
 
 import Reactlet from "../reactlet";
-import EntityPageProjects from "../entity-page-projects.jsx";
+import {TeamEntityPageProjects} from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
 import Observed from "../includes/observed.jsx";
-
 import {TeamProfile} from "../includes/profile.jsx";
+import TeamAnalytics from "../includes/team-analytics.jsx";
+import TeamMarketing from "../includes/team-marketing.jsx";
 
 export default function(application) {
   const assetUtils = assets(application);
@@ -29,10 +29,11 @@ export default function(application) {
         const props = {
           team,
           fetched: self.team().fetched(),
+          userFetched: application.currentUser().fetched(),
           currentUserIsOnTeam: self.currentUserIsOnTeam(),
-          addUserToTeam: (id) => { self.team().addUser(application, User({id})); },
-          removeUserFromTeam: ({id}) => { self.team().removeUser(application, User({id})); },
-          search: (query) => User.getSearchResultsJSON(application, query).then(users => users.map(user => User(user).asProps())),
+          addUserToTeam: (id) => { self.team().addUser(application, UserModel({id})); },
+          removeUserFromTeam: ({id}) => { self.team().removeUser(application, UserModel({id})); },
+          search: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
           updateDescription: self.updateDescription,
           uploadAvatar: self.uploadAvatar,
           uploadCover: self.uploadCover,
@@ -41,21 +42,26 @@ export default function(application) {
         return props;
       });
 
-      return Reactlet(Observed, {propsObservable, component:TeamProfile});
+      return Reactlet(Observed, {propsObservable, component:TeamProfile}, 'team-profile');
     },
 
     TeamProjects() {
       const propsObservable = Observable(() => {
+        const projects = self.team().projects().map(function (project) {
+          let {...projectProps} = project.asProps();
+          return projectProps;
+        });
+
         return {
           closeAllPopOvers: application.closeAllPopOvers,
           isAuthorizedUser: self.currentUserIsOnTeam(),
-          projectsObservable: application.team().projects,
-          pinsObservable: application.team().pins,
+          projects: projects,
+          pins: application.team().pins(),
           projectOptions: self.projectOptions(),
         };
       });
 
-      return Reactlet(Observed, {propsObservable, component:EntityPageProjects});
+      return Reactlet(Observed, {propsObservable, component:TeamEntityPageProjects});
     },
 
     projectOptions() {
@@ -70,9 +76,32 @@ export default function(application) {
     },
 
     teamAnalytics() {
-      if (self.team().fetched()) {
-        return AnalyticsPresenter(application, self.team());
-      }
+      const propsObservable = Observable(() => {
+        const projects = self.team().projects().map(function (project) {
+          let {...projectProps} = project.asProps();
+          projectProps.description = "";
+          projectProps.users = [];
+          return projectProps;
+        });
+        const id = self.team().id();
+
+        return {
+          id: id,
+          api: application.api,
+          projects: projects,
+          currentUserOnTeam: self.currentUserIsOnTeam(),
+        };
+      });
+      return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
+    },
+
+    teamMarketing() {
+      const propsObservable = Observable(() => {
+        return {
+          currentUserIsOnTeam: self.currentUserIsOnTeam(),
+        };
+      });
+      return Reactlet(Observed, {propsObservable, component:TeamMarketing});
     },
 
     addTeamProjectButton() {
@@ -86,7 +115,6 @@ export default function(application) {
           },
         };
       });
-
       return Reactlet(Observed, {propsObservable, component:AddTeamProject});
     },
 
@@ -112,7 +140,7 @@ export default function(application) {
     uploadAvatar: assetUtils.uploadAvatarFile,
 
     togglePinnedState(projectId) {
-      const action = Project.isPinnedByTeam(application.team(), projectId) ? "removePin" : "addPin";
+      const action = ProjectModel.isPinnedByTeam(application.team(), projectId) ? "removePin" : "addPin";
       return application.team()[action](application, projectId);
     },
 

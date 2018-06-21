@@ -60,7 +60,7 @@ export default Team = function(I, self) {
       if(self.localAvatarImage()) {
         return self.localAvatarImage();
       }
-      
+
       size = size || 'small';
       if (self.hasAvatarImage()) {
         return `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-avatar/${self.id()}/${size}?${cacheBuster}`;

@@ -11,7 +11,7 @@ import {Markdown} from '../includes/markdown.jsx';
 import Expander from '../includes/expander.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
-import {AvatarContainer, InfoContainer} from '../includes/profile.jsx';
+import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
@@ -92,7 +92,7 @@ const ProjectPage = ({
   <main className="project-page">
     <section id="info">
       <InfoContainer>
-        <AvatarContainer style={{backgroundImage: `url('${avatar}')`}}>
+        <ProjectInfoContainer style={{backgroundImage: `url('${avatar}')`}}>
           <h1>
             {(userIsCurrentUser
               ? <EditableField value={domain} update={updateDomain} placeholder="Name your project"/>
@@ -113,7 +113,7 @@ const ProjectPage = ({
             <ShowButton name={domain}/>
             <EditButton name={domain} isMember={userIsCurrentUser}/>
           </p>
-        </AvatarContainer>
+        </ProjectInfoContainer>
       </InfoContainer>
     </section>
     <section id="embed">
