@@ -1,22 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Observable from 'o_0';
 import {debounce} from 'lodash';
 import assets from '../../utils/assets';
 
-import UserModel from '../../models/user';
-import ProjectModel from '../../models/project';
-import TeamTemplate from '../../templates/pages/team';
+import Team from '../../models/team';
 import LayoutPresenter from '../layout';
 
 import Reactlet from "../reactlet";
 import {TeamEntityPageProjects} from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
-import Observed from "../includes/observed.jsx";
 import {TeamProfile} from "../includes/profile.jsx";
 import TeamAnalytics from "../includes/team-analytics.jsx";
 import TeamMarketing from "../includes/team-marketing.jsx";
+import NotFound from '../includes/not-found.jsx';
+import {DataLoader} from '../includes/loader.jsx';
 
 /*
 export default function(application) {
@@ -156,17 +154,22 @@ export default function(application) {
 */
 
 const TeamPage = ({team}) => (
-  JSON.stringify(team)
+  console.log('team', team) || JSON.stringify(team)
 );
 
 const TeamPageLoader = ({get}) => (
   <DataLoader get={get} renderError={() => <NotFound name="that team"/>}>
-    {team => team ? <TeamPage team={team}/> : 
+    {team => team ? <TeamPage team={team}/> : <NotFound name="that team"/>}
   </DataLoader>
 );
+TeamPageLoader.propTypes = {
+  get: PropTypes.func.isRequired,
+};
 
 export default function(application, id) {
-  const props = {};
+  const props = {
+    get: () => application.api().get(`teams/${id}`).then(({data}) => console.log(data) && Team(data).update(data).asProps()),
+  };
   const content = Reactlet(TeamPage, props, 'teampage');
   return LayoutPresenter(application, content);
-};
+}

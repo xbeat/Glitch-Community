@@ -7,7 +7,7 @@ const queryString = qs.parse(window.location.search);
 import IndexPage from './presenters/pages/index';
 import CategoryPage from './presenters/pages/category';
 import ProjectPage from './presenters/pages/project.jsx';
-import TeamPage from './presenters/pages/team';
+import TeamPage from './presenters/pages/team.jsx';
 import UserPage from './presenters/pages/user';
 import QuestionsPage from './presenters/pages/questions';
 import SearchPage from './presenters/pages/search';
@@ -82,8 +82,7 @@ function routePage(pageUrl, application) {
   if (application.getCachedTeamByUrl(pageUrl)) {
     application.pageIsTeamPage(true);
     const team = application.getCachedTeamByUrl(pageUrl);
-    const page = TeamPage(application);
-    application.getTeamById(team.id);
+    const page = TeamPage(application, team.id);
     return {page, title: team.name};
   }
 

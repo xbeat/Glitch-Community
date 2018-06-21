@@ -1,10 +1,5 @@
 import Project from '../../models/project';
 import Observable from 'o_0';
-import mdFactory from 'markdown-it';
-const md = mdFactory({
-  breaks: true,
-  linkify: true,
-  typographer: true}).disable(['image']);
 
 import assets from '../../utils/assets';
 import UserTemplate from '../../templates/pages/user';
