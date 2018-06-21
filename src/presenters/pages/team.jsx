@@ -10,11 +10,16 @@ import LayoutPresenter from '../layout';
 import Reactlet from "../reactlet";
 import {TeamEntityPageProjects} from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
-import {TeamProfile} from "../includes/profile.jsx";
+import {ProfileContainer} from "../includes/profile.jsx";
 import TeamAnalytics from "../includes/team-analytics.jsx";
 import TeamMarketing from "../includes/team-marketing.jsx";
 import NotFound from '../includes/not-found.jsx';
 import {DataLoader} from '../includes/loader.jsx';
+import Thanks from '../includes/thanks.jsx';
+import AddTeamUser from '../includes/add-team-user.jsx';
+import {AuthDescription} from '../includes/description-field.jsx';
+import UserInfoPop from '../pop-overs/user-info-pop.jsx';
+import {UserPopoversList} from '../users-list.jsx';
 
 /*
 export default function(application) {
@@ -153,23 +158,74 @@ export default function(application) {
 }
 */
 
-const TeamPage = ({team}) => (
-  console.log('team', team) || JSON.stringify(team)
+const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam}) => (
+  <UserPopoversList users={users}>
+    {(user, togglePopover) => <UserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUserFromTeam(user)} />}
+  </UserPopoversList>
+);
+TeamUsers.propTypes = {
+  users: PropTypes.array.isRequired,
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
+  removeUserFromTeam: PropTypes.func.isRequired,
+};
+
+const VerifiedBadge = ({image, tooltip}) => (
+  <span data-tooltip={tooltip}>
+    <img className="verified" src={image} alt={tooltip}/>
+  </span>
+);
+VerifiedBadge.propTypes = {
+  image: PropTypes.string.isRequired,
+  tooltip: PropTypes.string.isRequired,
+};
+
+const TeamPage = ({
+  team: {
+    id, name, currentUserIsOnTeam,
+    isVerified, verifiedImage, verifiedTooltip,
+    users,
+    teamAvatarStyle, teamProfileStyle,
+  },
+  uploadAvatar, uploadCover, hasCoverImage, clearCover,
+  addUserToTeam, removeUserFromTeam,
+}) => (
+  <main className="profile-page team-page">
+    <section>
+      <ProfileContainer
+        avatarStyle={teamAvatarStyle} coverStyle={teamProfileStyle}
+        avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}
+        coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
+      >
+        <h1 className="username">
+          {name}
+          { isVerified && <TeamVerified image={verifiedImage} tooltip={verifiedTooltip}/> }
+        </h1>
+        <div className="users-information">
+          <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
+          { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
+        </div>
+        <Thanks count={thanksCount}/>
+        <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
+      </ProfileContainer>
+    </section>
+  </main>
 );
 
-const TeamPageLoader = ({get}) => (
-  <DataLoader get={get} renderError={() => <NotFound name="that team"/>}>
-    {team => team ? <TeamPage team={team}/> : <NotFound name="that team"/>}
+const TeamPageLoader = ({get, name}) => (
+  <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
+    {team => team ? <TeamPage team={team}/> : <NotFound name={name}/>}
   </DataLoader>
 );
 TeamPageLoader.propTypes = {
   get: PropTypes.func.isRequired,
+  name: PropTypes.node.isRequired,
 };
 
-export default function(application, id) {
+export default function(application, id, name) {
   const props = {
-    get: () => application.api().get(`teams/${id}`).then(({data}) => console.log(data) && Team(data).update(data).asProps()),
+    name,
+    get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? Team(data).update(data).asProps() : null)),
   };
-  const content = Reactlet(TeamPage, props, 'teampage');
+  const content = Reactlet(TeamPageLoader, props, 'teampage');
   return LayoutPresenter(application, content);
 }

@@ -82,7 +82,7 @@ function routePage(pageUrl, application) {
   if (application.getCachedTeamByUrl(pageUrl)) {
     application.pageIsTeamPage(true);
     const team = application.getCachedTeamByUrl(pageUrl);
-    const page = TeamPage(application, team.id);
+    const page = TeamPage(application, team.id, team.name);
     return {page, title: team.name};
   }
 

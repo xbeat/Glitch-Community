@@ -77,7 +77,7 @@ CoverContainer.propTypes = {
   className: PropTypes.string,
 };
 
-const ProfileContainer = ({
+export const ProfileContainer = ({
   avatarStyle, avatarButtons,
   coverStyle, coverButtons,
   children,
@@ -104,97 +104,7 @@ const LoadingProfile = ({coverStyle}) => (
 );
 
 
-
-
 // stuff below this line is page specific and hopefully won't stay in this file forever
-
-const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam}) => (
-  <UserPopoversList users={users}>
-    {(user, togglePopover) => <UserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUserFromTeam(user)} />}
-  </UserPopoversList>
-);
-TeamUsers.propTypes = {
-  users: PropTypes.array.isRequired,
-  currentUserIsOnTeam: PropTypes.bool.isRequired,
-  removeUserFromTeam: PropTypes.func.isRequired,
-};
-
-const TeamVerified = ({image, tooltip}) => (
-  <span data-tooltip={tooltip}>
-    <img className="verified" src={image} alt={tooltip}/>
-  </span>
-);
-TeamVerified.propTypes = {
-  image: PropTypes.string.isRequired,
-  tooltip: PropTypes.string.isRequired,
-};
-
-const LoadedTeamProfile = ({
-  team: {
-    name, users, description, thanksCount,
-    teamAvatarStyle, teamProfileStyle, hasCoverImage,
-    isVerified, verifiedTooltip, verifiedImage,
-  },
-  currentUserIsOnTeam,
-  uploadCover, clearCover, uploadAvatar,
-  search, addUserToTeam, removeUserFromTeam,
-  updateDescription,
-}) => (
-  <ProfileContainer
-    avatarStyle={teamAvatarStyle} coverStyle={teamProfileStyle}
-    avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}
-    coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
-  >
-    <h1 className="username">
-      {name}
-      { isVerified && <TeamVerified image={verifiedImage} tooltip={verifiedTooltip}/> }
-    </h1>
-    <div className="users-information">
-      <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
-      { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
-    </div>
-    <Thanks count={thanksCount}/>
-    <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
-  </ProfileContainer>
-);
-LoadedTeamProfile.propTypes = {
-  team: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    users: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    })).isRequired,
-    thanksCount: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    isVerified: PropTypes.bool.isRequired,
-  }).isRequired,
-  currentUserIsOnTeam: PropTypes.bool.isRequired,
-  updateDescription: PropTypes.func.isRequired,
-  uploadAvatar: PropTypes.func.isRequired,
-};
-
-export const TeamProfile = ({fetched, currentUserIsOnTeam, userFetched, team, ...props}) => {
-  if (!fetched || (currentUserIsOnTeam && !userFetched)) {
-    return <LoadingProfile coverStyle={team.teamProfileStyle}/>;
-  } 
-  return (
-    <LoadedTeamProfile 
-      team={team} 
-      currentUserIsOnTeam={currentUserIsOnTeam}
-      {...props}
-    />
-  );
-  
-};
-TeamProfile.propTypes = {
-  fetched: PropTypes.bool.isRequired,
-  currentUserIsOnTeam: PropTypes.bool.isRequired,
-  userFetched: PropTypes.bool.isRequired,
-  team: PropTypes.shape({
-    teamProfileStyle: PropTypes.object.isRequired,
-  }).isRequired,
-};
-
-
 
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
   if(!login) {
