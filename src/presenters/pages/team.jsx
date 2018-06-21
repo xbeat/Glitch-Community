@@ -10,7 +10,7 @@ import LayoutPresenter from '../layout';
 import Reactlet from "../reactlet";
 import {TeamEntityPageProjects} from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
-import {ProfileContainer} from "../includes/profile.jsx";
+import {ProfileContainer, ImageButtons} from "../includes/profile.jsx";
 import TeamAnalytics from "../includes/team-analytics.jsx";
 import TeamMarketing from "../includes/team-marketing.jsx";
 import NotFound from '../includes/not-found.jsx';
@@ -181,13 +181,13 @@ VerifiedBadge.propTypes = {
 
 const TeamPage = ({
   team: {
-    id, name, currentUserIsOnTeam,
+    id, name, thanksCount, description, users,
     isVerified, verifiedImage, verifiedTooltip,
-    users,
     teamAvatarStyle, teamProfileStyle,
   },
+  currentUserIsOnTeam, updateDescription,
   uploadAvatar, uploadCover, hasCoverImage, clearCover,
-  addUserToTeam, removeUserFromTeam,
+  addUserToTeam, removeUserFromTeam, search,
 }) => (
   <main className="profile-page team-page">
     <section>
@@ -198,11 +198,11 @@ const TeamPage = ({
       >
         <h1 className="username">
           {name}
-          { isVerified && <TeamVerified image={verifiedImage} tooltip={verifiedTooltip}/> }
+          {isVerified && <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>}
         </h1>
         <div className="users-information">
           <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
-          { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
+          {currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
         </div>
         <Thanks count={thanksCount}/>
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
@@ -211,9 +211,23 @@ const TeamPage = ({
   </main>
 );
 
-const TeamPageLoader = ({get, name}) => (
+class TeamPageEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.props.initialTeam;
+  }
+  
+  render() {
+    const props = {
+      currentUserIsOnTeam: this.state.users
+    };
+    return <TeamPage team={this.state} {...props}/>;
+  }
+}
+
+const TeamPageLoader = ({get, name, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {team => team ? <TeamPage team={team}/> : <NotFound name={name}/>}
+    {team => team ? <TeamPageEditor initialTeam={team} {...props}/> : <NotFound name={name}/>}
   </DataLoader>
 );
 TeamPageLoader.propTypes = {
@@ -224,6 +238,7 @@ TeamPageLoader.propTypes = {
 export default function(application, id, name) {
   const props = {
     name,
+    api: application.api(),
     get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? Team(data).update(data).asProps() : null)),
   };
   const content = Reactlet(TeamPageLoader, props, 'teampage');

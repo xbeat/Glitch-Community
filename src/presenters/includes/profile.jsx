@@ -13,7 +13,7 @@ import EditableField from './editable-field.jsx';
 import UserInfoPop from '../pop-overs/user-info-pop.jsx';
 import {UserPopoversList} from '../users-list.jsx';
 
-const ImageButtons = ({name, uploadImage, clearImage}) => (
+export const ImageButtons = ({name, uploadImage, clearImage}) => (
   <div className="upload-image-buttons">
     { !!uploadImage && (
       <button className="button-small button-tertiary" onClick={uploadImage}>
