@@ -49,19 +49,19 @@ function routePage(pageUrl, application) {
   }
 
   // questions page ✅
-  if (application.isQuestionsUrl(pageUrl)) {
+  if (pageUrl === 'questions') {
     return {page: QuestionsPage(application), title: "Questions"};
   }
 
   // ~project overlay page ✅
-  if (application.isProjectUrl(pageUrl)) {
+  if (pageUrl.charAt(0) === '~') {
     const projectDomain = application.removeFirstCharacter(pageUrl);
     const page = ProjectPage(application, projectDomain);
     return {page, title:decodeURI(pageUrl)};
   }
 
   // user page ✅
-  if (application.isUserProfileUrl(pageUrl)) {
+  if (pageUrl.charAt(0) === '@') {
     application.pageIsUserPage(true);
     const userLogin = pageUrl.substring(1, pageUrl.length);
     const page = UserPage(application, userLogin);

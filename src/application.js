@@ -273,18 +273,6 @@ var self = Model({
     return string.substring(firstCharacterPosition, end);
   },
 
-  isProjectUrl(url) {
-    if (url.charAt(0) === "~") {
-      return true;
-    }
-  },
-
-  isUserProfileUrl(url) {
-    if (url.charAt(0) === "@") {
-      return true;
-    }
-  },
-
   isAnonUserProfileUrl(url) {
     if (url.match(/^(user\/)/g)) { // matches "user/" at beginning of url
       return true;
@@ -312,12 +300,6 @@ var self = Model({
 
   getCachedTeamByUrl(url) {
     return find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
-  },
-
-  isQuestionsUrl(url) {
-    if (url === 'questions') {
-      return true;
-    }
   },
 });
 
