@@ -217,9 +217,18 @@ class TeamPageEditor extends React.Component {
     this.state = this.props.initialTeam;
   }
   
+  updateField(field, value) {
+    const {id} = this.state;
+    const change = {[field]: value};
+    return this.props.api.patch(`teams/${id}`, change).then(() => {
+      this.setState(change);
+    });
+  }
+  
   render() {
     const props = {
-      currentUserIsOnTeam: this.state.users
+      currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
+      updateDescription: this.updateField.bind(this, 'description'),
     };
     return <TeamPage team={this.state} {...props}/>;
   }
@@ -239,6 +248,7 @@ export default function(application, id, name) {
   const props = {
     name,
     api: application.api(),
+    currentUserId: application.currentUser().id(),
     get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? Team(data).update(data).asProps() : null)),
   };
   const content = Reactlet(TeamPageLoader, props, 'teampage');
