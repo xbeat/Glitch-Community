@@ -18,13 +18,13 @@ export default [
     link: 'https://glitch.com/you-got-this/2'
   }
   , {
-    title: 'Hello Kitty Calculator',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Flumpy-gull.jpg?1529320669076",
-    link: 'https://lumpy-gull.glitch.me/'
+    title: 'Website Logins with EmailAuth',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Femail-auth.jpg?1529665896131",
+    link: 'https://glitch.com/~email-auth'
   }
   , {
-    title: 'You Got This! Zine: React Edition',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FreactZinesStackFeatureBanner.png?1529489480468",
-    link: 'https://glitch.com/you-got-this/2'
+    title: 'Master the Magic of CSS Houdini',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcss-houdini.jpg?1529665896358",
+    link: 'https://glitch.com/~houdini'
   }   
 ];
