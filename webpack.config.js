@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 
@@ -86,9 +86,8 @@ module.exports = () => {
       new OutputOnBuildStart,
       new LodashModuleReplacementPlugin,
       new webpack.NoEmitOnErrorsPlugin(),
-      new HtmlWebpackPlugin({
-        filename: 'index.ejs',
-        template: '!!raw-loader!views/index.ejs',
+      new ManifestPlugin({
+        filter: ({isInitial, name}) => isInitial && !name.endsWith('.map'),
       }),
     ],
 
