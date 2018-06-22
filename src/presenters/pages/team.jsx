@@ -158,15 +158,15 @@ export default function(application) {
 }
 */
 
-const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam}) => (
+const TeamUsers = ({users, currentUserIsOnTeam, removeUser}) => (
   <UserPopoversList users={users}>
-    {(user, togglePopover) => <UserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUserFromTeam(user)} />}
+    {(user, togglePopover) => <UserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUser(user)} />}
   </UserPopoversList>
 );
 TeamUsers.propTypes = {
   users: PropTypes.array.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
-  removeUserFromTeam: PropTypes.func.isRequired,
+  removeUser: PropTypes.func.isRequired,
 };
 
 const VerifiedBadge = ({image, tooltip}) => (
@@ -201,8 +201,8 @@ const TeamPage = ({
           {isVerified && <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>}
         </h1>
         <div className="users-information">
-          <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
-          {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUserToTeam} members={users.map(({id}) => id)}/>}
+          <TeamUsers {...{users, currentUserIsOnTeam, removeUser}}/>
+          {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)}/>}
         </div>
         <Thanks count={thanksCount}/>
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
@@ -225,10 +225,19 @@ class TeamPageEditor extends React.Component {
     });
   }
   
-  addUser(user) {
-    const {id} = this.state;
-    this.props.api.post(`/teams/${id}/users/${id}`).then(() => {
-      this.setState(
+  addUser(userId) {
+    const {id, users} = this.state;
+    this.props.api.post(`teams/${id}/users/${userId}`).then(() => {
+      const user = UserModel({id: userId}).asProps();
+      this.setState({users: [...users, user]});
+    });
+  }
+  
+  removeUser({id: userId}) {
+    const {id, users} = this.state;
+    this.props.api.delete(`teams/${id}/users/${userId}`).then(() => {
+      this.setState({users: users.filter(({id}) => id !== userId)});
+    });
   }
   
   render() {
@@ -236,6 +245,7 @@ class TeamPageEditor extends React.Component {
       currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
       updateDescription: this.updateField.bind(this, 'description'),
       addUser: this.addUser.bind(this),
+      removeUser: this.removeUser.bind(this),
     };
     return <TeamPage team={this.state} {...props} {...this.props}/>;
   }
