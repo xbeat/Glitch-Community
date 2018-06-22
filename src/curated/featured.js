@@ -18,7 +18,7 @@ export default [
     link: 'https://glitch.com/you-got-this/2'
   }
   , {
-    title: 'Website Logins with EmailAuth',
+    title: 'Website Logins with Email Auth',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Femail-auth.jpg?1529665896131",
     link: 'https://glitch.com/~email-auth'
   }
