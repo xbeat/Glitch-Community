@@ -225,17 +225,16 @@ class TeamPageEditor extends React.Component {
     });
   }
   
-  addItem(itemId, itemType, ItemModel) {
-    this.props.api.post(`teams/${id}/users/${userId}`).then(() => {
-      const user = UserModel({id: userId}).asProps(); //weewoo weewoo this relies on the usermodel having been loaded elsewhere
-      this.setState({users: [...users, user]});
+  addItem(field, Model, id) {
+    this.props.api.post(`teams/${this.state.id}/${field}/${id}`).then(() => {
+      const item = Model({id}).asProps(); //weewoo weewoo this relies on the model having been loaded elsewhere
+      this.setState({[field]: [...this.state[field], item]});
     });
   }
   
-  removeUser(userId) {
-    const {id, users} = this.state;
-    this.props.api.delete(`teams/${id}/users/${userId}`).then(() => {
-      this.setState({users: users.filter(({id}) => id !== userId)});
+  removeItem(field, id) {
+    this.props.api.delete(`teams/${this.state.id}/${field}/${id}`).then(() => {
+      this.setState({[field]: this.state[field].filter(item => item.id !== id)});
     });
   }
   
@@ -243,8 +242,8 @@ class TeamPageEditor extends React.Component {
     const props = {
       currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
       updateDescription: this.updateField.bind(this, 'description'),
-      addUser: this.addUser.bind(this),
-      removeUser: this.removeUser.bind(this),
+      addUser: this.addItem.bind(this, 'users', UserModel),
+      removeUser: this.removeItem.bind(this, 'users'),
     };
     return <TeamPage team={this.state} {...props} {...this.props}/>;
   }
