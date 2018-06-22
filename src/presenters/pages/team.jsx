@@ -183,10 +183,10 @@ const TeamPage = ({
   team: {
     name, thanksCount, description, users,
     isVerified, verifiedImage, verifiedTooltip,
-    teamAvatarStyle, teamProfileStyle,
+    teamAvatarStyle, teamProfileStyle, hasCoverImage,
   },
   currentUserIsOnTeam, updateDescription,
-  uploadAvatar, uploadCover, hasCoverImage, clearCover,
+  uploadAvatar, uploadCover, clearCover,
   addUser, removeUser, searchUsers,
 }) => (
   <main className="profile-page team-page">
@@ -244,6 +244,7 @@ class TeamPageEditor extends React.Component {
       updateDescription: this.updateField.bind(this, 'description'),
       addUser: this.addItem.bind(this, 'users', UserModel),
       removeUser: this.removeItem.bind(this, 'users'),
+      clearCover: this.updateField.bind(this, 'hasCoverImage', false),
     };
     return <TeamPage team={this.state} {...props} {...this.props}/>;
   }
