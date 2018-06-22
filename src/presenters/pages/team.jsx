@@ -179,11 +179,21 @@ VerifiedBadge.propTypes = {
   tooltip: PropTypes.string.isRequired,
 };
 
+const getProfileStyle = ({id, hasCoverImage, coverColor}) => {
+  const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-cover/${id}/large`;
+  const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
+  const coverImage = (hasCoverImage ? customImage : defaultImage);
+  return {
+    backgroundColor: coverColor,
+    backgroundImage: `url('${coverImage}')`,
+  };
+};
+
 const TeamPage = ({
   team: {
-    name, thanksCount, description, users,
+    id, name, thanksCount, description, users,
     isVerified, verifiedImage, verifiedTooltip,
-    teamAvatarStyle, teamProfileStyle, hasCoverImage,
+    teamAvatarStyle, coverColor, hasCoverImage,
   },
   currentUserIsOnTeam, updateDescription,
   uploadAvatar, uploadCover, clearCover,
@@ -192,7 +202,7 @@ const TeamPage = ({
   <main className="profile-page team-page">
     <section>
       <ProfileContainer
-        avatarStyle={teamAvatarStyle} coverStyle={teamProfileStyle}
+        avatarStyle={teamAvatarStyle} coverStyle={getProfileStyle({id, hasCoverImage, coverColor})}
         avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}
         coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
       >
