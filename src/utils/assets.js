@@ -148,8 +148,8 @@ export default function(application) {
       
     },
 
-    getTeamCoverImagePolicy() {
-      const policyPath = `teams/${application.team().id()}/cover/policy`;
+    getTeamCoverImagePolicy(id = application.team().id()) {
+      const policyPath = `teams/${id}/cover/policy`;
       return application.api().get(policyPath)
         .then(response => response).catch(function(error) {
           application.notifyUploadFailure(true);
