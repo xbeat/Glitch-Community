@@ -220,20 +220,20 @@ class TeamPageEditor extends React.Component {
   updateField(field, value) {
     const {id} = this.state;
     const change = {[field]: value};
-    this.props.api.patch(`teams/${id}`, change).then(() => {
+    return this.props.api.patch(`teams/${id}`, change).then(() => {
       this.setState(change);
     });
   }
   
   addItem(field, Model, id) {
-    this.props.api.post(`teams/${this.state.id}/${field}/${id}`).then(() => {
+    return this.props.api.post(`teams/${this.state.id}/${field}/${id}`).then(() => {
       const item = Model({id}).asProps(); //weewoo weewoo this relies on the model having been loaded elsewhere
       this.setState({[field]: [...this.state[field], item]});
     });
   }
   
   removeItem(field, id) {
-    this.props.api.delete(`teams/${this.state.id}/${field}/${id}`).then(() => {
+    return this.props.api.delete(`teams/${this.state.id}/${field}/${id}`).then(() => {
       this.setState({[field]: this.state[field].filter(item => item.id !== id)});
     });
   }
