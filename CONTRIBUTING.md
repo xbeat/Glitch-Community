@@ -115,7 +115,7 @@ Ok, now the GitHub repository is updated and stable.
   
 4. Your new version in staged!  View the site and the logs, make sure it's building and looks alive.
 
-5. Swap ~community with ~community-staging to put your new version in front of users. 
+5. Swap ~community with ~community-staging to put your new version in front of users. (there's a special endpoint for this, ask us about it)
 
 6. Problem? No worries, swap it back!
 
