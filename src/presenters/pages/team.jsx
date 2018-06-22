@@ -187,7 +187,7 @@ const TeamPage = ({
   },
   currentUserIsOnTeam, updateDescription,
   uploadAvatar, uploadCover, hasCoverImage, clearCover,
-  addUserToTeam, removeUserFromTeam, searchUsers,
+  addUser, removeUser, searchUsers,
 }) => (
   <main className="profile-page team-page">
     <section>
@@ -225,10 +225,17 @@ class TeamPageEditor extends React.Component {
     });
   }
   
+  addUser(user) {
+    const {id} = this.state;
+    this.props.api.post(`/teams/${id}/users/${id}`).then(() => {
+      this.setState(
+  }
+  
   render() {
     const props = {
       currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
       updateDescription: this.updateField.bind(this, 'description'),
+      addUser: this.addUser.bind(this),
     };
     return <TeamPage team={this.state} {...props} {...this.props}/>;
   }
