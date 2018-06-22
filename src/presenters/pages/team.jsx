@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {debounce} from 'lodash';
 import assets from '../../utils/assets';
 
-import Team from '../../models/team';
+import TeamModel from '../../models/team';
+import UserModel from '../../models/user';
 import LayoutPresenter from '../layout';
 
 import Reactlet from "../reactlet";
@@ -181,13 +181,13 @@ VerifiedBadge.propTypes = {
 
 const TeamPage = ({
   team: {
-    id, name, thanksCount, description, users,
+    name, thanksCount, description, users,
     isVerified, verifiedImage, verifiedTooltip,
     teamAvatarStyle, teamProfileStyle,
   },
   currentUserIsOnTeam, updateDescription,
   uploadAvatar, uploadCover, hasCoverImage, clearCover,
-  addUserToTeam, removeUserFromTeam, search,
+  addUserToTeam, removeUserFromTeam, searchUsers,
 }) => (
   <main className="profile-page team-page">
     <section>
@@ -202,7 +202,7 @@ const TeamPage = ({
         </h1>
         <div className="users-information">
           <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
-          {currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
+          {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUserToTeam} members={users.map(({id}) => id)}/>}
         </div>
         <Thanks count={thanksCount}/>
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
@@ -230,7 +230,7 @@ class TeamPageEditor extends React.Component {
       currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
       updateDescription: this.updateField.bind(this, 'description'),
     };
-    return <TeamPage team={this.state} {...props}/>;
+    return <TeamPage team={this.state} {...props} {...this.props}/>;
   }
 }
 
@@ -249,7 +249,8 @@ export default function(application, id, name) {
     name,
     api: application.api(),
     currentUserId: application.currentUser().id(),
-    get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? Team(data).update(data).asProps() : null)),
+    get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? TeamModel(data).update(data).asProps() : null)),
+    searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps()))
   };
   const content = Reactlet(TeamPageLoader, props, 'teampage');
   return LayoutPresenter(application, content);
