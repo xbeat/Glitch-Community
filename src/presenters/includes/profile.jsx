@@ -7,11 +7,8 @@ import PropTypes from 'prop-types';
 
 import Loader from './loader.jsx';
 import Thanks from './thanks.jsx';
-import AddTeamUser from './add-team-user.jsx';
 import {AuthDescription} from './description-field.jsx';
 import EditableField from './editable-field.jsx';
-import UserInfoPop from '../pop-overs/user-info-pop.jsx';
-import {UserPopoversList} from '../users-list.jsx';
 
 export const ImageButtons = ({name, uploadImage, clearImage}) => (
   <div className="upload-image-buttons">

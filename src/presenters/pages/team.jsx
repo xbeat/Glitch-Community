@@ -160,7 +160,7 @@ export default function(application) {
 
 const TeamUsers = ({users, currentUserIsOnTeam, removeUser}) => (
   <UserPopoversList users={users}>
-    {(user, togglePopover) => <UserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUser(user)} />}
+    {(user, togglePopover) => <UserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUser(user.id)} />}
   </UserPopoversList>
 );
 TeamUsers.propTypes = {
@@ -220,20 +220,19 @@ class TeamPageEditor extends React.Component {
   updateField(field, value) {
     const {id} = this.state;
     const change = {[field]: value};
-    return this.props.api.patch(`teams/${id}`, change).then(() => {
+    this.props.api.patch(`teams/${id}`, change).then(() => {
       this.setState(change);
     });
   }
   
-  addUser(userId) {
-    const {id, users} = this.state;
+  addItem(itemId, itemType, ItemModel) {
     this.props.api.post(`teams/${id}/users/${userId}`).then(() => {
-      const user = UserModel({id: userId}).asProps();
+      const user = UserModel({id: userId}).asProps(); //weewoo weewoo this relies on the usermodel having been loaded elsewhere
       this.setState({users: [...users, user]});
     });
   }
   
-  removeUser({id: userId}) {
+  removeUser(userId) {
     const {id, users} = this.state;
     this.props.api.delete(`teams/${id}/users/${userId}`).then(() => {
       this.setState({users: users.filter(({id}) => id !== userId)});
