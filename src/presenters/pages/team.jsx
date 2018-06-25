@@ -300,7 +300,7 @@ class TeamPageEditor extends React.Component {
       const color = assets.getDominantColor(image);
       await this.updateFields({
         hasAvatarImage: true,
-        avatarColor: color,
+        backgroundColor: color,
       });
     } catch (error) {
       console.error(error);
