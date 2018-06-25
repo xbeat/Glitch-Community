@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getTeamCoverImagePolicy, uploadAsset} from '../../utils/assets';
+import {requestFile, getTeamCoverImagePolicy, uploadAsset} from '../../utils/assets';
 
 import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
@@ -258,9 +258,10 @@ class TeamPageEditor extends React.Component {
     });
     try {
       const {data: policy} = await getTeamCoverImagePolicy(this.props.api, this.state.id);
-      const promise = uploadAsset(blob, policy);
-      promise.progress(data => console.log(data));
+      const promise = uploadAsset(blob, policy, 'large');
+      promise.progress(data => console.log('progress', data));
       await promise;
+      this.updateField('hasCoverImage', true);
     } catch (error) {
       console.error(error);
       this.setState({_uploadError: true});
@@ -279,7 +280,7 @@ class TeamPageEditor extends React.Component {
       updateDescription: this.updateField.bind(this, 'description'),
       addUser: this.addItem.bind(this, 'users', UserModel),
       removeUser: this.removeItem.bind(this, 'users'),
-      uploadCover: this.uploadCover.bind(this),
+      uploadCover: () => requestFile(this.uploadCover.bind(this)),
       clearCover: this.updateField.bind(this, 'hasCoverImage', false),
     };
     return (
