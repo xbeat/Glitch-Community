@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getTeamCoverImagePolicy} from '../../utils/assets';
+import {getTeamCoverImagePolicy, uploadAsset} from '../../utils/assets';
 
 import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
@@ -258,7 +258,9 @@ class TeamPageEditor extends React.Component {
     });
     try {
       const {data: policy} = await getTeamCoverImagePolicy(this.props.api, this.state.id);
-      console.log(policy);
+      const promise = uploadAsset(blob, policy);
+      promise.progress(data => console.log(data));
+      await promise;
     } catch (error) {
       console.error(error);
       this.setState({_uploadError: true});

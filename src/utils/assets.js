@@ -147,7 +147,7 @@ export function getTeamCoverImagePolicy(api, id) {
 };
 
 export function uploadAsset(blob, policy, key='original') {
-  return S3Uploader(policy).upload({ key, blob })
+  return S3Uploader(policy).upload({ key, blob });
 }
 
 
