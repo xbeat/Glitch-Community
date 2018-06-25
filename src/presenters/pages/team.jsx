@@ -225,6 +225,7 @@ class TeamPageEditor extends React.Component {
     super(props);
     this.state = {
       _uploading: false,
+      _uploadProgress: 0,
       _uploadError: false,
       ...this.props.initialTeam
     };
@@ -265,7 +266,11 @@ class TeamPageEditor extends React.Component {
       const {data: policy} = await assets.getTeamCoverImagePolicy(this.props.api, this.state.id);
       
       const promise = assets.uploadAsset(blob, policy, 'original');
-      promise.progress(data => console.log('progress', data));
+      promise.progress(({lengthComputable, loaded, total}) => {
+        if (lengthComputable) {
+          this.setState({_uploadProgress: loaded/total});
+        }
+      });
       
       await Promise.all([promise, ...Object.keys(assets.COVER_SIZES).map(async tag => {
         const resized = await assets.resizeImage(blob, assets.COVER_SIZES[tag]);
@@ -288,6 +293,7 @@ class TeamPageEditor extends React.Component {
   render() {
     const {
       _uploading,
+      _uploadProgress,
       _uploadError,
       ...team
     } = this.state;
@@ -305,11 +311,11 @@ class TeamPageEditor extends React.Component {
           {_uploading && (
             <div className="notification notifyUploading">
               Uploading asset
-              <progress className="notify-progress"></progress>
+              <progress className="notify-progress" value={_uploadProgress}></progress>
             </div>
           )}
           {_uploadError && (
-            <div className="notification notifyUploadError">File upload failed. Try again in a few minutes?</div>
+            <div className="notification notifyUploadFailure">File upload failed. Try again in a few minutes?</div>
           )}
         </aside>
         <TeamPage team={team} {...props} {...this.props}/>
