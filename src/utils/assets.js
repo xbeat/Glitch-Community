@@ -126,6 +126,14 @@ const getDominantColor = function(image) {
 };
 
 
+export function getTeamCoverImagePolicy(api, id) {
+  const policyPath = `teams/${id}/cover/policy`;
+  return api.get(policyPath).catch(function(error) {
+    console.error('getTeamCoverImagePolicy', error);
+  });
+};
+
+
 export default function(application) {
 
   let self;
