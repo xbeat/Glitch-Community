@@ -265,7 +265,7 @@ class TeamPageEditor extends React.Component {
       _uploadError: false,
     });
     try {
-      await assets.uploadAssetSizes(blob, policy, assets.COVER_SIZES,
+      await assets.uploadAssetSizes(blob, policy, sizes,
         ({lengthComputable, loaded, total}) => {
           if (lengthComputable) {
             this.setState({_uploadProgress: loaded/total});
@@ -274,25 +274,32 @@ class TeamPageEditor extends React.Component {
           }
         }
       );
-    } catch (error) {
-      this.setState({
-        _uploading: false,
-        _uploadError: true,
-      });
-      throw error;
+    } finally {
+      this.setState({_uploading: false});
     }
-    this.setState({
-      _uploading: false,
-      _cacheCover: Date.now(),
-    });
+  }
+  
+  async uploadAvatar(blob) {
+    try {
+      const {data: policy} = await assets.getTeamAvatarImagePolicy(this.props.api, this.state.id);
+      await this.uploadAsset(blob, policy, assets.AVATAR_SIZES);
+
+      const image = await assets.blobToImage(blob);
+      const color = assets.getDominantColor(image);
+      await this.updateFields({
+        hasAvatarImage: true,
+        avatarColor: color,
+      });
+    } catch (error) {
+      console.error(error);
+      this.setState({_uploadError: true});
+    }
   }
   
   async uploadCover(blob) {
     try {
       const {data: policy} = await assets.getTeamCoverImagePolicy(this.props.api, this.state.id);
-
-      const uploaded = await this.uploadAsset(blob, policy, assets.COVER_SIZES);
-      if (!uploaded) return;
+      await this.uploadAsset(blob, policy, assets.COVER_SIZES);
 
       const image = await assets.blobToImage(blob);
       const color = assets.getDominantColor(image);
@@ -304,6 +311,7 @@ class TeamPageEditor extends React.Component {
       console.error(error);
       this.setState({_uploadError: true});
     }
+    this.setState({_cacheCover: Date.now()});
   }
   
   render() {

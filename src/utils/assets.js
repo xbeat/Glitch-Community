@@ -138,11 +138,12 @@ export function requestFile(callback) {
   console.log('input created: ', input);
 }
 
+export function getTeamAvatarImagePolicy(api, id) {
+  return api.get(`teams/${id}/avatar/policy`);
+}
+
 export function getTeamCoverImagePolicy(api, id) {
-  const policyPath = `teams/${id}/cover/policy`;
-  return api.get(policyPath).catch(function(error) {
-    console.error('getTeamCoverImagePolicy', error);
-  });
+  return api.get(`teams/${id}/cover/policy`);
 }
 
 export function uploadAsset(blob, policy, key) {
