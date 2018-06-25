@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {requestFile, getTeamCoverImagePolicy, uploadAsset} from '../../utils/assets';
+import * as assets from '../../utils/assets';
 
 import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
@@ -230,12 +230,16 @@ class TeamPageEditor extends React.Component {
     };
   }
   
-  updateField(field, value) {
+  updateFields(changes) {
     const {id} = this.state;
-    const change = {[field]: value};
-    return this.props.api.patch(`teams/${id}`, change).then(() => {
-      this.setState(change);
+    return this.props.api.patch(`teams/${id}`, changes).then(() => {
+      this.setState(changes);
     });
+  }
+  
+  updateField(field, value) {
+    const change = {[field]: value};
+    return this.updateFields(change);
   }
   
   addItem(field, Model, id) {
@@ -257,11 +261,16 @@ class TeamPageEditor extends React.Component {
       _uploadError: false,
     });
     try {
-      const {data: policy} = await getTeamCoverImagePolicy(this.props.api, this.state.id);
-      const promise = uploadAsset(blob, policy, 'large');
+      const {data: policy} = await assets.getTeamCoverImagePolicy(this.props.api, this.state.id);
+      const promise = assets.uploadAsset(blob, policy, 'original');
       promise.progress(data => console.log('progress', data));
       await promise;
-      this.updateField('hasCoverImage', true);
+      const image = await assets.blobToImage(blob);
+      const color = assets.getDominantColor(image);
+      await this.updateFields({
+        hasCoverImage: true,
+        coverColor: color,
+      });
     } catch (error) {
       console.error(error);
       this.setState({_uploadError: true});
@@ -280,7 +289,7 @@ class TeamPageEditor extends React.Component {
       updateDescription: this.updateField.bind(this, 'description'),
       addUser: this.addItem.bind(this, 'users', UserModel),
       removeUser: this.removeItem.bind(this, 'users'),
-      uploadCover: () => requestFile(this.uploadCover.bind(this)),
+      uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
       clearCover: this.updateField.bind(this, 'hasCoverImage', false),
     };
     return (

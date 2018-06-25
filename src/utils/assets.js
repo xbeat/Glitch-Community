@@ -15,7 +15,7 @@ const AVATAR_SIZES = {
   small: 60,
 };
 
-const blobToImage = file =>
+export const blobToImage = file =>
   new Promise(function(resolve, reject) {
     const image = new Image;
     image.onload = () => resolve(image);
@@ -60,7 +60,7 @@ const drawCanvasThumbnail = function(image, type, max) {
 // Takes an HTML5 File and returns a promise for an HTML5 Blob that is fulfilled
 // with a thumbnail for the image. If the image is small enough the original
 // blob is returned. Width and height metadata are added to the blob.
-const resizeImage = function(file, size) {
+export function resizeImage(file, size) {
   const max = COVER_SIZES[size] || 1000;
   return blobToImage(file)
     .then(function(image) {
@@ -74,7 +74,7 @@ const resizeImage = function(file, size) {
     });
 };
 
-export const getDominantColor = function(image) {
+export function getDominantColor(image) {
   const {width, height} = image;
   const PIXELS_FROM_EDGE = 11;
   const canvas = document.createElement('canvas');
@@ -122,7 +122,6 @@ export const getDominantColor = function(image) {
   const colorMap = quantize(colors, 5);
   const [r, g, b] = Array.from(colorMap.palette()[0]);
   return `rgb(${r},${g},${b})`;
-  
 };
 
 
