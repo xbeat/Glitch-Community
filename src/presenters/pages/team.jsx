@@ -179,6 +179,15 @@ VerifiedBadge.propTypes = {
   tooltip: PropTypes.string.isRequired,
 };
 
+const getAvatarStyle = ({id, hasAvatarImage, backgroundColor, cache}) => {
+  const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-avatar/${id}/small?${cache}`;
+  const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-team-avatar.svg?1503510366819";
+  return {
+    backgroundColor,
+    backgroundImage: `url('${hasAvatarImage ? customImage : defaultImage}')`,
+  };
+};
+
 const getProfileStyle = ({id, hasCoverImage, coverColor, cache}) => {
   const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-cover/${id}/large?${cache}`;
   const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
@@ -192,17 +201,19 @@ const TeamPage = ({
   team: {
     id, name, thanksCount, description, users,
     isVerified, verifiedImage, verifiedTooltip,
-    teamAvatarStyle, coverColor, hasCoverImage,
+    backgroundColor, hasAvatarImage,
+    coverColor, hasCoverImage,
   },
   currentUserIsOnTeam, updateDescription,
   uploadAvatar, uploadCover, clearCover,
   addUser, removeUser, searchUsers,
-  _cacheCover,
+  _cacheAvatar, _cacheCover,
 }) => (
   <main className="profile-page team-page">
     <section>
       <ProfileContainer
-        avatarStyle={teamAvatarStyle} coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
+        avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
+        coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
         avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}
         coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
       >
@@ -228,6 +239,7 @@ class TeamPageEditor extends React.Component {
       _uploading: false,
       _uploadProgress: 0,
       _uploadError: false,
+      _cacheAvatar: Date.now(),
       _cacheCover: Date.now(),
       ...this.props.initialTeam
     };
@@ -294,6 +306,7 @@ class TeamPageEditor extends React.Component {
       console.error(error);
       this.setState({_uploadError: true});
     }
+    this.setState({_cacheAvatar: Date.now()});
   }
   
   async uploadCover(blob) {
@@ -319,11 +332,12 @@ class TeamPageEditor extends React.Component {
       _uploading,
       _uploadProgress,
       _uploadError,
+      _cacheAvatar,
       _cacheCover,
       ...team
     } = this.state;
     const props = {
-      _cacheCover,
+      _cacheAvatar, _cacheCover,
       currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
       updateDescription: this.updateField.bind(this, 'description'),
       addUser: this.addItem.bind(this, 'users', UserModel),

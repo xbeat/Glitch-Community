@@ -9,7 +9,7 @@ export const COVER_SIZES = {
   medium: 700,
   small: 450,
 };
-const AVATAR_SIZES = {
+export const AVATAR_SIZES = {
   large: 300,
   medium: 150,
   small: 60,
