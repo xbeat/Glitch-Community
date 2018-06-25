@@ -13,14 +13,14 @@ Example:
 
 export default [
   {
-    title: 'You Got This! Zine: React Edition',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FreactZinesStackFeatureBanner.png?1529489480468",
-    link: 'https://glitch.com/you-got-this/2'
+    title: 'Home Again, Home Again',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fhome-again.jpg?1529928234373",
+    link: 'https://glitch.com/~home-again'
   }
   , {
-    title: 'Website Logins with Email Auth',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Femail-auth.jpg?1529665896131",
-    link: 'https://glitch.com/~email-auth'
+    title: 'Generative Art Twitter Bot',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fgenerative-twitterbot.jpg?1529928234615",
+    link: 'https://glitch.com/~generative-twitterbot'
   }
   , {
     title: 'Master the Magic of CSS Houdini',
