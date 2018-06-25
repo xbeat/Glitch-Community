@@ -257,7 +257,7 @@ class TeamPageEditor extends React.Component {
       _uploadError: false,
     });
     try {
-      const policy = await getTeamCoverImagePolicy(this.props.api, this.state.id);
+      const {data: policy} = await getTeamCoverImagePolicy(this.props.api, this.state.id);
       console.log(policy);
     } catch (error) {
       console.error(error);
@@ -284,12 +284,14 @@ class TeamPageEditor extends React.Component {
       <React.Fragment>
         <aside className="notifications">
           {_uploading && (
-            <div className="notification notifyUploadProgress">
+            <div className="notification notifyUploading">
+              Uploading asset
+              <progress className="notify-progress"></progress>
             </div>
           )}
           {_uploadError && (
             <div className="notification notifyUploadError">File upload failed. Try again in a few minutes?</div>
-          )};
+          )}
         </aside>
         <TeamPage team={team} {...props} {...this.props}/>
       </React.Fragment>
