@@ -126,12 +126,29 @@ const getDominantColor = function(image) {
 };
 
 
+export function requestFile(callback) {
+  const input = document.createElement("input");
+  input.type = 'file';
+  input.accept = "image/*";
+  input.onchange = function(event) {
+    const file = event.target.files[0];
+    console.log('☔️☔️☔️ input onchange', file);
+    callback(file);
+  };
+  input.click();
+  console.log('input created: ', input);
+}
+
 export function getTeamCoverImagePolicy(api, id) {
   const policyPath = `teams/${id}/cover/policy`;
   return api.get(policyPath).catch(function(error) {
     console.error('getTeamCoverImagePolicy', error);
   });
 };
+
+export function uploadAsset(blob, policy, key='original') {
+  return S3Uploader(policy).upload({ key, blob })
+}
 
 
 export default function(application) {
@@ -301,16 +318,7 @@ export default function(application) {
     },
     
     uploader(uploadReceiver) {
-      const input = document.createElement("input");
-      input.type = 'file';
-      input.accept = "image/*";
-      input.onchange = function(event) {
-        const file = event.target.files[0];
-        console.log('☔️☔️☔️ input onchange', file);
-        uploadReceiver(file);
-      };
-      input.click();
-      console.log('input created: ', input);
+      requestFile(uploadReceiver);
       return false;
     },
   };
