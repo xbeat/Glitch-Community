@@ -72,7 +72,7 @@ export function resizeImage(file, size) {
       return drawCanvasThumbnail(image, file.type, max);
     
     });
-};
+}
 
 export function getDominantColor(image) {
   const {width, height} = image;
@@ -122,7 +122,7 @@ export function getDominantColor(image) {
   const colorMap = quantize(colors, 5);
   const [r, g, b] = Array.from(colorMap.palette()[0]);
   return `rgb(${r},${g},${b})`;
-};
+}
 
 
 export function requestFile(callback) {
@@ -143,26 +143,21 @@ export function getTeamCoverImagePolicy(api, id) {
   return api.get(policyPath).catch(function(error) {
     console.error('getTeamCoverImagePolicy', error);
   });
-};
+}
 
 export function uploadAsset(blob, policy, key) {
   return S3Uploader(policy).upload({ key, blob });
 }
 
-export async function uploadAssetSizes(blob, policy, sizes) {
-  const promise = assets.uploadAsset(blob, policy, 'original');
-  promise.progress(({lengthComputable, loaded, total}) => {
-    if (lengthComputable) {
-      this.setState({_uploadProgress: loaded/total});
-    } else {
-      this.setState(({_uploadProgress}) => ({_uploadProgress: (_uploadProgress+1)/2}));
-    }
+export function uploadAssetSizes(blob, policy, sizes, progressHandler) {
+  const upload = uploadAsset(blob, policy, 'original');
+  upload.progress(progressHandler);
+  
+  const scaledUploads = Object.keys(sizes).map(tag => {
+    return resizeImage(blob, sizes[tag]).then(resized => uploadAsset(resized, policy, tag));
   });
 
-  await Promise.all([promise, ...Object.keys(assets.COVER_SIZES).map(async tag => {
-    const resized = await assets.resizeImage(blob, assets.COVER_SIZES[tag]);
-    await assets.uploadAsset(resized, policy, tag);
-  })]);
+  return Promise.all([upload, ...scaledUploads]);
 }
 
 
