@@ -23,8 +23,8 @@ export default [
     link: 'https://glitch.com/~generative-twitterbot'
   }
   , {
-    title: 'Master the Magic of CSS Houdini',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcss-houdini.jpg?1529665896358",
-    link: 'https://glitch.com/~houdini'
+    title: 'Track Congress\' Progress',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcongress-tracker-1.jpg?1529928449588",
+    link: 'https://glitch.com/~congress-tracker'
   }   
 ];
