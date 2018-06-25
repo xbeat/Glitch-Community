@@ -74,7 +74,7 @@ const resizeImage = function(file, size) {
     });
 };
 
-const getDominantColor = function(image) {
+export const getDominantColor = function(image) {
   const {width, height} = image;
   const PIXELS_FROM_EDGE = 11;
   const canvas = document.createElement('canvas');
