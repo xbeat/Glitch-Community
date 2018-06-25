@@ -258,15 +258,13 @@ class TeamPageEditor extends React.Component {
     });
   }
   
-  async uploadCover(blob) {
+  async uploadAsset(blob, policy, sizes) {
     this.setState({
       _uploading: true,
       _uploadProgress: 0,
       _uploadError: false,
     });
     try {
-      const {data: policy} = await assets.getTeamCoverImagePolicy(this.props.api, this.state.id);
-      
       await assets.uploadAssetSizes(blob, policy, assets.COVER_SIZES,
         ({lengthComputable, loaded, total}) => {
           if (lengthComputable) {
@@ -276,7 +274,26 @@ class TeamPageEditor extends React.Component {
           }
         }
       );
-      
+    } catch (error) {
+      this.setState({
+        _uploading: false,
+        _uploadError: true,
+      });
+      throw error;
+    }
+    this.setState({
+      _uploading: false,
+      _cacheCover: Date.now(),
+    });
+  }
+  
+  async uploadCover(blob) {
+    try {
+      const {data: policy} = await assets.getTeamCoverImagePolicy(this.props.api, this.state.id);
+
+      const uploaded = await this.uploadAsset(blob, policy, assets.COVER_SIZES);
+      if (!uploaded) return;
+
       const image = await assets.blobToImage(blob);
       const color = assets.getDominantColor(image);
       await this.updateFields({
@@ -287,10 +304,6 @@ class TeamPageEditor extends React.Component {
       console.error(error);
       this.setState({_uploadError: true});
     }
-    this.setState({
-      _uploading: false,
-      _cacheCover: Date.now(),
-    });
   }
   
   render() {
@@ -307,6 +320,7 @@ class TeamPageEditor extends React.Component {
       updateDescription: this.updateField.bind(this, 'description'),
       addUser: this.addItem.bind(this, 'users', UserModel),
       removeUser: this.removeItem.bind(this, 'users'),
+      uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
       uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
       clearCover: this.updateField.bind(this, 'hasCoverImage', false),
     };
