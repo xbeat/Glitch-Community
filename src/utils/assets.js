@@ -4,7 +4,7 @@ import S3Uploader from './s3-uploader';
 
 import quantize from 'quantize';
 import Observable from 'o_0';
-const COVER_SIZES = {
+export const COVER_SIZES = {
   large: 1000,
   medium: 700,
   small: 450,

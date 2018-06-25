@@ -258,13 +258,20 @@ class TeamPageEditor extends React.Component {
   async uploadCover(blob) {
     this.setState({
       _uploading: true,
+      _uploadProgress: 0,
       _uploadError: false,
     });
     try {
       const {data: policy} = await assets.getTeamCoverImagePolicy(this.props.api, this.state.id);
+      
       const promise = assets.uploadAsset(blob, policy, 'original');
       promise.progress(data => console.log('progress', data));
-      await promise;
+      
+      await Promise.all([promise, ...Object.keys(assets.COVER_SIZES).map(async tag => {
+        const resized = await assets.resizeImage(blob, assets.COVER_SIZES[tag]);
+        await assets.uploadAsset(resized, policy, tag);
+      })]);
+      
       const image = await assets.blobToImage(blob);
       const color = assets.getDominantColor(image);
       await this.updateFields({
