@@ -223,7 +223,11 @@ const TeamPage = ({
 class TeamPageEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.props.initialTeam;
+    this.state = {
+      _uploading: false,
+      _uploadError: false,
+      ...this.props.initialTeam
+    };
   }
   
   updateField(field, value) {
@@ -248,11 +252,26 @@ class TeamPageEditor extends React.Component {
   }
   
   async uploadCover(blob) {
-    const policy = await getTeamCoverImagePolicy(this.props.api, this.state.id);
-    console.log(policy);
+    this.setState({
+      _uploading: true,
+      _uploadError: false,
+    });
+    try {
+      const policy = await getTeamCoverImagePolicy(this.props.api, this.state.id);
+      console.log(policy);
+    } catch (error) {
+      console.error(error);
+      this.setState({_uploadError: true});
+    }
+    this.setState({_uploading: false});
   }
   
   render() {
+    const {
+      _uploading,
+      _uploadError,
+      ...team
+    } = this.state;
     const props = {
       currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
       updateDescription: this.updateField.bind(this, 'description'),
@@ -261,7 +280,20 @@ class TeamPageEditor extends React.Component {
       uploadCover: this.uploadCover.bind(this),
       clearCover: this.updateField.bind(this, 'hasCoverImage', false),
     };
-    return <TeamPage team={this.state} {...props} {...this.props}/>;
+    return (
+      <React.Fragment>
+        <aside className="notifications">
+          {_uploading && (
+            <div className="notification notifyUploadProgress">
+            </div>
+          )}
+          {_uploadError && (
+            <div className="notification notifyUploadError">File upload failed. Try again in a few minutes?</div>
+          )};
+        </aside>
+        <TeamPage team={team} {...props} {...this.props}/>
+      </React.Fragment>
+    );
   }
 }
 
