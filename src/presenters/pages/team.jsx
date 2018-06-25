@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import assets from '../../utils/assets';
+import {getTeamCoverImagePolicy} from '../../utils/assets';
 
 import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
@@ -247,12 +247,18 @@ class TeamPageEditor extends React.Component {
     });
   }
   
+  async uploadCover(blob) {
+    const policy = await getTeamCoverImagePolicy(this.props.api, this.state.id);
+    console.log(policy);
+  }
+  
   render() {
     const props = {
       currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
       updateDescription: this.updateField.bind(this, 'description'),
       addUser: this.addItem.bind(this, 'users', UserModel),
       removeUser: this.removeItem.bind(this, 'users'),
+      uploadCover: this.uploadCover.bind(this),
       clearCover: this.updateField.bind(this, 'hasCoverImage', false),
     };
     return <TeamPage team={this.state} {...props} {...this.props}/>;
