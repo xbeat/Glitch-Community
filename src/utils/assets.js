@@ -145,8 +145,24 @@ export function getTeamCoverImagePolicy(api, id) {
   });
 };
 
-export function uploadAsset(blob, policy, key='original') {
+export function uploadAsset(blob, policy, key) {
   return S3Uploader(policy).upload({ key, blob });
+}
+
+export async function uploadAssetSizes(blob, policy, sizes) {
+  const promise = assets.uploadAsset(blob, policy, 'original');
+  promise.progress(({lengthComputable, loaded, total}) => {
+    if (lengthComputable) {
+      this.setState({_uploadProgress: loaded/total});
+    } else {
+      this.setState(({_uploadProgress}) => ({_uploadProgress: (_uploadProgress+1)/2}));
+    }
+  });
+
+  await Promise.all([promise, ...Object.keys(assets.COVER_SIZES).map(async tag => {
+    const resized = await assets.resizeImage(blob, assets.COVER_SIZES[tag]);
+    await assets.uploadAsset(resized, policy, tag);
+  })]);
 }
 
 
