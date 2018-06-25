@@ -269,6 +269,8 @@ class TeamPageEditor extends React.Component {
       promise.progress(({lengthComputable, loaded, total}) => {
         if (lengthComputable) {
           this.setState({_uploadProgress: loaded/total});
+        } else {
+          this.setState(({_uploadProgress}) => ({_uploadProgress: (_uploadProgress+1)/2}));
         }
       });
       
