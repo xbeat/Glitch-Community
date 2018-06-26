@@ -225,10 +225,11 @@ const TeamPage = ({
           <TeamUsers {...{users, currentUserIsOnTeam, removeUser}}/>
           {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)}/>}
         </div>
-        <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount)}/>
+        <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)}/>
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
       </ProfileContainer>
     </section>
+    {!currentUserIsOnTeam && <TeamMarketing/>}
   </main>
 );
 
