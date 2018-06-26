@@ -220,8 +220,8 @@ const TeamPage = ({
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
       </ProfileContainer>
     </section>
-    <NewEntityPageProjects projects={projects}/>
-    {!currentUserIsOnTeam && <TeamMarketing projects={projects} pins={teamPins}/>}
+    <NewEntityPageProjects projects={projects} pins={teamPins}/>
+    {!currentUserIsOnTeam && <TeamMarketing/>}
   </main>
 );
 

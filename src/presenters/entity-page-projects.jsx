@@ -128,9 +128,10 @@ export default EntityPageProjectsContainer;
 export const NewEntityPageProjects = ({projects, pins}) => {
   console.log(projects, pins);
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
-  const [pinnedProjects, recentProjects] = partition(projects, ({projectId}) => pinnedSet.has(projectId));
+  const [pinnedProjects, recentProjects] = partition(projects, ({id}) => pinnedSet.has(id));
   return (
     <React.Fragment>
+      {!!pinnedProjects.length && <ProjectsList title="Pinned Projects" projects={pinnedProjects}/>}
       <ProjectsList title="Recent Projects" projects={recentProjects}/>
     </React.Fragment>
   );
