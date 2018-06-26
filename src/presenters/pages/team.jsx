@@ -12,7 +12,7 @@ import {TeamEntityPageProjects} from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
 import {ProfileContainer, ImageButtons} from "../includes/profile.jsx";
 import TeamAnalytics from "../includes/team-analytics.jsx";
-import TeamMarketing from "../includes/team-marketing.jsx";
+import {TeamMarketing, VerifiedBadge} from "../includes/team-elements.jsx";
 import NotFound from '../includes/not-found.jsx';
 import {DataLoader} from '../includes/loader.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -167,16 +167,6 @@ TeamUsers.propTypes = {
   users: PropTypes.array.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUser: PropTypes.func.isRequired,
-};
-
-const VerifiedBadge = ({image, tooltip}) => (
-  <span data-tooltip={tooltip}>
-    <img className="verified" src={image} alt={tooltip}/>
-  </span>
-);
-VerifiedBadge.propTypes = {
-  image: PropTypes.string.isRequired,
-  tooltip: PropTypes.string.isRequired,
 };
 
 const getAvatarStyle = ({id, hasAvatarImage, backgroundColor, cache}) => {

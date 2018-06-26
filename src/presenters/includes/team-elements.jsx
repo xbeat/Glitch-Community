@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const TeamMarketing = () => (
+export const TeamMarketing = () => (
   <section className="team-marketing">
     <p>
       <img className="for-platforms-icon" src="https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188" alt="fishing emoji"></img>
@@ -15,4 +16,12 @@ const TeamMarketing = () => (
   </section>
 );
 
-export default TeamMarketing;
+export const VerifiedBadge = ({image, tooltip}) => (
+  <span data-tooltip={tooltip}>
+    <img className="verified" src={image} alt={tooltip}/>
+  </span>
+);
+VerifiedBadge.propTypes = {
+  image: PropTypes.string.isRequired,
+  tooltip: PropTypes.string.isRequired,
+};
