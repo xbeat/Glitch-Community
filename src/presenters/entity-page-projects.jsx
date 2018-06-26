@@ -166,14 +166,21 @@ const NewEntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin,
 export default class NewEntityPageProjectsLoader extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loadedProjects: {},
-    };
+    this.state = {}; //id: null or loaded project
+  }
+  
+  ensureProjects(projects) {
+    const unloadedProjects = projects.filter(({id}) => !(id in this.state));
+    console.log(unloadedProjects);
+  }
+  
+  componentDidMount() {
+    this.ensureProjects(this.props.projects);
   }
   
   render() {
     const {projects, ...props} = this.props;
-    const {loadedProjects} = this.state;
-    
-    return <NewEntityPageProps projects={projects.map(project => loadedProjects[project.id] || project)} {...props}/>;
-};
+    const loadedProjects = projects.map(project => this.state[project.id] || project);
+    return <NewEntityPageProjects projects={loadedProjects} {...props}/>;
+  }
+}
