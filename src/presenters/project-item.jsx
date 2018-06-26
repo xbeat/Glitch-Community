@@ -36,8 +36,6 @@ ProjectItem.propTypes = {
     description: PropTypes.string.isRequired,
     domain: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    isPinnedByTeam: PropTypes.bool.isRequired,
-    isPinnedByUser: PropTypes.bool.isRequired,
     isRecentProject: PropTypes.bool.isRequired,
     link: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

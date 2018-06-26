@@ -48,18 +48,11 @@ const ProjectOptionsPop = ({
         {!!addPin && <PopoverButton onClick={() => addPin(projectId)} text="Pin This" emoji="pushpin"/>}
         {!!removePin && <PopoverButton onClick={() => removePin(projectId)} text="Un-Pin This" emoji="pushpin"/>}
       </section>
-
-
       <section className="pop-over-actions danger-zone last-section">
-        {removeProjectFromTeam && <PopoverButton onClick={() => removeProjectFromTeam(projectId)} text="Remove Project" emoji="thumbs_down"/>
+        {!!removeProjectFromTeam && <PopoverButton onClick={() => removeProjectFromTeam(projectId)} text="Remove Project" emoji="thumbs_down"/>}
+        {!!deleteProject && <PopoverButton onClick={clickDelete} text="Delete This" emoji="bomb"/>}
+        {!!leaveProject && <PopoverButton onClick={clickLeave} text="Leave This" emoji="wave"/>}
       </section>
-      )}
-      {(deleteProject && leaveProject) && (
-        <section className="pop-over-actions danger-zone last-section">
-          <PopoverButton onClick={clickDelete} text="Delete This" emoji="bomb"/>
-          <PopoverButton onClick={clickLeave} text="Leave This" emoji="wave"/>
-        </section>
-      )}
     </dialog>
   );
 };

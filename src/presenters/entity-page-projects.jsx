@@ -126,9 +126,11 @@ export default EntityPageProjectsContainer;
 
 const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-export const NewEntityPageProjects = ({projects, pins, isAuthorized}) => {
+export const NewEntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, projectOptions}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const [pinnedProjects, recentProjects] = partition(projects, ({id}) => pinnedSet.has(id));
+  
+  const pinnedVisible = isAuthorized || pinnedProjects.length;
   
   const pinnedTitle = (
     <React.Fragment>
@@ -147,12 +149,18 @@ export const NewEntityPageProjects = ({projects, pins, isAuthorized}) => {
     </React.Fragment>
   );
   
-  const pinnedVisible = isAuthorized || pinnedProjects.length;
-  
   return (
     <React.Fragment>
-      {!!pinnedVisible && <ProjectsList title={pinnedTitle} projects={pinnedProjects} placeholder={pinnedEmpty}/>}
-      <ProjectsList title="Recent Projects" projects={recentProjects}/>
+      {!!pinnedVisible && (
+        <ProjectsList title={pinnedTitle}
+          projects={pinnedProjects} placeholder={pinnedEmpty}
+          projectOptions={isAuthorized ? {removePin, ...projectOptions} : {}}
+        />
+      )}
+      <ProjectsList
+        title="Recent Projects" projects={recentProjects}
+        projectOptions={isAuthorized ? {addPin, ...projectOptions} : {}}
+      />
     </React.Fragment>
   );
 };
