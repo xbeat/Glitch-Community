@@ -122,11 +122,9 @@ EntityPageProjects.propTypes = {
   isAuthorizedUser: PropTypes.bool.isRequired,
 };
 
-export default EntityPageProjectsContainer;
-
 const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-export const NewEntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, projectOptions}) => {
+const NewEntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, projectOptions}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const [pinnedProjects, recentProjects] = partition(projects, ({id}) => pinnedSet.has(id));
   
@@ -163,4 +161,19 @@ export const NewEntityPageProjects = ({projects, pins, isAuthorized, addPin, rem
       />
     </React.Fragment>
   );
+};
+
+export default class NewEntityPageProjectsLoader extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loadedProjects: {},
+    };
+  }
+  
+  render() {
+    const {projects, ...props} = this.props;
+    const {loadedProjects} = this.state;
+    
+    return <NewEntityPageProps projects={projects.map(project => loadedProjects[project.id] || project)} {...props}/>;
 };

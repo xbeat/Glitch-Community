@@ -9,7 +9,7 @@ import ProjectModel from '../../models/project';
 import LayoutPresenter from '../layout';
 
 import Reactlet from "../reactlet";
-import {NewEntityPageProjects} from "../entity-page-projects.jsx";
+import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
 import {ProfileContainer, ImageButtons} from "../includes/profile.jsx";
 import TeamAnalytics from "../includes/team-analytics.jsx";
@@ -222,7 +222,7 @@ const TeamPage = ({
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
       </ProfileContainer>
     </section>
-    <NewEntityPageProjects projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam} addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam}}/>
+    <EntityPageProjects projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam} addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam}}/>
     {!currentUserIsOnTeam && <TeamMarketing/>}
   </main>
 );
@@ -391,7 +391,8 @@ export default function(application, id, name) {
     api: application.api(),
     currentUserId: application.currentUser().id(),
     get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? TeamModel(data).update(data).asProps() : null)),
-    searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps()))
+    searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
+    getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
   };
   const content = Reactlet(TeamPageLoader, props, 'teampage');
   return LayoutPresenter(application, content);
