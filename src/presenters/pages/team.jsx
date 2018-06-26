@@ -5,6 +5,7 @@ import * as assets from '../../utils/assets';
 
 import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
+import ProjectModel from '../../models/project';
 import LayoutPresenter from '../layout';
 
 import Reactlet from "../reactlet";
@@ -198,6 +199,7 @@ const TeamPage = ({
   currentUserIsOnTeam, updateDescription,
   uploadAvatar, uploadCover, clearCover,
   addUser, removeUser, searchUsers,
+  addPin, removePin, removeProjectFromTeam,
   _cacheAvatar, _cacheCover,
 }) => (
   <main className="profile-page team-page">
@@ -220,7 +222,7 @@ const TeamPage = ({
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
       </ProfileContainer>
     </section>
-    <NewEntityPageProjects projects={projects} pins={teamPins}/>
+    <NewEntityPageProjects projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam} addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam}}/>
     {!currentUserIsOnTeam && <TeamMarketing/>}
   </main>
 );
@@ -260,6 +262,18 @@ class TeamPageEditor extends React.Component {
   removeItem(field, id) {
     return this.props.api.delete(`teams/${this.state.id}/${field}/${id}`).then(() => {
       this.setState({[field]: this.state[field].filter(item => item.id !== id)});
+    });
+  }
+  
+  addPin(id) {
+    return this.props.api.post(`teams/${this.state.id}/pinned-projects/${id}`).then(() => {
+      this.setState({teamPins: [...this.state.teamPins, {projectId: id}]});
+    });
+  }
+  
+  removePin(id) {
+    return this.props.api.delete(`teams/${this.state.id}/pinned-projects/${id}`).then(() => {
+      this.setState({teamPins: this.state.teamPins.filter(item => item.projectId !== id)});
     });
   }
   
@@ -338,6 +352,9 @@ class TeamPageEditor extends React.Component {
       uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
       uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
       clearCover: this.updateField.bind(this, 'hasCoverImage', false),
+      removeProjectFromTeam: this.removeItem.bind(this, 'projects'),
+      addPin: this.addPin.bind(this),
+      removePin: this.removePin.bind(this),
     };
     return (
       <React.Fragment>

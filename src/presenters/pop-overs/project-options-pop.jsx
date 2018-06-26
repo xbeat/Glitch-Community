@@ -10,8 +10,7 @@ const PopoverButton = ({onClick, text, emoji}) => (
 );
 
 const ProjectOptionsPop = ({
-  projectId,
-  projectName, projectIsPinned, togglePopover, 
+  projectId, projectName,
   addPin, removePin, deleteProject, 
   leaveProject, removeProjectFromTeam
 }) => {
