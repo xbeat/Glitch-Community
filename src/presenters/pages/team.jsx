@@ -198,9 +198,10 @@ const TeamPage = ({
   },
   currentUserIsOnTeam, updateDescription,
   uploadAvatar, uploadCover, clearCover,
-  addUser, removeUser, searchUsers,
-  addPin, removePin, removeProjectFromTeam,
-  getProjects,
+  addUser, removeUser,
+  addPin, removePin,
+  removeProjectFromTeam,
+  api, searchUsers, getProjects,
   _cacheAvatar, _cacheCover,
 }) => (
   <main className="profile-page team-page">
@@ -228,6 +229,9 @@ const TeamPage = ({
       addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam}}
       getProjects={getProjects}
     />
+    {(currentUserIsOnTeam ? (
+      <TeamAnalytics api={api} id={id} currentUserIsOnTeam={currentUserIsOnTeam} projects={projects}/>
+    ) : <TeamMarketing/>)}
     {!currentUserIsOnTeam && <TeamMarketing/>}
   </main>
 );
