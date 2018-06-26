@@ -109,7 +109,6 @@ export default function(application) {
         return {
           myProjects: application.currentUser().projects().map(({asProps})=>asProps()),
           teamProjects: self.team().projects().map(({asProps})=>asProps()),
-          teamUsers: self.team().users(),
           currentUserIsOnTeam: self.currentUserIsOnTeam(),
           addProject: (id) => {
             application.team().addProject(application, id);

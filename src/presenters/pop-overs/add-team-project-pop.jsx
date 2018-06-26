@@ -77,7 +77,6 @@ export class AddTeamProjectPop extends React.Component {
 AddTeamProjectPop.propTypes = {
   myProjects: PropTypes.array.isRequired,
   teamProjects: PropTypes.array.isRequired,
-  teamUsers: PropTypes.array.isRequired,
   addProject: PropTypes.func.isRequired,
   togglePopover: PropTypes.func.isRequired,
 };
