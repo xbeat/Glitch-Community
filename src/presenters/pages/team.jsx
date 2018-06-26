@@ -8,7 +8,7 @@ import UserModel from '../../models/user';
 import LayoutPresenter from '../layout';
 
 import Reactlet from "../reactlet";
-import {TeamEntityPageProjects} from "../entity-page-projects.jsx";
+import {NewEntityPageProjects} from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
 import {ProfileContainer, ImageButtons} from "../includes/profile.jsx";
 import TeamAnalytics from "../includes/team-analytics.jsx";
@@ -190,6 +190,7 @@ const getProfileStyle = ({id, hasCoverImage, coverColor, cache}) => {
 const TeamPage = ({
   team: {
     id, name, description, users,
+    projects, teamPins,
     isVerified, verifiedImage, verifiedTooltip,
     backgroundColor, hasAvatarImage,
     coverColor, hasCoverImage,
@@ -219,7 +220,8 @@ const TeamPage = ({
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
       </ProfileContainer>
     </section>
-    {!currentUserIsOnTeam && <TeamMarketing/>}
+    <NewEntityPageProjects projects={projects}/>
+    {!currentUserIsOnTeam && <TeamMarketing projects={projects} pins={teamPins}/>}
   </main>
 );
 

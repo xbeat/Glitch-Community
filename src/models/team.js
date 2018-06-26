@@ -216,6 +216,8 @@ export default Team = function(I, self) {
     asProps() {
       return {
         get users() { return self.users().map(({asProps}) => asProps()); },
+        get projects() { return self.projects().map(({asProps}) => asProps()); },
+        get teamPins() { return self.teamPins(); },
         
         backgroundColor: self.backgroundColor(),
         coverColor: self.coverColor(),

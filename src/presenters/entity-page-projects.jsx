@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
 import Observable from "o_0";
-import {debounce} from 'lodash';
+import {debounce, partition} from 'lodash';
 
 
 /* globals Set */
@@ -125,8 +125,13 @@ EntityPageProjects.propTypes = {
 export default EntityPageProjectsContainer;
 
 
-export const NewEntityPageProjects = ({projects, pinnedProjects}) => (
-  <React.Fragment>
-    <ProjectsList title="Recent Projects"
-  </React.Fragment>
-);
+export const NewEntityPageProjects = ({projects, pins}) => {
+  console.log(projects, pins);
+  const pinnedSet = new Set(pins.map(({projectId}) => projectId));
+  const [pinnedProjects, recentProjects] = partition(projects, ({projectId}) => pinnedSet.has(projectId));
+  return (
+    <React.Fragment>
+      <ProjectsList title="Recent Projects" projects={recentProjects}/>
+    </React.Fragment>
+  );
+};
