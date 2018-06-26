@@ -171,7 +171,7 @@ export default class NewEntityPageProjectsLoader extends React.Component {
   
   ensureProjects(projects) {
     const unloadedProjects = projects.filter(({id}) => !(id in this.state));
-    chunk(unloadedProjects, 10).forEach(projects => {
+    chunk(unloadedProjects, 50).forEach(projects => {
       const ids = projects.map(({id}) => id);
       this.props.getProjects(ids).then(projects => {
         this.setState(keyBy(projects, ({id}) => id));
