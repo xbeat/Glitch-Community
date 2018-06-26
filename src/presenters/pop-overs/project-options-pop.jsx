@@ -16,37 +16,37 @@ const ProjectOptionsPop = ({
   togglePopover,
 }) => {
   
+  function animate(event, className, func) {
+    const projectContainer = event.target.closest('li');
+    projectContainer.addEventListener('animationend', func, {once: true});
+    projectContainer.classList.add(className);
+    togglePopover();
+  }
+  
   function clickAddPin(event) {
-    animate(event, 'slide-up');
+    animate(event, 'slide-up', () => addPin(projectId));
   }
   
   function clickRemovePin(event) {
-    animate(event, 'slide-down');
-  }
-  
-  function animate(event, className) {
-    const projectContainer = event.target.closest('li');
-    togglePopover();
-    $(projectContainer).one('animationend', () => togglePinnedState(projectId));
-    return $(projectContainer).addClass(className);
+    animate(event, 'slide-down', () => removePin(projectId));
   }
   
   function clickLeave(event) {
     const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${projectName}?`;
     if (window.confirm(prompt)) {
-      return leaveProject(projectId, event);
+      leaveProject(projectId, event);
     }
   }
   
   function clickDelete(event) {
-    return deleteProject(projectId, event);
+    deleteProject(projectId, event);
   }
   
   return (
     <dialog className="pop-over project-options-pop">
       <section className="pop-over-actions">
-        {!!addPin && <PopoverButton onClick={() => addPin(projectId)} text="Pin This" emoji="pushpin"/>}
-        {!!removePin && <PopoverButton onClick={() => removePin(projectId)} text="Un-Pin This" emoji="pushpin"/>}
+        {!!addPin && <PopoverButton onClick={clickAddPin} text="Pin This" emoji="pushpin"/>}
+        {!!removePin && <PopoverButton onClick={clickRemovePin} text="Un-Pin This" emoji="pushpin"/>}
       </section>
       <section className="pop-over-actions danger-zone last-section">
         {!!removeProjectFromTeam && <PopoverButton onClick={() => removeProjectFromTeam(projectId)} text="Remove Project" emoji="thumbs_down"/>}
