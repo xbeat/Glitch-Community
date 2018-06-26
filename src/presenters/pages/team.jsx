@@ -229,10 +229,9 @@ const TeamPage = ({
       addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam}}
       getProjects={getProjects}
     />
-    {(currentUserIsOnTeam ? (
-      <TeamAnalytics api={api} id={id} currentUserIsOnTeam={currentUserIsOnTeam} projects={projects}/>
-    ) : <TeamMarketing/>)}
-    {!currentUserIsOnTeam && <TeamMarketing/>}
+    {(currentUserIsOnTeam ?
+      <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects}/>
+      : <TeamMarketing/>)}
   </main>
 );
 

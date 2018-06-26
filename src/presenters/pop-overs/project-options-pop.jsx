@@ -12,24 +12,25 @@ const PopoverButton = ({onClick, text, emoji}) => (
 const ProjectOptionsPop = ({
   projectId, projectName,
   addPin, removePin, deleteProject, 
-  leaveProject, removeProjectFromTeam
+  leaveProject, removeProjectFromTeam,
+  togglePopover,
 }) => {
-  /*
-  function addPin(event) {
-    togglePin(event, 'slide-up');
+  
+  function clickAddPin(event) {
+    animate(event, 'slide-up');
   }
   
-  function removePin(event) {
-    togglePin(event, 'slide-down');
+  function clickRemovePin(event) {
+    animate(event, 'slide-down');
   }
   
-  function togglePin(event, className) {
+  function animate(event, className) {
     const projectContainer = event.target.closest('li');
     togglePopover();
     $(projectContainer).one('animationend', () => togglePinnedState(projectId));
     return $(projectContainer).addClass(className);
   }
-  */
+  
   function clickLeave(event) {
     const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${projectName}?`;
     if (window.confirm(prompt)) {
