@@ -163,10 +163,11 @@ const NewEntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin,
   );
 };
 
+//todo? adding a project will update props, may need a new request
 export default class NewEntityPageProjectsLoader extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}; //id: null or loaded project
+    this.state = {};
   }
   
   ensureProjects(projects) {
