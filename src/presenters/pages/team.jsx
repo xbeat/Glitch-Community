@@ -200,6 +200,7 @@ const TeamPage = ({
   uploadAvatar, uploadCover, clearCover,
   addUser, removeUser, searchUsers,
   addPin, removePin, removeProjectFromTeam,
+  getProjects,
   _cacheAvatar, _cacheCover,
 }) => (
   <main className="profile-page team-page">
@@ -222,7 +223,11 @@ const TeamPage = ({
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
       </ProfileContainer>
     </section>
-    <EntityPageProjects projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam} addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam}}/>
+    <EntityPageProjects
+      projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
+      addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam}}
+      getProjects={getProjects}
+    />
     {!currentUserIsOnTeam && <TeamMarketing/>}
   </main>
 );

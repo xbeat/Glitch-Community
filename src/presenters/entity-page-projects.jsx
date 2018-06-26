@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
 import Observable from "o_0";
-import {debounce, partition} from 'lodash';
+import {chunk, debounce, keyBy, partition} from 'lodash';
 
 
 /* globals Set */
@@ -171,10 +171,12 @@ export default class NewEntityPageProjectsLoader extends React.Component {
   
   ensureProjects(projects) {
     const unloadedProjects = projects.filter(({id}) => !(id in this.state));
-    for (let i = 0; i < unloadedProjects.length; ++i) {
-      this.setState({[unloadedProjects[i].id]: null});
-    }
-    
+    chunk(unloadedProjects, 10).forEach(projects => {
+      const ids = projects.map(({id}) => id);
+      this.props.getProjects(ids).then(projects => {
+        this.setState(keyBy(projects, ({id}) => id));
+      });
+    });
   }
   
   componentDidMount() {
