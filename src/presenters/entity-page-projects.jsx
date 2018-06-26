@@ -123,3 +123,10 @@ EntityPageProjects.propTypes = {
 };
 
 export default EntityPageProjectsContainer;
+
+
+export const NewEntityPageProjects = ({projects, pinnedProjects}) => (
+  <React.Fragment>
+    <ProjectsList title="Recent Projects"
+  </React.Fragment>
+);

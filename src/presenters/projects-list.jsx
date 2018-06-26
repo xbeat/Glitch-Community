@@ -29,7 +29,7 @@ export const ProjectsList = ({closeAllPopOvers, title, isPinned=false, projects,
 
 ProjectsList.propTypes = {
   projects: PropTypes.array.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
   isPinned: PropTypes.bool,
 };
 
