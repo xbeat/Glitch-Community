@@ -124,14 +124,34 @@ EntityPageProjects.propTypes = {
 
 export default EntityPageProjectsContainer;
 
+const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-export const NewEntityPageProjects = ({projects, pins}) => {
-  console.log(projects, pins);
+export const NewEntityPageProjects = ({projects, pins, isAuthorized}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const [pinnedProjects, recentProjects] = partition(projects, ({id}) => pinnedSet.has(id));
+  
+  const pinnedTitle = (
+    <React.Fragment>
+      Pinned Projects
+      <span className="emoji pushpin emoji-in-title"></span>
+    </React.Fragment>
+  );
+  
+  const pinnedEmpty = (
+    <React.Fragment>
+      <img className="psst" src={psst} alt="psst"></img>
+      <p>
+        Pin your projects to show them off
+        <span className="emoji pushpin"></span>
+      </p>
+    </React.Fragment>
+  );
+  
+  const pinnedVisible = isAuthorized || pinnedProjects.length;
+  
   return (
     <React.Fragment>
-      {!!pinnedProjects.length && <ProjectsList title="Pinned Projects" projects={pinnedProjects}/>}
+      {!!pinnedVisible && <ProjectsList title={pinnedTitle} projects={pinnedProjects} placeholder={pinnedEmpty}/>}
       <ProjectsList title="Recent Projects" projects={recentProjects}/>
     </React.Fragment>
   );
