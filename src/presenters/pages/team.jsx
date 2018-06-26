@@ -21,6 +21,7 @@ import AddTeamUser from '../includes/add-team-user.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import UserInfoPop from '../pop-overs/user-info-pop.jsx';
 import {UserPopoversList} from '../users-list.jsx';
+import Uploader from '../includes/uploader.jsx';
 
 /*
 export default function(application) {
@@ -239,9 +240,6 @@ class TeamPageEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      _uploading: false,
-      _uploadProgress: 0,
-      _uploadError: false,
       _cacheAvatar: Date.now(),
       _cacheCover: Date.now(),
       ...this.props.initialTeam
@@ -285,31 +283,10 @@ class TeamPageEditor extends React.Component {
     });
   }
   
-  async uploadAsset(blob, policy, sizes) {
-    this.setState({
-      _uploading: true,
-      _uploadProgress: 0,
-      _uploadError: false,
-    });
-    try {
-      await assets.uploadAssetSizes(blob, policy, sizes,
-        ({lengthComputable, loaded, total}) => {
-          if (lengthComputable) {
-            this.setState({_uploadProgress: loaded/total});
-          } else {
-            this.setState(({_uploadProgress}) => ({_uploadProgress: (_uploadProgress+1)/2}));
-          }
-        }
-      );
-    } finally {
-      this.setState({_uploading: false});
-    }
-  }
-  
   async uploadAvatar(blob) {
     try {
       const {data: policy} = await assets.getTeamAvatarImagePolicy(this.props.api, this.state.id);
-      await this.uploadAsset(blob, policy, assets.AVATAR_SIZES);
+      await this.props.uploadAssetSizes(blob, policy, assets.AVATAR_SIZES);
 
       const image = await assets.blobToImage(blob);
       const color = assets.getDominantColor(image);
@@ -319,7 +296,6 @@ class TeamPageEditor extends React.Component {
       });
     } catch (error) {
       console.error(error);
-      this.setState({_uploadError: true});
     }
     this.setState({_cacheAvatar: Date.now()});
   }
@@ -327,7 +303,7 @@ class TeamPageEditor extends React.Component {
   async uploadCover(blob) {
     try {
       const {data: policy} = await assets.getTeamCoverImagePolicy(this.props.api, this.state.id);
-      await this.uploadAsset(blob, policy, assets.COVER_SIZES);
+      await this.props.uploadAssetSizes(blob, policy, assets.COVER_SIZES);
 
       const image = await assets.blobToImage(blob);
       const color = assets.getDominantColor(image);
@@ -337,16 +313,12 @@ class TeamPageEditor extends React.Component {
       });
     } catch (error) {
       console.error(error);
-      this.setState({_uploadError: true});
     }
     this.setState({_cacheCover: Date.now()});
   }
   
   render() {
     const {
-      _uploading,
-      _uploadProgress,
-      _uploadError,
       _cacheAvatar,
       _cacheCover,
       ...team
@@ -364,28 +336,15 @@ class TeamPageEditor extends React.Component {
       addPin: this.addPin.bind(this),
       removePin: this.removePin.bind(this),
     };
-    return (
-      <React.Fragment>
-        <aside className="notifications">
-          {_uploading && (
-            <div className="notification notifyUploading">
-              Uploading asset
-              <progress className="notify-progress" value={_uploadProgress}></progress>
-            </div>
-          )}
-          {_uploadError && (
-            <div className="notification notifyUploadFailure">File upload failed. Try again in a few minutes?</div>
-          )}
-        </aside>
-        <TeamPage team={team} {...props} {...this.props}/>
-      </React.Fragment>
-    );
+    return <TeamPage team={team} {...props} {...this.props}/>;
   }
 }
 
 const TeamPageLoader = ({get, name, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {team => team ? <TeamPageEditor initialTeam={team} {...props}/> : <NotFound name={name}/>}
+    {team => team ? (
+      <Uploader>{uploaders => <TeamPageEditor initialTeam={team} {...uploaders} {...props}/>}</Uploader>
+    ) : <NotFound name={name}/>}
   </DataLoader>
 );
 TeamPageLoader.propTypes = {
