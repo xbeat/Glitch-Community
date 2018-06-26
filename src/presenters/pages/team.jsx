@@ -199,7 +199,7 @@ const getProfileStyle = ({id, hasCoverImage, coverColor, cache}) => {
 
 const TeamPage = ({
   team: {
-    id, name, thanksCount, description, users,
+    id, name, description, users,
     isVerified, verifiedImage, verifiedTooltip,
     backgroundColor, hasAvatarImage,
     coverColor, hasCoverImage,
@@ -225,7 +225,7 @@ const TeamPage = ({
           <TeamUsers {...{users, currentUserIsOnTeam, removeUser}}/>
           {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)}/>}
         </div>
-        <Thanks count={thanksCount}/>
+        <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount)}/>
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
       </ProfileContainer>
     </section>
