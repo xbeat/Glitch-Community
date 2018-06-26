@@ -171,7 +171,10 @@ export default class NewEntityPageProjectsLoader extends React.Component {
   
   ensureProjects(projects) {
     const unloadedProjects = projects.filter(({id}) => !(id in this.state));
-    console.log(unloadedProjects);
+    for (let i = 0; i < unloadedProjects.length; ++i) {
+      this.setState({[unloadedProjects[i].id]: null});
+    }
+    
   }
   
   componentDidMount() {
