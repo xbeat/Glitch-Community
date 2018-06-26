@@ -343,7 +343,9 @@ class TeamPageEditor extends React.Component {
 const TeamPageLoader = ({get, name, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
     {team => team ? (
-      <Uploader>{uploaders => <TeamPageEditor initialTeam={team} {...uploaders} {...props}/>}</Uploader>
+      <Uploader>
+        {uploaders => <TeamPageEditor initialTeam={team} {...uploaders} {...props}/>}
+      </Uploader>
     ) : <NotFound name={name}/>}
   </DataLoader>
 );
