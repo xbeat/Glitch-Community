@@ -108,17 +108,6 @@ export default Team = function(I, self) {
       return -1 !== self.users().findIndex(user => user.id() === application.currentUser().id());
     },
     
-    currentUserIsAdminOnTeam(application) {
-      const ADMIN_ACCESS_LEVEL = 30
-      let id = application.currentUser().id();
-      let currentUserOnTeam = self.users().find(user => user.id === id)
-      
-//       if (currentUser) {
-        
-//       }
-      
-    },
-
     updateCoverColor(application, color) {
       if (color) {
         self.coverColor(color);
@@ -182,6 +171,20 @@ export default Team = function(I, self) {
           return console.log('removed user. team users are now', self.users());}).catch(error => console.error('removeUser', error));
     },
 
+//     userIsAdminOnTeam(user) {
+//       const ADMIN_ACCESS_LEVEL = 30
+//       let id = user.id()
+//       let userOnTeam = self.users().find(user => user.id === id)
+      
+//       // if (userOnTeam.teamsUser
+
+
+//   //       if (currentUserOnTeam) {        
+//   //       }
+
+//     },
+
+    
     addProject(application, projectId) {
       const teamProjectPath = `/teams/${self.id()}/projects/${projectId}`;
       return application.api().post(teamProjectPath)
