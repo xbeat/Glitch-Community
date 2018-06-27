@@ -270,7 +270,8 @@ export default User = function(I, self) {
         userAvatarUrl: self.userAvatarUrl(),
         userAvatarUrlLarge: self.userAvatarUrl('large'),
         userLink: self.userLink(),
-        userThanks: self.userThanks(),
+        userThanks: self.userThanks()
+
       };
     },
   });
