@@ -106,7 +106,6 @@ export default Team = function(I, self) {
 
     currentUserIsOnTeam(application) {
       return -1 !== self.users().findIndex(user => user.id() === application.currentUser().id());
-
     },
 
     updateCoverColor(application, color) {
@@ -249,7 +248,11 @@ export default Team = function(I, self) {
 Team.getTeamById = function(application, id) {
   const teamsPath = `teams/${id}`;
   return application.api().get(teamsPath)
-    .then(({data}) => application.saveTeam(data)).catch(error => console.error('getTeamById', error));
+    .then(({data}) => {
+      console.log(data)
+      application.saveTeam(data)
+    })
+    .catch(error => console.error('getTeamById', error));
 };
 
 Team.getSearchResults = function(application, query) {
