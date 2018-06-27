@@ -43,7 +43,7 @@ export class AddTeamProjectPop extends React.Component {
         projects.push(project);
       }
     }
-    return sortBy(projects, ;
+    return sortBy(projects, ['domain']);
   }
   
   onClick(event, projectId) {
