@@ -11,7 +11,7 @@ export class AddTeamProjectPop extends React.Component {
     this.state = {projects: []};
     this.onClick = this.onClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
-    this.updateFilter = debounce(this.updateFilter, 2000);
+    this.updateFilter = debounce(this.updateFilter, 20000);
   }
   
   updateFilter(query) {
