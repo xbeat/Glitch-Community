@@ -108,8 +108,14 @@ export default Team = function(I, self) {
       return -1 !== self.users().findIndex(user => user.id() === application.currentUser().id());
     },
     
-    currentUserIsTeamAdmin(application) {
+    currentUserIsAdminOnTeam(application) {
+      const ADMIN_ACCESS_LEVEL = 30
       let id = application.currentUser().id();
+      let currentUserOnTeam = self.users().find(user => user.id === id)
+      
+//       if (currentUser) {
+        
+//       }
       
     },
 
