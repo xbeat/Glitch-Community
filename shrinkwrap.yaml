@@ -331,9 +331,14 @@ packages:
       ajv: ^5.0.0
     resolution:
       integrity: sha1-YXmX/F9gV2iUxDX5QNgZ4TW4B2I=
+  /ajv-keywords/3.2.0:
+    dev: false
+    peerDependencies:
+      ajv: ^6.0.0
+    resolution:
+      integrity: sha1-6GuBnGAs+IIa1jdBNpjx3sAhhHo=
   /ajv-keywords/3.2.0/ajv@6.5.1:
-    dependencies:
-      ajv: 6.5.1
+    dependencies: {}
     dev: false
     id: registry.npmjs.org/ajv-keywords/3.2.0
     peerDependencies:
@@ -5045,7 +5050,7 @@ packages:
   /schema-utils/0.4.5:
     dependencies:
       ajv: 6.5.1
-      ajv-keywords: /ajv-keywords/3.2.0/ajv@6.5.1
+      ajv-keywords: 3.2.0
     dev: false
     engines:
       node: '>= 4.8.0 || >= 6.9.0 || >= 8.9.0'
