@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
+import {debounce} from 'lodash';
 
 
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
     super(props);
     
-    const projects = this.filterProjects("", this.props.myProjects, this.props.teamProjects);
-
-    this.state = {projects};
+    this.state = {projects: []};
     this.onClick = this.onClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
+    this.updateFilter = debounce(this.updateFilter, 2000);
   }
   
   updateFilter(query) {
@@ -19,8 +19,11 @@ export class AddTeamProjectPop extends React.Component {
     this.setState({projects});
   }
   
+  componentDidMount() {
+    this.updateFilter("");
+  }
+  
   filterProjects(query, myProjects, teamProjects) {
-    console.log("filter start.");
     query = query.toLowerCase().trim();
     const teamProjectIds = teamProjects.map(({id})=>id);
     const availableProjects = myProjects.filter(
@@ -31,11 +34,14 @@ export class AddTeamProjectPop extends React.Component {
     if(query) {
       projects = availableProjects.filter(project => {
         const titleMatch = project.domain.toLowerCase().includes(query);
+        if(titleMatch) {
+          return true;
+        }
         const descMatch = project.description.toLowerCase().includes(query);
-        return titleMatch || descMatch;
+        return descMatch;
       });
     }
-    return projects.sort();
+    return projects.splice(0,20);
   }
   
   onClick(event, projectId) {
