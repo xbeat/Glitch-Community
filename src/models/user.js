@@ -39,6 +39,7 @@ export default User = function(I, self) {
     persistentToken: null,
     pins: [],
     deletedProjects: [],
+    teamsUser: undefined,
   });
 
   self.attrObservable(...Array.from(Object.keys(I) || []));
@@ -271,6 +272,7 @@ export default User = function(I, self) {
         userAvatarUrlLarge: self.userAvatarUrl('large'),
         userLink: self.userLink(),
         userThanks: self.userThanks(),
+        teamsUser: self.teamsUser()
         
       };
     },
