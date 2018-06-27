@@ -31,6 +31,7 @@ export default Team = function(I, self) {
     isVerified: false,
     teamPins: [],
     hasAvatarImage: false,
+    teamAdminUsers: [],
   }
   );
     
@@ -226,6 +227,14 @@ export default Team = function(I, self) {
       return {backgroundColor: self.backgroundColor()};
     },
     
+    teamAdminUsers() {
+      console.log ('teamAdminUsers', self.users())
+      self.users().map(user => {
+        console.log (user, user.teamUser)
+        user.teamUser
+      })
+    },
+    
     asProps() {
       return {
         get users() { return self.users().map(({asProps}) => asProps()); },
@@ -247,6 +256,7 @@ export default Team = function(I, self) {
         url: self.url(),
         verifiedImage: self.verifiedImage(),
         verifiedTooltip: self.verifiedTooltip(),
+        teamAdminUsers: self.teamAdminUsers,
       };
     },
   });
