@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
-
+import {sortBy} from 'lodash';
 
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
     super(props);
     
-    const projects = this.filterProjects("", this.props.myProjects, this.props.teamProjects);
-
-    this.state = {projects};
+    this.state = {projects: []};
     this.onClick = this.onClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
   }
@@ -19,6 +17,10 @@ export class AddTeamProjectPop extends React.Component {
     this.setState({projects});
   }
   
+  componentDidMount() {
+    this.updateFilter("");
+  }
+  
   filterProjects(query, myProjects, teamProjects) {
     query = query.toLowerCase().trim();
     const teamProjectIds = teamProjects.map(({id})=>id);
@@ -26,15 +28,22 @@ export class AddTeamProjectPop extends React.Component {
       ({id}) => !teamProjectIds.includes(id)
     );
     
-    let projects = availableProjects;
-    if(query) {
-      projects = availableProjects.filter(project => {
-        const titleMatch = project.domain.toLowerCase().includes(query);
-        const descMatch = project.description.toLowerCase().includes(query);
-        return titleMatch || descMatch;
-      });
+    const maxProjects = 20;
+    if(!query) {
+      return availableProjects.splice(0,maxProjects);
     }
-    return projects.sort();
+    const projects = [];
+    for(let project of availableProjects) {
+      if(projects.length > maxProjects){
+        break;
+      }
+      const titleMatch = project.domain.toLowerCase().includes(query);
+      const descMatch = project.description.toLowerCase().includes(query);
+      if(titleMatch || descMatch) {
+        projects.push(project);
+      }
+    }
+    return projects;
   }
   
   onClick(event, projectId) {
