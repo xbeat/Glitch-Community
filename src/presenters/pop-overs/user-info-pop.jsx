@@ -46,6 +46,7 @@ const UserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopov
     togglePopover();
     removeUserFromTeam();
   };
+  console.log('🍕', user);
   
   return (
     <dialog className="pop-over user-info-pop">
