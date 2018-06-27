@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
-import {sortBy} from 'lodash';
 
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
