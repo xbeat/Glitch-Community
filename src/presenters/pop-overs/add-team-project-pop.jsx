@@ -20,6 +20,7 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   filterProjects(query, myProjects, teamProjects) {
+    console.log("filter start.");
     query = query.toLowerCase().trim();
     const teamProjectIds = teamProjects.map(({id})=>id);
     const availableProjects = myProjects.filter(
