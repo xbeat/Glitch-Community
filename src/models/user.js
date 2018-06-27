@@ -41,7 +41,7 @@ export default User = function(I, self) {
     deletedProjects: [],
   });
 
-  self.a}ttrObservable(...Array.from(Object.keys(I) || []));
+  self.attrObservable(...Array.from(Object.keys(I) || []));
   self.attrObservable("notFound");
   self.attrObservable("localCoverImage");
   self.attrModels('projects', Project);
@@ -270,8 +270,8 @@ export default User = function(I, self) {
         userAvatarUrl: self.userAvatarUrl(),
         userAvatarUrlLarge: self.userAvatarUrl('large'),
         userLink: self.userLink(),
-        userThanks: self.userThanks()
-
+        userThanks: self.userThanks(),
+        
       };
     },
   });

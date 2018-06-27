@@ -31,7 +31,6 @@ export default Team = function(I, self) {
     isVerified: false,
     teamPins: [],
     hasAvatarImage: false,
-    teamAdminUsers: [],
   }
   );
     
@@ -107,8 +106,9 @@ export default Team = function(I, self) {
 
     currentUserIsOnTeam(application) {
       return -1 !== self.users().findIndex(user => user.id() === application.currentUser().id());
+
     },
-    
+
     updateCoverColor(application, color) {
       if (color) {
         self.coverColor(color);
@@ -172,20 +172,6 @@ export default Team = function(I, self) {
           return console.log('removed user. team users are now', self.users());}).catch(error => console.error('removeUser', error));
     },
 
-//     userIsAdminOnTeam(user) {
-//       const ADMIN_ACCESS_LEVEL = 30
-//       let id = user.id()
-//       let userOnTeam = self.users().find(user => user.id === id)
-      
-//       // if (userOnTeam.teamsUser
-
-
-//   //       if (currentUserOnTeam) {        
-//   //       }
-
-//     },
-
-    
     addProject(application, projectId) {
       const teamProjectPath = `/teams/${self.id()}/projects/${projectId}`;
       return application.api().post(teamProjectPath)
@@ -227,14 +213,6 @@ export default Team = function(I, self) {
       return {backgroundColor: self.backgroundColor()};
     },
     
-    teamAdminUsers() {
-      console.log ('teamAdminUsers', self.users())
-      self.users().map(user => {
-        console.log (user, user.teamUser)
-        user.teamUser
-      })
-    },
-    
     asProps() {
       return {
         get users() { return self.users().map(({asProps}) => asProps()); },
@@ -256,7 +234,6 @@ export default Team = function(I, self) {
         url: self.url(),
         verifiedImage: self.verifiedImage(),
         verifiedTooltip: self.verifiedTooltip(),
-        teamAdminUsers: self.teamAdminUsers,
       };
     },
   });
@@ -272,11 +249,7 @@ export default Team = function(I, self) {
 Team.getTeamById = function(application, id) {
   const teamsPath = `teams/${id}`;
   return application.api().get(teamsPath)
-    .then(({data}) => {
-      console.log(data)
-      application.saveTeam(data)
-    })
-    .catch(error => console.error('getTeamById', error));
+    .then(({data}) => application.saveTeam(data)).catch(error => console.error('getTeamById', error));
 };
 
 Team.getSearchResults = function(application, query) {
