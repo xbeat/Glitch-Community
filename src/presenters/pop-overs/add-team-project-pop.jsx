@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
-import {debounce} from 'lodash';
-
+import {sortBy} from 'lodash';
 
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
@@ -11,7 +10,6 @@ export class AddTeamProjectPop extends React.Component {
     this.state = {projects: []};
     this.onClick = this.onClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
-    this.updateFilter = debounce(this.updateFilter, 20000);
   }
   
   updateFilter(query) {
@@ -30,18 +28,22 @@ export class AddTeamProjectPop extends React.Component {
       ({id}) => !teamProjectIds.includes(id)
     );
     
-    let projects = availableProjects;
-    if(query) {
-      projects = availableProjects.filter(project => {
-        const titleMatch = project.domain.toLowerCase().includes(query);
-        if(titleMatch) {
-          return true;
-        }
-        const descMatch = project.description.toLowerCase().includes(query);
-        return descMatch;
-      });
+    const maxProjects = 20;
+    if(!query) {
+      return availableProjects.splice(0,maxProjects);
     }
-    return projects.splice(0,20);
+    const projects = [];
+    for(let project of availableProjects) {
+      if(projects.length > maxProjects){
+        break;
+      }
+      const titleMatch = project.domain.toLowerCase().includes(query);
+      const descMatch = project.description.toLowerCase().includes(query);
+      if(titleMatch || descMatch) {
+        projects.push(project);
+      }
+    }
+    return sortBy(projects, ;
   }
   
   onClick(event, projectId) {
