@@ -65,7 +65,7 @@ Ok cool, these next steps are what we'd do internally and you're welcome to foll
     git remote add my-remix https://api.glitch.com/my-remix/git
     ```
  
-3. Make a new branch ("my-branch" here, but it's best if you name this branch something that indicates its purpose, e.g. "fix-avatars", etc.) based on your remix:
+3. Fetch your remote into a new branch ("my-branch" here, but it's best if you name this branch something that indicates its purpose, e.g. "fix-avatars", etc.) based on your remix:
     ```
     git fetch my-remix master:my-branch
     git checkout my-branch
