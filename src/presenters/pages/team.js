@@ -47,8 +47,10 @@ export default function(application) {
 
     TeamProjects() {
       const propsObservable = Observable(() => {
-        const projects = self.team().projects().map(function (project) {
-          let {...projectProps} = project.asProps();
+        const projects = self.team().projects().filter(
+          (project) => project.fetched()
+        ).map((project) => {
+          const {...projectProps} = project.asProps();
           return projectProps;
         });
 

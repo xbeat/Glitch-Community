@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Create Art like Mondrian',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fde-stijl.jpg?1530003302894",
-    link: 'https://glitch.com/~de-stijl'
+    title: 'Learn Ukulele Chords',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fukulele-chords.jpg?1530183290147",
+    link: 'https://glitch.com/~ukulele-chords'
   }
   , {
-    title: 'Track Congress\' Progress',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcongress-tracker-1.jpg?1529928449588",
-    link: 'https://glitch.com/~congress-tracker'
+    title: 'Roll The Dice',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fdice.jpg?1530183290537",
+    link: 'https://glitch.com/~dice'
   }
   , {
-    title: 'Generative Art Twitter Bot',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fgenerative-twitterbot.jpg?1529928234615",
-    link: 'https://glitch.com/~generative-twitterbot'
+    title: 'Meet Friendly Tech & Design Pros',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fnewbietalk.jpg?1530183290324",
+    link: 'https://glitch.com/~newbietalk'
   }  
 ];
