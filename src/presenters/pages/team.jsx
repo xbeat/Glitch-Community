@@ -276,6 +276,14 @@ class TeamPageUploader extends React.Component {
     return <TeamPage {...props} {...this.state} {...this.props}/>;
   }
 }
+TeamPageUploader.propTypes = {
+  api: PropTypes.any.isRequired,
+  team: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  }).isRequired,
+  updateFields: PropTypes.func.isRequired,
+  uploadAssetSizes: PropTypes.func.isRequired,
+};
 
 class TeamPageEditor extends React.Component {
   constructor(props) {
@@ -322,6 +330,7 @@ class TeamPageEditor extends React.Component {
   render() {
     const props = {
       currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
+      updateFields: this.updateFields.bind(this),
       updateDescription: this.updateField.bind(this, 'description'),
       addUser: this.addItem.bind(this, 'users', UserModel),
       removeUser: this.removeItem.bind(this, 'users'),
@@ -332,7 +341,7 @@ class TeamPageEditor extends React.Component {
     };
     return (
       <Uploader>
-        {uploaders => <TeamPage team={this.state} {.{...props} {...this.props}/>}
+        {uploaders => <TeamPageUploader team={this.state} {...uploaders} {...props} {...this.props}/>}
       </Uploader>
     );
   }
@@ -343,7 +352,6 @@ TeamPageEditor.propTypes = {
   initialTeam: PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired,
-  uploadAssetSizes: PropTypes.func.isRequired,
 };
 
 const TeamPageLoader = ({get, name, ...props}) => (
