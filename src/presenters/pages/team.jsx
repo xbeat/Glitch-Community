@@ -295,9 +295,14 @@ class TeamPageEditor extends React.Component {
     this.setState({_cacheCover: Date.now()});
   }
   
-  renderForReal(team, {updateFields, addItem, removeItem}, uploadFuncs) {
+  render() {
+    const {
+      updateFields,
+      addItem,
+      removeItem,
+    } = this.props;
     const props = {
-      currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
+      currentUserIsOnTeam: team.users.some(({id}) => this.props.currentUserId === id),
       updateFields: data => updateFields(data),
       updateDescription: description => updateFields({description}),
       addUser: id => addItem('users', id, 'users', UserModel({id}).asProps()),
@@ -309,25 +314,22 @@ class TeamPageEditor extends React.Component {
     };
     return <TeamPage team={team} {...props} {...this.props}/>;
   }
-  
-  render() {
-    return (
-      <EntityEditor api={this.props.api} initial={this.props.initialTeam} type="teams">
-        {({entity, ...editFuncs}) => (
-          <Uploader>
-            {uploadFuncs => this.renderForReal(entity, editFuncs, uploadFuncs)}
-          </Uploader>
-        )}
-      </EntityEditor>
-    );
-  }
 }
-TeamPageEditor.propTypes = {
+
+const TeamPageEditorContainer = ({api, initialTeam, ...props}) => (
+  <EntityEditor api={api} initial={initialTeam} type="teams">
+    {(team, editFuncs) => (
+      <Uploader>
+        {uploadFuncs => (
+          <TeamPageEditor api={api} team={team} {...editFuncs} {...uploadFuncs} {...props}/>
+        )}
+      </Uploader>
+    )}
+  </EntityEditor>
+);  
+TeamPageEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
-  currentUserId: PropTypes.number.isRequired,
-  initialTeam: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-  }).isRequired,
+  initialTeam: PropTypes.object.isRequired,
 };
 
 const TeamPageLoader = ({get, name, ...props}) => (
