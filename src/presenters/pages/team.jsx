@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import * as assets from '../../utils/assets';
-import TeamModel from '../../models/team';
+import TeamModel, {getAvata from '../../models/team';
 import UserModel from '../../models/user';
 import ProjectModel from '../../models/project';
 import Reactlet from '../reactlet';
 import LayoutPresenter from '../layout';
 
-import {EntityEditorSuite} from '../entity-editor.jsx';
+import {EntityEditorUploader} from '../entity-editor.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
@@ -19,24 +19,6 @@ import {DataLoader} from '../includes/loader.jsx';
 import Thanks from '../includes/thanks.jsx';
 import AddTeamUser from '../includes/add-team-user.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
-
-const getAvatarStyle = ({id, hasAvatarImage, backgroundColor, cache}) => {
-  const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-avatar/${id}/small?${cache}`;
-  const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-team-avatar.svg?1503510366819";
-  return {
-    backgroundColor,
-    backgroundImage: `url('${hasAvatarImage ? customImage : defaultImage}')`,
-  };
-};
-
-const getProfileStyle = ({id, hasCoverImage, coverColor, cache}) => {
-  const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-cover/${id}/large?${cache}`;
-  const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
-  return {
-    backgroundColor: coverColor,
-    backgroundImage: `url('${hasCoverImage ? customImage : defaultImage}')`,
-  };
-};
 
 const TeamPage = ({
   team: {
@@ -167,11 +149,11 @@ TeamPageEditor.propTypes = {
 const TeamPageLoader = ({api, get, name, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
     {team => team ? (
-      <EntityEditorSuite api={api} initial={team} type="teams">
+      <EntityEditorUploader api={api} initial={team} type="teams">
         {({entity, ...funcs}) => (
           <TeamPageEditor api={api} team={entity} {...funcs} {...props}/>
         )}
-      </EntityEditorSuite>
+      </EntityEditorUploader>
     ) : <NotFound name={name}/>}
   </DataLoader>
 );

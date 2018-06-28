@@ -47,7 +47,7 @@ EntityEditor.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-export const EntityEditorSuite = ({api, initial, type, children}) => (
+export const EntityEditorUploader = ({api, initial, type, children}) => (
   <EntityEditor api={api} initial={initial} type={type}>
     {(entity, editFuncs) => (
       <Uploader>
