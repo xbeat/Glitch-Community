@@ -325,6 +325,14 @@ class TeamPageEditor extends React.Component {
     return <TeamPage team={team} {...props} {...this.props}/>;
   }
 }
+TeamPageEditor.propTypes = {
+  api: PropTypes.any.isRequired,
+  currentUserId: PropTypes.number.isRequired,
+  initialTeam: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+  uploadAssetSizes: PropTypes.func.isRequired,
+};
 
 const TeamPageLoader = ({get, name, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
