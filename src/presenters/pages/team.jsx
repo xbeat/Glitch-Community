@@ -13,14 +13,12 @@ import EntityPageProjects from "../entity-page-projects.jsx";
 import AddTeamProject from "../includes/add-team-project.jsx";
 import {ProfileContainer, ImageButtons} from "../includes/profile.jsx";
 import TeamAnalytics from "../includes/team-analytics.jsx";
-import {TeamMarketing, VerifiedBadge} from "../includes/team-elements.jsx";
+import {TeamMarketing, TeamUsers, VerifiedBadge} from "../includes/team-elements.jsx";
 import NotFound from '../includes/not-found.jsx';
 import {DataLoader} from '../includes/loader.jsx';
 import Thanks from '../includes/thanks.jsx';
 import AddTeamUser from '../includes/add-team-user.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
-import UserInfoPop from '../pop-overs/user-info-pop.jsx';
-import {UserPopoversList} from '../users-list.jsx';
 import Uploader from '../includes/uploader.jsx';
 
 /*
@@ -160,17 +158,6 @@ export default function(application) {
 }
 */
 
-const TeamUsers = ({users, currentUserIsOnTeam, removeUser}) => (
-  <UserPopoversList users={users}>
-    {(user, togglePopover) => <UserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUser(user.id)} />}
-  </UserPopoversList>
-);
-TeamUsers.propTypes = {
-  users: PropTypes.array.isRequired,
-  currentUserIsOnTeam: PropTypes.bool.isRequired,
-  removeUser: PropTypes.func.isRequired,
-};
-
 const getAvatarStyle = ({id, hasAvatarImage, backgroundColor, cache}) => {
   const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-avatar/${id}/small?${cache}`;
   const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-team-avatar.svg?1503510366819";
@@ -247,8 +234,7 @@ class TeamPageEditor extends React.Component {
   }
   
   updateFields(changes) {
-    const {id} = this.state;
-    return this.props.api.patch(`teams/${id}`, changes).then(() => {
+    return this.props.api.patch(`teams/${this.state.id}`, changes).then(() => {
       this.setState(changes);
     });
   }
