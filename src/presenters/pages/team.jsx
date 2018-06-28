@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import * as assets from '../../utils/assets';
-
 import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
 import ProjectModel from '../../models/project';
-import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
+import LayoutPresenter from '../layout';
 
 import EntityEditor from '../entity-editor.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
@@ -21,143 +20,6 @@ import Thanks from '../includes/thanks.jsx';
 import AddTeamUser from '../includes/add-team-user.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import Uploader from '../includes/uploader.jsx';
-
-/*
-export default function(application) {
-  const assetUtils = assets(application);
-  
-  var self = {
-
-    application,
-    team: application.team,
-
-    TeamProfile() {
-      const propsObservable = Observable(() => {
-        const team = self.team().asProps();
-        const props = {
-          team,
-          fetched: self.team().fetched(),
-          userFetched: application.currentUser().fetched(),
-          currentUserIsOnTeam: self.currentUserIsOnTeam(),
-          addUserToTeam: (id) => { self.team().addUser(application, UserModel({id})); },
-          removeUserFromTeam: ({id}) => { self.team().removeUser(application, UserModel({id})); },
-          search: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
-          updateDescription: self.updateDescription,
-          uploadAvatar: self.uploadAvatar,
-          uploadCover: self.uploadCover,
-          clearCover: self.clearCover,
-        };
-        return props;
-      });
-
-      return Reactlet(Observed, {propsObservable, component:TeamProfile}, 'team-profile');
-    },
-
-    TeamProjects() {
-      const propsObservable = Observable(() => {
-        const projects = self.team().projects().map(function (project) {
-          let {...projectProps} = project.asProps();
-          return projectProps;
-        });
-
-        return {
-          closeAllPopOvers: application.closeAllPopOvers,
-          isAuthorizedUser: self.currentUserIsOnTeam(),
-          projects: projects,
-          pins: application.team().pins(),
-          projectOptions: self.projectOptions(),
-        };
-      });
-
-      return Reactlet(Observed, {propsObservable, component:TeamEntityPageProjects});
-    },
-
-    projectOptions() {
-      if(!self.currentUserIsOnTeam()) {
-        return {};
-      }
-
-      return {
-        removeProjectFromTeam: self.removeProjectFromTeam,
-        togglePinnedState: self.togglePinnedState,
-      };
-    },
-
-    teamAnalytics() {
-      const propsObservable = Observable(() => {
-        const projects = self.team().projects().map(function (project) {
-          let {...projectProps} = project.asProps();
-          projectProps.description = "";
-          projectProps.users = [];
-          return projectProps;
-        });
-        const id = self.team().id();
-
-        return {
-          id: id,
-          api: application.api,
-          projects: projects,
-          currentUserOnTeam: self.currentUserIsOnTeam(),
-        };
-      });
-      return Reactlet(Observed, {propsObservable, component:TeamAnalytics});
-    },
-
-    teamMarketing() {
-      const propsObservable = Observable(() => {
-        return {
-          currentUserIsOnTeam: self.currentUserIsOnTeam(),
-        };
-      });
-      return Reactlet(Observed, {propsObservable, component:TeamMarketing});
-    },
-
-    addTeamProjectButton() {
-      const propsObservable = Observable(() => {
-        return {
-          api: application.api,
-          teamUsers: application.team().users(),
-          currentUserIsOnTeam: self.currentUserIsOnTeam(),
-          addProject: (id) => {
-            application.team().addProject(application, id);
-          },
-        };
-      });
-      return Reactlet(Observed, {propsObservable, component:AddTeamProject});
-    },
-
-    currentUserIsOnTeam() {
-      return application.team().currentUserIsOnTeam(application);
-    },
-
-    updateDescription(text) {
-      application.team().description(text);
-      return self.updateTeam({description: text});
-    },
-
-    updateTeam: debounce(data => application.team().updateTeam(application, data)
-      , 250),
-
-    clearCover: () => assetUtils.updateHasCoverImage(false),
-
-    uploadCover: assetUtils.uploadCoverFile,
-    uploadAvatar: assetUtils.uploadAvatarFile,
-
-    togglePinnedState(projectId) {
-      const action = ProjectModel.isPinnedByTeam(application.team(), projectId) ? "removePin" : "addPin";
-      return application.team()[action](application, projectId);
-    },
-
-    removeProjectFromTeam(projectId) {
-      application.team().removeProject(application, projectId);
-    },
-  };
-
-  const content = TeamTemplate(self);
-
-  return LayoutPresenter(application, content);
-}
-*/
 
 const getAvatarStyle = ({id, hasAvatarImage, backgroundColor, cache}) => {
   const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-avatar/${id}/small?${cache}`;
@@ -294,26 +156,28 @@ class TeamPageEditor extends React.Component {
     return <TeamPage team={team} {...this.state} {...funcs} {...props}/>;
   }
 }
-
-const TeamPageEditorContainer = ({api, initialTeam, ...props}) => (
-  <EntityEditor api={api} initial={initialTeam} type="teams">
-    {(team, editFuncs) => (
-      <Uploader>
-        {uploadFuncs => (
-          <TeamPageEditor api={api} team={team} {...editFuncs} {...uploadFuncs} {...props}/>
-        )}
-      </Uploader>
-    )}
-  </EntityEditor>
-);  
-TeamPageEditorContainer.propTypes = {
-  api: PropTypes.any.isRequired,
-  initialTeam: PropTypes.object.isRequired,
+TeamPageEditor.propTypes = {
+  currentUserId: PropTypes.number.isRequired,
+  team: PropTypes.object.isRequired,
+  updateFields: PropTypes.func.isRequired,
+  addItem: PropTypes.func.isRequired,
+  removeItem: PropTypes.func.isRequired,
+  uploadAssetSizes: PropTypes.func.isRequired,
 };
 
-const TeamPageLoader = ({get, name, ...props}) => (
+const TeamPageLoader = ({api, get, name, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {team => team ? <TeamPageEditorContainer initialTeam={team} {...props}/> : <NotFound name={name}/>}
+    {team => team ? (
+      <EntityEditor api={api} initial={team} type="teams">
+        {(team, editFuncs) => (
+          <Uploader>
+            {uploadFuncs => (
+              <TeamPageEditor api={api} team={team} {...editFuncs} {...uploadFuncs} {...props}/>
+            )}
+          </Uploader>
+        )}
+      </EntityEditor>
+    ) : <NotFound name={name}/>}
   </DataLoader>
 );
 TeamPageLoader.propTypes = {
