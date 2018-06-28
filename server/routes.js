@@ -19,8 +19,8 @@ module.exports = function() {
   
   // Caching - js files have a hash in their name, so they last a long time
   app.use('/*.js', (request, response, next) => {
-    const ms = moment.duration(1, 'months').asMilliseconds();
-    response.header('Cache-Control', `public, max-age=${ms}`);
+    const s = moment.duration(1, 'months').asSeconds();
+    response.header('Cache-Control', `public, max-age=${s}`);
     return next();
   });
   
