@@ -18,7 +18,7 @@ export default [
     link: 'https://glitch.com/~ukulele-chords'
   }
   , {
-    title: 'Roll the Dice',
+    title: 'Roll The Dice',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fdice.jpg?1530183290537",
     link: 'https://glitch.com/~dice'
   }
