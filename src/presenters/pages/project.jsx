@@ -151,20 +151,16 @@ const ProjectPageEditor = ({project, updateFields, ...props}) => {
       {success: false, data: domain, message}
     ));
   }
-  
-  render() {
-    const props = {
-      project: this.state,
-      updateDomain: this.updateDomain.bind(this),
-      updateDescription: this.updateField.bind(this, 'description'),
-      updatePrivate: this.updateField.bind(this, 'private'),
-    };
-    return <ProjectPage {...props} {...this.props}/>;
-  }
-}
+  const funcs = {
+    updateDomain: domain => updateDomain(domain),
+    updateDescription: description => updateFields({description}),
+    updatePrivate: isPrivate => updateFields({private: isPrivate}),
+  };
+  return <ProjectPage project={project} {...funcs} {...props}/>;
+};
 ProjectPageEditor.propTypes = {
-  updateFields: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
+  updateFields: PropTypes.func.isRequired,
 };
 
 const ProjectPageLoader = ({name, get, api, ...props}) => (
@@ -173,7 +169,6 @@ const ProjectPageLoader = ({name, get, api, ...props}) => (
       <EntityEditor api={api} initial={project} type="projects">
         {({entity, ...funcs}) => <ProjectPageEditor project={entity} {...funcs} {...props}/>}
       </EntityEditor>
-      
     ) : <NotFound name={name}/>}
   </DataLoader>
 );

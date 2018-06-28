@@ -30,7 +30,8 @@ export default class EntityEditor extends React.Component {
   }
   
   render() {
-    return this.props.children(this.state, {
+    return this.props.children({
+      entity: this.state,
       updateFields: this.updateFields.bind(this),
       addItem: this.addItem.bind(this),
       removeItem: this.removeItem.bind(this),
@@ -49,7 +50,7 @@ EntityEditor.propTypes = {
 
 export const EntityEditorUploader = ({api, initial, type, children}) => (
   <EntityEditor api={api} initial={initial} type={type}>
-    {(entity, editFuncs) => (
+    {({entity, ...editFuncs}) => (
       <Uploader>
         {uploadFuncs => children({entity, ...editFuncs, ...uploadFuncs})}
       </Uploader>
