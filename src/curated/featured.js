@@ -13,7 +13,7 @@ Example:
 
 export default [
   {
-    title: 'Learn Ukulele Chords For Any Song',
+    title: 'Learn Ukulele Chords',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fukulele-chords.jpg?1530183290147",
     link: 'https://glitch.com/~ukulele-chords'
   }
@@ -23,7 +23,7 @@ export default [
     link: 'https://glitch.com/~dice'
   }
   , {
-    title: 'Meet Friendly Tech and Design Pros',
+    title: 'Meet Friendly Tech & Design Pros',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fnewbietalk.jpg?1530183290324",
     link: 'https://glitch.com/~newbietalk'
   }  
