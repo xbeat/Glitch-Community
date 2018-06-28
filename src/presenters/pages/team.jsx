@@ -8,7 +8,7 @@ import ProjectModel from '../../models/project';
 import Reactlet from '../reactlet';
 import LayoutPresenter from '../layout';
 
-import EntityEditor from '../entity-editor.jsx';
+import {EntityEditorSuite} from '../entity-editor.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
@@ -19,7 +19,6 @@ import {DataLoader} from '../includes/loader.jsx';
 import Thanks from '../includes/thanks.jsx';
 import AddTeamUser from '../includes/add-team-user.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
-import Uploader from '../includes/uploader.jsx';
 
 const getAvatarStyle = ({id, hasAvatarImage, backgroundColor, cache}) => {
   const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-avatar/${id}/small?${cache}`;
@@ -168,15 +167,11 @@ TeamPageEditor.propTypes = {
 const TeamPageLoader = ({api, get, name, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
     {team => team ? (
-      <EntityEditor api={api} initial={team} type="teams">
-        {(team, editFuncs) => (
-          <Uploader>
-            {uploadFuncs => (
-              <TeamPageEditor api={api} team={team} {...editFuncs} {...uploadFuncs} {...props}/>
-            )}
-          </Uploader>
+      <EntityEditorSuite api={api} initial={team} type="teams">
+        {({entity, ...funcs}) => (
+          <TeamPageEditor api={api} team={entity} {...funcs} {...props}/>
         )}
-      </EntityEditor>
+      </EntityEditorSuite>
     ) : <NotFound name={name}/>}
   </DataLoader>
 );

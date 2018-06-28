@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import {matches, reject} from 'lodash';
 
+import Uploader from './includes/uploader.jsx';
+
 export default class EntityEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -44,3 +46,13 @@ EntityEditor.propTypes = {
   type: PropTypes.string.isRequired,
   children: PropTypes.func.isRequired,
 };
+
+export const EntityEditorSuite = ({api, initial, type, children}) => (
+  <EntityEditor api={api} initial={initial} type={type}>
+    {(entity, editFuncs) => (
+      <Uploader>
+        {uploadFuncs => children({entity, ...editFuncs, ...uploadFuncs})}
+      </Uploader>
+    )}
+  </EntityEditor>
+);
