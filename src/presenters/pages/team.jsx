@@ -224,32 +224,6 @@ const TeamPage = ({
   </main>
 );
 
-class TeamPageUploader extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      _cacheAvatar: Date.now(),
-      _cacheCover: Date.now(),
-    };
-  }
-  
-  render() {
-    const props = {
-      uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
-      uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
-    };
-    return <TeamPage {...props} {...this.state} {...this.props}/>;
-  }
-}
-TeamPageUploader.propTypes = {
-  api: PropTypes.any.isRequired,
-  team: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-  }).isRequired,
-  updateFields: PropTypes.func.isRequired,
-  uploadAssetSizes: PropTypes.func.isRequired,
-};
-
 class TeamPageEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -297,22 +271,27 @@ class TeamPageEditor extends React.Component {
   
   render() {
     const {
+      team,
+      currentUserId,
       updateFields,
       addItem,
       removeItem,
+      ...props
     } = this.props;
-    const props = {
-      currentUserIsOnTeam: team.users.some(({id}) => this.props.currentUserId === id),
+    const funcs = {
+      currentUserIsOnTeam: team.users.some(({id}) => currentUserId === id),
       updateFields: data => updateFields(data),
       updateDescription: description => updateFields({description}),
       addUser: id => addItem('users', id, 'users', UserModel({id}).asProps()),
       removeUser: id => removeItem('users', id, 'users', {id}),
+      uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
+      uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
       clearCover: () => updateFields({hasCoverImage: false}),
-      removeProjectFromTeam: id => removeItem('projects', {id}),
+      removeProjectFromTeam: id => removeItem('projects', id, 'projects', {id}),
       addPin: projectId => addItem('pinned-projects', projectId, 'teamPins', {projectId}),
       removePin: projectId => removeItem('pinned-projects', projectId, 'teamPins', {projectId}),
     };
-    return <TeamPage team={team} {...props} {...this.props}/>;
+    return <TeamPage team={team} {...this.state} {...funcs} {...props}/>;
   }
 }
 
@@ -334,7 +313,7 @@ TeamPageEditorContainer.propTypes = {
 
 const TeamPageLoader = ({get, name, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {team => team ? <TeamPageEditor initialTeam={team} {...props}/> : <NotFound name={name}/>}
+    {team => team ? <TeamPageEditorContainer initialTeam={team} {...props}/> : <NotFound name={name}/>}
   </DataLoader>
 );
 TeamPageLoader.propTypes = {

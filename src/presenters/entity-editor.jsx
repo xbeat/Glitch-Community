@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {reject} from 'lodash';
+import {matches, reject} from 'lodash';
 
 export default class EntityEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.state.initial;
+    this.state = this.props.initial;
   }
   
   updateFields(changes) {
@@ -23,13 +23,12 @@ export default class EntityEditor extends React.Component {
   
   removeItem(remoteField, remoteId, localField, localModel) {
     return this.props.api.delete(`teams/${this.state.id}/${remoteField}/${remoteId}`).then(() => {
-      this.setState(prev => ({[localField]: reject(prev[localField], localModel)}));
+      this.setState(prev => ({[localField]: reject(prev[localField], matches(localModel))}));
     });
   }
   
   render() {
-    return this.children({
-      entity: this.state,
+    return this.props.children(this.state, {
       updateFields: this.updateFields.bind(this),
       addItem: this.addItem.bind(this),
       removeItem: this.removeItem.bind(this),
