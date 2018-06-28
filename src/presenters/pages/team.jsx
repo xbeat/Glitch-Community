@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import * as assets from '../../utils/assets';
-import TeamModel, {getAvata from '../../models/team';
+import TeamModel, {getAvatarStyle, getProfileStyle} from '../../models/team';
 import UserModel from '../../models/user';
 import ProjectModel from '../../models/project';
 import Reactlet from '../reactlet';
