@@ -132,7 +132,7 @@ class TeamPageEditor extends React.Component {
       uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
       uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
       clearCover: () => updateFields({hasCoverImage: false}),
-      addProject: id => removeItem('projects', id, 'projects', ProjectModel({id}).asProps()),
+      addProject: id => addItem('projects', id, 'projects', ProjectModel({id}).asProps()),
       removeProject: id => removeItem('projects', id, 'projects', {id}),
       addPin: projectId => addItem('pinned-projects', projectId, 'teamPins', {projectId}),
       removePin: projectId => removeItem('pinned-projects', projectId, 'teamPins', {projectId}),
