@@ -223,14 +223,64 @@ const TeamPage = ({
   </main>
 );
 
-class TeamPageEditor extends React.Component {
+class TeamPageUploader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       _cacheAvatar: Date.now(),
       _cacheCover: Date.now(),
-      ...this.props.initialTeam
     };
+  }
+  
+  async uploadAvatar(blob) {
+    try {
+      const {id} = this.props.team;
+      const {data: policy} = await assets.getTeamAvatarImagePolicy(this.props.api, id);
+      await this.props.uploadAssetSizes(blob, policy, assets.AVATAR_SIZES);
+
+      const image = await assets.blobToImage(blob);
+      const color = assets.getDominantColor(image);
+      await this.props.updateFields({
+        hasAvatarImage: true,
+        backgroundColor: color,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    this.setState({_cacheAvatar: Date.now()});
+  }
+  
+  async uploadCover(blob) {
+    try {
+      const {id} = this.props.team;
+      const {data: policy} = await assets.getTeamCoverImagePolicy(this.props.api, id);
+      await this.props.uploadAssetSizes(blob, policy, assets.COVER_SIZES);
+
+      const image = await assets.blobToImage(blob);
+      const color = assets.getDominantColor(image);
+      await this.props.updateFields({
+        hasCoverImage: true,
+        coverColor: color,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    this.setState({_cacheCover: Date.now()});
+  }
+  
+  render() {
+    const props = {
+      uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
+      uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
+    };
+    return <TeamPage {...props} {...this.state} {...this.props}/>;
+  }
+}
+
+class TeamPageEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.props.initialTeam;
   }
   
   updateFields(changes) {
@@ -269,78 +319,36 @@ class TeamPageEditor extends React.Component {
     });
   }
   
-  async uploadAvatar(blob) {
-    try {
-      const {data: policy} = await assets.getTeamAvatarImagePolicy(this.props.api, this.state.id);
-      await this.props.uploadAssetSizes(blob, policy, assets.AVATAR_SIZES);
-
-      const image = await assets.blobToImage(blob);
-      const color = assets.getDominantColor(image);
-      await this.updateFields({
-        hasAvatarImage: true,
-        backgroundColor: color,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-    this.setState({_cacheAvatar: Date.now()});
-  }
-  
-  async uploadCover(blob) {
-    try {
-      const {data: policy} = await assets.getTeamCoverImagePolicy(this.props.api, this.state.id);
-      await this.props.uploadAssetSizes(blob, policy, assets.COVER_SIZES);
-
-      const image = await assets.blobToImage(blob);
-      const color = assets.getDominantColor(image);
-      await this.updateFields({
-        hasCoverImage: true,
-        coverColor: color,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-    this.setState({_cacheCover: Date.now()});
-  }
-  
   render() {
-    const {
-      _cacheAvatar,
-      _cacheCover,
-      ...team
-    } = this.state;
     const props = {
-      _cacheAvatar, _cacheCover,
       currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
       updateDescription: this.updateField.bind(this, 'description'),
       addUser: this.addItem.bind(this, 'users', UserModel),
       removeUser: this.removeItem.bind(this, 'users'),
-      uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
-      uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
       clearCover: this.updateField.bind(this, 'hasCoverImage', false),
       removeProjectFromTeam: this.removeItem.bind(this, 'projects'),
       addPin: this.addPin.bind(this),
       removePin: this.removePin.bind(this),
     };
-    return <TeamPage team={team} {...props} {...this.props}/>;
+    return (
+      <Uploader>
+        {uploaders => <TeamPage team={this.state} {.{...props} {...this.props}/>}
+      </Uploader>
+    );
   }
 }
 TeamPageEditor.propTypes = {
   api: PropTypes.any.isRequired,
   currentUserId: PropTypes.number.isRequired,
   initialTeam: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
   }).isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
 const TeamPageLoader = ({get, name, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {team => team ? (
-      <Uploader>
-        {uploaders => <TeamPageEditor initialTeam={team} {...uploaders} {...props}/>}
-      </Uploader>
-    ) : <NotFound name={name}/>}
+    {team => team ? <TeamPageEditor initialTeam={team} {...props}/> : <NotFound name={name}/>}
   </DataLoader>
 );
 TeamPageLoader.propTypes = {
