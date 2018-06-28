@@ -28,11 +28,12 @@ const TeamPage = ({
     backgroundColor, hasAvatarImage,
     coverColor, hasCoverImage,
   },
-  currentUserIsOnTeam, updateDescription,
+  currentUserIsOnTeam, myProjects,
+  updateDescription,
   uploadAvatar, uploadCover, clearCover,
   addUser, removeUser,
   addPin, removePin,
-  removeProjectFromTeam,
+  addProject, removeProject,
   api, searchUsers, getProjects,
   _cacheAvatar, _cacheCover,
 }) => (
@@ -56,9 +57,10 @@ const TeamPage = ({
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
       </ProfileContainer>
     </section>
+    <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects}/>
     <EntityPageProjects
       projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
-      addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam}}
+      addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam: removeProject}}
       getProjects={getProjects}
     />
     {(currentUserIsOnTeam ?
@@ -130,7 +132,8 @@ class TeamPageEditor extends React.Component {
       uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
       uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
       clearCover: () => updateFields({hasCoverImage: false}),
-      removeProjectFromTeam: id => removeItem('projects', id, 'projects', {id}),
+      addProject: id => removeItem('projects', id, 'projects', ProjectModel({id}).asProps()),
+      removeProject: id => removeItem('projects', id, 'projects', {id}),
       addPin: projectId => addItem('pinned-projects', projectId, 'teamPins', {projectId}),
       removePin: projectId => removeItem('pinned-projects', projectId, 'teamPins', {projectId}),
     };
@@ -167,6 +170,7 @@ export default function(application, id, name) {
     name,
     api: application.api(),
     currentUserId: application.currentUser().id(),
+    myProjects: application.currentUser().projects().map(({asProps}) => asProps()),
     get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? TeamModel(data).update(data).asProps() : null)),
     searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
     getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
