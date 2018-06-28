@@ -8,17 +8,19 @@ import ProjectModel from '../../models/project';
 import Reactlet from '../reactlet';
 import LayoutPresenter from '../layout';
 
-import {EntityEditorUploader} from '../entity-editor.jsx';
-import EntityPageProjects from '../entity-page-projects.jsx';
-import AddTeamProject from '../includes/add-team-project.jsx';
-import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
-import TeamAnalytics from '../includes/team-analytics.jsx';
-import {TeamMarketing, TeamUsers, VerifiedBadge} from '../includes/team-elements.jsx';
-import NotFound from '../includes/not-found.jsx';
-import {DataLoader} from '../includes/loader.jsx';
-import Thanks from '../includes/thanks.jsx';
-import AddTeamUser from '../includes/add-team-user.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
+import {DataLoader} from '../includes/loader.jsx';
+import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
+import Thanks from '../includes/thanks.jsx';
+import NotFound from '../includes/not-found.jsx';
+import Uploader from '../includes/uploader.jsx';
+
+import AddTeamProject from '../includes/add-team-project.jsx';
+import {AddTeamUser, TeamUsers} from '../includes/team-users.jsx';
+import EntityEditor from '../entity-editor.jsx';
+import EntityPageProjects from '../entity-page-projects.jsx';
+import TeamAnalytics from '../includes/team-analytics.jsx';
+import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 
 const TeamPage = ({
   team: {
@@ -152,11 +154,15 @@ TeamPageEditor.propTypes = {
 const TeamPageLoader = ({api, get, name, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
     {team => team ? (
-      <EntityEditorUploader api={api} initial={team} type="teams">
-        {({entity, ...funcs}) => (
-          <TeamPageEditor api={api} team={entity} {...funcs} {...props}/>
+      <EntityEditor api={api} initial={team} type="teams">
+        {({entity, ...editFuncs}) => (
+          <Uploader>
+            {uploadFuncs => (
+              <TeamPageEditor api={api} team={entity} {...editFuncs} {...uploadFuncs} {...props}/>
+            )}
+          </Uploader>
         )}
-      </EntityEditorUploader>
+      </EntityEditor>
     ) : <NotFound name={name}/>}
   </DataLoader>
 );

@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import UserInfoPop from '../pop-overs/user-info-pop.jsx';
-import {UserPopoversList} from '../users-list.jsx';
-
 export const TeamMarketing = () => (
   <section className="team-marketing">
     <p>
@@ -18,17 +15,6 @@ export const TeamMarketing = () => (
     </a>
   </section>
 );
-
-export const TeamUsers = ({users, currentUserIsOnTeam, removeUser}) => (
-  <UserPopoversList users={users}>
-    {(user, togglePopover) => <UserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUser(user.id)} />}
-  </UserPopoversList>
-);
-TeamUsers.propTypes = {
-  users: PropTypes.array.isRequired,
-  currentUserIsOnTeam: PropTypes.bool.isRequired,
-  removeUser: PropTypes.func.isRequired,
-};
 
 export const VerifiedBadge = ({image, tooltip}) => (
   <span data-tooltip={tooltip}>
