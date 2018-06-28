@@ -7,13 +7,14 @@ import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
 import ProjectModel from '../../models/project';
 import LayoutPresenter from '../layout';
+import Reactlet from '../reactlet';
 
-import Reactlet from "../reactlet";
-import EntityPageProjects from "../entity-page-projects.jsx";
-import AddTeamProject from "../includes/add-team-project.jsx";
-import {ProfileContainer, ImageButtons} from "../includes/profile.jsx";
-import TeamAnalytics from "../includes/team-analytics.jsx";
-import {TeamMarketing, TeamUsers, VerifiedBadge} from "../includes/team-elements.jsx";
+import EntityEditor from '../entity-editor.jsx';
+import EntityPageProjects from '../entity-page-projects.jsx';
+import AddTeamProject from '../includes/add-team-project.jsx';
+import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
+import TeamAnalytics from '../includes/team-analytics.jsx';
+import {TeamMarketing, TeamUsers, VerifiedBadge} from '../includes/team-elements.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {DataLoader} from '../includes/loader.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -328,6 +329,10 @@ class TeamPageEditor extends React.Component {
   }
   
   render() {
+    return (
+      <EntityEditor api={this.props.api} 
+    
+    
     const props = {
       currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
       updateFields: this.updateFields.bind(this),
