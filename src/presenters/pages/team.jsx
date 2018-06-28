@@ -233,6 +233,32 @@ class TeamPageUploader extends React.Component {
     };
   }
   
+  render() {
+    const props = {
+      uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
+      uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
+    };
+    return <TeamPage {...props} {...this.state} {...this.props}/>;
+  }
+}
+TeamPageUploader.propTypes = {
+  api: PropTypes.any.isRequired,
+  team: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  }).isRequired,
+  updateFields: PropTypes.func.isRequired,
+  uploadAssetSizes: PropTypes.func.isRequired,
+};
+
+class TeamPageEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      _cacheAvatar: Date.now(),
+      _cacheCover: Date.now(),
+    };
+  }
+  
   async uploadAvatar(blob) {
     try {
       const {id} = this.props.team;
@@ -269,78 +295,19 @@ class TeamPageUploader extends React.Component {
     this.setState({_cacheCover: Date.now()});
   }
   
-  render() {
-    const props = {
-      uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
-      uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
-    };
-    return <TeamPage {...props} {...this.state} {...this.props}/>;
-  }
-}
-TeamPageUploader.propTypes = {
-  api: PropTypes.any.isRequired,
-  team: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-  }).isRequired,
-  updateFields: PropTypes.func.isRequired,
-  uploadAssetSizes: PropTypes.func.isRequired,
-};
-
-class TeamPageEditor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.props.initialTeam;
-  }
-  
-  updateFields(changes) {
-    return this.props.api.patch(`teams/${this.state.id}`, changes).then(() => {
-      this.setState(changes);
-    });
-  }
-  
-  updateField(field, value) {
-    const change = {[field]: value};
-    return this.updateFields(change);
-  }
-  
-  addItem(field, Model, id) {
-    return this.props.api.post(`teams/${this.state.id}/${field}/${id}`).then(() => {
-      const item = Model({id}).asProps(); //weewoo weewoo this relies on the model having been loaded elsewhere
-      this.setState({[field]: [...this.state[field], item]});
-    });
-  }
-  
-  removeItem(field, id) {
-    return this.props.api.delete(`teams/${this.state.id}/${field}/${id}`).then(() => {
-      this.setState({[field]: this.state[field].filter(item => item.id !== id)});
-    });
-  }
-  
-  addPin(id) {
-    return this.props.api.post(`teams/${this.state.id}/pinned-projects/${id}`).then(() => {
-      this.setState({teamPins: [...this.state.teamPins, {projectId: id}]});
-    });
-  }
-  
-  removePin(id) {
-    return this.props.api.delete(`teams/${this.state.id}/pinned-projects/${id}`).then(() => {
-      this.setState({teamPins: this.state.teamPins.filter(item => item.projectId !== id)});
-    });
-  }
-  
-  renderForReal(team, {updateFields}, uploadFuncs) {
+  renderForReal(team, {updateFields, addItem, removeItem}, uploadFuncs) {
     const props = {
       currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
       updateFields: data => updateFields(data),
       updateDescription: description => updateFields({description}),
-      addUser: this.addItem.bind(this, 'users', UserModel),
-      removeUser: this.removeItem.bind(this, 'users'),
+      addUser: id => addItem('users', id, 'users', UserModel({id}).asProps()),
+      removeUser: id => removeItem('users', id, 'users', {id}),
       clearCover: () => updateFields({hasCoverImage: false}),
-      removeProjectFromTeam: this.removeItem.bind(this, 'projects'),
-      addPin: this.addPin.bind(this),
-      removePin: this.removePin.bind(this),
+      removeProjectFromTeam: id => removeItem('projects', {id}),
+      addPin: projectId => addItem('pinned-projects', projectId, 'teamPins', {projectId}),
+      removePin: projectId => removeItem('pinned-projects', projectId, 'teamPins', {projectId}),
     };
-    return <TeamPageUploader team={team} {...uploadFuncs} {...props} {...this.props}/>;
+    return <TeamPage team={team} {...props} {...this.props}/>;
   }
   
   render() {

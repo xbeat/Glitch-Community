@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import 
+import {reject} from 'lodash';
 
 export default class EntityEditor extends React.Component {
   constructor(props) {
@@ -15,11 +15,6 @@ export default class EntityEditor extends React.Component {
     });
   }
   
-  updateField(field, value) {
-    const change = {[field]: value};
-    return this.updateFields(change);
-  }
-  
   addItem(remoteField, remoteId, localField, localModel) {
     return this.props.api.post(`${this.props.type}/${this.state.id}/${remoteField}/${remoteId}`).then(() => {
       this.setState(prev => ({[localField]: [...prev[localField], localModel]}));
@@ -28,12 +23,17 @@ export default class EntityEditor extends React.Component {
   
   removeItem(remoteField, remoteId, localField, localModel) {
     return this.props.api.delete(`teams/${this.state.id}/${remoteField}/${remoteId}`).then(() => {
-      this.setState(prev => ({[localField]: prev[localField].filter(item => item.id !== id)}));
+      this.setState(prev => ({[localField]: reject(prev[localField], localModel)}));
     });
   }
   
   render() {
-    return this.children({entity: this.state});
+    return this.children({
+      entity: this.state,
+      updateFields: this.updateFields.bind(this),
+      addItem: this.addItem.bind(this),
+      removeItem: this.removeItem.bind(this),
+    });
   }
 }
 
