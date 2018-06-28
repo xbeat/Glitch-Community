@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import 
+
 export default class EntityEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -18,16 +20,15 @@ export default class EntityEditor extends React.Component {
     return this.updateFields(change);
   }
   
-  addItem(field, Model, id) {
-    return this.props.api.post(`${this.props.type}/${this.state.id}/${field}/${id}`).then(() => {
-      const item = Model({id}).asProps(); //weewoo weewoo this relies on the model having been loaded elsewhere
-      this.setState(prev => ({[field]: [...prev[field], item]}));
+  addItem(remoteField, remoteId, localField, localModel) {
+    return this.props.api.post(`${this.props.type}/${this.state.id}/${remoteField}/${remoteId}`).then(() => {
+      this.setState(prev => ({[localField]: [...prev[localField], localModel]}));
     });
   }
   
-  removeItem(field, id) {
-    return this.props.api.delete(`teams/${this.state.id}/${field}/${id}`).then(() => {
-      this.setState(prev => ({[field]: prev[field].filter(item => item.id !== id)}));
+  removeItem(remoteField, remoteId, localField, localModel) {
+    return this.props.api.delete(`teams/${this.state.id}/${remoteField}/${remoteId}`).then(() => {
+      this.setState(prev => ({[localField]: prev[localField].filter(item => item.id !== id)}));
     });
   }
   

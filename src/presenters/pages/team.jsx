@@ -328,26 +328,30 @@ class TeamPageEditor extends React.Component {
     });
   }
   
-  render() {
-    return (
-      <EntityEditor api={this.props.api} 
-    
-    
+  renderForReal(team, {updateFields}, uploadFuncs) {
     const props = {
       currentUserIsOnTeam: this.state.users.some(({id}) => this.props.currentUserId === id),
-      updateFields: this.updateFields.bind(this),
-      updateDescription: this.updateField.bind(this, 'description'),
+      updateFields: data => updateFields(data),
+      updateDescription: description => updateFields({description}),
       addUser: this.addItem.bind(this, 'users', UserModel),
       removeUser: this.removeItem.bind(this, 'users'),
-      clearCover: this.updateField.bind(this, 'hasCoverImage', false),
+      clearCover: () => updateFields({hasCoverImage: false}),
       removeProjectFromTeam: this.removeItem.bind(this, 'projects'),
       addPin: this.addPin.bind(this),
       removePin: this.removePin.bind(this),
     };
+    return <TeamPageUploader team={team} {...uploadFuncs} {...props} {...this.props}/>;
+  }
+  
+  render() {
     return (
-      <Uploader>
-        {uploaders => <TeamPageUploader team={this.state} {...uploaders} {...props} {...this.props}/>}
-      </Uploader>
+      <EntityEditor api={this.props.api} initial={this.props.initialTeam} type="teams">
+        {({entity, ...editFuncs}) => (
+          <Uploader>
+            {uploadFuncs => this.renderForReal(entity, editFuncs, uploadFuncs)}
+          </Uploader>
+        )}
+      </EntityEditor>
     );
   }
 }
