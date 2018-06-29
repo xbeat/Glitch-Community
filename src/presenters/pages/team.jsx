@@ -127,7 +127,6 @@ class TeamPageEditor extends React.Component {
     } = this.props;
     const funcs = {
       currentUserIsOnTeam: team.users.some(({id}) => currentUserId === id),
-      updateFields: data => updateFields(data),
       updateDescription: description => updateFields({description}),
       addUser: id => addItem('users', id, 'users', UserModel({id}).asProps()),
       removeUser: id => removeItem('users', id, 'users', {id}),
