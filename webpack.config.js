@@ -22,7 +22,7 @@ module.exports = () => {
   if(process.env.NODE_ENV === 'production') {
     mode = 'production';
   }
-  
+
   console.log(`Starting Webpack in ${mode} mode.`);
   
   return {
