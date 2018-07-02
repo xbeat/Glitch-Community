@@ -116,6 +116,14 @@ class TeamPageEditor extends React.Component {
     this.setState({_cacheCover: Date.now()});
   }
   
+  async removeUser(id) {
+    await this.props.removeItem('users', id, 'users', {id});
+    if (id === this.props.currentUserId) {
+      const model = this.props.currentUserModel;
+      model.teams(model.teams().filter(({id}) => id() !== this.props.team.id));
+    }
+  }
+  
   render() {
     const {
       team,
@@ -129,7 +137,7 @@ class TeamPageEditor extends React.Component {
       currentUserIsOnTeam: team.users.some(({id}) => currentUserId === id),
       updateDescription: description => updateFields({description}),
       addUser: id => addItem('users', id, 'users', UserModel({id}).asProps()),
-      removeUser: id => removeItem('users', id, 'users', {id}),
+      removeUser: id => this.removeUser(id),
       uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
       uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
       clearCover: () => updateFields({hasCoverImage: false}),
@@ -143,6 +151,7 @@ class TeamPageEditor extends React.Component {
 }
 TeamPageEditor.propTypes = {
   currentUserId: PropTypes.number.isRequired,
+  currentUserModel: PropTypes.object.isRequired,
   team: PropTypes.object.isRequired,
   updateFields: PropTypes.func.isRequired,
   addItem: PropTypes.func.isRequired,
@@ -175,6 +184,7 @@ export default function(application, id, name) {
     name,
     api: application.api(),
     currentUserId: application.currentUser().id(),
+    currentUserModel: application.currentUser(),
     myProjects: application.currentUser().projects().map(({asProps}) => asProps()),
     get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? TeamModel(data).update(data).asProps() : null)),
     searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
