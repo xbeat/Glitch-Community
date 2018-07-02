@@ -312,13 +312,20 @@ export function OldUserPage(application, userLoginOrId) {
 
 const UserPage = ({loginOrId}) => loginOrId;
 
-export default function(application, loginOrId) {
+function UserPagePresenter(application, loginOrId, get) {
   const props = {
-    loginOrId,
+    loginOrId, get,
     api: application.api(),
     currentUserId: application.currentUser().id(),
-    get: () => 
   };
   const content = Reactlet(UserPage, props, 'userpage');
   return LayoutPresenter(application, content);
+}
+
+export function UserPageById(application, id) {
+  const get = () => application.api().get(`users/${id}`).then(({data}) => User(data).update(data).asProps());
+  return UserPagePresenter(application, get);
+}
+
+export function UserPageByLogin(application, login) {
 }
