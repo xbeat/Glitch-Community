@@ -13,7 +13,7 @@ import Reactlet from "../reactlet";
 import Observed from "../includes/observed.jsx";
 
 
-export default function(application, userLoginOrId) {
+export function OldUserPage(application, userLoginOrId) {
   const assetUtils = assets(application);
 
   var self = {
@@ -307,5 +307,18 @@ export default function(application, userLoginOrId) {
         
   const content = UserTemplate(self);
   
+  return LayoutPresenter(application, content);
+}
+
+const UserPage = ({loginOrId}) => loginOrId;
+
+export default function(application, loginOrId) {
+  const props = {
+    loginOrId,
+    api: application.api(),
+    currentUserId: application.currentUser().id(),
+    get: () => 
+  };
+  const content = Reactlet(UserPage, props, 'userpage');
   return LayoutPresenter(application, content);
 }
