@@ -9,6 +9,7 @@ import UserModel from '../../models/user';
 import {DataLoader} from '../includes/loader.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import EditableField from '../includes/editable-field.jsx';
+import EntityEditor from '../entity-editor.jsx';
 import Thanks from '../includes/thanks.jsx';
 
 import assets from '../../utils/assets';
@@ -37,26 +38,6 @@ export function OldUserPage(application, userLoginOrId) {
     },
 
     application,
-    
-    Profile() {
-      const propsObservable = Observable(() => {
-        const user = self.user().asProps();
-        const props = {
-          user,
-          fetched: self.user().fetched(),
-          isAuthorized: self.isCurrentUser(),
-          updateDescription: self.updateDescription,
-          updateName: self.updateName,
-          updateLogin: self.updateLogin,
-          uploadCover: self.uploadCover,
-          clearCover: self.clearCover,
-          uploadAvatar: self.uploadAvatar,
-        };
-        return props;
-      });
-
-      return Reactlet(Observed, {propsObservable, component:UserProfile});
-    },
   
     userName() {
       return application.user().name();
@@ -355,7 +336,7 @@ NameAndLogin.propTypes = {
   updateLogin: PropTypes.func,
 };
 
-const UserProfile = ({
+const UserPage = ({
   user: { //has science gone too far?
     name, login, id, description, thanksCount,
     profileStyle, avatarStyle, hasCoverImage,
@@ -366,16 +347,20 @@ const UserProfile = ({
   uploadCover, clearCover,
   uploadAvatar,
 }) => (
-  <ProfileContainer avatarStyle={avatarStyle} coverStyle={profileStyle}
-    coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
-    avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }
-  >
-    <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
-    <Thanks count={thanksCount}/>
-    <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
-  </ProfileContainer>
+  <main className="profile-page user-page">
+    <section>
+      <ProfileContainer avatarStyle={avatarStyle} coverStyle={profileStyle}
+        coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
+        avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }
+      >
+        <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
+        <Thanks count={thanksCount}/>
+        <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
+      </ProfileContainer>
+    </section>
+  </main>
 );
-UserProfile.propTypes = {
+UserPage.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
@@ -387,14 +372,6 @@ UserProfile.propTypes = {
   uploadAvatar: PropTypes.func.isRequired,
 };
 
-const UserPage = ({user}) => (
-  <main className="profile-page user-page">
-    <section>
-      <UserProfile user={user}/>
-    </section>
-  </main>
-);
-
 class UserPageEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -405,13 +382,32 @@ class UserPageEditor extends React.Component {
   }
   
   render() {
+    const {
+      user,
+      currentUserId,
+      updateFields,
+      addItem,
+      removeItem,
+      ...props
+    } = this.props;
+    const funcs = {
+      isAuthorized: user.id === currentUserId,
+      updateName: name => updateFields({name}),
+      updateLogin: login => updateFields({login}),
+      updateDescription: description => updateFields({description}),
+    };
+    return <UserPage user={user} {...funcs} {...props}/>;
   }
 }
 
 const UserPageLoader = ({api, get, loginOrId, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
     {user => user ? (
-      <UserPage user={user} {...props}/>
+      <EntityEditor api={api} initial={user} type="users">
+        {({entity, ...editFuncs}) => (
+          <UserPageEditor user={entity} {...editFuncs} {...props}/>
+        )}
+      </EntityEditor>
     ) : <NotFound name={loginOrId}/>}
   </DataLoader>
 );
