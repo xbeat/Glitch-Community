@@ -108,11 +108,16 @@ const LoadingProfile = ({coverStyle}) => (
 
 // stuff below this line is page specific and hopefully won't stay in this file forever
 
-const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam}) => (
-  <UserPopoversList users={users}>
-    {(user, togglePopover) => <UserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUserFromTeam(user)} />}
-  </UserPopoversList>
-);
+const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam, adminUsers}) => {
+  let userIsTeamAdmin = (user) => {
+    return adminUsers.includes(user.id)
+  }
+  return (
+    <UserPopoversList users={users}>
+      {(user, togglePopover) => <UserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUserFromTeam(user)} userIsTeamAdmin={userIsTeamAdmin(user)} />}
+    </UserPopoversList>
+  )
+};
 TeamUsers.propTypes = {
   users: PropTypes.array.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
@@ -146,12 +151,12 @@ const LoadedTeamProfile = ({
     avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}
     coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
   >
-    <h1 className="username">
+    <h1>
       {name}
       { isVerified && <TeamVerified image={verifiedImage} tooltip={verifiedTooltip}/> }
     </h1>
     <div className="users-information">
-      <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam}}/>
+      <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam, adminUsers}}/>
       { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
     </div>
     <Thanks count={thanksCount}/>
