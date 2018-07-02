@@ -31,6 +31,7 @@ export default Team = function(I, self) {
     isVerified: false,
     teamPins: [],
     hasAvatarImage: false,
+    adminUsers: []
   }
   );
     
@@ -217,6 +218,7 @@ export default Team = function(I, self) {
       return {
         get users() { return self.users().map(({asProps}) => asProps()); },
         
+        adminUsers: self.adminUsers(),
         coverColor: self.coverColor(),
         coverUrlSmall: self.coverUrl('small'),
         coverUrl: self.coverUrl(),
@@ -250,12 +252,12 @@ Team.getTeamById = function(application, id) {
   const teamsPath = `teams/${id}`;
   return application.api().get(teamsPath)
     .then(function({data}) {
-      console.log('🌹',data)
       let ADMIN_ACCESS_LEVEL = 30
       let adminUsers = data.users.filter(user => {
-        console.log (user)
-        
-        
+        return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL
+      })    
+      data.adminUsers = adminUsers.map(user => {
+        return user.id
       })
       application.saveTeam(data)
     })
