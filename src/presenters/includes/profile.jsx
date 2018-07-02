@@ -133,7 +133,8 @@ const LoadedTeamProfile = ({
   team: {
     name, users, description, thanksCount,
     teamAvatarStyle, teamProfileStyle, hasCoverImage,
-    isVerified, verifiedTooltip, verifiedImage,
+    isVerified, verifiedTooltip, verifiedImage, 
+    adminUsers,
   },
   currentUserIsOnTeam,
   uploadCover, clearCover, uploadAvatar,
@@ -166,6 +167,7 @@ LoadedTeamProfile.propTypes = {
     thanksCount: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
     isVerified: PropTypes.bool.isRequired,
+    adminUsers: PropTypes.array.isRequired,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   updateDescription: PropTypes.func.isRequired,
