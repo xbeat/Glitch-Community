@@ -36,10 +36,17 @@ UserActions.propTypes = {
 };
 
 // test w anon user too
-const AdminActions = ({user}) => (
+const AdminActions = ({user, userIsTeamAdmin}) => (
   <section className="pop-over-actions">
+    { userIsTeamAdmin && 
+      <div>
+        {user.login} is an
+        <span> </span>
+        <span className="badge">admin</span>
+      </div> 
+    }
     <button className="button-small has-emoji button-tertiary">
-      <span>Profile </span>
+      <span>xyzyx </span>
       <img className="emoji avatar" src={user.userAvatarUrl} alt={user.login}></img>
     </button>
   </section>
