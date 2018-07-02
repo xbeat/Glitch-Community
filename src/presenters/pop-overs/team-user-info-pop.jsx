@@ -48,7 +48,7 @@ const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, toggleP
   };
   
   return (
-    <dialog className="pop-over user-info-pop">
+    <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info">
         <a href={user.userLink}>
           <img className="avatar" src={user.userAvatarUrl} alt={user.login} style={user.style}/>
