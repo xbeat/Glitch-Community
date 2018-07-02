@@ -11,10 +11,11 @@ const RemoveFromTeam = ({action}) => (
     </button>
   </section>
 );
-
 RemoveFromTeam.propTypes = {
   action: PropTypes.func.isRequired,
 };
+
+
 
 const UserActions = ({user}) => (
   <section className="pop-over-actions">
@@ -26,7 +27,6 @@ const UserActions = ({user}) => (
     </a>
   </section>
 );
-
 UserActions.propTypes = {
   user: PropTypes.shape({
     userLink: PropTypes.string.isRequired,
@@ -41,12 +41,11 @@ const ThanksCount = ({count}) => (
   </section>
 );
 
-const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopover}) => {
+const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, userIsTeamAdmin, togglePopover}) => {
   const removeFromTeamAction = () => {
     togglePopover();
     removeUserFromTeam();
   };
-  
   return (
     <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info">
@@ -64,7 +63,6 @@ const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, toggleP
     </dialog>
   );
 };
-
 TeamUserInfoPop.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
@@ -76,8 +74,8 @@ TeamUserInfoPop.propTypes = {
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
+  userIsTeamAdmin: PropTypes.bool.isRequired,
 };
-
 TeamUserInfoPop.defaultProps = {
   user: {
     isOnTeam: false
