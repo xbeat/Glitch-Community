@@ -253,6 +253,7 @@ export default User = function(I, self) {
         get pins() { return self.pins(); },
 
         alt: self.alt(),
+        avatarUrl: self.avatarUrl(),
         color: self.color(),
         coverColor: self.coverColor(),
         coverUrlSmall: self.coverUrl('small'),
@@ -361,10 +362,10 @@ User.getSearchResults = function(application, query) {
 
 User._cache = cache;
 
-export function getAvatarStyle({id, color}) {
+export function getAvatarStyle({avatarUrl, color}) {
   return {
     backgroundColor: color,
-    backgroundImage: `url('${}')`,
+    backgroundImage: `url('${avatarUrl || ANON_AVATAR_URL}')`,
   };
 }
 

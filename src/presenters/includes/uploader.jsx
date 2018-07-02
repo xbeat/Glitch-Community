@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {uploadAssetSizes} from '../../utils/assets';
+import {uploadAsset, uploadAssetSizes} from '../../utils/assets';
 
 export default class Uploader extends React.Component {
   constructor(props) {
@@ -11,6 +11,27 @@ export default class Uploader extends React.Component {
       progress: 0,
       error: false,
     };
+  }
+  
+  async uploadAsset(blob, policy, key) {
+    this.setState({
+      uploading: true,
+      progress: 0,
+      error: false,
+    });
+    try {
+      await uploadAsset(blob, policy, key,
+        ({lengthComputable, loaded, total}) => {
+          if (lengthComputable) {
+            this.setState({progress: loaded/total});
+          } else {
+            this.setState(({progress}) => ({progress: (progress+1)/2}));
+          }
+        }
+      );
+    } finally {
+      this.setState({uploading: false});
+    }
   }
   
   async uploadAssetSizes(blob, policy, sizes) {
@@ -37,6 +58,10 @@ export default class Uploader extends React.Component {
   render() {
     const {children} = this.props;
     const {uploading, progress, error} = this.state;
+    const funcs = {
+      
+      uploadAssetSizes: this.uploadAssetSizes.bind(this),
+    };
     return (
       <React.Fragment>
         <aside className="notifications">
@@ -50,7 +75,7 @@ export default class Uploader extends React.Component {
             <div className="notification notifyUploadFailure">File upload failed. Try again in a few minutes?</div>
           )}
         </aside>
-        {children({uploadAssetSizes: this.uploadAssetSizes.bind(this)})}
+        {children(funcs)}
       </React.Fragment>
     );
   }
