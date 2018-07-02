@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Project from '../../models/project';
 import Observable from 'o_0';
 
+import ProjectModel from '../../models/project';
 import UserModel from '../../models/user';
 
 import {DataLoader} from '../includes/loader.jsx';
@@ -17,7 +18,7 @@ import UserTemplate from '../../templates/pages/user';
 import DeletedProjectsTemplate from '../../templates/deleted-projects';
 import LayoutPresenter from '../layout';
 
-import EntityPageProjectsContainer from "../entity-page-projects.jsx";
+import EntityPageProjects from "../entity-page-projects.jsx";
 import NotFound from '../includes/not-found.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
@@ -145,7 +146,7 @@ export function OldUserPage(application, userLoginOrId) {
         };
       });
       
-      return Reactlet(Observed, {propsObservable, component:EntityPageProjectsContainer});
+      return Reactlet(Observed, {propsObservable, component:EntityPageProjects});
     },
     
     hiddenUnlessUserIsAnon() {
@@ -340,12 +341,14 @@ const UserPage = ({
   user: { //has science gone too far?
     name, login, id, description, thanksCount,
     profileStyle, avatarStyle, hasCoverImage,
+    pins, projects,
   },
   isAuthorized,
   updateDescription,
   updateName, updateLogin,
   uploadCover, clearCover,
   uploadAvatar,
+  getProjects,
 }) => (
   <main className="profile-page user-page">
     <section>
@@ -358,6 +361,7 @@ const UserPage = ({
         <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
     </section>
+    <EntityPageProjects projects={projects} pins={pins} getProjects={getProjects} isAuthorized={false}/>
   </main>
 );
 UserPage.propTypes = {
@@ -436,6 +440,7 @@ function UserPagePresenter(application, loginOrId, get) {
     api: application.api(),
     currentUserId: application.currentUser().id(),
     currentUserModel: application.currentUser(),
+    getProjects: ids => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
   };
   const content = Reactlet(UserPageLoader, props, 'userpage');
   return LayoutPresenter(application, content);
