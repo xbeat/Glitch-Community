@@ -382,13 +382,16 @@ class UserPageEditor extends React.Component {
   }
   
   updateName(name) {
-    return this.props.updateFields({name}).catch(({response: {data: {message}}}) => Promise.reject(message));
+    return this.props.updateFields({name}).catch(
+      ({response: {data: {message}}}) => Promise.reject(message)
+    );
   }
   
   updateLogin(login) {
     return this.props.updateFields({login}).then(() => {
       history.replaceState(null, null, `/@${login}`);
       document.title = `@${login}`;
+      this.props.currentUserModel.login(login);
     }, ({response: {data: {message}}}) => Promise.reject(message));
   }
   
@@ -432,6 +435,7 @@ function UserPagePresenter(application, loginOrId, get) {
     loginOrId, get,
     api: application.api(),
     currentUserId: application.currentUser().id(),
+    currentUserModel: application.currentUser(),
   };
   const content = Reactlet(UserPageLoader, props, 'userpage');
   return LayoutPresenter(application, content);
