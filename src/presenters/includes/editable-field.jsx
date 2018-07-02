@@ -12,19 +12,19 @@ export default class EditableField extends React.Component {
     
     this.onChange = this.onChange.bind(this);
     this.update = debounce(this.update.bind(this), 500);
-    this.handleSuccess = this.handleSuccess.bind(this);
-    this.handleFailure = this.handleFailure.bind(this);
   }
   
   update(value){
-    this.props.update(value).then(this.handleUpdate);
+    this.props.update(value).then(
+      this.handleSuccess.bind(this),
+      this.handleFailure.bind(this, value));
   }
   
   handleSuccess() {
     this.setState({error: ""});
   }
   
-  handleFailure({data, message}) {
+  handleFailure(data, message) {
     // The update failed; we can ignore this if our state has already moved on
     if(data !== this.state.value.trim()){
       return;

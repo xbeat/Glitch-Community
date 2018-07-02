@@ -382,21 +382,14 @@ class UserPageEditor extends React.Component {
   }
   
   updateName(name) {
-    return this.props.updateFields({name}).then(() => (
-      {success: true, data: name}
-    )).catch(({response: {data: {message}}}) => (
-      {success: false, data: name, message}
-    ));
+    return this.props.updateFields({name}).catch(({response: {data: {message}}}) => Promise.reject(message));
   }
   
   updateLogin(login) {
     return this.props.updateFields({login}).then(() => {
       history.replaceState(null, null, `/@${login}`);
       document.title = `@${login}`;
-      return {success: true, data: login};
-    }).catch(({response: {data: {message}}}) => (
-      {success: false, data: login, message}
-    ));
+    }, ({response: {data: {message}}}) => Promise.reject(message));
   }
   
   render() {

@@ -146,10 +146,7 @@ const ProjectPageEditor = ({project, updateFields, ...props}) => {
     return updateFields({domain}).then(() => {
       history.replaceState(null, null, `/~${domain}`);
       document.title = `~${domain}`;
-      return {success: true, data: domain};
-    }).catch(({response: {data: {message}}}) => (
-      {success: false, data: domain, message}
-    ));
+    }, ({response: {data: {message}}}) => Promise.reject(message));
   }
   const funcs = {
     updateDomain: domain => updateDomain(domain),
