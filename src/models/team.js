@@ -249,7 +249,14 @@ export default Team = function(I, self) {
 Team.getTeamById = function(application, id) {
   const teamsPath = `teams/${id}`;
   return application.api().get(teamsPath)
-    .then(({data}) => application.saveTeam(data)).catch(error => console.error('getTeamById', error));
+    .then(function({data}) {
+      console.log('🌹',data)
+      let admins = data.users.map(user => {
+        console.log (user)
+      })
+      application.saveTeam(data)
+    })
+    .catch(error => console.error('getTeamById', error));
 };
 
 Team.getSearchResults = function(application, query) {
