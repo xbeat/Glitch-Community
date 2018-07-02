@@ -15,8 +15,6 @@ RemoveFromTeam.propTypes = {
   action: PropTypes.func.isRequired,
 };
 
-
-
 const UserActions = ({user}) => (
   <section className="pop-over-actions">
     <a href={user.userLink}>
@@ -39,15 +37,14 @@ UserActions.propTypes = {
 const AdminActions = ({user, userIsTeamAdmin}) => (
   <section className="pop-over-actions">
     { userIsTeamAdmin && 
-      <p>
-        <span className="status-badge is-admin">Admin</span>
-      </p> 
+      <button className="button-small has-emoji button-tertiary">
+        <span>Remove Admin Status</span>
+      </button>
     ||
-      <p>hi</p>
+      <button className="button-small has-emoji button-tertiary">
+        <span>Make an Admin</span>
+      </button>
     }
-    <button className="button-small has-emoji button-tertiary">
-      <span>Remove Admin Status</span>
-    </button>
   </section>
 );
 AdminActions.propTypes = {
@@ -78,6 +75,10 @@ const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, userIsT
         <div className="info-container">
           <p className="name" title={user.name}>{user.name}</p>
           <p className="user-login" title={user.login}>@{user.login}</p>
+          { userIsTeamAdmin && 
+            <p className="status-badge admin">Admin</p> 
+          }
+
         </div>
       </section>
       { user.thanksCount > 0 && <ThanksCount count={user.thanksCount} /> }
