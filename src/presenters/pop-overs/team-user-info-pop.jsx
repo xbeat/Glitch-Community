@@ -35,19 +35,21 @@ UserActions.propTypes = {
   }).isRequired,
 };
 
-// test w anon user too
+// test w anon user too // admin badge uses warning color
 const AdminActions = ({user, userIsTeamAdmin}) => (
   <section className="pop-over-actions">
     { userIsTeamAdmin && 
-      <div>
-        {user.login} is an
-        <span> </span>
-        <span className="badge">admin</span>
-      </div> 
+      <p>
+        <span>Is an </span>
+        <span className="status-badge">admin</span>
+      </p> 
+    ||
+      <p>hi</p>
     }
     <button className="button-small has-emoji button-tertiary">
-      <span>xyzyx </span>
-      <img className="emoji avatar" src={user.userAvatarUrl} alt={user.login}></img>
+      <span>Remove Admin Status </span>
+      <span className="status-badge">Admins Only</span>
+
     </button>
   </section>
 );
