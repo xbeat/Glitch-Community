@@ -251,8 +251,11 @@ Team.getTeamById = function(application, id) {
   return application.api().get(teamsPath)
     .then(function({data}) {
       console.log('🌹',data)
-      let admins = data.users.map(user => {
+      let ADMIN_ACCESS_LEVEL = 30
+      let adminUsers = data.users.filter(user => {
         console.log (user)
+        
+        
       })
       application.saveTeam(data)
     })
