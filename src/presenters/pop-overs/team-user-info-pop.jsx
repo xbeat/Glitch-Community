@@ -76,7 +76,9 @@ const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, userIsT
           <p className="name" title={user.name}>{user.name}</p>
           <p className="user-login" title={user.login}>@{user.login}</p>
           { userIsTeamAdmin && 
-            <p className="status-badge admin">Admin</p> 
+            <div className="status-badge">
+              <span className="status admin">Admin</span>
+            </div> 
           }
 
         </div>
