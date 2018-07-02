@@ -18,7 +18,7 @@ export default [
     link: 'https://glitch.com/~ten-functions'
   }
   , {
-    title: 'Ask the Magic 8 Ball',
+    title: 'Ask The Magic 8 Ball',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F8ball.jpg?1530529469908",
     link: 'https://glitch.com/~8ball'
   }
