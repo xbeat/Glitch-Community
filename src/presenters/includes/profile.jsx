@@ -5,11 +5,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Loader from './loader.jsx';
-import Thanks from './thanks.jsx';
-import {AuthDescription} from './description-field.jsx';
-import EditableField from './editable-field.jsx';
-
 export const ImageButtons = ({name, uploadImage, clearImage}) => (
   <div className="upload-image-buttons">
     { !!uploadImage && (
@@ -88,14 +83,6 @@ export const ProfileContainer = ({
       <div className="profile-information">
         {children}
       </div>
-    </InfoContainer>
-  </CoverContainer>
-);
-
-const LoadingProfile = ({coverStyle}) => (
-  <CoverContainer style={coverStyle}>
-    <InfoContainer>
-      <Loader/>
     </InfoContainer>
   </CoverContainer>
 );
