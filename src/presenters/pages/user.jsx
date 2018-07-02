@@ -5,7 +5,7 @@ import Project from '../../models/project';
 import Observable from 'o_0';
 
 import ProjectModel from '../../models/project';
-import UserModel from '../../models/user';
+import UserModel, {getProfileStyle} from '../../models/user';
 
 import {DataLoader} from '../includes/loader.jsx';
 import Uploader from '../includes/uploader.jsx';
@@ -341,8 +341,9 @@ NameAndLogin.propTypes = {
 
 const UserPage = ({
   user: { //has science gone too far?
-    name, login, id, description, thanksCount,
-    profileStyle, avatarStyle, hasCoverImage,
+    id, login, name, description, thanksCount,
+    avatarStyle,
+    hasCoverImage, coverColor,
     pins, projects,
   },
   isAuthorized,
@@ -351,10 +352,13 @@ const UserPage = ({
   uploadCover, clearCover,
   uploadAvatar,
   getProjects,
+  _cacheCover,
 }) => (
   <main className="profile-page user-page">
     <section>
-      <ProfileContainer avatarStyle={avatarStyle} coverStyle={profileStyle}
+      <ProfileContainer
+        avatarStyle={avatarStyle}
+        coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
         coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
         avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }
       >

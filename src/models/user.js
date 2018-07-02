@@ -361,5 +361,21 @@ User.getSearchResults = function(application, query) {
 
 User._cache = cache;
 
+export function getAvatarStyle({id, color}) {
+  return {
+    backgroundColor: color,
+    backgroundImage: `url('${}')`,
+  };
+}
+
+export function getProfileStyle({id, hasCoverImage, coverColor, cache}) {
+  const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-cover/${id}/large?${cache}`;
+  const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
+  return {
+    backgroundColor: self.coverColor,
+    backgroundImage: `url('${hasCoverImage ? customImage : defaultImage}')`,
+  };
+}
+
 // Circular dependencies must go below module.exports
 import Project from './project';
