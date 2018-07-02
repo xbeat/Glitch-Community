@@ -35,6 +35,23 @@ UserActions.propTypes = {
   }).isRequired,
 };
 
+// test w anon user too
+const AdminActions = ({user}) => (
+  <section className="pop-over-actions">
+    <button className="button-small has-emoji button-tertiary">
+      <span>Profile </span>
+      <img className="emoji avatar" src={user.userAvatarUrl} alt={user.login}></img>
+    </button>
+  </section>
+);
+AdminActions.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    login: PropTypes.string.isRequired,
+  }).isRequired,
+  userIsTeamAdmin: PropTypes.bool.isRequired,
+};
+
 const ThanksCount = ({count}) => (
   <section className="pop-over-info">
     <Thanks count={count} />
@@ -59,6 +76,7 @@ const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, userIsT
       </section>
       { user.thanksCount > 0 && <ThanksCount count={user.thanksCount} /> }
       <UserActions user={user} />
+      <AdminActions user={user} userIsTeamAdmin={userIsTeamAdmin} />
       { currentUserIsOnTeam && <RemoveFromTeam action={removeFromTeamAction} />}
     </dialog>
   );
