@@ -7,6 +7,9 @@ import Observable from 'o_0';
 import UserModel from '../../models/user';
 
 import {DataLoader} from '../includes/loader.jsx';
+import {AuthDescription} from '../includes/description-field.jsx';
+import EditableField from '../includes/editable-field.jsx';
+import Thanks from '../includes/thanks.jsx';
 
 import assets from '../../utils/assets';
 import UserTemplate from '../../templates/pages/user';
@@ -15,7 +18,7 @@ import LayoutPresenter from '../layout';
 
 import EntityPageProjectsContainer from "../entity-page-projects.jsx";
 import NotFound from '../includes/not-found.jsx';
-import {UserProfile} from '../includes/profile.jsx';
+import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
 import Observed from "../includes/observed.jsx";
 
@@ -317,11 +320,98 @@ export function OldUserPage(application, userLoginOrId) {
   return LayoutPresenter(application, content);
 }
 
+const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
+  if(!login) {
+    // Just an ID? We're anonymous.
+    return <h1 className="login">@{id}</h1>;
+  }
+  
+  if(!isAuthorized) {
+    if(!name) {
+      //promote login to an h1.
+      return <h1 className="login">@{login}</h1>;
+    }
+    return (
+      <React.Fragment>
+        <h1 className="username">{name}</h1>
+        <h2 className="login">@{login}</h2>
+      </React.Fragment>
+    );
+  }
+
+  return (
+    <React.Fragment>
+      <h1 className="username"><EditableField value={name||""} update={updateName} placeholder='Display name?'/></h1>
+      <h2 className="login"><EditableField value={login} update={updateLogin} prefix="@" placeholder='User ID?'/></h2>
+    </React.Fragment>
+  );
+};
+NameAndLogin.propTypes = {
+  name: PropTypes.string,
+  login: PropTypes.string,
+  id: PropTypes.number.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
+  updateName: PropTypes.func,
+  updateLogin: PropTypes.func,
+};
+
+const UserProfile = ({
+  user: { //has science gone too far?
+    name, login, id, description, thanksCount,
+    profileStyle, avatarStyle, hasCoverImage,
+  },
+  isAuthorized,
+  updateDescription,
+  updateName, updateLogin,
+  uploadCover, clearCover,
+  uploadAvatar,
+}) => (
+  <ProfileContainer avatarStyle={avatarStyle} coverStyle={profileStyle}
+    coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
+    avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }
+  >
+    <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
+    <Thanks count={thanksCount}/>
+    <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
+  </ProfileContainer>
+);
+UserProfile.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    login: PropTypes.string,
+    id: PropTypes.number.isRequired,
+    thanksCount: PropTypes.number.isRequired,
+    hasCoverImage: PropTypes.bool.isRequired,
+  }).isRequired,
+  uploadAvatar: PropTypes.func.isRequired,
+};
+
+const UserPage = ({user}) => (
+  <main className="profile-page user-page">
+    <section>
+      <UserProfile user={user}/>
+    </section>
+  </main>
+);
+
+class UserPageEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      _cacheAvatar: Date.now(),
+      _cacheCover: Date.now(),
+    };
+  }
+  
+  render() {
+  }
+}
 
 const UserPageLoader = ({api, get, loginOrId, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
     {user => user ? (
-      user.tooltipName
+      <UserPage user={user} {...props}/>
     ) : <NotFound name={loginOrId}/>}
   </DataLoader>
 );
