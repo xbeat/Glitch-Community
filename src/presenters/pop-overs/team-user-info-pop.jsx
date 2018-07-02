@@ -41,7 +41,7 @@ const ThanksCount = ({count}) => (
   </section>
 );
 
-const UserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopover}) => {
+const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopover}) => {
   const removeFromTeamAction = () => {
     togglePopover();
     removeUserFromTeam();
@@ -65,7 +65,7 @@ const UserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopov
   );
 };
 
-UserInfoPop.propTypes = {
+TeamUserInfoPop.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
     login: PropTypes.string.isRequired,
@@ -78,11 +78,11 @@ UserInfoPop.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
 };
 
-UserInfoPop.defaultProps = {
+TeamUserInfoPop.defaultProps = {
   user: {
     isOnTeam: false
   },
   currentUserIsOnTeam: false,
 };
 
-export default UserInfoPop;
+export default TeamUserInfoPop;

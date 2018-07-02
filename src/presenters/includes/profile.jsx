@@ -10,7 +10,7 @@ import Thanks from './thanks.jsx';
 import AddTeamUser from './add-team-user.jsx';
 import {AuthDescription} from './description-field.jsx';
 import EditableField from './editable-field.jsx';
-import UserInfoPop from '../pop-overs/user-info-pop.jsx';
+import TeamUserInfoPop from '../pop-overs/team-user-info-pop.jsx';
 import {UserPopoversList} from '../users-list.jsx';
 
 const ImageButtons = ({name, uploadImage, clearImage}) => (
@@ -114,7 +114,7 @@ const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam, adminUsers})
   }
   return (
     <UserPopoversList users={users}>
-      {(user, togglePopover) => <UserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUserFromTeam(user)} userIsTeamAdmin={userIsTeamAdmin(user)} />}
+      {(user, togglePopover) => <TeamUserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUserFromTeam(user)} userIsTeamAdmin={userIsTeamAdmin(user)} />}
     </UserPopoversList>
   )
 };
