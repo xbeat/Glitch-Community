@@ -14,13 +14,14 @@ export default class Uploader extends React.Component {
   }
   
   async uploadAsset(blob, policy, key) {
+    let url = null;
     this.setState({
       uploading: true,
       progress: 0,
       error: false,
     });
     try {
-      await uploadAsset(blob, policy, key,
+      url = await uploadAsset(blob, policy, key,
         ({lengthComputable, loaded, total}) => {
           if (lengthComputable) {
             this.setState({progress: loaded/total});
@@ -32,6 +33,7 @@ export default class Uploader extends React.Component {
     } finally {
       this.setState({uploading: false});
     }
+    return url;
   }
   
   async uploadAssetSizes(blob, policy, sizes) {
@@ -59,7 +61,7 @@ export default class Uploader extends React.Component {
     const {children} = this.props;
     const {uploading, progress, error} = this.state;
     const funcs = {
-      
+      uploadAsset: this.uploadAsset.bind(this),
       uploadAssetSizes: this.uploadAssetSizes.bind(this),
     };
     return (

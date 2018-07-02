@@ -405,6 +405,25 @@ class UserPageEditor extends React.Component {
     }, ({response: {data: {message}}}) => Promise.reject(message));
   }
   
+  async uploadAvatar(blob) {
+    try {
+      const {id} = this.props.user;
+      const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, id);
+      const url = await this.props.uploadAsset(blob, policy, 'temporary-user-avatar');
+
+      const image = await assets.blobToImage(blob);
+      const color = assets.getDominantColor(image);
+      console.log(url, color);/*
+      await this.props.updateFields({
+        avatarUrl: true,
+        color: color,
+      });*/
+    } catch (error) {
+      console.error(error);
+    }
+    this.setState({_cacheCover: Date.now()});
+  }
+  
   async uploadCover(blob) {
     try {
       const {id} = this.props.user;
@@ -437,6 +456,7 @@ class UserPageEditor extends React.Component {
       updateName: name => this.updateName(name),
       updateLogin: login => this.updateLogin(login),
       updateDescription: description => updateFields({description}),
+      uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
       uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
       clearCover: () => updateFields({hasCoverImage: false}),
     };
