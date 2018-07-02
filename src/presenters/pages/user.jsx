@@ -1,5 +1,12 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import Project from '../../models/project';
 import Observable from 'o_0';
+
+import UserModel from '../../models/user';
+
+import {DataLoader} from '../includes/loader.jsx';
 
 import assets from '../../utils/assets';
 import UserTemplate from '../../templates/pages/user';
@@ -310,7 +317,18 @@ export function OldUserPage(application, userLoginOrId) {
   return LayoutPresenter(application, content);
 }
 
-const UserPage = ({loginOrId}) => loginOrId;
+
+const UserPageLoader = ({api, get, loginOrId, ...props}) => (
+  <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
+    {user => user ? (
+      user.tooltipName
+    ) : <NotFound name={loginOrId}/>}
+  </DataLoader>
+);
+UserPageLoader.propTypes = {
+  get: PropTypes.func.isRequired,
+  loginOrId: PropTypes.node.isRequired,
+};
 
 function UserPagePresenter(application, loginOrId, get) {
   const props = {
@@ -318,14 +336,26 @@ function UserPagePresenter(application, loginOrId, get) {
     api: application.api(),
     currentUserId: application.currentUser().id(),
   };
-  const content = Reactlet(UserPage, props, 'userpage');
+  const content = Reactlet(UserPageLoader, props, 'userpage');
   return LayoutPresenter(application, content);
 }
 
+async function getUserById(api, id) {
+  const {data} = await api.get(`users/${id}`);
+  return UserModel(data).update(data).asProps();
+}
+
+async function getUserByLogin(api, login) {
+  const {data} = await api.get(`userId/byLogin/${login}`);
+  return await getUserById(api, data);
+}
+
 export function UserPageById(application, id) {
-  const get = () => application.api().get(`users/${id}`).then(({data}) => User(data).update(data).asProps());
-  return UserPagePresenter(application, get);
+  const get = () => getUserById(application.api(), id);
+  return UserPagePresenter(application, id, get);
 }
 
 export function UserPageByLogin(application, login) {
+  const get = () => getUserByLogin(application.api(), login);
+  return UserPagePresenter(application, login, get);
 }

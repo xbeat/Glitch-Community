@@ -8,7 +8,7 @@ import IndexPage from './presenters/pages/index';
 import CategoryPage from './presenters/pages/category';
 import ProjectPage from './presenters/pages/project.jsx';
 import TeamPage from './presenters/pages/team.jsx';
-import UserPage from './presenters/pages/user';
+import {UserPageById, UserPageByLogin} from './presenters/pages/user.jsx';
 import QuestionsPage from './presenters/pages/questions';
 import SearchPage from './presenters/pages/search';
 import errorPageTemplate from './templates/pages/error';
@@ -64,8 +64,7 @@ function routePage(pageUrl, application) {
   if (pageUrl.charAt(0) === '@') {
     application.pageIsUserPage(true);
     const userLogin = pageUrl.substring(1, pageUrl.length);
-    const page = UserPage(application, userLogin);
-    application.getUserByLogin(userLogin);
+    const page = UserPageByLogin(application, userLogin);
     return {page, title:decodeURI(pageUrl)};
   }
 
@@ -73,8 +72,7 @@ function routePage(pageUrl, application) {
   if (pageUrl.match(/^(user\/)/g)) {
     application.pageIsUserPage(true);
     const userId = application.anonProfileIdFromUrl(pageUrl);
-    const page = UserPage(application, userId);
-    application.getUserById(userId);
+    const page = UserPageById(application, userId);
     return {page, title: pageUrl};
   }
 
