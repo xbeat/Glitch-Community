@@ -386,7 +386,6 @@ class UserPageEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      _cacheAvatar: Date.now(),
       _cacheCover: Date.now(),
     };
   }
@@ -413,15 +412,15 @@ class UserPageEditor extends React.Component {
 
       const image = await assets.blobToImage(blob);
       const color = assets.getDominantColor(image);
-      console.log(url, color);/*
       await this.props.updateFields({
-        avatarUrl: true,
+        avatarUrl: url,
         color: color,
-      });*/
+      });
     } catch (error) {
       console.error(error);
     }
-    this.setState({_cacheCover: Date.now()});
+    this.props.currentUserModel.avatarUrl(this.props.user.avatarUrl);
+    this.props.currentUserModel.avatarThumbnailUrl(this.props.user.avatarThumbnailUrl);
   }
   
   async uploadCover(blob) {
@@ -432,7 +431,7 @@ class UserPageEditor extends React.Component {
 
       const image = await assets.blobToImage(blob);
       const color = assets.getDominantColor(image);
-      await this.props.updateFields({
+      const {data} = await this.props.updateFields({
         hasCoverImage: true,
         coverColor: color,
       });

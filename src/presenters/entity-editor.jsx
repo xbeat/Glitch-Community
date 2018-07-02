@@ -10,8 +10,8 @@ export default class EntityEditor extends React.Component {
   }
   
   updateFields(changes) {
-    return this.props.api.patch(`${this.props.type}/${this.state.id}`, changes).then(() => {
-      this.setState(changes);
+    return this.props.api.patch(`${this.props.type}/${this.state.id}`, changes).then(({data}) => {
+      this.setState(data);
     });
   }
   
