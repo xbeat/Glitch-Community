@@ -8,12 +8,14 @@ import ProjectModel from '../../models/project';
 import UserModel from '../../models/user';
 
 import {DataLoader} from '../includes/loader.jsx';
+import Uploader from '../includes/uploader.jsx';
+
 import {AuthDescription} from '../includes/description-field.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import EntityEditor from '../entity-editor.jsx';
 import Thanks from '../includes/thanks.jsx';
 
-import assets from '../../utils/assets';
+import * as assets from '../../utils/assets';
 import UserTemplate from '../../templates/pages/user';
 import DeletedProjectsTemplate from '../../templates/deleted-projects';
 import LayoutPresenter from '../layout';
@@ -399,6 +401,24 @@ class UserPageEditor extends React.Component {
     }, ({response: {data: {message}}}) => Promise.reject(message));
   }
   
+  async uploadCover(blob) {
+    try {
+      const {id} = this.props.user;
+      const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, id);
+      await this.props.uploadAssetSizes(blob, policy, assets.COVER_SIZES);
+
+      const image = await assets.blobToImage(blob);
+      const color = assets.getDominantColor(image);
+      await this.props.updateFields({
+        hasCoverImage: true,
+        coverColor: color,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    this.setState({_cacheCover: Date.now()});
+  }
+  
   render() {
     const {
       user,
@@ -413,8 +433,10 @@ class UserPageEditor extends React.Component {
       updateName: name => this.updateName(name),
       updateLogin: login => this.updateLogin(login),
       updateDescription: description => updateFields({description}),
+      uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
+      clearCover: () => updateFields({hasCoverImage: false}),
     };
-    return <UserPage user={user} {...funcs} {...props}/>;
+    return <UserPage user={user} {...this.state} {...funcs} {...props}/>;
   }
 }
 
@@ -423,7 +445,11 @@ const UserPageLoader = ({api, get, loginOrId, ...props}) => (
     {user => user ? (
       <EntityEditor api={api} initial={user} type="users">
         {({entity, ...editFuncs}) => (
-          <UserPageEditor user={entity} {...editFuncs} {...props}/>
+          <Uploader>
+            {({...uploadFuncs}) => (
+              <UserPageEditor user={entity} api={api} {...editFuncs} {...uploadFuncs} {...props}/>
+            )}
+          </Uploader>
         )}
       </EntityEditor>
     ) : <NotFound name={loginOrId}/>}

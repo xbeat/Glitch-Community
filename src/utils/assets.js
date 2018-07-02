@@ -138,6 +138,10 @@ export function requestFile(callback) {
   console.log('input created: ', input);
 }
 
+export function getUserCoverImagePolicy(api, id) {
+  return api.get(`users/${id}/cover/policy`);
+}
+
 export function getTeamAvatarImagePolicy(api, id) {
   return api.get(`teams/${id}/avatar/policy`);
 }
