@@ -12,5 +12,5 @@ while true; do
     --compress public/styles/styles.styl \
     --out public/styles.css
   
-  echo "Restarting stylus watcher"
+  echo "Stylus crashed; Restarting stylus --watch"
 done
