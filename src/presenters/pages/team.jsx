@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import NotificationSystem from 'react-notification-system'
+
 import * as assets from '../../utils/assets';
 import TeamModel, {getAvatarStyle, getProfileStyle} from '../../models/team';
 import UserModel from '../../models/user';
