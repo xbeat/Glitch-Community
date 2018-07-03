@@ -7,11 +7,8 @@ import PropTypes from 'prop-types';
 
 import Loader from './loader.jsx';
 import Thanks from './thanks.jsx';
-import AddTeamUser from './add-team-user.jsx';
 import {AuthDescription} from './description-field.jsx';
 import EditableField from './editable-field.jsx';
-import TeamUserInfoPop from '../pop-overs/team-user-info-pop.jsx';
-import {UserPopoversList} from '../users-list.jsx';
 
 export const ImageButtons = ({name, uploadImage, clearImage}) => (
   <div className="upload-image-buttons">
@@ -93,7 +90,6 @@ export const ProfileContainer = ({
       </div>
     </InfoContainer>
   </CoverContainer>
-<<<<<<< HEAD
 );
 
 const LoadingProfile = ({coverStyle}) => (
@@ -105,104 +101,7 @@ const LoadingProfile = ({coverStyle}) => (
 );
 
 
-
-
 // stuff below this line is page specific and hopefully won't stay in this file forever
-
-const TeamUsers = ({users, currentUserIsOnTeam, removeUserFromTeam, adminUsers}) => {
-  let userIsTeamAdmin = (user) => {
-    return adminUsers.includes(user.id)
-  }
-  return (
-    <UserPopoversList users={users}>
-      {(user, togglePopover) => <TeamUserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUserFromTeam(user)} userIsTeamAdmin={userIsTeamAdmin(user)} />}
-    </UserPopoversList>
-  )
-};
-TeamUsers.propTypes = {
-  users: PropTypes.array.isRequired,
-  currentUserIsOnTeam: PropTypes.bool.isRequired,
-  removeUserFromTeam: PropTypes.func.isRequired,
-};
-
-const TeamVerified = ({image, tooltip}) => (
-  <span data-tooltip={tooltip}>
-    <img className="verified" src={image} alt={tooltip}/>
-  </span>
-);
-TeamVerified.propTypes = {
-  image: PropTypes.string.isRequired,
-  tooltip: PropTypes.string.isRequired,
-};
-
-const LoadedTeamProfile = ({
-  team: {
-    name, users, description, thanksCount,
-    teamAvatarStyle, teamProfileStyle, hasCoverImage,
-    isVerified, verifiedTooltip, verifiedImage, 
-    adminUsers,
-  },
-  currentUserIsOnTeam,
-  uploadCover, clearCover, uploadAvatar,
-  search, addUserToTeam, removeUserFromTeam,
-  updateDescription,
-}) => (
-  <ProfileContainer
-    avatarStyle={teamAvatarStyle} coverStyle={teamProfileStyle}
-    avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}
-    coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
-  >
-    <h1>
-      {name}
-      { isVerified && <TeamVerified image={verifiedImage} tooltip={verifiedTooltip}/> }
-    </h1>
-    <div className="users-information">
-      <TeamUsers {...{users, currentUserIsOnTeam, removeUserFromTeam, adminUsers}}/>
-      { currentUserIsOnTeam && <AddTeamUser {...{search, add: addUserToTeam, members: users.map(({id}) => id)}}/>}
-    </div>
-    <Thanks count={thanksCount}/>
-    <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
-  </ProfileContainer>
-);
-LoadedTeamProfile.propTypes = {
-  team: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    users: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    })).isRequired,
-    thanksCount: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    isVerified: PropTypes.bool.isRequired,
-    adminUsers: PropTypes.array.isRequired,
-  }).isRequired,
-  currentUserIsOnTeam: PropTypes.bool.isRequired,
-  updateDescription: PropTypes.func.isRequired,
-  uploadAvatar: PropTypes.func.isRequired,
-};
-
-export const TeamProfile = ({fetched, currentUserIsOnTeam, userFetched, team, ...props}) => {
-  if (!fetched || (currentUserIsOnTeam && !userFetched)) {
-    return <LoadingProfile coverStyle={team.teamProfileStyle}/>;
-  } 
-  return (
-    <LoadedTeamProfile 
-      team={team} 
-      currentUserIsOnTeam={currentUserIsOnTeam}
-      {...props}
-    />
-  );
-  
-};
-TeamProfile.propTypes = {
-  fetched: PropTypes.bool.isRequired,
-  currentUserIsOnTeam: PropTypes.bool.isRequired,
-  userFetched: PropTypes.bool.isRequired,
-  team: PropTypes.shape({
-    teamProfileStyle: PropTypes.object.isRequired,
-  }).isRequired,
-};
-
-
 
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
   if(!login) {
@@ -285,6 +184,3 @@ UserProfile.propTypes = {
     profileStyle: PropTypes.object.isRequired,
   }).isRequired,
 };
-=======
-);
->>>>>>> nova-chance
