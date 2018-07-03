@@ -71,15 +71,6 @@ const TeamPage = ({
   </main>
 );
 
-const NotificationContext = React.createContext({
-  component: null,
-  props: {},
-  showNotification: () => {
-    console.log ('showNotification triggered')
-  },
-  showNotification2: () => {}
-});
-
 class TeamPageEditor extends React.Component {
   constructor(props) {
     super(props);
