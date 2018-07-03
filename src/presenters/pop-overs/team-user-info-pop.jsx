@@ -33,7 +33,6 @@ UserActions.propTypes = {
   }).isRequired,
 };
 
-// test w anon user too // admin badge uses grey. badge on buttons is gross. is it more gross than , post attempt surprise?
 const AdminActions = ({user, userIsTeamAdmin}) => (
   <section className="pop-over-actions">
     { userIsTeamAdmin && 
@@ -77,7 +76,7 @@ const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, userIsT
           <p className="user-login" title={user.login}>@{user.login}</p>
           { userIsTeamAdmin && 
             <div className="status-badge">
-              <span className="status admin">Admin</span>
+              <span className="status admin">Team Admin</span>
             </div> 
           }
 
