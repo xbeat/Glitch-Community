@@ -10,9 +10,9 @@ const NewProjectPop = ({projects}) => (
         { projects.map((project) => (
           <a key={project.id} href={project.remixUrl}>
             <ProjectResultItem {...project} action={()=>{
-                /* global analytics */
-                analytics.track("New Project Clicked");
-              }} />
+              /* global analytics */
+              analytics.track("New Project Clicked");
+            }} />
           </a>
         ))}
       </div>
