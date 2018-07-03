@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import NotificationSystem from 'react-notification-system'
-
 import * as assets from '../../utils/assets';
 import TeamModel, {getAvatarStyle, getProfileStyle} from '../../models/team';
 import UserModel from '../../models/user';
@@ -73,6 +71,13 @@ const TeamPage = ({
   </main>
 );
 
+const NotificationContext = React.createContext({
+  component: null,
+  props: {},
+  showNotification: () => {},
+  showNotification2: () => {}
+});
+
 class TeamPageEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -126,18 +131,6 @@ class TeamPageEditor extends React.Component {
     }
   }
   
-  componentDidMount() {
-    
-  }
-  
-  _addNotification(event) {
-    event.preventDefault();
-    this._notificationSystem.addNotification({
-      message: 'Notification message',
-      level: 'success'
-    });
-  }
-
   render() {
     const {
       team,
