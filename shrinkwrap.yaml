@@ -38,7 +38,6 @@ dependencies:
   react: 16.4.1
   react-dom: 16.4.1
   react-is: 16.4.1
-  react-notification-system: 0.2.17
   react-onclickoutside: 6.7.1
   react-pluralize: 1.4.1
   react-textarea-autosize: 6.1.0
@@ -4749,17 +4748,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-xpb0PpALlFWNw/q13A+1aHeyJyLYCg0/cCHPUA43zYluZuIPHaHL3k8OBsTgQtxqW0FhyDEMvi8fZ/+7+r4OSQ==
-  /react-notification-system/0.2.17:
-    dependencies:
-      create-react-class: 15.6.3
-      object-assign: 4.1.1
-      prop-types: 15.6.2
-    dev: false
-    peerDependencies:
-      react: "0.14.x || ^15.0.0 ||\_^16.0.0"
-      react-dom: 0.14.x || ^15.0.0 || ^16.0.0
-    resolution:
-      integrity: sha1-pg7du2IiWtj5/F14N1Rr9s2zaBg=
   /react-onclickoutside/6.7.1:
     dev: false
     peerDependencies:
@@ -6058,7 +6046,6 @@ specifiers:
   react: ^16.4.1
   react-dom: ^16.4.1
   react-is: ^16.4.1
-  react-notification-system: ^0.2.17
   react-onclickoutside: ^6.7.1
   react-pluralize: ^1.4.0
   react-textarea-autosize: ^6.1.0
