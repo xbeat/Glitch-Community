@@ -126,6 +126,18 @@ class TeamPageEditor extends React.Component {
     }
   }
   
+  componentDidMount() {
+    
+  }
+  
+  _addNotification(event) {
+    event.preventDefault();
+    this._notificationSystem.addNotification({
+      message: 'Notification message',
+      level: 'success'
+    });
+  }
+
   render() {
     const {
       team,
