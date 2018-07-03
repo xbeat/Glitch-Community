@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const moment = require('moment-mini');
 
 const {getProject, getUser} = require('./api');
@@ -18,8 +19,8 @@ module.exports = function() {
   
   // Caching - js files have a hash in their name, so they last a long time
   app.use('/*.js', (request, response, next) => {
-    const ms = moment.duration(1, 'months').asMilliseconds();
-    response.header('Cache-Control', `public, max-age=${ms}`);
+    const s = moment.duration(1, 'months').asSeconds();
+    response.header('Cache-Control', `public, max-age=${s}`);
     return next();
   });
   
@@ -37,9 +38,11 @@ module.exports = function() {
   });
   
   function render(res, title, description, image) {
-    image = image || 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
-    res.render(__dirname + '/../public/index.ejs', {
-      title, description, image,
+    const manifest = JSON.parse(fs.readFileSync('public/manifest.json'));
+    res.render('index.ejs', {
+      title, description,
+      image: image || 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png',
+      scripts: Object.values(manifest),
       ...constants
     });
   }

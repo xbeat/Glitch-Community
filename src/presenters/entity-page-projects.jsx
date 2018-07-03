@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectsList from "./projects-list.jsx";
 import Observable from "o_0";
-import {debounce} from 'lodash';
+import {chunk, debounce, keyBy, partition} from 'lodash';
 
 
 /* globals Set */
@@ -122,4 +122,71 @@ EntityPageProjects.propTypes = {
   isAuthorizedUser: PropTypes.bool.isRequired,
 };
 
-export default EntityPageProjectsContainer;
+const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
+
+const NewEntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, projectOptions}) => {
+  const pinnedSet = new Set(pins.map(({projectId}) => projectId));
+  const [pinnedProjects, recentProjects] = partition(projects, ({id}) => pinnedSet.has(id));
+  
+  const pinnedVisible = isAuthorized || pinnedProjects.length;
+  
+  const pinnedTitle = (
+    <React.Fragment>
+      Pinned Projects
+      <span className="emoji pushpin emoji-in-title"></span>
+    </React.Fragment>
+  );
+  
+  const pinnedEmpty = (
+    <React.Fragment>
+      <img className="psst" src={psst} alt="psst"></img>
+      <p>
+        Pin your projects to show them off
+        <span className="emoji pushpin"></span>
+      </p>
+    </React.Fragment>
+  );
+  
+  return (
+    <React.Fragment>
+      {!!pinnedVisible && (
+        <ProjectsList title={pinnedTitle}
+          projects={pinnedProjects} placeholder={pinnedEmpty}
+          projectOptions={isAuthorized ? {removePin, ...projectOptions} : {}}
+        />
+      )}
+      <ProjectsList
+        title="Recent Projects" projects={recentProjects}
+        projectOptions={isAuthorized ? {addPin, ...projectOptions} : {}}
+      />
+    </React.Fragment>
+  );
+};
+
+//todo? adding a project will update props, may need a new request
+export default class NewEntityPageProjectsLoader extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  
+  ensureProjects(projects) {
+    const unloadedProjects = projects.filter(({id}) => !(id in this.state));
+    chunk(unloadedProjects, 50).forEach(projects => {
+      const ids = projects.map(({id}) => id);
+      this.props.getProjects(ids).then(projects => {
+        this.setState(keyBy(projects, ({id}) => id));
+      });
+    });
+  }
+  
+  componentDidMount() {
+    this.ensureProjects(this.props.projects);
+  }
+  
+  render() {
+    const {projects, ...props} = this.props;
+    const loadedProjects = projects.map(project => this.state[project.id] || project);
+    return <NewEntityPageProjects projects={loadedProjects} {...props}/>;
+  }
+}

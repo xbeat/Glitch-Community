@@ -1,32 +1,39 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import Project from '../../models/project';
 import Observable from 'o_0';
-import mdFactory from 'markdown-it';
-const md = mdFactory({
-  breaks: true,
-  linkify: true,
-  typographer: true}).disable(['image']);
 
-import assets from '../../utils/assets';
+import ProjectModel from '../../models/project';
+import UserModel, {getAvatarStyle, getProfileStyle} from '../../models/user';
+
+import {DataLoader} from '../includes/loader.jsx';
+import Uploader from '../includes/uploader.jsx';
+
+import {AuthDescription} from '../includes/description-field.jsx';
+import EditableField from '../includes/editable-field.jsx';
+import EntityEditor from '../entity-editor.jsx';
+import Thanks from '../includes/thanks.jsx';
+
+import * as assets from '../../utils/assets';
 import UserTemplate from '../../templates/pages/user';
 import DeletedProjectsTemplate from '../../templates/deleted-projects';
 import LayoutPresenter from '../layout';
 
-import EntityPageProjectsContainer from "../entity-page-projects.jsx";
+import EntityPageProjects from "../entity-page-projects.jsx";
 import NotFound from '../includes/not-found.jsx';
-import {UserProfile} from '../includes/profile.jsx';
+import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
 import Observed from "../includes/observed.jsx";
 
 
-export default function(application, userLoginOrId) {
+export function OldUserPage(application, userLoginOrId) {
   const assetUtils = assets(application);
 
   var self = {
 
     user: application.user,    
     
-    newDescription: Observable(""),
-    editingDescription: Observable(false),
     deletedProjectsLoadingState: Observable(""),
     
     userLoginOrId() {
@@ -34,79 +41,9 @@ export default function(application, userLoginOrId) {
     },
 
     application,
-    
-    Profile() {
-      const propsObservable = Observable(() => {
-        const user = self.user().asProps();
-        const props = {
-          user,
-          fetched: self.user().fetched(),
-          isAuthorized: self.isCurrentUser(),
-          updateDescription: self.updateDescription,
-          updateName: self.updateName,
-          updateLogin: self.updateLogin,
-          uploadCover: self.uploadCover,
-          clearCover: self.clearCover,
-          uploadAvatar: self.uploadAvatar,
-        };
-        return props;
-      });
-
-      return Reactlet(Observed, {propsObservable, component:UserProfile});
-    },
   
     userName() {
       return application.user().name();
-    },
-
-    hiddenUnlessUserHasName() {
-      if (!self.userName()) { return 'hidden'; }
-    },
-
-    hiddenUnlessUserHasThanks() {
-      if (!(application.user().thanksCount() > 0)) { return 'hidden'; }
-    },
-
-    
-    hiddenIfEditingDescription() {
-      if (self.editingDescription()) { return 'hidden'; }
-    },
-
-    hiddenUnlessEditingDescription() {
-      if (!self.editingDescription()) { return 'hidden'; }
-    },
-
-    focusOnEditableDescription() {
-      self.editingDescription(true);
-      const element = document.getElementById('description-markdown');
-      return element.focus();
-    },
-    
-    defocusOnEditableDescription(event) {
-      self.editingDescription(false);
-      const text = event.target.textContent;
-      return self.newDescription(text);
-    },
-
-    editableDescriptionMarkdown() {
-      if (application.user().description().trim().length === 0) {
-        return "";
-      } else if (self.newDescription()) {
-        const text = self.newDescription();
-        const node = document.createElement('span');
-        node.innerHTML = md.render(text);
-        return node;
-      } 
-      return application.user().initialDescriptionMarkdown();
-      
-    },
-
-    editableDescription() {
-      if (self.newDescription()) {
-        return self.newDescription();
-      } 
-      return application.user().initialDescription();
-      
     },
 
     description() {
@@ -180,27 +117,6 @@ export default function(application, userLoginOrId) {
       return application.user().isCurrentUser(application);
     },
 
-    hiddenUnlessUserIsCurrentUser() {
-      if (!self.isCurrentUser()) { return 'hidden'; }
-    },
-
-    hiddenIfUserIsNotCurrentUser() {
-      if (self.isCurrentUser()) { return 'hidden'; }
-    },
-
-    hiddenIfNoDescription() {
-      if (application.user().description().length === 0) { return 'hidden'; }
-    },
-
-    possessivePronoun() {
-      if (self.isCurrentUser()) { return 'Your '; }
-    },
-
-    cover() {
-      const cover = self.coverUrl();
-      if (cover) { return `url(${cover})`; }
-    },
-    
     clearCover: () => assetUtils.updateHasCoverImage(false),
 
     uploadCover: assetUtils.uploadCoverFile,
@@ -232,7 +148,7 @@ export default function(application, userLoginOrId) {
         };
       });
       
-      return Reactlet(Observed, {propsObservable, component:EntityPageProjectsContainer});
+      return Reactlet(Observed, {propsObservable, component:EntityPageProjects});
     },
     
     hiddenUnlessUserIsAnon() {
@@ -386,4 +302,215 @@ export default function(application, userLoginOrId) {
   const content = UserTemplate(self);
   
   return LayoutPresenter(application, content);
+}
+
+const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
+  if(!login) {
+    // Just an ID? We're anonymous.
+    return <h1 className="login">@{id}</h1>;
+  }
+  
+  if(!isAuthorized) {
+    if(!name) {
+      //promote login to an h1.
+      return <h1 className="login">@{login}</h1>;
+    }
+    return (
+      <React.Fragment>
+        <h1 className="username">{name}</h1>
+        <h2 className="login">@{login}</h2>
+      </React.Fragment>
+    );
+  }
+
+  return (
+    <React.Fragment>
+      <h1 className="username"><EditableField value={name||""} update={updateName} placeholder='Display name?'/></h1>
+      <h2 className="login"><EditableField value={login} update={updateLogin} prefix="@" placeholder='User ID?'/></h2>
+    </React.Fragment>
+  );
+};
+NameAndLogin.propTypes = {
+  name: PropTypes.string,
+  login: PropTypes.string,
+  id: PropTypes.number.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
+  updateName: PropTypes.func,
+  updateLogin: PropTypes.func,
+};
+
+const UserPage = ({
+  user: { //has science gone too far?
+    id, login, name, description, thanksCount,
+    avatarUrl, color,
+    hasCoverImage, coverColor,
+    pins, projects,
+  },
+  isAuthorized,
+  updateDescription,
+  updateName, updateLogin,
+  uploadCover, clearCover,
+  uploadAvatar,
+  getProjects,
+  _cacheCover,
+}) => (
+  <main className="profile-page user-page">
+    <section>
+      <ProfileContainer
+        avatarStyle={getAvatarStyle({avatarUrl, color})}
+        coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
+        coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
+        avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }
+      >
+        <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
+        <Thanks count={thanksCount}/>
+        <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
+      </ProfileContainer>
+    </section>
+    <EntityPageProjects projects={projects} pins={pins} getProjects={getProjects} isAuthorized={false}/>
+  </main>
+);
+UserPage.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    login: PropTypes.string,
+    id: PropTypes.number.isRequired,
+    thanksCount: PropTypes.number.isRequired,
+    hasCoverImage: PropTypes.bool.isRequired,
+  }).isRequired,
+  uploadAvatar: PropTypes.func.isRequired,
+};
+
+class UserPageEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      _cacheCover: Date.now(),
+    };
+  }
+  
+  updateName(name) {
+    return this.props.updateFields({name}).catch(
+      ({response: {data: {message}}}) => Promise.reject(message)
+    );
+  }
+  
+  updateLogin(login) {
+    return this.props.updateFields({login}).then(() => {
+      history.replaceState(null, null, `/@${login}`);
+      document.title = `@${login}`;
+      this.props.currentUserModel.login(login);
+    }, ({response: {data: {message}}}) => Promise.reject(message));
+  }
+  
+  async uploadAvatar(blob) {
+    try {
+      const {id} = this.props.user;
+      const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, id);
+      const url = await this.props.uploadAsset(blob, policy, 'temporary-user-avatar');
+
+      const image = await assets.blobToImage(blob);
+      const color = assets.getDominantColor(image);
+      await this.props.updateFields({
+        avatarUrl: url,
+        color: color,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    this.props.currentUserModel.avatarUrl(this.props.user.avatarUrl);
+    this.props.currentUserModel.avatarThumbnailUrl(this.props.user.avatarThumbnailUrl);
+  }
+  
+  async uploadCover(blob) {
+    try {
+      const {id} = this.props.user;
+      const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, id);
+      await this.props.uploadAssetSizes(blob, policy, assets.COVER_SIZES);
+
+      const image = await assets.blobToImage(blob);
+      const color = assets.getDominantColor(image);
+      const {data} = await this.props.updateFields({
+        hasCoverImage: true,
+        coverColor: color,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    this.setState({_cacheCover: Date.now()});
+  }
+  
+  render() {
+    const {
+      user,
+      currentUserId,
+      updateFields,
+      addItem,
+      removeItem,
+      ...props
+    } = this.props;
+    const funcs = {
+      isAuthorized: user.id === currentUserId,
+      updateName: name => this.updateName(name),
+      updateLogin: login => this.updateLogin(login),
+      updateDescription: description => updateFields({description}),
+      uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
+      uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
+      clearCover: () => updateFields({hasCoverImage: false}),
+    };
+    return <UserPage user={user} {...this.state} {...funcs} {...props}/>;
+  }
+}
+
+const UserPageLoader = ({api, get, loginOrId, ...props}) => (
+  <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
+    {user => user ? (
+      <EntityEditor api={api} initial={user} type="users">
+        {({entity, ...editFuncs}) => (
+          <Uploader>
+            {({...uploadFuncs}) => (
+              <UserPageEditor user={entity} api={api} {...editFuncs} {...uploadFuncs} {...props}/>
+            )}
+          </Uploader>
+        )}
+      </EntityEditor>
+    ) : <NotFound name={loginOrId}/>}
+  </DataLoader>
+);
+UserPageLoader.propTypes = {
+  get: PropTypes.func.isRequired,
+  loginOrId: PropTypes.node.isRequired,
+};
+
+function UserPagePresenter(application, loginOrId, get) {
+  const props = {
+    loginOrId, get,
+    api: application.api(),
+    currentUserId: application.currentUser().id(),
+    currentUserModel: application.currentUser(),
+    getProjects: ids => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
+  };
+  const content = Reactlet(UserPageLoader, props, 'userpage');
+  return LayoutPresenter(application, content);
+}
+
+async function getUserById(api, id) {
+  const {data} = await api.get(`users/${id}`);
+  return UserModel(data).update(data).asProps();
+}
+
+async function getUserByLogin(api, login) {
+  const {data} = await api.get(`userId/byLogin/${login}`);
+  return await getUserById(api, data);
+}
+
+export function UserPageById(application, id) {
+  const get = () => getUserById(application.api(), id);
+  return UserPagePresenter(application, id, get);
+}
+
+export function UserPageByLogin(application, login) {
+  const get = () => getUserByLogin(application.api(), login);
+  return UserPagePresenter(application, login, get);
 }

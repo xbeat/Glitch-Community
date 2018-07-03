@@ -8,6 +8,7 @@ import Project from '../../models/project';
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
+import EntityEditor from '../entity-editor.jsx';
 import Expander from '../includes/expander.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -140,50 +141,32 @@ ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
 };
 
-class ProjectPageEditor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.props.initialProject;
-  }
-  
-  updateDomain(domain) {
-    return this.updateField('domain', domain).then(() => {
+const ProjectPageEditor = ({project, updateFields, ...props}) => {
+  function updateDomain(domain) {
+    return updateFields({domain}).then(() => {
       history.replaceState(null, null, `/~${domain}`);
       document.title = `~${domain}`;
-      return {success: true, data: domain};
-    }).catch(({response: {data: {message}}}) => (
-      {success: false, data: domain, message}
-    ));
+    }, ({response: {data: {message}}}) => Promise.reject(message));
   }
-  
-  updateField(field, value) {
-    const {id} = this.state;
-    const change = {[field]: value};
-    return this.props.api.patch(`projects/${id}`, change).then(() => {
-      this.setState(change);
-    });
-  }
-  
-  render() {
-    const props = {
-      project: this.state,
-      updateDomain: this.updateDomain.bind(this),
-      updateDescription: this.updateField.bind(this, 'description'),
-      updatePrivate: this.updateField.bind(this, 'private'),
-    };
-    return <ProjectPage {...props} {...this.props}/>;
-  }
-}
+  const funcs = {
+    updateDomain: domain => updateDomain(domain),
+    updateDescription: description => updateFields({description}),
+    updatePrivate: isPrivate => updateFields({private: isPrivate}),
+  };
+  return <ProjectPage project={project} {...funcs} {...props}/>;
+};
 ProjectPageEditor.propTypes = {
-  api: PropTypes.any.isRequired,
-  initialProject: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-  }).isRequired,
+  project: PropTypes.object.isRequired,
+  updateFields: PropTypes.func.isRequired,
 };
 
-const ProjectPageLoader = ({name, get, ...props}) => (
+const ProjectPageLoader = ({name, get, api, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {project => project ? <ProjectPageEditor initialProject={project} {...props}/> : <NotFound name={name}/>}
+    {project => project ? (
+      <EntityEditor api={api} initial={project} type="projects">
+        {({entity, ...funcs}) => <ProjectPageEditor project={entity} {...funcs} {...props}/>}
+      </EntityEditor>
+    ) : <NotFound name={name}/>}
   </DataLoader>
 );
 ProjectPageLoader.propTypes = {

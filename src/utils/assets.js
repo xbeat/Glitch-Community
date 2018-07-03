@@ -4,18 +4,18 @@ import S3Uploader from './s3-uploader';
 
 import quantize from 'quantize';
 import Observable from 'o_0';
-const COVER_SIZES = {
+export const COVER_SIZES = {
   large: 1000,
   medium: 700,
   small: 450,
 };
-const AVATAR_SIZES = {
+export const AVATAR_SIZES = {
   large: 300,
   medium: 150,
   small: 60,
 };
 
-const blobToImage = file =>
+export const blobToImage = file =>
   new Promise(function(resolve, reject) {
     const image = new Image;
     image.onload = () => resolve(image);
@@ -60,7 +60,7 @@ const drawCanvasThumbnail = function(image, type, max) {
 // Takes an HTML5 File and returns a promise for an HTML5 Blob that is fulfilled
 // with a thumbnail for the image. If the image is small enough the original
 // blob is returned. Width and height metadata are added to the blob.
-const resizeImage = function(file, size) {
+export function resizeImage(file, size) {
   const max = COVER_SIZES[size] || 1000;
   return blobToImage(file)
     .then(function(image) {
@@ -72,9 +72,9 @@ const resizeImage = function(file, size) {
       return drawCanvasThumbnail(image, file.type, max);
     
     });
-};
+}
 
-const getDominantColor = function(image) {
+export function getDominantColor(image) {
   const {width, height} = image;
   const PIXELS_FROM_EDGE = 11;
   const canvas = document.createElement('canvas');
@@ -122,8 +122,48 @@ const getDominantColor = function(image) {
   const colorMap = quantize(colors, 5);
   const [r, g, b] = Array.from(colorMap.palette()[0]);
   return `rgb(${r},${g},${b})`;
+}
+
+
+export function requestFile(callback) {
+  const input = document.createElement("input");
+  input.type = 'file';
+  input.accept = "image/*";
+  input.onchange = function(event) {
+    const file = event.target.files[0];
+    console.log('☔️☔️☔️ input onchange', file);
+    callback(file);
+  };
+  input.click();
+  console.log('input created: ', input);
+}
+
+export function getUserCoverImagePolicy(api, id) {
+  return api.get(`users/${id}/cover/policy`);
+}
+
+export function getTeamAvatarImagePolicy(api, id) {
+  return api.get(`teams/${id}/avatar/policy`);
+}
+
+export function getTeamCoverImagePolicy(api, id) {
+  return api.get(`teams/${id}/cover/policy`);
+}
+
+export function uploadAsset(blob, policy, key) {
+  return S3Uploader(policy).upload({ key, blob });
+}
+
+export function uploadAssetSizes(blob, policy, sizes, progressHandler) {
+  const upload = uploadAsset(blob, policy, 'original');
+  upload.progress(progressHandler);
   
-};
+  const scaledUploads = Object.keys(sizes).map(tag => {
+    return resizeImage(blob, sizes[tag]).then(resized => uploadAsset(resized, policy, tag));
+  });
+
+  return Promise.all([upload, ...scaledUploads]);
+}
 
 
 export default function(application) {
@@ -148,8 +188,8 @@ export default function(application) {
       
     },
 
-    getTeamCoverImagePolicy() {
-      const policyPath = `teams/${application.team().id()}/cover/policy`;
+    getTeamCoverImagePolicy(id = application.team().id()) {
+      const policyPath = `teams/${id}/cover/policy`;
       return application.api().get(policyPath)
         .then(response => response).catch(function(error) {
           application.notifyUploadFailure(true);
@@ -293,16 +333,7 @@ export default function(application) {
     },
     
     uploader(uploadReceiver) {
-      const input = document.createElement("input");
-      input.type = 'file';
-      input.accept = "image/*";
-      input.onchange = function(event) {
-        const file = event.target.files[0];
-        console.log('☔️☔️☔️ input onchange', file);
-        uploadReceiver(file);
-      };
-      input.click();
-      console.log('input created: ', input);
+      requestFile(uploadReceiver);
       return false;
     },
   };

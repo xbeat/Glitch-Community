@@ -57,5 +57,8 @@
     </noscript>
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <% for (let i = 0; i < scripts.length; ++i) { %>
+    <script src="<%= scripts[i] %>" async></script>
+    <% } %>
   </body>
 </html>

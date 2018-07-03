@@ -3,10 +3,11 @@ public/*.css.map
 public/*.ks
 public/*.js.map
 public/*.js
-public/index.ejs
+public/*.json
 *.gz
 src/cache/*
 src/templates/**/*.js
+node_modules/*
 *.md5
 .config/configstore/update-notifier-nodemon.json
 .config/configstore/update-notifier-pnpm.json

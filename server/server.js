@@ -7,10 +7,6 @@ require("./cache").initCache();
 
 const app = express();
 
-// We generate our template via webpack for the moment
-// So it can change underneath express's caching
-app.disable('view cache');
-
 // Accept JSON as req.body
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -7,8 +7,8 @@ const queryString = qs.parse(window.location.search);
 import IndexPage from './presenters/pages/index';
 import CategoryPage from './presenters/pages/category';
 import ProjectPage from './presenters/pages/project.jsx';
-import TeamPage from './presenters/pages/team';
-import UserPage from './presenters/pages/user';
+import TeamPage from './presenters/pages/team.jsx';
+import {UserPageById, UserPageByLogin} from './presenters/pages/user.jsx';
 import QuestionsPage from './presenters/pages/questions';
 import SearchPage from './presenters/pages/search';
 import errorPageTemplate from './templates/pages/error';
@@ -49,46 +49,43 @@ function routePage(pageUrl, application) {
   }
 
   // questions page ✅
-  if (application.isQuestionsUrl(pageUrl)) {
+  if (pageUrl === 'questions') {
     return {page: QuestionsPage(application), title: "Questions"};
   }
 
   // ~project overlay page ✅
-  if (application.isProjectUrl(pageUrl)) {
+  if (pageUrl.charAt(0) === '~') {
     const projectDomain = application.removeFirstCharacter(pageUrl);
     const page = ProjectPage(application, projectDomain);
     return {page, title:decodeURI(pageUrl)};
   }
 
-  // user page ✅
-  if (application.isUserProfileUrl(pageUrl)) {
+  // @user page ✅
+  if (pageUrl.charAt(0) === '@') {
     application.pageIsUserPage(true);
     const userLogin = pageUrl.substring(1, pageUrl.length);
-    const page = UserPage(application, userLogin);
-    application.getUserByLogin(userLogin);
+    const page = UserPageByLogin(application, userLogin);
     return {page, title:decodeURI(pageUrl)};
   }
 
   // anon user page ✅
-  if (application.isAnonUserProfileUrl(pageUrl)) {
+  if (pageUrl.match(/^(user\/)/g)) {
     application.pageIsUserPage(true);
     const userId = application.anonProfileIdFromUrl(pageUrl);
-    const page = UserPage(application, userId);
-    application.getUserById(userId);
+    const page = UserPageById(application, userId);
     return {page, title: pageUrl};
   }
 
-  // team page ✅
-  if (application.isTeamUrl(pageUrl)) {
+  // root team page ✅
+  if (application.getCachedTeamByUrl(pageUrl)) {
     application.pageIsTeamPage(true);
     const team = application.getCachedTeamByUrl(pageUrl);
-    const page = TeamPage(application);
-    application.getTeamById(team.id);
+    const page = TeamPage(application, team.id, team.name);
     return {page, title: team.name};
   }
 
   // search page ✅
-  if (application.isSearchUrl(pageUrl, queryString)) {
+  if (pageUrl === 'search' && queryString.q) {
     const query = queryString.q;
     application.searchQuery(query);
     application.searchTeams(query);
@@ -99,7 +96,7 @@ function routePage(pageUrl, application) {
   }
 
   // category page ✅
-  if (application.isCategoryUrl(pageUrl)) {
+  if (application.categories.some(({url}) => pageUrl === url)) {
     application.getCategory(pageUrl);
     const page = CategoryPage(application);
     return {page, title: application.category().name()};

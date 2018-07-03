@@ -13,7 +13,7 @@ import EditableField from './editable-field.jsx';
 import TeamUserInfoPop from '../pop-overs/team-user-info-pop.jsx';
 import {UserPopoversList} from '../users-list.jsx';
 
-const ImageButtons = ({name, uploadImage, clearImage}) => (
+export const ImageButtons = ({name, uploadImage, clearImage}) => (
   <div className="upload-image-buttons">
     { !!uploadImage && (
       <button className="button-small button-tertiary" onClick={uploadImage}>
@@ -77,7 +77,7 @@ CoverContainer.propTypes = {
   className: PropTypes.string,
 };
 
-const ProfileContainer = ({
+export const ProfileContainer = ({
   avatarStyle, avatarButtons,
   coverStyle, coverButtons,
   children,
@@ -93,6 +93,7 @@ const ProfileContainer = ({
       </div>
     </InfoContainer>
   </CoverContainer>
+<<<<<<< HEAD
 );
 
 const LoadingProfile = ({coverStyle}) => (
@@ -284,3 +285,6 @@ UserProfile.propTypes = {
     profileStyle: PropTypes.object.isRequired,
   }).isRequired,
 };
+=======
+);
+>>>>>>> nova-chance

@@ -10,60 +10,49 @@ const PopoverButton = ({onClick, text, emoji}) => (
 );
 
 const ProjectOptionsPop = ({
-  projectId,
-  projectName, projectIsPinned, togglePopover, 
-  togglePinnedState, deleteProject, 
-  leaveProject, removeProjectFromTeam
+  projectId, projectName,
+  addPin, removePin, deleteProject, 
+  leaveProject, removeProjectFromTeam,
+  togglePopover,
 }) => {
   
-  function addPin(event) {
-    togglePin(event, 'slide-up');
-  }
-  
-  function removePin(event) {
-    togglePin(event, 'slide-down');
-  }
-  
-  function togglePin(event, className) {
+  function animate(event, className, func) {
     const projectContainer = event.target.closest('li');
+    projectContainer.addEventListener('animationend', func, {once: true});
+    projectContainer.classList.add(className);
     togglePopover();
-    $(projectContainer).one('animationend', () => togglePinnedState(projectId));
-    return $(projectContainer).addClass(className);
   }
-     
+  
+  function clickAddPin(event) {
+    animate(event, 'slide-up', () => addPin(projectId));
+  }
+  
+  function clickRemovePin(event) {
+    animate(event, 'slide-down', () => removePin(projectId));
+  }
+  
   function clickLeave(event) {
     const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${projectName}?`;
     if (window.confirm(prompt)) {
-      return leaveProject(projectId, event);
+      leaveProject(projectId, event);
     }
   }
   
   function clickDelete(event) {
-    return deleteProject(projectId, event);
+    deleteProject(projectId, event);
   }
   
   return (
     <dialog className="pop-over project-options-pop">
       <section className="pop-over-actions">
-        { projectIsPinned ? (
-          <PopoverButton onClick={removePin} text="Un-Pin This" emoji="pushpin"/>
-        ) : (
-          <PopoverButton onClick={addPin} text="Pin This" emoji="pushpin"/>
-        )}
+        {!!addPin && <PopoverButton onClick={clickAddPin} text="Pin This" emoji="pushpin"/>}
+        {!!removePin && <PopoverButton onClick={clickRemovePin} text="Un-Pin This" emoji="pushpin"/>}
       </section>
-
-
-      {removeProjectFromTeam && (
-        <section className="pop-over-actions team-options danger-zone last-section">
-          <PopoverButton onClick={() => removeProjectFromTeam(projectId)} text="Remove Project" emoji="thumbs_down"/>
-        </section>
-      )}
-      {(deleteProject && leaveProject) && (
-        <section className="pop-over-actions danger-zone last-section">
-          <PopoverButton onClick={clickDelete} text="Delete This" emoji="bomb"/>
-          <PopoverButton onClick={clickLeave} text="Leave This" emoji="wave"/>
-        </section>
-      )}
+      <section className="pop-over-actions danger-zone last-section">
+        {!!removeProjectFromTeam && <PopoverButton onClick={() => removeProjectFromTeam(projectId)} text="Remove Project" emoji="thumbs_down"/>}
+        {!!deleteProject && <PopoverButton onClick={clickDelete} text="Delete This" emoji="bomb"/>}
+        {!!leaveProject && <PopoverButton onClick={clickLeave} text="Leave This" emoji="wave"/>}
+      </section>
     </dialog>
   );
 };
@@ -71,9 +60,9 @@ const ProjectOptionsPop = ({
 ProjectOptionsPop.propTypes = {
   projectId: PropTypes.string.isRequired,
   projectName: PropTypes.string.isRequired,
-  projectIsPinned: PropTypes.bool.isRequired,
   togglePopover: PropTypes.func.isRequired,
-  togglePinnedState: PropTypes.func,
+  addPin: PropTypes.func,
+  removePin: PropTypes.func,
   deleteProject: PropTypes.func,
   leaveProject: PropTypes.func,
   removeProjectFromTeam: PropTypes.func,
@@ -87,7 +76,6 @@ export default function ProjectOptions({projectOptions={}, project}) {
   const popupProps = {
     projectId: project.id,
     projectName: project.name,
-    projectIsPinned: project.isPinnedByUser || project.isPinnedByTeam
   };
   
   return (
