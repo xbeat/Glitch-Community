@@ -28,7 +28,7 @@ const TeamPage = ({
     projects, teamPins,
     isVerified, verifiedImage, verifiedTooltip,
     backgroundColor, hasAvatarImage,
-    coverColor, hasCoverImage,
+    coverColor, hasCoverImage, adminUsers
   },
   currentUserIsOnTeam, myProjects,
   updateDescription,
@@ -52,7 +52,7 @@ const TeamPage = ({
           {isVerified && <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>}
         </h1>
         <div className="users-information">
-          <TeamUsers {...{users, currentUserIsOnTeam, removeUser}}/>
+          <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminUsers}}/>
           {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)}/>}
         </div>
         <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)}/>
