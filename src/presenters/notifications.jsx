@@ -1,11 +1,11 @@
-// eventually replaces notifications.js, once all top left pages are react-ified
+// eventually replaces notifications.js, once all pages are react-ified
 
 import React from 'react';
 import PropTypes from 'prop-types';
 
 const NotificationContext = React.createContext();
 
-export class NotificationProvider extends Component {
+export class NotificationProvider extends React.Component {
   constructor(props) {
     super(props);
 
@@ -13,16 +13,16 @@ export class NotificationProvider extends Component {
       isVisible: false,
       message: '',
     };
-  }
+  };
 
-  show = (message) => {
+  show(message) {
     this.setState({
       message,
       isVisible: true,
     });
   };
 
-  hide = () => {
+  hide() {
     this.setState({
       message: '',
       isVisible: false,
@@ -42,11 +42,11 @@ export class NotificationProvider extends Component {
         }}
       >
         // TODO:  Render Snackbar presentation component here
-      
+        <Notification />
         {children}
-      </SharedSnackbarContext.Provider>
+      </NotificationContext.Provider>
     );
   }
 }
 
-export const SharedSnackbarConsumer = SharedSnackbarContext.Consumer;
+export const NotificationConsumer = NotificationContext.Consumer;
