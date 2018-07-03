@@ -22,6 +22,8 @@ import EntityPageProjects from '../entity-page-projects.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 
+const AppNotificationContext = React.createContext()
+
 const TeamPage = ({
   team: {
     id, name, description, users,
@@ -39,36 +41,38 @@ const TeamPage = ({
   api, searchUsers, getProjects,
   _cacheAvatar, _cacheCover,
 }) => (
-  <main className="profile-page team-page">
-    <section>
-      <ProfileContainer
-        avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
-        coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
-        avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}
-        coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
-      >
-        <h1 className="username">
-          {name}
-          {isVerified && <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>}
-        </h1>
-        <div className="users-information">
-          <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminUsers}}/>
-          {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)}/>}
-        </div>
-        <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)}/>
-        <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
-      </ProfileContainer>
-    </section>
-    <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects}/>
-    <EntityPageProjects
-      projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
-      addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam: removeProject}}
-      getProjects={getProjects}
-    />
-    {(currentUserIsOnTeam ?
-      <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects}/>
-      : <TeamMarketing/>)}
-  </main>
+  <AppNotificationContext>
+    <main className="profile-page team-page">
+      <section>
+        <ProfileContainer
+          avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
+          coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
+          avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}
+          coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
+        >
+          <h1 className="username">
+            {name}
+            {isVerified && <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>}
+          </h1>
+          <div className="users-information">
+            <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminUsers}}/>
+            {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)}/>}
+          </div>
+          <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)}/>
+          <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
+        </ProfileContainer>
+      </section>
+      <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects}/>
+      <EntityPageProjects
+        projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
+        addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam: removeProject}}
+        getProjects={getProjects}
+      />
+      {(currentUserIsOnTeam ?
+        <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects}/>
+        : <TeamMarketing/>)}
+    </main>
+  </AppNotificationContext>
 );
 
 class TeamPageEditor extends React.Component {
