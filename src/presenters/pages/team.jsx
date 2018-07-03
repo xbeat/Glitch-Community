@@ -74,7 +74,9 @@ const TeamPage = ({
 const NotificationContext = React.createContext({
   component: null,
   props: {},
-  showNotification: () => {},
+  showNotification: () => {
+    console.log ('showNotification triggered')
+  },
   showNotification2: () => {}
 });
 
