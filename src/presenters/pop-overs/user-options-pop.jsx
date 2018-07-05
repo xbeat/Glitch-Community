@@ -102,6 +102,9 @@ UserOptionsPop.propTypes = {
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
+
+// move to a seperate file
+// needs api
 const CreateTeamPop = () => {
   return (
     <dialog className="pop-over user-options-pop">
@@ -111,6 +114,7 @@ const CreateTeamPop = () => {
     </dialog>
   )
 }
+
 
 export default function UserOptionsPopContainer(props) {
   const {avatarUrl, avatarStyle} = props;
