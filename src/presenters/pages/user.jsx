@@ -447,6 +447,14 @@ class UserPageEditor extends React.Component {
     this.setState({_cacheCover: Date.now()});
   }
   
+  async leaveProject(id) {
+    await this.props.api.delete(`/projects/${id}/authorization`, {
+      data: {
+        targetUserId: this.props.user.id,
+      },
+    });
+  }
+  
   render() {
     const {
       user,
