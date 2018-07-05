@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 
-const TeamButton = ({url, name, teamAvatarUrl}) => (
+const Team = ({url, name, teamAvatarUrl}) => (
   <a className="button-link" href={url}>
     <div className="button button-small has-emoji button-tertiary">
       <span>{name} </span>
@@ -11,13 +11,13 @@ const TeamButton = ({url, name, teamAvatarUrl}) => (
   </a>
 );
 
-TeamButton.propTypes = {
+Team.propTypes = {
   url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   teamAvatarUrl: PropTypes.string.isRequired,
 };
 
-const TeamButtons = ({teams}) => {
+const TeamList = ({teams}) => {
   const hasTeams = teams && teams.length;
   if(!hasTeams) {
     return null;
@@ -26,13 +26,13 @@ const TeamButtons = ({teams}) => {
   return (
     <section className="pop-over-actions">
       {teams.map((team) => (
-        <TeamButton key={team.name} {...team}/>
+        <Team key={team.name} {...team}/>
       ))}
     </section>
   );
 };
 
-TeamButtons.propTypes = {
+TeamList.propTypes = {
   teams: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
   })),
@@ -66,7 +66,7 @@ const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams,
         </a>
       </section>
 
-      <TeamButtons teams={teams}/>
+      <TeamList teams={teams}/>
 
       <section className="pop-over-info section-has-tertiary-buttons">      
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
@@ -96,26 +96,38 @@ UserOptionsPop.propTypes = {
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
-export default function UserOptionsPopContainer(props) {
-  const {avatarUrl, avatarStyle} = props;
-  return (
-    <PopoverContainer>
-      {({togglePopover, visible}) => (
-        <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
-          <button className="user" onClick={togglePopover}>
-            <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
-            <span className="down-arrow icon"/>
-          </button>
-          {visible && <UserOptionsPop {...props} togglePopover={togglePopover}/>}
+
+
+// export default function UserOptionsPopContainer(props) {
+//   const {avatarUrl, avatarStyle} = props;
+//   return (
+//     <PopoverContainer>
+//       {({togglePopover, visible}) => (
+//         <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
+//           <button className="user" onClick={togglePopover}>
+//             <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
+//             <span className="down-arrow icon"/>
+//           </button>
+//           {visible && <UserOptionsPop {...props} togglePopover={togglePopover}/>}
           
           
-        </div>
-      )}
-    </PopoverContainer>
-  );
+//         </div>
+//       )}
+//     </PopoverContainer>
+//   );
+// }
+
+
+class UserOptionsPopContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { CreateTeamPop: null };
+  }
 }
-          
+
 UserOptionsPopContainer.propTypes = {
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
 };
+
+export default UserOptionsPopContainer
