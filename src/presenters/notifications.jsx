@@ -11,7 +11,7 @@ export class NotificationProvider extends React.Component {
 
     this.state = {
       isVisible: false,
-      message: '',
+      message: 'yolooo',
     };
   };
 
@@ -49,8 +49,13 @@ export class NotificationProvider extends React.Component {
 }
 
 // export const NotificationConsumer = NotificationContext.Consumer;
-export const notification = () => (
+export const Notification = () => (
   <NotificationContext.Consumer>
-  
+    {({isVisible, message, hide}) => (
+      <Notification 
+        isVisible={isVisible}
+        message={message}
+      />
+    )}
   </NotificationContext.Consumer>
 )
