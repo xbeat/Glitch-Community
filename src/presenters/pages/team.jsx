@@ -180,7 +180,6 @@ TeamPageLoader.propTypes = {
   name: PropTypes.node.isRequired,
 };
 
-// unused
 const getTeamById = (application, id) => {
   console.log ('getTeamById')
   const teamsPath = `teams/${id}`;

@@ -26,7 +26,6 @@ export default (application, content) =>
         searchQuery: application.searchQuery(),
         overlayNewStuffVisible: application.overlayNewStuffVisible,
         promiseProjectsByIds: (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds),
-        api: application.api,
       };
       return Reactlet(Header, props);
     },
