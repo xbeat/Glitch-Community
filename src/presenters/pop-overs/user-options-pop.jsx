@@ -27,7 +27,7 @@ const TeamList = ({teams, toggleCreateTeamPop}) => {
     <section className="pop-over-actions">
       <div onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
         <span>Create Team </span>
-        <span className="emoji dog-face"></span>
+        <span className="emoji herb"></span>
       </div>
 
       {teams.map((team) => (
