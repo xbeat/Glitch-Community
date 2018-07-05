@@ -180,6 +180,23 @@ TeamPageLoader.propTypes = {
   name: PropTypes.node.isRequired,
 };
 
+const normalizeAdminsFromTeam = (application, id) => {
+  console.log ('getTeamById')
+  const teamsPath = `teams/${id}`;
+  return application.api().get(teamsPath)
+    .then(function({data}) {
+      let ADMIN_ACCESS_LEVEL = 30
+      let adminUsers = data.users.filter(user => {
+        return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL
+      })
+      data.adminUsers = adminUsers.map(user => {
+        return user.id
+      })
+      application.saveTeam(data)
+    })
+    .catch(error => console.error('getTeamById', error));
+}
+
 export default function(application, id, name) {
   const props = {
     name,
@@ -187,13 +204,8 @@ export default function(application, id, name) {
     currentUserId: application.currentUser().id(),
     currentUserModel: application.currentUser(),
     myProjects: application.currentUser().projects().map(({asProps}) => asProps()),
-    get: () => 
-      application.api().get(`teams/${id}`)
-      .then(({data}) => (
-        
-        data ? TeamModel(data).update(data).asProps() : null)
-    ),
-    
+    get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? 
+                                                                      TeamModel(data).update(data).asProps() : null)),
     searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
     getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
   };
