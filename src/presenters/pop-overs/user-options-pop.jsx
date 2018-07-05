@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 
+
 const Team = ({url, name, teamAvatarUrl}) => (
   <a className="button-link" href={url}>
     <div className="button button-small has-emoji button-tertiary">
@@ -10,24 +11,22 @@ const Team = ({url, name, teamAvatarUrl}) => (
     </div>
   </a>
 );
+
 Team.propTypes = {
   url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   teamAvatarUrl: PropTypes.string.isRequired,
 };
 
-const TeamsList = ({teams, togglePopover}) => {
-  const showCreateTeamPop = () => {
-    console.log('createTeam')
-    togglePopover()
-  }
+
+const TeamsList = ({teams, showCreateTeamPop}) => {
   const hasTeams = teams && teams.length;
   if(!hasTeams) {
     return null;
   }
   return (
     <section className="pop-over-actions">
-      <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={showCreateTeamPop}>
+      <button className="button-small has-emoji button-tertiary" onClick={showCreateTeamPop}>
         <span>Create Team </span>
         <span className="emoji dog-face"></span>
       </button>      
@@ -39,6 +38,7 @@ const TeamsList = ({teams, togglePopover}) => {
     </section>
   );
 };
+
 TeamsList.propTypes = {
   teams: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -46,7 +46,7 @@ TeamsList.propTypes = {
 };
 
 
-UserOptionsPop extends React.Component {
+class UserOptionsPop extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -55,11 +55,18 @@ UserOptionsPop extends React.Component {
   }
 
   clickNewStuff(event) {
-    togglePopover();
-    showNewStuffOverlay();
+    this.props.togglePopover();
+    this.props.showNewStuffOverlay();
     event.stopPropagation();
   };
 
+  showCreateTeamPop() {
+    console.log('createTeam')
+    this.props.togglePopover()
+    this.setState({ createTeamPopVisible: true })
+    console.log('📟', this.state.createTeamPopVisible)
+  }
+  
   signOut() {
     /* global analytics */
     analytics.track("Logout");
@@ -68,23 +75,20 @@ UserOptionsPop extends React.Component {
     return location.reload();
   };
 
-
   render() {
     return (
       <dialog className="pop-over user-options-pop">
         <section className="pop-over-actions">
-          <a className="button-link" href={userLink}>
+          <a className="button-link" href={this.props.userLink}>
             <div className="button button-small has-emoji button-tertiary">
               <span>Your Profile </span>
-              <img className="emoji avatar" src={avatarUrl} style={avatarStyle} alt="Your avatar"></img>
+              <img className="emoji avatar" src={this.props.avatarUrl} style={this.props.avatarStyle} alt="Your avatar"></img>
             </div>
           </a>
         </section>
-
-        <TeamsList teams={teams} togglePopover={togglePopover}/>
-
+        <TeamsList teams={this.props.teams} togglePopover={this.props.togglePopover} showCreateTeamPop={this.props.showCreateTeamPop}/>
         <section className="pop-over-info section-has-tertiary-buttons">      
-          <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
+          <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={this.props.clickNewStuff}>
             <span>New Stuff </span>
             <span className="emoji dog-face"></span>
           </button>
@@ -94,7 +98,7 @@ UserOptionsPop extends React.Component {
               <span className="emoji ambulance"></span>
             </div>
           </a>        
-          <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={signOut}>
+          <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={this.props.signOut}>
             <span>Sign Out</span>
             <span className="emoji balloon"></span>
           </button>
@@ -104,56 +108,6 @@ UserOptionsPop extends React.Component {
   }
 }
 
-
-//
-// const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay}) => {
-//   const clickNewStuff = (event) => {
-//     togglePopover();
-//     showNewStuffOverlay();
-//     event.stopPropagation();
-//   };
-  
-//   const signOut = () => {
-//     /* global analytics */
-//     analytics.track("Logout");
-//     analytics.reset();
-//     localStorage.removeItem('cachedUser');
-//     return location.reload();
-//   };
-
-//   return (
-//     <dialog className="pop-over user-options-pop">
-//       <section className="pop-over-actions">
-//         <a className="button-link" href={userLink}>
-//           <div className="button button-small has-emoji button-tertiary">
-//             <span>Your Profile </span>
-//             <img className="emoji avatar" src={avatarUrl} style={avatarStyle} alt="Your avatar"></img>
-//           </div>
-//         </a>
-//       </section>
-
-//       <TeamsList teams={teams} togglePopover={togglePopover}/>
-
-//       <section className="pop-over-info section-has-tertiary-buttons">      
-//         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
-//           <span>New Stuff </span>
-//           <span className="emoji dog-face"></span>
-//         </button>
-//         <a className="button-link" href="https://support.glitch.com">
-//           <div className="button button-small has-emoji button-tertiary button-on-secondary-background">
-//             <span>Support </span>
-//             <span className="emoji ambulance"></span>
-//           </div>
-//         </a>        
-//         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={signOut}>
-//           <span>Sign Out</span>
-//           <span className="emoji balloon"></span>
-//         </button>
-//       </section>
-//     </dialog>
-//   );
-// };
-
 UserOptionsPop.propTypes = {
   togglePopover: PropTypes.func.isRequired,
   userLink: PropTypes.string.isRequired,
@@ -162,6 +116,7 @@ UserOptionsPop.propTypes = {
   showNewStuffOverlay: PropTypes.func.isRequired,
   api: PropTypes.func.isRequired,
 };
+
 
 export default function UserOptionsPopContainer(props) {
   const {avatarUrl, avatarStyle} = props;
