@@ -41,7 +41,6 @@ export class NotificationProvider extends React.Component {
           message: this.state.message,
         }}
       >
-        // TODO:  Render Snackbar presentation component here
         <Notification />
         {children}
       </NotificationContext.Provider>
@@ -49,4 +48,9 @@ export class NotificationProvider extends React.Component {
   }
 }
 
-export const NotificationConsumer = NotificationContext.Consumer;
+// export const NotificationConsumer = NotificationContext.Consumer;
+export const notification = () => (
+  <NotificationContext.Consumer>
+  
+  </NotificationContext.Consumer>
+)
