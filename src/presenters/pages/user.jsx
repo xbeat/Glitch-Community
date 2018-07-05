@@ -352,6 +352,7 @@ const UserPage = ({
   uploadCover, clearCover,
   uploadAvatar,
   addPin, removePin,
+  leaveProject,
   getProjects,
   _cacheCover,
 }) => (
@@ -371,7 +372,7 @@ const UserPage = ({
     <EntityPageProjects
       projects={projects} pins={pins} isAuthorized={isAuthorized}
       addPin={addPin} removePin={removePin}
-      projectOptions={{}}
+      projectOptions={{leaveProject}}
       getProjects={getProjects}
     />
   </main>
@@ -453,6 +454,7 @@ class UserPageEditor extends React.Component {
         targetUserId: this.props.user.id,
       },
     });
+    this.props.localRemoveItem('projects', {id});
   }
   
   render() {
@@ -474,6 +476,7 @@ class UserPageEditor extends React.Component {
       clearCover: () => updateFields({hasCoverImage: false}),
       addPin: projectId => addItem('pinned-projects', projectId, 'pins', {projectId}),
       removePin: projectId => removeItem('pinned-projects', projectId, 'pins', {projectId}),
+      leaveProject: id => this.leaveProject(id),
     };
     return <UserPage user={user} {...this.state} {...funcs} {...props}/>;
   }
