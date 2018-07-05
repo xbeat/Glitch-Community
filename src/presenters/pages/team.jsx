@@ -21,8 +21,7 @@ import EntityEditor from '../entity-editor.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
-
-import {NotificationProvider} from '../notifications.jsx'
+// import {NotificationProvider} from '../notifications.jsx'
 
 const TeamPage = ({
   team: {
@@ -42,8 +41,6 @@ const TeamPage = ({
   _cacheAvatar, _cacheCover,
 }) => (
   <main className="profile-page team-page">
-    <NotificationProvider>
-    
     <section>
       <ProfileContainer
         avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
@@ -72,7 +69,6 @@ const TeamPage = ({
     {(currentUserIsOnTeam ?
       <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects}/>
       : <TeamMarketing/>)}
-    </NotificationProvider>
   </main>
 );
 
