@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 
-const TeamButton = ({url, name, teamAvatarUrl}) => (
+const Team = ({url, name, teamAvatarUrl}) => (
   <a className="button-link" href={url}>
     <div className="button button-small has-emoji button-tertiary">
       <span>{name} </span>
@@ -10,15 +10,16 @@ const TeamButton = ({url, name, teamAvatarUrl}) => (
     </div>
   </a>
 );
-TeamButton.propTypes = {
+Team.propTypes = {
   url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   teamAvatarUrl: PropTypes.string.isRequired,
 };
 
-const TeamButtons = ({teams}) => {
-  const createTeam = () => {
+const TeamsList = ({teams}) => {
+  const showCreateTeamPop = () => {
     console.log('createTeam')
+    // togglePopover()
     
   }
   const hasTeams = teams && teams.length;
@@ -27,25 +28,23 @@ const TeamButtons = ({teams}) => {
   }
   return (
     <section className="pop-over-actions">
-      <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={createTeam}>
+      <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={showCreateTeamPop}>
         <span>Create Team </span>
         <span className="emoji dog-face"></span>
       </button>      
       
 
       {teams.map((team) => (
-        <TeamButton key={team.name} {...team}/>
+        <Team key={team.name} {...team}/>
       ))}
     </section>
   );
 };
-TeamButtons.propTypes = {
+TeamsList.propTypes = {
   teams: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
   })),
 };
-
-
 
 const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay}) => {
   const clickNewStuff = (event) => {
@@ -73,7 +72,7 @@ const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams,
         </a>
       </section>
 
-      <TeamButtons teams={teams}/>
+      <TeamsList teams={teams}/>
 
       <section className="pop-over-info section-has-tertiary-buttons">      
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
