@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProjectsList from "./projects-list.jsx";
+import ProjectsList from './projects-list.jsx';
 import {chunk, keyBy, partition} from 'lodash';
 
 /* globals Set */
@@ -49,7 +49,7 @@ EntityPageProjects.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   projects: PropTypes.array.isRequired,
   pins: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    projectId: PropTypes.string.isRequired,
   }).isRequired).isRequired,
   addPin: PropTypes.func.isRequired,
   removePin: PropTypes.func.isRequired,
@@ -83,3 +83,7 @@ export default class EntityPageProjectsLoader extends React.Component {
     return <EntityPageProjects projects={loadedProjects} {...props}/>;
   }
 }
+EntityPageProjectsLoader.propTypes = {
+  projects: PropTypes.array.isRequired,
+  getProjects: PropTypes.func.isRequired,
+};
