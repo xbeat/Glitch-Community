@@ -351,6 +351,7 @@ const UserPage = ({
   updateName, updateLogin,
   uploadCover, clearCover,
   uploadAvatar,
+  addPin, removePin,
   getProjects,
   _cacheCover,
 }) => (
@@ -367,7 +368,12 @@ const UserPage = ({
         <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
     </section>
-    <EntityPageProjects projects={projects} pins={pins} getProjects={getProjects} isAuthorized={false}/>
+    <EntityPageProjects
+      projects={projects} pins={pins} isAuthorized={isAuthorized}
+      addPin={addPin} removePin={removePin}
+      projectOptions={{}}
+      getProjects={getProjects}
+    />
   </main>
 );
 UserPage.propTypes = {
@@ -431,7 +437,7 @@ class UserPageEditor extends React.Component {
 
       const image = await assets.blobToImage(blob);
       const color = assets.getDominantColor(image);
-      const {data} = await this.props.updateFields({
+      await this.props.updateFields({
         hasCoverImage: true,
         coverColor: color,
       });
@@ -458,6 +464,8 @@ class UserPageEditor extends React.Component {
       uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
       uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
       clearCover: () => updateFields({hasCoverImage: false}),
+      addPin: projectId => addItem('pinned-projects', projectId, 'pins', {projectId}),
+      removePin: projectId => removeItem('pinned-projects', projectId, 'pins', {projectId}),
     };
     return <UserPage user={user} {...this.state} {...funcs} {...props}/>;
   }
