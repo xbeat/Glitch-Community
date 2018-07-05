@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Practice Writing JS Functions',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ften-functions.jpg?1530529470077",
-    link: 'https://glitch.com/~ten-functions'
+    title: 'Make Your Own NASA Logo',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fnasa.jpg?1530790398869",
+    link: 'https://glitch.com/~nasa'
   }
   , {
-    title: 'Ask the Magic 8-Ball',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F8ball.jpg?1530529469908",
-    link: 'https://glitch.com/~8ball'
+    title: 'Custom Third-party DNT Embeds',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fdo-not-track.jpg?1530790399023",
+    link: 'https://glitch.com/~do-not-track-iframe-wrapper'
   }
   , {
-    title: 'Beautiful Feathers On A Curve',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglobeards-feather-curve.jpg?1530529470277",
-    link: 'https://globeards.glitch.me/drawcurve.html'
+    title: 'Pixelatize Your Images',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpixelatize.jpg?1530790398712",
+    link: 'https://glitch.com/~pixelatize'
   }  
 ];
