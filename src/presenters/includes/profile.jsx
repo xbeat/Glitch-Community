@@ -175,9 +175,7 @@ export const UserProfile = ({fetched, user, ...props}) => {
     return <LoadingProfile coverStyle={user.profileStyle}/>;
   } 
   return <LoadedUserProfile user={user} {...props}/>;
-  
 };
-    
 UserProfile.propTypes = {
   fetched: PropTypes.bool.isRequired,
   user: PropTypes.shape({
