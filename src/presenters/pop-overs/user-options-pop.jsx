@@ -17,7 +17,7 @@ TeamButton.propTypes = {
   teamAvatarUrl: PropTypes.string.isRequired,
 };
 
-const TeamButtons = ({teams}) => {
+const TeamButtons = ({teams, toggleCreateTeamPop}) => {
   const hasTeams = teams && teams.length;
   if(!hasTeams) {
     return null;
@@ -25,6 +25,7 @@ const TeamButtons = ({teams}) => {
   
   return (
     <section className="pop-over-actions">
+      <p click={toggleCreateTeamPop}>click me to make team</p>
       {teams.map((team) => (
         <TeamButton key={team.name} {...team}/>
       ))}
@@ -40,7 +41,7 @@ TeamButtons.propTypes = {
 
 
 
-const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay}) => {
+const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay, toggleCreateTeamPop}) => {
   const clickNewStuff = (event) => {
     togglePopover();
     showNewStuffOverlay();
@@ -97,27 +98,60 @@ UserOptionsPop.propTypes = {
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
+// export default function UserOptionsPopContainer(props) {
+//   const {avatarUrl, avatarStyle} = props;
+//   return (
+    
+//     <PopoverContainer>
+//       {({togglePopover, visible}) => (
+//         <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
+//           <button className="user" onClick={togglePopover}>
+//             <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
+//             <span className="down-arrow icon"/>
+//           </button>
+//           {visible && <UserOptionsPop {...props} togglePopover={togglePopover}/>}
+//         </div>
+//       )}      
+//     </PopoverContainer>
+//   );
+// }
+          
+
+const CreateTeamPop = () => {
+  return (
+    <dialog className="pop-over user-options-pop">
+      <section className="pop-over-actions">
+        <p>yoyoyoyo</p>
+      </section>
+    </dialog>
+  )
+}
+
 export default function UserOptionsPopContainer(props) {
   const {avatarUrl, avatarStyle} = props;
   return (
-    <React.Fragment
+    
     <PopoverContainer>
       {({togglePopover, visible}) => (
+      <PopoverContainer>
+        {({togglePopover: toggleCreateTeamPop, visible: teamPopVisible}) => (
         <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
           <button className="user" onClick={togglePopover}>
             <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
             <span className="down-arrow icon"/>
           </button>
-          {visible && <UserOptionsPop {...props} togglePopover={togglePopover}/>}
-
-
+          {visible && <UserOptionsPop {...props} togglePopover={togglePopover} toggleCreateTeamPop={toggleCreateTeamPop}/>}
+          {teamPopVisible && <CreateTeamPop/>}
         </div>
       )}
     </PopoverContainer>
+        )}
+    </PopoverContainer>
   );
 }
-          
+
 UserOptionsPopContainer.propTypes = {
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
 };
+
