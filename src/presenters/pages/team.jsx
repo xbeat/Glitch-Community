@@ -180,7 +180,7 @@ TeamPageLoader.propTypes = {
   name: PropTypes.node.isRequired,
 };
 
-const normalizeAdminsFromTeam = (application, id) => {
+const getTeamById = (application, id) => {
   console.log ('getTeamById')
   const teamsPath = `teams/${id}`;
   return application.api().get(teamsPath)
@@ -204,8 +204,7 @@ export default function(application, id, name) {
     currentUserId: application.currentUser().id(),
     currentUserModel: application.currentUser(),
     myProjects: application.currentUser().projects().map(({asProps}) => asProps()),
-    get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? 
-                                                                      TeamModel(data).update(data).asProps() : null)),
+    get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? TeamModel(data).update(data).asProps() : null)),
     searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
     getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
   };
