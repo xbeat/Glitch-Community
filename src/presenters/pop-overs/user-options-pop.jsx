@@ -25,7 +25,7 @@ const TeamButtons = ({teams, toggleCreateTeamPop}) => {
   
   return (
     <section className="pop-over-actions">
-      <p click={toggleCreateTeamPop}>click me to make team</p>
+      <p onClick={toggleCreateTeamPop}>click me to make team</p>
       {teams.map((team) => (
         <TeamButton key={team.name} {...team}/>
       ))}
@@ -67,7 +67,7 @@ const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams,
         </a>
       </section>
 
-      <TeamButtons teams={teams}/>
+      <TeamButtons teams={teams} toggleCreateTeamPop={toggleCreateTeamPop}/>
 
       <section className="pop-over-info section-has-tertiary-buttons">      
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
@@ -91,7 +91,6 @@ const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams,
 
 UserOptionsPop.propTypes = {
   togglePopover: PropTypes.func.isRequired,
-  togglePopoverCreateTeam: PropTypes.func.isRequired,
   userLink: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
@@ -132,20 +131,20 @@ export default function UserOptionsPopContainer(props) {
   return (
     
     <PopoverContainer>
-      {({togglePopover, visible}) => (
-      <PopoverContainer>
-        {({togglePopover: toggleCreateTeamPop, visible: teamPopVisible}) => (
-        <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
-          <button className="user" onClick={togglePopover}>
-            <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
-            <span className="down-arrow icon"/>
-          </button>
-          {visible && <UserOptionsPop {...props} togglePopover={togglePopover} toggleCreateTeamPop={toggleCreateTeamPop}/>}
-          {teamPopVisible && <CreateTeamPop/>}
-        </div>
-      )}
-    </PopoverContainer>
+      {({togglePopover: toggleUserOptionsPop, visible: userOptionsPopVisible}) => (
+        <PopoverContainer>
+          {({togglePopover: toggleCreateTeamPop, visible: teamPopVisible}) => (
+          <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
+            <button className="user" onClick={toggleUserOptionsPop}>
+              <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
+              <span className="down-arrow icon"/>
+            </button>
+            {userOptionsPopVisible && <UserOptionsPop {...props} togglePopover={toggleUserOptionsPop} toggleCreateTeamPop={() => { toggleUserOptionsPop(); toggleCreateTeamPop(); }}/>}
+            {teamPopVisible && <CreateTeamPop/>}
+          </div>
         )}
+      </PopoverContainer>
+    )}
     </PopoverContainer>
   );
 }

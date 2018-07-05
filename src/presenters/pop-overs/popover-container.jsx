@@ -52,9 +52,22 @@ export default class PopoverContainer extends React.Component {
       return {visible: !prevState.visible};
     });
   }
+  
+  hide() {
+    this.setState(() => {
+      return {visible: false};
+    });
+  }
+  
+  show() {
+    this.setState(() => {
+      return {visible: true};
+    });
+  }
+
 
   render() {
-    const inner = this.props.children({visible: this.state.visible, togglePopover: this.toggle});
+    const inner = this.props.children({visible: this.state.visible, togglePopover: this.toggle, hidePopover: this.hide, showPopover: this.show});
     if(isFragment(inner)) {
       console.error("PopoverContainer does not support React.Fragment as the top level item. Please use a different element.");
     }
