@@ -39,7 +39,7 @@ const ProjectOptionsPop = ({
   }
   
   function clickDelete(event) {
-    deleteProject(projectId, event);
+    animate(event, 'slide-down', () => deleteProject(projectId));
   }
   
   return (
