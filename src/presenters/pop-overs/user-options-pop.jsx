@@ -16,11 +16,10 @@ Team.propTypes = {
   teamAvatarUrl: PropTypes.string.isRequired,
 };
 
-const TeamsList = ({teams}) => {
+const TeamsList = ({teams, togglePopover}) => {
   const showCreateTeamPop = () => {
     console.log('createTeam')
-    // togglePopover()
-    
+    togglePopover()
   }
   const hasTeams = teams && teams.length;
   if(!hasTeams) {
@@ -46,14 +45,22 @@ TeamsList.propTypes = {
   })),
 };
 
-const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay}) => {
-  const clickNewStuff = (event) => {
+
+UserOptionsPop extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      createTeamPopVisible: false,
+    };
+  }
+
+  clickNewStuff(event) {
     togglePopover();
     showNewStuffOverlay();
     event.stopPropagation();
   };
-  
-  const signOut = () => {
+
+  signOut() {
     /* global analytics */
     analytics.track("Logout");
     analytics.reset();
@@ -61,38 +68,91 @@ const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams,
     return location.reload();
   };
 
-  return (
-    <dialog className="pop-over user-options-pop">
-      <section className="pop-over-actions">
-        <a className="button-link" href={userLink}>
-          <div className="button button-small has-emoji button-tertiary">
-            <span>Your Profile </span>
-            <img className="emoji avatar" src={avatarUrl} style={avatarStyle} alt="Your avatar"></img>
-          </div>
-        </a>
-      </section>
 
-      <TeamsList teams={teams}/>
+  render() {
+    return (
+      <dialog className="pop-over user-options-pop">
+        <section className="pop-over-actions">
+          <a className="button-link" href={userLink}>
+            <div className="button button-small has-emoji button-tertiary">
+              <span>Your Profile </span>
+              <img className="emoji avatar" src={avatarUrl} style={avatarStyle} alt="Your avatar"></img>
+            </div>
+          </a>
+        </section>
 
-      <section className="pop-over-info section-has-tertiary-buttons">      
-        <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
-          <span>New Stuff </span>
-          <span className="emoji dog-face"></span>
-        </button>
-        <a className="button-link" href="https://support.glitch.com">
-          <div className="button button-small has-emoji button-tertiary button-on-secondary-background">
-            <span>Support </span>
-            <span className="emoji ambulance"></span>
-          </div>
-        </a>        
-        <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={signOut}>
-          <span>Sign Out</span>
-          <span className="emoji balloon"></span>
-        </button>
-      </section>
-    </dialog>
-  );
-};
+        <TeamsList teams={teams} togglePopover={togglePopover}/>
+
+        <section className="pop-over-info section-has-tertiary-buttons">      
+          <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
+            <span>New Stuff </span>
+            <span className="emoji dog-face"></span>
+          </button>
+          <a className="button-link" href="https://support.glitch.com">
+            <div className="button button-small has-emoji button-tertiary button-on-secondary-background">
+              <span>Support </span>
+              <span className="emoji ambulance"></span>
+            </div>
+          </a>        
+          <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={signOut}>
+            <span>Sign Out</span>
+            <span className="emoji balloon"></span>
+          </button>
+        </section>
+      </dialog>
+    );
+  }
+}
+
+
+//
+// const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay}) => {
+//   const clickNewStuff = (event) => {
+//     togglePopover();
+//     showNewStuffOverlay();
+//     event.stopPropagation();
+//   };
+  
+//   const signOut = () => {
+//     /* global analytics */
+//     analytics.track("Logout");
+//     analytics.reset();
+//     localStorage.removeItem('cachedUser');
+//     return location.reload();
+//   };
+
+//   return (
+//     <dialog className="pop-over user-options-pop">
+//       <section className="pop-over-actions">
+//         <a className="button-link" href={userLink}>
+//           <div className="button button-small has-emoji button-tertiary">
+//             <span>Your Profile </span>
+//             <img className="emoji avatar" src={avatarUrl} style={avatarStyle} alt="Your avatar"></img>
+//           </div>
+//         </a>
+//       </section>
+
+//       <TeamsList teams={teams} togglePopover={togglePopover}/>
+
+//       <section className="pop-over-info section-has-tertiary-buttons">      
+//         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
+//           <span>New Stuff </span>
+//           <span className="emoji dog-face"></span>
+//         </button>
+//         <a className="button-link" href="https://support.glitch.com">
+//           <div className="button button-small has-emoji button-tertiary button-on-secondary-background">
+//             <span>Support </span>
+//             <span className="emoji ambulance"></span>
+//           </div>
+//         </a>        
+//         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={signOut}>
+//           <span>Sign Out</span>
+//           <span className="emoji balloon"></span>
+//         </button>
+//       </section>
+//     </dialog>
+//   );
+// };
 
 UserOptionsPop.propTypes = {
   togglePopover: PropTypes.func.isRequired,
