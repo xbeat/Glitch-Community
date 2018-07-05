@@ -10,7 +10,6 @@ const TeamButton = ({url, name, teamAvatarUrl}) => (
     </div>
   </a>
 );
-
 TeamButton.propTypes = {
   url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -18,20 +17,28 @@ TeamButton.propTypes = {
 };
 
 const TeamButtons = ({teams}) => {
+  const createTeam = () => {
+    console.log('createTeam')
+    
+  }
   const hasTeams = teams && teams.length;
   if(!hasTeams) {
     return null;
   }
-  
   return (
     <section className="pop-over-actions">
+      <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={createTeam}>
+        <span>Create Team </span>
+        <span className="emoji dog-face"></span>
+      </button>      
+      
+
       {teams.map((team) => (
         <TeamButton key={team.name} {...team}/>
       ))}
     </section>
   );
 };
-
 TeamButtons.propTypes = {
   teams: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -94,6 +101,7 @@ UserOptionsPop.propTypes = {
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
+  api: PropTypes.func.isRequired,
 };
 
 export default function UserOptionsPopContainer(props) {
