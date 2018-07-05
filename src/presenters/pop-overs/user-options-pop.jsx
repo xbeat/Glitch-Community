@@ -55,13 +55,14 @@ class UserOptionsPop extends React.Component {
   }
 
   clickNewStuff(event) {
+    console.log('newstuff', this)
     this.props.togglePopover();
     this.props.showNewStuffOverlay();
     event.stopPropagation();
   };
 
   showCreateTeamPop() {
-    console.log('createTeam')
+    console.log('createTeam', this)
     this.props.togglePopover()
     this.setState({ createTeamPopVisible: true })
     console.log('📟', this.state.createTeamPopVisible)
@@ -86,9 +87,9 @@ class UserOptionsPop extends React.Component {
             </div>
           </a>
         </section>
-        <TeamsList teams={this.props.teams} togglePopover={this.props.togglePopover} showCreateTeamPop={this.props.showCreateTeamPop}/>
+        <TeamsList teams={this.props.teams} togglePopover={this.togglePopover} showCreateTeamPop={this.showCreateTeamPop}/>
         <section className="pop-over-info section-has-tertiary-buttons">      
-          <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={this.props.clickNewStuff}>
+          <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={this.clickNewStuff}>
             <span>New Stuff </span>
             <span className="emoji dog-face"></span>
           </button>
@@ -98,7 +99,7 @@ class UserOptionsPop extends React.Component {
               <span className="emoji ambulance"></span>
             </div>
           </a>        
-          <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={this.props.signOut}>
+          <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={this.signOut}>
             <span>Sign Out</span>
             <span className="emoji balloon"></span>
           </button>
