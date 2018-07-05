@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 
-const TeamButton = ({url, name, teamAvatarUrl}) => (
+const Team = ({url, name, teamAvatarUrl}) => (
   <a className="button-link" href={url}>
     <div className="button button-small has-emoji button-tertiary">
       <span>{name} </span>
@@ -11,13 +11,13 @@ const TeamButton = ({url, name, teamAvatarUrl}) => (
   </a>
 );
 
-TeamButton.propTypes = {
+Team.propTypes = {
   url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   teamAvatarUrl: PropTypes.string.isRequired,
 };
 
-const TeamButtons = ({teams, toggleCreateTeamPop}) => {
+const TeamList = ({teams, toggleCreateTeamPop}) => {
   const hasTeams = teams && teams.length;
   if(!hasTeams) {
     return null;
@@ -25,15 +25,20 @@ const TeamButtons = ({teams, toggleCreateTeamPop}) => {
   
   return (
     <section className="pop-over-actions">
-      <p onClick={toggleCreateTeamPop}>click me to make team</p>
+      <div onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
+        <span>Create Team </span>
+        <span className="emoji dog-face"></span>
+      </div>
+
       {teams.map((team) => (
-        <TeamButton key={team.name} {...team}/>
+        <Team key={team.name} {...team}/>
       ))}
+
     </section>
   );
 };
 
-TeamButtons.propTypes = {
+TeamList.propTypes = {
   teams: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
   })),
@@ -67,7 +72,7 @@ const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams,
         </a>
       </section>
 
-      <TeamButtons teams={teams} toggleCreateTeamPop={toggleCreateTeamPop}/>
+      <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop}/>
 
       <section className="pop-over-info section-has-tertiary-buttons">      
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
@@ -97,25 +102,6 @@ UserOptionsPop.propTypes = {
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
-// export default function UserOptionsPopContainer(props) {
-//   const {avatarUrl, avatarStyle} = props;
-//   return (
-    
-//     <PopoverContainer>
-//       {({togglePopover, visible}) => (
-//         <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
-//           <button className="user" onClick={togglePopover}>
-//             <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
-//             <span className="down-arrow icon"/>
-//           </button>
-//           {visible && <UserOptionsPop {...props} togglePopover={togglePopover}/>}
-//         </div>
-//       )}      
-//     </PopoverContainer>
-//   );
-// }
-          
-
 const CreateTeamPop = () => {
   return (
     <dialog className="pop-over user-options-pop">
@@ -133,14 +119,14 @@ export default function UserOptionsPopContainer(props) {
     <PopoverContainer>
       {({togglePopover: toggleUserOptionsPop, visible: userOptionsPopVisible}) => (
         <PopoverContainer>
-          {({togglePopover: toggleCreateTeamPop, visible: teamPopVisible}) => (
+          {({togglePopover: toggleCreateTeamPop, visible: createTeamPopVisible, hidePopover: hideCreateTeamPop}) => (
           <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
-            <button className="user" onClick={toggleUserOptionsPop}>
+            <button className="user" onClick={() => {toggleUserOptionsPop(); hideCreateTeamPop(); }}>
               <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
               <span className="down-arrow icon"/>
             </button>
             {userOptionsPopVisible && <UserOptionsPop {...props} togglePopover={toggleUserOptionsPop} toggleCreateTeamPop={() => { toggleUserOptionsPop(); toggleCreateTeamPop(); }}/>}
-            {teamPopVisible && <CreateTeamPop/>}
+            {createTeamPopVisible && <CreateTeamPop/>}
           </div>
         )}
       </PopoverContainer>

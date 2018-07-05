@@ -22,6 +22,7 @@ export default class PopoverContainer extends React.Component {
     this.state = { visible: false };
 
     this.toggle = this.toggle.bind(this);
+    this.hide = this.hide.bind(this)
     this.handleClickOutside = this.handleClickOutside.bind(this);
    
     // We need to set up and instantiate an onClickOutside wrapper
@@ -59,15 +60,15 @@ export default class PopoverContainer extends React.Component {
     });
   }
   
-  show() {
-    this.setState(() => {
-      return {visible: true};
-    });
-  }
+  // show() {
+  //   this.setState(() => {
+  //     return {visible: true};
+  //   });
+  // }
 
 
   render() {
-    const inner = this.props.children({visible: this.state.visible, togglePopover: this.toggle, hidePopover: this.hide, showPopover: this.show});
+    const inner = this.props.children({visible: this.state.visible, togglePopover: this.toggle, hidePopover: this.hide});
     if(isFragment(inner)) {
       console.error("PopoverContainer does not support React.Fragment as the top level item. Please use a different element.");
     }
