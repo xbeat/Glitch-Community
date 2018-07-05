@@ -107,6 +107,8 @@ export default function UserOptionsPopContainer(props) {
             <span className="down-arrow icon"/>
           </button>
           {visible && <UserOptionsPop {...props} togglePopover={togglePopover}/>}
+          
+          
         </div>
       )}
     </PopoverContainer>
