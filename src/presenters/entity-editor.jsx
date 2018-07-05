@@ -22,7 +22,7 @@ export default class EntityEditor extends React.Component {
   }
   
   removeItem(remoteField, remoteId, localField, localModel) {
-    return this.props.api.delete(`teams/${this.state.id}/${remoteField}/${remoteId}`).then(() => {
+    return this.props.api.delete(`${this.props.type}/${this.state.id}/${remoteField}/${remoteId}`).then(() => {
       this.setState(prev => ({[localField]: reject(prev[localField], matches(localModel))}));
     });
   }
