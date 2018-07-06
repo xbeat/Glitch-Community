@@ -177,9 +177,10 @@ class UserPageEditor extends React.Component {
   }
   
   async deleteProject(id) {
+    const {domain} = this.props.user.projects.find(proj => proj.id === id);
     await this.props.api.delete(`/projects/${id}`);
     this.props.localRemoveItem('projects', {id});
-    this.props.localAddItem('deletedProjects', {id, domain:id});
+    this.props.localAddItem('deletedProjects', {id, domain});
   }
   
   async undeleteProject(id, domain) {

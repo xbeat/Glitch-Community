@@ -1,8 +1,10 @@
 import React from 'react';
 
-import {getAvatarUrl} from '../../models/project.js';
+import {getAvatarUrl} from '../models/project.js';
 
 import {DataLoader} from './includes/loader.jsx';
+
+/* globals Set */
 
 function clickUndelete(event, callback) {
   const node = event.target.closest('li');
@@ -20,13 +22,6 @@ const DeletedProject = ({id, domain, onClick}) => (
   </button>
 );
 
-function normalizeProjects(userProjects, userDeleted, netDeleted) {
-  // userProjects and userDeleted change on delete/undelete
-  // netDeleted is loaded once then stays the same
-  // so use the three to suss out what's actually deleted
-  return netDeleted.filter(({id}) => 
-}
-
 const DeletedProjectsList = ({deletedProjects, undelete}) => (
   <ul className="deleted-projects-container">
     {deletedProjects.map(({id, domain}) => (
@@ -39,6 +34,15 @@ const DeletedProjectsList = ({deletedProjects, undelete}) => (
     ))}
   </ul>
 );
+
+function normalizeProjects(userProjects, userDeleted, netDeleted) {
+  // userProjects and userDeleted change on delete/undelete
+  // netDeleted is loaded once then stays the same
+  // so use the three to suss out what's actually deleted
+  const userSet = new Set(userProjects.concat(userDeleted).map(({id}) => id));
+  const stillDeleted = netDeleted.filter(({id}) => !userSet.has(id));
+  return userDeleted.concat(stillDeleted);
+}
 
 export default class DeletedProjects extends React.Component {
   constructor(props) {
@@ -54,13 +58,18 @@ export default class DeletedProjects extends React.Component {
   }
   
   render() {
+    const {
+      projects,
+      deletedProjects,
+      undelete,
+    } = this.props;
     return (
       <article className="deleted-projects">
         <h2>Deleted Projects <span className="emoji bomb emoji-in-title"></span></h2>
         {this.state.shown ? (
           <DataLoader get={this.props.get}>
             {({data}) => (
-              <DeletedProjectsList allDeletedProjects={data} {...this.props}/>
+              <DeletedProjectsList deletedProjects={normalizeProjects(projects, deletedProjects, data)} undelete={undelete}/>
             )}
           </DataLoader>
         ) : (
@@ -70,3 +79,5 @@ export default class DeletedProjects extends React.Component {
     );
   }
 }
+DeletedProjects.propTypes = {
+};
