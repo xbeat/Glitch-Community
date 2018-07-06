@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PopoverContainer from './popover-container.jsx';
+import _ from 'lodash'
+// import PopoverContainer from './popover-container.jsx';
 
 
 // TODO
@@ -53,7 +54,7 @@ class CreateTeamPop extends React.Component {
         
         <section className="pop-over-info">
           <p className="info-description">
-            Use Teams to group and manage projects with collaborators
+            Showcase your team's projects and manage project members
           </p>
         </section>
         <section className="pop-over-actions">
