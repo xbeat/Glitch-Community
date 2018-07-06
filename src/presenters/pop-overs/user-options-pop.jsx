@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
+import CreateTeamPop from './create-team-pop.jsx'; 
 
 const Team = ({url, name, teamAvatarUrl}) => (
   <a className="button-link" href={url}>
@@ -101,19 +102,6 @@ UserOptionsPop.propTypes = {
   avatarStyle: PropTypes.object.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
-
-
-// move to a seperate file
-// needs api
-const CreateTeamPop = () => {
-  return (
-    <dialog className="pop-over user-options-pop">
-      <section className="pop-over-actions">
-        <p>yoyoyoyo</p>
-      </section>
-    </dialog>
-  )
-}
 
 
 export default function UserOptionsPopContainer(props) {
