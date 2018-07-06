@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 
-// move to a seperate file
+
+// TODO
+// styles
 // needs api
 // has to handle team name taken error case
 
@@ -28,14 +30,14 @@ class CreateTeamPop extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('A team name and url was submitted: ', this.state.teamUrl);
+    alert('A team name and url was submitted: ' + this.state.teamUrl);
     event.preventDefault();
   }
 
 
   render() {
     return (
-      <dialog className="pop-over user-options-pop">
+      <dialog className="pop-over create-team-pop">
         <section className="pop-over-info">
           <div className="pop-title">
             Create Team
@@ -44,11 +46,11 @@ class CreateTeamPop extends React.Component {
         <section className="pop-over-actions">
           
         <form onSubmit={this.handleSubmit}>
-          <input className="pop-over-input" onChange={this.handleChange} type="text" autoFocus placeholder="my-cool-team"/>
+          <input className="pop-over-input team-name-input" onChange={this.handleChange} type="text" autoFocus placeholder="My Cool Team"/>
           <p className="action-description">
             /{this.state.teamUrl}
           </p>          
-          <input type="submit" value="Submit" className="button-small has-emoji button-tertiary" />
+          <input type="submit" value="Create Team" className="button-small has-emoji" />
         </form>
 
 
