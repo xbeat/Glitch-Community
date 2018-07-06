@@ -304,6 +304,19 @@ export function OldUserPage(application, userLoginOrId) {
   return LayoutPresenter(application, content);
 }
 
+class DeletedProjects extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  
+  render() {
+    return (
+      <section>
+      </section>
+    );
+  }
+}
+
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
   if(!login) {
     // Just an ID? We're anonymous.
