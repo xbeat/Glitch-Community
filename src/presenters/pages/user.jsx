@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import LayoutPresenter from '../layout';
 import Reactlet from "../reactlet";
 
-import ProjectModel, {getAvatarUrl} from '../../models/project';
+import ProjectModel from '../../models/project';
 import UserModel, {getAvatarStyle, getProfileStyle} from '../../models/user';
 import * as assets from '../../utils/assets';
 
@@ -16,66 +16,10 @@ import EditableField from '../includes/editable-field.jsx';
 import EntityEditor from '../entity-editor.jsx';
 import Thanks from '../includes/thanks.jsx';
 
-import EntityPageProjects from "../entity-page-projects.jsx";
+import DeletedProjects from '../deleted-projects.jsx';
+import EntityPageProjects from '../entity-page-projects.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
-
-
-function clickUndelete(event, callback) {
-  const node = event.target.closest('li');
-  node.addEventListener('animationend', callback, {once: true});
-  node.classList.add('slide-up');
-}
-
-const DeletedProject = ({id, domain, onClick}) => (
-  <button className="button-unstyled" onClick={evt => clickUndelete(evt, onClick)}>
-    <div className="deleted-project">
-      <img className="avatar" src={getAvatarUrl(id)} alt=""/>
-      <div className="deleted-project-name">{domain}</div>
-      <div className="button button-small">Undelete</div>
-    </div>
-  </button>
-);
-
-class DeletedProjects extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      shown: false,
-    };
-    this.clickShow = this.clickShow.bind(this);
-  }
-  
-  clickShow() {
-    this.setState({shown: true});
-  }
-  
-  render() {
-    return (
-      <article className="deleted-projects">
-        <h2>Deleted Projects <span className="emoji bomb emoji-in-title"></span></h2>
-        {this.state.shown ? (
-          <DataLoader get={this.props.get}>
-            {({data}) => (
-              <ul className="deleted-projects-container">
-                {data.map(({id, domain}) => (
-                  <li key={id} className="deleted-project-container">
-                    <DeletedProject
-                      id={id} domain={domain}
-                      onClick={() => this.props.undelete(id, domain)}
-                    />
-                  </li>
-                ))}
-              </ul>
-            )}
-          </DataLoader>
-        ) : (
-          <button className="button button-tertiary" onClick={this.clickShow}>Show</button>
-        )}
-      </article>
-    );
-  }
-}
 
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
   if(!login) {
@@ -117,7 +61,7 @@ const UserPage = ({
     id, login, name, description, thanksCount,
     avatarUrl, color,
     hasCoverImage, coverColor,
-    pins, projects,
+    pins, projects, deletedProjects,
   },
   isAuthorized,
   updateDescription,
@@ -149,7 +93,7 @@ const UserPage = ({
       projectOptions={{leaveProject, deleteProject}}
       getProjects={getProjects}
     />
-    {isAuthorized && <DeletedProjects get={getDeletedProjects} undelete={undeleteProject}/>}
+    {isAuthorized && <DeletedProjects get={getDeletedProjects} undelete={undeleteProject} projects={projects} deletedProjects={deletedProjects}/>}
   </main>
 );
 UserPage.propTypes = {
@@ -235,6 +179,7 @@ class UserPageEditor extends React.Component {
   async deleteProject(id) {
     await this.props.api.delete(`/projects/${id}`);
     this.props.localRemoveItem('projects', {id});
+    this.props.localAddItem('deletedProjects', {id, domain:id});
   }
   
   async undeleteProject(id, domain) {
@@ -248,6 +193,7 @@ class UserPageEditor extends React.Component {
         console.warn(e);
       }
     }
+    this.props.localRemoveItem('deletedProjects', {id});
     this.props.localAddItem('projects', {id});
   }
   
@@ -281,7 +227,7 @@ class UserPageEditor extends React.Component {
 const UserPageLoader = ({api, get, loginOrId, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
     {user => user ? (
-      <EntityEditor api={api} initial={user} type="users">
+      <EntityEditor api={api} initial={{...user, deletedProjects: []}} type="users">
         {({entity, ...editFuncs}) => (
           <Uploader>
             {({...uploadFuncs}) => (
