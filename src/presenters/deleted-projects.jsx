@@ -20,7 +20,27 @@ const DeletedProject = ({id, domain, onClick}) => (
   </button>
 );
 
-class DeletedProjects extends React.Component {
+function normalizeProjects(userProjects, userDeleted, netDeleted) {
+  // userProjects and userDeleted change on delete/undelete
+  // netDeleted is loaded once then stays the same
+  // so use the three to suss out what's actually deleted
+  return netDeleted.filter(({id}) => 
+}
+
+const DeletedProjectsList = ({deletedProjects, undelete}) => (
+  <ul className="deleted-projects-container">
+    {deletedProjects.map(({id, domain}) => (
+      <li key={id} className="deleted-project-container">
+        <DeletedProject
+          id={id} domain={domain}
+          onClick={() => undelete(id, domain)}
+        />
+      </li>
+    ))}
+  </ul>
+);
+
+export default class DeletedProjects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,16 +60,7 @@ class DeletedProjects extends React.Component {
         {this.state.shown ? (
           <DataLoader get={this.props.get}>
             {({data}) => (
-              <ul className="deleted-projects-container">
-                {data.map(({id, domain}) => (
-                  <li key={id} className="deleted-project-container">
-                    <DeletedProject
-                      id={id} domain={domain}
-                      onClick={() => this.props.undelete(id, domain)}
-                    />
-                  </li>
-                ))}
-              </ul>
+              <DeletedProjectsList allDeletedProjects={data} {...this.props}/>
             )}
           </DataLoader>
         ) : (
