@@ -48,9 +48,11 @@ class CreateTeamPop extends React.Component {
       isVerified: false,
     })
     .then (response => {
-      // blocked by https://www.notion.so/glitch/possible-API-bug-Database-error-when-POSTing-to-teams-to-create-new-team-e3628f4c503d497a804e35f1bf3934a7
       console.log ('👏', response, response.data)
+      // if not in community cache
+      
       this.setState({ isLoading: false })
+      
       // if response.statusCode === 400 if taken, 
       // 200 if created
       // redirect to team page
