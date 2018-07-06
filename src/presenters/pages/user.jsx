@@ -322,9 +322,17 @@ class DeletedProjects extends React.Component {
       <article className="deleted-projects">
         <h2>Deleted Projects <span className="emoji bomb emoji-in-title"></span></h2>
         {this.state.shown ? (
-          <Loader get={this.props.getDeletedProjects}>
-            {data => JSON.stringify(data)}
-          </Loader>
+          <DataLoader get={this.props.get}>
+            {({data}) => (
+              <ul className="deleted-projects-container">
+                {data.map(({id, domain}) => (
+                  <li key={id} className="deleted-project">
+                    <div className="deleted-project-name">{domain}</div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </DataLoader>
         ) : (
           <button className="button button-tertiary" onClick={this.clickShow}>Show</button>
         )}
@@ -382,7 +390,7 @@ const UserPage = ({
   uploadAvatar,
   addPin, removePin,
   leaveProject, deleteProject,
-  getProjects, get
+  getProjects, getDeletedProjects,
   _cacheCover,
 }) => (
   <main className="profile-page user-page">
@@ -404,7 +412,7 @@ const UserPage = ({
       projectOptions={{leaveProject, deleteProject}}
       getProjects={getProjects}
     />
-    {isAuthorized && <DeletedProjects/>}
+    {isAuthorized && <DeletedProjects get={getDeletedProjects}/>}
   </main>
 );
 UserPage.propTypes = {
