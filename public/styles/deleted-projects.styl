@@ -28,17 +28,21 @@ deleted-project-avatar-size = 32px
     border-radius: 5px
     padding: 12px
 
+    .avatar
+      border-radius: 5px
+      width: deleted-project-avatar-size
+      height: deleted-project-avatar-size
+      margin-right: 12px
+      float: left
+
     .deleted-project-name
+      min-height: deleted-project-avatar-size
       margin-bottom: 6px
       font-weight: 600
       font-size: 14px
-
-    .avatar
-      margin-right: 12px
-      border-radius: 5px
-      vertical-align: middle
-      width: deleted-project-avatar-size
-      height: deleted-project-avatar-size
+      display: flex
+      flex-direction: column
+      justify-content: center
       
   .slide-up
     animation: slideUp 0.1s ease-out
