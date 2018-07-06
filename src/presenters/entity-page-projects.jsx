@@ -68,15 +68,23 @@ export default class EntityPageProjectsLoader extends React.Component {
   
   ensureProjects(projects) {
     const unloadedProjects = projects.filter(({id}) => !(id in this.state));
-    chunk(unloadedProjects, 50).forEach(projects => {
-      const ids = projects.map(({id}) => id);
-      this.props.getProjects(ids).then(projects => {
-        this.setState(keyBy(projects, ({id}) => id));
+    console.log(unloadedProjects);
+    if (unloadedProjects.length) {
+      this.setState(unloadedProjects.reduce((data, {id}) => ({[id]: null, ...data}), {}));
+      chunk(unloadedProjects, 50).forEach(projects => {
+        const ids = projects.map(({id}) => id);
+        this.props.getProjects(ids).then(projects => {
+          this.setState(keyBy(projects, ({id}) => id));
+        });
       });
-    });
+    }
   }
   
   componentDidMount() {
+    this.ensureProjects(this.props.projects);
+  }
+  
+  componentDidUpdate() {
     this.ensureProjects(this.props.projects);
   }
   
