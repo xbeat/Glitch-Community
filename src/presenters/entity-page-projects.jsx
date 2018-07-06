@@ -10,7 +10,7 @@ import ProjectsList from './projects-list.jsx';
 
 const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, projectOptions}) => {
+const EntityPageProjects = ({projects, pins, isAuthorized, isLoaded, addPin, removePin, projectOptions}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const [pinnedProjects, recentProjects] = partition(projects, ({id}) => pinnedSet.has(id));
   
@@ -37,14 +37,14 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, pr
     <React.Fragment>
       {!!pinnedVisible && (
         <ProjectsList title={pinnedTitle}
-          projects={pinnedProjects} placeholder={pinnedEmpty}
+          projects={pinnedProjects} placeholder={isLoaded ? pinnedEmpty : null}
           projectOptions={isAuthorized ? {removePin, ...projectOptions} : {}}
         />
       )}
-      <ProjectsList
-        title="Recent Projects" projects={recentProjects}
+      <ProjectsList title="Recent Projects" projects={recentProjects}
         projectOptions={isAuthorized ? {addPin, ...projectOptions} : {}}
       />
+      {!isLoaded && <Loader/>}
     </React.Fragment>
   );
 };
@@ -83,7 +83,7 @@ export default class EntityPageProjectsLoader extends React.Component {
   render() {
     const {projects, ...props} = this.props;
     const loadedProjects = projects.map(project => this.state[project.id]).filter(project => project);
-    return <EntityPageProjects projects={loadedProjects} {...props}/>;
+    return <EntityPageProjects projects={loadedProjects} isLoaded={loadedProjects.length === projects.length} {...props}/>;
   }
 }
 EntityPageProjectsLoader.propTypes = {
