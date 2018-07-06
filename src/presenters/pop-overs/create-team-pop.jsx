@@ -22,8 +22,8 @@ class CreateTeamPop extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount(){
-   this.refs.input.select(); 
+  componentDidMount() {
+   this.refs.input.select();
   }
 
   handleChange(event) {
