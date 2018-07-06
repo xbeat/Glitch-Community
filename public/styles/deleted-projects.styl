@@ -4,24 +4,16 @@ deleted-project-avatar-size = 32px
   display: block
 
   .deleted-projects-container
+    list-style-type: none
+    display: flex
+    flex-wrap: wrap
     margin: 0
     padding: 0
-    list-style-type: none
-      
-  .deleted-project
-    background-color: #e5e5e5
-    border-radius: 5px
-    cursor: pointer
-    display: block
-    float: left
-    height: 90px
+  
+  .deleted-project-container
+    flex: 1 0 235px
     margin-bottom: 12px
     margin-right: 10px
-    min-width: 235px
-    overflow: hidden
-    padding: 12px
-    position: relative
-    
     &:hover
       .button
         background-color: secondary-background
@@ -30,18 +22,12 @@ deleted-project-avatar-size = 32px
       .button
         background-color: secondary-background-active
         box-shadow: none
-        
-    &:after
-    	bottom: 100%
-    	left: 3.5%
-    	border: solid transparent
-    	content: " "
-    	height: 0
-    	width: 0
-    	position: absolute
-    	pointer-events: none
-    	border-bottom-color: inherit
-    	border-width: 6px
+      
+  .deleted-project
+    background-color: #e5e5e5
+    border-radius: 5px
+    height: 90px
+    padding: 12px
 
     .avatar
       margin-right: 7px
@@ -52,9 +38,6 @@ deleted-project-avatar-size = 32px
       height: deleted-project-avatar-size
       max-width: deleted-project-avatar-size
 
-    .button
-      display: block
-
     .deleted-project-name
       display: inline-block
       margin-top: 6px
@@ -64,12 +47,10 @@ deleted-project-avatar-size = 32px
       font-size: 14px
       height: 34px
       overflow: hidden
+    
+    .button
+      
       
   .slide-up
     animation: slideUp 0.1s ease-out
     animation-fill-mode: forwards
-
-  .deleted-project-loader {
-    margin-top: 8px
-    margin-bottom: 8px
-  }

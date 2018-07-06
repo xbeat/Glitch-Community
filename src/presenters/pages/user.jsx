@@ -326,7 +326,7 @@ class DeletedProjects extends React.Component {
             {({data}) => (
               <ul className="deleted-projects-container">
                 {data.map(({id, domain}) => (
-                  <li key={id}>
+                  <li key={id} className="deleted-project-container">
                     <button className="button-unstyled">
                       <div className="deleted-project">
                         <img className="avatar" src={getAvatarUrl(id)} alt=""/>
