@@ -15,6 +15,7 @@ class CreateTeamPop extends React.Component {
       teamName: 'Team Rocket',
       teamUrl: 'team-rocket',
       isLoading: false,
+      hasError: false
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -38,6 +39,22 @@ class CreateTeamPop extends React.Component {
     // post to /teams with name and url json body
     this.setState({ isLoading: true })
     console.log('A team url and name was submitted: ' + this.state.teamUrl + ' ' + this.state.teamName );
+    this.props.api().post(('teams'), {
+      name: this.state.teamName,
+      url: this.state.teamUrl,
+    })
+    .then (({data}) => {
+      console.log ('👏', data)
+      this.setState({ isLoading: false })
+      // redirect to team page
+    }).catch (error => {
+      console.error(error)
+      this.setState({ 
+        isLoading: false,
+        hasError: true,
+      })
+      // show error message
+    })
   }
 
 
