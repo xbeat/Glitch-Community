@@ -307,12 +307,28 @@ export function OldUserPage(application, userLoginOrId) {
 class DeletedProjects extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      shown: false,
+    }
+    this.clickShow = this.clickShow.bind(this);
+  }
+  
+  clickShow() {
+    this.setState({shown: true});
   }
   
   render() {
     return (
-      <section>
-      </section>
+      <article className="deleted-projects">
+        <h2>Deleted Projects <span className="emoji bomb emoji-in-title"></span></h2>
+        {this.state.shown ? (
+          <Loader get={this.props.getDeletedProjects}>
+            {data => JSON.stringify(data)}
+          </Loader>
+        ) : (
+          <button className="button button-tertiary" onClick={this.clickShow}>Show</button>
+        )}
+      </article>
     );
   }
 }
@@ -366,7 +382,7 @@ const UserPage = ({
   uploadAvatar,
   addPin, removePin,
   leaveProject, deleteProject,
-  getProjects,
+  getProjects, get
   _cacheCover,
 }) => (
   <main className="profile-page user-page">
@@ -388,6 +404,7 @@ const UserPage = ({
       projectOptions={{leaveProject, deleteProject}}
       getProjects={getProjects}
     />
+    {isAuthorized && <DeletedProjects/>}
   </main>
 );
 UserPage.propTypes = {
@@ -528,6 +545,7 @@ function UserPagePresenter(application, loginOrId, get) {
     currentUserId: application.currentUser().id(),
     currentUserModel: application.currentUser(),
     getProjects: ids => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
+    getDeletedProjects: () => application.api().get(`user/deleted-projects`),
   };
   const content = Reactlet(UserPageLoader, props, 'userpage');
   return LayoutPresenter(application, content);
