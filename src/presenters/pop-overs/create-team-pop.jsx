@@ -13,23 +13,23 @@ class CreateTeamPop extends React.Component {
     super(props);
 
     this.state = {
-      // teamName: '',
-      teamUrl: 'my-cool-team',
+      teamName: '',
+      teamUrl: 'team-rocket',
     };
     
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // componentDidMount(){
-  //  this.nameInput.focus(); 
-  // }
+  componentDidMount(){
+   this.refs.input.select(); 
+  }
 
   handleChange(event) {
     this.setState({teamUrl: event.target.value.toUpperCase()});
   }
 
-  handleSubmit(event) {
+  createTeam(event) {
     alert('A team name and url was submitted: ' + this.state.teamUrl);
     event.preventDefault();
   }
@@ -46,11 +46,22 @@ class CreateTeamPop extends React.Component {
         <section className="pop-over-actions">
           
         <form onSubmit={this.handleSubmit}>
-          <input className="pop-over-input team-name-input" onChange={this.handleChange} type="text" autoFocus placeholder="My Cool Team"/>
+          <input 
+            ref="input"
+            className="pop-over-input team-name-input" 
+            onChange={this.handleChange} 
+            type="text" 
+            autoFocus 
+            placeholder="Your Team Name" 
+            defaultValue="Team Rocket"
+          />
           <p className="action-description">
             /{this.state.teamUrl}
           </p>          
-          <input type="submit" value="Create Team" className="button-small has-emoji" />
+          <button type="submit" className="button-small has-emoji" onClick={createTeam}>
+            Create Team
+            <span className="emoji herb">
+          </button>
         </form>
 
 
