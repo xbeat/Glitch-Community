@@ -60,7 +60,12 @@ class CreateTeamPop extends React.Component {
     })
   }
 
-
+  // TODO 
+  // replace input with <EditableField value={name||""} update={updateName} placeholder='Display name?'/>
+  // pass in an update func to the field that updates my url state on field updates, clears error state on update too (assume innocence during retype)
+  // for error handlingz
+  // https://glitch.com/edit/#!/community-pirijan?path=src/presenters/includes/editable-field.jsx:9:30
+  // if error strings must always be passed from the server , then update the error strings in the api for friendliness
   render() {
     return (
       <dialog className="pop-over create-team-pop">
