@@ -33,10 +33,11 @@ class CreateTeamPop extends React.Component {
   }
 
   handleSubmit(event) {
-    // this.props.api
-    // post to /teams with name and url strings
-    alert('A team url and name was submitted: ' + this.state.teamUrl + ' ' + this.state.teamName );
     event.preventDefault();
+    // this.props.api
+    // post to /teams with name and url json body
+    this.setState({ isLoading: true })
+    console.log('A team url and name was submitted: ' + this.state.teamUrl + ' ' + this.state.teamName );
   }
 
 
