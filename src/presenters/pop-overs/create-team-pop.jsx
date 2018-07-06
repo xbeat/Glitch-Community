@@ -48,14 +48,8 @@ class CreateTeamPop extends React.Component {
       isVerified: false,
     })
     .then (response => {
-      console.log ('👏', response, response.data)
-      // if not in community cache
-      
       this.setState({ isLoading: false })
-      
-      // if response.statusCode === 400 if taken, 
-      // 200 if created
-      // redirect to team page
+      window.location = `/@${response.data.url}`
     }).catch (error => {
       console.error(error)
       this.setState({
