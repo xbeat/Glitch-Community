@@ -33,9 +33,25 @@
       border-bottom: none
       border-bottom-left-radius: 3px
       border-bottom-right-radius: 3px
+
   .results-list
     padding: 6px
-
+    
+  .clickable-label
+    cursor: pointer
+    &:hover,
+    &:active
+      .back
+        opacity: 1
+        border-radius: 5px
+        border: none
+    &:hover
+      .back
+        background-color: secondary-background-hover
+    &:active
+      .back
+        background-color: secondary-background-active
+    
   .description-section
     margin: 0
     padding: 0
@@ -52,6 +68,8 @@
     .pop-title
       font-size: 14px
       font-weight: bold
+      display: inline-block
+      vertical-align: middle
     &.last-section
       border-bottom: none
     .info-description

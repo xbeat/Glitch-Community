@@ -41,11 +41,17 @@ class CreateTeamPop extends React.Component {
   render() {
     return (
       <dialog className="pop-over create-team-pop">
-        <section className="pop-over-info">
+        <section className="pop-over-info clickable-label">
+          <div className="back icon">
+            <div className="left-arrow icon" />
+          </div>
           <div className="pop-title">
             <span>Create Team </span>
             <span className="emoji herb" />
           </div>
+        </section>
+        
+        <section className="pop-over-info">
           <p className="info-description">
             Teams can be used for xyz , keeping things together and stuff. collaborating with friends and enemies
           </p>
