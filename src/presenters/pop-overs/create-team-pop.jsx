@@ -26,7 +26,10 @@ class CreateTeamPop extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({teamUrl: event.target.value.toUpperCase()});
+    this.setState({
+      teamName: event.target.value, 
+      teamUrl: event.target.value.toUpperCase()
+    });
   }
 
   handleSubmit(event) {
@@ -43,6 +46,9 @@ class CreateTeamPop extends React.Component {
             <span>Create Team </span>
             <span className="emoji herb" />
           </div>
+          <p className="info-description">
+            Teams can be used for xyz , keeping things together and stuff. collaborating with friends and enemies
+          </p>
         </section>
         <section className="pop-over-actions">
           
@@ -57,7 +63,7 @@ class CreateTeamPop extends React.Component {
             defaultValue="Team Rocket"
           />
           <p className="action-description">
-            /{this.state.teamUrl}
+            /@{this.state.teamUrl}
           </p>          
           <button type="submit" className="button-small has-emoji">
             <span>Create Team </span>
@@ -69,10 +75,10 @@ class CreateTeamPop extends React.Component {
 
         </section>
         <section className="pop-over-info">
-          <p className="info-description">
-            You can change this later
+          <p className="info-description assurance-descripton">
+            p.s. You can rename later
           </p>
-        </section>      
+        </section>
       </dialog>
     )
   }
