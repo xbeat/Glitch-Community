@@ -345,7 +345,7 @@ class DeletedProjects extends React.Component {
                   <li key={id} className="deleted-project-container">
                     <DeletedProject
                       id={id} domain={domain}
-                      onClick={() => this.props.undelete(id)}
+                      onClick={() => this.props.undelete(id, domain)}
                     />
                   </li>
                 ))}
@@ -408,7 +408,8 @@ const UserPage = ({
   uploadCover, clearCover,
   uploadAvatar,
   addPin, removePin,
-  leaveProject, deleteProject,
+  leaveProject,
+  deleteProject, undeleteProject,
   getProjects, getDeletedProjects,
   _cacheCover,
 }) => (
@@ -431,7 +432,7 @@ const UserPage = ({
       projectOptions={{leaveProject, deleteProject}}
       getProjects={getProjects}
     />
-    {isAuthorized && <DeletedProjects get={getDeletedProjects} undelete={id => console.log(id)}/>}
+    {isAuthorized && <DeletedProjects get={getDeletedProjects} undelete={undeleteProject}/>}
   </main>
 );
 UserPage.propTypes = {
@@ -519,6 +520,11 @@ class UserPageEditor extends React.Component {
     this.props.localRemoveItem('projects', {id});
   }
   
+  async undeleteProject(id, domain) {
+    //await this.props.api.post(`/projects/${id}/undelete`);
+    this.props.localAddItem('projects', {id, domain});
+  }
+  
   render() {
     const {
       user,
@@ -540,6 +546,7 @@ class UserPageEditor extends React.Component {
       removePin: projectId => removeItem('pinned-projects', projectId, 'pins', {projectId}),
       leaveProject: id => this.leaveProject(id),
       deleteProject: id => this.deleteProject(id),
+      undeleteProject: (id, domain) => this.undeleteProject(id, domain),
     };
     return <UserPage user={user} {...this.state} {...funcs} {...props}/>;
   }

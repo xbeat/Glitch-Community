@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProjectsList from './projects-list.jsx';
 import {chunk, keyBy, partition} from 'lodash';
+
+import Loader from './includes/loader.jsx';
+import ProjectsList from './projects-list.jsx';
+
 
 /* globals Set */
 
@@ -79,7 +82,7 @@ export default class EntityPageProjectsLoader extends React.Component {
   
   render() {
     const {projects, ...props} = this.props;
-    const loadedProjects = projects.map(project => this.state[project.id] || project);
+    const loadedProjects = projects.map(project => this.state[project.id]).filter(project => project);
     return <EntityPageProjects projects={loadedProjects} {...props}/>;
   }
 }
