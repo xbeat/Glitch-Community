@@ -68,7 +68,6 @@ export default class EntityPageProjectsLoader extends React.Component {
   
   ensureProjects(projects) {
     const unloadedProjects = projects.filter(({id}) => !(id in this.state));
-    console.log(unloadedProjects);
     if (unloadedProjects.length) {
       this.setState(unloadedProjects.reduce((data, {id}) => ({[id]: null, ...data}), {}));
       chunk(unloadedProjects, 50).forEach(projects => {
