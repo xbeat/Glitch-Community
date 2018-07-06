@@ -18,7 +18,7 @@ class CreateTeamPop extends React.Component {
     };
     
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount(){
@@ -29,7 +29,7 @@ class CreateTeamPop extends React.Component {
     this.setState({teamUrl: event.target.value.toUpperCase()});
   }
 
-  createTeam(event) {
+  handleSubmit(event) {
     alert('A team name and url was submitted: ' + this.state.teamUrl);
     event.preventDefault();
   }
@@ -40,7 +40,8 @@ class CreateTeamPop extends React.Component {
       <dialog className="pop-over create-team-pop">
         <section className="pop-over-info">
           <div className="pop-title">
-            Create Team
+            <span>Create Team </span>
+            <span className="emoji herb" />
           </div>
         </section>
         <section className="pop-over-actions">
@@ -58,9 +59,9 @@ class CreateTeamPop extends React.Component {
           <p className="action-description">
             /{this.state.teamUrl}
           </p>          
-          <button type="submit" className="button-small has-emoji" onClick={createTeam}>
-            Create Team
-            <span className="emoji herb">
+          <button type="submit" className="button-small has-emoji">
+            <span>Create Team </span>
+            <span className="emoji thumbs_up" />
           </button>
         </form>
 
