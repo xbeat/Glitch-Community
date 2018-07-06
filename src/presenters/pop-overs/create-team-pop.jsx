@@ -5,16 +5,15 @@ import _ from 'lodash'
 
 
 // TODO
-// styles
 // needs api
-// has to handle team name taken error case
+// has to handle team name taken error case // error styles
 
 class CreateTeamPop extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      teamName: '',
+      teamName: 'Team Rocket',
       teamUrl: 'team-rocket',
     };
     
@@ -29,12 +28,12 @@ class CreateTeamPop extends React.Component {
   handleChange(event) {
     this.setState({
       teamName: event.target.value, 
-      teamUrl: event.target.value.toUpperCase()
+      teamUrl: _.kebabCase(event.target.value)
     });
   }
 
   handleSubmit(event) {
-    alert('A team name and url was submitted: ' + this.state.teamUrl);
+    alert('A team url and name was submitted: ' + this.state.teamUrl + ' ' + this.state.teamName );
     event.preventDefault();
   }
 

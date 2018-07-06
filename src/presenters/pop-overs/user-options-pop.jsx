@@ -47,9 +47,9 @@ TeamList.propTypes = {
 
 
 
-const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay, toggleCreateTeamPop}) => {
+const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay, toggleCreateTeamPop}) => {
   const clickNewStuff = (event) => {
-    togglePopover();
+    toggleUserOptionsPop();
     showNewStuffOverlay();
     event.stopPropagation();
   };
@@ -96,7 +96,7 @@ const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams,
 };
 
 UserOptionsPop.propTypes = {
-  togglePopover: PropTypes.func.isRequired,
+  toggleUserOptionsPop: PropTypes.func.isRequired,
   userLink: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
@@ -105,7 +105,7 @@ UserOptionsPop.propTypes = {
 
 
 export default function UserOptionsPopContainer(props) {
-  const {avatarUrl, avatarStyle} = props;
+  const {avatarUrl, avatarStyle, api} = props;
   return (
     
     <PopoverContainer>
@@ -117,8 +117,8 @@ export default function UserOptionsPopContainer(props) {
               <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
               <span className="down-arrow icon"/>
             </button>
-            {userOptionsPopVisible && <UserOptionsPop {...props} togglePopover={toggleUserOptionsPop} toggleCreateTeamPop={() => { toggleUserOptionsPop(); toggleCreateTeamPop(); }}/>}
-            {createTeamPopVisible && <CreateTeamPop/>}
+            {userOptionsPopVisible && <UserOptionsPop {...props} toggleUserOptionsPop={toggleUserOptionsPop} toggleCreateTeamPop={() => { toggleUserOptionsPop(); toggleCreateTeamPop(); }}/>}
+            {createTeamPopVisible && <CreateTeamPop api={api}  />}
           </div>
         )}
       </PopoverContainer>
@@ -130,5 +130,6 @@ export default function UserOptionsPopContainer(props) {
 UserOptionsPopContainer.propTypes = {
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
+  api: PropTypes.func.isRequired,
 };
 
