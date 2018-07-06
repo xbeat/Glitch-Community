@@ -304,8 +304,14 @@ export function OldUserPage(application, userLoginOrId) {
   return LayoutPresenter(application, content);
 }
 
-const DeletedProject = ({id, domain}) => (
-  <button className="button-unstyled" onClick={() => console.log(id)}>
+function clickUndelete(event, callback) {
+  const node = event.target.closest('li');
+  node.addEventListener('animationend', callback, {once: true});
+  node.classList.add('slide-up');
+}
+
+const DeletedProject = ({id, domain, onClick}) => (
+  <button className="button-unstyled" onClick={evt => clickUndelete(evt, onClick)}>
     <div className="deleted-project">
       <img className="avatar" src={getAvatarUrl(id)} alt=""/>
       <div className="deleted-project-name">{domain}</div>
@@ -337,7 +343,10 @@ class DeletedProjects extends React.Component {
               <ul className="deleted-projects-container">
                 {data.map(({id, domain}) => (
                   <li key={id} className="deleted-project-container">
-                    <DeletedProject id={id} domain={domain}/>
+                    <DeletedProject
+                      id={id} domain={domain}
+                      onClick={() => this.props.undelete(id)}
+                    />
                   </li>
                 ))}
               </ul>
@@ -422,7 +431,7 @@ const UserPage = ({
       projectOptions={{leaveProject, deleteProject}}
       getProjects={getProjects}
     />
-    {isAuthorized && <DeletedProjects get={getDeletedProjects}/>}
+    {isAuthorized && <DeletedProjects get={getDeletedProjects} undelete={id => console.log(id)}/>}
   </main>
 );
 UserPage.propTypes = {
