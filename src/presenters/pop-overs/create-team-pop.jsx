@@ -53,7 +53,7 @@ class CreateTeamPop extends React.Component {
         
         <section className="pop-over-info">
           <p className="info-description">
-            Teams can be used for xyz , keeping things together and stuff. collaborating with friends and enemies
+            Use Teams to group and manage projects with collaborators
           </p>
         </section>
         <section className="pop-over-actions">
