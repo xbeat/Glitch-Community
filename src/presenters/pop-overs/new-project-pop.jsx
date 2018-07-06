@@ -11,7 +11,10 @@ const NewProjectPop = ({projects}) => (
           <a key={project.id} href={project.remixUrl}>
             <ProjectResultItem {...project} action={()=>{
                 /* global analytics */
-                analytics.track("New Project Clicked");
+                analytics.track("New Project Clicked", {
+                  baseDomain: project.domain,
+                  origin: "community new project pop",
+                });
               }} />
           </a>
         ))}
