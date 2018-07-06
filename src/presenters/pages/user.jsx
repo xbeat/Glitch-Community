@@ -329,8 +329,10 @@ class DeletedProjects extends React.Component {
                   <li key={id} className="deleted-project-container">
                     <button className="button-unstyled">
                       <div className="deleted-project">
-                        <img className="avatar" src={getAvatarUrl(id)} alt=""/>
-                        <div className="deleted-project-name">{domain}</div>
+                        <div className="deleted-project-name">
+                          <img className="avatar" src={getAvatarUrl(id)} alt=""/>
+                          {domain}
+                        </div>
                         <div className="button button-small">Undelete</div>
                       </div>
                     </button>
