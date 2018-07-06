@@ -50,7 +50,7 @@ class CreateTeamPop extends React.Component {
       // redirect to team page
     }).catch (error => {
       console.error(error)
-      this.setState({ 
+      this.setState({
         isLoading: false,
         hasError: true,
       })
