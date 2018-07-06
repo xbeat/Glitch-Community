@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash'
-// import PopoverContainer from './popover-container.jsx';
+import Loader from '../includes/loader.jsx';
 
 
 // TODO
@@ -14,6 +14,7 @@ class CreateTeamPop extends React.Component {
     this.state = {
       teamName: 'Team Rocket',
       teamUrl: 'team-rocket',
+      isLoading: false,
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -33,7 +34,7 @@ class CreateTeamPop extends React.Component {
 
   handleSubmit(event) {
     // this.props.api
-    // 
+    // post to /teams with name and url strings
     alert('A team url and name was submitted: ' + this.state.teamUrl + ' ' + this.state.teamName );
     event.preventDefault();
   }
@@ -71,11 +72,16 @@ class CreateTeamPop extends React.Component {
           />
           <p className="action-description team-url-preview">
             /@{this.state.teamUrl}
-          </p>          
-          <button type="submit" className="button-small has-emoji">
-            <span>Create Team </span>
-            <span className="emoji thumbs_up" />
-          </button>
+          </p>
+          
+          {this.state.isLoading && 
+            <Loader />
+          ||
+            <button type="submit" className="button-small has-emoji">
+              <span>Create Team </span>
+              <span className="emoji thumbs_up" />
+            </button>
+          }
         </form>
 
         </section>
