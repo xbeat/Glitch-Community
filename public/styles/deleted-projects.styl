@@ -1,30 +1,12 @@
 deleted-project-avatar-size = 32px
 
 .deleted-projects
-  clear: both
-  display: inline-block
-  width: 100%
-  vertical-align: top
-  border-radius: 5px
-  
-  header
-    float: left
-    width: 22%
-    @media (max-width: hugeViewport)
-      width: 21%
+  display: block
 
   .deleted-projects-container
     margin: 0
     padding: 0
     list-style-type: none
-    overflow: hidden
-
-    a
-      &:hover
-        text-decoration: none
-      
-    .down-arrow
-      margin: 0
       
   .deleted-project
     background-color: #e5e5e5
@@ -39,12 +21,6 @@ deleted-project-avatar-size = 32px
     overflow: hidden
     padding: 12px
     position: relative
-    transition: 0.1s all
-    width: 32%
-    @media (max-width: largeViewport)
-      width: 48%
-    @media (max-width: mediumSmallViewport)
-      width: 100%
     
     &:hover
       .button
