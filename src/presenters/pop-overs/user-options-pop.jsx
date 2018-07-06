@@ -118,7 +118,7 @@ export default function UserOptionsPopContainer(props) {
               <span className="down-arrow icon"/>
             </button>
             {userOptionsPopVisible && <UserOptionsPop {...props} toggleUserOptionsPop={toggleUserOptionsPop} toggleCreateTeamPop={() => { toggleUserOptionsPop(); toggleCreateTeamPop(); }}/>}
-            {createTeamPopVisible && <CreateTeamPop api={api}  />}
+            {createTeamPopVisible && <CreateTeamPop api={api} toggleUserOptionsPop={() => {  toggleCreateTeamPop(); toggleUserOptionsPop(); }} />}
           </div>
         )}
       </PopoverContainer>

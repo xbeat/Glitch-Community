@@ -5,7 +5,6 @@ import _ from 'lodash'
 
 
 // TODO
-// needs api
 // has to handle team name taken error case // error styles
 
 class CreateTeamPop extends React.Component {
@@ -33,6 +32,8 @@ class CreateTeamPop extends React.Component {
   }
 
   handleSubmit(event) {
+    // this.props.api
+    // 
     alert('A team url and name was submitted: ' + this.state.teamUrl + ' ' + this.state.teamName );
     event.preventDefault();
   }
@@ -41,7 +42,7 @@ class CreateTeamPop extends React.Component {
   render() {
     return (
       <dialog className="pop-over create-team-pop">
-        <section className="pop-over-info clickable-label">
+        <section className="pop-over-info clickable-label" onClick={() => this.props.toggleUserOptionsPop()}>
           <div className="back icon">
             <div className="left-arrow icon" />
           </div>
@@ -77,8 +78,6 @@ class CreateTeamPop extends React.Component {
           </button>
         </form>
 
-
-
         </section>
         <section className="pop-over-info">
           <p className="info-description">
@@ -91,8 +90,9 @@ class CreateTeamPop extends React.Component {
 }
 
 
-// CreateTeamPop.propTypes = {
-//   api: PropTypes.func.isRequired,
-// };
+CreateTeamPop.propTypes = {
+  api: PropTypes.func.isRequired,
+  toggleUserOptionsPop: PropTypes.func.isRequired,
+};
 
 export default CreateTeamPop;
