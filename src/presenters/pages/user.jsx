@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Project from '../../models/project';
 import Observable from 'o_0';
 
-import ProjectModel from '../../models/project';
+import ProjectModel, {getAvatarUrl} from '../../models/project';
 import UserModel, {getAvatarStyle, getProfileStyle} from '../../models/user';
 
 import {DataLoader} from '../includes/loader.jsx';
@@ -326,8 +326,12 @@ class DeletedProjects extends React.Component {
             {({data}) => (
               <ul className="deleted-projects-container">
                 {data.map(({id, domain}) => (
-                  <li key={id} className="deleted-project">
-                    <div className="deleted-project-name">{domain}</div>
+                  <li key={id}>
+                    <button className="button-unstyled deleted-project">
+                      <img className="avatar" src={getAvatarUrl(id)} alt=""/>
+                      <div className="deleted-project-name">{domain}</div>
+                      <div className="button button-small">Undelete</div>
+                    </button>
                   </li>
                 ))}
               </ul>

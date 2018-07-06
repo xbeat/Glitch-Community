@@ -263,5 +263,9 @@ Project.getSearchResults = function(application, query) {
 
 Project._cache = cache;
 
+export function getAvatarUrl(id) {
+  return `${CDN_URL}/project-avatar/${id}.png`;
+}
+
 // Circular dependencies must go below module.exports
 import User from './user';
