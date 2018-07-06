@@ -73,7 +73,7 @@ class CreateTeamPop extends React.Component {
             <span className="emoji herb" />
           </div>
         </section>
-        
+
         <section className="pop-over-info">
           <p className="info-description">
             Showcase your team's projects and manage project members
