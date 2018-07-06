@@ -304,6 +304,16 @@ export function OldUserPage(application, userLoginOrId) {
   return LayoutPresenter(application, content);
 }
 
+const DeletedProject = ({id, domain}) => (
+  <button className="button-unstyled" onClick={() => console.log(id)}>
+    <div className="deleted-project">
+      <img className="avatar" src={getAvatarUrl(id)} alt=""/>
+      <div className="deleted-project-name">{domain}</div>
+      <div className="button button-small">Undelete</div>
+    </div>
+  </button>
+);
+
 class DeletedProjects extends React.Component {
   constructor(props) {
     super(props);
@@ -327,13 +337,7 @@ class DeletedProjects extends React.Component {
               <ul className="deleted-projects-container">
                 {data.map(({id, domain}) => (
                   <li key={id} className="deleted-project-container">
-                    <button className="button-unstyled">
-                      <div className="deleted-project">
-                        <img className="avatar" src={getAvatarUrl(id)} alt=""/>
-                        <div className="deleted-project-name">{domain}</div>
-                        <div className="button button-small">Undelete</div>
-                      </div>
-                    </button>
+                    <DeletedProject id={id} domain={domain}/>
                   </li>
                 ))}
               </ul>
