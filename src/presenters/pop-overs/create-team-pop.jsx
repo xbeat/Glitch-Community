@@ -36,10 +36,16 @@ class CreateTeamPop extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ isLoading: true })
-    console.log('A team url and name was submitted: ' + this.state.teamUrl + ' ' + this.state.teamName );
     this.props.api().post(('teams'), {
       name: this.state.teamName,
       url: this.state.teamUrl,
+      hasAvatarImage: false,
+      coverColor: '',
+      location: '',
+      description: '',
+      backgroundColor: '',
+      hasCoverImage: false,
+      isVerified: false,
     })
     .then (response => {
       // blocked by https://www.notion.so/glitch/possible-API-bug-Database-error-when-POSTing-to-teams-to-create-new-team-e3628f4c503d497a804e35f1bf3934a7
