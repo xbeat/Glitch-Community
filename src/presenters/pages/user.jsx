@@ -522,7 +522,16 @@ class UserPageEditor extends React.Component {
   
   async undeleteProject(id, domain) {
     await this.props.api.post(`/projects/${id}/undelete`);
-    this.props.localAddItem('projects', {id, domain});
+    if (domain.endsWith('-deleted')) {
+      try {
+        await this.props.api.patch(`/projects/${id}`, {
+          domain: domain.replace(/-deleted$/, ''),
+        });
+      } catch (e) {
+        console.warn(e);
+      }
+    }
+    this.props.localAddItem('projects', {id});
   }
   
   render() {
