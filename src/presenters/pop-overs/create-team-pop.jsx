@@ -68,7 +68,7 @@ class CreateTeamPop extends React.Component {
             placeholder="Your Team Name" 
             defaultValue="Team Rocket"
           />
-          <p className="action-description">
+          <p className="action-description team-url-preview">
             /@{this.state.teamUrl}
           </p>          
           <button type="submit" className="button-small has-emoji">
@@ -81,8 +81,8 @@ class CreateTeamPop extends React.Component {
 
         </section>
         <section className="pop-over-info">
-          <p className="info-description assurance-descripton">
-            p.s. You can rename later
+          <p className="info-description">
+            You can change this later
           </p>
         </section>
       </dialog>
