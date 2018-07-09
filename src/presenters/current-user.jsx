@@ -1,4 +1,14 @@
-//This should probably get refactored as a context receiver
+import React from 'react';
+
+import Observed from './includes/observed.jsx';
+
+const CurrentUserContext = React.createContext('currentUser');
+
+export const CurrentUserProvider = ({model, children}) => (
+  <CurrentUserContext.Provider value={{}}>
+    {children}
+  </CurrentUserContext.Provider>
+)
 
 export function normalizeUser(user, currentUser) {
   return user.id === currentUser.id ? currentUser : user;

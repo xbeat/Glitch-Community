@@ -57,12 +57,7 @@ NameAndLogin.propTypes = {
 };
 
 const UserPage = ({
-  user: { //has science gone too far?
-    id, login, name, description, thanksCount,
-    avatarUrl, color,
-    hasCoverImage, coverColor,
-    pins, projects, deletedProjects,
-  },
+  user,
   isAuthorized,
   updateDescription,
   updateName, updateLogin,
@@ -77,24 +72,24 @@ const UserPage = ({
   <main className="profile-page user-page">
     <section>
       <ProfileContainer
-        avatarStyle={getAvatarStyle({avatarUrl, color})}
+        avatarStyle={getAvatarStyle({...user})}
         coverStyle={getProfileStyle({...user, cache: _cacheCover})}
-        coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
+        coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={user.hasCoverImage ? clearCover : null}/>}
         avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }
       >
         <NameAndLogin {...user} {...{isAuthorized, updateName, updateLogin}}/>
-        <Thanks count={thanksCount}/>
-        <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
+        <Thanks count={user.thanksCount}/>
+        <AuthDescription authorized={isAuthorized} description={user.description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
     </section>
     <EntityPageProjects
-      projects={projects} pins={pins} isAuthorized={isAuthorized}
+      projects={user.projects} pins={user.pins} isAuthorized={isAuthorized}
       addPin={addPin} removePin={removePin}
       projectOptions={{leaveProject, deleteProject}}
       getProjects={getProjects}
       currentUser={user}
     />
-    {isAuthorized && <DeletedProjects get={getDeletedProjects} undelete={undeleteProject} projects={projects} deletedProjects={deletedProjects}/>}
+    {isAuthorized && <DeletedProjects get={getDeletedProjects} undelete={undeleteProject} projects={user.projects} deletedProjects={user.deletedProjects}/>}
   </main>
 );
 UserPage.propTypes = {
