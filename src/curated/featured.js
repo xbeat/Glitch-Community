@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Make Your Own NASA Logo',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fnasa.jpg?1530790398869",
-    link: 'https://glitch.com/~nasa'
+    title: 'Play Music With Your Face',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fface-the-music.jpg?1531135109987",
+    link: 'https://glitch.com/~face-the-music'
   }
   , {
-    title: 'Custom Third-party DNT Embeds',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fdo-not-track.jpg?1530790399023",
-    link: 'https://glitch.com/~do-not-track-iframe-wrapper'
+    title: 'Pew Pew Pew! Galaxeroids!',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fgalaxeroids.jpg?1531135110191",
+    link: 'https://glitch.com/~galaxeroids'
   }
   , {
-    title: 'Pixelatize Your Images',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpixelatize.jpg?1530790398712",
-    link: 'https://glitch.com/~pixelatize'
+    title: 'Make Labels for Hardware Shops',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fshop-labels.jpg?1531135109784",
+    link: 'https://glitch.com/~shop-labels'
   }  
 ];
