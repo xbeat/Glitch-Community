@@ -8,6 +8,10 @@ import ProjectsList from './projects-list.jsx';
 
 /* globals Set */
 
+function listToObject(list, val) {
+  return list.reduce((data, key) => ({[key]: val, ...data}), {});
+}
+
 const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
 const EntityPageProjects = ({projects, pins, isAuthorized, isLoaded, addPin, removePin, projectOptions}) => {
@@ -65,19 +69,15 @@ export default class EntityPageProjectsLoader extends React.Component {
     this.state = {};
   }
   
-  clearProjects(projects) {
-    this.setState(projects.reduce((data, id) => ({[id]: null, ...data}), {}));
-  }
-  
   ensureProjects(projects) {
     const ids = projects.map(({id}) => id);
-    const discardedProjects = Object.keys(this.state).filter(id => !ids.includes(id));
+    const discardedProjects = Object.keys(this.state).filter(id => this.state[id] && !ids.includes(id));
     if (discardedProjects.length) {
-      this.clearProjects(discardedProjects);
+      this.setState(listToObject(discardedProjects, undefined));
     }
-    const unloadedProjects = ids.filter(id => !(id in this.state));
+    const unloadedProjects = ids.filter(id => this.state[id] === undefined);
     if (unloadedProjects.length) {
-      this.clearProjects(unloadedProjects);
+      this.setState(listToObject(unloadedProjects, null));
       chunk(unloadedProjects, 50).forEach(chunk => {
         this.props.getProjects(chunk).then(projects => {
           this.setState(keyBy(projects, ({id}) => id));
