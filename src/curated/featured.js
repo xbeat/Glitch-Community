@@ -23,7 +23,7 @@ export default [
     link: 'https://glitch.com/~galaxeroids'
   }
   , {
-    title: 'Make Labels for Hardware Shops',
+    title: 'Get Organized: Make Labels',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fshop-labels.jpg?1531135109784",
     link: 'https://glitch.com/~shop-labels'
   }  
