@@ -263,7 +263,6 @@ function UserPagePresenter(application, loginOrId, get) {
 async function getUserById(api, id) {
   const {data} = await api.get(`users/${id}`);
   console.log(data);
-  //return UserModel(data)/*.update(data)*/.asProps();
   return data;
 }
 
