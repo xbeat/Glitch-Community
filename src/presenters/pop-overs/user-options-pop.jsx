@@ -18,13 +18,17 @@ Team.propTypes = {
   teamAvatarUrl: PropTypes.string.isRequired,
 };
 
+
+
+// TODO
+// have to pass anons down, just !hasTeams is inaccurate for showing the sign in to create team state
 const TeamList = ({teams, toggleCreateTeamPop}) => {
   const hasTeams = teams && teams.length;
   if(!hasTeams) {
     return (
       <section className="pop-over-actions">
         <p className="description action-description">
-          Sign in to create a team
+          ↑ Sign in to create a team
         </p>
         <button className="button button-small has-emoji button-tertiary" disabled={true}>
           <span>Create Team </span>
