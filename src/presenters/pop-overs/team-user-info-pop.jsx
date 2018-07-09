@@ -49,21 +49,24 @@ UserActions.propTypes = {
   // update UI, user props
   // I can unadmin myself: (test this case, UI should adapt)
 const AdminActions = ({user, userIsTeamAdmin}) => {
-  const removeAdmin = () => {
+  const removeAdminStatus = () => {
+    console.log ('addAdminStatus clicked', user)
     // PATCH /teams/<teamId>/users/<userId>
+    // https://www.notion.so/glitch/teams-teamId-users-userId-29d069b57861494082b0404fc2fb16a7
   }
 
-  const addAdmin = () => {
+  const addAdminStatus = () => {
+    console.log ('addAdminStatus clicked', user)
   }
   
   return (
     <section className="pop-over-actions admin-actions">
       { userIsTeamAdmin && 
-        <button className="button-small button-tertiary" onClick={removeAdmin}>
+        <button className="button-small button-tertiary" onClick={removeAdminStatus}>
           <span>Remove Admin Status</span>
         </button>
       ||
-        <button className="button-small button-tertiary" onClick={addAdmin}>
+        <button className="button-small button-tertiary" onClick={addAdminStatus}>
           <span>Make an Admin</span>
         </button>
       }
