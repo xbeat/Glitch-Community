@@ -71,10 +71,12 @@ export default class EntityPageProjectsLoader extends React.Component {
   
   ensureProjects(projects) {
     const ids = projects.map(({id}) => id);
+    
     const discardedProjects = Object.keys(this.state).filter(id => this.state[id] && !ids.includes(id));
     if (discardedProjects.length) {
       this.setState(listToObject(discardedProjects, undefined));
     }
+    
     const unloadedProjects = ids.filter(id => this.state[id] === undefined);
     if (unloadedProjects.length) {
       this.setState(listToObject(unloadedProjects, null));
