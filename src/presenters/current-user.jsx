@@ -1,18 +1,21 @@
 import React from 'react';
 
+import Observable from 'o_0';
 import Observed from './includes/observed.jsx';
 
-const CurrentUserContext = React.createContext('currentUser');
+const {Provider, Consumer} = React.createContext({});
 
-export const CurrentUserProvider = ({model, children}) => (
-  <Observed propsObservable={() => model ? model.asProps() : {}} component={user => (
-    <CurrentUserContext.Provider value={user}>
-      {children}
-    </CurrentUserContext.Provider>
-  )}/>
+export const CurrentUserConsumer = ({children}) => (
+  <Consumer>
+    {model => (
+      <Observed propsObservable={Observable(() => model.asProps())} component={user => (
+        children(user)
+      )}/>
+    )}
+  </Consumer>
 );
 
-export const CurrentUserConsumer = CurrentUserContext.Consumer;
+export const CurrentUserProvider = Provider;
 
 export function normalizeUser(user, currentUser) {
   return user.id === currentUser.id ? currentUser : user;

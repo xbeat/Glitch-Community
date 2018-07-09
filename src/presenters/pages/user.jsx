@@ -10,6 +10,7 @@ import * as assets from '../../utils/assets';
 
 import {DataLoader} from '../includes/loader.jsx';
 import Uploader from '../includes/uploader.jsx';
+import {CurrentUserProvider} from '../current-user.jsx';
 
 import {AuthDescription} from '../includes/description-field.jsx';
 import EditableField from '../includes/editable-field.jsx';
@@ -212,6 +213,7 @@ class UserPageEditor extends React.Component {
     const {
       user,
       currentUserId,
+      currentUserModel,
       updateFields,
       addItem,
       removeItem,
@@ -231,7 +233,11 @@ class UserPageEditor extends React.Component {
       deleteProject: id => this.deleteProject(id),
       undeleteProject: (id, domain) => this.undeleteProject(id, domain),
     };
-    return <UserPage user={user} {...this.state} {...funcs} {...props}/>;
+    return (
+      <CurrentUserProvider value={currentUserModel}>
+        <UserPage user={user} {...this.state} {...funcs} {...props}/>
+      </CurrentUserProvider>
+    );
   }
 }
 

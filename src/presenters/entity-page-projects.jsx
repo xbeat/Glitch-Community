@@ -4,7 +4,7 @@ import {chunk, keyBy, partition} from 'lodash';
 
 import Loader from './includes/loader.jsx';
 import ProjectsList from './projects-list.jsx';
-import {CurrentUserProvider, normalizeProjects} from './current-user.jsx';
+import {CurrentUserConsumer, normalizeProjects} from './current-user.jsx';
 
 
 /* globals Set */
@@ -101,7 +101,7 @@ export default class EntityPageProjectsLoader extends React.Component {
     const {projects, ...props} = this.props;
     const loadedProjects = projects.map(project => this.state[project.id]).filter(project => project);
     return (
-      <CurrentUserProvider>
+      <CurrentUserConsumer>
         {currentUser => (
           <EntityPageProjects
             projects={normalizeProjects(loadedProjects, currentUser)}
@@ -109,7 +109,7 @@ export default class EntityPageProjectsLoader extends React.Component {
             {...props}
           />
         )}
-      </CurrentUserProvider>
+      </CurrentUserConsumer>
     );
   }
 }
