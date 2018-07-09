@@ -41,7 +41,7 @@ const CreateTeam = (toggleCreateTeamPop, userIsAnon) => {
   } else {
     console.log ('💣', toggleCreateTeamPop)
     return (
-      <div onClick={() => toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
+      <div onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
         <span>Create Team </span>
         <span className="emoji herb"></span>
       </div>
