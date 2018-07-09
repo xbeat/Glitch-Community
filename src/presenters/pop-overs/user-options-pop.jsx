@@ -25,7 +25,7 @@ TeamItem.propTypes = {
 // Create Team button
 
 const CreateTeam = (toggleCreateTeamPop, userIsAnon) => {
-  if (userIsAnon) {
+  if (userIsAnon === true) {
     return (
       <React.Fragment>
         <p className="description action-description">
@@ -39,8 +39,9 @@ const CreateTeam = (toggleCreateTeamPop, userIsAnon) => {
       </React.Fragment>
     )
   } else {
+    console.log ('💣', toggleCreateTeamPop)
     return (
-      <div onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
+      <div onClick={() => toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
         <span>Create Team </span>
         <span className="emoji herb"></span>
       </div>
@@ -50,7 +51,7 @@ const CreateTeam = (toggleCreateTeamPop, userIsAnon) => {
 
 CreateTeam.propTypes = {
   toggleCreateTeamPop: PropTypes.func.isRequired,
-  userIsAnon: PropTypes.bool,
+  userIsAnon: PropTypes.bool.isRequired,
 };
 
 
@@ -64,7 +65,7 @@ const TeamList = ({teams, toggleCreateTeamPop, userIsAnon}) => {
   const hasTeams = teams && teams.length;
   return (
     <section className="pop-over-actions">
-      <CreateTeam toggleCreateTeamPop={toggleCreateTeamPop} />
+      <CreateTeam toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
       {teams.map((team) => (
         <TeamItem key={team.name} {...team}/>
       ))}
@@ -77,7 +78,7 @@ TeamList.propTypes = {
     name: PropTypes.string.isRequired,
   })),
   toggleCreateTeamPop: PropTypes.func.isRequired,
-  userIsAnon: PropTypes.bool,
+  userIsAnon: PropTypes.bool.isRequired,
 };
 
 
@@ -137,7 +138,7 @@ UserOptionsPop.propTypes = {
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
-  userIsAnon: PropTypes.bool,
+  userIsAnon: PropTypes.bool.isRequired,
 };
 
 
