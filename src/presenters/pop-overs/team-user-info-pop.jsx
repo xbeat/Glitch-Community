@@ -44,8 +44,13 @@ UserActions.propTypes = {
 
 // Admin Actions Section
 
+// TODO add/remove admin 
+  // API
+  // update UI, user props
+  // I can unadmin myself: (test this case, UI should adapt)
 const AdminActions = ({user, userIsTeamAdmin}) => {
   const removeAdmin = () => {
+    // PATCH /teams/<teamId>/users/<userId>
   }
 
   const addAdmin = () => {
