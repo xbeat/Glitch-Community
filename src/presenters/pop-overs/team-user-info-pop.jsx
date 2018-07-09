@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import Thanks from '../includes/thanks.jsx';
 
+
+// Remove from Team 👋
+
 const RemoveFromTeam = ({action}) => (
   <section className="pop-over-actions danger-zone">
     <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={action}>
@@ -11,12 +14,16 @@ const RemoveFromTeam = ({action}) => (
     </button>
   </section>
 );
+
 RemoveFromTeam.propTypes = {
   action: PropTypes.func.isRequired,
 };
 
+
+// User Actions Section
+
 const UserActions = ({user}) => (
-  <section className="pop-over-actions">
+  <section className="pop-over-actions user-actions">
     <a href={user.userLink}>
       <button className="button-small has-emoji button-tertiary">
         <span>Profile </span>
@@ -25,6 +32,7 @@ const UserActions = ({user}) => (
     </a>
   </section>
 );
+
 UserActions.propTypes = {
   user: PropTypes.shape({
     userLink: PropTypes.string.isRequired,
@@ -33,19 +41,31 @@ UserActions.propTypes = {
   }).isRequired,
 };
 
-const AdminActions = ({user, userIsTeamAdmin}) => (
-  <section className="pop-over-actions">
-    { userIsTeamAdmin && 
-      <button className="button-small has-emoji button-tertiary">
-        <span>Remove Admin Status</span>
-      </button>
-    ||
-      <button className="button-small has-emoji button-tertiary">
-        <span>Make an Admin</span>
-      </button>
-    }
-  </section>
-);
+
+// Admin Actions Section
+
+const AdminActions = ({user, userIsTeamAdmin}) => {
+  const removeAdmin = () => {
+  }
+
+  const addAdmin = () => {
+  }
+  
+  return (
+    <section className="pop-over-actions admin-actions">
+      { userIsTeamAdmin && 
+        <button className="button-small button-tertiary" onClick={removeAdmin}>
+          <span>Remove Admin Status</span>
+        </button>
+      ||
+        <button className="button-small button-tertiary" onClick={addAdmin}>
+          <span>Make an Admin</span>
+        </button>
+      }
+    </section>
+  )
+};
+
 AdminActions.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -54,11 +74,17 @@ AdminActions.propTypes = {
   userIsTeamAdmin: PropTypes.bool.isRequired,
 };
 
+
+// Thanks 💖
+
 const ThanksCount = ({count}) => (
   <section className="pop-over-info">
     <Thanks count={count} />
   </section>
 );
+
+
+// Team User Info
 
 const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, userIsTeamAdmin, togglePopover}) => {
   const removeFromTeamAction = () => {
@@ -89,6 +115,7 @@ const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, userIsT
     </dialog>
   );
 };
+
 TeamUserInfoPop.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
@@ -102,6 +129,7 @@ TeamUserInfoPop.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
 };
+
 TeamUserInfoPop.defaultProps = {
   user: {
     isOnTeam: false

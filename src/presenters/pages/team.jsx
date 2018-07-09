@@ -188,9 +188,7 @@ const ParseTeam = (data) => {
   data.adminUsers = adminUsers.map(user => {
     return user.id
   })
-  console.log (data)
   return data
-  // application.saveTeam(data)
 }
 
 export default function(application, id, name) {
@@ -203,7 +201,9 @@ export default function(application, id, name) {
     get: () => 
       application.api().get(`teams/${id}`)
       .then(({data}) => (
-        data ? ParseTeam(data).TeamModel(data).update(data).asProps() : null
+        data ? 
+          TeamModel(ParseTeam(data)).update(data).asProps() 
+        : null
     )),
     searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
     getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
