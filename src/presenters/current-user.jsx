@@ -5,10 +5,14 @@ import Observed from './includes/observed.jsx';
 const CurrentUserContext = React.createContext('currentUser');
 
 export const CurrentUserProvider = ({model, children}) => (
-  <CurrentUserContext.Provider value={{}}>
-    {children}
-  </CurrentUserContext.Provider>
-)
+  <Observed propsObservable={() => model ? model.asProps() : {}} component={user => (
+    <CurrentUserContext.Provider value={user}>
+      {children}
+    </CurrentUserContext.Provider>
+  )}/>
+);
+
+export const CurrentUserConsumer = CurrentUserContext.Consumer;
 
 export function normalizeUser(user, currentUser) {
   return user.id === currentUser.id ? currentUser : user;
