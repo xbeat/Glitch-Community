@@ -107,7 +107,7 @@ UserPage.propTypes = {
     hasCoverImage: PropTypes.bool.isRequired,
     avatarUrl: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
-    coverColor: PropTypes.string.isRequired,
+    coverColor: PropTypes.string,
   }).isRequired,
   uploadAvatar: PropTypes.func.isRequired,
   uploadCover: PropTypes.func.isRequired,
@@ -234,7 +234,7 @@ class UserPageEditor extends React.Component {
       undeleteProject: (id, domain) => this.undeleteProject(id, domain),
     };
     return (
-      <CurrentUserProvider value={currentUserModel}>
+      <CurrentUserProvider model={currentUserModel}>
         <UserPage user={user} {...this.state} {...funcs} {...props}/>
       </CurrentUserProvider>
     );
@@ -276,7 +276,6 @@ function UserPagePresenter(application, loginOrId, get) {
 
 async function getUserById(api, id) {
   const {data} = await api.get(`users/${id}`);
-  console.log(data);
   return data;
 }
 
