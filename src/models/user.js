@@ -261,6 +261,7 @@ export default User = function(I, self) {
         initialDescription: self.initialDescription(),
         hasCoverImage: self.hasCoverImage(),
         id: self.id(),
+        isAnon: self.isAnon(),
         login: self.login(),
         name: self.name(),
         style: self.style(),

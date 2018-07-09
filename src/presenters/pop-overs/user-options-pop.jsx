@@ -4,9 +4,9 @@ import PopoverContainer from './popover-container.jsx';
 import CreateTeamPop from './create-team-pop.jsx'; 
 
 
+// Individual Team Item
 
-
-const Team = ({url, name, teamAvatarUrl}) => (
+const TeamItem = ({url, name, teamAvatarUrl}) => (
   <a className="button-link" href={url}>
     <div className="button button-small has-emoji button-tertiary">
       <span>{name} </span>
@@ -15,13 +15,16 @@ const Team = ({url, name, teamAvatarUrl}) => (
   </a>
 );
 
-Team.propTypes = {
+TeamItem.propTypes = {
   url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   teamAvatarUrl: PropTypes.string.isRequired,
 };
 
-const CreateTeamButton = (toggleCreateTeamPop) => {
+
+// Create Team button
+
+const CreateTeam = (toggleCreateTeamPop, userIsAnon) => {
   if (userIsAnon) {
     return (
       <React.Fragment>
@@ -35,42 +38,36 @@ const CreateTeamButton = (toggleCreateTeamPop) => {
         </button>
       </React.Fragment>
     )
-  }
-  
-  return (
-    <div onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
-      <span>Create Team </span>
-      <span className="emoji herb"></span>
-    </div>
-  )
-}
-
-// TODO
-// have to pass is anon down, just !hasTeams is inaccurate for showing the sign in to create team state
-const TeamList = ({teams, toggleCreateTeamPop}) => {
-  const hasTeams = teams && teams.length;
-
-  //anons, anons w teams, signed in w no teams, signed in w teams
-  
-  
-  if(!hasTeams) {
+  } else {
     return (
-      <section className="pop-over-actions">
-      </section>
-    )
-  }
-  
-  return (
-    <section className="pop-over-actions">
       <div onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
         <span>Create Team </span>
         <span className="emoji herb"></span>
       </div>
+    )
+  }
+}
 
+CreateTeam.propTypes = {
+  toggleCreateTeamPop: PropTypes.func.isRequired,
+  userIsAnon: PropTypes.bool,
+};
+
+
+// Team List
+
+// TODO
+// have to pass is userIsAnon down, 
+// test states: anons, anons w teams, signed in w no teams, signed in w teams
+
+const TeamList = ({teams, toggleCreateTeamPop, userIsAnon}) => {
+  const hasTeams = teams && teams.length;
+  return (
+    <section className="pop-over-actions">
+      <CreateTeam toggleCreateTeamPop={toggleCreateTeamPop} />
       {teams.map((team) => (
-        <Team key={team.name} {...team}/>
+        <TeamItem key={team.name} {...team}/>
       ))}
-
     </section>
   );
 };
@@ -79,11 +76,14 @@ TeamList.propTypes = {
   teams: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
   })),
+  toggleCreateTeamPop: PropTypes.func.isRequired,
+  userIsAnon: PropTypes.bool,
 };
 
 
+// User Options Pop 
 
-const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay, toggleCreateTeamPop}) => {
+const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay, toggleCreateTeamPop, userIsAnon}) => {
   const clickNewStuff = (event) => {
     toggleUserOptionsPop();
     showNewStuffOverlay();
@@ -109,7 +109,7 @@ const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle,
         </a>
       </section>
 
-      <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop}/>
+      <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon}/>
 
       <section className="pop-over-info section-has-tertiary-buttons">      
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
@@ -137,6 +137,7 @@ UserOptionsPop.propTypes = {
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
+  userIsAnon: PropTypes.bool,
 };
 
 

@@ -55,6 +55,7 @@ const UserOptionsPopWrapper = ({user, overlayNewStuffVisible, api}) => {
       return overlayNewStuffVisible(true);
     },
     api: api,
+    userIsAnon: user.isAnon,
   };
 
   return <UserOptionsPop {...props}/>;
