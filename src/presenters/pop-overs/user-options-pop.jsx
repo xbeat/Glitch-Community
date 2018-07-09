@@ -64,7 +64,12 @@ CreateTeam.propTypes = {
 const TeamList = ({teams, toggleCreateTeamPop, userIsAnon}) => {
   const hasTeams = teams && teams.length;
   return (
-    <section className="pop-over-actions">
+    <section className="pop-over-actions">      
+
+      <div onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
+        <span>test button </span>
+      </div>
+      
       <CreateTeam toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
       {teams.map((team) => (
         <TeamItem key={team.name} {...team}/>
