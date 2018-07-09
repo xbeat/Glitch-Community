@@ -11,13 +11,38 @@ export default class EditableField extends React.Component {
     };
     
     this.onChange = this.onChange.bind(this);
-    this.update = debounce(this.update.bind(this), 500);
+    if (!this.props.fieldOnlyUpdatesOnSubmit) {
+      this.update = debounce(this.update.bind(this), 500);
+    }
   }
   
+  componentDidMount() {
+    if (this.props.autoFocus) {
+      this.refs.input.select()
+    }
+  }
+  
+  componentDidUpdate(prevProps) {
+    if (prevProps.submitError !== this.props.submitError) {
+      this.setState({
+        error: this.props.submitError
+      })
+      // focus the field if an error has been created
+      if (this.props.submitError.length) {
+        this.refs.input.select()
+      }
+    }
+  }
+
   update(value){
+    if (this.props.fieldOnlyUpdatesOnSubmit) {
+      this.props.update(value)
+    }
+    else {
     this.props.update(value).then(
       this.handleSuccess.bind(this),
       this.handleFailure.bind(this, value));
+    }
   }
   
   handleSuccess() {
@@ -26,15 +51,16 @@ export default class EditableField extends React.Component {
   
   handleFailure(data, message) {
     // The update failed; we can ignore this if our state has already moved on
+    console.log('data', data, message)
     if(data !== this.state.value.trim()){
       return;
     }
-    
+
     // Ah, we haven't moved on, and we know the last edit failed.
     // Ok, display an error.
-    this.setState({error: message||""});
+    this.setState({error: message || ""});
   }
-  
+
   onChange(evt) {
     let value = evt.currentTarget.value;
     this.setState((lastState) => {
@@ -43,17 +69,19 @@ export default class EditableField extends React.Component {
       }
       return {value};
     });
-  }  
+  }
   render() {
     const classes = ["content-editable", this.state.error ? "error" : ""].join(" ");
     const inputProps = {
+      ref: "input",
       className: classes,
-      value:this.state.value,
+      value: this.state.value,
       onChange: this.onChange,
       spellCheck: false,
       autoComplete: "off",
       placeholder: this.props.placeholder,
       id: uniqueId("editable-field-"),
+      autoFocus: this.props.autoFocus,
     };
     
     const maybeErrorIcon = !!this.state.error && (
@@ -87,4 +115,7 @@ EditableField.propTypes = {
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
   prefix: PropTypes.string,
+  autoFocus: PropTypes.bool,
+  fieldOnlyUpdatesOnSubmit: PropTypes.bool,
+  submitError: PropTypes.string,
 };

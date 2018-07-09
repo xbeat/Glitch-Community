@@ -20,9 +20,9 @@ Team.propTypes = {
 
 const TeamList = ({teams, toggleCreateTeamPop}) => {
   const hasTeams = teams && teams.length;
-  if(!hasTeams) {
-    return null;
-  }
+  // if(!hasTeams) {
+  //   return null;
+  // }
   
   return (
     <section className="pop-over-actions">
@@ -31,7 +31,7 @@ const TeamList = ({teams, toggleCreateTeamPop}) => {
         <span className="emoji herb"></span>
       </div>
 
-      {teams.map((team) => (
+      {teams.length && teams.map((team) => (
         <Team key={team.name} {...team}/>
       ))}
 

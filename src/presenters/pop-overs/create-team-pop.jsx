@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash'
 import Loader from '../includes/loader.jsx';
-
-
-// TODO
-// has to handle team name taken error case // error styles
+import EditableField from '../includes/editable-field.jsx';
 
 class CreateTeamPop extends React.Component {
   constructor(props) {
@@ -15,21 +12,18 @@ class CreateTeamPop extends React.Component {
       teamName: 'Team Rocket',
       teamUrl: 'team-rocket',
       isLoading: false,
-      hasError: false
+      errorMessage: ''
     };
     
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-   this.refs.input.select();
-  }
-
-  handleChange(event) {
+  handleChange(newValue) {
     this.setState({
-      teamName: event.target.value, 
-      teamUrl: _.kebabCase(event.target.value)
+      teamName: newValue, 
+      teamUrl: _.kebabCase(newValue),
+      errorMessage: "",
     });
   }
 
@@ -51,21 +45,16 @@ class CreateTeamPop extends React.Component {
       this.setState({ isLoading: false })
       window.location = `/@${response.data.url}`
     }).catch (error => {
-      console.error(error)
+      let statusCode = error.response.data.status
+      let message = error.response.data.message
+      console.error(error, statusCode, message)
       this.setState({
         isLoading: false,
-        hasError: true,
+        errorMessage: message,
       })
-      // show error message
     })
   }
 
-  // TODO 
-  // replace input with <EditableField value={name||""} update={updateName} placeholder='Display name?'/>
-  // pass in an update func to the field that updates my url state on field updates, clears error state on update too (assume innocence during retype)
-  // for error handlingz
-  // https://glitch.com/edit/#!/community-pirijan?path=src/presenters/includes/editable-field.jsx:9:30
-  // if error strings must always be passed from the server , then update the error strings in the api for friendliness
   render() {
     return (
       <dialog className="pop-over create-team-pop">
@@ -87,14 +76,13 @@ class CreateTeamPop extends React.Component {
         <section className="pop-over-actions">
           
         <form onSubmit={this.handleSubmit}>
-          <input 
-            ref="input"
-            className="pop-over-input team-name-input" 
-            onChange={this.handleChange} 
-            type="text" 
-            autoFocus 
-            placeholder="Your Team Name" 
-            defaultValue="Team Rocket"
+          <EditableField 
+            value="Team Rocket" 
+            update={this.handleChange} 
+            placeholder='Your Team Name' 
+            autoFocus={true} 
+            fieldOnlyUpdatesOnSubmit={true}
+            submitError={this.state.errorMessage}
           />
           <p className="action-description team-url-preview">
             /@{this.state.teamUrl}
