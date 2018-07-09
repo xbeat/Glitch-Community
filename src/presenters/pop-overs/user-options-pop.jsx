@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 import CreateTeamPop from './create-team-pop.jsx'; 
 
+
+
+
 const Team = ({url, name, teamAvatarUrl}) => (
   <a className="button-link" href={url}>
     <div className="button button-small has-emoji button-tertiary">
@@ -18,22 +21,41 @@ Team.propTypes = {
   teamAvatarUrl: PropTypes.string.isRequired,
 };
 
-
-
-// TODO
-// have to pass anons down, just !hasTeams is inaccurate for showing the sign in to create team state
-const TeamList = ({teams, toggleCreateTeamPop}) => {
-  const hasTeams = teams && teams.length;
-  if(!hasTeams) {
+const CreateTeamButton = (toggleCreateTeamPop) => {
+  if (userIsAnon) {
     return (
-      <section className="pop-over-actions">
+      <React.Fragment>
         <p className="description action-description">
-          ↑ Sign in to create a team
+          <a href="#">Sign in</a> 
+          <span> to create a team</span>
         </p>
         <button className="button button-small has-emoji button-tertiary" disabled={true}>
           <span>Create Team </span>
           <span className="emoji herb"></span>
         </button>
+      </React.Fragment>
+    )
+  }
+  
+  return (
+    <div onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
+      <span>Create Team </span>
+      <span className="emoji herb"></span>
+    </div>
+  )
+}
+
+// TODO
+// have to pass is anon down, just !hasTeams is inaccurate for showing the sign in to create team state
+const TeamList = ({teams, toggleCreateTeamPop}) => {
+  const hasTeams = teams && teams.length;
+
+  //anons, anons w teams, signed in w no teams, signed in w teams
+  
+  
+  if(!hasTeams) {
+    return (
+      <section className="pop-over-actions">
       </section>
     )
   }
