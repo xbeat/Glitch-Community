@@ -4,6 +4,7 @@ import {chunk, keyBy, partition} from 'lodash';
 
 import Loader from './includes/loader.jsx';
 import ProjectsList from './projects-list.jsx';
+import {normalizeProjects} from './includes/normalize.jsx';
 
 
 /* globals Set */
@@ -99,7 +100,13 @@ export default class EntityPageProjectsLoader extends React.Component {
   render() {
     const {currentUser, projects, ...props} = this.props;
     const loadedProjects = projects.map(project => this.state[project.id]).filter(project => project);
-    return <EntityPageProjects projects={loadedProjects} isLoaded={loadedProjects.length === projects.length} {...props}/>;
+    return (
+      <EntityPageProjects
+        projects={normalizeProjects(loadedProjects, currentUser)}
+        isLoaded={loadedProjects.length === projects.length}
+        {...props}
+      />
+    );
   }
 }
 EntityPageProjectsLoader.propTypes = {

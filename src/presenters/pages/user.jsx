@@ -78,11 +78,11 @@ const UserPage = ({
     <section>
       <ProfileContainer
         avatarStyle={getAvatarStyle({avatarUrl, color})}
-        coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
+        coverStyle={getProfileStyle({...user, cache: _cacheCover})}
         coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
         avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }
       >
-        <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
+        <NameAndLogin {...user} {...{isAuthorized, updateName, updateLogin}}/>
         <Thanks count={thanksCount}/>
         <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
@@ -92,6 +92,7 @@ const UserPage = ({
       addPin={addPin} removePin={removePin}
       projectOptions={{leaveProject, deleteProject}}
       getProjects={getProjects}
+      currentUser={user}
     />
     {isAuthorized && <DeletedProjects get={getDeletedProjects} undelete={undeleteProject} projects={projects} deletedProjects={deletedProjects}/>}
   </main>
@@ -124,8 +125,9 @@ class UserPageEditor extends React.Component {
   }
   
   updateName(name) {
-    return this.props.updateFields({name}).catch(
-      ({response: {data: {message}}}) => Promise.reject(message)
+    return this.props.updateFields({name}).then(() => {
+      this.props.currentUserModel.name(name);
+    }, ({response: {data: {message}}}) => Promise.reject(message)
     );
   }
   
