@@ -5,7 +5,7 @@ import LayoutPresenter from '../layout';
 import Reactlet from "../reactlet";
 
 import ProjectModel from '../../models/project';
-import UserModel, {getAvatarStyle, getProfileStyle} from '../../models/user';
+import {getAvatarStyle, getProfileStyle} from '../../models/user';
 import * as assets from '../../utils/assets';
 
 import {DataLoader} from '../includes/loader.jsx';
@@ -104,8 +104,15 @@ UserPage.propTypes = {
     id: PropTypes.number.isRequired,
     thanksCount: PropTypes.number.isRequired,
     hasCoverImage: PropTypes.bool.isRequired,
+    avatarUrl: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    coverColor: PropTypes.string.isRequired,
   }).isRequired,
   uploadAvatar: PropTypes.func.isRequired,
+  uploadCover: PropTypes.func.isRequired,
+  clearCover: PropTypes.func.isRequired,
+  leaveProject: PropTypes.func.isRequired,
+  _cacheCover: PropTypes.number.isRequired,
 };
 
 class UserPageEditor extends React.Component {

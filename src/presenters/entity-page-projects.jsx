@@ -59,20 +59,27 @@ EntityPageProjects.propTypes = {
   projectOptions: PropTypes.object.isRequired,
 };
 
-//todo? adding a project will update props, may need a new request
 export default class EntityPageProjectsLoader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
   
+  clearProjects(projects) {
+    this.setState(projects.reduce((data, id) => ({[id]: null, ...data}), {}));
+  }
+  
   ensureProjects(projects) {
-    const unloadedProjects = projects.filter(({id}) => !(id in this.state));
+    const ids = projects.map(({id}) => id);
+    const discardedProjects = Object.keys(this.state).filter(id => !ids.includes(id));
+    if (discardedProjects.length) {
+      this.clearProjects(discardedProjects);
+    }
+    const unloadedProjects = ids.filter(id => !(id in this.state));
     if (unloadedProjects.length) {
-      this.setState(unloadedProjects.reduce((data, {id}) => ({[id]: null, ...data}), {}));
-      chunk(unloadedProjects, 50).forEach(projects => {
-        const ids = projects.map(({id}) => id);
-        this.props.getProjects(ids).then(projects => {
+      this.clearProjects(unloadedProjects);
+      chunk(unloadedProjects, 50).forEach(chunk => {
+        this.props.getProjects(chunk).then(projects => {
           this.setState(keyBy(projects, ({id}) => id));
         });
       });
