@@ -97,7 +97,7 @@ export default class EntityPageProjectsLoader extends React.Component {
   }
   
   render() {
-    const {projects, ...props} = this.props;
+    const {currentUser, projects, ...props} = this.props;
     const loadedProjects = projects.map(project => this.state[project.id]).filter(project => project);
     return <EntityPageProjects projects={loadedProjects} isLoaded={loadedProjects.length === projects.length} {...props}/>;
   }
@@ -105,4 +105,5 @@ export default class EntityPageProjectsLoader extends React.Component {
 EntityPageProjectsLoader.propTypes = {
   projects: PropTypes.array.isRequired,
   getProjects: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
