@@ -24,7 +24,7 @@ TeamItem.propTypes = {
 
 // Create Team button
 
-const CreateTeam = (toggleCreateTeamPop, userIsAnon) => {
+const CreateTeamButton = ({toggleCreateTeamPop, userIsAnon}) => {
   if (userIsAnon === true) {
     return (
       <React.Fragment>
@@ -39,7 +39,6 @@ const CreateTeam = (toggleCreateTeamPop, userIsAnon) => {
       </React.Fragment>
     )
   } else {
-    console.log ('💣', toggleCreateTeamPop)
     return (
       <div onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
         <span>Create Team </span>
@@ -49,7 +48,7 @@ const CreateTeam = (toggleCreateTeamPop, userIsAnon) => {
   }
 }
 
-CreateTeam.propTypes = {
+CreateTeamButton.propTypes = {
   toggleCreateTeamPop: PropTypes.func.isRequired,
   userIsAnon: PropTypes.bool.isRequired,
 };
@@ -57,20 +56,11 @@ CreateTeam.propTypes = {
 
 // Team List
 
-// TODO
-// have to pass is userIsAnon down, 
-// test states: anons, anons w teams, signed in w no teams, signed in w teams
-
 const TeamList = ({teams, toggleCreateTeamPop, userIsAnon}) => {
   const hasTeams = teams && teams.length;
   return (
-    <section className="pop-over-actions">      
-
-      <div onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
-        <span>test button </span>
-      </div>
-      
-      <CreateTeam toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
+    <section className="pop-over-actions">
+      <CreateTeamButton toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
       {teams.map((team) => (
         <TeamItem key={team.name} {...team}/>
       ))}
@@ -115,7 +105,7 @@ const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle,
         </a>
       </section>
 
-      <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon}/>
+      <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
 
       <section className="pop-over-info section-has-tertiary-buttons">      
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
@@ -160,8 +150,17 @@ export default function UserOptionsPopContainer(props) {
               <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
               <span className="down-arrow icon"/>
             </button>
-            {userOptionsPopVisible && <UserOptionsPop {...props} toggleUserOptionsPop={toggleUserOptionsPop} toggleCreateTeamPop={() => { toggleUserOptionsPop(); toggleCreateTeamPop(); }}/>}
-            {createTeamPopVisible && <CreateTeamPop api={api} toggleUserOptionsPop={() => {  toggleCreateTeamPop(); toggleUserOptionsPop(); }} />}
+            {userOptionsPopVisible && <UserOptionsPop 
+                                        {...props} 
+                                        toggleUserOptionsPop={toggleUserOptionsPop} 
+                                        toggleCreateTeamPop={() => { toggleUserOptionsPop(); toggleCreateTeamPop(); }}
+                                      />
+            }
+            {createTeamPopVisible && <CreateTeamPop 
+                                       api={api} 
+                                       toggleUserOptionsPop={() => {  toggleCreateTeamPop(); toggleUserOptionsPop(); }} 
+                                     />
+            }
           </div>
         )}
       </PopoverContainer>
