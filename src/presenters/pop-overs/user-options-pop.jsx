@@ -23,11 +23,13 @@ const TeamList = ({teams, toggleCreateTeamPop}) => {
   if(!hasTeams) {
     return (
       <section className="pop-over-actions">
-        <p className="action-description">yolo blah blah</p>
-        <div className="button button-small has-emoji button-tertiary" disabled={true}>
+        <p className="description action-description">
+          Sign in to create a team
+        </p>
+        <button className="button button-small has-emoji button-tertiary" disabled={true}>
           <span>Create Team </span>
           <span className="emoji herb"></span>
-        </div>
+        </button>
       </section>
     )
   }
