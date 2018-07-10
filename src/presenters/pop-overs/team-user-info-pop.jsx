@@ -157,6 +157,7 @@ class TeamUserInfoPop extends React.Component {
                 <span className="status admin">Team Admin</span>
               </div> 
             }
+            { this.state.adminStatusIsUpdating && <Loader />}
           </div>
         </section>
         { this.props.user.thanksCount > 0 && <ThanksCount count={this.props.user.thanksCount} /> }
@@ -166,8 +167,8 @@ class TeamUserInfoPop extends React.Component {
           userIsTeamAdmin={this.state.userIsTeamAdmin} 
           api={this.props.api} 
           teamId={this.props.teamId} 
-          updateUserIsTeamAdmin={() => this.updateUserIsTeamAdmin()} 
-          updateAdminStatusIsUpdating={() => this.updateAdminStatusIsUpdating()}
+          updateUserIsTeamAdmin={(value) => this.updateUserIsTeamAdmin(value)} 
+          updateAdminStatusIsUpdating={(value) => this.updateAdminStatusIsUpdating(value)}
           adminStatusIsUpdating={this.state.adminStatusIsUpdating} 
         />
         { this.props.currentUserIsOnTeam && <RemoveFromTeam action={this.removeFromTeamAction} /> }
