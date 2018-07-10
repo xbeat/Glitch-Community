@@ -51,33 +51,33 @@ UserActions.propTypes = {
   // update UI, user props
   // I can unadmin myself: (test this case, UI should adapt)
   // case: try and remove the last/only admin on a team
-const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, loadingAdminStatus, updateLoadingAdminStatus}) => {
-  
+const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, adminStatusIsUpdating, updateAdminStatusIsUpdating}) => {
   const updateAdminStatus = (accessLevel) => {
-    updateLoadingAdminStatus(true)
-    api.patch((`teams/${teamId}/users/${user.id}`), {
+    updateAdminStatusIsUpdating(true)
+    let teamUser = `teams/${teamId}/users/${user.id}`
+    api.patch((teamUser, {
       access_level: accessLevel
-    }
-    .then(({data}) => {
+    }).then(() => {
       updateUserIsTeamAdmin(accessLevel);
-      updateLoadingAdminStatus(false);
+      updateAdminStatusIsUpdating(false);
     }).catch(error => {
       console.error("updateAdminStatus", accessLevel, error, error.response)
       // last admin
     })
-  )
+    )
+  }
   
   return (
     <section className="pop-over-actions admin-actions">
       { userIsTeamAdmin && 
         <button className="button-small button-tertiary" onClick={() => updateAdminStatus(MEMBER_ACCESS_LEVEL)}>
           <span>Remove Admin Status</span>
-          { loadingAdminStatus && <Loader />}
+          { adminStatusIsUpdating && <Loader />}
         </button>
       ||
         <button className="button-small button-tertiary" onClick={() => updateAdminStatus(ADMIN_ACCESS_LEVEL)}>
           <span>Make an Admin</span>
-          { loadingAdminStatus && <Loader />}
+          { adminStatusIsUpdating && <Loader />}
         </button>
       }
     </section>
@@ -93,8 +93,8 @@ AdminActions.propTypes = {
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   updateUserIsTeamAdmin: PropTypes.func.isRequired,
-  updateLoadingAdminStatus: PropTypes.func.isRequired,
-  loadingAdminStatus: PropTypes.bool.isRequired,
+  updateAdminStatusIsUpdating: PropTypes.func.isRequired,
+  adminStatusIsUpdating: PropTypes.bool.isRequired,
 };
 
 
@@ -115,7 +115,7 @@ class TeamUserInfoPop extends React.Component {
 
     this.state = {
       userIsTeamAdmin: this.props.userIsTeamAdmin,
-      loadingAdminStatus: false
+      adminStatusIsUpdating: false
     };
   }
 
@@ -134,9 +134,9 @@ class TeamUserInfoPop extends React.Component {
     })
   }
   
-  updateChangingAdminStatus(value) {
+  updateAdminStatusIsUpdating(value) {
     this.setState({
-      loadingAdminStatus: value
+      adminStatusIsUpdating: value
     })
   }
 
@@ -165,8 +165,8 @@ class TeamUserInfoPop extends React.Component {
           api={this.props.api} 
           teamId={this.props.teamId} 
           updateUserIsTeamAdmin={() => this.updateUserIsTeamAdmin()} 
-          updateLoadingAdminStatus={() => this.updateLoadingAdminStatus()}
-          loadingAdminStatus={this.state.loadingAdminStatus} 
+          updateAdminStatusIsUpdating={() => this.updateAdminStatusIsUpdating()}
+          adminStatusIsUpdating={this.state.adminStatusIsUpdating} 
         />
         { this.props.currentUserIsOnTeam && <RemoveFromTeam action={this.removeFromTeamAction} /> }
       </dialog>
