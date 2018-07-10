@@ -30,6 +30,9 @@ export default class Uploader extends React.Component {
           }
         }
       );
+    } catch (e) {
+      this.setState({error: true});
+      throw e;
     } finally {
       this.setState({uploading: false});
     }
@@ -52,6 +55,9 @@ export default class Uploader extends React.Component {
           }
         }
       );
+    } catch (e) {
+      this.setState({error: true});
+      throw e;
     } finally {
       this.setState({uploading: false});
     }
