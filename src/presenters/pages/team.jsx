@@ -54,23 +54,23 @@ const TeamPage = ({
           {isVerified && <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>}
         </h1>
         <div className="users-information">
-          <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminUsers, api, teamId:id}}/>
-          {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)}/>}
+          <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminUsers, api, teamId:id}} />
+          {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)} />}
         </div>
-        <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)}/>
+        <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)} />
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
       </ProfileContainer>
     </section>
-    <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects}/>
+    <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects} />
     <EntityPageProjects
       projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
       addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam: removeProject}}
       getProjects={getProjects}
     />
     {(currentUserIsOnTeam ?
-      <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects}/>
+      <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects} />
       : <TeamMarketing/>)}
-    { currentUserIsOnTeam && <DeleteTeam teamId={id} teamName={name} users={users} adminUsers={adminUsers}/> }
+    { currentUserIsOnTeam && <DeleteTeam api={() => api} teamId={id} teamName={name} users={users} adminUsers={adminUsers} /> }
   </main>
 );
 

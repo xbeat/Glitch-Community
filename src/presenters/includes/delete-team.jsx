@@ -23,9 +23,11 @@ const DeleteTeam = ({...props}) => {
 };
 
 DeleteTeam.propTypes = {
+  api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
-  //     { currentUserIsOnTeam && <DeleteTeam teamId={id} teamName={name} users={users} adminUsers={adminUsers}/> }
-
+  teamName: PropTypes.string.isRequired,
+  users: PropTypes.array.isRequired,
+  adminUsers: PropTypes.array.isRequired,
 };
 
 export default DeleteTeam;
