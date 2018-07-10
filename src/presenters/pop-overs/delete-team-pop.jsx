@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import UsersList from "../users-list.jsx";
+import Loader from '../includes/loader.jsx'
 
 export class DeleteTeamPop extends React.Component {
   constructor(props) {
     super(props);    
     this.state = {
-      admins: []
+      admins: [],
+      teamIsDeleting: false,
     };
   }
     
@@ -55,18 +57,32 @@ export class DeleteTeamPop extends React.Component {
 //   adminUsersList() {
 //     
   // }
+  deleteTeam() {
+    console.log ('delete the team')
+    console.log ('during delete show loader in button') // even tho it's fast, it's the only immediate response i can give. assuming success and redirecting immediately may interrupt the request
+    console.log ('on 200, redirect to /')
+  }
   
   render() {
     return (
       <dialog className="pop-over delete-team-pop">
         <section className="pop-over-info">
-          <p>Delete {this.props.teamName}</p>
+          <div className="pop-title">Delete {this.props.teamName}</div>
         </section>
         <section className="pop-over-actions">
           <p>Deleting this team will</p>
+          <div className="button-wrap">
+            <button className="button button-small has-emoji opens-pop-over" onClick={this.deleteTeam}>
+              <span>Delete Team</span> 
+              <span className="emoji bomb" role="img" aria-label="bomb emoji"></span>
+              { this.state.teamIsDeleting && <Loader /> }
+            </button>
+          </div>
+
         </section>
         <section className="pop-over-info">
-          <UsersList users={this.state.admins} extraClass="single-line"/>
+          <UsersList users={this.state.admins}/>
+          <p>This will also email all team admins, giving them an option to undelete the team</p>
         </section>
       </dialog>
     );
