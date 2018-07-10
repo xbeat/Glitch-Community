@@ -62,7 +62,7 @@ const UserPage = ({
     id, login, name, description, thanksCount,
     avatarUrl, color,
     hasCoverImage, coverColor,
-    pins, projects, deletedProjects,
+    pins, projects,
   },
   isAuthorized,
   updateDescription,
@@ -70,7 +70,7 @@ const UserPage = ({
   uploadCover, clearCover,
   uploadAvatar,
   addPin, removePin,
-  leaveProject,
+  leaveProject, deletedProjects,
   deleteProject, undeleteProject,
   getProjects, getDeletedProjects,
   _cacheCover,
@@ -206,7 +206,7 @@ class UserPageEditor extends React.Component {
         console.warn(e);
       }
     }
-    this.setState(({deletedProjects}) => 
+    this.setState(({deletedProjects}) => ({deletedProjects: deletedProjects.filter(p => p.id !== id)}));
     this.props.localAddItem('projects', {id, domain});
   }
   
