@@ -28,7 +28,7 @@ const DeletedProjectsList = ({deletedProjects, undelete}) => (
       <li key={id} className="deleted-project-container">
         <DeletedProject
           id={id} domain={domain}
-          onClick={() => undelete(id, domain)}
+          onClick={() => undelete(id)}
         />
       </li>
     ))}

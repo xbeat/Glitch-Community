@@ -193,21 +193,22 @@ class UserPageEditor extends React.Component {
     this.setState(({deletedProjects}) => ({deletedProjects: [data, ...deletedProjects]}));
   }
   
-  async undeleteProject(id, domain) {
+  async undeleteProject(id) {
     await this.props.api.post(`/projects/${id}/undelete`);
-    if (domain.endsWith('-deleted')) {
+    const {data} = await this.props.api.get(`projects/${id}`);
+    if (data.domain.endsWith('-deleted')) {
       try {
-        const newDomain = domain.replace(/-deleted$/, '');
+        const newDomain = data.domain.replace(/-deleted$/, '');
         await this.props.api.patch(`/projects/${id}`, {
           domain: newDomain,
         });
-        domain = newDomain;
+        data.domain = newDomain;
       } catch (e) {
         console.warn(e);
       }
     }
     this.setState(({deletedProjects}) => ({deletedProjects: deletedProjects.filter(p => p.id !== id)}));
-    this.props.localAddItem('projects', {id, domain});
+    this.props.localAddItem('projects', data);
   }
   
   render() {
@@ -232,7 +233,7 @@ class UserPageEditor extends React.Component {
       removePin: projectId => removeItem('pinned-projects', projectId, 'pins', {projectId}),
       leaveProject: id => this.leaveProject(id),
       deleteProject: id => this.deleteProject(id),
-      undeleteProject: (id, domain) => this.undeleteProject(id, domain),
+      undeleteProject: id => this.undeleteProject(id),
     };
     return (
       <CurrentUserProvider model={currentUserModel}>
