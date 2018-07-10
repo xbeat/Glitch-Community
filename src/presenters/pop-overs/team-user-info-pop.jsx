@@ -46,38 +46,34 @@ UserActions.propTypes = {
 
 // Admin Actions Section
 
-// TODO add/remove admin 
-  // API
+// TODO
   // update UI, user props
   // I can unadmin myself: (test this case, UI should adapt)
+  // case: try and remove the last/only admin on a team
 const AdminActions = ({user, userIsTeamAdmin, api, teamId}) => {
-  const removeAdminStatus = () => {
-    console.log ('remove AdminStatus clicked', teamId, user.id)
+  
+  const updateAdminStatus = (accessLevel) => {
     api.patch((`teams/${teamId}/users/${user.id}`), {
-      access_level: MEMBER_ACCESS_LEVEL
+      access_level: accessLevel
     })
     .then(({data}) => 
       console.log('🌹', data)
-      // update user
+      // TODO update user
+      // waiting on stateful user refactor
     ).catch(error =>
-      console.error("removeAdminStatus", error, error.response)
+      console.error("updateAdminStatus", accessLevel, error, error.response)
+      // last admin
     )
-    // PATCH /teams/<teamId>/users/<userId>
-    // https://www.notion.so/glitch/teams-teamId-users-userId-29d069b57861494082b0404fc2fb16a7
-  }
-
-  const addAdminStatus = ({user, userIsTeamAdmin, api, teamId}) => {
-    console.log ('addAdminStatus clicked', user, ADMIN_ACCESS_LEVEL)
   }
   
   return (
     <section className="pop-over-actions admin-actions">
       { userIsTeamAdmin && 
-        <button className="button-small button-tertiary" onClick={removeAdminStatus}>
+        <button className="button-small button-tertiary" onClick={updateAdminStatus(MEMBER_ACCESS_LEVEL)}>
           <span>Remove Admin Status</span>
         </button>
       ||
-        <button className="button-small button-tertiary" onClick={addAdminStatus}>
+        <button className="button-small button-tertiary" onClick={updateAdminStatus(ADMIN_ACCESS_LEVEL)}>
           <span>Make an Admin</span>
         </button>
       }
@@ -106,6 +102,18 @@ const ThanksCount = ({count}) => (
 
 
 // Team User Info
+
+class TeamUserInfoPop extends React.Component {
+    constructor(props) {
+    super(props);
+
+    this.state = {
+      teamName: 'Team Rocket',
+      teamUrl: 'team-rocket',
+      isLoading: false,
+      errorMessage: ''
+    };
+
 
 const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, userIsTeamAdmin, togglePopover, api, teamId}) => {
   const removeFromTeamAction = () => {
