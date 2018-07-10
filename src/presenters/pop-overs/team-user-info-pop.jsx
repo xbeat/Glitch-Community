@@ -50,16 +50,15 @@ UserActions.propTypes = {
   // update UI, user props
   // I can unadmin myself: (test this case, UI should adapt)
   // case: try and remove the last/only admin on a team
-const AdminActions = ({user, userIsTeamAdmin, api, teamId}) => {
+const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin}) => {
   
   const updateAdminStatus = (accessLevel) => {
     api.patch((`teams/${teamId}/users/${user.id}`), {
       access_level: accessLevel
     })
     .then(({data}) => 
-      console.log('🌹', data)
-      // TODO update user
-      // waiting on stateful user refactor
+      console.log ('🌹'
+      updateUserIsTeamAdmin(accessLevel)
     ).catch(error =>
       console.error("updateAdminStatus", accessLevel, error, error.response)
       // last admin
@@ -89,6 +88,7 @@ AdminActions.propTypes = {
   userIsTeamAdmin: PropTypes.bool.isRequired,
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
+  updateUserIsTeamAdmin: PropTypes.func.isRequired,
 };
 
 
@@ -108,41 +108,50 @@ class TeamUserInfoPop extends React.Component {
     super(props);
 
     this.state = {
-      teamName: 'Team Rocket',
-      teamUrl: 'team-rocket',
-      isLoading: false,
-      errorMessage: ''
+      userIsTeamAdmin: this.props.userIsTeamAdmin,
     };
+  }
 
-
-const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, userIsTeamAdmin, togglePopover, api, teamId}) => {
-  const removeFromTeamAction = () => {
-    togglePopover();
-    removeUserFromTeam();
+  removeFromTeamAction() {
+    this.props.togglePopover();
+    this.props.removeUserFromTeam();
   };
-  return (
-    <dialog className="pop-over team-user-info-pop">
-      <section className="pop-over-info">
-        <a href={user.userLink}>
-          <img className="avatar" src={user.userAvatarUrl} alt={user.login} style={user.style}/>
-        </a>
-        <div className="info-container">
-          <p className="name" title={user.name}>{user.name}</p>
-          <p className="user-login" title={user.login}>@{user.login}</p>
-          { userIsTeamAdmin && 
-            <div className="status-badge">
-              <span className="status admin">Team Admin</span>
-            </div> 
-          }
+  
+  updateUserIsTeamAdmin(accessLevel) {
+    let isAdmin = false
+    if (accessLevel === ADMIN_ACCESS_LEVEL) {
+      isAdmin = true
+    }
+    this.setState({
+      userIsTeamAdmin: isAdmin
+    })
+  }
 
-        </div>
-      </section>
-      { user.thanksCount > 0 && <ThanksCount count={user.thanksCount} /> }
-      <UserActions user={user} />
-      <AdminActions user={user} userIsTeamAdmin={userIsTeamAdmin} api={api} teamId={teamId}/>
-      { currentUserIsOnTeam && <RemoveFromTeam action={removeFromTeamAction} />}
-    </dialog>
-  );
+  render() {
+    return (
+      <dialog className="pop-over team-user-info-pop">
+        <section className="pop-over-info">
+          <a href={this.props.user.userLink}>
+            <img className="avatar" src={this.props.user.userAvatarUrl} alt={this.props.user.login} style={this.props.user.style}/>
+          </a>
+          <div className="info-container">
+            <p className="name" title={this.props.user.name}>{this.props.user.name}</p>
+            <p className="user-login" title={this.props.user.login}>@{this.props.user.login}</p>
+            { this.state.userIsTeamAdmin && 
+              <div className="status-badge">
+                <span className="status admin">Team Admin</span>
+              </div> 
+            }
+
+          </div>
+        </section>
+        { this.props.user.thanksCount > 0 && <ThanksCount count={this.props.user.thanksCount} /> }
+        <UserActions user={this.props.user} />
+        <AdminActions user={this.props.user} userIsTeamAdmin={this.state.userIsTeamAdmin} api={this.props.api} teamId={this.props.teamId} updateUserIsTeamAdmin={(accessLevel) => this.updateUserIsTeamAdmin(accessLevel)}/>
+        { this.props.currentUserIsOnTeam && <RemoveFromTeam action={this.removeFromTeamAction} /> }
+      </dialog>
+    );
+  }
 };
 
 TeamUserInfoPop.propTypes = {
