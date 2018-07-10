@@ -57,8 +57,13 @@ export default class DeletedProjects extends React.Component {
   
   async clickShow() {
     this.setState({shown: true});
-    const {data} = await this.props.get();
-    
+    try {
+      const {data} = await this.props.get();
+      this.props.setDeletedProjects(data);
+      this.setState({loaded: true});
+    } catch (e) {
+      this.setState({shown: false});
+    }
   }
   
   render() {
