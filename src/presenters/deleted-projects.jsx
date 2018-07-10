@@ -66,25 +66,20 @@ export default class DeletedProjects extends React.Component {
     }
   }
   
+  renderContents() {
+    if (!this.state.shown) {
+      return <button className="button button-tertiary" onClick={this.clickShow}>Show</button>;
+    } else if (!this.state.loaded) {
+      return <Loader/>;
+    }
+    return <DeletedProjectsList {...this.props}/>;
+  }
+  
   render() {
-    const {
-      deletedProjects,
-      undelete,
-    } = this.props;
-    const {
-      shown,
-      loaded,
-    } = this.state;
     return (
       <article className="deleted-projects">
         <h2>Deleted Projects <span className="emoji bomb emoji-in-title"></span></h2>
-        {shown ? (
-          loaded ? (
-            <DeletedProjectsList deletedProjects={deletedProjects} undelete={undelete}/>
-          ) : <Loader/>
-        ) : (
-          <button className="button button-tertiary" onClick={this.clickShow}>Show</button>
-        )}
+        {this.renderContents()}
       </article>
     );
   }

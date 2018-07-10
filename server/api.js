@@ -17,10 +17,10 @@ async function getFromCacheOrApi(id, cache, api) {
   if (item === null) {
     try {
       item = (await api(id)) || NOT_FOUND;
-      cache.put(id, item, CACHE_TIMEOUT);
     } catch (e) {
       item = NOT_FOUND;
     }
+    cache.put(id, item, CACHE_TIMEOUT);
   }
   return item !== NOT_FOUND ? item : null;
 }
