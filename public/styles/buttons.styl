@@ -13,6 +13,8 @@ button
   cursor: pointer
   position: relative
   vertical-align: middle
+  &.danger-zone
+    background-color: warning-background
   &:hover
     background-color: secondary-background
     text-decoration: none
@@ -24,8 +26,6 @@ button
     padding-bottom: 5px
   img
     vertical-align: bottom
-  &.danger-zone
-    background-color: warning-background
 
   &[disabled]
     opacity: .5
