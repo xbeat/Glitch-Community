@@ -16,7 +16,7 @@ import NotFound from '../includes/not-found.jsx';
 import Uploader from '../includes/uploader.jsx';
 
 import AddTeamProject from '../includes/add-team-project.jsx';
-import DeleteTeam from '../includes/delete-project.jsx';
+import DeleteTeam from '../includes/delete-team.jsx';
 import {AddTeamUser, TeamUsers} from '../includes/team-users.jsx';
 import EntityEditor from '../entity-editor.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
@@ -70,7 +70,7 @@ const TeamPage = ({
     {(currentUserIsOnTeam ?
       <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects}/>
       : <TeamMarketing/>)}
-    { currentUserIsOnTeam && <DeleteTeam team={this.props.team} /> }
+    { currentUserIsOnTeam && <DeleteTeam teamId={id} teamName={name} users={users} adminUsers={adminUsers}/> }
   </main>
 );
 
