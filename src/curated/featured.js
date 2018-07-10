@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Learn Ukulele Chords',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fukulele-chords.jpg?1530183290147",
-    link: 'https://glitch.com/~ukulele-chords'
+    title: 'Play Music With Your Face',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fface-the-music.jpg?1531135109987",
+    link: 'https://glitch.com/~face-the-music'
   }
   , {
-    title: 'Roll The Dice',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fdice.jpg?1530183290537",
-    link: 'https://glitch.com/~dice'
+    title: 'Pew Pew Pew! Galaxeroids!',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fgalaxeroids.jpg?1531135110191",
+    link: 'https://glitch.com/~galaxeroids'
   }
   , {
-    title: 'Meet Friendly Tech & Design Pros',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fnewbietalk.jpg?1530183290324",
-    link: 'https://glitch.com/~newbietalk'
+    title: 'Get Organized: Make Labels',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fshop-labels.jpg?1531135109784",
+    link: 'https://glitch.com/~shop-labels'
   }  
 ];

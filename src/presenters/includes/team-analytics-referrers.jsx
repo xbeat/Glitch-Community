@@ -32,10 +32,10 @@ const filterReferrers = (referrers) => {
   return filteredReferrers;
 };
 
-const TeamAnalyticsReferrers = ({analytics, totalRemixes, totalAppViews}) => {
+const TeamAnalyticsReferrers = ({analytics, totalRemixes, uniqueAppViews}) => {
   const appViewReferrers = filterReferrers(analytics.referrers);
   const remixReferrers = filterReferrers(analytics.remixReferrers);
-  const totalDirectAppViews = totalAppViews - countTotals(appViewReferrers, 'requests');
+  const totalDirectAppViews = uniqueAppViews - countTotals(appViewReferrers, 'requests');
   const totalDirectRemixes = totalRemixes - countTotals(remixReferrers, 'remixes');
   return (
     <div className="referrers-content">
@@ -46,14 +46,14 @@ const TeamAnalyticsReferrers = ({analytics, totalRemixes, totalAppViews}) => {
         <ul>
           <ReferrerItem
             count = {totalDirectAppViews}
-            total = {totalAppViews}
+            total = {uniqueAppViews}
             description = "direct views"
           />
           { appViewReferrers.map((referrer, key) => (
             <ReferrerItem
               key={key}
               count = {referrer.requests}
-              total = {totalAppViews}
+              total = {uniqueAppViews}
               description = {referrer.domain}
             />
           ))}
@@ -87,7 +87,7 @@ const TeamAnalyticsReferrers = ({analytics, totalRemixes, totalAppViews}) => {
 TeamAnalyticsReferrers.propTypes = {
   analytics: PropTypes.object.isRequired,
   totalRemixes: PropTypes.number.isRequired,
-  totalAppViews: PropTypes.number.isRequired,
+  uniqueAppViews: PropTypes.number.isRequired,
 };
 
 export default TeamAnalyticsReferrers;
