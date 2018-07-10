@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {chunk, keyBy, partition} from 'lodash';
 
-import Loader from './includes/loader.jsx';
 import ProjectsList from './projects-list.jsx';
 import {CurrentUserConsumer, normalizeProjects} from './current-user.jsx';
 
@@ -15,7 +14,7 @@ function listToObject(list, val) {
 
 const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-const EntityPageProjects = ({projects, pins, isAuthorized, isLoaded, addPin, removePin, projectOptions}) => {
+const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, projectOptions}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const [pinnedProjects, recentProjects] = partition(projects, ({id}) => pinnedSet.has(id));
   
@@ -42,14 +41,13 @@ const EntityPageProjects = ({projects, pins, isAuthorized, isLoaded, addPin, rem
     <React.Fragment>
       {!!pinnedVisible && (
         <ProjectsList title={pinnedTitle}
-          projects={pinnedProjects} placeholder={isLoaded ? pinnedEmpty : null}
+          projects={pinnedProjects} placeholder={pinnedEmpty}
           projectOptions={isAuthorized ? {removePin, ...projectOptions} : {}}
         />
       )}
       <ProjectsList title="Recent Projects" projects={recentProjects}
         projectOptions={isAuthorized ? {addPin, ...projectOptions} : {}}
       />
-      {!isLoaded && <Loader/>}
     </React.Fragment>
   );
 };
@@ -99,13 +97,12 @@ export default class EntityPageProjectsLoader extends React.Component {
   
   render() {
     const {projects, ...props} = this.props;
-    const loadedProjects = projects.map(project => this.state[project.id]).filter(project => project);
+    const loadedProjects = projects.map(project => this.state[project.id] || project);
     return (
       <CurrentUserConsumer>
         {currentUser => (
           <EntityPageProjects
             projects={normalizeProjects(loadedProjects, currentUser)}
-            isLoaded={loadedProjects.length === projects.length}
             {...props}
           />
         )}

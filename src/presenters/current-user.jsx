@@ -37,7 +37,7 @@ export function normalizeUsers(users, currentUser) {
 }
 
 export function normalizeProject({users, ...project}, currentUser) {
-  return {users: normalizeUsers(users, currentUser), ...project};
+  return {users: users ? normalizeUsers(users, currentUser) : [], ...project};
 }
 
 export function normalizeProjects(projects, currentUser) {
