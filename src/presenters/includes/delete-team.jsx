@@ -11,7 +11,7 @@ const DeleteTeam = ({...props}) => {
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <div className="button-wrap">
-            <button className="button button-small has-emoji opens-pop-over danger-zone" onClick={togglePopover}>
+            <button className="button button-small button-tertiary has-emoji opens-pop-over danger-zone" onClick={togglePopover}>
               Delete Team <span className="emoji bomb" role="img" aria-label=""></span>
             </button>
             { visible && <AddTeamProjectPop {...props} togglePopover={togglePopover} /> }
