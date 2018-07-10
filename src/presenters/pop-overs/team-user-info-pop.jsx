@@ -49,6 +49,9 @@ UserActions.propTypes = {
 
 const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, adminStatusIsUpdating, updateAdminStatusIsUpdating}) => {  
   const updateAdminStatus = (accessLevel) => {
+    if (adminStatusIsUpdating) {
+      return null
+    }
     updateAdminStatusIsUpdating(true)
     let teamUser = `teams/${teamId}/users/${user.id}`
     api.patch((teamUser), {
@@ -61,20 +64,19 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
     }).catch(error => {
       console.error("updateAdminStatus", accessLevel, error, error.response)
       // TODO: last admin error -> show notification
+      // TODO err networking/general api error
     })
   }
-  
+    
   return (
     <section className="pop-over-actions admin-actions">
       { userIsTeamAdmin && 
         <button className="button-small button-tertiary" onClick={() => updateAdminStatus(MEMBER_ACCESS_LEVEL)}>
           <span>Remove Admin Status</span>
-          { adminStatusIsUpdating && <Loader />}
         </button>
       ||
         <button className="button-small button-tertiary" onClick={() => updateAdminStatus(ADMIN_ACCESS_LEVEL)}>
           <span>Make an Admin</span>
-          { adminStatusIsUpdating && <Loader />}
         </button>
       }
     </section>
@@ -152,7 +154,6 @@ class TeamUserInfoPop extends React.Component {
                 <span className="status admin">Team Admin</span>
               </div> 
             }
-            { this.state.adminStatusIsUpdating && <Loader />}
           </div>
         </section>
         { this.props.user.thanksCount > 0 && <ThanksCount count={this.props.user.thanksCount} /> }
