@@ -10,7 +10,10 @@ import Thanks from './thanks.jsx';
 import {AuthDescription} from './description-field.jsx';
 import EditableField from './editable-field.jsx';
 
-export const ImageButtons = ({name, uploadImage, clearImage}) => (
+
+// Image Actions
+
+export const ImageActions = ({name, uploadImage, clearImage}) => (
   <div className="upload-image-buttons">
     { !!uploadImage && (
       <button className="button-small button-tertiary" onClick={uploadImage}>
@@ -24,11 +27,14 @@ export const ImageButtons = ({name, uploadImage, clearImage}) => (
     )}
   </div>
 );
-ImageButtons.propTypes = {
+ImageActions.propTypes = {
   name: PropTypes.string.isRequired,
   uploadImage: PropTypes.func,
   clearImage: PropTypes.func,
 };
+
+
+// Project Info Container
 
 export const ProjectInfoContainer = ({
   style,
@@ -51,6 +57,9 @@ ProjectInfoContainer.propTypes = {
   buttons: PropTypes.element,
 };
 
+
+// Info Container (generic)
+
 export const InfoContainer = ({children}) => (
   <div className="profile-info">
     {children}
@@ -59,6 +68,9 @@ export const InfoContainer = ({children}) => (
 InfoContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+
+// Cover Container
 
 export const CoverContainer = ({
   buttons, children, className, ...props
@@ -73,6 +85,9 @@ CoverContainer.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
+
+
+// Profile Container
 
 export const ProfileContainer = ({
   avatarStyle, avatarButtons,
@@ -147,11 +162,11 @@ const LoadedUserProfile = ({
   updateDescription,
   updateName, updateLogin,
   uploadCover, clearCover,
-  uploadAvatar,
+  uploadAvatar
 }) => (
   <ProfileContainer avatarStyle={avatarStyle} coverStyle={profileStyle}
-    coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
-    avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }
+    coverButtons={isAuthorized && <ImageActions name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
+    avatarButtons={isAuthorized ? <ImageActions name="Avatar" uploadImage={uploadAvatar} /> : null }
   >
     <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
     <Thanks count={thanksCount}/>

@@ -22,7 +22,7 @@ import LayoutPresenter from '../layout';
 
 import EntityPageProjects from "../entity-page-projects.jsx";
 import NotFound from '../includes/not-found.jsx';
-import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
+import {ProfileContainer, ImageActions} from '../includes/profile.jsx';
 import Reactlet from "../reactlet";
 import Observed from "../includes/observed.jsx";
 
@@ -359,8 +359,8 @@ const UserPage = ({
       <ProfileContainer
         avatarStyle={getAvatarStyle({avatarUrl, color})}
         coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
-        coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
-        avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }
+        coverButtons={isAuthorized && <ImageActions name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
+        avatarButtons={isAuthorized ? <ImageActions name="Avatar" uploadImage={uploadAvatar} /> : null }
       >
         <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
         <Thanks count={thanksCount}/>

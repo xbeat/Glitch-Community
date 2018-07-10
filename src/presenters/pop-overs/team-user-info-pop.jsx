@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import Thanks from '../includes/thanks.jsx';
 
+const MEMBER_ACCESS_LEVEL = 20
+const ADMIN_ACCESS_LEVEL = 30
 
 // Remove from Team 👋
 
@@ -48,15 +50,23 @@ UserActions.propTypes = {
   // API
   // update UI, user props
   // I can unadmin myself: (test this case, UI should adapt)
-const AdminActions = ({user, userIsTeamAdmin}) => {
+const AdminActions = ({user, userIsTeamAdmin, api, teamId}) => {
   const removeAdminStatus = () => {
-    console.log ('addAdminStatus clicked', user)
+    console.log ('remove AdminStatus clicked', teamId, user.id)
+    api.patch((`teams/${teamId}/users/${user.id}`), {
+      access_level: MEMBER_ACCESS_LEVEL
+    })
+    .then(({data}) => 
+      console.log('🌹', data)
+    ).catch(error =>
+      console.error("removeAdminStatus", error, error.response)
+    )
     // PATCH /teams/<teamId>/users/<userId>
     // https://www.notion.so/glitch/teams-teamId-users-userId-29d069b57861494082b0404fc2fb16a7
   }
 
-  const addAdminStatus = () => {
-    console.log ('addAdminStatus clicked', user)
+  const addAdminStatus = ({user, userIsTeamAdmin, api, teamId}) => {
+    console.log ('addAdminStatus clicked', user, ADMIN_ACCESS_LEVEL)
   }
   
   return (
@@ -80,6 +90,8 @@ AdminActions.propTypes = {
     login: PropTypes.string.isRequired,
   }).isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
+  api: PropTypes.func.isRequired,
+  teamId: PropTypes.number.isRequired,
 };
 
 
@@ -94,7 +106,7 @@ const ThanksCount = ({count}) => (
 
 // Team User Info
 
-const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, userIsTeamAdmin, togglePopover}) => {
+const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, userIsTeamAdmin, togglePopover, api, teamId}) => {
   const removeFromTeamAction = () => {
     togglePopover();
     removeUserFromTeam();
@@ -118,7 +130,7 @@ const TeamUserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, userIsT
       </section>
       { user.thanksCount > 0 && <ThanksCount count={user.thanksCount} /> }
       <UserActions user={user} />
-      <AdminActions user={user} userIsTeamAdmin={userIsTeamAdmin} />
+      <AdminActions user={user} userIsTeamAdmin={userIsTeamAdmin} api={api} teamId={teamId}/>
       { currentUserIsOnTeam && <RemoveFromTeam action={removeFromTeamAction} />}
     </dialog>
   );
@@ -136,6 +148,8 @@ TeamUserInfoPop.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
+  api: PropTypes.func.isRequired,
+  teamId: PropTypes.number.isRequired,
 };
 
 TeamUserInfoPop.defaultProps = {

@@ -6,21 +6,30 @@ import PopoverContainer from '../pop-overs/popover-container.jsx';
 import TeamUserInfoPop from '../pop-overs/team-user-info-pop.jsx';
 import {UserPopoversList} from '../users-list.jsx';
 
-export const TeamUsers = ({users, currentUserIsOnTeam, removeUser, adminUsers}) => {
+
+// Team Users list (in profile container)
+
+export const TeamUsers = ({users, currentUserIsOnTeam, removeUser, adminUsers, api, teamId}) => {
   let userIsTeamAdmin = (user) => {
     return adminUsers.includes(user.id)
   }
   return (
     <UserPopoversList users={users}>
-      {(user, togglePopover) => <TeamUserInfoPop togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUser(user.id)} userIsTeamAdmin={userIsTeamAdmin(user)} />}
+      {(user, togglePopover) => <TeamUserInfoPop api={api} teamId={teamId} togglePopover={togglePopover} user={user} currentUserIsOnTeam={currentUserIsOnTeam} removeUserFromTeam={() => removeUser(user.id)} userIsTeamAdmin={userIsTeamAdmin(user)} />}
     </UserPopoversList>
   )
 };
+
 TeamUsers.propTypes = {
   users: PropTypes.array.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUser: PropTypes.func.isRequired,
+  api: PropTypes.func.isRequired,
+  teamId: PropTypes.number.isRequired,
 };
+
+
+// Add Team User
 
 export const AddTeamUser = (props) => (
   <PopoverContainer>
