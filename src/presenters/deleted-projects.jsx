@@ -22,6 +22,11 @@ const DeletedProject = ({id, domain, onClick}) => (
     </div>
   </button>
 );
+DeletedProject.propTypes = {
+  id: PropTypes.string.isRequired,
+  domain: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 const DeletedProjectsList = ({deletedProjects, undelete}) => (
   <ul className="deleted-projects-container">
@@ -37,7 +42,7 @@ const DeletedProjectsList = ({deletedProjects, undelete}) => (
 );
 DeletedProjectsList.propTypes = {
   deletedProjects: PropTypes.array.isRequired,
-  undelete: PropTypes.
+  undelete: PropTypes.func.isRequired,
 };
 
 function normalizeProjects(userProjects, userDeleted, netDeleted) {
