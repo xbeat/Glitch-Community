@@ -120,6 +120,7 @@ class UserPageEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      deletedProjects: [],
       _cacheCover: Date.now(),
     };
   }
@@ -187,9 +188,9 @@ class UserPageEditor extends React.Component {
   
   async deleteProject(id) {
     await this.props.api.delete(`/projects/${id}`);
-    this.props.localRemoveItem('projects', {id});
     const {data} = await this.props.api.get(`projects/${id}?showDeleted=true`);
-    this.props.localAddItem('deletedProjects', data);
+    this.props.localRemoveItem('projects', {id});
+    this.setState(({deletedProjects}) => ({deletedProjects: [data, ...deletedProjects]}));
   }
   
   async undeleteProject(id, domain) {
@@ -205,7 +206,7 @@ class UserPageEditor extends React.Component {
         console.warn(e);
       }
     }
-    this.props.localRemoveItem('deletedProjects', {id});
+    this.setState(({deletedProjects}) => 
     this.props.localAddItem('projects', {id, domain});
   }
   
@@ -244,7 +245,7 @@ class UserPageEditor extends React.Component {
 const UserPageLoader = ({api, get, loginOrId, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
     {user => user ? (
-      <EntityEditor api={api} initial={{...user, deletedProjects: []}} type="users">
+      <EntityEditor api={api} initial={user} type="users">
         {({entity, ...editFuncs}) => (
           <Uploader>
             {({...uploadFuncs}) => (
