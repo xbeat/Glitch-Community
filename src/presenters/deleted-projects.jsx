@@ -28,63 +28,51 @@ DeletedProject.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-class DeletedProjectsList extends React.Component {
-  componentDidMount() {
-    this.props.set(this.props.rawDeletedProjects);
-  }
-  
-  render() {
-    const {deletedProjects, undelete} = this.props;
-    return (
-      <ul className="deleted-projects-container">
-        {deletedProjects.map(({id, domain}) => (
-          <li key={id} className="deleted-project-container">
-            <DeletedProject
-              id={id} domain={domain}
-              onClick={() => undelete(id)}
-            />
-          </li>
-        ))}
-      </ul>
-    );
-  }
-}
+const DeletedProjectsList = ({deletedProjects, undelete}) => (
+  <ul className="deleted-projects-container">
+    {deletedProjects.map(({id, domain}) => (
+      <li key={id} className="deleted-project-container">
+        <DeletedProject
+          id={id} domain={domain}
+          onClick={() => undelete(id)}
+        />
+      </li>
+    ))}
+  </ul>
+);
 DeletedProjectsList.propTypes = {
   deletedProjects: PropTypes.array.isRequired,
   undelete: PropTypes.func.isRequired,
 };
-
-function normalizeProjects(userProjects, userDeleted, netDeleted) {
-  // userProjects and userDeleted change on delete/undelete
-  // netDeleted is loaded once then stays the same
-  // so use the three to suss out what's actually deleted
-  const userSet = new Set(userProjects.concat(userDeleted).map(({id}) => id));
-  const stillDeleted = netDeleted.filter(({id}) => !userSet.has(id));
-  return userDeleted.concat(stillDeleted);
-}
 
 export default class DeletedProjects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       shown: false,
+      loaded: false,
     };
     this.clickShow = this.clickShow.bind(this);
   }
   
-  clickShow() {
+  async clickShow() {
     this.setState({shown: true});
+    const {data} = await this.props.get();
+    
   }
   
   render() {
-    const {undelete} = this.props;
+    const {
+      deletedProjects,
+      undelete,
+    } = this.props;
     return (
       <article className="deleted-projects">
         <h2>Deleted Projects <span className="emoji bomb emoji-in-title"></span></h2>
         {this.state.shown ? (
           <DataLoader get={this.props.get}>
             {({data}) => (
-              <DeletedProjectsList initialDeletedProjects={data} undelete={undelete}/>
+              <DeletedProjectsList deletedProjects={deletedProjects} undelete={undelete}/>
             )}
           </DataLoader>
         ) : (
@@ -96,4 +84,6 @@ export default class DeletedProjects extends React.Component {
 }
 DeletedProjects.propTypes = {
   get: PropTypes.func.isRequired,
+  setDeletedProjects: PropTypes.func.isRequired,
+  deletedProjects: PropTypes.array.isRequired,
 };
