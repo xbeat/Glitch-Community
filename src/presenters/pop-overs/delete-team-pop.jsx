@@ -58,6 +58,9 @@ export class DeleteTeamPop extends React.Component {
 //     
   // }
   deleteTeam() {
+    if (this.state.teamIsDeleting) {
+      return null
+    }
     console.log ('delete the team')
     console.log ('during delete show loader in button') // even tho it's fast, it's the only immediate response i can give. assuming success and redirecting immediately may interrupt the request
     console.log ('on 200, redirect to /')
@@ -67,6 +70,7 @@ export class DeleteTeamPop extends React.Component {
   }
   
   render() {
+    let illustration = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fdelete%20team.svg?1531266411664"
     return (
       <dialog className="pop-over delete-team-pop">
         <section className="pop-over-info">
@@ -75,6 +79,7 @@ export class DeleteTeamPop extends React.Component {
           </div>
         </section>
         <section className="pop-over-actions">
+          <img src={illustration} role="img" aria-label="illustration" />
           <div className="action-description">
             Deleting this team will balkhjdslfkj klsadjflsak jdsaldkjf asdfsadf sakldfj
           </div>
@@ -88,7 +93,7 @@ export class DeleteTeamPop extends React.Component {
         </section>
         <section className="pop-over-info">
           <UsersList users={this.state.admins}/>
-          <p className="info-description">This will also email all team admins, giving them an option to undelete the team</p>
+          <p className="info-description">This will also email all team admins, giving them an option to undelete it later</p>
         </section>
       </dialog>
     );
