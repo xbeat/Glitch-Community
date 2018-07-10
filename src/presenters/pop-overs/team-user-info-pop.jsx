@@ -57,15 +57,15 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
     updateLoadingAdminStatus(true)
     api.patch((`teams/${teamId}/users/${user.id}`), {
       access_level: accessLevel
-    })
+    }
     .then(({data}) => {
       updateUserIsTeamAdmin(accessLevel);
-      updateLoadingAdminStatus(false)
-    }).catch(error =>
+      updateLoadingAdminStatus(false);
+    }).catch(error => {
       console.error("updateAdminStatus", accessLevel, error, error.response)
       // last admin
-    )
-  }
+    })
+  )
   
   return (
     <section className="pop-over-actions admin-actions">
