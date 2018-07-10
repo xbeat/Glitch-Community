@@ -51,9 +51,9 @@ UserActions.propTypes = {
   // update UI, user props
   // I can unadmin myself: (test this case, UI should adapt)
   // case: try and remove the last/only admin on a team
-const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, loadingAdminStatus}) => {
+const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, loadingAdminStatus, updateLoadingAdminStatus}) => {
   
-  const updateAdminStatus = (accessLevel, updateLoadingAdminStatus) => {
+  const updateAdminStatus = (accessLevel) => {
     updateLoadingAdminStatus(true)
     api.patch((`teams/${teamId}/users/${user.id}`), {
       access_level: accessLevel
@@ -70,12 +70,12 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
   return (
     <section className="pop-over-actions admin-actions">
       { userIsTeamAdmin && 
-        <button className="button-small button-tertiary" onClick={() => updateAdminStatus(MEMBER_ACCESS_LEVEL, updateLoadingAdminStatus)}>
+        <button className="button-small button-tertiary" onClick={() => updateAdminStatus(MEMBER_ACCESS_LEVEL)}>
           <span>Remove Admin Status</span>
           { loadingAdminStatus && <Loader />}
         </button>
       ||
-        <button className="button-small button-tertiary" onClick={() => updateAdminStatus(ADMIN_ACCESS_LEVEL, updateLoadingAdminStatus)}>
+        <button className="button-small button-tertiary" onClick={() => updateAdminStatus(ADMIN_ACCESS_LEVEL)}>
           <span>Make an Admin</span>
           { loadingAdminStatus && <Loader />}
         </button>
@@ -134,7 +134,7 @@ class TeamUserInfoPop extends React.Component {
     })
   }
   
-  updateLoadingAdminStatus(value) {
+  updateChangingAdminStatus(value) {
     this.setState({
       loadingAdminStatus: value
     })
@@ -164,8 +164,8 @@ class TeamUserInfoPop extends React.Component {
           userIsTeamAdmin={this.state.userIsTeamAdmin} 
           api={this.props.api} 
           teamId={this.props.teamId} 
-          updateUserIsTeamAdmin={(accessLevel) => this.updateUserIsTeamAdmin(accessLevel)} 
-          updateLoadingAdminStatus={(value) => this.updateLoadingAdminStatus(value)}
+          updateUserIsTeamAdmin={() => this.updateUserIsTeamAdmin()} 
+          updateLoadingAdminStatus={() => this.updateLoadingAdminStatus()}
           loadingAdminStatus={this.state.loadingAdminStatus} 
         />
         { this.props.currentUserIsOnTeam && <RemoveFromTeam action={this.removeFromTeamAction} /> }
