@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {getAvatarUrl} from '../models/project.js';
 
@@ -34,6 +35,10 @@ const DeletedProjectsList = ({deletedProjects, undelete}) => (
     ))}
   </ul>
 );
+DeletedProjectsList.propTypes = {
+  deletedProjects: PropTypes.array.isRequired,
+  undelete: PropTypes.
+};
 
 function normalizeProjects(userProjects, userDeleted, netDeleted) {
   // userProjects and userDeleted change on delete/undelete
@@ -80,4 +85,7 @@ export default class DeletedProjects extends React.Component {
   }
 }
 DeletedProjects.propTypes = {
+  get: PropTypes.func.isRequired,
+  projects: PropTypes.array.isRequired,
+  deletedProjects: PropTypes.array.isRequired,
 };
