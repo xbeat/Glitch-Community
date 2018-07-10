@@ -47,12 +47,7 @@ UserActions.propTypes = {
 
 // Admin Actions Section
 
-// TODO
-  // update UI, user props
-  // I can unadmin myself: (test this case, UI should adapt)
-  // case: try and remove the last/only admin on a team
-const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, adminStatusIsUpdating, updateAdminStatusIsUpdating}) => {
-  
+const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, adminStatusIsUpdating, updateAdminStatusIsUpdating}) => {  
   const updateAdminStatus = (accessLevel) => {
     updateAdminStatusIsUpdating(true)
     let teamUser = `teams/${teamId}/users/${user.id}`
@@ -62,11 +57,11 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
     .then(({data}) => {
       updateAdminStatusIsUpdating(false);
       updateUserIsTeamAdmin(accessLevel);
+      // TODO: I can unadmin myself, updates currentUser in other components too
     }).catch(error => {
       console.error("updateAdminStatus", accessLevel, error, error.response)
-      // last admin
+      // TODO: last admin error -> show notification
     })
-    
   }
   
   return (
