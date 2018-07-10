@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Thanks from '../includes/thanks.jsx';
+import Loader from '../includes/loader.jsx';
 
 const MEMBER_ACCESS_LEVEL = 20
 const ADMIN_ACCESS_LEVEL = 30
@@ -50,16 +51,17 @@ UserActions.propTypes = {
   // update UI, user props
   // I can unadmin myself: (test this case, UI should adapt)
   // case: try and remove the last/only admin on a team
-const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin}) => {
+const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, loadingAdminStatus}) => {
   
-  const updateAdminStatus = (accessLevel) => {
+  const updateAdminStatus = (accessLevel, updateLoadingAdminStatus) => {
+    updateLoadingAdminStatus(true)
     api.patch((`teams/${teamId}/users/${user.id}`), {
       access_level: accessLevel
     })
-    .then(({data}) => 
-      console.log ('🌹'
-      updateUserIsTeamAdmin(accessLevel)
-    ).catch(error =>
+    .then(({data}) => {
+      updateUserIsTeamAdmin(accessLevel);
+      updateLoadingAdminStatus(false)
+    }).catch(error =>
       console.error("updateAdminStatus", accessLevel, error, error.response)
       // last admin
     )
@@ -68,12 +70,14 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
   return (
     <section className="pop-over-actions admin-actions">
       { userIsTeamAdmin && 
-        <button className="button-small button-tertiary" onClick={updateAdminStatus(MEMBER_ACCESS_LEVEL)}>
+        <button className="button-small button-tertiary" onClick={() => updateAdminStatus(MEMBER_ACCESS_LEVEL, updateLoadingAdminStatus)}>
           <span>Remove Admin Status</span>
+          { loadingAdminStatus && <Loader />}
         </button>
       ||
-        <button className="button-small button-tertiary" onClick={updateAdminStatus(ADMIN_ACCESS_LEVEL)}>
+        <button className="button-small button-tertiary" onClick={() => updateAdminStatus(ADMIN_ACCESS_LEVEL, updateLoadingAdminStatus)}>
           <span>Make an Admin</span>
+          { loadingAdminStatus && <Loader />}
         </button>
       }
     </section>
@@ -89,6 +93,8 @@ AdminActions.propTypes = {
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   updateUserIsTeamAdmin: PropTypes.func.isRequired,
+  updateLoadingAdminStatus: PropTypes.func.isRequired,
+  loadingAdminStatus: PropTypes.bool.isRequired,
 };
 
 
@@ -109,6 +115,7 @@ class TeamUserInfoPop extends React.Component {
 
     this.state = {
       userIsTeamAdmin: this.props.userIsTeamAdmin,
+      loadingAdminStatus: false
     };
   }
 
@@ -124,6 +131,12 @@ class TeamUserInfoPop extends React.Component {
     }
     this.setState({
       userIsTeamAdmin: isAdmin
+    })
+  }
+  
+  updateLoadingAdminStatus(value) {
+    this.setState({
+      loadingAdminStatus: value
     })
   }
 
@@ -142,12 +155,19 @@ class TeamUserInfoPop extends React.Component {
                 <span className="status admin">Team Admin</span>
               </div> 
             }
-
           </div>
         </section>
         { this.props.user.thanksCount > 0 && <ThanksCount count={this.props.user.thanksCount} /> }
         <UserActions user={this.props.user} />
-        <AdminActions user={this.props.user} userIsTeamAdmin={this.state.userIsTeamAdmin} api={this.props.api} teamId={this.props.teamId} updateUserIsTeamAdmin={(accessLevel) => this.updateUserIsTeamAdmin(accessLevel)}/>
+        <AdminActions 
+          user={this.props.user} 
+          userIsTeamAdmin={this.state.userIsTeamAdmin} 
+          api={this.props.api} 
+          teamId={this.props.teamId} 
+          updateUserIsTeamAdmin={(accessLevel) => this.updateUserIsTeamAdmin(accessLevel)} 
+          updateLoadingAdminStatus={(value) => this.updateLoadingAdminStatus(value)}
+          loadingAdminStatus={this.state.loadingAdminStatus} 
+        />
         { this.props.currentUserIsOnTeam && <RemoveFromTeam action={this.removeFromTeamAction} /> }
       </dialog>
     );
