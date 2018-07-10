@@ -50,7 +50,7 @@ export default Project = function(I, self) {
         isPinnedByTeam: project.isPinnedByTeam(application),
         isPinnedByUser: project.isPinnedByUser(application),
         isRecentProject: !!(project.isRecentProject),
-        link: `/~${project.domain()}`,
+        link: getLink(self.domain()),
         name: project.name(),
         private: project.private(),
         showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
@@ -80,7 +80,7 @@ export default Project = function(I, self) {
     },
 
     avatar() {
-      return `${CDN_URL}/project-avatar/${self.id()}.png`;
+      return getAvatarUrl(self.id());
     },
         
     getReadme(application) {
@@ -265,6 +265,10 @@ Project._cache = cache;
 
 export function getAvatarUrl(id) {
   return `${CDN_URL}/project-avatar/${id}.png`;
+}
+
+export function getLink(domain) {
+  return `/~${domain}`;
 }
 
 // Circular dependencies must go below module.exports

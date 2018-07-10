@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getAvatarUrl} from '../models/project.js';
+import {getAvatarUrl, getLink} from '../models/project.js';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
@@ -13,7 +13,7 @@ export const ProjectItem = ({project, categoryColor, projectOptions}) => {
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
       <ProjectOptionsContainer project={project} projectOptions={projectOptions}></ProjectOptionsContainer>
 
-      <a href={project.link}>
+      <a href={getLink(project.domain)}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
           style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
           data-track="project" data-track-label={project.domain}>
@@ -37,9 +37,7 @@ ProjectItem.propTypes = {
     description: PropTypes.string.isRequired,
     domain: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    isRecentProject: PropTypes.bool.isRequired,
-    link: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    isRecentProject: PropTypes.bool,
     private: PropTypes.bool.isRequired,
     showAsGlitchTeam: PropTypes.bool.isRequired,
     users: PropTypes.array.isRequired,
