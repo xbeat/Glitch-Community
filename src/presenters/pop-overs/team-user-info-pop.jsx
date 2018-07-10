@@ -58,6 +58,7 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId}) => {
     })
     .then(({data}) => 
       console.log('🌹', data)
+      // update user
     ).catch(error =>
       console.error("removeAdminStatus", error, error.response)
     )
