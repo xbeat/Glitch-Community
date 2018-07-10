@@ -72,7 +72,8 @@ const UserPage = ({
   addPin, removePin,
   leaveProject, deletedProjects,
   deleteProject, undeleteProject,
-  getProjects, getDeletedProjects,
+  getProjects,
+  getDeletedProjects, setDeletedProjects,
   _cacheCover,
 }) => (
   <main className="profile-page user-page">
@@ -94,7 +95,7 @@ const UserPage = ({
       projectOptions={{leaveProject, deleteProject}}
       getProjects={getProjects}
     />
-    {isAuthorized && <DeletedProjects get={getDeletedProjects} undelete={undeleteProject} projects={projects} deletedProjects={deletedProjects}/>}
+    {isAuthorized && <DeletedProjects get={getDeletedProjects} setDeletedProjects={setDeletedProjects} deletedProjects={deletedProjects} undelete={undeleteProject}/>}
   </main>
 );
 UserPage.propTypes = {
@@ -234,6 +235,7 @@ class UserPageEditor extends React.Component {
       leaveProject: id => this.leaveProject(id),
       deleteProject: id => this.deleteProject(id),
       undeleteProject: id => this.undeleteProject(id),
+      setDeletedProjects: deletedProjects => this.setState({deletedProjects}),
     };
     return (
       <CurrentUserProvider model={currentUserModel}>
