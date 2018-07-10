@@ -61,28 +61,34 @@ export class DeleteTeamPop extends React.Component {
     console.log ('delete the team')
     console.log ('during delete show loader in button') // even tho it's fast, it's the only immediate response i can give. assuming success and redirecting immediately may interrupt the request
     console.log ('on 200, redirect to /')
+    this.setState({
+      teamIsDeleting: true
+    })
   }
   
   render() {
     return (
       <dialog className="pop-over delete-team-pop">
         <section className="pop-over-info">
-          <div className="pop-title">Delete {this.props.teamName}</div>
+          <div className="pop-title">
+            Delete {this.props.teamName}
+          </div>
         </section>
         <section className="pop-over-actions">
-          <p>Deleting this team will</p>
-          <div className="button-wrap">
-            <button className="button button-small has-emoji opens-pop-over" onClick={this.deleteTeam}>
-              <span>Delete Team</span> 
-              <span className="emoji bomb" role="img" aria-label="bomb emoji"></span>
-              { this.state.teamIsDeleting && <Loader /> }
-            </button>
+          <div className="action-description">
+            Deleting this team will balkhjdslfkj klsadjflsak jdsaldkjf asdfsadf sakldfj
           </div>
-
+        </section>
+        <section className="pop-over-actions danger-zone">
+          <button className="button button-small has-emoji opens-pop-over" onClick={this.deleteTeam}>
+            <span>Delete Team </span> 
+            <span className="emoji bomb" role="img" aria-label="bomb emoji"></span>
+            { this.state.teamIsDeleting && <Loader /> }
+          </button>
         </section>
         <section className="pop-over-info">
           <UsersList users={this.state.admins}/>
-          <p>This will also email all team admins, giving them an option to undelete the team</p>
+          <p className="info-description">This will also email all team admins, giving them an option to undelete the team</p>
         </section>
       </dialog>
     );
