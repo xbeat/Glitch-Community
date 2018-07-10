@@ -1,15 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
+import UsersList from "../users-list.jsx";
 
 export class DeleteTeamPop extends React.Component {
   constructor(props) {
     super(props);    
-    this.state = {};
+    this.state = {
+      admins: []
+    };
   }
     
-  // componentDidMount() {
-  // }
+  componentDidMount() {
+    console.log (this.props.users, this.props.adminUsers)
+    let admins = this.props.users.filter(user => {
+      return this.props.adminUsers.includes(user.id)
+    })
+    this.setState({
+      admins: admins
+    })
+  }
   
 //   filterProjects(query, myProjects, teamProjects) {
 //     query = query.toLowerCase().trim();
@@ -42,18 +52,21 @@ export class DeleteTeamPop extends React.Component {
   //   this.props.addProject(projectId);
   // }
 
-  adminUsersList() {
-    
-  }
+//   adminUsersList() {
+//     
+  // }
   
   render() {
     return (
-      <dialog className="pop-over add-team-project-pop">
+      <dialog className="pop-over delete-team-pop">
         <section className="pop-over-info">
           <p>Delete {this.props.teamName}</p>
         </section>
         <section className="pop-over-actions">
           <p>Deleting this team will</p>
+        </section>
+        <section className="pop-over-info">
+          <UsersList users={this.state.admins} extraClass="single-line"/>
         </section>
       </dialog>
     );
