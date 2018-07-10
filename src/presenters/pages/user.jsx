@@ -105,7 +105,7 @@ UserPage.propTypes = {
     id: PropTypes.number.isRequired,
     thanksCount: PropTypes.number.isRequired,
     hasCoverImage: PropTypes.bool.isRequired,
-    avatarUrl: PropTypes.string.isRequired,
+    avatarUrl: PropTypes.string,
     color: PropTypes.string.isRequired,
     coverColor: PropTypes.string,
   }).isRequired,
@@ -241,6 +241,18 @@ class UserPageEditor extends React.Component {
     );
   }
 }
+UserPageEditor.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  }).isRequired,
+  currentUserId: PropTypes.number.isRequired,
+  currentUserModel: PropTypes.object.isRequired,
+  updateFields: PropTypes.func.isRequired,
+  addItem: PropTypes.func.isRequired,
+  removeItem: PropTypes.func.isRequired,
+  localAddItem: PropTypes.func.isRequired,
+  localRemoveItem: PropTypes.func.isRequired,
+};
 
 const UserPageLoader = ({api, get, loginOrId, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
