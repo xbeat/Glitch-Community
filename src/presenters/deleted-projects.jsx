@@ -29,6 +29,10 @@ DeletedProject.propTypes = {
 };
 
 class DeletedProjectsList extends React.Component {
+  componentDidMount() {
+    this.props.set(this.props.rawDeletedProjects);
+  }
+  
   render() {
     const {deletedProjects, undelete} = this.props;
     return (
