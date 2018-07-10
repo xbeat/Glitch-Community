@@ -28,18 +28,23 @@ DeletedProject.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-const DeletedProjectsList = ({deletedProjects, undelete}) => (
-  <ul className="deleted-projects-container">
-    {deletedProjects.map(({id, domain}) => (
-      <li key={id} className="deleted-project-container">
-        <DeletedProject
-          id={id} domain={domain}
-          onClick={() => undelete(id)}
-        />
-      </li>
-    ))}
-  </ul>
-);
+class DeletedProjectsList extends React.Component {
+  render() {
+    const {deletedProjects, undelete} = this.props;
+    return (
+      <ul className="deleted-projects-container">
+        {deletedProjects.map(({id, domain}) => (
+          <li key={id} className="deleted-project-container">
+            <DeletedProject
+              id={id} domain={domain}
+              onClick={() => undelete(id)}
+            />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+}
 DeletedProjectsList.propTypes = {
   deletedProjects: PropTypes.array.isRequired,
   undelete: PropTypes.func.isRequired,
@@ -68,18 +73,14 @@ export default class DeletedProjects extends React.Component {
   }
   
   render() {
-    const {
-      projects,
-      deletedProjects,
-      undelete,
-    } = this.props;
+    const {undelete} = this.props;
     return (
       <article className="deleted-projects">
         <h2>Deleted Projects <span className="emoji bomb emoji-in-title"></span></h2>
         {this.state.shown ? (
           <DataLoader get={this.props.get}>
             {({data}) => (
-              <DeletedProjectsList deletedProjects={normalizeProjects(projects, deletedProjects, data)} undelete={undelete}/>
+              <DeletedProjectsList initialDeletedProjects={data} undelete={undelete}/>
             )}
           </DataLoader>
         ) : (
@@ -91,6 +92,4 @@ export default class DeletedProjects extends React.Component {
 }
 DeletedProjects.propTypes = {
   get: PropTypes.func.isRequired,
-  projects: PropTypes.array.isRequired,
-  deletedProjects: PropTypes.array.isRequired,
 };
