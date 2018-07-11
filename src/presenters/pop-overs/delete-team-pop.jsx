@@ -11,6 +11,7 @@ export class DeleteTeamPop extends React.Component {
       admins: [],
       teamIsDeleting: false,
     };
+    this.deleteTeam = this.deleteTeam.bind(this);
   }
     
   componentDidMount() {
@@ -23,21 +24,25 @@ export class DeleteTeamPop extends React.Component {
   }
   
   deleteTeam() {
-    console.log (this.props)
-    console.log (this.state)
     if (this.state.teamIsDeleting) {
       return null
     }
-    let deletePath = `teams/${this.props.teamId}`
     this.setState({
       teamIsDeleting: true
     })
-    this.props.api.delete((deletePath).then(({data}) => {
-      console.log ('✅', data) // on 200, redirect to /
-    }))
-    // console.log ('delete the team')
-    // console.log ('during delete show loader in button') // even tho it's fast, it's the only immediate response i can give. assuming success and redirecting immediately may interrupt the request
-    // console.log ('on 200, redirect to /')
+    let team = `teams/${this.props.teamId}`
+    this.props.api().delete(team)
+    .then(({data}) => {
+      window.location = '/'
+    }).catch(error => {
+      console.error("deleteTeam", error, error.response)
+      this.setState({
+        teamIsDeleting: false
+      })
+      // TODO: show generic error notification
+    })
+
+    
   }
   
   render() {
@@ -56,7 +61,7 @@ export class DeleteTeamPop extends React.Component {
           </div>
         </section>
         <section className="pop-over-actions danger-zone">
-          <button className="button button-small has-emoji opens-pop-over" onClick={this.deleteTeam)}>
+          <button className="button button-small has-emoji opens-pop-over" onClick={this.deleteTeam}>
             <span>Delete {this.props.teamName} </span> 
             <span className="emoji bomb" role="img" aria-label="bomb emoji"></span>
             { this.state.teamIsDeleting && <Loader /> }
