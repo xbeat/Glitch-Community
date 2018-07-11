@@ -12,15 +12,15 @@ const NotifyUploading = ({progress}) => (
 );
 const NotifyError = () => 'File upload failed. Try again in a few minutes?';
 
-async function uploadWrapper(createNotification, createPersistentNotification, upload, ...args) {
+async function uploadWrapper(notifications, upload) {
   let result = null;
   let progress = 0;
   const {
     updateNotification,
     removeNotification,
-  } = createPersistentNotification(<NotifyUploading progress={progress}/>, 'notifyUploading');
+  } = notifications.createPersistentNotification(<NotifyUploading progress={progress}/>, 'notifyUploading');
   try {
-    result = await upload(...args,
+    result = await upload(
       ({lengthComputable, loaded, total}) => {
         if (lengthComputable) {
           progress = loaded/total;
@@ -31,7 +31,7 @@ async function uploadWrapper(createNotification, createPersistentNotification, u
       }
     );
   } catch (e) {
-    createNotification(<NotifyError/>, 'notifyError');
+    notifications.createNotification(<NotifyError/>, 'notifyError');
     throw e;
   } finally {
     removeNotification();
@@ -39,29 +39,21 @@ async function uploadWrapper(createNotification, createPersistentNotification, u
   return result;
 }
 
-const Uploader = ({createNotification, createPersistentNotification, children}) => (
-);
-Uploader.propTypes = {
-  children: PropTypes.func.isRequired,
-  createNotification: PropTypes.func.isRequired,
-  createPersistentNotification: PropTypes.func.isRequired,
-};
-
-const UploaderContainer = ({children}) => (
+const Uploader = ({children}) => (
   <Notifications>
     {notifications => (
-  children({
-    uploadAsset: (blob, policy, key) => {
-      return uploadWrapper(createNotification, createPersistentNotification, uploadAsset, blob, policy, key);
-    },
-    uploadAssetSizes: (blob, policy, sizes) => {
-      return uploadWrapper(createNotification, createPersistentNotification, uploadAssetSizes, blob, policy, sizes);
-    },
-  })
+      children({
+        uploadAsset: (blob, policy, key) => {
+          return uploadWrapper(notifications, cb => uploadAsset(blob, policy, key, cb));
+        },
+        uploadAssetSizes: (blob, policy, sizes) => {
+          return uploadWrapper(notifications, cb => uploadAssetSizes(blob, policy, sizes, cb));
+        },
+      })
     )}
   </Notifications>
 );
-UploaderContainer.propTypes = {
+Uploader.propTypes = {
   children: PropTypes.func.isRequired,
 };
-export default UploaderContainer;
+export default Uploader;
