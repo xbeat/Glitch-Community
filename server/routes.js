@@ -65,7 +65,7 @@ module.exports = function() {
     if (!user) {
       return render(res, `@${name}`, `We couldn't find @${name}`);
     }
-    render(res, user.name, user.description);
+    render(res, user.name, user.description, user.avatarThumbnailUrl);
   });
 
   app.get('*', (req, res) => {

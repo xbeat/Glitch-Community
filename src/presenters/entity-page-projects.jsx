@@ -1,125 +1,116 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProjectsList from "./projects-list.jsx";
-import Observable from "o_0";
-import {debounce} from 'lodash';
+import {chunk, keyBy, partition} from 'lodash';
+
+import ProjectsList from './projects-list.jsx';
+import {CurrentUserConsumer, normalizeProjects} from './current-user.jsx';
 
 
 /* globals Set */
 
-const projectStateFromModels = (projectsModel, pinsModel) => {
-  const pinnedIds = pinsModel.map(({projectId}) => projectId);
-  const pinnedSet = new Set(pinnedIds);
-  const projects = projectsModel.filter(project => project.fetched()).map(project => project.asProps());
-  const pinnedProjects = projects.filter( (project) => pinnedSet.has(project.id));
-  const recentProjects = projects.filter( (project) => !pinnedSet.has(project.id));
-  return {pinnedProjects, recentProjects};
-};
+function listToObject(list, val) {
+  return list.reduce((data, key) => ({[key]: val, ...data}), {});
+}
 
-export const TeamEntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, projects, pins, projectOptions}) => {
-  const commonProps = {
-    closeAllPopOvers,
-    projectOptions,
-  };
-  let pinIds = pins.map(pin => {
-    return pin.projectId;
-  });
-  let recentProjects = projects.filter(project => {
-    return !pinIds.includes(project.id);
-  });
-  let pinnedProjects = projects.filter(project => {
-    return pinIds.includes(project.id);
-  });
+const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
+
+const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, projectOptions}) => {
+  const pinnedSet = new Set(pins.map(({projectId}) => projectId));
+  const [pinnedProjects, recentProjects] = partition(projects, ({id}) => pinnedSet.has(id));
   
-  const showPinnedProjects = isAuthorizedUser || pinnedProjects.length !== 0;
+  const pinnedVisible = isAuthorized || pinnedProjects.length;
+  
+  const pinnedTitle = (
+    <React.Fragment>
+      Pinned Projects
+      <span className="emoji pushpin emoji-in-title"></span>
+    </React.Fragment>
+  );
+  
+  const pinnedEmpty = (
+    <React.Fragment>
+      <img className="psst" src={psst} alt="psst"></img>
+      <p>
+        Pin your projects to show them off
+        <span className="emoji pushpin"></span>
+      </p>
+    </React.Fragment>
+  );
+  
   return (
     <React.Fragment>
-      { showPinnedProjects && (
-        <ProjectsList title="Pinned Projects" isPinned={true} projects={pinnedProjects} {...commonProps}/>
+      {!!pinnedVisible && (
+        <ProjectsList title={pinnedTitle}
+          projects={pinnedProjects} placeholder={pinnedEmpty}
+          projectOptions={isAuthorized ? {removePin, ...projectOptions} : {}}
+        />
       )}
-      <ProjectsList title="Recent Projects" projects={recentProjects} {...commonProps}/>
+      <ProjectsList title="Recent Projects" projects={recentProjects}
+        projectOptions={isAuthorized ? {addPin, ...projectOptions} : {}}
+      />
     </React.Fragment>
   );
 };
-
-TeamEntityPageProjects.propTypes = {
-  pins: PropTypes.array.isRequired,
+EntityPageProjects.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
   projects: PropTypes.array.isRequired,
-  isAuthorizedUser: PropTypes.bool.isRequired,
-  closeAllPopOvers: PropTypes.func.isRequired,
+  pins: PropTypes.arrayOf(PropTypes.shape({
+    projectId: PropTypes.string.isRequired,
+  }).isRequired).isRequired,
+  addPin: PropTypes.func.isRequired,
+  removePin: PropTypes.func.isRequired,
   projectOptions: PropTypes.object.isRequired,
 };
 
-
-export class EntityPageProjectsContainer extends React.Component {
-  
+export default class EntityPageProjectsLoader extends React.Component {
   constructor(props) {
     super(props);
-     
-    this.state = {
-      recentProjects: [],
-      pinnedProjects: [],
-    };
+    this.state = {};
+  }
+  
+  ensureProjects(projects) {
+    const ids = projects.map(({id}) => id);
     
-    this.aggregateObservable = null;
-    this.setStateFromModels = debounce((projectsModel, pinsModel, Component) => {
-      Component.setState(projectStateFromModels(projectsModel, pinsModel));
-    }, 10);
+    const discardedProjects = Object.keys(this.state).filter(id => this.state[id] && !ids.includes(id));
+    if (discardedProjects.length) {
+      this.setState(listToObject(discardedProjects, undefined));
+    }
+    
+    const unloadedProjects = ids.filter(id => this.state[id] === undefined);
+    if (unloadedProjects.length) {
+      this.setState(listToObject(unloadedProjects, null));
+      chunk(unloadedProjects, 100).forEach(chunk => {
+        this.props.getProjects(chunk).then(projects => {
+          this.setState(keyBy(projects, ({id}) => id));
+        });
+      });
+    }
   }
   
   componentDidMount() {
-    this.aggregateObservable = Observable(() => {
-      const projectsModel = this.props.projectsObservable();
-      const pinsModel = this.props.pinsObservable();
-      
-      // Subscribe just to the 'fetched' subcomponent of the projects.
-      for(let {fetched} of projectsModel) {
-        fetched && fetched();
-      }
-      
-      this.setStateFromModels(projectsModel, pinsModel, this);
-    });
+    this.ensureProjects(this.props.projects);
   }
   
-  componentWillUnmount(){
-    this.aggregateObservable && this.aggregateObservable.releaseDependencies();
-    this.aggregateObservable = null;
+  componentDidUpdate() {
+    this.ensureProjects(this.props.projects);
   }
-
+  
   render() {
-    return <EntityPageProjects {...this.props} {...this.state}/>;
+    const {projects, ...props} = this.props;
+    const loadedProjects = projects.map(project => this.state[project.id] || project);
+    return (
+      <CurrentUserConsumer>
+        {currentUser => (
+          <EntityPageProjects
+            projects={normalizeProjects(loadedProjects, currentUser)}
+            {...props}
+          />
+        )}
+      </CurrentUserConsumer>
+    );
   }
 }
-
-EntityPageProjectsContainer.propTypes = {
-  projectsObservable: PropTypes.func.isRequired,
-  pinsObservable: PropTypes.func.isRequired,
-  isAuthorizedUser: PropTypes.bool.isRequired,
-  closeAllPopOvers: PropTypes.func.isRequired,
-  projectOptions: PropTypes.object.isRequired,
+EntityPageProjectsLoader.propTypes = {
+  projects: PropTypes.array.isRequired,
+  getProjects: PropTypes.func.isRequired,
 };
-
-export const EntityPageProjects = ({closeAllPopOvers, isAuthorizedUser, recentProjects, pinnedProjects, projectOptions}) => {
-
-  const commonProps = {
-    closeAllPopOvers,
-    projectOptions,
-  };
-  
-  const showPinnedProjects = isAuthorizedUser || pinnedProjects.length !== 0;
-  return (
-    <React.Fragment>
-      { showPinnedProjects && (
-        <ProjectsList title="Pinned Projects" isPinned={true} projects={pinnedProjects} {...commonProps}/>
-      )}
-      <ProjectsList title="Recent Projects" projects={recentProjects} {...commonProps}/>
-    </React.Fragment>
-  );
-};
-
-EntityPageProjects.propTypes = {
-  pinnedProjects: PropTypes.array.isRequired,
-  isAuthorizedUser: PropTypes.bool.isRequired,
-};
-
-export default EntityPageProjectsContainer;

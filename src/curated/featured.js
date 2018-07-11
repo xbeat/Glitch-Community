@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Practice Writing JS Functions',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ften-functions.jpg?1530529470077",
-    link: 'https://glitch.com/~ten-functions'
+    title: 'Play Music With Your Face',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fface-the-music.jpg?1531135109987",
+    link: 'https://glitch.com/~face-the-music'
   }
   , {
-    title: 'Ask the Magic 8-Ball',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F8ball.jpg?1530529469908",
-    link: 'https://glitch.com/~8ball'
+    title: 'Pew Pew Pew! Galaxeroids!',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fgalaxeroids.jpg?1531135110191",
+    link: 'https://glitch.com/~galaxeroids'
   }
   , {
-    title: 'Beautiful Feathers On A Curve',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglobeards-feather-curve.jpg?1530529470277",
-    link: 'https://globeards.glitch.me/drawcurve.html'
+    title: 'Get Organized: Make Labels',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fshop-labels.jpg?1531135109784",
+    link: 'https://glitch.com/~shop-labels'
   }  
 ];

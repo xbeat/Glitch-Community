@@ -98,11 +98,11 @@ project-avatar-size = 42px
     cursor: pointer
     overflow: visible
     &:hover
-      button
+      .button
         background-color: secondary-background
         box-shadow: 2px 2px 0 primary
     &:active
-      button
+      .button
         background-color: secondary-background-active
         box-shadow: none
     &:after
@@ -134,8 +134,7 @@ project-avatar-size = 42px
       width: project-avatar-size
       height: project-avatar-size
 
-    button
-      display: inline
+    .button
       max-width: "calc(100% - %s - 11px)" % project-avatar-size
       vertical-align: -13px
 

@@ -57,19 +57,19 @@ class TeamAnalytics extends React.Component {
       isGettingData: true,
       isGettingC3: true,
       totalRemixes: 0,
-      totalAppViews: 0,
+      uniqueAppViews: 0,
     };
   }
 
   updateTotals() {
-    let totalAppViews = 0;
+    let uniqueAppViews = 0;
     let totalRemixes = 0;
     this.state.analytics.buckets.forEach(bucket => {
-      totalAppViews += bucket.analytics.visits;
+      uniqueAppViews += bucket.analytics.uniqueIps;
       totalRemixes += bucket.analytics.remixes;
     });
     this.setState({
-      totalAppViews: totalAppViews,
+      uniqueAppViews: uniqueAppViews,
       totalRemixes: totalRemixes,
     });
   }
@@ -156,7 +156,7 @@ class TeamAnalytics extends React.Component {
             <Loader />
           ||
             <TeamAnalyticsSummary
-              totalAppViews = {this.state.totalAppViews}
+              uniqueAppViews = {this.state.uniqueAppViews}
               totalRemixes = {this.state.totalRemixes}
             />
           }
@@ -185,7 +185,7 @@ class TeamAnalytics extends React.Component {
             <TeamAnalyticsReferrers 
               analytics = {this.state.analytics}
               totalRemixes = {this.state.totalRemixes}
-              totalAppViews = {this.state.totalAppViews}
+              uniqueAppViews = {this.state.uniqueAppViews}
             />
           }
         </section>

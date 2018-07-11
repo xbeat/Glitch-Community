@@ -12,17 +12,17 @@ const createHistogram = (buckets) => {
   let data = binData(buckets);
   let histogram = [];
   data.forEach (bin => {
-    let totalAppViews = 0;
+    let uniqueAppViews = 0;
     let totalRemixes = 0;
     // let codeViews = []
     bin.forEach (data => {
       totalRemixes += data.analytics.remixes;
-      totalAppViews += data.analytics.visits;
+      uniqueAppViews += data.analytics.uniqueIps;
       // referrers.push(data.analytics.referrers)
     });
     histogram.push({
       time: bin.x0,
-      appViews: totalAppViews,
+      appViews: uniqueAppViews,
       remixes: totalRemixes,
     });
   });
@@ -34,7 +34,7 @@ const chartColumns = (analytics) => {
   let histogram = createHistogram(buckets);
   let timestamps = ['x'];
   let remixes = ['Remixes'];
-  let appViews = ['App Views'];
+  let appViews = ['Unique App Views'];
   // let codeViews = ['Code Views']
   histogram.shift();
   histogram.forEach(bucket => {
