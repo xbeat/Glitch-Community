@@ -61,6 +61,9 @@ export class DeleteTeamPop extends React.Component {
     if (this.state.teamIsDeleting) {
       return null
     }
+    let deletePath = `teams/${this.props.teamId}`
+    api.delete(deletePath => {
+    })
     console.log ('delete the team')
     console.log ('during delete show loader in button') // even tho it's fast, it's the only immediate response i can give. assuming success and redirecting immediately may interrupt the request
     console.log ('on 200, redirect to /')
