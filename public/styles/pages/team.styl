@@ -7,8 +7,18 @@
     padding: 12px
     progress
       width: 100%
-      border-color: line-on-secondary-background
+      border-color: secondary
+      background-color: primary-background
+      &::-webkit-progress-value
+        background-color: secondary
+        border-radius: 3px
+
+      &::-moz-progress-bar
+        background-color: secondary
+        border-radius: 3px
+
     .secondary
       color: text-on-secondary-background
       font-size: 14px
       margin-top: 0.5rem
+

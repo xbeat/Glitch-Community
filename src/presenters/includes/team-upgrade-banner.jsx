@@ -40,7 +40,7 @@ class TeamUpgradeBanner extends React.Component {
         <progress value={this.props.projectsCount} max={this.props.limit} />
         <p className="secondary">{this.state.remainingFreeProjects} projects left</p>
         <button className="button buttom-small has-emoji">
-          Upgrade Team
+          Upgrade {this.props.teamName}
           <span className="emoji fish" />
         </button>
       </aside>
@@ -51,6 +51,7 @@ class TeamUpgradeBanner extends React.Component {
 TeamUpgradeBanner.propTypes = {
   projectsCount: PropTypes.number.isRequired,
   limit: PropTypes.number.isRequired,
+  teamName: PropTypes.string.isRequired,
 };
 
 export default TeamUpgradeBanner;
