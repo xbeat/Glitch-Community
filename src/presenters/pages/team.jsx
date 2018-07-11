@@ -40,6 +40,7 @@ const TeamPage = ({
   addProject, removeProject,
   api, searchUsers, getProjects,
   _cacheAvatar, _cacheCover,
+  currentUserIsTeamAdmin,
 }) => (
   <main className="profile-page team-page">
     <section>
@@ -70,7 +71,7 @@ const TeamPage = ({
     {(currentUserIsOnTeam ?
       <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects} />
       : <TeamMarketing/>)}
-    { currentUserIsOnTeam && <DeleteTeam api={() => api} teamId={id} teamName={name} users={users} adminUsers={adminUsers} /> }
+    { currentUserIsOnTeam && <DeleteTeam api={() => api} teamId={id} teamName={name} users={users} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> }
   </main>
 );
 
@@ -127,6 +128,14 @@ class TeamPageEditor extends React.Component {
     }
   }
   
+  currentUserIsTeamAdmin() {
+    let id = this.props.currentUserId
+    console.log(id, this.props.team.adminUsers)
+    if (this.props.team.adminUsers.includes(id)) {
+      return true
+    } else return false
+  }
+  
   render() {
     const {
       team,
@@ -138,6 +147,7 @@ class TeamPageEditor extends React.Component {
     } = this.props;
     const funcs = {
       currentUserIsOnTeam: team.users.some(({id}) => currentUserId === id),
+      currentUserIsTeamAdmin: this.currentUserIsTeamAdmin(),
       updateDescription: description => updateFields({description}),
       addUser: id => addItem('users', id, 'users', UserModel({id}).asProps()),
       removeUser: id => this.removeUser(id),

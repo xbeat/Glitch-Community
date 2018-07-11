@@ -40,9 +40,10 @@ export class DeleteTeamPop extends React.Component {
         teamIsDeleting: false
       })
       // TODO: show generic error notification
-    })
-
-    
+    })    
+  }
+  
+  currentUserIsAdmin() {
   }
   
   render() {
@@ -83,6 +84,7 @@ DeleteTeamPop.propTypes = {
   users: PropTypes.array.isRequired,
   adminUsers: PropTypes.array.isRequired,
   togglePopover: PropTypes.func.isRequired,
+  currentUserIsTeamAdmin: PropTypes.bool.isRequired
 };
 
 
