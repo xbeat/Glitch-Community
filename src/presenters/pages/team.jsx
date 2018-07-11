@@ -55,7 +55,7 @@ const TeamPage = ({
           {isVerified && <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>}
         </h1>
         <div className="users-information">
-          <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminUsers, api, teamId:id}} />
+          <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminUsers, api, teamId:id, currentUserIsTeamAdmin}} />
           {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)} />}
         </div>
         <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)} />
