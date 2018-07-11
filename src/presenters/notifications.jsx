@@ -33,9 +33,9 @@ export class Notifications extends React.Component {
   createPersistent(content, className='') {
     const id = this.create(content, `notifyPersistent ${className}`);
     const updateNotification = (content) => {
-      this.setState(({notifications}) => {
-        const old = notifications.find(n => n.id === id);
-        return {notifications
+      this.setState(({notifications}) => ({
+        notifications: notifications.map(n => n.id === id ? {...n, content} : n),
+      }));
     };
     const removeNotification = () => {
       this.remove(id);

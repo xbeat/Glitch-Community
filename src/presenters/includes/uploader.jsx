@@ -4,6 +4,12 @@ import PropTypes from 'prop-types';
 import {uploadAsset, uploadAssetSizes} from '../../utils/assets';
 import Notifications from '../notifications.jsx';
 
+const NotifyUploading = ({progress}) => (
+  <React.Fragment>
+    Uploading asset
+    <progress className="notify-progress" value={progress}></progress>
+  </React.Fragment>
+);
 const NotifyError = () => 'File upload failed. Try again in a few minutes?';
 
 class Uploader extends React.Component {
@@ -17,75 +23,64 @@ class Uploader extends React.Component {
   
   async uploadAsset(blob, policy, key) {
     let url = null;
-    this.setState({
-      uploading: true,
-      progress: 0,
-    });
+    let progress = 0;
+    const {
+      updateNotification,
+      removeNotification,
+    } = this.props.createPersistentNotification(<NotifyUploading progress={progress}/>, 'notifyUploading');
     try {
       url = await uploadAsset(blob, policy, key,
         ({lengthComputable, loaded, total}) => {
           if (lengthComputable) {
-            this.setState({progress: loaded/total});
+            progress = loaded/total;
           } else {
-            this.setState(({progress}) => ({progress: (progress+1)/2}));
+            progress = (progress+1)/2;
           }
+          updateNotification(<NotifyUploading progress={progress}/>);
         }
       );
     } catch (e) {
       this.props.createNotification(<NotifyError/>, 'notifyError');
       throw e;
     } finally {
-      this.setState({uploading: false});
+      removeNotification();
     }
     return url;
   }
   
   async uploadAssetSizes(blob, policy, sizes) {
-    this.setState({
-      uploading: true,
-      progress: 0,
-    });
+    let progress = 0;
+    const {
+      updateNotification,
+      removeNotification,
+    } = this.props.createPersistentNotification(<NotifyUploading progress={progress}/>, 'notifyUploading');
     try {
       await uploadAssetSizes(blob, policy, sizes,
         ({lengthComputable, loaded, total}) => {
           if (lengthComputable) {
-            this.setState({progress: loaded/total});
+            progress = loaded/total;
           } else {
-            this.setState(({progress}) => ({progress: (progress+1)/2}));
+            progress = (progress+1)/2;
           }
+          updateNotification(<NotifyUploading progress={progress}/>);
         }
       );
     } catch (e) {
       this.props.createNotification(<NotifyError/>, 'notifyError');
       throw e;
     } finally {
-      this.setState({uploading: false});
+      removeNotification();
     }
   }
   
   render() {
-    const {children} = this.props;
-    const {uploading, progress} = this.state;
     const funcs = {
       uploadAsset: this.uploadAsset.bind(this),
       uploadAssetSizes: this.uploadAssetSizes.bind(this),
     };
-    return (
-      <React.Fragment>
-        <aside className="notifications">
-          {uploading && (
-            <div className="notification notifyUploading">
-              Uploading asset
-              <progress className="notify-progress" value={progress}></progress>
-            </div>
-          )}
-        </aside>
-        {children(funcs)}
-      </React.Fragment>
-    );
+    return this.props.children(funcs);
   }
 }
-
 Uploader.propTypes = {
   children: PropTypes.func.isRequired,
 };
