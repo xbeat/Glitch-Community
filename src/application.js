@@ -2,7 +2,7 @@
 
 import Observable from 'o_0';
 
-import {find, keys} from "lodash";
+import {find} from "lodash";
 import axios from 'axios';
 import cachedCategories from './cache/categories.js';
 import cachedTeams from './cache/teams.js';
@@ -272,52 +272,13 @@ var self = Model({
     const end = string.length;
     return string.substring(firstCharacterPosition, end);
   },
-
-  isProjectUrl(url) {
-    if (url.charAt(0) === "~") {
-      return true;
-    }
-  },
-
-  isUserProfileUrl(url) {
-    if (url.charAt(0) === "@") {
-      return true;
-    }
-  },
-
-  isAnonUserProfileUrl(url) {
-    if (url.match(/^(user\/)/g)) { // matches "user/" at beginning of url
-      return true;
-    }
-  },
   
   anonProfileIdFromUrl(url) {
     return url.replace(/^(user\/)/g, '');
   },
-  
-  isSearchUrl(url, queryString) {
-    const queryStringKeys = keys(queryString); // ['q', 'blah']
-    if ((url === 'search') && (queryStringKeys.includes('q'))) {
-      return true;
-    }
-  },
-
-  isCategoryUrl(url) {
-    if (find(cachedCategories, category => category.url === url)) { return true; }
-  },
-
-  isTeamUrl(url) {
-    return !!find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
-  },
 
   getCachedTeamByUrl(url) {
     return find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
-  },
-
-  isQuestionsUrl(url) {
-    if (url === 'questions') {
-      return true;
-    }
   },
 });
 

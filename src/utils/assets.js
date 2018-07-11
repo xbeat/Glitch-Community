@@ -3,19 +3,19 @@
 import S3Uploader from './s3-uploader';
 
 import quantize from 'quantize';
-import Observable from 'o_0';
-const COVER_SIZES = {
+
+export const COVER_SIZES = {
   large: 1000,
   medium: 700,
   small: 450,
 };
-const AVATAR_SIZES = {
+export const AVATAR_SIZES = {
   large: 300,
   medium: 150,
   small: 60,
 };
 
-const blobToImage = file =>
+export const blobToImage = file =>
   new Promise(function(resolve, reject) {
     const image = new Image;
     image.onload = () => resolve(image);
@@ -60,7 +60,7 @@ const drawCanvasThumbnail = function(image, type, max) {
 // Takes an HTML5 File and returns a promise for an HTML5 Blob that is fulfilled
 // with a thumbnail for the image. If the image is small enough the original
 // blob is returned. Width and height metadata are added to the blob.
-const resizeImage = function(file, size) {
+export function resizeImage(file, size) {
   const max = COVER_SIZES[size] || 1000;
   return blobToImage(file)
     .then(function(image) {
@@ -72,9 +72,9 @@ const resizeImage = function(file, size) {
       return drawCanvasThumbnail(image, file.type, max);
     
     });
-};
+}
 
-const getDominantColor = function(image) {
+export function getDominantColor(image) {
   const {width, height} = image;
   const PIXELS_FROM_EDGE = 11;
   const canvas = document.createElement('canvas');
@@ -122,188 +122,45 @@ const getDominantColor = function(image) {
   const colorMap = quantize(colors, 5);
   const [r, g, b] = Array.from(colorMap.palette()[0]);
   return `rgb(${r},${g},${b})`;
-  
-};
+}
 
 
-export default function(application) {
-
-  let self;
-  return self = { 
-
-    getImagePolicy(assetType) {
-      if (assetType === 'avatar') {
-        if (application.pageIsTeamPage()) {
-          return self.getTeamAvatarImagePolicy();
-        }
-      }
-      return self.getCoverImagePolicy();
-    },
-
-    getCoverImagePolicy() {
-      if (application.pageIsTeamPage()) {
-        return self.getTeamCoverImagePolicy();
-      } 
-      return self.getUserCoverImagePolicy();
-      
-    },
-
-    getTeamCoverImagePolicy() {
-      const policyPath = `teams/${application.team().id()}/cover/policy`;
-      return application.api().get(policyPath)
-        .then(response => response).catch(function(error) {
-          application.notifyUploadFailure(true);
-          return console.error('getTeamCoverImagePolicy', error);
-        });
-    },
-    
-    getTeamAvatarImagePolicy() {
-      const policyPath = `teams/${application.team().id()}/avatar/policy`;
-      return application.api().get(policyPath)
-        .then(response => response).catch(function(error) {
-          application.notifyUploadFailure(true);
-          return console.error('getTeamAvatarImagePolicy', error);
-        });
-    },
-    
-    // We also use this cover bucket as a temp location for user avatars.
-    getUserCoverImagePolicy() {
-      const policyPath = `users/${application.user().id()}/cover/policy`;
-      return application.api().get(policyPath)
-        .then(response => response).catch(function(error) {
-          application.notifyUploadFailure(true);
-          return console.error('getUserCoverImagePolicy', error);
-        });
-    },
-        
-    generateUploadProgressEventHandler(uploadData) {
-      return function({lengthComputable, loaded, total}) {
-        if (lengthComputable) {
-          return uploadData.ratio(loaded / total);
-        } 
-        // Fake progress with each event: 0, 0.5, 0.75, 0.875, ...
-        return uploadData.ratio((1 + uploadData.ratio()) / 2);
-        
-      };
-    },
-
-    // Returns a promise that will be fulfilled with the url of the uploaded
-    // asset or rejected with an error.
-    uploadAsset(file, key, assetType) {
-      key = key || 'original';
-      const uploadData = {ratio: Observable(0)};
-      application.pendingUploads.push(uploadData);
-      return self.getImagePolicy(assetType)
-        .then(function({data}) {
-          const policy = data;
-          console.log('got the policy', policy);
-          console.log('uploading', file);
-          return S3Uploader(policy).upload({
-            key,
-            blob: file}).progress(
-            self.generateUploadProgressEventHandler(uploadData));
-        }).finally(
-          () => application.pendingUploads.remove(uploadData)
-        ).catch(function(error) {
-          application.notifyUploadFailure(true);
-          return console.error("uploadAsset", error);
-        });
-    },
-
-    uploadResized(file, size, assetType) {
-      console.log('uploadResized', size);
-      return resizeImage(file, size)
-        .then(function(blob) {
-          console.log('uploadCoverSize blob', blob);
-          return self.uploadAsset(blob, size, assetType);}).catch(function(error) {
-          application.notifyUploadFailure(true);
-          return console.error('uploadResized', error);
-        });
-    },
-
-    updateHasCoverImage(hasCover=true) {
-      const HAS_COVER_IMAGE = 
-        {'hasCoverImage': hasCover};
-      if (application.pageIsTeamPage()) {
-        application.team().updateTeam(application, HAS_COVER_IMAGE);
-        application.team().hasCoverImage(hasCover);
-        !hasCover && application.team().localCoverImage(null);
-        return;
-      } 
-      application.user().hasCoverImage(hasCover);
-      application.user().updateUser(application, HAS_COVER_IMAGE);
-      !hasCover && application.user().localCoverImage(null);
-    },
-
-    updateHasAvatarImage(hasAvatar=true) {
-      const HAS_AVATAR_IMAGE = 
-        {'hasAvatarImage': hasAvatar};
-      if (application.pageIsTeamPage()) {
-        application.team().updateTeam(application, HAS_AVATAR_IMAGE); 
-        application.team().hasAvatarImage(hasAvatar);
-        !hasAvatar && application.team().localAvatarImage(null);
-        return;
-      } 
-      console.error("hasAvatarImage does not exist in the user model.");
-    },
-
-    addCoverFile(file) {
-      self.uploadAsset(file)    
-        .then(() => self.updateHasCoverImage());
-      for (let size in COVER_SIZES) {
-        self.uploadResized(file, size);
-      }      
-      return blobToImage(file)
-        .then(function(image) {
-          const dominantColor = getDominantColor(image);
-          const entity = application.pageIsTeamPage() ? application.team() : application.user();
-          entity.localCoverImage(image.src);
-          entity.hasCoverImage(true);
-          entity.updateCoverColor(application, dominantColor);
-        }).catch(function(error) {
-          application.notifyUploadFailure(true);
-          return console.error('addCoverFile', error);
-        });
-    },
-
-    addAvatarFile(file) {
-      self.uploadAsset(file, 'original', 'avatar')
-        .then(() => self.updateHasAvatarImage());
-      for (let size in AVATAR_SIZES) {
-        self.uploadResized(file, size, 'avatar');
-      }
-      return blobToImage(file)
-        .then(function(image) {
-          const dominantColor = getDominantColor(image);
-          const entity = application.pageIsTeamPage() ? application.team() : application.user();
-          entity.localAvatarImage(image.src);
-          entity.updateAvatarColor(application, dominantColor);
-        }).catch(function(error) {
-          application.notifyUploadFailure(true);
-          return console.error('addAvatarFile', error);
-        });
-    },
-  
-    uploadAvatarFile() {
-      return self.uploader(self.addAvatarFile);
-    },
-    
-    uploadCoverFile() {
-      return self.uploader(self.addCoverFile);
-    },
-    
-    uploader(uploadReceiver) {
-      const input = document.createElement("input");
-      input.type = 'file';
-      input.accept = "image/*";
-      input.onchange = function(event) {
-        const file = event.target.files[0];
-        console.log('☔️☔️☔️ input onchange', file);
-        uploadReceiver(file);
-      };
-      input.click();
-      console.log('input created: ', input);
-      return false;
-    },
+export function requestFile(callback) {
+  const input = document.createElement("input");
+  input.type = 'file';
+  input.accept = "image/*";
+  input.onchange = function(event) {
+    const file = event.target.files[0];
+    console.log('☔️☔️☔️ input onchange', file);
+    callback(file);
   };
+  input.click();
+  console.log('input created: ', input);
+}
+
+export function getUserCoverImagePolicy(api, id) {
+  return api.get(`users/${id}/cover/policy`);
+}
+
+export function getTeamAvatarImagePolicy(api, id) {
+  return api.get(`teams/${id}/avatar/policy`);
+}
+
+export function getTeamCoverImagePolicy(api, id) {
+  return api.get(`teams/${id}/cover/policy`);
+}
+
+export function uploadAsset(blob, policy, key) {
+  return S3Uploader(policy).upload({ key, blob });
+}
+
+export function uploadAssetSizes(blob, policy, sizes, progressHandler) {
+  const upload = uploadAsset(blob, policy, 'original');
+  upload.progress(progressHandler);
+  
+  const scaledUploads = Object.keys(sizes).map(tag => {
+    return resizeImage(blob, sizes[tag]).then(resized => uploadAsset(resized, policy, tag));
+  });
+
+  return Promise.all([upload, ...scaledUploads]);
 }

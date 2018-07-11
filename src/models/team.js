@@ -216,7 +216,10 @@ export default Team = function(I, self) {
     asProps() {
       return {
         get users() { return self.users().map(({asProps}) => asProps()); },
+        get projects() { return self.projects().map(({asProps}) => asProps()); },
+        get teamPins() { return self.teamPins(); },
         
+        backgroundColor: self.backgroundColor(),
         coverColor: self.coverColor(),
         coverUrlSmall: self.coverUrl('small'),
         coverUrl: self.coverUrl(),
@@ -230,6 +233,7 @@ export default Team = function(I, self) {
         teamThanks: self.teamThanks(),
         thanksCount: self.thanksCount(),
         truncatedDescription: self.truncatedDescription(),
+        hasAvatarImage: !!self.hasAvatarImage(),
         hasCoverImage: !!self.hasCoverImage(),
         url: self.url(),
         verifiedImage: self.verifiedImage(),
@@ -274,6 +278,31 @@ Team.getSearchResults = function(application, query) {
 
 
 Team._cache = cache;
+
+
+export const getAvatarStyle = ({id, hasAvatarImage, backgroundColor, cache}) => {
+  const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-avatar/${id}/small?${cache}`;
+  const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-team-avatar.svg?1503510366819";
+  if (hasAvatarImage) {
+    return {
+      backgroundImage: `url('${customImage}')`,
+    };
+  }
+  return {
+    backgroundColor,
+    backgroundImage: `url('${defaultImage}')`,
+  };
+};
+
+export const getProfileStyle = ({id, hasCoverImage, coverColor, cache}) => {
+  const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-cover/${id}/large?${cache}`;
+  const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
+  return {
+    backgroundColor: coverColor,
+    backgroundImage: `url('${hasCoverImage ? customImage : defaultImage}')`,
+  };
+};
+
 
 // Circular dependencies must go below module.exports
 import Project from './project';

@@ -16,8 +16,11 @@ export default (application, content) =>
     header() {
       const userObservable = Observable(() => {
         const user = application.currentUser();
-        user.teams();
         const maybeUser = user.fetched() ? user.asProps() : null;
+        if (maybeUser) {
+          //Invoke any getters we care about
+          maybeUser.teams;
+        }
         return maybeUser;
       });
       const props = {
