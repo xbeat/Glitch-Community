@@ -70,7 +70,7 @@ export class DeleteTeamPop extends React.Component {
   }
   
   render() {
-    let illustration = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fdelete%20team.svg?1531266411664"
+    let illustration = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fdelete%20team.svg?1531266718950"
     return (
       <dialog className="pop-over delete-team-pop">
         <section className="pop-over-info">
@@ -79,14 +79,14 @@ export class DeleteTeamPop extends React.Component {
           </div>
         </section>
         <section className="pop-over-actions">
-          <img src={illustration} role="img" aria-label="illustration" />
+          <img className="illustration" src={illustration} role="img" aria-label="illustration" />
           <div className="action-description">
-            Deleting this team will balkhjdslfkj klsadjflsak jdsaldkjf asdfsadf sakldfj
+            Deleting {this.props.teamName} will remove this team page. No projects will be deleted, but only current project members will be able to edit them.
           </div>
         </section>
         <section className="pop-over-actions danger-zone">
           <button className="button button-small has-emoji opens-pop-over" onClick={this.deleteTeam}>
-            <span>Delete Team </span> 
+            <span>Delete {this.props.teamName} </span> 
             <span className="emoji bomb" role="img" aria-label="bomb emoji"></span>
             { this.state.teamIsDeleting && <Loader /> }
           </button>
