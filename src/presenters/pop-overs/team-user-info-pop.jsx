@@ -73,10 +73,20 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
       { userIsTeamAdmin && 
         <button className="button-small button-tertiary" onClick={() => updateAdminStatus(MEMBER_ACCESS_LEVEL)}>
           <span>Remove Admin Status</span>
+          { !currentUserIsTeamAdmin && 
+            <div className="status-badge">
+              <span className="status admin">Admins</span>
+            </div> 
+          }
         </button>
       ||
         <button className="button-small button-tertiary" onClick={() => updateAdminStatus(ADMIN_ACCESS_LEVEL)}>
           <span>Make an Admin</span>
+          { !currentUserIsTeamAdmin && 
+            <div className="status-badge">
+              <span className="status admin">Admins</span>
+            </div> 
+          }
         </button>
       }
     </section>
