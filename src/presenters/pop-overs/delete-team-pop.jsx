@@ -64,6 +64,11 @@ export class DeleteTeamPop extends React.Component {
         <section className="pop-over-actions danger-zone">
           <button className="button button-small has-emoji opens-pop-over" onClick={this.deleteTeam}>
             <span>Delete {this.props.teamName} </span> 
+            { !this.state.currentUserIsTeamAdmin && 
+              <div className="status-badge">
+                <span className="status admin">Admins</span>
+              </div> 
+            }
             <span className="emoji bomb" role="img" aria-label="bomb emoji"></span>
             { this.state.teamIsDeleting && <Loader /> }
           </button>
