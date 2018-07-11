@@ -70,7 +70,7 @@ export class DeleteTeamPop extends React.Component {
   }
   
   render() {
-    let illustration = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fdelete%20team.svg?1531266718950"
+    let illustration = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fdelete-team.svg?1531267699621"
     return (
       <dialog className="pop-over delete-team-pop">
         <section className="pop-over-info">
