@@ -1,11 +1,13 @@
 import React from 'react';
 
-const {Provider, Consumer} = React.createContext();
+const {Provider, Consumer} = React.createContext({
+  createNotification: (content) => console.log(content),
+});
 
-const Notification = ({children, className}) => (
-  <div className={`notification ${className}`}>
-    {children}
-  </div>
+const Notification = ({content, className}) => (
+  <aside className={`notification ${className}`}>
+    {content}
+  </aside>
 );
 
 export class Notifications extends React.Component {
@@ -16,25 +18,31 @@ export class Notifications extends React.Component {
     };
   }
   
+  createNotification(content) {
+    const notification = {
+      content,
+    };
+    this.setState(({notifications}) => ({
+      notifications: [...notifications, notification],
+    }));
+  }
+  
   render() {
     const funcs = {
+      createNotification: this.createNotification.bind(this),
     };
     return (
       <React.Fragment>
         <Provider value={funcs}>
           {this.props.children}
         </Provider>
-        <aside className="notifications">
-          {uploading && (
-            <div className="notification notifyUploading">
-              Uploading asset
-              <progress className="notify-progress" value={progress}></progress>
-            </div>
-          )}
-          {error && (
-            <div className="notification notifyUploadFailure">File upload failed. Try again in a few minutes?</div>
-          )}
-        </aside>
+        <div className="notifications">
+          {this.state.notifications.map(({id, className, children}) => (
+            <Notification key={id} className={className}>
+              {children}
+            </Notification>
+          ))}
+        </div>
       </React.Fragment>
     );
   }
