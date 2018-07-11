@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {uploadAsset, uploadAssetSizes} from '../../utils/assets';
+import Notifications from '../notifications.jsx';
 
-export default class Uploader extends React.Component {
+class Uploader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       uploading: false,
       progress: 0,
-      error: false,
     };
   }
   
@@ -18,7 +18,6 @@ export default class Uploader extends React.Component {
     this.setState({
       uploading: true,
       progress: 0,
-      error: false,
     });
     try {
       url = await uploadAsset(blob, policy, key,
@@ -31,7 +30,7 @@ export default class Uploader extends React.Component {
         }
       );
     } catch (e) {
-      this.setState({error: true});
+      this.props.createNotification('File upload failed. Try again in a few minutes?', 'notifyUploadFailure');
       throw e;
     } finally {
       this.setState({uploading: false});
@@ -43,7 +42,6 @@ export default class Uploader extends React.Component {
     this.setState({
       uploading: true,
       progress: 0,
-      error: false,
     });
     try {
       await uploadAssetSizes(blob, policy, sizes,
@@ -56,7 +54,7 @@ export default class Uploader extends React.Component {
         }
       );
     } catch (e) {
-      this.setState({error: true});
+      this.props.createNotification('File upload failed. Try again in a few minutes?', 'notifyUploadFailure');
       throw e;
     } finally {
       this.setState({uploading: false});
@@ -65,7 +63,7 @@ export default class Uploader extends React.Component {
   
   render() {
     const {children} = this.props;
-    const {uploading, progress, error} = this.state;
+    const {uploading, progress} = this.state;
     const funcs = {
       uploadAsset: this.uploadAsset.bind(this),
       uploadAssetSizes: this.uploadAssetSizes.bind(this),
@@ -79,9 +77,6 @@ export default class Uploader extends React.Component {
               <progress className="notify-progress" value={progress}></progress>
             </div>
           )}
-          {error && (
-            <div className="notification notifyUploadFailure">File upload failed. Try again in a few minutes?</div>
-          )}
         </aside>
         {children(funcs)}
       </React.Fragment>
@@ -92,3 +87,14 @@ export default class Uploader extends React.Component {
 Uploader.propTypes = {
   children: PropTypes.func.isRequired,
 };
+
+const UploaderContainer = ({children}) => (
+  <Notifications>
+    {notifications => (
+      <Uploader {...notifications}>
+        {children}
+      </Uploader>
+    )}
+  </Notifications>
+);
+export default UploaderContainer;

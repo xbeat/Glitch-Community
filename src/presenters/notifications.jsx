@@ -4,8 +4,8 @@ const {Provider, Consumer} = React.createContext({
   createNotification: (content) => console.log(content),
 });
 
-const Notification = ({children, className}) => (
-  <aside className={`notification ${className}`}>
+const Notification = ({children, className, remove}) => (
+  <aside className={`notification ${className}`} onAnimationEnd={remove}>
     {children}
   </aside>
 );
@@ -18,7 +18,7 @@ export class Notifications extends React.Component {
     };
   }
   
-  createNotification(content, className='') {
+  create(content, className='') {
     const notification = {
       id: `${Date.now()}{Math.random()}`,
       content, className,
@@ -28,7 +28,7 @@ export class Notifications extends React.Component {
     }));
   }
   
-  removeNotification(id) {
+  remove(id) {
     this.setState(({notifications}) => ({
       notifications: notifications.filter(n => n.id !== id),
     }));
@@ -36,21 +36,24 @@ export class Notifications extends React.Component {
   
   render() {
     const funcs = {
-      createNotification: this.createNotification.bind(this),
+      createNotification: this.create.bind(this),
     };
+    const {notifications} = this.state;
     window.notify = funcs; //weewoo weeoo test code here
     return (
       <React.Fragment>
         <Provider value={funcs}>
           {this.props.children}
         </Provider>
-        <div className="notifications">
-          {this.state.notifications.map(({id, className, content}) => (
-            <Notification key={id} className={className} onAnimationEnd={() => this.removeNotification(id)}>
-              {content}
-            </Notification>
-          ))}
-        </div>
+        {!!notifications.length && (
+          <div className="notifications">
+            {notifications.map(({id, className, content}) => (
+              <Notification key={id} className={className} remove={this.remove.bind(this, id)}>
+                {content}
+              </Notification>
+            ))}
+          </div>
+        )}
       </React.Fragment>
     );
   }
