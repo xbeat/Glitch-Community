@@ -14,62 +14,30 @@ export class DeleteTeamPop extends React.Component {
   }
     
   componentDidMount() {
-    console.log (this.props.users, this.props.adminUsers)
     let admins = this.props.users.filter(user => {
       return this.props.adminUsers.includes(user.id)
     })
     this.setState({
-      admins: admins
+      admins: admins,
     })
   }
   
-//   filterProjects(query, myProjects, teamProjects) {
-//     query = query.toLowerCase().trim();
-//     const teamProjectIds = teamProjects.map(({id})=>id);
-//     const availableProjects = myProjects.filter(
-//       ({id}) => !teamProjectIds.includes(id)
-//     );
-    
-//     const maxProjects = 20;
-//     if(!query) {
-//       return availableProjects.splice(0,maxProjects);
-//     }
-//     const projects = [];
-//     for(let project of availableProjects) {
-//       if(projects.length > maxProjects){
-//         break;
-//       }
-//       const titleMatch = project.domain.toLowerCase().includes(query);
-//       const descMatch = project.description.toLowerCase().includes(query);
-//       if(titleMatch || descMatch) {
-//         projects.push(project);
-//       }
-//     }
-//     return projects;
-//   }
-  
-  // onClick(event, projectId) {
-  //   event.preventDefault();
-  //   this.props.togglePopover();
-  //   this.props.addProject(projectId);
-  // }
-
-//   adminUsersList() {
-//     
-  // }
   deleteTeam() {
+    console.log (this.props)
+    console.log (this.state)
     if (this.state.teamIsDeleting) {
       return null
     }
     let deletePath = `teams/${this.props.teamId}`
-    api.delete(deletePath => {
-    })
-    console.log ('delete the team')
-    console.log ('during delete show loader in button') // even tho it's fast, it's the only immediate response i can give. assuming success and redirecting immediately may interrupt the request
-    console.log ('on 200, redirect to /')
     this.setState({
       teamIsDeleting: true
     })
+    this.props.api.delete((deletePath).then(({data}) => {
+      console.log ('✅', data) // on 200, redirect to /
+    }))
+    // console.log ('delete the team')
+    // console.log ('during delete show loader in button') // even tho it's fast, it's the only immediate response i can give. assuming success and redirecting immediately may interrupt the request
+    // console.log ('on 200, redirect to /')
   }
   
   render() {
@@ -88,7 +56,7 @@ export class DeleteTeamPop extends React.Component {
           </div>
         </section>
         <section className="pop-over-actions danger-zone">
-          <button className="button button-small has-emoji opens-pop-over" onClick={this.deleteTeam}>
+          <button className="button button-small has-emoji opens-pop-over" onClick={this.deleteTeam)}>
             <span>Delete {this.props.teamName} </span> 
             <span className="emoji bomb" role="img" aria-label="bomb emoji"></span>
             { this.state.teamIsDeleting && <Loader /> }
