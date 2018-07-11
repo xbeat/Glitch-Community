@@ -12,86 +12,56 @@ const NotifyUploading = ({progress}) => (
 );
 const NotifyError = () => 'File upload failed. Try again in a few minutes?';
 
-class Uploader extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      uploading: false,
-      progress: 0,
-    };
-  }
-  
-  async uploadAsset(blob, policy, key) {
-    let url = null;
-    let progress = 0;
-    const {
-      updateNotification,
-      removeNotification,
-    } = this.props.createPersistentNotification(<NotifyUploading progress={progress}/>, 'notifyUploading');
-    try {
-      url = await uploadAsset(blob, policy, key,
-        ({lengthComputable, loaded, total}) => {
-          if (lengthComputable) {
-            progress = loaded/total;
-          } else {
-            progress = (progress+1)/2;
-          }
-          updateNotification(<NotifyUploading progress={progress}/>);
+async function uploadWrapper(createNotification, createPersistentNotification, upload, ...args) {
+  let result = null;
+  let progress = 0;
+  const {
+    updateNotification,
+    removeNotification,
+  } = createPersistentNotification(<NotifyUploading progress={progress}/>, 'notifyUploading');
+  try {
+    result = await upload(...args,
+      ({lengthComputable, loaded, total}) => {
+        if (lengthComputable) {
+          progress = loaded/total;
+        } else {
+          progress = (progress+1)/2;
         }
-      );
-    } catch (e) {
-      this.props.createNotification(<NotifyError/>, 'notifyError');
-      throw e;
-    } finally {
-      removeNotification();
-    }
-    return url;
+        updateNotification(<NotifyUploading progress={progress}/>);
+      }
+    );
+  } catch (e) {
+    createNotification(<NotifyError/>, 'notifyError');
+    throw e;
+  } finally {
+    removeNotification();
   }
-  
-  async uploadAssetSizes(blob, policy, sizes) {
-    let progress = 0;
-    const {
-      updateNotification,
-      removeNotification,
-    } = this.props.createPersistentNotification(<NotifyUploading progress={progress}/>, 'notifyUploading');
-    try {
-      await uploadAssetSizes(blob, policy, sizes,
-        ({lengthComputable, loaded, total}) => {
-          if (lengthComputable) {
-            progress = loaded/total;
-          } else {
-            progress = (progress+1)/2;
-          }
-          updateNotification(<NotifyUploading progress={progress}/>);
-        }
-      );
-    } catch (e) {
-      this.props.createNotification(<NotifyError/>, 'notifyError');
-      throw e;
-    } finally {
-      removeNotification();
-    }
-  }
-  
-  render() {
-    const funcs = {
-      uploadAsset: this.uploadAsset.bind(this),
-      uploadAssetSizes: this.uploadAssetSizes.bind(this),
-    };
-    return this.props.children(funcs);
-  }
+  return result;
 }
+
+const Uploader = ({createNotification, createPersistentNotification, children}) => (
+);
 Uploader.propTypes = {
   children: PropTypes.func.isRequired,
+  createNotification: PropTypes.func.isRequired,
+  createPersistentNotification: PropTypes.func.isRequired,
 };
 
 const UploaderContainer = ({children}) => (
   <Notifications>
     {notifications => (
-      <Uploader {...notifications}>
-        {children}
-      </Uploader>
+  children({
+    uploadAsset: (blob, policy, key) => {
+      return uploadWrapper(createNotification, createPersistentNotification, uploadAsset, blob, policy, key);
+    },
+    uploadAssetSizes: (blob, policy, sizes) => {
+      return uploadWrapper(createNotification, createPersistentNotification, uploadAssetSizes, blob, policy, sizes);
+    },
+  })
     )}
   </Notifications>
 );
+UploaderContainer.propTypes = {
+  children: PropTypes.func.isRequired,
+};
 export default UploaderContainer;
