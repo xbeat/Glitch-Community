@@ -134,7 +134,6 @@ class TeamPageEditor extends React.Component {
   
   currentUserIsTeamAdmin() {
     let id = this.props.currentUserId
-    console.log(id, this.props.team.adminUsers)
     if (this.props.team.adminUsers.includes(id)) {
       return true
     } else return false
