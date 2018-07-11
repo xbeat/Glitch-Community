@@ -22,7 +22,9 @@ import EntityEditor from '../entity-editor.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
-// import {NotificationProvider} from '../notifications.jsx'
+import TeamUpgradeBanner from '../includes/team-upgrade-banner.jsx';
+
+const FREE_TEAM_PROJECTS_LIMIT = 5
 
 const TeamPage = ({
   team: {
@@ -71,6 +73,8 @@ const TeamPage = ({
     {(currentUserIsOnTeam ?
       <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects} />
       : <TeamMarketing/>)}
+    { currentUserIsOnTeam && <TeamUpgradeBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT}/>}
+    {/* billing section goes here */}
     { currentUserIsOnTeam && <DeleteTeam api={() => api} teamId={id} teamName={name} users={users} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> }
   </main>
 );
