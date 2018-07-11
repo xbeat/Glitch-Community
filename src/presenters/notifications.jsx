@@ -21,11 +21,29 @@ export class Notifications extends React.Component {
   create(content, className='') {
     const notification = {
       id: `${Date.now()}{Math.random()}`,
-      content, className,
+      className,
+      content,
     };
     this.setState(({notifications}) => ({
       notifications: [...notifications, notification],
     }));
+    return notification.id;
+  }
+  
+  createPersistent(content, className='') {
+    const id = this.create(content, `notifyPersistent ${className}`);
+    const updateNotification = (content) => {
+      this.setState(({notifications}) => {
+        const old = notifications.find(n => n.id === id);
+        return {notifications
+    };
+    const removeNotification = () => {
+      this.remove(id);
+    };
+    return {
+      updateNotification,
+      removeNotification,
+    };
   }
   
   remove(id) {
@@ -37,6 +55,7 @@ export class Notifications extends React.Component {
   render() {
     const funcs = {
       createNotification: this.create.bind(this),
+      createPersistentNotification: this.createPersistent.bind(this),
     };
     const {notifications} = this.state;
     window.notify = funcs; //weewoo weeoo test code here

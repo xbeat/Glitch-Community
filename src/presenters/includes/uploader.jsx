@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import {uploadAsset, uploadAssetSizes} from '../../utils/assets';
 import Notifications from '../notifications.jsx';
 
+const NotifyError = () => 'File upload failed. Try again in a few minutes?';
+
 class Uploader extends React.Component {
   constructor(props) {
     super(props);
@@ -30,7 +32,7 @@ class Uploader extends React.Component {
         }
       );
     } catch (e) {
-      this.props.createNotification('File upload failed. Try again in a few minutes?', 'notifyUploadFailure');
+      this.props.createNotification(<NotifyError/>, 'notifyError');
       throw e;
     } finally {
       this.setState({uploading: false});
@@ -54,7 +56,7 @@ class Uploader extends React.Component {
         }
       );
     } catch (e) {
-      this.props.createNotification('File upload failed. Try again in a few minutes?', 'notifyUploadFailure');
+      this.props.createNotification(<NotifyError/>, 'notifyError');
       throw e;
     } finally {
       this.setState({uploading: false});
