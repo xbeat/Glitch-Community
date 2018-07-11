@@ -10,9 +10,10 @@ class TeamUpgradeBanner extends React.Component {
     this.state = {
       remainingFreeProjects: 0,
     };
+    this.updateRemainingFreeProjects = this.updateRemainingFreeProjects.bind(this);
   }
-  
-  calcRemainingFreeProjects() {
+
+  updateRemainingFreeProjects() {
     let remaining = this.props.limit - this.props.projectsCount
     if (remaining < 0) {
       remaining = 0
@@ -21,7 +22,17 @@ class TeamUpgradeBanner extends React.Component {
       remainingFreeProjects: remaining
     })
   }
+
+  componentDidMount() {
+    this.updateRemainingFreeProjects()
+  }
   
+  componentDidUpdate(prevProps) {
+    if (this.props.projectsCount !== prevProps.projectsCount) {
+      this.updateRemainingFreeProjects()
+    }
+  }
+
   render() {
     return (
       <aside className="team-upgrade-banner">
