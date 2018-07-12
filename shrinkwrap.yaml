@@ -18,6 +18,7 @@ dependencies:
   eslint-loader: 2.0.0
   eslint-plugin-jsx-a11y: 6.0.3
   eslint-plugin-react: 7.10.0
+  eslint-scope: 4.0.0
   express: 4.16.3
   express-http-proxy: 1.2.0
   html-truncate: 1.2.2
@@ -6026,6 +6027,7 @@ specifiers:
   eslint-loader: ^2.0.0
   eslint-plugin-jsx-a11y: ^6.0.3
   eslint-plugin-react: ^7.10.0
+  eslint-scope: ^4.0.0
   express: ^4.16.3
   express-http-proxy: ^1.2.0
   html-truncate: ^1.2.2
