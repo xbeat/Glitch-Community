@@ -20,12 +20,10 @@ class UserEditor extends React.Component {
     return this.state.id === this.props.currentUserModel.id();
   }
   
-  errorWrapper(func, ...args) {
-    return func.bind(this)(...args).catch(error => {
-      console.error(error);
-      this.props.createErrorNotification();
-      return Promise.reject(error);
-    });
+  handleError(error) {
+    console.error(error);
+    this.props.createErrorNotification();
+    return Promise.reject(error);
   }
 
   handleErrorForField(error) {
@@ -73,7 +71,7 @@ class UserEditor extends React.Component {
         color: color,
       });
     } catch (error) {
-      throw error;
+      throw await this.handleError(error);
     } finally {
       if (this.isCurrentUser()) {
         this.props.currentUserModel.avatarUrl(this.state.avatarUrl);
@@ -95,13 +93,13 @@ class UserEditor extends React.Component {
         coverColor: color,
       });
     } catch (error) {
-      throw error;
+      throw await this.handleError(error);;
     } finally {
       this.setState({_cacheCover: Date.now()});
     }
   }
   
-  async pinProject(id) {
+  addPin(id) {
     return this.props.api.post(`users/${this.state.id}/pinned-projects/${id}`).then(() => {
       this.setState(({pins}) => ({
         pins: [...pins, {projectId: id}],
@@ -109,7 +107,7 @@ class UserEditor extends React.Component {
     });
   }
   
-  async unpinProject(id) {
+  removePin(id) {
     return this.props.api.delete(`users/${this.state.id}/pinned-projects/${id}`).then(() => {
       this.setState(({pins}) => ({
         pins: pins.filter(p => p.projectId !== id),
@@ -158,18 +156,19 @@ class UserEditor extends React.Component {
   }
   
   render() {
+    const handleError = this.handleError.bind(this);
     const funcs = {
       updateName: name => this.updateName(name),
       updateLogin: login => this.updateLogin(login),
-      updateDescription: description => this.updateFields({description}),
+      updateDescription: description => this.updateFields({description}).catch(handleError),
       uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
       uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
-      clearCover: () => this.updateFields({hasCoverImage: false}),
-      addPin: id => this.errorWrapper(this.pinProject, id),
-      removePin: id => this.unpinProject(id),
-      leaveProject: id => this.leaveProject(id),
-      deleteProject: id => this.deleteProject(id),
-      undeleteProject: id => this.undeleteProject(id),
+      clearCover: () => this.updateFields({hasCoverImage: false}).catch(handleError),
+      addPin: id => this.addPin(id).catch(handleError),
+      removePin: id => this.removePin(id).catch(handleError),
+      leaveProject: id => this.leaveProject(id).catch(handleError),
+      deleteProject: id => this.deleteProject(id).catch(handleError),
+      undeleteProject: id => this.undeleteProject(id).catch(handleError),
       setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
     };
     return this.props.children(this.state, funcs, this.isCurrentUser());
