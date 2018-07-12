@@ -26,6 +26,9 @@ import TeamUpgradeBanner from '../includes/team-upgrade-banner.jsx';
 
 const FREE_TEAM_PROJECTS_LIMIT = 5
 
+
+// Team Page
+
 const TeamPage = ({
   team: {
     id, name, description, users,
@@ -75,11 +78,14 @@ const TeamPage = ({
     {(currentUserIsOnTeam ?
       <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects} />
       : <TeamMarketing/>)}
-    { (currentUserIsOnTeam & teamHasUnlimitedProjects) && <TeamUpgradeBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT} teamName={name} />}
+    { (currentUserIsOnTeam && !teamHasUnlimitedProjects) && <TeamUpgradeBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT} teamName={name} />}
     {/* billing section goes here */}
     { currentUserIsOnTeam && <DeleteTeam api={() => api} teamId={id} teamName={name} users={users} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> }
   </main>
 );
+
+
+// Team Page Editor
 
 class TeamPageEditor extends React.Component {
   constructor(props) {
@@ -136,15 +142,14 @@ class TeamPageEditor extends React.Component {
   
   currentUserIsTeamAdmin() {
     let id = this.props.currentUserId
-    if (this.props.team.adminUsers.includes(id)) {
-      return true
-    } else return false
+    return this.props.team.adminUsers.includes(id)
   }
 
   // TODO temp feature switch name
   teamHasUnlimitedProjects() {
     let features = this.props.team.features
-    features.includes('unlimited projects')
+    console.log('🍕🍕🍕🍕' , features.includes('unlimited projects'))
+    return features.includes('unlimited projects')
   }
   
   render() {
@@ -174,6 +179,7 @@ class TeamPageEditor extends React.Component {
     return <TeamPage team={team} {...this.state} {...funcs} {...props}/>;
   }
 }
+
 TeamPageEditor.propTypes = {
   currentUserId: PropTypes.number.isRequired,
   currentUserModel: PropTypes.object.isRequired,
@@ -183,6 +189,9 @@ TeamPageEditor.propTypes = {
   removeItem: PropTypes.func.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
 };
+
+
+// Team Page Loader
 
 const TeamPageLoader = ({api, get, name, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
@@ -199,6 +208,7 @@ const TeamPageLoader = ({api, get, name, ...props}) => (
     ) : <NotFound name={name}/>}
   </DataLoader>
 );
+
 TeamPageLoader.propTypes = {
   get: PropTypes.func.isRequired,
   name: PropTypes.node.isRequired,
@@ -214,6 +224,9 @@ const ParseTeam = (data) => {
   })
   return data
 }
+
+
+// Init Team
 
 export default function(application, id, name) {
   const props = {
