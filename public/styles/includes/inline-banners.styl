@@ -3,6 +3,7 @@
   max-width: 325px
   border-radius: 5px
   padding: 12px
+  position: relative
   
   progress
     width: 100%
@@ -37,3 +38,18 @@
     top: 7rem
     .add-team-project-pop
       top: 24px
+  
+  &.team-project-limit-reached-banner
+    background-color: section-line
+    border-bottom-color: section-line
+    &:after
+      top: -13px
+      left: 8.5px
+      border: solid transparent
+      content: " "
+      height: 0
+      width: 0
+      position: absolute
+      pointer-events: none
+      border-bottom-color: inherit
+      border-width: 7px
