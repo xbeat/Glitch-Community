@@ -44,7 +44,7 @@ const TeamPage = ({
   api, searchUsers, getProjects,
   _cacheAvatar, _cacheCover,
   currentUserIsTeamAdmin,
-  teamFeaturesHasUnlimitedProjects,
+  teamHasUnlimitedProjects,
 }) => (
   <main className="profile-page team-page">
     <section>
@@ -75,9 +75,9 @@ const TeamPage = ({
     {(currentUserIsOnTeam ?
       <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects} />
       : <TeamMarketing/>)}
-    { currentUserIsOnTeam && <TeamUpgradeBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT} teamName={name} />}
+    { (currentUserIsOnTeam & teamHasUnlimitedProjects) && <TeamUpgradeBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT} teamName={name} />}
     {/* billing section goes here */}
-    { (currentUserIsOnTeam & teamFeaturesHasUnlimitedProjects) && <DeleteTeam api={() => api} teamId={id} teamName={name} users={users} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> }
+    { currentUserIsOnTeam && <DeleteTeam api={() => api} teamId={id} teamName={name} users={users} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> }
   </main>
 );
 
@@ -140,12 +140,11 @@ class TeamPageEditor extends React.Component {
       return true
     } else return false
   }
-  
-  teamFeaturesHasUnlimitedProjects() {
-    // TODO temp feature switch name
-    if (this.props.team.features.includes('unlimited projects')) {
-      return true
-    }
+
+  // TODO temp feature switch name
+  teamHasUnlimitedProjects() {
+    let features = this.props.team.features
+    features.includes('unlimited projects')
   }
   
   render() {
@@ -170,7 +169,7 @@ class TeamPageEditor extends React.Component {
       removeProject: id => removeItem('projects', id, 'projects', {id}),
       addPin: projectId => addItem('pinned-projects', projectId, 'teamPins', {projectId}),
       removePin: projectId => removeItem('pinned-projects', projectId, 'teamPins', {projectId}),
-      teamFeaturesHasUnlimitedProjects: this.teamFeaturesHasUnlimitedProjects(),
+      teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
     };
     return <TeamPage team={team} {...this.state} {...funcs} {...props}/>;
   }
