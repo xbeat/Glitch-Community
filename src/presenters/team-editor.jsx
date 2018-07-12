@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
+import ProjectModel from '../models/project';
+import UserModel from '../models/user';
 
-class TeamPageEditor extends React.Component {
+class TeamEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -60,40 +62,73 @@ class TeamPageEditor extends React.Component {
     this.setState({_cacheCover: Date.now()});
   }
   
+  async addUser(id) {
+    await this.props.api.post(`teams/${this.state.id}/users/${id}`);
+    this.setState(({users}) => ({
+      users: [...users, UserModel({id}).asProps()],
+    }));
+  }
+  
   async removeUser(id) {
-    await this.props.removeItem('users', id, 'users', {id});
+    await this.props.api.delete(`teams/${this.state.id}/users/${id}`);
+    this.setState(({users}) => ({
+      users: users.filter(u => u.id !== id),
+    }));
     if (id === this.props.currentUserModel.id()) {
       const model = this.props.currentUserModel;
       model.teams(model.teams().filter(({id}) => id() !== this.props.team.id));
     }
   }
   
+  async addProject(id) {
+    await this.props.api.post(`teams/${this.state.id}/projects/${id}`);
+    this.setState(({projects}) => ({
+      projects: [...projects, ProjectModel({id}).asProps()],
+    }));
+  }
+  
+  async removeProject(id) {
+    await this.props.api.delete(`teams/${this.state.id}/projects/${id}`);
+    this.setState(({projects}) => ({
+      projects: projects.filter(p => p.id !== id),
+    }));
+  }
+  
+  async addPin(id) {
+    await this.props.api.post(`teams/${this.state.id}/pinned-projects/${id}`);
+    this.setState(({teamPins}) => ({
+      teamPins: [...teamPins, {projectId: id}],
+    }));
+  }
+  
+  async removePin(id) {
+    await this.props.api.delete(`teams/${this.state.id}/pinned-projects/${id}`);
+    this.setState(({teamPins}) => ({
+      teamPins: teamPins.filter(p => p.projectId !== id),
+    }));
+  }
+  
   render() {
-    const {
-      team,
-      currentUserModel,
-      updateFields,
-      addItem,
-      removeItem,
-      ...props
-    } = this.props;
     const funcs = {
-      currentUserIsOnTeam: team.users.some(({id}) => currentUserModel.id() === id),
-      updateDescription: description => updateFields({description}),
-      addUser: id => addItem('users', id, 'users', UserModel({id}).asProps()),
+      updateDescription: description => this.updateFields({description}),
+      addUser: id => this.addUser(id),
       removeUser: id => this.removeUser(id),
       uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
       uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
-      clearCover: () => updateFields({hasCoverImage: false}),
-      addProject: id => addItem('projects', id, 'projects', ProjectModel({id}).asProps()),
-      removeProject: id => removeItem('projects', id, 'projects', {id}),
-      addPin: projectId => addItem('pinned-projects', projectId, 'teamPins', {projectId}),
-      removePin: projectId => removeItem('pinned-projects', projectId, 'teamPins', {projectId}),
+      clearCover: () => this.updateFields({hasCoverImage: false}),
+      addProject: id => this.addProject(id),
+      removeProject: id => this.removeProject(id),
+      addPin: id => this.addPin(id),
+      removePin: id => this.removePin(id),
     };
-    return <TeamPage team={team} {...this.state} {...funcs} {...props}/>;
+    const currentUserId = this.props.currentUserModel.id();
+    const currentUserIsOnTeam = this.state.users.some(({id}) => currentUserId === id);
+    return this.props.children(this.state, funcs, currentUserIsOnTeam);
   }
 }
-TeamPageEditor.propTypes = {
+TeamEditor.propTypes = {
+  children: PropTypes.func.isRequired,
+  createErrorNotification: PropTypes.func.isRequired,
   currentUserModel: PropTypes.object.isRequired,
   initialTeam: PropTypes.object.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,

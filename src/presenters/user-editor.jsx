@@ -160,13 +160,13 @@ class UserEditor extends React.Component {
 }
 UserEditor.propTypes = {
   children: PropTypes.func.isRequired,
+  createErrorNotification: PropTypes.func.isRequired,
   currentUserModel: PropTypes.object.isRequired,
   initialUser: PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired,
   uploadAsset: PropTypes.func.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
-  createNotification: PropTypes.func.isRequired,
 };
 
 const UserEditorContainer = ({api, children, currentUserModel, initialUser}) => (
