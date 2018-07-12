@@ -26,7 +26,7 @@ class UserEditor extends React.Component {
     return Promise.reject(error);
   }
 
-  handleErrorForField(error) {
+  handleErrorForInput(error) {
     if (error && error.response && error.response.data) {
       return Promise.reject(error.response.data.message);
     }
@@ -45,7 +45,7 @@ class UserEditor extends React.Component {
       if (this.isCurrentUser()) {
         this.props.currentUserModel.name(name);
       }
-    }, this.handleErrorForField.bind(this));
+    }, this.handleErrorForInput.bind(this));
   }
   
   updateLogin(login) {
@@ -55,7 +55,7 @@ class UserEditor extends React.Component {
       if (this.isCurrentUser()) {
         this.props.currentUserModel.login(login);
       }
-    }, this.handleErrorForField.bind(this));
+    }, this.handleErrorForInput.bind(this));
   }
   
   async uploadAvatar(blob) {
@@ -93,7 +93,7 @@ class UserEditor extends React.Component {
         coverColor: color,
       });
     } catch (error) {
-      throw await this.handleError(error);;
+      throw await this.handleError(error);
     } finally {
       this.setState({_cacheCover: Date.now()});
     }
