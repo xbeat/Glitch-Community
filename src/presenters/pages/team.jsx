@@ -32,7 +32,8 @@ const TeamPage = ({
     projects, teamPins,
     isVerified, verifiedImage, verifiedTooltip,
     backgroundColor, hasAvatarImage,
-    coverColor, hasCoverImage, adminUsers
+    coverColor, hasCoverImage, adminUsers,
+    features
   },
   currentUserIsOnTeam, myProjects,
   updateDescription,
@@ -43,6 +44,7 @@ const TeamPage = ({
   api, searchUsers, getProjects,
   _cacheAvatar, _cacheCover,
   currentUserIsTeamAdmin,
+  teamFeaturesHasUnlimitedProjects,
 }) => (
   <main className="profile-page team-page">
     <section>
@@ -75,7 +77,7 @@ const TeamPage = ({
       : <TeamMarketing/>)}
     { currentUserIsOnTeam && <TeamUpgradeBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT} teamName={name} />}
     {/* billing section goes here */}
-    { currentUserIsOnTeam && <DeleteTeam api={() => api} teamId={id} teamName={name} users={users} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> }
+    { (currentUserIsOnTeam & teamFeaturesHasUnlimitedProjects) && <DeleteTeam api={() => api} teamId={id} teamName={name} users={users} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> }
   </main>
 );
 
@@ -139,6 +141,13 @@ class TeamPageEditor extends React.Component {
     } else return false
   }
   
+  teamFeaturesHasUnlimitedProjects() {
+    // TODO temp feature switch name
+    if (this.props.team.features.includes('unlimited projects')) {
+      return true
+    }
+  }
+  
   render() {
     const {
       team,
@@ -161,6 +170,7 @@ class TeamPageEditor extends React.Component {
       removeProject: id => removeItem('projects', id, 'projects', {id}),
       addPin: projectId => addItem('pinned-projects', projectId, 'teamPins', {projectId}),
       removePin: projectId => removeItem('pinned-projects', projectId, 'teamPins', {projectId}),
+      teamFeaturesHasUnlimitedProjects: this.teamFeaturesHasUnlimitedProjects(),
     };
     return <TeamPage team={team} {...this.state} {...funcs} {...props}/>;
   }
