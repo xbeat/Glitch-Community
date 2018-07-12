@@ -70,6 +70,9 @@ const TeamPage = ({
       </ProfileContainer>
     </section>
     <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects} />
+    { currentUserIsOnTeam && 
+      <TeamProjectLimitReachedBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT} teamName={name} />
+    }
     <EntityPageProjects
       projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
       addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam: removeProject}}
