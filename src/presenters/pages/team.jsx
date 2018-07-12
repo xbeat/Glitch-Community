@@ -13,6 +13,7 @@ import {DataLoader} from '../includes/loader.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import Thanks from '../includes/thanks.jsx';
 import NotFound from '../includes/not-found.jsx';
+import {Notifications} from '../notifications.jsx';
 import Uploader from '../includes/uploader.jsx';
 
 import AddTeamProject from '../includes/add-team-project.jsx';
@@ -160,19 +161,21 @@ TeamPageEditor.propTypes = {
 };
 
 const TeamPageLoader = ({api, get, name, ...props}) => (
-  <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {team => team ? (
-      <EntityEditor api={api} initial={team} type="teams">
-        {({entity, ...editFuncs}) => (
-          <Uploader>
-            {uploadFuncs => (
-              <TeamPageEditor api={api} team={entity} {...editFuncs} {...uploadFuncs} {...props}/>
-            )}
-          </Uploader>
-        )}
-      </EntityEditor>
-    ) : <NotFound name={name}/>}
-  </DataLoader>
+  <Notifications>
+    <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
+      {team => team ? (
+        <EntityEditor api={api} initial={team} type="teams">
+          {({entity, ...editFuncs}) => (
+            <Uploader>
+              {uploadFuncs => (
+                <TeamPageEditor api={api} team={entity} {...editFuncs} {...uploadFuncs} {...props}/>
+              )}
+            </Uploader>
+          )}
+        </EntityEditor>
+      ) : <NotFound name={name}/>}
+    </DataLoader>
+  </Notifications>
 );
 TeamPageLoader.propTypes = {
   get: PropTypes.func.isRequired,

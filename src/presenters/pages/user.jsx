@@ -10,6 +10,7 @@ import * as assets from '../../utils/assets';
 
 import {DataLoader} from '../includes/loader.jsx';
 import Uploader from '../includes/uploader.jsx';
+import {Notifications} from '../notifications.jsx';
 import {CurrentUserProvider} from '../current-user.jsx';
 
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -258,19 +259,21 @@ UserPageEditor.propTypes = {
 };
 
 const UserPageLoader = ({api, get, loginOrId, ...props}) => (
-  <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
-    {user => user ? (
-      <EntityEditor api={api} initial={user} type="users">
-        {({entity, ...editFuncs}) => (
-          <Uploader>
-            {({...uploadFuncs}) => (
-              <UserPageEditor user={entity} api={api} {...editFuncs} {...uploadFuncs} {...props}/>
-            )}
-          </Uploader>
-        )}
-      </EntityEditor>
-    ) : <NotFound name={loginOrId}/>}
-  </DataLoader>
+  <Notifications>
+    <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
+      {user => user ? (
+        <EntityEditor api={api} initial={user} type="users">
+          {({entity, ...editFuncs}) => (
+            <Uploader>
+              {({...uploadFuncs}) => (
+                <UserPageEditor user={entity} api={api} {...editFuncs} {...uploadFuncs} {...props}/>
+              )}
+            </Uploader>
+          )}
+        </EntityEditor>
+      ) : <NotFound name={loginOrId}/>}
+    </DataLoader>
+  </Notifications>
 );
 UserPageLoader.propTypes = {
   get: PropTypes.func.isRequired,
