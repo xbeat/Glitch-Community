@@ -48,8 +48,6 @@ class UserEditor extends React.Component {
   
   async updateLogin(login) {
     await this.updateFields({login});
-    history.replaceState(null, null, `/@${login}`);
-    document.title = `@${login}`;
     if (this.isCurrentUser()) {
       this.props.currentUserModel.login(login);
     }

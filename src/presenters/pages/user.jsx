@@ -21,6 +21,12 @@ import EntityPageProjects from '../entity-page-projects.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
+function syncPageToLogin(login) {
+  console.log(login);
+  //history.replaceState(null, null, `/@${login}`);
+  //document.title = `@${login}`;
+}
+
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
   if(!login) {
     // Just an ID? We're anonymous.
@@ -81,9 +87,12 @@ const UserPage = ({
         avatarStyle={getAvatarStyle({avatarUrl, color})}
         coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
         coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
-        avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }
+        avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null }
       >
-        <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
+        <NameAndLogin
+          {...{name, login, id, isAuthorized, updateName}}
+          updateLogin={login => updateLogin(login).then(syncPageToLogin)}
+        />
         <Thanks count={thanksCount}/>
         <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
