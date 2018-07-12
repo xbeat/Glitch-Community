@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
+
 import ProjectModel from '../models/project';
 import UserModel from '../models/user';
 
@@ -16,6 +17,11 @@ class TeamEditor extends React.Component {
       _cacheAvatar: Date.now(),
       _cacheCover: Date.now(),
     };
+  }
+  
+  currentUserIsOnTeam() {
+    const currentUserId = this.props.currentUserModel.id();
+    return this.state.users.some(({id}) => currentUserId === id);
   }
   
   handleError(error) {
@@ -115,9 +121,7 @@ class TeamEditor extends React.Component {
       addPin: id => this.addPin(id).catch(handleError),
       removePin: id => this.removePin(id).catch(handleError),
     };
-    const currentUserId = this.props.currentUserModel.id();
-    const currentUserIsOnTeam = this.state.users.some(({id}) => currentUserId === id);
-    return this.props.children(this.state, funcs, currentUserIsOnTeam);
+    return this.props.children(this.state, funcs, this.currentUserIsOnTeam());
   }
 }
 TeamEditor.propTypes = {
