@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Notifications from './notifications.jsx';
+
 class ProjectEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,14 @@ class ProjectEditor extends React.Component {
     this.props.createErrorNotification();
     return Promise.reject(error);
   }
+
+  handleErrorForInput(error) {
+    if (error && error.response && error.response.data) {
+      return Promise.reject(error.response.data.message);
+    }
+    this.props.createErrorNotification();
+    return Promise.reject();
+  }
   
   async updateFields(changes) {
     const {data} = await this.props.api.patch(`projects/${this.state.id}`, changes);
@@ -26,27 +36,38 @@ class ProjectEditor extends React.Component {
   }
   
   render() {
+    const handleError = this.handleError.bind(this);
+    const handleErrorForInput = this.handleErrorForInput.bind(this);
     const funcs = {
+      updateDomain: domain => this.updateFields({domain}).catch(handleErrorForInput),
+      updateDescription: description => this.updateFields({description}).catch(handleError),
+      updatePrivate: isPrivate => this.updateFields({private: isPrivate}).catch(handleError),
     };
-    return children(this.state, funcs, this.userIsMember());
+    return this.props.children(this.state, funcs, this.userIsMember());
   }
 }
-
-const ProjectPageEditor = ({project, updateFields, ...props}) => {
-  function updateDomain(domain) {
-    return updateFields({domain}).then(() => {
-      history.replaceState(null, null, `/~${domain}`);
-      document.title = `~${domain}`;
-    }, ({response: {data: {message}}}) => Promise.reject(message));
-  }
-  const funcs = {
-    updateDomain: domain => updateDomain(domain),
-    updateDescription: description => updateFields({description}),
-    updatePrivate: isPrivate => updateFields({private: isPrivate}),
-  };
-  return <ProjectPage project={project} {...funcs} {...props}/>;
-};
 ProjectEditor.propTypes = {
   api: PropTypes.any.isRequired,
+  children: PropTypes.func.isRequired,
+  createErrorNotification: PropTypes.func.isRequired,
+  currentUserModel: PropTypes.object.isRequired,
   initialProject: PropTypes.object.isRequired,
 };
+
+const ProjectEditorContainer = ({api, children, currentUserModel, initialProject}) => (
+  <Notifications>
+    {notifyFuncs => (
+      <ProjectEditor api={api} currentUserModel={currentUserModel} initialProject={initialProject} {...notifyFuncs}>
+        {children}
+      </ProjectEditor>
+    )}
+  </Notifications>
+);
+ProjectEditorContainer.propTypes = {
+  api: PropTypes.any.isRequired,
+  children: PropTypes.func.isRequired,
+  currentUserModel: PropTypes.object.isRequired,
+  initialProject: PropTypes.object.isRequired,
+};
+
+export default ProjectEditorContainer;

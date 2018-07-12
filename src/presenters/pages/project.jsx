@@ -8,7 +8,7 @@ import Project from '../../models/project';
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
-import EntityEditor from '../entity-editor.jsx';
+import ProjectEditor from '../project-editor.jsx';
 import Expander from '../includes/expander.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -161,12 +161,14 @@ ProjectPageEditor.propTypes = {
   updateFields: PropTypes.func.isRequired,
 };
 
-const ProjectPageLoader = ({name, get, api, ...props}) => (
+const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
   <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
     {project => project ? (
-      <EntityEditor api={api} initial={project} type="projects">
-        {({entity, ...funcs}) => <ProjectPageEditor project={entity} {...funcs} {...props}/>}
-      </EntityEditor>
+      <ProjectEditor api={api} initialProject={project} currentUserModel={currentUserModel}>
+        {(project, funcs, userIsMember) => (
+          <ProjectPage project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
+        )}
+      </ProjectEditor>
     ) : <NotFound name={name}/>}
   </DataLoader>
 );
@@ -178,6 +180,7 @@ ProjectPageLoader.propTypes = {
 export default function(application, name) {
   const props = {
     api: application.api(),
+    currentUserModel: application.currentUser(),
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
     getTeam: (id) => application.api().get(`teams/${id}`).then(({data}) => data),
