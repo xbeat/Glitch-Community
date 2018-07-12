@@ -10,7 +10,7 @@ import LayoutPresenter from '../layout';
 
 import {AuthDescription} from '../includes/description-field.jsx';
 import {DataLoader} from '../includes/loader.jsx';
-import {ProfileContainer, ImageActions} from '../includes/profile.jsx';
+import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import Thanks from '../includes/thanks.jsx';
 import NotFound from '../includes/not-found.jsx';
 import Uploader from '../includes/uploader.jsx';
@@ -49,8 +49,8 @@ const TeamPage = ({
       <ProfileContainer
         avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
         coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
-        avatarButtons={currentUserIsOnTeam ? <ImageActions name="Avatar" uploadImage={uploadAvatar}/> : null}
-        coverButtons={currentUserIsOnTeam ? <ImageActions name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
+        avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}
+        coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
       >
         <h1 className="username">
           {name}

@@ -11,9 +11,9 @@ import {AuthDescription} from './description-field.jsx';
 import EditableField from './editable-field.jsx';
 
 
-// Image Actions
+// Image Buttons
 
-export const ImageActions = ({name, uploadImage, clearImage}) => (
+export const ImageButtons = ({name, uploadImage, clearImage}) => (
   <div className="upload-image-buttons">
     { !!uploadImage && (
       <button className="button-small button-tertiary" onClick={uploadImage}>
@@ -27,7 +27,7 @@ export const ImageActions = ({name, uploadImage, clearImage}) => (
     )}
   </div>
 );
-ImageActions.propTypes = {
+ImageButtons.propTypes = {
   name: PropTypes.string.isRequired,
   uploadImage: PropTypes.func,
   clearImage: PropTypes.func,
@@ -165,8 +165,8 @@ const LoadedUserProfile = ({
   uploadAvatar
 }) => (
   <ProfileContainer avatarStyle={avatarStyle} coverStyle={profileStyle}
-    coverButtons={isAuthorized && <ImageActions name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
-    avatarButtons={isAuthorized ? <ImageActions name="Avatar" uploadImage={uploadAvatar} /> : null }
+    coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
+    avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }
   >
     <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
     <Thanks count={thanksCount}/>
