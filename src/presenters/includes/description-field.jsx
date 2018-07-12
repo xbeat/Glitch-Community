@@ -26,10 +26,7 @@ class EditableDescription extends React.Component {
   
   onFocus(evt) {
     if (evt.currentTarget === evt.target) {
-      this.setState({
-        description: this.props.initialDescription,
-        focused: true,
-      });
+      this.setState({focused: true});
     }
   }
   
