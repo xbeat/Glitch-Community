@@ -212,7 +212,7 @@ class TeamAnalytics extends React.Component {
 
         { this.props.projects.length === 0 &&
           <aside className="inline-banners add-project-to-analytics-banner">
-            <div className="description">Add Projects to your team to track views and remixes</div>
+            <div className="description">Add Projects to your team to see who's viewing and remixing</div>
             <button className="button-small has-emoji">
               <span>Add Project </span>
               <span className="emoji bento-box" />
