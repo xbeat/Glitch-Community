@@ -14,11 +14,53 @@ class CreateTeamPop extends React.Component {
       isLoading: false,
       errorMessage: ''
     };
-    
+
+    this.randomDescription = this.randomDescription.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  randomDescription() {
+    let descriptiveAdjectives = [
+      'charming',
+      'bold',
+      'brave',
+      'cool',
+      'docile',
+      'dope',
+      'faithful',
+      'fertile',
+      'fervent',
+      'forgiving',
+      'genial',
+      'genteel',
+      'grouchy',
+      'hopeful',
+      'humane',
+      'jolly',
+      'joyful',
+      'loving',
+      'magical',
+      'moral',
+      'mysterious',
+      'notorious',
+      'passionate',
+      'preposterous',
+      'quaint',
+      'quirky',
+      'scrumptious',
+      'sensitive',
+      'sober',
+      'tropical',
+      'woeful',
+      'whimsical',
+      'zealous',
+    ]
+    let adjectives = _.sampleSize(descriptiveAdjectives, 2)
+    return `A #{adjectives[0]} team that makes #{adjectives[1]} things`
+  }
+
+  
   handleChange(newValue) {
     this.setState({
       teamName: newValue, 
@@ -26,7 +68,7 @@ class CreateTeamPop extends React.Component {
       errorMessage: "",
     });
   }
-
+  
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ isLoading: true })
@@ -36,7 +78,7 @@ class CreateTeamPop extends React.Component {
       hasAvatarImage: false,
       coverColor: '',
       location: '',
-      description: '',
+      description: this.randomDescription(),
       backgroundColor: '',
       hasCoverImage: false,
       isVerified: false,
