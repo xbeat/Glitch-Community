@@ -75,12 +75,11 @@ const TeamPage = ({
       addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam: removeProject}}
       getProjects={getProjects}
     />
-    {(currentUserIsOnTeam ?
-      <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects} />
-      : <TeamMarketing/>)}
+    { currentUserIsOnTeam && <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects} addProject={addProject} myProjects={myProjects} /> }
     { (currentUserIsOnTeam && !teamHasUnlimitedProjects) && <TeamUpgradeBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT} teamName={name} />}
     {/* billing section goes here */}
     { currentUserIsOnTeam && <DeleteTeam api={() => api} teamId={id} teamName={name} users={users} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> }
+    { !currentUserIsOnTeam && <TeamMarketing /> }
   </main>
 );
 
