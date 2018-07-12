@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import {matches, reject} from 'lodash';
 
-import * as assets from '../utils/assets';
-
 export default class EntityEditor extends React.Component {
   constructor(props) {
     super(props);

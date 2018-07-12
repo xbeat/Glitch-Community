@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets.js';
 
+import Uploader from './includes/uploader.jsx';
+
 class UserEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +23,9 @@ class UserEditor extends React.Component {
   
   updateName(name) {
     return this.updateFields({name}).then(() => {
-      this.props.userModel.name(name);
+      if (this.isCurrentUser()) {
+        this.props.userModel.name(name);
+      }
     }, ({response: {data: {message}}}) => Promise.reject(message)
     );
   }
@@ -30,12 +34,14 @@ class UserEditor extends React.Component {
     return this.updateFields({login}).then(() => {
       history.replaceState(null, null, `/@${login}`);
       document.title = `@${login}`;
-      this.props.userModel.login(login);
+      if (this.isCurrentUser()) {
+        this.props.currentUserModel.login(login);
+      }
     }, ({response: {data: {message}}}) => Promise.reject(message));
   }
   
   isCurrentUser() {
-    return this.state.id === this.props.currentUserId;
+    return this.state.id === this.props.currentUserModel.id();
   }
   
   async uploadAvatar(blob) {
@@ -53,9 +59,10 @@ class UserEditor extends React.Component {
     } catch (error) {
       console.error(error);
     }
-    if (
-    this.props.userModel.avatarUrl(this.props.user.avatarUrl);
-    this.props.userModel.avatarThumbnailUrl(this.props.user.avatarThumbnailUrl);
+    if (this.isCurrentUser()) {
+      this.props.currentUserModel.avatarUrl(this.props.user.avatarUrl);
+      this.props.currentUserModel.avatarThumbnailUrl(this.props.user.avatarThumbnailUrl);
+    }
   }
   
   async uploadCover(blob) {
@@ -147,12 +154,11 @@ class UserEditor extends React.Component {
       undeleteProject: id => this.undeleteProject(id),
       setDeletedProjects: deletedProjects => this.setState({deletedProjects}),
     };
-    return this.props.children(this.state, funcs, this.state.id === this.props.currentUserId);
+    return this.props.children(this.state, funcs, this.isCurrentUser());
   }
 }
 UserEditor.propTypes = {
   children: PropTypes.func.isRequired,
-  currentUserId: PropTypes.number.isRequired,
   currentUserModel: PropTypes.object.isRequired,
   initialUser: PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -161,5 +167,19 @@ UserEditor.propTypes = {
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
-export default ({children, initialUser}) => (
+const UserEditorContainer = ({children, initialUser, currentUserModel}) => (
+  <Uploader>
+    {({uploadAsset, uploadAssetSizes}) => (
+      <UserEditor {...{initialUser, currentUserModel, uploadAsset, uploadAssetSizes}}>
+        {children}
+      </UserEditor>
+    )}
+  </Uploader>
 );
+UserEditorContainer.propTypes = {
+  children: PropTypes.func.isRequired,
+  initialUser: PropTypes.object.isRequired,
+  currentUserMode: PropTypes.object.isRequired,
+};
+
+export default UserEditorContainer;

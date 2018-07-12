@@ -9,13 +9,12 @@ import {getAvatarStyle, getProfileStyle} from '../../models/user';
 import * as assets from '../../utils/assets';
 
 import {DataLoader} from '../includes/loader.jsx';
-import Uploader from '../includes/uploader.jsx';
 import {Notifications} from '../notifications.jsx';
 import {CurrentUserProvider} from '../current-user.jsx';
 
 import {AuthDescription} from '../includes/description-field.jsx';
 import EditableField from '../includes/editable-field.jsx';
-import EntityEditor from '../entity-editor.jsx';
+import UserEditor from '../user-editor.jsx';
 import Thanks from '../includes/thanks.jsx';
 
 import DeletedProjects from '../deleted-projects.jsx';
@@ -258,19 +257,15 @@ UserPageEditor.propTypes = {
   localRemoveItem: PropTypes.func.isRequired,
 };
 
-const UserPageLoader = ({api, get, loginOrId, ...props}) => (
+const UserPageLoader = ({api, get, loginOrId, currentUserModel, getProjects, getDeletedProjects}) => (
   <Notifications>
     <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
       {user => user ? (
-        <EntityEditor api={api} initial={user} type="users">
-          {({entity, ...editFuncs}) => (
-            <Uploader>
-              {({...uploadFuncs}) => (
-                <UserPageEditor user={entity} api={api} {...editFuncs} {...uploadFuncs} {...props}/>
-              )}
-            </Uploader>
+        <UserEditor api={api} initialUser={user} currentUserModel={currentUserModel}>
+          {(user, funcs, isAuthorized) => (
+            <UserPage user={user} {...funcs} {...{isAuthorized, getProjects, getDeletedProjects}}/>
           )}
-        </EntityEditor>
+        </UserEditor>
       ) : <NotFound name={loginOrId}/>}
     </DataLoader>
   </Notifications>
@@ -284,7 +279,6 @@ function UserPagePresenter(application, loginOrId, get) {
   const props = {
     loginOrId, get,
     api: application.api(),
-    currentUserId: application.currentUser().id(),
     currentUserModel: application.currentUser(),
     getProjects: ids => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
     getDeletedProjects: () => application.api().get(`user/deleted-projects`),
