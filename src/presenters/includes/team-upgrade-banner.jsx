@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import AddTeamProject from './add-team-project.jsx';
+
 // import PopoverContainer from '../pop-overs/popover-container.jsx'; // see delete-team for pop pattern
 
 

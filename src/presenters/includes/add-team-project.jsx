@@ -27,6 +27,9 @@ const AddTeamProject = ({currentUserIsOnTeam, ...props}) => {
 
 AddTeamProject.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
+  addProject: PropTypes.func.isRequired,
+  myProjects: PropTypes.array.isRequired,
+  teamProjects: PropTypes.array.isRequired,
 };
 
 export default AddTeamProject;
