@@ -59,44 +59,34 @@ class UserEditor extends React.Component {
   }
   
   async uploadAvatar(blob) {
-    try {
-      const {id} = this.state;
-      const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, id);
-      const url = await this.props.uploadAsset(blob, policy, 'temporary-user-avatar');
+    const {id} = this.state;
+    const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, id);
+    const url = await this.props.uploadAsset(blob, policy, 'temporary-user-avatar');
 
-      const image = await assets.blobToImage(blob);
-      const color = assets.getDominantColor(image);
-      await this.updateFields({
-        avatarUrl: url,
-        color: color,
-      });
-    } catch (error) {
-      throw await this.handleError(error);
-    } finally {
-      if (this.isCurrentUser()) {
-        this.props.currentUserModel.avatarUrl(this.state.avatarUrl);
-        this.props.currentUserModel.avatarThumbnailUrl(this.state.avatarThumbnailUrl);
-      }
+    const image = await assets.blobToImage(blob);
+    const color = assets.getDominantColor(image);
+    await this.updateFields({
+      avatarUrl: url,
+      color: color,
+    });
+    if (this.isCurrentUser()) {
+      this.props.currentUserModel.avatarUrl(this.state.avatarUrl);
+      this.props.currentUserModel.avatarThumbnailUrl(this.state.avatarThumbnailUrl);
     }
   }
   
   async uploadCover(blob) {
-    try {
-      const {id} = this.state;
-      const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, id);
-      await this.props.uploadAssetSizes(blob, policy, assets.COVER_SIZES);
+    const {id} = this.state;
+    const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, id);
+    await this.props.uploadAssetSizes(blob, policy, assets.COVER_SIZES);
 
-      const image = await assets.blobToImage(blob);
-      const color = assets.getDominantColor(image);
-      await this.props.updateFields({
-        hasCoverImage: true,
-        coverColor: color,
-      });
-    } catch (error) {
-      throw await this.handleError(error);
-    } finally {
-      this.setState({_cacheCover: Date.now()});
-    }
+    const image = await assets.blobToImage(blob);
+    const color = assets.getDominantColor(image);
+    await this.props.updateFields({
+      hasCoverImage: true,
+      coverColor: color,
+    });
+    this.setState({_cacheCover: Date.now()});
   }
   
   addPin(id) {
@@ -161,8 +151,8 @@ class UserEditor extends React.Component {
       updateName: name => this.updateName(name),
       updateLogin: login => this.updateLogin(login),
       updateDescription: description => this.updateFields({description}).catch(handleError),
-      uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
-      uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
+      uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
+      uploadCover: () => assets.requestFile(blob => this.uploadCover(blob).catch(handleError)),
       clearCover: () => this.updateFields({hasCoverImage: false}).catch(handleError),
       addPin: id => this.addPin(id).catch(handleError),
       removePin: id => this.removePin(id).catch(handleError),
