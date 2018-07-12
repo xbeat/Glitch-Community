@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Learn Ukulele Chords',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fukulele-chords.jpg?1530183290147",
-    link: 'https://glitch.com/~ukulele-chords'
+    title: 'A Tribute to WordArt',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwordart.jpg?1531393616283",
+    link: 'https://glitch.com/~wordart'
   }
   , {
-    title: 'Roll The Dice',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fdice.jpg?1530183290537",
-    link: 'https://glitch.com/~dice'
+    title: 'Your Moment of Zen',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fyour-moment-of-zen.jpg?1531393614581",
+    link: 'https://your-moment-of-zen.glitch.me'
   }
   , {
-    title: 'Meet Friendly Tech & Design Pros',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fnewbietalk.jpg?1530183290324",
-    link: 'https://glitch.com/~newbietalk'
+    title: 'Time Is A Flat Circle',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fuselezzzclock.jpg?1531393615321",
+    link: 'https://glitch.com/~uselezzzclock'
   }  
 ];

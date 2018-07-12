@@ -9,6 +9,14 @@ export default class EntityEditor extends React.Component {
     this.state = this.props.initial;
   }
   
+  localAddItem(field, model) {
+    this.setState(prev => ({[field]: [...prev[field], model]}));
+  }
+  
+  localRemoveItem(field, model) {
+    this.setState(prev => ({[field]: reject(prev[field], matches(model))}));
+  }
+  
   updateFields(changes) {
     return this.props.api.patch(`${this.props.type}/${this.state.id}`, changes).then(({data}) => {
       this.setState(data);
@@ -17,13 +25,13 @@ export default class EntityEditor extends React.Component {
   
   addItem(remoteField, remoteId, localField, localModel) {
     return this.props.api.post(`${this.props.type}/${this.state.id}/${remoteField}/${remoteId}`).then(() => {
-      this.setState(prev => ({[localField]: [...prev[localField], localModel]}));
+      this.localAddItem(localField, localModel);
     });
   }
   
   removeItem(remoteField, remoteId, localField, localModel) {
-    return this.props.api.delete(`teams/${this.state.id}/${remoteField}/${remoteId}`).then(() => {
-      this.setState(prev => ({[localField]: reject(prev[localField], matches(localModel))}));
+    return this.props.api.delete(`${this.props.type}/${this.state.id}/${remoteField}/${remoteId}`).then(() => {
+      this.localRemoveItem(localField, localModel);
     });
   }
   
@@ -33,6 +41,8 @@ export default class EntityEditor extends React.Component {
       updateFields: this.updateFields.bind(this),
       addItem: this.addItem.bind(this),
       removeItem: this.removeItem.bind(this),
+      localAddItem: this.localAddItem.bind(this),
+      localRemoveItem: this.localRemoveItem.bind(this),
     });
   }
 }
