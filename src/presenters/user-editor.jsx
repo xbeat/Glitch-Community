@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as assets from '../utils/assets.js';
+import * as assets from '../utils/assets';
 
 import Notifications from './notifications.jsx';
 import Uploader from './includes/uploader.jsx';
@@ -20,17 +20,17 @@ class UserEditor extends React.Component {
     return this.state.id === this.props.currentUserModel.id();
   }
   
-  handleError(notify, error) {
+  handleError(error) {
     console.error(error);
-    notify();
+    this.props.createErrorNotification();
     return Promise.reject(error);
   }
 
-  handleErrorForInput(notify, error) {
+  handleErrorForInput(error) {
     if (error && error.response && error.response.data) {
       return Promise.reject(error.response.data.message);
     }
-    notify();
+    this.props.createErrorNotification();
     return Promise.reject();
   }
   
@@ -139,8 +139,8 @@ class UserEditor extends React.Component {
   }
   
   render() {
-    const handleError = this.handleError.bind(this, this.props.createErrorNotification);
-    const handleErrorForInput = this.handleErrorForInput.bind(this, this.props.createErrorNotification);
+    const handleError = this.handleError.bind(this);
+    const handleErrorForInput = this.handleErrorForInput.bind(this);
     const funcs = {
       updateName: name => this.updateName(name).catch(handleErrorForInput),
       updateLogin: login => this.updateLogin(login).catch(handleErrorForInput),
