@@ -16,6 +16,7 @@ import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
+import {Notifications} from '../notifications.jsx';
 
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
@@ -26,6 +27,11 @@ function trackRemix(id, domain) {
     baseProjectId: id,
     baseDomain: domain,
   });
+}
+
+function syncPageToDomain(domain) {
+  history.replaceState(null, null, `/~${domain}`);
+  document.title = `~${domain}`;
 }
 
 const PrivateTooltip = "Only members can view code";
@@ -96,7 +102,7 @@ const ProjectPage = ({
         <ProjectInfoContainer style={{backgroundImage: `url('${avatar}')`}}>
           <h1>
             {(isAuthorized
-              ? <EditableField value={domain} update={updateDomain} placeholder="Name your project"/>
+              ? <EditableField value={domain} update={domain => updateDomain(domain).then(() => syncPageToDomain(domain))} placeholder="Name your project"/>
               : <React.Fragment>{domain} {project.private && <PrivateBadge/>}</React.Fragment>
             )}
           </h1>
@@ -142,35 +148,18 @@ ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
 };
 
-const ProjectPageEditor = ({project, updateFields, ...props}) => {
-  function updateDomain(domain) {
-    return updateFields({domain}).then(() => {
-      history.replaceState(null, null, `/~${domain}`);
-      document.title = `~${domain}`;
-    }, ({response: {data: {message}}}) => Promise.reject(message));
-  }
-  const funcs = {
-    updateDomain: domain => updateDomain(domain),
-    updateDescription: description => updateFields({description}),
-    updatePrivate: isPrivate => updateFields({private: isPrivate}),
-  };
-  return <ProjectPage project={project} {...funcs} {...props}/>;
-};
-ProjectPageEditor.propTypes = {
-  project: PropTypes.object.isRequired,
-  updateFields: PropTypes.func.isRequired,
-};
-
 const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
-  <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {project => project ? (
-      <ProjectEditor api={api} initialProject={project} currentUserModel={currentUserModel}>
-        {(project, funcs, userIsMember) => (
-          <ProjectPage project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
-        )}
-      </ProjectEditor>
-    ) : <NotFound name={name}/>}
-  </DataLoader>
+  <Notifications>
+    <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
+      {project => project ? (
+        <ProjectEditor api={api} initialProject={project} currentUserModel={currentUserModel}>
+          {(project, funcs, userIsMember) => (
+            <ProjectPage project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
+          )}
+        </ProjectEditor>
+      ) : <NotFound name={name}/>}
+    </DataLoader>
+  </Notifications>
 );
 ProjectPageLoader.propTypes = {
   name: PropTypes.string.isRequired,

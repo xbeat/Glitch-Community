@@ -1,8 +1,6 @@
 import React from 'react';
 
-const {Provider, Consumer} = React.createContext({
-  createNotification: (content) => console.log(content),
-});
+const {Provider, Consumer} = React.createContext();
 
 const Notification = ({children, className, remove}) => (
   <aside className={`notification ${className}`} onAnimationEnd={remove}>
