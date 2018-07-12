@@ -4,6 +4,7 @@ import moment from 'moment-mini';
 import _ from 'lodash';
 
 import Loader from './loader.jsx';
+import AddTeamProject from './add-team-project.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx';
 
@@ -213,10 +214,7 @@ class TeamAnalytics extends React.Component {
         { this.props.projects.length === 0 &&
           <aside className="inline-banners add-project-to-analytics-banner">
             <div className="description">Add Projects to your team to see who's viewing and remixing</div>
-            <button className="button-small has-emoji">
-              <span>Add Project </span>
-              <span className="emoji bento-box" />
-            </button>
+            <AddTeamProject currentUserIsOnTeam={this.props.currentUserOnTeam} addProject={this.props.addProject} myProjects={this.props.myProjects} teamProjects={this.props.projects} extraButtonClass="button-small" />
           </aside>
         }
       </section>

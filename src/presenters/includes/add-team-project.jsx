@@ -14,7 +14,7 @@ const AddTeamProject = ({currentUserIsOnTeam, ...props}) => {
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <div className="button-wrap">
-            <button className="button add-project has-emoji opens-pop-over" onClick={togglePopover}>
+            <button className={`button add-project has-emoji opens-pop-over ${this.extraButtonClass}`} onClick={togglePopover}>
               Add Project <span className="emoji bento-box" role="img" aria-label=""></span>
             </button>
             { visible && <AddTeamProjectPop {...props} togglePopover={togglePopover} /> }
@@ -30,6 +30,11 @@ AddTeamProject.propTypes = {
   addProject: PropTypes.func.isRequired,
   myProjects: PropTypes.array.isRequired,
   teamProjects: PropTypes.array.isRequired,
+  extraButtonClass: PropTypes.string
 };
+
+// AddTeamProject.defaultProps = {
+//   extraButtonClass: ''
+// }
 
 export default AddTeamProject;
