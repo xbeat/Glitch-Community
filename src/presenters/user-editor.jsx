@@ -113,9 +113,9 @@ class UserEditor extends React.Component {
   async deleteProject(id) {
     await this.props.api.delete(`/projects/${id}`);
     const {data} = await this.props.api.get(`projects/${id}?showDeleted=true`);
-    this.setState(({projects, deletedProjects}) => ({
+    this.setState(({projects, _deletedProjects}) => ({
       projects: projects.filter(p => p.id !== id),
-      deletedProjects: [data, ...deletedProjects]
+      _deletedProjects: [data, ..._deletedProjects]
     }));
   }
   
@@ -133,9 +133,9 @@ class UserEditor extends React.Component {
         console.warn(e);
       }
     }
-    this.setState(({projects, deletedProjects}) => ({
+    this.setState(({projects, _deletedProjects}) => ({
       projects: [...projects, data],
-      deletedProjects: deletedProjects.filter(p => p.id !== id)
+      _deletedProjects: _deletedProjects.filter(p => p.id !== id)
     }));
   }
   
@@ -152,7 +152,7 @@ class UserEditor extends React.Component {
       leaveProject: id => this.leaveProject(id),
       deleteProject: id => this.deleteProject(id),
       undeleteProject: id => this.undeleteProject(id),
-      setDeletedProjects: deletedProjects => this.setState({deletedProjects}),
+      setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
     };
     return this.props.children(this.state, funcs, this.isCurrentUser());
   }
@@ -167,19 +167,20 @@ UserEditor.propTypes = {
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
-const UserEditorContainer = ({children, initialUser, currentUserModel}) => (
+const UserEditorContainer = ({api, children, currentUserModel, initialUser}) => (
   <Uploader>
     {({uploadAsset, uploadAssetSizes}) => (
-      <UserEditor {...{initialUser, currentUserModel, uploadAsset, uploadAssetSizes}}>
+      <UserEditor {...{api, currentUserModel, initialUser, uploadAsset, uploadAssetSizes}}>
         {children}
       </UserEditor>
     )}
   </Uploader>
 );
 UserEditorContainer.propTypes = {
+  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
+  currentUserModel: PropTypes.object.isRequired,
   initialUser: PropTypes.object.isRequired,
-  currentUserMode: PropTypes.object.isRequired,
 };
 
 export default UserEditorContainer;
