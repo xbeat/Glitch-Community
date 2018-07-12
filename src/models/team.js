@@ -31,7 +31,8 @@ export default Team = function(I, self) {
     isVerified: false,
     teamPins: [],
     hasAvatarImage: false,
-    adminUsers: []
+    adminUsers: [],
+    features: [],
   }
   );
     
@@ -240,6 +241,7 @@ export default Team = function(I, self) {
         url: self.url(),
         verifiedImage: self.verifiedImage(),
         verifiedTooltip: self.verifiedTooltip(),
+        features: self.features()
       };
     },
   });
