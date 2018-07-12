@@ -20,17 +20,17 @@ class UserEditor extends React.Component {
     return this.state.id === this.props.currentUserModel.id();
   }
   
-  handleError(error) {
+  handleError(notify, error) {
     console.error(error);
-    this.props.createErrorNotification();
+    notify();
     return Promise.reject(error);
   }
 
-  handleErrorForInput(error) {
+  handleErrorForInput(notify, error) {
     if (error && error.response && error.response.data) {
       return Promise.reject(error.response.data.message);
     }
-    this.props.createErrorNotification();
+    notify();
     return Promise.reject();
   }
   
@@ -56,8 +56,7 @@ class UserEditor extends React.Component {
   }
   
   async uploadAvatar(blob) {
-    const {id} = this.state;
-    const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, id);
+    const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, this.state.id);
     const url = await this.props.uploadAsset(blob, policy, 'temporary-user-avatar');
 
     const image = await assets.blobToImage(blob);
@@ -73,8 +72,7 @@ class UserEditor extends React.Component {
   }
   
   async uploadCover(blob) {
-    const {id} = this.state;
-    const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, id);
+    const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, this.state.id);
     await this.props.uploadAssetSizes(blob, policy, assets.COVER_SIZES);
 
     const image = await assets.blobToImage(blob);
@@ -141,8 +139,8 @@ class UserEditor extends React.Component {
   }
   
   render() {
-    const handleError = this.handleError.bind(this);
-    const handleErrorForInput = this.handleErrorForInput.bind(this);
+    const handleError = this.handleError.bind(this, this.props.createErrorNotification);
+    const handleErrorForInput = this.handleErrorForInput.bind(this, this.props.createErrorNotification);
     const funcs = {
       updateName: name => this.updateName(name).catch(handleErrorForInput),
       updateLogin: login => this.updateLogin(login).catch(handleErrorForInput),
