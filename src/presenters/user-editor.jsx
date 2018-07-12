@@ -5,6 +5,13 @@ import * as assets from '../utils/assets.js';
 
 import Uploader from './includes/uploader.jsx';
 
+function handleErrorForField(data) {
+  if (data && data.response && data.response.data) {
+    return Promise.reject(data.response.data.message);
+  }
+  return Promise.reject();
+}
+
 class UserEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +20,10 @@ class UserEditor extends React.Component {
       _deletedProjects: [],
       _cacheCover: Date.now(),
     };
+  }
+  
+  isCurrentUser() {
+    return this.state.id === this.props.currentUserModel.id();
   }
   
   updateFields(changes) {
@@ -26,8 +37,7 @@ class UserEditor extends React.Component {
       if (this.isCurrentUser()) {
         this.props.userModel.name(name);
       }
-    }, ({response: {data: {message}}}) => Promise.reject(message)
-    );
+    }, handleErrorForField);
   }
   
   updateLogin(login) {
@@ -37,11 +47,7 @@ class UserEditor extends React.Component {
       if (this.isCurrentUser()) {
         this.props.currentUserModel.login(login);
       }
-    }, ({response: {data: {message}}}) => Promise.reject(message));
-  }
-  
-  isCurrentUser() {
-    return this.state.id === this.props.currentUserModel.id();
+    }, handleErrorForField);
   }
   
   async uploadAvatar(blob) {
