@@ -3,14 +3,8 @@ import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets.js';
 
+import Notifications from './notifications.jsx';
 import Uploader from './includes/uploader.jsx';
-
-function handleErrorForField(data) {
-  if (data && data.response && data.response.data) {
-    return Promise.reject(data.response.data.message);
-  }
-  return Promise.reject();
-}
 
 class UserEditor extends React.Component {
   constructor(props) {
@@ -26,6 +20,20 @@ class UserEditor extends React.Component {
     return this.state.id === this.props.currentUserModel.id();
   }
   
+  handleError(error) {
+    console.error(error);
+    this.props.createErrorNotification();
+    return Promise.reject(error);
+  }
+
+  handleErrorForField(error) {
+    if (error && error.response && error.response.data) {
+      return Promise.reject(error.response.data.message);
+    }
+    this.props.createErrorNotification();
+    return Promise.reject();
+  }
+  
   updateFields(changes) {
     return this.props.api.patch(`users/${this.state.id}`, changes).then(({data}) => {
       this.setState(data);
@@ -35,9 +43,9 @@ class UserEditor extends React.Component {
   updateName(name) {
     return this.updateFields({name}).then(() => {
       if (this.isCurrentUser()) {
-        this.props.userModel.name(name);
+        this.props.currentUserModel.name(name);
       }
-    }, handleErrorForField);
+    }, this.handleErrorForField.bind(this));
   }
   
   updateLogin(login) {
@@ -47,12 +55,12 @@ class UserEditor extends React.Component {
       if (this.isCurrentUser()) {
         this.props.currentUserModel.login(login);
       }
-    }, handleErrorForField);
+    }, this.handleErrorForField.bind(this));
   }
   
   async uploadAvatar(blob) {
     try {
-      const {id} = this.props.user;
+      const {id} = this.state;
       const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, id);
       const url = await this.props.uploadAsset(blob, policy, 'temporary-user-avatar');
 
@@ -63,11 +71,12 @@ class UserEditor extends React.Component {
         color: color,
       });
     } catch (error) {
-      console.error(error);
-    }
-    if (this.isCurrentUser()) {
-      this.props.currentUserModel.avatarUrl(this.props.user.avatarUrl);
-      this.props.currentUserModel.avatarThumbnailUrl(this.props.user.avatarThumbnailUrl);
+      throw error;
+    } finally {
+      if (this.isCurrentUser()) {
+        this.props.currentUserModel.avatarUrl(this.state.avatarUrl);
+        this.props.currentUserModel.avatarThumbnailUrl(this.state.avatarThumbnailUrl);
+      }
     }
   }
   
@@ -84,9 +93,10 @@ class UserEditor extends React.Component {
         coverColor: color,
       });
     } catch (error) {
-      console.error(error);
+      throw error;
+    } finally {
+      this.setState({_cacheCover: Date.now()});
     }
-    this.setState({_cacheCover: Date.now()});
   }
   
   async pinProject(id) {
@@ -147,7 +157,7 @@ class UserEditor extends React.Component {
   
   render() {
     const funcs = {
-      updateName: name => this.updateName(name),
+      updateName: name => this.updateName(name).catch(e => this.handleError(e)),
       updateLogin: login => this.updateLogin(login),
       updateDescription: description => this.updateFields({description}),
       uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
@@ -171,16 +181,21 @@ UserEditor.propTypes = {
   }).isRequired,
   uploadAsset: PropTypes.func.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
+  createNotification: PropTypes.func.isRequired,
 };
 
 const UserEditorContainer = ({api, children, currentUserModel, initialUser}) => (
-  <Uploader>
-    {({uploadAsset, uploadAssetSizes}) => (
-      <UserEditor {...{api, currentUserModel, initialUser, uploadAsset, uploadAssetSizes}}>
-        {children}
-      </UserEditor>
+  <Notifications>
+    {notifyFuncs => (
+      <Uploader>
+        {uploadFuncs => (
+          <UserEditor {...{api, currentUserModel, initialUser}} {...uploadFuncs} {...notifyFuncs}>
+            {children}
+          </UserEditor>
+        )}
+      </Uploader>
     )}
-  </Uploader>
+  </Notifications>
 );
 UserEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
