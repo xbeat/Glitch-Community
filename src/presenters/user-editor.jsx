@@ -20,14 +20,12 @@ class UserEditor extends React.Component {
     return this.state.id === this.props.currentUserModel.id();
   }
   
-  errorWrapper(func) {
-    return (...args) => (
-      func(...args).catch(error => {
-        console.error(error);
-        this.props.createErrorNotification();
-        return Promise.reject(error);
-      })
-    );
+  errorWrapper(func, ...args) {
+    return func.bind(this)(...args).catch(error => {
+      console.error(error);
+      this.props.createErrorNotification();
+      return Promise.reject(error);
+    });
   }
 
   handleErrorForField(error) {
@@ -167,7 +165,7 @@ class UserEditor extends React.Component {
       uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
       uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
       clearCover: () => this.updateFields({hasCoverImage: false}),
-      addPin: this.errorWrapper(this.pinProject.bind(this)),
+      addPin: id => this.errorWrapper(this.pinProject, id),
       removePin: id => this.unpinProject(id),
       leaveProject: id => this.leaveProject(id),
       deleteProject: id => this.deleteProject(id),

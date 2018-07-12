@@ -60,7 +60,7 @@ export class Notifications extends React.Component {
     const funcs = {
       createNotification: this.create.bind(this),
       createPersistentNotification: this.createPersistent.bind(this),
-      createError: this.createError.bind(this),
+      createErrorNotification: this.createError.bind(this),
     };
     const {notifications} = this.state;
     window.notify = funcs; //weewoo weeoo test code here
