@@ -31,8 +31,8 @@ class ProjectEditor extends React.Component {
   }
   
   async updateFields(changes) {
-    const {data} = await this.props.api.patch(`projects/${this.state.id}`, changes);
-    this.setState(data);
+    await this.props.api.patch(`projects/${this.state.id}`, changes);
+    this.setState(changes);
   }
   
   render() {
