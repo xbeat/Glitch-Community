@@ -97,22 +97,27 @@ Only employees of Fog Creek will be able to do this step, and here it is!  This 
 
 First, let's make sure any changes made direct to Community are merged and happy.  This is a Glitch site, after all-- we're not forcing the PR workflow, especially for small changes.
 
-1. In your local git repo, checkout `origin/master`, then pull from `https://api.glitch.com/community/git` and, if there were any changes, merge them and push them back to `origin/master`.
-
-    Ok, now the GitHub repository is updated and stable. 
+1. In your local git repo, 
+```git checkout origin/master``` 
+2. then pull from the base community site to get any live changes
+```
+git pull https://api.glitch.com/community/git
+``` 
+and, if there were any changes, merge them and push them back to `origin/master`.
+Ok, now the GitHub repository is updated and stable. 
   
-2. Inside of https://glitch.com/~community-staging, open up the console.
+3. Inside of https://glitch.com/~community-staging, open up the console.
     ```
     git log -1 # Gets a stable changeset handy in case we need to revert
     git pull
     refresh # Updates the glitch editor with the new files
     ```
   
-3. Your new version in staged!  View the site and the logs, make sure it's building and looks alive.
+4. Your new version in staged!  View the site and the logs, make sure it's building and looks alive.
 
-4. Swap ~community with ~community-staging to put your new version in front of users.
+5. Swap ~community with ~community-staging to put your new version in front of users. (there's a special endpoint for this, ask us about it)
 
-5. Problem? No worries, swap it back!
+6. Problem? No worries, swap it back!
 
 #### Or just doing it live…
 
