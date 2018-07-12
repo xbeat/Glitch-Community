@@ -78,10 +78,10 @@ ReadmeLoader.propTypes = {
 
 const ProjectPage = ({
   project: {
-    avatar, description, domain, id,
-    userIsCurrentUser, users, teams,
+    avatar, description, domain, id, users, teams,
     ...project // 'private' can't be used as a variable name
   },
+  isAuthorized,
   getReadme,
   getTeam, getTeamPins,
   getUser, getUserPins,
@@ -95,24 +95,24 @@ const ProjectPage = ({
       <InfoContainer>
         <ProjectInfoContainer style={{backgroundImage: `url('${avatar}')`}}>
           <h1>
-            {(userIsCurrentUser
+            {(isAuthorized
               ? <EditableField value={domain} update={updateDomain} placeholder="Name your project"/>
               : <React.Fragment>{domain} {project.private && <PrivateBadge/>}</React.Fragment>
             )}
           </h1>
-          {(userIsCurrentUser &&
+          {(isAuthorized &&
             <div>
-              <PrivateToggle isPrivate={project.private} isMember={userIsCurrentUser} setPrivate={updatePrivate}/>
+              <PrivateToggle isPrivate={project.private} isMember={isAuthorized} setPrivate={updatePrivate}/>
             </div>
           )}
           <UsersList users={users} />
           <AuthDescription
-            authorized={userIsCurrentUser} description={description}
+            authorized={isAuthorized} description={description}
             update={updateDescription} placeholder="Tell us about your app"
           />
           <p className="buttons">
             <ShowButton name={domain}/>
-            <EditButton name={domain} isMember={userIsCurrentUser}/>
+            <EditButton name={domain} isMember={isAuthorized}/>
           </p>
         </ProjectInfoContainer>
       </InfoContainer>
@@ -121,7 +121,7 @@ const ProjectPage = ({
       <Embed domain={domain}/>
       <div className="buttons buttons-right">
         <RemixButton className="button-small"
-          name={domain} isMember={userIsCurrentUser}
+          name={domain} isMember={isAuthorized}
           onClick={() => trackRemix(id, domain)}
         />
       </div>
@@ -138,6 +138,7 @@ const ProjectPage = ({
   </main>
 );
 ProjectPage.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
   project: PropTypes.object.isRequired,
 };
 

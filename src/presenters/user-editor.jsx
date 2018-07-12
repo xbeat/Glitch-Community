@@ -157,6 +157,7 @@ class UserEditor extends React.Component {
   }
 }
 UserEditor.propTypes = {
+  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   createErrorNotification: PropTypes.func.isRequired,
   currentUserModel: PropTypes.object.isRequired,

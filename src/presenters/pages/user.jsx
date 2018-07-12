@@ -22,9 +22,8 @@ import NotFound from '../includes/not-found.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
 function syncPageToLogin(login) {
-  console.log(login);
-  //history.replaceState(null, null, `/@${login}`);
-  //document.title = `@${login}`;
+  history.replaceState(null, null, `/@${login}`);
+  document.title = `@${login}`;
 }
 
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
@@ -91,7 +90,7 @@ const UserPage = ({
       >
         <NameAndLogin
           {...{name, login, id, isAuthorized, updateName}}
-          updateLogin={login => updateLogin(login).then(syncPageToLogin)}
+          updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
         />
         <Thanks count={thanksCount}/>
         <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
