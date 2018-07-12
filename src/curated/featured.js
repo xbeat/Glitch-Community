@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Play Music With Your Face',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fface-the-music.jpg?1531135109987",
-    link: 'https://glitch.com/~face-the-music'
+    title: 'A Tribute to WordArt',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwordart.jpg?1531393616283",
+    link: 'https://glitch.com/~wordart'
   }
   , {
-    title: 'Pew Pew Pew! Galaxeroids!',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fgalaxeroids.jpg?1531135110191",
-    link: 'https://glitch.com/~galaxeroids'
+    title: 'Your Moment of Zen',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fyour-moment-of-zen.jpg?1531393614581",
+    link: 'https://your-moment-of-zen.glitch.me'
   }
   , {
-    title: 'Get Organized: Make Labels',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fshop-labels.jpg?1531135109784",
-    link: 'https://glitch.com/~shop-labels'
+    title: 'Time Is A Flat Circle',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fuselezzzclock.jpg?1531393615321",
+    link: 'https://glitch.com/~uselezzzclock'
   }  
 ];
