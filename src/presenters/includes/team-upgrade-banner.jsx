@@ -35,7 +35,7 @@ class TeamUpgradeBanner extends React.Component {
 
   render() {
     return (
-      <aside className="team-upgrade-banner">
+      <aside className="inline-banners team-upgrade-banner">
         <div>
           Free teams are limited to 5 projects
         </div>
@@ -43,7 +43,7 @@ class TeamUpgradeBanner extends React.Component {
           {this.state.remainingFreeProjects} left
         </div>
         <progress value={this.props.projectsCount} max={this.props.limit} />
-        <button className="button buttom-small has-emoji">
+        <button className="button buttom-small button-cta has-emoji">
           <span>Upgrade {this.props.teamName} </span>
           <span className="emoji sparkles" />
         </button>
