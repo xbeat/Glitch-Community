@@ -209,7 +209,15 @@ class TeamAnalytics extends React.Component {
             />
           }
         </section>
-
+        
+        <aside className="add-project-to-analytics-banner">
+          <div>Add Projects to your team to track how people are using them</div>
+          <button className="button-small has-emoji">
+            <span>Add Project </span>
+            <span className="emoji bento-box" />
+          </button>
+        </aside>
+        
       </section>
     );
   }
@@ -220,6 +228,9 @@ TeamAnalytics.propTypes = {
   api: PropTypes.func.isRequired,
   projects: PropTypes.array.isRequired,
   currentUserOnTeam: PropTypes.bool.isRequired,
+  
+  addProject: PropTypes.func.isRequired,
+  myProjects: PropTypes.array.isRequired,
 };
 
 export default TeamAnalytics;
