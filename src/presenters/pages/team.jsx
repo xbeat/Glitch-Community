@@ -23,6 +23,8 @@ import EntityPageProjects from '../entity-page-projects.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 import TeamUpgradeBanner from '../includes/team-upgrade-banner.jsx';
+import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reached-banner.jsx';
+
 
 const FREE_TEAM_PROJECTS_LIMIT = 5
 
@@ -70,8 +72,8 @@ const TeamPage = ({
       </ProfileContainer>
     </section>
     <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects} />
-    { currentUserIsOnTeam && 
-      <TeamProjectLimitReachedBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT} teamName={name} />
+    { (currentUserIsOnTeam && !teamHasUnlimitedProjects && projects.length >= FREE_TEAM_PROJECTS_LIMIT) &&
+      <TeamProjectLimitReachedBanner teamName={name} />
     }
     <EntityPageProjects
       projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
@@ -81,10 +83,12 @@ const TeamPage = ({
     { currentUserIsOnTeam && 
       <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects} addProject={addProject} myProjects={myProjects} /> 
     }
-    { (currentUserIsOnTeam && !teamHasUnlimitedProjects) && 
+    { (currentUserIsOnTeam && !teamHasUnlimitedProjects ) && 
       <TeamUpgradeBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT} teamName={name} />
     }
+
     {/* billing info section goes here */}
+
     { currentUserIsOnTeam && 
       <DeleteTeam api={() => api} teamId={id} teamName={name} users={users} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> 
     }
@@ -158,7 +162,6 @@ class TeamPageEditor extends React.Component {
   // TODO temp feature switch name
   teamHasUnlimitedProjects() {
     let features = this.props.team.features
-    console.log('🍕🍕🍕🍕' , features.includes('unlimited projects'))
     return features.includes('unlimited projects')
   }
   
