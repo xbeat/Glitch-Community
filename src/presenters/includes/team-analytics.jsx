@@ -177,41 +177,38 @@ class TeamAnalytics extends React.Component {
           }
         </section>
 
-        { this.props.projects.length > 0 &&
-          <React.Fragment>
-            <section className="referrers">
-              <h3>Referrers</h3>
-              { (this.state.isGettingData) &&
-                <Loader />
-              ||
-                <TeamAnalyticsReferrers 
-                  analytics = {this.state.analytics}
-                  totalRemixes = {this.state.totalRemixes}
-                  uniqueAppViews = {this.state.uniqueAppViews}
-                />
-              }
-            </section>
-            <section className="project-details">
-              <h3>Project Details</h3>
-              <TeamAnalyticsProjectPop
-                updateProjectdomain = {this.updateProjectdomain.bind(this)}
-                currentProjectDomain = {this.state.currentProjectDomain}
-                projects = {this.props.projects}
-              />
-              { (this.state.currentProjectDomain === "All Projects") &&
-                <p>
-                  <span className="up-arrow">↑ </span>
-                  Select a project for details and the latest remixes</p>
-                ||
-                <TeamAnalyticsProjectDetails
-                  currentProjectDomain = {this.state.currentProjectDomain}
-                  id = {this.props.id}
-                  api = {this.props.api}
-                />
-              }
-            </section>
-          </React.Fragment>
-        }
+        <section className="referrers">
+          <h3>Referrers</h3>
+          { (this.state.isGettingData) &&
+            <Loader />
+          ||
+            <TeamAnalyticsReferrers 
+              analytics = {this.state.analytics}
+              totalRemixes = {this.state.totalRemixes}
+              uniqueAppViews = {this.state.uniqueAppViews}
+            />
+          }
+        </section>
+
+        <section className="project-details">
+          <h3>Project Details</h3>
+          <TeamAnalyticsProjectPop
+            updateProjectdomain = {this.updateProjectdomain.bind(this)}
+            currentProjectDomain = {this.state.currentProjectDomain}
+            projects = {this.props.projects}
+          />
+          { (this.state.currentProjectDomain === "All Projects") &&
+            <p>
+              <span className="up-arrow">↑ </span>
+              Select a project for details and the latest remixes</p>
+            ||
+            <TeamAnalyticsProjectDetails
+              currentProjectDomain = {this.state.currentProjectDomain}
+              id = {this.props.id}
+              api = {this.props.api}
+            />
+          }
+        </section>
 
         { this.props.projects.length === 0 &&
           <aside className="inline-banners add-project-to-analytics-banner">

@@ -57,7 +57,7 @@ class CreateTeamPop extends React.Component {
       'zealous',
     ]
     let adjectives = _.sampleSize(descriptiveAdjectives, 2)
-    return `A #{adjectives[0]} team that makes #{adjectives[1]} things`
+    return `A ${adjectives[0]} team that makes ${adjectives[1]} things`
   }
 
   
