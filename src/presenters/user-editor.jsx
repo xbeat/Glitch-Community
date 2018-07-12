@@ -34,28 +34,25 @@ class UserEditor extends React.Component {
     return Promise.reject();
   }
   
-  updateFields(changes) {
-    return this.props.api.patch(`users/${this.state.id}`, changes).then(({data}) => {
-      this.setState(data);
-    });
+  async updateFields(changes) {
+    const {data} = await this.props.api.patch(`users/${this.state.id}`, changes);
+    this.setState(data);
   }
   
-  updateName(name) {
-    return this.updateFields({name}).then(() => {
-      if (this.isCurrentUser()) {
-        this.props.currentUserModel.name(name);
-      }
-    }, this.handleErrorForInput.bind(this));
+  async updateName(name) {
+    await this.updateFields({name});
+    if (this.isCurrentUser()) {
+      this.props.currentUserModel.name(name);
+    }
   }
   
-  updateLogin(login) {
-    return this.updateFields({login}).then(() => {
-      history.replaceState(null, null, `/@${login}`);
-      document.title = `@${login}`;
-      if (this.isCurrentUser()) {
-        this.props.currentUserModel.login(login);
-      }
-    }, this.handleErrorForInput.bind(this));
+  async updateLogin(login) {
+    await this.updateFields({login});
+    history.replaceState(null, null, `/@${login}`);
+    document.title = `@${login}`;
+    if (this.isCurrentUser()) {
+      this.props.currentUserModel.login(login);
+    }
   }
   
   async uploadAvatar(blob) {
@@ -89,20 +86,18 @@ class UserEditor extends React.Component {
     this.setState({_cacheCover: Date.now()});
   }
   
-  addPin(id) {
-    return this.props.api.post(`users/${this.state.id}/pinned-projects/${id}`).then(() => {
-      this.setState(({pins}) => ({
-        pins: [...pins, {projectId: id}],
-      }));
-    });
+  async addPin(id) {
+    await this.props.api.post(`users/${this.state.id}/pinned-projects/${id}`);
+    this.setState(({pins}) => ({
+      pins: [...pins, {projectId: id}],
+    }));
   }
   
-  removePin(id) {
-    return this.props.api.delete(`users/${this.state.id}/pinned-projects/${id}`).then(() => {
-      this.setState(({pins}) => ({
-        pins: pins.filter(p => p.projectId !== id),
-      }));
-    });
+  async removePin(id) {
+    await this.props.api.delete(`users/${this.state.id}/pinned-projects/${id}`);
+    this.setState(({pins}) => ({
+      pins: pins.filter(p => p.projectId !== id),
+    }));
   }
   
   async leaveProject(id) {
@@ -147,9 +142,10 @@ class UserEditor extends React.Component {
   
   render() {
     const handleError = this.handleError.bind(this);
+    const handleErrorForInput = this.handleErrorForInput.bind(this);
     const funcs = {
-      updateName: name => this.updateName(name),
-      updateLogin: login => this.updateLogin(login),
+      updateName: name => this.updateName(name).catch(handleErrorForInput),
+      updateLogin: login => this.updateLogin(login).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
       uploadCover: () => assets.requestFile(blob => this.uploadCover(blob).catch(handleError)),
