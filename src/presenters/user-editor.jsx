@@ -20,10 +20,14 @@ class UserEditor extends React.Component {
     return this.state.id === this.props.currentUserModel.id();
   }
   
-  handleError(error) {
-    console.error(error);
-    this.props.createErrorNotification();
-    return Promise.reject(error);
+  errorWrapper(func) {
+    return (...args) => (
+      func(...args).catch(error => {
+        console.error(error);
+        this.props.createErrorNotification();
+        return Promise.reject(error);
+      })
+    );
   }
 
   handleErrorForField(error) {
@@ -157,13 +161,13 @@ class UserEditor extends React.Component {
   
   render() {
     const funcs = {
-      updateName: name => this.updateName(name).catch(e => this.handleError(e)),
+      updateName: name => this.updateName(name),
       updateLogin: login => this.updateLogin(login),
       updateDescription: description => this.updateFields({description}),
       uploadAvatar: () => assets.requestFile(this.uploadAvatar.bind(this)),
       uploadCover: () => assets.requestFile(this.uploadCover.bind(this)),
       clearCover: () => this.updateFields({hasCoverImage: false}),
-      addPin: id => this.pinProject(id),
+      addPin: this.errorWrapper(this.pinProject.bind(this)),
       removePin: id => this.unpinProject(id),
       leaveProject: id => this.leaveProject(id),
       deleteProject: id => this.deleteProject(id),
