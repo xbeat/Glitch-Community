@@ -10,6 +10,7 @@ class TeamUpgradeInfoBanner extends React.Component {
       remainingFreeProjects: 0,
     };
     this.updateRemainingFreeProjects = this.updateRemainingFreeProjects.bind(this);
+    this.errorIfLimitReached = this.errorIfLimitReached.bind(this);
   }
 
   updateRemainingFreeProjects() {
@@ -20,6 +21,12 @@ class TeamUpgradeInfoBanner extends React.Component {
     this.setState({
       remainingFreeProjects: remaining
     })
+  }
+  
+  errorIfLimitReached() {
+    if (this.state.remainingFreeProjects === 0) {
+      return 'projects-left-error'
+    }
   }
 
   componentDidMount() {
@@ -38,7 +45,7 @@ class TeamUpgradeInfoBanner extends React.Component {
         <div>
           Free teams are limited to 5 projects
         </div>
-        <div className="projects-left">
+        <div className={`projects-left ${this.errorIfLimitReached()}`}>
           {this.state.remainingFreeProjects} left
         </div>
         <progress value={this.props.projectsCount} max={this.props.limit} />
