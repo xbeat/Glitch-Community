@@ -10,13 +10,12 @@ function handleError(notify, error) {
 }
 
 function handleErrorForInput(notify, error) {
-  console.log('handle', error);
   if (error && error.response && error.response.data) {
     return Promise.reject(error.response.data.message);
   }
   console.error(error);
   notify();
-  return Promise.reject(null);
+  return Promise.reject();
 }
 
 const ErrorHandler = ({children}) => (

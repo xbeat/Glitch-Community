@@ -32,11 +32,11 @@ class ProjectEditor extends React.Component {
   }
 }
 ProjectEditor.propTypes = {
-  handleError: PropTypes.func.isRequired,
-  handleErrorForInput: PropTypes.func.isRequired,
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   currentUserModel: PropTypes.object.isRequired,
+  handleError: PropTypes.func.isRequired,
+  handleErrorForInput: PropTypes.func.isRequired,
   initialProject: PropTypes.object.isRequired,
 };
 

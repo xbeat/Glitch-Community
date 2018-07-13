@@ -6,7 +6,7 @@ import * as assets from '../utils/assets';
 import ProjectModel from '../models/project';
 import UserModel from '../models/user';
 
-import Notifications from './notifications.jsx';
+import ErrorHandlers from './error-handlers.jsx';
 import Uploader from './includes/uploader.jsx';
 
 class TeamEditor extends React.Component {
@@ -22,12 +22,6 @@ class TeamEditor extends React.Component {
   currentUserIsOnTeam() {
     const currentUserId = this.props.currentUserModel.id();
     return this.state.users.some(({id}) => currentUserId === id);
-  }
-  
-  handleError(error) {
-    console.error(error);
-    this.props.createErrorNotification();
-    return Promise.reject(error);
   }
   
   async updateFields(changes) {
@@ -108,7 +102,7 @@ class TeamEditor extends React.Component {
   }
   
   render() {
-    const handleError = this.handleError.bind(this);
+    const {handleError} = this.props;
     const funcs = {
       updateDescription: description => this.updateFields({description}).catch(handleError),
       addUser: id => this.addUser(id).catch(handleError),
@@ -127,24 +121,24 @@ class TeamEditor extends React.Component {
 TeamEditor.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
-  createErrorNotification: PropTypes.func.isRequired,
   currentUserModel: PropTypes.object.isRequired,
+  handleError: PropTypes.func.isRequired,
   initialTeam: PropTypes.object.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
 const TeamEditorContainer = ({api, children, currentUserModel, initialTeam}) => (
-  <Notifications>
-    {notifyFuncs => (
+  <ErrorHandlers>
+    {errorFuncs => (
       <Uploader>
         {uploadFuncs => (
-          <TeamEditor {...{api, currentUserModel, initialTeam}} {...uploadFuncs} {...notifyFuncs}>
+          <TeamEditor {...{api, currentUserModel, initialTeam}} {...uploadFuncs} {...errorFuncs}>
             {children}
           </TeamEditor>
         )}
       </Uploader>
     )}
-  </Notifications>
+  </ErrorHandlers>
 );
 TeamEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
