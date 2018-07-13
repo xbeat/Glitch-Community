@@ -122,7 +122,7 @@ const TeamPage = ({
       {/* billing info section goes here */}
 
       { currentUserIsOnTeam && 
-        <DeleteTeam api={() => api} teamId={id} teamName={name} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> 
+        <DeleteTeam api={() => api} teamId={id} teamName={name} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} users={users} /> 
       }
       { !currentUserIsOnTeam && 
         <TeamMarketing /> 
