@@ -26,7 +26,7 @@ export class UpgradeTeamPop extends React.Component {
 UpgradeTeamPop.propTypes = {
   teamName: PropTypes.string.isRequired,
   teamId: PropTypes.number.isRequired,
-  userId: PropTypes.number.isRequired,
+  currentUserId: PropTypes.number.isRequired,
   togglePopover: PropTypes.func.isRequired,
 };
 

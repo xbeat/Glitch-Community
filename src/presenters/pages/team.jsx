@@ -57,7 +57,7 @@ const TeamPage = ({
       return true
     } else return false
   }
-  
+  console.log ('🌹', currentUserId)
   return (
     <main className="profile-page team-page">
       <section>
@@ -116,7 +116,13 @@ const TeamPage = ({
         /> 
       }
       { (currentUserIsOnTeam && !teamHasUnlimitedProjects ) && 
-        <TeamUpgradeBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT} teamName={name} teamId={id} users={users} currentUserId={currentUserId} />
+        <TeamUpgradeBanner 
+          projectsCount={projects.length} 
+          limit={FREE_TEAM_PROJECTS_LIMIT} 
+          teamName={name} 
+          teamId={id} 
+          users={users} 
+          currentUserId={currentUserId} />
       }
 
       {/* billing info section goes here */}
@@ -221,6 +227,7 @@ class TeamPageEditor extends React.Component {
       addPin: projectId => addItem('pinned-projects', projectId, 'teamPins', {projectId}),
       removePin: projectId => removeItem('pinned-projects', projectId, 'teamPins', {projectId}),
       teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
+      currentUserId: currentUserId,
     };
     return <TeamPage team={team} {...this.state} {...funcs} {...props}/>;
   }
