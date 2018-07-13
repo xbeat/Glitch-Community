@@ -49,7 +49,7 @@ const TeamPage = ({
   api, searchUsers, getProjects,
   _cacheAvatar, _cacheCover,
   currentUserIsTeamAdmin,
-  teamHasUnlimitedProjects,
+  teamHasUnlimitedProjects, currentUserId
 }) => {
 
   const projectLimitIsReached = () => {
@@ -116,13 +116,13 @@ const TeamPage = ({
         /> 
       }
       { (currentUserIsOnTeam && !teamHasUnlimitedProjects ) && 
-        <TeamUpgradeBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT} teamName={name} />
+        <TeamUpgradeBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT} teamName={name} teamId={id} users={users} currentUserId={currentUserId} />
       }
 
       {/* billing info section goes here */}
 
       { currentUserIsOnTeam && 
-        <DeleteTeam api={() => api} teamId={id} teamName={name} users={users} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> 
+        <DeleteTeam api={() => api} teamId={id} teamName={name} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> 
       }
       { !currentUserIsOnTeam && 
         <TeamMarketing /> 

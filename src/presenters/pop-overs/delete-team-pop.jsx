@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProjectResultItem from '../includes/project-result-item.jsx';
 import UsersList from "../users-list.jsx";
 import Loader from '../includes/loader.jsx'
 
