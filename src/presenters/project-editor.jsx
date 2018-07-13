@@ -22,19 +22,18 @@ class ProjectEditor extends React.Component {
   }
   
   render() {
-    const inputFuncs = this.props.addHandleErrorForInput({
-      updateDomain: domain => this.updateFields({domain}),
-    });
-    const funcs = this.props.addHandleError({
-      updateDescription: description => this.updateFields({description}),
-      updatePrivate: isPrivate => this.updateFields({private: isPrivate}),
-    });
-    return this.props.children(this.state, {...inputFuncs, ...funcs}, this.userIsMember());
+    const {handleError, handleErrorForInput} = this.props;
+    const funcs = {
+      updateDomain: domain => this.updateFields({domain}).catch(handleErrorForInput),
+      updateDescription: description => this.updateFields({description}).catch(handleError),
+      updatePrivate: isPrivate => this.updateFields({private: isPrivate}).catch(handleError),
+    };
+    return this.props.children(this.state, funcs, this.userIsMember());
   }
 }
 ProjectEditor.propTypes = {
-  addHandleError: PropTypes.func.isRequired,
-  addHandleErrorForInput: PropTypes.func.isRequired,
+  handleError: PropTypes.func.isRequired,
+  handleErrorForInput: PropTypes.func.isRequired,
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   currentUserModel: PropTypes.object.isRequired,
