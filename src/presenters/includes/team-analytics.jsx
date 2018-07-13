@@ -220,7 +220,6 @@ class TeamAnalytics extends React.Component {
               myProjects={this.props.myProjects} 
               teamProjects={this.props.projects} 
               extraButtonClass="button-small" 
-              projectLimitIsReached={this.props.projectLimitIsReached} 
             />
           </aside>
         }
@@ -236,7 +235,6 @@ TeamAnalytics.propTypes = {
   currentUserOnTeam: PropTypes.bool.isRequired,
   addProject: PropTypes.func.isRequired,
   myProjects: PropTypes.array.isRequired,
-  projectLimitIsReached: PropTypes.bool.isRequired,
 };
 
 export default TeamAnalytics;

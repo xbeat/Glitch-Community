@@ -109,7 +109,6 @@ const TeamPage = ({
           projects={projects} 
           addProject={addProject} 
           myProjects={myProjects} 
-          projectLimitIsReached={projectLimitIsReached()} 
         /> 
       }
       { (currentUserIsOnTeam && !teamHasUnlimitedProjects ) && 
