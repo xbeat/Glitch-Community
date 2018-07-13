@@ -51,8 +51,10 @@ const TeamPage = ({
   currentUserIsTeamAdmin,
   teamHasUnlimitedProjects,
 }) => {
-  projectLimitReached = () => {
-    if ((currentUserIsOnTeam && !teamHasUnlimitedProjects && projects.length) >= FREE_TEAM_PROJECTS_LIMIT) 
+  const projectLimitIsReached = () => {
+    if ((currentUserIsOnTeam && !teamHasUnlimitedProjects && projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
+      return true
+    }
   }
   return (
     <main className="profile-page team-page">
@@ -75,8 +77,8 @@ const TeamPage = ({
           <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
         </ProfileContainer>
       </section>
-      <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects} />
-      { (currentUserIsOnTeam && !teamHasUnlimitedProjects && projects.length >= FREE_TEAM_PROJECTS_LIMIT) &&
+      <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects} projectLimitIsReached={projectLimitIsReached} />
+      { projectLimitIsReached &&
         <TeamProjectLimitReachedBanner teamName={name} />
       }
       <EntityPageProjects
