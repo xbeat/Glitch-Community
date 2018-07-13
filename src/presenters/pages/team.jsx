@@ -68,12 +68,16 @@ const TeamPage = ({
           coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
         >
           <h1 className="username">
-            {name}
-            {isVerified && <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>}
+            { name }
+            { isVerified && 
+              <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>
+            }
           </h1>
           <div className="users-information">
             <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminUsers, api, teamId:id, currentUserIsTeamAdmin}} />
-            {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)} />}
+            { currentUserIsOnTeam && 
+              <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)} />
+            }
           </div>
           <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)} />
           <AuthDescription 
