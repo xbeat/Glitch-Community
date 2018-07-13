@@ -11,12 +11,8 @@ export class UpgradeTeamPop extends React.Component {
     this.state = {
       monthlyCost: 0
     };
-    // this.price = this.price.bind(this);
   }
   
-  // price() {
-  //   return (this.props.users.length * PRICE_PER_USER)
-  // }
   componentDidMount() {
     let monthlyCost = this.props.users.length * PRICE_PER_USER
     this.setState({
