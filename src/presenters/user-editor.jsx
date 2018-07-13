@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
 
-import Notifications from './notifications.jsx';
+import ErrorHandlers from './error-handlers.jsx';
 import Uploader from './includes/uploader.jsx';
 
 class UserEditor extends React.Component {
@@ -18,20 +18,6 @@ class UserEditor extends React.Component {
   
   isCurrentUser() {
     return this.state.id === this.props.currentUserModel.id();
-  }
-  
-  handleError(error) {
-    console.error(error);
-    this.props.createErrorNotification();
-    return Promise.reject(error);
-  }
-
-  handleErrorForInput(error) {
-    if (error && error.response && error.response.data) {
-      return Promise.reject(error.response.data.message);
-    }
-    this.props.createErrorNotification();
-    return Promise.reject();
   }
   
   async updateFields(changes) {
@@ -137,8 +123,7 @@ class UserEditor extends React.Component {
   }
   
   render() {
-    const handleError = this.handleError.bind(this);
-    const handleErrorForInput = this.handleErrorForInput.bind(this);
+    const {handleError, handleErrorForInput} = this.props;
     const funcs = {
       updateName: name => this.updateName(name).catch(handleErrorForInput),
       updateLogin: login => this.updateLogin(login).catch(handleErrorForInput),
@@ -159,8 +144,9 @@ class UserEditor extends React.Component {
 UserEditor.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
-  createErrorNotification: PropTypes.func.isRequired,
   currentUserModel: PropTypes.object.isRequired,
+  handleError: PropTypes.func.isRequired,
+  handleErrorForInput: PropTypes.func.isRequired,
   initialUser: PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired,
@@ -169,17 +155,17 @@ UserEditor.propTypes = {
 };
 
 const UserEditorContainer = ({api, children, currentUserModel, initialUser}) => (
-  <Notifications>
-    {notifyFuncs => (
+  <ErrorHandlers>
+    {errorFuncs => (
       <Uploader>
         {uploadFuncs => (
-          <UserEditor {...{api, currentUserModel, initialUser}} {...uploadFuncs} {...notifyFuncs}>
+          <UserEditor {...{api, currentUserModel, initialUser}} {...uploadFuncs} {...errorFuncs}>
             {children}
           </UserEditor>
         )}
       </Uploader>
     )}
-  </Notifications>
+  </ErrorHandlers>
 );
 UserEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
