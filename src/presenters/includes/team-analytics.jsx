@@ -214,7 +214,14 @@ class TeamAnalytics extends React.Component {
         { this.props.projects.length === 0 &&
           <aside className="inline-banners add-project-to-analytics-banner">
             <div className="description">Add Projects to your team to see who's viewing and remixing</div>
-            <AddTeamProject currentUserIsOnTeam={this.props.currentUserOnTeam} addProject={this.props.addProject} myProjects={this.props.myProjects} teamProjects={this.props.projects} extraButtonClass="button-small" />
+            <AddTeamProject 
+              currentUserIsOnTeam={this.props.currentUserOnTeam} 
+              addProject={this.props.addProject} 
+              myProjects={this.props.myProjects} 
+              teamProjects={this.props.projects} 
+              extraButtonClass="button-small" 
+              projectLimitIsReached={this.props.projectLimitIsReached} 
+            />
           </aside>
         }
       </section>
@@ -227,9 +234,9 @@ TeamAnalytics.propTypes = {
   api: PropTypes.func.isRequired,
   projects: PropTypes.array.isRequired,
   currentUserOnTeam: PropTypes.bool.isRequired,
-  
   addProject: PropTypes.func.isRequired,
   myProjects: PropTypes.array.isRequired,
+  projectLimitIsReached: PropTypes.bool.isRequired,
 };
 
 export default TeamAnalytics;

@@ -51,11 +51,13 @@ const TeamPage = ({
   currentUserIsTeamAdmin,
   teamHasUnlimitedProjects,
 }) => {
+
   const projectLimitIsReached = () => {
     if ((currentUserIsOnTeam && !teamHasUnlimitedProjects && projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
       return true
-    }
+    } else return false
   }
+  
   return (
     <main className="profile-page team-page">
       <section>
@@ -74,20 +76,41 @@ const TeamPage = ({
             {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)} />}
           </div>
           <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)} />
-          <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
+          <AuthDescription 
+            authorized={currentUserIsOnTeam} 
+            description={description} 
+            update={updateDescription} 
+            placeholder="Tell us about your team"
+          />
         </ProfileContainer>
       </section>
-      <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects} projectLimitIsReached={projectLimitIsReached()} />
-      { projectLimitIsReached &&
+      <AddTeamProject 
+        {...{currentUserIsOnTeam, addProject, myProjects}} 
+        teamProjects={projects}
+        projectLimitIsReached={projectLimitIsReached()}
+      />
+      { projectLimitIsReached() &&
         <TeamProjectLimitReachedBanner teamName={name} />
       }
       <EntityPageProjects
-        projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
-        addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam: removeProject}}
+        projects={projects} 
+        pins={teamPins} 
+        isAuthorized={currentUserIsOnTeam}
+        addPin={addPin} 
+        removePin={removePin} 
+        projectOptions={{removeProjectFromTeam: removeProject}}
         getProjects={getProjects}
       />
       { currentUserIsOnTeam && 
-        <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects} addProject={addProject} myProjects={myProjects} /> 
+        <TeamAnalytics 
+          api={() => api} 
+          id={id} 
+          currentUserOnTeam={currentUserIsOnTeam} 
+          projects={projects} 
+          addProject={addProject} 
+          myProjects={myProjects} 
+          projectLimitIsReached={projectLimitIsReached()} 
+        /> 
       }
       { (currentUserIsOnTeam && !teamHasUnlimitedProjects ) && 
         <TeamUpgradeBanner projectsCount={projects.length} limit={FREE_TEAM_PROJECTS_LIMIT} teamName={name} />
