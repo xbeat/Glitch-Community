@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import PopoverContainer from '../pop-overs/popover-container.jsx'; // see delete-team for pop pattern
-
+import UpgradeTeam from './upgrade-team.jsx';
 
 class TeamProjectLimitReachedBanner extends React.Component {
   constructor(props) {
@@ -16,10 +15,7 @@ class TeamProjectLimitReachedBanner extends React.Component {
         <div className="description">
           You'll need to upgrade your team to add more projects
         </div>
-        <button className="button buttom-small button-cta has-emoji">
-          <span>Upgrade {this.props.teamName} </span>
-          <span className="emoji sparkles" />
-        </button>
+        <UpgradeTeam teamName={this.props.teamName} teamId={this.props.teamId} currentUserId={this.props.currentUserId} />
       </aside>
     );
   }
@@ -27,6 +23,8 @@ class TeamProjectLimitReachedBanner extends React.Component {
 
 TeamProjectLimitReachedBanner.propTypes = {
   teamName: PropTypes.string.isRequired,
+  teamId: PropTypes.number.isRequired,
+  currentUserId: PropTypes.number.isRequired,
 };
 
 export default TeamProjectLimitReachedBanner;

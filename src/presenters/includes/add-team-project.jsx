@@ -15,7 +15,7 @@ const AddTeamProject = ({currentUserIsOnTeam, ...props}) => {
         {({visible, togglePopover}) => (
           <div className="button-wrap">
             <button className={`button add-project has-emoji opens-pop-over ${props.extraButtonClass}`} disabled={props.projectLimitIsReached} onClick={togglePopover}>
-              Add Project <span className="emoji bento-box" role="img" aria-label=""></span>
+              Add Project <span className="emoji bento-box" role="img" aria-label="" />
             </button>
             { visible && <AddTeamProjectPop {...props} togglePopover={togglePopover} /> }
           </div>

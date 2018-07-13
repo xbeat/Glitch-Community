@@ -9,7 +9,7 @@ const UpgradeTeam = ({...props}) => {
     <PopoverContainer>
       {({visible, togglePopover}) => (
         <div className="button-wrap">
-          <button className="button buttom-small button-cta has-emoji">
+          <button className="button buttom-small button-cta has-emoji opens-pop-over">
             <span>Upgrade {props.teamName} </span>
             <span className="emoji sparkles" />
           </button>

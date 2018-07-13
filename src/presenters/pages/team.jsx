@@ -22,7 +22,7 @@ import EntityEditor from '../entity-editor.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
-import TeamUpgradeBanner from '../includes/team-upgrade-banner.jsx';
+import TeamUpgradeInfoBanner from '../includes/team-upgrade-info-banner.jsx';
 import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reached-banner.jsx';
 
 
@@ -57,7 +57,6 @@ const TeamPage = ({
       return true
     } else return false
   }
-  console.log ('🌹', currentUserId)
   return (
     <main className="profile-page team-page">
       <section>
@@ -94,7 +93,11 @@ const TeamPage = ({
         projectLimitIsReached={projectLimitIsReached()}
       />
       { projectLimitIsReached() &&
-        <TeamProjectLimitReachedBanner teamName={name} />
+        <TeamProjectLimitReachedBanner 
+          teamName={name} 
+          teamId={id}
+          currentUserId={currentUserId}
+        />
       }
       <EntityPageProjects
         projects={projects} 
@@ -116,7 +119,7 @@ const TeamPage = ({
         /> 
       }
       { (currentUserIsOnTeam && !teamHasUnlimitedProjects ) && 
-        <TeamUpgradeBanner 
+        <TeamUpgradeInfoBanner 
           projectsCount={projects.length} 
           limit={FREE_TEAM_PROJECTS_LIMIT} 
           teamName={name} 
@@ -128,7 +131,12 @@ const TeamPage = ({
       {/* billing info section goes here */}
 
       { currentUserIsOnTeam && 
-        <DeleteTeam api={() => api} teamId={id} teamName={name} adminUsers={adminUsers} currentUserIsTeamAdmin={currentUserIsTeamAdmin} users={users} /> 
+        <DeleteTeam api={() => api} 
+          teamId={id} 
+          teamName={name} 
+          adminUsers={adminUsers} 
+          currentUserIsTeamAdmin={currentUserIsTeamAdmin} 
+          users={users} /> 
       }
       { !currentUserIsOnTeam && 
         <TeamMarketing /> 

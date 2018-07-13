@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 
 import UpgradeTeam from './upgrade-team.jsx';
 
-
-
-class TeamUpgradeBanner extends React.Component {
+class TeamUpgradeInfoBanner extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -50,7 +48,7 @@ class TeamUpgradeBanner extends React.Component {
   }
 };
 
-TeamUpgradeBanner.propTypes = {
+TeamUpgradeInfoBanner.propTypes = {
   projectsCount: PropTypes.number.isRequired,
   limit: PropTypes.number.isRequired,
   teamName: PropTypes.string.isRequired,
@@ -58,4 +56,4 @@ TeamUpgradeBanner.propTypes = {
   currentUserId: PropTypes.number.isRequired,
 };
 
-export default TeamUpgradeBanner;
+export default TeamUpgradeInfoBanner;
