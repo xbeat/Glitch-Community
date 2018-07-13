@@ -77,7 +77,7 @@ const TeamPage = ({
           <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
         </ProfileContainer>
       </section>
-      <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects} projectLimitIsReached={projectLimitIsReached} />
+      <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects} projectLimitIsReached={projectLimitIsReached()} />
       { projectLimitIsReached &&
         <TeamProjectLimitReachedBanner teamName={name} />
       }
