@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 
 import UsersList from "../users-list.jsx";
 
+const PRICE_PER_USER = 10
+
 export class UpgradeTeamPop extends React.Component {
   constructor(props) {
     super(props);    
     this.state = {};
+    this.price = this.price.bind(this);
   }
   
   price() {
-    this.props.users.
+    return (this.props.users.length * PRICE_PER_USER)
   }
     
   render() {
@@ -23,16 +26,18 @@ export class UpgradeTeamPop extends React.Component {
         </section>
         <section className="pop-over-actions">
           <div className="action-description">
-            Teams cost $10 per user, per month
+            Teams cost ${PRICE_PER_USER} per active user, per month. We won't bill you for members of your team who aren't using Glitch.
           </div>
           <UsersList users={this.props.users}/>
-          
+          <div className="action-description">
+            ${PRICE_PER_USER} per active user, per month
+          </div>
         </section>
-        <section className="pop-over-actions cta-zone">
+        <section className="pop-over-actions">
           <button className="button buttom-small button-cta has-emoji opens-pop-over">
-            Upgrade for $60
+            Upgrade for ${this.price()}
           </button>
-        </section>        
+        </section>
         <section className="pop-over-info">
           <div className="info-description">
             lksdjflskja klsadjf
