@@ -19,30 +19,16 @@ function handleErrorForInput(notify, error) {
   return Promise.reject(null);
 }
 
-const ErrorHandler = ({children, createErrorNotification}) => {
-  const handleErrorBound = handleError.bind(null, createErrorNotification);
-  const handleErrorForInputBound = handleErrorForInput.bind(null, createErrorNotification);
-  return children({
-    handleError: error => handleErrorBound(error),
-    handleErrorForInput: error => handleErrorForInputBound(error),
-  });
-};
-ErrorHandler.propTypes = {
-  children: PropTypes.func.isRequired,
-  createErrorNotification: PropTypes.func.isRequired,
-};
-
-const ErrorHandlerContainer = ({children}) => (
+const ErrorHandler = ({children}) => (
   <Notifications>
-    {notify => (
-      <ErrorHandler {...notify}>
-        {children}
-      </ErrorHandler>
-    )}
+    {({createErrorNotification}) => children({
+      handleError: error => handleError(createErrorNotification, error),
+      handleErrorForInput: error => handleErrorForInput(createErrorNotification, error),
+    })}
   </Notifications>
 );
-ErrorHandlerContainer.propTypes = {
+ErrorHandler.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-export default ErrorHandlerContainer;
+export default ErrorHandler;
