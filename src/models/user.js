@@ -103,10 +103,6 @@ export default User = function(I, self) {
       return self.id() === application.currentUser().id();
     },
 
-    isOnUserPageForCurrentUser(application) {
-      return !!(application.pageIsUserPage() && self.isCurrentUser(application));
-    },
-
     hiddenIfSignedIn() {
       if (self.isSignedIn()) { return 'hidden'; }
     },

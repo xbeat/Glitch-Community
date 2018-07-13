@@ -62,7 +62,6 @@ function routePage(pageUrl, application) {
 
   // @user page ✅
   if (pageUrl.charAt(0) === '@') {
-    application.pageIsUserPage(true);
     const userLogin = pageUrl.substring(1, pageUrl.length);
     const page = UserPageByLogin(application, userLogin);
     return {page, title:decodeURI(pageUrl)};
@@ -70,7 +69,6 @@ function routePage(pageUrl, application) {
 
   // anon user page ✅
   if (pageUrl.match(/^(user\/)/g)) {
-    application.pageIsUserPage(true);
     const userId = application.anonProfileIdFromUrl(pageUrl);
     const page = UserPageById(application, userId);
     return {page, title: pageUrl};
@@ -78,7 +76,6 @@ function routePage(pageUrl, application) {
 
   // root team page ✅
   if (application.getCachedTeamByUrl(pageUrl)) {
-    application.pageIsTeamPage(true);
     const team = application.getCachedTeamByUrl(pageUrl);
     const page = TeamPage(application, team.id, team.name);
     return {page, title: team.name};

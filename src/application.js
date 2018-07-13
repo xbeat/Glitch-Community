@@ -61,10 +61,6 @@ var self = Model({
   questions: Observable([]),
   gettingQuestions: Observable(false),
 
-  // pages
-  pageIsTeamPage: Observable(false),
-  pageIsUserPage: Observable(false),
-
   // category page
   category: Observable({}),
   categoryProjectsLoaded: Observable(false),
