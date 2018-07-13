@@ -15,7 +15,7 @@ class TeamProjectLimitReachedBanner extends React.Component {
         <div className="description">
           You'll need to upgrade your team to add more projects
         </div>
-        <UpgradeTeam teamName={this.props.teamName} teamId={this.props.teamId} currentUserId={this.props.currentUserId} />
+        <UpgradeTeam teamName={this.props.teamName} teamId={this.props.teamId} currentUserId={this.props.currentUserId} users={this.props.users} />
       </aside>
     );
   }
@@ -25,6 +25,7 @@ TeamProjectLimitReachedBanner.propTypes = {
   teamName: PropTypes.string.isRequired,
   teamId: PropTypes.number.isRequired,
   currentUserId: PropTypes.number.isRequired,
+  users: PropTypes.array.isRequired,
 };
 
 export default TeamProjectLimitReachedBanner;

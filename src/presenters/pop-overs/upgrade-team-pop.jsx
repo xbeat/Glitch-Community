@@ -9,7 +9,7 @@ export class UpgradeTeamPop extends React.Component {
     
   render() {
     return (
-      <dialog className="pop-over delete-team-pop">
+      <dialog className="pop-over upgrade-team-pop">
         <section className="pop-over-info">
           <div className="pop-title">
             Upgrade {this.props.teamName}
@@ -28,6 +28,7 @@ UpgradeTeamPop.propTypes = {
   teamId: PropTypes.number.isRequired,
   currentUserId: PropTypes.number.isRequired,
   togglePopover: PropTypes.func.isRequired,
+  users: PropTypes.array.isRequired,
 };
 
 

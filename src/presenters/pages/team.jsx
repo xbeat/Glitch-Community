@@ -97,6 +97,7 @@ const TeamPage = ({
           teamName={name} 
           teamId={id}
           currentUserId={currentUserId}
+          users={users}
         />
       }
       <EntityPageProjects

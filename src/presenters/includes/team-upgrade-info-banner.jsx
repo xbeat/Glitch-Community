@@ -42,7 +42,7 @@ class TeamUpgradeInfoBanner extends React.Component {
           {this.state.remainingFreeProjects} left
         </div>
         <progress value={this.props.projectsCount} max={this.props.limit} />
-        <UpgradeTeam teamName={this.props.teamName} teamId={this.props.teamId} currentUserId={this.props.currentUserId} />
+        <UpgradeTeam teamName={this.props.teamName} teamId={this.props.teamId} currentUserId={this.props.currentUserId} users={this.props.users}/>
       </aside>
     );
   }
@@ -54,6 +54,7 @@ TeamUpgradeInfoBanner.propTypes = {
   teamName: PropTypes.string.isRequired,
   teamId: PropTypes.number.isRequired,
   currentUserId: PropTypes.number.isRequired,
+  users: PropTypes.array.isRequired,
 };
 
 export default TeamUpgradeInfoBanner;

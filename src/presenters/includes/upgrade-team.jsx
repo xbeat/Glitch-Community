@@ -9,7 +9,7 @@ const UpgradeTeam = ({...props}) => {
     <PopoverContainer>
       {({visible, togglePopover}) => (
         <div className="button-wrap">
-          <button className="button buttom-small button-cta has-emoji opens-pop-over">
+          <button className="button buttom-small button-cta has-emoji opens-pop-over" onClick={togglePopover}>
             <span>Upgrade {props.teamName} </span>
             <span className="emoji sparkles" />
           </button>
@@ -24,6 +24,7 @@ UpgradeTeam.propTypes = {
   teamName: PropTypes.string.isRequired,
   teamId: PropTypes.number.isRequired,
   currentUserId: PropTypes.number.isRequired,
+  users: PropTypes.array.isRequired,
 };
 
 export default UpgradeTeam;
