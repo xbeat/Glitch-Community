@@ -12,12 +12,13 @@ function handleError(notify, error) {
 }
 
 function handleErrorForInput(notify, error) {
+  console.log('handle', error);
   if (error && error.response && error.response.data) {
     return Promise.reject(error.response.data.message);
   }
   console.error(error);
   notify();
-  return Promise.reject();
+  return Promise.reject(null);
 }
 
 function addCatch(func, handler) {
@@ -25,6 +26,7 @@ function addCatch(func, handler) {
 }
 
 function addCatchToAll(obj, handler) {
+  console.log(obj);
   return mapValues(obj, func => addCatch(func, handler));
 }
 

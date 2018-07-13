@@ -26,7 +26,6 @@ class ProjectEditor extends React.Component {
       updateDomain: domain => this.updateFields({domain}),
     });
     const funcs = this.props.addHandleError({
-      updateDomain: domain => this.updateFields({domain}),
       updateDescription: description => this.updateFields({description}),
       updatePrivate: isPrivate => this.updateFields({private: isPrivate}),
     });

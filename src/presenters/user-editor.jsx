@@ -127,7 +127,7 @@ class UserEditor extends React.Component {
         });
         data.domain = newDomain;
       } catch (e) {
-        console.warn(e);
+        console.warn('failed to rename project on undelete', e);
       }
     }
     this.setState(({projects, _deletedProjects}) => ({
