@@ -34,24 +34,23 @@ export class UpgradeTeamPop extends React.Component {
         </section>
         <section className="pop-over-actions">
           <div className="action-description">
-            Glitch Teams cost ${PRICE_PER_USER} per active user, monthly.
+            Glitch Teams cost ${PRICE_PER_USER} per active user a month
           </div>
           <UsersList users={this.props.users}/>
-          <div className="action-description">
-            {this.props.users.length} users × ${PRICE_PER_USER} = ${this.state.monthlyCost}/mo
-          </div>
         </section>
         <section className="pop-over-actions">
           <button className="button buttom-small button-cta has-emoji opens-pop-over">
-            Upgrade {this.props.teamName}
-            <span className="emoji credit-card"/>
+            <span>Upgrade for ${this.state.monthlyCost}/mo </span>
+            <span className="emoji credit_card"/>
           </button>
+
         </section>
         <section className="pop-over-info">
           <div className="info-description">
-            We won't bill you for team members who aren't using Glitch.
+            We'll only bill you for team members who are actively using Glitch.
           </div>
         </section>
+
       </dialog>
     );
   }
