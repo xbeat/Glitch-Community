@@ -36,7 +36,7 @@ export class UpgradeTeamPop extends React.Component {
         </section>
         <section className="pop-over-actions">
           <button className="button buttom-small button-cta has-emoji opens-pop-over">
-            <span>Upgrade for $10/mo each </span>
+            <span>Upgrade {this.props.teamName} </span>
             <span className="emoji credit_card"/>
           </button>
 
