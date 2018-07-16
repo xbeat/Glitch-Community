@@ -16,7 +16,9 @@ export class AddTeamProjectPop extends React.Component {
     this.updateFilter = this.updateFilter.bind(this);
     
     // this.toggleSource = this.toggleSource.bind(this);
-    
+
+    // this.activeIfSourceIsTemplates = this.activeIfSourceIsTemplates.bind(this);
+
     this.activeIfSourceIsTemplates = this.activeIfSourceIsTemplates.bind(this);
     this.activeIfSourceIsMyProjects = this.activeIfSourceIsMyProjects.bind(this);
   }
@@ -32,15 +34,19 @@ export class AddTeamProjectPop extends React.Component {
   
   getTemplates() {
     const templateIds = [
-      
+      'asdf'
     ]
+    console.log(this.props.api)
   }
   
   componentDidMount() {
-    
+    // TODO: set source based on ls pref , default to templates
+
+    if (this.state.source === 'templates') {
+      this.getTemplates()
+    }
     
     this.updateFilter("");
-    // TODO: set source based on ls pref , default to templates
   }
   
   filterProjects(query, myProjects, teamProjects) {

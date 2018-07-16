@@ -91,7 +91,7 @@ const TeamPage = ({
         {...{currentUserIsOnTeam, addProject, myProjects}} 
         teamProjects={projects}
         projectLimitIsReached={projectLimitIsReached()}
-        api={() => api} 
+        api={() => api}
       />
       { projectLimitIsReached() &&
         <TeamProjectLimitReachedBanner 
@@ -127,7 +127,8 @@ const TeamPage = ({
           teamName={name} 
           teamId={id} 
           users={users} 
-          currentUserId={currentUserId} />
+          currentUserId={currentUserId} 
+        />
       }
 
       {/* billing info section goes here */}

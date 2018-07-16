@@ -220,6 +220,7 @@ class TeamAnalytics extends React.Component {
               myProjects={this.props.myProjects} 
               teamProjects={this.props.projects} 
               extraButtonClass="button-small" 
+              api={this.props.api}
             />
           </aside>
         }
