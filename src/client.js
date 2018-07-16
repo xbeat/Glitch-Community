@@ -70,7 +70,7 @@ function routePage(pageUrl, application) {
 
   // anon user page ✅
   if (pageUrl.match(/^(user\/)/g)) {
-    const userId = application.anonProfileIdFromUrl(pageUrl);
+    const userId = pageUrl.replace(/^(user\/)/g, '');
     const page = UserPageById(application, userId);
     return {page, title: pageUrl};
   }

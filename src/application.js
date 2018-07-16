@@ -245,10 +245,6 @@ var self = Model({
     const end = string.length;
     return string.substring(firstCharacterPosition, end);
   },
-  
-  anonProfileIdFromUrl(url) {
-    return url.replace(/^(user\/)/g, '');
-  },
 });
 
 
