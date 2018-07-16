@@ -68,10 +68,10 @@ export class AddTeamProjectPop extends React.Component {
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
           <div class="segmented-buttons">
-            <button className="button-small button-tertiary button-on-secondary" onClick={(event) => this.toggleSource(event)}>
+            <button className="button-small button-tertiary button-on-secondary" onClick={this.setSourceToMyProjects}>
               Templates
             </button>
-            <button className="button-small button-tertiary button-on-secondary">
+            <button className="button-small button-tertiary button-on-secondary" onClick={this.setSourceToTemplates}>
               My Projects
             </button>
           </div>
