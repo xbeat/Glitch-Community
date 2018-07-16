@@ -24,6 +24,7 @@ export class AddTeamProjectPop extends React.Component {
   
   componentDidMount() {
     this.updateFilter("");
+    // TODO: set source based on ls pref , default to templates
   }
   
   filterProjects(query, myProjects, teamProjects) {
@@ -75,10 +76,10 @@ export class AddTeamProjectPop extends React.Component {
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
           <div className="segmented-buttons">
-            <button className="button-small button-tertiary button-on-secondary" onClick={() => this.setState({source: 'my projects'})} >
+            <button className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsTemplates()}`} onClick={() => this.setState({source: 'templates'})} >
               Templates
             </button>
-            <button className="button-small button-tertiary button-on-secondary" onClick={() => this.setState({source: 'templates'})} >
+            <button className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsMyProjects()}`} onClick={() => this.setState({source: 'my projects'})} >
               My Projects
             </button>
           </div>
