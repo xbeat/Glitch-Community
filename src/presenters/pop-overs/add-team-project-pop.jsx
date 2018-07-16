@@ -30,26 +30,35 @@ export class AddTeamProjectPop extends React.Component {
   filterProjects(query, myProjects, teamProjects) {
     query = query.toLowerCase().trim();
     const teamProjectIds = teamProjects.map(({id})=>id);
+
+
+    // only show projects not already on the team
+
     const availableProjects = myProjects.filter(
       ({id}) => !teamProjectIds.includes(id)
     );
     
-    const maxProjects = 20;
+    // default show , no query
+    
+    const maxProjects = 25;
     if(!query) {
       return availableProjects.splice(0,maxProjects);
     }
-    const projects = [];
+    
+    // Filtering happens here on available projects
+    
+    const filteredProjects = [];
     for(let project of availableProjects) {
-      if(projects.length > maxProjects){
+      if(filteredProjects.length > maxProjects){
         break;
       }
       const titleMatch = project.domain.toLowerCase().includes(query);
       const descMatch = project.description.toLowerCase().includes(query);
       if(titleMatch || descMatch) {
-        projects.push(project);
+        filteredProjects.push(project);
       }
     }
-    return projects;
+    return filteredProjects;
   }
   
   activeIfSourceIsTemplates() {
