@@ -9,12 +9,12 @@ export class AddTeamProjectPop extends React.Component {
     this.state = {
       projects: [],
       source: 'templates',
-      filterPlaceholder: 'Filter Projects'
+      filterPlaceholder: 'Filter projects'
     };
     this.onClick = this.onClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
     
-    this.toggleSource = this.toggleSource.bind(this);
+    // this.toggleSource = this.toggleSource.bind(this);
     
     this.activeIfSourceIsTemplates = this.activeIfSourceIsTemplates.bind(this);
     this.activeIfSourceIsMyProjects = this.activeIfSourceIsMyProjects.bind(this);
@@ -36,7 +36,7 @@ export class AddTeamProjectPop extends React.Component {
     // if source is 'templates':
     
     
-    // if source is 'my projects':
+    // if source is 'my-projects':
     
     const teamProjectIds = teamProjects.map(({id})=>id);
 
@@ -77,20 +77,35 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   activeIfSourceIsMyProjects() {
-    if (this.state.source === 'my projects') {
+    if (this.state.source === 'my-projects') {
       return 'active'
     }
   }
   
   onClick(event, projectId) {
-    console.log('🚒')
     event.preventDefault();
     this.props.togglePopover();
     this.props.addProject(projectId);
   }
   
   toggleSource(event) {
-    console.log (event, event.target)
+    let newSource = event.target.dataset.source
+    console.log (newSource)
+    if (newSource === this.state.source) {
+      return
+    }
+    
+    if (newSource === 'templates') {
+      this.setState({
+        source: 'templates',
+        filterPlaceholder: 'Filter projects',
+      })
+    } else if (newSource === 'my-projects') {
+      this.setState({
+        source: 'my-projects',
+        filterPlaceholder: 'Filter templates',
+      })
+    }
   }
 
   render() {
@@ -99,10 +114,18 @@ export class AddTeamProjectPop extends React.Component {
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
           <div className="segmented-buttons">
-            <button className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsTemplates()}`} onClick={(event) => this.toggleSource(event)} >
+            <button 
+              className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsTemplates()}`} 
+              onClick={this.toggleSource.bind(this)} 
+              data-source="templates" 
+            >
               Templates
             </button>
-            <button className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsMyProjects()}`} onClick={() => this.setState({source: 'my projects'})} >
+            <button 
+              className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsMyProjects()}`} 
+              onClick={this.toggleSource.bind(this)} 
+              data-source="my-projects" 
+            >
               My Projects
             </button>
           </div>
