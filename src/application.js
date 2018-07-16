@@ -5,7 +5,6 @@ import Observable from 'o_0';
 import {find} from "lodash";
 import axios from 'axios';
 import cachedCategories from './cache/categories.js';
-import cachedTeams from './cache/teams.js';
 import featuredCollections from './curated/featured';
 import Model from './models/model';
 import User from './models/user';
@@ -249,10 +248,6 @@ var self = Model({
   
   anonProfileIdFromUrl(url) {
     return url.replace(/^(user\/)/g, '');
-  },
-
-  getCachedTeamByUrl(url) {
-    return find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
   },
 });
 
