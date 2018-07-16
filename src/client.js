@@ -1,5 +1,6 @@
 /* globals EDITOR_URL */
 import application from './application';
+import rootTeams from './curated/teams.js';
 
 import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
