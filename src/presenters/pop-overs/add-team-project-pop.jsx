@@ -83,6 +83,7 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   onClick(event, projectId) {
+    // TODO do a diff thing w remixing if source is templates
     event.preventDefault();
     this.props.togglePopover();
     this.props.addProject(projectId);
@@ -90,22 +91,21 @@ export class AddTeamProjectPop extends React.Component {
   
   toggleSource(event) {
     let newSource = event.target.dataset.source
-    console.log (newSource)
     if (newSource === this.state.source) {
       return
     }
-    
     if (newSource === 'templates') {
       this.setState({
         source: 'templates',
-        filterPlaceholder: 'Filter projects',
+        filterPlaceholder: 'Filter templates',
       })
     } else if (newSource === 'my-projects') {
       this.setState({
         source: 'my-projects',
-        filterPlaceholder: 'Filter templates',
+        filterPlaceholder: 'Filter projects',
       })
     }
+    this.filterInput.focus()
   }
 
   render() {
@@ -130,6 +130,7 @@ export class AddTeamProjectPop extends React.Component {
             </button>
           </div>
           <input
+            ref={(input) => { this.filterInput = input; }}
             onChange={(event) => {this.updateFilter(event.target.value);}}
             id="team-project-search" className="pop-over-input search-input pop-over-search"
             placeholder= {this.state.filterPlaceholder}
