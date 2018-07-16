@@ -9,12 +9,15 @@ export class AddTeamProjectPop extends React.Component {
     this.state = {
       projects: [],
       source: 'templates',
+      filterPlaceholder: 'Filter Projects'
     };
     this.onClick = this.onClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
     
-    this.activeIfSourceIsTemplates = this.activeIfSourceIsTemplates.bind(this)
-    this.activeIfSourceIsMyProjects = this.activeIfSourceIsMyProjects.bind(this)
+    this.toggleSource = this.toggleSource.bind(this);
+    
+    this.activeIfSourceIsTemplates = this.activeIfSourceIsTemplates.bind(this);
+    this.activeIfSourceIsMyProjects = this.activeIfSourceIsMyProjects.bind(this);
   }
   
   updateFilter(query) {
@@ -29,6 +32,12 @@ export class AddTeamProjectPop extends React.Component {
   
   filterProjects(query, myProjects, teamProjects) {
     query = query.toLowerCase().trim();
+    
+    // if source is 'templates':
+    
+    
+    // if source is 'my projects':
+    
     const teamProjectIds = teamProjects.map(({id})=>id);
 
 
@@ -73,10 +82,15 @@ export class AddTeamProjectPop extends React.Component {
     }
   }
   
-    onClick(event, projectId) {
+  onClick(event, projectId) {
+    console.log('🚒')
     event.preventDefault();
     this.props.togglePopover();
     this.props.addProject(projectId);
+  }
+  
+  toggleSource(event) {
+    console.log (event, event.target)
   }
 
   render() {
@@ -85,7 +99,7 @@ export class AddTeamProjectPop extends React.Component {
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
           <div className="segmented-buttons">
-            <button className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsTemplates()}`} onClick={() => this.setState({source: 'templates'})} >
+            <button className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsTemplates()}`} onClick={(event) => this.toggleSource(event)} >
               Templates
             </button>
             <button className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsMyProjects()}`} onClick={() => this.setState({source: 'my projects'})} >
@@ -95,7 +109,7 @@ export class AddTeamProjectPop extends React.Component {
           <input
             onChange={(event) => {this.updateFilter(event.target.value);}}
             id="team-project-search" className="pop-over-input search-input pop-over-search"
-            placeholder="Filter projects"
+            placeholder= {this.state.filterPlaceholder}
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>
