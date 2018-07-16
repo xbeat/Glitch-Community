@@ -54,11 +54,6 @@ export class AddTeamProjectPop extends React.Component {
     this.setState({projects});
   }
     
-  componentDidMount() {
-    // TODO: set source based on ls pref , default to templates
-    this.getTemplateProjects()
-    // this.updateFilter("");
-  }
   
   filterProjects(query, myProjects, teamProjects) {
     query = query.toLowerCase().trim();
@@ -98,6 +93,9 @@ export class AddTeamProjectPop extends React.Component {
       }
     }
     return filteredProjects;
+  
+    // set state filteredProjects
+
   }
   
   activeIfSourceIsTemplates() {
@@ -113,30 +111,38 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   onClick(event, projectId) {
-    // TODO do a diff thing w remixing if source is templates
+    console.log ('🌹 project or template clicked', projectId) // TODO do a diff thing w remixing if source is templates
     event.preventDefault();
     this.props.togglePopover();
     this.props.addProject(projectId);
   }
-  
-  toggleSource(event) {
-    let newSource = event.target.dataset.source
-    if (newSource === this.state.source) {
-      return
-    }
-    if (newSource === 'templates') {
-      this.setState({
-        source: 'templates',
-        filterPlaceholder: 'Filter templates',
-      })
-    } else if (newSource === 'my-projects') {
-      this.setState({
-        source: 'my-projects',
-        filterPlaceholder: 'Filter projects',
-      })
-    }
-    // this.updateFilter("");
+
+  toggleSource() {
+    this.updateFilter("");
     this.filterInput.focus();
+  }
+  
+  sourceIsTemplates() {
+    this.setState({
+      source: 'templates',
+      filterPlaceholder: 'Filter templates',
+    })
+    this.toggleSource()
+  }
+  
+  sourceIsMyProjects() {
+    this.setState({
+      source: 'my-projects',
+      filterPlaceholder: 'Filter projects',
+    })
+    this.toggleSource()
+  }
+  
+
+  componentDidMount() {
+    // TODO: set source based on ls pref , default to templates
+    this.getTemplateProjects()
+    // this.updateFilter("");
   }
 
   render() {
@@ -148,14 +154,14 @@ export class AddTeamProjectPop extends React.Component {
           <div className="segmented-buttons">
             <button 
               className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsTemplates()}`} 
-              onClick={this.toggleSource.bind(this)} 
+              onClick={this.sourceIsTemplates.bind(this)} 
               data-source="templates" 
             >
               Templates
             </button>
             <button 
               className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsMyProjects()}`} 
-              onClick={this.toggleSource.bind(this)} 
+              onClick={this.sourceIsMyProjects.bind(this)} 
               data-source="my-projects" 
             >
               My Projects
@@ -169,37 +175,19 @@ export class AddTeamProjectPop extends React.Component {
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>
-        { (this.state.loadingTemplates && this.state.source === 'templates') &&
-          <Loader /> 
-        }
-        { (this.state.source === 'templates') && (
-          <section className="pop-over-actions results-list" data-source='templates'>
-            <ul className="results">
-              { this.state.templateProjects.map((project) => (
-                <li key={project.id}>
-                  <ProjectResultItem 
-                    action={(event) => this.onClick(event, project.id)} 
-                    {...project}
-                    title={project.domain}/>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-        { (this.state.source === 'my-projects') && (
-          <section className="pop-over-actions results-list" data-source='my-projects'>
-            <ul className="results">
-              { this.props.myProjects.map((project) => (
-                <li key={project.id}>
-                  <ProjectResultItem 
-                    action={(event) => this.onClick(event, project.id)} 
-                    {...project}
-                    title={project.domain}/>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
+        <section className="pop-over-actions results-list" data-source='templates'>
+          {this.state.loadingTemplates && <Loader /> }
+          <ul className="results">
+            { this.state.filteredProjects.map((project) => (
+              <li key={project.id}>
+                <ProjectResultItem 
+                  action={(event) => this.onClick(event, project.id)} 
+                  {...project}
+                  title={project.domain}/>
+              </li>
+            ))}
+          </ul>
+        </section>
       </dialog>
     );
   }
