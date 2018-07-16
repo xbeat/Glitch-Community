@@ -19,13 +19,11 @@ export class AddTeamProjectPop extends React.Component {
 
     // this.activeIfSourceIsTemplates = this.activeIfSourceIsTemplates.bind(this);
 
-    this.activeIfSourceIsTemplates = this.activeIfSourceIsTemplates.bind(this);
-    this.activeIfSourceIsMyProjects = this.activeIfSourceIsMyProjects.bind(this);
+    // this.activeIfSourceIsTemplates = this.activeIfSourceIsTemplates.bind(this);
+    // this.activeIfSourceIsMyProjects = this.activeIfSourceIsMyProjects.bind(this);
   }
   
   updateFilter(query) {
-    
-    
     const projects = this.filterProjects(query, this.props.myProjects, this.props.teamProjects);
     console.log ('👍', projects)
     // assigns projects to state
