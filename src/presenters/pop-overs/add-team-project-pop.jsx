@@ -2,16 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import ProjectModel from '../../models/project';
+import Loader from '../includes/loader.jsx';
 
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
     super(props);  
     this.state = {
       projects: [],
+      templateProjects: [],
       source: 'templates',
       filterPlaceholder: 'Filter projects',
       loadingTemplates: false,
-      templateProjects: []
     };
     this.onClick = this.onClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);    
@@ -20,9 +21,9 @@ export class AddTeamProjectPop extends React.Component {
   normalizeTemplateProjects(data) {
     let projects = data.map(project => {
       project.users = []
-      ProjectModel(project).update(project).asProps()
+      return ProjectModel(project).update(project).asProps()      
     })
-    return projects.map(project => ProjectModel(project).update(project).asProps())
+    return projects
   }
   
   getTemplates() {
@@ -30,13 +31,12 @@ export class AddTeamProjectPop extends React.Component {
       loadingTemplates: true,
     })
     const templateIds = [
-      '9cd48134-1624-48f5-beaf-6c1b68bd9217', // https://timelink.glitch.me/
-      '712cc905-bfcb-454e-a47a-c729ab63c455', // https://poller.glitch.me/
+      '9cd48134-1624-48f5-beaf-6c1b68bd9217', // 'timelink'
+      '712cc905-bfcb-454e-a47a-c729ab63c455', // 'poller'
+      '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
     ]
     let projectsPath = `projects/byIds?ids=${templateIds.join(',')}`
     this.props.api().get(projectsPath).then(({data}) => {
-      // TODO remove & normalize users list
-      console.log('🎡',data)
       let projects = this.normalizeTemplateProjects(data)
       this.setState({
         templateProjects: projects,
@@ -168,6 +168,9 @@ export class AddTeamProjectPop extends React.Component {
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>
+        { (this.state.loadingTemplates && this.state.source === 'templates') &&
+          <Loader /> 
+        }
         { showResults && (
           <section className="pop-over-actions results-list">
             <ul className="results">
