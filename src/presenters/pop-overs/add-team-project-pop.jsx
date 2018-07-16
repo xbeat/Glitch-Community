@@ -8,52 +8,40 @@ export class AddTeamProjectPop extends React.Component {
   constructor(props) {
     super(props);  
     this.state = {
-      projects: [],
-      templateProjects: [],
+      templates: [],
+      filteredProjects: [],
       source: 'templates',
       filterPlaceholder: 'Filter projects',
       loadingTemplates: false,
     };
     this.onClick = this.onClick.bind(this);
-    this.updateFilter = this.updateFilter.bind(this);    
+    this.updateFilter = this.updateFilter.bind(this);
   }
 
   normalizeTemplateProjects(data) {
     let projects = data.map(project => {
       project.users = []
-      return ProjectModel(project).update(project).asProps()      
+      return ProjectModel(project).update(project).asProps()
     })
     return projects
   }
   
-  getTemplateProjects() {
+  updateFilter(query) {
+    console.log(this.state.source)
+    let projects = []
+    if (this.state.source === 'templates') {
+      projects = this.state.templates
+    } else {
+      projects = this.props.myProjects
+    }
+
+    let filteredProjects = this.filterProjects(query, projects, this.props.teamProjects);
+    console.log ('🍎', filteredProjects, this.state.source)
     this.setState({
-      loadingTemplates: true,
-    })
-    const templateIds = [
-      '9cd48134-1624-48f5-beaf-6c1b68bd9217', // 'timelink'
-      '712cc905-bfcb-454e-a47a-c729ab63c455', // 'poller'
-      '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
-    ]
-    let projectsPath = `projects/byIds?ids=${templateIds.join(',')}`
-    this.props.api().get(projectsPath).then(({data}) => {
-      let projects = this.normalizeTemplateProjects(data)
-      this.setState({
-        templateProjects: projects,
-        loadingTemplates: false,
-      })
-    })
+      filteredProjects: filteredProjects
+    });
   }
 
-  updateFilter(query) {
-    let projectsToFilter = this.props.myProjects
-    if (this.state.source === 'templates') {
-      projectsToFilter = this.state.templateProjects
-    }
-    let projects = this.filterProjects(query, projectsToFilter, this.props.teamProjects);
-    this.setState({projects});
-  }
-    
   
   filterProjects(query, myProjects, teamProjects) {
     query = query.toLowerCase().trim();
@@ -138,6 +126,24 @@ export class AddTeamProjectPop extends React.Component {
     this.toggleSource()
   }
   
+  getTemplateProjects() {
+    this.setState({
+      loadingTemplates: true,
+    })
+    const templateIds = [
+      '9cd48134-1624-48f5-beaf-6c1b68bd9217', // 'timelink'
+      '712cc905-bfcb-454e-a47a-c729ab63c455', // 'poller'
+      '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
+    ]
+    let projectsPath = `projects/byIds?ids=${templateIds.join(',')}`
+    this.props.api().get(projectsPath).then(({data}) => {
+      let projects = this.normalizeTemplateProjects(data)
+      this.setState({
+        templates: projects,
+        loadingTemplates: false,
+      })
+    })
+  }
 
   componentDidMount() {
     // TODO: set source based on ls pref , default to templates
@@ -176,7 +182,9 @@ export class AddTeamProjectPop extends React.Component {
           />
         </section>
         <section className="pop-over-actions results-list" data-source='templates'>
-          {this.state.loadingTemplates && <Loader /> }
+          { (this.state.loadingTemplates && this.state.source === 'templates') && 
+            <Loader /> 
+          }
           <ul className="results">
             { this.state.filteredProjects.map((project) => (
               <li key={project.id}>
