@@ -209,14 +209,15 @@ class TeamPageEditor extends React.Component {
     return this.props.team.adminUsers.includes(id)
   }
 
-  // TODO temp feature switch name
+  // TODO temp feature switch name // features will eventually return an object instead
   teamHasUnlimitedProjects() {
     let features = this.props.team.features
     return features.includes('unlimited projects')
   }
   
-  teamhasBilling() {
-    return false
+  teamHasBillingExposed() {
+    let features = this.props.team.features
+    return features.includes('billing exposed')
   }
   
   render() {
