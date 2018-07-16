@@ -76,10 +76,9 @@ function routePage(pageUrl, application) {
   }
 
   // root team page ✅
-  if (application.getCachedTeamByUrl(pageUrl)) {
-    const team = application.getCachedTeamByUrl(pageUrl);
-    const page = TeamPage(application, team.id, team.name);
-    return {page, title: team.name};
+  if (rootTeams[pageUrl]) {
+    const page = TeamPage(application, rootTeams[pageUrl], pageUrl);
+    return {page, title: pageUrl};
   }
 
   // search page ✅
