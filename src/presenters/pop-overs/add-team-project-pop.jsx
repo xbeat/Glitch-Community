@@ -6,9 +6,14 @@ export class AddTeamProjectPop extends React.Component {
   constructor(props) {
     super(props);
     
-    this.state = {projects: []};
+    this.state = {
+      projects: [],
+      source: 'templates',
+    };
     this.onClick = this.onClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
+    this.activeIfSourceIsTemplates = this.activeIfSourceIsTemplates.bind(this)
+    this.activeIfSourceIsMyProjects = this.activeIfSourceIsMyProjects.bind(this)
   }
   
   updateFilter(query) {
@@ -45,6 +50,12 @@ export class AddTeamProjectPop extends React.Component {
     return projects;
   }
   
+  activeIfSourceIsTemplates() {
+  }
+  
+  activeIfSourceIsMyProjects() {
+  }
+  
   onClick(event, projectId) {
     event.preventDefault();
     this.props.togglePopover();
@@ -57,7 +68,7 @@ export class AddTeamProjectPop extends React.Component {
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
           <div class="segmented-buttons">
-            <button className="button-small button-tertiary button-on-secondary">
+            <button className="button-small button-tertiary button-on-secondary" onClick={(event) => this.toggleSource(event)}>
               Templates
             </button>
             <button className="button-small button-tertiary button-on-secondary">
