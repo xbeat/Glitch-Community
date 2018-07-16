@@ -8,7 +8,7 @@ export class AddTeamProjectPop extends React.Component {
   constructor(props) {
     super(props);  
     this.state = {
-      templates: [],
+      templateProjects: [],
       filteredProjects: [],
       source: 'templates',
       filterPlaceholder: 'Filter projects',
@@ -26,39 +26,40 @@ export class AddTeamProjectPop extends React.Component {
     return projects
   }
   
+  
   updateFilter(query) {
     let projects = []
     if (this.state.source === 'templates') {
-      projects = this.state.templates
+      projects = this.state.templateProjects
     } else {
       projects = this.props.myProjects
     }
 
-    console.log('👀', this.state.source, projects)
+    
+    console.log('🥩', this.state.source, projects.length)
+    // doesn't update when template is ready
 
-    if (query) {
-      let filteredProjects = this.filterProjects(query, this.state.templates, this.props.teamProjects);
-      this.setState({
-        filteredProjects: filteredProjects
-      });
-    } else {
-      this.setState({
-        filteredProjects: projects
-      });      
-    }
+    let filteredProjects = this.filterProjects(query, projects, this.props.teamProjects);
+    this.setState({
+      filteredProjects: filteredProjects
+    });
   }
 
   
-  filterProjects(query, myProjects, teamProjects) {
+  filterProjects(query, projects, teamProjects) {
     query = query.toLowerCase().trim();
+    
     const teamProjectIds = teamProjects.map(({id})=>id);
-    const availableProjects = myProjects.filter(
+    const availableProjects = projects.filter(
       ({id}) => !teamProjectIds.includes(id)
     );
     const MAX_PROJECTS = 20;
     if(!query) {
       return availableProjects.splice(0,MAX_PROJECTS);
     }
+    
+    
+    
     const filteredProjects = [];
     for(let project of availableProjects) {
       if(filteredProjects.length > MAX_PROJECTS){
@@ -119,9 +120,11 @@ export class AddTeamProjectPop extends React.Component {
     this.props.api().get(projectsPath).then(({data}) => {
       let projects = this.normalizeTemplateProjects(data)
       this.setState({
-        templates: projects,
+        templateProjects: projects,
         loadingTemplates: false,
       })
+      console.log (this.state.templateProjects)
+      this.updateFilter('')
     })
   }
 
@@ -136,12 +139,14 @@ export class AddTeamProjectPop extends React.Component {
   componentDidMount() {
     this.getTemplateProjects();
     this.filterInput.focus();
-    this.updateFilter();
+    this.updateFilter("");
   }
 
   render() {
     // if this.state.projects.length === 0, show the error/info state
     // TODO show error state if user has no projects
+    const filteredProjects = this.state.filteredProjects
+    
     return (
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
@@ -173,8 +178,10 @@ export class AddTeamProjectPop extends React.Component {
           { (this.state.loadingTemplates) && 
             <Loader /> 
           }
+          
+          
           <ul className="results">
-            { this.state.filteredProjects.map((project) => (
+            { filteredProjects.map((project) => (
               <li key={project.id}>
                 <ProjectResultItem 
                   action={(event) => this.onClick(event, project.id)} 
