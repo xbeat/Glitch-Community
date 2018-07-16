@@ -27,7 +27,7 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   updateFilter(query) {
-    console.log(this.state.source)
+    console.log('👀', this.state.source)
     let projects = []
     if (this.state.source === 'templates') {
       projects = this.state.templates
@@ -105,17 +105,18 @@ export class AddTeamProjectPop extends React.Component {
     this.props.addProject(projectId);
   }
 
-  toggleSource() {
-    this.updateFilter("");
-    this.filterInput.focus();
-  }
+  
+  //
+  // toggleSource() {
+  //   this.updateFilter("");
+  //   this.filterInput.focus();
+  // }
   
   sourceIsTemplates() {
     this.setState({
       source: 'templates',
       filterPlaceholder: 'Filter templates',
     })
-    this.toggleSource()
   }
   
   sourceIsMyProjects() {
@@ -123,7 +124,6 @@ export class AddTeamProjectPop extends React.Component {
       source: 'my-projects',
       filterPlaceholder: 'Filter projects',
     })
-    this.toggleSource()
   }
   
   getTemplateProjects() {
@@ -145,10 +145,21 @@ export class AddTeamProjectPop extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    console.log (prevState.source, this.state.source)
+    if (prevState.source !== this.state.source) {
+      this.updateFilter("");
+      this.filterInput.focus();
+    }
+  }
+
   componentDidMount() {
-    // TODO: set source based on ls pref , default to templates
     this.getTemplateProjects()
     // this.updateFilter("");
+    this.setState({
+      
+    })
+    this.filterInput.focus();
   }
 
   render() {
