@@ -56,10 +56,18 @@ export class AddTeamProjectPop extends React.Component {
     return (
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
+          <div class="segmented-buttons">
+            <button className="button-small button-tertiary button-on-secondary">
+              Templates
+            </button>
+            <button className="button-small button-tertiary button-on-secondary">
+              My Projects
+            </button>
+          </div>
           <input
             onChange={(event) => {this.updateFilter(event.target.value);}}
             id="team-project-search" className="pop-over-input search-input pop-over-search"
-            placeholder="Filter your projects"
+            placeholder="Filter projects"
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>

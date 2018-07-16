@@ -132,3 +132,21 @@ button.button-unstyled
   display: inline-block
   position: relative
 
+.segmented-buttons
+  margin-bottom: 12px
+  button
+    margin: 0
+    &:first-child
+      border-top-right-radius: 0
+      border-bottom-right-radius: 0
+    &:last-child
+      border-left: 0
+      border-top-left-radius: 0
+      border-bottom-left-radius: 0
+    &:not(:first-child):not(:last-child)
+      border-radius: 0px
+      border-left: 0
+
+.button-active
+  background-color: secondary-background-active
+  color: primary
