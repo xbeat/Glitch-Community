@@ -27,7 +27,6 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   updateFilter(query) {
-    console.log('👀', this.state.source)
     let projects = []
     if (this.state.source === 'templates') {
       projects = this.state.templates
@@ -35,40 +34,31 @@ export class AddTeamProjectPop extends React.Component {
       projects = this.props.myProjects
     }
 
-    let filteredProjects = this.filterProjects(query, projects, this.props.teamProjects);
-    console.log ('🍎', filteredProjects, this.state.source)
-    this.setState({
-      filteredProjects: filteredProjects
-    });
+    console.log('👀', this.state.source, projects)
+
+    if (query) {
+      let filteredProjects = this.filterProjects(query, this.state.templates, this.props.teamProjects);
+      this.setState({
+        filteredProjects: filteredProjects
+      });
+    } else {
+      this.setState({
+        filteredProjects: projects
+      });      
+    }
   }
 
   
   filterProjects(query, myProjects, teamProjects) {
     query = query.toLowerCase().trim();
-    
-    // if source is 'templates':
-    
-    
-    // if source is 'my-projects':
-    
     const teamProjectIds = teamProjects.map(({id})=>id);
-
-
-    // only show projects not already on the team
-
     const availableProjects = myProjects.filter(
       ({id}) => !teamProjectIds.includes(id)
     );
-    
-    // default show , no query
-    
     const MAX_PROJECTS = 20;
     if(!query) {
       return availableProjects.splice(0,MAX_PROJECTS);
     }
-    
-    // Filtering happens here on available projects
-    
     const filteredProjects = [];
     for(let project of availableProjects) {
       if(filteredProjects.length > MAX_PROJECTS){
@@ -81,9 +71,6 @@ export class AddTeamProjectPop extends React.Component {
       }
     }
     return filteredProjects;
-  
-    // set state filteredProjects
-
   }
   
   activeIfSourceIsTemplates() {
@@ -104,13 +91,6 @@ export class AddTeamProjectPop extends React.Component {
     this.props.togglePopover();
     this.props.addProject(projectId);
   }
-
-  
-  //
-  // toggleSource() {
-  //   this.updateFilter("");
-  //   this.filterInput.focus();
-  // }
   
   sourceIsTemplates() {
     this.setState({
@@ -154,12 +134,9 @@ export class AddTeamProjectPop extends React.Component {
   }
 
   componentDidMount() {
-    this.getTemplateProjects()
-    // this.updateFilter("");
-    this.setState({
-      
-    })
+    this.getTemplateProjects();
     this.filterInput.focus();
+    this.updateFilter();
   }
 
   render() {
@@ -193,7 +170,7 @@ export class AddTeamProjectPop extends React.Component {
           />
         </section>
         <section className="pop-over-actions results-list" data-source='templates'>
-          { (this.state.loadingTemplates && this.state.source === 'templates') && 
+          { (this.state.loadingTemplates) && 
             <Loader /> 
           }
           <ul className="results">
