@@ -312,7 +312,7 @@ export default function(application, id, name) {
         : null
     )),
     searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
-    getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
+    getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(project => ProjectModel(project).update(project).asProps())),
   };
   const content = Reactlet(TeamPageLoader, props, 'teampage');
   return LayoutPresenter(application, content);

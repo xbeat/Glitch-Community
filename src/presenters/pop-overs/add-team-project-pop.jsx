@@ -1,31 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectResultItem from '../includes/project-result-item.jsx';
+import ProjectModel from '../../models/project';
 
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
-    super(props);
-    
+    super(props);  
     this.state = {
       projects: [],
       source: 'templates',
       filterPlaceholder: 'Filter projects',
       loadingTemplates: false,
+      templateProjects: []
     };
     this.onClick = this.onClick.bind(this);
-    this.updateFilter = this.updateFilter.bind(this);
-    
-    // this.toggleSource = this.toggleSource.bind(this);
-
-    // this.activeIfSourceIsTemplates = this.activeIfSourceIsTemplates.bind(this);
-
-    // this.activeIfSourceIsTemplates = this.activeIfSourceIsTemplates.bind(this);
-    // this.activeIfSourceIsMyProjects = this.activeIfSourceIsMyProjects.bind(this);
+    this.updateFilter = this.updateFilter.bind(this);    
   }
 
+  normalizeTemplateProjects(data) {
+    let projects = data.map(project => {
+      project.users = []
+      ProjectModel(project).update(project).asProps()
+    })
+    return projects.map(project => ProjectModel(project).update(project).asProps())
+  }
+  
   getTemplates() {
     this.setState({
-      loadingTemplates: true
+      loadingTemplates: true,
     })
     const templateIds = [
       '9cd48134-1624-48f5-beaf-6c1b68bd9217', // https://timelink.glitch.me/
@@ -33,26 +35,28 @@ export class AddTeamProjectPop extends React.Component {
     ]
     let projectsPath = `projects/byIds?ids=${templateIds.join(',')}`
     this.props.api().get(projectsPath).then(({data}) => {
-      return data
+      // TODO remove & normalize users list
+      console.log('🎡',data)
+      let projects = this.normalizeTemplateProjects(data)
+      this.setState({
+        templateProjects: projects,
+        loadingTemplates: false,
+      })
     })
   }
 
   updateFilter(query) {
-    // const projects = []
     let projectsToFilter = this.props.myProjects
     if (this.state.source === 'templates') {
-      projectsToFilter = this.getTemplates()
+      projectsToFilter = this.state.templateProjects
     }
     let projects = this.filterProjects(query, projectsToFilter, this.props.teamProjects);
-
-    
-    console.log ('👍', projects)
-
     this.setState({projects});
   }
     
   componentDidMount() {
-    // TODO: set source based on ls pref , default to templates    
+    // TODO: set source based on ls pref , default to templates
+    this.getTemplates()
     this.updateFilter("");
   }
   
