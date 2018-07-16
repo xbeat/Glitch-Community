@@ -26,7 +26,7 @@ export class AddTeamProjectPop extends React.Component {
     return projects
   }
   
-  getTemplates() {
+  getTemplateProjects() {
     this.setState({
       loadingTemplates: true,
     })
@@ -56,8 +56,8 @@ export class AddTeamProjectPop extends React.Component {
     
   componentDidMount() {
     // TODO: set source based on ls pref , default to templates
-    this.getTemplates()
-    this.updateFilter("");
+    this.getTemplateProjects()
+    // this.updateFilter("");
   }
   
   filterProjects(query, myProjects, teamProjects) {
@@ -79,16 +79,16 @@ export class AddTeamProjectPop extends React.Component {
     
     // default show , no query
     
-    const maxProjects = 25;
+    const MAX_PROJECTS = 20;
     if(!query) {
-      return availableProjects.splice(0,maxProjects);
+      return availableProjects.splice(0,MAX_PROJECTS);
     }
     
     // Filtering happens here on available projects
     
     const filteredProjects = [];
     for(let project of availableProjects) {
-      if(filteredProjects.length > maxProjects){
+      if(filteredProjects.length > MAX_PROJECTS){
         break;
       }
       const titleMatch = project.domain.toLowerCase().includes(query);
@@ -135,12 +135,13 @@ export class AddTeamProjectPop extends React.Component {
         filterPlaceholder: 'Filter projects',
       })
     }
-    this.updateFilter("");
+    // this.updateFilter("");
     this.filterInput.focus();
   }
 
   render() {
-    const showResults = this.state.projects.length > 0;
+    // if this.state.projects.length === 0, show the error/info state
+    // TODO show error state if user has no projects
     return (
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
@@ -171,10 +172,24 @@ export class AddTeamProjectPop extends React.Component {
         { (this.state.loadingTemplates && this.state.source === 'templates') &&
           <Loader /> 
         }
-        { showResults && (
-          <section className="pop-over-actions results-list">
+        { (this.state.source === 'templates') && (
+          <section className="pop-over-actions results-list" data-source='templates'>
             <ul className="results">
-              { this.state.projects.map((project) => (
+              { this.state.templateProjects.map((project) => (
+                <li key={project.id}>
+                  <ProjectResultItem 
+                    action={(event) => this.onClick(event, project.id)} 
+                    {...project}
+                    title={project.domain}/>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        { (this.state.source === 'my-projects') && (
+          <section className="pop-over-actions results-list" data-source='my-projects'>
+            <ul className="results">
+              { this.props.myProjects.map((project) => (
                 <li key={project.id}>
                   <ProjectResultItem 
                     action={(event) => this.onClick(event, project.id)} 
