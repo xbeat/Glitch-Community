@@ -215,6 +215,10 @@ class TeamPageEditor extends React.Component {
     return features.includes('unlimited projects')
   }
   
+  teamhasBilling() {
+    return false
+  }
+  
   render() {
     const {
       team,
