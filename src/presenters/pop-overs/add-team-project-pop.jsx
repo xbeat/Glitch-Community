@@ -31,10 +31,16 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   getTemplates() {
+    this.setState({
+      loadingTemplates: true
+    })
     const templateIds = [
-      'asdf'
+      '9cd48134-1624-48f5-beaf-6c1b68bd9217', // https://timelink.glitch.me/
+      '712cc905-bfcb-454e-a47a-c729ab63c455', // https://poller.glitch.me/
     ]
+    let ids = templateIds
     console.log(this.props.api)
+    
   }
   
   componentDidMount() {
