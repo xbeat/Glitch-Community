@@ -9,7 +9,8 @@ export class AddTeamProjectPop extends React.Component {
     this.state = {
       projects: [],
       source: 'templates',
-      filterPlaceholder: 'Filter projects'
+      filterPlaceholder: 'Filter projects',
+      loadingTemplates: false,
     };
     this.onClick = this.onClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
@@ -21,11 +22,23 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   updateFilter(query) {
+    
+    
     const projects = this.filterProjects(query, this.props.myProjects, this.props.teamProjects);
+    console.log ('👍', projects)
+    // assigns projects to state
     this.setState({projects});
   }
   
+  getTemplates() {
+    const templateIds = [
+      
+    ]
+  }
+  
   componentDidMount() {
+    
+    
     this.updateFilter("");
     // TODO: set source based on ls pref , default to templates
   }
@@ -105,7 +118,8 @@ export class AddTeamProjectPop extends React.Component {
         filterPlaceholder: 'Filter projects',
       })
     }
-    this.filterInput.focus()
+    this.updateFilter("");
+    this.filterInput.focus();
   }
 
   render() {
@@ -161,6 +175,7 @@ AddTeamProjectPop.propTypes = {
   teamProjects: PropTypes.array.isRequired,
   addProject: PropTypes.func.isRequired,
   togglePopover: PropTypes.func.isRequired,
+  api: PropTypes.func.isRequired
 };
 
 

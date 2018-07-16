@@ -31,6 +31,7 @@ AddTeamProject.propTypes = {
   myProjects: PropTypes.array.isRequired,
   teamProjects: PropTypes.array.isRequired,
   extraButtonClass: PropTypes.string,
+  api: PropTypes.func.isRequired
 };
 
 export default AddTeamProject;

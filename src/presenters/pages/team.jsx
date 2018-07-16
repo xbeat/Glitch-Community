@@ -91,6 +91,7 @@ const TeamPage = ({
         {...{currentUserIsOnTeam, addProject, myProjects}} 
         teamProjects={projects}
         projectLimitIsReached={projectLimitIsReached()}
+        api={() => api} 
       />
       { projectLimitIsReached() &&
         <TeamProjectLimitReachedBanner 
