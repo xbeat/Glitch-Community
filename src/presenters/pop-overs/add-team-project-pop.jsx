@@ -22,14 +22,7 @@ export class AddTeamProjectPop extends React.Component {
     // this.activeIfSourceIsTemplates = this.activeIfSourceIsTemplates.bind(this);
     // this.activeIfSourceIsMyProjects = this.activeIfSourceIsMyProjects.bind(this);
   }
-  
-  updateFilter(query) {
-    const projects = this.filterProjects(query, this.props.myProjects, this.props.teamProjects);
-    console.log ('👍', projects)
-    // assigns projects to state
-    this.setState({projects});
-  }
-  
+
   getTemplates() {
     this.setState({
       loadingTemplates: true
@@ -38,18 +31,28 @@ export class AddTeamProjectPop extends React.Component {
       '9cd48134-1624-48f5-beaf-6c1b68bd9217', // https://timelink.glitch.me/
       '712cc905-bfcb-454e-a47a-c729ab63c455', // https://poller.glitch.me/
     ]
-    let ids = templateIds
-    console.log(this.props.api)
-    
+    let projectsPath = `projects/byIds?ids=${templateIds.join(',')}`
+    this.props.api().get(projectsPath).then(({data}) => {
+      return data
+    })
   }
-  
-  componentDidMount() {
-    // TODO: set source based on ls pref , default to templates
 
+  updateFilter(query) {
+    // const projects = []
+    let projectsToFilter = this.props.myProjects
     if (this.state.source === 'templates') {
-      this.getTemplates()
+      projectsToFilter = this.getTemplates()
     }
+    let projects = this.filterProjects(query, projectsToFilter, this.props.teamProjects);
+
     
+    console.log ('👍', projects)
+
+    this.setState({projects});
+  }
+    
+  componentDidMount() {
+    // TODO: set source based on ls pref , default to templates    
     this.updateFilter("");
   }
   
