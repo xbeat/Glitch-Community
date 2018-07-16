@@ -12,6 +12,7 @@ export class AddTeamProjectPop extends React.Component {
     };
     this.onClick = this.onClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
+    
     this.activeIfSourceIsTemplates = this.activeIfSourceIsTemplates.bind(this)
     this.activeIfSourceIsMyProjects = this.activeIfSourceIsMyProjects.bind(this)
   }
@@ -51,12 +52,18 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   activeIfSourceIsTemplates() {
+    if (this.state.source === 'templates') {
+      return 'active'
+    }
   }
   
   activeIfSourceIsMyProjects() {
+    if (this.state.source === 'my projects') {
+      return 'active'
+    }
   }
   
-  onClick(event, projectId) {
+    onClick(event, projectId) {
     event.preventDefault();
     this.props.togglePopover();
     this.props.addProject(projectId);
@@ -67,11 +74,11 @@ export class AddTeamProjectPop extends React.Component {
     return (
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
-          <div class="segmented-buttons">
-            <button className="button-small button-tertiary button-on-secondary" onClick={this.setSourceToMyProjects}>
+          <div className="segmented-buttons">
+            <button className="button-small button-tertiary button-on-secondary" onClick={() => this.setState({source: 'my projects'})} >
               Templates
             </button>
-            <button className="button-small button-tertiary button-on-secondary" onClick={this.setSourceToTemplates}>
+            <button className="button-small button-tertiary button-on-secondary" onClick={() => this.setState({source: 'templates'})} >
               My Projects
             </button>
           </div>
