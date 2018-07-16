@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'A Tribute to WordArt',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwordart.jpg?1531393616283",
-    link: 'https://glitch.com/~wordart'
+    title: 'Random Acts of Kindness',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frandom-acts-of-kindness-generator.jpg?1531740318993",
+    link: 'https://glitch.com/~random-acts-of-kindness-generator'
   }
   , {
-    title: 'Your Moment of Zen',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fyour-moment-of-zen.jpg?1531393614581",
-    link: 'https://your-moment-of-zen.glitch.me'
+    title: 'Learn While You Road Trip',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Froadtrip.jpg?1531740320479",
+    link: 'https://glitch.com/~roadtrip'
   }
   , {
-    title: 'Time Is A Flat Circle',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fuselezzzclock.jpg?1531393615321",
-    link: 'https://glitch.com/~uselezzzclock'
+    title: 'Track Recent Earthquakes',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fusgs-earthquakes.jpg?1531740319665",
+    link: 'https://glitch.com/~usgs-earthquakes'
   }  
 ];
