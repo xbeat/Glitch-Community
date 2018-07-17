@@ -68,7 +68,7 @@ module.exports = () => {
           loader: "eslint-loader",
           options: {
             fix: false,
-            cache: `${SRC}/.eslintcache`, //caching tends to make the config stick, so disable this when reconfiguring
+            cache: false, // Keep this off, it can use a lot of space.  Let Webpack --watch does the heavy lifting for us.
             emitError: false,
             emitWarning: true,
             failOnError: false,
