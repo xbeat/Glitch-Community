@@ -82,7 +82,7 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   async inviteUserToRemix(data) {
-    let inviteUserPath = `projects/&{data.inviteToken}/join`;
+    let inviteUserPath = `projects/${data.inviteToken}/join`;
     return await this.props.api().post(inviteUserPath);
   }
   
@@ -100,7 +100,11 @@ export class AddTeamProjectPop extends React.Component {
         .then(({data}) => {
           console.log ('yolooo' , data);
           this.inviteUserToRemix(data)
-            .then; 
+        .then(({data}) => {
+            console.log ('🚒', data.id)
+            this.props.addProject(data.id)
+          })
+            // .then; 
           //       // 3) POST /teams/:teamId/projects/:projectId
 
         });
