@@ -78,6 +78,7 @@ export class AddTeamProjectPop extends React.Component {
   onClick(event, projectId) {
     if (this.state.source === 'templates') {
       console.log ('🌹 time for notify, remixing and patching')
+      // notify.createPersistentNotification(<p>remixing projectName to newname</p>, 'notifyRemixing')
       
     }
     event.preventDefault();
