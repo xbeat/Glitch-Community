@@ -25,48 +25,37 @@ export class AddTeamProjectPop extends React.Component {
     })
     return projects
   }
-  
-  
+    
   updateFilter(query) {
     let projects = []
     if (this.state.source === 'templates') {
       projects = this.state.templateProjects
     } else {
       projects = this.props.myProjects
-    }
-
-    
-    console.log('🥩', this.state.source, projects.length)
-    // doesn't update when template is ready
-
+    }    
     let filteredProjects = this.filterProjects(query, projects, this.props.teamProjects);
     this.setState({
       filteredProjects: filteredProjects
     });
   }
-
   
   filterProjects(query, projects, teamProjects) {
-    query = query.toLowerCase().trim();
-    
-    const teamProjectIds = teamProjects.map(({id})=>id);
-    const availableProjects = projects.filter(
+    query = query.toLowerCase().trim();  
+    let MAX_PROJECTS = 20;
+    let teamProjectIds = teamProjects.map(({id}) => id);
+    let availableProjects = projects.filter(
       ({id}) => !teamProjectIds.includes(id)
     );
-    const MAX_PROJECTS = 20;
+    let filteredProjects = [];
     if(!query) {
       return availableProjects.splice(0,MAX_PROJECTS);
     }
-    
-    
-    
-    const filteredProjects = [];
     for(let project of availableProjects) {
       if(filteredProjects.length > MAX_PROJECTS){
         break;
-      }
-      const titleMatch = project.domain.toLowerCase().includes(query);
-      const descMatch = project.description.toLowerCase().includes(query);
+      }      
+      let titleMatch = project.domain.toLowerCase().includes(query);
+      let descMatch = project.description.toLowerCase().includes(query);
       if(titleMatch || descMatch) {
         filteredProjects.push(project);
       }
@@ -87,7 +76,10 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   onClick(event, projectId) {
-    console.log ('🌹 project or template clicked', projectId) // TODO do a diff thing w remixing if source is templates
+    if (this.state.source === 'templates') {
+      console.log ('🌹 time for notify, remixing and patching')
+      
+    }
     event.preventDefault();
     this.props.togglePopover();
     this.props.addProject(projectId);
@@ -143,8 +135,6 @@ export class AddTeamProjectPop extends React.Component {
   }
 
   render() {
-    // if this.state.projects.length === 0, show the error/info state
-    // TODO show error state if user has no projects
     const filteredProjects = this.state.filteredProjects
     
     return (
@@ -178,8 +168,6 @@ export class AddTeamProjectPop extends React.Component {
           { (this.state.loadingTemplates) && 
             <Loader /> 
           }
-          
-          
           <ul className="results">
             { filteredProjects.map((project) => (
               <li key={project.id}>

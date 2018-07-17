@@ -53,7 +53,6 @@ const TeamPage = ({
 }) => {
 
   const projectLimitIsReached = () => {
-    console.log('🍎', currentUserIsTeamAdmin)
     if ((currentUserIsOnTeam && !teamHasUnlimitedProjects && projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
       return true
     } else return false
