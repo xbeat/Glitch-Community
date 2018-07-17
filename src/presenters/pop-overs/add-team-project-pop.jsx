@@ -83,21 +83,27 @@ export class AddTeamProjectPop extends React.Component {
     let remixTemplatePath = `projects/${projectId}/remix`
     this.props.api().post(remixTemplatePath)
     .then(({data}) => {
-      console.log(data);
+      console.log(data.domain);
       // returns domain: "lake-century"
+      // can test w hello-webpage for now
       
+      
+    }).catch(error => {
+      console.error('addTemplateToTeam', error.response)
     })
 
     
   }
   
   onClick(event, projectId) {
+    event.preventDefault();
+    this.props.togglePopover();
+
     if (this.state.source === 'templates') {
       console.log ('🌹 time for notify, remixing and patching')
       this.addTemplateToTeam(projectId)
-    }
-    event.preventDefault();
-    this.props.togglePopover();
+    }    
+    // else
     this.props.addProject(projectId);
   }
   
