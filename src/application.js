@@ -68,28 +68,6 @@ var self = Model({
   // category page
   category: Observable({}),
   categoryProjectsLoaded: Observable(false),
-
-  // notifications
-  notifyUserDescriptionUpdated: Observable(false), // unused, to remove
-  notifyUploading() {
-    return self.uploadFilesRemaining() > 0;
-  },
-  notifyUploadFailure: Observable(false),
-
-  // upload status
-  pendingUploads: Observable([]),
-  uploadFilesRemaining() {
-    return self.pendingUploads().length;
-  },
-  uploadProgress() { // Integer between 0..100
-    const pendingUploads = self.pendingUploads();
-    const numberOfPendingUploads = pendingUploads.length;
-
-    const progress = pendingUploads.reduce((accumulator, currentValue) => accumulator + currentValue
-      , 0);
-
-    return ((progress / numberOfPendingUploads) * 100) | 0;
-  },
   
   normalizedBaseUrl() {
     return "/";
