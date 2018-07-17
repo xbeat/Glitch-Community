@@ -86,8 +86,10 @@ export class AddTeamProjectPop extends React.Component {
       console.log(data.domain);
       // returns domain: "lake-century"
       // can test w hello-webpage for now
-      
-      
+      // 1) POST /projects/:domainOrId/remix
+      // 2) POST /projects/:inviteToken/join
+      // 3) POST /teams/:teamId/projects/:projectId
+
     }).catch(error => {
       console.error('addTemplateToTeam', error.response)
     })
@@ -102,9 +104,10 @@ export class AddTeamProjectPop extends React.Component {
     if (this.state.source === 'templates') {
       console.log ('🌹 time for notify, remixing and patching')
       this.addTemplateToTeam(projectId)
-    }    
-    // else
-    this.props.addProject(projectId);
+    } else {
+    // have to be a member before this will work
+      this.props.addProject(projectId);
+    }
   }
   
   sourceIsTemplates() {
