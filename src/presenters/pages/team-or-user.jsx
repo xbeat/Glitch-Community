@@ -40,4 +40,12 @@ TeamOrUserPage.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
+const PageWrapper = ({currentUserModel, ...props}) => (
+  <Notifications>
+    <CurrentUserProvider model={currentUserModel}>
+      <TeamOrUserPage currentUserModel={currentUserModel} {...props}/>
+    </CurrentUserProvider>
+  </Notifications>
+);
+
 export default TeamOrUserPage;

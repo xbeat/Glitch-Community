@@ -30,7 +30,7 @@ const TeamPage = ({
     coverColor, hasCoverImage,
     _cacheAvatar, _cacheCover,
   },
-  currentUserIsOnTeam, myProjects,
+  currentUserIsOnTeam,
   updateDescription,
   uploadAvatar, uploadCover, clearCover,
   addUser, removeUser,
@@ -58,7 +58,7 @@ const TeamPage = ({
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
       </ProfileContainer>
     </section>
-    <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects}/>
+    <AddTeamProject {...{currentUserIsOnTeam, addProject}} teamProjects={projects}/>
     <EntityPageProjects
       projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
       addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam: removeProject}}
@@ -75,7 +75,6 @@ TeamPage.propTypes = {
     name: PropTypes.string.isRequired,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
-  myProjects: PropTypes.array.isRequired,
   api: PropTypes.any.isRequired,
 };
 
@@ -102,7 +101,6 @@ export default function(application, id, name) {
     name,
     api: application.api(),
     currentUserModel: application.currentUser(),
-    myProjects: application.currentUser().projects().map(({asProps}) => asProps()),
     get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? TeamModel(data).update(data).asProps() : null)),
     searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
     getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
