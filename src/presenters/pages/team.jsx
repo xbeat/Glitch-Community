@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {getAvatarStyle, getProfileStyle} from '../../models/team';
 import TeamEditor from '../team-editor.jsx';
+import Notifications from '../notifications.jsx';
 
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
@@ -71,14 +72,38 @@ TeamPage.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
-const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
-  <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
-    {(team, funcs, currentUserIsOnTeam) => (
-      <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
-    )}
-  </TeamEditor>
+const NameConflictWarning = ({id}) => (
+  <React.Fragment>
+    This team has your name!
+    <a href={`/user/${id}`}>Go to your profile</a>
+  </React.Fragment>
 );
-TeamPageContainer.propTypes = {
-};
+
+class TeamNameConflict extends React.Component {
+  componentDidMount() {
+    const content = NameConflictWarning(this.props.currentUserModel.id());
+    this.notification = this.props.createPersistentNotification(content);
+  }
+  
+  componentWillUnmount() {
+    this.notification.remove();
+  }
+  
+  render() {
+    return <TeamPage {...this.props}/>
+  }
+}
+
+const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
+  <Notifications>
+    {notifyFuncs => (
+      <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
+        {(team, funcs, currentUserIsOnTeam) => (
+          <TeamNameConflict {...notifyFuncs} api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
+        )}
+      </TeamEditor>
+    )}
+  </Notifications>
+);
 
 export default TeamPageContainer;
