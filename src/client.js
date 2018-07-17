@@ -8,8 +8,9 @@ const queryString = qs.parse(window.location.search);
 import IndexPage from './presenters/pages/index';
 import CategoryPage from './presenters/pages/category';
 import ProjectPage from './presenters/pages/project.jsx';
+import TeamOrUserPage from './presenters/pages/team-or-user.jsx';
 import TeamPage from './presenters/pages/team.jsx';
-import {UserPageById, UserPageByLogin} from './presenters/pages/user.jsx';
+import {UserPageById} from './presenters/pages/user.jsx';
 import QuestionsPage from './presenters/pages/questions';
 import SearchPage from './presenters/pages/search';
 import errorPageTemplate from './templates/pages/error';
@@ -63,8 +64,8 @@ function routePage(pageUrl, application) {
 
   // @user page ✅
   if (pageUrl.charAt(0) === '@') {
-    const userLogin = pageUrl.substring(1, pageUrl.length);
-    const page = UserPageByLogin(application, userLogin);
+    const name = pageUrl.substring(1, pageUrl.length);
+    const page = TeamOrUserPage(application, name);
     return {page, title:decodeURI(pageUrl)};
   }
 
