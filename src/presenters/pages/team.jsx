@@ -75,22 +75,26 @@ TeamPage.propTypes = {
 const NameConflictWarning = ({id}) => (
   <React.Fragment>
     This team has your name!
-    <a href={`/user/${id}`}>Go to your profile</a>
+    <a className="button button-small button-tertiary" href={`/user/${id}`}>Go to your profile</a>
   </React.Fragment>
 );
 
 class TeamNameConflict extends React.Component {
   componentDidMount() {
-    const content = NameConflictWarning(this.props.currentUserModel.id());
-    this.notification = this.props.createPersistentNotification(content);
+    if (this.props.team.url.toLowerCase() === this.props.currentUserModel.login().toLowerCase()) {
+      const content = NameConflictWarning({id: this.props.currentUserModel.id()});
+      this.notification = this.props.createPersistentNotification(content);
+    }
   }
   
   componentWillUnmount() {
-    this.notification.remove();
+    if (this.notification) {
+      this.notification.remove();
+    }
   }
   
   render() {
-    return <TeamPage {...this.props}/>
+    return this.props.children;
   }
 }
 
@@ -99,7 +103,9 @@ const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
     {notifyFuncs => (
       <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
         {(team, funcs, currentUserIsOnTeam) => (
-          <TeamNameConflict {...notifyFuncs} api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
+          <TeamNameConflict {...notifyFuncs} {...{team, currentUserModel}}>
+            <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
+          </TeamNameConflict>
         )}
       </TeamEditor>
     )}
