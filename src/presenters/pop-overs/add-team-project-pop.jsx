@@ -13,6 +13,7 @@ export class AddTeamProjectPop extends React.Component {
       source: 'templates',
       filterPlaceholder: 'Filter projects',
       loadingTemplates: false,
+      notifyTemplateIsRemixing: false,
     };
     this.onClick = this.onClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
@@ -75,11 +76,26 @@ export class AddTeamProjectPop extends React.Component {
     }
   }
   
+  addTemplateToTeam(projectId) {
+    this.setState({
+      notifyTemplateIsRemixing: true
+    })
+    this.props.api().post(projectsPath).then(({data}) => {
+      let projects = this.normalizeTemplateProjects(data)
+      this.setState({
+        templateProjects: projects,
+        loadingTemplates: false,
+      })
+      this.updateFilter('')
+    })
+
+    
+  }
+  
   onClick(event, projectId) {
     if (this.state.source === 'templates') {
       console.log ('🌹 time for notify, remixing and patching')
-      // notify.createPersistentNotification(<p>remixing projectName to newname</p>, 'notifyRemixing')
-      
+      this.addTemplateToTeam(projectId)
     }
     event.preventDefault();
     this.props.togglePopover();
@@ -124,6 +140,10 @@ export class AddTeamProjectPop extends React.Component {
     if (prevState.source !== this.state.source) {
       this.updateFilter("");
       this.filterInput.focus();
+    }
+    if (prevState.notifyTemplateIsRemixing !== this.state.notifyTemplateIsRemixing) {
+      console.log('📟 time to toggle the `is remixing` notification to', this.state.notifyTemplateIsRemixing)
+      // notify.createPersistentNotification(<p>remixing projectName to newname</p>, 'notifyRemixing')
     }
   }
 
