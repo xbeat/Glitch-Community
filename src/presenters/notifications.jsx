@@ -1,8 +1,6 @@
 import React from 'react';
 
-const {Provider, Consumer} = React.createContext({
-  createNotification: (content) => console.log(content),
-});
+const {Provider, Consumer} = React.createContext();
 
 const Notification = ({children, className, remove}) => (
   <aside className={`notification ${className}`} onAnimationEnd={remove}>
@@ -28,6 +26,10 @@ export class Notifications extends React.Component {
       notifications: [...notifications, notification],
     }));
     return notification.id;
+  }
+  
+  createError(content='Something went wrong. Try refreshing?') {
+    this.create(content, 'notifyError');
   }
   
   createPersistent(content, className='') {
@@ -56,6 +58,7 @@ export class Notifications extends React.Component {
     const funcs = {
       createNotification: this.create.bind(this),
       createPersistentNotification: this.createPersistent.bind(this),
+      createErrorNotification: this.createError.bind(this),
     };
     const {notifications} = this.state;
     window.notify = funcs; //weewoo weeoo test code here
