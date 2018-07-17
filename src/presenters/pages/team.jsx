@@ -27,7 +27,6 @@ import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 import TeamUpgradeInfoBanner from '../includes/team-upgrade-info-banner.jsx';
 import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reached-banner.jsx';
 
-
 const FREE_TEAM_PROJECTS_LIMIT = 5
 
 
