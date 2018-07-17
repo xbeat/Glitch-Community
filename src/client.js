@@ -8,9 +8,7 @@ const queryString = qs.parse(window.location.search);
 import IndexPage from './presenters/pages/index';
 import CategoryPage from './presenters/pages/category';
 import ProjectPage from './presenters/pages/project.jsx';
-import TeamOrUserPage from './presenters/pages/team-or-user.jsx';
-import TeamPage from './presenters/pages/team.jsx';
-import {UserPageById} from './presenters/pages/user.jsx';
+import {TeamPagePresenter, UserPagePresenter, TeamOrUserPagePresenter} from './presenters/pages/team-or-user.jsx';
 import QuestionsPage from './presenters/pages/questions';
 import SearchPage from './presenters/pages/search';
 import errorPageTemplate from './templates/pages/error';
@@ -65,20 +63,20 @@ function routePage(pageUrl, application) {
   // @user page ✅
   if (pageUrl.charAt(0) === '@') {
     const name = pageUrl.substring(1, pageUrl.length);
-    const page = TeamOrUserPage(application, name);
+    const page = TeamOrUserPagePresenter(application, name);
     return {page, title:decodeURI(pageUrl)};
   }
 
   // anon user page ✅
   if (pageUrl.match(/^(user\/)/g)) {
     const userId = pageUrl.replace(/^(user\/)/g, '');
-    const page = UserPageById(application, userId);
+    const page = UserPagePresenter(application, userId, `user ${userId}`);
     return {page, title: pageUrl};
   }
 
   // root team page ✅
   if (rootTeams[pageUrl]) {
-    const page = TeamPage(application, rootTeams[pageUrl], pageUrl);
+    const page = TeamPagePresenter(application, rootTeams[pageUrl], pageUrl);
     return {page, title: pageUrl};
   }
 
