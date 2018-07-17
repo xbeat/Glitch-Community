@@ -53,6 +53,7 @@ const TeamPage = ({
 }) => {
 
   const projectLimitIsReached = () => {
+    console.log('🍎', currentUserIsTeamAdmin)
     if ((currentUserIsOnTeam && !teamHasUnlimitedProjects && projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
       return true
     } else return false
@@ -268,7 +269,7 @@ const TeamPageLoader = ({api, get, name, currentUserModel, ...props}) => (
       {team => team ? (
         <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
           {(team, funcs, currentUserIsOnTeam) => (
-            <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
+            <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props} />
           )}
         </TeamEditor>
       ) : <NotFound name={name}/>}
