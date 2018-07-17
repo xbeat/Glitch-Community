@@ -101,6 +101,23 @@ class TeamEditor extends React.Component {
     }));
   }
   
+  currentUserIsTeamAdmin() {
+    const currentUserId = this.props.currentUserModel.id();
+    return this.props.initialTeam.adminUsers.includes(currentUserId)
+  }
+
+  // TODO temp feature switch name // features will eventually return an object instead
+  teamHasUnlimitedProjects() {
+    let features = this.props.initialTeam.features
+    return features.includes('unlimited projects')
+  }
+  
+  teamHasBillingExposed() {
+    let features = this.props.initialTeam.features
+    return features.includes('billing exposed')
+  }
+
+  
   render() {
     const {handleError} = this.props;
     const funcs = {
@@ -114,6 +131,9 @@ class TeamEditor extends React.Component {
       removeProject: id => this.removeProject(id).catch(handleError),
       addPin: id => this.addPin(id).catch(handleError),
       removePin: id => this.removePin(id).catch(handleError),
+      currentUserIsTeamAdmin: this.currentUserIsTeamAdmin(),
+      teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
+      teamHasBillingExposed: this.teamHasBillingExposed(),
     };
     return this.props.children(this.state, funcs, this.currentUserIsOnTeam());
   }
