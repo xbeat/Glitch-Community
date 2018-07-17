@@ -84,7 +84,8 @@ export class AddTeamProjectPop extends React.Component {
     this.props.api().post(remixTemplatePath)
     .then(({data}) => {
       console.log(data);
-      // 
+      // returns domain: "lake-century"
+      
     })
 
     
