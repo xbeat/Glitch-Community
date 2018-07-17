@@ -1,19 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TeamModel, {getAvatarStyle, getProfileStyle} from '../../models/team';
-import UserModel from '../../models/user';
-import ProjectModel from '../../models/project';
-import Reactlet from '../reactlet';
-import LayoutPresenter from '../layout';
+import {getAvatarStyle, getProfileStyle} from '../../models/team';
 import TeamEditor from '../team-editor.jsx';
 
 import {AuthDescription} from '../includes/description-field.jsx';
-import {DataLoader} from '../includes/loader.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import Thanks from '../includes/thanks.jsx';
-import NotFound from '../includes/not-found.jsx';
-import {Notifications} from '../notifications.jsx';
 
 import AddTeamProject from '../includes/add-team-project.jsx';
 import {AddTeamUser, TeamUsers} from '../includes/team-users.jsx';
@@ -78,33 +71,14 @@ TeamPage.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
-const TeamPageLoader = ({api, get, name, currentUserModel, ...props}) => (
-  <Notifications>
-    <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-      {team => team ? (
-        <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
-          {(team, funcs, currentUserIsOnTeam) => (
-            <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
-          )}
-        </TeamEditor>
-      ) : <NotFound name={name}/>}
-    </DataLoader>
-  </Notifications>
+const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
+  <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
+    {(team, funcs, currentUserIsOnTeam) => (
+      <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
+    )}
+  </TeamEditor>
 );
-TeamPageLoader.propTypes = {
-  get: PropTypes.func.isRequired,
-  name: PropTypes.node.isRequired,
+TeamPageContainer.propTypes = {
 };
 
-export default function(application, id, name) {
-  const props = {
-    name,
-    api: application.api(),
-    currentUserModel: application.currentUser(),
-    get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? TeamModel(data).update(data).asProps() : null)),
-    searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
-    getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
-  };
-  const content = Reactlet(TeamPageLoader, props, 'teampage');
-  return LayoutPresenter(application, content);
-}
+export default TeamPageContainer;
