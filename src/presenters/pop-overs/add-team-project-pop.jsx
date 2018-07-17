@@ -80,13 +80,11 @@ export class AddTeamProjectPop extends React.Component {
     this.setState({
       notifyTemplateIsRemixing: true
     })
-    this.props.api().post(projectsPath).then(({data}) => {
-      let projects = this.normalizeTemplateProjects(data)
-      this.setState({
-        templateProjects: projects,
-        loadingTemplates: false,
-      })
-      this.updateFilter('')
+    let remixTemplatePath = `projects/${projectId}/remix`
+    this.props.api().post(remixTemplatePath)
+    .then(({data}) => {
+      console.log(data);
+      // 
     })
 
     
@@ -126,7 +124,8 @@ export class AddTeamProjectPop extends React.Component {
       '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
     ]
     let projectsPath = `projects/byIds?ids=${templateIds.join(',')}`
-    this.props.api().get(projectsPath).then(({data}) => {
+    this.props.api().get(projectsPath)
+    .then(({data}) => {
       let projects = this.normalizeTemplateProjects(data)
       this.setState({
         templateProjects: projects,
