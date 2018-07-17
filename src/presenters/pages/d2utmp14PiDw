@@ -282,9 +282,6 @@ TeamPageLoader.propTypes = {
   name: PropTypes.node.isRequired,
 };
 
-
-// Init Team
-
 const ParseTeam = (data) => {
   let ADMIN_ACCESS_LEVEL = 30
   let adminUsers = data.users.filter(user => {
@@ -295,6 +292,9 @@ const ParseTeam = (data) => {
   })
   return data
 }
+
+
+// Init Team
 
 export default function(application, id, name) {
   const props = {
