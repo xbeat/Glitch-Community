@@ -55,14 +55,14 @@ function routePage(pageUrl, application) {
 
   // ~project overlay page ✅
   if (pageUrl.charAt(0) === '~') {
-    const projectDomain = application.removeFirstCharacter(pageUrl);
+    const projectDomain = pageUrl.substring(1);
     const page = ProjectPage(application, projectDomain);
     return {page, title:decodeURI(pageUrl)};
   }
 
   // @user page ✅
   if (pageUrl.charAt(0) === '@') {
-    const name = pageUrl.substring(1, pageUrl.length);
+    const name = pageUrl.substring(1);
     const page = TeamOrUserPagePresenter(application, name);
     return {page, title:decodeURI(pageUrl)};
   }
@@ -109,7 +109,7 @@ function routePage(pageUrl, application) {
 }
 
 function route(location, application) {
-  let normalizedRoute = location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
+  const normalizedRoute = location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
   console.log(`normalizedRoute is ${normalizedRoute}`);
 
   //

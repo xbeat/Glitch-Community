@@ -235,16 +235,6 @@ var self = Model({
   getQuestions() {
     return Question.getQuestions(self).then(questions => self.questions(questions));
   },
-
-  // client.coffee routing helpers
-  // TODO?: move to utils.coffee
-  
-  removeFirstCharacter(string) {
-    // ex: ~cool to cool
-    const firstCharacterPosition = 1;
-    const end = string.length;
-    return string.substring(firstCharacterPosition, end);
-  },
 });
 
 
