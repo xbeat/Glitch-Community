@@ -8,7 +8,7 @@ import Project from '../../models/project';
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
-import EntityEditor from '../entity-editor.jsx';
+import ProjectEditor from '../project-editor.jsx';
 import Expander from '../includes/expander.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -16,6 +16,7 @@ import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
+import {Notifications} from '../notifications.jsx';
 
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
@@ -26,6 +27,11 @@ function trackRemix(id, domain) {
     baseProjectId: id,
     baseDomain: domain,
   });
+}
+
+function syncPageToDomain(domain) {
+  history.replaceState(null, null, `/~${domain}`);
+  document.title = `~${domain}`;
 }
 
 const PrivateTooltip = "Only members can view code";
@@ -78,10 +84,10 @@ ReadmeLoader.propTypes = {
 
 const ProjectPage = ({
   project: {
-    avatar, description, domain, id,
-    userIsCurrentUser, users, teams,
+    avatar, description, domain, id, users, teams,
     ...project // 'private' can't be used as a variable name
   },
+  isAuthorized,
   getReadme,
   getTeam, getTeamPins,
   getUser, getUserPins,
@@ -95,24 +101,24 @@ const ProjectPage = ({
       <InfoContainer>
         <ProjectInfoContainer style={{backgroundImage: `url('${avatar}')`}}>
           <h1>
-            {(userIsCurrentUser
-              ? <EditableField value={domain} update={updateDomain} placeholder="Name your project"/>
+            {(isAuthorized
+              ? <EditableField value={domain} update={domain => updateDomain(domain).then(() => syncPageToDomain(domain))} placeholder="Name your project"/>
               : <React.Fragment>{domain} {project.private && <PrivateBadge/>}</React.Fragment>
             )}
           </h1>
-          {(userIsCurrentUser &&
+          {(isAuthorized &&
             <div>
-              <PrivateToggle isPrivate={project.private} isMember={userIsCurrentUser} setPrivate={updatePrivate}/>
+              <PrivateToggle isPrivate={project.private} isMember={isAuthorized} setPrivate={updatePrivate}/>
             </div>
           )}
           <UsersList users={users} />
           <AuthDescription
-            authorized={userIsCurrentUser} description={description}
+            authorized={isAuthorized} description={description}
             update={updateDescription} placeholder="Tell us about your app"
           />
           <p className="buttons">
             <ShowButton name={domain}/>
-            <EditButton name={domain} isMember={userIsCurrentUser}/>
+            <EditButton name={domain} isMember={isAuthorized}/>
           </p>
         </ProjectInfoContainer>
       </InfoContainer>
@@ -121,7 +127,7 @@ const ProjectPage = ({
       <Embed domain={domain}/>
       <div className="buttons buttons-right">
         <RemixButton className="button-small"
-          name={domain} isMember={userIsCurrentUser}
+          name={domain} isMember={isAuthorized}
           onClick={() => trackRemix(id, domain)}
         />
       </div>
@@ -138,36 +144,22 @@ const ProjectPage = ({
   </main>
 );
 ProjectPage.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
   project: PropTypes.object.isRequired,
 };
 
-const ProjectPageEditor = ({project, updateFields, ...props}) => {
-  function updateDomain(domain) {
-    return updateFields({domain}).then(() => {
-      history.replaceState(null, null, `/~${domain}`);
-      document.title = `~${domain}`;
-    }, ({response: {data: {message}}}) => Promise.reject(message));
-  }
-  const funcs = {
-    updateDomain: domain => updateDomain(domain),
-    updateDescription: description => updateFields({description}),
-    updatePrivate: isPrivate => updateFields({private: isPrivate}),
-  };
-  return <ProjectPage project={project} {...funcs} {...props}/>;
-};
-ProjectPageEditor.propTypes = {
-  project: PropTypes.object.isRequired,
-  updateFields: PropTypes.func.isRequired,
-};
-
-const ProjectPageLoader = ({name, get, api, ...props}) => (
-  <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-    {project => project ? (
-      <EntityEditor api={api} initial={project} type="projects">
-        {({entity, ...funcs}) => <ProjectPageEditor project={entity} {...funcs} {...props}/>}
-      </EntityEditor>
-    ) : <NotFound name={name}/>}
-  </DataLoader>
+const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
+  <Notifications>
+    <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
+      {project => project ? (
+        <ProjectEditor api={api} initialProject={project} currentUserModel={currentUserModel}>
+          {(project, funcs, userIsMember) => (
+            <ProjectPage project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
+          )}
+        </ProjectEditor>
+      ) : <NotFound name={name}/>}
+    </DataLoader>
+  </Notifications>
 );
 ProjectPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
@@ -177,6 +169,7 @@ ProjectPageLoader.propTypes = {
 export default function(application, name) {
   const props = {
     api: application.api(),
+    currentUserModel: application.currentUser(),
     get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
     getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
     getTeam: (id) => application.api().get(`teams/${id}`).then(({data}) => data),
