@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import TeamModel from '../../models/team';
+
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 
@@ -15,17 +17,17 @@ const getUser = async (api, name) => {
 
 const getTeam = async(api, name) => {
   const {data} = await api.get(`teams/byUrl/${name}`);
-  return data;
+  return data && TeamModel(data).update(data).asProps();
 }
 
-const UserOrTeamPage = ({api, name}) => (
+const TeamOrUserPage = ({api, name, ...props}) => (
   <DataLoader get={() => getTeam(api, name)}>
     {team => team ? (
-      <TeamPage api={api} team={team}/>
+      <TeamPage api={api} team={team} {...props}/>
     ) : (
       <DataLoader get={() => getUser(api, name)}>
         {user => user ? (
-          <UserPage api={api} user={user}/>
+          <UserPage api={api} user={user} {...props}/>
         ) : (
           <NotFound name={name}/>
         )}
@@ -33,9 +35,9 @@ const UserOrTeamPage = ({api, name}) => (
     )}
   </DataLoader>
 );
-UserOrTeamPage.propTypes = {
+TeamOrUserPage.propTypes = {
   api: PropTypes.any.isRequired,
   name: PropTypes.string.isRequired,
 };
 
-export default UserOrTeamPage;
+export default TeamOrUserPage;

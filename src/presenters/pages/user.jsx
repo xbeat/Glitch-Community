@@ -69,7 +69,7 @@ const UserPage = ({
     pins, projects,
     _cacheCover, _deletedProjects,
   },
-  isAuthorized,
+  api, isAuthorized,
   updateDescription,
   updateName, updateLogin,
   uploadCover, clearCover,
@@ -77,7 +77,7 @@ const UserPage = ({
   addPin, removePin,
   leaveProject,
   deleteProject, undeleteProject,
-  getDeletedProjects, setDeletedProjects,
+  setDeletedProjects,
   getProjects,
 }) => (
   <main className="profile-page user-page">
@@ -102,7 +102,7 @@ const UserPage = ({
       projectOptions={{leaveProject, deleteProject}}
       getProjects={getProjects}
     />
-    {isAuthorized && <DeletedProjects get={getDeletedProjects} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
+    {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
   </main>
 );
 UserPage.propTypes = {
@@ -125,14 +125,14 @@ UserPage.propTypes = {
   leaveProject: PropTypes.func.isRequired,
 };
 
-const UserPageLoader = ({api, get, loginOrId, currentUserModel, getProjects, getDeletedProjects}) => (
+const UserPageLoader = ({api, get, loginOrId, currentUserModel, getProjects}) => (
   <CurrentUserProvider model={currentUserModel}>
     <Notifications>
       <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
         {user => user ? (
           <UserEditor api={api} initialUser={user} currentUserModel={currentUserModel}>
             {(user, funcs, isAuthorized) => (
-              <UserPage user={user} {...funcs} {...{isAuthorized, getProjects, getDeletedProjects}}/>
+              <UserPage api={api} user={user} {...funcs} {...{isAuthorized, getProjects}}/>
             )}
           </UserEditor>
         ) : <NotFound name={loginOrId}/>}
@@ -151,7 +151,6 @@ function UserPagePresenter(application, loginOrId, get) {
     api: application.api(),
     currentUserModel: application.currentUser(),
     getProjects: ids => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
-    getDeletedProjects: () => application.api().get(`user/deleted-projects`),
   };
   const content = Reactlet(UserPageLoader, props, 'userpage');
   return LayoutPresenter(application, content);
