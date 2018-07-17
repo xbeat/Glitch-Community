@@ -43,13 +43,13 @@ function identifyUser(application) {
 
 function routePage(pageUrl, application) {
   // index page ✅
-  if ((pageUrl === "index.html") || (pageUrl === "")) {
+  if (pageUrl.match(/^index\.html$/i) || !pageUrl) {
     application.getQuestions();
     return {page: IndexPage(application)};
   }
 
   // questions page ✅
-  if (pageUrl === 'questions') {
+  if (pageUrl.match(/^questions$/i)) {
     return {page: QuestionsPage(application), title: "Questions"};
   }
 
@@ -75,13 +75,13 @@ function routePage(pageUrl, application) {
   }
 
   // root team page ✅
-  if (rootTeams[pageUrl]) {
-    const page = TeamPagePresenter(application, rootTeams[pageUrl], pageUrl);
+  if (rootTeams[pageUrl.toLowerCase()]) {
+    const page = TeamPagePresenter(application, rootTeams[pageUrl.toLowerCase()], pageUrl);
     return {page, title: pageUrl};
   }
 
   // search page ✅
-  if (pageUrl === 'search' && queryString.q) {
+  if (pageUrl.match(/^search$/i) && queryString.q) {
     const query = queryString.q;
     application.searchQuery(query);
     application.searchTeams(query);
@@ -92,7 +92,7 @@ function routePage(pageUrl, application) {
   }
 
   // category page ✅
-  if (application.categories.some(({url}) => pageUrl === url)) {
+  if (application.categories.some(({url}) => pageUrl.match(new RegExp(url, 'i')))) {
     application.getCategory(pageUrl);
     const page = CategoryPage(application);
     return {page, title: application.category().name()};
@@ -109,7 +109,7 @@ function routePage(pageUrl, application) {
 }
 
 function route(location, application) {
-  const normalizedRoute = location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
+  const normalizedRoute = location.pathname.replace(/^\/|\/$/g, "");
   console.log(`normalizedRoute is ${normalizedRoute}`);
 
   //

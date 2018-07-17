@@ -58,6 +58,11 @@ const TeamPageLoader = ({api, currentUserModel, id, name, ...props}) => (
     </DataLoader>
   </PageWrapper>
 );
+TeamPageLoader.propTypes = {
+  api: PropTypes.any.isRequired,
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+};
 
 const UserPageLoader = ({api, currentUserModel, id, name, ...props}) => (
   <PageWrapper currentUserModel={currentUserModel}>
@@ -70,6 +75,11 @@ const UserPageLoader = ({api, currentUserModel, id, name, ...props}) => (
     </DataLoader>
   </PageWrapper>
 );
+UserPageLoader.propTypes = {
+  api: PropTypes.any.isRequired,
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+};
 
 const TeamOrUserPageLoader = ({api, currentUserModel, name, ...props}) => (
   <PageWrapper currentUserModel={currentUserModel}>
@@ -88,6 +98,10 @@ const TeamOrUserPageLoader = ({api, currentUserModel, name, ...props}) => (
     </DataLoader>
   </PageWrapper>
 );
+TeamOrUserPageLoader.propTypes = {
+  api: PropTypes.any.isRequired,
+  name: PropTypes.string.isRequired,
+};
 
 function Presenter(application, Loader, args) {
   const props = {
