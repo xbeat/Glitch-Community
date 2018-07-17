@@ -31,7 +31,7 @@ async function uploadWrapper(notifications, upload) {
       }
     );
   } catch (e) {
-    notifications.createErrorNotification(<NotifyError/>);
+    notifications.createNotification(<NotifyError/>, 'notifyError');
     throw e;
   } finally {
     removeNotification();
