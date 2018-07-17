@@ -115,13 +115,11 @@ export class AddTeamProjectPop extends React.Component {
         templateProjects: projects,
         loadingTemplates: false,
       })
-      console.log (this.state.templateProjects)
       this.updateFilter('')
     })
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log (prevState.source, this.state.source)
     if (prevState.source !== this.state.source) {
       this.updateFilter("");
       this.filterInput.focus();
