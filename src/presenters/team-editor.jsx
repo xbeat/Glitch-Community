@@ -103,18 +103,18 @@ class TeamEditor extends React.Component {
   
   currentUserIsTeamAdmin() {
     const currentUserId = this.props.currentUserModel.id();
-    return this.props.initialTeam.adminUsers.includes(currentUserId)
+    return this.props.initialTeam.adminUsers.includes(currentUserId);
   }
 
   // TODO temp feature switch name // features will eventually return an object instead
   teamHasUnlimitedProjects() {
-    let features = this.props.initialTeam.features
-    return features.includes('unlimited projects')
+    let features = this.props.initialTeam.features;
+    return features.includes('unlimited projects');
   }
   
   teamHasBillingExposed() {
-    let features = this.props.initialTeam.features
-    return features.includes('billing exposed')
+    let features = this.props.initialTeam.features;
+    return features.includes('billing exposed');
   }
 
   

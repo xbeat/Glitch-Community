@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash'
+import _ from 'lodash';
 import Loader from '../includes/loader.jsx';
 import EditableField from '../includes/editable-field.jsx';
 
@@ -55,9 +55,9 @@ class CreateTeamPop extends React.Component {
       'woeful',
       'whimsical',
       'zealous',
-    ]
-    let adjectives = _.sampleSize(descriptiveAdjectives, 2)
-    return `A ${adjectives[0]} team that makes ${adjectives[1]} things`
+    ];
+    let adjectives = _.sampleSize(descriptiveAdjectives, 2);
+    return `A ${adjectives[0]} team that makes ${adjectives[1]} things`;
   }
 
   
@@ -71,7 +71,7 @@ class CreateTeamPop extends React.Component {
   
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({ isLoading: true })
+    this.setState({ isLoading: true });
     this.props.api().post(('teams'), {
       name: this.state.teamName,
       url: this.state.teamUrl,
@@ -83,18 +83,18 @@ class CreateTeamPop extends React.Component {
       hasCoverImage: false,
       isVerified: false,
     })
-    .then (response => {
-      this.setState({ isLoading: false })
-      window.location = `/@${response.data.url}`
-    }).catch (error => {
-      let statusCode = error.response.data.status
-      let message = error.response.data.message
-      console.error(error, statusCode, message)
-      this.setState({
-        isLoading: false,
-        errorMessage: message,
-      })
-    })
+      .then (response => {
+        this.setState({ isLoading: false });
+        window.location = `/@${response.data.url}`;
+      }).catch (error => {
+        let statusCode = error.response.data.status;
+        let message = error.response.data.message;
+        console.error(error, statusCode, message);
+        this.setState({
+          isLoading: false,
+          errorMessage: message,
+        });
+      });
   }
 
   render() {
@@ -117,28 +117,28 @@ class CreateTeamPop extends React.Component {
         </section>
         <section className="pop-over-actions">
           
-        <form onSubmit={this.handleSubmit}>
-          <EditableField 
-            value="Team Rocket" 
-            update={this.handleChange} 
-            placeholder='Your Team Name' 
-            autoFocus={true} 
-            fieldOnlyUpdatesOnSubmit={true}
-            submitError={this.state.errorMessage}
-          />
-          <p className="action-description team-url-preview">
+          <form onSubmit={this.handleSubmit}>
+            <EditableField 
+              value="Team Rocket" 
+              update={this.handleChange} 
+              placeholder='Your Team Name' 
+              autoFocus={true} 
+              fieldOnlyUpdatesOnSubmit={true}
+              submitError={this.state.errorMessage}
+            />
+            <p className="action-description team-url-preview">
             /@{this.state.teamUrl}
-          </p>
+            </p>
           
-          {this.state.isLoading && 
+            {this.state.isLoading && 
             <Loader />
           ||
             <button type="submit" className="button-small has-emoji">
               <span>Create Team </span>
               <span className="emoji thumbs_up" />
             </button>
-          }
-        </form>
+            }
+          </form>
 
         </section>
         <section className="pop-over-info">
@@ -147,7 +147,7 @@ class CreateTeamPop extends React.Component {
           </p>
         </section>
       </dialog>
-    )
+    );
   }
 }
 

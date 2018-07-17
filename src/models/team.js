@@ -255,18 +255,18 @@ export default Team = function(I, self) {
 };
 
 Team.getTeamById = function(application, id) {
-  console.log ('getTeamById')
+  console.log ('getTeamById');
   const teamsPath = `teams/${id}`;
   return application.api().get(teamsPath)
     .then(function({data}) {
-      let ADMIN_ACCESS_LEVEL = 30
+      let ADMIN_ACCESS_LEVEL = 30;
       let adminUsers = data.users.filter(user => {
-        return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL
-      })
+        return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
+      });
       data.adminUsers = adminUsers.map(user => {
-        return user.id
-      })
-      application.saveTeam(data)
+        return user.id;
+      });
+      application.saveTeam(data);
     })
     .catch(error => console.error('getTeamById', error));
 };

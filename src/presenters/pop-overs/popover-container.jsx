@@ -22,7 +22,7 @@ export default class PopoverContainer extends React.Component {
     this.state = { visible: false };
 
     this.toggle = this.toggle.bind(this);
-    this.hide = this.hide.bind(this)
+    this.hide = this.hide.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
    
     // We need to set up and instantiate an onClickOutside wrapper

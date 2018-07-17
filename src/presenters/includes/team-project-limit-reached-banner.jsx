@@ -19,7 +19,7 @@ class TeamProjectLimitReachedBanner extends React.Component {
       </aside>
     );
   }
-};
+}
 
 TeamProjectLimitReachedBanner.propTypes = {
   teamName: PropTypes.string.isRequired,

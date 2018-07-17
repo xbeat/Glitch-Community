@@ -21,18 +21,18 @@ export class AddTeamProjectPop extends React.Component {
 
   normalizeTemplateProjects(data) {
     let projects = data.map(project => {
-      project.users = []
-      return ProjectModel(project).update(project).asProps()
-    })
-    return projects
+      project.users = [];
+      return ProjectModel(project).update(project).asProps();
+    });
+    return projects;
   }
     
   updateFilter(query) {
-    let projects = []
+    let projects = [];
     if (this.state.source === 'templates') {
-      projects = this.state.templateProjects
+      projects = this.state.templateProjects;
     } else {
-      projects = this.props.myProjects
+      projects = this.props.myProjects;
     }    
     let filteredProjects = this.filterProjects(query, projects, this.props.teamProjects);
     this.setState({
@@ -66,23 +66,24 @@ export class AddTeamProjectPop extends React.Component {
   
   activeIfSourceIsTemplates() {
     if (this.state.source === 'templates') {
-      return 'active'
+      return 'active';
     }
   }
   
   activeIfSourceIsMyProjects() {
     if (this.state.source === 'my-projects') {
-      return 'active'
+      return 'active';
     }
   }
   
   async remixTemplate(projectId) {
-    let remixTemplatePath = `projects/${projectId}/remix`    
-    return await this.props.api().post(remixTemplatePath)
+    let remixTemplatePath = `projects/${projectId}/remix`;    
+    return await this.props.api().post(remixTemplatePath);
   }
   
   async inviteUserToRemix(data) {
-    let inviteUserPath = `projects/&{data.inviteToken}/join`
+    let inviteUserPath = `projects/&{data.inviteToken}/join`;
+    return await this.props.api().post(inviteUserPath);
   }
   
   onClick(event, projectId) {
@@ -90,24 +91,19 @@ export class AddTeamProjectPop extends React.Component {
     this.props.togglePopover();
 
     if (this.state.source === 'templates') {
-      console.log ('🌹 time for notify, remixing and patching')
+      console.log ('🌹 time for notify, remixing and patching');
       this.setState({
         notifyTemplateIsRemixing: true
-      })
+      });
 
       this.remixTemplate(projectId)
-      .then(({data}) => {
-        console.log ('yolooo' , data)
-        
-//               let addUserPath = `projects/${data.inviteToken}/join`
-//       this.props.api().post(addUserPath)
-//       .then({data}) => {
-        
-//       }
-//       // 2) POST /projects/:inviteToken/join
-//       // 3) POST /teams/:teamId/projects/:projectId
+        .then(({data}) => {
+          console.log ('yolooo' , data);
+          this.inviteUserToRemix(data)
+            .then; 
+          //       // 3) POST /teams/:teamId/projects/:projectId
 
-      })
+        });
 
     } else {
     // have to be a member before this will work
@@ -119,35 +115,35 @@ export class AddTeamProjectPop extends React.Component {
     this.setState({
       source: 'templates',
       filterPlaceholder: 'Filter templates',
-    })
+    });
   }
   
   sourceIsMyProjects() {
     this.setState({
       source: 'my-projects',
       filterPlaceholder: 'Filter projects',
-    })
+    });
   }
   
   getTemplateProjects() {
     this.setState({
       loadingTemplates: true,
-    })
+    });
     const templateIds = [
       '9cd48134-1624-48f5-beaf-6c1b68bd9217', // 'timelink'
       '712cc905-bfcb-454e-a47a-c729ab63c455', // 'poller'
       '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
-    ]
-    let projectsPath = `projects/byIds?ids=${templateIds.join(',')}`
+    ];
+    let projectsPath = `projects/byIds?ids=${templateIds.join(',')}`;
     this.props.api().get(projectsPath)
-    .then(({data}) => {
-      let projects = this.normalizeTemplateProjects(data)
-      this.setState({
-        templateProjects: projects,
-        loadingTemplates: false,
-      })
-      this.updateFilter('')
-    })
+      .then(({data}) => {
+        let projects = this.normalizeTemplateProjects(data);
+        this.setState({
+          templateProjects: projects,
+          loadingTemplates: false,
+        });
+        this.updateFilter('');
+      });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -156,7 +152,7 @@ export class AddTeamProjectPop extends React.Component {
       this.filterInput.focus();
     }
     if (prevState.notifyTemplateIsRemixing !== this.state.notifyTemplateIsRemixing) {
-      console.log('📟 time to toggle the `is remixing` notification to', this.state.notifyTemplateIsRemixing)
+      console.log('📟 time to toggle the `is remixing` notification to', this.state.notifyTemplateIsRemixing);
       // notify.createPersistentNotification(<p>remixing projectName to newname</p>, 'notifyRemixing')
     }
   }
@@ -168,7 +164,7 @@ export class AddTeamProjectPop extends React.Component {
   }
 
   render() {
-    const filteredProjects = this.state.filteredProjects
+    const filteredProjects = this.state.filteredProjects;
     
     return (
       <dialog className="pop-over add-team-project-pop">

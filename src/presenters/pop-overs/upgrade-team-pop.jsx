@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import UsersList from "../users-list.jsx";
 
-const PRICE_PER_USER = 10
+const PRICE_PER_USER = 10;
 
 export class UpgradeTeamPop extends React.Component {
   constructor(props) {
@@ -14,10 +14,10 @@ export class UpgradeTeamPop extends React.Component {
   }
   
   componentDidMount() {
-    let monthlyCost = this.props.users.length * PRICE_PER_USER
+    let monthlyCost = this.props.users.length * PRICE_PER_USER;
     this.setState({
       monthlyCost: monthlyCost
-    })
+    });
   }
     
   render() {

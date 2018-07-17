@@ -18,7 +18,7 @@ export default class EditableField extends React.Component {
   
   componentDidMount() {
     if (this.props.autoFocus) {
-      this.refs.input.select()
+      this.refs.input.select();
     }
   }
   
@@ -26,22 +26,22 @@ export default class EditableField extends React.Component {
     if (prevProps.submitError !== this.props.submitError) {
       this.setState({
         error: this.props.submitError
-      })
+      });
       // focus the field if an error has been created
       if (this.props.submitError.length) {
-        this.refs.input.select()
+        this.refs.input.select();
       }
     }
   }
 
   update(value){
     if (this.props.fieldOnlyUpdatesOnSubmit) {
-      this.props.update(value)
+      this.props.update(value);
     }
     else {
-    this.props.update(value).then(
-      this.handleSuccess.bind(this),
-      this.handleFailure.bind(this, value));
+      this.props.update(value).then(
+        this.handleSuccess.bind(this),
+        this.handleFailure.bind(this, value));
     }
   }
   
@@ -51,7 +51,7 @@ export default class EditableField extends React.Component {
   
   handleFailure(data, message) {
     // The update failed; we can ignore this if our state has already moved on
-    console.log('data', data, message)
+    console.log('data', data, message);
     if(data !== this.state.value.trim()){
       return;
     }

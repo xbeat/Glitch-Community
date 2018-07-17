@@ -27,7 +27,7 @@ import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 import TeamUpgradeInfoBanner from '../includes/team-upgrade-info-banner.jsx';
 import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reached-banner.jsx';
 
-const FREE_TEAM_PROJECTS_LIMIT = 5
+const FREE_TEAM_PROJECTS_LIMIT = 5;
 
 
 // Team Page
@@ -54,9 +54,9 @@ const TeamPage = ({
 
   const projectLimitIsReached = () => {
     if ((currentUserIsOnTeam && !teamHasUnlimitedProjects && projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
-      return true
-    } else return false
-  }
+      return true;
+    } return false;
+  };
   return (
     <main className="profile-page team-page">
       <section>
@@ -145,8 +145,8 @@ const TeamPage = ({
         <TeamMarketing /> 
       }
     </main>
-  )
-}
+  );
+};
 
 
 // Team Page Loader
@@ -174,15 +174,15 @@ TeamPageLoader.propTypes = {
 // Init Team
 
 const ParseTeam = (data) => {
-  let ADMIN_ACCESS_LEVEL = 30
+  let ADMIN_ACCESS_LEVEL = 30;
   let adminUsers = data.users.filter(user => {
-    return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL
-  })
+    return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
+  });
   data.adminUsers = adminUsers.map(user => {
-    return user.id
-  })
-  return data
-}
+    return user.id;
+  });
+  return data;
+};
 
 export default function(application, id, name) {
   const props = {
@@ -193,11 +193,11 @@ export default function(application, id, name) {
     myProjects: application.currentUser().projects().map(({asProps}) => asProps()),
     get: () => 
       application.api().get(`teams/${id}`)
-      .then(({data}) => (
-        data ? 
-          TeamModel(ParseTeam(data)).update(data).asProps() 
-        : null
-    )),
+        .then(({data}) => (
+          data ? 
+            TeamModel(ParseTeam(data)).update(data).asProps() 
+            : null
+        )),
     searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
     getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(project => ProjectModel(project).update(project).asProps())),
   };

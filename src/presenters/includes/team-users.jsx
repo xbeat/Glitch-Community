@@ -11,8 +11,8 @@ import {UserPopoversList} from '../users-list.jsx';
 
 export const TeamUsers = ({users, currentUserIsOnTeam, removeUser, adminUsers, api, teamId, currentUserIsTeamAdmin}) => {
   let userIsTeamAdmin = (user) => {
-    return adminUsers.includes(user.id)
-  }
+    return adminUsers.includes(user.id);
+  };
   return (
     <UserPopoversList users={users}>
       {(user, togglePopover) => <TeamUserInfoPop 
@@ -25,7 +25,7 @@ export const TeamUsers = ({users, currentUserIsOnTeam, removeUser, adminUsers, a
         removeUserFromTeam={() => removeUser(user.id)} userIsTeamAdmin={userIsTeamAdmin(user)}
       />}
     </UserPopoversList>
-  )
+  );
 };
 
 TeamUsers.propTypes = {

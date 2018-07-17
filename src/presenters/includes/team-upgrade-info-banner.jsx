@@ -14,28 +14,28 @@ class TeamUpgradeInfoBanner extends React.Component {
   }
 
   updateRemainingFreeProjects() {
-    let remaining = this.props.limit - this.props.projectsCount
+    let remaining = this.props.limit - this.props.projectsCount;
     if (remaining < 0) {
-      remaining = 0
+      remaining = 0;
     }
     this.setState({
       remainingFreeProjects: remaining
-    })
+    });
   }
   
   errorIfLimitReached() {
     if (this.state.remainingFreeProjects === 0) {
-      return 'projects-left-error'
+      return 'projects-left-error';
     }
   }
 
   componentDidMount() {
-    this.updateRemainingFreeProjects()
+    this.updateRemainingFreeProjects();
   }
   
   componentDidUpdate(prevProps) {
     if (this.props.projectsCount !== prevProps.projectsCount) {
-      this.updateRemainingFreeProjects()
+      this.updateRemainingFreeProjects();
     }
   }
 
@@ -53,7 +53,7 @@ class TeamUpgradeInfoBanner extends React.Component {
       </aside>
     );
   }
-};
+}
 
 TeamUpgradeInfoBanner.propTypes = {
   projectsCount: PropTypes.number.isRequired,

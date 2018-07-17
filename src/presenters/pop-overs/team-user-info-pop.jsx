@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import Thanks from '../includes/thanks.jsx';
 import Loader from '../includes/loader.jsx';
 
-const MEMBER_ACCESS_LEVEL = 20
-const ADMIN_ACCESS_LEVEL = 30
+const MEMBER_ACCESS_LEVEL = 20;
+const ADMIN_ACCESS_LEVEL = 30;
 
 // Remove from Team 👋
 
@@ -50,23 +50,23 @@ UserActions.propTypes = {
 const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, adminStatusIsUpdating, updateAdminStatusIsUpdating, currentUserIsTeamAdmin}) => {  
   const updateAdminStatus = (accessLevel) => {
     if (adminStatusIsUpdating) {
-      return null
+      return null;
     }
-    updateAdminStatusIsUpdating(true)
-    let teamUser = `teams/${teamId}/users/${user.id}`
+    updateAdminStatusIsUpdating(true);
+    let teamUser = `teams/${teamId}/users/${user.id}`;
     api.patch((teamUser), {
       access_level: accessLevel
     })
-    .then(({data}) => {
-      updateAdminStatusIsUpdating(false);
-      updateUserIsTeamAdmin(accessLevel);
+      .then(({data}) => {
+        updateAdminStatusIsUpdating(false);
+        updateUserIsTeamAdmin(accessLevel);
       // TODO: I can unadmin myself, updates currentUser in other components too
-    }).catch(error => {
-      console.error("updateAdminStatus", accessLevel, error, error.response)
+      }).catch(error => {
+        console.error("updateAdminStatus", accessLevel, error, error.response);
       // TODO: last admin error -> show notification
       // TODO err networking/general api error
-    })
-  }
+      });
+  };
     
   return (
     <section className="pop-over-actions admin-actions">
@@ -92,7 +92,7 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
         </button>
       }
     </section>
-  )
+  );
 };
 
 AdminActions.propTypes = {
@@ -122,7 +122,7 @@ const ThanksCount = ({count}) => (
 // Team User Info
 
 class TeamUserInfoPop extends React.Component {
-    constructor(props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -134,22 +134,22 @@ class TeamUserInfoPop extends React.Component {
   removeFromTeamAction() {
     this.props.togglePopover();
     this.props.removeUserFromTeam();
-  };
+  }
   
   updateUserIsTeamAdmin(accessLevel) {
-    let isAdmin = false
+    let isAdmin = false;
     if (accessLevel === ADMIN_ACCESS_LEVEL) {
-      isAdmin = true
+      isAdmin = true;
     }
     this.setState({
       userIsTeamAdmin: isAdmin
-    })
+    });
   }
   
   updateAdminStatusIsUpdating(value) {
     this.setState({
       adminStatusIsUpdating: value
-    })
+    });
   }
 
   render() {
@@ -185,7 +185,7 @@ class TeamUserInfoPop extends React.Component {
       </dialog>
     );
   }
-};
+}
 
 TeamUserInfoPop.propTypes = {
   user: PropTypes.shape({

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import UsersList from "../users-list.jsx";
-import Loader from '../includes/loader.jsx'
+import Loader from '../includes/loader.jsx';
 
 export class DeleteTeamPop extends React.Component {
   constructor(props) {
@@ -15,38 +15,38 @@ export class DeleteTeamPop extends React.Component {
     
   componentDidMount() {
     let admins = this.props.users.filter(user => {
-      return this.props.adminUsers.includes(user.id)
-    })
+      return this.props.adminUsers.includes(user.id);
+    });
     this.setState({
       admins: admins,
-    })
+    });
   }
   
   deleteTeam() {
     if (this.state.teamIsDeleting) {
-      return null
+      return null;
     }
     this.setState({
       teamIsDeleting: true
-    })
-    let team = `teams/${this.props.teamId}`
+    });
+    let team = `teams/${this.props.teamId}`;
     this.props.api().delete(team)
-    .then(({data}) => {
-      window.location = '/'
-    }).catch(error => {
-      console.error("deleteTeam", error, error.response)
-      this.setState({
-        teamIsDeleting: false
-      })
+      .then(({data}) => {
+        window.location = '/';
+      }).catch(error => {
+        console.error("deleteTeam", error, error.response);
+        this.setState({
+          teamIsDeleting: false
+        });
       // TODO: show generic error notification
-    })    
+      });    
   }
   
   currentUserIsAdmin() {
   }
   
   render() {
-    let illustration = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fdelete-team.svg?1531267699621"
+    let illustration = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fdelete-team.svg?1531267699621";
     return (
       <dialog className="pop-over delete-team-pop">
         <section className="pop-over-info">
