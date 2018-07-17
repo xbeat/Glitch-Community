@@ -71,8 +71,9 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
   return (
     <section className="pop-over-actions admin-actions">
       { userIsTeamAdmin && 
-        <button className="button-small button-tertiary" onClick={() => updateAdminStatus(MEMBER_ACCESS_LEVEL)}>
-          <span>Remove Admin Status</span>
+        <button className="button-small button-tertiary has-emoji" onClick={() => updateAdminStatus(MEMBER_ACCESS_LEVEL)}>
+          <span>Remove Admin Status </span>
+          <span className="emoji fast-down" />
           { !currentUserIsTeamAdmin && 
             <div className="status-badge">
               <span className="status admin">Admins</span>
@@ -80,8 +81,9 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
           }
         </button>
       ||
-        <button className="button-small button-tertiary" onClick={() => updateAdminStatus(ADMIN_ACCESS_LEVEL)}>
-          <span>Make an Admin</span>
+        <button className="button-small button-tertiary has-emoji" onClick={() => updateAdminStatus(ADMIN_ACCESS_LEVEL)}>
+          <span>Make an Admin </span>
+          <span className="emoji fast-up" />
           { !currentUserIsTeamAdmin && 
             <div className="status-badge">
               <span className="status admin">Admins</span>
