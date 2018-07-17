@@ -101,7 +101,7 @@ export class AddTeamProjectPop extends React.Component {
           console.log ('yolooo' , data);
           this.inviteUserToRemix(data)
         .then(({data}) => {
-            console.log ('🚒', data.id)
+            console.log ('🚒', data)
             this.props.addProject(data.id)
           })
             // .then; 
