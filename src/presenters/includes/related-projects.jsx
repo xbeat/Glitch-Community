@@ -64,7 +64,7 @@ class RelatedProjects extends React.Component {
       <ul className="related-projects">
         {teams.map(({id, name, url, teamProfileStyle}) => (
           <li key={id}>
-            <RelatedProjectsHeader name={name} url={url}/>
+            <RelatedProjectsHeader name={name} url={`/@${url}`}/>
             <DataLoader get={() => this.getProjects(id, getTeamPins, getTeam)}>
               {projects => <RelatedProjectsBody projects={projects} coverStyle={teamProfileStyle}/>}
             </DataLoader>

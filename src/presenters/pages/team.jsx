@@ -74,13 +74,14 @@ TeamPage.propTypes = {
 
 const NameConflictWarning = ({id}) => (
   <React.Fragment>
-    This team has your name!
-    <a className="button button-small button-tertiary" href={`/user/${id}`}>Go to your profile</a>
+    <p>This team has your name!</p>
+    <a className="button button-small button-tertiary button-in-notification-container" href={`/user/${id}`}>Go to your profile</a>
   </React.Fragment>
 );
 
 class TeamNameConflict extends React.Component {
   componentDidMount() {
+    console.log(this.props.team.url, this.props.currentUserModel.login());
     if (this.props.team.url.toLowerCase() === this.props.currentUserModel.login().toLowerCase()) {
       const content = NameConflictWarning({id: this.props.currentUserModel.id()});
       this.notification = this.props.createPersistentNotification(content);

@@ -235,7 +235,7 @@ export default Team = function(I, self) {
         truncatedDescription: self.truncatedDescription(),
         hasAvatarImage: !!self.hasAvatarImage(),
         hasCoverImage: !!self.hasCoverImage(),
-        url: `/@${self.url()}`,
+        url: self.url(),
         verifiedImage: self.verifiedImage(),
         verifiedTooltip: self.verifiedTooltip(),
       };
