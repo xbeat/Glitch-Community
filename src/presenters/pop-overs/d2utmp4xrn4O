@@ -81,8 +81,8 @@ export class AddTeamProjectPop extends React.Component {
     return await this.props.api().post(remixTemplatePath)
   }
   
-  async inviteUserToRemix(data) {
-    let inviteUserPath = `projects/&{data.inviteToken}/join`
+  async inviteUserToRemix(remixData) {
+    leprojects/:inviteToken/join
   }
   
   onClick(event, projectId) {
