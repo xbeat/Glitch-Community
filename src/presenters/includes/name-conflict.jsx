@@ -27,7 +27,7 @@ class NameConflict extends React.Component {
   }
   
   render() {
-    return 'hello';
+    return null;
   }
 }
 NameConflict.propTypes = {
@@ -36,15 +36,15 @@ NameConflict.propTypes = {
 };
 
 const NameConflictContainer = () => (
-  <Notifications>
-    {notifyFuncs => (
-      <CurrentUserConsumer>
-        {({id}) => (
+  <CurrentUserConsumer>
+    {({id}) => (
+      <Notifications>
+        {notifyFuncs => (
           <NameConflict userId={id} {...notifyFuncs}/>
         )}
-      </CurrentUserConsumer>
+      </Notifications>
     )}
-  </Notifications>
+  </CurrentUserConsumer>
 );
 
 export default NameConflictContainer;
