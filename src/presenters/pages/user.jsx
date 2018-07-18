@@ -116,7 +116,7 @@ UserPage.propTypes = {
   leaveProject: PropTypes.func.isRequired,
 };
 
-const UserPageLoader = ({api, user, currentUserModel, getProjects}) => (
+const UserPageContainer = ({api, user, currentUserModel, getProjects}) => (
   <UserEditor api={api} initialUser={user} currentUserModel={currentUserModel}>
     {(user, funcs, isAuthorized) => (
       <UserPage api={api} user={user} {...funcs} {...{isAuthorized, getProjects}}/>
@@ -124,4 +124,4 @@ const UserPageLoader = ({api, user, currentUserModel, getProjects}) => (
   </UserEditor>
 );
 
-export default UserPageLoader;
+export default UserPageContainer;

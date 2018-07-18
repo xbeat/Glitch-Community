@@ -39,7 +39,7 @@ const getTeam = async(api, name) => {
 };
 
 // this func will eventually live in the layout
-const PageWrapper = ({currentUserModel, children}) => (
+const PageWrapper = ({children, currentUserModel}) => (
   <Notifications>
     <CurrentUserProvider model={currentUserModel}>
       {children}
