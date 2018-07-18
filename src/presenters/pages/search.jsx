@@ -9,6 +9,8 @@ import Categories from "../categories.jsx";
 import ProjectsList from "../projects-list.jsx";
 import TeamItem from '../team-item.jsx';
 import UserItem from '../user-item.jsx';
+import Loader from '../includes/loader.jsx';
+import NotFound from '../includes/not-found.jsx';
 
 
 function old(application) {
@@ -68,6 +70,13 @@ function old(application) {
   return LayoutPresenter(application, content);
 }
 
+const SearchResults = ({children, name}) => (
+  <article>
+    <h2>{name}</h2>
+    <Loader/>
+  </article>
+);
+
 class SearchPage extends React.Component {
   constructor(props) {
     super(props);
@@ -78,11 +87,18 @@ class SearchPage extends React.Component {
     };
   }
   
+  componentDidMount() {
+    console.log(this.props.query);
+  }
+  
   render() {
+    const results = [
+      'asdf'
+    ].filter(res => !!res);
     return (
       <React.Fragment>
         <main className="search-results">
-          
+          {results.length ? results : <NotFound name="any results"/>}
         </main>
         <Categories categories={this.props.categories}/>
       </React.Fragment>
