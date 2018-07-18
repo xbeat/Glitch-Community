@@ -9,12 +9,12 @@ import Loader from './loader.jsx';
 import Thanks from './thanks.jsx';
 import {AuthDescription} from './description-field.jsx';
 import EditableField from './editable-field.jsx';
-import AdminOnlyBadge from './admin-only-badge.jsx'; 
+import AdminOnlyBadge from './admin-only-badge.jsx' 
 
 
 // Image Buttons
 
-export const ImageButtons = ({name, uploadImage, clearImage, notifyAdminOnly, currentUserIsTeamAdmin}) => (
+export const ImageButtons = ({name, uploadImage, clearImage, currentUserIsTeamAdmin}) => (
   <div className="upload-image-buttons">
     { !!uploadImage && (
       <div className="button button-small button-tertiary" onClick={uploadImage}>
@@ -34,7 +34,6 @@ ImageButtons.propTypes = {
   name: PropTypes.string.isRequired,
   uploadImage: PropTypes.func,
   clearImage: PropTypes.func,
-  notifyAdminOnly: PropTypes.func,
   currentUserIsTeamAdmin: PropTypes.bool,
 };
 
