@@ -74,29 +74,37 @@ function old(application) {
   return LayoutPresenter(application, content);
 }
 
-const SearchLoader = ({name}) => (
+const TeamResults = ({teams}) => (
   <article>
-    <h2>{name}</h2>
-    <Loader/>
+    <h2>Teams</h2>
+    <ul className="teams-container">
+      {teams ? (
+        teams.map(team => (
+          <li key={team.id}>
+            <TeamItem team={team}/>
+          </li>
+        ))
+      ) : <Loader/>}
+    </ul>
   </article>
 );
 
-const SearchTeams = ({results}) => (
-  results ? (
-    !!results.length && (
-      <article>
-        <h2>Teams</h2>
-        <ul className="teams-container">
-          {results.map(team => (
-            <li key={team.id}>
-              <TeamItem team={team}/>
-            </li>
-          ))}
-        </ul>
-      </article>
-    )
-  ) : <SearchLoader name="Teams"/>
+const UserResults = ({users}) => (
+  <article>
+    <h2>Users</h2>
+    <ul className="users-container">
+      {users ? (
+        users.map(user => (
+          <li key={user.id}>
+            <UserItem user={user}/>
+          </li>
+        ))
+      ) : <Loader/>}
+    </ul>
+  </article>
 );
+
+const showResults = (results) => !results || !!results.length;
 
 class SearchPage extends React.Component {
   constructor(props) {
@@ -135,24 +143,12 @@ class SearchPage extends React.Component {
   
   render() {
     const {teams, users, projects} = this.state;
-    const noResults = [teams, users, projects].every(res => !!res && !res.length);
+    const noResults = [teams, users].every(results => !showResults(results));
     return (
       <React.Fragment>
         <main className="search-results">
-          {teams ? (
-            !!teams.length && (
-              <article>
-                <h2>Teams</h2>
-                <ul className="teams-container">
-                  {teams.map(team => (
-                    <li key={team.id}>
-                      <TeamItem team={team}/>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            )
-          ) : <SearchLoader name="Teams"/>}
+          {showResults(teams) && <TeamResults teams={teams}/>}
+          {showResults(users) && <UserResults users={users}/>}
           {noResults && <NotFound name="any results"/>}
         </main>
         <Categories categories={this.props.categories}/>
