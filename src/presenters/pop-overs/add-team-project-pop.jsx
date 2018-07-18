@@ -95,20 +95,16 @@ export class AddTeamProjectPop extends React.Component {
       this.setState({
         notifyTemplateIsRemixing: true
       });
-
       this.remixTemplate(projectId)
         .then(({data}) => {
           console.log ('yolooo' , data);
           this.inviteUserToRemix(data)
         .then(({data}) => {
             console.log ('🚒', data)
+            // patch? avatar?
             this.props.addProject(data.id)
           })
-            // .then; 
-          //       // 3) POST /teams/:teamId/projects/:projectId
-
         });
-
     } else {
     // have to be a member before this will work
       this.props.addProject(projectId);
