@@ -127,7 +127,7 @@ class TeamEditor extends React.Component {
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
       uploadCover: () => assets.requestFile(blob => this.uploadCover(blob).catch(handleError)),
       clearCover: () => this.updateFields({hasCoverImage: false}).catch(handleError),
-      addProject: id => {console.log(id); this.addProject(id).catch(handleError)},
+      addProject: id => this.addProject(id).catch(handleError),
       removeProject: id => this.removeProject(id).catch(handleError),
       addPin: id => this.addPin(id).catch(handleError),
       removePin: id => this.removePin(id).catch(handleError),
