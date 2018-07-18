@@ -22,7 +22,7 @@ export const ImageButtons = ({name, uploadImage, clearImage, currentUserIsTeamAd
         <AdminOnlyBadge currentUserIsTeamAdmin={currentUserIsTeamAdmin} />
       </div>
     )}
-    { !!clearImage && (
+    { (!!clearImage && currentUserIsTeamAdmin) && (
       <div className="button button-small button-tertiary" onClick={clearImage}>
         Clear {name} 
         <AdminOnlyBadge currentUserIsTeamAdmin={currentUserIsTeamAdmin} />
