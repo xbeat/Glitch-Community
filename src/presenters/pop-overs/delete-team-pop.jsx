@@ -1,9 +1,10 @@
+/* global notify */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import UsersList from "../users-list.jsx";
 import Loader from '../includes/loader.jsx';
 import AdminOnlyBadge from '../includes/admin-only-badge.jsx' 
-
 
 export class DeleteTeamPop extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ export class DeleteTeamPop extends React.Component {
           teamIsDeleting: false
         });
       // TODO: show generic error notification
+      notify.createNotification(<div>Whoops, something went wrong. Please </div>, 'notifyError')
       });    
   }
     
