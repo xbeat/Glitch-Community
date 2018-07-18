@@ -139,8 +139,20 @@ class SearchPage extends React.Component {
     return (
       <React.Fragment>
         <main className="search-results">
-          <SearchTeams results={teams}/>
-          <SearchUsers results={users}/>
+          {teams ? (
+            !!teams.length && (
+              <article>
+                <h2>Teams</h2>
+                <ul className="teams-container">
+                  {teams.map(team => (
+                    <li key={team.id}>
+                      <TeamItem team={team}/>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            )
+          ) : <SearchLoader name="Teams"/>}
           {noResults && <NotFound name="any results"/>}
         </main>
         <Categories categories={this.props.categories}/>
