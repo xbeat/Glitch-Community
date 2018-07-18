@@ -1,12 +1,13 @@
 import React from 'react';
 
 import LayoutPresenter from '../layout';
+import Reactlet from '../reactlet';
 import ProjectModel from '../../models/project';
 
 import Loader, {DataLoader} from '../includes/loader.jsx';
-import {ProjectsUL} from "../projects-list.jsx";
-import Categories from "../categories.jsx";
-import Reactlet from "../reactlet";
+import {ProjectsUL} from '../projects-list.jsx';
+import ProjectsLoader from '../projects-loader.jsx';
+import Categories from '../categories.jsx';
 
 const CategoryPageWrap = ({category, categories, children}) => (
   <React.Fragment>
@@ -52,7 +53,9 @@ const CategoryPage = ({api, category, ...props}) => (
   >
     {category => (
       <CategoryPageWrap category={category} {...props}>
-        <ProjectsUL projects={category.projects} categoryColor={category.color}/>
+        <ProjectsLoader api={api} projects={category.projects}>
+          {projects => <ProjectsUL projects={projects} categoryColor={category.color}/>}
+        </ProjectsLoader>
       </CategoryPageWrap>
     )}
   </DataLoader>

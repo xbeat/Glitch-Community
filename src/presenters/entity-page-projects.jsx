@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {partition} from 'lodash';
 
 import ProjectsList from './projects-list.jsx';
+import ProjectsLoader from './projects-loader.jsx';
 
 /* globals Set */
 
@@ -55,3 +56,11 @@ EntityPageProjects.propTypes = {
   removePin: PropTypes.func.isRequired,
   projectOptions: PropTypes.object.isRequired,
 };
+
+const EntityPageProjectsContainer = ({api, projects, ...props}) => (
+  <ProjectsLoader api={api} projects={projects}>
+    {projects => <EntityPageProjects projects={projects} {...props}/>}
+  </ProjectsLoader>
+);
+
+export default EntityPageProjectsContainer;
