@@ -40,10 +40,6 @@ var self = Model({
 
   // search - users
   searchQuery: Observable(""),
-  searchingForUsers: Observable(false),
-  searchResultsUsers: Observable([]),
-  searchResultsUsersLoaded: Observable(false),
-  searchResultsHaveNoUsers: Observable(false),
 
   // search - projects
   searchingForProjects: Observable(false),

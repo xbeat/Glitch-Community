@@ -213,11 +213,6 @@ export default User = function(I, self) {
       node.innerHTML = md.render(text);
       return node;
     },
-    
-    pushSearchResult(application) {
-      application.searchResultsUsers.push(self);
-      return application.searchResultsUsersLoaded(true);
-    },
 
     userThanks() {
       const thanksCount = self.thanksCount();
@@ -335,28 +330,6 @@ User.getSearchResultsJSON = function(application, query) {
   return application.api(source).get(searchPath)
     .then(({data}) => data)
     .catch(error => console.error('getSearchResultsJSON', error));
-};
-
-User.getSearchResults = function(application, query) {
-  const MAX_RESULTS = 20;
-  application.searchResultsUsers([]);
-  application.searchingForUsers(true);
-  return User.getSearchResultsJSON(application, query)
-    .then((data) => {
-      application.searchingForUsers(false);
-      data = data.slice(0 , MAX_RESULTS);
-      if (data.length === 0) {
-        application.searchResultsHaveNoUsers(true);
-      }
-      data = data.map(function(datum) {
-        datum.fetched = true;
-        return User(datum).update(datum);
-      });
-      data.forEach(function(userModel) {
-        return userModel.pushSearchResult(application);
-      });
-      return data;
-    }).catch(error => console.error('getSearchResults', error));
 };
 
 
