@@ -74,6 +74,7 @@ class TeamEditor extends React.Component {
   }
   
   async addProject(id) {
+    console.log ('addproject', id) // Why is only my projects doing a get, and templates are not (from add-team-project-pop) 
     await this.props.api.post(`teams/${this.state.id}/projects/${id}`);
     this.setState(({projects}) => ({
       projects: [...projects, ProjectModel({id}).asProps()],

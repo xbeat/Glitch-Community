@@ -91,15 +91,14 @@ export class AddTeamProjectPop extends React.Component {
     this.props.togglePopover();
 
     if (this.state.source === 'templates') {
-      console.log ('🌹 time for notify, remixing and patching');
-      this.setState({
-        notifyTemplateIsRemixing: true
-      });
+      // this.setState({
+      //   notifyTemplateIsRemixing: true
+      // });
       this.remixTemplate(projectId)
         .then(({data}) => {
           console.log ('yolooo' , data);
           this.inviteUserToRemix(data)
-        .then(({data}) => {
+          .then(({data}) => {
             console.log ('🚒', data)
             // patch? avatar?
             this.props.addProject(data.id)
