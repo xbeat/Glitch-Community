@@ -50,7 +50,6 @@ UserActions.propTypes = {
 
 const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, adminStatusIsUpdating, updateAdminStatusIsUpdating, currentUserIsTeamAdmin, notifyAdminOnly}) => {  
   const updateAdminStatus = (accessLevel) => {
-    // TODO notifyadmin only
     if (!currentUserIsTeamAdmin) {
         notifyAdminOnly()
         return null
@@ -60,18 +59,18 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
     }
     updateAdminStatusIsUpdating(true);
     let teamUser = `teams/${teamId}/users/${user.id}`;
-    api.patch((teamUser), {
-      access_level: accessLevel
-    })
-      .then(({data}) => {
-        updateAdminStatusIsUpdating(false);
-        updateUserIsTeamAdmin(accessLevel);
-      // TODO: I can unadmin myself, updates currentUser in other components too
-      }).catch(error => {
-        console.error("updateAdminStatus", accessLevel, error, error.response);
-      // TODO: last admin error -> show notification
-      // TODO err networking/general api error
-      });
+    api.patch((teamUser), {access_level: accessLevel})
+    .then(({data}) => {
+      updateAdminStatusIsUpdating(false);
+      updateUserIsTeamAdmin(accessLevel);
+    // TODO: I can unadmin myself, updates currentUser in other components too
+    }).catch(error => {
+      console.error("updateAdminStatus", accessLevel, error.response.data);
+      
+      
+    // TODO: last admin error -> show notification
+    // TODO err networking/general api error
+    });
   };
 
   return (
