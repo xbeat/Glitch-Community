@@ -62,14 +62,13 @@ const TeamPage = ({
   };
   
   const admins = () => {
-    console.log('🌹', adminIds)
     return users.filter(user => {
       adminIds.includes(user.id);
     });
   }
   
   const notifyAdminOnly = () => {
-    notify.createNotification(<p>Only team admins can edit this <UsersList users={admins()}/></p>, 'notifyAdminOnly')
+    notify.createNotification(<React.Fragment></React.Fragment><p>Only team admins can edit this <UsersList users={admins()}/></p>, 'notifyAdminOnly')
   }
   
   return (
