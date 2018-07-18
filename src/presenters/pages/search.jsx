@@ -108,24 +108,29 @@ class SearchPage extends React.Component {
     };
   }
   
-  async searchTeams() {
+  async search(type) {
     const {api, query} = this.props;
-    const {data} = await api.get(`teams/search?q=${query}`);
+    const {data} = await api.get(`${type}/search?q=${query}`);
+    return data.slice(0, MAX_RESULTS);
+  }
+  
+  async searchTeams() {
+    const results = await this.search('teams');
     this.setState({
-      teams: data.slice(0, MAX_RESULTS).map(team => TeamModel(team).update(team).asProps()),
+      teams: results.map(team => TeamModel(team).update(team).asProps()),
     });
   }
   
   async searchUsers() {
-    const {api, query} = this.props;
-    const {data} = await api.get(`users/search?q=${query}`);
+    const results = await this.search('users');
     this.setState({
-      users: data.slice(0, MAX_RESULTS).map(user => UserModel(user).update(user).asProps()),
+      users: results.map(user => UserModel(user).update(user).asProps()),
     });
   }
   
   componentDidMount() {
     this.searchTeams();
+    this.searchUsers();
   }
   
   render() {
@@ -134,7 +139,8 @@ class SearchPage extends React.Component {
     return (
       <React.Fragment>
         <main className="search-results">
-          <SearchTeams key="teams" results={this.state.teams}/>
+          <SearchTeams results={teams}/>
+          <SearchUsers results={users}/>
           {noResults && <NotFound name="any results"/>}
         </main>
         <Categories categories={this.props.categories}/>
