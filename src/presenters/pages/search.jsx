@@ -1,17 +1,17 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 
 import LayoutPresenter from '../layout';
+import Reactlet from "../reactlet";
 import SearchPageTemplate from '../../templates/pages/search';
 
 import Categories from "../categories.jsx";
-import Reactlet from "../reactlet";
 import ProjectsList from "../projects-list.jsx";
 import TeamItem from '../team-item.jsx';
 import UserItem from '../user-item.jsx';
 
 
-export default function(application) {
+function old(application) {
 
   const self = { 
 
@@ -60,17 +60,83 @@ export default function(application) {
       return Reactlet(ProjectsList, props);
     },
     
-    Categories() {
-      const props = {
-        categories: application.categories,
-      };
-      return Reactlet(Categories, props);
-    },
-    
   };
     
 
   const content = SearchPageTemplate(self);
         
+  return LayoutPresenter(application, content);
+}
+
+class SearchPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      teams: null,
+      users: null,
+      projects: null,
+    };
+  }
+  
+  render() {
+    return (
+      <React.Fragment>
+        <main className="search-results">
+          
+        </main>
+        <Categories categories={this.props.categories}/>
+      </React.Fragment>
+    );
+  }
+}
+SearchPage.propTypes = {
+  api: PropTypes.any.isRequired,
+  categories: PropTypes.array.isRequired,
+  query: PropTypes.string.isRequired,
+};
+/*
+
+const SearchPage = props => (
+  <main className="search-results">
+
+  article(class=@hiddenIfSearchResultsHaveNoTeams)
+    h2 Teams
+    ul.teams-container
+      - @searchResultsTeams().forEach (team) ->
+        li
+          = Reactlet(TeamItem, {team: team.asProps()}, 'search-team-'+team.id())
+    span(class=@hiddenIfSearchResultsTeamsLoaded)
+      = Loader(this)
+
+
+  article(class=@hiddenIfSearchResultsHaveNoUsers)
+    h2 Users
+    ul.users-container
+      - @searchResultsUsers().forEach (user) ->
+        li
+          = Reactlet(UserItem, {user: user.asProps()}, 'search-user-'+user.id())
+    span(class=@hiddenIfSearchResultsUsersLoaded)
+      = Loader(this)
+
+  article.projects(class=@hiddenIfSearchResultsHaveNoProjects)
+    = ProjectListPresenter()
+    span(class=@hiddenIfSearchResultsProjectsLoaded)
+      = Loader(this)
+
+  article.no-results(class=@hiddenUnlessSearchHasNoResults)
+    p no results found
+    img(src=cat)
+  </main>
+
+  = @Categories
+);
+*/
+export default function(application, query) {
+  const props = {
+    api: application.api(),
+    categories: application.categories,
+    query,
+  };
+  const content = Reactlet(SearchPage, props);
   return LayoutPresenter(application, content);
 }
