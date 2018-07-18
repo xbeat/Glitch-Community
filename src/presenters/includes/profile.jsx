@@ -1,5 +1,5 @@
 //
-// Profile.jsx!  I export TeamProfile and UserProfile.
+// I export TeamProfile and UserProfile.
 //
 
 import React from 'react';
@@ -9,21 +9,24 @@ import Loader from './loader.jsx';
 import Thanks from './thanks.jsx';
 import {AuthDescription} from './description-field.jsx';
 import EditableField from './editable-field.jsx';
+import AdminOnlyBadge from './admin-only-badge.jsx' 
 
 
 // Image Buttons
 
-export const ImageButtons = ({name, uploadImage, clearImage}) => (
+export const ImageButtons = ({name, uploadImage, clearImage, notifyAdminOnly, currentUserIsTeamAdmin}) => (
   <div className="upload-image-buttons">
     { !!uploadImage && (
-      <button className="button-small button-tertiary" onClick={uploadImage}>
-        Upload {name}
-      </button>
+      <div className="button button-small button-tertiary" onClick={uploadImage}>
+        <span>Upload {name}</span>
+        <AdminOnlyBadge currentUserIsTeamAdmin={currentUserIsTeamAdmin} />
+      </div>
     )}
     { !!clearImage && (
-      <button className="button-small button-tertiary" onClick={clearImage}>
-        Clear {name}  
-      </button>
+      <div className="button button-small button-tertiary" onClick={clearImage}>
+        Clear {name} 
+        <AdminOnlyBadge currentUserIsTeamAdmin={currentUserIsTeamAdmin} />
+      </div>
     )}
   </div>
 );
@@ -31,6 +34,8 @@ ImageButtons.propTypes = {
   name: PropTypes.string.isRequired,
   uploadImage: PropTypes.func,
   clearImage: PropTypes.func,
+  notifyAdminOnly: PropTypes.func,
+  currentUserIsTeamAdmin: PropTypes.bool,
 };
 
 

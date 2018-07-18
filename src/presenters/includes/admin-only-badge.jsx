@@ -6,7 +6,7 @@ const AdminOnlyBadge = ({...props}) => {
     <React.Fragment>
       { !props.currentUserIsTeamAdmin && 
         <div className="status-badge">
-          <span className="status admin">Admins</span>
+          <span className="status admin">Admin</span>
         </div> 
       }
     </React.Fragment>
