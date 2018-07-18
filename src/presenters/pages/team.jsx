@@ -88,7 +88,7 @@ const TeamPage = ({
             }
           </h1>
           <div className="users-information">
-            <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminIds, api, teamId:id, currentUserIsTeamAdmin}} />
+            <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminIds, api, teamId:id, currentUserIsTeamAdmin, notifyAdminOnly}} />
             { currentUserIsOnTeam && 
               <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)} />
             }

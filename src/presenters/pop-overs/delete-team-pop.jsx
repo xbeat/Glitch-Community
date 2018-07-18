@@ -28,16 +28,15 @@ export class DeleteTeamPop extends React.Component {
     });
     let team = `teams/${this.props.teamId}`;
     this.props.api().delete(team)
-      .then(({data}) => {
-        window.location = '/';
-      }).catch(error => {
-        console.error("deleteTeam", error, error.response);
-        this.setState({
-          teamIsDeleting: false
-        });
-      // TODO: show generic error notification
-      notify.createNotification(<div>Whoops, something went wrong. Please </div>, 'notifyError')
-      });    
+    .then(({data}) => {
+      window.location = '/';
+    }).catch(error => {
+      console.error("deleteTeam", error, error.response);
+      notify.createNotification(<div>Something went wrong, try refreshing?</div>, 'notifyError')
+      this.setState({
+        teamIsDeleting: false
+      });
+    });    
   }
     
   render() {
