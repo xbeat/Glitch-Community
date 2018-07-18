@@ -1,6 +1,5 @@
 let Team;
 import {reject} from 'lodash';
-import axios from 'axios';
 
 const cache = {};
 const cacheBuster = Math.floor(Math.random() * 1000);

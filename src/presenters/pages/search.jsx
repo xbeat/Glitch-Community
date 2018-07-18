@@ -8,14 +8,14 @@ import ProjectModel from '../../models/project';
 import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
 
+import ErrorHandlers from '../error-handlers.jsx';
 import Categories from '../categories.jsx';
 import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
+import {Notifications} from '../notifications.jsx';
 import ProjectsList from '../projects-list.jsx';
 import TeamItem from '../team-item.jsx';
 import UserItem from '../user-item.jsx';
-
-const MAX_RESULTS = 20;
 
 const TeamResults = ({teams}) => (
   <article>
@@ -58,6 +58,8 @@ const ProjectResults = ({projects}) => (
   )
 );
 
+
+const MAX_RESULTS = 20;
 const showResults = (results) => !results || !!results.length;
 
 class SearchPage extends React.Component {
@@ -95,9 +97,10 @@ class SearchPage extends React.Component {
   }
   
   componentDidMount() {
-    this.searchTeams();
-    this.searchUsers();
-    this.searchProjects();
+    const {handleError} = this.props;
+    this.searchTeams().catch(handleError);
+    this.searchUsers().catch(handleError);
+    this.searchProjects().catch(handleError);
   }
   
   render() {
@@ -122,12 +125,20 @@ SearchPage.propTypes = {
   query: PropTypes.string.isRequired,
 };
 
+const SearchPageContainer = ({...props}) => (
+  <Notifications>
+    <ErrorHandlers>
+      {errorFuncs => <SearchPage {...errorFuncs} {...props}/>}
+    </ErrorHandlers>
+  </Notifications>
+);
+
 export default function(application, query) {
   const props = {
     api: application.api(),
     categories: application.categories,
     query,
   };
-  const content = Reactlet(SearchPage, props);
+  const content = Reactlet(SearchPageContainer, props);
   return LayoutPresenter(application, content);
 }
