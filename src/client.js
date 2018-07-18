@@ -94,8 +94,9 @@ function routePage(pageUrl, application) {
 
   // category page ✅
   if (application.categories.some(({url}) => pageUrl === url)) {
-    const page = CategoryPage(application, application.categories.find(({url}) => pageUrl === url));
-    return {page, title: application.category().name()};
+    const category = application.categories.find(({url}) => pageUrl === url);
+    const page = CategoryPage(application, category);
+    return {page, title: category.name};
   }
  
   // error page ✅

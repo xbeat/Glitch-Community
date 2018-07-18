@@ -2,6 +2,7 @@ import React from 'react';
 
 import LayoutPresenter from '../layout';
 
+import {DataLoader, } from '../includes/loader.jsx';
 import {ProjectsUL} from "../projects-list.jsx";
 import Categories from "../categories.jsx";
 import Reactlet from "../reactlet";
@@ -62,7 +63,7 @@ export default function(application) {
 }
 */
 
-const CategoryPage = ({api, category, categories}) => (
+const CategoryPageWrap = ({category, categories, children}) => (
   <React.Fragment>
     <main className="category-page">
       <article className="projects" style={{backgroundColor: category.backgroundColor}}>
@@ -73,17 +74,44 @@ const CategoryPage = ({api, category, categories}) => (
           </span>
           <p className="description">{category.description}</p>
         </header>
+        {children}
       </article>
     </main>
     <Categories categories={categories}/>
   </React.Fragment>
 );
 
-export default function(application, categoryModel) {
+const CategoryPageLoader = ({...props}) => (
+  <CategoryPageWrap {...props}>
+    <Loader/>
+  </CategoryPageWrap>
+);
+
+const CategoryPageError = ({...props}) => (
+  <CategoryPageWrap {...props}>
+    Something went wrong. Try refreshing?
+  </CategoryPageWrap>
+);
+
+const CategoryPage = ({api, category, ...props}) => (
+  <DataLoader
+    get={() => ({data: category})}
+    renderLoader={() => <CategoryPageLoader category={category} {...props}/>}
+    renderError={() => <CategoryPageError category={category} {...props}/>}
+  >
+    {({data}) => (
+      <CategoryPageWrap category={data} {...props}>
+        data!
+      </CategoryPageWrap>
+    )}
+  </DataLoader>
+);
+
+export default function(application, category) {
   const props = {
     api: application.api(),
-    category: categoryModel.asProps(),
-    categories: application.categories(),
+    category,
+    categories: application.categories,
   };
   const content = Reactlet(CategoryPage, props);
   return LayoutPresenter(application, content);

@@ -47,8 +47,6 @@ export default Project = function(I, self) {
         description: project.description(),
         domain: project.domain(),
         id: project.id(),
-        isPinnedByTeam: project.isPinnedByTeam(application),
-        isPinnedByUser: project.isPinnedByUser(application),
         isRecentProject: !!(project.isRecentProject),
         link: getLink(self.domain()),
         name: project.name(),
@@ -118,14 +116,6 @@ export default Project = function(I, self) {
       application.searchResultsProjects.push(self);
       return application.searchResultsProjectsLoaded(true);
     },
-
-    isPinnedByUser(application) {
-      return Project.isPinnedByUser(application.user(), self.id());
-    },
-
-    isPinnedByTeam(application) {
-      return Project.isPinnedByTeam(application.team(), self.id());
-    },
            
     delete() {
       const projectPath = `/projects/${self.id()}`;
@@ -170,16 +160,6 @@ export default Project = function(I, self) {
   // console.log '💎 project cache', cache
 
   return self;
-};
-
-Project.isPinnedByUser = (user, projectId) => {
-  const pins = user.pins().map(pin => pin.projectId);
-  return pins.includes(projectId);
-};
-
-Project.isPinnedByTeam = function(team, projectId) {
-  const pins = team.pins().map(pin => pin.projectId);
-  return pins.includes(projectId);
 };
 
 // Fetch projects and populate them into the local cache
