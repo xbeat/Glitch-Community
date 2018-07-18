@@ -16,13 +16,11 @@ NameConflictWarning.propTypes = {
 
 class NameConflict extends React.Component {
   componentDidMount() {
-    console.log('mount');
     const content = NameConflictWarning({id: this.props.userId});
     this.notification = this.props.createPersistentNotification(content);
   }
   
   componentWillUnmount() {
-    console.log('unmount');
     this.notification.removeNotification();
   }
   

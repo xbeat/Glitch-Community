@@ -71,12 +71,19 @@ TeamPage.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
+const teamConflictsWithUser = (team, currentUserModel) => {
+  if (currentUserModel.login()) {
+    return currentUserModel.login().toLowerCase() === team.url;
+  }
+  return false;
+};
+
 const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
   <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam) => (
       <React.Fragment>
         <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
-        {!!team.url.match(new RegExp(currentUserModel.login() || '', 'i')) && <NameConflictWarning/>}
+        {teamConflictsWithUser(team, currentUserModel) && <NameConflictWarning/>}
       </React.Fragment>
     )}
   </TeamEditor>
