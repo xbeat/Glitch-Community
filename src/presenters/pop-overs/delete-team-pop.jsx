@@ -60,7 +60,7 @@ export class DeleteTeamPop extends React.Component {
           </button>
         </section>
         <section className="pop-over-info">
-          <UsersList users={this.props.admins}/>
+          <UsersList users={this.props.admins()}/>
           <p className="info-description">This will also email all team admins, giving them an option to undelete it later</p>
         </section>
       </dialog>
@@ -73,7 +73,7 @@ DeleteTeamPop.propTypes = {
   teamId: PropTypes.number.isRequired,
   teamName: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,
-  admins: PropTypes.array.isRequired,
+  admins: PropTypes.func.isRequired,
   togglePopover: PropTypes.func.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired
 };

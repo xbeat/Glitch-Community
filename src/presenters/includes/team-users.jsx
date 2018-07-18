@@ -9,9 +9,9 @@ import {UserPopoversList} from '../users-list.jsx';
 
 // Team Users list (in profile container)
 
-export const TeamUsers = ({users, currentUserIsOnTeam, removeUser, adminUsers, api, teamId, currentUserIsTeamAdmin}) => {
+export const TeamUsers = ({users, currentUserIsOnTeam, removeUser, adminIds, api, teamId, currentUserIsTeamAdmin}) => {
   let userIsTeamAdmin = (user) => {
-    return adminUsers.includes(user.id);
+    return adminIds.includes(user.id);
   };
   return (
     <UserPopoversList users={users}>
@@ -34,7 +34,8 @@ TeamUsers.propTypes = {
   removeUser: PropTypes.func.isRequired,
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
-  currentUserIsTeamAdmin: PropTypes.bool.isRequired
+  currentUserIsTeamAdmin: PropTypes.bool.isRequired,
+  adminIds: PropTypes.array,
 };
 
 
