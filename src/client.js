@@ -87,6 +87,7 @@ function routePage(pageUrl, application) {
   // search page ✅
   if (pageUrl === 'search' && queryString.q) {
     const query = queryString.q;
+    application.searchQuery(query);
     const page = SearchPage(application, query);
     return {page, title: `Search for ${query}`};
   }
