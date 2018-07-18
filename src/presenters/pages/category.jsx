@@ -1,67 +1,12 @@
 import React from 'react';
 
 import LayoutPresenter from '../layout';
+import ProjectModel from '../../models/project';
 
-import {DataLoader, } from '../includes/loader.jsx';
+import Loader, {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from "../projects-list.jsx";
 import Categories from "../categories.jsx";
 import Reactlet from "../reactlet";
-
-/*
-export default function(application) {
-
-    
-  var self = {
-
-    application,
-    category: application.category,
-
-    projects() {
-      const projects = self.category().projects().filter(project => project.fetched());
-      const props = {
-        closeAllPopOvers: application.closeAllPopOvers, 
-        projects: projects.map(project => project.asProps()),
-        categoryColor: self.category().color(),
-      };
-      return Reactlet(ProjectsUL, props);
-    },
-
-    Categories() {
-      const props = {
-        categories: application.categories,
-      };
-      return Reactlet(Categories, props);
-    },
-
-    name() {
-      return self.category().name();
-    },
-
-    avatarUrl() {
-      return self.category().avatarUrl();
-    },
-
-    description() {
-      return self.category().description();
-    },
-
-    backgroundColor() {
-      return self.category().backgroundColor();
-    },
-
-    style() {
-      return {backgroundColor: self.backgroundColor()};
-    },
-
-    hiddenIfCategoryProjectsLoaded() {
-      if (application.categoryProjectsLoaded()) { return 'hidden'; }
-    },
-  };
-    
-  const content = CategoryPageTemplate(self);
-  return LayoutPresenter(application, content);
-}
-*/
 
 const CategoryPageWrap = ({category, categories, children}) => (
   <React.Fragment>
@@ -93,15 +38,21 @@ const CategoryPageError = ({...props}) => (
   </CategoryPageWrap>
 );
 
+async function loadCategory(api, id) {
+  const {data} = await api.get(`categories/${id}`);
+  data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
+  return data;
+}
+
 const CategoryPage = ({api, category, ...props}) => (
   <DataLoader
-    get={() => ({data: category})}
+    get={() => loadCategory(api, category.id)}
     renderLoader={() => <CategoryPageLoader category={category} {...props}/>}
     renderError={() => <CategoryPageError category={category} {...props}/>}
   >
-    {({data}) => (
-      <CategoryPageWrap category={data} {...props}>
-        data!
+    {category => (
+      <CategoryPageWrap category={category} {...props}>
+        <ProjectsUL projects={category.projects} categoryColor={category.color}/>
       </CategoryPageWrap>
     )}
   </DataLoader>
