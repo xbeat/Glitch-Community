@@ -81,9 +81,9 @@ const NameConflictWarning = ({id}) => (
 
 class TeamNameConflict extends React.Component {
   componentDidMount() {
-    console.log(this.props.team.url, this.props.currentUserModel.login());
-    if (this.props.team.url.toLowerCase() === this.props.currentUserModel.login().toLowerCase()) {
-      const content = NameConflictWarning({id: this.props.currentUserModel.id()});
+    const {teamUrl, userLogin, userId} = this.props;
+    if (userLogin && teamUrl.toLowerCase() === userLogin.toLowerCase()) {
+      const content = NameConflictWarning({id: userId});
       this.notification = this.props.createPersistentNotification(content);
     }
   }
@@ -98,13 +98,16 @@ class TeamNameConflict extends React.Component {
     return this.props.children;
   }
 }
+TeamNameConflict.propTypes = {
+  teamUrl: PropTypes.string.isRequired,
+  userLogin: PropTypes.string.isRequired,
 
 const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
   <Notifications>
     {notifyFuncs => (
       <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
         {(team, funcs, currentUserIsOnTeam) => (
-          <TeamNameConflict {...notifyFuncs} {...{team, currentUserModel}}>
+          <TeamNameConflict {...notifyFuncs} teamUrl={team.url} userLogin={currentUserModel.login()} userId={currentUserModel.id()}>
             <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
           </TeamNameConflict>
         )}
