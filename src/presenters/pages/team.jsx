@@ -41,7 +41,7 @@ const TeamPage = ({
     projects, teamPins,
     isVerified, verifiedImage, verifiedTooltip,
     backgroundColor, hasAvatarImage,
-    coverColor, hasCoverImage, adminUsers,
+    coverColor, hasCoverImage, adminIds,
     _cacheAvatar, _cacheCover,
   },
   currentUserIsOnTeam, myProjects,
@@ -60,12 +60,15 @@ const TeamPage = ({
       return true;
     } return false;
   };
-    
-  const notifyAdminOnly = () => {
+  
+  const admins = () => {
     let admins = users.filter(user => {
-      return adminUsers.includes(user.id);
+      return adminIds.includes(user.id);
     });
-    notify.createPersistentNotification(<p>Only team admins can do this <UsersList users={admins}/></p>, 'notifyAdminOnly')
+  }
+  
+  const notifyAdminOnly = () => {
+    notify.createNotification(<p>Only team admins can edit this <UsersList users={admins()}/></p>, 'notifyAdminOnly')
   }
   
   return (
@@ -84,7 +87,7 @@ const TeamPage = ({
             }
           </h1>
           <div className="users-information">
-            <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminUsers, api, teamId:id, currentUserIsTeamAdmin}} />
+            <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminIds, api, teamId:id, currentUserIsTeamAdmin}} />
             { currentUserIsOnTeam && 
               <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)} />
             }
@@ -148,7 +151,7 @@ const TeamPage = ({
         <DeleteTeam api={() => api} 
           teamId={id} 
           teamName={name} 
-          adminUsers={adminUsers} 
+          admins={admins} 
           currentUserIsTeamAdmin={currentUserIsTeamAdmin} 
           users={users} /> 
       }
@@ -186,10 +189,10 @@ TeamPageLoader.propTypes = {
 
 const ParseTeam = (data) => {
   let ADMIN_ACCESS_LEVEL = 30;
-  let adminUsers = data.users.filter(user => {
+  let adminIds = data.users.filter(user => {
     return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
   });
-  data.adminUsers = adminUsers.map(user => {
+  data.adminIds = adminIds.map(user => {
     return user.id;
   });
   return data;

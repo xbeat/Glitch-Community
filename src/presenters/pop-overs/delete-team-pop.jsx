@@ -7,21 +7,11 @@ export class DeleteTeamPop extends React.Component {
   constructor(props) {
     super(props);    
     this.state = {
-      admins: [],
       teamIsDeleting: false,
     };
     this.deleteTeam = this.deleteTeam.bind(this);
   }
     
-  componentDidMount() {
-    let admins = this.props.users.filter(user => {
-      return this.props.adminUsers.includes(user.id);
-    });
-    this.setState({
-      admins: admins,
-    });
-  }
-  
   deleteTeam() {
     if (this.state.teamIsDeleting) {
       return null;
@@ -41,10 +31,7 @@ export class DeleteTeamPop extends React.Component {
       // TODO: show generic error notification
       });    
   }
-  
-  currentUserIsAdmin() {
-  }
-  
+    
   render() {
     let illustration = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fdelete-team.svg?1531267699621";
     return (
@@ -73,7 +60,7 @@ export class DeleteTeamPop extends React.Component {
           </button>
         </section>
         <section className="pop-over-info">
-          <UsersList users={this.state.admins}/>
+          <UsersList users={this.props.admins}/>
           <p className="info-description">This will also email all team admins, giving them an option to undelete it later</p>
         </section>
       </dialog>
@@ -86,7 +73,7 @@ DeleteTeamPop.propTypes = {
   teamId: PropTypes.number.isRequired,
   teamName: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,
-  adminUsers: PropTypes.array.isRequired,
+  admins: PropTypes.array.isRequired,
   togglePopover: PropTypes.func.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired
 };

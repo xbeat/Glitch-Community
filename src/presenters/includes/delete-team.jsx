@@ -27,7 +27,7 @@ DeleteTeam.propTypes = {
   teamId: PropTypes.number.isRequired,
   teamName: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,
-  adminUsers: PropTypes.array.isRequired,
+  admins: PropTypes.array.isRequired,
 };
 
 export default DeleteTeam;
