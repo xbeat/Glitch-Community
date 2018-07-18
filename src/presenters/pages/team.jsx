@@ -58,7 +58,9 @@ const TeamPage = ({
     } return false;
   };
   
-  const s = () => {}
+  const notifyAdminOnly = () => {
+    notify.createPersistentNotification(<p>remixing admin only</p>, 'notifyAdminOnly')
+  }
   
   return (
     <main className="profile-page team-page">
