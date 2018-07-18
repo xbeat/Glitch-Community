@@ -66,7 +66,7 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
     // TODO: I can unadmin myself, updates currentUser in other components too
     }).catch(error => {
       console.error("updateAdminStatus", accessLevel, error.response.data);
-      
+      notifications.createNotification(<p>{error.response.data.message}</p>, 'notifyError');
       
     // TODO: last admin error -> show notification
     // TODO err networking/general api error
