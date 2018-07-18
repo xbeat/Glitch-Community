@@ -6,6 +6,7 @@ import Reactlet from "../reactlet";
 import SearchPageTemplate from '../../templates/pages/search';
 
 import TeamModel from '../../models/team';
+import UserModel from '../../models/user';
 
 import Categories from "../categories.jsx";
 import ProjectsList from "../projects-list.jsx";
@@ -14,6 +15,7 @@ import UserItem from '../user-item.jsx';
 import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 
+const MAX_RESULTS = 20;
 
 function old(application) {
 
@@ -107,7 +109,6 @@ class SearchPage extends React.Component {
   }
   
   async searchTeams() {
-    const MAX_RESULTS = 20;
     const {api, query} = this.props;
     const {data} = await api.get(`teams/search?q=${query}`);
     this.setState({
@@ -116,6 +117,11 @@ class SearchPage extends React.Component {
   }
   
   async searchUsers() {
+    const {api, query} = this.props;
+    const {data} = await api.get(`users/search?q=${query}`);
+    this.setState({
+      users: data.slice(0, MAX_RESULTS).map(user => UserModel(user).update(user).asProps()),
+    });
   }
   
   componentDidMount() {
