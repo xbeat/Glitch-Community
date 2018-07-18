@@ -8,10 +8,14 @@ import AdminOnlyBadge from './admin-only-badge.jsx'
 const DeleteTeam = ({...props}) => {
   
   const notifyAdmin = (event) => {
-    console.log('👀🔼', event)
+    console.log('👀🔼', event, event.nativeEvent)
     if (!props.currentUserIsTeamAdmin) {
       props.notifyAdminOnly()
-      event.target.stopPropagation
+      event.stopPropagation()
+      event.nativeEvent.preventDefault()
+      event.nativeEvent.stopImmediatePropagation()
+
+
     }
     // return togglePopover if not admin then block popover w prevent default
   }
