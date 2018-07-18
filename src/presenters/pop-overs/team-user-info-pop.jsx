@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Thanks from '../includes/thanks.jsx';
 import Loader from '../includes/loader.jsx';
+import AdminOnlyBadge from '../includes/admin-only-badge.jsx' 
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
@@ -67,28 +68,20 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
       // TODO err networking/general api error
       });
   };
-    
+
   return (
     <section className="pop-over-actions admin-actions">
       { userIsTeamAdmin && 
         <button className="button-small button-tertiary has-emoji" onClick={() => updateAdminStatus(MEMBER_ACCESS_LEVEL)}>
           <span>Remove Admin Status </span>
           <span className="emoji fast-down" />
-          { !currentUserIsTeamAdmin && 
-            <div className="status-badge">
-              <span className="status admin">Admins</span>
-            </div> 
-          }
+          <AdminOnlyBadge currentUserIsTeamAdmin={currentUserIsTeamAdmin} />
         </button>
       ||
         <button className="button-small button-tertiary has-emoji" onClick={() => updateAdminStatus(ADMIN_ACCESS_LEVEL)}>
           <span>Make an Admin </span>
           <span className="emoji fast-up" />
-          { !currentUserIsTeamAdmin && 
-            <div className="status-badge">
-              <span className="status admin">Admins</span>
-            </div> 
-          }
+          <AdminOnlyBadge currentUserIsTeamAdmin={currentUserIsTeamAdmin} />
         </button>
       }
     </section>

@@ -6,15 +6,21 @@ import PopoverContainer from '../pop-overs/popover-container.jsx';
 import AdminOnlyBadge from './admin-only-badge.jsx' 
 
 const DeleteTeam = ({...props}) => {
-  const togglePopoverIfAdmin = (togglePopover) => {
-    togglePopover
+  
+  const notifyAdmin = (event) => {
+    console.log('👀🔼', event)
+    if (!props.currentUserIsTeamAdmin) {
+      props.notifyAdminOnly()
+      event.target.stopPropagation
+    }
+    // return togglePopover if not admin then block popover w prevent default
   }
   return (
     <section className="add-project-container">
       <PopoverContainer>
         {({visible, togglePopover}) => (
-          <div className="button-wrap">
-            <button className="button button-small button-tertiary has-emoji opens-pop-over danger-zone" onClick={togglePopoverIfAdmin}>
+          <div className="button-wrap" onClick={notifyAdmin}>
+            <button className="button button-small button-tertiary has-emoji opens-pop-over danger-zone" onClick={togglePopover}>
               <span>Delete {props.teamName} </span>
               <span className="emoji bomb" role="img" aria-label="" />
               <AdminOnlyBadge currentUserIsTeamAdmin={props.currentUserIsTeamAdmin} />
