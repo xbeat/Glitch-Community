@@ -78,7 +78,7 @@ const TeamPage = ({
         <ProfileContainer
           avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
           coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
-          avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}
+          avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} notifyAdminOnly={notifyAdminOnly} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> : null}
           coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
         >
           <h1 className="username">
