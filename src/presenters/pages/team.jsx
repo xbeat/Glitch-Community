@@ -63,16 +63,16 @@ const TeamPage = ({
   
   const admins = () => {
     return users.filter(user => {
-      adminIds.includes(user.id);
+      return adminIds.includes(user.id);
     });
   }
   
   const notifyAdminOnly = () => {
-    notify.createNotification(<React.Fragment></React.Fragment><p>Only team admins can edit this <UsersList users={admins()}/></p>, 'notifyAdminOnly')
+    notify.createNotification(<div>Only team admins can edit this <UsersList users={admins()}/></div>, 'notifyAdminOnly')
   }
   
   return (
-    <main className="profile-page team-page" onClick={notifyAdminOnly}>
+    <main className="profile-page team-page">
       <section>
         <ProfileContainer
           avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
@@ -134,7 +134,7 @@ const TeamPage = ({
           myProjects={myProjects} 
         /> 
       }
-      { (currentUserIsOnTeam && !teamHasUnlimitedProjects ) && 
+      { (currentUserIsOnTeam && !teamHasUnlimitedProjects) && 
         <TeamUpgradeInfoBanner 
           projectsCount={projects.length} 
           limit={FREE_TEAM_PROJECTS_LIMIT} 
@@ -153,7 +153,9 @@ const TeamPage = ({
           teamName={name} 
           admins={admins} 
           currentUserIsTeamAdmin={currentUserIsTeamAdmin} 
-          users={users} /> 
+          users={users} 
+          notifyAdminOnly = {notifyAdminOnly}
+        /> 
       }
       { !currentUserIsOnTeam && 
         <TeamMarketing /> 
