@@ -70,11 +70,21 @@ function old(application) {
   return LayoutPresenter(application, content);
 }
 
-const SearchResults = ({children, name}) => (
+const SearchLoader = ({name}) => (
   <article>
     <h2>{name}</h2>
     <Loader/>
   </article>
+);
+
+const SearchTeams = ({results}) => (
+  results ? (
+    results.length && (
+      <article>
+        <h2>Teams</h2>
+      </article>
+    )
+  ) : <SearchLoader name="Teams"/>
 );
 
 class SearchPage extends React.Component {
@@ -87,13 +97,29 @@ class SearchPage extends React.Component {
     };
   }
   
+  async loadTeams() {
+  const MAX_RESULTS = 20;
+  const searchPath = `teams/search?q=${query}`;
+  return application.api(source).get(searchPath)
+    .then(function({data}) {
+      application.searchingForTeams(false);
+      data = data.slice(0 , MAX_RESULTS);
+      if (data.length === 0) {
+        application.searchResultsHaveNoTeams(true);
+      }
+      return data.forEach(function(datum) {
+        datum.fetched = true;
+        return Team(datum).update(datum).pushSearchResult(application);
+      });}).catch(error => console.log('getSearchResults', error));
+  }
+  
   componentDidMount() {
     console.log(this.props.query);
   }
   
   render() {
     const results = [
-      'asdf'
+      <SearchTeams key="teams" results={this.state.teams}/>
     ].filter(res => !!res);
     return (
       <React.Fragment>
