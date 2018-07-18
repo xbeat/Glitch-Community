@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
-import Notifications from 
+import Notifications from '../notifications.jsx';
 
 const NameConflictWarning = ({id}) => (
   <React.Fragment>
@@ -21,10 +21,15 @@ class NameConflict extends React.Component {
   }
   
   componentWillUnmount() {
-    this.notification.remove();
+    this.notification.removeNotification();
+  }
+  
+  render() {
+    return null;
   }
 }
 NameConflict.propTypes = {
+  createPersistentNotification: PropTypes.func.isRequired,
   userId: PropTypes.number,
 };
 
@@ -32,7 +37,9 @@ const NameConflictContainer = () => (
   <Notifications>
     {notifyFuncs => (
       <CurrentUserConsumer>
-        {({id}) => <NameConflict userId={id} {...notifyFuncs}/>}
+        {({id}) => (
+          <NameConflict userId={id} {...notifyFuncs}/>
+        )}
       </CurrentUserConsumer>
     )}
   </Notifications>

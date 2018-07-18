@@ -3,17 +3,16 @@ import PropTypes from 'prop-types';
 
 import {getAvatarStyle, getProfileStyle} from '../../models/team';
 import TeamEditor from '../team-editor.jsx';
-import Notifications from '../notifications.jsx';
-
-import {AuthDescription} from '../includes/description-field.jsx';
-import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
-import Thanks from '../includes/thanks.jsx';
+import NameConflict from '../includes/name-conflict.jsx';
 
 import AddTeamProject from '../includes/add-team-project.jsx';
 import {AddTeamUser, TeamUsers} from '../includes/team-users.jsx';
+import {AuthDescription} from '../includes/description-field.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
+import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
+import Thanks from '../includes/thanks.jsx';
 
 const TeamPage = ({
   team: {
@@ -75,7 +74,10 @@ TeamPage.propTypes = {
 const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
   <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam) => (
-      <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
+      <React.Fragment>
+        <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
+        <NameConflict name={team.url}/>
+      </React.Fragment>
     )}
   </TeamEditor>
 );
