@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const AdminOnlyBadge = ({...props}) => {
   return (
     <React.Fragment>
-      { !props.currentUserIsTeamAdmin && 
+      { (props.currentUserIsTeamAdmin === false) && 
         <div className="status-badge">
           <span className="status admin">Admin</span>
         </div> 

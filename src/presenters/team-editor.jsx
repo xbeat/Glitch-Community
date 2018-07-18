@@ -104,7 +104,11 @@ class TeamEditor extends React.Component {
   
   currentUserIsTeamAdmin() {
     const currentUserId = this.props.currentUserModel.id();
-    return this.props.initialTeam.adminIds.includes(currentUserId);
+    if (this.props.initialTeam.adminIds.includes(currentUserId)) {
+      return true
+    } else {
+      return false
+    }
   }
 
   // TODO temp feature switch name // features will eventually return an object instead

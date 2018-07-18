@@ -72,6 +72,10 @@ const TeamPage = ({
     notify.createNotification(<div>{message} <UsersList users={admins()}/></div>, 'notifyAdminOnly')
   }
   
+  const uploadAvatarIfAdmin = () => {
+    
+  }
+  
   return (
     <main className="profile-page team-page">
       <section>
@@ -79,7 +83,7 @@ const TeamPage = ({
           avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
           coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
           avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} notifyAdminOnly={notifyAdminOnly} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> : null}
-          coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
+          coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null} notifyAdminOnly={notifyAdminOnly} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> : null}
         >
           <h1 className="username">
             { name }

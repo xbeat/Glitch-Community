@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UsersList from "../users-list.jsx";
 import Loader from '../includes/loader.jsx';
-import AdminOnlyBadge from '../includes/admin-only-badge.jsx' 
+import AdminOnlyBadge from '../includes/admin-only-badge.jsx'; 
 
 export class DeleteTeamPop extends React.Component {
   constructor(props) {
@@ -17,8 +17,8 @@ export class DeleteTeamPop extends React.Component {
     
   deleteTeam() {
     if (!this.props.currentUserIsTeamAdmin) {
-      this.props.notifyAdminOnly('Only admins can delete teams')
-      return null
+      this.props.notifyAdminOnly('Only admins can delete teams');
+      return null;
     }
     if (this.state.teamIsDeleting) {
       return null;
@@ -28,15 +28,15 @@ export class DeleteTeamPop extends React.Component {
     });
     let team = `teams/${this.props.teamId}`;
     this.props.api().delete(team)
-    .then(({data}) => {
-      window.location = '/';
-    }).catch(error => {
-      console.error("deleteTeam", error, error.response);
-      notify.createNotification(<div>Something went wrong, try refreshing?</div>, 'notifyError')
-      this.setState({
-        teamIsDeleting: false
-      });
-    });    
+      .then(({data}) => {
+        window.location = '/';
+      }).catch(error => {
+        console.error("deleteTeam", error, error.response);
+        notify.createNotification(<div>Something went wrong, try refreshing?</div>, 'notifyError');
+        this.setState({
+          teamIsDeleting: false
+        });
+      });    
   }
     
   render() {

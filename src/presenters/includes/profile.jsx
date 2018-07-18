@@ -9,7 +9,7 @@ import Loader from './loader.jsx';
 import Thanks from './thanks.jsx';
 import {AuthDescription} from './description-field.jsx';
 import EditableField from './editable-field.jsx';
-import AdminOnlyBadge from './admin-only-badge.jsx' 
+import AdminOnlyBadge from './admin-only-badge.jsx'; 
 
 
 // Image Buttons

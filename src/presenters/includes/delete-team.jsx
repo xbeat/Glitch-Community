@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import DeleteTeamPop from '../pop-overs/delete-team-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
-import AdminOnlyBadge from './admin-only-badge.jsx' 
+import AdminOnlyBadge from './admin-only-badge.jsx'; 
 
 const DeleteTeam = ({...props}) => {
   

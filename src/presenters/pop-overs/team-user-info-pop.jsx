@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import Thanks from '../includes/thanks.jsx';
 import Loader from '../includes/loader.jsx';
-import AdminOnlyBadge from '../includes/admin-only-badge.jsx' 
+import AdminOnlyBadge from '../includes/admin-only-badge.jsx'; 
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
@@ -53,8 +53,8 @@ UserActions.propTypes = {
 const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, adminStatusIsUpdating, updateAdminStatusIsUpdating, currentUserIsTeamAdmin, notifyAdminOnly}) => {  
   const updateAdminStatus = (accessLevel) => {
     if (!currentUserIsTeamAdmin) {
-        notifyAdminOnly()
-        return null
+      notifyAdminOnly();
+      return null;
     }
     if (adminStatusIsUpdating) {
       return null;
@@ -62,15 +62,15 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
     updateAdminStatusIsUpdating(true);
     let teamUser = `teams/${teamId}/users/${user.id}`;
     api.patch((teamUser), {access_level: accessLevel})
-    .then(({data}) => {
-      updateAdminStatusIsUpdating(false);
-      updateUserIsTeamAdmin(accessLevel);
-    // TODO: If I unadmin myself, updates currentUser in other components too
-    }).catch(error => {
-      console.error("updateAdminStatus", accessLevel, error.response.data);
-      notify.createNotification(<p>{error.response.data.message}</p>, 'notifyError');
-      updateAdminStatusIsUpdating(false)
-    });
+      .then(({data}) => {
+        updateAdminStatusIsUpdating(false);
+        updateUserIsTeamAdmin(accessLevel);
+        // TODO: If I unadmin myself, updates currentUser in other components too
+      }).catch(error => {
+        console.error("updateAdminStatus", accessLevel, error.response.data);
+        notify.createNotification(<p>{error.response.data.message}</p>, 'notifyError');
+        updateAdminStatusIsUpdating(false);
+      });
   };
 
   return (
