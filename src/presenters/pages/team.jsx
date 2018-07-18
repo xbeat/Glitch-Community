@@ -76,7 +76,7 @@ const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
     {(team, funcs, currentUserIsOnTeam) => (
       <React.Fragment>
         <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
-        <NameConflict name={team.url}/>
+        {!!team.url.match(new RegExp(currentUserModel.login() || '', 'i')) && <NameConflict name={team.url}/>}
       </React.Fragment>
     )}
   </TeamEditor>

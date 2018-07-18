@@ -21,11 +21,13 @@ class NameConflict extends React.Component {
   }
   
   componentWillUnmount() {
-    this.notification.removeNotification();
+    if (this.notification) {
+      this.notification.removeNotification();
+    }
   }
   
   render() {
-    return null;
+    return 'hello';
   }
 }
 NameConflict.propTypes = {
