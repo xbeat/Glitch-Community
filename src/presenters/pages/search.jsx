@@ -84,6 +84,13 @@ const SearchTeams = ({results}) => (
     !!results.length && (
       <article>
         <h2>Teams</h2>
+        <ul className="teams-container">
+          {results.map(team => (
+            <li key={team.id}>
+              <TeamItem team={team}/>
+            </li>
+          ))}
+        </ul>
       </article>
     )
   ) : <SearchLoader name="Teams"/>
@@ -106,6 +113,9 @@ class SearchPage extends React.Component {
     this.setState({
       teams: data.slice(0, MAX_RESULTS).map(team => TeamModel(team).update(team).asProps()),
     });
+  }
+  
+  async searchUsers() {
   }
   
   componentDidMount() {

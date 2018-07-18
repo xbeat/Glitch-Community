@@ -194,11 +194,6 @@ export default Team = function(I, self) {
         }).catch(error => console.error('removeProject', error));
     },
 
-    pushSearchResult(application) {
-      application.searchResultsTeams.push(self);
-      return application.searchResultsTeamsLoaded(true);
-    },
-
     teamProfileStyle() {
       return {
         backgroundColor: self.coverColor(),
@@ -254,26 +249,6 @@ Team.getTeamById = function(application, id) {
   const teamsPath = `teams/${id}`;
   return application.api().get(teamsPath)
     .then(({data}) => application.saveTeam(data)).catch(error => console.error('getTeamById', error));
-};
-
-Team.getSearchResults = function(application, query) {
-  const MAX_RESULTS = 20;
-  const { CancelToken } = axios;
-  const source = CancelToken.source();
-  application.searchResultsTeams([]);
-  application.searchingForTeams(true);
-  const searchPath = `teams/search?q=${query}`;
-  return application.api(source).get(searchPath)
-    .then(function({data}) {
-      application.searchingForTeams(false);
-      data = data.slice(0 , MAX_RESULTS);
-      if (data.length === 0) {
-        application.searchResultsHaveNoTeams(true);
-      }
-      return data.forEach(function(datum) {
-        datum.fetched = true;
-        return Team(datum).update(datum).pushSearchResult(application);
-      });}).catch(error => console.log('getSearchResults', error));
 };
 
 
