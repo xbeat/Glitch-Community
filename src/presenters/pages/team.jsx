@@ -57,6 +57,9 @@ const TeamPage = ({
       return true;
     } return false;
   };
+  
+  const s = () => {}
+  
   return (
     <main className="profile-page team-page">
       <section>
