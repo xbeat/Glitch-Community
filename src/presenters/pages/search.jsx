@@ -1,3 +1,6 @@
+import React from 'react';
+
+
 import LayoutPresenter from '../layout';
 import SearchPageTemplate from '../../templates/pages/search';
 
