@@ -1,3 +1,5 @@
+/* global notify */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -63,13 +65,11 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
     .then(({data}) => {
       updateAdminStatusIsUpdating(false);
       updateUserIsTeamAdmin(accessLevel);
-    // TODO: I can unadmin myself, updates currentUser in other components too
+    // TODO: If I unadmin myself, updates currentUser in other components too
     }).catch(error => {
       console.error("updateAdminStatus", accessLevel, error.response.data);
-      notifications.createNotification(<p>{error.response.data.message}</p>, 'notifyError');
-      
-    // TODO: last admin error -> show notification
-    // TODO err networking/general api error
+      notify.createNotification(<p>{error.response.data.message}</p>, 'notifyError');
+      updateAdminStatusIsUpdating(false)
     });
   };
 
