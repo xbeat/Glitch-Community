@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UsersList from "../users-list.jsx";
 import Loader from '../includes/loader.jsx';
+import AdminOnlyBadge from '../includes/admin-only-badge.jsx' 
+
 
 export class DeleteTeamPop extends React.Component {
   constructor(props) {
@@ -13,6 +15,10 @@ export class DeleteTeamPop extends React.Component {
   }
     
   deleteTeam() {
+    if (!this.props.currentUserIsTeamAdmin) {
+      this.props.notifyAdminOnly('Only admins can delete teams')
+      return null
+    }
     if (this.state.teamIsDeleting) {
       return null;
     }
@@ -50,12 +56,8 @@ export class DeleteTeamPop extends React.Component {
         <section className="pop-over-actions danger-zone">
           <button className="button button-small has-emoji opens-pop-over" onClick={this.deleteTeam}>
             <span>Delete {this.props.teamName} </span> 
-            { !this.props.currentUserIsTeamAdmin && 
-              <div className="status-badge">
-                <span className="status admin">Admins</span>
-              </div> 
-            }
             <span className="emoji bomb" role="img" aria-label="bomb emoji"></span>
+            <AdminOnlyBadge currentUserIsTeamAdmin={this.props.currentUserIsTeamAdmin} />
             { this.state.teamIsDeleting && <Loader /> }
           </button>
         </section>
@@ -75,7 +77,8 @@ DeleteTeamPop.propTypes = {
   users: PropTypes.array.isRequired,
   admins: PropTypes.func.isRequired,
   togglePopover: PropTypes.func.isRequired,
-  currentUserIsTeamAdmin: PropTypes.bool.isRequired
+  currentUserIsTeamAdmin: PropTypes.bool.isRequired,
+  notifyAdminOnly: PropTypes.func.isRequired,
 };
 
 

@@ -67,8 +67,9 @@ const TeamPage = ({
     });
   }
   
-  const notifyAdminOnly = () => {
-    notify.createNotification(<div>Only team admins can edit this <UsersList users={admins()}/></div>, 'notifyAdminOnly')
+  const notifyAdminOnly = (message) => {
+    message = message || "Only team admins can edit this"
+    notify.createNotification(<div>{message} <UsersList users={admins()}/></div>, 'notifyAdminOnly')
   }
   
   return (
