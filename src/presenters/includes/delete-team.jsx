@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import DeleteTeamPop from '../pop-overs/delete-team-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
+import AdminOnlyBadge from './admin-only-badge.jsx' 
 
 const DeleteTeam = ({...props}) => {
   const togglePopoverIfAdmin = (togglePopover) => {
@@ -16,11 +17,7 @@ const DeleteTeam = ({...props}) => {
             <button className="button button-small button-tertiary has-emoji opens-pop-over danger-zone" onClick={togglePopoverIfAdmin}>
               <span>Delete {props.teamName} </span>
               <span className="emoji bomb" role="img" aria-label="" />
-              { !props.currentUserIsTeamAdmin && 
-                <div className="status-badge">
-                  <span className="status admin">Admins</span>
-                </div> 
-              }
+              <AdminOnlyBadge currentUserIsTeamAdmin={props.currentUserIsTeamAdmin} />
             </button>
             { visible && <DeleteTeamPop {...props} togglePopover={togglePopover} /> }
           </div>
