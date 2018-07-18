@@ -1,10 +1,12 @@
-import CategoryPageTemplate from '../../templates/pages/category';
+import React from 'react';
+
 import LayoutPresenter from '../layout';
 
 import {ProjectsUL} from "../projects-list.jsx";
 import Categories from "../categories.jsx";
 import Reactlet from "../reactlet";
 
+/*
 export default function(application) {
 
     
@@ -58,4 +60,31 @@ export default function(application) {
   const content = CategoryPageTemplate(self);
   return LayoutPresenter(application, content);
 }
+*/
 
+const CategoryPage = ({api, category, categories}) => (
+  <React.Fragment>
+    <main className="category-page">
+      <article className="projects" style={{backgroundColor: category.backgroundColor}}>
+        <header className="category">
+          <h2 className="category-name">{category.name}</h2>
+          <span className="category-image-container">
+            <img src={category.avatarUrl} alt=""/>
+          </span>
+          <p className="description">{category.description}</p>
+        </header>
+      </article>
+    </main>
+    <Categories categories={categories}/>
+  </React.Fragment>
+);
+
+export default function(application, categoryModel) {
+  const props = {
+    api: application.api(),
+    category: categoryModel.asProps(),
+    categories: application.categories(),
+  };
+  const content = Reactlet(CategoryPage, props);
+  return LayoutPresenter(application, content);
+}

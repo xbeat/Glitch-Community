@@ -65,17 +65,6 @@ Category.getRandomCategoriesJSON = function(api) {
     .then(({data}) => data);
 };
 
-Category.updateCategory = function(application, id) {
-  const categoriesPath = `categories/${id}`;
-  return application.api().get(categoriesPath)
-    .then(function({data}) {
-      data.fetched = true;
-      Category(data).update(data); // .pushSearchResult(application)
-      application.getProjects(data.projects);
-      return application.categoryProjectsLoaded(true);
-    });
-};
-
 
 Category._cache = cache;
 
