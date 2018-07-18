@@ -5,6 +5,8 @@ import LayoutPresenter from '../layout';
 import Reactlet from "../reactlet";
 import SearchPageTemplate from '../../templates/pages/search';
 
+import TeamModel from '../../models/team';
+
 import Categories from "../categories.jsx";
 import ProjectsList from "../projects-list.jsx";
 import TeamItem from '../team-item.jsx';
@@ -79,7 +81,7 @@ const SearchLoader = ({name}) => (
 
 const SearchTeams = ({results}) => (
   results ? (
-    results.length && (
+    !!results.length && (
       <article>
         <h2>Teams</h2>
       </article>
@@ -97,34 +99,27 @@ class SearchPage extends React.Component {
     };
   }
   
-  async loadTeams() {
-  const MAX_RESULTS = 20;
-  const searchPath = `teams/search?q=${query}`;
-  return application.api(source).get(searchPath)
-    .then(function({data}) {
-      application.searchingForTeams(false);
-      data = data.slice(0 , MAX_RESULTS);
-      if (data.length === 0) {
-        application.searchResultsHaveNoTeams(true);
-      }
-      return data.forEach(function(datum) {
-        datum.fetched = true;
-        return Team(datum).update(datum).pushSearchResult(application);
-      });}).catch(error => console.log('getSearchResults', error));
+  async searchTeams() {
+    const MAX_RESULTS = 20;
+    const {api, query} = this.props;
+    const {data} = await api.get(`teams/search?q=${query}`);
+    this.setState({
+      teams: data.slice(0, MAX_RESULTS).map(team => TeamModel(team).update(team).asProps()),
+    });
   }
   
   componentDidMount() {
-    console.log(this.props.query);
+    this.searchTeams();
   }
   
   render() {
-    const results = [
-      <SearchTeams key="teams" results={this.state.teams}/>
-    ].filter(res => !!res);
+    const {teams, users, projects} = this.state;
+    const noResults = [teams, users, projects].every(res => !!res && !res.length);
     return (
       <React.Fragment>
         <main className="search-results">
-          {results.length ? results : <NotFound name="any results"/>}
+          <SearchTeams key="teams" results={this.state.teams}/>
+          {noResults && <NotFound name="any results"/>}
         </main>
         <Categories categories={this.props.categories}/>
       </React.Fragment>
