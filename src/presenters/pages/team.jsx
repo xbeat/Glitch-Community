@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {getAvatarStyle, getProfileStyle} from '../../models/team';
 import TeamEditor from '../team-editor.jsx';
-import NameConflict from '../includes/name-conflict.jsx';
+import NameConflictWarning from '../includes/name-conflict.jsx';
 
 import AddTeamProject from '../includes/add-team-project.jsx';
 import {AddTeamUser, TeamUsers} from '../includes/team-users.jsx';
@@ -76,7 +76,7 @@ const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
     {(team, funcs, currentUserIsOnTeam) => (
       <React.Fragment>
         <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
-        {!!team.url.match(new RegExp(currentUserModel.login() || '', 'i')) && <NameConflict name={team.url}/>}
+        {!!team.url.match(new RegExp(currentUserModel.login() || '', 'i')) && <NameConflictWarning/>}
       </React.Fragment>
     )}
   </TeamEditor>
