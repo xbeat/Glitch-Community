@@ -1,3 +1,5 @@
+/* global notify */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -26,6 +28,7 @@ import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 import TeamUpgradeInfoBanner from '../includes/team-upgrade-info-banner.jsx';
 import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reached-banner.jsx';
+import UsersList from "../users-list.jsx";
 
 const FREE_TEAM_PROJECTS_LIMIT = 5;
 
@@ -57,13 +60,16 @@ const TeamPage = ({
       return true;
     } return false;
   };
-  
+    
   const notifyAdminOnly = () => {
-    notify.createPersistentNotification(<p>remixing admin only</p>, 'notifyAdminOnly')
+    let admins = users.filter(user => {
+      return adminUsers.includes(user.id);
+    });
+    notify.createPersistentNotification(<p>Only team admins can do this <UsersList users={admins}/></p>, 'notifyAdminOnly')
   }
   
   return (
-    <main className="profile-page team-page">
+    <main className="profile-page team-page" onClick={notifyAdminOnly}>
       <section>
         <ProfileContainer
           avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
