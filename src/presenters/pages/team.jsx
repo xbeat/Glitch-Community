@@ -63,8 +63,8 @@ const TeamPage = ({
   
   const admins = () => {
     console.log('🌹', adminIds)
-    users.filter(user => {
-      return adminIds.includes(user.id);
+    return users.filter(user => {
+      adminIds.includes(user.id);
     });
   }
   
