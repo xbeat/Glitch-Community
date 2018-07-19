@@ -10,7 +10,6 @@ import featuredCollections from './curated/featured';
 import Model from './models/model';
 import User from './models/user';
 import Project from './models/project';
-import Category from './models/category';
 import Team from './models/team';
 import Question from './models/question';
 
@@ -228,7 +227,6 @@ window.API_URL = API_URL;
 window.EDITOR_URL = EDITOR_URL;
 window.User = User;
 window.Project = Project;
-window.Category = Category;
 window.Team = Team;
 window.Question = Question;
 
