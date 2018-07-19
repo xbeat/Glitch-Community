@@ -6,8 +6,8 @@ import Notifications from '../notifications.jsx';
 
 const NameConflictWarning = ({id}) => (
   <React.Fragment>
-    <p>This team has your name!</p>
-    <a className="button button-small button-tertiary button-in-notification-container" href={`/user/${id}`}>Go to your profile</a>
+    <p>This team has your name</p>
+    <a className="button button-small button-tertiary button-in-notification-container" href={`/user/${id}`}>Your Profile</a>
   </React.Fragment>
 );
 NameConflictWarning.propTypes = {
