@@ -62,5 +62,6 @@ export default class ProjectsLoader extends React.Component {
 }
 ProjectsLoader.propTypes = {
   api: PropTypes.any.isRequired,
+  children: PropTypes.func.isRequired,
   projects: PropTypes.array.isRequired,
 };
