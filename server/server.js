@@ -12,8 +12,6 @@ Raven.config('https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508', {
   },
 }).install();
 
-Raven.captureMessage("3");
-
 require("./cache").initCache();
 
 const app = express();
