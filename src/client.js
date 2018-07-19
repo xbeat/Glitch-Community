@@ -10,7 +10,7 @@ import ProjectPage from './presenters/pages/project.jsx';
 import TeamPage from './presenters/pages/team.jsx';
 import {UserPageById, UserPageByLogin} from './presenters/pages/user.jsx';
 import QuestionsPage from './presenters/pages/questions';
-import SearchPage from './presenters/pages/search';
+import SearchPage from './presenters/pages/search.jsx';
 import errorPageTemplate from './templates/pages/error';
 
 console.log("#########");
@@ -88,10 +88,7 @@ function routePage(pageUrl, application) {
   if (pageUrl === 'search' && queryString.q) {
     const query = queryString.q;
     application.searchQuery(query);
-    application.searchTeams(query);
-    application.searchUsers(query);
-    application.searchProjects(query);
-    const page = SearchPage(application);
+    const page = SearchPage(application, query);
     return {page, title: `Search for ${query}`};
   }
 

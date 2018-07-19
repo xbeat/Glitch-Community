@@ -40,22 +40,6 @@ var self = Model({
 
   // search - users
   searchQuery: Observable(""),
-  searchingForUsers: Observable(false),
-  searchResultsUsers: Observable([]),
-  searchResultsUsersLoaded: Observable(false),
-  searchResultsHaveNoUsers: Observable(false),
-
-  // search - projects
-  searchingForProjects: Observable(false),
-  searchResultsProjects: Observable([]),
-  searchResultsProjectsLoaded: Observable(false),
-  searchResultsHaveNoProjects: Observable(false),
-
-  // search - teams
-  searchingForTeams: Observable(false),
-  searchResultsTeams: Observable([]),
-  searchResultsTeamsLoaded: Observable(false),
-  searchResultsHaveNoTeams: Observable(false),
 
   // questions
   questions: Observable([]),
@@ -77,21 +61,6 @@ var self = Model({
     $(".overlay-background.disposable").remove();
     self.overlayVideoVisible(false);
     self.overlayNewStuffVisible(false);
-  },
-
-  searchProjects(query) {
-    self.searchResultsProjects([]);
-    return Project.getSearchResults(application, query);
-  },
-
-  searchUsers(query) {
-    self.searchResultsUsers([]);
-    return User.getSearchResults(application, query);
-  },
-
-  searchTeams(query) {
-    self.searchResultsTeams([]);
-    return Team.getSearchResults(application, query);
   },
   
   api(source) {
