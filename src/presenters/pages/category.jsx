@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
@@ -26,6 +27,16 @@ const CategoryPageWrap = ({category, categories, children}) => (
     <Categories categories={categories}/>
   </React.Fragment>
 );
+CategoryPageWrap.propTypes = {
+  category: PropTypes.shape({
+    avatarUrl: PropTypes.string.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  categories: PropTypes.array.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 const CategoryPageLoader = ({...props}) => (
   <CategoryPageWrap {...props}>
@@ -60,6 +71,10 @@ const CategoryPage = ({api, category, ...props}) => (
     )}
   </DataLoader>
 );
+CategoryPage.propTypes = {
+  api: PropTypes.any.isRequired,
+  category: PropTypes.object.isRequired,
+};
 
 export default function(application, category) {
   const props = {
