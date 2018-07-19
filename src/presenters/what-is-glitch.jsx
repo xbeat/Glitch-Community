@@ -8,36 +8,29 @@ const free = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffree
 
 const whatsGlitchAlt = "Create a node app, or remix one. It updates as you type. Code with Friends!";
   
-const WhatIsGlitch = ({isSignedIn, showVideoOverlay}) => {
-  if (isSignedIn()) {
-    return null;
-  }
-  
-  return (
-    <section className="what-is-glitch">
-      <h2>How It Works</h2>
-      <span>
-        <a href="https://glitch.com/about">
-          <figure title="How Glitch works">
-            <img className="wide" src={whatsGlitchWide} alt={whatsGlitchAlt}/>
-            <img className="narrow" src={whatsGlitchNarrow} alt={whatsGlitchAlt}/>
-          </figure>
-        </a>
-        <div>
-          <span>And it's <img className="free" src={free} alt="free"/></span>
-          <span>. </span>
-          <button className="video" onClick={showVideoOverlay}>
-            <img className="play-button" src={play} alt="play"/>
-            <span>How it works in 1 minute</span>
-          </button>
-        </div>
-      </span>
-    </section>
-  );
-};
+const WhatIsGlitch = ({showVideoOverlay}) => (
+  <section className="what-is-glitch">
+    <h2>How It Works</h2>
+    <span>
+      <a href="https://glitch.com/about">
+        <figure title="How Glitch works">
+          <img className="wide" src={whatsGlitchWide} alt={whatsGlitchAlt}/>
+          <img className="narrow" src={whatsGlitchNarrow} alt={whatsGlitchAlt}/>
+        </figure>
+      </a>
+      <div>
+        <span>And it's <img className="free" src={free} alt="free"/></span>
+        <span>. </span>
+        <button className="video" onClick={showVideoOverlay}>
+          <img className="play-button" src={play} alt="play"/>
+          <span>How it works in 1 minute</span>
+        </button>
+      </div>
+    </span>
+  </section>
+);
 
 WhatIsGlitch.propTypes = {
-  isSignedIn: PropTypes.func.isRequired,
   showVideoOverlay: PropTypes.func.isRequired,
 };
 

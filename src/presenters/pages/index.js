@@ -20,18 +20,16 @@ export default function(application) {
     user: application.user,
 
     WhatIsGlitch() {
-
+      if (application.currentUser().isSignedIn()) {
+        return null;
+      }
       const props = {
-        isSignedIn() {
-          return application.currentUser().isSignedIn();
-        },
         showVideoOverlay(event) {
           application.overlayVideoVisible(true);
           document.getElementsByClassName('video-overlay')[0].focus();
           return event.stopPropagation();
         },
       };
-
       return Reactlet(WhatIsGlitch, props);
     },
 
