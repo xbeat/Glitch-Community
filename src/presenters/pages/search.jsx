@@ -69,7 +69,7 @@ class SearchPage extends React.Component {
       teams: null,
       users: null,
       projects: null,
-    }; 
+    };
   }
   
   async searchTeams() {
