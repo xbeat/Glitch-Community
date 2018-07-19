@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {ProjectsUL} from "./projects-list.jsx";
+import ProjectModel from '../models/project';
+
+import {ProjectsUL} from './projects-list.jsx';
 import {sampleSize} from 'lodash';
 
-const Category = ({closeAllPopOvers, category}) => {
+const Category = ({category}) => {
   const ulProps = {
-    closeAllPopOvers,
     projects: category.projects||[],
     categoryColor: category.color,
   };
@@ -47,15 +48,14 @@ export default class CategoryContainer extends React.Component {
   }
   
   componentDidMount() {
-    this.props.getCategories().then((categoriesJSON) => {
+    this.props.getCategories().then((allCategories) => {
       // The API gives us a json blob with all of the categories, but only
       // the 'projects' field on 3 of them.  If the field is present,
       // then it's an array of projects.
-      const categoriesWithProjects = categoriesJSON.filter(category => !!category.projects);
+      const categoriesWithProjects = allCategories.filter(category => !!category.projects);
       const sampledCategories = sampleSize(categoriesWithProjects, 3);
-      const categories = sampledCategories.map(categoryJSON => {
-        const {...category} = this.props.categoryModel(categoryJSON).asProps();
-        category.projects = sampleSize(category.projects, 3);
+      const categories = sampledCategories.map(category => {
+        category.projects = sampleSize(category.projects, 3).map(project => ProjectModel(project).update(project).asProps());
         return category;
       });
       this.setState({categories});
@@ -65,7 +65,7 @@ export default class CategoryContainer extends React.Component {
     return (
       <React.Fragment>
         { this.state.categories.map((category) => (
-          <Category key={category.id} category={category} closeAllPopOvers={this.props.closeAllPopOvers}/>
+          <Category key={category.id} category={category}/>
         ))}
       </React.Fragment>
     );
@@ -74,6 +74,5 @@ export default class CategoryContainer extends React.Component {
 
 CategoryContainer.propTypes = {
   getCategories: PropTypes.func.isRequired,
-  closeAllPopOvers: PropTypes.func.isRequired,
   categoryModel: PropTypes.func.isRequired,
 };
