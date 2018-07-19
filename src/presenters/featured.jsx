@@ -10,11 +10,18 @@ const Witch = () => (
 );
 
 const FeaturedPanel = ({img, link, title}) => (
-  <a href={link} className="featured-container" data-track="featured-project" data-track-label={title}>
-    <img className="featured" src={img} alt=""/>
-    <p className="project-name">{title}</p>
+  <a href={link} data-track="featured-project" data-track-label={title}>
+    <div className="featured-container">
+      <img className="featured" src={img} alt=""/>
+      <p className="project-name">{title}</p>
+    </div>
   </a>
 );
+FeaturedPanel.propTypes = {
+  img: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+};
 
 const Featured = ({embedHtml, featured}) => (
   <section className="featured featured-collections">
