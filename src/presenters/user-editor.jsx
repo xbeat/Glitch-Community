@@ -61,7 +61,7 @@ class UserEditor extends React.Component {
 
     const image = await assets.blobToImage(blob);
     const color = assets.getDominantColor(image);
-    await this.props.updateFields({
+    await this.updateFields({
       hasCoverImage: true,
       coverColor: color,
     });
