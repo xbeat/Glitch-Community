@@ -15,7 +15,7 @@ const Video = () => (
 const OverlayVideo = ({children}) => (
   <PopoverContainer>
     {({visible, setVisible}) => (
-      <details onToggle={evt => setVisible(evt.target.open)} open={visible}>
+      <details onToggle={evt => setVisible(evt.target.open)} open={visible} className="overlay-container">
         <summary>{children}</summary>
         <div className="overlay-background">
           <dialog className="overlay video-overlay">
