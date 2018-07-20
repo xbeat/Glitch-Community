@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 import Thanks from '../includes/thanks.jsx';
 import Loader from '../includes/loader.jsx';
-import {AdminOnlyBadge} from '../includes/team-elements.jsx' 
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
@@ -79,13 +78,11 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
         <button className="button-small button-tertiary has-emoji" onClick={() => updateAdminStatus(MEMBER_ACCESS_LEVEL)}>
           <span>Remove Admin Status </span>
           <span className="emoji fast-down" />
-          <AdminOnlyBadge currentUserIsTeamAdmin={currentUserIsTeamAdmin} />
         </button>
       ||
         <button className="button-small button-tertiary has-emoji" onClick={() => updateAdminStatus(ADMIN_ACCESS_LEVEL)}>
           <span>Make an Admin </span>
           <span className="emoji fast-up" />
-          <AdminOnlyBadge currentUserIsTeamAdmin={currentUserIsTeamAdmin} />
         </button>
       }
     </section>

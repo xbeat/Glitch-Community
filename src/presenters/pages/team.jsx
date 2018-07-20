@@ -164,14 +164,12 @@ const TeamPage = ({
 
       {/* billing info section goes here */}
 
-      { currentUserIsOnTeam && 
+      { currentUserIsTeamAdmin && 
         <DeleteTeam api={() => api} 
           teamId={id} 
           teamName={name} 
-          admins={admins} 
-          currentUserIsTeamAdmin={currentUserIsTeamAdmin} 
+          admins={admins}
           users={users} 
-          notifyAdminOnly = {notifyAdminOnly}
         /> 
       }
       { !currentUserIsOnTeam && 
