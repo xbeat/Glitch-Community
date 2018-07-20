@@ -4,6 +4,11 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './pop-overs/popover-container.jsx';
 import {ANON_AVATAR_URL} from '../models/user.js';
 
+const GLITCH_TEAM_AVATAR = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267";
+const ADMIN_ICON = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadmin.svg?1532107187144"
+
+// UserAvatar
+
 function addDefaultSrc(event) {
   event.target.src = ANON_AVATAR_URL;
 }
@@ -19,6 +24,9 @@ UserAvatar.propTypes = {
   alt: PropTypes.string.isRequired,
   userAvatarUrl: PropTypes.string.isRequired,
 };
+
+
+// UserTile
 
 const UserTile = ({
   userLink,
@@ -40,6 +48,9 @@ UserTile.propTypes = {
   extraClass: PropTypes.string,
 };
 
+
+// PopulatedUsersList
+
 export const PopulatedUsersList = ({users, extraClass="" }) => (
   <ul className={`users ${extraClass}`}>
     {users.map((user, key) => (
@@ -55,7 +66,8 @@ PopulatedUsersList.propTypes = {
   extraClass: PropTypes.string,
 };
 
-const glitchTeamAvatar = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267";
+
+// UsersList
 
 const UsersList = ({glitchTeam=false, users, ...props}) => {
   if(glitchTeam) {
@@ -64,7 +76,7 @@ const UsersList = ({glitchTeam=false, users, ...props}) => {
       tooltipName: "Glitch-Team",
       style: {backgroundColor: "#74ecfc"},
       alt: "Glitch Team Avatar",
-      userAvatarUrl: glitchTeamAvatar,
+      userAvatarUrl: GLITCH_TEAM_AVATAR,
       extraClass: "made-by-glitch",
     }];
   }
@@ -87,18 +99,23 @@ const UserPopoverTile = ({
   userAvatarUrl,
   children,
   adminIds,
-}) => (
-  <PopoverContainer>
-    {({visible, togglePopover}) => (
-      <div className="button-wrap">
-        <button onClick={togglePopover} className="user button-unstyled" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
-          <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} adminIds={adminIds} />
-        </button>
-        {!!visible && children(togglePopover)}
-      </div>
-    )}
-  </PopoverContainer>
-);
+}) => {
+  
+  return (
+    <PopoverContainer>
+      {({visible, togglePopover}) => (
+        <div className="button-wrap">
+          <button onClick={togglePopover} className="user button-unstyled" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
+            <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
+            
+            <span className="admin-badge">admin</span>
+          </button>
+          {!!visible && children(togglePopover)}
+        </div>
+      )}
+    </PopoverContainer>
+  )
+};
 
 UserPopoverTile.propTypes = {
   userLink: PropTypes.string,
