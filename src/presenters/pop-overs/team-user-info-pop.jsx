@@ -49,12 +49,8 @@ UserActions.propTypes = {
 
 // Admin Actions Section ⏫⏬
 
-const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, adminStatusIsUpdating, updateAdminStatusIsUpdating, currentUserIsTeamAdmin, notifyAdminOnly}) => {  
+const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, adminStatusIsUpdating, updateAdminStatusIsUpdating}) => {  
   const updateAdminStatus = (accessLevel) => {
-    if (!currentUserIsTeamAdmin) {
-      notifyAdminOnly();
-      return null;
-    }
     if (adminStatusIsUpdating) {
       return null;
     }
@@ -100,8 +96,6 @@ AdminActions.propTypes = {
   updateUserIsTeamAdmin: PropTypes.func.isRequired,
   updateAdminStatusIsUpdating: PropTypes.func.isRequired,
   adminStatusIsUpdating: PropTypes.bool.isRequired,
-  currentUserIsTeamAdmin: PropTypes.bool.isRequired,
-  notifyAdminOnly: PropTypes.func.isRequired,
 };
 
 
@@ -166,17 +160,17 @@ class TeamUserInfoPop extends React.Component {
         </section>
         { this.props.user.thanksCount > 0 && <ThanksCount count={this.props.user.thanksCount} /> }
         <UserActions user={this.props.user} />
-        <AdminActions 
-          user={this.props.user} 
-          userIsTeamAdmin={this.state.userIsTeamAdmin} 
-          api={this.props.api} 
-          teamId={this.props.teamId} 
-          updateUserIsTeamAdmin={(value) => this.updateUserIsTeamAdmin(value)} 
-          updateAdminStatusIsUpdating={(value) => this.updateAdminStatusIsUpdating(value)}
-          adminStatusIsUpdating={this.state.adminStatusIsUpdating} 
-          currentUserIsTeamAdmin={this.props.currentUserIsTeamAdmin}
-          notifyAdminOnly={this.props.notifyAdminOnly}
-        />
+        { this.props.currentUserIsTeamAdmin &&
+          <AdminActions 
+            user={this.props.user} 
+            userIsTeamAdmin={this.state.userIsTeamAdmin} 
+            api={this.props.api} 
+            teamId={this.props.teamId} 
+            updateUserIsTeamAdmin={(value) => this.updateUserIsTeamAdmin(value)} 
+            updateAdminStatusIsUpdating={(value) => this.updateAdminStatusIsUpdating(value)}
+            adminStatusIsUpdating={this.state.adminStatusIsUpdating} 
+          />
+        }
         { this.props.currentUserIsOnTeam && <RemoveFromTeam action={this.removeFromTeamAction} /> }
       </dialog>
     );
@@ -198,7 +192,6 @@ TeamUserInfoPop.propTypes = {
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
-  notifyAdminOnly: PropTypes.func.isRequired,
 };
 
 TeamUserInfoPop.defaultProps = {

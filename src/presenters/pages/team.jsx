@@ -66,27 +66,6 @@ const TeamPage = ({
       return adminIds.includes(user.id);
     });
   }
-  
-  const notifyAdminOnly = (message) => {
-    message = message || "Only team admins can edit this"
-    notify.createNotification(<div>{message} <UsersList users={admins()}/></div>, 'notifyAdminOnly')
-  }
-  
-  // const uploadAvatarIfAdmin = () => {
-  //   if (currentUserIsTeamAdmin) {
-  //     uploadAvatar()
-  //   } else {
-  //     notifyAdminOnly('Only team admins can change the avatar')
-  //   }
-  // }
-  
-  // const uploadCoverIfAdmin = () => {
-  //   if (currentUserIsTeamAdmin) {
-  //     uploadCover()
-  //   } else {
-  //     notifyAdminOnly('Only team admins can change the cover')
-  //   }
-  // }
 
   return (
     <main className="profile-page team-page">
@@ -104,7 +83,7 @@ const TeamPage = ({
             }
           </h1>
           <div className="users-information">
-            <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminIds, api, teamId:id, currentUserIsTeamAdmin, notifyAdminOnly}} />
+            <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminIds, api, teamId:id, currentUserIsTeamAdmin}} />
             { currentUserIsOnTeam && 
               <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)} />
             }

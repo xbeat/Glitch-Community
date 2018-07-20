@@ -9,7 +9,7 @@ import {UserPopoversList} from '../users-list.jsx';
 
 // Team Users list (in profile container)
 
-export const TeamUsers = ({users, currentUserIsOnTeam, removeUser, adminIds, api, teamId, currentUserIsTeamAdmin, notifyAdminOnly}) => {
+export const TeamUsers = ({users, currentUserIsOnTeam, removeUser, adminIds, api, teamId, currentUserIsTeamAdmin}) => {
   let userIsTeamAdmin = (user) => {
     return adminIds.includes(user.id);
   };
@@ -23,7 +23,6 @@ export const TeamUsers = ({users, currentUserIsOnTeam, removeUser, adminIds, api
         currentUserIsOnTeam={currentUserIsOnTeam} 
         currentUserIsTeamAdmin={currentUserIsTeamAdmin}
         removeUserFromTeam={() => removeUser(user.id)} userIsTeamAdmin={userIsTeamAdmin(user)}
-        notifyAdminOnly={notifyAdminOnly}
       />}
     </UserPopoversList>
   );
@@ -37,7 +36,6 @@ TeamUsers.propTypes = {
   teamId: PropTypes.number.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
   adminIds: PropTypes.array,
-  notifyAdminOnly: PropTypes.func.isRequired,
 };
 
 
