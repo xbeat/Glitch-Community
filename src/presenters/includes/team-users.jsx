@@ -14,7 +14,7 @@ export const TeamUsers = ({users, currentUserIsOnTeam, removeUser, adminIds, api
     return adminIds.includes(user.id);
   };
   return (
-    <UserPopoversList users={users}>
+    <UserPopoversList users={users} adminIds={adminIds}>
       {(user, togglePopover) => <TeamUserInfoPop 
         api={api} 
         teamId={teamId} 

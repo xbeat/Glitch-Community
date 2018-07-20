@@ -77,18 +77,22 @@ UsersList.propTypes = {
 
 export default UsersList;
 
+
+//UserPopoverTile
+
 const UserPopoverTile = ({
   tooltipName, 
   style,
   alt, 
   userAvatarUrl,
   children,
+  adminIds,
 }) => (
   <PopoverContainer>
     {({visible, togglePopover}) => (
       <div className="button-wrap">
         <button onClick={togglePopover} className="user button-unstyled" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
-          <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
+          <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} adminIds={adminIds} />
         </button>
         {!!visible && children(togglePopover)}
       </div>
@@ -102,13 +106,17 @@ UserPopoverTile.propTypes = {
   style: PropTypes.object.isRequired,
   extraClass: PropTypes.string,
   children: PropTypes.func.isRequired,
+  adminIds: PropTypes.array
 };
 
-export const UserPopoversList = ({users, children}) => (
+
+// UserPopoversList
+
+export const UserPopoversList = ({users, children, adminIds}) => (
   <ul className="users">
     {users.map((user, key) => (
       <li key={key}>
-        <UserPopoverTile {...user}>
+        <UserPopoverTile {...user} adminIds={adminIds} >
           {(togglePopover) => children(user, togglePopover)}
         </UserPopoverTile>
       </li>
@@ -119,4 +127,9 @@ export const UserPopoversList = ({users, children}) => (
 UserPopoversList.propTypes = {
   users: PropTypes.array.isRequired,
   children: PropTypes.func.isRequired,
+  adminIds: PropTypes.array,
+};
+
+UserPopoversList.defaultProps = {
+  adminIds: []
 };
