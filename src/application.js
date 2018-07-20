@@ -31,7 +31,6 @@ var self = Model({
 }).extend({
 
   // overlays
-  overlayVideoVisible: Observable(false),
   overlayNewStuffVisible: Observable(false),
 
   // search - users
@@ -51,7 +50,6 @@ var self = Model({
 
   closeAllPopOvers() {
     $(".overlay-background.disposable").remove();
-    self.overlayVideoVisible(false);
     self.overlayNewStuffVisible(false);
   },
   
