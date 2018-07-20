@@ -8,7 +8,13 @@ details.overlay-container
     list-style: none
     &::-webkit-details-marker
       display: none
-  &[open] > summary::after, .overlay-background
+  &[open] > summary::after
+    content: ''
+  &:not([open]) > :not(summary)
+    display: none
+
+details.overlay-container[open] > summary::after
+.overlay-background
     // overflow: scroll
     overflow-x: auto
     -webkit-overflow-scrolling: touch
@@ -20,11 +26,8 @@ details.overlay-container
     left: 0
     z-index: 10
     cursor: default
-    content: ''
-  &:not([open]) > :not(summary)
-    display: none
 
-.overlay
+dialog.overlay
   -webkit-tap-highlight-color: rgba(0,0,0,0)
   background-color: background-color
   color: primary
