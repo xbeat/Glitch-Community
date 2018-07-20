@@ -32,7 +32,7 @@ export const AdminOnlyBadge = ({...props}) => {
     <React.Fragment>
       { (props.currentUserIsTeamAdmin === false) && 
         <div className="status-badge">
-          <span className="status admin">Admin</span>
+          <span className="status admin">A</span>
         </div> 
       }
     </React.Fragment>
