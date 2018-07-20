@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import Thanks from '../includes/thanks.jsx';
 import Loader from '../includes/loader.jsx';
-import AdminOnlyBadge from '../includes/admin-only-badge.jsx'; 
+import {AdminOnlyBadge} from '../includes/team-elements.jsx' 
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;

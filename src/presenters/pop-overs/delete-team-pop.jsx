@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UsersList from "../users-list.jsx";
 import Loader from '../includes/loader.jsx';
-import AdminOnlyBadge from '../includes/admin-only-badge.jsx'; 
+import {AdminOnlyBadge} from '../includes/team-elements.jsx' 
 
 export class DeleteTeamPop extends React.Component {
   constructor(props) {

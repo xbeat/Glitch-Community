@@ -83,6 +83,7 @@ AuthDescription.propTypes = {
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
+  currentUserIsTeamAdmin: PropTypes.bool,
 };
 
 export { EditableDescription, StaticDescription, AuthDescription };
