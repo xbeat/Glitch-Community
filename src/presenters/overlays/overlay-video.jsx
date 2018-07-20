@@ -12,10 +12,17 @@ const Video = () => (
   </div>
 );
 
+function handleToggle(evt, setVisible) {
+  setVisible(evt.target.open);
+  if (evt.target.open) {
+    evt.target.querySelector('.wistia_embed').focus();
+  }
+}
+
 const OverlayVideo = ({children}) => (
   <PopoverContainer>
     {({visible, setVisible}) => (
-      <details onToggle={evt => setVisible(evt.target.open)} open={visible} className="overlay-container">
+      <details onToggle={evt => handleToggle(evt, setVisible)} open={visible} className="overlay-container">
         <summary>{children}</summary>
         <dialog className="overlay video-overlay">
           <section className="pop-over-actions">
