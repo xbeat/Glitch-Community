@@ -1,7 +1,6 @@
 import Layout from '../templates/layout';
 import Header from './header.jsx';
 import Footer from './footer.jsx';
-import OverlayVideo from './overlays/overlay-video';
 import NewStuffPresenter from './overlays/new-stuff';
 import ProjectModel from '../models/project';
 import Observable from 'o_0';
@@ -36,6 +35,5 @@ export default (application, content) =>
 
     footer: Reactlet(Footer),
     
-    overlayVideo: OverlayVideo(application),
     newStuff: NewStuffPresenter(application),
   });

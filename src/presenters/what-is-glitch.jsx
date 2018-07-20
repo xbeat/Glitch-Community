@@ -1,5 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
+import OverlayVideo from './overlays/overlay-video.jsx';
 
 const play = "https://cdn.hyperdev.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fplay.svg";
 const whatsGlitchWide = "https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fwhats-glitch-wide.svg?1499885209761";
@@ -8,7 +9,7 @@ const free = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffree
 
 const whatsGlitchAlt = "Create a node app, or remix one. It updates as you type. Code with Friends!";
   
-const WhatIsGlitch = ({showVideoOverlay}) => (
+const WhatIsGlitch = () => (
   <section className="what-is-glitch">
     <h2>How It Works</h2>
     <span>
@@ -20,17 +21,15 @@ const WhatIsGlitch = ({showVideoOverlay}) => (
       </a>
       <div>
         And it's <img className="free" src={free} alt="free"/>.
-        <button className="video" onClick={showVideoOverlay}>
-          <img className="play-button" src={play} alt="play"/>
-          <span>How it works in 1 minute</span>
-        </button>
+        <OverlayVideo>
+          <div className="video">
+            <img className="play-button" src={play} alt="play"/>
+            <span>How it works in 1 minute</span>
+          </div>
+        </OverlayVideo>
       </div>
     </span>
   </section>
 );
-
-WhatIsGlitch.propTypes = {
-  showVideoOverlay: PropTypes.func.isRequired,
-};
 
 export default WhatIsGlitch;
