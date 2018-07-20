@@ -108,9 +108,7 @@ const UserPopoverTile = ({
           <button onClick={togglePopover} className="user button-unstyled" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
             <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
             {adminIds.includes(id) &&
-              <div className="avatar-admin-badge-container">
-                <img className="avatar-admin-badge" src={ADMIN_ICON} />
-              </div>
+              <img className="avatar-admin-badge" src={ADMIN_ICON} />
             }
           </button>
           {!!visible && children(togglePopover)}
