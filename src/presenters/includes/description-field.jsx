@@ -5,7 +5,7 @@ import Markdown from './markdown.jsx';
 import {debounce} from 'lodash';
 import {AdminOnlyBadge} from './team-elements.jsx' 
 
-class EditableDescription extends React.Component {
+export class EditableDescription extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,6 +57,7 @@ class EditableDescription extends React.Component {
         tabIndex={0} onFocus={this.onFocus} onBlur={this.onBlur}
       >
         <Markdown>{description}</Markdown>
+        <AdminOnlyBadge currentUserIsTeamAdmin={currentUserIsTeamAdmin}/>
       </p>
     );
   }
@@ -65,25 +66,25 @@ EditableDescription.propTypes = {
   initialDescription: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   updateDescription: PropTypes.func.isRequired,
+  currentUserIsTeamAdmin: PropTypes.bool.isRequired,
 };
 
-const StaticDescription = ({description, currentUserIsTeamAdmin}) => (
+export const StaticDescription = ({description}) => (
   description ? 
     <p className="description read-only">
       <Markdown>{description}</Markdown>
-      <AdminOnlyBadge currentUserIsTeamAdmin={currentUserIsTeamAdmin}/>
     </p> 
   : null
 );
 StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
-  currentUserIsTeamAdmin: PropTypes.bool,
 };
 
-const AuthDescription = ({authorized, description, placeholder, update, currentUserIsTeamAdmin}) => (
+export const AuthDescription = ({authorized, description, placeholder, update, currentUserIsTeamAdmin}) => (
   authorized ?
-    <EditableDescription initialDescription={description} updateDescription={update} placeholder={placeholder}/> :
-    <StaticDescription description={description} currentUserIsTeamAdmin={currentUserIsTeamAdmin}/>
+    <EditableDescription initialDescription={description} updateDescription={update} placeholder={placeholder} currentUserIsTeamAdmin={currentUserIsTeamAdmin}/> 
+  :
+    <StaticDescription description={description}/>
 );
 AuthDescription.propTypes = {
   authorized: PropTypes.bool.isRequired,
@@ -93,4 +94,3 @@ AuthDescription.propTypes = {
   currentUserIsTeamAdmin: PropTypes.bool,
 };
 
-export { EditableDescription, StaticDescription, AuthDescription };
