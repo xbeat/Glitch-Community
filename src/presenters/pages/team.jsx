@@ -116,6 +116,7 @@ const TeamPage = ({
             update={updateDescription} 
             placeholder="Tell us about your team"
             currentUserIsTeamAdmin={currentUserIsTeamAdmin}
+            notifyAdminOnly={notifyAdminOnly}
           />
         </ProfileContainer>
       </section>

@@ -19,14 +19,19 @@ export class EditableDescription extends React.Component {
     this.update = debounce(this.props.updateDescription, 1000);
   }
   
-  onChange(evt) {
-    const description = evt.currentTarget.value;
+  onChange(event) {
+    const description = event.currentTarget.value;
     this.setState({ description });
     this.update(description.trim());
   }
   
-  onFocus(evt) {
-    if (evt.currentTarget === evt.target) {
+  onFocus(event) {
+    console.log('🍎', this.props.currentUserIsTeamAdmin)
+    if (this.props.currentUserIsTeamAdmin === false) {
+      this.props.notifyAdminOnly()
+      return null
+    }
+    if (event.currentTarget === event.target) {
       this.setState({focused: true});
     }
   }
@@ -50,15 +55,17 @@ export class EditableDescription extends React.Component {
         autoFocus // eslint-disable-line jsx-a11y/no-autofocus
       />
       :
-      <p
-        className="description content-editable"
-        placeholder={placeholder} aria-label={placeholder}
-        role="textbox" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
-        tabIndex={0} onFocus={this.onFocus} onBlur={this.onBlur}
-      >
-        <Markdown>{description}</Markdown>
-        <AdminOnlyBadge currentUserIsTeamAdmin={currentUserIsTeamAdmin}/>
-      </p>
+      <div className="description-container">
+        <p
+          className="description content-editable"
+          placeholder={placeholder} aria-label={placeholder}
+          role="textbox" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
+          tabIndex={0} onFocus={this.onFocus} onBlur={this.onBlur}
+        >
+          <Markdown>{description}</Markdown>
+        </p>
+        <AdminOnlyBadge currentUserIsTeamAdmin={this.props.currentUserIsTeamAdmin}/>
+      </div>
     );
   }
 }
@@ -66,7 +73,8 @@ EditableDescription.propTypes = {
   initialDescription: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   updateDescription: PropTypes.func.isRequired,
-  currentUserIsTeamAdmin: PropTypes.bool.isRequired,
+  currentUserIsTeamAdmin: PropTypes.bool,
+  notifyAdminOnly: PropTypes.func,
 };
 
 export const StaticDescription = ({description}) => (
@@ -80,9 +88,15 @@ StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-export const AuthDescription = ({authorized, description, placeholder, update, currentUserIsTeamAdmin}) => (
+export const AuthDescription = ({authorized, description, placeholder, update, currentUserIsTeamAdmin, notifyAdminOnly}) => (
   authorized ?
-    <EditableDescription initialDescription={description} updateDescription={update} placeholder={placeholder} currentUserIsTeamAdmin={currentUserIsTeamAdmin}/> 
+    <EditableDescription 
+      initialDescription={description} 
+      updateDescription={update} 
+      placeholder={placeholder} 
+      currentUserIsTeamAdmin={currentUserIsTeamAdmin}
+      notifyAdminOnly={notifyAdminOnly}
+    /> 
   :
     <StaticDescription description={description}/>
 );
@@ -92,5 +106,6 @@ AuthDescription.propTypes = {
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool,
+  notifyAdminOnly: PropTypes.func,
 };
 
