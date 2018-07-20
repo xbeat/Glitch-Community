@@ -10,7 +10,6 @@ import featuredCollections from './curated/featured';
 import Model from './models/model';
 import User from './models/user';
 import Project from './models/project';
-import Category from './models/category';
 import Team from './models/team';
 import Question from './models/question';
 
@@ -59,10 +58,6 @@ var self = Model({
   // pages
   pageIsTeamPage: Observable(false),
   pageIsUserPage: Observable(false),
-
-  // category page
-  category: Observable({}),
-  categoryProjectsLoaded: Observable(false),
   
   normalizedBaseUrl() {
     return "/";
@@ -206,12 +201,6 @@ var self = Model({
     const userIds = usersData.map(user => user.id);
     return User.getUsersById(self.api(), userIds);
   },
-
-  getCategory(url) {
-    const categoryData = find(cachedCategories, category => category.url === url);
-    self.category(Category(categoryData));
-    return Category.updateCategory(application, categoryData.id);
-  },
  
   get categories() {
     return cachedCategories;
@@ -241,10 +230,7 @@ var self = Model({
 });
 
 
-self.attrModel("user", User);
 self.attrModel("currentUser", User);
-self.attrModel("category", Category);
-self.attrModel("team", Team);
 self.attrModel("question", Question);
 
 window.application = self;
@@ -252,7 +238,6 @@ window.API_URL = API_URL;
 window.EDITOR_URL = EDITOR_URL;
 window.User = User;
 window.Project = Project;
-window.Category = Category;
 window.Team = Team;
 window.Question = Question;
 

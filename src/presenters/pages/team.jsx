@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import TeamModel, {getAvatarStyle, getProfileStyle} from '../../models/team';
 import UserModel from '../../models/user';
-import ProjectModel from '../../models/project';
 import Reactlet from '../reactlet';
 import LayoutPresenter from '../layout';
 import TeamEditor from '../team-editor.jsx';
@@ -36,7 +35,7 @@ const TeamPage = ({
   addUser, removeUser,
   addPin, removePin,
   addProject, removeProject,
-  api, searchUsers, getProjects,
+  api, searchUsers,
 }) => (
   <main className="profile-page team-page">
     <section>
@@ -60,9 +59,8 @@ const TeamPage = ({
     </section>
     <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects}/>
     <EntityPageProjects
-      projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
+      api={api} projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
       addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam: removeProject}}
-      getProjects={getProjects}
     />
     {(currentUserIsOnTeam ?
       <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects}/>
@@ -105,7 +103,6 @@ export default function(application, id, name) {
     myProjects: application.currentUser().projects().map(({asProps}) => asProps()),
     get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? TeamModel(data).update(data).asProps() : null)),
     searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
-    getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
   };
   const content = Reactlet(TeamPageLoader, props, 'teampage');
   return LayoutPresenter(application, content);

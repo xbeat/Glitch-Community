@@ -5,7 +5,7 @@ import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
 import IndexPage from './presenters/pages/index';
-import CategoryPage from './presenters/pages/category';
+import CategoryPage from './presenters/pages/category.jsx';
 import ProjectPage from './presenters/pages/project.jsx';
 import TeamPage from './presenters/pages/team.jsx';
 import {UserPageById, UserPageByLogin} from './presenters/pages/user.jsx';
@@ -99,9 +99,9 @@ function routePage(pageUrl, application) {
 
   // category page ✅
   if (application.categories.some(({url}) => pageUrl === url)) {
-    application.getCategory(pageUrl);
-    const page = CategoryPage(application);
-    return {page, title: application.category().name()};
+    const category = application.categories.find(({url}) => pageUrl === url);
+    const page = CategoryPage(application, category);
+    return {page, title: category.name};
   }
  
   // error page ✅
