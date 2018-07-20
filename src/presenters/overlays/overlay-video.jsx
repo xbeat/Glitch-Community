@@ -15,7 +15,8 @@ const Video = () => (
 function handleToggle(evt, setVisible) {
   setVisible(evt.target.open);
   if (evt.target.open) {
-    evt.target.querySelector('.wistia_embed').focus();
+    evt.target.blur();
+    evt.target.querySelector('video').focus();
   }
 }
 
