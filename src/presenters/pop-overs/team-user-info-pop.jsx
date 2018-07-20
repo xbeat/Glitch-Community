@@ -8,7 +8,6 @@ import Loader from '../includes/loader.jsx';
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
-const ADMIN_ICON = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadmin.svg?1532107187144"
 
 // Remove from Team 👋
 
@@ -154,7 +153,7 @@ class TeamUserInfoPop extends React.Component {
             <p className="user-login" title={this.props.user.login}>@{this.props.user.login}</p>
             { this.state.userIsTeamAdmin && 
               <div className="status-badge">
-                <span className="status admin" data-tooltip="Admins can edit team info, team profile, adjust billing, and share">
+                <span className="status admin" data-tooltip="Admins can edit team info and billing">
                   Team Admin
                 </span>
               </div> 
