@@ -72,21 +72,21 @@ const TeamPage = ({
     notify.createNotification(<div>{message} <UsersList users={admins()}/></div>, 'notifyAdminOnly')
   }
   
-  const uploadAvatarIfAdmin = () => {
-    if (currentUserIsTeamAdmin) {
-      uploadAvatar()
-    } else {
-      notifyAdminOnly('Only team admins can change the avatar')
-    }
-  }
+  // const uploadAvatarIfAdmin = () => {
+  //   if (currentUserIsTeamAdmin) {
+  //     uploadAvatar()
+  //   } else {
+  //     notifyAdminOnly('Only team admins can change the avatar')
+  //   }
+  // }
   
-  const uploadCoverIfAdmin = () => {
-    if (currentUserIsTeamAdmin) {
-      uploadCover()
-    } else {
-      notifyAdminOnly('Only team admins can change the cover')
-    }
-  }
+  // const uploadCoverIfAdmin = () => {
+  //   if (currentUserIsTeamAdmin) {
+  //     uploadCover()
+  //   } else {
+  //     notifyAdminOnly('Only team admins can change the cover')
+  //   }
+  // }
 
   return (
     <main className="profile-page team-page">
@@ -95,7 +95,7 @@ const TeamPage = ({
           avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
           coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
           avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatarIfAdmin} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> : null}
-          coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCoverIfAdmin} clearImage={hasCoverImage ? clearCover : null} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> : null}
+          coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> : null}
         >
           <h1 className="username">
             { name }

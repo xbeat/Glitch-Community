@@ -26,19 +26,3 @@ VerifiedBadge.propTypes = {
   tooltip: PropTypes.string.isRequired,
 };
 
-
-export const AdminOnlyBadge = ({...props}) => {
-  return (
-    <React.Fragment>
-      { (props.currentUserIsTeamAdmin === false) && 
-        <div className="status-badge">
-          <span className="status admin">A</span>
-        </div> 
-      }
-    </React.Fragment>
-  )
-};
-
-AdminOnlyBadge.propTypes = {
-  currentUserIsTeamAdmin: PropTypes.bool.isRequired,
-};
