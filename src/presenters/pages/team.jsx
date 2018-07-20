@@ -94,8 +94,8 @@ const TeamPage = ({
         <ProfileContainer
           avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
           coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
-          avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatarIfAdmin} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> : null}
-          coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null} currentUserIsTeamAdmin={currentUserIsTeamAdmin} /> : null}
+          avatarButtons={currentUserIsTeamAdmin ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null}
+          coverButtons={currentUserIsTeamAdmin ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null} /> : null}
         >
           <h1 className="username">
             { name }
@@ -111,12 +111,10 @@ const TeamPage = ({
           </div>
           <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)} />
           <AuthDescription 
-            authorized={currentUserIsOnTeam} 
+            authorized={currentUserIsTeamAdmin} 
             description={description} 
             update={updateDescription} 
             placeholder="Tell us about your team"
-            currentUserIsTeamAdmin={currentUserIsTeamAdmin}
-            notifyAdminOnly={notifyAdminOnly}
           />
         </ProfileContainer>
       </section>
