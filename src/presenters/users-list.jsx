@@ -5,7 +5,6 @@ import PopoverContainer from './pop-overs/popover-container.jsx';
 import {ANON_AVATAR_URL} from '../models/user.js';
 
 const GLITCH_TEAM_AVATAR = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267";
-const ADMIN_ICON = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadmin.svg?1532114369496"
 
 // UserAvatar
 

@@ -153,7 +153,7 @@ class TeamUserInfoPop extends React.Component {
             <p className="user-login" title={this.props.user.login}>@{this.props.user.login}</p>
             { this.state.userIsTeamAdmin && 
               <div className="status-badge">
-                <span className="status admin" data-tooltip="Admins can edit team info and billing">
+                <span className="status admin" data-tooltip="Can edit team info and billing">
                   Team Admin
                 </span>
               </div> 
