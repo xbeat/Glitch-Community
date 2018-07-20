@@ -19,8 +19,7 @@ const WhatIsGlitch = ({showVideoOverlay}) => (
         </figure>
       </a>
       <div>
-        <span>And it's <img className="free" src={free} alt="free"/></span>
-        <span>. </span>
+        And it's <img className="free" src={free} alt="free"/>.
         <button className="video" onClick={showVideoOverlay}>
           <img className="play-button" src={play} alt="play"/>
           <span>How it works in 1 minute</span>
