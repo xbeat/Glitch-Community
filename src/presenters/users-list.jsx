@@ -99,16 +99,19 @@ const UserPopoverTile = ({
   userAvatarUrl,
   children,
   adminIds,
+  id,
 }) => {
-  
   return (
     <PopoverContainer>
       {({visible, togglePopover}) => (
         <div className="button-wrap">
           <button onClick={togglePopover} className="user button-unstyled" data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
             <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
-            
-            <span className="admin-badge">admin</span>
+            {adminIds.includes(id) &&
+              <div className="avatar-admin-badge-container">
+                <img className="avatar-admin-badge" src={ADMIN_ICON} />
+              </div>
+            }
           </button>
           {!!visible && children(togglePopover)}
         </div>
