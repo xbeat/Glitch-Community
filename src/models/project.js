@@ -234,32 +234,6 @@ Project.promiseProjectsByIds = (api, ids) => {
   });
 };
 
-Project.getSearchResults = function(application, query) {
-  const MAX_RESULTS = 20;
-  const { CancelToken } = axios;
-  source = CancelToken.source();
-  application.searchResultsUsers([]);
-  application.searchingForProjects(true);
-  const searchPath = `projects/search?q=${query}`;
-  return application.api(source).get(searchPath)
-    .then(function({data}) {
-      application.searchingForProjects(false);
-    
-      let projects = data;
-
-      // Remove not-safe-for-kids results
-      projects = projects.filter(project => project.notSafeForKids === false);
-    
-      projects = projects.slice(0 , MAX_RESULTS);
-      if (projects.length === 0) {
-        application.searchResultsHaveNoProjects(true);
-      }
-      return projects.forEach(function(project) {
-        project.fetched = true;
-        return Project(project).update(project).pushSearchResult(application);
-      });}).catch(error => console.error('getSearchResults', error));
-};
-
 
 Project._cache = cache;
 
