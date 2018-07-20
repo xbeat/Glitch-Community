@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
 import Markdown from './markdown.jsx';
 import {debounce} from 'lodash';
+import {AdminOnlyBadge} from './team-elements.jsx' 
 
 class EditableDescription extends React.Component {
   constructor(props) {
@@ -66,17 +67,23 @@ EditableDescription.propTypes = {
   updateDescription: PropTypes.func.isRequired,
 };
 
-const StaticDescription = ({description}) => (
-  description ? <p className="description read-only"><Markdown>{description}</Markdown></p> : null
+const StaticDescription = ({description, currentUserIsTeamAdmin}) => (
+  description ? 
+    <p className="description read-only">
+      <Markdown>{description}</Markdown>
+      <AdminOnlyBadge currentUserIsTeamAdmin={currentUserIsTeamAdmin}/>
+    </p> 
+  : null
 );
 StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
+  currentUserIsTeamAdmin: PropTypes.bool,
 };
 
-const AuthDescription = ({authorized, description, placeholder, update}) => (
+const AuthDescription = ({authorized, description, placeholder, update, currentUserIsTeamAdmin}) => (
   authorized ?
     <EditableDescription initialDescription={description} updateDescription={update} placeholder={placeholder}/> :
-    <StaticDescription description={description}/>
+    <StaticDescription description={description} currentUserIsTeamAdmin={currentUserIsTeamAdmin}/>
 );
 AuthDescription.propTypes = {
   authorized: PropTypes.bool.isRequired,
