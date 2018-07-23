@@ -96,6 +96,8 @@ class NewStuffOverlayContainer extends React.Component {
     this.state = {
       visible: false,
     };
+    this.show = this.show.bind(this);
+    this.hide = this.hide.bind(this);
   }
   
   show() {
@@ -103,20 +105,21 @@ class NewStuffOverlayContainer extends React.Component {
   }
   
   hide() {
-    this.setState({visib
+    this.setState({visible: false});
+  }
   
   render() {
     return (
       <React.Fragment>
-        {this.props.children(() => this.setState({visible: true}))}
+        {this.props.children(this.show)}
         {this.state.visible && (
-          <div className="overlay-background" onClick={>
+          
+          <div className="overlay-background" onClick={this.hide}></div>
             <dialog className="pop-over overlay new-stuff-overlay overlay-narrow"
-              open={this.state.visible} onClose={() => this.setState({visible: false})}
+              open={this.state.visible} onClose={this.hide}
             >
               hello
             </dialog>
-          </div>
         )}
       </React.Fragment>
     );

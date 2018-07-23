@@ -1,6 +1,7 @@
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
+import NewStuffContainer from './overlays/new-stuff.jsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import urlJoin from 'url-join';
@@ -104,7 +105,13 @@ class HeaderContainer extends React.Component {
     this.props.userObservable.releaseDependencies();
   }
   render() {
-    return <Header {...this.props} maybeUser={this.state.maybeUser}/>;
+    return (
+      <NewStuffContainer>
+        {showNewStuffOverlay => (
+          <Header {...this.props} maybeUser={this.state.maybeUser} showNewStuffOverlay={showNewStuffOverlay}/>
+        )}
+      </NewStuffContainer>
+    );
   }
 }
 
@@ -112,7 +119,6 @@ HeaderContainer.propTypes = {
   baseUrl: PropTypes.string.isRequired,
   userObservable: PropTypes.func.isRequired,
   searchQuery: PropTypes.string.isRequired,
-  showNewStuffOverlay: PropTypes.func.isRequired,
   promiseProjectsByIds: PropTypes.func.isRequired,
 };
 
