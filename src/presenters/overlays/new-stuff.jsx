@@ -129,7 +129,7 @@ class NewStuffOverlayContainer extends React.Component {
   }
   
   render() {
-    
+    const showDog = this.props.isSignedIn && this.state.showNewStuff;
     const RenderOutside = ({visible, setVisible}) => {
       const show = () => {
         setVisible(true);
@@ -137,7 +137,7 @@ class NewStuffOverlayContainer extends React.Component {
       };
       return <React.Fragment>
         {this.props.children(show)}
-        <NewStuffDog onClick={show}/>
+        {showDog && <NewStuffDog onClick={show}/>}
         {visible && <div className="overlay-background" role="presentation"></div>}
       </React.Fragment>;
     };

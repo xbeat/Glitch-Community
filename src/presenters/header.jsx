@@ -106,7 +106,10 @@ class HeaderContainer extends React.Component {
   }
   render() {
     return (
-      <NewStuffContainer isSignedIn={!!this.state.maybeUser && !!this.state.maybeUser.login}>
+      <NewStuffContainer
+        isSignedIn={!!this.state.maybeUser && !!this.state.maybeUser.login}
+        getUserPref={this.props.getUserPref} setUserPref={this.props.setUserPref}
+      >
         {showNewStuffOverlay => (
           <Header {...this.props} maybeUser={this.state.maybeUser} showNewStuffOverlay={showNewStuffOverlay}/>
         )}
