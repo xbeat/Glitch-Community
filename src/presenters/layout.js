@@ -1,7 +1,6 @@
 import Layout from '../templates/layout';
 import Header from './header.jsx';
 import Footer from './footer.jsx';
-import NewStuffPresenter from './overlays/new-stuff';
 import ProjectModel from '../models/project';
 import Observable from 'o_0';
 
@@ -27,6 +26,8 @@ export default (application, content) =>
         searchQuery: application.searchQuery(),
         overlayNewStuffVisible: application.overlayNewStuffVisible,
         promiseProjectsByIds: (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds),
+        getUserPref: application.getUserPref,
+        setUserPref: application.updateUserPrefs,
       };
       return Reactlet(Header, props);
     },
@@ -34,6 +35,4 @@ export default (application, content) =>
     content,
 
     footer: Reactlet(Footer),
-    
-    newStuff: NewStuffPresenter(application),
   });
