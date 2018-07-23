@@ -55,15 +55,15 @@ class UserPref extends React.Component {
     this.handleStorage = this.handleStorage.bind(this);
   }
   
-  handleStorage(evt) {
-    console.log(evt);
-  }
-  
-  componentDidMount() {
+  handleStorage() {
     const value = this.props.getUserPref(this.props.name);
     this.setState({
       value: value !== undefined ? value : this.props.default,
     });
+  }
+  
+  componentDidMount() {
+    this.handleStorage();
     window.addEventListener('storage', this.handleStorage, {passive: true});
   }
   
@@ -81,82 +81,48 @@ class UserPref extends React.Component {
   }
 }
 
-class NewStuffOverlayContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showNewStuff: true,
-      newStuffReadId: 0,
+const latestId = Math.max(...newStuffLog.map(({id}) => id));
+
+const NewStuffOverlayContainer = ({children, isSignedIn, showNewStuff, newStuffReadId, setShowNewStuff, setNewStuffReadId}) => {
+  const showDog = isSignedIn && showNewStuff && (newStuffReadId < latestId);
+  const RenderOuter = ({visible, setVisible}) => {
+    const show = () => {
+      setVisible(true);
+      setNewStuffReadId(latestId);
     };
-    this.readFromStorage = this.readFromStorage.bind(this);
-  }
+    return <React.Fragment>
+      {children(show)}
+      {showDog && <NewStuffDog onClick={show}/>}
+      {visible && <div className="overlay-background" role="presentation"></div>}
+    </React.Fragment>;
+  };
   
-  readFromStorage() {
-    const {getUserPref} = this.props;
-    this.setState({
-      showNewStuff: getUserPref('showNewStuff') === false ? false : true,
-      newStuffReadId: getUserPref('newStuffReadId') || 0,
-    });
-  }
-  
-  componentDidMount() {
-    this.readFromStorage();
-    window.addEventListener('storage', this.readFromStorage);
-  }
-  
-  componentWillUnmount() {
-    window.removeEventListener('storage', this.readFromStorage);
-  }
-  
-  latestId() {
-    return Math.max(...newStuffLog.map(({id}) => id));
-  }
-  
-  markRead() {
-    const id = this.latestId();
-    this.setState({newStuffReadId: id});
-    this.props.setUserPref('newStuffReadId', id);
-  }
-  
-  setShowNewStuff(show) {
-    this.setState({showNewStuff: show});
-    this.props.setUserPref('showNewStuff', show);
-  }
-  
-  render() {
-    const {children, isSignedIn} = this.props;
-    const {showNewStuff, newStuffReadId} = this.state;
-    
-    const showDog = isSignedIn && showNewStuff && (newStuffReadId < this.latestId());
-    const RenderOutside = ({visible, setVisible}) => {
-      const show = () => {
-        setVisible(true);
-        this.markRead();
-      };
-      return <React.Fragment>
-        {children(show)}
-        {showDog && <NewStuffDog onClick={show}/>}
-        {visible && <div className="overlay-background" role="presentation"></div>}
-      </React.Fragment>;
-    };
-    
-    const unreadStuff = newStuffLog.filter(({id}) => id > newStuffReadId);
-    const setShowNewStuff = this.setShowNewStuff.bind(this);
-    return (
-      <PopoverContainer outer={RenderOutside}>
-        {({visible}) => (visible ? (
-          <NewStuffOverlay
-            setShowNewStuff={setShowNewStuff} showNewStuff={showNewStuff}
-            newStuff={unreadStuff.length ? unreadStuff : newStuffLog}
-          />
-        ): null)}
-      </PopoverContainer>
-    );
-  }
-}
-NewStuffOverlayContainer.propTypes = {
-  isSignedIn: PropTypes.bool.isRequired,
+  const RenderInner = ({visible}) => (visible ? (
+    <NewStuffOverlay
+      setShowNewStuff={setShowNewStuff} showNewStuff={showNewStuff}
+      newStuff={unreadStuff.length ? unreadStuff : newStuffLog}
+    />
+  ): null);
+
+  const unreadStuff = newStuffLog.filter(({id}) => id > newStuffReadId);
+  return <PopoverContainer outer={RenderOuter}>{RenderInner}</PopoverContainer>;
+};
+
+const NewStuffContainer = ({children, getUserPref, setUserPref}) => (
+  <UserPref name="showNewStuff" default={true} {...{getUserPref, setUserPref}}>
+    {(showNewStuff, setShowNewStuff) => (
+      <UserPref name="newStuffReadId" default={0} {...{getUserPref, setUserPref}}>
+        {(newStuffReadId, setNewStuffReadId) => (
+          <NewStuffOverlayContainer {...{showNewStuff, newStuffReadId, setShowNewStuff, setNewStuffReadId}}>
+            {children}
+          </NewStuffOverlayContainer>
+        )}
+      </UserPref>
+    )}
+  </UserPref>
+);
+NewStuffContainer.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-export default NewStuffOverlayContainer;
+export default NewStuffContainer;
