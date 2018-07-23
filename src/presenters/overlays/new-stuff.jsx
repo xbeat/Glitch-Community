@@ -93,17 +93,18 @@ export function old(application) {
   return OverlayNewStuffTemplate(self);
 }
 
-const NewStuffOutside = ({visible, setVisible, children}) => (
-  <React.Fragment>
-    {children(() => setVisible(true))}
-    {visible && <div className="overlay-background" role="presentation"></div>}
-  </React.Fragment>
-);
-
 const NewStuffOverlay = () => (
   <dialog className="pop-over overlay new-stuff-overlay overlay-narrow" open>
     hello
   </dialog>
+);
+
+const NewStuffDog = ({onClick}) => (
+  <div className="new-stuff-footer">
+    <button className="button-unstyled new-stuff opens-pop-over" onClick={onClick}>
+      <figure className="new-stuff-avatar" data-tooltip="New" data-tooltip-top="true" data-tooltip-persistent="true"/>
+    </button>
+  </div>
 );
 
 class NewStuffOverlayContainer extends React.Component {
@@ -122,6 +123,7 @@ class NewStuffOverlayContainer extends React.Component {
       };
       return <React.Fragment>
         {this.props.children(show)}
+        <NewStuffDog onClick={show}/>
         {visible && <div className="overlay-background" role="presentation"></div>}
       </React.Fragment>;
     };
