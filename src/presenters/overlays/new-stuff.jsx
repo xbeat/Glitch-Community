@@ -1,122 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Markdown from '../includes/markdown.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 
 import newStuffLog from '../../curated/new-stuff-log';
 
-import markdownFactory from 'markdown-it';
-import markdownSanitizer from 'markdown-it-sanitizer';
-const markdown = markdownFactory({html: true})
-  .use(markdownSanitizer);
-import Observable from 'o_0';
-import OverlayNewStuffTemplate from '../../templates/overlays/new-stuff';
-
-export function old(application) {
-  
-  application.overlayNewStuffVisible.observe(function() {
-    if (application.overlayNewStuffVisible() === true) {
-      self.updateNewStuffRead();
-      return self.newStuffNotificationVisible(false);
-    }
-  });
-
-  var self = {
-
-    newStuffLog: newStuffLog(self),
-    
-    newStuffNotificationVisible: Observable(false),
-    newStuff: Observable([]),
-    
-    mdToNode(md) {
-      const node = document.createElement('span');
-      node.innerHTML = markdown.render(md);
-      return node;
-    },
-
-    visibility() {
-      if (!application.overlayNewStuffVisible()) { return "hidden"; }
-    },
-        
-    getUpdates() {
-      const MAX_UPDATES = 3;
-      const updates = self.newStuffLog.updates();
-      const newStuffReadId = application.getUserPref('newStuffReadId');
-      const totalUpdates = self.newStuffLog.totalUpdates();
-      
-      const latestStuff = updates.slice(0, MAX_UPDATES);
-      self.newStuff(latestStuff);
-
-      let hasNewStuff = true;
-      if (newStuffReadId) {
-        const unread = totalUpdates - newStuffReadId;
-        const newStuff = updates.slice(0, unread);
-        if (unread <= 0) {
-          hasNewStuff = false;
-        } else {
-          self.newStuff(newStuff);
-        }
-      }
-            
-      const isSignedIn = application.currentUser().isSignedIn();
-      const ignoreNewStuff = application.getUserPref('showNewStuff') === false;
-      const visible = isSignedIn && hasNewStuff && !ignoreNewStuff;
-      
-      return self.newStuffNotificationVisible(visible);
-    },
-
-
-    checked(event) {
-      const showNewStuff = application.getUserPref('showNewStuff');
-      if ((showNewStuff != null) && (event != null)) {
-        return application.updateUserPrefs('showNewStuff', event);
-      } else if (showNewStuff != null) {
-        return showNewStuff;
-      } 
-      return application.updateUserPrefs('showNewStuff', true);
-      
-    },
-
-    updateNewStuffRead() {
-      return application.updateUserPrefs('newStuffReadId', self.newStuffLog.totalUpdates());
-    },
-      
-    hiddenUnlessNewStuffNotificationVisible() {
-      if (!self.newStuffNotificationVisible()) { return 'hidden'; }
-    },
-        
-    showNewStuffOverlay() {
-      return application.overlayNewStuffVisible(true);
-    },
-  };
-
-  self.getUpdates();
-  return OverlayNewStuffTemplate(self);
-}
-
-const NewStuffOverlay = ({setShowNewStuff, showNewStuff, unreadStuff}) => (
+const NewStuffOverlay = ({setShowNewStuff, showNewStuff, newStuff}) => (
   <dialog className="pop-over overlay new-stuff-overlay overlay-narrow" open>
     <section className="pop-over-info">
       <figure className="new-stuff-avatar"/>
       <div className="overlay-title">New Stuff</div>
       <div>
         <label className="button button-small">
-          <input className="button-checkbox" type="checkbox" checked={showNewStuff}/>
+          <input className="button-checkbox" type="checkbox"
+            checked={showNewStuff} onChange={evt => setShowNewStuff(evt.target.checked)}
+          />
           Keep showing me these
         </label>
       </div>
-    </section>{/*
-
-      section.pop-over-actions
-        - updates = @newStuff()
-        - mdToNode = @mdToNode
-        - updates.forEach (update) ->
-          article
-            .title= update.title
-            .body= mdToNode(update.body)
-            - if update.link
-              p
-                a.link(href=update.link) Read the blog post →*/}
+    </section>
+    <section className="pop-over-actions">
+      {newStuff.map(({id, title, body, link}) => (
+        <article key={id}>
+          <div className="title">{title}</div>
+          <div className="body"><Markdown>{body}</Markdown></div>
+          {!!link && (
+            <p>
+              <a className="link" href={link}>
+                Read the blog post →
+              </a>
+            </p>
+          )}
+        </article>
+      ))}
+    </section>
   </dialog>
 );
 
@@ -183,8 +101,8 @@ class NewStuffOverlayContainer extends React.Component {
       <PopoverContainer outer={RenderOutside}>
         {({visible}) => (visible ? (
           <NewStuffOverlay
-            newStuff={unreadStuff.length ? unreadStuff : newStuffLog}
             setShowNewStuff={setShowNewStuff} showNewStuff={showNewStuff}
+            newStuff={unreadStuff.length ? unreadStuff : newStuffLog}
           />
         ): null)}
       </PopoverContainer>
