@@ -106,7 +106,7 @@ class HeaderContainer extends React.Component {
   }
   render() {
     return (
-      <NewStuffContainer>
+      <NewStuffContainer isSignedIn={true}>
         {showNewStuffOverlay => (
           <Header {...this.props} maybeUser={this.state.maybeUser} showNewStuffOverlay={showNewStuffOverlay}/>
         )}

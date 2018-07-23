@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 
@@ -109,16 +110,31 @@ class NewStuffOverlayContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+      showNewStuff: undefined,
+      newStuffReadId: undefined,
+    };
   }
   
   render() {
+    const RenderOutside = ({visible, setVisible}) => {
+      const show = () => {
+        setVisible(true);
+      };
+      return <React.Fragment>
+        {this.props.children(show)}
+        {visible && <div className="overlay-background" role="presentation"></div>}
+      </React.Fragment>;
+    };
     return (
-      <PopoverContainer outer={vis => <NewStuffOutside {...vis}>{this.props.children}</NewStuffOutside>}>
+      <PopoverContainer outer={RenderOutside}>
         {({visible}) => (visible ? <NewStuffOverlay/> : null)}
       </PopoverContainer>
     );
   }
 }
+NewStuffOverlayContainer.propTypes = {
+  isSignedIn: PropTypes.bool.isRequired,
+  children: PropTypes.func.isRequired,
+};
 
 export default NewStuffOverlayContainer;
