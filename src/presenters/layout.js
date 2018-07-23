@@ -24,7 +24,6 @@ export default (application, content) =>
         baseUrl: application.normalizedBaseUrl(),
         userObservable: userObservable,
         searchQuery: application.searchQuery(),
-        overlayNewStuffVisible: application.overlayNewStuffVisible,
         promiseProjectsByIds: (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds),
         getUserPref: application.getUserPref,
         setUserPref: application.updateUserPrefs,

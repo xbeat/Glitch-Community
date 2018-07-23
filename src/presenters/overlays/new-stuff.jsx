@@ -12,8 +12,8 @@ const NewStuffOverlay = ({setShowNewStuff, showNewStuff, newStuff}) => (
       <figure className="new-stuff-avatar"/>
       <div className="overlay-title">New Stuff</div>
       <div>
-        <label className="button button-small">
-          <input className="button-checkbox" type="checkbox"
+        <label className="button button-small" htmlFor="showNewStuff">
+          <input id="showNewStuff" className="button-checkbox" type="checkbox"
             checked={showNewStuff} onChange={evt => setShowNewStuff(evt.target.checked)}
           />
           Keep showing me these
@@ -55,12 +55,16 @@ class NewStuffOverlayContainer extends React.Component {
     };
   }
   
-  componentDidMount() {
+  readFromStorage() {
     const {getUserPref} = this.props;
     this.setState({
       showNewStuff: getUserPref('showNewStuff') === false ? false : true,
       newStuffReadId: getUserPref('newStuffReadId') || 0,
     });
+  }
+  
+  componentDidMount() {
+    this.readFromStorage();
   }
   
   latestId() {

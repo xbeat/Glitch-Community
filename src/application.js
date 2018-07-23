@@ -30,9 +30,6 @@ var self = Model({
   currentUser: cachedUser,
 }).extend({
 
-  // overlays
-  overlayNewStuffVisible: Observable(false),
-
   // search - users
   searchQuery: Observable(""),
 
@@ -46,11 +43,6 @@ var self = Model({
   
   normalizedBaseUrl() {
     return "/";
-  },
-
-  closeAllPopOvers() {
-    $(".overlay-background.disposable").remove();
-    self.overlayNewStuffVisible(false);
   },
   
   api(source) {
