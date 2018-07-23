@@ -46,6 +46,41 @@ const NewStuffDog = ({onClick}) => (
   </div>
 );
 
+class UserPref extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.default,
+    };
+    this.handleStorage = this.handleStorage.bind(this);
+  }
+  
+  handleStorage(evt) {
+    console.log(evt);
+  }
+  
+  componentDidMount() {
+    const value = this.props.getUserPref(this.props.name);
+    this.setState({
+      value: value !== undefined ? value : this.props.default,
+    });
+    window.addEventListener('storage', this.handleStorage, {passive: true});
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('storage', this.handleStorage, {passive: true});
+  }
+  
+  set(value) {
+    this.setState({value});
+    this.props.setUserPref(this.props.name, value);
+  }
+  
+  render() {
+    return this.props.children(this.state.value, this.set.bind(this));
+  }
+}
+
 class NewStuffOverlayContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -53,6 +88,7 @@ class NewStuffOverlayContainer extends React.Component {
       showNewStuff: true,
       newStuffReadId: 0,
     };
+    this.readFromStorage = this.readFromStorage.bind(this);
   }
   
   readFromStorage() {
@@ -65,6 +101,11 @@ class NewStuffOverlayContainer extends React.Component {
   
   componentDidMount() {
     this.readFromStorage();
+    window.addEventListener('storage', this.readFromStorage);
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('storage', this.readFromStorage);
   }
   
   latestId() {
