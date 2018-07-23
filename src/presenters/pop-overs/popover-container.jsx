@@ -13,7 +13,7 @@ popover pans, which have straight-walled sides rather than angled.
 const Wrapper = ({children}) => (children);
 
 Wrapper.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.element,
 };
 
 export default class PopoverContainer extends React.Component {
