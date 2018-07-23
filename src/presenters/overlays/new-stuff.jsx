@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 
+import newStuffLog from '../../curated/new-stuff-log';
+
 import markdownFactory from 'markdown-it';
 import markdownSanitizer from 'markdown-it-sanitizer';
 const markdown = markdownFactory({html: true})
   .use(markdownSanitizer);
 import Observable from 'o_0';
 import OverlayNewStuffTemplate from '../../templates/overlays/new-stuff';
-import newStuffLog from '../new-stuff-log';
 
 export function old(application) {
   
@@ -93,7 +94,7 @@ export function old(application) {
   return OverlayNewStuffTemplate(self);
 }
 
-const NewStuffOverlay = () => (
+const NewStuffOverlay = ({setShowNewStuff}) => (
   <dialog className="pop-over overlay new-stuff-overlay overlay-narrow" open>
     hello
   </dialog>
@@ -124,27 +125,41 @@ class NewStuffOverlayContainer extends React.Component {
     });
   }
   
+  latestId() {
+    return Math.max(...newStuffLog.map(({id}) => id));
+  }
+  
   markRead() {
-    this.setState({newStuffReadId: 5});
-    this.props.setUserPref('newStuffReadId', 5);
+    const id = this.latestId();
+    this.setState({newStuffReadId: id});
+    this.props.setUserPref('newStuffReadId', id);
+  }
+  
+  setShowNewStuff(show) {
+    this.setState({showNewStuff: show});
+    this.props.setUserPref('showNewStuff', show);
   }
   
   render() {
-    const showDog = this.props.isSignedIn && this.state.showNewStuff;
+    const {children, isSignedIn} = this.props;
+    const {showNewStuff, newStuffReadId} = this.state;
+    const showDog = isSignedIn && showNewStuff && (newStuffReadId < this.latestId());
+    
     const RenderOutside = ({visible, setVisible}) => {
       const show = () => {
         setVisible(true);
         this.markRead();
       };
       return <React.Fragment>
-        {this.props.children(show)}
+        {children(show)}
         {showDog && <NewStuffDog onClick={show}/>}
         {visible && <div className="overlay-background" role="presentation"></div>}
       </React.Fragment>;
     };
+    
     return (
       <PopoverContainer outer={RenderOutside}>
-        {({visible}) => (visible ? <NewStuffOverlay/> : null)}
+        {({visible}) => (visible ? <NewStuffOverlay setShowNewStuff={this.setShowNewStuff.bind(this)}/> : null)}
       </PopoverContainer>
     );
   }
