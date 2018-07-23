@@ -94,9 +94,29 @@ export function old(application) {
   return OverlayNewStuffTemplate(self);
 }
 
-const NewStuffOverlay = ({setShowNewStuff}) => (
+const NewStuffOverlay = ({setShowNewStuff, showNewStuff, unreadStuff}) => (
   <dialog className="pop-over overlay new-stuff-overlay overlay-narrow" open>
-    hello
+    <section className="pop-over-info">
+      <figure className="new-stuff-avatar"/>
+      <div className="overlay-title">New Stuff</div>
+      <div>
+        <label className="button button-small">
+          <input className="button-checkbox" type="checkbox" checked={showNewStuff}/>
+          Keep showing me these
+        </label>
+      </div>
+    </section>{/*
+
+      section.pop-over-actions
+        - updates = @newStuff()
+        - mdToNode = @mdToNode
+        - updates.forEach (update) ->
+          article
+            .title= update.title
+            .body= mdToNode(update.body)
+            - if update.link
+              p
+                a.link(href=update.link) Read the blog post →*/}
   </dialog>
 );
 
@@ -143,8 +163,8 @@ class NewStuffOverlayContainer extends React.Component {
   render() {
     const {children, isSignedIn} = this.props;
     const {showNewStuff, newStuffReadId} = this.state;
-    const showDog = isSignedIn && showNewStuff && (newStuffReadId < this.latestId());
     
+    const showDog = isSignedIn && showNewStuff && (newStuffReadId < this.latestId());
     const RenderOutside = ({visible, setVisible}) => {
       const show = () => {
         setVisible(true);
@@ -157,9 +177,16 @@ class NewStuffOverlayContainer extends React.Component {
       </React.Fragment>;
     };
     
+    const unreadStuff = newStuffLog.filter(({id}) => id > newStuffReadId);
+    const setShowNewStuff = this.setShowNewStuff.bind(this);
     return (
       <PopoverContainer outer={RenderOutside}>
-        {({visible}) => (visible ? <NewStuffOverlay setShowNewStuff={this.setShowNewStuff.bind(this)}/> : null)}
+        {({visible}) => (visible ? (
+          <NewStuffOverlay
+            newStuff={unreadStuff.length ? unreadStuff : newStuffLog}
+            setShowNewStuff={setShowNewStuff} showNewStuff={showNewStuff}
+          />
+        ): null)}
       </PopoverContainer>
     );
   }
