@@ -1,5 +1,7 @@
 import React from 'react';
 
+import PopoverContainer from '../pop-overs/popover-container.jsx';
+
 import markdownFactory from 'markdown-it';
 import markdownSanitizer from 'markdown-it-sanitizer';
 const markdown = markdownFactory({html: true})
@@ -90,41 +92,21 @@ export function old(application) {
   return OverlayNewStuffTemplate(self);
 }
 
-class NewStuffOverlayContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: false,
-    };
-    this.show = this.show.bind(this);
-    this.hide = this.hide.bind(this);
-  }
-  
-  show() {
-    this.setState({visible: true});
-  }
-  
-  hide() {
-    this.setState({visible: false});
-  }
-  
-  render() {
-    return (
-      <React.Fragment>
-        {this.props.children(this.show)}
-        {this.state.visible && (
-          <React.Fragment>
-            <div className="overlay-background" onClick={this.hide}></div>
-            <dialog className="pop-over overlay new-stuff-overlay overlay-narrow"
-              open={this.state.visible} onClose={this.hide}
-            >
-              hello
-            </dialog>
-          </React.Fragment>
-        )}
-      </React.Fragment>
-    );
-  }
-}
+const NewStuffOverlayContainer = ({children}) => (
+  <PopoverContainer outer={({setVisible}) => children(() => setVisible(false))}>
+    {({visible, setVisible}) => (
+      visible && (
+        <span>
+          <div className="overlay-background" onClick={() => setVisible(false)}></div>
+          <dialog className="pop-over overlay new-stuff-overlay overlay-narrow"
+            open={visible} onClose={() => setVisible(false)}
+          >
+            hello
+          </dialog>
+        </span>
+      )
+    )}
+  </PopoverContainer>
+);
 
 export default NewStuffOverlayContainer;

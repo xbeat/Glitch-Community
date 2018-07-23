@@ -59,22 +59,28 @@ export default class PopoverContainer extends React.Component {
   }
 
   render() {
-    const inner = this.props.children({
+    const props = {
       visible: this.state.visible,
       togglePopover: this.toggle,
       setVisible: this.set,
-    });
+    };
+    const inner = this.props.children(props);
     if(isFragment(inner)) {
       console.error("PopoverContainer does not support React.Fragment as the top level item. Please use a different element.");
     }
+    const outer = this.props.outer ? this.props.outer(props) : null;
     return (
-      <this.MonitoredComponent disableOnClickOutside={!this.state.visible} eventTypes={["mousedown", "touchstart", "keyup"]}>
-        {inner}
-      </this.MonitoredComponent>
+      <React.Fragment>
+        {outer}
+        <this.MonitoredComponent disableOnClickOutside={!this.state.visible} eventTypes={["mousedown", "touchstart", "keyup"]}>
+          {inner}
+        </this.MonitoredComponent>
+      </React.Fragment>
     );
   }
 }
 
 PopoverContainer.propTypes = {
   children: PropTypes.func.isRequired,
+  outer: PropTypes.func,
 };
