@@ -102,7 +102,7 @@ const NewStuffOverlay = () => (
 const NewStuffDog = ({onClick}) => (
   <div className="new-stuff-footer">
     <button className="button-unstyled new-stuff opens-pop-over" onClick={onClick}>
-      <figure className="new-stuff-avatar" data-tooltip="New" data-tooltip-top="true" data-tooltip-persistent="true"/>
+      <figure className="new-stuff-avatar" data-tooltip="New" data-tooltip-top="true" data-tooltip-persistent="true" alt="New Stuff"/>
     </button>
   </div>
 );
@@ -111,15 +111,29 @@ class NewStuffOverlayContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showNewStuff: undefined,
-      newStuffReadId: undefined,
+      showNewStuff: true,
+      newStuffReadId: 0,
     };
   }
   
+  componentDidMount() {
+    const {getUserPref} = this.props;
+    this.setState({
+      showNewStuff: getUserPref('showNewStuff') === false ? false : true,
+      newStuffReadId: getUserPref('newStuffReadId') || 0,
+    });
+  }
+  
+  markRead() {
+    
+  }
+  
   render() {
+    
     const RenderOutside = ({visible, setVisible}) => {
       const show = () => {
         setVisible(true);
+        this.markRead();
       };
       return <React.Fragment>
         {this.props.children(show)}
