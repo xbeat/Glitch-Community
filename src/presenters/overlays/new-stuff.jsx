@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Markdown from '../includes/markdown.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
+import UserPref from '../includes/user-pref.jsx';
 
 import newStuffLog from '../../curated/new-stuff-log';
 
@@ -37,6 +38,16 @@ const NewStuffOverlay = ({setShowNewStuff, showNewStuff, newStuff}) => (
     </section>
   </dialog>
 );
+NewStuffOverlay.propTypes = {
+  setShowNewStuff: PropTypes.func.isRequired,
+  showNewStuff: PropTypes.bool.isRequired,
+  newStuff: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    link: PropTypes.string,
+  }).isRequired).isRequired,
+};
 
 const NewStuffDog = ({onClick}) => (
   <div className="new-stuff-footer">
@@ -45,41 +56,9 @@ const NewStuffDog = ({onClick}) => (
     </button>
   </div>
 );
-
-class UserPref extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: props.default,
-    };
-    this.handleStorage = this.handleStorage.bind(this);
-  }
-  
-  handleStorage() {
-    const value = this.props.getUserPref(this.props.name);
-    this.setState({
-      value: value !== undefined ? value : this.props.default,
-    });
-  }
-  
-  componentDidMount() {
-    this.handleStorage();
-    window.addEventListener('storage', this.handleStorage, {passive: true});
-  }
-  
-  componentWillUnmount() {
-    window.removeEventListener('storage', this.handleStorage, {passive: true});
-  }
-  
-  set(value) {
-    this.setState({value});
-    this.props.setUserPref(this.props.name, value);
-  }
-  
-  render() {
-    return this.props.children(this.state.value, this.set.bind(this));
-  }
-}
+NewStuffDog.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
 
 const latestId = Math.max(...newStuffLog.map(({id}) => id));
 
@@ -107,6 +86,14 @@ const NewStuff = ({children, isSignedIn, showNewStuff, newStuffReadId, setShowNe
   ): null);
 
   return <PopoverContainer outer={RenderOuter}>{RenderInner}</PopoverContainer>;
+};
+NewStuff.propTypes = {
+  children: PropTypes.func.isRequired,
+  isSignedIn: PropTypes.bool.isRequired,
+  showNewStuff: PropTypes.bool.isRequired,
+  newStuffReadId: PropTypes.number.isRequired,
+  setShowNewStuff: PropTypes.func.isRequired,
+  setNewStuffReadId: PropTypes.func.isRequired,
 };
 
 const NewStuffContainer = ({children, isSignedIn, getUserPref, setUserPref}) => (
