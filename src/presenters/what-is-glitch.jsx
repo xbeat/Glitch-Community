@@ -20,7 +20,7 @@ const WhatIsGlitch = () => (
         </figure>
       </a>
       <div>
-        And it's <img className="free" src={free} alt="free"/>.
+        And it's <img className="free" src={free} alt="free"/>.{' '}
         <OverlayVideo>
           <div className="button video">
             <img className="play-button" src={play} alt="play"/>
