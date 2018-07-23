@@ -6,7 +6,7 @@ import Observable from 'o_0';
 import OverlayNewStuffTemplate from '../../templates/overlays/new-stuff';
 import newStuffLog from '../new-stuff-log';
 
-export default function(application) {
+export function old(application) {
   
   application.overlayNewStuffVisible.observe(function() {
     if (application.overlayNewStuffVisible() === true) {
@@ -87,3 +87,12 @@ export default function(application) {
   self.getUpdates();
   return OverlayNewStuffTemplate(self);
 }
+
+const NewStuffOverlayContainer = ({children, ...props}) => (
+  <PopoverContainer>
+    {({visible, setVisible}) => (
+      <React.Fragment>
+      </React.Fragment>
+      
+  </PopoverContainer>
+);

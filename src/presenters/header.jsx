@@ -45,15 +45,13 @@ SearchForm.propTypes = {
   defaultValue: PropTypes.string.isRequired,
 };
 
-const UserOptionsPopWrapper = ({user, overlayNewStuffVisible}) => {
+const UserOptionsPopWrapper = ({user, showNewStuffOverlay}) => {
   const props = {
     teams: user.teams,
     userLink: user.userLink,
     avatarUrl: user.userAvatarUrl,
     avatarStyle: {backgroundColor: user.color},
-    showNewStuffOverlay() {
-      return overlayNewStuffVisible(true);
-    }
+    showNewStuffOverlay,
   };
 
   return <UserOptionsPop {...props}/>;
@@ -63,10 +61,10 @@ UserOptionsPopWrapper.propTypes = {
   user: PropTypes.shape({
     login: PropTypes.string,
   }).isRequired,
-  overlayNewStuffVisible: PropTypes.func.isRequired,
+  showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
-const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promiseProjectsByIds}) => {
+const Header = ({baseUrl, maybeUser, searchQuery, showNewStuffOverlay, promiseProjectsByIds}) => {
   const signedIn = maybeUser && !!maybeUser.login;
   return (
     <header role="banner">
@@ -81,7 +79,7 @@ const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promis
         <NewProjectPop promiseProjectsByIds={promiseProjectsByIds}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
-        { maybeUser && <UserOptionsPopWrapper user={maybeUser} overlayNewStuffVisible={overlayNewStuffVisible} />}
+        { maybeUser && <UserOptionsPopWrapper user={maybeUser} showNewStuffOverlay={showNewStuffOverlay} />}
       </nav>
     </header>
   );
@@ -114,7 +112,7 @@ HeaderContainer.propTypes = {
   baseUrl: PropTypes.string.isRequired,
   userObservable: PropTypes.func.isRequired,
   searchQuery: PropTypes.string.isRequired,
-  overlayNewStuffVisible: PropTypes.func.isRequired,
+  showNewStuffOverlay: PropTypes.func.isRequired,
   promiseProjectsByIds: PropTypes.func.isRequired,
 };
 
