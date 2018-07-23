@@ -125,7 +125,8 @@ class NewStuffOverlayContainer extends React.Component {
   }
   
   markRead() {
-    
+    this.setState({newStuffReadId: 5});
+    this.props.setUserPref('newStuffReadId', 5);
   }
   
   render() {
