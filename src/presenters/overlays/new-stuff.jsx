@@ -113,13 +113,14 @@ class NewStuffOverlayContainer extends React.Component {
       <React.Fragment>
         {this.props.children(this.show)}
         {this.state.visible && (
-          
-          <div className="overlay-background" onClick={this.hide}></div>
+          <React.Fragment>
+            <div className="overlay-background" onClick={this.hide}></div>
             <dialog className="pop-over overlay new-stuff-overlay overlay-narrow"
               open={this.state.visible} onClose={this.hide}
             >
               hello
             </dialog>
+          </React.Fragment>
         )}
       </React.Fragment>
     );
