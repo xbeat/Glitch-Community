@@ -83,7 +83,8 @@ class UserPref extends React.Component {
 
 const latestId = Math.max(...newStuffLog.map(({id}) => id));
 
-const NewStuffOverlayContainer = ({children, isSignedIn, showNewStuff, newStuffReadId, setShowNewStuff, setNewStuffReadId}) => {
+const NewStuff = ({children, isSignedIn, showNewStuff, newStuffReadId, setShowNewStuff, setNewStuffReadId}) => {
+  
   const showDog = isSignedIn && showNewStuff && (newStuffReadId < latestId);
   const RenderOuter = ({visible, setVisible}) => {
     const show = () => {
@@ -97,6 +98,7 @@ const NewStuffOverlayContainer = ({children, isSignedIn, showNewStuff, newStuffR
     </React.Fragment>;
   };
   
+  const unreadStuff = newStuffLog.filter(({id}) => id > newStuffReadId);
   const RenderInner = ({visible}) => (visible ? (
     <NewStuffOverlay
       setShowNewStuff={setShowNewStuff} showNewStuff={showNewStuff}
@@ -104,18 +106,17 @@ const NewStuffOverlayContainer = ({children, isSignedIn, showNewStuff, newStuffR
     />
   ): null);
 
-  const unreadStuff = newStuffLog.filter(({id}) => id > newStuffReadId);
   return <PopoverContainer outer={RenderOuter}>{RenderInner}</PopoverContainer>;
 };
 
-const NewStuffContainer = ({children, getUserPref, setUserPref}) => (
+const NewStuffContainer = ({children, isSignedIn, getUserPref, setUserPref}) => (
   <UserPref name="showNewStuff" default={true} {...{getUserPref, setUserPref}}>
     {(showNewStuff, setShowNewStuff) => (
       <UserPref name="newStuffReadId" default={0} {...{getUserPref, setUserPref}}>
         {(newStuffReadId, setNewStuffReadId) => (
-          <NewStuffOverlayContainer {...{showNewStuff, newStuffReadId, setShowNewStuff, setNewStuffReadId}}>
+          <NewStuff {...{isSignedIn, showNewStuff, newStuffReadId, setShowNewStuff, setNewStuffReadId}}>
             {children}
-          </NewStuffOverlayContainer>
+          </NewStuff>
         )}
       </UserPref>
     )}
@@ -123,6 +124,9 @@ const NewStuffContainer = ({children, getUserPref, setUserPref}) => (
 );
 NewStuffContainer.propTypes = {
   children: PropTypes.func.isRequired,
+  isSignedIn: PropTypes.bool.isRequired,
+  getUserPref: PropTypes.func.isRequired,
+  setUserPref: PropTypes.func.isRequired,
 };
 
 export default NewStuffContainer;
