@@ -94,34 +94,31 @@ export function old(application) {
 
 const NewStuffOutside = ({visible, setVisible, children}) => (
   <React.Fragment>
-    {children(() => setVisible(false))}
+    {children(() => setVisible(true))}
     {visible && <div className="overlay-background" role="presentation"></div>}
   </React.Fragment>
 );
 
-const NewStuffOverlay = ({visible, setVisible}) => (
-  <dialog className="pop-over overlay new-stuff-overlay overlay-narrow"
-    open={visible} onClose={() => setVisible(false)}
-  >
+const NewStuffOverlay = () => (
+  <dialog className="pop-over overlay new-stuff-overlay overlay-narrow" open>
     hello
   </dialog>
 );
 
-const NewStuffOverlayContainer = ({children}) => (
-  <PopoverContainer outer={NewStuff}>
-    {({visible, setVisible}) => (
-      visible ? (
-        <span>
-            <div className="overlay-background" onClick={() => setVisible(false)} role="presentation"></div>
-            <dialog className="pop-over overlay new-stuff-overlay overlay-narrow"
-              open={visible} onClose={() => setVisible(false)}
-            >
-              hello
-            </dialog>
-        </span>
-      ) : null
-    )}
-  </PopoverContainer>
-);
+class NewStuffOverlayContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      
+  }
+  
+  render() {
+    return (
+      <PopoverContainer outer={vis => <NewStuffOutside {...vis}>{this.props.children}</NewStuffOutside>}>
+        {({visible}) => (visible ? <NewStuffOverlay/> : null)}
+      </PopoverContainer>
+    );
+  }
+}
 
 export default NewStuffOverlayContainer;
