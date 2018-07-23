@@ -1,3 +1,5 @@
+import React from 'react';
+
 import markdownFactory from 'markdown-it';
 import markdownSanitizer from 'markdown-it-sanitizer';
 const markdown = markdownFactory({html: true})
@@ -88,11 +90,37 @@ export function old(application) {
   return OverlayNewStuffTemplate(self);
 }
 
-const NewStuffOverlayContainer = ({children, ...props}) => (
-  <PopoverContainer>
-    {({visible, setVisible}) => (
+class NewStuffOverlayContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+    };
+  }
+  
+  show() {
+    this.setState({visible: true});
+  }
+  
+  hide() {
+    this.setState({visib
+  
+  render() {
+    return (
       <React.Fragment>
+        {this.props.children(() => this.setState({visible: true}))}
+        {this.state.visible && (
+          <div className="overlay-background" onClick={>
+            <dialog className="pop-over overlay new-stuff-overlay overlay-narrow"
+              open={this.state.visible} onClose={() => this.setState({visible: false})}
+            >
+              hello
+            </dialog>
+          </div>
+        )}
       </React.Fragment>
-      
-  </PopoverContainer>
-);
+    );
+  }
+}
+
+export default NewStuffOverlayContainer;
