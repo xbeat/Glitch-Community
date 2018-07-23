@@ -13,9 +13,9 @@ Example:
 
 export default [
   {
-    title: 'Guess The Right Color',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcolor-guessing-game.jpg?1531999961697",
-    link: 'https://glitch.com/~color-guessing-game'
+    title: 'It\'s Countdown O\'Clock',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcountdown-oclock.jpg?1532340065871",
+    link: 'https://glitch.com/~countdown-oclock'
   }
   , {
     title: 'Corgis On Demand',
