@@ -69,7 +69,6 @@ export function resizeImage(file, max) {
         return file;
       } 
       return drawCanvasThumbnail(image, file.type, max);
-    
     });
 }
 

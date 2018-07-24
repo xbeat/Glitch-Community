@@ -23,7 +23,6 @@ export default class PopoverContainer extends React.Component {
 
     this.set = this.set.bind(this);
     this.toggle = this.toggle.bind(this);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
    
     // We need to set up and instantiate an onClickOutside wrapper
     // It's important to instantiate it once and pass though its children,
@@ -32,8 +31,9 @@ export default class PopoverContainer extends React.Component {
 
     // We do extra work with disableOnClickOutside and handleClickOutside
     // to prevent event bindings from being created until the popover is opened.
+    const handleClickOutside = this.handleClickOutside.bind(this);
     const clickOutsideConfig = {
-      handleClickOutside: () => this.handleClickOutside,
+      handleClickOutside: () => handleClickOutside,
       excludeScrollbar: true,
     };
     this.MonitoredComponent = onClickOutside(Wrapper, clickOutsideConfig);
