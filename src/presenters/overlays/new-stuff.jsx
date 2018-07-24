@@ -61,6 +61,16 @@ NewStuffDog.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
+const Outer = ({children, visible, showPopup, dogVisible}) => {
+  return (
+    <React.Fragment>
+      {children(showPopup)}
+      {dogVisible && <NewStuffDog onClick={showPopup}/>}
+      {visible && <div className="overlay-background" role="presentation"></div>}
+    </React.Fragment>
+  );
+};
+
 class NewStuff extends React.Component {
   constructor(props) {
     super(props);
@@ -69,44 +79,20 @@ class NewStuff extends React.Component {
     };
   }
   
+  showPopup(setVisible) {
+    setVisible(true);
+    const unreadStuff = newStuffLog.filter(({id}) => id > this.props.newStuffReadId);
+    this.setState({
+      log: unreadStuff.length ? unreadStuff : newStuffLog,
+    });
+    this.props.setNewStuffReadId(latestId);
+  }
+  
   render() {
-    const {isSignedIn, showNewStuff, newStuffReadId} = this.props;
-    
-    const showDog = isSignedIn && showNewStuff && (newStuffReadId < latestId);
-    const RenderOuter = ({visible, setVisible}) => {
-      const show = () => {
-        setVisible(true);
-        this.props.setNewStuffReadId(latestId);
-        const unreadStuff = newStuffLog.filter(({id}) => id > newStuffReadId);
-        this.setState({
-          log: unreadStuff.length ? unreadStuff : newStuffLog,
-        });
-      };
-      return <React.Fragment>
-        {this.props.children(show)}
-        {showDog && <NewStuffDog onClick={show}/>}
-        {visible && <div className="overlay-background" role="presentation"></div>}
-      </React.Fragment>;
-    };
-    
+    const {children, isSignedIn, showNewStuff, newStuffReadId} = this.props;
+    const dogVisible = isSignedIn && showNewStuff && (newStuffReadId < latestId);
     return (
-      <PopoverContainer outer={
-        ({visible, setVisible}) => {
-          const show = () => {
-            setVisible(true);
-            this.props.setNewStuffReadId(latestId);
-            const unreadStuff = newStuffLog.filter(({id}) => id > newStuffReadId);
-            this.setState({
-              log: unreadStuff.length ? unreadStuff : newStuffLog,
-            });
-          };
-          return <React.Fragment>
-            {this.props.children(show)}
-            {showDog && <NewStuffDog onClick={show}/>}
-            {visible && <div className="overlay-background" role="presentation"></div>}
-          </React.Fragment>;
-        }
-      }>
+      <PopoverContainer outer={({visible, setVisible}) => <Outer {...{visible, dogVisible}} showPopup={this>{children}</Outer>}>
         {({visible}) => (visible ? (
           <NewStuffOverlay {...this.props} newStuff={this.state.log}/>
         ) : null)}
