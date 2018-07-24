@@ -6,6 +6,7 @@ import PopoverContainer from '../pop-overs/popover-container.jsx';
 import UserPref from '../includes/user-pref.jsx';
 
 import newStuffLog from '../../curated/new-stuff-log';
+const latestId = Math.max(...newStuffLog.map(({id}) => id));
 
 const NewStuffOverlay = ({setShowNewStuff, showNewStuff, newStuff}) => (
   <dialog className="pop-over overlay new-stuff-overlay overlay-narrow" open>
@@ -59,8 +60,6 @@ const NewStuffDog = ({onClick}) => (
 NewStuffDog.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
-
-const latestId = Math.max(...newStuffLog.map(({id}) => id));
 
 const NewStuff = ({children, isSignedIn, showNewStuff, newStuffReadId, setShowNewStuff, setNewStuffReadId}) => {
   
