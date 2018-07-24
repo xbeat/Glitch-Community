@@ -1,4 +1,4 @@
-/* globals API_URL APP_URL EDITOR_URL analytics application*/
+/* globals API_URL APP_URL EDITOR_URL analytics application Raven */
 
 import Observable from 'o_0';
 
@@ -17,13 +17,24 @@ if(localStorage.cachedUser) {
   try {
     cachedUser = JSON.parse(localStorage.cachedUser);
     if (cachedUser.id <= 0) {
-      throw 'invalid id';
+      throw new Error('invalid id');
     }
   } catch (error) {
     //Something bad happened in the past to get us here!
     //Act natural and pretend we're logged out
+    console.warn('could not parse cachedUser', localStorage.cachedUser);
+    Raven.captureMessage('failed to parse cachedUser', {extra: {cachedUser: localStorage.cachedUser}});
     cachedUser = undefined;
   }
+}
+
+if (cachedUser) {
+  Raven.setUserContext({
+    id: cachedUser.id,
+    login: cachedUser.login,
+  });
+} else {
+  Raven.setUserContext();
 }
 
 var self = Model({

@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Random Acts of Kindness',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frandom-acts-of-kindness-generator.jpg?1531740318993",
-    link: 'https://glitch.com/~random-acts-of-kindness-generator'
+    title: 'It\'s Countdown O\'Clock',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcountdown-oclock.jpg?1532340065871",
+    link: 'https://glitch.com/~countdown-oclock'
   }
   , {
-    title: 'Learn While You Road Trip',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Froadtrip.jpg?1531740320479",
-    link: 'https://glitch.com/~roadtrip'
+    title: 'Create Slick Beats',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ftenori-off.jpg?1532340207849",
+    link: 'https://glitch.com/~tenori-off'
   }
   , {
-    title: 'Track Recent Earthquakes',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fusgs-earthquakes.jpg?1531740319665",
-    link: 'https://glitch.com/~usgs-earthquakes'
+    title: 'From Slack to Things ✅',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fthings-cmd.jpg?1532340416668",
+    link: 'https://glitch.com/edit/#!/things-cmd'
   }  
 ];

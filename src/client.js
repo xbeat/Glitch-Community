@@ -1,4 +1,4 @@
-/* globals EDITOR_URL */
+/* globals EDITOR_URL Raven */
 import application from './application';
 
 import qs from 'querystringify';
@@ -32,12 +32,17 @@ function identifyUser(application) {
   const user = application.currentUser();
   const analytics = window.analytics;
   if (analytics && application.currentUser().isSignedIn()) {
-    analytics.identify(user.id(), {
-      name: user.name(),
-      login: user.login(),
-      email: user.email(),
-      created_at: user.createdAt(),
-    });
+    try {
+      analytics.identify(user.id(), {
+        name: user.name(),
+        login: user.login(),
+        email: user.email(),
+        created_at: user.createdAt(),
+      });
+    } catch (error) {
+      console.error(error);
+      Raven.captureException(error);
+    }
   }
 }
 
@@ -132,13 +137,16 @@ function route(location, application) {
         window.location.replace("/");
       }).catch((error) => {
         const errorData = error && error.response && error.response.data;
-        console.error("OAuth login error.", {provider, queryString, error: errorData});
+        const deets = {provider, queryString, error: errorData};
+        console.error("OAuth login error.", deets);
+        Raven.captureMessage("Oauth login error", {extra: deets});
 
         document.title = "OAuth Login Error";
         document.body.appendChild(errorPageTemplate({
           title: "OAuth Login Problem",
           description: "Hard to say what happened, but we couldn't log you in. Try again?",
         }));
+      
       });
   }
   

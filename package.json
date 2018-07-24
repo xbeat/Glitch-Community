@@ -44,6 +44,7 @@
     "quantize": "^1.0.2",
     "querystringify": "^2.0.0",
     "randomcolor": "^0.5.3",
+    "raven": "^2.6.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-is": "^16.4.1",
