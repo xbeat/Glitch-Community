@@ -8,7 +8,7 @@ const url = require('url');
 //
 
 module.exports = function(app) {
-    // Proxy the some parts of our site over to ghost blogs:
+  // Proxy the some parts of our site over to ghost blogs:
   proxyGhost(app, 'help', 'help-center.glitch.me');
   proxyGhost(app, 'featured', 'featured.glitch.me');
 }
@@ -22,13 +22,13 @@ function proxyGhost(app, route, glitchTarget) {
       const path = req.path;
       if(!path.toLowerCase().startsWith(sandwichedRoute)) {
          //therefore, path is "/{route}[^/]"/i
-         const rest = path.substring(sandwichedRoute.length - 1);
+         const rest = path.substring(sandwichedRoute.length);
          return res.redirect(301, sandwichedRoute + rest);
       }
       return next();
   });
 
-  // Proxy all the requests to /{route}/ over to to glitchTarget:
+  // Proxy all the requests to /{route}/ over to glitchTarget:
   app.use(sandwichedRoute, proxy(glitchTarget, {
     preserveHostHdr: false, // glitch routes based on this, so we have to reset it
     https: false, // allows the proxy to do less work
