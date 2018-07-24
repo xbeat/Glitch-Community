@@ -50,27 +50,6 @@ NewStuffOverlay.propTypes = {
   }).isRequired).isRequired,
 };
 
-const NewStuffDog = ({onClick}) => (
-  <div className="new-stuff-footer">
-    <button className="button-unstyled new-stuff opens-pop-over" onClick={onClick}>
-      <figure className="new-stuff-avatar" data-tooltip="New" data-tooltip-top="true" data-tooltip-persistent="true" alt="New Stuff"/>
-    </button>
-  </div>
-);
-NewStuffDog.propTypes = {
-  onClick: PropTypes.func.isRequired,
-};
-
-const Outer = ({children, visible, showPopup, dogVisible}) => {
-  return (
-    <React.Fragment>
-      {children(showPopup)}
-      {dogVisible && <NewStuffDog onClick={showPopup}/>}
-      {visible && <div className="overlay-background" role="presentation"></div>}
-    </React.Fragment>
-  );
-};
-
 class NewStuff extends React.Component {
   constructor(props) {
     super(props);
@@ -79,20 +58,35 @@ class NewStuff extends React.Component {
     };
   }
   
-  showPopup(setVisible) {
+  showNewStuff(setVisible) {
     setVisible(true);
     const unreadStuff = newStuffLog.filter(({id}) => id > this.props.newStuffReadId);
-    this.setState({
-      log: unreadStuff.length ? unreadStuff : newStuffLog,
-    });
+    this.setState({log: unreadStuff.length ? unreadStuff : newStuffLog});
     this.props.setNewStuffReadId(latestId);
   }
   
-  render() {
+  renderOuter({visible, setVisible}) {
     const {children, isSignedIn, showNewStuff, newStuffReadId} = this.props;
     const dogVisible = isSignedIn && showNewStuff && (newStuffReadId < latestId);
+    const show = () => this.showNewStuff(setVisible);
     return (
-      <PopoverContainer outer={({visible, setVisible}) => <Outer {...{visible, dogVisible}} showPopup={this>{children}</Outer>}>
+      <React.Fragment>
+        {children(show)}
+        {dogVisible && (
+          <div className="new-stuff-footer">
+            <button className="button-unstyled new-stuff opens-pop-over" onClick={show}>
+              <figure className="new-stuff-avatar" data-tooltip="New" data-tooltip-top="true" data-tooltip-persistent="true" alt="New Stuff"/>
+            </button>
+          </div>
+        )}
+        {visible && <div className="overlay-background" role="presentation"></div>}
+      </React.Fragment>
+    );
+  }
+  
+  render() {
+    return (
+      <PopoverContainer outer={this.renderOuter.bind(this)}>
         {({visible}) => (visible ? (
           <NewStuffOverlay {...this.props} newStuff={this.state.log}/>
         ) : null)}
