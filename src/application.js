@@ -2,7 +2,6 @@
 
 import Observable from 'o_0';
 
-import {find} from "lodash";
 import axios from 'axios';
 import cachedCategories from './cache/categories.js';
 import featuredCollections from './curated/featured';

@@ -74,7 +74,7 @@ function routePage(pageUrl, application) {
 
   // anon user page ✅
   if (pageUrl.match(/^(user\/)/g)) {
-    const userId = pageUrl.replace(/^(user\/)/g, '');
+    const userId = parseInt(pageUrl.replace(/^(user\/)/g, ''), 10);
     const page = UserPagePresenter(application, userId, `user ${userId}`);
     return {page, title: pageUrl};
   }
