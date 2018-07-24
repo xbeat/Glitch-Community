@@ -69,7 +69,6 @@ const UserPage = ({
   leaveProject,
   deleteProject, undeleteProject,
   setDeletedProjects,
-  getProjects,
 }) => (
   <main className="profile-page user-page">
     <section>
@@ -89,9 +88,8 @@ const UserPage = ({
     </section>
     <EntityPageProjects
       projects={projects} pins={pins} isAuthorized={isAuthorized}
-      addPin={addPin} removePin={removePin}
+      api={api} addPin={addPin} removePin={removePin}
       projectOptions={{leaveProject, deleteProject}}
-      getProjects={getProjects}
     />
     {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
   </main>

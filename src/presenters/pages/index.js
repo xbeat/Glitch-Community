@@ -3,7 +3,6 @@ import LayoutPresenter from '../layout';
 import FeaturedCollectionPresenter from '../featured-collection';
 import RecentProjectsPresenter from '../recent-projects';
 import QuestionsPresenter from '../questions';
-import CategoryModel from '../../models/category';
 import Reactlet from '../reactlet';
 import EmbedHtml from '../../curated/embed';
 
@@ -49,9 +48,7 @@ export default function(application) {
     
     randomCategories() {
       const props = {
-        closeAllPopOvers: application.closeAllPopOvers,
-        getCategories: () => CategoryModel.getRandomCategoriesJSON(application.api()),
-        categoryModel: CategoryModel,
+        api: application.api(),
       };
       return Reactlet(RandomCategories, props);
     },

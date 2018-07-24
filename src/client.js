@@ -1,4 +1,4 @@
-/* globals EDITOR_URL */
+/* globals EDITOR_URL Raven */
 import application from './application';
 import rootTeams from './curated/teams.js';
 
@@ -6,11 +6,11 @@ import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
 import IndexPage from './presenters/pages/index';
-import CategoryPage from './presenters/pages/category';
+import CategoryPage from './presenters/pages/category.jsx';
 import ProjectPage from './presenters/pages/project.jsx';
 import {TeamPagePresenter, UserPagePresenter, TeamOrUserPagePresenter} from './presenters/pages/team-or-user.jsx';
 import QuestionsPage from './presenters/pages/questions';
-import SearchPage from './presenters/pages/search';
+import SearchPage from './presenters/pages/search.jsx';
 import errorPageTemplate from './templates/pages/error';
 
 console.log("#########");
@@ -32,12 +32,17 @@ function identifyUser(application) {
   const user = application.currentUser();
   const analytics = window.analytics;
   if (analytics && application.currentUser().isSignedIn()) {
-    analytics.identify(user.id(), {
-      name: user.name(),
-      login: user.login(),
-      email: user.email(),
-      created_at: user.createdAt(),
-    });
+    try {
+      analytics.identify(user.id(), {
+        name: user.name(),
+        login: user.login(),
+        email: user.email(),
+        created_at: user.createdAt(),
+      });
+    } catch (error) {
+      console.error(error);
+      Raven.captureException(error);
+    }
   }
 }
 
@@ -84,18 +89,15 @@ function routePage(pageUrl, application) {
   if (pageUrl.match(/^search$/i) && queryString.q) {
     const query = queryString.q;
     application.searchQuery(query);
-    application.searchTeams(query);
-    application.searchUsers(query);
-    application.searchProjects(query);
-    const page = SearchPage(application);
+    const page = SearchPage(application, query);
     return {page, title: `Search for ${query}`};
   }
 
   // category page ✅
-  if (application.categories.some(({url}) => pageUrl.match(new RegExp(url, 'i')))) {
-    application.getCategory(pageUrl);
-    const page = CategoryPage(application);
-    return {page, title: application.category().name()};
+  if (application.categories.some(({url}) => pageUrl === url)) {
+    const category = application.categories.find(({url}) => pageUrl === url);
+    const page = CategoryPage(application, category);
+    return {page, title: category.name};
   }
  
   // error page ✅
@@ -131,13 +133,16 @@ function route(location, application) {
         window.location.replace("/");
       }).catch((error) => {
         const errorData = error && error.response && error.response.data;
-        console.error("OAuth login error.", {provider, queryString, error: errorData});
+        const deets = {provider, queryString, error: errorData};
+        console.error("OAuth login error.", deets);
+        Raven.captureMessage("Oauth login error", {extra: deets});
 
         document.title = "OAuth Login Error";
         document.body.appendChild(errorPageTemplate({
           title: "OAuth Login Problem",
           description: "Hard to say what happened, but we couldn't log you in. Try again?",
         }));
+      
       });
   }
   

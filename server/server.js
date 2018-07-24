@@ -1,7 +1,16 @@
 const express = require("express");
 const compression = require("compression");
-
 require("../webpack.config.js"); // So that webpack lints itself
+
+// https://docs.sentry.io/clients/node/
+const Raven = require("raven");
+Raven.config('https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508', {
+  name: process.env.PROJECT_DOMAIN,
+  extra: {
+    project_domain: process.env.PROJECT_DOMAIN,
+    node_env: process.env.NODE_ENV,
+  },
+}).install();
 
 require("./cache").initCache();
 

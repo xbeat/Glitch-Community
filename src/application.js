@@ -1,4 +1,4 @@
-/* globals API_URL APP_URL EDITOR_URL analytics application*/
+/* globals API_URL APP_URL EDITOR_URL analytics application Raven */
 
 import Observable from 'o_0';
 
@@ -9,7 +9,6 @@ import featuredCollections from './curated/featured';
 import Model from './models/model';
 import User from './models/user';
 import Project from './models/project';
-import Category from './models/category';
 import Team from './models/team';
 import Question from './models/question';
 
@@ -18,13 +17,24 @@ if(localStorage.cachedUser) {
   try {
     cachedUser = JSON.parse(localStorage.cachedUser);
     if (cachedUser.id <= 0) {
-      throw 'invalid id';
+      throw new Error('invalid id');
     }
   } catch (error) {
     //Something bad happened in the past to get us here!
     //Act natural and pretend we're logged out
+    console.warn('could not parse cachedUser', localStorage.cachedUser);
+    Raven.captureMessage('failed to parse cachedUser', {extra: {cachedUser: localStorage.cachedUser}});
     cachedUser = undefined;
   }
+}
+
+if (cachedUser) {
+  Raven.setUserContext({
+    id: cachedUser.id,
+    login: cachedUser.login,
+  });
+} else {
+  Raven.setUserContext();
 }
 
 var self = Model({
@@ -39,31 +49,11 @@ var self = Model({
 
   // search - users
   searchQuery: Observable(""),
-  searchingForUsers: Observable(false),
-  searchResultsUsers: Observable([]),
-  searchResultsUsersLoaded: Observable(false),
-  searchResultsHaveNoUsers: Observable(false),
-
-  // search - projects
-  searchingForProjects: Observable(false),
-  searchResultsProjects: Observable([]),
-  searchResultsProjectsLoaded: Observable(false),
-  searchResultsHaveNoProjects: Observable(false),
-
-  // search - teams
-  searchingForTeams: Observable(false),
-  searchResultsTeams: Observable([]),
-  searchResultsTeamsLoaded: Observable(false),
-  searchResultsHaveNoTeams: Observable(false),
 
   // questions
   questions: Observable([]),
   gettingQuestions: Observable(false),
 
-  // category page
-  category: Observable({}),
-  categoryProjectsLoaded: Observable(false),
-  
   normalizedBaseUrl() {
     return "/";
   },
@@ -72,21 +62,6 @@ var self = Model({
     $(".overlay-background.disposable").remove();
     self.overlayVideoVisible(false);
     self.overlayNewStuffVisible(false);
-  },
-
-  searchProjects(query) {
-    self.searchResultsProjects([]);
-    return Project.getSearchResults(application, query);
-  },
-
-  searchUsers(query) {
-    self.searchResultsUsers([]);
-    return User.getSearchResults(application, query);
-  },
-
-  searchTeams(query) {
-    self.searchResultsTeams([]);
-    return Team.getSearchResults(application, query);
   },
   
   api(source) {
@@ -221,12 +196,6 @@ var self = Model({
     const userIds = usersData.map(user => user.id);
     return User.getUsersById(self.api(), userIds);
   },
-
-  getCategory(url) {
-    const categoryData = find(cachedCategories, category => category.url === url);
-    self.category(Category(categoryData));
-    return Category.updateCategory(application, categoryData.id);
-  },
  
   get categories() {
     return cachedCategories;
@@ -238,10 +207,7 @@ var self = Model({
 });
 
 
-self.attrModel("user", User);
 self.attrModel("currentUser", User);
-self.attrModel("category", Category);
-self.attrModel("team", Team);
 self.attrModel("question", Question);
 
 window.application = self;
@@ -249,7 +215,6 @@ window.API_URL = API_URL;
 window.EDITOR_URL = EDITOR_URL;
 window.User = User;
 window.Project = Project;
-window.Category = Category;
 window.Team = Team;
 window.Question = Question;
 

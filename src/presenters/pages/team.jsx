@@ -29,7 +29,7 @@ const TeamPage = ({
   addUser, removeUser,
   addPin, removePin,
   addProject, removeProject,
-  api, searchUsers, getProjects,
+  api, searchUsers,
 }) => (
   <main className="profile-page team-page">
     <section>
@@ -53,9 +53,8 @@ const TeamPage = ({
     </section>
     <AddTeamProject {...{currentUserIsOnTeam, addProject}} teamProjects={projects}/>
     <EntityPageProjects
-      projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
+      api={api} projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
       addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam: removeProject}}
-      getProjects={getProjects}
     />
     {(currentUserIsOnTeam ?
       <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects}/>
