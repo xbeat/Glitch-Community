@@ -8,6 +8,8 @@ details.overlay-container
     list-style: none
     &::-webkit-details-marker
       display: none
+    &::before
+      display: none
   &[open] > summary::after
     content: ''
   &:not([open]) > :not(summary)

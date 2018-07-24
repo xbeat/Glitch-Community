@@ -1,4 +1,6 @@
 /* globals EDITOR_URL Raven */
+import 'details-element-polyfill';
+
 import application from './application';
 
 import qs from 'querystringify';

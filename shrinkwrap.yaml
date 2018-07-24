@@ -13,6 +13,7 @@ dependencies:
   c3: 0.6.2
   compression: 1.7.2
   d3-array: 1.2.1
+  details-element-polyfill: 2.0.1
   ejs: 2.6.1
   eslint: 5.2.0
   eslint-loader: 2.1.0
@@ -2154,6 +2155,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
+  /details-element-polyfill/2.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-fizgsnC/rHPhMgrlmKb5vZAnYTqpl65qRrdd3/GhBTULhq3iXDbjhTXjaV1OLyJCAp+QWgIrmJo2CS/VAaGFfw==
   /detect-indent/4.0.0:
     dependencies:
       repeating: 2.0.1
@@ -6055,6 +6060,7 @@ specifiers:
   c3: ^0.6.2
   compression: ^1.7.2
   d3-array: ^1.2.1
+  details-element-polyfill: ^2.0.1
   ejs: ^2.6.1
   eslint: ^5.2.0
   eslint-loader: ^2.1.0
