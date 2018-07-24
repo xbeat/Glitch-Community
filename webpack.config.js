@@ -58,7 +58,7 @@ module.exports = () => {
         },
       },
       minimizer: [
-        new UglifyJsPlugin(),
+        new UglifyJsPlugin({uglifyOptions: {safari10: true}}),
       ],
     },
     devtool: 'source-map',
