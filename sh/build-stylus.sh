@@ -11,7 +11,7 @@ cd ~/
 # To fix this, we use nodemon to watch for changes to .styl files,
 # then call this build script.
 
-echo "Starting Stylus Build"
+echo "Starting Stylus build"
 
 stylus \
   --use autoprefixer-stylus \
@@ -21,10 +21,10 @@ stylus \
 stylus_status=$?
 # If it built, update styles.css
 if [ $stylus_status -eq 0 ]; then
-  echo "Build success, updating css."
+  echo "Stylus build success, updating css..."
   mv styles/styles.css public/styles.css
   mv styles/styles.css.map public/styles.css.map
-  echo "Styles updated."
+  echo "CSS updated"
 else
-  echo "Stylus build failed."
+  echo "Stylus build failed"
 fi
