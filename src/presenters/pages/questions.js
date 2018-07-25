@@ -1,6 +1,6 @@
 import QuestionsPageTemplate from '../../templates/pages/questions';
 import LayoutPresenter from '../layout';
-import QuestionsPresenter from '../questions';
+import Questions from '../questions.jsx';
 import Reactlet from '../reactlet';
 
 import Categories from "../categories.jsx";
@@ -11,7 +11,11 @@ export default function(application) {
     application,
 
     questions() {
-      return QuestionsPresenter(application, 12);
+      const props = {
+        api: application.api(),
+        max: 12,
+      };
+      return Reactlet(Questions, props);
     },
 
     Categories() {

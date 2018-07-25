@@ -1,3 +1,5 @@
+import React from 'react';
+
 import QuestionsTemplate from '../templates/includes/questions';
 import QuestionItemPresenter from './question-item';
 import Observable from 'o_0';
@@ -5,7 +7,16 @@ import {sample} from 'lodash';
 
 const DEFAULT_MAX_QUESTIONS = 3;
 
-export default function(application, maxQuestions) {
+const kaomojis = [
+  '八(＾□＾*)',
+  '(ノ^_^)ノ',
+  'ヽ(*ﾟｰﾟ*)ﾉ',
+  '♪(┌・。・)┌',
+  'ヽ(๏∀๏ )ﾉ',
+  'ヽ(^。^)丿',
+];
+
+function old(application, maxQuestions) {
   var self = {
 
     maxQuestions() {
@@ -59,8 +70,52 @@ const QuestionItem = ({}) => (
   </React.Fragment>
 );
 
-class Questions extends React.Fragment {
+const QuestionTimer = () => (
+  <div className="loader-pie" title="Looking for more questions...">
+    <div className="left-side"><div className="slice animated"></div></div>
+    <div className="right-side"><div className="slice animated"></div></div>
+  </div>
+);
+
+class Questions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      m
+      kaomoji: kaomojis[0],
+      loading: false,
+      questions: [],
+    };
+    this
+  }
+  
+  async load() {
+    this.timeout = null;
+    this.setState({loading: true});
+    await new Promise(resolve => window.setTimeout(resolve, 1000));
+    this.setState({loading: false});
+    this.timeout = window.setTimeout(() => this.load(), 10000);
+  }
+  
+  componentDidMount() {
+    this.load();
+  }
+  
+  componentWillUnmount() {
+    window.clearTimeout(this.timeout);
+  }
+  
+  render() {
+    const {kaomoji, loading, questions} = this.state;
+    return (
+      <section className="questions">
+        <h2>
+          <a href="/questions">Help Others, Get Thanks →</a>
+          {' '}
+          {!loading && <QuestionTimer/>}
+        </h2>
+      </section>
+    );
+  }
+}
+
+export default Questions;
