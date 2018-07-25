@@ -1,3 +1,5 @@
+/* globals EDITOR_URL */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -15,33 +17,41 @@ const kaomojis = [
   'ヽ(^。^)丿',
 ];
 
-const QuestionItem = ({domain, colorOuter, colorInner, userAva}) => (
+function truncateQuestion(question) {
+  const max = 140;
+  if (question.length > max) {
+    return question.substring(0, max - 3) + '…';
+  } 
+  return question;
+}
+
+function truncateTag(tag) {
+  const max = 15;
+  return tag.substring(0, max);
+}
+
+function questionUrl() {
+  if (I.line) {
+    return `${EDITOR_URL}#!/${I.domain}?path=${I.path}:${I.line}:${I.character}`;
+  } 
+  return `${EDITOR_URL}#!/${I.domain}`;
+}
+
+const QuestionItem = ({colorOuter, colorInner, domain, question, tags, userAvatar, userColor, userLogin}) => (
   <React.Fragment>
     <img className="help-icon" src={iconHelp} alt=""/>
     <a href={projectUrl} data-track="question" data-track-label={domain}>
       <div className="project" style={{backgroundColor: colorOuter}}>
         <div className="project-container" style={{backgroundColor: colorInner}}>
-          <img className="avatar" src={
+          <img className="avatar" src={userAvatar} style={userColor}/>
+          <div className="button">Help {userLogin}</div>
+          <div className="description question" title={question}>{truncateQuestion(question)}</div>
+          <div className="description tags">
+            {tags.map(tag => <div className="tag" title={tag}>{truncateTag(tag)}</div>)}
+          </div>
         </div>
       </div>
     </a>
-  
-  a(href=@projectUrl)
-    .project(data-track="question" data-track-label=@domain style=@outerColor)
-      .project-container(style=@innerColor)
-
-        img.avatar(src=@userAvatar style=@userColor)
-
-        button= "Help #{@userLogin()}"
-
-        .description.question(title=@fullQuestion)=@filteredQuestion
-
-        .description.tags
-          - context = @
-          - @question.tags().forEach (tag) ->
-            - filteredTag = context.filteredTag tag
-            .tag(alt=tag)= filteredTag
-
   </React.Fragment>
 );
 
