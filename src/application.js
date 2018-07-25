@@ -10,7 +10,6 @@ import Model from './models/model';
 import User from './models/user';
 import Project from './models/project';
 import Team from './models/team';
-import Question from './models/question';
 
 let cachedUser = undefined;
 if(localStorage.cachedUser) {
@@ -43,10 +42,6 @@ var self = Model({
 
   // search - users
   searchQuery: Observable(""),
-
-  // questions
-  questions: Observable([]),
-  gettingQuestions: Observable(false),
 
   // pages
   pageIsTeamPage: Observable(false),
@@ -193,10 +188,6 @@ var self = Model({
     return cachedCategories;
   },
 
-  getQuestions() {
-    return Question.getQuestions(self).then(questions => self.questions(questions));
-  },
-
   // client.coffee routing helpers
   // TODO?: move to utils.coffee
   
@@ -218,7 +209,6 @@ var self = Model({
 
 
 self.attrModel("currentUser", User);
-self.attrModel("question", Question);
 
 window.application = self;
 window.API_URL = API_URL;
@@ -226,6 +216,5 @@ window.EDITOR_URL = EDITOR_URL;
 window.User = User;
 window.Project = Project;
 window.Team = Team;
-window.Question = Question;
 
 export default self;

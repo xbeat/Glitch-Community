@@ -30,7 +30,7 @@ function truncateTag(tag) {
   return tag.substring(0, max);
 }
 
-const QuestionItem = ({character, colorOuter, colorInner, domain, line, path, question, tags, userAvatar, userColor, userLogin}) => (
+const QuestionItem = ({colorOuter, colorInner, domain, question, tags, userAvatar, userColor, userLogin, path, line, character}) => (
   <React.Fragment>
     <img className="help-icon" src={iconHelp} alt=""/>
     <a href={getEditorUrl(domain, path, line, character)} data-track="question" data-track-label={domain}>
@@ -47,6 +47,19 @@ const QuestionItem = ({character, colorOuter, colorInner, domain, line, path, qu
     </a>
   </React.Fragment>
 );
+QuestionItem.propTypes = {
+  colorOuter: PropTypes.string.isRequired,
+  colorInner: PropTypes.string.isRequired,
+  domain: PropTypes.string.isRequired,
+  question: PropTypes.string.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  userAvatar: PropTypes.string.isRequired,
+  userColor: PropTypes.object.isRequired,
+  userLogin: PropTypes.string.isRequired,
+  path: PropTypes.string,
+  line: PropTypes.number,
+  character: PropTypes.number,
+};
 
 const QuestionTimer = ({animating, callback}) => (
   <div className="loader-pie" title="Looking for more questions...">
@@ -54,6 +67,10 @@ const QuestionTimer = ({animating, callback}) => (
     <div className="right-side"><div className={`slice ${animating ? 'animated' : ''}`}></div></div>
   </div>
 );
+QuestionTimer.propTypes = {
+  animation: PropTypes.bool.isRequired,
+  callback: PropTypes.func.isRequired,
+};
 
 class Questions extends React.Component {
   constructor(props) {
