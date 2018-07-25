@@ -6,7 +6,7 @@ cd ~/
 
 # n.b. we're deliberately avoiding using `stylus --watch` because"
 # 1. it tends to crash
-# 2. while the build it underway, in mangles the output file
+# 2. while the build is underway, it tends to mangle the output file and break the site
 #
 # To fix this, we use nodemon to watch for changes to .styl files,
 # then call this build script.
