@@ -1,10 +1,10 @@
-/* globals EDITOR_URL */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import randomColor from 'randomcolor';
 import {sample} from 'lodash';
+
+import {getEditorUrl} from '../models/project';
 
 const iconHelp = 'https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fask-for-help.svg?1494954687906';
 
@@ -30,24 +30,17 @@ function truncateTag(tag) {
   return tag.substring(0, max);
 }
 
-function questionUrl() {
-  if (I.line) {
-    return `${EDITOR_URL}#!/${I.domain}?path=${I.path}:${I.line}:${I.character}`;
-  } 
-  return `${EDITOR_URL}#!/${I.domain}`;
-}
-
-const QuestionItem = ({colorOuter, colorInner, domain, question, tags, userAvatar, userColor, userLogin}) => (
+const QuestionItem = ({character, colorOuter, colorInner, domain, line, path, question, tags, userAvatar, userColor, userLogin}) => (
   <React.Fragment>
     <img className="help-icon" src={iconHelp} alt=""/>
-    <a href={projectUrl} data-track="question" data-track-label={domain}>
+    <a href={getEditorUrl(domain, path, line, character)} data-track="question" data-track-label={domain}>
       <div className="project" style={{backgroundColor: colorOuter}}>
         <div className="project-container" style={{backgroundColor: colorInner}}>
-          <img className="avatar" src={userAvatar} style={userColor}/>
+          <img className="avatar" src={userAvatar} style={userColor} alt=""/>
           <div className="button">Help {userLogin}</div>
           <div className="description question" title={question}>{truncateQuestion(question)}</div>
           <div className="description tags">
-            {tags.map(tag => <div className="tag" title={tag}>{truncateTag(tag)}</div>)}
+            {tags.map(tag => <div key={tag} className="tag" title={tag}>{truncateTag(tag)}</div>)}
           </div>
         </div>
       </div>

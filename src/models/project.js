@@ -225,5 +225,12 @@ export function getLink(domain) {
   return `/~${domain}`;
 }
 
+export function getEditorUrl(domain, path, line, character) {
+  if (!path || isNaN(line) || isNaN(character)) {
+    return getEditorUrl(domain);
+  }
+  return `${EDITOR_URL}#!/${domain}?path=${path}:${line}:${character}`;
+}
+
 // Circular dependencies must go below module.exports
 import User from './user';
