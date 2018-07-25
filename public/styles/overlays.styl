@@ -2,92 +2,87 @@ defaultCover = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fdef
 
 pop-shadow = 0px 2px 5px 0px rgba(0,0,0,0.27), 0px 1px 1px 0px rgba(0,0,0,0.15)
 
-.overlay-background,
-.overlay-video-background
-  // overflow: scroll
-  overflow-x: auto
-  -webkit-overflow-scrolling: touch
-  background-color: overlay-background
-  width: 100%
-  height: 100%
+details.overlay-container
+  display: inline-block
+  > summary
+    list-style: none
+    &::-webkit-details-marker
+      display: none
+    &::before
+      display: none
+  &[open] > summary::after
+    content: ''
+  &:not([open]) > :not(summary)
+    display: none
+
+details.overlay-container[open] > summary::after
+.overlay-background
+    // overflow: scroll
+    overflow-x: auto
+    -webkit-overflow-scrolling: touch
+    background-color: overlay-background
+    width: 100%
+    height: 100%
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 10
+    cursor: default
+
+dialog.overlay
+  -webkit-tap-highlight-color: rgba(0,0,0,0)
+  background-color: background-color
+  color: primary
+  border: 2px primary solid
+  border-radius: 5px
+  max-width: 640px
+  width: 94%
+  max-height: 85%
+  height: initial
+  overflow-y: auto
+  display: block
   position: fixed
-  top: 0
-  left: 0
-  z-index: 10
-  cursor: default
+  left: 50%
+  transform: translateX(-50%)
+  top: 6.5%
+  padding: 0
+  box-shadow: pop-shadow
+  z-index: 15
+  &:focus
+    outline: transparent
+  // .user-names
+  //   display: none
+  .users,
+  .project-users
+    margin-top: 0
 
-  .overlay
-    -webkit-tap-highlight-color: rgba(0,0,0,0)
-    background-color: background-color
-    color: primary
-    border: 2px primary solid
-    border-radius: 5px
-    max-width: 640px
-    width: 94%
-    max-height: 85%
-    height: initial
-    overflow-y: auto
-    display: block
-    position: relative
-    top: 6.5%
-    padding: 0
-    margin-left: auto
-    margin-right: auto
-    box-shadow: pop-shadow
-    &:focus
-      outline: transparent
-    // .user-names
-    //   display: none
-    .users,
-    .project-users
-      margin-top: 0
-
-    section
-      padding: 12px
-      padding-top: 14px
-      padding-bottom: 14px
-    .avatar
-      vertical-align: middle
-      margin-right: 5px
-    .overlay-title
-      font-weight: bold
-      display: inline-block
-    a
-      color: general-link
-      // &:hover
-      //   text-decoration: none
-    .has-buttons
-      padding-bottom: 0
-      button,
-      .button
-        margin-bottom: 14px
-        margin-right: 0.5rem
-
-  .editor-actions
-    background-image: url(defaultCover)
-        
+  section
+    padding: 12px
+    padding-top: 14px
+    padding-bottom: 14px
   .pop-over-actions
     margin: 0
     border-bottom: 1px solid secondary
     position: relative
+  .avatar
+    vertical-align: middle
+    margin-right: 5px
+  .overlay-title
+    font-weight: bold
+    display: inline-block
+  a
+    color: general-link
+    // &:hover
+    //   text-decoration: none
+  .has-buttons
+    padding-bottom: 0
+    button,
     .button
-      display: inline-block
+      margin-bottom: 14px
+      margin-right: 0.5rem
   
-  .overlay-narrow
+  &.overlay-narrow
     max-width: 460px
-      
-  .pop-over-info
-    margin: 0
-    background-color: secondary-background
-    border-bottom: 1px solid secondary
-    border-top-left-radius: 3px
-    border-top-right-radius: 3px
-    .pop-title
-      font-size: 14px
-      font-weight: bold
-  
-  .last-section
-    border-bottom: none
 
   // wistia embed styling
   .wistia_responsive_padding

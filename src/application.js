@@ -6,7 +6,6 @@ import {find} from "lodash";
 import axios from 'axios';
 import cachedCategories from './cache/categories.js';
 import cachedTeams from './cache/teams.js';
-import featuredCollections from './curated/featured';
 import Model from './models/model';
 import User from './models/user';
 import Project from './models/project';
@@ -42,12 +41,6 @@ var self = Model({
   currentUser: cachedUser,
 }).extend({
 
-  featuredCollections,
-
-  // overlays
-  overlayVideoVisible: Observable(false),
-  overlayNewStuffVisible: Observable(false),
-
   // search - users
   searchQuery: Observable(""),
 
@@ -61,12 +54,6 @@ var self = Model({
   
   normalizedBaseUrl() {
     return "/";
-  },
-
-  closeAllPopOvers() {
-    $(".overlay-background.disposable").remove();
-    self.overlayVideoVisible(false);
-    self.overlayNewStuffVisible(false);
   },
   
   api(source) {

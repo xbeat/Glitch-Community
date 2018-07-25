@@ -1,4 +1,6 @@
 /* globals EDITOR_URL Raven */
+import 'details-element-polyfill';
+
 import application from './application';
 
 import qs from 'querystringify';
@@ -164,22 +166,3 @@ function route(location, application) {
 }
 
 route(window.location, application);
-
-document.addEventListener("click", event => globalclick(event));
-document.addEventListener("touchend", event => globalclick(event));
-document.addEventListener("keyup", function(event) {
-  const escapeKey = 27;
-  const tabKey = 9;
-  if (event.keyCode === escapeKey) {
-    return application.closeAllPopOvers();
-  }
-  if (event.keyCode === tabKey) {
-    return globalclick(event);
-  }
-});
-
-var globalclick = function(event) {
-  if (!$(event.target).closest('.pop-over, .opens-pop-over, .overlay').length) {
-    return application.closeAllPopOvers();
-  }
-};
