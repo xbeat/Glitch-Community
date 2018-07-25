@@ -1,3 +1,5 @@
+/* global EDITOR_URL */
+
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
@@ -23,7 +25,7 @@ const Logo = () => {
 };
 
 const ResumeCoding = () => (
-  <a className="button button-small button-cta" href="https://glitch.com/edit/" data-track="resume coding">
+  <a className="button button-small button-cta" href={EDITOR_URL} data-track="resume coding">
     <div className="">Resume Coding</div>
   </a>
 );

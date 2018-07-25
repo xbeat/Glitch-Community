@@ -31,3 +31,17 @@ export default function(application) {
 
   return LayoutPresenter(application, content);
 }
+
+const QuestionsPage = ({api, categories}) => (
+  <main className="questions-page">
+    <Questions api={api} max={12}/>
+    <Categories categories={categories}/>
+  </main>
+);
+
+export default function(application) {
+  const props = {
+    api: application.api(),
+    categories: application.categories,
+  };
+  const content = Reactlet(QuestionsPage, props);
