@@ -1,0 +1,30 @@
+#!/bin/bash
+cd ~/
+
+# This script builds the contents of the ~/stylus folder.
+# On success, we move styles.css to public/
+
+# n.b. we're deliberately avoiding using `stylus --watch` because"
+# 1. it tends to crash
+# 2. while the build it underway, in mangles the output file
+#
+# To fix this, we use nodemon to watch for changes to .styl files,
+# then call this build script.
+
+echo "Starting Stylus Build"
+
+stylus \
+  --use autoprefixer-stylus \
+  --sourcemap \
+  --compress styles/styles.styl
+
+stylus_status=$?
+# If it built, update styles.css
+if [ $stylus_status -eq 0 ]; then
+  echo "Build success, updating css."
+  mv styles/styles.css public/styles.css
+  mv styles/styles.css.map public/styles.css.map
+  echo "Styles updated."
+else
+  echo "Stylus build failed."
+fi
