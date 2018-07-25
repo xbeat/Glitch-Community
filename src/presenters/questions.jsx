@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 import randomColor from 'randomcolor';
 import {sample} from 'lodash';
 
-import {getEditorUrl} from '../models/project';
-
-const iconHelp = 'https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fask-for-help.svg?1494954687906';
+import QuestionItem from './question-item.jsx';
 
 const kaomojis = [
   '八(＾□＾*)',
@@ -16,50 +14,6 @@ const kaomojis = [
   'ヽ(๏∀๏ )ﾉ',
   'ヽ(^。^)丿',
 ];
-
-function truncateQuestion(question) {
-  const max = 140;
-  if (question.length > max) {
-    return question.substring(0, max - 3) + '…';
-  } 
-  return question;
-}
-
-function truncateTag(tag) {
-  const max = 15;
-  return tag.substring(0, max);
-}
-
-const QuestionItem = ({colorOuter, colorInner, domain, question, tags, userAvatar, userColor, userLogin, path, line, character}) => (
-  <React.Fragment>
-    <img className="help-icon" src={iconHelp} alt=""/>
-    <a href={getEditorUrl(domain, path, line, character)} data-track="question" data-track-label={domain}>
-      <div className="project" style={{backgroundColor: colorOuter}}>
-        <div className="project-container" style={{backgroundColor: colorInner}}>
-          <img className="avatar" src={userAvatar} style={{backgroundColor: userColor}} alt=""/>
-          <div className="button">Help {userLogin}</div>
-          <div className="description question" title={question}>{truncateQuestion(question)}</div>
-          <div className="description tags">
-            {tags.map(tag => <div key={tag} className="tag" title={tag}>{truncateTag(tag)}</div>)}
-          </div>
-        </div>
-      </div>
-    </a>
-  </React.Fragment>
-);
-QuestionItem.propTypes = {
-  colorOuter: PropTypes.string.isRequired,
-  colorInner: PropTypes.string.isRequired,
-  domain: PropTypes.string.isRequired,
-  question: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  userAvatar: PropTypes.string.isRequired,
-  userColor: PropTypes.string.isRequired,
-  userLogin: PropTypes.string.isRequired,
-  path: PropTypes.string,
-  line: PropTypes.number,
-  character: PropTypes.number,
-};
 
 const QuestionTimer = ({animating, callback}) => (
   <div className="loader-pie" title="Looking for more questions...">
