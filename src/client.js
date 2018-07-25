@@ -11,7 +11,7 @@ import CategoryPage from './presenters/pages/category.jsx';
 import ProjectPage from './presenters/pages/project.jsx';
 import TeamPage from './presenters/pages/team.jsx';
 import {UserPageById, UserPageByLogin} from './presenters/pages/user.jsx';
-import QuestionsPage from './presenters/pages/questions';
+import QuestionsPage from './presenters/pages/questions.jsx';
 import SearchPage from './presenters/pages/search.jsx';
 import errorPageTemplate from './templates/pages/error';
 

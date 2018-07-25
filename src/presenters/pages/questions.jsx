@@ -1,36 +1,11 @@
-import QuestionsPageTemplate from '../../templates/pages/questions';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import LayoutPresenter from '../layout';
-import Questions from '../questions.jsx';
 import Reactlet from '../reactlet';
 
-import Categories from "../categories.jsx";
-
-export default function(application) {
-  const self = {
-
-    application,
-
-    questions() {
-      const props = {
-        api: application.api(),
-        max: 12,
-      };
-      return Reactlet(Questions, props);
-    },
-
-    Categories() {
-      const props = {
-        categories: application.categories,
-      };
-     
-      return Reactlet(Categories, props);
-    },
-  };
-      
-  const content = QuestionsPageTemplate(self);
-
-  return LayoutPresenter(application, content);
-}
+import Questions from '../questions.jsx';
+import Categories from '../categories.jsx';
 
 const QuestionsPage = ({api, categories}) => (
   <main className="questions-page">
@@ -38,6 +13,10 @@ const QuestionsPage = ({api, categories}) => (
     <Categories categories={categories}/>
   </main>
 );
+QuestionsPage.propTypes = {
+  api: PropTypes.any.isRequired,
+  categories: PropTypes.array.isRequired,
+};
 
 export default function(application) {
   const props = {
@@ -45,3 +24,5 @@ export default function(application) {
     categories: application.categories,
   };
   const content = Reactlet(QuestionsPage, props);
+  return LayoutPresenter(application, content);
+}
