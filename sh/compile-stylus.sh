@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Stylus tends to crash, so run it in a loop so that it'll come back to life on failure.
+# Stylus --watch has two problems that we're working around:
+# 1. it t Stylus tends to crash, so run it in a loop so that it'll come back to life on failure.
 
 echo "Starting stylus watcher"
 
