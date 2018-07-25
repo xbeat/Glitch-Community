@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 
 class OutputOnBuildStart {
@@ -56,6 +57,9 @@ module.exports = () => {
           },
         },
       },
+      minimizer: [
+        new UglifyJsPlugin({uglifyOptions: {safari10: true}}),
+      ],
     },
     devtool: 'source-map',
     module: {
