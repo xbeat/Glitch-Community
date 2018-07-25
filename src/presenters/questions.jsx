@@ -70,10 +70,10 @@ const QuestionItem = ({}) => (
   </React.Fragment>
 );
 
-const QuestionTimer = () => (
+const QuestionTimer = ({animating}) => (
   <div className="loader-pie" title="Looking for more questions...">
-    <div className="left-side"><div className="slice animated"></div></div>
-    <div className="right-side"><div className="slice animated"></div></div>
+    <div className="left-side"><div className={`slice ${animating ? 'animated' : ''}`}></div></div>
+    <div className="right-side"><div className={`slice ${animating ? 'animated' : ''}`}></div></div>
   </div>
 );
 
@@ -85,7 +85,7 @@ class Questions extends React.Component {
       loading: false,
       questions: [],
     };
-    this
+    this.timeout = null;
   }
   
   async load() {
@@ -101,7 +101,9 @@ class Questions extends React.Component {
   }
   
   componentWillUnmount() {
-    window.clearTimeout(this.timeout);
+    if (this.timeout !== null) {
+      window.clearTimeout(this.timeout);
+    }
   }
   
   render() {
@@ -111,7 +113,7 @@ class Questions extends React.Component {
         <h2>
           <a href="/questions">Help Others, Get Thanks →</a>
           {' '}
-          {!loading && <QuestionTimer/>}
+          <QuestionTimer animating={!loading}/>
         </h2>
       </section>
     );
