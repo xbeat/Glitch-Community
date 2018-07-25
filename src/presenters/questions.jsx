@@ -3,6 +3,7 @@ import React from 'react';
 import QuestionsTemplate from '../templates/includes/questions';
 import QuestionItemPresenter from './question-item';
 import Observable from 'o_0';
+import randomColor from 'randomcolor';
 import {sample} from 'lodash';
 
 const DEFAULT_MAX_QUESTIONS = 3;
@@ -71,8 +72,8 @@ const QuestionItem = ({}) => (
 );
 
 const QuestionTimer = ({animating, callback}) => (
-  <div className="loader-pie" title="Looking for more questions..." onAnimationEnd={callback}>
-    <div className="left-side"><div className={`slice ${animating ? 'animated' : ''}`}></div></div>
+  <div className="loader-pie" title="Looking for more questions...">
+    <div className="left-side"><div className={`slice ${animating ? 'animated' : ''}`} onAnimationEnd={callback}></div></div>
     <div className="right-side"><div className={`slice ${animating ? 'animated' : ''}`}></div></div>
   </div>
 );
@@ -82,31 +83,30 @@ class Questions extends React.Component {
     super(props);
     this.state = {
       kaomoji: '',
-      loading: false,
+      loading: true,
       questions: [],
     };
-    this.timeout = null;
   }
   
   async load() {
     this.timeout = null;
     this.setState({loading: true});
-    await new Promise(resolve => window.setTimeout(resolve, 1000));
+    const {data} = await this.props.api.get('projects/questions');
+    const questions = data.map(({details}) => {
+      const [colorInner, colorOuter] = randomColor({luminosity: 'light', count: 2});
+      return {
+        ...JSON.parse(details),
+        colorInner, colorOuter,
+      };
+    });
     this.setState({
       kaomoji: sample(kaomojis),
       loading: false,
     });
-    //this.timeout = window.setTimeout(() => this.load(), 10000);
   }
   
   componentDidMount() {
     this.load();
-  }
-  
-  componentWillUnmount() {
-    if (this.timeout !== null) {
-      //window.clearTimeout(this.timeout);
-    }
   }
   
   render() {
@@ -114,12 +114,13 @@ class Questions extends React.Component {
     return (
       <section className="questions">
         <h2>
-          <a href="/questions">Help Others, Get Thanks →</a>
-          {' '}
+          <a href="/questions">Help Others, Get Thanks →</a>{' '}
           <QuestionTimer animating={!loading} callback={() => this.load()}/>
         </h2>
         <article className="projects">
-          {questions.length ? 'asdf' : (
+          {questions.length ? (
+            'asdf'
+          ) : (
             <React.Fragment>
               {kaomoji} Looks like nobody is asking for help right now.{' '}
               <a className="general-link" href="/help/how-can-i-get-help-with-code-in-my-project/">Learn about helping</a>
