@@ -16,7 +16,7 @@ echo "Starting Stylus build"
 stylus \
   --use autoprefixer-stylus \
   --sourcemap \
-  --compress styles/styles.styl
+  styles/styles.styl
 
 stylus_status=$?
 # If it built, update styles.css
