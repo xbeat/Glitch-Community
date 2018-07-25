@@ -38,7 +38,7 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomai
   };
   
   const filteredProjects = projects.filter(({name}) => {
-    return name.toLowerCase().includes(filter.toLowerCase());
+    return name && name.toLowerCase().includes(filter.toLowerCase());
   });
   
   return (
@@ -99,7 +99,6 @@ class TeamAnalyticsProjectPop extends React.Component {
   }
   
   setFilter(query) {
-    console.log("setting filter to", query)
     this.setState({filter: query});
   }
   
