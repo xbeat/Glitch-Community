@@ -191,29 +191,6 @@ Project.getProjectsByIds = function(api, ids) {
   return ids.map(id => Project({id}));
 };
 
-//getProjectsByIds, but wrapped in a promise until they're all fetched.
-Project.promiseProjectsByIds = (api, ids) => {
-  // Fetch all the project models.
-  const projects = Project.getProjectsByIds(api, ids);
-  
-  // Set up promises to listen to the fetched() state
-  const promises = projects.map(project => {
-    return new Promise((resolve) => {
-      project.fetched.observe((isFetched) => {
-        isFetched && resolve();
-      });
-    });
-  });
-  
-  // Once they all report in as fetched,
-  // return the (now populated) original projects object
-  return new Promise((resolve) => {
-    Promise.all(promises).then(() => {
-      return resolve(projects);
-    });
-  });
-};
-
 
 Project._cache = cache;
 
