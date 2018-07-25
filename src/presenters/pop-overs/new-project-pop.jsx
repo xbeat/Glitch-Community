@@ -70,7 +70,7 @@ class NewProjectPopContainer extends React.Component {
 }
 
 NewProjectPopContainer.propTypes = {
-  promiseProjectsByIds: PropTypes.func.isRequired,
+  api: PropTypes.any.isRequired,
 };
 
 export default NewProjectPopContainer;

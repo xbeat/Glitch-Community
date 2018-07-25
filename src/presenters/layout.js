@@ -21,6 +21,7 @@ export default (application, content) =>
         return maybeUser;
       });
       const props = {
+        api: application.api(),
         baseUrl: application.normalizedBaseUrl(),
         userObservable: userObservable,
         searchQuery: application.searchQuery(),

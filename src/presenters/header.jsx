@@ -67,7 +67,7 @@ UserOptionsPopWrapper.propTypes = {
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
-const Header = ({baseUrl, maybeUser, searchQuery, showNewStuffOverlay, promiseProjectsByIds}) => {
+const Header = ({api, baseUrl, maybeUser, searchQuery, showNewStuffOverlay}) => {
   const signedIn = maybeUser && !!maybeUser.login;
   return (
     <header role="banner">
@@ -79,7 +79,7 @@ const Header = ({baseUrl, maybeUser, searchQuery, showNewStuffOverlay, promisePr
      
       <nav>
         <SearchForm baseUrl={baseUrl} onSubmit={submitSearch} defaultValue={searchQuery}/>
-        <NewProjectPop promiseProjectsByIds={promiseProjectsByIds}/>
+        <NewProjectPop api={api}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
         { maybeUser && <UserOptionsPopWrapper user={maybeUser} showNewStuffOverlay={showNewStuffOverlay} />}
@@ -124,7 +124,6 @@ HeaderContainer.propTypes = {
   baseUrl: PropTypes.string.isRequired,
   userObservable: PropTypes.func.isRequired,
   searchQuery: PropTypes.string.isRequired,
-  promiseProjectsByIds: PropTypes.func.isRequired,
 };
 
 export default HeaderContainer;
