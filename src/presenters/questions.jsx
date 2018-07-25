@@ -81,7 +81,7 @@ class Questions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      kaomoji: kaomojis[0],
+      kaomoji: '',
       loading: false,
       questions: [],
     };
@@ -92,7 +92,10 @@ class Questions extends React.Component {
     this.timeout = null;
     this.setState({loading: true});
     await new Promise(resolve => window.setTimeout(resolve, 1000));
-    this.setState({loading: false});
+    this.setState({
+      kaomoji: sample(kaomojis),
+      loading: false,
+    });
     this.timeout = window.setTimeout(() => this.load(), 10000);
   }
   
@@ -115,6 +118,15 @@ class Questions extends React.Component {
           {' '}
           <QuestionTimer animating={!loading}/>
         </h2>
+        <article className="projects">
+          {questions.length ? 'asdf' : (
+            <React.Fragment>
+              {kaomoji}{' '}
+              Looks like nobody is asking for help right now.{' '}
+              <a className="general-link" href="/help/how-can-i-get-help-with-code-in-my-project/">Learn about helping</a>
+            </React.Fragment>
+          )}
+        </article>
       </section>
     );
   }
