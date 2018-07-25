@@ -8,7 +8,7 @@ const iconHelp = 'https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2F
 function truncateQuestion(question) {
   const max = 140;
   if (question.length > max) {
-    return question.substring(0, max - 3) + '…';
+    return question.substring(0, max - 1) + '…';
   } 
   return question;
 }

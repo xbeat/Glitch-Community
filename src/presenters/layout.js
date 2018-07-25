@@ -1,7 +1,6 @@
 import Layout from '../templates/layout';
 import Header from './header.jsx';
 import Footer from './footer.jsx';
-import ProjectModel from '../models/project';
 import Observable from 'o_0';
 
 import Reactlet from './reactlet';
