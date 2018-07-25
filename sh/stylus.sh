@@ -1,4 +1,6 @@
-# Two processes are needed.
+#!/bin/bash
+
+# Two processes are needed to handle stylus.
 
 # This first is to invoke stylus --watch so that we get speedy stylus builds:
 bash sh/stylus-watcher.sh &
