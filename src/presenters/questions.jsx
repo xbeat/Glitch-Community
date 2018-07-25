@@ -70,8 +70,8 @@ const QuestionItem = ({}) => (
   </React.Fragment>
 );
 
-const QuestionTimer = ({animating}) => (
-  <div className="loader-pie" title="Looking for more questions...">
+const QuestionTimer = ({animating, callback}) => (
+  <div className="loader-pie" title="Looking for more questions..." onAnimationEnd={callback}>
     <div className="left-side"><div className={`slice ${animating ? 'animated' : ''}`}></div></div>
     <div className="right-side"><div className={`slice ${animating ? 'animated' : ''}`}></div></div>
   </div>
@@ -96,7 +96,7 @@ class Questions extends React.Component {
       kaomoji: sample(kaomojis),
       loading: false,
     });
-    this.timeout = window.setTimeout(() => this.load(), 10000);
+    //this.timeout = window.setTimeout(() => this.load(), 10000);
   }
   
   componentDidMount() {
@@ -105,7 +105,7 @@ class Questions extends React.Component {
   
   componentWillUnmount() {
     if (this.timeout !== null) {
-      window.clearTimeout(this.timeout);
+      //window.clearTimeout(this.timeout);
     }
   }
   
@@ -116,13 +116,12 @@ class Questions extends React.Component {
         <h2>
           <a href="/questions">Help Others, Get Thanks →</a>
           {' '}
-          <QuestionTimer animating={!loading}/>
+          <QuestionTimer animating={!loading} callback={() => this.load()}/>
         </h2>
         <article className="projects">
           {questions.length ? 'asdf' : (
             <React.Fragment>
-              {kaomoji}{' '}
-              Looks like nobody is asking for help right now.{' '}
+              {kaomoji} Looks like nobody is asking for help right now.{' '}
               <a className="general-link" href="/help/how-can-i-get-help-with-code-in-my-project/">Learn about helping</a>
             </React.Fragment>
           )}
