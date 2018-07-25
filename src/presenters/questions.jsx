@@ -36,7 +36,7 @@ const QuestionItem = ({colorOuter, colorInner, domain, question, tags, userAvata
     <a href={getEditorUrl(domain, path, line, character)} data-track="question" data-track-label={domain}>
       <div className="project" style={{backgroundColor: colorOuter}}>
         <div className="project-container" style={{backgroundColor: colorInner}}>
-          <img className="avatar" src={userAvatar} style={userColor} alt=""/>
+          <img className="avatar" src={userAvatar} style={{backgroundColor: userColor}} alt=""/>
           <div className="button">Help {userLogin}</div>
           <div className="description question" title={question}>{truncateQuestion(question)}</div>
           <div className="description tags">
@@ -54,7 +54,7 @@ QuestionItem.propTypes = {
   question: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   userAvatar: PropTypes.string.isRequired,
-  userColor: PropTypes.object.isRequired,
+  userColor: PropTypes.string.isRequired,
   userLogin: PropTypes.string.isRequired,
   path: PropTypes.string,
   line: PropTypes.number,
@@ -85,7 +85,8 @@ class Questions extends React.Component {
   async load() {
     this.setState({loading: true});
     try {
-      const {data} = await this.props.api.get('projects/questions');
+      //const {data} = await this.props.api.get('projects/questions');
+      const data=[{"userId":6091,"projectId":"9bcd211e-7fb5-4888-acc7-143f02bfd635","details":"{\"questionId\":\"iTtCaQixcnUN7bb4\",\"projectId\":\"9bcd211e-7fb5-4888-acc7-143f02bfd635\",\"domain\":\"flawless-speedboat\",\"path\":\"README.md\",\"line\":4,\"character\":19,\"question\":\"how do i ask questions\",\"tags\":[\"md\",\"api\"],\"userTabId\":\"15772\",\"userId\":6091,\"userLogin\":\"Greg\",\"userAvatar\":\"https://s3.amazonaws.com/staging-assetsbucket-1ndysle6zaaq4/user-avatar/087d46f8-1e42-4627-be92-e0e3997a5afc-small.png\",\"userColor\":\"#ff87dd\",\"created\":\"2018-07-25T18:58:45.979Z\",\"version\":2}","updatedAt":"2018-07-25T18:58:29.343Z"}]
       const questions = data.map(({details}) => {
         const question = JSON.parse(details);
         const [colorInner, colorOuter] = randomColor({luminosity: 'light', count: 2});
@@ -118,7 +119,7 @@ class Questions extends React.Component {
             <ul className="projects-container">
               {questions.map(question => (
                 <li key={question.questionId}>
-                  <QuestionItem question={question}/>
+                  <QuestionItem {...question}/>
                 </li>
               ))}
             </ul>

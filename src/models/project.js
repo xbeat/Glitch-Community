@@ -226,10 +226,10 @@ export function getLink(domain) {
 }
 
 export function getEditorUrl(domain, path, line, character) {
-  if (!path || isNaN(line) || isNaN(character)) {
-    return getEditorUrl(domain);
+  if (path && !isNaN(line) && !isNaN(character)) {
+    return `${EDITOR_URL}#!/${domain}?path=${path}:${line}:${character}`;
   }
-  return `${EDITOR_URL}#!/${domain}?path=${path}:${line}:${character}`;
+  return `${EDITOR_URL}#!/${domain}`;
 }
 
 // Circular dependencies must go below module.exports
