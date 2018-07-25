@@ -68,7 +68,7 @@ const QuestionTimer = ({animating, callback}) => (
   </div>
 );
 QuestionTimer.propTypes = {
-  animation: PropTypes.bool.isRequired,
+  animating: PropTypes.bool.isRequired,
   callback: PropTypes.func.isRequired,
 };
 
@@ -83,19 +83,22 @@ class Questions extends React.Component {
   }
   
   async load() {
-    this.timeout = null;
     this.setState({loading: true});
-    const {data} = await this.props.api.get('projects/questions');
-    const questions = data.map(({details}) => {
-      const question = JSON.parse(details);
-      const [colorInner, colorOuter] = randomColor({luminosity: 'light', count: 2});
-      return {colorInner, colorOuter, ...question};
-    });
-    this.setState({
-      kaomoji: sample(kaomojis),
-      loading: false,
-      questions,
-    });
+    try {
+      const {data} = await this.props.api.get('projects/questions');
+      questions = data.map(({details}) => {
+        const question = JSON.parse(details);
+        const [colorInner, colorOuter] = randomColor({luminosity: 'light', count: 2});
+        return {colorInner, colorOuter, ...question};
+      });
+      this.setState({
+        kaomoji: sample(kaomojis),
+        loading: false,
+        questions,
+      });
+    } catch (e) {
+      console.error('failed to load questions');
+    }
   }
   
   componentDidMount() {
