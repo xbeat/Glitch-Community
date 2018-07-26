@@ -8,7 +8,8 @@ span
 
     - if @currentUser().isSignedIn()
       = @QuestionsPresenter
-    = @RecentProjectsPresenter
+    - if @currentUser().id()
+      = @RecentProjectsPresenter
 
     = @featured
         

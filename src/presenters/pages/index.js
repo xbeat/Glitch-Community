@@ -28,10 +28,6 @@ export default function(application) {
 
     currentUser: application.currentUser,
 
-    hiddenUnlessCurrentUser() {
-      if (!application.currentUser().id()) { return 'hidden'; }
-    },
-
     featured() {
       return Reactlet(Featured);
     },
