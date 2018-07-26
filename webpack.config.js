@@ -98,7 +98,6 @@ module.exports = () => {
             {
               loader: 'stylus-loader',
               options: {
-                sourceMap: true,
                 use: [AutoprefixerStylus()],
               },
             },
