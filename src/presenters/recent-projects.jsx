@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {CoverC
+import {getAvatarStyle, getProfileStyle} from '../models/user';
+
+import {CoverContainer} from './includes/profile.jsx';
+import SignInPop from "./pop-overs/sign-in-pop.jsx";
 
 import RecentProjectsTemplate from '../templates/includes/recent-projects';
 import Loader from '../templates/includes/loader';
 
 import {ProjectsUL} from "./projects-list.jsx";
-import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import Reactlet from "./reactlet";
 
-export default function(application) {
+function old(application) {
 
   const self = { 
 
@@ -79,27 +81,23 @@ export default function(application) {
   return RecentProjectsTemplate(self);
 }
 
-const RecentProjects = () => (
-  /*
-  h2
-    a(href=@userLink)
-      span Your Projects →
-  .cover-container(@style)
-    .profile-avatar
-      .user-avatar-container
-        a(href=@userLink)
-          .user-avatar(class=@userAvatarIsAnon style=@userAvatarStyle alt="Your avatar")
-      - if @currentUser.isAnon()
-        .anon-user-sign-up
-          = @SignInPop
-    article.projects
-      span(class=@hiddenIfUserIsFetched)
-        =@loader
-
-      =@projects
-      */
+const RecentProjects = ({user}) => (
   <section className="profile recent-projects">
-    <h2><a href={userLink}>Your Projects →</a></h2>
-    
+    <h2><a href={user.userLink}>Your Projects →</a></h2>
+    <CoverContainer style={getProfileStyle(user)}>
+      <div className="profile-avatar">
+        <div className="user-avatar-container">
+          <a href={user.userLink}>
+            <div className={`user-avatar ${userAvatarIsAnon}`} style={getAvatarStyle(user)} alt=""></div>
+          </a>
+          {userIsAnon && <div className="anon-user-sign-up"><SignInPop/></div>}
+        </div>
+      </div>
+      <article className="projects">
+        {projects}
+      </article>
+    </CoverContainer>
   </section>
 );
+
+export default RecentProjects;
