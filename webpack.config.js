@@ -5,6 +5,8 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const AutoprefixerStylus = require("autoprefixer-stylus");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+
 
 
 
@@ -65,6 +67,7 @@ module.exports = () => {
       },
       minimizer: [
         new UglifyJsPlugin({uglifyOptions: {safari10: true}}),
+        new OptimizeCSSAssetsPlugin({}),
       ],
     },
     devtool: 'source-map',

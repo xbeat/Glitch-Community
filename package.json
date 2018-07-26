@@ -60,7 +60,8 @@
     "webpack-manifest-plugin": "^2.0.3",
     "css-loader": "^1.0.0",
     "stylus-loader": "^3.0.2",
-    "mini-css-extract-plugin": "^0.4.1"
+    "mini-css-extract-plugin": "^0.4.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.0"
   },
   "engines": {
     "node": "8.x"
