@@ -92,10 +92,17 @@ module.exports = () => {
           test: /\.styl$/,
           use: [
             MiniCssExtractPlugin.loader,
-            "css-loader",
+            //"css-loader",
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+              },
+            },
             {
               loader: 'stylus-loader',
               options: {
+                sourcemap: {'comment': true},
                 use: [AutoprefixerStylus()],
               },
             },
