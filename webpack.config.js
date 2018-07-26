@@ -67,7 +67,6 @@ module.exports = () => {
       },
       minimizer: [
         new UglifyJsPlugin({uglifyOptions: {safari10: true}}),
-        new OptimizeCSSAssetsPlugin({}),
       ],
     },
     devtool: 'source-map',
@@ -101,8 +100,6 @@ module.exports = () => {
             {
               loader: 'stylus-loader',
               options: {
-                compression: true,
-                preferPathResolver: 'webpack',
                 use: [AutoprefixerStylus()],
               },
             },
@@ -125,9 +122,15 @@ module.exports = () => {
         fileName: "styles.json",
         filter: ({isInitial, name}) => isInitial && name.endsWith('.css'),
       }),
-       new MiniCssExtractPlugin({
+      new MiniCssExtractPlugin({
         filename: "[name].css?[contenthash]"
-      })
+      }),
+      new OptimizeCSSAssetsPlugin({ 
+        assetNameRegExp: /\.css$/g,
+        cssProcessor: require('cssnano'),
+        cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
+        canPrint: true
+      }),
     ],
   };
 }
