@@ -303,22 +303,6 @@ User.getUserById = function(application, id) {
   return promise;
 };
 
-User.getUsersById = function(api, ids) {
-  const userIdsToFetch = ids.filter(function(id) {
-    const user = cache[id];
-    return !user || !user.fetched();
-  });
-  const usersPath = `users/byIds?ids=${userIdsToFetch.join(',')}`;
-  return api.get(usersPath)
-    .then(function({data}) {
-      data.forEach(function(datum) {
-        datum.fetched = true;
-        return User(datum).update(datum);
-      });
-      return ids.map(id => User({id}));
-    });
-};
-
 User.getSearchResultsJSON = function(application, query) {
   const { CancelToken } = axios;
   const source = CancelToken.source();

@@ -244,12 +244,6 @@ export default Team = function(I, self) {
   return self;
 };
 
-Team.getTeamById = function(application, id) {
-  const teamsPath = `teams/${id}`;
-  return application.api().get(teamsPath)
-    .then(({data}) => application.saveTeam(data)).catch(error => console.error('getTeamById', error));
-};
-
 
 Team._cache = cache;
 
