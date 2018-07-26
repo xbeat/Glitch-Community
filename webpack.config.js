@@ -18,6 +18,7 @@ const PUBLIC = path.resolve(__dirname, 'public');
 const SRC = path.resolve(__dirname, 'src');
 const STYLES = path.resolve(__dirname, 'styles');
 const BASE = path.resolve(__dirname, '.');
+const STYLE_BUNDLE_NAME = 'styles';
 
 
 module.exports = () => {
@@ -33,7 +34,7 @@ module.exports = () => {
     mode,
     entry: {
       "client-bundle": `${SRC}/client.js`,
-      "styles": `${STYLES}/styles.styl`,
+      [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
     },
     output: {
       filename: '[name].js?[chunkhash]',
@@ -104,7 +105,10 @@ module.exports = () => {
       new webpack.NoEmitOnErrorsPlugin(),
       new ManifestPlugin({
         fileName: "scripts.json",
-        filter: ({isInitial, name}) => isInitial && name.endsWith('.js'),
+        filter: ({isInitial, name}) => (
+          isInitial && name.endsWith('.js') &&
+            name !== `${STYLE_BUNDLE_NAME}.js` // clean up 
+          ),
       }),
       new ManifestPlugin({
         fileName: "styles.json",
@@ -113,8 +117,7 @@ module.exports = () => {
        new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
-        filename: "[name].css?[hash]",
-        chunkFilename: "[id].[hash].css"
+        filename: "[name].css?[hash]"
       })
     ],
 
