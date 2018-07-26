@@ -29,7 +29,7 @@ CurrentUserConsumer.propTypes = {
 };
 
 export function normalizeUser(user, currentUser) {
-  return user.id === currentUser.id ? currentUser : user;
+  return user.id === (currentUser && currentUser.id) ? currentUser : user;
 }
 
 export function normalizeUsers(users, currentUser) {
