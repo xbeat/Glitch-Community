@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'It\'s Countdown O\'Clock',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcountdown-oclock.jpg?1532340065871",
-    link: 'https://glitch.com/~countdown-oclock'
+    title: 'Generate Bling!',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fgenerative-crystals.jpg?1532598873084",
+    link: 'https://generative-crystals.glitch.me'
   }
   , {
     title: 'Create Slick Beats',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ftenori-off.jpg?1532340207849",
-    link: 'https://glitch.com/~tenori-off'
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftwitter-quizz.jpg?1532599148329",
+    link: 'https://twitter-quizz.glitch.me'
   }
   , {
-    title: 'From Slack to Things ✅',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fthings-cmd.jpg?1532340416668",
-    link: 'https://glitch.com/edit/#!/things-cmd'
+    title: 'I Gotsta Get Paid',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsilfra-invoice.jpg?1532599009082",
+    link: 'https://glitch.com/~silfra-invoice'
   }  
 ];
