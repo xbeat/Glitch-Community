@@ -51,7 +51,6 @@ function identifyUser(application) {
 function routePage(pageUrl, application) {
   // index page ✅
   if (pageUrl.match(/^index\.html$/i) || !pageUrl) {
-    application.getQuestions();
     return {page: IndexPage(application)};
   }
 
