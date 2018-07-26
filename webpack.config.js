@@ -122,9 +122,7 @@ module.exports = () => {
         filter: ({isInitial, name}) => isInitial && name.endsWith('.css'),
       }),
        new MiniCssExtractPlugin({
-        // Options similar to the same options in webpackOptions.output
-        // both options are optional
-        filename: "[name].css?[hash]"
+        filename: "[name].css?[contenthash]"
       })
     ],
   };
