@@ -2,6 +2,7 @@
 import 'details-element-polyfill';
 
 import application from './application';
+import rootTeams from './curated/teams.js';
 
 import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
@@ -9,8 +10,7 @@ const queryString = qs.parse(window.location.search);
 import IndexPage from './presenters/pages/index';
 import CategoryPage from './presenters/pages/category.jsx';
 import ProjectPage from './presenters/pages/project.jsx';
-import TeamPage from './presenters/pages/team.jsx';
-import {UserPageById, UserPageByLogin} from './presenters/pages/user.jsx';
+import {TeamPagePresenter, UserPagePresenter, TeamOrUserPagePresenter} from './presenters/pages/team-or-user.jsx';
 import QuestionsPage from './presenters/pages/questions.jsx';
 import SearchPage from './presenters/pages/search.jsx';
 import errorPageTemplate from './templates/pages/error';
@@ -50,48 +50,44 @@ function identifyUser(application) {
 
 function routePage(pageUrl, application) {
   // index page ✅
-  if ((pageUrl === "index.html") || (pageUrl === "")) {
+  if (pageUrl.match(/^index\.html$/i) || !pageUrl) {
     return {page: IndexPage(application)};
   }
 
   // questions page ✅
-  if (pageUrl === 'questions') {
+  if (pageUrl.match(/^questions$/i)) {
     return {page: QuestionsPage(application), title: "Questions"};
   }
 
   // ~project overlay page ✅
   if (pageUrl.charAt(0) === '~') {
-    const projectDomain = application.removeFirstCharacter(pageUrl);
+    const projectDomain = pageUrl.substring(1);
     const page = ProjectPage(application, projectDomain);
     return {page, title:decodeURI(pageUrl)};
   }
 
   // @user page ✅
   if (pageUrl.charAt(0) === '@') {
-    application.pageIsUserPage(true);
-    const userLogin = pageUrl.substring(1, pageUrl.length);
-    const page = UserPageByLogin(application, userLogin);
+    const name = pageUrl.substring(1);
+    const page = TeamOrUserPagePresenter(application, name);
     return {page, title:decodeURI(pageUrl)};
   }
 
   // anon user page ✅
   if (pageUrl.match(/^(user\/)/g)) {
-    application.pageIsUserPage(true);
-    const userId = application.anonProfileIdFromUrl(pageUrl);
-    const page = UserPageById(application, userId);
+    const userId = parseInt(pageUrl.replace(/^(user\/)/g, ''), 10);
+    const page = UserPagePresenter(application, userId, `user ${userId}`);
     return {page, title: pageUrl};
   }
 
   // root team page ✅
-  if (application.getCachedTeamByUrl(pageUrl)) {
-    application.pageIsTeamPage(true);
-    const team = application.getCachedTeamByUrl(pageUrl);
-    const page = TeamPage(application, team.id, team.name);
-    return {page, title: team.name};
+  if (rootTeams[pageUrl.toLowerCase()]) {
+    const page = TeamPagePresenter(application, rootTeams[pageUrl.toLowerCase()], pageUrl);
+    return {page, title: pageUrl};
   }
 
   // search page ✅
-  if (pageUrl === 'search' && queryString.q) {
+  if (pageUrl.match(/^search$/i) && queryString.q) {
     const query = queryString.q;
     application.searchQuery(query);
     const page = SearchPage(application, query);
@@ -116,7 +112,7 @@ function routePage(pageUrl, application) {
 }
 
 function route(location, application) {
-  let normalizedRoute = location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
+  const normalizedRoute = location.pathname.replace(/^\/|\/$/g, "");
   console.log(`normalizedRoute is ${normalizedRoute}`);
 
   //

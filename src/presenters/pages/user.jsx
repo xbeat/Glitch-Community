@@ -1,14 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import LayoutPresenter from '../layout';
-import Reactlet from "../reactlet";
-
 import {getAvatarStyle, getProfileStyle} from '../../models/user';
-
-import {DataLoader} from '../includes/loader.jsx';
-import {Notifications} from '../notifications.jsx';
-import {CurrentUserProvider} from '../current-user.jsx';
 
 import {AuthDescription} from '../includes/description-field.jsx';
 import EditableField from '../includes/editable-field.jsx';
@@ -17,7 +10,6 @@ import Thanks from '../includes/thanks.jsx';
 
 import DeletedProjects from '../deleted-projects.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
-import NotFound from '../includes/not-found.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
 function syncPageToLogin(login) {
@@ -76,7 +68,7 @@ const UserPage = ({
   addPin, removePin,
   leaveProject,
   deleteProject, undeleteProject,
-  getDeletedProjects, setDeletedProjects,
+  setDeletedProjects,
 }) => (
   <main className="profile-page user-page">
     <section>
@@ -99,7 +91,7 @@ const UserPage = ({
       api={api} addPin={addPin} removePin={removePin}
       projectOptions={{leaveProject, deleteProject}}
     />
-    {isAuthorized && <DeletedProjects get={getDeletedProjects} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
+    {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
   </main>
 );
 UserPage.propTypes = {
@@ -122,53 +114,12 @@ UserPage.propTypes = {
   leaveProject: PropTypes.func.isRequired,
 };
 
-const UserPageLoader = ({api, get, loginOrId, currentUserModel, getDeletedProjects}) => (
-  <CurrentUserProvider model={currentUserModel}>
-    <Notifications>
-      <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
-        {user => user ? (
-          <UserEditor api={api} initialUser={user} currentUserModel={currentUserModel}>
-            {(user, funcs, isAuthorized) => (
-              <UserPage user={user} {...funcs} {...{api, isAuthorized, getDeletedProjects}}/>
-            )}
-          </UserEditor>
-        ) : <NotFound name={loginOrId}/>}
-      </DataLoader>
-    </Notifications>
-  </CurrentUserProvider>
+const UserPageContainer = ({api, user, currentUserModel, getProjects}) => (
+  <UserEditor api={api} initialUser={user} currentUserModel={currentUserModel}>
+    {(user, funcs, isAuthorized) => (
+      <UserPage api={api} user={user} {...funcs} {...{isAuthorized, getProjects}}/>
+    )}
+  </UserEditor>
 );
-UserPageLoader.propTypes = {
-  get: PropTypes.func.isRequired,
-  loginOrId: PropTypes.node.isRequired,
-};
 
-function UserPagePresenter(application, loginOrId, get) {
-  const props = {
-    loginOrId, get,
-    api: application.api(),
-    currentUserModel: application.currentUser(),
-    getDeletedProjects: () => application.api().get(`user/deleted-projects`),
-  };
-  const content = Reactlet(UserPageLoader, props, 'userpage');
-  return LayoutPresenter(application, content);
-}
-
-async function getUserById(api, id) {
-  const {data} = await api.get(`users/${id}`);
-  return data;
-}
-
-async function getUserByLogin(api, login) {
-  const {data} = await api.get(`userId/byLogin/${login}`);
-  return await getUserById(api, data);
-}
-
-export function UserPageById(application, id) {
-  const get = () => getUserById(application.api(), id);
-  return UserPagePresenter(application, id, get);
-}
-
-export function UserPageByLogin(application, login) {
-  const get = () => getUserByLogin(application.api(), login);
-  return UserPagePresenter(application, login, get);
-}
+export default UserPageContainer;
