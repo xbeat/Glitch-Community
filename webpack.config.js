@@ -32,7 +32,7 @@ module.exports = () => {
     mode,
     entry: {
       "client-bundle": `${SRC}/client.js`,
-      "styles": `${STYLES}/styles.styl`
+      "styles": `${STYLES}/styles.styl`,
     },
     output: {
       filename: '[name].js?[chunkhash]',
@@ -90,7 +90,7 @@ module.exports = () => {
         {
             test: /\.styl%/,
             use: ExtractTextPlugin.extract({
-              use: ["css-load"stylus-loader"
+              use: ["css-loader", "stylus-loader"]
             })
         },
       ],
@@ -102,10 +102,15 @@ module.exports = () => {
       new ManifestPlugin({
         filter: ({isInitial, name}) => isInitial && !name.endsWith('.map'),
       }),
-      new ExtractTextPlugin("[name].css?[contenthash]", {
-        allChunks: true
-      })
+      new ExtractTextPlugin("[name].css")
     ],
 
   };
 }
+
+
+/*
+ new ExtractTextPlugin("[name].css?[contenthash]", {
+        allChunks: false
+      })
+      */
