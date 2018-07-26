@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getAvatarStyle, getProfileStyle} from '../models/user';
+import {CurrentUserProvider, CurrentUserConsumer} from './current-user.jsx';
 
 import {CoverContainer} from './includes/profile.jsx';
 import Loader from './includes/loader.jsx';
@@ -30,27 +31,34 @@ const RecentProjectsContainer = ({children, user}) => (
 RecentProjectsContainer.propTypes = {
   children: PropTypes.node.isRequired,
   user: PropTypes.shape({
-    id: PropTypes.number.isRequired,
     avatarUrl: PropTypes.string.isRequired,
-    
+    color: PropTypes.string.isRequired,
+    coverColor: PropTypes.string.isRequired,
+    hasCoverImage: PropTypes.bool.isRequired,
+    id: PropTypes.number.isRequired,
+    login: PropTypes.string.isRequired,
+    userLink: PropTypes.string.isRequired,
   }).isRequired,
 };
 
-const RecentProjects = ({api, fetched, user}) => (
-  <RecentProjectsContainer user={user}>
-    {fetched ? (
-      <ProjectsLoader api={api} projects={user.projects.slice(0,3)}>
-        {projects => <ProjectsUL projects={projects}/>}
-      </ProjectsLoader>
-    ) : <Loader/>}
-  </RecentProjectsContainer>
+const RecentProjects = ({api, userModel}) => (
+  <CurrentUserProvider model={userModel}>
+    <CurrentUserConsumer>
+      {(user, fetched) => (
+        <RecentProjectsContainer user={user}>
+          {fetched ? (
+            <ProjectsLoader api={api} projects={user.projects.slice(0,3)}>
+              {projects => <ProjectsUL projects={projects}/>}
+            </ProjectsLoader>
+          ) : <Loader/>}
+        </RecentProjectsContainer>
+      )}
+    </CurrentUserConsumer>
+  </CurrentUserProvider>
 );
 RecentProjects.propTypes = {
   api: PropTypes.any.isRequired,
-  fetched: PropTypes.bool.isRequired,
-  user: PropTypes.shape({
-    projects: PropTypes.array.isRequired,
-  }).isRequired,
+  userModel: PropTypes.object.isRequired,
 };
 
 export default RecentProjects;
