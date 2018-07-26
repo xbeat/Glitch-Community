@@ -9,79 +9,6 @@ import ProjectsLoader from './projects-loader.jsx';
 import {ProjectsUL} from './projects-list.jsx';
 import SignInPop from './pop-overs/sign-in-pop.jsx';
 
-import RecentProjectsTemplate from '../templates/includes/recent-projects';
-
-import Reactlet from "./reactlet";
-
-function old(application) {
-
-  const self = { 
-
-    application,
-    currentUser: application.currentUser(),
-
-    style() {
-      return {
-        backgroundImage: `url('${application.currentUser().coverUrl('large')}')`,
-        backgroundColor: application.currentUser().coverColor(),
-      };
-    },
-    
-    userAvatarStyle() {
-      return {
-        backgroundColor: application.currentUser().color(),
-        backgroundImage: `url('${application.currentUser().userAvatarUrl('large')}')`,
-      };
-    },
-    
-    userAvatarUrl() {
-      return application.currentUser().userAvatarUrl('large');
-    },
-    
-    loader() {
-      return Loader(self);
-    },
-    
-    projects() {
-      const projectsObservable = application.currentUser().projects;
-      const projects = projectsObservable.slice(0,3);      
-      
-      if(projects.find(project => !project.fetched())){
-        return self.loader();
-      }
-      
-      const props = {
-        projects: projects.map(project => project.asProps()),
-      };
-
-      return Reactlet(ProjectsUL, props);
-    },
-        
-    SignInPop() {
-      return Reactlet(SignInPop);
-    },
-    
-    userAvatarIsAnon() {
-      if (application.currentUser().isAnon()) { return 'anon-user-avatar'; }
-    },
-
-    userLink() {
-      return application.currentUser().userLink();
-    },
-
-    hiddenIfUserIsFetched() {
-      if (application.currentUser().fetched()) { return 'hidden'; }
-    },
-
-    hiddenUnlessCurrentUser() {
-      const currentAndFetched = application.currentUser().id() && application.currentUser().fetched();
-      if (!currentAndFetched) { return 'hidden'; }
-    },
-  };
-
-  return RecentProjectsTemplate(self);
-}
-
 const RecentProjectsContainer = ({children, user}) => (
   <section className="profile recent-projects">
     <h2><a href={user.userLink}>Your Projects →</a></h2>
@@ -100,6 +27,14 @@ const RecentProjectsContainer = ({children, user}) => (
     </CoverContainer>
   </section>
 );
+RecentProjectsContainer.propTypes = {
+  children: PropTypes.node.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    avatarUrl: PropTypes.string.isRequired,
+    
+  }).isRequired,
+};
 
 const RecentProjects = ({api, fetched, user}) => (
   <RecentProjectsContainer user={user}>
@@ -110,5 +45,12 @@ const RecentProjects = ({api, fetched, user}) => (
     ) : <Loader/>}
   </RecentProjectsContainer>
 );
+RecentProjects.propTypes = {
+  api: PropTypes.any.isRequired,
+  fetched: PropTypes.bool.isRequired,
+  user: PropTypes.shape({
+    projects: PropTypes.array.isRequired,
+  }).isRequired,
+};
 
 export default RecentProjects;
