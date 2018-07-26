@@ -1,3 +1,8 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import {CoverC
+
 import RecentProjectsTemplate from '../templates/includes/recent-projects';
 import Loader from '../templates/includes/loader';
 
@@ -73,3 +78,28 @@ export default function(application) {
 
   return RecentProjectsTemplate(self);
 }
+
+const RecentProjects = () => (
+  /*
+  h2
+    a(href=@userLink)
+      span Your Projects →
+  .cover-container(@style)
+    .profile-avatar
+      .user-avatar-container
+        a(href=@userLink)
+          .user-avatar(class=@userAvatarIsAnon style=@userAvatarStyle alt="Your avatar")
+      - if @currentUser.isAnon()
+        .anon-user-sign-up
+          = @SignInPop
+    article.projects
+      span(class=@hiddenIfUserIsFetched)
+        =@loader
+
+      =@projects
+      */
+  <section className="profile recent-projects">
+    <h2><a href={userLink}>Your Projects →</a></h2>
+    
+  </section>
+);
