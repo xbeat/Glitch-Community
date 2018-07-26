@@ -1,5 +1,4 @@
 import React from 'react';
-import {render} from 'react-dom';
 
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
@@ -95,18 +94,14 @@ const IndexPageContainer = ({userModel, ...props}) => (
   </CurrentUserProvider>
 );
 
-const Scripts = () => (
-  <React.Fragment>
-    <script src="//fast.wistia.com/embed/medias/vskja9agqj.jsonp" async></script>
-    <script src="//fast.wistia.com/assets/external/E-v1.js" async></script>
-  </React.Fragment>
-);
-
 export default function IndexPagePresenter(application) {
-  const e = document.createElement('span');
-  document.body.appendChild(e);
-  render(Scripts, e);
-    
+  const a = document.createElement('script');
+  a.src = '//fast.wistia.com/embed/medias/vskja9agqj.jsonp';
+  document.body.appendChild(a);
+  const b = document.createElement('script');
+  b.src = '//fast.wistia.com/assets/external/E-v1.js';
+  document.body.appendChild(b);
+  
   const props = {
     api: application.api(),
     categories: application.categories,
