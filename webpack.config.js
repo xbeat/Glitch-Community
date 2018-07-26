@@ -3,7 +3,8 @@ const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 
 
 class OutputOnBuildStart {
@@ -88,10 +89,12 @@ module.exports = () => {
           loader : 'babel-loader'
         },
         {
-            test: /\.styl%/,
-            use: ExtractTextPlugin.extract({
-              use: ["css-loader", "stylus-loader"]
-            })
+          test: /\.styl$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            "css-loader",
+            "stylus-loader",
+          ] 
         },
       ],
     },
@@ -102,15 +105,13 @@ module.exports = () => {
       new ManifestPlugin({
         filter: ({isInitial, name}) => isInitial && !name.endsWith('.map'),
       }),
-      new ExtractTextPlugin("[name].css")
+       new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: "[name].[hash].css",
+        chunkFilename: "[id].[hash].css"
+      })
     ],
 
   };
 }
-
-
-/*
- new ExtractTextPlugin("[name].css?[contenthash]", {
-        allChunks: false
-      })
-      */
