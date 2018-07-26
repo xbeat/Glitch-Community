@@ -4,7 +4,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const SylusAutoprefixer = require("autoprefixer-stylus");
+const AutoprefixerStylus = require("autoprefixer-stylus");
 
 
 
@@ -95,7 +95,13 @@ module.exports = () => {
           use: [
             MiniCssExtractPlugin.loader,
             "css-loader",
-            "stylus-loader",
+            {
+              loader: 'stylus-loader',
+              options: {
+                sourceMap: true,
+                use: [AutoprefixerStylus()],
+              },
+            },
           ] 
         },
       ],
@@ -121,9 +127,5 @@ module.exports = () => {
         filename: "[name].css?[hash]"
       })
     ],
-    stylus: {
-      use: [SylusAutoprefixer()]
-    },
-
   };
 }
