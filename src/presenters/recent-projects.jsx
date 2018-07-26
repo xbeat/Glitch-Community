@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getAvatarStyle, getProfileStyle} from '../models/user';
-import {CurrentUserProvider, CurrentUserConsumer} from './current-user.jsx';
+import {CurrentUserConsumer} from './current-user.jsx';
 
 import {CoverContainer} from './includes/profile.jsx';
 import Loader from './includes/loader.jsx';
@@ -41,24 +41,21 @@ RecentProjectsContainer.propTypes = {
   }).isRequired,
 };
 
-const RecentProjects = ({api, userModel}) => (
-  <CurrentUserProvider model={userModel}>
-    <CurrentUserConsumer>
-      {(user, fetched) => (
-        <RecentProjectsContainer user={user}>
-          {fetched ? (
-            <ProjectsLoader api={api} projects={user.projects.slice(0,3)}>
-              {projects => <ProjectsUL projects={projects}/>}
-            </ProjectsLoader>
-          ) : <Loader/>}
-        </RecentProjectsContainer>
-      )}
-    </CurrentUserConsumer>
-  </CurrentUserProvider>
+const RecentProjects = ({api}) => (
+  <CurrentUserConsumer>
+    {(user, fetched) => (
+      <RecentProjectsContainer user={user}>
+        {fetched ? (
+          <ProjectsLoader api={api} projects={user.projects.slice(0,3)}>
+            {projects => <ProjectsUL projects={projects}/>}
+          </ProjectsLoader>
+        ) : <Loader/>}
+      </RecentProjectsContainer>
+    )}
+  </CurrentUserConsumer>
 );
 RecentProjects.propTypes = {
   api: PropTypes.any.isRequired,
-  userModel: PropTypes.object.isRequired,
 };
 
 export default RecentProjects;
