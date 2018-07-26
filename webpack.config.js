@@ -101,6 +101,8 @@ module.exports = () => {
             {
               loader: 'stylus-loader',
               options: {
+                compression: true,
+                preferPathResolver: 'webpack',
                 use: [AutoprefixerStylus()],
               },
             },
