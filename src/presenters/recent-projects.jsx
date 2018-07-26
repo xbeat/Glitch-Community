@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import {getAvatarStyle, getProfileStyle} from '../models/user';
 
 import {CoverContainer} from './includes/profile.jsx';
-import SignInPop from "./pop-overs/sign-in-pop.jsx";
+import Loader from './includes/loader.jsx';
+import ProjectsLoader from './projects-loader.jsx';
+import {ProjectsUL} from './projects-list.jsx';
+import SignInPop from './pop-overs/sign-in-pop.jsx';
 
 import RecentProjectsTemplate from '../templates/includes/recent-projects';
-import Loader from '../templates/includes/loader';
 
-import {ProjectsUL} from "./projects-list.jsx";
 import Reactlet from "./reactlet";
 
 function old(application) {
@@ -81,23 +82,33 @@ function old(application) {
   return RecentProjectsTemplate(self);
 }
 
-const RecentProjects = ({user}) => (
+const RecentProjectsContainer = ({children, user}) => (
   <section className="profile recent-projects">
     <h2><a href={user.userLink}>Your Projects →</a></h2>
     <CoverContainer style={getProfileStyle(user)}>
       <div className="profile-avatar">
         <div className="user-avatar-container">
           <a href={user.userLink}>
-            <div className={`user-avatar ${userAvatarIsAnon}`} style={getAvatarStyle(user)} alt=""></div>
+            <div className={`user-avatar ${!user.login ? 'anon-user-avatar' : ''}`} style={getAvatarStyle(user)} alt=""></div>
           </a>
-          {userIsAnon && <div className="anon-user-sign-up"><SignInPop/></div>}
+          {!user.login && <div className="anon-user-sign-up"><SignInPop/></div>}
         </div>
       </div>
       <article className="projects">
-        {projects}
+        {children}
       </article>
     </CoverContainer>
   </section>
+);
+
+const RecentProjects = ({api, fetched, user}) => (
+  <RecentProjectsContainer user={user}>
+    {fetched ? (
+      <ProjectsLoader api={api} projects={user.projects.slice(0,3)}>
+        {projects => <ProjectsUL projects={projects}/>}
+      </ProjectsLoader>
+    ) : <Loader/>}
+  </RecentProjectsContainer>
 );
 
 export default RecentProjects;

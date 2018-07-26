@@ -59,6 +59,9 @@ export default function(application) {
 
     RecentProjectsPresenter() {
       const props = {
+        api: application.api(),
+        user: application.currentUser().asProps(),
+        fetched: application.currentUser().fetched(),
       };
       return Reactlet(RecentProjects, props);
     },
