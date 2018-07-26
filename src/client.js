@@ -164,20 +164,4 @@ function route(location, application) {
   document.body.appendChild(page);
 }
 
-let passed = false;
-try {
-  const element = document.querySelector('noscript');
-  const formatted = `Hello ${element}`;
-  const arrow = ({value}={}) => ({value: value || formatted});
-  const {value} = arrow();
-  arrow({value});
-  passed = true;
-} catch(error) {
-  passed = false;
-  console.error(error);
-  console.error('failed the es6 test, ignoring js');
-}
-
-if (passed) {
-  route(window.location, application);
-}
+route(window.location, application);
