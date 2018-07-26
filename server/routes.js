@@ -39,6 +39,7 @@ module.exports = function() {
   
   function render(res, title, description, image) {
     const manifest = JSON.parse(fs.readFileSync('public/manifest.json'));
+    const scripts = manifest.filter
     res.render('index.ejs', {
       title, description,
       image: image || 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png',

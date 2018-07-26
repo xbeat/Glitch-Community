@@ -103,7 +103,12 @@ module.exports = () => {
       new LodashModuleReplacementPlugin,
       new webpack.NoEmitOnErrorsPlugin(),
       new ManifestPlugin({
-        filter: ({isInitial, name}) => isInitial && !name.endsWith('.map'),
+        fileName: "scripts.json",
+        filter: ({isInitial, name}) => isInitial && name.endsWith('.js'),
+      }),
+      new ManifestPlugin({
+        fileName: "styles.json",
+        filter: ({isInitial, name}) => isInitial && name.endsWith('.css'),
       }),
        new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
