@@ -5,10 +5,6 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const AutoprefixerStylus = require("autoprefixer-stylus");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-
-
-
 
 class OutputOnBuildStart {
   apply(compiler) {
@@ -124,12 +120,6 @@ module.exports = () => {
       }),
       new MiniCssExtractPlugin({
         filename: "[name].css?[contenthash]"
-      }),
-      new OptimizeCSSAssetsPlugin({ 
-        assetNameRegExp: /\.css$/g,
-        cssProcessor: require('cssnano'),
-        cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
-        canPrint: true
       }),
     ],
   };
