@@ -19,29 +19,45 @@ const whatsGlitchNarrow = "https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09d
 const free = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffree.svg?1499350845981";
 
 const whatsGlitchAlt = "Create a node app, or remix one. It updates as you type. Code with Friends!";
+
+function loadScript(src) {
+  const script = document.createElement('script');
+  script.src = src;
+  script.async = true;
+  document.head.appendChild(script);
+}
   
-const WhatIsGlitch = () => (
-  <section className="what-is-glitch">
-    <h2>How It Works</h2>
-    <span>
-      <a href="https://glitch.com/about">
-        <figure title="How Glitch works">
-          <img className="wide" src={whatsGlitchWide} alt={whatsGlitchAlt}/>
-          <img className="narrow" src={whatsGlitchNarrow} alt={whatsGlitchAlt}/>
-        </figure>
-      </a>
-      <div>
-        And it's <img className="free" src={free} alt="free"/>.{' '}
-        <OverlayVideo>
-          <div className="button video">
-            <img className="play-button" src={play} alt="play"/>
-            <span>How it works in 1 minute</span>
+class WhatIsGlitch extends React.Component {
+  componentDidMount() {
+    loadScript('//fast.wistia.com/embed/medias/vskja9agqj.jsonp');
+    loadScript('//fast.wistia.com/assets/external/E-v1.js');
+  }
+  
+  render() {
+    return (
+      <section className="what-is-glitch">
+        <h2>How It Works</h2>
+        <span>
+          <a href="https://glitch.com/about">
+            <figure title="How Glitch works">
+              <img className="wide" src={whatsGlitchWide} alt={whatsGlitchAlt}/>
+              <img className="narrow" src={whatsGlitchNarrow} alt={whatsGlitchAlt}/>
+            </figure>
+          </a>
+          <div>
+            And it's <img className="free" src={free} alt="free"/>.{' '}
+            <OverlayVideo>
+              <div className="button video">
+                <img className="play-button" src={play} alt="play"/>
+                <span>How it works in 1 minute</span>
+              </div>
+            </OverlayVideo>
           </div>
-        </OverlayVideo>
-      </div>
-    </span>
-  </section>
-);
+        </span>
+      </section>
+    );
+  }
+}
 
 const FOUNDED = 2000;
 const current = new Date().getFullYear();
@@ -95,13 +111,6 @@ const IndexPageContainer = ({userModel, ...props}) => (
 );
 
 export default function IndexPagePresenter(application) {
-  const a = document.createElement('script');
-  a.src = '//fast.wistia.com/embed/medias/vskja9agqj.jsonp';
-  document.body.appendChild(a);
-  const b = document.createElement('script');
-  b.src = '//fast.wistia.com/assets/external/E-v1.js';
-  document.body.appendChild(b);
-  
   const props = {
     api: application.api(),
     categories: application.categories,
