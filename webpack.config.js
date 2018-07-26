@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 
 class OutputOnBuildStart {
@@ -14,6 +15,7 @@ class OutputOnBuildStart {
 
 const PUBLIC = path.resolve(__dirname, 'public');
 const SRC = path.resolve(__dirname, 'src');
+const STYLES = path.resolve(__dirname, 'styles');
 const BASE = path.resolve(__dirname, '.');
 
 
@@ -29,7 +31,8 @@ module.exports = () => {
   return {
     mode,
     entry: {
-      "client-bundle": `${SRC}/client.js`
+      "client-bundle": `${SRC}/client.js`,
+      "styles": `${STYLES}/styles.styl`
     },
     output: {
       filename: '[name].js?[chunkhash]',
@@ -84,6 +87,12 @@ module.exports = () => {
           exclude: /node_modules/,
           loader : 'babel-loader'
         },
+        {
+            test: /\.styl%/,
+            use: ExtractTextPlugin.extract({
+              use: ["css-load"stylus-loader"
+            })
+        },
       ],
     },
     plugins: [
@@ -93,6 +102,9 @@ module.exports = () => {
       new ManifestPlugin({
         filter: ({isInitial, name}) => isInitial && !name.endsWith('.map'),
       }),
+      new ExtractTextPlugin("[name].css?[contenthash]", {
+        allChunks: true
+      })
     ],
 
   };
