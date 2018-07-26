@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import LayoutPresenter from '../layout';
 import Reactlet from '../reactlet';
@@ -101,6 +102,13 @@ const IndexPage = ({api, categories, user}) => (
     <MadeInGlitch/>
   </main>
 );
+IndexPage.propTypes = {
+  api: PropTypes.any.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number,
+    login: PropTypes.string,
+  }).isRequired,
+};
 
 const IndexPageContainer = ({userModel, ...props}) => (
   <CurrentUserProvider model={userModel}>
