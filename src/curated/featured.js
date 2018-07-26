@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Guess The Right Color',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcolor-guessing-game.jpg?1531999961697",
-    link: 'https://glitch.com/~color-guessing-game'
+    title: 'Twitter Quiz',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftwitter-quizz.jpg?1532599148329",
+    link: 'https://twitter-quizz.glitch.me'
   }
   , {
-    title: 'Corgis On Demand',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcorgi-button.jpg?1531999962386",
-    link: 'https://glitch.com/~corgi-button'
-  }
+    title: 'Generate Bling!',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fgenerative-crystals.jpg?1532598873084",
+    link: 'https://generative-crystals.glitch.me'
+  } 
   , {
-    title: 'Create Reveal.js Presentations',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Freveal-glitch.jpg?1531999963191",
-    link: 'https://glitch.com/~reveal-glitch'
+    title: 'I Gotsta Get Paid',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsilfra-invoice.jpg?1532599009082",
+    link: 'https://glitch.com/~silfra-invoice'
   }  
 ];

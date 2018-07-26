@@ -13,7 +13,7 @@ popover pans, which have straight-walled sides rather than angled.
 const Wrapper = ({children}) => (children);
 
 Wrapper.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.element,
 };
 
 export default class PopoverContainer extends React.Component {
@@ -21,18 +21,19 @@ export default class PopoverContainer extends React.Component {
     super(props);
     this.state = { visible: false };
 
+    this.set = this.set.bind(this);
     this.toggle = this.toggle.bind(this);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
    
     // We need to set up and instantiate an onClickOutside wrapper
     // It's important to instantiate it once and pass though its children,
-    // otherwise the diff algorithm won't be able to figureo out our hijinks.
+    // otherwise the diff algorithm won't be able to figure out our hijinks.
     // https://github.com/Pomax/react-onclickoutside
 
     // We do extra work with disableOnClickOutside and handleClickOutside
     // to prevent event bindings from being created until the popover is opened.
+    const handleClickOutside = this.handleClickOutside.bind(this);
     const clickOutsideConfig = {
-      handleClickOutside: (function() { return this.handleClickOutside; }).bind(this),
+      handleClickOutside: () => handleClickOutside,
       excludeScrollbar: true,
     };
     this.MonitoredComponent = onClickOutside(Wrapper, clickOutsideConfig);
@@ -47,6 +48,10 @@ export default class PopoverContainer extends React.Component {
     this.setState({visible: false});
   }
   
+  set(visible) {
+    this.setState({visible});
+  }
+  
   toggle() {
     this.setState((prevState) => {
       return {visible: !prevState.visible};
@@ -54,18 +59,28 @@ export default class PopoverContainer extends React.Component {
   }
 
   render() {
-    const inner = this.props.children({visible: this.state.visible, togglePopover: this.toggle});
+    const props = {
+      visible: this.state.visible,
+      togglePopover: this.toggle,
+      setVisible: this.set,
+    };
+    const inner = this.props.children(props);
     if(isFragment(inner)) {
       console.error("PopoverContainer does not support React.Fragment as the top level item. Please use a different element.");
     }
+    const outer = this.props.outer ? this.props.outer(props) : null;
     return (
-      <this.MonitoredComponent disableOnClickOutside={!this.state.visible} eventTypes={["mousedown", "touchstart", "keyup"]}>
-        {inner}
-      </this.MonitoredComponent>
+      <React.Fragment>
+        {outer}
+        <this.MonitoredComponent disableOnClickOutside={!this.state.visible} eventTypes={["mousedown", "touchstart", "keyup"]}>
+          {inner}
+        </this.MonitoredComponent>
+      </React.Fragment>
     );
   }
 }
 
 PopoverContainer.propTypes = {
   children: PropTypes.func.isRequired,
+  outer: PropTypes.func,
 };

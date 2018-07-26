@@ -75,6 +75,8 @@ export default class DeletedProjects extends React.Component {
       return <button className="button button-tertiary" onClick={this.clickShow}>Show</button>;
     } else if (!this.state.loaded) {
       return <Loader/>;
+    } else if (!this.props.deletedProjects.length) {
+      return 'nothing found';
     }
     return <DeletedProjectsList {...this.props}/>;
   }

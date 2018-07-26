@@ -1,9 +1,6 @@
 import Layout from '../templates/layout';
 import Header from './header.jsx';
 import Footer from './footer.jsx';
-import OverlayVideo from './overlays/overlay-video';
-import NewStuffPresenter from './overlays/new-stuff';
-import ProjectModel from '../models/project';
 import Observable from 'o_0';
 
 import Reactlet from './reactlet';
@@ -23,11 +20,12 @@ export default (application, content) =>
         return maybeUser;
       });
       const props = {
+        api: application.api(),
         baseUrl: application.normalizedBaseUrl(),
         userObservable: userObservable,
         searchQuery: application.searchQuery(),
-        overlayNewStuffVisible: application.overlayNewStuffVisible,
-        promiseProjectsByIds: (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds),
+        getUserPref: application.getUserPref,
+        setUserPref: application.updateUserPrefs,
       };
       return Reactlet(Header, props);
     },
@@ -35,7 +33,4 @@ export default (application, content) =>
     content,
 
     footer: Reactlet(Footer),
-    
-    overlayVideo: OverlayVideo(application),
-    newStuff: NewStuffPresenter(application),
   });

@@ -1,12 +1,11 @@
 import IndexTemplate from '../../templates/pages/index';
 import LayoutPresenter from '../layout';
-import FeaturedCollectionPresenter from '../featured-collection';
 import RecentProjectsPresenter from '../recent-projects';
-import QuestionsPresenter from '../questions';
 import Reactlet from '../reactlet';
-import EmbedHtml from '../../curated/embed';
 
 import Categories from "../categories.jsx";
+import Featured from '../featured.jsx';
+import Questions from '../questions.jsx';
 import RandomCategories from '../random-categories.jsx';
 import WhatIsGlitch from "../what-is-glitch.jsx";
 import ByFogCreek from "../includes/by-fogcreek.jsx";
@@ -21,19 +20,10 @@ export default function(application) {
     user: application.user,
 
     WhatIsGlitch() {
-
-      const props = {
-        isSignedIn() {
-          return application.currentUser().isSignedIn();
-        },
-        showVideoOverlay(event) {
-          application.overlayVideoVisible(true);
-          document.getElementsByClassName('video-overlay')[0].focus();
-          return event.stopPropagation();
-        },
-      };
-
-      return Reactlet(WhatIsGlitch, props);
+      if (application.currentUser().isSignedIn()) {
+        return null;
+      }
+      return Reactlet(WhatIsGlitch);
     },
 
     currentUser: application.currentUser,
@@ -42,8 +32,8 @@ export default function(application) {
       if (!application.currentUser().id()) { return 'hidden'; }
     },
 
-    featuredCollections() {
-      return application.featuredCollections.map(collection => FeaturedCollectionPresenter(application, collection));
+    featured() {
+      return Reactlet(Featured);
     },
     
     randomCategories() {
@@ -51,12 +41,6 @@ export default function(application) {
         api: application.api(),
       };
       return Reactlet(RandomCategories, props);
-    },
-
-    embed() {
-      const node = document.createElement('span');
-      node.innerHTML = EmbedHtml;
-      return node;
     },
 
     Categories() {
@@ -67,7 +51,10 @@ export default function(application) {
     },
 
     QuestionsPresenter() {
-      return QuestionsPresenter(application);
+      const props = {
+        api: application.api(),
+      };
+      return Reactlet(Questions, props);
     },
 
     RecentProjectsPresenter() {
