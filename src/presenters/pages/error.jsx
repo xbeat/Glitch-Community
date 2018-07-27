@@ -3,20 +3,41 @@ import PropTypes from 'prop-types';
 
 const logo = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcarp.svg";
 
+const drawStar = (canvas, context, color) => {
+  const x = Math.random() * canvas.width;
+  const y = Math.random() * canvas.height;
+  context.fillStyle = color;
+  context.fillRect(x, y, 2, 2);
+};
+
 class Stars extends React.Component {
   constructor(props) {
     super(props);
+    this.stars = 1;
     this.canvas = React.createRef();
+    this.handleResize = this.handleResize.bind(this);
   }
   
-  drawStars() {
-    this.canvas.current.width = screen.width;
-    this.canvas.current.height = screen.height;
+  resetCanvas() {
+    this.canvas.current.width = Math.max(window.innerWidth, screen.width);
+    this.canvas.current.height = Math.max(window.innerHeight, screen.height);
     const context = this.canvas.current.getContext('2d');
+    for (let i = 0; i < 100; ++i) {
+      drawStar(this.canvas.current, context, 'white');
+    }
+  }
+  
+  handleResize() {
+    this.drawStars();
   }
   
   componentDidMount() {
     this.drawStars();
+    window.addEventListener('resize', this.handleResize);
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
   }
   
   render() {
