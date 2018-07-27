@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
-import ProjectModel from '../../models/project';
 
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
@@ -90,7 +89,6 @@ const Presenter = (application, Loader, args) => {
     api: application.api(),
     currentUserModel: application.currentUser(),
     searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
-    getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => ProjectModel(d).update(d).asProps())),
     ...args,
   };
   return (

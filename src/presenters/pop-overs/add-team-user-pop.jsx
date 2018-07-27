@@ -65,6 +65,7 @@ class AddTeamUserPop extends React.Component {
     }
     
     const request = this.props.search(this.state.query);
+    UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps()))
     this.setState({ maybeRequest: request });
     
     request.then(results => {
@@ -104,7 +105,7 @@ class AddTeamUserPop extends React.Component {
 }
 
 AddTeamUserPop.propTypes = {
-  search: PropTypes.func.isRequired,
+  api: PropTypes.any.isRequired,
   add: PropTypes.func.isRequired,
   members: PropTypes.arrayOf(PropTypes.number.isRequired),
   togglePopover: PropTypes.func.isRequired,
