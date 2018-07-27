@@ -33,10 +33,10 @@ RecentProjectsContainer.propTypes = {
   user: PropTypes.shape({
     avatarUrl: PropTypes.string,
     color: PropTypes.string.isRequired,
-    coverColor: PropTypes.string.isRequired,
+    coverColor: PropTypes.string,
     hasCoverImage: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired,
-    login: PropTypes.string.isRequired,
+    login: PropTypes.string,
     userLink: PropTypes.string.isRequired,
   }).isRequired,
 };
