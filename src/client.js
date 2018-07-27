@@ -13,7 +13,9 @@ import ProjectPage from './presenters/pages/project.jsx';
 import {TeamPagePresenter, UserPagePresenter, TeamOrUserPagePresenter} from './presenters/pages/team-or-user.jsx';
 import QuestionsPage from './presenters/pages/questions.jsx';
 import SearchPage from './presenters/pages/search.jsx';
-import errorPageTemplate from './templates/pages/error';
+import ErrorPage from './presenters/pages/error.jsx';
+
+import Reactlet from './presenters/reactlet';
 
 console.log("#########");
 console.log("❓ query strings are", queryString);
@@ -103,7 +105,7 @@ function routePage(pageUrl, application) {
  
   // error page ✅
   return {
-    page: errorPageTemplate({
+    page: Reactlet(ErrorPage, {
       title: "Page Not Found",
       description: "Maybe a typo? Or perhaps it's moved?"
     }),
@@ -139,7 +141,7 @@ function route(location, application) {
         Raven.captureMessage("Oauth login error", {extra: deets});
 
         document.title = "OAuth Login Error";
-        document.body.appendChild(errorPageTemplate({
+        document.body.appendChild(Reactlet(ErrorPage, {
           title: "OAuth Login Problem",
           description: "Hard to say what happened, but we couldn't log you in. Try again?",
         }));
