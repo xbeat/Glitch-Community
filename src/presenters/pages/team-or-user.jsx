@@ -106,6 +106,7 @@ const Presenter = ({application, Loader, ...args}) => {
   );
 };
 
-export const TeamPagePresenter = (application, id, name) => Presenter(application, TeamPageLoader, {id, name});
-export const UserPagePresenter = (application, id, name) => Presenter(application, UserPageLoader, {id, name});
-export const TeamOrUserPagePresenter = (application, name) => Presenter(application, TeamOrUserPageLoader, {name});
+const TeamPagePresenter = (application, id, name) => Presenter(application, TeamPageLoader, {id, name});
+const UserPagePresenter = (application, id, name) => Presenter(application, UserPageLoader, {id, name});
+const TeamOrUserPagePresenter = (application, name) => Presenter(application, TeamOrUserPageLoader, {name});
+export {TeamPagePresenter as TeamPage, UserPagePresenter as UserPage, TeamOrUserPagePresenter as TeamOrUserPage};

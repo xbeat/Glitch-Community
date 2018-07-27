@@ -109,9 +109,9 @@ IndexPage.propTypes = {
   }).isRequired,
 };
 
-const IndexPageContainer = ({application, userModel}) => (
+const IndexPageContainer = ({application}) => (
   <Layout application={application}>
-    <CurrentUserProvider model={userModel}>
+    <CurrentUserProvider model={application.currentUser()}>
       <CurrentUserConsumer>
         {user => <IndexPage user={user} api={application.api()} categories={application.categories}/>}
       </CurrentUserConsumer>
