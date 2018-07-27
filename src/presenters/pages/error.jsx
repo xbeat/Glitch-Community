@@ -19,8 +19,8 @@ class Stars extends React.Component {
   }
   
   resetCanvas(width, height) {
-    this.canvas.current.width = Math.max(window.innerWidth, screen.width);
-    this.canvas.current.height = Math.max(window.innerHeight, screen.height);
+    this.canvas.current.width = width;
+    this.canvas.current.height = height;
     const context = this.canvas.current.getContext('2d');
     for (let i = 0; i < 100; ++i) {
       drawStar(this.canvas.current, context, 'white');
@@ -28,12 +28,18 @@ class Stars extends React.Component {
   }
   
   handleResize() {
-    this.drawStars();
+    const width = Math.max(window.innerWidth, screen.width);
+    const height = Math.max(window.innerHeight, screen.height);
+    if (width > this.canvas.current.width || height > this.canvas.current.height) {
+      this.resetCanvas(width, height);
+    }
   }
   
   componentDidMount() {
-    this.drawStars();
+    this.canvas.current.width = 0;
+    this.canvas.current.height = 0;
     window.addEventListener('resize', this.handleResize);
+    this.handleResize();
   }
   
   componentWillUnmount() {
