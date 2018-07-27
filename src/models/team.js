@@ -68,39 +68,12 @@ export default Team = function(I, self) {
       
     },
 
-    hiddenIfFetched() {
-      if (self.fetched()) { return 'hidden'; }
-    },
-
-    hiddenUnlessFetched() {
-      if (!self.fetched()) { return 'hidden'; }
-    },
-    
-    truncatedDescription() {
-      const MAX_CHARACTERS = 140;
-      if (self.description().length > MAX_CHARACTERS) {
-        return self.description().substring(0, MAX_CHARACTERS) + "…";
-      } 
-      return self.description();
-    },
-
     thanksCount() {
       if (self.users().length) {
         let thanks = 0;
         self.users().forEach(user => thanks = thanks + parseInt(user.thanksCount()));
         return thanks;
       }
-    },
-
-    teamThanks() {
-      const thanksCount = self.thanksCount();
-      if (thanksCount === 1) {
-        return "Thanked once";
-      } else if (thanksCount === 2) {
-        return "Thanked twice";
-      } 
-      return `Thanked ${thanksCount} times`;
-      
     },
 
     currentUserIsOnTeam(application) {
@@ -224,9 +197,7 @@ export default Team = function(I, self) {
         teamAvatarStyle: self.teamAvatarStyle(),
         teamAvatarUrl: self.teamAvatarUrl(),
         teamProfileStyle: self.teamProfileStyle(),
-        teamThanks: self.teamThanks(),
         thanksCount: self.thanksCount(),
-        truncatedDescription: self.truncatedDescription(),
         hasAvatarImage: !!self.hasAvatarImage(),
         hasCoverImage: !!self.hasCoverImage(),
         url: self.url(),

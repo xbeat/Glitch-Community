@@ -102,26 +102,6 @@ export default User = function(I, self) {
       return self.id() === application.currentUser().id();
     },
 
-    hiddenIfSignedIn() {
-      if (self.isSignedIn()) { return 'hidden'; }
-    },
-
-    hiddenUnlessSignedIn() {
-      if (!self.isSignedIn()) { return 'hidden'; }
-    },
-
-    //
-    // hiddenIfAnon: ->
-    //   'hidden' if self.isAnon()
-
-    hiddenIfFetched() {
-      if (self.fetched()) { return 'hidden'; }
-    },
-
-    hiddenUnlessFetched() {
-      if (!self.fetched()) { return 'hidden'; }
-    },
-
     tooltipName() {
       return self.login() || "anonymous user";
     },
@@ -178,47 +158,6 @@ export default User = function(I, self) {
       return self.updateUser(application, 
         {coverColor: color});
     },
-
-    truncatedDescription() {
-      const MAX_CHARACTERS = 140;
-      if (self.description().length > MAX_CHARACTERS) {
-        return self.description().substring(0, MAX_CHARACTERS) + "…";
-      } 
-      return self.description();
-      
-    },
-
-    descriptionMarkdown() {
-      const text = self.description();
-      const node = document.createElement('span');
-      node.innerHTML = md.render(text);
-      return node;
-    },
-    
-    truncatedDescriptionMarkdown() {
-      const text = self.truncatedDescription();
-      const node = document.createElement('span');
-      node.innerHTML = md.render(text);
-      return node;
-    },
-
-    initialDescriptionMarkdown() {
-      const text = self.initialDescription();
-      const node = document.createElement('span');
-      node.innerHTML = md.render(text);
-      return node;
-    },
-
-    userThanks() {
-      const thanksCount = self.thanksCount();
-      if (thanksCount === 1) {
-        return "Thanked once";
-      } else if (thanksCount === 2) {
-        return "Thanked twice";
-      } 
-      return `Thanked ${thanksCount} times`;
-      
-    },
     
     addPin(application, projectId) {
       self.pins.push({
@@ -258,11 +197,9 @@ export default User = function(I, self) {
         avatarStyle: self.avatarStyle(),
         thanksCount: self.thanksCount(),
         tooltipName: self.tooltipName(),
-        // truncatedDescriptionHtml: md.render(self.truncatedDescription()),
         userAvatarUrl: self.userAvatarUrl(),
         userAvatarUrlLarge: self.userAvatarUrl('large'),
         userLink: self.userLink(),
-        userThanks: self.userThanks(),
         
       };
     },
