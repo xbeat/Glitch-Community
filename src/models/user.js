@@ -1,5 +1,4 @@
 let User;
-import axios from 'axios';
 import mdFactory from 'markdown-it';
 const md = mdFactory({
   breaks: true,
@@ -301,15 +300,6 @@ User.getUserById = function(application, id) {
       });
   });
   return promise;
-};
-
-User.getSearchResultsJSON = function(application, query) {
-  const { CancelToken } = axios;
-  const source = CancelToken.source();
-  const searchPath = `users/search?q=${query}`;
-  return application.api(source).get(searchPath)
-    .then(({data}) => data)
-    .catch(error => console.error('getSearchResultsJSON', error));
 };
 
 

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
+import UserModel from '../../models/user';
+
 import Loader from '../includes/loader.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
 
@@ -59,22 +61,23 @@ class AddTeamUserPop extends React.Component {
     });
   }
   
-  startSearch() {
+  async startSearch() {
     if (!this.state.query) {
       return this.clearSearch();
     }
     
-    const request = this.props.search(this.state.query);
-    UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps()))
+    const request = this.props.api.get(`users/search?q=${this.state.query}`);
     this.setState({ maybeRequest: request });
     
-    request.then(results => {
-      this.setState(({ maybeRequest }) => {
-        return (request === maybeRequest) ? {
-          maybeRequest: null,
-          maybeResults: results.filter(user => !this.props.members || !this.props.members.includes(user.id)).slice(0, 5),
-        } : {};
-      });
+    const {data} = await request;
+    const results = data.map(user => UserModel(user).asProps());
+    const nonMemberResults = results.filter(user => !this.props.members || !this.props.members.includes(user.id));
+    
+    this.setState(({ maybeRequest }) => {
+      return (request === maybeRequest) ? {
+        maybeRequest: null,
+        maybeResults: nonMemberResults.slice(0, 5),
+      } : {};
     });
   }
   

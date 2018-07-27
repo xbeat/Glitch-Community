@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TeamModel from '../../models/team';
-import UserModel from '../../models/user';
 
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
@@ -88,7 +87,6 @@ const Presenter = (application, Loader, args) => {
   const props = {
     api: application.api(),
     currentUserModel: application.currentUser(),
-    searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
     ...args,
   };
   return (
