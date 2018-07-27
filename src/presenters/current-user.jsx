@@ -18,7 +18,14 @@ export const CurrentUserConsumer = ({children}) => (
   <Consumer>
     {model => (
       <Observed
-        propsObservable={Observable(() => model ? {user: model.asProps(), fetched: model.fetched()} : {})}
+        propsObservable={Observable(() => {
+          if (model) {
+            const user = model.asProps();
+            user.teams;
+            return {user, fetched: model.fetched()};
+          }
+          return null;
+        })}
         component={({user, fetched}) => children(user, fetched)}
       />
     )}

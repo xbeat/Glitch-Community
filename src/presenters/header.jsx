@@ -7,6 +7,7 @@ import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
 import NewStuffContainer from './overlays/new-stuff.jsx';
+import {CurrentUserConsumer} from './current-user.jsx';
 
 const Logo = () => {
   const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
@@ -93,37 +94,19 @@ Header.propTypes = {
   maybeUser: PropTypes.object,
 };
 
-class HeaderContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { maybeUser: null };
-  }
-  componentDidMount() {
-    this.props.userObservable.observe((maybeUser) => {
-      this.setState({maybeUser: maybeUser});
-    });
-  }
-  componentWillUnmount() {
-    this.props.userObservable.releaseDependencies();
-  }
-  render() {
-    return (
+const HeaderContainer = ({getUserPref, setUserPref, ...props}) => (
+  <CurrentUserConsumer>
+    {user => (
       <NewStuffContainer
-        isSignedIn={!!this.state.maybeUser && !!this.state.maybeUser.login}
-        getUserPref={this.props.getUserPref} setUserPref={this.props.setUserPref}
+        isSignedIn={!!user && !!user.login}
+        getUserPref={getUserPref} setUserPref={setUserPref}
       >
         {showNewStuffOverlay => (
-          <Header {...this.props} maybeUser={this.state.maybeUser} showNewStuffOverlay={showNewStuffOverlay}/>
+          <Header {...props} maybeUser={user} showNewStuffOverlay={showNewStuffOverlay}/>
         )}
       </NewStuffContainer>
-    );
-  }
-}
-
-HeaderContainer.propTypes = {
-  baseUrl: PropTypes.string.isRequired,
-  userObservable: PropTypes.func.isRequired,
-  searchQuery: PropTypes.string.isRequired,
-};
+    )}
+  </CurrentUserConsumer>
+);
 
 export default HeaderContainer;
