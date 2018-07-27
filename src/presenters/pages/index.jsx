@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import LayoutPresenter from '../layout';
-import Reactlet from '../reactlet';
+import Layout from '../layout.jsx';
 
 import {getEditorUrl} from '../../models/project';
 import {CurrentUserProvider, CurrentUserConsumer} from '../current-user.jsx';
@@ -110,20 +109,14 @@ IndexPage.propTypes = {
   }).isRequired,
 };
 
-const IndexPageContainer = ({userModel, ...props}) => (
-  <CurrentUserProvider model={userModel}>
-    <CurrentUserConsumer>
-      {user => <IndexPage user={user} {...props}/>}
-    </CurrentUserConsumer>
-  </CurrentUserProvider>
+const IndexPageContainer = ({application, userModel}) => (
+  <Layout application={application}>
+    <CurrentUserProvider model={userModel}>
+      <CurrentUserConsumer>
+        {user => <IndexPage user={user} api={application.api()} categories={application.categories}/>}
+      </CurrentUserConsumer>
+    </CurrentUserProvider>
+  </Layout>
 );
 
-export default function IndexPagePresenter(application) {
-  const props = {
-    api: application.api(),
-    categories: application.categories,
-    userModel: application.currentUser(),
-  };
-  const content = Reactlet(IndexPageContainer, props);
-  return LayoutPresenter(application, content);
-}
+export default IndexPageContainer;

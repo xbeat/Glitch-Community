@@ -18,8 +18,7 @@ import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
 import {Notifications} from '../notifications.jsx';
 
-import LayoutPresenter from '../layout';
-import Reactlet from '../reactlet';
+import Layout from '../layout.jsx';
 
 function trackRemix(id, domain) {
   analytics.track("Click Remix", {
@@ -148,6 +147,19 @@ ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
 };
 
+const getProps = (application, name) => ({
+  api: application.api(),
+  currentUserModel: application.currentUser(),
+  get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
+  getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
+  getTeam: (id) => application.api().get(`teams/${id}`).then(({data}) => data),
+  getTeamPins: (id) => application.api().get(`teams/${id}/pinned-projects`).then(({data}) => data),
+  getUser: (id) => application.api().get(`users/${id}`).then(({data}) => data),
+  getUserPins: (id) => application.api().get(`users/${id}/pinned-projects`).then(({data}) => data),
+  getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => Project(d).update(d).asProps())),
+  name,
+});
+
 const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
   <Notifications>
     <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
@@ -164,21 +176,3 @@ const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
 ProjectPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
-
-// Let's keep layout in jade until all pages are react
-export default function(application, name) {
-  const props = {
-    api: application.api(),
-    currentUserModel: application.currentUser(),
-    get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
-    getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
-    getTeam: (id) => application.api().get(`teams/${id}`).then(({data}) => data),
-    getTeamPins: (id) => application.api().get(`teams/${id}/pinned-projects`).then(({data}) => data),
-    getUser: (id) => application.api().get(`users/${id}`).then(({data}) => data),
-    getUserPins: (id) => application.api().get(`users/${id}/pinned-projects`).then(({data}) => data),
-    getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => Project(d).update(d).asProps())),
-    name,
-  };
-  const content = Reactlet(ProjectPageLoader, props, 'projectpage');
-  return LayoutPresenter(application, content);
-}

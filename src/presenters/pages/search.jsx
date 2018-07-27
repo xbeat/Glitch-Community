@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import LayoutPresenter from '../layout';
-import Reactlet from '../reactlet';
+import Layout from '../layout';
 
 import ProjectModel from '../../models/project';
 import TeamModel from '../../models/team';
@@ -125,20 +124,16 @@ SearchPage.propTypes = {
   query: PropTypes.string.isRequired,
 };
 
-const SearchPageContainer = ({...props}) => (
-  <Notifications>
-    <ErrorHandlers>
-      {errorFuncs => <SearchPage {...errorFuncs} {...props}/>}
-    </ErrorHandlers>
-  </Notifications>
+const SearchPageContainer = ({application, query}) => (
+  <Layout application={application}>
+    <Notifications>
+      <ErrorHandlers>
+        {errorFuncs => (
+          <SearchPage {...errorFuncs} api={application.api} categories={application.categories} query={query}/>
+        )}
+      </ErrorHandlers>
+    </Notifications>
+  </Layout>
 );
 
-export default function(application, query) {
-  const props = {
-    api: application.api(),
-    categories: application.categories,
-    query,
-  };
-  const content = Reactlet(SearchPageContainer, props);
-  return LayoutPresenter(application, content);
-}
+export default SearchPageContainer;
