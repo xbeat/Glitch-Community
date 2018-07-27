@@ -69,7 +69,7 @@ function routePage(pageUrl, application) {
     return {page, title:decodeURI(pageUrl)};
   }
 
-  // @user page ✅
+  // @name page ✅
   if (pageUrl.charAt(0) === '@') {
     const name = pageUrl.substring(1);
     const page = <TeamOrUserPage application={application} name={name}/>;

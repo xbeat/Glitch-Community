@@ -17,3 +17,5 @@ const QuestionsPage = ({application}) => (
 QuestionsPage.propTypes = {
   application: PropTypes.any.isRequired,
 };
+
+export default QuestionsPage;
