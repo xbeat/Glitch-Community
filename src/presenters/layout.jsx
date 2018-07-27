@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Observable from 'o_0';
+
+import {CurrentUserProvider} from './current-user.jsx';
+import {Notifications} from './notifications.jsx';
+
 import Header from './header.jsx';
 import Footer from './footer.jsx';
-import Observable from 'o_0';
 
 const getHeaderProps = (application) => {
   const userObservable = Observable(() => {
@@ -28,9 +32,13 @@ const getHeaderProps = (application) => {
 
 const Layout = ({children, application}) => (
   <div className="content">
-    <Header {...getHeaderProps(application)}/>
-    {children}
-    <Footer/>
+    <Notifications>
+      <CurrentUserProvider model={application.currentUser()}>
+        <Header {...getHeaderProps(application)}/>
+        {children}
+        <Footer/>
+      </CurrentUserProvider>
+    </Notifications>
   </div>
 );
 Layout.propTypes = {

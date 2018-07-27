@@ -16,7 +16,6 @@ import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-buttons.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
-import {Notifications} from '../notifications.jsx';
 
 import Layout from '../layout.jsx';
 
@@ -177,9 +176,7 @@ const getProps = (application, name) => ({
 
 const ProjectPageContainer = ({application, name}) => (
   <Layout application={application}>
-    <Notifications>
-      <ProjectPageLoader {...getProps(application, name)}/>
-    </Notifications>
+    <ProjectPageLoader {...getProps(application, name)}/>
   </Layout>
 );
 

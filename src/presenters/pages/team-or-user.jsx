@@ -5,10 +5,8 @@ import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
 import ProjectModel from '../../models/project';
 
-import {CurrentUserProvider} from '../current-user.jsx';
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
-import {Notifications} from '../notifications.jsx';
 
 import Layout from '../layout.jsx';
 import TeamPage from './team.jsx';
@@ -97,11 +95,7 @@ const Presenter = (application, Loader, args) => {
   };
   return (
     <Layout application={application}>
-      <Notifications>
-        <CurrentUserProvider model={application.currentUser()}>
-          <Loader {...props}/>
-        </CurrentUserProvider>
-      </Notifications>
+      <Loader {...props}/>
     </Layout>
   );
 };

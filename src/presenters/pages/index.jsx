@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Layout from '../layout.jsx';
 
 import {getEditorUrl} from '../../models/project';
-import {CurrentUserProvider, CurrentUserConsumer} from '../current-user.jsx';
+import {CurrentUserConsumer} from '../current-user.jsx';
 
 import Categories from '../categories.jsx';
 import Featured from '../featured.jsx';
@@ -111,11 +111,9 @@ IndexPage.propTypes = {
 
 const IndexPageContainer = ({application}) => (
   <Layout application={application}>
-    <CurrentUserProvider model={application.currentUser()}>
-      <CurrentUserConsumer>
-        {user => <IndexPage user={user} api={application.api()} categories={application.categories}/>}
-      </CurrentUserConsumer>
-    </CurrentUserProvider>
+    <CurrentUserConsumer>
+      {user => <IndexPage user={user} api={application.api()} categories={application.categories}/>}
+    </CurrentUserConsumer>
   </Layout>
 );
 

@@ -1,12 +1,12 @@
 /* global EDITOR_URL */
+import React from 'react';
+import PropTypes from 'prop-types';
+import urlJoin from 'url-join';
 
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
 import NewStuffContainer from './overlays/new-stuff.jsx';
-import React from 'react';
-import PropTypes from 'prop-types';
-import urlJoin from 'url-join';
 
 const Logo = () => {
   const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";

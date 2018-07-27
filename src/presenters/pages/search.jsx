@@ -11,7 +11,6 @@ import ErrorHandlers from '../error-handlers.jsx';
 import Categories from '../categories.jsx';
 import Loader from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
-import {Notifications} from '../notifications.jsx';
 import ProjectsList from '../projects-list.jsx';
 import TeamItem from '../team-item.jsx';
 import UserItem from '../user-item.jsx';
@@ -126,13 +125,11 @@ SearchPage.propTypes = {
 
 const SearchPageContainer = ({application, query}) => (
   <Layout application={application}>
-    <Notifications>
-      <ErrorHandlers>
-        {errorFuncs => (
-          <SearchPage {...errorFuncs} api={application.api} categories={application.categories} query={query}/>
-        )}
-      </ErrorHandlers>
-    </Notifications>
+    <ErrorHandlers>
+      {errorFuncs => (
+        <SearchPage {...errorFuncs} api={application.api} categories={application.categories} query={query}/>
+      )}
+    </ErrorHandlers>
   </Layout>
 );
 
