@@ -32,10 +32,8 @@ class Stars extends React.Component {
       drawStar(this.canvas.current, context, 'white');
     }
     
-    if (this.interval !== null) {
-      window.clearInterval(this.interval);
-    }
     let remainingStars = additionalStars - initialStars;
+    window.clearInterval(this.interval);
     this.interval = window.setInterval(() => {
       drawStar(this.canvas.current, context, '#CB82C0');
       if (--remainingStars <= 0) {
@@ -59,9 +57,8 @@ class Stars extends React.Component {
   
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
-    if (this.interval !== null) {
-      window.clearInterval(this.interval);
-    }
+    window.clearInterval(this.interval);
+    this.interval = null;
   }
   
   render() {
