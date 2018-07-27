@@ -13,41 +13,55 @@ const drawStar = (canvas, context, color) => {
 class Stars extends React.Component {
   constructor(props) {
     super(props);
-    this.stars = 1;
+    this.state = {
+      width: 0,
+      height: 0,
+    };
     this.canvas = React.createRef();
     this.handleResize = this.handleResize.bind(this);
+    this.interval = null;
   }
   
-  resetCanvas(width, height) {
-    this.canvas.current.width = width;
-    this.canvas.current.height = height;
+  componentDidUpdate() {
+    const {width, height} = this.state;
+    const initialStars = Math.round((width * height) / 15000);
+    const additionalStars = Math.round((width * height) / 3500);
     const context = this.canvas.current.getContext('2d');
-    for (let i = 0; i < 100; ++i) {
+    
+    for (let i = 0; i < initialStars; ++i) {
       drawStar(this.canvas.current, context, 'white');
     }
+    
+    if (this.interval !== null) {
+      window.clearInterval(this.interval);
+    }
+    this.interval = window.setInterval(() => {
+      drawStar(this.canvas.current, '#CB82C0');
+    }, 100);
   }
   
   handleResize() {
     const width = Math.max(window.innerWidth, screen.width);
     const height = Math.max(window.innerHeight, screen.height);
-    if (width > this.canvas.current.width || height > this.canvas.current.height) {
-      this.resetCanvas(width, height);
+    if (width > this.state.width || height > this.state.height) {
+      this.setState({width, height});
     }
   }
   
   componentDidMount() {
-    this.canvas.current.width = 0;
-    this.canvas.current.height = 0;
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
   }
   
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
+    if (this.interval !== null) {
+      window.clearInterval(this.interval);
+    }
   }
   
   render() {
-    return <canvas id="stars" ref={this.canvas}/>;
+    return <canvas id="stars" {...this.state} ref={this.canvas}/>;
   }
 }
 
