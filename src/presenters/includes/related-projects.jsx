@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {sampleSize, difference} from 'lodash';
 
+import {getProfileStyle as getTeamProfileStyle} from '../../models/team';
+import {getProfileStyle as getUserProfileStyle} from '../../models/user';
+
 import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
@@ -62,19 +65,19 @@ class RelatedProjects extends React.Component {
     }
     return (
       <ul className="related-projects">
-        {teams.map(({id, name, url, teamProfileStyle}) => (
+        {teams.map(({id, name, url, ...team}) => (
           <li key={id}>
             <RelatedProjectsHeader name={name} url={`/@${url}`}/>
             <DataLoader get={() => this.getProjects(id, getTeamPins, getTeam)}>
-              {projects => <RelatedProjectsBody projects={projects} coverStyle={teamProfileStyle}/>}
+              {projects => <RelatedProjectsBody projects={projects} coverStyle={getTeamProfileStyle({id, ...team})}/>}
             </DataLoader>
           </li>
         ))}
-        {users.map(({id, name, login, tooltipName, userLink, profileStyle}) => (
+        {users.map(({id, name, login, tooltipName, userLink, ...user}) => (
           <li key={id}>
             <RelatedProjectsHeader name={name || login || tooltipName} url={userLink}/>
             <DataLoader get={() => this.getProjects(id, getUserPins, getUser)}>
-              {projects => <RelatedProjectsBody projects={projects} coverStyle={profileStyle}/>}
+              {projects => <RelatedProjectsBody projects={projects} coverStyle={getUserProfileStyle({id, ...user})}/>}
             </DataLoader>
           </li>
         ))}

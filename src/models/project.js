@@ -1,5 +1,4 @@
 /* global application CDN_URL EDITOR_URL*/
-import {find} from 'lodash';
 
 let Project;
 const cache = {};
