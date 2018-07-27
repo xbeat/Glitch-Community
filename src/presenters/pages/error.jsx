@@ -18,7 +18,7 @@ class Stars extends React.Component {
     this.handleResize = this.handleResize.bind(this);
   }
   
-  resetCanvas() {
+  resetCanvas(width, height) {
     this.canvas.current.width = Math.max(window.innerWidth, screen.width);
     this.canvas.current.height = Math.max(window.innerHeight, screen.height);
     const context = this.canvas.current.getContext('2d');
