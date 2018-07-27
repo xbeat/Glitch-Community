@@ -31,7 +31,7 @@ const RecentProjectsContainer = ({children, user}) => (
 RecentProjectsContainer.propTypes = {
   children: PropTypes.node.isRequired,
   user: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
+    avatarUrl: PropTypes.string,
     color: PropTypes.string.isRequired,
     coverColor: PropTypes.string.isRequired,
     hasCoverImage: PropTypes.bool.isRequired,
