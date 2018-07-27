@@ -29,7 +29,7 @@ module.exports = () => {
   return {
     mode,
     entry: {
-      "client-bundle": `${SRC}/client.js`
+      "client-bundle": `${SRC}/client.jsx`
     },
     output: {
       filename: '[name].js?[chunkhash]',

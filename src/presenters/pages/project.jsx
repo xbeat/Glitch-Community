@@ -147,6 +147,21 @@ ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
 };
 
+const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
+  <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
+    {project => project ? (
+      <ProjectEditor api={api} initialProject={project} currentUserModel={currentUserModel}>
+        {(project, funcs, userIsMember) => (
+          <ProjectPage project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
+        )}
+      </ProjectEditor>
+    ) : <NotFound name={name}/>}
+  </DataLoader>
+);
+ProjectPageLoader.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
 const getProps = (application, name) => ({
   api: application.api(),
   currentUserModel: application.currentUser(),
@@ -160,19 +175,12 @@ const getProps = (application, name) => ({
   name,
 });
 
-const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
-  <Notifications>
-    <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-      {project => project ? (
-        <ProjectEditor api={api} initialProject={project} currentUserModel={currentUserModel}>
-          {(project, funcs, userIsMember) => (
-            <ProjectPage project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
-          )}
-        </ProjectEditor>
-      ) : <NotFound name={name}/>}
-    </DataLoader>
-  </Notifications>
+const ProjectPageContainer = ({application, name}) => (
+  <Layout application={application}>
+    <Notifications>
+      <ProjectPageLoader {...getProps(application, name)}/>
+    </Notifications>
+  </Layout>
 );
-ProjectPageLoader.propTypes = {
-  name: PropTypes.string.isRequired,
-};
+
+export default ProjectPageContainer;

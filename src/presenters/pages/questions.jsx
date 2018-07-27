@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Layout from '../layout';
+import Layout from '../layout.jsx';
 
 import Questions from '../questions.jsx';
 import Categories from '../categories.jsx';

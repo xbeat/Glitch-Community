@@ -15,8 +15,6 @@ import QuestionsPage from './presenters/pages/questions.jsx';
 import SearchPage from './presenters/pages/search.jsx';
 import ErrorPage from './presenters/pages/error.jsx';
 
-import Reactlet from './presenters/reactlet';
-
 console.log("#########");
 console.log("❓ query strings are", queryString);
 console.log("🎏 application is", application);
@@ -92,23 +90,20 @@ function routePage(pageUrl, application) {
   if (pageUrl.match(/^search$/i) && queryString.q) {
     const query = queryString.q;
     application.searchQuery(query);
-    const page = SearchPage(application, query);
+    const page = <SearchPage application={application} query={query}/>;
     return {page, title: `Search for ${query}`};
   }
 
   // category page ✅
   if (application.categories.some(({url}) => pageUrl === url)) {
     const category = application.categories.find(({url}) => pageUrl === url);
-    const page = CategoryPage(application, category);
+    const page = <CategoryPage application={application} category={category}/>;
     return {page, title: category.name};
   }
  
   // error page ✅
   return {
-    page: Reactlet(ErrorPage, {
-      title: "Page Not Found",
-      description: "Maybe a typo? Or perhaps it's moved?"
-    }),
+    page: <ErrorPage title="Page Not Found" description="Maybe a typo? Or perhaps it's moved?"/>,
     title: "👻 Page not found",
   };
 }

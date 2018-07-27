@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Layout from '../layout';
+import Layout from '../layout.jsx';
 
 import ProjectModel from '../../models/project';
 import TeamModel from '../../models/team';
