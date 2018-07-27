@@ -138,7 +138,6 @@ var self = Model({
   
   loadUser(userData){
     userData.fetched = true;
-    userData.initialDescription = userData.description;
     console.log('👀 user data is ', userData);
     self.getProjects(userData.projects);
     

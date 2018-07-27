@@ -53,7 +53,6 @@ export default Project = function(I, self) {
         private: project.private(),
         showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
         remixUrl: project.remixUrl(),
-        userIsCurrentUser: project.userIsCurrentUser(application),
       };
     },
 
@@ -70,11 +69,6 @@ export default Project = function(I, self) {
     
     remixUrl() {
       return `${EDITOR_URL}#!/remix/${I.domain}`;
-    },
-
-    userIsCurrentUser(application) {
-      const userIsCurrentUser = find(self.users(), user => user.id() === application.currentUser().id());
-      return !!userIsCurrentUser;
     },
 
     avatar() {
@@ -110,11 +104,6 @@ export default Project = function(I, self) {
           return self.projectNotFound(true);
         
         });
-    },
-
-    pushSearchResult(application) {
-      application.searchResultsProjects.push(self);
-      return application.searchResultsProjectsLoaded(true);
     },
            
     delete() {

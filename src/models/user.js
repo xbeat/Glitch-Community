@@ -1,9 +1,4 @@
 let User;
-import mdFactory from 'markdown-it';
-const md = mdFactory({
-  breaks: true,
-  linkify: true,
-  typographer: true}).disable(['image']);
 
 import Model from './model';
 const cache = {};
@@ -29,7 +24,6 @@ export default User = function(I, self) {
     login: null,
     name: null,
     description: "",
-    initialDescription: "",
     projects: undefined,
     teams: [],
     thanksCount: 0,
@@ -187,7 +181,6 @@ export default User = function(I, self) {
         coverColor: self.coverColor(),
         coverUrlSmall: self.coverUrl('small'),
         description: self.description(),
-        initialDescription: self.initialDescription(),
         hasCoverImage: self.hasCoverImage(),
         id: self.id(),
         login: self.login(),
