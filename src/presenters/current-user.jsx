@@ -19,12 +19,12 @@ export const CurrentUserConsumer = ({children}) => (
     {model => (
       <Observed
         propsObservable={Observable(() => {
-          if (model) {
+          if (model && model.id()) {
             const user = model.asProps();
             user.teams;
             return {user, fetched: model.fetched()};
           }
-          return null;
+          return {user: null, fetched: false};
         })}
         component={({user, fetched}) => children(user, fetched)}
       />

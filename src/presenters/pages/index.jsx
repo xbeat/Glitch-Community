@@ -91,12 +91,12 @@ const IndexPage = ({api, categories, user}) => (
       <a href="https://glitch.com">Glitch</a>{' '}
       is the friendly community where you'll build the app of your dreams
     </h1>
-    {!!user.login && <Questions api={api}/>}
-    {!!user.id && <RecentProjects api={api}/>}
+    {!!(user && user.login) && <Questions api={api}/>}
+    {!!user && <RecentProjects api={api}/>}
     <Featured/>
     <RandomCategories api={api}/>
     <Categories categories={categories}/>
-    {!user.login && <WhatIsGlitch/>}
+    {!(user && user.login) && <WhatIsGlitch/>}
     <ByFogCreek/>
     <MadeInGlitch/>
   </main>
@@ -106,7 +106,7 @@ IndexPage.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number,
     login: PropTypes.string,
-  }).isRequired,
+  }),
 };
 
 const IndexPageContainer = ({application}) => (
