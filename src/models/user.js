@@ -123,51 +123,6 @@ export default User = function(I, self) {
     glitchTeamAvatar() {
       return "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg";
     },
-
-    updateUser(application, updateData) {
-      const userPath = `users/${self.id()}`;
-      return application.api().patch(userPath, updateData).then(({data}) => {
-        console.log('updatedUser', data);
-        return {
-          success: true,
-          data: data,
-          message: null,
-        };
-      }).catch(error => {
-        console.error(`updateUser PATCH ${userPath}`, error);
-        let message = "Unable to update :-(";
-        if(error && error.response && error.response.data && error.response.data.message) {
-          message = error.response.data.message;
-        }
-        return {
-          success: false,
-          data: updateData,
-          message,
-        };
-      });
-    },
-
-    updateCoverColor(application, color) {
-      self.coverColor(color);
-      return self.updateUser(application, 
-        {coverColor: color});
-    },
-    
-    addPin(application, projectId) {
-      self.pins.push({
-        projectId});
-      const pinPath = `users/${self.id()}/pinned-projects/${projectId}`;
-      return application.api().post(pinPath)
-        .then(({data}) => console.log(data)).catch(error => console.error('addPin', error));
-    },
-
-    removePin(application, projectId) {
-      const newPins = self.pins().filter(pin => pin.projectId !== projectId);
-      self.pins(newPins);
-      const pinPath = `users/${self.id()}/pinned-projects/${projectId}`;
-      return application.api().delete(pinPath)
-        .then(({data}) => console.log(data)).catch(error => console.error('removePin', error));
-    },
     
     asProps() {
       return {
