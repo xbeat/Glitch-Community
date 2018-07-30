@@ -39,11 +39,10 @@ class TeamPage extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
-      currentUserIsOnTeam: this.props.currentUserIsOnTeam,
-      currentUserIsTeamAdmin: this.props.currentUserIsTeamAdmin,
-      teamHasUnlimitedProjects: this.props.teamHasUnlimitedProjects
+      // currentUserIsOnTeam: this.props.currentUserIsOnTeam,
+      // currentUserIsTeamAdmin: this.props.currentUserIsTeamAdmin,
+      // teamHasUnlimitedProjects: this.props.teamHasUnlimitedProjects
     };
-    this.team = this.props.team
   }
 
 //   team: {
@@ -68,14 +67,14 @@ class TeamPage extends React.Component {
   // create update state funcs to pass dowen
   
   projectLimitIsReached() {
-    if ((this.state.currentUserIsOnTeam && !this.state.teamHasUnlimitedProjects && this.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
+    if ((this.state.currentUserIsOnTeam && !this.state.teamHasUnlimitedProjects && this.props.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
       return true;
     } return false;
   };
   
   admins() {
-    return users.filter(user => {
-      return adminIds.includes(user.id);
+    return this.props.team.users.filter(user => {
+      return this.props.team.adminIds.includes(user.id);
     });
   }
 
@@ -84,10 +83,22 @@ class TeamPage extends React.Component {
       <main className="profile-page team-page">
         <section>
           <ProfileContainer
-            avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
-            coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
-            avatarButtons={currentUserIsTeamAdmin ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null}
-            coverButtons={currentUserIsTeamAdmin ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null} /> : null}
+            avatarStyle={getAvatarStyle({
+              id: this.props.team.id, 
+              hasAvatarImage: this.props.team.hasAvatarImage, 
+              backgroundColor: this.props.team.backgroundColor, 
+              cache: this.props.team._cacheAvatar,
+            })}
+            coverStyle={getProfileStyle({
+              id: this.props.team.id, 
+              hasCoverImage: this.props.team.hasCoverImage, 
+              coverColor: this.props.team.coverColor, 
+              cache: this.props.team._cacheCover,
+            })}
+            avatarButtons={this.props.currentUserIsTeamAdmin ? <ImageButtons name="Avatar" uploadImage={this.props.uploadAvatar} /> : null}
+            coverButtons={this.props.currentUserIsTeamAdmin ? <ImageButtons name="Cover" 
+                                                                uploadImage={uploadCover} 
+                                                                clearImage={this.props.hasCoverImage ? clearCover : null} /> : null}
           >
             <h1 className="username">
               { name }
@@ -195,42 +206,28 @@ TeamPage.propTypes = {
     verifiedImage: PropTypes.string.isRequired,
     verifiedTooltip: PropTypes.string.isRequired,
   }),
-  clearCover: PropTypes.array.isRequired,
-
-  currentUserIsOnTeam: PropTypes.array.isRequired,
-  myProjects: PropTypes.array.isRequired,
-  updateDescription: PropTypes.array.isRequired,
-  uploadAvatar: PropTypes.array.isRequired,
-  uploadCover: PropTypes.array.isRequired,
-  addUser: PropTypes.array.isRequired,
-  removeUser: PropTypes.array.isRequired,
-  addPin: PropTypes.array.isRequired,
-  removePin: PropTypes.array.isRequired,
-  addProject: PropTypes.array.isRequired,
-  removeProject: PropTypes.array.isRequired,
-  currentUserIsTeamAdmin: PropTypes.array.isRequired,
-  teamHasUnlimitedProjects: PropTypes.array.isRequired,
-  currentUserId: PropTypes.array.isRequired,
-  api: PropTypes.array.isRequired,
-  searchUsers: PropTypes.array.isRequired,
-  getProjects: PropTypes.array.isRequired,
+  addPin: PropTypes.func.isRequired,
+  addProject: PropTypes.func.isRequired,
+  addUser: PropTypes.func.isRequired,
   adminIds: PropTypes.array.isRequired,
-
-  
-  
+  api: PropTypes.func.isRequired,
+  clearCover: PropTypes.func.isRequired,
+  currentUserId: PropTypes.number.isRequired,
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
+  currentUserIsTeamAdmin: PropTypes.bool.isRequired,
+  getProjects: PropTypes.func.isRequired,
+  myProjects: PropTypes.array.isRequired,
+  removeUser: PropTypes.func.isRequired,
+  removePin: PropTypes.func.isRequired,
+  removeProject: PropTypes.func.isRequired,
+  searchUsers: PropTypes.func.isRequired,
+  teamHasUnlimitedProjects: PropTypes.bool.isRequired,
+  updateDescription: PropTypes.func.isRequired,
+  uploadAvatar: PropTypes.func.isRequired,
+  uploadCover: PropTypes.func.isRequired,
 }
 
 
-//   currentUserIsOnTeam, myProjects,
-//   updateDescription,
-//   uploadAvatar, uploadCover, clearCover,
-//   addUser, removeUser,
-//   addPin, removePin,
-//   addProject, removeProject,
-//   currentUserIsTeamAdmin,
-//   teamHasUnlimitedProjects, currentUserId,
-//   api, searchUsers, getProjects,
-// }) => {
 
 
 
