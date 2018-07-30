@@ -35,11 +35,13 @@ const FREE_TEAM_PROJECTS_LIMIT = 5;
 
 // Team Page
 
-export default class TeamPage extends React.Component {
+class TeamPage extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
       currentUserIsOnTeam: this.props.currentUserIsOnTeam,
+      currentUserIsTeamAdmin: this.props.currentUserIsTeamAdmin,
+      teamHasUnlimitedProjects: this.props.teamHasUnlimitedProjects
     };
   }
 
@@ -62,8 +64,15 @@ export default class TeamPage extends React.Component {
 //   api, searchUsers, getProjects,
 // }) => {
 
-  projectLimitIsReached() {
-    if ((currentUserIsOnTeam && !teamHasUnlimitedProjects && projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
+  // create update state funcs to pass down
+  
+
+  render() {
+        const team = this.props.team
+
+        
+  const = projectLimitIsReached() => {
+    if ((this.state.currentUserIsOnTeam && !this.state.teamHasUnlimitedProjects && team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
       return true;
     } return false;
   };
@@ -74,101 +83,99 @@ export default class TeamPage extends React.Component {
     });
   }
 
-  render() {
-  
-  return (
-    <main className="profile-page team-page">
-      <section>
-        <ProfileContainer
-          avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
-          coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
-          avatarButtons={currentUserIsTeamAdmin ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null}
-          coverButtons={currentUserIsTeamAdmin ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null} /> : null}
-        >
-          <h1 className="username">
-            { name }
-            { isVerified && 
-              <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>
-            }
-          </h1>
-          <div className="users-information">
-            <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminIds, api, teamId:id, currentUserIsTeamAdmin}} />
-            { currentUserIsOnTeam && 
-              <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)} />
-            }
-          </div>
-          <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)} />
-          <AuthDescription 
-            authorized={currentUserIsTeamAdmin} 
-            description={description} 
-            update={updateDescription} 
-            placeholder="Tell us about your team"
+    return (
+      <main className="profile-page team-page">
+        <section>
+          <ProfileContainer
+            avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
+            coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
+            avatarButtons={currentUserIsTeamAdmin ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null}
+            coverButtons={currentUserIsTeamAdmin ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null} /> : null}
+          >
+            <h1 className="username">
+              { name }
+              { isVerified && 
+                <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>
+              }
+            </h1>
+            <div className="users-information">
+              <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminIds, api, teamId:id, currentUserIsTeamAdmin}} />
+              { currentUserIsOnTeam && 
+                <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)} />
+              }
+            </div>
+            <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)} />
+            <AuthDescription 
+              authorized={currentUserIsTeamAdmin} 
+              description={description} 
+              update={updateDescription} 
+              placeholder="Tell us about your team"
+            />
+          </ProfileContainer>
+        </section>
+        <AddTeamProject 
+          {...{currentUserIsOnTeam, addProject, myProjects}} 
+          teamProjects={projects}
+          projectLimitIsReached={projectLimitIsReached()}
+          api={() => api}
+        />
+        { projectLimitIsReached() &&
+          <TeamProjectLimitReachedBanner 
+            teamName={name} 
+            teamId={id}
+            currentUserId={currentUserId}
+            users={users}
           />
-        </ProfileContainer>
-      </section>
-      <AddTeamProject 
-        {...{currentUserIsOnTeam, addProject, myProjects}} 
-        teamProjects={projects}
-        projectLimitIsReached={projectLimitIsReached()}
-        api={() => api}
-      />
-      { projectLimitIsReached() &&
-        <TeamProjectLimitReachedBanner 
-          teamName={name} 
-          teamId={id}
-          currentUserId={currentUserId}
-          users={users}
-        />
-      }
-      <EntityPageProjects
-        projects={projects} 
-        pins={teamPins} 
-        isAuthorized={currentUserIsOnTeam}
-        addPin={addPin} 
-        removePin={removePin} 
-        projectOptions={{removeProjectFromTeam: removeProject}}
-        getProjects={getProjects}
-      />
-      { currentUserIsOnTeam && 
-        <TeamAnalytics 
-          api={() => api} 
-          id={id} 
-          currentUserOnTeam={currentUserIsOnTeam} 
+        }
+        <EntityPageProjects
           projects={projects} 
-          addProject={addProject} 
-          myProjects={myProjects} 
-        /> 
-      }
-      { (currentUserIsOnTeam && !teamHasUnlimitedProjects) && 
-        <TeamUpgradeInfoBanner 
-          projectsCount={projects.length} 
-          limit={FREE_TEAM_PROJECTS_LIMIT} 
-          teamName={name} 
-          teamId={id} 
-          users={users} 
-          currentUserId={currentUserId} 
+          pins={teamPins} 
+          isAuthorized={currentUserIsOnTeam}
+          addPin={addPin} 
+          removePin={removePin} 
+          projectOptions={{removeProjectFromTeam: removeProject}}
+          getProjects={getProjects}
         />
-      }
+        { currentUserIsOnTeam && 
+          <TeamAnalytics 
+            api={() => api} 
+            id={id} 
+            currentUserOnTeam={currentUserIsOnTeam} 
+            projects={projects} 
+            addProject={addProject} 
+            myProjects={myProjects} 
+          /> 
+        }
+        { (currentUserIsOnTeam && !teamHasUnlimitedProjects) && 
+          <TeamUpgradeInfoBanner 
+            projectsCount={projects.length} 
+            limit={FREE_TEAM_PROJECTS_LIMIT} 
+            teamName={name} 
+            teamId={id} 
+            users={users} 
+            currentUserId={currentUserId} 
+          />
+        }
 
-      {/* billing info section goes here */}
+        {/* billing info section goes here */}
 
-      {/* Temporary: enable once team creation is public
-      { currentUserIsTeamAdmin && 
-        <DeleteTeam api={() => api} 
-          teamId={id} 
-          teamName={name} 
-          admins={admins}
-          users={users} 
-        /> 
-      }
-     */}
+        {/* Temporary: enable once team creation is public
+        { currentUserIsTeamAdmin && 
+          <DeleteTeam api={() => api} 
+            teamId={id} 
+            teamName={name} 
+            admins={admins}
+            users={users} 
+          /> 
+        }
+       */}
 
-      { !currentUserIsOnTeam && 
-        <TeamMarketing /> 
-      }
-    </main>
-  );
-};
+        { !currentUserIsOnTeam && 
+          <TeamMarketing /> 
+        }
+      </main>
+    );
+  };
 }
 
 
