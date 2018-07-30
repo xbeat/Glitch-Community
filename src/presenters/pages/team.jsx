@@ -42,10 +42,16 @@ class TeamPage extends React.Component {
       // currentUserIsOnTeam: this.props.currentUserIsOnTeam,
       // currentUserIsTeamAdmin: this.props.currentUserIsTeamAdmin,
       // teamHasUnlimitedProjects: this.props.teamHasUnlimitedProjects
+      projectLimitIsReached: false
     };
-    
+    this.updateProjectLimitIsReached = this.updateProjectLimitIsReached.bind(this);
+    this.teamAdmins = this.teamAdmins.bind(this);
   }
 
+  componentDidMount() {
+    this.updateProjectLimitIsReached()
+  }
+  
 //   team: {
 //     id, name, description, users,
 //     projects, teamPins,
@@ -67,12 +73,19 @@ class TeamPage extends React.Component {
 
   // create update state funcs to pass dowen
   
-  projectLimitIsReached() {
+  updateProjectLimitIsReached() {
+    console.log('asdf', this.props)
     if ((this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects && this.props.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
-      return true;
-    } return false;
+      this.setState({
+        projectLimitIsReached: true
+      }) 
+    } else {
+      this.setState({
+        projectLimitIsReached: false
+      }) 
+    }
   };
-  
+
   teamAdmins() {
     return this.props.team.users.filter(user => {
       return this.props.team.adminIds.includes(user.id);
@@ -134,10 +147,10 @@ class TeamPage extends React.Component {
         <AddTeamProject 
           {...this.props} 
           teamProjects={this.props.team.projects}
-          projectLimitIsReached={this.projectLimitIsReached()}
+          projectLimitIsReached={this.state.projectLimitIsReached}
           api={() => this.props.api}
         />
-        { this.projectLimitIsReached() &&
+        { this.state.projectLimitIsReached &&
           <TeamProjectLimitReachedBanner 
             teamName={name} 
             teamId={this.props.team.id}
