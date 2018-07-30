@@ -211,12 +211,16 @@ export default Team = function(I, self) {
   
     
     asProps() {
-      
-      const adminIds = (users) => {
-        data.users.filter(user => {
-          return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
-        }
-      }
+      // const adminIds = (users) => {
+      //   console.log ('dsalk;jf',users)
+      //   let ADMIN_ACCESS_LEVEL = 30;
+      //   let adminUsers = users.filter(user => {
+      //     return user.teamsUser().accessLevel === ADMIN_ACCESS_LEVEL;
+      //   })
+      //   return adminUsers.map(user => {
+      //     return user.id(); 
+      //   });
+      // }
       
       return {
         get users() { return self.users().map(({asProps}) => asProps()); },
@@ -256,22 +260,21 @@ export default Team = function(I, self) {
   return self;
 };
 
-Team.getTeamById = function(application, id) {
-  console.log ('getTeamById');
-  const teamsPath = `teams/${id}`;
-  return application.api().get(teamsPath)
-    .then(function({data}) {
-      let ADMIN_ACCESS_LEVEL = 30;
-      let adminIds = data.users.filter(user => {
-        return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
-      });
-      data.adminIds = adminIds.map(user => {
-        return user.id;
-      });
-      application.saveTeam(data);
-    })
-    .catch(error => console.error('getTeamById', error));
-};
+// Team.getTeamById = function(api, id) {
+//   const teamsPath = `teams/${id}`;
+//   return api.get(teamsPath)
+//     .then(function({data}) {
+//       let ADMIN_ACCESS_LEVEL = 30;
+//       let adminIds = data.users.filter(user => {
+//         return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
+//       });
+//       data.adminIds = adminIds.map(user => {
+//         return user.id;
+//       });
+//       return Team(data).update(data)
+//     })
+//     .catch(error => console.error('getTeamById', error));
+// };
 
 
 Team._cache = cache;

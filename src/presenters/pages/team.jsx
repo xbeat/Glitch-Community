@@ -275,7 +275,7 @@ export default function(application, id, name) {
       application.api().get(`teams/${id}`)
         .then(({data}) => (
           data ? 
-            TeamModel(ParseTeam(data)).update(data).asProps() 
+            TeamModel(data).update(ParseTeam(data)).asProps() 
             : null
         )),
     searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
