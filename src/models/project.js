@@ -1,13 +1,10 @@
-/* global application CDN_URL EDITOR_URL*/
+/* global CDN_URL EDITOR_URL*/
 
 let Project;
 const cache = {};
 
 import Team from './team';
 import Model from './model';
-import axios from 'axios';
-
-let source = undefined; // reference to cancel token
 
 export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528812220123";
 
@@ -72,75 +69,6 @@ export default Project = function(I, self) {
 
     avatar() {
       return getAvatarUrl(self.id());
-    },
-        
-    getReadme(application) {
-      if (self.id() === undefined) {
-        self.readmeNotFound(true);
-        self.projectNotFound(true);
-        return;
-      }
-      
-      const { CancelToken } = axios;
-      source = CancelToken.source();
-      self.readme(undefined);
-      self.readmeNotFound(undefined);
-      self.projectNotFound(undefined);
-      let path = `projects/${self.id()}/readme`;
-      let token = application.currentUser() && application.currentUser().persistentToken();
-      if(token){
-        path += `?token=${token}`;
-      }
-      return application.api(source).get(path)
-        .then(function(response) {
-          self.readme(response.data);
-          return application.overlayProject(self);
-        }).catch(function(error) {
-          console.error("getReadme", error);
-          if (error.response.status === 404) {
-            return self.readmeNotFound(true);
-          } 
-          return self.projectNotFound(true);
-        
-        });
-    },
-           
-    delete() {
-      const projectPath = `/projects/${self.id()}`;
-      return new Promise(function(resolve, reject) {
-        return application.api().delete(projectPath)
-          .then(response => resolve(response)).catch(function(error) {
-            reject(error);
-            return console.error('deleteProject', error);
-          });
-      });
-    },
-      
-    undelete() {
-      const projectPath = `/projects/${self.id()}/undelete`;
-      return new Promise(function(resolve, reject) { 
-        return application.api().post(projectPath)
-          .then(response => resolve(response)).catch(function(error) {
-            console.error('undeleteProject', error);
-            return reject(error);
-          });
-      });
-    },
-    
-    leave() {
-      const projectAuthPath = `/projects/${self.id()}/authorization`;
-      const config = {
-        data: { 
-          targetUserId: application.currentUser().id(),
-        },
-      };
-      return new Promise(function(resolve, reject) {
-        return application.api().delete(projectAuthPath, config)
-          .then(response => resolve(response)).catch(function(error) {
-            console.error('leaveProject', error);
-            return reject(error);
-          });
-      });
     },
   });
       
