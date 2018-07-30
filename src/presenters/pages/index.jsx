@@ -13,12 +13,7 @@ import Questions from '../questions.jsx';
 import RandomCategories from '../random-categories.jsx';
 import RecentProjects from '../recent-projects.jsx';
 
-const play = "https://cdn.hyperdev.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fplay.svg";
-const whatsGlitchWide = "https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fwhats-glitch-wide.svg?1499885209761";
-const whatsGlitchNarrow = "https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fwhats-glitch-narrow.svg?1499884900667";
-const free = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffree.svg?1499350845981";
 
-const whatsGlitchAlt = "Create a node app, or remix one. It updates as you type. Code with Friends!";
 
 function loadScript(src) {
   const script = document.createElement('script');
@@ -34,6 +29,11 @@ class WhatIsGlitch extends React.Component {
   }
   
   render() {
+    const free = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffree.svg?1499350845981";
+    const play = "https://cdn.hyperdev.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fplay.svg";
+    const whatsGlitchWide = "https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fwhats-glitch-wide.svg?1499885209761";
+    const whatsGlitchNarrow = "https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fwhats-glitch-narrow.svg?1499884900667";
+    const whatsGlitchAlt = "Create a node app, or remix one. It updates as you type. Code with Friends!";
     return (
       <section className="what-is-glitch">
         <h2>How It Works</h2>
@@ -59,22 +59,50 @@ class WhatIsGlitch extends React.Component {
   }
 }
 
-const FOUNDED = 2000;
-const current = new Date().getFullYear();
-const age = current - FOUNDED;
-const logo = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffogcreek.svg";
-
-const ByFogCreek = () => (
-  <section className="by-fogcreek" role="complementary">
-    <h2>Made By Fog Creek</h2>
-    <img src={logo} alt="Fog Creek logo"/>
-    <p>
-      You might know us for making Trello, FogBugz, and co-creating Stack Overflow. 
-      We're <a href="https://www.fogcreek.com">a friendly, self-funded company</a> that's
-      been helping people make stuff for over {age} years.
-    </p>
-  </section>
-);
+class ByFogCreek extends React.Component {
+  
+  
+  constructor(props) {
+    super(props);
+    this.state = {age: this.age()};
+    this.timer = null;
+  }
+  
+  age() {
+    const FOUNDED = 2000;
+    const current = new Date().getFullYear();
+    return current - FOUNDED;
+  }
+  
+  startTimer() {
+    this.timer = window.setTimeout(() => {
+    }, Math.min(, 600000));
+  }
+  
+  componentDidMount() {
+    this.startTimer();
+  }
+  
+  componentWillUnmount() {
+    window.clearTimeout(this.timer);
+    this.timer = null;
+  }
+  
+  render() {
+    const logo = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffogcreek.svg";
+    return (
+      <section className="by-fogcreek" role="complementary">
+        <h2>Made By Fog Creek</h2>
+        <img src={logo} alt="Fog Creek logo"/>
+        <p>
+          You might know us for making Trello, FogBugz, and co-creating Stack Overflow. 
+          We're <a href="https://www.fogcreek.com">a friendly, self-funded company</a> that's
+          been helping people make stuff for over {this.state.age} years.
+        </p>
+      </section>
+    );
+  }
+}
 
 const MadeInGlitch = () => (
   <section className="made-in-glitch">
