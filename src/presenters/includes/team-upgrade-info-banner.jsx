@@ -40,9 +40,7 @@ class TeamUpgradeInfoBanner extends React.Component {
   }
 
   render() {
-    let progressValueWidth = () => {
-      return {width: (this.props.projectsCount / this.props.limit) * 100}
-    }
+    let progressValueWidth = {width: `${Math.min(((this.props.projectsCount / this.props.limit) * 100), 100)}%`}
     
     return (
       <aside className="inline-banners team-upgrade-banner">
@@ -52,9 +50,11 @@ class TeamUpgradeInfoBanner extends React.Component {
 
         <div className="progress" value={this.props.projectsCount} max={this.props.limit}>
           <div className="progress-value" style={progressValueWidth}>
-            <div className={`projects-left ${this.errorIfLimitReached()}`}>
-              {this.state.remainingFreeProjects} left
-            </div>            
+            <div className="progress-left-container">
+              <div className={`projects-left ${this.errorIfLimitReached()}`}>
+                {this.state.remainingFreeProjects} left
+              </div>
+            </div>
           </div>
         </div>
         
