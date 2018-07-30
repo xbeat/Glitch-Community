@@ -43,6 +43,7 @@ class TeamPage extends React.Component {
       // currentUserIsTeamAdmin: this.props.currentUserIsTeamAdmin,
       // teamHasUnlimitedProjects: this.props.teamHasUnlimitedProjects
     };
+    
   }
 
 //   team: {
@@ -79,8 +80,7 @@ class TeamPage extends React.Component {
   }
 
   render() {
-    console.log (this.props)
-    debugger
+    console.log ('🚒', this.props, this.props.team.id)
     return (
       <main className="profile-page team-page">
         <section>
@@ -109,7 +109,10 @@ class TeamPage extends React.Component {
               }
             </h1>
             <div className="users-information">
-              <TeamUsers {...this.props} />
+              <TeamUsers {...this.props} 
+                users={this.props.team.users}
+                teamId={this.props.team.id}
+              />
               { this.props.currentUserIsOnTeam && 
                 <AddTeamUser 
                   search={this.props.searchUsers} 
@@ -216,7 +219,6 @@ TeamPage.propTypes = {
   addPin: PropTypes.func.isRequired,
   addProject: PropTypes.func.isRequired,
   addUser: PropTypes.func.isRequired,
-  adminIds: PropTypes.array.isRequired,
   api: PropTypes.func.isRequired,
   clearCover: PropTypes.func.isRequired,
   currentUserId: PropTypes.number.isRequired,
