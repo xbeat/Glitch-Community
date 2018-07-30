@@ -118,11 +118,19 @@ export function getLink(domain) {
   return `/~${domain}`;
 }
 
+export function getShowUrl(domain) {
+  return `//${domain}.glitch.me`;
+}
+
 export function getEditorUrl(domain, path, line, character) {
   if (path && !isNaN(line) && !isNaN(character)) {
     return `${EDITOR_URL}#!/${domain}?path=${path}:${line}:${character}`;
   }
   return `${EDITOR_URL}#!/${domain}`;
+}
+
+export function getRemixUrl(domain) {
+  return `${EDITOR_URL}#!/remix/${domain}`;
 }
 
 // Circular dependencies must go below module.exports
