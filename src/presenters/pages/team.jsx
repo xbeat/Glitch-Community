@@ -97,69 +97,75 @@ class TeamPage extends React.Component {
             })}
             avatarButtons={this.props.currentUserIsTeamAdmin ? <ImageButtons name="Avatar" uploadImage={this.props.uploadAvatar} /> : null}
             coverButtons={this.props.currentUserIsTeamAdmin ? <ImageButtons name="Cover" 
-                                                                uploadImage={uploadCover} 
-                                                                clearImage={this.props.hasCoverImage ? clearCover : null} /> : null}
-          >
+                                                                uploadImage={this.props.uploadCover} 
+                                                                clearImage={this.props.team.hasCoverImage ? this.props.team.clearCover : null} /> : null
+            }>
             <h1 className="username">
               { name }
-              { isVerified && 
-                <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>
+              { this.props.team.isVerified && 
+                <VerifiedBadge image={this.props.team.verifiedImage} tooltip={this.props.team.verifiedTooltip}/>
               }
             </h1>
             <div className="users-information">
-              <TeamUsers {...{users, currentUserIsOnTeam, removeUser, adminIds, api, teamId:id, currentUserIsTeamAdmin}} />
-              { currentUserIsOnTeam && 
-                <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)} />
+              <TeamUsers {...this.props} />
+              { this.props.currentUserIsOnTeam && 
+                <AddTeamUser 
+                  search={this.props.searchUsers} 
+                  add={this.props.addUser} 
+                  members={this.props.team.users.map(({id}) => id)} 
+                />
               }
             </div>
-            <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)} />
+            <Thanks count={this.props.team.users.reduce((total, {thanksCount}) => total + thanksCount, 0)} />
             <AuthDescription 
-              authorized={currentUserIsTeamAdmin} 
-              description={description} 
-              update={updateDescription} 
+              authorized={this.props.currentUserIsTeamAdmin}
+              description={this.props.team.description} 
+              update={this.props.updateDescription}
               placeholder="Tell us about your team"
             />
           </ProfileContainer>
         </section>
+
+        {/*REFACTOR PROPS reqs in addteamproject */}
         <AddTeamProject 
-          {...{currentUserIsOnTeam, addProject, myProjects}} 
-          teamProjects={projects}
-          projectLimitIsReached={projectLimitIsReached()}
-          api={() => api}
+          {...this.props} 
+          teamProjects={this.props.team.projects}
+          projectLimitIsReached={this.projectLimitIsReached()}
+          api={() => this.props.api}
         />
         { projectLimitIsReached() &&
           <TeamProjectLimitReachedBanner 
             teamName={name} 
-            teamId={id}
+            teamId={this.props.team.id}
             currentUserId={currentUserId}
             users={users}
           />
         }
         <EntityPageProjects
-          projects={projects} 
-          pins={teamPins} 
-          isAuthorized={currentUserIsOnTeam}
-          addPin={addPin} 
+          projects={this.props.team.projects} 
+          pins={this.props.team.teamPins} 
+          isAuthorized={this.props.currentUserIsOnTeam}
+          addPin={this.props.addPin} 
           removePin={removePin} 
           projectOptions={{removeProjectFromTeam: removeProject}}
           getProjects={getProjects}
         />
-        { currentUserIsOnTeam && 
+        { this.props.currentUserIsOnTeam && 
           <TeamAnalytics 
-            api={() => api} 
-            id={id} 
-            currentUserOnTeam={currentUserIsOnTeam} 
+            api={() => this.props.api} 
+            id={this.props.team.id} 
+            currentUserOnTeam={this.props.currentUserIsOnTeam} 
             projects={projects} 
             addProject={addProject} 
             myProjects={myProjects} 
           /> 
         }
-        { (currentUserIsOnTeam && !teamHasUnlimitedProjects) && 
+        { (this.props.currentUserIsOnTeam && !teamHasUnlimitedProjects) && 
           <TeamUpgradeInfoBanner 
             projectsCount={projects.length} 
             limit={FREE_TEAM_PROJECTS_LIMIT} 
             teamName={name} 
-            teamId={id} 
+            teamId={this.props.team.id} 
             users={users} 
             currentUserId={currentUserId} 
           />
@@ -169,8 +175,8 @@ class TeamPage extends React.Component {
 
         {/* Temporary: enable once team creation is public
         { currentUserIsTeamAdmin && 
-          <DeleteTeam api={() => api} 
-            teamId={id} 
+          <DeleteTeam api={() => this.props.api} 
+            teamId={this.props.team.id} 
             teamName={name} 
             admins={admins}
             users={users} 
@@ -178,7 +184,7 @@ class TeamPage extends React.Component {
         }
        */}
 
-        { !currentUserIsOnTeam && 
+        { !this.props.currentUserIsOnTeam && 
           <TeamMarketing /> 
         }
       </main>
