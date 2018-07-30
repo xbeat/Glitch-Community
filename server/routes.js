@@ -40,6 +40,7 @@ module.exports = function() {
   });
 
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
+
   function render(res, title, description, image=imageDefault) {
     const scripts = JSON.parse(fs.readFileSync('public/scripts.json'));
     const styles = JSON.parse(fs.readFileSync('public/styles.json'));

@@ -236,8 +236,8 @@ const TeamPageLoader = ({api, get, name, currentUserModel, ...props}) => (
     <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
       {team => team ? (
         <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
-          {(team, funcs, currentUserIsOnTeam) => (
-            <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props} />
+          {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
+            <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin} {...props} />
           )}
         </TeamEditor>
       ) : <NotFound name={name}/>}

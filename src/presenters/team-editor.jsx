@@ -140,7 +140,7 @@ class TeamEditor extends React.Component {
       teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
       teamHasBillingExposed: this.teamHasBillingExposed(),
     };
-    return this.props.children(this.state, funcs, this.currentUserIsOnTeam());
+    return this.props.children(this.state, funcs, this.currentUserIsOnTeam(), this.currentUserIsTeamAdmin());
   }
 }
 TeamEditor.propTypes = {
