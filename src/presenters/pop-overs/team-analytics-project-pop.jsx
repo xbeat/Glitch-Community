@@ -38,7 +38,7 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomai
   };
   
   const filteredProjects = projects.filter(({name}) => {
-    return name && name.toLowerCase().includes(filter.toLowerCase());
+    return name.toLowerCase().includes(filter.toLowerCase());
   });
   
   return (
