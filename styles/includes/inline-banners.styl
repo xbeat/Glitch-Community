@@ -24,16 +24,19 @@
   &.team-upgrade-banner
     margin-top: 2rem
     margin-bottom: 1rem
-    .projects-left
-      margin-top: 4px
-      display: inline-block
-      color: primary-background
-      border-radius: 5px
-      background-color: tertiary
-      padding: 3px 5px
-      padding-bottom: 1px
-    .projects-left-error
-      background-color: error
+    .progress-container
+      position: relative
+      .projects-left
+        position: absolute
+        margin-top: 4px
+        display: inline-block
+        color: primary-background
+        border-radius: 5px
+        background-color: tertiary
+        padding: 3px 5px
+        padding-bottom: 1px
+      .projects-left-error
+        background-color: error
 
   &.add-project-to-analytics-banner
     position: absolute
