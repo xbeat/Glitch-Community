@@ -244,12 +244,6 @@ export default Team = function(I, self) {
   return self;
 };
 
-Team.getTeamById = function(application, id) {
-  const teamsPath = `teams/${id}`;
-  return application.api().get(teamsPath)
-    .then(({data}) => application.saveTeam(data)).catch(error => console.error('getTeamById', error));
-};
-
 
 Team._cache = cache;
 
@@ -268,7 +262,7 @@ export const getAvatarStyle = ({id, hasAvatarImage, backgroundColor, cache}) => 
   };
 };
 
-export const getProfileStyle = ({id, hasCoverImage, coverColor, cache}) => {
+export const getProfileStyle = ({id, hasCoverImage, coverColor, cache=cacheBuster}) => {
   const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-cover/${id}/large?${cache}`;
   const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
   return {

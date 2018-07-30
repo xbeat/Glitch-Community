@@ -303,22 +303,6 @@ User.getUserById = function(application, id) {
   return promise;
 };
 
-User.getUsersById = function(api, ids) {
-  const userIdsToFetch = ids.filter(function(id) {
-    const user = cache[id];
-    return !user || !user.fetched();
-  });
-  const usersPath = `users/byIds?ids=${userIdsToFetch.join(',')}`;
-  return api.get(usersPath)
-    .then(function({data}) {
-      data.forEach(function(datum) {
-        datum.fetched = true;
-        return User(datum).update(datum);
-      });
-      return ids.map(id => User({id}));
-    });
-};
-
 User.getSearchResultsJSON = function(application, query) {
   const { CancelToken } = axios;
   const source = CancelToken.source();
@@ -338,7 +322,7 @@ export function getAvatarStyle({avatarUrl, color}) {
   };
 }
 
-export function getProfileStyle({id, hasCoverImage, coverColor, cache}) {
+export function getProfileStyle({id, hasCoverImage, coverColor, cache=cacheBuster}) {
   const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-cover/${id}/large?${cache}`;
   const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
   return {

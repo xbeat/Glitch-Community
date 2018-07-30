@@ -7,7 +7,7 @@ import rootTeams from './curated/teams.js';
 import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
-import IndexPage from './presenters/pages/index';
+import IndexPage from './presenters/pages/index.jsx';
 import CategoryPage from './presenters/pages/category.jsx';
 import ProjectPage from './presenters/pages/project.jsx';
 import {TeamPagePresenter, UserPagePresenter, TeamOrUserPagePresenter} from './presenters/pages/team-or-user.jsx';

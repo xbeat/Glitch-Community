@@ -18,8 +18,8 @@ export const CurrentUserConsumer = ({children}) => (
   <Consumer>
     {model => (
       <Observed
-        propsObservable={Observable(() => model ? model.asProps() : {})}
-        component={user => children(user)}
+        propsObservable={Observable(() => model ? {user: model.asProps(), fetched: model.fetched()} : {})}
+        component={({user, fetched}) => children(user, fetched)}
       />
     )}
   </Consumer>
@@ -29,7 +29,7 @@ CurrentUserConsumer.propTypes = {
 };
 
 export function normalizeUser(user, currentUser) {
-  return user.id === currentUser.id ? currentUser : user;
+  return user.id === (currentUser && currentUser.id) ? currentUser : user;
 }
 
 export function normalizeUsers(users, currentUser) {
