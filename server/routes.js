@@ -48,6 +48,7 @@ module.exports = function() {
       title, description, image,
       scripts: Object.values(scripts),
       styles: Object.values(styles),
+      PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
       ...constants,
     });
   }
