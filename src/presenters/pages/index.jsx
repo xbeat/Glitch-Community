@@ -69,8 +69,7 @@ class ByFogCreek extends React.Component {
   }
   
   age() {
-    const FOUNDED = new Date('2000, 6, 30);
-    console.log(this.state.time, FOUNDED);
+    const FOUNDED = new Date('2000-08-14');
     return moment(this.state.time).diff(FOUNDED, 'years');
   }
   
@@ -78,7 +77,7 @@ class ByFogCreek extends React.Component {
     this.timer = window.setTimeout(() => {
       this.setState({time: new Date()});
       this.startTimer();
-    }, moment.duration(1, 'seconds').asMilliseconds());
+    }, moment.duration(1, 'hours').asMilliseconds());
   }
   
   componentDidMount() {
