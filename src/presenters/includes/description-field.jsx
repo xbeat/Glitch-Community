@@ -72,7 +72,7 @@ export const StaticDescription = ({description}) => (
     <p className="description read-only">
       <Markdown>{description}</Markdown>
     </p> 
-  : null
+    : null
 );
 StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
@@ -85,7 +85,7 @@ export const AuthDescription = ({authorized, description, placeholder, update, n
       updateDescription={update} 
       placeholder={placeholder} 
     /> 
-  :
+    :
     <StaticDescription description={description}/>
 );
 AuthDescription.propTypes = {

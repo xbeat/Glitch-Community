@@ -36,7 +36,7 @@ export const AdminOnlyBadge = ({...props}) => {
         </div> 
       }
     </React.Fragment>
-  )
+  );
 };
 
 AdminOnlyBadge.propTypes = {

@@ -36,7 +36,7 @@ const FREE_TEAM_PROJECTS_LIMIT = 5;
 // Team Page
 
 class TeamPage extends React.Component {
-    constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       projectLimitIsReached: false
@@ -46,20 +46,20 @@ class TeamPage extends React.Component {
   }
 
   componentDidMount() {
-    this.updateProjectLimitIsReached()
+    this.updateProjectLimitIsReached();
   }
     
   updateProjectLimitIsReached() {
     if ((this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects && this.props.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
       this.setState({
         projectLimitIsReached: true
-      }) 
+      }); 
     } else {
       this.setState({
         projectLimitIsReached: false
-      }) 
+      }); 
     }
-  };
+  }
 
   teamAdmins() {
     return this.props.team.users.filter(user => {
@@ -86,8 +86,8 @@ class TeamPage extends React.Component {
             })}
             avatarButtons={this.props.currentUserIsTeamAdmin ? <ImageButtons name="Avatar" uploadImage={this.props.uploadAvatar} /> : null}
             coverButtons={this.props.currentUserIsTeamAdmin ? <ImageButtons name="Cover" 
-                                                                uploadImage={this.props.uploadCover} 
-                                                                clearImage={this.props.team.hasCoverImage ? this.props.team.clearCover : null} /> : null
+              uploadImage={this.props.uploadCover} 
+              clearImage={this.props.team.hasCoverImage ? this.props.team.clearCover : null} /> : null
             }>
             <h1>
               { this.props.team.name }
@@ -181,7 +181,7 @@ class TeamPage extends React.Component {
         }
       </main>
     );
-  };
+  }
 }
 
 TeamPage.propTypes = {
@@ -222,7 +222,7 @@ TeamPage.propTypes = {
   updateDescription: PropTypes.func.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
   uploadCover: PropTypes.func.isRequired,
-}
+};
 
 
 

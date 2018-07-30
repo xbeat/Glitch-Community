@@ -114,7 +114,7 @@ const UserPopoverTile = ({
         </div>
       )}
     </PopoverContainer>
-  )
+  );
 };
 
 UserPopoverTile.propTypes = {
