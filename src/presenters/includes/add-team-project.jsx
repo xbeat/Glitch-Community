@@ -32,7 +32,8 @@ AddTeamProject.propTypes = {
   myProjects: PropTypes.array.isRequired,
   teamProjects: PropTypes.array.isRequired,
   extraButtonClass: PropTypes.string,
-  api: PropTypes.func.isRequired
+  api: PropTypes.func.isRequired,
+  projectLimitIsReached: PropTypes.bool.isRequired,
 };
 
 export default AddTeamProject;

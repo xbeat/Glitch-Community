@@ -67,7 +67,7 @@ class TeamPage extends React.Component {
   // create update state funcs to pass dowen
   
   projectLimitIsReached() {
-    if ((this.state.currentUserIsOnTeam && !this.state.teamHasUnlimitedProjects && this.props.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
+    if ((this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects && this.props.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
       return true;
     } return false;
   };
@@ -80,6 +80,7 @@ class TeamPage extends React.Component {
 
   render() {
     console.log (this.props)
+    debugger
     return (
       <main className="profile-page team-page">
         <section>
@@ -127,7 +128,6 @@ class TeamPage extends React.Component {
           </ProfileContainer>
         </section>
 
-        {/*REFACTOR PROPS reqs in addteamproject */}
         <AddTeamProject 
           {...this.props} 
           teamProjects={this.props.team.projects}
@@ -197,13 +197,13 @@ TeamPage.propTypes = {
   team: PropTypes.shape({
     _cacheAvatar: PropTypes.number.isRequired,
     _cacheCover: PropTypes.number.isRequired,
-    adminIds: PropTypes.array,
+    adminIds: PropTypes.array.isRequired,
     backgroundColor: PropTypes.string.isRequired,
     coverColor: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     features: PropTypes.array.isRequired,  
     hasAvatarImage: PropTypes.bool.isRequired,
-    hasCoverImage: PropTypes.string.isRequired,
+    hasCoverImage: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired,
     isVerified: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
