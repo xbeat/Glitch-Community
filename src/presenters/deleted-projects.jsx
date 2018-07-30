@@ -1,7 +1,3 @@
-// deleted projects is a little strange
-// it loads the projects from the api, but expects them to be stored elsewhere
-// so it takes an initially empty list of projects and a function to fill it once they load
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -62,7 +58,7 @@ export default class DeletedProjects extends React.Component {
   async clickShow() {
     this.setState({shown: true});
     try {
-      const {data} = await this.props.api.get('user/deleted-projects');
+      const {data} = await this.props.get();
       this.props.setDeletedProjects(data);
       this.setState({loaded: true});
     } catch (e) {
@@ -75,8 +71,6 @@ export default class DeletedProjects extends React.Component {
       return <button className="button button-tertiary" onClick={this.clickShow}>Show</button>;
     } else if (!this.state.loaded) {
       return <Loader/>;
-    } else if (!this.props.deletedProjects.length) {
-      return 'nothing found';
     }
     return <DeletedProjectsList {...this.props}/>;
   }
@@ -91,7 +85,7 @@ export default class DeletedProjects extends React.Component {
   }
 }
 DeletedProjects.propTypes = {
-  api: PropTypes.any.isRequired,
-  deletedProjects: PropTypes.array.isRequired,
+  get: PropTypes.func.isRequired,
   setDeletedProjects: PropTypes.func.isRequired,
+  deletedProjects: PropTypes.array.isRequired,
 };

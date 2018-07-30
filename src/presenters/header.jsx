@@ -1,9 +1,6 @@
-/* global EDITOR_URL */
-
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
-import NewStuffContainer from './overlays/new-stuff.jsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import urlJoin from 'url-join';
@@ -25,7 +22,7 @@ const Logo = () => {
 };
 
 const ResumeCoding = () => (
-  <a className="button button-small button-cta" href={EDITOR_URL} data-track="resume coding">
+  <a className="button button-small button-cta" href="https://glitch.com/edit/" data-track="resume coding">
     <div className="">Resume Coding</div>
   </a>
 );
@@ -48,25 +45,17 @@ SearchForm.propTypes = {
   defaultValue: PropTypes.string.isRequired,
 };
 
-<<<<<<< HEAD
 const UserOptionsPopWrapper = ({user, overlayNewStuffVisible, api}) => {
-=======
-const UserOptionsPopWrapper = ({user, showNewStuffOverlay}) => {
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
   const props = {
     teams: user.teams,
     userLink: user.userLink,
     avatarUrl: user.userAvatarUrl,
     avatarStyle: {backgroundColor: user.color},
-<<<<<<< HEAD
     showNewStuffOverlay() {
       return overlayNewStuffVisible(true);
     },
     api: api,
     userIsAnon: user.isAnon,
-=======
-    showNewStuffOverlay,
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
   };
 
   return <UserOptionsPop {...props}/>;
@@ -76,14 +65,10 @@ UserOptionsPopWrapper.propTypes = {
   user: PropTypes.shape({
     login: PropTypes.string,
   }).isRequired,
-  showNewStuffOverlay: PropTypes.func.isRequired,
+  overlayNewStuffVisible: PropTypes.func.isRequired,
 };
 
-<<<<<<< HEAD
 const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promiseProjectsByIds, api}) => {
-=======
-const Header = ({api, baseUrl, maybeUser, searchQuery, showNewStuffOverlay}) => {
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
   const signedIn = maybeUser && !!maybeUser.login;
   return (
     <header role="banner">
@@ -95,14 +80,10 @@ const Header = ({api, baseUrl, maybeUser, searchQuery, showNewStuffOverlay}) => 
      
       <nav>
         <SearchForm baseUrl={baseUrl} onSubmit={submitSearch} defaultValue={searchQuery}/>
-        <NewProjectPop api={api}/>
+        <NewProjectPop promiseProjectsByIds={promiseProjectsByIds}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
-<<<<<<< HEAD
         { maybeUser && <UserOptionsPopWrapper user={maybeUser} overlayNewStuffVisible={overlayNewStuffVisible} api={api} />}
-=======
-        { maybeUser && <UserOptionsPopWrapper user={maybeUser} showNewStuffOverlay={showNewStuffOverlay} />}
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
       </nav>
     </header>
   );
@@ -128,16 +109,7 @@ class HeaderContainer extends React.Component {
     this.props.userObservable.releaseDependencies();
   }
   render() {
-    return (
-      <NewStuffContainer
-        isSignedIn={!!this.state.maybeUser && !!this.state.maybeUser.login}
-        getUserPref={this.props.getUserPref} setUserPref={this.props.setUserPref}
-      >
-        {showNewStuffOverlay => (
-          <Header {...this.props} maybeUser={this.state.maybeUser} showNewStuffOverlay={showNewStuffOverlay}/>
-        )}
-      </NewStuffContainer>
-    );
+    return <Header {...this.props} maybeUser={this.state.maybeUser}/>;
   }
 }
 
@@ -145,12 +117,9 @@ HeaderContainer.propTypes = {
   baseUrl: PropTypes.string.isRequired,
   userObservable: PropTypes.func.isRequired,
   searchQuery: PropTypes.string.isRequired,
-<<<<<<< HEAD
   overlayNewStuffVisible: PropTypes.func.isRequired,
   promiseProjectsByIds: PropTypes.func.isRequired,
   api: PropTypes.func.isRequired,
-=======
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
 };
 
 export default HeaderContainer;

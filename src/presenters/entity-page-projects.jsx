@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {partition} from 'lodash';
+import {chunk, keyBy, partition} from 'lodash';
 
 import ProjectsList from './projects-list.jsx';
-import ProjectsLoader from './projects-loader.jsx';
+import {CurrentUserConsumer, normalizeProjects} from './current-user.jsx';
+
 
 /* globals Set */
+
+function listToObject(list, val) {
+  return list.reduce((data, key) => ({[key]: val, ...data}), {});
+}
 
 const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
@@ -57,10 +62,55 @@ EntityPageProjects.propTypes = {
   projectOptions: PropTypes.object.isRequired,
 };
 
-const EntityPageProjectsContainer = ({api, projects, ...props}) => (
-  <ProjectsLoader api={api} projects={projects}>
-    {projects => <EntityPageProjects projects={projects} {...props}/>}
-  </ProjectsLoader>
-);
-
-export default EntityPageProjectsContainer;
+export default class EntityPageProjectsLoader extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  
+  ensureProjects(projects) {
+    const ids = projects.map(({id}) => id);
+    
+    const discardedProjects = Object.keys(this.state).filter(id => this.state[id] && !ids.includes(id));
+    if (discardedProjects.length) {
+      this.setState(listToObject(discardedProjects, undefined));
+    }
+    
+    const unloadedProjects = ids.filter(id => this.state[id] === undefined);
+    if (unloadedProjects.length) {
+      this.setState(listToObject(unloadedProjects, null));
+      chunk(unloadedProjects, 100).forEach(chunk => {
+        this.props.getProjects(chunk).then(projects => {
+          this.setState(keyBy(projects, ({id}) => id));
+        });
+      });
+    }
+  }
+  
+  componentDidMount() {
+    this.ensureProjects(this.props.projects);
+  }
+  
+  componentDidUpdate() {
+    this.ensureProjects(this.props.projects);
+  }
+  
+  render() {
+    const {projects, ...props} = this.props;
+    const loadedProjects = projects.map(project => this.state[project.id] || project);
+    return (
+      <CurrentUserConsumer>
+        {currentUser => (
+          <EntityPageProjects
+            projects={normalizeProjects(loadedProjects, currentUser)}
+            {...props}
+          />
+        )}
+      </CurrentUserConsumer>
+    );
+  }
+}
+EntityPageProjectsLoader.propTypes = {
+  projects: PropTypes.array.isRequired,
+  getProjects: PropTypes.func.isRequired,
+};

@@ -11,17 +11,12 @@ const countTotals = (data, countProperty) => {
   return total;
 };
 
-const ReferrerPlaceholder = ({count}) => {
-  if (count === 0) {
-    return <span>0</span>
-  } 
-  return null
-}
-
 const ReferrerItem = ({count, total, description}) => {
   const progress = Math.max(Math.round(count / total * 100), 3);
   if (count <= 0) {
-    return null;
+    <li>
+      <span>0</span>
+    </li>
   }
   return (
     <li>
@@ -51,9 +46,6 @@ const TeamAnalyticsReferrers = ({analytics, totalRemixes, uniqueAppViews}) => {
           App Views
         </h4>
         <ul>
-          <ReferrerPlaceholder 
-            count = {uniqueAppViews}
-          />
           <ReferrerItem
             count = {totalDirectAppViews}
             total = {uniqueAppViews}
@@ -75,9 +67,6 @@ const TeamAnalyticsReferrers = ({analytics, totalRemixes, uniqueAppViews}) => {
           Remixes
         </h4>
         <ul>
-          <ReferrerPlaceholder 
-            count = {totalRemixes}
-          />
           <ReferrerItem
             count = {totalDirectRemixes}
             total = {totalRemixes}

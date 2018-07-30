@@ -20,7 +20,7 @@ export default class Observed extends React.Component {
   }
   
   render() {
-    return this.props.component(this.state.observedProps);
+    return <this.props.component {...this.state.observedProps}/>;
   }
 }
 

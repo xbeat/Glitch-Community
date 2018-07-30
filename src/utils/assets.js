@@ -60,7 +60,8 @@ const drawCanvasThumbnail = function(image, type, max) {
 // Takes an HTML5 File and returns a promise for an HTML5 Blob that is fulfilled
 // with a thumbnail for the image. If the image is small enough the original
 // blob is returned. Width and height metadata are added to the blob.
-export function resizeImage(file, max) {
+export function resizeImage(file, size) {
+  const max = COVER_SIZES[size] || 1000;
   return blobToImage(file)
     .then(function(image) {
       file.width = image.width;
@@ -69,6 +70,7 @@ export function resizeImage(file, max) {
         return file;
       } 
       return drawCanvasThumbnail(image, file.type, max);
+    
     });
 }
 

@@ -43,6 +43,7 @@ export default function(application) {
       }
       
       const props = {
+        closeAllPopOvers: application.closeAllPopOvers,
         projects: projects.map(project => project.asProps()),
       };
 

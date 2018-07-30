@@ -8,32 +8,27 @@ const url = require('url');
 //
 
 module.exports = function(app) {
-  // Proxy the some parts of our site over to ghost blogs:
-  proxyGhost(app, 'help', 'help-center.glitch.me');
-  proxyGhost(app, 'featured', 'featured.glitch.me');
-}
+  // Proxy the /help/ section of our site over to help-center,
+  // which is a Ghost blog.
 
-function proxyGhost(app, route, glitchTarget) {
-  const routeWithLeadingSlash = `/${route}`;
-  const sandwichedRoute = `/${route}/`;
-  // node matches /{route} and /{route}/;
-  // we need to force /{route}/ so that relative links in Ghost work. 
-  app.all(routeWithLeadingSlash, (req, res, next) => {
+  // node matches /help and /help/;
+  // we need to force /help/ so that relative links in Ghost work. 
+  app.all('/help', (req, res, next) => {
       const path = req.path;
-      if(!path.toLowerCase().startsWith(sandwichedRoute)) {
-         //therefore, path is "/{route}[^/]"/i
-         const rest = path.substring(sandwichedRoute.length);
-         return res.redirect(301, sandwichedRoute + rest);
+      if(!path.toLowerCase().startsWith("/help/")) {
+         //therefore, path is "/help[^/]"/i
+         const rest = path.substring(5);
+         return res.redirect(301, "/help/" + rest);
       }
       return next();
   });
 
-  // Proxy all the requests to /{route}/ over to glitchTarget:
-  app.use(sandwichedRoute, proxy(glitchTarget, {
+  // Proxy all the requests to /help/ over to help-center:
+  app.use('/help/', proxy('help-center.glitch.me', {
     preserveHostHdr: false, // glitch routes based on this, so we have to reset it
     https: false, // allows the proxy to do less work
     proxyReqPathResolver: function(req) {
-      const path = routeWithLeadingSlash + url.parse(req.url).path;
+      const path = '/help' + url.parse(req.url).path;
       console.log("Proxied:", path);
       return path;
     }

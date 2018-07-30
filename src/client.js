@@ -1,17 +1,15 @@
 /* globals EDITOR_URL Raven */
-import 'details-element-polyfill';
-
 import application from './application';
-import rootTeams from './curated/teams.js';
 
 import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
 import IndexPage from './presenters/pages/index';
-import CategoryPage from './presenters/pages/category.jsx';
+import CategoryPage from './presenters/pages/category';
 import ProjectPage from './presenters/pages/project.jsx';
-import {TeamPagePresenter, UserPagePresenter, TeamOrUserPagePresenter} from './presenters/pages/team-or-user.jsx';
-import QuestionsPage from './presenters/pages/questions.jsx';
+import TeamPage from './presenters/pages/team.jsx';
+import {UserPageById, UserPageByLogin} from './presenters/pages/user.jsx';
+import QuestionsPage from './presenters/pages/questions';
 import SearchPage from './presenters/pages/search.jsx';
 import errorPageTemplate from './templates/pages/error';
 
@@ -50,44 +48,49 @@ function identifyUser(application) {
 
 function routePage(pageUrl, application) {
   // index page ✅
-  if (pageUrl.match(/^index\.html$/i) || !pageUrl) {
+  if ((pageUrl === "index.html") || (pageUrl === "")) {
+    application.getQuestions();
     return {page: IndexPage(application)};
   }
 
   // questions page ✅
-  if (pageUrl.match(/^questions$/i)) {
+  if (pageUrl === 'questions') {
     return {page: QuestionsPage(application), title: "Questions"};
   }
 
   // ~project overlay page ✅
   if (pageUrl.charAt(0) === '~') {
-    const projectDomain = pageUrl.substring(1);
+    const projectDomain = application.removeFirstCharacter(pageUrl);
     const page = ProjectPage(application, projectDomain);
     return {page, title:decodeURI(pageUrl)};
   }
 
   // @user page ✅
   if (pageUrl.charAt(0) === '@') {
-    const name = pageUrl.substring(1);
-    const page = TeamOrUserPagePresenter(application, name);
+    application.pageIsUserPage(true);
+    const userLogin = pageUrl.substring(1, pageUrl.length);
+    const page = UserPageByLogin(application, userLogin);
     return {page, title:decodeURI(pageUrl)};
   }
 
   // anon user page ✅
   if (pageUrl.match(/^(user\/)/g)) {
-    const userId = parseInt(pageUrl.replace(/^(user\/)/g, ''), 10);
-    const page = UserPagePresenter(application, userId, `user ${userId}`);
+    application.pageIsUserPage(true);
+    const userId = application.anonProfileIdFromUrl(pageUrl);
+    const page = UserPageById(application, userId);
     return {page, title: pageUrl};
   }
 
   // root team page ✅
-  if (rootTeams[pageUrl.toLowerCase()]) {
-    const page = TeamPagePresenter(application, rootTeams[pageUrl.toLowerCase()], pageUrl);
-    return {page, title: pageUrl};
+  if (application.getCachedTeamByUrl(pageUrl)) {
+    application.pageIsTeamPage(true);
+    const team = application.getCachedTeamByUrl(pageUrl);
+    const page = TeamPage(application, team.id, team.name);
+    return {page, title: team.name};
   }
 
   // search page ✅
-  if (pageUrl.match(/^search$/i) && queryString.q) {
+  if (pageUrl === 'search' && queryString.q) {
     const query = queryString.q;
     application.searchQuery(query);
     const page = SearchPage(application, query);
@@ -96,9 +99,9 @@ function routePage(pageUrl, application) {
 
   // category page ✅
   if (application.categories.some(({url}) => pageUrl === url)) {
-    const category = application.categories.find(({url}) => pageUrl === url);
-    const page = CategoryPage(application, category);
-    return {page, title: category.name};
+    application.getCategory(pageUrl);
+    const page = CategoryPage(application);
+    return {page, title: application.category().name()};
   }
  
   // error page ✅
@@ -112,7 +115,7 @@ function routePage(pageUrl, application) {
 }
 
 function route(location, application) {
-  const normalizedRoute = location.pathname.replace(/^\/|\/$/g, "");
+  let normalizedRoute = location.pathname.replace(/^\/|\/$/g, "").toLowerCase();
   console.log(`normalizedRoute is ${normalizedRoute}`);
 
   //
@@ -161,3 +164,22 @@ function route(location, application) {
 }
 
 route(window.location, application);
+
+document.addEventListener("click", event => globalclick(event));
+document.addEventListener("touchend", event => globalclick(event));
+document.addEventListener("keyup", function(event) {
+  const escapeKey = 27;
+  const tabKey = 9;
+  if (event.keyCode === escapeKey) {
+    return application.closeAllPopOvers();
+  }
+  if (event.keyCode === tabKey) {
+    return globalclick(event);
+  }
+});
+
+var globalclick = function(event) {
+  if (!$(event.target).closest('.pop-over, .opens-pop-over, .overlay').length) {
+    return application.closeAllPopOvers();
+  }
+};

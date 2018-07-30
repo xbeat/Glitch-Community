@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import {CurrentUserConsumer} from '../current-user.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import ProjectModel from '../../models/project';
 import Loader from '../includes/loader.jsx';
@@ -222,10 +220,5 @@ AddTeamProjectPop.propTypes = {
   api: PropTypes.func.isRequired
 };
 
-const AddTeamProjectPopContainer = (props) => (
-  <CurrentUserConsumer>
-    {currentUser => <AddTeamProjectPop myProjects={currentUser.projects} {...props}/>}
-  </CurrentUserConsumer>
-);
 
-export default AddTeamProjectPopContainer;
+export default AddTeamProjectPop;

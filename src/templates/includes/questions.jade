@@ -1,0 +1,26 @@
+- Loader = require "./loader"
+
+section.questions
+  h2
+    a(href="/questions")
+      span= "Help Others, Get Thanks →"
+    span= " "
+    .loader-pie(title="Looking for more questions...")
+      .left-side
+        .slice(class=@animatedUnlessLookingForQuestions)
+      .right-side
+        .slice(class=@animatedUnlessLookingForQuestions)
+
+  article.projects
+
+    span(class=@hiddenIfQuestions)
+      span= @kaomoji
+      span= " "
+      span Looks like nobody is asking for help right now. 
+        a.general-link(href="/help/how-can-i-get-help-with-code-in-my-project/")
+          span Learn about helping
+
+    span(class=@hiddenUnlessQuestions)
+      ul.projects-container
+        - @questions().forEach (question) ->
+          = question

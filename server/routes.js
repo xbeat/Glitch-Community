@@ -2,7 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const moment = require('moment-mini');
 
-const {getProject, getTeam, getUser} = require('./api');
+const {getProject, getUser} = require('./api');
 const {updateCaches} = require('./cache');
 const constants = require('./constants');
 
@@ -37,13 +37,13 @@ module.exports = function() {
     response.sendStatus(200);
   });
   
-  const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
-  function render(res, title, description, image=imageDefault) {
+  function render(res, title, description, image) {
     const manifest = JSON.parse(fs.readFileSync('public/manifest.json'));
     res.render('index.ejs', {
-      title, description, image,
+      title, description,
+      image: image || 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png',
       scripts: Object.values(manifest),
-      ...constants,
+      ...constants
     });
   }
   
@@ -61,15 +61,11 @@ module.exports = function() {
   
   app.get('/@:name', async (req, res) => {
     const {name} = req.params;
-    const team = await getTeam(name);
-    if (team) {
-      return render(res, team.name, team.description);
-    }
     const user = await getUser(name);
-    if (user) {
-      return render(res, user.name, user.description, user.avatarThumbnailUrl);
+    if (!user) {
+      return render(res, `@${name}`, `We couldn't find @${name}`);
     }
-    return render(res, `@${name}`, `We couldn't find @${name}`);
+    render(res, user.name, user.description, user.avatarThumbnailUrl);
   });
 
   app.get('*', (req, res) => {
