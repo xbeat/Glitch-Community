@@ -116,7 +116,8 @@ class TeamUserInfoPop extends React.Component {
 
     this.state = {
       userIsTeamAdmin: this.props.userIsTeamAdmin,
-      adminStatusIsUpdating: false
+      adminStatusIsUpdating: false,
+      currentUserIsTeamAdmin: this.props.currentUserIsTeamAdmin,
     };
   }
 
@@ -162,7 +163,7 @@ class TeamUserInfoPop extends React.Component {
         </section>
         { this.props.user.thanksCount > 0 && <ThanksCount count={this.props.user.thanksCount} /> }
         <UserActions user={this.props.user} />
-        { this.props.currentUserIsTeamAdmin &&
+        { this.state.currentUserIsTeamAdmin &&
           <AdminActions 
             user={this.props.user} 
             userIsTeamAdmin={this.state.userIsTeamAdmin} 
@@ -173,7 +174,7 @@ class TeamUserInfoPop extends React.Component {
             adminStatusIsUpdating={this.state.adminStatusIsUpdating} 
           />
         }
-        { this.props.currentUserIsOnTeam && <RemoveFromTeam action={this.removeFromTeamAction} /> }
+        { this.state.currentUserIsTeamAdmin && <RemoveFromTeam action={this.removeFromTeamAction} /> }
       </dialog>
     );
   }
