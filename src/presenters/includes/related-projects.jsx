@@ -53,7 +53,7 @@ class RelatedProjects extends React.Component {
       
       return ids;
     }).then(projectIds => (
-      projectIds.length ? this.props.getProjects(projectIds) : []
+      projectIds.length ? this.props.api.get(`projects/byIds?ids=${projectIds.join(',')}`).then(({data}) => data.map(d => Project(d).update(d).asProps()))(projectIds) : []
     ));
   }
   
@@ -86,6 +86,7 @@ class RelatedProjects extends React.Component {
   }
 }
 RelatedProjects.propTypes = {
+  api: PropTypes.any.isRequired,
   ignoreProjectId: PropTypes.string.isRequired,
   getTeam: PropTypes.func.isRequired,
   getTeamPins: PropTypes.func.isRequired,

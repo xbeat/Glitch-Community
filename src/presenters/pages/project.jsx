@@ -142,6 +142,7 @@ const ProjectPage = ({
   </main>
 );
 ProjectPage.propTypes = {
+  api: PropTypes.any.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   project: PropTypes.object.isRequired,
 };
@@ -151,7 +152,7 @@ const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
     {project => project ? (
       <ProjectEditor api={api} initialProject={project} currentUserModel={currentUserModel}>
         {(project, funcs, userIsMember) => (
-          <ProjectPage project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
+          <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
         )}
       </ProjectEditor>
     ) : <NotFound name={name}/>}
