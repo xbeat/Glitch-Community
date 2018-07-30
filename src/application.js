@@ -2,17 +2,12 @@
 
 import Observable from 'o_0';
 
-import {find} from "lodash";
 import axios from 'axios';
 import cachedCategories from './cache/categories.js';
-import cachedTeams from './cache/teams.js';
-import featuredCollections from './curated/featured';
 import Model from './models/model';
 import User from './models/user';
 import Project from './models/project';
-import Category from './models/category';
 import Team from './models/team';
-import Question from './models/question';
 
 let cachedUser = undefined;
 if(localStorage.cachedUser) {
@@ -43,37 +38,13 @@ var self = Model({
   currentUser: cachedUser,
 }).extend({
 
-  featuredCollections,
-
-  // overlays
-  overlayVideoVisible: Observable(false),
-  overlayNewStuffVisible: Observable(false),
-
   // search - users
   searchQuery: Observable(""),
 
-  // questions
-  questions: Observable([]),
-  gettingQuestions: Observable(false),
-
-  // pages
-  pageIsTeamPage: Observable(false),
-  pageIsUserPage: Observable(false),
-
-  // category page
-  category: Observable({}),
-  categoryProjectsLoaded: Observable(false),
-  
   normalizedBaseUrl() {
     return "/";
   },
 
-  closeAllPopOvers() {
-    $(".overlay-background.disposable").remove();
-    self.overlayVideoVisible(false);
-    self.overlayNewStuffVisible(false);
-  },
-  
   api(source) {
     const persistentToken = self.currentUser() && self.currentUser().persistentToken();
     if (persistentToken) {
@@ -206,54 +177,20 @@ var self = Model({
     const userIds = usersData.map(user => user.id);
     return User.getUsersById(self.api(), userIds);
   },
-
-  getCategory(url) {
-    const categoryData = find(cachedCategories, category => category.url === url);
-    self.category(Category(categoryData));
-    return Category.updateCategory(application, categoryData.id);
-  },
  
   get categories() {
     return cachedCategories;
   },
-
-  getQuestions() {
-    return Question.getQuestions(self).then(questions => self.questions(questions));
-  },
-
-  // client.coffee routing helpers
-  // TODO?: move to utils.coffee
-  
-  removeFirstCharacter(string) {
-    // ex: ~cool to cool
-    const firstCharacterPosition = 1;
-    const end = string.length;
-    return string.substring(firstCharacterPosition, end);
-  },
-  
-  anonProfileIdFromUrl(url) {
-    return url.replace(/^(user\/)/g, '');
-  },
-
-  getCachedTeamByUrl(url) {
-    return find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
-  },
 });
 
 
-self.attrModel("user", User);
 self.attrModel("currentUser", User);
-self.attrModel("category", Category);
-self.attrModel("team", Team);
-self.attrModel("question", Question);
 
 window.application = self;
 window.API_URL = API_URL;
 window.EDITOR_URL = EDITOR_URL;
 window.User = User;
 window.Project = Project;
-window.Category = Category;
 window.Team = Team;
-window.Question = Question;
 
 export default self;
