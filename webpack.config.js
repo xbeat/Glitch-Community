@@ -101,7 +101,7 @@ module.exports = () => {
             {
               loader: 'stylus-loader',
               options: {
-                compress: true,
+                compress: true, // Compress CSS as part of the stylus build
                 use: [AutoprefixerStylus()],
               },
             },
@@ -117,7 +117,7 @@ module.exports = () => {
         fileName: "scripts.json",
         filter: ({isInitial, name}) => (
           isInitial && name.endsWith('.js') &&
-            name !== `${STYLE_BUNDLE_NAME}.js` // clean up 
+            name !== `${STYLE_BUNDLE_NAME}.js` // omit the no-op CSS bundle .js file 
           ),
       }),
       new ManifestPlugin({
