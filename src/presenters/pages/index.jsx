@@ -73,14 +73,14 @@ class ByFogCreek extends React.Component {
   
   startTimer() {
     const nextTime = new Date(this.FOUNDED + this.state.age + 1, 1, 1);
-    console.log(nextTime.getDate() - Date.now());
+    console.log(Math.min((nextTime.getTime() - Date.now()), 6000));
     this.timer = window.setTimeout(() => {
       console.log(this.age(), this.state.age);
       if (this.age() > this.state.age) {
         this.setState({age: this.age()});
       }
       this.startTimer();
-    }, Math.min((nextTime.getDate() - Date.now()), 6000000));
+    }, Math.min((nextTime.getTime() - Date.now()), 6000));
   }
   
   componentDidMount() {
