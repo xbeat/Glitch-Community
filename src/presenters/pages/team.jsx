@@ -39,9 +39,6 @@ class TeamPage extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
-      // currentUserIsOnTeam: this.props.currentUserIsOnTeam,
-      // currentUserIsTeamAdmin: this.props.currentUserIsTeamAdmin,
-      // teamHasUnlimitedProjects: this.props.teamHasUnlimitedProjects
       projectLimitIsReached: false
     };
     this.updateProjectLimitIsReached = this.updateProjectLimitIsReached.bind(this);
@@ -51,28 +48,7 @@ class TeamPage extends React.Component {
   componentDidMount() {
     this.updateProjectLimitIsReached()
   }
-  
-//   team: {
-//     id, name, description, users,
-//     projects, teamPins,
-//     isVerified, verifiedImage, verifiedTooltip,
-//     backgroundColor, hasAvatarImage,
-//     coverColor, hasCoverImage, adminIds,
-//     _cacheAvatar, _cacheCover,
-//   },
-//   currentUserIsOnTeam, myProjects,
-//   updateDescription,
-//   uploadAvatar, uploadCover, clearCover,
-//   addUser, removeUser,
-//   addPin, removePin,
-//   addProject, removeProject,
-//   currentUserIsTeamAdmin,
-//   teamHasUnlimitedProjects, currentUserId,
-//   api, searchUsers, getProjects,
-// }) => {
-
-  // create update state funcs to pass dowen
-  
+    
   updateProjectLimitIsReached() {
     if ((this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects && this.props.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
       this.setState({
@@ -113,8 +89,8 @@ class TeamPage extends React.Component {
                                                                 uploadImage={this.props.uploadCover} 
                                                                 clearImage={this.props.team.hasCoverImage ? this.props.team.clearCover : null} /> : null
             }>
-            <h1 className="username">
-              { name }
+            <h1>
+              { this.props.team.name }
               { this.props.team.isVerified && 
                 <VerifiedBadge image={this.props.team.verifiedImage} tooltip={this.props.team.verifiedTooltip}/>
               }
@@ -150,7 +126,7 @@ class TeamPage extends React.Component {
         />
         { this.state.projectLimitIsReached &&
           <TeamProjectLimitReachedBanner 
-            teamName={name} 
+            teamName={this.props.team.name} 
             teamId={this.props.team.id}
             currentUserId={this.props.currentUserId}
             users={this.props.team.users}

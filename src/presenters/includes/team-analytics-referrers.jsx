@@ -14,7 +14,9 @@ const countTotals = (data, countProperty) => {
 const ReferrerItem = ({count, total, description}) => {
   const progress = Math.max(Math.round(count / total * 100), 3);
   if (count <= 0) {
-    return null;
+    <li>
+      <span>0</span>
+    </li>
   }
   return (
     <li>
