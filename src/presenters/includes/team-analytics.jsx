@@ -99,7 +99,7 @@ class TeamAnalytics extends React.Component {
     });
   }
 
-  updateProjectdomain(newDomain) {
+  updateProjectDomain(newDomain) {
     this.setState({
       currentProjectDomain: newDomain
     }, () => {
@@ -142,7 +142,7 @@ class TeamAnalytics extends React.Component {
         <h2>Analytics</h2>
         <section className="controls">
           <TeamAnalyticsProjectPop
-            updateProjectdomain = {this.updateProjectdomain.bind(this)}
+            updateProjectDomain = {this.updateProjectDomain.bind(this)}
             currentProjectDomain = {this.state.currentProjectDomain}
             projects = {this.props.projects}
           />
@@ -194,7 +194,7 @@ class TeamAnalytics extends React.Component {
         <section className="project-details">
           <h3>Project Details</h3>
           <TeamAnalyticsProjectPop
-            updateProjectdomain = {this.updateProjectdomain.bind(this)}
+            updateProjectDomain = {this.updateProjectDomain.bind(this)}
             currentProjectDomain = {this.state.currentProjectDomain}
             projects = {this.props.projects}
           />

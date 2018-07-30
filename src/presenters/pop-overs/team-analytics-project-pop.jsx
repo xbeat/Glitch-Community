@@ -30,10 +30,10 @@ const isActive = (currentProjectDomain, project) => {
   }
 };
 
-const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectdomain, currentProjectDomain}) => {
+const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomain, currentProjectDomain}) => {
   const onClick = (project) => {
     togglePopover();
-    updateProjectdomain(project.domain);
+    updateProjectDomain(project.domain);
     setFilter("");
   };
   
@@ -86,7 +86,7 @@ PopOver.propTypes = {
   togglePopover: PropTypes.func.isRequired,
   setFilter: PropTypes.func.isRequired,
   filter: PropTypes.string.isRequired,
-  updateProjectdomain: PropTypes.func.isRequired,
+  updateProjectDomain: PropTypes.func.isRequired,
   currentProjectDomain: PropTypes.string.isRequired,
 };
 
@@ -103,7 +103,7 @@ class TeamAnalyticsProjectPop extends React.Component {
   }
   
   render() {
-    const {updateProjectdomain, currentProjectDomain, projects} = this.props;
+    const {updateProjectDomain, currentProjectDomain, projects} = this.props;
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
@@ -114,7 +114,7 @@ class TeamAnalyticsProjectPop extends React.Component {
             {visible && 
               <PopOver 
                 projects={projects}
-                updateProjectdomain={updateProjectdomain}
+                updateProjectDomain={updateProjectDomain}
                 currentProjectDomain={currentProjectDomain}
                 togglePopover={togglePopover}
                 setFilter={this.setFilter}
@@ -129,7 +129,7 @@ class TeamAnalyticsProjectPop extends React.Component {
 }
 
 TeamAnalyticsProjectPop.propTypes = {
-  updateProjectdomain: PropTypes.func.isRequired,
+  updateProjectDomain: PropTypes.func.isRequired,
   currentProjectDomain: PropTypes.string.isRequired,
 };
 

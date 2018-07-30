@@ -4,6 +4,8 @@ public/*.ks
 public/*.js.map
 public/*.js
 public/*.json
+styles/style.css
+styles/style.css.map
 *.gz
 src/cache/*
 src/templates/**/*.js
