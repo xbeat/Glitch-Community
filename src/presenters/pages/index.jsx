@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import moment from 'moment-mini';
+
 import Layout from '../layout.jsx';
 
 import {getEditorUrl} from '../../models/project';
@@ -67,8 +69,8 @@ class ByFogCreek extends React.Component {
   }
   
   age() {
-    const FOUNDED = 2000;
-    return new Date().getFullYear() - FOUNDED;
+    const FOUNDED = new Date(2000, 8, 14);
+    return new Date() - FOUNDED;
   }
   
   startTimer() {
