@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Twitter Quiz',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftwitter-quizz.jpg?1532599148329",
-    link: 'https://twitter-quizz.glitch.me'
+    title: 'Sync your Spotify tunes to Slack!',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fharmonious-shoemaker.jpg?1532951366324",
+    link: 'https://glitch.com/~harmonious-shoemaker'
   }
   , {
-    title: 'Generate Bling!',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fgenerative-crystals.jpg?1532598873084",
-    link: 'https://generative-crystals.glitch.me'
+    title: 'Hmm...what\'s in the fridge?',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffridgemoji.jpg?1532951363259",
+    link: 'https://glitch.com/~fridgemoji'
   } 
   , {
-    title: 'I Gotsta Get Paid',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsilfra-invoice.jpg?1532599009082",
-    link: 'https://glitch.com/~silfra-invoice'
+    title: 'Animate those SVGs!',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsvg-animator.jpg?1532951363984",
+    link: 'https://glitch.com/~svg-animator'
   }  
 ];

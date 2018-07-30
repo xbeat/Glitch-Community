@@ -3,7 +3,8 @@ const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const AutoprefixerStylus = require("autoprefixer-stylus");
 
 class OutputOnBuildStart {
   apply(compiler) {
@@ -14,7 +15,9 @@ class OutputOnBuildStart {
 
 const PUBLIC = path.resolve(__dirname, 'public');
 const SRC = path.resolve(__dirname, 'src');
+const STYLES = path.resolve(__dirname, 'styles');
 const BASE = path.resolve(__dirname, '.');
+const STYLE_BUNDLE_NAME = 'styles';
 
 
 module.exports = () => {
@@ -29,7 +32,8 @@ module.exports = () => {
   return {
     mode,
     entry: {
-      "client-bundle": `${SRC}/client.jsx`
+      "client-bundle": `${SRC}/client.jsx`,
+      [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
     },
     output: {
       filename: '[name].js?[chunkhash]',
@@ -84,6 +88,25 @@ module.exports = () => {
           exclude: /node_modules/,
           loader : 'babel-loader'
         },
+        {
+          test: /\.styl$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+              },
+            },
+            {
+              loader: 'stylus-loader',
+              options: {
+                compress: true, // Compress CSS as part of the stylus build
+                use: [AutoprefixerStylus()],
+              },
+            },
+          ] 
+        },
       ],
     },
     plugins: [
@@ -91,9 +114,19 @@ module.exports = () => {
       new LodashModuleReplacementPlugin,
       new webpack.NoEmitOnErrorsPlugin(),
       new ManifestPlugin({
-        filter: ({isInitial, name}) => isInitial && !name.endsWith('.map'),
+        fileName: "scripts.json",
+        filter: ({isInitial, name}) => (
+          isInitial && name.endsWith('.js') &&
+            name !== `${STYLE_BUNDLE_NAME}.js` // omit the no-op CSS bundle .js file 
+          ),
+      }),
+      new ManifestPlugin({
+        fileName: "styles.json",
+        filter: ({isInitial, name}) => isInitial && name.endsWith('.css'),
+      }),
+      new MiniCssExtractPlugin({
+        filename: "[name].css?[contenthash]"
       }),
     ],
-
   };
 }
