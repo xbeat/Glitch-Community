@@ -62,25 +62,22 @@ class WhatIsGlitch extends React.Component {
 class ByFogCreek extends React.Component {
   constructor(props) {
     super(props);
-    this.FOUNDED = 2000;
     this.state = {age: this.age()};
     this.timer = null;
   }
   
   age() {
-    return new Date().getFullYear() - this.FOUNDED;
+    const FOUNDED = 2000;
+    return new Date().getFullYear() - FOUNDED;
   }
   
   startTimer() {
-    const nextTime = new Date(this.FOUNDED + this.state.age + 1, 1, 1);
-    console.log(Math.min((nextTime.getTime() - Date.now()), 6000));
     this.timer = window.setTimeout(() => {
-      console.log(this.age(), this.state.age);
       if (this.age() > this.state.age) {
         this.setState({age: this.age()});
       }
       this.startTimer();
-    }, Math.min((nextTime.getTime() - Date.now()), 6000));
+    }, 1000 * 60 * 60);
   }
   
   componentDidMount() {
