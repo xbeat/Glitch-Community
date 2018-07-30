@@ -193,7 +193,7 @@ class TeamPage extends React.Component {
 }
 
 TeamPage.propTypes = {
-  team: PropTypes.shape.isRequired({
+  team: PropTypes.shape({
     _cacheAvatar: PropTypes.number.isRequired,
     _cacheCover: PropTypes.number.isRequired,
     adminIds: PropTypes.array.isRequired,
