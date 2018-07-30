@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {sampleSize, difference} from 'lodash';
 
+import ProjectModel from '../../models/project';
 import {getProfileStyle as getTeamProfileStyle} from '../../models/team';
 import {getProfileStyle as getUserProfileStyle} from '../../models/user';
 
@@ -38,27 +39,34 @@ class RelatedProjects extends React.Component {
     this.state = {teams, users};
   }
   
-  getProjects(id, getPins, getProjects) {
-    return getPins(id).then(pins => {
-      const pinIds = pins.map(pin => pin.projectId);
-      const ids = sampleSize(difference(pinIds, [this.props.ignoreProjectId]), PROJECT_COUNT);
-      
-      if (ids.length < PROJECT_COUNT) {
-        return getProjects(id).then(({projects}) => {
-          const allIds = projects.map(({id}) => id);
-          const remainingIds = difference(allIds, [this.props.ignoreProjectId, ...ids]);
-          return [...ids, ...sampleSize(remainingIds, PROJECT_COUNT - ids.length)];
-        });
-      }
-      
-      return ids;
+  async getProjects(id, getPins, getAllProjects) {
+    const pins = await getPins(id);
+    const pinIds = pins.map(pin => pin.projectId);
+    const ids = sampleSize(difference(pinIds, [this.props.ignoreProjectId]), PROJECT_COUNT);
+
+    if (ids.length < PROJECT_COUNT) {
+      return getAllProjects(id).then(({projects}) => {
+        const allIds = projects.map(({id}) => id);
+        const remainingIds = difference(allIds, [this.props.ignoreProjectId, ...ids]);
+        return [...ids, ...sampleSize(remainingIds, PROJECT_COUNT - ids.length)];
+      });
+    }
+
     }).then(projectIds => (
-      projectIds.length ? this.props.api.get(`projects/byIds?ids=${projectIds.join(',')}`).then(({data}) => data.map(d => Project(d).update(d).asProps()))(projectIds) : []
+      projectIds.length ? (
+        this.props.api.get(`projects/byIds?ids=${projectIds.join(',')}`).then(
+          ({data}) => data.map(d => ProjectModel(d).update(d).asProps())
+        )
+      ) : []
     ));
   }
   
   render() {
-    const {getTeam, getTeamPins, getUser, getUserPins} = this.props;
+    const {api} = this.props;
+    const getTeam = (id) => api.get(`teams/${id}`).then(({data}) => data);
+    const getTeamPins = (id) => api.get(`teams/${id}/pinned-projects`).then(({data}) => data);
+    const getUser = (id) => api.get(`users/${id}`).then(({data}) => data);
+    const getUserPins = (id) => api.get(`users/${id}/pinned-projects`).then(({data}) => data);
     const {teams, users} = this.state;
     if (!teams.length && !users.length) {
       return null;
@@ -88,10 +96,6 @@ class RelatedProjects extends React.Component {
 RelatedProjects.propTypes = {
   api: PropTypes.any.isRequired,
   ignoreProjectId: PropTypes.string.isRequired,
-  getTeam: PropTypes.func.isRequired,
-  getTeamPins: PropTypes.func.isRequired,
-  getUser: PropTypes.func.isRequired,
-  getUserPins: PropTypes.func.isRequired,
   teams: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,
 };
