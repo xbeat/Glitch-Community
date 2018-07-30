@@ -143,6 +143,7 @@ const TeamPage = ({
 
       {/* billing info section goes here */}
 
+      {/* Temporary: enable once team creation is public
       { currentUserIsTeamAdmin && 
         <DeleteTeam api={() => api} 
           teamId={id} 
@@ -151,6 +152,8 @@ const TeamPage = ({
           users={users} 
         /> 
       }
+     */}
+
       { !currentUserIsOnTeam && 
         <TeamMarketing /> 
       }

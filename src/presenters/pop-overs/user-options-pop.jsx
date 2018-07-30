@@ -60,7 +60,9 @@ const TeamList = ({teams, toggleCreateTeamPop, userIsAnon}) => {
   const hasTeams = teams && teams.length;
   return (
     <section className="pop-over-actions">
+      {/* Temporary: enable once team creation is public
       <CreateTeamButton toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
+      */}
       {teams.map((team) => (
         <TeamItem key={team.name} {...team}/>
       ))}
