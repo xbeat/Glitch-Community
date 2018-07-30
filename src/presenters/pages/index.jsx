@@ -68,11 +68,6 @@ class ByFogCreek extends React.Component {
     this.timer = null;
   }
   
-  age() {
-    const FOUNDED = new Date('2000-08-14');
-    return moment(this.state.time).diff(FOUNDED, 'years');
-  }
-  
   startTimer() {
     this.timer = window.setTimeout(() => {
       this.setState({time: new Date()});
@@ -91,6 +86,8 @@ class ByFogCreek extends React.Component {
   
   render() {
     const logo = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffogcreek.svg";
+    const FOUNDED = new Date('2000-08-14');
+    const age = moment(this.state.time).diff(FOUNDED, 'years');
     return (
       <section className="by-fogcreek" role="complementary">
         <h2>Made By Fog Creek</h2>
@@ -98,7 +95,7 @@ class ByFogCreek extends React.Component {
         <p>
           You might know us for making Trello, FogBugz, and co-creating Stack Overflow. 
           We're <a href="https://www.fogcreek.com">a friendly, self-funded company</a> that's
-          been helping people make stuff for over {this.age()} years.
+          been helping people make stuff for over {age} years.
         </p>
       </section>
     );
