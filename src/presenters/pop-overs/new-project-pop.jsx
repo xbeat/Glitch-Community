@@ -5,14 +5,14 @@ import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
 
-import ProjectModel from '../../models/project';
+import ProjectModel, {getRemixUrl} from '../../models/project';
 
 const NewProjectPop = ({projects}) => (
   <div className="pop-over new-project-pop">
     <section className="pop-over-actions results-list">
       <div className="results">
         {projects.length ? projects.map((project) => (
-          <a key={project.id} href={project.remixUrl}>
+          <a key={project.id} href={getRemixUrl(project.domain)}>
             <ProjectResultItem {...project} users={[]} action={()=>{
               /* global analytics */
               analytics.track("New Project Clicked", {
@@ -30,7 +30,7 @@ const NewProjectPop = ({projects}) => (
 NewProjectPop.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
+    domain: PropTypes.string.isRequired,
   })).isRequired,
 };
 

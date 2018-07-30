@@ -48,23 +48,11 @@ export default Project = function(I, self) {
         name: project.name(),
         private: project.private(),
         showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
-        remixUrl: project.remixUrl(),
       };
     },
 
     name() {
       return self.domain();
-    },
-  
-    editUrl() {
-      if (I.line) {
-        return `${EDITOR_URL}#!/${I.domain}?path=${I.path}:${I.line}:${I.character}`;
-      }
-      return `${EDITOR_URL}#!/${I.domain}`;
-    },
-    
-    remixUrl() {
-      return `${EDITOR_URL}#!/remix/${I.domain}`;
     },
 
     avatar() {
