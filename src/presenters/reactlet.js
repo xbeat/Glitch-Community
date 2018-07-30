@@ -20,7 +20,7 @@ export default function(Component, props, guid=null) {
   // We have to wait until the DOM element is present before we can act anyway,
   // and then we can render in reverse order so that duplicates get culled
   // and we end up outputing only the most recent version.
-  distinctIds.add(id);
+  distinctIds.add(idz);
   stack.push({
     id: id,
     render: (el) => { 
