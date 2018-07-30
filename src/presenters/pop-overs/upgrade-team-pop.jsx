@@ -35,10 +35,14 @@ export class UpgradeTeamPop extends React.Component {
           <UsersList users={this.props.users}/>
         </section>
         <section className="pop-over-actions">
-          <button className="button buttom-small button-cta has-emoji opens-pop-over">
+          <button className="button buttom-small button-cta has-emoji opens-pop-over" disabled>
             <span>Upgrade {this.props.teamName} </span>
             <span className="emoji credit_card"/>
           </button>
+          {/* Temporary: remove this once billing is ready */}
+          <p className="action-description">
+            Paid teams are coming soon. In the meantime, feel free to add as many projects as you want, they won't go away.
+          </p>
 
         </section>
         <section className="pop-over-info">
