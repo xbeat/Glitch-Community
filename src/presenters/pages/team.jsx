@@ -35,38 +35,47 @@ const FREE_TEAM_PROJECTS_LIMIT = 5;
 
 // Team Page
 
-const TeamPage = ({
-  team: {
-    id, name, description, users,
-    projects, teamPins,
-    isVerified, verifiedImage, verifiedTooltip,
-    backgroundColor, hasAvatarImage,
-    coverColor, hasCoverImage, adminIds,
-    _cacheAvatar, _cacheCover,
-  },
-  currentUserIsOnTeam, myProjects,
-  updateDescription,
-  uploadAvatar, uploadCover, clearCover,
-  addUser, removeUser,
-  addPin, removePin,
-  addProject, removeProject,
-  currentUserIsTeamAdmin,
-  teamHasUnlimitedProjects, currentUserId,
-  api, searchUsers, getProjects,
-}) => {
+export default class TeamPage extends React.Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+      currentUserIsOnTeam: this.props.currentUserIsOnTeam,
+    };
+  }
 
-  const projectLimitIsReached = () => {
+//   team: {
+//     id, name, description, users,
+//     projects, teamPins,
+//     isVerified, verifiedImage, verifiedTooltip,
+//     backgroundColor, hasAvatarImage,
+//     coverColor, hasCoverImage, adminIds,
+//     _cacheAvatar, _cacheCover,
+//   },
+//   currentUserIsOnTeam, myProjects,
+//   updateDescription,
+//   uploadAvatar, uploadCover, clearCover,
+//   addUser, removeUser,
+//   addPin, removePin,
+//   addProject, removeProject,
+//   currentUserIsTeamAdmin,
+//   teamHasUnlimitedProjects, currentUserId,
+//   api, searchUsers, getProjects,
+// }) => {
+
+  projectLimitIsReached() {
     if ((currentUserIsOnTeam && !teamHasUnlimitedProjects && projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
       return true;
     } return false;
   };
   
-  const admins = () => {
+  admins() {
     return users.filter(user => {
       return adminIds.includes(user.id);
     });
   }
 
+  render() {
+  
   return (
     <main className="profile-page team-page">
       <section>
@@ -160,6 +169,7 @@ const TeamPage = ({
     </main>
   );
 };
+}
 
 
 // Team Page Loader
