@@ -18,7 +18,7 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, pr
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const [pinnedProjects, recentProjects] = partition(projects, ({id}) => pinnedSet.has(id));
   
-  const pinnedVisible = (isAuthorized || pinnedProjects.length) && ;
+  const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
   
   const pinnedTitle = (
     <React.Fragment>
