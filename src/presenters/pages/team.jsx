@@ -1,24 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TeamModel, {getAvatarStyle, getProfileStyle} from '../../models/team';
-import UserModel from '../../models/user';
-import Reactlet from '../reactlet';
-import LayoutPresenter from '../layout';
+import {getAvatarStyle, getProfileStyle} from '../../models/team';
 import TeamEditor from '../team-editor.jsx';
-
-import {AuthDescription} from '../includes/description-field.jsx';
-import {DataLoader} from '../includes/loader.jsx';
-import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
-import Thanks from '../includes/thanks.jsx';
-import NotFound from '../includes/not-found.jsx';
-import {Notifications} from '../notifications.jsx';
+import NameConflictWarning from '../includes/name-conflict.jsx';
 
 import AddTeamProject from '../includes/add-team-project.jsx';
 import {AddTeamUser, TeamUsers} from '../includes/team-users.jsx';
+import {AuthDescription} from '../includes/description-field.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
+import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
+import Thanks from '../includes/thanks.jsx';
 
 const TeamPage = ({
   team: {
@@ -29,7 +23,7 @@ const TeamPage = ({
     coverColor, hasCoverImage,
     _cacheAvatar, _cacheCover,
   },
-  currentUserIsOnTeam, myProjects,
+  currentUserIsOnTeam,
   updateDescription,
   uploadAvatar, uploadCover, clearCover,
   addUser, removeUser,
@@ -57,7 +51,7 @@ const TeamPage = ({
         <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
       </ProfileContainer>
     </section>
-    <AddTeamProject {...{currentUserIsOnTeam, addProject, myProjects}} teamProjects={projects}/>
+    <AddTeamProject {...{currentUserIsOnTeam, addProject}} teamProjects={projects}/>
     <EntityPageProjects
       api={api} projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
       addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam: removeProject}}
@@ -73,37 +67,25 @@ TeamPage.propTypes = {
     name: PropTypes.string.isRequired,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
-  myProjects: PropTypes.array.isRequired,
   api: PropTypes.any.isRequired,
 };
 
-const TeamPageLoader = ({api, get, name, currentUserModel, ...props}) => (
-  <Notifications>
-    <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-      {team => team ? (
-        <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
-          {(team, funcs, currentUserIsOnTeam) => (
-            <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
-          )}
-        </TeamEditor>
-      ) : <NotFound name={name}/>}
-    </DataLoader>
-  </Notifications>
-);
-TeamPageLoader.propTypes = {
-  get: PropTypes.func.isRequired,
-  name: PropTypes.node.isRequired,
+const teamConflictsWithUser = (team, currentUserModel) => {
+  if (currentUserModel.login()) {
+    return currentUserModel.login().toLowerCase() === team.url;
+  }
+  return false;
 };
 
-export default function(application, id, name) {
-  const props = {
-    name,
-    api: application.api(),
-    currentUserModel: application.currentUser(),
-    myProjects: application.currentUser().projects().map(({asProps}) => asProps()),
-    get: () => application.api().get(`teams/${id}`).then(({data}) => (data ? TeamModel(data).update(data).asProps() : null)),
-    searchUsers: (query) => UserModel.getSearchResultsJSON(application, query).then(users => users.map(user => UserModel(user).asProps())),
-  };
-  const content = Reactlet(TeamPageLoader, props, 'teampage');
-  return LayoutPresenter(application, content);
-}
+const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
+  <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
+    {(team, funcs, currentUserIsOnTeam) => (
+      <React.Fragment>
+        <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
+        {teamConflictsWithUser(team, currentUserModel) && <NameConflictWarning/>}
+      </React.Fragment>
+    )}
+  </TeamEditor>
+);
+
+export default TeamPageContainer;

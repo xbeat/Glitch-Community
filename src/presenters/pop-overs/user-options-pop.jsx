@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 
 const TeamButton = ({url, name, teamAvatarUrl}) => (
-  <a className="button-link" href={url}>
+  <a className="button-link" href={`/@${url}`}>
     <div className="button button-small has-emoji button-tertiary">
       <span>{name} </span>
       <img className="emoji avatar" src={teamAvatarUrl} alt={`${name} team avatar`} width="16px" height="16px"/>

@@ -2,10 +2,8 @@
 
 import Observable from 'o_0';
 
-import {find} from "lodash";
 import axios from 'axios';
 import cachedCategories from './cache/categories.js';
-import cachedTeams from './cache/teams.js';
 import Model from './models/model';
 import User from './models/user';
 import Project from './models/project';
@@ -43,14 +41,10 @@ var self = Model({
   // search - users
   searchQuery: Observable(""),
 
-  // pages
-  pageIsTeamPage: Observable(false),
-  pageIsUserPage: Observable(false),
-  
   normalizedBaseUrl() {
     return "/";
   },
-  
+
   api(source) {
     const persistentToken = self.currentUser() && self.currentUser().persistentToken();
     if (persistentToken) {
@@ -186,24 +180,6 @@ var self = Model({
  
   get categories() {
     return cachedCategories;
-  },
-
-  // client.coffee routing helpers
-  // TODO?: move to utils.coffee
-  
-  removeFirstCharacter(string) {
-    // ex: ~cool to cool
-    const firstCharacterPosition = 1;
-    const end = string.length;
-    return string.substring(firstCharacterPosition, end);
-  },
-  
-  anonProfileIdFromUrl(url) {
-    return url.replace(/^(user\/)/g, '');
-  },
-
-  getCachedTeamByUrl(url) {
-    return find(cachedTeams, team => team.url.toLowerCase() === url.toLowerCase());
   },
 });
 
