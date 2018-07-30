@@ -79,6 +79,7 @@ class TeamPage extends React.Component {
   }
 
   render() {
+    console.log (this.props)
     return (
       <main className="profile-page team-page">
         <section>
@@ -196,7 +197,7 @@ TeamPage.propTypes = {
   team: PropTypes.shape({
     _cacheAvatar: PropTypes.number.isRequired,
     _cacheCover: PropTypes.number.isRequired,
-    adminIds: PropTypes.array.isRequired,
+    adminIds: PropTypes.array,
     backgroundColor: PropTypes.string.isRequired,
     coverColor: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
