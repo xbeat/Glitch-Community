@@ -64,7 +64,6 @@ EditableDescription.propTypes = {
   initialDescription: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   updateDescription: PropTypes.func.isRequired,
-  notifyAdminOnly: PropTypes.func,
 };
 
 export const StaticDescription = ({description}) => (
@@ -78,7 +77,7 @@ StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-export const AuthDescription = ({authorized, description, placeholder, update, notifyAdminOnly}) => (
+export const AuthDescription = ({authorized, description, placeholder, update}) => (
   authorized ?
     <EditableDescription 
       initialDescription={description} 
@@ -93,6 +92,5 @@ AuthDescription.propTypes = {
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
-  notifyAdminOnly: PropTypes.func,
 };
 

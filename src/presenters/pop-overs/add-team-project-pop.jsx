@@ -10,8 +10,8 @@ export class AddTeamProjectPop extends React.Component {
     this.state = {
       templateProjects: [],
       filteredProjects: [],
-      source: 'templates',
-      filterPlaceholder: 'Filter projects',
+      source: 'my-projects', // my-projects, templates
+      filterPlaceholder: 'Filter my projects',
       loadingTemplates: false,
       notifyTemplateIsRemixing: false,
     };
@@ -168,6 +168,7 @@ export class AddTeamProjectPop extends React.Component {
     return (
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
+          {/* Temporary: hidden for now pending having templates to use
           <div className="segmented-buttons">
             <button 
               className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsTemplates()}`} 
@@ -184,6 +185,8 @@ export class AddTeamProjectPop extends React.Component {
               My Projects
             </button>
           </div>
+          */}
+          
           <input
             ref={(input) => { this.filterInput = input; }}
             onChange={(event) => {this.updateFilter(event.target.value);}}
