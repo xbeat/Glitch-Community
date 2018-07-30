@@ -64,18 +64,19 @@ class WhatIsGlitch extends React.Component {
 class ByFogCreek extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {time: moment()};
+    this.state = {time: new Date()};
     this.timer = null;
   }
   
   age() {
-    const FOUNDED = moment(new Date(2000, 7, 30, 17, 35, 0));
-    return moment.duration(this.state.time.diff(FOUNDED));
+    const FOUNDED = new Date('2000, 6, 30);
+    console.log(this.state.time, FOUNDED);
+    return moment(this.state.time).diff(FOUNDED, 'years');
   }
   
   startTimer() {
     this.timer = window.setTimeout(() => {
-      this.setState({time: moment()});
+      this.setState({time: new Date()});
       this.startTimer();
     }, moment.duration(1, 'seconds').asMilliseconds());
   }
@@ -98,7 +99,7 @@ class ByFogCreek extends React.Component {
         <p>
           You might know us for making Trello, FogBugz, and co-creating Stack Overflow. 
           We're <a href="https://www.fogcreek.com">a friendly, self-funded company</a> that's
-          been helping people make stuff for over {Math.floor(this.age().asYears())} years.
+          been helping people make stuff for over {this.age()} years.
         </p>
       </section>
     );
