@@ -62,7 +62,8 @@
     <script src="https://cdn.ravenjs.com/3.26.2/raven.min.js" crossorigin="anonymous"></script>
     <script>
       Raven.config('https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508').install({
-        environment: '<%= PROJECT_DOMAIN %>'
+        environment: '<%= ENVIRONMENT %>',
+        serverName: '<%= PROJECT_DOMAIN %>'
       });
     </script>
     <% for (let i = 0; i < scripts.length; ++i) { %>

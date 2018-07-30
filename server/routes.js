@@ -44,11 +44,14 @@ module.exports = function() {
     const scripts = JSON.parse(fs.readFileSync('public/scripts.json'));
     const styles = JSON.parse(fs.readFileSync('public/styles.json'));
 
+    const environment = process.env.NODE_ENV || "dev";
+
     res.render('index.ejs', {
       title, description, image,
       scripts: Object.values(scripts),
       styles: Object.values(styles),
       PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
+      ENVIRONMENT: environment,
       ...constants,
     });
   }
