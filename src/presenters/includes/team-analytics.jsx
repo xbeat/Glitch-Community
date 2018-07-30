@@ -117,7 +117,7 @@ class TeamAnalytics extends React.Component {
         c3: c3,
         isGettingC3: false,
       });
-      if (this.props.currentUserOnTeam) {
+      if (this.props.currentUserIsOnTeam) {
         this.updateAnalytics();
       }
     });
@@ -125,8 +125,8 @@ class TeamAnalytics extends React.Component {
   
   componentDidUpdate(prevProps) {
     if (
-      prevProps.currentUserOnTeam === false && 
-      this.props.currentUserOnTeam === true &&
+      prevProps.currentUserIsOnTeam === false && 
+      this.props.currentUserIsOnTeam === true &&
       this.state.isGettingC3 === false
     ) {
       this.updateAnalytics();
@@ -134,7 +134,7 @@ class TeamAnalytics extends React.Component {
   }
   
   render() {
-    if (!this.props.currentUserOnTeam) {
+    if (!this.props.currentUserIsOnTeam) {
       return null;
     }
     return (
@@ -215,12 +215,9 @@ class TeamAnalytics extends React.Component {
           <aside className="inline-banners add-project-to-analytics-banner">
             <div className="description">Add Projects to your team to see who's viewing and remixing</div>
             <AddTeamProject 
-              currentUserIsOnTeam={this.props.currentUserOnTeam}
-              addProject={this.props.addProject}
-              myProjects={this.props.myProjects}
-              teamProjects={this.props.projects}
-              extraButtonClass="button-small"
-              api={this.props.api}
+              {...this.props}
+              extraButtonClass = "button-small"
+              teamProjects = {this.props.projects}
             />
           </aside>
         }
@@ -233,9 +230,10 @@ TeamAnalytics.propTypes = {
   id: PropTypes.number,
   api: PropTypes.func.isRequired,
   projects: PropTypes.array.isRequired,
-  currentUserOnTeam: PropTypes.bool.isRequired,
+  currentUserIsOnTeam: PropTypes.bool.isRequired,
   addProject: PropTypes.func.isRequired,
   myProjects: PropTypes.array.isRequired,
+  projectLimitIsReached: PropTypes.bool.isRequired,
 };
 
 export default TeamAnalytics;

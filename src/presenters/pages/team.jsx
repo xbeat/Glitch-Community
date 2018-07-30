@@ -74,7 +74,6 @@ class TeamPage extends React.Component {
   // create update state funcs to pass dowen
   
   updateProjectLimitIsReached() {
-    console.log('asdf', this.props)
     if ((this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects && this.props.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
       this.setState({
         projectLimitIsReached: true
@@ -93,7 +92,6 @@ class TeamPage extends React.Component {
   }
 
   render() {
-    console.log ('🚒', this.props, this.props.team.id)
     return (
       <main className="profile-page team-page">
         <section>
@@ -171,10 +169,11 @@ class TeamPage extends React.Component {
           <TeamAnalytics 
             api={() => this.props.api} 
             id={this.props.team.id} 
-            currentUserOnTeam={this.props.currentUserIsOnTeam} 
+            currentUserIsOnTeam={this.props.currentUserIsOnTeam} 
             projects={this.props.team.projects} 
             addProject={this.props.addProject} 
-            myProjects={this.props.myProjects} 
+            myProjects={this.props.myProjects}
+            projectLimitIsReached={this.state.projectLimitIsReached}
           /> 
         }
         { (this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects) && 
