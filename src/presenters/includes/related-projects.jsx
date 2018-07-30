@@ -42,23 +42,20 @@ class RelatedProjects extends React.Component {
   async getProjects(id, getPins, getAllProjects) {
     const pins = await getPins(id);
     const pinIds = pins.map(pin => pin.projectId);
-    const ids = sampleSize(difference(pinIds, [this.props.ignoreProjectId]), PROJECT_COUNT);
+    let ids = sampleSize(difference(pinIds, [this.props.ignoreProjectId]), PROJECT_COUNT);
 
     if (ids.length < PROJECT_COUNT) {
-      return getAllProjects(id).then(({projects}) => {
-        const allIds = projects.map(({id}) => id);
-        const remainingIds = difference(allIds, [this.props.ignoreProjectId, ...ids]);
-        return [...ids, ...sampleSize(remainingIds, PROJECT_COUNT - ids.length)];
-      });
+      const {projects} = await getAllProjects(id);
+      const allIds = projects.map(({id}) => id);
+      const remainingIds = difference(allIds, [this.props.ignoreProjectId, ...ids]);
+      ids = [...ids, ...sampleSize(remainingIds, PROJECT_COUNT - ids.length)];
     }
 
-    }).then(projectIds => (
-      projectIds.length ? (
-        this.props.api.get(`projects/byIds?ids=${projectIds.join(',')}`).then(
-          ({data}) => data.map(d => ProjectModel(d).update(d).asProps())
-        )
-      ) : []
-    ));
+    if (ids.length) {
+      const {data} = await this.props.api.get(`projects/byIds?ids=${ids.join(',')}`);
+      return data.map(d => ProjectModel(d).update(d).asProps());
+    }
+    return [];
   }
   
   render() {
