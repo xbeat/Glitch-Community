@@ -17,12 +17,14 @@ module.exports = function() {
     return next();
   });
   
-  // Caching - js files have a hash in their name, so they last a long time
-  app.use('/*.js', (request, response, next) => {
-    const s = moment.duration(1, 'months').asSeconds();
-    response.header('Cache-Control', `public, max-age=${s}`);
-    return next();
-  });
+  // Caching - js and CSS files have a hash in their name, so they last a long time
+  ['/*.js', '/*.css'].forEach((path) => (
+    app.use(path, (request, response, next) => {
+      const s = moment.duration(1, 'months').asSeconds();
+      response.header('Cache-Control', `public, max-age=${s}`);
+      return next();
+    })
+  ));
   
   app.use(express.static('public', { index: false }));
 
@@ -36,13 +38,16 @@ module.exports = function() {
     await updateCaches();
     response.sendStatus(200);
   });
-  
+
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
   function render(res, title, description, image=imageDefault) {
-    const manifest = JSON.parse(fs.readFileSync('public/manifest.json'));
+    const scripts = JSON.parse(fs.readFileSync('public/scripts.json'));
+    const styles = JSON.parse(fs.readFileSync('public/styles.json'));
+
     res.render('index.ejs', {
       title, description, image,
-      scripts: Object.values(manifest),
+      scripts: Object.values(scripts),
+      styles: Object.values(styles),
       ...constants,
     });
   }
