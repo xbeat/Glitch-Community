@@ -36,7 +36,7 @@ TeamUsers.propTypes = {
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
-  adminIds: PropTypes.array,
+  adminIds: PropTypes.array.isRequired,
 };
 
 

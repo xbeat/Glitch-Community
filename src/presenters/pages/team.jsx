@@ -38,26 +38,15 @@ const FREE_TEAM_PROJECTS_LIMIT = 5;
 class TeamPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      projectLimitIsReached: false
-    };
-    this.updateProjectLimitIsReached = this.updateProjectLimitIsReached.bind(this);
+    this.state = {};
     this.teamAdmins = this.teamAdmins.bind(this);
   }
-
-  componentDidMount() {
-    this.updateProjectLimitIsReached();
-  }
-    
-  updateProjectLimitIsReached() {
+ 
+  projectLimitIsReached() {
     if ((this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects && this.props.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
-      this.setState({
-        projectLimitIsReached: true
-      }); 
+      return true
     } else {
-      this.setState({
-        projectLimitIsReached: false
-      }); 
+      return false
     }
   }
 
@@ -99,6 +88,7 @@ class TeamPage extends React.Component {
               <TeamUsers {...this.props} 
                 users={this.props.team.users}
                 teamId={this.props.team.id}
+                adminIds={this.props.team.adminIds}
               />
               { this.props.currentUserIsOnTeam && 
                 <AddTeamUser 
@@ -121,10 +111,10 @@ class TeamPage extends React.Component {
         <AddTeamProject 
           {...this.props} 
           teamProjects={this.props.team.projects}
-          projectLimitIsReached={this.state.projectLimitIsReached}
+          projectLimitIsReached={this.projectLimitIsReached()}
           api={() => this.props.api}
         />
-        { this.state.projectLimitIsReached &&
+        { this.projectLimitIsReached() &&
           <TeamProjectLimitReachedBanner 
             teamName={this.props.team.name} 
             teamId={this.props.team.id}
@@ -149,7 +139,7 @@ class TeamPage extends React.Component {
             projects={this.props.team.projects} 
             addProject={this.props.addProject} 
             myProjects={this.props.myProjects}
-            projectLimitIsReached={this.state.projectLimitIsReached}
+            projectLimitIsReached={this.projectLimitIsReached()}
           /> 
         }
         { (this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects) && 
