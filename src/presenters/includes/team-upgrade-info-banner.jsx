@@ -45,12 +45,13 @@ class TeamUpgradeInfoBanner extends React.Component {
         <div>
           Free teams are limited to 5 projects
         </div>
-        <div className="progress-container">
-          <div className={`projects-left ${this.errorIfLimitReached()}`}>
+
+        <div className="progress-container" value={this.props.projectsCount} max={this.props.limit}>
+          <div className={`progress-bar projects-left ${this.errorIfLimitReached()}`}>
             {this.state.remainingFreeProjects} left
-          </div>
-          <progress value={this.props.projectsCount} max={this.props.limit} />
+          </div>            
         </div>
+        
         <UpgradeTeam teamName={this.props.teamName} teamId={this.props.teamId} currentUserId={this.props.currentUserId} users={this.props.users}/>
       </aside>
     );
