@@ -72,7 +72,7 @@ class TeamPage extends React.Component {
     } return false;
   };
   
-  admins() {
+  teamAdmins() {
     return this.props.team.users.filter(user => {
       return this.props.team.adminIds.includes(user.id);
     });
@@ -133,12 +133,12 @@ class TeamPage extends React.Component {
           projectLimitIsReached={this.projectLimitIsReached()}
           api={() => this.props.api}
         />
-        { projectLimitIsReached() &&
+        { this.projectLimitIsReached() &&
           <TeamProjectLimitReachedBanner 
             teamName={name} 
             teamId={this.props.team.id}
-            currentUserId={currentUserId}
-            users={users}
+            currentUserId={this.props.currentUserId}
+            users={this.props.team.users}
           />
         }
         <EntityPageProjects
@@ -146,28 +146,28 @@ class TeamPage extends React.Component {
           pins={this.props.team.teamPins} 
           isAuthorized={this.props.currentUserIsOnTeam}
           addPin={this.props.addPin} 
-          removePin={removePin} 
-          projectOptions={{removeProjectFromTeam: removeProject}}
-          getProjects={getProjects}
+          removePin={this.props.removePin} 
+          projectOptions={{removeProjectFromTeam: this.props.removeProject}}
+          getProjects={this.props.getProjects}
         />
         { this.props.currentUserIsOnTeam && 
           <TeamAnalytics 
             api={() => this.props.api} 
             id={this.props.team.id} 
             currentUserOnTeam={this.props.currentUserIsOnTeam} 
-            projects={projects} 
-            addProject={addProject} 
-            myProjects={myProjects} 
+            projects={this.props.team.projects} 
+            addProject={this.props.addProject} 
+            myProjects={this.props.myProjects} 
           /> 
         }
-        { (this.props.currentUserIsOnTeam && !teamHasUnlimitedProjects) && 
+        { (this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects) && 
           <TeamUpgradeInfoBanner 
-            projectsCount={projects.length} 
+            projectsCount={this.props.team.projects.length} 
             limit={FREE_TEAM_PROJECTS_LIMIT} 
-            teamName={name} 
+            teamName={this.props.team.name} 
             teamId={this.props.team.id} 
-            users={users} 
-            currentUserId={currentUserId} 
+            users={this.props.team.users} 
+            currentUserId={this.props.currentUserId} 
           />
         }
 
@@ -177,9 +177,9 @@ class TeamPage extends React.Component {
         { currentUserIsTeamAdmin && 
           <DeleteTeam api={() => this.props.api} 
             teamId={this.props.team.id} 
-            teamName={name} 
-            admins={admins}
-            users={users} 
+            teamName={this.props.team.name} 
+            teamAdmins={this.teamAdmins}
+            users={this.props.team.users} 
           /> 
         }
        */}
