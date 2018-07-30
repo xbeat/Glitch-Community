@@ -73,9 +73,7 @@ class ByFogCreek extends React.Component {
   
   startTimer() {
     this.timer = window.setTimeout(() => {
-      if (this.age() > this.state.age) {
-        this.setState({age: this.age()});
-      }
+      this.setState({age: this.age()});
       this.startTimer();
     }, 1000 * 60 * 60);
   }
