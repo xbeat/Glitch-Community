@@ -208,8 +208,16 @@ export default Team = function(I, self) {
       }
       return {backgroundColor: self.backgroundColor()};
     },
+  
     
     asProps() {
+      
+      const adminIds = (users) => {
+        data.users.filter(user => {
+          return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
+        }
+      }
+      
       return {
         get users() { return self.users().map(({asProps}) => asProps()); },
         get projects() { return self.projects().map(({asProps}) => asProps()); },

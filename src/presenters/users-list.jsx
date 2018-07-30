@@ -123,7 +123,8 @@ UserPopoverTile.propTypes = {
   style: PropTypes.object.isRequired,
   extraClass: PropTypes.string,
   children: PropTypes.func.isRequired,
-  adminIds: PropTypes.array
+  adminIds: PropTypes.array,
+  id: PropTypes.number.isRequired,
 };
 
 

@@ -22,7 +22,8 @@ export const TeamUsers = ({users, currentUserIsOnTeam, removeUser, adminIds, api
         user={user} 
         currentUserIsOnTeam={currentUserIsOnTeam} 
         currentUserIsTeamAdmin={currentUserIsTeamAdmin}
-        removeUserFromTeam={() => removeUser(user.id)} userIsTeamAdmin={userIsTeamAdmin(user)}
+        removeUserFromTeam={() => removeUser(user.id)}                         
+        userIsTeamAdmin={userIsTeamAdmin(user)}
       />}
     </UserPopoversList>
   );
