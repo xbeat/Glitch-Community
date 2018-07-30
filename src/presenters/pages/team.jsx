@@ -43,6 +43,7 @@ class TeamPage extends React.Component {
       currentUserIsTeamAdmin: this.props.currentUserIsTeamAdmin,
       teamHasUnlimitedProjects: this.props.teamHasUnlimitedProjects
     };
+    this.team = this.props.team
   }
 
 //   team: {
@@ -64,15 +65,10 @@ class TeamPage extends React.Component {
 //   api, searchUsers, getProjects,
 // }) => {
 
-  // create update state funcs to pass down
+  // create update state funcs to pass dowen
   
-
-  render() {
-        const team = this.props.team
-
-        
-  const = projectLimitIsReached() => {
-    if ((this.state.currentUserIsOnTeam && !this.state.teamHasUnlimitedProjects && team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
+  projectLimitIsReached() {
+    if ((this.state.currentUserIsOnTeam && !this.state.teamHasUnlimitedProjects && this.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
       return true;
     } return false;
   };
@@ -83,6 +79,7 @@ class TeamPage extends React.Component {
     });
   }
 
+  render() {
     return (
       <main className="profile-page team-page">
         <section>
@@ -177,6 +174,65 @@ class TeamPage extends React.Component {
     );
   };
 }
+
+TeamPage.propTypes = {
+  team: PropTypes.shape.isRequired({
+    _cacheAvatar: PropTypes.number.isRequired,
+    _cacheCover: PropTypes.number.isRequired,
+    adminIds: PropTypes.array.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    coverColor: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    features: PropTypes.array.isRequired,  
+    hasAvatarImage: PropTypes.bool.isRequired,
+    hasCoverImage: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    isVerified: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired,
+    projects: PropTypes.array.isRequired,
+    teamPins: PropTypes.array.isRequired,
+    users: PropTypes.array.isRequired,
+    verifiedImage: PropTypes.string.isRequired,
+    verifiedTooltip: PropTypes.string.isRequired,
+  }),
+  clearCover: PropTypes.array.isRequired,
+
+  currentUserIsOnTeam: PropTypes.array.isRequired,
+  myProjects: PropTypes.array.isRequired,
+  updateDescription: PropTypes.array.isRequired,
+  uploadAvatar: PropTypes.array.isRequired,
+  uploadCover: PropTypes.array.isRequired,
+  addUser: PropTypes.array.isRequired,
+  removeUser: PropTypes.array.isRequired,
+  addPin: PropTypes.array.isRequired,
+  removePin: PropTypes.array.isRequired,
+  addProject: PropTypes.array.isRequired,
+  removeProject: PropTypes.array.isRequired,
+  currentUserIsTeamAdmin: PropTypes.array.isRequired,
+  teamHasUnlimitedProjects: PropTypes.array.isRequired,
+  currentUserId: PropTypes.array.isRequired,
+  api: PropTypes.array.isRequired,
+  searchUsers: PropTypes.array.isRequired,
+  getProjects: PropTypes.array.isRequired,
+  adminIds: PropTypes.array.isRequired,
+
+  
+  
+}
+
+
+//   currentUserIsOnTeam, myProjects,
+//   updateDescription,
+//   uploadAvatar, uploadCover, clearCover,
+//   addUser, removeUser,
+//   addPin, removePin,
+//   addProject, removeProject,
+//   currentUserIsTeamAdmin,
+//   teamHasUnlimitedProjects, currentUserId,
+//   api, searchUsers, getProjects,
+// }) => {
+
+
 
 
 // Team Page Loader
