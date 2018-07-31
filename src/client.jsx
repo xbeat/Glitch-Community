@@ -4,14 +4,15 @@ import 'details-element-polyfill';
 import React from 'react';
 import {render} from 'react-dom';
 
+import {BrowserRouter} from 'react-router-dom';
+
 import application from './application';
 import rootTeams from './curated/teams.js';
 
 import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
-import App from './presenters/app.jsx';
-import IndexPage from './presenters/pages/index.jsx';
+import Routing from './presenters/pages/routing.jsx';
 import CategoryPage from './presenters/pages/category.jsx';
 import ProjectPage from './presenters/pages/project.jsx';
 import {TeamPage, UserPage, TeamOrUserPage} from './presenters/pages/team-or-user.jsx';
@@ -53,11 +54,7 @@ function identifyUser(application) {
 }
 
 function routePage(pageUrl, application) {
-  // index page ✅
-  if (pageUrl.match(/^index\.html$/i) || !pageUrl) {
-    return {page: <IndexPage application={application}/>};
-  }
-
+  
   // questions page ✅
   if (pageUrl.match(/^questions$/i)) {
     return {page: <QuestionsPage application={application} title="Questions"/>};
@@ -107,7 +104,7 @@ function routePage(pageUrl, application) {
  
   // error page ✅
   return {
-    page: <App application={application}/>,
+    page: <BrowserRouter><Routing application={application}/></BrowserRouter>,
     title: "👻 Page not found",
   };
 }
