@@ -78,38 +78,19 @@ class TeamEditor extends React.Component {
     }
   }
 
-
-
-
   async updateUserPermissions(id, accessLevel) {
     await this.props.api.patch(`teams/${this.state.id}/users/${id}`, {accessLevel: accessLevel});
     if (accessLevel === ADMIN_ACCESS_LEVEL) {
-      this.setState({
-        adminIds: this.state.adminIds.push(id)
-      });
+      this.setState((prevState, props) => ({
+        counter: prevState.adminIds.push(id)
+      }));
     } else {
-      let index = this.state.indexOf(id)
-      this.setState({
-        adminIds: this.state.adminIds.splice(index, 1)
-      });
+      let index = this.state.adminIds.indexOf(id)
+      this.setState((prevState, props) => ({
+        counter: prevState.adminIds.splice(index, 1)
+      }));
     }
-
-    // if (this.state.adminIds.includes(currentUserId)) {
-    //   return true;
-    // } 
-    // return false;
-
-    
-    // this.setState(({users}) => ({
-      // specific user from users?
-      // update admin ids?
-
-      // users: [...users, UserModel({id}).asProps()],
-    // }));
-
   }
-
-
 
   async addProject(id) {
     console.log ('addproject', id); // Why is only my projects doing a get, and templates are not (from add-team-project-pop) 
@@ -176,6 +157,7 @@ class TeamEditor extends React.Component {
       currentUserIsTeamAdmin: this.currentUserIsTeamAdmin(),
       teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
       teamHasBillingExposed: this.teamHasBillingExposed(),
+      updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),
     };
     return this.props.children(this.state, funcs, this.currentUserIsOnTeam(), this.currentUserIsTeamAdmin());
   }
