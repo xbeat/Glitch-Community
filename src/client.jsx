@@ -10,6 +10,7 @@ import rootTeams from './curated/teams.js';
 import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
+import App from './presenters/app.jsx';
 import IndexPage from './presenters/pages/index.jsx';
 import CategoryPage from './presenters/pages/category.jsx';
 import ProjectPage from './presenters/pages/project.jsx';
@@ -106,7 +107,7 @@ function routePage(pageUrl, application) {
  
   // error page ✅
   return {
-    page: <ErrorPage title="Page Not Found" description="Maybe a typo? Or perhaps it's moved?"/>,
+    page: <App application={application}/>,
     title: "👻 Page not found",
   };
 }
