@@ -12,7 +12,6 @@ import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
 import Routing from './presenters/pages/routing.jsx';
-import CategoryPage from './presenters/pages/category.jsx';
 import ErrorPage from './presenters/pages/error.jsx';
 
 console.log("#########");
@@ -49,13 +48,6 @@ function identifyUser(application) {
 }
 
 function routePage(pageUrl, application) {
-
-  // category page ✅
-  if (application.categories.some(({url}) => pageUrl === url)) {
-    const category = application.categories.find(({url}) => pageUrl === url);
-    const page = <CategoryPage application={application} category={category}/>;
-    return {page, title: category.name};
-  }
  
   // error page ✅
   return {
