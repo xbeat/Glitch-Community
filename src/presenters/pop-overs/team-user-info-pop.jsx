@@ -6,14 +6,14 @@ import PropTypes from 'prop-types';
 import Thanks from '../includes/thanks.jsx';
 import Loader from '../includes/loader.jsx';
 
-// const MEMBER_ACCESS_LEVEL = 20;
-// const ADMIN_ACCESS_LEVEL = 30;
+const MEMBER_ACCESS_LEVEL = 20;
+const ADMIN_ACCESS_LEVEL = 30;
 
 // Remove from Team 👋
 
-const RemoveFromTeam = ({action}) => (
+const RemoveFromTeam = ({removeFromTeam}) => (
   <section className="pop-over-actions danger-zone">
-    <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={action}>
+    <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={removeFromTeam}>
       Remove from Team
       <span className="emoji wave" />
     </button>
@@ -21,7 +21,7 @@ const RemoveFromTeam = ({action}) => (
 );
 
 RemoveFromTeam.propTypes = {
-  action: PropTypes.func.isRequired,
+  removeFromTeam: PropTypes.func.isRequired,
 };
 
 
@@ -49,13 +49,20 @@ UserActions.propTypes = {
 
 // Admin Actions Section ⏫⏬
 
-const AdminActions = ({user, userIsTeamAdmin}) => {  
+const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {  
 
   // BUG: If I unadmin myself, shopuld updates currentUser in other components too
   // BUG: if I change a users admin status it doesn't update the view
   // BUG: error on removing from team
   
-  // const updateAdminStatus = (accessLevel) => {
+  
+  let updateAdminStatus = () => {
+    if (userIsTeamAdmin) {
+      updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)
+    } else {
+        updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)
+    }
+    
   //   if (adminStatusIsUpdating) {
   //     return null;
   //   }
@@ -75,12 +82,12 @@ const AdminActions = ({user, userIsTeamAdmin}) => {
   return (
     <section className="pop-over-actions admin-actions">
       { userIsTeamAdmin && 
-        <button className="button-small button-tertiary has-emoji" onClick={() => {}}>
+        <button className="button-small button-tertiary has-emoji" onClick={() => {updateAdminStatus()}}>
           <span>Remove Admin Status </span>
           <span className="emoji fast-down" />
         </button>
       ||
-        <button className="button-small button-tertiary has-emoji" onClick={() => {}}>
+        <button className="button-small button-tertiary has-emoji" onClick={() => {updateAdminStatus()}}>
           <span>Make an Admin </span>
           <span className="emoji fast-up" />
         </button>
@@ -95,9 +102,8 @@ AdminActions.propTypes = {
     login: PropTypes.string.isRequired,
   }).isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
-  api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
-  updateUserIsTeamAdmin: PropTypes.func.isRequired,
+  updateUserPermissions: PropTypes.func.isRequired,
   // updateAdminStatusIsUpdating: PropTypes.func.isRequired,
   // adminStatusIsUpdating: PropTypes.bool.isRequired,
 };
@@ -117,30 +123,29 @@ const ThanksCount = ({count}) => (
 export default class TeamUserInfoPop extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {};
   }
 
-  removeFromTeamAction() {
+  removeFromTeam() {
     this.props.togglePopover();
     this.props.removeUser(this.props.user.id);
   }
   
-  updateUserIsTeamAdmin(accessLevel) {
-    let isAdmin = false;
+  // updateUserIsTeamAdmin(accessLevel) {
+  //   let isAdmin = false;
     // if (accessLevel === ADMIN_ACCESS_LEVEL) {
     //   isAdmin = true;
     // }
     // this.setState({
     //   userIsTeamAdmin: isAdmin
     // });
-  }
+  // }
   
-  updateAdminStatusIsUpdating(value) {
-    this.setState({
-      adminStatusIsUpdating: value
-    });
-  }
+  // updateAdminStatusIsUpdating(value) {
+  //   this.setState({
+  //     adminStatusIsUpdating: value
+  //   });
+  // }
 
   render() {
     return (
@@ -152,7 +157,7 @@ export default class TeamUserInfoPop extends React.Component {
           <div className="info-container">
             <p className="name" title={this.props.user.name}>{this.props.user.name}</p>
             <p className="user-login" title={this.props.user.login}>@{this.props.user.login}</p>
-            { this.state.userIsTeamAdmin && 
+            { this.props.userIsTeamAdmin && 
               <div className="status-badge">
                 <span className="status admin" data-tooltip="Can edit team info and billing">
                   Team Admin
@@ -163,18 +168,16 @@ export default class TeamUserInfoPop extends React.Component {
         </section>
         { this.props.user.thanksCount > 0 && <ThanksCount count={this.props.user.thanksCount} /> }
         <UserActions user={this.props.user} />
-        { this.state.currentUserIsTeamAdmin &&
+        { this.props.currentUserIsTeamAdmin &&
           <AdminActions 
             user={this.props.user} 
-            userIsTeamAdmin={this.state.userIsTeamAdmin} 
+            userIsTeamAdmin={this.props.userIsTeamAdmin} 
             api={this.props.api} 
             teamId={this.props.teamId} 
-            updateUserIsTeamAdmin={(value) => this.updateUserIsTeamAdmin(value)} 
-            updateAdminStatusIsUpdating={(value) => this.updateAdminStatusIsUpdating(value)}
-            adminStatusIsUpdating={this.state.adminStatusIsUpdating} 
+            updateUserPermissions={this.props.updateUserPermissions} 
           />
         }
-        { this.state.currentUserIsTeamAdmin && <RemoveFromTeam action={this.removeFromTeamAction} /> }
+        { this.props.currentUserIsTeamAdmin && <RemoveFromTeam removeFromTeam={this.removeFromTeam} /> }
       </dialog>
     );
   }
@@ -195,6 +198,7 @@ TeamUserInfoPop.propTypes = {
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
+  updateUserPermissions: PropTypes.func.isRequired,
 };
 
 TeamUserInfoPop.defaultProps = {

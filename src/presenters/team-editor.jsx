@@ -77,6 +77,7 @@ class TeamEditor extends React.Component {
   }
 
   async updateUserPermissions(id, accessLevel) {
+    console.log ('🚒 updateUserPermissions',id, accessLevel)
     await this.props.api.patch(`teams/${this.state.id}/users/${id}`, {accessLevel: accessLevel});
     if (accessLevel === ADMIN_ACCESS_LEVEL) {
       this.setState((prevState) => ({
