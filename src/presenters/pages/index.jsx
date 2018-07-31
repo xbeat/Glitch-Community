@@ -65,23 +65,16 @@ class ByFogCreek extends React.Component {
   constructor(props) {
     super(props);
     this.state = {time: new Date()};
-    this.timer = null;
-  }
-  
-  startTimer() {
-    this.timer = window.setTimeout(() => {
-      this.setState({time: new Date()});
-      this.startTimer();
-    }, moment.duration(1, 'hours').asMilliseconds());
   }
   
   componentDidMount() {
-    this.startTimer();
+    this.timer = window.setInterval(() => {
+      this.setState({time: new Date()});
+    }, moment.duration(1, 'hours').asMilliseconds());
   }
   
   componentWillUnmount() {
     window.clearTimeout(this.timer);
-    this.timer = null;
   }
   
   render() {
