@@ -9,9 +9,7 @@ import UserModel from '../models/user';
 import ErrorHandlers from './error-handlers.jsx';
 import Uploader from './includes/uploader.jsx';
 
-import _ from 'lodash';
-
-const MEMBER_ACCESS_LEVEL = 20;
+// const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
 
 class TeamEditor extends React.Component {
@@ -81,12 +79,12 @@ class TeamEditor extends React.Component {
   async updateUserPermissions(id, accessLevel) {
     await this.props.api.patch(`teams/${this.state.id}/users/${id}`, {accessLevel: accessLevel});
     if (accessLevel === ADMIN_ACCESS_LEVEL) {
-      this.setState((prevState, props) => ({
+      this.setState((prevState) => ({
         counter: prevState.adminIds.push(id)
       }));
     } else {
       let index = this.state.adminIds.indexOf(id)
-      this.setState((prevState, props) => ({
+      this.setState((prevState) => ({
         counter: prevState.adminIds.splice(index, 1)
       }));
     }
