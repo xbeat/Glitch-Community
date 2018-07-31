@@ -14,9 +14,7 @@ const queryString = qs.parse(window.location.search);
 
 import Routing from './presenters/pages/routing.jsx';
 import CategoryPage from './presenters/pages/category.jsx';
-import ProjectPage from './presenters/pages/project.jsx';
 import {TeamPage, UserPage, TeamOrUserPage} from './presenters/pages/team-or-user.jsx';
-import QuestionsPage from './presenters/pages/questions.jsx';
 import SearchPage from './presenters/pages/search.jsx';
 import ErrorPage from './presenters/pages/error.jsx';
 
@@ -54,18 +52,6 @@ function identifyUser(application) {
 }
 
 function routePage(pageUrl, application) {
-  
-  // questions page ✅
-  if (pageUrl.match(/^questions$/i)) {
-    return {page: <QuestionsPage application={application} title="Questions"/>};
-  }
-
-  // ~project overlay page ✅
-  if (pageUrl.charAt(0) === '~') {
-    const projectDomain = pageUrl.substring(1);
-    const page = <ProjectPage application={application} name={projectDomain}/>;
-    return {page, title:decodeURI(pageUrl)};
-  }
 
   // @name page ✅
   if (pageUrl.charAt(0) === '@') {
