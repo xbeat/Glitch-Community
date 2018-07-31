@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Helmet from 'react-helmet';
 import Project from '../../models/project';
 
 import {DataLoader} from '../includes/loader.jsx';
@@ -29,7 +30,6 @@ function trackRemix(id, domain) {
 
 function syncPageToDomain(domain) {
   history.replaceState(null, null, `/~${domain}`);
-  document.title = `~${domain}`;
 }
 
 const PrivateTooltip = "Only members can view code";
@@ -150,7 +150,12 @@ const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
     {project => project ? (
       <ProjectEditor api={api} initialProject={project} currentUserModel={currentUserModel}>
         {(project, funcs, userIsMember) => (
-          <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
+          <React.Fragment>
+            <Helmet>
+              <title>{project.domain}</title>
+            </Helmet>
+            <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
+          </React.Fragment>
         )}
       </ProjectEditor>
     ) : <NotFound name={name}/>}

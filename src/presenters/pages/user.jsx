@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Helmet} from 'react-helmet';
+import Helmet from 'react-helmet';
 import {getAvatarStyle, getProfileStyle} from '../../models/user';
 
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -120,7 +120,7 @@ const UserPageContainer = ({api, user, currentUserModel}) => (
     {(user, funcs, isAuthorized) => (
       <React.Fragment>
         <Helmet>
-          <title>{user.name}</title>
+          <title>{user.name || (user.login ? `@${user.login}` : `User ${user.id}`)}</title>
         </Helmet>
         <UserPage api={api} user={user} {...funcs} isAuthorized={isAuthorized}/>
       </React.Fragment>

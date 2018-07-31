@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import qs from 'querystringify';
 import {Route, Switch} from 'react-router-dom';
-import {Helmet} from 'react-helmet';
+import Helmet from 'react-helmet';
 
 import rootTeams from '../../curated/teams.js';
 

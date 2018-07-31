@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Helmet from 'react-helmet';
 import {getAvatarStyle, getProfileStyle} from '../../models/team';
 import TeamEditor from '../team-editor.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
@@ -81,6 +82,9 @@ const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
   <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam) => (
       <React.Fragment>
+        <Helmet>
+          <title>{team.name}</title>
+        </Helmet>
         <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
         {teamConflictsWithUser(team, currentUserModel) && <NameConflictWarning/>}
       </React.Fragment>
