@@ -21,6 +21,14 @@ export class UpgradeTeamPop extends React.Component {
   }
     
   render() {
+    
+    let users = () => {
+      return this.props.users.map(user => {
+        user.userLink = null
+        return user
+      })
+    }
+    
     return (
       <dialog className="pop-over upgrade-team-pop">
         <section className="pop-over-info">
@@ -32,7 +40,7 @@ export class UpgradeTeamPop extends React.Component {
           <div className="action-description">
             Glitch Teams cost ${PRICE_PER_USER} per active user a month
           </div>
-          <UsersList users={this.props.users}/>
+          <UsersList users={users()}/>
         </section>
         <section className="pop-over-actions">
           <button className="button buttom-small button-cta has-emoji opens-pop-over" disabled>
