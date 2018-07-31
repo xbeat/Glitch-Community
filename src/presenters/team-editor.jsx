@@ -72,7 +72,24 @@ class TeamEditor extends React.Component {
       model.teams(model.teams().filter(({id}) => id() !== this.props.team.id));
     }
   }
-  
+
+
+
+
+  async updateUserPermissions(id, accessLevel) {
+    await this.props.api.patch(`teams/${this.state.id}/users/${id}`);
+    this.setState(({users}) => ({
+      
+      // specific user from users
+      // update admin ids
+      
+      // users: [...users, UserModel({id}).asProps()],
+    }));
+
+  }
+
+
+
   async addProject(id) {
     console.log ('addproject', id); // Why is only my projects doing a get, and templates are not (from add-team-project-pop) 
     await this.props.api.post(`teams/${this.state.id}/projects/${id}`);
@@ -108,7 +125,6 @@ class TeamEditor extends React.Component {
       return true;
     } 
     return false;
-    
   }
 
   // TODO temp feature switch name // features will eventually return an object instead
