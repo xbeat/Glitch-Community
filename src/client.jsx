@@ -47,14 +47,6 @@ function identifyUser(application) {
   }
 }
 
-function routePage(pageUrl, application) {
- 
-  // error page ✅
-  return {
-    page: <BrowserRouter><Routing application={application}/></BrowserRouter>,
-  };
-}
-
 async function route(location, application) {
   const normalizedRoute = location.pathname.replace(/^\/|\/$/g, "");
   console.log(`normalizedRoute is ${normalizedRoute}`);
@@ -99,7 +91,7 @@ async function route(location, application) {
   //
   //  Page Routing
   //
-  const page, title=document.title} = routePage(normalizedRoute, application);
+  const page = <BrowserRouter><Routing application={application}/></BrowserRouter>;
   const dom = document.createElement('div');
   document.body.appendChild(dom);
   render(page, dom);
