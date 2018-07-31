@@ -53,6 +53,7 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
 
   // BUG: If I unadmin myself, shopuld updates currentUser in other components too
   // BUG: if I change a users admin status it doesn't update the view
+  // BUG: error on removing from team
   
   const updateAdminStatus = (accessLevel) => {
     if (adminStatusIsUpdating) {
