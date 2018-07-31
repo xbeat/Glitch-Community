@@ -7,17 +7,23 @@ class TeamUpgradeInfoBanner extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.errorIfLimitReached = this.errorIfLimitReached.bind(this);
+    // this.errorIfLimitReached = this.errorIfLimitReached.bind(this);
   }
   
-  errorIfLimitReached() {
-    if (this.props.projectsCount >= this.props.limit) {
-      return 'projects-left-error';
-    }
-  }
+  // errorIfLimitReached() {
+  //   if (this.props.projectsCount >= this.props.limit) {
+  //     return 'projects-left-error';
+  //   }
+  // }
 
   render() {
-    let progressValueWidth = {width: (Math.min(this.props.projectsCount, 100)) + '%'}
+    let progressPercent = Math.min(((this.props.projectsCount / this.props.limit) * 100), 100)
+    let progressValueWidth = {width: progressPercent + '%'}
+    let errorIfLimitReached = () => {
+      if (this.props.projectsCount >= this.props.limit) {
+        return 'projects-left-error';
+      }
+    }
     
     return (
       <aside className="inline-banners team-upgrade-banner">
@@ -25,9 +31,9 @@ class TeamUpgradeInfoBanner extends React.Component {
           Free teams are limited to {this.props.limit} projects
         </div>
 
-        <div className="progress" value={this.props.projectsCount} max={this.props.limit}>
+        <div className="progress">
           <div className="progress-value" style={progressValueWidth}>
-              <div className={`projects-left ${this.errorIfLimitReached()}`}>
+              <div className={`projects-left ${errorIfLimitReached}`}>
                 {this.props.projectsCount}
               </div>
           </div>
