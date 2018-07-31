@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {Helmet} from 'react-helmet';
 import {getAvatarStyle, getProfileStyle} from '../../models/user';
 
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -117,7 +118,12 @@ UserPage.propTypes = {
 const UserPageContainer = ({api, user, currentUserModel}) => (
   <UserEditor api={api} initialUser={user} currentUserModel={currentUserModel}>
     {(user, funcs, isAuthorized) => (
-      <UserPage api={api} user={user} {...funcs} isAuthorized={isAuthorized}/>
+      <React.Fragment>
+        <Helmet>
+          <title>{user.name}</title>
+        </Helmet>
+        <UserPage api={api} user={user} {...funcs} isAuthorized={isAuthorized}/>
+      </React.Fragment>
     )}
   </UserEditor>
 );

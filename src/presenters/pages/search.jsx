@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {Helmet} from 'react-helmet';
 import Layout from '../layout.jsx';
 
 import ProjectModel from '../../models/project';
@@ -125,6 +126,9 @@ SearchPage.propTypes = {
 
 const SearchPageContainer = ({application, query}) => (
   <Layout application={application} searchQuery={query}>
+    <Helmet>
+      <title>Search for {query}</title>
+    </Helmet>
     <ErrorHandlers>
       {errorFuncs => (
         <SearchPage {...errorFuncs} api={application.api()} categories={application.categories} query={query}/>
