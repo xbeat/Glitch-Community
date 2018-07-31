@@ -50,6 +50,10 @@ UserActions.propTypes = {
 // Admin Actions Section ⏫⏬
 
 const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, adminStatusIsUpdating, updateAdminStatusIsUpdating}) => {  
+
+  // BUG: If I unadmin myself, shopuld updates currentUser in other components too
+  // BUG: if I change a users admin status it doesn't update the view
+  
   const updateAdminStatus = (accessLevel) => {
     if (adminStatusIsUpdating) {
       return null;
@@ -60,7 +64,6 @@ const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin
       .then(({data}) => {
         updateAdminStatusIsUpdating(false);
         updateUserIsTeamAdmin(accessLevel);
-        // TODO: If I unadmin myself, updates currentUser in other components too
       }).catch(error => {
         console.error("updateAdminStatus", accessLevel, error.response.data);
         notify.createNotification(<p>{error.response.data.message}</p>, 'notifyError');
