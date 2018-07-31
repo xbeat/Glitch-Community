@@ -17,12 +17,12 @@ class TeamUpgradeInfoBanner extends React.Component {
   }
 
   render() {
-    let progressValueWidth = {width: `${Math.min(((this.props.projectsCount / this.props.limit) * 100), 100)}%`}
+    let progressValueWidth = {width: (Math.min(this.props.projectsCount, 100)) + '%'}
     
     return (
       <aside className="inline-banners team-upgrade-banner">
         <div>
-          Free teams are limited to 5 projects
+          Free teams are limited to {this.props.limit} projects
         </div>
 
         <div className="progress" value={this.props.projectsCount} max={this.props.limit}>
