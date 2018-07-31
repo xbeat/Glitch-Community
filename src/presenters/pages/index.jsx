@@ -68,14 +68,14 @@ class ByFogCreek extends React.PureComponent {
   }
   
   age() {
-    const FOUNDED = new Date('2000-08-14');
+    const FOUNDED = '2000-08-14';
     return moment().diff(FOUNDED, 'years');
   }
   
   componentDidMount() {
     this.timer = window.setInterval(() => {
       this.setState({age: this.age()});
-    }, moment.duration(15, 'seconds').asMilliseconds());
+    }, moment.duration(1, 'minutes').asMilliseconds());
   }
   
   componentWillUnmount() {
