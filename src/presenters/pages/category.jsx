@@ -13,6 +13,7 @@ import Categories from '../categories.jsx';
 const CategoryPageWrap = ({category, categories, children}) => (
   <React.Fragment>
     <Helmet>
+      <title>{category.name}</title>
     </Helmet>
     <main className="category-page">
       <article className="projects" style={{backgroundColor: category.backgroundColor}}>
