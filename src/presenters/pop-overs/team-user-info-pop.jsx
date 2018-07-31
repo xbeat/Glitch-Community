@@ -101,8 +101,9 @@ export default class TeamUserInfoPop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+  this.removeFromTeam = this.removeFromTeam.bind(this);
   }
-
+  
   removeFromTeam() {
     this.props.togglePopover();
     this.props.removeUser(this.props.user.id);
