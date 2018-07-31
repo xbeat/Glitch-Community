@@ -127,7 +127,7 @@ const SearchPageContainer = ({application, query}) => (
   <Layout application={application} searchQuery={query}>
     <ErrorHandlers>
       {errorFuncs => (
-        <SearchPage {...errorFuncs} api={application.api} categories={application.categories} query={query}/>
+        <SearchPage {...errorFuncs} api={application.api()} categories={application.categories} query={query}/>
       )}
     </ErrorHandlers>
   </Layout>

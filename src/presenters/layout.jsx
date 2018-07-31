@@ -9,7 +9,6 @@ import Footer from './footer.jsx';
 
 const getHeaderProps = (application) => ({
   api: application.api(),
-  baseUrl: application.normalizedBaseUrl(),
   getUserPref: application.getUserPref,
   setUserPref: application.updateUserPrefs,
 });

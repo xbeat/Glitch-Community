@@ -1,7 +1,5 @@
 /* globals API_URL APP_URL EDITOR_URL analytics application Raven */
 
-import Observable from 'o_0';
-
 import axios from 'axios';
 import cachedCategories from './cache/categories.js';
 import Model from './models/model';
@@ -37,10 +35,6 @@ if (cachedUser) {
 var self = Model({
   currentUser: cachedUser,
 }).extend({
-
-  normalizedBaseUrl() {
-    return "/";
-  },
 
   api(source) {
     const persistentToken = self.currentUser() && self.currentUser().persistentToken();

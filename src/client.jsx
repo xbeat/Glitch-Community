@@ -13,7 +13,6 @@ const queryString = qs.parse(window.location.search);
 
 import Routing from './presenters/pages/routing.jsx';
 import CategoryPage from './presenters/pages/category.jsx';
-import SearchPage from './presenters/pages/search.jsx';
 import ErrorPage from './presenters/pages/error.jsx';
 
 console.log("#########");
@@ -50,13 +49,6 @@ function identifyUser(application) {
 }
 
 function routePage(pageUrl, application) {
-
-  // search page ✅
-  if (pageUrl.match(/^search$/i) && queryString.q) {
-    const query = queryString.q;
-    const page = <SearchPage application={application} query={query}/>;
-    return {page, title: `Search for ${query}`};
-  }
 
   // category page ✅
   if (application.categories.some(({url}) => pageUrl === url)) {

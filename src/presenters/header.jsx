@@ -1,7 +1,6 @@
 /* global EDITOR_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
-import urlJoin from 'url-join';
 
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
@@ -37,16 +36,18 @@ const submitSearch = (event) => {
   }
 };
 
-const SearchForm = ({baseUrl, onSubmit, defaultValue}) => (
-  <form action={urlJoin(baseUrl, "search")} method="get" role="search" onSubmit={onSubmit}>
+const SearchForm = ({onSubmit, defaultValue}) => (
+  <form action="/search" method="get" role="search" onSubmit={onSubmit}>
     <input className="search-input" name="q" placeholder="bots, apps, users" defaultValue={defaultValue}/>
   </form>
 );
 
 SearchForm.propTypes = {
-  baseUrl: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  defaultValue: PropTypes.string.isRequired,
+  defaultValue: PropTypes.string,
+};
+SearchForm.defaultProps = {
+  defaultValue: '',
 };
 
 const UserOptionsPopWrapper = ({user, showNewStuffOverlay}) => {
@@ -68,18 +69,18 @@ UserOptionsPopWrapper.propTypes = {
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
-const Header = ({api, baseUrl, maybeUser, searchQuery, showNewStuffOverlay}) => {
+const Header = ({api, maybeUser, searchQuery, showNewStuffOverlay}) => {
   const signedIn = maybeUser && !!maybeUser.login;
   return (
     <header role="banner">
       <div className="header-info">
-        <a href={baseUrl}>
+        <a href="/">
           <Logo/>
         </a>
       </div>
      
       <nav>
-        <SearchForm baseUrl={baseUrl} onSubmit={submitSearch} defaultValue={searchQuery}/>
+        <SearchForm onSubmit={submitSearch} defaultValue={searchQuery}/>
         <NewProjectPop api={api}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
@@ -90,7 +91,6 @@ const Header = ({api, baseUrl, maybeUser, searchQuery, showNewStuffOverlay}) => 
 };
 
 Header.propTypes = {
-  baseUrl: PropTypes.string.isRequired,
   maybeUser: PropTypes.object,
 };
 
