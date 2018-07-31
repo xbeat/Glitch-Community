@@ -49,45 +49,25 @@ UserActions.propTypes = {
 
 // Admin Actions Section ⏫⏬
 
-const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {  
-
-  // BUG: If I unadmin myself, shopuld updates currentUser in other components too
-  // BUG: if I change a users admin status it doesn't update the view
-  // BUG: error on removing from team
+const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
   
+  let removeAdminStatus = () => {
+    updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)
+  }
   
-  let updateAdminStatus = () => {
-    if (userIsTeamAdmin) {
-      updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)
-    } else {
-        updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)
-    }
-    
-  //   if (adminStatusIsUpdating) {
-  //     return null;
-  //   }
-  //   updateAdminStatusIsUpdating(true);
-  //   let teamUser = `teams/${teamId}/users/${user.id}`;
-  //   api.patch((teamUser), {access_level: accessLevel})
-  //     .then(({data}) => {
-  //       updateAdminStatusIsUpdating(false);
-  //       updateUserIsTeamAdmin(accessLevel);
-  //     }).catch(error => {
-  //       console.error("updateAdminStatus", accessLevel, error.response.data);
-  //       notify.createNotification(<p>{error.response.data.message}</p>, 'notifyError');
-  //       updateAdminStatusIsUpdating(false);
-  //     });
-  // };
+  let addAdminStatus = () => {
+    updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)
+  }
 
   return (
     <section className="pop-over-actions admin-actions">
       { userIsTeamAdmin && 
-        <button className="button-small button-tertiary has-emoji" onClick={() => {updateAdminStatus()}}>
+        <button className="button-small button-tertiary has-emoji" onClick={() => {removeAdminStatus()}}>
           <span>Remove Admin Status </span>
           <span className="emoji fast-down" />
         </button>
       ||
-        <button className="button-small button-tertiary has-emoji" onClick={() => {updateAdminStatus()}}>
+        <button className="button-small button-tertiary has-emoji" onClick={() => {addAdminStatus()}}>
           <span>Make an Admin </span>
           <span className="emoji fast-up" />
         </button>
@@ -102,10 +82,7 @@ AdminActions.propTypes = {
     login: PropTypes.string.isRequired,
   }).isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
-  teamId: PropTypes.number.isRequired,
   updateUserPermissions: PropTypes.func.isRequired,
-  // updateAdminStatusIsUpdating: PropTypes.func.isRequired,
-  // adminStatusIsUpdating: PropTypes.bool.isRequired,
 };
 
 
@@ -130,22 +107,6 @@ export default class TeamUserInfoPop extends React.Component {
     this.props.togglePopover();
     this.props.removeUser(this.props.user.id);
   }
-  
-  // updateUserIsTeamAdmin(accessLevel) {
-  //   let isAdmin = false;
-    // if (accessLevel === ADMIN_ACCESS_LEVEL) {
-    //   isAdmin = true;
-    // }
-    // this.setState({
-    //   userIsTeamAdmin: isAdmin
-    // });
-  // }
-  
-  // updateAdminStatusIsUpdating(value) {
-  //   this.setState({
-  //     adminStatusIsUpdating: value
-  //   });
-  // }
 
   render() {
     return (
@@ -170,11 +131,9 @@ export default class TeamUserInfoPop extends React.Component {
         <UserActions user={this.props.user} />
         { this.props.currentUserIsTeamAdmin &&
           <AdminActions 
-            user={this.props.user} 
-            userIsTeamAdmin={this.props.userIsTeamAdmin} 
-            api={this.props.api} 
-            teamId={this.props.teamId} 
-            updateUserPermissions={this.props.updateUserPermissions} 
+            user={this.props.user}
+            userIsTeamAdmin={this.props.userIsTeamAdmin}
+            updateUserPermissions={this.props.updateUserPermissions}
           />
         }
         { this.props.currentUserIsTeamAdmin && <RemoveFromTeam removeFromTeam={this.removeFromTeam} /> }
