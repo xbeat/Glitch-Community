@@ -66,35 +66,6 @@ export default Project = function(I, self) {
   return self;
 };
 
-// Fetch projects and populate them into the local cache
-Project.getProjectsByIds = function(api, ids) {
-  const NUMBER_OF_PROJECTS_PER_REQUEST = 40;
-  const newProjectIds = ids.filter(function(id) {
-    const project = cache[id];
-    return !project || !project.fetched();
-  });
-  
-  // fetch the ids in groups so they fit into max allowable url length
-  const projectIdGroups = newProjectIds.map(function(id, index) {
-    if ((index % NUMBER_OF_PROJECTS_PER_REQUEST) === 0) {
-      return newProjectIds.slice(index, index + NUMBER_OF_PROJECTS_PER_REQUEST);       
-    }  return null; }).filter(id => id);
-  
-  projectIdGroups.map(function(group) {
-    const projectsPath = `projects/byIds?ids=${group.join(',')}`;
-    return api.get(projectsPath)
-      .then(function({data}) {
-        data.map(function(datum) {
-          datum.fetched = true;
-          return Project(datum).update(datum);
-        }); 
-      })
-      .catch(error => console.error("getProjectsByIds", error));
-  });
-  
-  return ids.map(id => Project({id}));
-};
-
 
 Project._cache = cache;
 

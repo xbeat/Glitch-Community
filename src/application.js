@@ -116,32 +116,16 @@ var self = Model({
       self.currentUser(user);
     });
   },
-
-  // due to model caching, whenever user.id === currentuser.id, 
-  // the objects will be set equal other.
-  // this means that they must share a loader,
-  // and that 'saveUser' will clobber 'getCurrentUserById'
-  // but not necessarily the other way around.
-  saveUser(userData) {
-    const user = self.loadUser(userData);
-    self.user(user);
-  },
   
   loadUser(userData){
     userData.fetched = true;
     console.log('👀 user data is ', userData);
-    self.getProjects(userData.projects);
     
     const user = User(userData).update(userData);
     const teams = user.teams().map(teamData => Team(teamData));
     user.teams(teams);
     
     return user;
-  },
-
-  getProjects(projectsData) {
-    const projectIds = projectsData.map(project => project.id);
-    return Project.getProjectsByIds(self.api(), projectIds);
   },
  
   get categories() {
