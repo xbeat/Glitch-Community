@@ -105,6 +105,7 @@ class TeamEditor extends React.Component {
   }
 
   async removeProject(id) {
+    console.log('📟 removeProject')
     await this.props.api.delete(`teams/${this.state.id}/projects/${id}`);
     this.setState(({projects}) => ({
       projects: projects.filter(p => p.id !== id),
