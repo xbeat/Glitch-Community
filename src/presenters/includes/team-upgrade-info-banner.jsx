@@ -7,15 +7,8 @@ class TeamUpgradeInfoBanner extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    // this.errorIfLimitReached = this.errorIfLimitReached.bind(this);
   }
   
-  // errorIfLimitReached() {
-  //   if (this.props.projectsCount >= this.props.limit) {
-  //     return 'projects-left-error';
-  //   }
-  // }
-
   render() {
     let progressPercent = Math.min(((this.props.projectsCount / this.props.limit) * 100), 100)
     let progressValueWidth = {width: progressPercent + '%'}
@@ -32,8 +25,8 @@ class TeamUpgradeInfoBanner extends React.Component {
         </div>
 
         <div className="progress">
-          <div className="progress-value" style={progressValueWidth}>
-              <div className={`projects-left ${errorIfLimitReached}`}>
+          <div className={`progress-value ${errorIfLimitReached()}`} style={progressValueWidth}>
+              <div className={`projects-left ${errorIfLimitReached()}`}>
                 {this.props.projectsCount}
               </div>
           </div>

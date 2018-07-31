@@ -27,7 +27,10 @@
         position: relative
         height: 9px
         min-width: 6%
+        &.projects-left-error
+          background-color: warning
 
+        
       .projects-left
         position: absolute
         color: primary-background
@@ -37,8 +40,8 @@
         padding-bottom: 1px
         right: 0
         top: -8px;
-      .projects-left-error
-        background-color: error
+        &.projects-left-error
+          background-color: error
 
 
   &.add-project-to-analytics-banner
