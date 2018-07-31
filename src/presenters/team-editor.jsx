@@ -143,7 +143,6 @@ class TeamEditor extends React.Component {
     let features = this.props.initialTeam.features;
     return features.includes('billing exposed');
   }
-
   
   render() {
     const {handleError} = this.props;
