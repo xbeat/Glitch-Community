@@ -14,7 +14,7 @@ const queryString = qs.parse(window.location.search);
 
 import Routing from './presenters/pages/routing.jsx';
 import CategoryPage from './presenters/pages/category.jsx';
-import {TeamPage, UserPage, TeamOrUserPage} from './presenters/pages/team-or-user.jsx';
+import {TeamPage, UserPage} from './presenters/pages/team-or-user.jsx';
 import SearchPage from './presenters/pages/search.jsx';
 import ErrorPage from './presenters/pages/error.jsx';
 
@@ -52,13 +52,6 @@ function identifyUser(application) {
 }
 
 function routePage(pageUrl, application) {
-
-  // @name page ✅
-  if (pageUrl.charAt(0) === '@') {
-    const name = pageUrl.substring(1);
-    const page = <TeamOrUserPage application={application} name={name}/>;
-    return {page, title:decodeURI(pageUrl)};
-  }
 
   // anon user page ✅
   if (pageUrl.match(/^(user\/)/g)) {
