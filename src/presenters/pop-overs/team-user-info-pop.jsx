@@ -123,7 +123,7 @@ export default class TeamUserInfoPop extends React.Component {
                 <span className="status admin" data-tooltip="Can edit team info and billing">
                   Team Admin
                 </span>
-              </div> 
+              </div>
             }
           </div>
         </section>

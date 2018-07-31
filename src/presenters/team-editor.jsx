@@ -1,3 +1,5 @@
+/* global notify */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -9,7 +11,7 @@ import UserModel from '../models/user';
 import ErrorHandlers from './error-handlers.jsx';
 import Uploader from './includes/uploader.jsx';
 
-// const MEMBER_ACCESS_LEVEL = 20;
+const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
 
 class TeamEditor extends React.Component {
@@ -77,7 +79,10 @@ class TeamEditor extends React.Component {
   }
 
   async updateUserPermissions(id, accessLevel) {
-    console.log ('🚒 updateUserPermissions',id, accessLevel)
+    if (accessLevel === MEMBER_ACCESS_LEVEL && this.state.adminIds.length <= 1) {
+      notify.createNotification(<div>A team must have at least one admin</div>, 'notifyError');
+      return false
+    }
     await this.props.api.patch(`teams/${this.state.id}/users/${id}`, {accessLevel: accessLevel});
     if (accessLevel === ADMIN_ACCESS_LEVEL) {
       this.setState((prevState) => ({
