@@ -38,9 +38,6 @@ var self = Model({
   currentUser: cachedUser,
 }).extend({
 
-  // search - users
-  searchQuery: Observable(""),
-
   normalizedBaseUrl() {
     return "/";
   },

@@ -10,16 +10,15 @@ import Footer from './footer.jsx';
 const getHeaderProps = (application) => ({
   api: application.api(),
   baseUrl: application.normalizedBaseUrl(),
-  searchQuery: application.searchQuery(),
   getUserPref: application.getUserPref,
   setUserPref: application.updateUserPrefs,
 });
 
-const Layout = ({children, application}) => (
+const Layout = ({children, application, searchQuery}) => (
   <div className="content">
     <Notifications>
       <CurrentUserProvider model={application.currentUser()}>
-        <Header {...getHeaderProps(application)}/>
+        <Header {...getHeaderProps(application)} searchQuery={searchQuery}/>
         {children}
         <Footer/>
       </CurrentUserProvider>
@@ -29,6 +28,7 @@ const Layout = ({children, application}) => (
 Layout.propTypes = {
   application: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
+  searchQuery: PropTypes.string,
 };
 
 export default Layout;

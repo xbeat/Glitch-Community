@@ -7,14 +7,12 @@ import {render} from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 
 import application from './application';
-import rootTeams from './curated/teams.js';
 
 import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
 import Routing from './presenters/pages/routing.jsx';
 import CategoryPage from './presenters/pages/category.jsx';
-import {TeamPage, UserPage} from './presenters/pages/team-or-user.jsx';
 import SearchPage from './presenters/pages/search.jsx';
 import ErrorPage from './presenters/pages/error.jsx';
 
@@ -53,23 +51,9 @@ function identifyUser(application) {
 
 function routePage(pageUrl, application) {
 
-  // anon user page ✅
-  if (pageUrl.match(/^(user\/)/g)) {
-    const userId = parseInt(pageUrl.replace(/^(user\/)/g, ''), 10);
-    const page = <UserPage application={application} id={userId} name={`user ${userId}`}/>;
-    return {page, title: pageUrl};
-  }
-
-  // root team page ✅
-  if (rootTeams[pageUrl.toLowerCase()]) {
-    const page = <TeamPage application={application} id={rootTeams[pageUrl.toLowerCase()]} name={pageUrl}/>;
-    return {page, title: pageUrl};
-  }
-
   // search page ✅
   if (pageUrl.match(/^search$/i) && queryString.q) {
     const query = queryString.q;
-    application.searchQuery(query);
     const page = <SearchPage application={application} query={query}/>;
     return {page, title: `Search for ${query}`};
   }

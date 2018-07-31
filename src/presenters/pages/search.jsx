@@ -124,7 +124,7 @@ SearchPage.propTypes = {
 };
 
 const SearchPageContainer = ({application, query}) => (
-  <Layout application={application}>
+  <Layout application={application} searchQuery={query}>
     <ErrorHandlers>
       {errorFuncs => (
         <SearchPage {...errorFuncs} api={application.api} categories={application.categories} query={query}/>
