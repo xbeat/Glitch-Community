@@ -41,6 +41,7 @@ dependencies:
   raven: 2.6.3
   react: 16.4.1
   react-dom: 16.4.1
+  react-helmet: 5.2.0
   react-is: 16.4.1
   react-onclickoutside: 6.7.1
   react-pluralize: 1.4.1
@@ -2085,6 +2086,10 @@ packages:
       node: '>=0.10'
     resolution:
       integrity: sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+  /deep-equal/1.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-9dJgKStmDghO/0zbyfCK0yR0SLU=
   /deep-extend/0.6.0:
     dev: false
     engines:
@@ -2570,6 +2575,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-lEvs00zEHuMqY6n68nrVpl/Fl3c=
+  /exenv/1.2.2:
+    dev: false
+    resolution:
+      integrity: sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=
   /expand-brackets/2.1.4:
     dependencies:
       debug: 2.6.9
@@ -4858,6 +4867,17 @@ packages:
       react: ^16.0.0
     resolution:
       integrity: sha512-1Gin+wghF/7gl4Cqcvr1DxFX2Osz7ugxSwl6gBqCMpdrxHjIFUS7GYxrFftZ9Ln44FHw0JxCFD9YtZsrbR5/4A==
+  /react-helmet/5.2.0:
+    dependencies:
+      deep-equal: 1.0.1
+      object-assign: 4.1.1
+      prop-types: 15.6.2
+      react-side-effect: 1.1.5
+    dev: false
+    peerDependencies:
+      react: '>=15.0.0'
+    resolution:
+      integrity: sha1-qBgR3yExOm1VxfBYxK66XW89l6c=
   /react-is/16.4.1:
     dev: false
     resolution:
@@ -4902,6 +4922,15 @@ packages:
       react: '>=15'
     resolution:
       integrity: sha512-yrvL8AogDh2X42Dt9iknk4wF4V8bWREPirFfS9gLU1huk6qK41sg7Z/1S81jjTrGHxa3B8R3J6xIkDAA6CVarg==
+  /react-side-effect/1.1.5:
+    dependencies:
+      exenv: 1.2.2
+      shallowequal: 1.1.0
+    dev: false
+    peerDependencies:
+      react: ^0.13.0 || ^0.14.0 || ^15.0.0 || ^16.0.0
+    resolution:
+      integrity: sha512-Z2ZJE4p/jIfvUpiUMRydEVpQRf2f8GMHczT6qLcARmX7QRb28JDBTpnM2g/i5y/p7ZDEXYGHWg0RbhikE+hJRw==
   /react-textarea-autosize/7.0.4:
     dependencies:
       prop-types: 15.6.2
@@ -5308,6 +5337,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-QMEp5B7cftE7APOjk5Y6xgrbWu+WkLVQwk8JNjZ8nKRciZaByEW6MubieAiToS7+dwvrjGhH8jRXz3MVd0AYqQ==
+  /shallowequal/1.1.0:
+    dev: false
+    resolution:
+      integrity: sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
   /shebang-command/1.2.0:
     dependencies:
       shebang-regex: 1.0.0
@@ -6229,6 +6262,7 @@ specifiers:
   raven: ^2.6.3
   react: ^16.4.1
   react-dom: ^16.4.1
+  react-helmet: ^5.2.0
   react-is: ^16.4.1
   react-onclickoutside: ^6.7.1
   react-pluralize: ^1.4.0

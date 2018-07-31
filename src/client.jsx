@@ -52,7 +52,6 @@ function routePage(pageUrl, application) {
   // error page ✅
   return {
     page: <BrowserRouter><Routing application={application}/></BrowserRouter>,
-    title: "👻 Page not found",
   };
 }
 

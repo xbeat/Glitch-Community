@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import qs from 'querystringify';
 import {Route, Switch} from 'react-router-dom';
+import {Helmet} from 'react-helmet';
 
 import rootTeams from '../../curated/teams.js';
 
@@ -15,7 +16,12 @@ import CategoryPage from './category.jsx';
 import ErrorPage from './error.jsx';
 
 const NotFoundPage = () => (
-  <ErrorPage title="Page Not Found" description="Maybe a typo? Or perhaps it's moved?"/>
+  <React.Fragment>
+    <ErrorPage title="Page Not Found" description="Maybe a typo? Or perhaps it's moved?"/>
+    <Helmet>
+      <title>👻 Page not found</title> {/*eslint-disable-line*/}
+    </Helmet>
+  </React.Fragment>
 );
 
 const Routing = ({application}) => (

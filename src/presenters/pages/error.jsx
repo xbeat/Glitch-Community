@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {Helmet} from 'react-helmet';
+
 const logo = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcarp.svg";
 
 const drawStar = (canvas, context, color) => {
@@ -68,6 +70,9 @@ class Stars extends React.Component {
 
 const ErrorPage = ({title, description}) => (
   <div className="content error-page">
+    <Helmet>
+      <title>{title}</title>
+    </Helmet>
     <div className="container">
       <h1>{title}</h1>
       <h2>{description}</h2>
