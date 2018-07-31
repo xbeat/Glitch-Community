@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import Thanks from '../includes/thanks.jsx';
 import Loader from '../includes/loader.jsx';
 
-const MEMBER_ACCESS_LEVEL = 20;
-const ADMIN_ACCESS_LEVEL = 30;
+// const MEMBER_ACCESS_LEVEL = 20;
+// const ADMIN_ACCESS_LEVEL = 30;
 
 // Remove from Team 👋
 
@@ -49,38 +49,38 @@ UserActions.propTypes = {
 
 // Admin Actions Section ⏫⏬
 
-const AdminActions = ({user, userIsTeamAdmin, api, teamId, updateUserIsTeamAdmin, adminStatusIsUpdating, updateAdminStatusIsUpdating}) => {  
+const AdminActions = ({user, userIsTeamAdmin}) => {  
 
   // BUG: If I unadmin myself, shopuld updates currentUser in other components too
   // BUG: if I change a users admin status it doesn't update the view
   // BUG: error on removing from team
   
-  const updateAdminStatus = (accessLevel) => {
-    if (adminStatusIsUpdating) {
-      return null;
-    }
-    updateAdminStatusIsUpdating(true);
-    let teamUser = `teams/${teamId}/users/${user.id}`;
-    api.patch((teamUser), {access_level: accessLevel})
-      .then(({data}) => {
-        updateAdminStatusIsUpdating(false);
-        updateUserIsTeamAdmin(accessLevel);
-      }).catch(error => {
-        console.error("updateAdminStatus", accessLevel, error.response.data);
-        notify.createNotification(<p>{error.response.data.message}</p>, 'notifyError');
-        updateAdminStatusIsUpdating(false);
-      });
-  };
+  // const updateAdminStatus = (accessLevel) => {
+  //   if (adminStatusIsUpdating) {
+  //     return null;
+  //   }
+  //   updateAdminStatusIsUpdating(true);
+  //   let teamUser = `teams/${teamId}/users/${user.id}`;
+  //   api.patch((teamUser), {access_level: accessLevel})
+  //     .then(({data}) => {
+  //       updateAdminStatusIsUpdating(false);
+  //       updateUserIsTeamAdmin(accessLevel);
+  //     }).catch(error => {
+  //       console.error("updateAdminStatus", accessLevel, error.response.data);
+  //       notify.createNotification(<p>{error.response.data.message}</p>, 'notifyError');
+  //       updateAdminStatusIsUpdating(false);
+  //     });
+  // };
 
   return (
     <section className="pop-over-actions admin-actions">
       { userIsTeamAdmin && 
-        <button className="button-small button-tertiary has-emoji" onClick={() => updateAdminStatus(MEMBER_ACCESS_LEVEL)}>
+        <button className="button-small button-tertiary has-emoji" onClick={() => {}}>
           <span>Remove Admin Status </span>
           <span className="emoji fast-down" />
         </button>
       ||
-        <button className="button-small button-tertiary has-emoji" onClick={() => updateAdminStatus(ADMIN_ACCESS_LEVEL)}>
+        <button className="button-small button-tertiary has-emoji" onClick={() => {}}>
           <span>Make an Admin </span>
           <span className="emoji fast-up" />
         </button>
@@ -98,8 +98,8 @@ AdminActions.propTypes = {
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   updateUserIsTeamAdmin: PropTypes.func.isRequired,
-  updateAdminStatusIsUpdating: PropTypes.func.isRequired,
-  adminStatusIsUpdating: PropTypes.bool.isRequired,
+  // updateAdminStatusIsUpdating: PropTypes.func.isRequired,
+  // adminStatusIsUpdating: PropTypes.bool.isRequired,
 };
 
 
@@ -114,30 +114,26 @@ const ThanksCount = ({count}) => (
 
 // Team User Info
 
-class TeamUserInfoPop extends React.Component {
+export default class TeamUserInfoPop extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      userIsTeamAdmin: this.props.userIsTeamAdmin,
-      adminStatusIsUpdating: false,
-      currentUserIsTeamAdmin: this.props.currentUserIsTeamAdmin,
-    };
+    this.state = {};
   }
 
   removeFromTeamAction() {
     this.props.togglePopover();
-    this.props.removeUser();
+    this.props.removeUser(this.props.user.id);
   }
   
   updateUserIsTeamAdmin(accessLevel) {
     let isAdmin = false;
-    if (accessLevel === ADMIN_ACCESS_LEVEL) {
-      isAdmin = true;
-    }
-    this.setState({
-      userIsTeamAdmin: isAdmin
-    });
+    // if (accessLevel === ADMIN_ACCESS_LEVEL) {
+    //   isAdmin = true;
+    // }
+    // this.setState({
+    //   userIsTeamAdmin: isAdmin
+    // });
   }
   
   updateAdminStatusIsUpdating(value) {
@@ -208,4 +204,3 @@ TeamUserInfoPop.defaultProps = {
   currentUserIsOnTeam: false,
 };
 
-export default TeamUserInfoPop;
