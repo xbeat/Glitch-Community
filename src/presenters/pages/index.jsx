@@ -75,7 +75,7 @@ class ByFogCreek extends React.PureComponent {
   componentDidMount() {
     this.timer = window.setInterval(() => {
       this.setState({age: this.age()});
-    }, moment.duration(1, 'minutes').asMilliseconds());
+    }, moment.duration(5, 'minutes').asMilliseconds());
   }
   
   componentWillUnmount() {
