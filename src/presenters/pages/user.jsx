@@ -15,7 +15,6 @@ import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
-  document.title = `@${login}`;
 }
 
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {

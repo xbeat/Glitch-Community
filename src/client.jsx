@@ -99,8 +99,7 @@ async function route(location, application) {
   //
   //  Page Routing
   //
-  const {page, title=document.title} = routePage(normalizedRoute, application);
-  document.title = title;
+  const page, title=document.title} = routePage(normalizedRoute, application);
   const dom = document.createElement('div');
   document.body.appendChild(dom);
   render(page, dom);
