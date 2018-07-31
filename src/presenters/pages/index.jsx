@@ -61,16 +61,21 @@ class WhatIsGlitch extends React.Component {
   }
 }
 
-class ByFogCreek extends React.Component {
+class ByFogCreek extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {time: new Date()};
+    this.state = {age: this.age()};
+  }
+  
+  age() {
+    const FOUNDED = new Date('2000-08-14');
+    return moment().diff(FOUNDED, 'years');
   }
   
   componentDidMount() {
     this.timer = window.setInterval(() => {
-      this.setState({time: new Date()});
-    }, moment.duration(1, 'hours').asMilliseconds());
+      this.setState({age: this.age()});
+    }, moment.duration(15, 'seconds').asMilliseconds());
   }
   
   componentWillUnmount() {
@@ -79,8 +84,6 @@ class ByFogCreek extends React.Component {
   
   render() {
     const logo = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffogcreek.svg";
-    const FOUNDED = new Date('2000-08-14');
-    const age = moment(this.state.time).diff(FOUNDED, 'years');
     return (
       <section className="by-fogcreek" role="complementary">
         <h2>Made By Fog Creek</h2>
@@ -88,7 +91,7 @@ class ByFogCreek extends React.Component {
         <p>
           You might know us for making Trello, FogBugz, and co-creating Stack Overflow. 
           We're <a href="https://www.fogcreek.com">a friendly, self-funded company</a> that's
-          been helping people make stuff for over {age} years.
+          been helping people make stuff for over {this.state.age} years.
         </p>
       </section>
     );
