@@ -6,36 +6,13 @@ import UpgradeTeam from './upgrade-team.jsx';
 class TeamUpgradeInfoBanner extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      remainingFreeProjects: 0,
-    };
-    this.updateRemainingFreeProjects = this.updateRemainingFreeProjects.bind(this);
+    this.state = {};
     this.errorIfLimitReached = this.errorIfLimitReached.bind(this);
-  }
-
-  updateRemainingFreeProjects() {
-    let remaining = this.props.limit - this.props.projectsCount;
-    if (remaining < 0) {
-      remaining = 0;
-    }
-    this.setState({
-      remainingFreeProjects: remaining
-    });
   }
   
   errorIfLimitReached() {
-    if (this.state.remainingFreeProjects === 0) {
+    if (this.props.projectsCount >= this.props.limit) {
       return 'projects-left-error';
-    }
-  }
-
-  componentDidMount() {
-    this.updateRemainingFreeProjects();
-  }
-  
-  componentDidUpdate(prevProps) {
-    if (this.props.projectsCount !== prevProps.projectsCount) {
-      this.updateRemainingFreeProjects();
     }
   }
 
@@ -51,7 +28,7 @@ class TeamUpgradeInfoBanner extends React.Component {
         <div className="progress" value={this.props.projectsCount} max={this.props.limit}>
           <div className="progress-value" style={progressValueWidth}>
               <div className={`projects-left ${this.errorIfLimitReached()}`}>
-                {this.state.remainingFreeProjects} left
+                {this.props.projectsCount}
               </div>
           </div>
         </div>
