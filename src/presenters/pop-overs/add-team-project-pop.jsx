@@ -196,9 +196,13 @@ export class AddTeamProjectPop extends React.Component {
           />
         </section>
         <section className="pop-over-actions results-list" data-source='templates'>
+          {/* Temporary: hidden for now pending having templates to use
+
           { (this.state.loadingTemplates) && 
             <Loader /> 
           }
+          */}
+
           <ul className="results">
             { filteredProjects.map((project) => (
               <li key={project.id}>
