@@ -9,22 +9,22 @@ import {UserPopoversList} from '../users-list.jsx';
 
 // Team Users list (in profile container)
 
-export const TeamUsers = ({users, currentUserIsOnTeam, removeUser, adminIds, api, teamId, currentUserIsTeamAdmin}) => {
+export const TeamUsers = (props) => {
+  
   let userIsTeamAdmin = (user) => {
-    return adminIds.includes(user.id);
+    console.log (user)
+    return props.adminIds.includes(user.id);
   };
   return (
-    <UserPopoversList users={users} adminIds={adminIds}>
-      {(user, togglePopover) => <TeamUserInfoPop 
-        api={api} 
-        teamId={teamId} 
-        togglePopover={togglePopover} 
-        user={user} 
-        currentUserIsOnTeam={currentUserIsOnTeam} 
-        currentUserIsTeamAdmin={currentUserIsTeamAdmin}
-        removeUserFromTeam={() => removeUser(user.id)}                         
-        userIsTeamAdmin={userIsTeamAdmin(user)}
-      />}
+    <UserPopoversList users={props.users} adminIds={props.adminIds}>
+      {(user, togglePopover) => 
+        <TeamUserInfoPop 
+          userIsTeamAdmin={userIsTeamAdmin(user)}
+          togglePopover={togglePopover} 
+          user={user} 
+          {...props}
+        />
+      }
     </UserPopoversList>
   );
 };
@@ -33,6 +33,7 @@ TeamUsers.propTypes = {
   users: PropTypes.array.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUser: PropTypes.func.isRequired,
+  updateUserPermissions: PropTypes.func.isRequired,
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
@@ -47,7 +48,12 @@ export const AddTeamUser = (props) => (
     {({visible, togglePopover}) => (
       <span className="add-user-container">
         <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
-        {visible && <AddTeamUserPop {...props} togglePopover={togglePopover}/>}
+        {visible && 
+          <AddTeamUserPop 
+            {...props}
+            togglePopover={togglePopover}
+          />
+        }
       </span>
     )}
   </PopoverContainer>

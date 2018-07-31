@@ -127,7 +127,7 @@ class TeamUserInfoPop extends React.Component {
 
   removeFromTeamAction() {
     this.props.togglePopover();
-    this.props.removeUserFromTeam();
+    this.props.removeUser();
   }
   
   updateUserIsTeamAdmin(accessLevel) {
@@ -194,7 +194,7 @@ TeamUserInfoPop.propTypes = {
     isOnTeam: PropTypes.bool,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
-  removeUserFromTeam: PropTypes.func.isRequired,
+  removeUser: PropTypes.func.isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
