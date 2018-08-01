@@ -132,16 +132,17 @@ class TeamPage extends React.Component {
           getProjects={this.props.getProjects}
         />
         
-        <aside className="inline-banners">
-            <div className="description">as dfasd fasdf</div>
-            <AddTeamProject 
-              {...this.props}
-              extraButtonClass = "button-small"
-              teamProjects = {this.props.team.projects}
-              api={() => this.props.api}
-            />
-          </aside>
-
+        { this.props.team.projects.length === 0 &&
+          <aside className="inline-banners add-project-to-empty-team-banner">
+              <div className="description">as dfasd fasdf</div>
+              <AddTeamProject 
+                {...this.props}
+                extraButtonClass = "button-small"
+                teamProjects = {this.props.team.projects}
+                api={() => this.props.api}
+              />
+            </aside>
+        }
         
         { this.props.currentUserIsOnTeam &&
           <TeamAnalytics
