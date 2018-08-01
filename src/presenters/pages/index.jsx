@@ -79,7 +79,7 @@ class ByFogCreek extends React.PureComponent {
   }
   
   componentWillUnmount() {
-    window.clearTimeout(this.timer);
+    window.clearInterval(this.timer);
   }
   
   render() {
