@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import randomColor from 'randomcolor';
 import {sample} from 'lodash';
 
+import {ApiConsumer} from './api.jsx';
+
 import QuestionItem from './question-item.jsx';
 
 const kaomojis = [
@@ -95,4 +97,10 @@ Questions.defaultProps = {
   max: 3,
 };
 
-export default Questions;
+const QuestionsContainer = ({max}) => (
+  <ApiConsumer>
+    {api => <Questions api={api} max={max}/>}
+  </ApiConsumer>
+);
+
+export default QuestionsContainer;

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {ApiConsumer} from '../api.jsx';
 import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
@@ -26,7 +27,6 @@ const NewProjectPop = ({projects}) => (
     </section>
   </div>
 );
-
 NewProjectPop.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -34,7 +34,7 @@ NewProjectPop.propTypes = {
   })).isRequired,
 };
 
-class NewProjectPopContainer extends React.Component {
+class NewProjectPopButton extends React.Component {
   constructor(props) {
     super(props);
     
@@ -69,9 +69,13 @@ class NewProjectPopContainer extends React.Component {
     );
   }
 }
-
-NewProjectPopContainer.propTypes = {
+NewProjectPopButton.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
+const NewProjectPopContainer = () => (
+  <ApiConsumer>
+    {api => <NewProjectPopButton api={api}/>}
+  </ApiConsumer>
+);
 export default NewProjectPopContainer;

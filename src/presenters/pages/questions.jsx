@@ -13,7 +13,7 @@ const QuestionsPage = ({application}) => (
       <title>Questions</title>
     </Helmet>
     <main className="questions-page">
-      <Questions api={application.api()} max={12}/>
+      <Questions max={12}/>
       <Categories categories={application.categories}/>
     </main>
   </Layout>

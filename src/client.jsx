@@ -11,7 +11,7 @@ import application from './application';
 import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
-import Routing from './presenters/pages/routing.jsx';
+import App from './presenters/app.jsx';
 import ErrorPage from './presenters/pages/error.jsx';
 
 console.log("#########");
@@ -91,10 +91,9 @@ async function route(location, application) {
   //
   //  Page Routing
   //
-  const page = <BrowserRouter><Routing application={application}/></BrowserRouter>;
   const dom = document.createElement('div');
   document.body.appendChild(dom);
-  render(page, dom);
+  render(<BrowserRouter><App application={application}/></BrowserRouter>, dom);
 }
 
 route(window.location, application);

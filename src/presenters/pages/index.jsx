@@ -113,7 +113,7 @@ const IndexPage = ({api, categories, user}) => (
       <a href="https://glitch.com">Glitch</a>{' '}
       is the friendly community where you'll build the app of your dreams
     </h1>
-    {!!(user && user.login) && <Questions api={api}/>}
+    {!!(user && user.login) && <Questions/>}
     {!!user && <RecentProjects api={api}/>}
     <Featured/>
     <RandomCategories api={api}/>
