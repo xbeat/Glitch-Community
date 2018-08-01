@@ -213,7 +213,7 @@ class TeamAnalytics extends React.Component {
 
         { this.props.projects.length === 0 &&
           <aside className="inline-banners add-project-to-analytics-banner">
-            <div className="description">Add Projects to your team to see who's viewing and remixing</div>
+            <div className="description">Add Projects to see who's viewing and remixing</div>
             <AddTeamProject 
               {...this.props}
               extraButtonClass = "button-small"
