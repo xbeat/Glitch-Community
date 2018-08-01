@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {sampleSize} from 'lodash';
 
 import ProjectModel from '../models/project';
+import {ApiConsumer} from './api.jsx';
 
 import {ProjectsUL} from './projects-list.jsx';
 
@@ -39,7 +40,7 @@ Category.propTypes = {
   }).isRequired,
 };
 
-export default class CategoryContainer extends React.Component {
+class CategoryLoader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,6 +76,14 @@ export default class CategoryContainer extends React.Component {
   }
 }
 
-CategoryContainer.propTypes = {
+CategoryLoader.propTypes = {
   api: PropTypes.any.isRequired,
 };
+
+const CategoryContainer = () => (
+  <ApiConsumer>
+    {api => <CategoryLoader api={api}/>}
+  </ApiConsumer>
+);
+
+export default CategoryContainer;
