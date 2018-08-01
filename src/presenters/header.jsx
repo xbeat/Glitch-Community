@@ -2,6 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {Link} from 'react-router-dom';
+
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
@@ -74,9 +76,9 @@ const Header = ({api, maybeUser, searchQuery, showNewStuffOverlay}) => {
   return (
     <header role="banner">
       <div className="header-info">
-        <a href="/">
+        <Link to="/">
           <Logo/>
-        </a>
+        </Link>
       </div>
      
       <nav>

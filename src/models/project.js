@@ -42,7 +42,6 @@ export default Project = function(I, self) {
         description: project.description(),
         domain: project.domain(),
         id: project.id(),
-        link: getLink(self.domain()),
         private: project.private(),
         showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
       };
