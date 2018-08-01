@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {chunk, keyBy} from 'lodash';
 
 import ProjectModel from '../models/project';
+import {ApiConsumer} from './api.jsx';
 
 import {CurrentUserConsumer, normalizeProjects} from './current-user.jsx';
 
@@ -15,7 +16,7 @@ async function getProjects(api, ids) {
   return data.map(d => ProjectModel(d).update(d).asProps());
 }
 
-export default class ProjectsLoader extends React.Component {
+class ProjectsLoader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -65,3 +66,10 @@ ProjectsLoader.propTypes = {
   children: PropTypes.func.isRequired,
   projects: PropTypes.array.isRequired,
 };
+
+const ProjectsLoaderConsumer = ({...props}) => (
+  <ApiConsumer>
+    {api => <ProjectsLoader api={api} {...props}/>}
+  </ApiConsumer>
+);
+export default ProjectsLoaderConsumer;
