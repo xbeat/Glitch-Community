@@ -19,8 +19,8 @@ export const ProjectItem = ({project, categoryColor, projectOptions}) => {
           data-track="project" data-track-label={project.domain}>
           <div className="project-container">
             <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
-            <div className={project.isRecentProject ? "button button-cta" : "button"}>
-              <span className="project-badge private-project-badge"></span>
+            <div className="button">
+              <span className="project-badge private-project-badge" aria-label="private"></span>
               <div className="project-name">{project.domain}</div>
             </div>
             <div className="description"><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
@@ -37,7 +37,6 @@ ProjectItem.propTypes = {
     description: PropTypes.string.isRequired,
     domain: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    isRecentProject: PropTypes.bool,
     private: PropTypes.bool.isRequired,
     showAsGlitchTeam: PropTypes.bool.isRequired,
     users: PropTypes.array.isRequired,

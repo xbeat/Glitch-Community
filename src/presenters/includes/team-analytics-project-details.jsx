@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 
 import Loader from './loader.jsx';
-import {FALLBACK_AVATAR_URL} from '../../models/project.js';
+import {FALLBACK_AVATAR_URL, getAvatarUrl} from '../../models/project.js';
 
 const RECENT_REMIXES_COUNT = 100;
 
@@ -20,16 +20,12 @@ const addFallbackSrc = (event) => {
   event.target.src = FALLBACK_AVATAR_URL;
 };
 
-const avatarUrl = (id) => {
-  return `https://cdn.glitch.com/project-avatar/${id}.png`;
-};
-
 const communityProjectUrl = (domain) => {
   return `/~${domain}`;
 };
 
 const ProjectDetails = ({projectDetails}) => {
-  let projectAvatar = avatarUrl(projectDetails.id);
+  let projectAvatar = getAvatarUrl(projectDetails.id);
   let projectUrl = communityProjectUrl(projectDetails.domain);
   return (
     <article className="project-details">
@@ -75,7 +71,7 @@ const ProjectDetails = ({projectDetails}) => {
               <td className="label">Originally remixed from</td>
               <td>
                 <a href={communityProjectUrl(projectDetails.baseProject.domain)}>
-                  <img alt="project avatar" className="avatar baseproject-avatar" src={avatarUrl(projectDetails.baseProject.id)} onError={addFallbackSrc} />
+                  <img alt="project avatar" className="avatar baseproject-avatar" src={getAvatarUrl(projectDetails.baseProject.id)} onError={addFallbackSrc} />
                 </a>
                 {projectDetails.baseProject.domain}
               </td>
@@ -88,7 +84,7 @@ const ProjectDetails = ({projectDetails}) => {
 };
 
 const ProjectRemixItem = ({remix}) => {
-  let projectAvatar = avatarUrl(remix.id);
+  let projectAvatar = getAvatarUrl(remix.id);
   let projectUrl = communityProjectUrl(remix.domain);
   return (
     <a href={projectUrl}>

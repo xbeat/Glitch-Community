@@ -79,7 +79,6 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomai
 PopOver.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    avatar: PropTypes.string.isRequired,
     domain: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
   })).isRequired,

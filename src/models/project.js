@@ -39,24 +39,13 @@ export default Project = function(I, self) {
       return {
         get teams() { return project.teams().map(team => team.asProps()); },
         get users() { return project.users().map(user => user.asProps()); },
-        avatar: project.avatar(),
         description: project.description(),
         domain: project.domain(),
         id: project.id(),
-        isRecentProject: !!(project.isRecentProject),
         link: getLink(self.domain()),
-        name: project.name(),
         private: project.private(),
         showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
       };
-    },
-
-    name() {
-      return self.domain();
-    },
-
-    avatar() {
-      return getAvatarUrl(self.id());
     },
   });
       
