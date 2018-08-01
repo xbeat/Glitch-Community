@@ -47,10 +47,10 @@ export class AddTeamProjectPop extends React.Component {
     return projects;
   }
   
-  onClick(event, projectId) {
+  onClick(event, project) {
     event.preventDefault();
     this.props.togglePopover();
-    this.props.addProject(projectId);
+    this.props.addProject(project);
   }
 
   render() {
@@ -71,7 +71,7 @@ export class AddTeamProjectPop extends React.Component {
               { this.state.projects.map((project) => (
                 <li key={project.id}>
                   <ProjectResultItem 
-                    action={(event) => this.onClick(event, project.id)} 
+                    action={(event) => this.onClick(event, project)} 
                     {...project}
                     title={project.domain}/>
                 </li>
