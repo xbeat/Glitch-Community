@@ -75,7 +75,7 @@ class TeamPage extends React.Component {
             })}
             avatarButtons={this.props.currentUserIsTeamAdmin ? <ImageButtons name="Avatar" uploadImage={this.props.uploadAvatar} /> : null}
             coverButtons={this.props.currentUserIsTeamAdmin ? <ImageButtons name="Cover" 
-              uploadImage={this.props.uploadCover} 
+              uploadImage={this.props.uploadCover}
               clearImage={this.props.team.hasCoverImage ? this.props.team.clearCover : null} /> : null
             }>
             <h1>
