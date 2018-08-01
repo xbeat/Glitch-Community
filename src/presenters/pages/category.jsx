@@ -67,7 +67,7 @@ const CategoryPage = ({api, category, ...props}) => (
   >
     {category => (
       <CategoryPageWrap category={category} {...props}>
-        <ProjectsLoader api={api} projects={category.projects}>
+        <ProjectsLoader projects={category.projects}>
           {projects => <ProjectsUL projects={projects} categoryColor={category.color}/>}
         </ProjectsLoader>
       </CategoryPageWrap>
@@ -81,7 +81,11 @@ CategoryPage.propTypes = {
 
 const CategoryPageContainer = ({application, category}) => (
   <Layout application={application}>
-    <CategoryPage api={application.api()} category={category} categories={application.categories}/>
+    <ApiConsumer>
+      {api => (
+        <CategoryPage api={api} category={category} categories={application.categories}/>
+      )}
+    </ApiConsumer>
   </Layout>
 );
 
