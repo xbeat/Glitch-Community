@@ -31,7 +31,7 @@ import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reache
 import UsersList from "../users-list.jsx";
 
 const FREE_TEAM_PROJECTS_LIMIT = 5;
-const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533135427324"
+const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533136461350"
 
 // Team Page
 
@@ -132,11 +132,11 @@ class TeamPage extends React.Component {
           getProjects={this.props.getProjects}
         />
         
-        { this.props.team.projects.length === 0 &&
+        { (this.props.team.projects.length === 0 && this.props.currentUserIsOnTeam) &&
           <aside className="inline-banners add-project-to-empty-team-banner">
             <div className="description-container">
               <img src={ADD_PROJECT_PALS} alt="add project pals" />
-              <div className="description">Add your projects to get {this.props.team.name} started</div>
+              <div className="description">Add projects to your team to get started</div>
             </div>
             <AddTeamProject 
               {...this.props}
