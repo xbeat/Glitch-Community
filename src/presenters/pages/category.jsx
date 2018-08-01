@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
 import ProjectModel from '../../models/project';
 
+import {ApiConsumer} from '../api.jsx';
 import Loader, {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
