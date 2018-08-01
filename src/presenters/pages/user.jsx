@@ -114,10 +114,10 @@ UserPage.propTypes = {
   leaveProject: PropTypes.func.isRequired,
 };
 
-const UserPageContainer = ({api, user, currentUserModel, getProjects}) => (
+const UserPageContainer = ({api, user, currentUserModel}) => (
   <UserEditor api={api} initialUser={user} currentUserModel={currentUserModel}>
     {(user, funcs, isAuthorized) => (
-      <UserPage api={api} user={user} {...funcs} {...{isAuthorized, getProjects}}/>
+      <UserPage api={api} user={user} {...funcs} isAuthorized={isAuthorized}/>
     )}
   </UserEditor>
 );

@@ -31,12 +31,12 @@ const RecentProjectsContainer = ({children, user}) => (
 RecentProjectsContainer.propTypes = {
   children: PropTypes.node.isRequired,
   user: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
+    avatarUrl: PropTypes.string,
     color: PropTypes.string.isRequired,
-    coverColor: PropTypes.string.isRequired,
+    coverColor: PropTypes.string,
     hasCoverImage: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired,
-    login: PropTypes.string.isRequired,
+    login: PropTypes.string,
     userLink: PropTypes.string.isRequired,
   }).isRequired,
 };

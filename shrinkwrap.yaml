@@ -24,7 +24,6 @@ dependencies:
   express: 4.16.3
   express-http-proxy: 1.2.0
   html-truncate: 1.2.2
-  jadelet: 0.8.0-pre.11
   lodash: 4.17.10
   lodash-webpack-plugin: 0.11.5
   markdown-it: 8.4.1
@@ -296,16 +295,6 @@ packages:
       webpack: ^3.0.0 || ^4.0.0
     resolution:
       integrity: sha512-LonryJP+FxQQHsjGBi6W786TQB1Oym+agTpY0c+Kj8alnIw+DLUJb6SI8Y1GHGhLCH1yPRrucjObUmxNICQ1pg==
-  /JSONSelect/0.4.0:
-    dev: false
-    engines:
-      node: '>=0.4.7'
-    resolution:
-      integrity: sha1-oI7cxn6z/L6Z7WMIVTRKDPKCu40=
-  /JSV/4.0.2:
-    dev: false
-    resolution:
-      integrity: sha1-0Hf2glVx+CEy+d/67Vh7QCn+/1c=
   /abbrev/1.1.1:
     dev: false
     resolution:
@@ -386,12 +375,6 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-7QMXwyIGT3lGbAKWa922Bas32Zg=
-  /ansi-styles/1.0.0:
-    dev: false
-    engines:
-      node: '>=0.8.0'
-    resolution:
-      integrity: sha1-yxAt8cVvUSPquLZ817mAJ6AnkXg=
   /ansi-styles/2.2.1:
     dev: false
     engines:
@@ -1438,16 +1421,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-Sm+gc5nCa7pH8LJJa00PtAjFVQ0=
-  /chalk/0.4.0:
-    dependencies:
-      ansi-styles: 1.0.0
-      has-color: 0.1.7
-      strip-ansi: 0.1.1
-    dev: false
-    engines:
-      node: '>=0.8.0'
-    resolution:
-      integrity: sha1-UZmj3c0MHv4jvAjBsCewYXbgxk8=
   /chalk/1.1.3:
     dependencies:
       ansi-styles: 2.2.1
@@ -1528,14 +1501,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-UZK3NBx2Mca+b5LsG7bY183pHWt5Y1xts4P3Pz7ENTwGVnJOUWbRb3ocjvX7hx9tq/yTAdclXm9sZ38gNuem4A==
-  /cjson/0.3.0:
-    dependencies:
-      jsonlint: 1.6.0
-    dev: false
-    engines:
-      node: '>= 0.3.0'
-    resolution:
-      integrity: sha1-5kObkHA9MS/24iJAl76pLOPQKhQ=
   /class-utils/0.3.6:
     dependencies:
       arr-union: 3.1.0
@@ -1579,16 +1544,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
-  /coffee-script/1.7.1:
-    dependencies:
-      mkdirp: 0.3.5
-    deprecated: CoffeeScript on NPM has moved to "coffeescript" (no hyphen)
-    dev: false
-    engines:
-      node: '>=0.8.0'
-    hasBin: true
-    resolution:
-      integrity: sha1-YplqhheAx15tUGnROCJyO3NAS/w=
   /collection-visit/1.0.0:
     dependencies:
       map-visit: 1.0.0
@@ -1608,12 +1563,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-SxQVMEz1ACjqgWQ2Q72C6gWANok=
-  /colors/0.5.1:
-    dev: false
-    engines:
-      node: '>=0.1.90'
-    resolution:
-      integrity: sha1-fQAj6usVTo7p/Oddy5I9DtFmd3Q=
   /commander/2.13.0:
     dev: false
     resolution:
@@ -2276,10 +2225,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-fO3Di4tBKJpYTFHAxTU00BcfWMY9w24r/x21a6rZRbsD/ToUgGxsMbiGRmB7uVAXeGKXD9MwiLZa5E97EVgIRQ==
-  /ebnf-parser/0.1.10:
-    dev: false
-    resolution:
-      integrity: sha1-zR9rpHfFY4xAyX7ZtXLbW6tdgzE=
   /ee-first/1.1.1:
     dev: false
     resolution:
@@ -2414,19 +2359,6 @@ packages:
       node: '>=0.8.0'
     resolution:
       integrity: sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
-  /escodegen/1.3.3:
-    dependencies:
-      esprima: 1.1.1
-      estraverse: 1.5.1
-      esutils: 1.0.0
-    dev: false
-    engines:
-      node: '>=0.10.0'
-    hasBin: true
-    optionalDependencies:
-      source-map: 0.1.43
-    resolution:
-      integrity: sha1-8CQBb1qI4Eb9EgBQVek5gC5sXyM=
   /eslint-loader/2.1.0:
     dependencies:
       loader-fs-cache: 1.0.1
@@ -2556,13 +2488,6 @@ packages:
       node: '>=6.0.0'
     resolution:
       integrity: sha512-kapdTCt1bjmspxStVKX6huolXVV5ZfyZguY1lcfhVVZstce3bqxH9mcLzNn3/mlgW6wQ732+0fuG9v7h0ZQoKg==
-  /esprima/1.1.1:
-    dev: false
-    engines:
-      node: '>=0.4.0'
-    hasBin: true
-    resolution:
-      integrity: sha1-W28VR/TRAuZw4UDFCb5ncdautUk=
   /esprima/4.0.1:
     dev: false
     engines:
@@ -2586,24 +2511,12 @@ packages:
       node: '>=4.0'
     resolution:
       integrity: sha512-64RBB++fIOAXPw3P9cy89qfMlvZEXZkqqJkjqqXIvzP5ezRZjW+lPWjw35UX/3EhUPFYbg5ER4JYgDw4007/DQ==
-  /estraverse/1.5.1:
-    dev: false
-    engines:
-      node: '>=0.4.0'
-    resolution:
-      integrity: sha1-hno+jlip+EYYr7bC3bzZFrfLr3E=
   /estraverse/4.2.0:
     dev: false
     engines:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-De4/7TH81GlhjOc0IJn8GvoL2xM=
-  /esutils/1.0.0:
-    dev: false
-    engines:
-      node: '>=0.10.0'
-    resolution:
-      integrity: sha1-gVHTWOIMisx/t0XnRywAJf5JZXA=
   /esutils/2.0.2:
     dev: false
     engines:
@@ -3108,12 +3021,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-NPUEnOHs3ysGSa8+8k5F7TVBbZE=
-  /has-color/0.1.7:
-    dev: false
-    engines:
-      node: '>=0.10.0'
-    resolution:
-      integrity: sha1-ZxRKUmDDT8PMpnfQQdr1L+e3iy8=
   /has-flag/1.0.0:
     dev: false
     engines:
@@ -3662,47 +3569,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-YRrhrPFPXoH3KVB0coGf6XM1WKk=
-  /jadelet/0.8.0-pre.11:
-    dependencies:
-      coffee-script: 1.7.1
-      commander: 2.16.0
-      jison: 0.4.18
-      jison-lex: 0.3.4
-      md5: 2.2.1
-      o_0: 0.4.0-pre.0
-      stdin: 0.0.1
-      through2: 2.0.3
-      wrench: 1.5.9
-    dev: false
-    hasBin: true
-    resolution:
-      integrity: sha1-Ye2bqLJuvlcVvELq/HHsYCLqnVQ=
-  /jison-lex/0.3.4:
-    dependencies:
-      lex-parser: 0.1.4
-      nomnom: 1.5.2
-    dev: false
-    engines:
-      node: '>=0.4'
-    hasBin: true
-    resolution:
-      integrity: sha1-gcoo2E+ESZ36jFlNzePYo/Jux6U=
-  /jison/0.4.18:
-    dependencies:
-      JSONSelect: 0.4.0
-      cjson: 0.3.0
-      ebnf-parser: 0.1.10
-      escodegen: 1.3.3
-      esprima: 1.1.1
-      jison-lex: 0.3.4
-      lex-parser: 0.1.4
-      nomnom: 1.5.2
-    dev: false
-    engines:
-      node: '>=0.4'
-    hasBin: true
-    resolution:
-      integrity: sha512-FKkCiJvozgC7VTHhMJ00a0/IApSxhlGsFIshLW6trWJ8ONX2TQJBBz6DlcO1Gffy4w9LT+uL+PA+CVnUSJMF7w==
   /js-tokens/3.0.2:
     dev: false
     resolution:
@@ -3755,16 +3621,6 @@ packages:
       graceful-fs: 4.1.11
     resolution:
       integrity: sha1-NzaitCi4e72gzIO1P6PWM6NcKug=
-  /jsonlint/1.6.0:
-    dependencies:
-      JSV: 4.0.2
-      nomnom: 1.8.1
-    dev: false
-    engines:
-      node: '>= 0.6'
-    hasBin: true
-    resolution:
-      integrity: sha1-iKpGvCiaesk7tGyuLVihh6m7SUo=
   /jsx-ast-utils/2.0.1:
     dependencies:
       array-includes: 3.0.3
@@ -3832,10 +3688,6 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha1-OwmSTt+fCDwEkP3UwLxEIeBHZO4=
-  /lex-parser/0.1.4:
-    dev: false
-    resolution:
-      integrity: sha1-ZMTwJfF/1Tv7RXY/rrFvAVp0dVA=
   /linkify-it/2.0.3:
     dependencies:
       uc.micro: 1.0.5
@@ -4176,10 +4028,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-8ZItLHeEgaqEvd5lYBXfm4EZSFCX29Jb9K+lAHhDKzReKBQKj3R+7NOF6tjqYi9t4oI8VUfaWITJQm86wnXGNQ==
-  /mkdirp/0.3.5:
-    dev: false
-    resolution:
-      integrity: sha1-3j5fiWHIjHh+4TaN+EmsRBPsqNc=
   /mkdirp/0.5.1:
     dependencies:
       minimist: 0.0.8
@@ -4315,22 +4163,6 @@ packages:
     requiresBuild: true
     resolution:
       integrity: sha512-FG2mWJU1Y58a9ktgMJ/RZpsiPz3b7ge77t/okZHEa4NbrlXGKZ8s1A6Q+C7+JPXohAfcPALRwvxcAn8S874pmw==
-  /nomnom/1.5.2:
-    dependencies:
-      colors: 0.5.1
-      underscore: 1.1.7
-    deprecated: Package no longer supported. Contact support@npmjs.com for more info.
-    dev: false
-    resolution:
-      integrity: sha1-9DRUSKhTz71cDSYyDyR3qwUm/i8=
-  /nomnom/1.8.1:
-    dependencies:
-      chalk: 0.4.0
-      underscore: 1.6.0
-    deprecated: Package no longer supported. Contact support@npmjs.com for more info.
-    dev: false
-    resolution:
-      integrity: sha1-IVH3Ikcrp55Qp2/BJbuMjy5Nwqc=
   /nopt/1.0.10:
     dependencies:
       abbrev: 1.1.1
@@ -5567,10 +5399,6 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
-  /stdin/0.0.1:
-    dev: false
-    resolution:
-      integrity: sha1-0wQZgarsPf28d6GzjWNy449ftx4=
   /stream-browserify/2.0.1:
     dependencies:
       inherits: 2.0.3
@@ -5640,13 +5468,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==
-  /strip-ansi/0.1.1:
-    dev: false
-    engines:
-      node: '>=0.8.0'
-    hasBin: true
-    resolution:
-      integrity: sha1-OeipjQRNFQZgq+SmgIrPcLt7yZE=
   /strip-ansi/3.0.1:
     dependencies:
       ansi-regex: 2.1.1
@@ -5916,14 +5737,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Il9rngM3Zj4Njnz9aG/Cg2zKznY=
-  /underscore/1.1.7:
-    dev: false
-    resolution:
-      integrity: sha1-QLq4S60Z0jAJbo1u9ii/8FXYPbA=
-  /underscore/1.6.0:
-    dev: false
-    resolution:
-      integrity: sha1-izixDKze9jM3uLJOT/htRa6lKag=
   /union-value/1.0.0:
     dependencies:
       arr-union: 3.1.0
@@ -6224,13 +6037,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
-  /wrench/1.5.9:
-    deprecated: 'wrench.js is deprecated! You should check out fs-extra (https://github.com/jprichardson/node-fs-extra) for any operations you were using wrench for. Thanks for all the usage over the years.'
-    dev: false
-    engines:
-      node: '>=0.1.97'
-    resolution:
-      integrity: sha1-QRaRxjqbJTGxcAJnJ5veyiOyFCo=
   /write-file-atomic/2.3.0:
     dependencies:
       graceful-fs: 4.1.11
@@ -6323,7 +6129,6 @@ specifiers:
   express: ^4.16.3
   express-http-proxy: ^1.2.0
   html-truncate: ^1.2.2
-  jadelet: ^0.8.0-pre.11
   lodash: ^4.17.10
   lodash-webpack-plugin: ^0.11.5
   markdown-it: ^8.4.1

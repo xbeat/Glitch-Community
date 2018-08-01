@@ -1,6 +1,9 @@
 /* globals EDITOR_URL Raven */
 import 'details-element-polyfill';
 
+import React from 'react';
+import {render} from 'react-dom';
+
 import application from './application';
 import rootTeams from './curated/teams.js';
 
@@ -10,10 +13,10 @@ const queryString = qs.parse(window.location.search);
 import IndexPage from './presenters/pages/index.jsx';
 import CategoryPage from './presenters/pages/category.jsx';
 import ProjectPage from './presenters/pages/project.jsx';
-import {TeamPagePresenter, UserPagePresenter, TeamOrUserPagePresenter} from './presenters/pages/team-or-user.jsx';
+import {TeamPage, UserPage, TeamOrUserPage} from './presenters/pages/team-or-user.jsx';
 import QuestionsPage from './presenters/pages/questions.jsx';
 import SearchPage from './presenters/pages/search.jsx';
-import errorPageTemplate from './templates/pages/error';
+import ErrorPage from './presenters/pages/error.jsx';
 
 console.log("#########");
 console.log("❓ query strings are", queryString);
@@ -51,38 +54,38 @@ function identifyUser(application) {
 function routePage(pageUrl, application) {
   // index page ✅
   if (pageUrl.match(/^index\.html$/i) || !pageUrl) {
-    return {page: IndexPage(application)};
+    return {page: <IndexPage application={application}/>};
   }
 
   // questions page ✅
   if (pageUrl.match(/^questions$/i)) {
-    return {page: QuestionsPage(application), title: "Questions"};
+    return {page: <QuestionsPage application={application} title="Questions"/>};
   }
 
   // ~project overlay page ✅
   if (pageUrl.charAt(0) === '~') {
     const projectDomain = pageUrl.substring(1);
-    const page = ProjectPage(application, projectDomain);
+    const page = <ProjectPage application={application} name={projectDomain}/>;
     return {page, title:decodeURI(pageUrl)};
   }
 
-  // @user page ✅
+  // @name page ✅
   if (pageUrl.charAt(0) === '@') {
     const name = pageUrl.substring(1);
-    const page = TeamOrUserPagePresenter(application, name);
+    const page = <TeamOrUserPage application={application} name={name}/>;
     return {page, title:decodeURI(pageUrl)};
   }
 
   // anon user page ✅
   if (pageUrl.match(/^(user\/)/g)) {
     const userId = parseInt(pageUrl.replace(/^(user\/)/g, ''), 10);
-    const page = UserPagePresenter(application, userId, `user ${userId}`);
+    const page = <UserPage application={application} id={userId} name={`user ${userId}`}/>;
     return {page, title: pageUrl};
   }
 
   // root team page ✅
   if (rootTeams[pageUrl.toLowerCase()]) {
-    const page = TeamPagePresenter(application, rootTeams[pageUrl.toLowerCase()], pageUrl);
+    const page = <TeamPage application={application} id={rootTeams[pageUrl.toLowerCase()]} name={pageUrl}/>;
     return {page, title: pageUrl};
   }
 
@@ -90,28 +93,25 @@ function routePage(pageUrl, application) {
   if (pageUrl.match(/^search$/i) && queryString.q) {
     const query = queryString.q;
     application.searchQuery(query);
-    const page = SearchPage(application, query);
+    const page = <SearchPage application={application} query={query}/>;
     return {page, title: `Search for ${query}`};
   }
 
   // category page ✅
   if (application.categories.some(({url}) => pageUrl === url)) {
     const category = application.categories.find(({url}) => pageUrl === url);
-    const page = CategoryPage(application, category);
+    const page = <CategoryPage application={application} category={category}/>;
     return {page, title: category.name};
   }
  
   // error page ✅
   return {
-    page: errorPageTemplate({
-      title: "Page Not Found",
-      description: "Maybe a typo? Or perhaps it's moved?"
-    }),
+    page: <ErrorPage title="Page Not Found" description="Maybe a typo? Or perhaps it's moved?"/>,
     title: "👻 Page not found",
   };
 }
 
-function route(location, application) {
+async function route(location, application) {
   const normalizedRoute = location.pathname.replace(/^\/|\/$/g, "");
   console.log(`normalizedRoute is ${normalizedRoute}`);
 
@@ -119,7 +119,8 @@ function route(location, application) {
   // Redirects
   //
   if (location.hash.startsWith("#!/")) {
-    return window.location = EDITOR_URL + window.location.hash;
+    window.location = EDITOR_URL + window.location.hash;
+    return;
   }
   
   //
@@ -129,22 +130,21 @@ function route(location, application) {
     const provider = normalizedRoute.substring("login/".length);
     const code = queryString.code;
    
-    return application.login(provider, code)
-      .then(() => {
-        window.location.replace("/");
-      }).catch((error) => {
-        const errorData = error && error.response && error.response.data;
-        const deets = {provider, queryString, error: errorData};
-        console.error("OAuth login error.", deets);
-        Raven.captureMessage("Oauth login error", {extra: deets});
+    try {
+      await application.login(provider, code);
+      window.location.replace("/");
+    } catch (error) {
+      const errorData = error && error.response && error.response.data;
+      const deets = {provider, queryString, error: errorData};
+      console.error("OAuth login error.", deets);
+      Raven.captureMessage("Oauth login error", {extra: deets});
 
-        document.title = "OAuth Login Error";
-        document.body.appendChild(errorPageTemplate({
-          title: "OAuth Login Problem",
-          description: "Hard to say what happened, but we couldn't log you in. Try again?",
-        }));
-      
-      });
+      document.title = "OAuth Login Error";
+      const div = document.createElement('div');
+      document.body.appendChild(div);
+      render(<ErrorPage title="OAuth Login Problem" description="Hard to say what happened, but we couldn't log you in. Try again?"/>, div);
+    }
+    return;
   }
   
   //
@@ -157,7 +157,9 @@ function route(location, application) {
   //
   const {page, title=document.title} = routePage(normalizedRoute, application);
   document.title = title;
-  document.body.appendChild(page);
+  const dom = document.createElement('div');
+  document.body.appendChild(dom);
+  render(page, dom);
 }
 
 route(window.location, application);
