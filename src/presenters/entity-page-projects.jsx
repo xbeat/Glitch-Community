@@ -57,8 +57,8 @@ EntityPageProjects.propTypes = {
   projectOptions: PropTypes.object.isRequired,
 };
 
-const EntityPageProjectsContainer = ({api, projects, ...props}) => (
-  <ProjectsLoader api={api} projects={projects}>
+const EntityPageProjectsContainer = ({projects, ...props}) => (
+  <ProjectsLoader projects={projects}>
     {projects => <EntityPageProjects projects={projects} {...props}/>}
   </ProjectsLoader>
 );

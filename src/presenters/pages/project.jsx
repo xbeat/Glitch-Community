@@ -147,7 +147,7 @@ ProjectPage.propTypes = {
 };
 
 async function getProject(api, domain) {
-  const {data} = api.get(`projects/${domain}`);
+  const {data} = await api.get(`projects/${domain}`);
   return data ? Project(data).update(data).asProps() : null;
 }
 
