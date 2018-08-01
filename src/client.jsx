@@ -75,7 +75,6 @@ async function route(location, application) {
       console.error("OAuth login error.", deets);
       Raven.captureMessage("Oauth login error", {extra: deets});
 
-      document.title = "OAuth Login Error";
       const div = document.createElement('div');
       document.body.appendChild(div);
       render(<ErrorPage title="OAuth Login Problem" description="Hard to say what happened, but we couldn't log you in. Try again?"/>, div);
