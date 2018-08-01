@@ -123,21 +123,33 @@ class TeamPage extends React.Component {
           />
         }
         <EntityPageProjects
-          projects={this.props.team.projects} 
-          pins={this.props.team.teamPins} 
+          projects={this.props.team.projects}
+          pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
-          addPin={this.props.addPin} 
-          removePin={this.props.removePin} 
+          addPin={this.props.addPin}
+          removePin={this.props.removePin}
           projectOptions={{removeProjectFromTeam: this.props.removeProject}}
           getProjects={this.props.getProjects}
         />
-        { this.props.currentUserIsOnTeam && 
-          <TeamAnalytics 
-            api={() => this.props.api} 
-            id={this.props.team.id} 
-            currentUserIsOnTeam={this.props.currentUserIsOnTeam} 
-            projects={this.props.team.projects} 
-            addProject={this.props.addProject} 
+        
+        <aside className="inline-banners">
+            <div className="description">as dfasd fasdf</div>
+            <AddTeamProject 
+              {...this.props}
+              extraButtonClass = "button-small"
+              teamProjects = {this.props.team.projects}
+              api={() => this.props.api}
+            />
+          </aside>
+
+        
+        { this.props.currentUserIsOnTeam &&
+          <TeamAnalytics
+            api={() => this.props.api}
+            id={this.props.team.id}
+            currentUserIsOnTeam={this.props.currentUserIsOnTeam}
+            projects={this.props.team.projects}
+            addProject={this.props.addProject}
             myProjects={this.props.myProjects}
             projectLimitIsReached={this.projectLimitIsReached()}
           /> 
