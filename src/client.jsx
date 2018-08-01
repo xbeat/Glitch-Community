@@ -11,7 +11,11 @@ import application from './application';
 import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
-import App from './presenters/app.jsx';
+import {ApiProvider} from './presenters/api.jsx';
+import {CurrentUserProvider} from './presenters/current-user.jsx';
+import {Notifications} from './presenters/notifications.jsx';
+
+import Router from './presenters/pages/router.jsx';
 import ErrorPage from './presenters/pages/error.jsx';
 
 console.log("#########");
@@ -91,9 +95,21 @@ async function route(location, application) {
   //
   //  Page Routing
   //
+
   const dom = document.createElement('div');
   document.body.appendChild(dom);
-  render(<BrowserRouter><App application={application}/></BrowserRouter>, dom);
+  const App = ({application}) => (
+    <BrowserRouter>
+      <Notifications>
+        <ApiProvider api={application.api()}>
+          <CurrentUserProvider model={application.currentUser()}>
+            <Router application={application}/>
+          </CurrentUserProvider>
+        </ApiProvider>
+      </Notifications>
+    </BrowserRouter>
+  );
+  render(<App application={application}/>, dom);
 }
 
 route(window.location, application);
