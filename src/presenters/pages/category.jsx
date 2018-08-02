@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
 import ProjectModel from '../../models/project';
 
@@ -11,6 +12,9 @@ import Categories from '../categories.jsx';
 
 const CategoryPageWrap = ({category, categories, children}) => (
   <React.Fragment>
+    <Helmet>
+      <title>{category.name}</title>
+    </Helmet>
     <main className="category-page">
       <article className="projects" style={{backgroundColor: category.backgroundColor}}>
         <header className="category">

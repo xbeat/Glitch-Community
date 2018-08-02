@@ -4,18 +4,14 @@ import 'details-element-polyfill';
 import React from 'react';
 import {render} from 'react-dom';
 
+import {BrowserRouter} from 'react-router-dom';
+
 import application from './application';
-import rootTeams from './curated/teams.js';
 
 import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
-import IndexPage from './presenters/pages/index.jsx';
-import CategoryPage from './presenters/pages/category.jsx';
-import ProjectPage from './presenters/pages/project.jsx';
-import {TeamPage, UserPage, TeamOrUserPage} from './presenters/pages/team-or-user.jsx';
-import QuestionsPage from './presenters/pages/questions.jsx';
-import SearchPage from './presenters/pages/search.jsx';
+import Routing from './presenters/pages/routing.jsx';
 import ErrorPage from './presenters/pages/error.jsx';
 
 console.log("#########");
@@ -49,66 +45,6 @@ function identifyUser(application) {
       Raven.captureException(error);
     }
   }
-}
-
-function routePage(pageUrl, application) {
-  // index page ✅
-  if (pageUrl.match(/^index\.html$/i) || !pageUrl) {
-    return {page: <IndexPage application={application}/>};
-  }
-
-  // questions page ✅
-  if (pageUrl.match(/^questions$/i)) {
-    return {page: <QuestionsPage application={application} title="Questions"/>};
-  }
-
-  // ~project overlay page ✅
-  if (pageUrl.charAt(0) === '~') {
-    const projectDomain = pageUrl.substring(1);
-    const page = <ProjectPage application={application} name={projectDomain}/>;
-    return {page, title:decodeURI(pageUrl)};
-  }
-
-  // @name page ✅
-  if (pageUrl.charAt(0) === '@') {
-    const name = pageUrl.substring(1);
-    const page = <TeamOrUserPage application={application} name={name}/>;
-    return {page, title:decodeURI(pageUrl)};
-  }
-
-  // anon user page ✅
-  if (pageUrl.match(/^(user\/)/g)) {
-    const userId = parseInt(pageUrl.replace(/^(user\/)/g, ''), 10);
-    const page = <UserPage application={application} id={userId} name={`user ${userId}`}/>;
-    return {page, title: pageUrl};
-  }
-
-  // root team page ✅
-  if (rootTeams[pageUrl.toLowerCase()]) {
-    const page = <TeamPage application={application} id={rootTeams[pageUrl.toLowerCase()]} name={pageUrl}/>;
-    return {page, title: pageUrl};
-  }
-
-  // search page ✅
-  if (pageUrl.match(/^search$/i) && queryString.q) {
-    const query = queryString.q;
-    application.searchQuery(query);
-    const page = <SearchPage application={application} query={query}/>;
-    return {page, title: `Search for ${query}`};
-  }
-
-  // category page ✅
-  if (application.categories.some(({url}) => pageUrl === url)) {
-    const category = application.categories.find(({url}) => pageUrl === url);
-    const page = <CategoryPage application={application} category={category}/>;
-    return {page, title: category.name};
-  }
- 
-  // error page ✅
-  return {
-    page: <ErrorPage title="Page Not Found" description="Maybe a typo? Or perhaps it's moved?"/>,
-    title: "👻 Page not found",
-  };
 }
 
 async function route(location, application) {
@@ -155,8 +91,7 @@ async function route(location, application) {
   //
   //  Page Routing
   //
-  const {page, title=document.title} = routePage(normalizedRoute, application);
-  document.title = title;
+  const page = <BrowserRouter><Routing application={application}/></BrowserRouter>;
   const dom = document.createElement('div');
   document.body.appendChild(dom);
   render(page, dom);

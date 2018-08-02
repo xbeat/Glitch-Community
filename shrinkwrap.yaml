@@ -41,9 +41,11 @@ dependencies:
   raven: 2.6.3
   react: 16.4.1
   react-dom: 16.4.1
+  react-helmet: 5.2.0
   react-is: 16.4.1
   react-onclickoutside: 6.7.1
   react-pluralize: 1.4.1
+  react-router-dom: 4.3.1
   react-textarea-autosize: 7.0.4
   stylus: 0.54.5
   stylus-loader: 3.0.2
@@ -2084,6 +2086,10 @@ packages:
       node: '>=0.10'
     resolution:
       integrity: sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+  /deep-equal/1.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-9dJgKStmDghO/0zbyfCK0yR0SLU=
   /deep-extend/0.6.0:
     dev: false
     engines:
@@ -2569,6 +2575,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-lEvs00zEHuMqY6n68nrVpl/Fl3c=
+  /exenv/1.2.2:
+    dev: false
+    resolution:
+      integrity: sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=
   /expand-brackets/2.1.4:
     dependencies:
       debug: 2.6.9
@@ -3098,6 +3108,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-eWI5HG9Np+eHV1KQhisXWwM+4EPPYe5dFX1UZZH7k/E3JzDEazVH+VGlZi6R94ZqImq+A3D1mCEtrFIfg/E7sA==
+  /history/4.7.2:
+    dependencies:
+      invariant: 2.2.4
+      loose-envify: 1.4.0
+      resolve-pathname: 2.2.0
+      value-equal: 0.4.0
+      warning: 3.0.0
+    dev: false
+    resolution:
+      integrity: sha512-1zkBRWW6XweO0NBcjiphtVJVsIQ+SXF29z9DVkceeaSLVMFXHool+fdCZD4spDCfZJCILPILc3bm7Bc+HRi0nA==
   /hmac-drbg/1.0.1:
     dependencies:
       hash.js: 1.1.5
@@ -3106,6 +3126,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=
+  /hoist-non-react-statics/2.5.5:
+    dev: false
+    resolution:
+      integrity: sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
   /home-or-tmp/2.0.0:
     dependencies:
       os-homedir: 1.0.2
@@ -3540,6 +3564,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-eXK1UInq2bPmjyX6e3VHIzMLobc4J94i4AWn+Hpq3OU5KkrRC96OAcR3PRJ/pGu6m8TRnBHP9dkXQVsT/COVIA==
+  /isarray/0.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-ihis/Kmo9Bd+Cav8YDiTmwXR7t8=
   /isarray/1.0.0:
     dev: false
     resolution:
@@ -3573,6 +3601,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-mGbfOVECEw449/mWvOtlRDIJwls=
+  /js-tokens/4.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
   /js-yaml/3.12.0:
     dependencies:
       argparse: 1.0.10
@@ -3793,6 +3825,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha1-0aitM/qc4OcT1l/dCsi3SNR4yEg=
+  /loose-envify/1.4.0:
+    dependencies:
+      js-tokens: 4.0.0
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
   /lowercase-keys/1.0.1:
     dev: false
     engines:
@@ -4465,6 +4504,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
+  /path-to-regexp/1.7.0:
+    dependencies:
+      isarray: 0.0.1
+    dev: false
+    resolution:
+      integrity: sha1-Wf3g9DW62suhA6hOnTvGTpa5k30=
   /pause-stream/0.0.11:
     dependencies:
       through: 2.3.8
@@ -4822,6 +4867,17 @@ packages:
       react: ^16.0.0
     resolution:
       integrity: sha512-1Gin+wghF/7gl4Cqcvr1DxFX2Osz7ugxSwl6gBqCMpdrxHjIFUS7GYxrFftZ9Ln44FHw0JxCFD9YtZsrbR5/4A==
+  /react-helmet/5.2.0:
+    dependencies:
+      deep-equal: 1.0.1
+      object-assign: 4.1.1
+      prop-types: 15.6.2
+      react-side-effect: 1.1.5
+    dev: false
+    peerDependencies:
+      react: '>=15.0.0'
+    resolution:
+      integrity: sha1-qBgR3yExOm1VxfBYxK66XW89l6c=
   /react-is/16.4.1:
     dev: false
     resolution:
@@ -4839,6 +4895,42 @@ packages:
     dev: false
     resolution:
       integrity: sha512-PS5PkJYkgtLehlEUMXL6kDo+Gl8v2C7Xbnotft/HoDNiBKGCYk7rC3xsxNZfyYyrYCvoY181i8WzFWf57riu5A==
+  /react-router-dom/4.3.1:
+    dependencies:
+      history: 4.7.2
+      invariant: 2.2.4
+      loose-envify: 1.4.0
+      prop-types: 15.6.2
+      react-router: 4.3.1
+      warning: 4.0.1
+    dev: false
+    peerDependencies:
+      react: '>=15'
+    resolution:
+      integrity: sha512-c/MlywfxDdCp7EnB7YfPMOfMD3tOtIjrQlj/CKfNMBxdmpJP8xcz5P/UAFn3JbnQCNUxsHyVVqllF9LhgVyFCA==
+  /react-router/4.3.1:
+    dependencies:
+      history: 4.7.2
+      hoist-non-react-statics: 2.5.5
+      invariant: 2.2.4
+      loose-envify: 1.4.0
+      path-to-regexp: 1.7.0
+      prop-types: 15.6.2
+      warning: 4.0.1
+    dev: false
+    peerDependencies:
+      react: '>=15'
+    resolution:
+      integrity: sha512-yrvL8AogDh2X42Dt9iknk4wF4V8bWREPirFfS9gLU1huk6qK41sg7Z/1S81jjTrGHxa3B8R3J6xIkDAA6CVarg==
+  /react-side-effect/1.1.5:
+    dependencies:
+      exenv: 1.2.2
+      shallowequal: 1.1.0
+    dev: false
+    peerDependencies:
+      react: ^0.13.0 || ^0.14.0 || ^15.0.0 || ^16.0.0
+    resolution:
+      integrity: sha512-Z2ZJE4p/jIfvUpiUMRydEVpQRf2f8GMHczT6qLcARmX7QRb28JDBTpnM2g/i5y/p7ZDEXYGHWg0RbhikE+hJRw==
   /react-textarea-autosize/7.0.4:
     dependencies:
       prop-types: 15.6.2
@@ -5041,6 +5133,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-six699nWiBvItuZTM17rywoYh0g=
+  /resolve-pathname/2.2.0:
+    dev: false
+    resolution:
+      integrity: sha512-bAFz9ld18RzJfddgrO2e/0S2O81710++chRMUxHjXOYKF6jTAMrUNZrEZ1PvV0zlhfjidm08iRPdTLPno1FuRg==
   /resolve-url/0.2.1:
     dev: false
     resolution:
@@ -5241,6 +5337,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-QMEp5B7cftE7APOjk5Y6xgrbWu+WkLVQwk8JNjZ8nKRciZaByEW6MubieAiToS7+dwvrjGhH8jRXz3MVd0AYqQ==
+  /shallowequal/1.1.0:
+    dev: false
+    resolution:
+      integrity: sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
   /shebang-command/1.2.0:
     dependencies:
       shebang-regex: 1.0.0
@@ -5883,6 +5983,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-qNdTUMaCjPs4eEnM3W9H94R3sU70YCuT+/ST7nUf+id1bVOrdjrpUaeZLqPBPRph3hsgn4a4BvwpxhHZx+oSDg==
+  /value-equal/0.4.0:
+    dev: false
+    resolution:
+      integrity: sha512-x+cYdNnaA3CxvMaTX0INdTCN8m8aF2uY9BvEqmxuYp8bL09cs/kWVQPVGcA35fMktdOsP69IgU7wFj/61dJHEw==
   /vary/1.1.2:
     dev: false
     engines:
@@ -5895,6 +5999,18 @@ packages:
     dev: false
     resolution:
       integrity: sha1-XX6kW7755Kb/ZflUOOCofDV9WnM=
+  /warning/3.0.0:
+    dependencies:
+      loose-envify: 1.4.0
+    dev: false
+    resolution:
+      integrity: sha1-MuU3fLVy3kqwR1O9+IIcAe1gW3w=
+  /warning/4.0.1:
+    dependencies:
+      loose-envify: 1.4.0
+    dev: false
+    resolution:
+      integrity: sha512-rAVtTNZw+cQPjvGp1ox0XC5Q2IBFyqoqh+QII4J/oguyu83Bax1apbo2eqB8bHRS+fqYUBagys6lqUoVwKSmXQ==
   /watchpack/1.6.0:
     dependencies:
       chokidar: 2.0.4
@@ -6146,9 +6262,11 @@ specifiers:
   raven: ^2.6.3
   react: ^16.4.1
   react-dom: ^16.4.1
+  react-helmet: ^5.2.0
   react-is: ^16.4.1
   react-onclickoutside: ^6.7.1
   react-pluralize: ^1.4.0
+  react-router-dom: ^4.3.1
   react-textarea-autosize: ^7.0.4
   stylus: ^0.54.5
   stylus-loader: ^3.0.2

@@ -75,7 +75,7 @@ export default function ProjectOptions({projectOptions={}, project}) {
   
   const popupProps = {
     projectId: project.id,
-    projectName: project.name,
+    projectName: project.domain,
   };
   
   return (

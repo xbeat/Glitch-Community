@@ -12,7 +12,7 @@ const UserSearchResults = ({users, action}) => (
     <ul className="results">
       {users.map(user => (
         <li key={user.id}>
-          <UserResultItem user={user} action={() => action(user.id)} />
+          <UserResultItem user={user} action={() => action(user)} />
         </li>
       ))}
     </ul>
@@ -81,9 +81,9 @@ class AddTeamUserPop extends React.Component {
     });
   }
   
-  onClick(userId) {
+  onClick(user) {
     this.props.togglePopover();
-    this.props.add(userId);
+    this.props.add(user);
   }
   
   render() {
