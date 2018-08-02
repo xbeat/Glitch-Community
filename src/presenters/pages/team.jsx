@@ -46,7 +46,6 @@ class TeamPage extends React.Component {
   }
 
   render() {
-    console.log('👀', this.props.team, this.props.team.hasCoverImage)
     return (
       <main className="profile-page team-page">
         <section>
