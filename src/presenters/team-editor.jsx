@@ -23,17 +23,17 @@ class TeamEditor extends React.Component {
       _cacheCover: Date.now(),
     };
   }
-  
+
   currentUserIsOnTeam() {
     const currentUserId = this.props.currentUserModel.id();
     return this.state.users.some(({id}) => currentUserId === id);
   }
-  
+
   async updateFields(changes) {
     const {data} = await this.props.api.patch(`teams/${this.state.id}`, changes);
     this.setState(data);
   }
-  
+
   async uploadAvatar(blob) {
     const {data: policy} = await assets.getTeamAvatarImagePolicy(this.props.api, this.state.id);
     await this.props.uploadAssetSizes(blob, policy, assets.AVATAR_SIZES);
@@ -46,7 +46,7 @@ class TeamEditor extends React.Component {
     });
     this.setState({_cacheAvatar: Date.now()});
   }
-  
+
   async uploadCover(blob) {
     const {data: policy} = await assets.getTeamCoverImagePolicy(this.props.api, this.state.id);
     await this.props.uploadAssetSizes(blob, policy, assets.COVER_SIZES);
@@ -59,14 +59,14 @@ class TeamEditor extends React.Component {
     });
     this.setState({_cacheCover: Date.now()});
   }
-  
+
   async addUser(id) {
     await this.props.api.post(`teams/${this.state.id}/users/${id}`);
     this.setState(({users}) => ({
       users: [...users, UserModel({id}).asProps()],
     }));
   }
-  
+
   async removeUser(id) {
     await this.props.api.delete(`teams/${this.state.id}/users/${id}`);
     this.setState(({users}) => ({
@@ -97,7 +97,6 @@ class TeamEditor extends React.Component {
   }
 
   async addProject(id) {
-    console.log ('addproject', id); // Why is only my projects doing a get, and templates are not (from add-team-project-pop) 
     await this.props.api.post(`teams/${this.state.id}/projects/${id}`);
     this.setState(({projects}) => ({
       projects: [...projects, ProjectModel({id}).asProps()],
@@ -105,32 +104,31 @@ class TeamEditor extends React.Component {
   }
 
   async removeProject(id) {
-    console.log('📟 removeProject')
     await this.props.api.delete(`teams/${this.state.id}/projects/${id}`);
     this.setState(({projects}) => ({
       projects: projects.filter(p => p.id !== id),
     }));
   }
-  
+
   async addPin(id) {
     await this.props.api.post(`teams/${this.state.id}/pinned-projects/${id}`);
     this.setState(({teamPins}) => ({
       teamPins: [...teamPins, {projectId: id}],
     }));
   }
-  
+
   async removePin(id) {
     await this.props.api.delete(`teams/${this.state.id}/pinned-projects/${id}`);
     this.setState(({teamPins}) => ({
       teamPins: teamPins.filter(p => p.projectId !== id),
     }));
   }
-  
+
   currentUserIsTeamAdmin() {
     const currentUserId = this.props.currentUserModel.id();
     if (this.state.adminIds.includes(currentUserId)) {
       return true;
-    } 
+    }
     return false;
   }
 
@@ -139,12 +137,12 @@ class TeamEditor extends React.Component {
     let features = this.props.initialTeam.features;
     return features.includes('unlimited projects');
   }
-  
+
   teamHasBillingExposed() {
     let features = this.props.initialTeam.features;
     return features.includes('billing exposed');
   }
-  
+
   render() {
     const {handleError} = this.props;
     const funcs = {
@@ -158,7 +156,6 @@ class TeamEditor extends React.Component {
       removeProject: id => this.removeProject(id).catch(handleError),
       addPin: id => this.addPin(id).catch(handleError),
       removePin: id => this.removePin(id).catch(handleError),
-      currentUserIsTeamAdmin: this.currentUserIsTeamAdmin(),
       teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
       teamHasBillingExposed: this.teamHasBillingExposed(),
       updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),

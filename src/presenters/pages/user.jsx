@@ -2,17 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getAvatarStyle, getProfileStyle} from '../../models/user';
-import * as assets from '../../utils/assets';
+
+import {CurrentUserProvider} from '../current-user.jsx';
 
 import {AuthDescription} from '../includes/description-field.jsx';
 import EditableField from '../includes/editable-field.jsx';
-import EntityEditor from '../entity-editor.jsx';
+import UserEditor from '../user-editor.jsx';
 import Thanks from '../includes/thanks.jsx';
 
 import DeletedProjects from '../deleted-projects.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import UserEditor from '../user-editor.jsx'
+
+function syncPageToLogin(login) {
+  history.replaceState(null, null, `/@${login}`);
+  document.title = `@${login}`;
+}
 
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
   if(!login) {
@@ -65,7 +71,7 @@ const UserPage = ({
   addPin, removePin,
   leaveProject,
   deleteProject, undeleteProject,
-  getProjects, setDeletedProjects,
+  getDeletedProjects, setDeletedProjects,
 }) => (
   <main className="profile-page user-page">
     <section>
@@ -73,9 +79,12 @@ const UserPage = ({
         avatarStyle={getAvatarStyle({avatarUrl, color})}
         coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
         coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
-        avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar} /> : null }
+        avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null }
       >
-        <NameAndLogin {...{name, login, id, isAuthorized, updateName, updateLogin}}/>
+        <NameAndLogin
+          {...{name, login, id, isAuthorized, updateName}}
+          updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
+        />
         <Thanks count={thanksCount}/>
         <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
@@ -99,13 +108,14 @@ UserPage.propTypes = {
     avatarUrl: PropTypes.string,
     color: PropTypes.string.isRequired,
     coverColor: PropTypes.string,
+    _cacheCover: PropTypes.number.isRequired,
+    _deletedProjects: PropTypes.array.isRequired,
   }).isRequired,
   uploadAvatar: PropTypes.func.isRequired,
   uploadCover: PropTypes.func.isRequired,
   clearCover: PropTypes.func.isRequired,
   leaveProject: PropTypes.func.isRequired,
 };
-
 
 const UserPageContainer = ({api, user, currentUserModel, getProjects}) => (
   <UserEditor api={api} initialUser={user} currentUserModel={currentUserModel}>

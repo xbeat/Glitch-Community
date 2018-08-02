@@ -3,12 +3,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as assets from '../../utils/assets';
 import TeamModel, {getAvatarStyle, getProfileStyle} from '../../models/team';
 import UserModel from '../../models/user';
 import ProjectModel from '../../models/project';
 import Reactlet from '../reactlet';
 import LayoutPresenter from '../layout';
+import TeamEditor from '../team-editor.jsx';
 
 import {AuthDescription} from '../includes/description-field.jsx';
 import {DataLoader} from '../includes/loader.jsx';
@@ -16,8 +16,6 @@ import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import Thanks from '../includes/thanks.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Notifications} from '../notifications.jsx';
-import Uploader from '../includes/uploader.jsx';
-import TeamEditor from '../team-editor.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
 
 import AddTeamProject from '../includes/add-team-project.jsx';
