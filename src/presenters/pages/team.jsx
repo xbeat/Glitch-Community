@@ -46,6 +46,7 @@ class TeamPage extends React.Component {
   }
 
   render() {
+    console.log('👀', this.props.team, this.props.team.hasCoverImage)
     return (
       <main className="profile-page team-page">
         <section>
@@ -62,10 +63,17 @@ class TeamPage extends React.Component {
               coverColor: this.props.team.coverColor,
               cache: this.props.team._cacheCover,
             })}
-            avatarButtons={this.props.currentUserIsTeamAdmin ? <ImageButtons name="Avatar" uploadImage={this.props.uploadAvatar} /> : null}
-            coverButtons={this.props.currentUserIsTeamAdmin ? <ImageButtons name="Cover"
-              uploadImage={this.props.uploadCover}
-              clearImage={this.props.team.hasCoverImage ? this.props.team.clearCover : null} /> : null
+            avatarButtons={this.props.currentUserIsTeamAdmin ? 
+              <ImageButtons name="Avatar" uploadImage={this.props.uploadAvatar} /> 
+              : null
+            }
+            coverButtons={this.props.currentUserIsTeamAdmin ? 
+              <ImageButtons name="Cover"
+                uploadImage={this.props.uploadCover}
+                clearImage={this.props.team.hasCoverImage ? 
+                  this.props.team.clearCover : null
+                } 
+              /> : null
             }>
             <h1>
               { this.props.team.name }
@@ -81,9 +89,9 @@ class TeamPage extends React.Component {
               />
               { this.props.currentUserIsOnTeam &&
                 <AddTeamUser
-                  search={this.props.searchUsers}
                   add={this.props.addUser}
                   members={this.props.team.users.map(({id}) => id)}
+                  api={this.props.api}
                 />
               }
             </div>
@@ -211,7 +219,6 @@ TeamPage.propTypes = {
   removeUser: PropTypes.func.isRequired,
   removePin: PropTypes.func.isRequired,
   removeProject: PropTypes.func.isRequired,
-  searchUsers: PropTypes.func.isRequired,
   teamHasUnlimitedProjects: PropTypes.bool.isRequired,
   updateDescription: PropTypes.func.isRequired,
   uploadAvatar: PropTypes.func.isRequired,

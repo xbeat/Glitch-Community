@@ -4,21 +4,23 @@ import PropTypes from 'prop-types';
 
 // Image Buttons
 
-export const ImageButtons = ({name, uploadImage, clearImage}) => (
-  
-  <div className="upload-image-buttons">
-    { !!uploadImage && (
-      <button className="button button-small button-tertiary" onClick={uploadImage}>
-        <span>Upload {name}</span>
-      </button>
-    )}
-    { !!clearImage && (
-      <button className="button button-small button-tertiary" onClick={clearImage}>
-        Clear {name} 
-      </button>
-    )}
-  </div>
-);
+export const ImageButtons = ({name, uploadImage, clearImage}) => {
+  console.log(name, clearImage)
+  return (
+    <div className="upload-image-buttons">
+      { !!uploadImage && (
+        <button className="button button-small button-tertiary" onClick={uploadImage}>
+          <span>Upload {name}</span>
+        </button>
+      )}
+      { !!clearImage && (
+        <button className="button button-small button-tertiary" onClick={clearImage}>
+          Clear {name} 
+        </button>
+      )}
+    </div>
+  );
+}
 ImageButtons.propTypes = {
   name: PropTypes.string.isRequired,
   uploadImage: PropTypes.func,
