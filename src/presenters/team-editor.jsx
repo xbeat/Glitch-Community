@@ -57,8 +57,8 @@ class TeamEditor extends React.Component {
     this.setState({_cacheCover: Date.now()});
   }
 
-  async addUser(id) {
-    await this.props.api.post(`teams/${this.state.id}/users/${id}`);
+  async addUser(user) {
+    await this.props.api.post(`teams/${this.state.id}/users/${user.id}`);
     this.setState(({users}) => ({
       users: [...users, user],
     }));
@@ -93,8 +93,8 @@ class TeamEditor extends React.Component {
     }
   }
 
-  async addProject(id) {
-    await this.props.api.post(`teams/${this.state.id}/projects/${id}`);
+  async addProject(project) {
+    await this.props.api.post(`teams/${this.state.id}/projects/${project.id}`);    
     this.setState(({projects}) => ({
       projects: [project, ...projects],
     }));
@@ -149,7 +149,7 @@ class TeamEditor extends React.Component {
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
       uploadCover: () => assets.requestFile(blob => this.uploadCover(blob).catch(handleError)),
       clearCover: () => this.updateFields({hasCoverImage: false}).catch(handleError),
-      addProject: id => this.addProject(id).catch(handleError),
+      addProject: project => this.addProject(project).catch(handleError),
       removeProject: id => this.removeProject(id).catch(handleError),
       addPin: id => this.addPin(id).catch(handleError),
       removePin: id => this.removePin(id).catch(handleError),

@@ -91,24 +91,26 @@ export class AddTeamProjectPop extends React.Component {
   onClick(event, project) {
     event.preventDefault();
     this.props.togglePopover();
-    if (this.state.source === 'templates') {
+    // temp: this code used by adding team templates
+
+    // if (this.state.source === 'templates') {
       // this.setState({
       //   notifyTemplateIsRemixing: true
       // });
-      this.remixTemplate(projectId)
-        .then(({data}) => {
-          console.log ('yolooo' , data);
-          this.inviteUserToRemix(data)
-            .then(({data}) => {
-              console.log ('🚒', data);
-              // patch? avatar?
-              this.props.addProject(data.id);
-            });
-        });
-    } else {
+    //   this.remixTemplate(projectId)
+    //     .then(({data}) => {
+    //       console.log ('yolooo' , data);
+    //       this.inviteUserToRemix(data)
+    //         .then(({data}) => {
+    //           console.log ('🚒', data);
+    //           // patch? avatar?
+    //           this.props.addProject(data.id);
+    //         });
+    //     });
+    // } else {
     // have to be a member before this will work
-      this.props.addProject(projectId);
-    }
+      this.props.addProject(project);
+    // }
   }
 
   sourceIsTemplates() {
@@ -209,7 +211,7 @@ export class AddTeamProjectPop extends React.Component {
             { filteredProjects.map((project) => (
               <li key={project.id}>
                 <ProjectResultItem
-                  action={(event) => this.onClick(event, project.id)}
+                  action={(event) => this.onClick(event, project)}
                   {...project}
                   title={project.domain}/>
               </li>
