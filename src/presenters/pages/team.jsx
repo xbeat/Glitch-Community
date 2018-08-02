@@ -27,10 +27,10 @@ import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 import TeamUpgradeInfoBanner from '../includes/team-upgrade-info-banner.jsx';
 import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reached-banner.jsx';
 import UsersList from "../users-list.jsx";
-import {CurrentUserConsumer} from '../current-user.jsx'
+import {CurrentUserConsumer} from '../current-user.jsx';
 
 const FREE_TEAM_PROJECTS_LIMIT = 5;
-const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533137032374"
+const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533137032374";
 
 // Team Page
 
@@ -43,10 +43,10 @@ class TeamPage extends React.Component {
 
   projectLimitIsReached() {
     if ((this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects && this.props.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
-      return true
-    } else {
-      return false
-    }
+      return true;
+    } 
+    return false;
+    
   }
 
   teamAdmins() {
@@ -143,7 +143,7 @@ class TeamPage extends React.Component {
               teamProjects = {this.props.team.projects}
               api={() => this.props.api}
             />
-            </aside>
+          </aside>
         }
 
         { this.props.currentUserIsOnTeam &&

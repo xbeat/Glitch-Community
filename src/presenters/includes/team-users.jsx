@@ -12,7 +12,7 @@ import {UserPopoversList} from '../users-list.jsx';
 export const TeamUsers = (props) => {
   
   let userIsTeamAdmin = (user) => {
-    console.log (user)
+    console.log (user);
     return props.adminIds.includes(user.id);
   };
   return (

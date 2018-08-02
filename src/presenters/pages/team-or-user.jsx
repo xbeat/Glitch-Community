@@ -35,7 +35,7 @@ const getTeamById = async (api, id) => {
 
 const parseTeamAdminIds = (data) => {
   if (!data) {
-    return data
+    return data;
   }
   let ADMIN_ACCESS_LEVEL = 30;
   let adminIds = data.users.filter(user => {
@@ -44,13 +44,13 @@ const parseTeamAdminIds = (data) => {
   data.adminIds = adminIds.map(user => {
     return user.id;
   });
-  return data
-}
+  return data;
+};
 
 
 const getTeam = async(api, name) => {
   let {data} = await api.get(`teams/byUrl/${name}`);
-  data = parseTeamAdminIds(data)
+  data = parseTeamAdminIds(data);
   return data && TeamModel(data).update(data).asProps();
 };
 

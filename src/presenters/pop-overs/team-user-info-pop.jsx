@@ -52,22 +52,22 @@ UserActions.propTypes = {
 const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
   
   let removeAdminStatus = () => {
-    updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)
-  }
+    updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL);
+  };
   
   let addAdminStatus = () => {
-    updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)
-  }
+    updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL);
+  };
 
   return (
     <section className="pop-over-actions admin-actions">
       { userIsTeamAdmin && 
-        <button className="button-small button-tertiary has-emoji" onClick={() => {removeAdminStatus()}}>
+        <button className="button-small button-tertiary has-emoji" onClick={() => {removeAdminStatus();}}>
           <span>Remove Admin Status </span>
           <span className="emoji fast-down" />
         </button>
       ||
-        <button className="button-small button-tertiary has-emoji" onClick={() => {addAdminStatus()}}>
+        <button className="button-small button-tertiary has-emoji" onClick={() => {addAdminStatus();}}>
           <span>Make an Admin </span>
           <span className="emoji fast-up" />
         </button>
@@ -101,7 +101,7 @@ export default class TeamUserInfoPop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-  this.removeFromTeam = this.removeFromTeam.bind(this);
+    this.removeFromTeam = this.removeFromTeam.bind(this);
   }
   
   removeFromTeam() {

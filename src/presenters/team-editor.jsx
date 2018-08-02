@@ -81,7 +81,7 @@ class TeamEditor extends React.Component {
   async updateUserPermissions(id, accessLevel) {
     if (accessLevel === MEMBER_ACCESS_LEVEL && this.state.adminIds.length <= 1) {
       notify.createNotification(<div>A team must have at least one admin</div>, 'notifyError');
-      return false
+      return false;
     }
     await this.props.api.patch(`teams/${this.state.id}/users/${id}`, {accessLevel: accessLevel});
     if (accessLevel === ADMIN_ACCESS_LEVEL) {
@@ -89,7 +89,7 @@ class TeamEditor extends React.Component {
         counter: prevState.adminIds.push(id)
       }));
     } else {
-      let index = this.state.adminIds.indexOf(id)
+      let index = this.state.adminIds.indexOf(id);
       this.setState((prevState) => ({
         counter: prevState.adminIds.splice(index, 1)
       }));

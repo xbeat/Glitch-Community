@@ -24,10 +24,10 @@ export class UpgradeTeamPop extends React.Component {
     
     let users = () => {
       return this.props.users.map(user => {
-        user.userLink = null
-        return user
-      })
-    }
+        user.userLink = null;
+        return user;
+      });
+    };
     
     return (
       <dialog className="pop-over upgrade-team-pop">
