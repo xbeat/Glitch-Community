@@ -20,15 +20,15 @@ TeamButton.propTypes = {
 };
 
 
-// Create Team button
+// Create Team button (temp hidden in prod)
 
 const CreateTeamButton = ({toggleCreateTeamPop, userIsAnon}) => {
   if (userIsAnon === true) {
     return (
       <React.Fragment>
+        <button className="button button-small button-tertiary">Sign in</button>
         <p className="description action-description">
-          <a href="#">Sign in</a>
-          <span> to create a team</span>
+          to create a team
         </p>
         <button className="button button-small has-emoji button-tertiary" disabled={true}>
           <span>Create Team </span>
@@ -38,10 +38,10 @@ const CreateTeamButton = ({toggleCreateTeamPop, userIsAnon}) => {
     );
   }
   return (
-    <div onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
+    <button onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
       <span>Create Team </span>
       <span className="emoji herb"></span>
-    </div>
+    </button>
   );
 
 };
@@ -55,7 +55,7 @@ CreateTeamButton.propTypes = {
 // Team List
 
 const TeamList = ({teams, toggleCreateTeamPop, userIsAnon}) => {
-  const hasTeams = teams && teams.length;
+  // const hasTeams = teams && teams.length;
   return (
     <section className="pop-over-actions">
       {/* Temporary: enable once team creation is public
