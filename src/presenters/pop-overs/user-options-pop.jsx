@@ -144,9 +144,9 @@ export default function UserOptionsPopContainer(props) {
     <PopoverContainer>
       {({togglePopover: toggleUserOptionsPop, visible: userOptionsPopVisible}) => (
         <PopoverContainer>
-          {({togglePopover: toggleCreateTeamPop, visible: createTeamPopVisible, hidePopover: hideCreateTeamPop}) => (
+          {({togglePopover: toggleCreateTeamPop, visible: createTeamPopVisible}) => (
             <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
-              <button className="user" onClick={() => {toggleUserOptionsPop(); hideCreateTeamPop(); }}>
+              <button className="user" onClick={() => {toggleUserOptionsPop(); }}>
                 <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
                 <span className="down-arrow icon"/>
               </button>

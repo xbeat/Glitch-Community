@@ -238,11 +238,11 @@ const teamConflictsWithUser = (team, currentUserModel) => {
 
 const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
   <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
-    {(team, funcs, currentUserIsOnTeam) => (
+    {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
       <React.Fragment>
         <CurrentUserConsumer>
           {currentUser => (
-            <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} currentUserId={currentUser.id} myProjects={currentUser.projects} {...props}/>
+            <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} currentUserId={currentUser.id} myProjects={currentUser.projects} currentUserIsTeamAdmin={currentUserIsTeamAdmin} {...props}/>
           )}
         </CurrentUserConsumer>
         {teamConflictsWithUser(team, currentUserModel) && <NameConflictWarning/>}
