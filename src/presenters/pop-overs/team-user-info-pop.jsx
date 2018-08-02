@@ -1,10 +1,7 @@
-/* global notify */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import Thanks from '../includes/thanks.jsx';
-import Loader from '../includes/loader.jsx';
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;

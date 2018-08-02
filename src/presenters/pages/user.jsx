@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import {getAvatarStyle, getProfileStyle} from '../../models/user';
 
-import {CurrentUserProvider} from '../current-user.jsx';
-
 import {AuthDescription} from '../includes/description-field.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import UserEditor from '../user-editor.jsx';
@@ -70,7 +68,7 @@ const UserPage = ({
   addPin, removePin,
   leaveProject,
   deleteProject, undeleteProject,
-  getDeletedProjects, setDeletedProjects,
+  setDeletedProjects,
 }) => (
   <main className="profile-page user-page">
     <section>

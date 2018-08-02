@@ -9,6 +9,7 @@ export default class EditableField extends React.Component {
       value: this.props.value,
       error: "",
     };
+    this.textInput = React.createRef();
     
     this.onChange = this.onChange.bind(this);
     if (!this.props.fieldOnlyUpdatesOnSubmit) {
@@ -18,7 +19,7 @@ export default class EditableField extends React.Component {
   
   componentDidMount() {
     if (this.props.autoFocus) {
-      this.refs.input.select();
+      this.textInput.current.select();
     }
   }
   
@@ -29,7 +30,7 @@ export default class EditableField extends React.Component {
       });
       // focus the field if an error has been created
       if (this.props.submitError.length) {
-        this.refs.input.select();
+        this.textInput.current.select();
       }
     }
   }
@@ -73,7 +74,6 @@ export default class EditableField extends React.Component {
   render() {
     const classes = ["content-editable", this.state.error ? "error" : ""].join(" ");
     const inputProps = {
-      ref: "input",
       className: classes,
       value: this.state.value,
       onChange: this.onChange,
@@ -102,7 +102,7 @@ export default class EditableField extends React.Component {
       <label htmlFor={inputProps.id}>
         <div className="editable-field-flex">
           {maybePrefix}
-          <input {...inputProps}/>
+          <input {...inputProps} ref={this.textInput} />
           {maybeErrorIcon}
         </div>
         {maybeErrorMessage}

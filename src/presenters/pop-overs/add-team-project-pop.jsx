@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import ProjectModel from '../../models/project';
-import Loader from '../includes/loader.jsx';
+// import Loader from '../includes/loader.jsx';
 
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {

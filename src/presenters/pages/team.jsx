@@ -1,32 +1,21 @@
-/* global notify */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TeamModel, {getAvatarStyle, getProfileStyle} from '../../models/team';
-import UserModel from '../../models/user';
-import ProjectModel from '../../models/project';
-import Reactlet from '../reactlet';
-import LayoutPresenter from '../layout';
 import TeamEditor from '../team-editor.jsx';
-
+import {getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
-import {DataLoader} from '../includes/loader.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
-import Thanks from '../includes/thanks.jsx';
-import NotFound from '../includes/not-found.jsx';
-import {Notifications} from '../notifications.jsx';
-import NameConflictWarning from '../includes/name-conflict.jsx';
 
+import Thanks from '../includes/thanks.jsx';
+import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
-import DeleteTeam from '../includes/delete-team.jsx';
+// import DeleteTeam from '../includes/delete-team.jsx';
 import {AddTeamUser, TeamUsers} from '../includes/team-users.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 import TeamUpgradeInfoBanner from '../includes/team-upgrade-info-banner.jsx';
 import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reached-banner.jsx';
-import UsersList from "../users-list.jsx";
 import {CurrentUserConsumer} from '../current-user.jsx';
 
 const FREE_TEAM_PROJECTS_LIMIT = 5;

@@ -1,14 +1,5 @@
-//
-// I export TeamProfile and UserProfile.
-//
-
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import Loader from './loader.jsx';
-import Thanks from './thanks.jsx';
-import {AuthDescription} from './description-field.jsx';
-import EditableField from './editable-field.jsx';
 
 
 // Image Buttons
@@ -17,14 +8,14 @@ export const ImageButtons = ({name, uploadImage, clearImage}) => (
   
   <div className="upload-image-buttons">
     { !!uploadImage && (
-      <div className="button button-small button-tertiary" onClick={uploadImage}>
+      <button className="button button-small button-tertiary" onClick={uploadImage}>
         <span>Upload {name}</span>
-      </div>
+      </button>
     )}
     { !!clearImage && (
-      <div className="button button-small button-tertiary" onClick={clearImage}>
+      <button className="button button-small button-tertiary" onClick={clearImage}>
         Clear {name} 
-      </div>
+      </button>
     )}
   </div>
 );

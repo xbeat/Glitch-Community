@@ -23,7 +23,7 @@ export class DeleteTeamPop extends React.Component {
     });
     let team = `teams/${this.props.teamId}`;
     this.props.api().delete(team)
-      .then(({data}) => {
+      .then(() => {
         window.location = '/';
       }).catch(error => {
         console.error("deleteTeam", error, error.response);
@@ -44,7 +44,7 @@ export class DeleteTeamPop extends React.Component {
           </div>
         </section>
         <section className="pop-over-actions">
-          <img className="illustration" src={illustration} role="img" aria-label="illustration" />
+          <img className="illustration" src={illustration} aria-label="illustration" />
           <div className="action-description">
             Deleting {this.props.teamName} will remove this team page. No projects will be deleted, but only current project members will be able to edit them.
           </div>

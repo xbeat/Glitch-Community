@@ -122,7 +122,6 @@ class CreateTeamPop extends React.Component {
               value="Team Rocket" 
               update={this.handleChange} 
               placeholder='Your Team Name' 
-              autoFocus={true} 
               fieldOnlyUpdatesOnSubmit={true}
               submitError={this.state.errorMessage}
             />
