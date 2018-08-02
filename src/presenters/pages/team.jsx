@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Helmet from 'react-helmet';
 import TeamEditor from '../team-editor.jsx';
 import {getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -33,9 +34,9 @@ class TeamPage extends React.Component {
   projectLimitIsReached() {
     if ((this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects && this.props.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
       return true;
-    } 
+    }
     return false;
-    
+
   }
 
   teamAdmins() {
@@ -229,11 +230,16 @@ const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
   <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
       <React.Fragment>
+        <Helmet>
+          <title>{team.name}</title>
+        </Helmet>
+
         <CurrentUserConsumer>
           {currentUser => (
             <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} currentUserId={currentUser.id} myProjects={currentUser.projects} currentUserIsTeamAdmin={currentUserIsTeamAdmin} {...props}/>
           )}
         </CurrentUserConsumer>
+
         {teamConflictsWithUser(team, currentUserModel) && <NameConflictWarning/>}
       </React.Fragment>
     )}

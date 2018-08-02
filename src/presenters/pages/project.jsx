@@ -3,7 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Project from '../../models/project';
+import Helmet from 'react-helmet';
+import Project, {getAvatarUrl} from '../../models/project';
 
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
@@ -16,10 +17,8 @@ import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-actions.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
-import {Notifications} from '../notifications.jsx';
 
-import LayoutPresenter from '../layout';
-import Reactlet from '../reactlet';
+import Layout from '../layout.jsx';
 
 function trackRemix(id, domain) {
   analytics.track("Click Remix", {
@@ -31,7 +30,6 @@ function trackRemix(id, domain) {
 
 function syncPageToDomain(domain) {
   history.replaceState(null, null, `/~${domain}`);
-  document.title = `~${domain}`;
 }
 
 const PrivateTooltip = "Only members can view code";
@@ -73,25 +71,23 @@ const ReadmeError = (error) => (
     ? <React.Fragment>This project would be even better with a <code>README.md</code></React.Fragment>
     : <React.Fragment>We couldn't load the readme. Try refreshing?</React.Fragment>
 );
-const ReadmeLoader = ({getReadme}) => (
-  <DataLoader get={getReadme} renderError={ReadmeError}>
-    {readme => <Expander height={200}><Markdown>{readme}</Markdown></Expander>}
+const ReadmeLoader = ({api, domain}) => (
+  <DataLoader get={() => api.get(`projects/${domain}/readme`)} renderError={ReadmeError}>
+    {({data}) => <Expander height={200}><Markdown>{data}</Markdown></Expander>}
   </DataLoader>
 );
 ReadmeLoader.propTypes = {
-  getReadme: PropTypes.func.isRequired,
+  api: PropTypes.any.isRequired,
+  domain: PropTypes.string.isRequired,
 };
 
 const ProjectPage = ({
   project: {
-    avatar, description, domain, id, users, teams,
+    description, domain, id, users, teams,
     ...project // 'private' can't be used as a variable name
   },
+  api,
   isAuthorized,
-  getReadme,
-  getTeam, getTeamPins,
-  getUser, getUserPins,
-  getProjects,
   updateDomain,
   updateDescription,
   updatePrivate,
@@ -99,7 +95,7 @@ const ProjectPage = ({
   <main className="project-page">
     <section id="info">
       <InfoContainer>
-        <ProjectInfoContainer style={{backgroundImage: `url('${avatar}')`}}>
+        <ProjectInfoContainer style={{backgroundImage: `url('${getAvatarUrl(id)}')`}}>
           <h1>
             {(isAuthorized
               ? <EditableField value={domain} update={domain => updateDomain(domain).then(() => syncPageToDomain(domain))} placeholder="Name your project"/>
@@ -133,10 +129,10 @@ const ProjectPage = ({
       </div>
     </section>
     <section id="readme">
-      <ReadmeLoader getReadme={getReadme}/>
+      <ReadmeLoader api={api} domain={domain}/>
     </section>
     <section id="related">
-      <RelatedProjects ignoreProjectId={id} {...{teams, users, getTeam, getTeamPins, getUser, getUserPins, getProjects}}/>
+      <RelatedProjects ignoreProjectId={id} {...{api, teams, users}}/>
     </section>
     <section id="feedback" className="buttons buttons-right">
       <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
@@ -144,41 +140,42 @@ const ProjectPage = ({
   </main>
 );
 ProjectPage.propTypes = {
+  api: PropTypes.any.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   project: PropTypes.object.isRequired,
 };
 
 const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
-  <Notifications>
-    <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
-      {project => project ? (
-        <ProjectEditor api={api} initialProject={project} currentUserModel={currentUserModel}>
-          {(project, funcs, userIsMember) => (
-            <ProjectPage project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
-          )}
-        </ProjectEditor>
-      ) : <NotFound name={name}/>}
-    </DataLoader>
-  </Notifications>
+  <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
+    {project => project ? (
+      <ProjectEditor api={api} initialProject={project} currentUserModel={currentUserModel}>
+        {(project, funcs, userIsMember) => (
+          <React.Fragment>
+            <Helmet>
+              <title>{project.domain}</title>
+            </Helmet>
+            <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
+          </React.Fragment>
+        )}
+      </ProjectEditor>
+    ) : <NotFound name={name}/>}
+  </DataLoader>
 );
 ProjectPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-// Let's keep layout in jade until all pages are react
-export default function(application, name) {
-  const props = {
-    api: application.api(),
-    currentUserModel: application.currentUser(),
-    get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
-    getReadme: () => application.api().get(`projects/${name}/readme`).then(({data}) => data),
-    getTeam: (id) => application.api().get(`teams/${id}`).then(({data}) => data),
-    getTeamPins: (id) => application.api().get(`teams/${id}/pinned-projects`).then(({data}) => data),
-    getUser: (id) => application.api().get(`users/${id}`).then(({data}) => data),
-    getUserPins: (id) => application.api().get(`users/${id}/pinned-projects`).then(({data}) => data),
-    getProjects: (ids) => application.api().get(`projects/byIds?ids=${ids.join(',')}`).then(({data}) => data.map(d => Project(d).update(d).asProps())),
-    name,
-  };
-  const content = Reactlet(ProjectPageLoader, props, 'projectpage');
-  return LayoutPresenter(application, content);
-}
+const getProps = (application, name) => ({
+  api: application.api(),
+  currentUserModel: application.currentUser(),
+  get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
+  name,
+});
+
+const ProjectPageContainer = ({application, name}) => (
+  <Layout application={application}>
+    <ProjectPageLoader {...getProps(application, name)}/>
+  </Layout>
+);
+
+export default ProjectPageContainer;

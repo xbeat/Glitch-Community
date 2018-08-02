@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import LayoutPresenter from '../layout';
-import Reactlet from '../reactlet';
+import Helmet from 'react-helmet';
+import Layout from '../layout.jsx';
 import ProjectModel from '../../models/project';
 
 import Loader, {DataLoader} from '../includes/loader.jsx';
@@ -12,6 +12,9 @@ import Categories from '../categories.jsx';
 
 const CategoryPageWrap = ({category, categories, children}) => (
   <React.Fragment>
+    <Helmet>
+      <title>{category.name}</title>
+    </Helmet>
     <main className="category-page">
       <article className="projects" style={{backgroundColor: category.backgroundColor}}>
         <header className="category">
@@ -76,12 +79,10 @@ CategoryPage.propTypes = {
   category: PropTypes.object.isRequired,
 };
 
-export default function(application, category) {
-  const props = {
-    api: application.api(),
-    category,
-    categories: application.categories,
-  };
-  const content = Reactlet(CategoryPage, props);
-  return LayoutPresenter(application, content);
-}
+const CategoryPageContainer = ({application, category}) => (
+  <Layout application={application}>
+    <CategoryPage api={application.api()} category={category} categories={application.categories}/>
+  </Layout>
+);
+
+export default CategoryPageContainer;

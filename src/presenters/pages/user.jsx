@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Helmet from 'react-helmet';
 import {getAvatarStyle, getProfileStyle} from '../../models/user';
 
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -14,7 +15,6 @@ import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
-  document.title = `@${login}`;
 }
 
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
@@ -114,10 +114,15 @@ UserPage.propTypes = {
   leaveProject: PropTypes.func.isRequired,
 };
 
-const UserPageContainer = ({api, user, currentUserModel, getProjects}) => (
+const UserPageContainer = ({api, user, currentUserModel}) => (
   <UserEditor api={api} initialUser={user} currentUserModel={currentUserModel}>
     {(user, funcs, isAuthorized) => (
-      <UserPage api={api} user={user} {...funcs} {...{isAuthorized, getProjects}}/>
+      <React.Fragment>
+        <Helmet>
+          <title>{user.name || (user.login ? `@${user.login}` : `User ${user.id}`)}</title>
+        </Helmet>
+        <UserPage api={api} user={user} {...funcs} isAuthorized={isAuthorized}/>
+      </React.Fragment>
     )}
   </UserEditor>
 );

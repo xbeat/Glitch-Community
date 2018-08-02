@@ -37,8 +37,8 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomai
     setFilter("");
   };
   
-  const filteredProjects = projects.filter(({name}) => {
-    return name.toLowerCase().includes(filter.toLowerCase());
+  const filteredProjects = projects.filter(({domain}) => {
+    return domain.toLowerCase().includes(filter.toLowerCase());
   });
   
   return (
@@ -56,7 +56,7 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomai
       <section className="pop-over-actions results-list">
         <ul className="results">
           <li className="button-unstyled">
-            < AllProjectsItem 
+            <AllProjectsItem 
               currentProjectDomain = {currentProjectDomain}
               action = {() => {onClick({domain: "All Projects"});}}
             />
@@ -79,7 +79,6 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomai
 PopOver.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    avatar: PropTypes.string.isRequired,
     domain: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
   })).isRequired,

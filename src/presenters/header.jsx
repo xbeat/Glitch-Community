@@ -1,12 +1,12 @@
 /* global EDITOR_URL */
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
 import NewStuffContainer from './overlays/new-stuff.jsx';
-import React from 'react';
-import PropTypes from 'prop-types';
-import urlJoin from 'url-join';
+import {CurrentUserConsumer} from './current-user.jsx';
 
 const Logo = () => {
   const LOGO_DAY = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
@@ -36,16 +36,18 @@ const submitSearch = (event) => {
   }
 };
 
-const SearchForm = ({baseUrl, onSubmit, defaultValue}) => (
-  <form action={urlJoin(baseUrl, "search")} method="get" role="search" onSubmit={onSubmit}>
+const SearchForm = ({onSubmit, defaultValue}) => (
+  <form action="/search" method="get" role="search" onSubmit={onSubmit}>
     <input className="search-input" name="q" placeholder="bots, apps, users" defaultValue={defaultValue}/>
   </form>
 );
 
 SearchForm.propTypes = {
-  baseUrl: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  defaultValue: PropTypes.string.isRequired,
+  defaultValue: PropTypes.string,
+};
+SearchForm.defaultProps = {
+  defaultValue: '',
 };
 
 const UserOptionsPopWrapper = ({user, showNewStuffOverlay, api}) => {
@@ -69,18 +71,18 @@ UserOptionsPopWrapper.propTypes = {
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
-const Header = ({api, baseUrl, maybeUser, searchQuery, showNewStuffOverlay}) => {
+const Header = ({api, maybeUser, searchQuery, showNewStuffOverlay}) => {
   const signedIn = maybeUser && !!maybeUser.login;
   return (
     <header role="banner">
       <div className="header-info">
-        <a href={baseUrl}>
+        <a href="/">
           <Logo/>
         </a>
       </div>
 
       <nav>
-        <SearchForm baseUrl={baseUrl} onSubmit={submitSearch} defaultValue={searchQuery}/>
+        <SearchForm onSubmit={submitSearch} defaultValue={searchQuery}/>
         <NewProjectPop api={api}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
@@ -91,43 +93,23 @@ const Header = ({api, baseUrl, maybeUser, searchQuery, showNewStuffOverlay}) => 
 };
 
 Header.propTypes = {
-  baseUrl: PropTypes.string.isRequired,
   maybeUser: PropTypes.object,
   api: PropTypes.func.isRequired,
 };
 
-class HeaderContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { maybeUser: null };
-  }
-  componentDidMount() {
-    this.props.userObservable.observe((maybeUser) => {
-      this.setState({maybeUser: maybeUser});
-    });
-  }
-  componentWillUnmount() {
-    this.props.userObservable.releaseDependencies();
-  }
-  render() {
-    return (
+const HeaderContainer = ({getUserPref, setUserPref, ...props}) => (
+  <CurrentUserConsumer>
+    {user => (
       <NewStuffContainer
-        isSignedIn={!!this.state.maybeUser && !!this.state.maybeUser.login}
-        getUserPref={this.props.getUserPref} setUserPref={this.props.setUserPref}
+        isSignedIn={!!user && !!user.login}
+        getUserPref={getUserPref} setUserPref={setUserPref}
       >
         {showNewStuffOverlay => (
-          <Header {...this.props} maybeUser={this.state.maybeUser} showNewStuffOverlay={showNewStuffOverlay}/>
+          <Header {...props} maybeUser={user} showNewStuffOverlay={showNewStuffOverlay}/>
         )}
       </NewStuffContainer>
-    );
-  }
-}
-
-HeaderContainer.propTypes = {
-  baseUrl: PropTypes.string.isRequired,
-  userObservable: PropTypes.func.isRequired,
-  searchQuery: PropTypes.string.isRequired,
-  api: PropTypes.func.isRequired,
-};
+    )}
+  </CurrentUserConsumer>
+);
 
 export default HeaderContainer;

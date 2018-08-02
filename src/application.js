@@ -1,7 +1,5 @@
 /* globals API_URL APP_URL EDITOR_URL analytics application Raven */
 
-import Observable from 'o_0';
-
 import axios from 'axios';
 import cachedCategories from './cache/categories.js';
 import Model from './models/model';
@@ -37,13 +35,6 @@ if (cachedUser) {
 var self = Model({
   currentUser: cachedUser,
 }).extend({
-
-  // search - users
-  searchQuery: Observable(""),
-
-  normalizedBaseUrl() {
-    return "/";
-  },
 
   api(source) {
     const persistentToken = self.currentUser() && self.currentUser().persistentToken();
@@ -117,14 +108,6 @@ var self = Model({
         return self.storeLocal('cachedUser', response.data);
       });
   },
-
-  getUserByLogin(login) {
-    User.getUserByLogin(application, login).then((user) => self.saveUser(user));
-  },
-
-  getUserById(id) {
-    User.getUserById(application, id).then((user) => self.saveUser(user));
-  },
   
   getCurrentUserById(id) {
     User.getUserById(application, id).then((userData) => {
@@ -133,49 +116,16 @@ var self = Model({
       self.currentUser(user);
     });
   },
-
-  getTeamById(id) {
-    return Team.getTeamById(application, id);
-  },
-
-  // due to model caching, whenever user.id === currentuser.id, 
-  // the objects will be set equal other.
-  // this means that they must share a loader,
-  // and that 'saveUser' will clobber 'getCurrentUserById'
-  // but not necessarily the other way around.
-  saveUser(userData) {
-    const user = self.loadUser(userData);
-    self.user(user);
-  },
   
   loadUser(userData){
     userData.fetched = true;
-    userData.initialDescription = userData.description;
     console.log('👀 user data is ', userData);
-    self.getProjects(userData.projects);
     
     const user = User(userData).update(userData);
     const teams = user.teams().map(teamData => Team(teamData));
     user.teams(teams);
     
     return user;
-  },
-
-  saveTeam(teamData) {
-    teamData.fetched = true;
-    console.log('👀 team data is ', teamData);
-    self.team(Team(teamData).update(teamData));
-    return self.getProjects(teamData.projects);
-  },
-
-  getProjects(projectsData) {
-    const projectIds = projectsData.map(project => project.id);
-    return Project.getProjectsByIds(self.api(), projectIds);
-  },
-
-  getUsers(usersData) {
-    const userIds = usersData.map(user => user.id);
-    return User.getUsersById(self.api(), userIds);
   },
  
   get categories() {

@@ -8,7 +8,7 @@ import ProjectModel from '../../models/project';
 
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
-    super(props);  
+    super(props);
     this.state = {
       templateProjects: [],
       filteredProjects: [],
@@ -28,22 +28,22 @@ export class AddTeamProjectPop extends React.Component {
     });
     return projects;
   }
-    
+
   updateFilter(query) {
     let projects = [];
     if (this.state.source === 'templates') {
       projects = this.state.templateProjects;
     } else {
       projects = this.props.myProjects;
-    }    
+    }
     let filteredProjects = this.filterProjects(query, projects, this.props.teamProjects);
     this.setState({
       filteredProjects: filteredProjects
     });
   }
-  
+
   filterProjects(query, projects, teamProjects) {
-    query = query.toLowerCase().trim();  
+    query = query.toLowerCase().trim();
     let MAX_PROJECTS = 20;
     let teamProjectIds = teamProjects.map(({id}) => id);
     let availableProjects = projects.filter(
@@ -56,7 +56,7 @@ export class AddTeamProjectPop extends React.Component {
     for(let project of availableProjects) {
       if(filteredProjects.length > MAX_PROJECTS){
         break;
-      }      
+      }
       let titleMatch = project.domain.toLowerCase().includes(query);
       let descMatch = project.description.toLowerCase().includes(query);
       if(titleMatch || descMatch) {
@@ -65,33 +65,32 @@ export class AddTeamProjectPop extends React.Component {
     }
     return filteredProjects;
   }
-  
+
   activeIfSourceIsTemplates() {
     if (this.state.source === 'templates') {
       return 'active';
     }
   }
-  
+
   activeIfSourceIsMyProjects() {
     if (this.state.source === 'my-projects') {
       return 'active';
     }
   }
-  
+
   async remixTemplate(projectId) {
-    let remixTemplatePath = `projects/${projectId}/remix`;    
+    let remixTemplatePath = `projects/${projectId}/remix`;
     return await this.props.api().post(remixTemplatePath);
   }
-  
+
   async inviteUserToRemix(data) {
     let inviteUserPath = `projects/${data.inviteToken}/join`;
     return await this.props.api().post(inviteUserPath);
   }
-  
-  onClick(event, projectId) {
+
+  onClick(event, project) {
     event.preventDefault();
     this.props.togglePopover();
-
     if (this.state.source === 'templates') {
       // this.setState({
       //   notifyTemplateIsRemixing: true
@@ -111,21 +110,21 @@ export class AddTeamProjectPop extends React.Component {
       this.props.addProject(projectId);
     }
   }
-  
+
   sourceIsTemplates() {
     this.setState({
       source: 'templates',
       filterPlaceholder: 'Filter templates',
     });
   }
-  
+
   sourceIsMyProjects() {
     this.setState({
       source: 'my-projects',
       filterPlaceholder: 'Filter projects',
     });
   }
-  
+
   getTemplateProjects() {
     this.setState({
       loadingTemplates: true,
@@ -166,29 +165,29 @@ export class AddTeamProjectPop extends React.Component {
 
   render() {
     const filteredProjects = this.state.filteredProjects;
-    
+
     return (
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
           {/* Temporary: hidden for now pending having templates to use
           <div className="segmented-buttons">
-            <button 
-              className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsTemplates()}`} 
-              onClick={this.sourceIsTemplates.bind(this)} 
-              data-source="templates" 
+            <button
+              className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsTemplates()}`}
+              onClick={this.sourceIsTemplates.bind(this)}
+              data-source="templates"
             >
               Templates
             </button>
-            <button 
-              className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsMyProjects()}`} 
-              onClick={this.sourceIsMyProjects.bind(this)} 
-              data-source="my-projects" 
+            <button
+              className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsMyProjects()}`}
+              onClick={this.sourceIsMyProjects.bind(this)}
+              data-source="my-projects"
             >
               My Projects
             </button>
           </div>
           */}
-          
+
           <input
             ref={(input) => { this.filterInput = input; }}
             onChange={(event) => {this.updateFilter(event.target.value);}}
@@ -197,19 +196,20 @@ export class AddTeamProjectPop extends React.Component {
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>
+
         <section className="pop-over-actions results-list" data-source='templates'>
           {/* Temporary: hidden for now pending having templates to use
 
-          { (this.state.loadingTemplates) && 
-            <Loader /> 
+          { (this.state.loadingTemplates) &&
+            <Loader />
           }
           */}
 
           <ul className="results">
             { filteredProjects.map((project) => (
               <li key={project.id}>
-                <ProjectResultItem 
-                  action={(event) => this.onClick(event, project.id)} 
+                <ProjectResultItem
+                  action={(event) => this.onClick(event, project.id)}
                   {...project}
                   title={project.domain}/>
               </li>

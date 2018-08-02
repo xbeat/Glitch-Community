@@ -5,9 +5,6 @@ import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
 
-import ProjectModel from '../models/project';
-import UserModel from '../models/user';
-
 import ErrorHandlers from './error-handlers.jsx';
 import Uploader from './includes/uploader.jsx';
 
@@ -63,7 +60,7 @@ class TeamEditor extends React.Component {
   async addUser(id) {
     await this.props.api.post(`teams/${this.state.id}/users/${id}`);
     this.setState(({users}) => ({
-      users: [...users, UserModel({id}).asProps()],
+      users: [...users, user],
     }));
   }
 
@@ -99,7 +96,7 @@ class TeamEditor extends React.Component {
   async addProject(id) {
     await this.props.api.post(`teams/${this.state.id}/projects/${id}`);
     this.setState(({projects}) => ({
-      projects: [...projects, ProjectModel({id}).asProps()],
+      projects: [project, ...projects],
     }));
   }
 

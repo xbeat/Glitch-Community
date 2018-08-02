@@ -35,7 +35,7 @@ const UserTile = ({
   userAvatarUrl,
   extraClass="",
 }) => (
-  <a className={`user ${extraClass}`} href={userLink} data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
+  <a href={userLink} className={`user ${extraClass}`} data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
     <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
   </a>
 );

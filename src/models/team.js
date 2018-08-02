@@ -1,5 +1,4 @@
 let Team;
-import {reject} from 'lodash';
 
 const cache = {};
 const cacheBuster = Math.floor(Math.random() * 1000);
@@ -14,7 +13,7 @@ export default Team = function(I, self) {
   if (cache[I.id]) {
     return cache[I.id];
   }
-  
+
   self.defaults(I, {
     id: undefined,
     name: undefined,
@@ -34,26 +33,26 @@ export default Team = function(I, self) {
     features: [],
   }
   );
-    
+
   self.attrObservable(...Array.from(Object.keys(I) || []));
-  
+
   self.attrModels('projects', Project);
   self.attrModels('users', User);
   self.attrObservable("localCoverImage");
   self.attrObservable("localAvatarImage");
 
   self.extend({
-    
+
     pins: self.teamPins,
-  
+
     coverUrl(size='large') {
       if(self.localCoverImage()) {
         return self.localCoverImage();
       }
-      
+
       if (self.hasCoverImage()) {
-        return `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-cover/${self.id()}/${size}?${cacheBuster}`;           
-      } 
+        return `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-cover/${self.id()}/${size}?${cacheBuster}`;
+      }
       return "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
     },
 
@@ -65,25 +64,9 @@ export default Team = function(I, self) {
       size = size || 'small';
       if (self.hasAvatarImage()) {
         return `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-avatar/${self.id()}/${size}?${cacheBuster}`;
-      } 
+      }
       return "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-team-avatar.svg?1503510366819";
-      
-    },
 
-    hiddenIfFetched() {
-      if (self.fetched()) { return 'hidden'; }
-    },
-
-    hiddenUnlessFetched() {
-      if (!self.fetched()) { return 'hidden'; }
-    },
-    
-    truncatedDescription() {
-      const MAX_CHARACTERS = 140;
-      if (self.description().length > MAX_CHARACTERS) {
-        return self.description().substring(0, MAX_CHARACTERS) + "…";
-      } 
-      return self.description();
     },
 
     thanksCount() {
@@ -94,105 +77,12 @@ export default Team = function(I, self) {
       }
     },
 
-    teamThanks() {
-      const thanksCount = self.thanksCount();
-      if (thanksCount === 1) {
-        return "Thanked once";
-      } else if (thanksCount === 2) {
-        return "Thanked twice";
-      } 
-      return `Thanked ${thanksCount} times`;
-      
-    },
-
-    currentUserIsOnTeam(application) {
-      return -1 !== self.users().findIndex(user => user.id() === application.currentUser().id());
-
-    },
-
-    updateCoverColor(application, color) {
-      if (color) {
-        self.coverColor(color);
-        return self.updateTeam(application, 
-          {coverColor: color});
-      }
-    },
-
-    updateAvatarColor(application, color) {
-      if (color) {
-        self.backgroundColor(color);
-        return self.updateTeam(application, 
-          {backgroundColor: color});
-      }
-    },
-
-    updateTeam(application, updateData) {
-      const teamPath = `teams/${self.id()}`;
-      return application.api().patch(teamPath, updateData)
-        .then(({data}) => console.log('updatedTeam', data)).catch(error => console.error(`updateTeam PATCH ${teamPath}`, error));
-    },
-
     verifiedTooltip() {
       return "Verified to be supportive, helpful people";
     },
 
     verifiedImage() {
       return "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fverified.svg?1501783108220";
-    },
-
-    addPin(application, projectId) {
-      self.pins.push({
-        projectId});
-      const pinPath = `teams/${self.id()}/pinned-projects/${projectId}`;
-      return application.api().post(pinPath)
-        .then(({data}) => console.log(data)).catch(error => console.error('addPin', error));
-    },
-
-    removePin(application, projectId) {
-      const newPins = self.pins().filter(pin => pin.projectId !== projectId);
-      self.pins(newPins);
-      const pinPath = `teams/${self.id()}/pinned-projects/${projectId}`;
-      return application.api().delete(pinPath)
-        .then(({data}) => console.log(data)).catch(error => console.error('removePin', error));
-    },
-
-    addUser(application, user) {
-      const teamUserPath = `/teams/${self.id()}/users/${user.id()}`;
-      return application.api().post(teamUserPath)
-        .then(function() {
-          self.users.push(user);
-          return console.log('added user. team users are now', self.users());}).catch(error => console.error('addUser', error));
-    },
-
-    removeUser(application, user) {
-      const teamUserPath = `/teams/${self.id()}/users/${user.id()}`;
-      return application.api().delete(teamUserPath)
-        .then(function() {
-          const newUsers = reject(self.users(), removedUser => removedUser.id() === user.id());
-          self.users(newUsers);
-          return console.log('removed user. team users are now', self.users());}).catch(error => console.error('removeUser', error));
-    },
-
-    addProject(application, projectId) {
-      const teamProjectPath = `/teams/${self.id()}/projects/${projectId}`;
-      return application.api().post(teamProjectPath)
-        .then(function() {
-          self.projects.push(Project({id: projectId}));
-          // asynchronously populate the project we just added.
-          Project.getProjectsByIds(application.api(), [projectId]);
-        
-          console.log('added project. team projects are now', self.projects());
-        }).catch(error => console.error('addProject', error));
-    },
-
-    removeProject(application, projectId) {
-      const teamProjectPath = `/teams/${self.id()}/projects/${projectId}`;
-      return application.api().delete(teamProjectPath)
-        .then(function() {
-          const newProjects = reject(self.projects(), removedProject => removedProject.id() === projectId);
-          self.projects(newProjects);
-          console.log('removed project. team projects are now', self.projects());
-        }).catch(error => console.error('removeProject', error));
     },
 
     teamProfileStyle() {
@@ -208,8 +98,8 @@ export default Team = function(I, self) {
       }
       return {backgroundColor: self.backgroundColor()};
     },
-  
-    
+
+
     asProps() {
       // const adminIds = (users) => {
       //   console.log ('dsalk;jf',users)
@@ -218,15 +108,15 @@ export default Team = function(I, self) {
       //     return user.teamsUser().accessLevel === ADMIN_ACCESS_LEVEL;
       //   })
       //   return adminUsers.map(user => {
-      //     return user.id(); 
+      //     return user.id();
       //   });
       // }
-      
+
       return {
         get users() { return self.users().map(({asProps}) => asProps()); },
         get projects() { return self.projects().map(({asProps}) => asProps()); },
         get teamPins() { return self.teamPins(); },
-        
+
         adminIds: self.adminIds(),
         backgroundColor: self.backgroundColor(),
         coverColor: self.coverColor(),
@@ -239,9 +129,7 @@ export default Team = function(I, self) {
         teamAvatarStyle: self.teamAvatarStyle(),
         teamAvatarUrl: self.teamAvatarUrl(),
         teamProfileStyle: self.teamProfileStyle(),
-        teamThanks: self.teamThanks(),
         thanksCount: self.thanksCount(),
-        truncatedDescription: self.truncatedDescription(),
         hasAvatarImage: !!self.hasAvatarImage(),
         hasCoverImage: !!self.hasCoverImage(),
         url: self.url(),
@@ -260,23 +148,6 @@ export default Team = function(I, self) {
   return self;
 };
 
-// Team.getTeamById = function(api, id) {
-//   const teamsPath = `teams/${id}`;
-//   return api.get(teamsPath)
-//     .then(function({data}) {
-//       let ADMIN_ACCESS_LEVEL = 30;
-//       let adminIds = data.users.filter(user => {
-//         return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
-//       });
-//       data.adminIds = adminIds.map(user => {
-//         return user.id;
-//       });
-//       return Team(data).update(data)
-//     })
-//     .catch(error => console.error('getTeamById', error));
-// };
-
-
 Team._cache = cache;
 
 
@@ -294,7 +165,7 @@ export const getAvatarStyle = ({id, hasAvatarImage, backgroundColor, cache}) => 
   };
 };
 
-export const getProfileStyle = ({id, hasCoverImage, coverColor, cache}) => {
+export const getProfileStyle = ({id, hasCoverImage, coverColor, cache=cacheBuster}) => {
   const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-cover/${id}/large?${cache}`;
   const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
   return {
