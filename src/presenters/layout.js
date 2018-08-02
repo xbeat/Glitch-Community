@@ -24,8 +24,6 @@ export default (application, content) =>
         baseUrl: application.normalizedBaseUrl(),
         userObservable: userObservable,
         searchQuery: application.searchQuery(),
-        promiseProjectsByIds: (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds),
-        api: application.api,
         getUserPref: application.getUserPref,
         setUserPref: application.updateUserPrefs,
       };

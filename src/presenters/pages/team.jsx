@@ -29,6 +29,7 @@ import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 import TeamUpgradeInfoBanner from '../includes/team-upgrade-info-banner.jsx';
 import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reached-banner.jsx';
 import UsersList from "../users-list.jsx";
+import {CurrentUserConsumer} from '../current-user.jsx'
 
 const FREE_TEAM_PROJECTS_LIMIT = 5;
 const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533137032374"
@@ -241,7 +242,11 @@ const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
   <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam) => (
       <React.Fragment>
-        <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
+        <CurrentUserConsumer>
+          {currentUser => (
+            <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} currentUserId={currentUser.id} myProjects={currentUser.projects} {...props}/>
+          )}
+        </CurrentUserConsumer>
         {teamConflictsWithUser(team, currentUserModel) && <NameConflictWarning/>}
       </React.Fragment>
     )}
