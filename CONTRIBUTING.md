@@ -19,7 +19,7 @@ Anyone in our community can feel welcome and supported in submitting improvement
 Philosophy and Ideals
 ---------------------
 
-Our ideal contribution flow works like this:
+Our current ideal contribution flow works like this:
 
 #### On Your Side
 
@@ -77,7 +77,9 @@ Ok cool, these next steps are what we'd do internally and you're welcome to foll
     ```
     _(Don't have permission to push? You'll need to first [Fork](https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/) our [repository](https://github.com/FogCreek/Glitch-Community) and then [create a pull request from the fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) instead.)_
 
-5. Now that we can see the full diff in the pull request, there are probably some changes that pop out as things worth fixing before merging it with the main project.  No problem, iterate!  Observe the diff, go back into you Glitch project, and make your changes.  To update the pull request, go back to your local console and run:
+#### Updating an existing PR with new changes
+
+5. In local console and run:
    ```
    git checkout my-branch  # Make sure we're on the right branch
    git pull my-remix master
