@@ -23,12 +23,8 @@ export default class PopoverContainer extends React.Component {
 
     this.set = this.set.bind(this);
     this.toggle = this.toggle.bind(this);
-<<<<<<< HEAD
-    this.hide = this.hide.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
-=======
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
-   
+
     // We need to set up and instantiate an onClickOutside wrapper
     // It's important to instantiate it once and pass though its children,
     // otherwise the diff algorithm won't be able to figure out our hijinks.
@@ -43,32 +39,26 @@ export default class PopoverContainer extends React.Component {
     };
     this.MonitoredComponent = onClickOutside(Wrapper, clickOutsideConfig);
   }
-  
+
   handleClickOutside(event) {
     // On keyup events, only hide the popup if it was the Escape key
     if(event.type === "keyup" && !["Escape", "Esc"].includes(event.key)) {
       return;
     }
-    
+
     this.setState({visible: false});
   }
-  
+
   set(visible) {
     this.setState({visible});
   }
-  
+
   toggle() {
     this.setState((prevState) => {
       return {visible: !prevState.visible};
     });
   }
-  
-  hide() {
-    this.setState(() => {
-      return {visible: false};
-    });
-  }
-  
+
   // show() {
   //   this.setState(() => {
   //     return {visible: true};
@@ -77,16 +67,12 @@ export default class PopoverContainer extends React.Component {
 
 
   render() {
-<<<<<<< HEAD
-    const inner = this.props.children({visible: this.state.visible, togglePopover: this.toggle, hidePopover: this.hide});
-=======
     const props = {
       visible: this.state.visible,
       togglePopover: this.toggle,
       setVisible: this.set,
     };
     const inner = this.props.children(props);
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
     if(isFragment(inner)) {
       console.error("PopoverContainer does not support React.Fragment as the top level item. Please use a different element.");
     }

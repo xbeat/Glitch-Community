@@ -1,18 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
-import CreateTeamPop from './create-team-pop.jsx'; 
+import CreateTeamPop from './create-team-pop.jsx';
 
-<<<<<<< HEAD
 
-// Individual Team Item
-
-const TeamItem = ({url, name, teamAvatarUrl}) => (
-  <a className="button-link" href={url}>
-=======
 const TeamButton = ({url, name, teamAvatarUrl}) => (
   <a className="button-link" href={`/@${url}`}>
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
     <div className="button button-small has-emoji button-tertiary">
       <span>{name} </span>
       <img className="emoji avatar" src={teamAvatarUrl} alt={`${name} team avatar`} width="16px" height="16px"/>
@@ -20,7 +13,7 @@ const TeamButton = ({url, name, teamAvatarUrl}) => (
   </a>
 );
 
-TeamItem.propTypes = {
+TeamButton.propTypes = {
   url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   teamAvatarUrl: PropTypes.string.isRequired,
@@ -34,7 +27,7 @@ const CreateTeamButton = ({toggleCreateTeamPop, userIsAnon}) => {
     return (
       <React.Fragment>
         <p className="description action-description">
-          <a href="#">Sign in</a> 
+          <a href="#">Sign in</a>
           <span> to create a team</span>
         </p>
         <button className="button button-small has-emoji button-tertiary" disabled={true}>
@@ -43,14 +36,14 @@ const CreateTeamButton = ({toggleCreateTeamPop, userIsAnon}) => {
         </button>
       </React.Fragment>
     );
-  } 
+  }
   return (
     <div onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
       <span>Create Team </span>
       <span className="emoji herb"></span>
     </div>
   );
-  
+
 };
 
 CreateTeamButton.propTypes = {
@@ -69,7 +62,7 @@ const TeamList = ({teams, toggleCreateTeamPop, userIsAnon}) => {
       <CreateTeamButton toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
       */}
       {teams.map((team) => (
-        <TeamItem key={team.name} {...team}/>
+        <TeamButton key={team.name} {...team}/>
       ))}
     </section>
   );
@@ -84,7 +77,7 @@ TeamList.propTypes = {
 };
 
 
-// User Options Pop 
+// User Options Pop
 
 const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay, toggleCreateTeamPop, userIsAnon}) => {
   const clickNewStuff = (event) => {
@@ -92,7 +85,7 @@ const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle,
     showNewStuffOverlay();
     event.stopPropagation();
   };
-  
+
   const signOut = () => {
     /* global analytics */
     analytics.track("Logout");
@@ -114,7 +107,7 @@ const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle,
 
       <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
 
-      <section className="pop-over-info section-has-tertiary-buttons">      
+      <section className="pop-over-info section-has-tertiary-buttons">
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
           <span>New Stuff </span>
           <span className="emoji dog-face"></span>
@@ -124,7 +117,7 @@ const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle,
             <span>Support </span>
             <span className="emoji ambulance"></span>
           </div>
-        </a>        
+        </a>
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={signOut}>
           <span>Sign Out</span>
           <span className="emoji balloon"></span>
@@ -147,7 +140,7 @@ UserOptionsPop.propTypes = {
 export default function UserOptionsPopContainer(props) {
   const {avatarUrl, avatarStyle, api} = props;
   return (
-    
+
     <PopoverContainer>
       {({togglePopover: toggleUserOptionsPop, visible: userOptionsPopVisible}) => (
         <PopoverContainer>
@@ -157,15 +150,15 @@ export default function UserOptionsPopContainer(props) {
                 <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
                 <span className="down-arrow icon"/>
               </button>
-              {userOptionsPopVisible && <UserOptionsPop 
-                {...props} 
-                toggleUserOptionsPop={toggleUserOptionsPop} 
+              {userOptionsPopVisible && <UserOptionsPop
+                {...props}
+                toggleUserOptionsPop={toggleUserOptionsPop}
                 toggleCreateTeamPop={() => { toggleUserOptionsPop(); toggleCreateTeamPop(); }}
               />
               }
-              {createTeamPopVisible && <CreateTeamPop 
-                api={api} 
-                toggleUserOptionsPop={() => {  toggleCreateTeamPop(); toggleUserOptionsPop(); }} 
+              {createTeamPopVisible && <CreateTeamPop
+                api={api}
+                toggleUserOptionsPop={() => {  toggleCreateTeamPop(); toggleUserOptionsPop(); }}
               />
               }
             </div>

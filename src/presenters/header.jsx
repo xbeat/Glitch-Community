@@ -48,25 +48,15 @@ SearchForm.propTypes = {
   defaultValue: PropTypes.string.isRequired,
 };
 
-<<<<<<< HEAD
-const UserOptionsPopWrapper = ({user, overlayNewStuffVisible, api}) => {
-=======
-const UserOptionsPopWrapper = ({user, showNewStuffOverlay}) => {
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
+const UserOptionsPopWrapper = ({user, showNewStuffOverlay, api}) => {
   const props = {
     teams: user.teams,
     userLink: user.userLink,
     avatarUrl: user.userAvatarUrl,
     avatarStyle: {backgroundColor: user.color},
-<<<<<<< HEAD
-    showNewStuffOverlay() {
-      return overlayNewStuffVisible(true);
-    },
     api: api,
     userIsAnon: user.isAnon,
-=======
     showNewStuffOverlay,
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
   };
 
   return <UserOptionsPop {...props}/>;
@@ -79,11 +69,7 @@ UserOptionsPopWrapper.propTypes = {
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
-<<<<<<< HEAD
-const Header = ({baseUrl, maybeUser, searchQuery, overlayNewStuffVisible, promiseProjectsByIds, api}) => {
-=======
 const Header = ({api, baseUrl, maybeUser, searchQuery, showNewStuffOverlay}) => {
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
   const signedIn = maybeUser && !!maybeUser.login;
   return (
     <header role="banner">
@@ -92,17 +78,13 @@ const Header = ({api, baseUrl, maybeUser, searchQuery, showNewStuffOverlay}) => 
           <Logo/>
         </a>
       </div>
-     
+
       <nav>
         <SearchForm baseUrl={baseUrl} onSubmit={submitSearch} defaultValue={searchQuery}/>
         <NewProjectPop api={api}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
-<<<<<<< HEAD
-        { maybeUser && <UserOptionsPopWrapper user={maybeUser} overlayNewStuffVisible={overlayNewStuffVisible} api={api} />}
-=======
-        { maybeUser && <UserOptionsPopWrapper user={maybeUser} showNewStuffOverlay={showNewStuffOverlay} />}
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
+        { maybeUser && <UserOptionsPopWrapper user={maybeUser} showNewStuffOverlay={showNewStuffOverlay} api={api} />}
       </nav>
     </header>
   );
@@ -145,12 +127,7 @@ HeaderContainer.propTypes = {
   baseUrl: PropTypes.string.isRequired,
   userObservable: PropTypes.func.isRequired,
   searchQuery: PropTypes.string.isRequired,
-<<<<<<< HEAD
-  overlayNewStuffVisible: PropTypes.func.isRequired,
-  promiseProjectsByIds: PropTypes.func.isRequired,
   api: PropTypes.func.isRequired,
-=======
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
 };
 
 export default HeaderContainer;

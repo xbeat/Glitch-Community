@@ -24,18 +24,14 @@ export default (application, content) =>
         baseUrl: application.normalizedBaseUrl(),
         userObservable: userObservable,
         searchQuery: application.searchQuery(),
-<<<<<<< HEAD
-        overlayNewStuffVisible: application.overlayNewStuffVisible,
         promiseProjectsByIds: (projectIds) => ProjectModel.promiseProjectsByIds(application.api(), projectIds),
         api: application.api,
-=======
         getUserPref: application.getUserPref,
         setUserPref: application.updateUserPrefs,
->>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
       };
       return Reactlet(Header, props);
     },
-    
+
     content,
 
     footer: Reactlet(Footer),
