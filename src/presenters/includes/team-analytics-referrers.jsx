@@ -51,7 +51,7 @@ const TeamAnalyticsReferrers = ({analytics, totalRemixes, uniqueAppViews}) => {
           App Views
         </h4>
         <ul>
-          <ReferrerPlaceholder 
+          <ReferrerPlaceholder
             count = {uniqueAppViews}
           />
           <ReferrerItem
@@ -69,13 +69,13 @@ const TeamAnalyticsReferrers = ({analytics, totalRemixes, uniqueAppViews}) => {
           ))}
         </ul>
       </article>
-      
+
       <article className="referrers-column remixes">
         <h4>
           Remixes
         </h4>
         <ul>
-          <ReferrerPlaceholder 
+          <ReferrerPlaceholder
             count = {totalRemixes}
           />
           <ReferrerItem
@@ -92,7 +92,7 @@ const TeamAnalyticsReferrers = ({analytics, totalRemixes, uniqueAppViews}) => {
             />
           ))}
         </ul>
-      </article> 
+      </article>
     </div>
   );
 };

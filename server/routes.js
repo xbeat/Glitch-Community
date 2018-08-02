@@ -2,21 +2,21 @@ const express = require('express');
 const fs = require('fs');
 const moment = require('moment-mini');
 
-const {getProject, getUser} = require('./api');
+const {getProject, getTeam, getUser} = require('./api');
 const {updateCaches} = require('./cache');
 const constants = require('./constants');
 
 module.exports = function() {
-  
+
   const app = express.Router();
-  
+
   // CORS - Allow pages from any domain to make requests to our API
   app.use(function(request, response, next) {
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     return next();
   });
-  
+
   // Caching - js and CSS files have a hash in their name, so they last a long time
   ['/*.js', '/*.css'].forEach((path) => (
     app.use(path, (request, response, next) => {
@@ -25,7 +25,7 @@ module.exports = function() {
       return next();
     })
   ));
-  
+
   app.use(express.static('public', { index: false }));
 
   // Log all requests for diagnostics
@@ -52,9 +52,9 @@ module.exports = function() {
       ...constants,
     });
   }
-  
+
   const {CDN_URL} = constants;
-  
+
   app.get('/~:domain', async (req, res) => {
     const {domain} = req.params;
     const project = await getProject(domain);
@@ -64,14 +64,18 @@ module.exports = function() {
     const avatar = `${CDN_URL}/project-avatar/${project.id}.png`;
     render(res, domain, project.description, avatar);
   });
-  
+
   app.get('/@:name', async (req, res) => {
     const {name} = req.params;
-    const user = await getUser(name);
-    if (!user) {
-      return render(res, `@${name}`, `We couldn't find @${name}`);
+    const team = await getTeam(name);
+    if (team) {
+      return render(res, team.name, team.description);
     }
-    render(res, user.name, user.description, user.avatarThumbnailUrl);
+    const user = await getUser(name);
+    if (user) {
+      return render(res, user.name, user.description, user.avatarThumbnailUrl);
+    }
+    return render(res, `@${name}`, `We couldn't find @${name}`);
   });
 
   app.get('*', (req, res) => {
@@ -79,6 +83,6 @@ module.exports = function() {
       "Glitch - The Friendly, Creative Community",
       "The friendly community where you’ll build the app of your dreams");
   });
-  
+
   return app;
 };

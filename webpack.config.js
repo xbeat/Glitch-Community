@@ -21,14 +21,14 @@ const STYLE_BUNDLE_NAME = 'styles';
 
 
 module.exports = () => {
-  
+
   let mode = 'development';
   if(process.env.NODE_ENV === 'production') {
     mode = 'production';
   }
 
   console.log(`Starting Webpack in ${mode} mode.`);
-  
+
   return {
     mode,
     entry: {
@@ -61,6 +61,9 @@ module.exports = () => {
           },
         },
       },
+      minimizer: [
+        new UglifyJsPlugin({uglifyOptions: {safari10: true}}),
+      ],
     },
     devtool: 'source-map',
     module: {
@@ -102,7 +105,7 @@ module.exports = () => {
                 use: [AutoprefixerStylus()],
               },
             },
-          ] 
+          ]
         },
       ],
     },
@@ -114,7 +117,7 @@ module.exports = () => {
         fileName: "scripts.json",
         filter: ({isInitial, name}) => (
           isInitial && name.endsWith('.js') &&
-            name !== `${STYLE_BUNDLE_NAME}.js` // omit the no-op CSS bundle .js file 
+            name !== `${STYLE_BUNDLE_NAME}.js` // omit the no-op CSS bundle .js file
           ),
       }),
       new ManifestPlugin({

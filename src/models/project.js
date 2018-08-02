@@ -47,8 +47,6 @@ export default Project = function(I, self) {
         description: project.description(),
         domain: project.domain(),
         id: project.id(),
-        isPinnedByTeam: project.isPinnedByTeam(application),
-        isPinnedByUser: project.isPinnedByUser(application),
         isRecentProject: !!(project.isRecentProject),
         link: getLink(self.domain()),
         name: project.name(),
@@ -118,14 +116,6 @@ export default Project = function(I, self) {
       application.searchResultsProjects.push(self);
       return application.searchResultsProjectsLoaded(true);
     },
-
-    isPinnedByUser(application) {
-      return Project.isPinnedByUser(application.user(), self.id());
-    },
-
-    isPinnedByTeam(application) {
-      return Project.isPinnedByTeam(application.team(), self.id());
-    },
            
     delete() {
       const projectPath = `/projects/${self.id()}`;
@@ -172,16 +162,6 @@ export default Project = function(I, self) {
   return self;
 };
 
-Project.isPinnedByUser = (user, projectId) => {
-  const pins = user.pins().map(pin => pin.projectId);
-  return pins.includes(projectId);
-};
-
-Project.isPinnedByTeam = function(team, projectId) {
-  const pins = team.pins().map(pin => pin.projectId);
-  return pins.includes(projectId);
-};
-
 // Fetch projects and populate them into the local cache
 Project.getProjectsByIds = function(api, ids) {
   const NUMBER_OF_PROJECTS_PER_REQUEST = 40;
@@ -211,29 +191,6 @@ Project.getProjectsByIds = function(api, ids) {
   return ids.map(id => Project({id}));
 };
 
-//getProjectsByIds, but wrapped in a promise until they're all fetched.
-Project.promiseProjectsByIds = (api, ids) => {
-  // Fetch all the project models.
-  const projects = Project.getProjectsByIds(api, ids);
-  
-  // Set up promises to listen to the fetched() state
-  const promises = projects.map(project => {
-    return new Promise((resolve) => {
-      project.fetched.observe((isFetched) => {
-        isFetched && resolve();
-      });
-    });
-  });
-  
-  // Once they all report in as fetched,
-  // return the (now populated) original projects object
-  return new Promise((resolve) => {
-    Promise.all(promises).then(() => {
-      return resolve(projects);
-    });
-  });
-};
-
 
 Project._cache = cache;
 
@@ -243,6 +200,13 @@ export function getAvatarUrl(id) {
 
 export function getLink(domain) {
   return `/~${domain}`;
+}
+
+export function getEditorUrl(domain, path, line, character) {
+  if (path && !isNaN(line) && !isNaN(character)) {
+    return `${EDITOR_URL}#!/${domain}?path=${path}:${line}:${character}`;
+  }
+  return `${EDITOR_URL}#!/${domain}`;
 }
 
 // Circular dependencies must go below module.exports

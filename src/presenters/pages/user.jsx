@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import LayoutPresenter from '../layout';
-import Reactlet from "../reactlet";
-
-import ProjectModel from '../../models/project';
 import {getAvatarStyle, getProfileStyle} from '../../models/user';
 import * as assets from '../../utils/assets';
 
+<<<<<<< HEAD
 import {DataLoader} from '../includes/loader.jsx';
 import Uploader from '../includes/uploader.jsx';
 import {Notifications} from '../notifications.jsx';
 import {CurrentUserProvider} from '../current-user.jsx';
 
+=======
+>>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
 import {AuthDescription} from '../includes/description-field.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import EntityEditor from '../entity-editor.jsx';
@@ -20,7 +19,6 @@ import Thanks from '../includes/thanks.jsx';
 
 import DeletedProjects from '../deleted-projects.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
-import NotFound from '../includes/not-found.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
@@ -65,7 +63,7 @@ const UserPage = ({
     hasCoverImage, coverColor,
     pins, projects,
   },
-  isAuthorized,
+  api, isAuthorized,
   updateDescription,
   updateName, updateLogin,
   uploadCover, clearCover,
@@ -73,9 +71,13 @@ const UserPage = ({
   addPin, removePin,
   leaveProject, deletedProjects,
   deleteProject, undeleteProject,
+<<<<<<< HEAD
   getProjects,
   getDeletedProjects, setDeletedProjects,
   _cacheCover,
+=======
+  setDeletedProjects,
+>>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
 }) => (
   <main className="profile-page user-page">
     <section>
@@ -92,11 +94,14 @@ const UserPage = ({
     </section>
     <EntityPageProjects
       projects={projects} pins={pins} isAuthorized={isAuthorized}
-      addPin={addPin} removePin={removePin}
+      api={api} addPin={addPin} removePin={removePin}
       projectOptions={{leaveProject, deleteProject}}
-      getProjects={getProjects}
     />
+<<<<<<< HEAD
     {isAuthorized && <DeletedProjects get={getDeletedProjects} setDeletedProjects={setDeletedProjects} deletedProjects={deletedProjects} undelete={undeleteProject}/>}
+=======
+    {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
+>>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
   </main>
 );
 UserPage.propTypes = {
@@ -258,6 +263,7 @@ UserPageEditor.propTypes = {
   localRemoveItem: PropTypes.func.isRequired,
 };
 
+<<<<<<< HEAD
 const UserPageLoader = ({api, get, loginOrId, ...props}) => (
   <Notifications>
     <DataLoader get={get} renderError={() => <NotFound name={loginOrId}/>}>
@@ -307,8 +313,14 @@ export function UserPageById(application, id) {
   const get = () => getUserById(application.api(), id);
   return UserPagePresenter(application, id, get);
 }
+=======
+const UserPageContainer = ({api, user, currentUserModel, getProjects}) => (
+  <UserEditor api={api} initialUser={user} currentUserModel={currentUserModel}>
+    {(user, funcs, isAuthorized) => (
+      <UserPage api={api} user={user} {...funcs} {...{isAuthorized, getProjects}}/>
+    )}
+  </UserEditor>
+);
+>>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
 
-export function UserPageByLogin(application, login) {
-  const get = () => getUserByLogin(application.api(), login);
-  return UserPagePresenter(application, login, get);
-}
+export default UserPageContainer;

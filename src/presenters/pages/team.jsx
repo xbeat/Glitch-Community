@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+<<<<<<< HEAD
 import * as assets from '../../utils/assets';
 import TeamModel, {getAvatarStyle, getProfileStyle} from '../../models/team';
 import UserModel from '../../models/user';
@@ -18,14 +19,25 @@ import Thanks from '../includes/thanks.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Notifications} from '../notifications.jsx';
 import Uploader from '../includes/uploader.jsx';
+=======
+import {getAvatarStyle, getProfileStyle} from '../../models/team';
+import TeamEditor from '../team-editor.jsx';
+import NameConflictWarning from '../includes/name-conflict.jsx';
+>>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
 
 import AddTeamProject from '../includes/add-team-project.jsx';
 import DeleteTeam from '../includes/delete-team.jsx';
 import {AddTeamUser, TeamUsers} from '../includes/team-users.jsx';
+<<<<<<< HEAD
 import EntityEditor from '../entity-editor.jsx';
+=======
+import {AuthDescription} from '../includes/description-field.jsx';
+>>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
 import EntityPageProjects from '../entity-page-projects.jsx';
+import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
+<<<<<<< HEAD
 import TeamUpgradeInfoBanner from '../includes/team-upgrade-info-banner.jsx';
 import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reached-banner.jsx';
 import UsersList from "../users-list.jsx";
@@ -190,6 +202,57 @@ class TeamPage extends React.Component {
   }
 }
 
+=======
+import Thanks from '../includes/thanks.jsx';
+
+const TeamPage = ({
+  team: {
+    id, name, description, users,
+    projects, teamPins,
+    isVerified, verifiedImage, verifiedTooltip,
+    backgroundColor, hasAvatarImage,
+    coverColor, hasCoverImage,
+    _cacheAvatar, _cacheCover,
+  },
+  currentUserIsOnTeam,
+  updateDescription,
+  uploadAvatar, uploadCover, clearCover,
+  addUser, removeUser,
+  addPin, removePin,
+  addProject, removeProject,
+  api, searchUsers,
+}) => (
+  <main className="profile-page team-page">
+    <section>
+      <ProfileContainer
+        avatarStyle={getAvatarStyle({id, hasAvatarImage, backgroundColor, cache: _cacheAvatar})}
+        coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
+        avatarButtons={currentUserIsOnTeam ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null}
+        coverButtons={currentUserIsOnTeam ? <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/> : null}
+      >
+        <h1 className="username">
+          {name}
+          {isVerified && <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>}
+        </h1>
+        <div className="users-information">
+          <TeamUsers {...{users, currentUserIsOnTeam, removeUser}}/>
+          {currentUserIsOnTeam && <AddTeamUser search={searchUsers} add={addUser} members={users.map(({id}) => id)}/>}
+        </div>
+        <Thanks count={users.reduce((total, {thanksCount}) => total + thanksCount, 0)}/>
+        <AuthDescription authorized={currentUserIsOnTeam} description={description} update={updateDescription} placeholder="Tell us about your team"/>
+      </ProfileContainer>
+    </section>
+    <AddTeamProject {...{currentUserIsOnTeam, addProject}} teamProjects={projects}/>
+    <EntityPageProjects
+      api={api} projects={projects} pins={teamPins} isAuthorized={currentUserIsOnTeam}
+      addPin={addPin} removePin={removePin} projectOptions={{removeProjectFromTeam: removeProject}}
+    />
+    {(currentUserIsOnTeam ?
+      <TeamAnalytics api={() => api} id={id} currentUserOnTeam={currentUserIsOnTeam} projects={projects}/>
+      : <TeamMarketing/>)}
+  </main>
+);
+>>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1
 TeamPage.propTypes = {
   team: PropTypes.shape({
     _cacheAvatar: PropTypes.number.isRequired,
@@ -217,6 +280,7 @@ TeamPage.propTypes = {
   clearCover: PropTypes.func.isRequired,
   currentUserId: PropTypes.number.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
+<<<<<<< HEAD
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
   getProjects: PropTypes.func.isRequired,
   myProjects: PropTypes.array.isRequired,
@@ -290,3 +354,27 @@ export default function(application, id, name) {
   const content = Reactlet(TeamPageLoader, props, 'teampage');
   return LayoutPresenter(application, content);
 }
+=======
+  api: PropTypes.any.isRequired,
+};
+
+const teamConflictsWithUser = (team, currentUserModel) => {
+  if (currentUserModel.login()) {
+    return currentUserModel.login().toLowerCase() === team.url;
+  }
+  return false;
+};
+
+const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
+  <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
+    {(team, funcs, currentUserIsOnTeam) => (
+      <React.Fragment>
+        <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
+        {teamConflictsWithUser(team, currentUserModel) && <NameConflictWarning/>}
+      </React.Fragment>
+    )}
+  </TeamEditor>
+);
+
+export default TeamPageContainer;
+>>>>>>> bcc747b1f2676cf72f88782dd94a005eaee504c1

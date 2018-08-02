@@ -23,14 +23,14 @@ RawHTML.propTypes = {
 };
 
 const Markdown = ({children}) => (
-  <RawHTML>{md.render(children)}</RawHTML>
+  <RawHTML>{md.render(children || '')}</RawHTML>
 );
 Markdown.propTypes = {
   children: PropTypes.string.isRequired,
 };
 
 const TruncatedMarkdown = ({children, length}) => (
-  <RawHTML>{truncate(md.render(children), length, {ellipsis: '…'})}</RawHTML>
+  <RawHTML>{truncate(md.render(children || ''), length, {ellipsis: '…'})}</RawHTML>
 );
 TruncatedMarkdown.propTypes = {
   children: PropTypes.string.isRequired,
