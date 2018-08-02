@@ -19,7 +19,7 @@ const TeamPage = ({
   team: {
     id, name, description, users,
     projects, teamPins,
-    isVerified, verifiedImage, verifiedTooltip,
+    isVerified,
     backgroundColor, hasAvatarImage,
     coverColor, hasCoverImage,
     _cacheAvatar, _cacheCover,
@@ -42,7 +42,7 @@ const TeamPage = ({
       >
         <h1 className="username">
           {name}
-          {isVerified && <VerifiedBadge image={verifiedImage} tooltip={verifiedTooltip}/>}
+          {isVerified && <VerifiedBadge/>}
         </h1>
         <div className="users-information">
           <TeamUsers {...{users, currentUserIsOnTeam, removeUser}}/>

@@ -9,7 +9,7 @@ export default function Project({teams, users, ...project}) {
     ...project
   };
   return {
-    update: () => this,
+    update: data => Project(data),
     asProps: () => props,
   };
 }

@@ -67,22 +67,6 @@ export default Team = function(I, self) {
       
     },
 
-    thanksCount() {
-      if (self.users().length) {
-        let thanks = 0;
-        self.users().forEach(user => thanks = thanks + parseInt(user.thanksCount()));
-        return thanks;
-      }
-    },
-
-    verifiedTooltip() {
-      return "Verified to be supportive, helpful people";
-    },
-
-    verifiedImage() {
-      return "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fverified.svg?1501783108220";
-    },
-
     teamProfileStyle() {
       return {
         backgroundColor: self.coverColor(),
@@ -114,12 +98,9 @@ export default Team = function(I, self) {
         teamAvatarStyle: self.teamAvatarStyle(),
         teamAvatarUrl: self.teamAvatarUrl(),
         teamProfileStyle: self.teamProfileStyle(),
-        thanksCount: self.thanksCount(),
         hasAvatarImage: !!self.hasAvatarImage(),
         hasCoverImage: !!self.hasCoverImage(),
         url: self.url(),
-        verifiedImage: self.verifiedImage(),
-        verifiedTooltip: self.verifiedTooltip(),
       };
     },
   });
