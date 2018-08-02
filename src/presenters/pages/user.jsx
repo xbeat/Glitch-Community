@@ -12,6 +12,7 @@ import Thanks from '../includes/thanks.jsx';
 import DeletedProjects from '../deleted-projects.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
+import UserEditor from '../user-editor.jsx'
 
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
   if(!login) {
@@ -53,7 +54,8 @@ const UserPage = ({
     id, login, name, description, thanksCount,
     avatarUrl, color,
     hasCoverImage, coverColor,
-    pins, projects,
+    pins, projects, _deletedProjects,
+    _cacheCover,
   },
   api, isAuthorized,
   updateDescription,
@@ -61,10 +63,9 @@ const UserPage = ({
   uploadCover, clearCover,
   uploadAvatar,
   addPin, removePin,
-  leaveProject, deletedProjects,
+  leaveProject,
   deleteProject, undeleteProject,
   getProjects, setDeletedProjects,
-  _cacheCover,
 }) => (
   <main className="profile-page user-page">
     <section>
@@ -103,7 +104,6 @@ UserPage.propTypes = {
   uploadCover: PropTypes.func.isRequired,
   clearCover: PropTypes.func.isRequired,
   leaveProject: PropTypes.func.isRequired,
-  _cacheCover: PropTypes.number.isRequired,
 };
 
 
