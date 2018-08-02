@@ -13,7 +13,6 @@ import Thanks from '../includes/thanks.jsx';
 import DeletedProjects from '../deleted-projects.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
-import UserEditor from '../user-editor.jsx'
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
