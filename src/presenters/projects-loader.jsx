@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {chunk, keyBy} from 'lodash';
 
 import ProjectModel from '../models/project';
-import {ApiConsumer} from './api.jsx';
 
 import {CurrentUserConsumer, normalizeProjects} from './current-user.jsx';
 
@@ -67,9 +66,4 @@ ProjectsLoader.propTypes = {
   projects: PropTypes.array.isRequired,
 };
 
-const ProjectsLoaderConsumer = ({...props}) => (
-  <ApiConsumer>
-    {api => <ProjectsLoader api={api} {...props}/>}
-  </ApiConsumer>
-);
-export default ProjectsLoaderConsumer;
+export default ProjectsLoader;

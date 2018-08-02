@@ -68,7 +68,7 @@ const CategoryPage = ({api, category, ...props}) => (
   >
     {category => (
       <CategoryPageWrap category={category} {...props}>
-        <ProjectsLoader projects={category.projects}>
+        <ProjectsLoader api={api} projects={category.projects}>
           {projects => <ProjectsUL projects={projects} categoryColor={category.color}/>}
         </ProjectsLoader>
       </CategoryPageWrap>

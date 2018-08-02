@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {sampleSize} from 'lodash';
 
 import ProjectModel from '../models/project';
-import {ApiConsumer} from './api.jsx';
 
 import {ProjectsUL} from './projects-list.jsx';
 
@@ -80,10 +79,4 @@ CategoryLoader.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
-const CategoryContainer = () => (
-  <ApiConsumer>
-    {api => <CategoryLoader api={api}/>}
-  </ApiConsumer>
-);
-
-export default CategoryContainer;
+export default CategoryLoader;

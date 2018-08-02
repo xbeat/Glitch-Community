@@ -6,6 +6,7 @@ import moment from 'moment-mini';
 import Layout from '../layout.jsx';
 
 import {getEditorUrl} from '../../models/project';
+import {ApiConsumer} from '../api.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
 import Categories from '../categories.jsx';
@@ -107,16 +108,16 @@ const MadeInGlitch = () => (
   </section>
 );
 
-const IndexPage = ({categories, user}) => (
+const IndexPage = ({api, categories, user}) => (
   <main>
     <h1 className="headline">
       <a href="https://glitch.com">Glitch</a>{' '}
       is the friendly community where you'll build the app of your dreams
     </h1>
-    {!!(user && user.login) && <Questions/>}
-    {!!user && <RecentProjects/>}
+    {!!(user && user.login) && <Questions api={api}/>}
+    {!!user && <RecentProjects api={api}/>}
     <Featured/>
-    <RandomCategories/>
+    <RandomCategories api={api}/>
     <Categories categories={categories}/>
     {!(user && user.login) && <WhatIsGlitch/>}
     <ByFogCreek/>
@@ -132,9 +133,13 @@ IndexPage.propTypes = {
 
 const IndexPageContainer = ({application}) => (
   <Layout application={application}>
-    <CurrentUserConsumer>
-      {user => <IndexPage user={user} categories={application.categories}/>}
-    </CurrentUserConsumer>
+    <ApiConsumer>
+      {api => (
+        <CurrentUserConsumer>
+          {user => <IndexPage api={api} user={user} categories={application.categories}/>}
+        </CurrentUserConsumer>
+      )}
+    </ApiConsumer>
   </Layout>
 );
 

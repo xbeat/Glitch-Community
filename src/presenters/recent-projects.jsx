@@ -41,12 +41,12 @@ RecentProjectsContainer.propTypes = {
   }).isRequired,
 };
 
-const RecentProjects = () => (
+const RecentProjects = ({api}) => (
   <CurrentUserConsumer>
     {(user, fetched) => (
       <RecentProjectsContainer user={user}>
         {fetched ? (
-          <ProjectsLoader projects={user.projects.slice(0,3)}>
+          <ProjectsLoader api={api} projects={user.projects.slice(0,3)}>
             {projects => <ProjectsUL projects={projects}/>}
           </ProjectsLoader>
         ) : <Loader/>}
@@ -54,5 +54,8 @@ const RecentProjects = () => (
     )}
   </CurrentUserConsumer>
 );
+RecentProjects.propTypes = {
+  api: PropTypes.any.isRequired,
+};
 
 export default RecentProjects;
