@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
+import {getAvatarUrl} from '../models/team';
+
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import Thanks from './includes/thanks.jsx';
 import UsersList from './users-list.jsx';
@@ -15,7 +18,7 @@ export default function TeamItem({team}) {
   return (
     <WrappingLink href={team.url} className="item" style={style}>
       <div className="content">
-        <img className="avatar" src={team.teamAvatarUrl} alt="" />
+        <img className="avatar" src={getAvatarUrl(team)} alt="" />
         <div className="information">
           <a href={team.url} className="button">{team.name}</a>
           {!!team.isVerified && <VerifiedBadge/>}
@@ -30,12 +33,13 @@ export default function TeamItem({team}) {
 
 TeamItem.propTypes = {
   team: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     coverColor: PropTypes.string.isRequired,
     coverUrlSmall: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    hasAvatarImage: PropTypes.bool.isRequired,
     isVerified: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
-    teamAvatarUrl: PropTypes.string.isRequired,
     users: PropTypes.array.isRequired,
     url: PropTypes.string.isRequired,
   }),

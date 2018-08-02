@@ -96,7 +96,6 @@ export default Team = function(I, self) {
         isVerified: self.isVerified(),
         name: self.name(),
         teamAvatarStyle: self.teamAvatarStyle(),
-        teamAvatarUrl: self.teamAvatarUrl(),
         teamProfileStyle: self.teamProfileStyle(),
         hasAvatarImage: !!self.hasAvatarImage(),
         hasCoverImage: !!self.hasCoverImage(),
@@ -117,17 +116,22 @@ export default Team = function(I, self) {
 Team._cache = cache;
 
 
-export const getAvatarStyle = ({id, hasAvatarImage, backgroundColor, cache}) => {
+export const getAvatarUrl = ({id, hasAvatarImage, cache=cacheBuster}) => {
   const customImage = `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-avatar/${id}/small?${cache}`;
   const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-team-avatar.svg?1503510366819";
+  return hasAvatarImage ? customImage : defaultImage;
+};
+
+export const getAvatarStyle = ({id, hasAvatarImage, backgroundColor, cache}) => {
+  const image = getAvatarUrl({id, hasAvatarImage, cache});
   if (hasAvatarImage) {
     return {
-      backgroundImage: `url('${customImage}')`,
+      backgroundImage: `url('${image}')`,
     };
   }
   return {
     backgroundColor,
-    backgroundImage: `url('${defaultImage}')`,
+    backgroundImage: `url('${image}')`,
   };
 };
 
