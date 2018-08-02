@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {getAvatarUrl} from '../models/team';
+import {getAvatarUrl, getProfileStyle} from '../models/team';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import Thanks from './includes/thanks.jsx';
@@ -10,10 +10,7 @@ import WrappingLink from './includes/wrapping-link.jsx';
 import {VerifiedBadge} from './includes/team-elements.jsx';
 
 export default function TeamItem({team}) {
-  const style = {
-    backgroundImage: `url('${team.coverUrlSmall}')`,
-    backgroundColor: team.coverColor,
-  };
+  const style = getProfileStyle({...team, size: 'small'});
   const thanksCount = team.users.reduce((total, {thanksCount}) => total + thanksCount, 0);
   return (
     <WrappingLink href={team.url} className="item" style={style}>
@@ -35,9 +32,9 @@ TeamItem.propTypes = {
   team: PropTypes.shape({
     id: PropTypes.number.isRequired,
     coverColor: PropTypes.string.isRequired,
-    coverUrlSmall: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     hasAvatarImage: PropTypes.bool.isRequired,
+    hasCoverImage: PropTypes.bool.isRequired,
     isVerified: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     users: PropTypes.array.isRequired,
