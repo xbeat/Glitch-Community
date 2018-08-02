@@ -10,7 +10,7 @@ import WrappingLink from './includes/wrapping-link.jsx';
 import {VerifiedBadge} from './includes/team-elements.jsx';
 
 export default function TeamItem({team}) {
-  const style = getProfileStyle({...team, size: 'small'});
+  const style = getProfileStyle({...team, size: 'medium'});
   const thanksCount = team.users.reduce((total, {thanksCount}) => total + thanksCount, 0);
   return (
     <WrappingLink href={team.url} className="item" style={style}>

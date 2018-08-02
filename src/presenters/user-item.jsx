@@ -1,19 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import Thanks from './includes/thanks.jsx';
 
-import {ANON_AVATAR_URL} from '../models/user.js';
+import {ANON_AVATAR_URL, getProfileStyle} from '../models/user.js';
 
 function addDefaultSrc(event) {
   event.target.src = ANON_AVATAR_URL;
 }
 
 export default function UserItem({user}) {
-  const style = {
-    backgroundImage: `url('${user.coverUrlSmall}')`,
-    backgroundColor: user.coverColor || '',
-  };
+  const style = getProfileStyle({...user, size: 'medium'});
   return (
     <a href={user.userLink}>
       <div className="item" style={style}>
@@ -34,8 +32,9 @@ export default function UserItem({user}) {
 UserItem.propTypes = {
   user: PropTypes.shape({
     coverColor: PropTypes.string,
-    coverUrlSmall: PropTypes.string.isRequired,
     description: PropTypes.string,
+    hasCoverImage: PropTypes.bool.isRequired,
+    id: PropTypes.number.isRequired,
     login: PropTypes.string.isRequired,
     name: PropTypes.string,
     thanksCount: PropTypes.number.isRequired,
