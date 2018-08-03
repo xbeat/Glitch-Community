@@ -159,6 +159,15 @@ User.getUserById = function(application, id) {
 
 User._cache = cache;
 
+export function getDisplayName({login, name}) {
+  if (name) {
+    return name;
+  } else if (login) {
+    return `@${login}`;
+  }
+  return 'Anonymous User';
+}
+
 export function getLink({id, login}) {
   if (login) {
     return `/@${login}`;
