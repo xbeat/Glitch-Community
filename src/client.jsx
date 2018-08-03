@@ -11,7 +11,6 @@ import application from './application';
 import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
-import {ApiProvider} from './presenters/api.jsx';
 import {CurrentUserProvider} from './presenters/current-user.jsx';
 import {Notifications} from './presenters/notifications.jsx';
 
@@ -101,11 +100,9 @@ async function route(location, application) {
   const App = ({application}) => (
     <BrowserRouter>
       <Notifications>
-        <ApiProvider api={application.api()}>
-          <CurrentUserProvider model={application.currentUser()}>
-            <Router application={application}/>
-          </CurrentUserProvider>
-        </ApiProvider>
+        <CurrentUserProvider model={application.currentUser()}>
+          <Router application={application}/>
+        </CurrentUserProvider>
       </Notifications>
     </BrowserRouter>
   );

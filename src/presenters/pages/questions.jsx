@@ -7,7 +7,7 @@ import Layout from '../layout.jsx';
 import Questions from '../questions.jsx';
 import Categories from '../categories.jsx';
 
-const QuestionsPage = ({api, application}) => (
+const QuestionsPage = ({application}) => (
   <Layout application={application}>
     <Helmet>
       <title>Questions</title>
