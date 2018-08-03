@@ -49,25 +49,27 @@ export const PopulatedUsersList = ({users, extraClass="" }) => (
     ))}
   </ul>
 );
-
 PopulatedUsersList.propTypes = {
   users: PropTypes.array.isRequired,
   extraClass: PropTypes.string,
 };
 
+const GlitchTeamUsersList = ({extraClass=''}) => (
+  <ul className={`users ${extraClass}`}>
+    <li>
+      <span className="user made-by-glitch" data-tooltip="Glitch Team" data-tooltip-left="true" style={{backgroundColor:"#74ecfc"}}>
+        <UserAvatar userAvatarUrl="https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267" alt="Glitch Team"/>
+      </span>
+    </li>
+  </ul>
+);
+
 const glitchTeamAvatar = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267";
-const UsersList = ({glitchTeam=false, users, ...props}) => {
+const UsersList = ({glitchTeam=false, users, extraClass}) => {
   if(glitchTeam) {
-    users = [{
-      userLink: null,
-      tooltipName: "Glitch-Team",
-      style: {backgroundColor:"#74ecfc"},
-      alt: "Glitch Team Avatar",
-      userAvatarUrl: glitchTeamAvatar,
-      extraClass: "made-by-glitch",
-    }];
+    return <GlitchTeamUsersList extraClass={extraClass}/>
   }
-  return <PopulatedUsersList users={users} {...props}/>;
+  return <PopulatedUsersList users={users} extraClass={extraClass}/>;
 };
 
 UsersList.propTypes = {
