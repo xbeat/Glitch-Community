@@ -52,7 +52,7 @@ const UserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopov
     <dialog className="pop-over user-info-pop">
       <section className="pop-over-info">
         <a href={getLink(user)}>
-          <img className="avatar" src={user.userAvatarUrl} alt={user.login} style={user.style}/>
+          <img className="avatar" src={user.userAvatarUrl} alt={user.login} style={{backgroundColor: user.color}}/>
         </a>
         <div className="info-container">
           <p className="name" title={user.name}>{user.name}</p>
@@ -71,6 +71,7 @@ UserInfoPop.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string,
     login: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
     userAvatarUrl: PropTypes.string.isRequired,
     thanksCount: PropTypes.number.isRequired,
     isOnTeam: PropTypes.bool,

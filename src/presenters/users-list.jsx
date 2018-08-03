@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './pop-overs/popover-container.jsx';
 import {ANON_AVATAR_URL, getDisplayName, getLink} from '../models/user.js';
 
+function getStyle({color}) {
+  return {backgroundColor: color};
+}
+
 function addDefaultSrc(event) {
   event.target.src = ANON_AVATAR_URL;
 }
@@ -21,7 +25,7 @@ UserAvatar.propTypes = {
 };
 
 const UserTile = (user) => (
-  <a href={getLink(user)} className="user" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={user.style}>
+  <a href={getLink(user)} className="user" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
     <UserAvatar userAvatarUrl={user.userAvatarUrl} alt={getDisplayName(user)} />
   </a>
 );
@@ -30,7 +34,7 @@ UserTile.propTypes = {
   id: PropTypes.number.isRequired,
   login: PropTypes.string,
   name: PropTypes.string,
-  style: PropTypes.object.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 export const PopulatedUsersList = ({users, extraClass="" }) => (
@@ -50,7 +54,7 @@ PopulatedUsersList.propTypes = {
 const GlitchTeamUsersList = ({extraClass=''}) => {
   const name = 'Glitch Team';
   const avatar = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267";
-  const style = {backgroundColor: "#74ecfc"};
+  const style = getStyle({color: "#74ecfc"});
   return (
     <ul className={`users ${extraClass}`}>
       <li>
@@ -79,7 +83,7 @@ const UserPopoverTile = ({children, ...user}) => (
   <PopoverContainer>
     {({visible, togglePopover}) => (
       <div className="button-wrap">
-        <button onClick={togglePopover} className="user button-unstyled" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={user.style}>
+        <button onClick={togglePopover} className="user button-unstyled" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
           <UserAvatar userAvatarUrl={user.userAvatarUrl} alt={getDisplayName(user)} />
         </button>
         {!!visible && children(togglePopover)}
@@ -92,7 +96,7 @@ UserPopoverTile.propTypes = {
   id: PropTypes.number.isRequired,
   login: PropTypes.string,
   name: PropTypes.string,
-  style: PropTypes.object.isRequired,
+  color: PropTypes.string.isRequired,
   children: PropTypes.func.isRequired,
 };
 

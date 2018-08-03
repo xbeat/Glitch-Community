@@ -47,25 +47,6 @@ export default User = function(I, self) {
       return !self.login();
     },
 
-    coverUrl(size='large') {
-      if (self.localCoverImage()) {
-        return self.localCoverImage();
-      } 
-
-      if (self.hasCoverImage()) {
-        return `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/user-cover/${self.id()}/${size}?${cacheBuster}`;
-      } 
-      return "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
-      
-    },
-    
-    profileStyle() {
-      return {
-        backgroundColor: self.coverColor(),
-        backgroundImage: `url('${self.coverUrl()}')`,
-      };
-    },
-
     userAvatarUrl(size) {
       size = size || 'small';
       if (self.isAnon() || !self.avatarUrl()) {
@@ -77,21 +58,12 @@ export default User = function(I, self) {
       return self.avatarThumbnailUrl();
     },
     
-    alt() {
-      return `${I.login} avatar`;
-    },
-    
-    style() {
-      return {backgroundColor: I.color};
-    },
-    
     asProps() {
       return {
         get teams() { return self.teams.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()); },
         get projects() { return self.projects.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()); },
         get pins() { return self.pins(); },
 
-        alt: self.alt(),
         avatarUrl: self.avatarUrl(),
         color: self.color(),
         coverColor: self.coverColor(),
@@ -100,8 +72,6 @@ export default User = function(I, self) {
         id: self.id(),
         login: self.login(),
         name: self.name(),
-        style: self.style(),
-        profileStyle: self.profileStyle(),
         thanksCount: self.thanksCount(),
         userAvatarUrl: self.userAvatarUrl(),
         userAvatarUrlLarge: self.userAvatarUrl('large'),
