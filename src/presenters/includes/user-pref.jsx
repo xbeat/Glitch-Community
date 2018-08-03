@@ -2,21 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const {Provider, Consumer} = React.createContext();
+const KEY = 'community-userPrefs';
 
-class UserPrefs extends React.Component {
+class LocalStorage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {value: undefined};
     this.handleStorage = this.handleStorage.bind(this);
   }
   
   handleStorage() {
+    let value;
     try {
-      const prefs = window.localStorage['community-userPrefs'];
-      this.setState(JSON.parse(prefs));
+      value = JSON.parse(window.localStorage[this.props.key]);
     } catch (error) {
-      console.error('Failed to read prefs from localStorage!');
+      console.error('Failed to read from localStorage!');
+      value = undefined;
     }
+    this.setState({value});
   }
   
   componentDidMount() {
@@ -29,8 +32,12 @@ class UserPrefs extends React.Component {
   }
   
   set(value) {
+    try {
+      window.localStorage[this.props.key] = value;
+    } catch (error) {
+      console.error('Failed to write to localStorage!');
+    }
     this.setState({value});
-    this.props.setUserPref(this.props.name, value);
   }
   
   render() {
