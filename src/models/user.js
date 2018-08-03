@@ -80,10 +80,6 @@ export default User = function(I, self) {
       }
       return self.avatarThumbnailUrl();
     },
-
-    tooltipName() {
-      return self.login() || "anonymous user";
-    },
     
     alt() {
       return `${I.login} avatar`;
@@ -115,7 +111,6 @@ export default User = function(I, self) {
         style: self.style(),
         profileStyle: self.profileStyle(),
         thanksCount: self.thanksCount(),
-        tooltipName: self.tooltipName(),
         userAvatarUrl: self.userAvatarUrl(),
         userAvatarUrlLarge: self.userAvatarUrl('large'),
       };
