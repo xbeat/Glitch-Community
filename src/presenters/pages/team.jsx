@@ -109,12 +109,13 @@ class TeamPage extends React.Component {
           teamProjects={this.props.team.projects}
           projectLimitIsReached={this.projectLimitIsReached()}
           api={() => this.props.api}
+          myProjects={this.props.currentUser.projects}
         />
         { this.projectLimitIsReached() &&
           <TeamProjectLimitReachedBanner
             teamName={this.props.team.name}
             teamId={this.props.team.id}
-            currentUserId={this.props.currentUserId}
+            currentUserId={this.props.currentUser.id}
             users={this.props.team.users}
           />
         }
@@ -150,7 +151,7 @@ class TeamPage extends React.Component {
             currentUserIsOnTeam={this.props.currentUserIsOnTeam}
             projects={this.props.team.projects}
             addProject={this.props.addProject}
-            myProjects={this.props.myProjects}
+            myProjects={this.props.currentUser.projects}
             projectLimitIsReached={this.projectLimitIsReached()}
           />
         }
@@ -161,7 +162,7 @@ class TeamPage extends React.Component {
             teamName={this.props.team.name}
             teamId={this.props.team.id}
             users={this.props.team.users}
-            currentUserId={this.props.currentUserId}
+            currentUserId={this.props.currentUser.id}
           />
         }
 
@@ -211,11 +212,11 @@ TeamPage.propTypes = {
   addUser: PropTypes.func.isRequired,
   api: PropTypes.func.isRequired,
   clearCover: PropTypes.func.isRequired,
-  
-  currentUserId: PropTypes.number.isRequired,
+  currentUser: PropTypes.object,
+  // currentUserId: PropTypes.number.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
-  myProjects: PropTypes.array.isRequired,
+  // myProjects: PropTypes.array.isRequired,
   removeUser: PropTypes.func.isRequired,
   removePin: PropTypes.func.isRequired,
   removeProject: PropTypes.func.isRequired,
@@ -243,7 +244,7 @@ const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
 
         <CurrentUserConsumer>
           {currentUser => (
-            <TeamPage api={api} team={team} {...funcs} currentUser={currentUser} currentUserIsOnTeam={currentUserIsOnTeam} currentUserId={currentUser.id} myProjects={currentUser.projects} currentUserIsTeamAdmin={currentUserIsTeamAdmin} {...props}/>
+            <TeamPage api={api} team={team} {...funcs} currentUser={currentUser} currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin} {...props}/>
           )}
         </CurrentUserConsumer>
 
