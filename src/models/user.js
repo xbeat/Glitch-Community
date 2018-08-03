@@ -92,14 +92,6 @@ export default User = function(I, self) {
     style() {
       return {backgroundColor: I.color};
     },
-    
-    userLink() {
-      if (self.isSignedIn()) {
-        return `/@${I.login}`;
-      } 
-      return `/user/${I.id}`;
-      
-    },
 
     glitchTeamAvatar() {
       return "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg";
@@ -126,8 +118,6 @@ export default User = function(I, self) {
         tooltipName: self.tooltipName(),
         userAvatarUrl: self.userAvatarUrl(),
         userAvatarUrlLarge: self.userAvatarUrl('large'),
-        userLink: self.userLink(),
-        
       };
     },
   });
