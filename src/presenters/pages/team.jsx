@@ -109,7 +109,7 @@ class TeamPage extends React.Component {
           teamProjects={this.props.team.projects}
           projectLimitIsReached={this.projectLimitIsReached()}
           api={() => this.props.api}
-          myProjects={this.props.currentUser.projects}
+          myProjects={this.props.currentUser ? this.props.currentUser.projects : []}
         />
         { this.projectLimitIsReached() &&
           <TeamProjectLimitReachedBanner
@@ -151,7 +151,7 @@ class TeamPage extends React.Component {
             currentUserIsOnTeam={this.props.currentUserIsOnTeam}
             projects={this.props.team.projects}
             addProject={this.props.addProject}
-            myProjects={this.props.currentUser.projects}
+            myProjects={this.props.currentUser ? this.props.currentUser.projects : []}
             projectLimitIsReached={this.projectLimitIsReached()}
           />
         }
@@ -213,10 +213,8 @@ TeamPage.propTypes = {
   api: PropTypes.func.isRequired,
   clearCover: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
-  // currentUserId: PropTypes.number.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
-  // myProjects: PropTypes.array.isRequired,
   removeUser: PropTypes.func.isRequired,
   removePin: PropTypes.func.isRequired,
   removeProject: PropTypes.func.isRequired,
