@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getLink} from '../../models/user'
+import {getLink} from '../../models/user';
 import Thanks from '../includes/thanks.jsx';
 
 const RemoveFromTeam = ({action}) => (
@@ -19,7 +19,7 @@ RemoveFromTeam.propTypes = {
 
 const UserActions = ({user}) => (
   <section className="pop-over-actions">
-    <a href={user.userLink}>
+    <a href={getLink(user)}>
       <button className="button-small has-emoji button-tertiary">
         <span>Profile </span>
         <img className="emoji avatar" src={user.userAvatarUrl} alt={user.login}></img>
@@ -51,7 +51,7 @@ const UserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopov
   return (
     <dialog className="pop-over user-info-pop">
       <section className="pop-over-info">
-        <a href={user.userLink}>
+        <a href={getLink(user)}>
           <img className="avatar" src={user.userAvatarUrl} alt={user.login} style={user.style}/>
         </a>
         <div className="info-container">
@@ -68,7 +68,7 @@ const UserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopov
 
 UserInfoPop.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.umber.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string,
     login: PropTypes.string.isRequired,
     userAvatarUrl: PropTypes.string.isRequired,

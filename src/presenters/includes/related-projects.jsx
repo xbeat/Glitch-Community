@@ -4,7 +4,7 @@ import {sampleSize, difference} from 'lodash';
 
 import ProjectModel from '../../models/project';
 import {getProfileStyle as getTeamProfileStyle} from '../../models/team';
-import {getProfileStyle as getUserProfileStyle} from '../../models/user';
+import {getLink as getUserLink, getProfileStyle as getUserProfileStyle} from '../../models/user';
 
 import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
@@ -78,9 +78,9 @@ class RelatedProjects extends React.Component {
             </DataLoader>
           </li>
         ))}
-        {users.map(({id, name, login, tooltipName, userLink, ...user}) => (
+        {users.map(({id, name, login, tooltipName, ...user}) => (
           <li key={id}>
-            <RelatedProjectsHeader name={name || login || tooltipName} url={userLink}/>
+            <RelatedProjectsHeader name={name || login || tooltipName} url={getUserLink({id, login})}/>
             <DataLoader get={() => this.getProjects(id, getUserPins, getUser)}>
               {projects => <RelatedProjectsBody projects={projects} coverStyle={getUserProfileStyle({id, ...user})}/>}
             </DataLoader>

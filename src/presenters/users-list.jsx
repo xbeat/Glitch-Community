@@ -96,10 +96,8 @@ const UserPopoverTile = ({
 );
 
 UserPopoverTile.propTypes = {
-  userLink: PropTypes.string,
   tooltipName: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
-  extraClass: PropTypes.string,
   children: PropTypes.func.isRequired,
 };
 

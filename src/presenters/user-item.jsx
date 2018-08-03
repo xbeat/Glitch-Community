@@ -4,7 +4,7 @@ import React from 'react';
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import Thanks from './includes/thanks.jsx';
 
-import {ANON_AVATAR_URL, getProfileStyle} from '../models/user.js';
+import {ANON_AVATAR_URL, getLink, getProfileStyle} from '../models/user.js';
 
 function addDefaultSrc(event) {
   event.target.src = ANON_AVATAR_URL;
@@ -13,7 +13,7 @@ function addDefaultSrc(event) {
 export default function UserItem({user}) {
   const style = getProfileStyle({...user, size: 'medium'});
   return (
-    <a href={user.userLink}>
+    <a href={getLink(user)}>
       <div className="item" style={style}>
         <div className="content">
           <img onError={addDefaultSrc} className="avatar" src={user.userAvatarUrlLarge} alt=""></img>
@@ -38,6 +38,5 @@ UserItem.propTypes = {
     login: PropTypes.string.isRequired,
     name: PropTypes.string,
     thanksCount: PropTypes.number.isRequired,
-    userLink: PropTypes.string.isRequired,
   }),
 };
