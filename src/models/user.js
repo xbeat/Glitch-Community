@@ -191,6 +191,13 @@ User.getUserById = function(application, id) {
 
 User._cache = cache;
 
+export function getLink({id, login}) {
+  if (login) {
+    return `/@${login}`;
+  }
+  return `/user/${id}`;
+}
+
 export function getAvatarStyle({avatarUrl, color}) {
   return {
     backgroundColor: color,
