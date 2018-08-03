@@ -56,7 +56,7 @@ const UserOptionsPopWrapper = ({user, showNewStuffOverlay}) => {
   const props = {
     teams: user.teams,
     userLink: getLink(user),
-    avatarUrl: user.avatarUrl,
+    avatarUrl: user.userAvatarUrl,
     avatarStyle: {backgroundColor: user.color},
     showNewStuffOverlay,
   };

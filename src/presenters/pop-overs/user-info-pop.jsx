@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {getLink} from '../../models/user'
 import Thanks from '../includes/thanks.jsx';
 
 const RemoveFromTeam = ({action}) => (
@@ -29,7 +30,7 @@ const UserActions = ({user}) => (
 
 UserActions.propTypes = {
   user: PropTypes.shape({
-    userLink: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     userAvatarUrl: PropTypes.string.isRequired,
     login: PropTypes.string.isRequired,
   }).isRequired,
@@ -67,10 +68,10 @@ const UserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopov
 
 UserInfoPop.propTypes = {
   user: PropTypes.shape({
+    id: PropTypes.umber.isRequired,
     name: PropTypes.string,
     login: PropTypes.string.isRequired,
     userAvatarUrl: PropTypes.string.isRequired,
-    userLink: PropTypes.string.isRequired,
     thanksCount: PropTypes.number.isRequired,
     isOnTeam: PropTypes.bool,
   }).isRequired,

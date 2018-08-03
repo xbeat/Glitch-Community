@@ -51,12 +51,6 @@ export default User = function(I, self) {
       return !self.login();
     },
 
-    isAnExperiencedUser() {
-      if (self.login() && (self.projects().length > 1)) {
-        return true;
-      }
-    },
-
     coverUrl(size='large') {
       if (self.localCoverImage()) {
         return self.localCoverImage();
@@ -76,26 +70,15 @@ export default User = function(I, self) {
       };
     },
 
-    avatarStyle() {
-      return {
-        backgroundColor: self.color(),
-        backgroundImage: `url('${self.userAvatarUrl('large')}')`,
-      };
-    },
-
     userAvatarUrl(size) {
       size = size || 'small';
       if (self.isAnon() || !self.avatarUrl()) {
-        return self.anonAvatar();
+        return ANON_AVATAR_URL;
       }
       if (size === "large") {
         return self.avatarUrl();
       }
       return self.avatarThumbnailUrl();
-    },
-
-    isCurrentUser(application) {
-      return self.id() === application.currentUser().id();
     },
 
     tooltipName() {
@@ -116,10 +99,6 @@ export default User = function(I, self) {
       } 
       return `/user/${I.id}`;
       
-    },
-
-    anonAvatar() {
-      return ANON_AVATAR_URL;
     },
 
     glitchTeamAvatar() {
@@ -143,7 +122,6 @@ export default User = function(I, self) {
         name: self.name(),
         style: self.style(),
         profileStyle: self.profileStyle(),
-        avatarStyle: self.avatarStyle(),
         thanksCount: self.thanksCount(),
         tooltipName: self.tooltipName(),
         userAvatarUrl: self.userAvatarUrl(),
