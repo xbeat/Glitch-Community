@@ -75,7 +75,6 @@ export default User = function(I, self) {
         name: self.name(),
         thanksCount: self.thanksCount(),
         userAvatarUrl: self.userAvatarUrl(),
-        userAvatarUrlLarge: self.userAvatarUrl('large'),
       };
     },
   });

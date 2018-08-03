@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getLink} from '../models/user';
+import {getAvatarThumbnailUrl, getLink} from '../models/user';
 
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
@@ -56,7 +56,7 @@ const UserOptionsPopWrapper = ({user, showNewStuffOverlay}) => {
   const props = {
     teams: user.teams,
     userLink: getLink(user),
-    avatarUrl: user.userAvatarUrl,
+    avatarUrl: getAvatarThumbnailUrl(user),
     avatarStyle: {backgroundColor: user.color},
     showNewStuffOverlay,
   };
@@ -66,8 +66,9 @@ const UserOptionsPopWrapper = ({user, showNewStuffOverlay}) => {
 
 UserOptionsPopWrapper.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    avatarThumbnailUrl: PropTypes.string,
     color: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     login: PropTypes.string,
   }).isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,

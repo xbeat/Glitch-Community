@@ -74,16 +74,12 @@ UserInfoPop.propTypes = {
     color: PropTypes.string.isRequired,
     userAvatarUrl: PropTypes.string.isRequired,
     thanksCount: PropTypes.number.isRequired,
-    isOnTeam: PropTypes.bool,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
 };
 
 UserInfoPop.defaultProps = {
-  user: {
-    isOnTeam: false
-  },
   currentUserIsOnTeam: false,
 };
 

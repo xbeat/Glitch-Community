@@ -4,7 +4,7 @@ import React from 'react';
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import Thanks from './includes/thanks.jsx';
 
-import {ANON_AVATAR_URL, getLink, getProfileStyle} from '../models/user.js';
+import {ANON_AVATAR_URL, getAvatarUrl, getLink, getProfileStyle} from '../models/user.js';
 
 function addDefaultSrc(event) {
   event.target.src = ANON_AVATAR_URL;
@@ -16,7 +16,7 @@ export default function UserItem({user}) {
     <a href={getLink(user)}>
       <div className="item" style={style}>
         <div className="content">
-          <img onError={addDefaultSrc} className="avatar" src={user.userAvatarUrlLarge} alt=""></img>
+          <img onError={addDefaultSrc} className="avatar" src={getAvatarUrl(user)} alt=""></img>
           <div className="information">
             {!!user.name && <h3 className="name">{user.name}</h3>}
             <div className="button">@{user.login}</div>
@@ -31,6 +31,7 @@ export default function UserItem({user}) {
 
 UserItem.propTypes = {
   user: PropTypes.shape({
+    avatarUrl: PropTypes.string,
     coverColor: PropTypes.string,
     description: PropTypes.string,
     hasCoverImage: PropTypes.bool.isRequired,

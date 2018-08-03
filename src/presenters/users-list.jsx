@@ -34,7 +34,7 @@ UserTile.propTypes = {
   id: PropTypes.number.isRequired,
   login: PropTypes.string,
   name: PropTypes.string,
-  avatarThumbnailUrl: PropTypes.string.isRequired,
+  avatarThumbnailUrl: PropTypes.string,
   color: PropTypes.string.isRequired,
 };
 
@@ -97,6 +97,7 @@ UserPopoverTile.propTypes = {
   id: PropTypes.number.isRequired,
   login: PropTypes.string,
   name: PropTypes.string,
+  avatarThumbnailUrl: PropTypes.string,
   color: PropTypes.string.isRequired,
   children: PropTypes.func.isRequired,
 };
