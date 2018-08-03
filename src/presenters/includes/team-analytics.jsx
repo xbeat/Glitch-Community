@@ -131,6 +131,15 @@ class TeamAnalytics extends React.Component {
     ) {
       this.updateAnalytics();
     }
+    else if (
+      prevProps.projects.length !== this.props.projects.length &&
+      this.state.isGettingC3 === false
+    ) {
+      this.updateAnalytics();
+      this.setState({
+        currentProjectDomain: 'All Projects'
+      })
+    }
   }
   
   render() {
