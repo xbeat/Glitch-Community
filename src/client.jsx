@@ -12,6 +12,7 @@ import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
 import {CurrentUserProvider} from './presenters/current-user.jsx';
+import {UserPrefsProvider} from './presenters/includes/user-prefs.jsx';
 import {Notifications} from './presenters/notifications.jsx';
 
 import Router from './presenters/pages/router.jsx';
@@ -99,9 +100,11 @@ async function route(location, application) {
   const App = ({application}) => (
     <BrowserRouter>
       <Notifications>
-        <CurrentUserProvider model={application.currentUser()}>
-          <Router application={application}/>
-        </CurrentUserProvider>
+        <UserPrefsProvider>
+          <CurrentUserProvider model={application.currentUser()}>
+            <Router application={application}/>
+          </CurrentUserProvider>
+        </UserPrefsProvider>
       </Notifications>
     </BrowserRouter>
   );

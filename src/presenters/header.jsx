@@ -99,13 +99,10 @@ Header.propTypes = {
   maybeUser: PropTypes.object,
 };
 
-const HeaderContainer = ({getUserPref, setUserPref, ...props}) => (
+const HeaderContainer = ({...props}) => (
   <CurrentUserConsumer>
     {user => (
-      <NewStuffContainer
-        isSignedIn={!!user && !!user.login}
-        getUserPref={getUserPref} setUserPref={setUserPref}
-      >
+      <NewStuffContainer isSignedIn={!!user && !!user.login}>
         {showNewStuffOverlay => (
           <Header {...props} maybeUser={user} showNewStuffOverlay={showNewStuffOverlay}/>
         )}

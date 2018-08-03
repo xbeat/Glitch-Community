@@ -4,15 +4,9 @@ import PropTypes from 'prop-types';
 import Header from './header.jsx';
 import Footer from './footer.jsx';
 
-const getHeaderProps = (application) => ({
-  api: application.api(),
-  getUserPref: application.getUserPref,
-  setUserPref: application.updateUserPrefs,
-});
-
 const Layout = ({children, application, searchQuery}) => (
   <div className="content">
-    <Header {...getHeaderProps(application)} searchQuery={searchQuery}/>
+    <Header api={application.api()} searchQuery={searchQuery}/>
     {children}
     <Footer/>
   </div>

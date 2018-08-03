@@ -61,28 +61,6 @@ var self = Model({
       return undefined;
     }
   },
-
-  getLocal(key) {
-    try {
-      return JSON.parse(window.localStorage[key]);
-    } catch (error) {
-      return undefined;
-    }
-  },
-
-  getUserPrefs() {
-    return self.getLocal('community-userPrefs') || {};
-  },
-
-  getUserPref(key) {
-    return self.getUserPrefs()[key];
-  },
-
-  updateUserPrefs(key, value) {
-    const prefs = self.getUserPrefs();
-    prefs[key] = value;
-    return self.storeLocal('community-userPrefs', prefs);
-  },
     
   login(provider, code) {
     let authURL;

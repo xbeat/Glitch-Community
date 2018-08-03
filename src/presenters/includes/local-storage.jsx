@@ -11,9 +11,9 @@ export default class LocalStorage extends React.Component {
   handleStorage() {
     let value;
     try {
-      value = JSON.parse(window.localStorage.getItem(this.props.key));
+      value = JSON.parse(window.localStorage.getItem(this.props.name));
     } catch (error) {
-      console.error('Failed to read from localStorage!');
+      console.error('Failed to read from localStorage!', error);
       value = undefined;
     }
     this.setState({value});
@@ -30,19 +30,22 @@ export default class LocalStorage extends React.Component {
   
   set(value) {
     try {
-      window.localStorage.setItem(this.props.key, value);
+      window.localStorage.setItem(this.props.name, JSON.stringify(value));
     } catch (error) {
-      console.error('Failed to write to localStorage!');
+      console.error('Failed to write to localStorage!', error);
     }
     this.setState({value});
   }
   
   render() {
-    return this.props.children(this.state.value, this.set.bind(this));
+    return this.props.children(
+      this.state.value !== undefined ? this.state.value : this.props.default,
+      this.set.bind(this)
+    );
   }
 }
 LocalStorage.propTypes = {
   children: PropTypes.func.isRequired,
-  key: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   default: PropTypes.any.isRequired,
 };
