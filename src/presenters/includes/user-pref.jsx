@@ -3,25 +3,25 @@ import PropTypes from 'prop-types';
 
 const {Provider, Consumer} = React.createContext();
 
-class UserPref extends React.Component {
+class UserPrefs extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: props.default,
-    };
+    this.state = {};
     this.handleStorage = this.handleStorage.bind(this);
   }
   
   handleStorage() {
-    const value = this.props.getUserPref(this.props.name);
-    this.setState({
-      value: value !== undefined ? value : this.props.default,
-    });
+    try {
+      const prefs = window.localStorage['community-userPrefs'];
+      this.setState(JSON.parse(prefs));
+    } catch (error) {
+      console.error('Failed to read prefs from localStorage!');
+    }
   }
   
   componentDidMount() {
-    this.handleStorage();
     window.addEventListener('storage', this.handleStorage, {passive: true});
+    this.handleStorage();
   }
   
   componentWillUnmount() {
