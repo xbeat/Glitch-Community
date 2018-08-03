@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import PopoverContainer from './pop-overs/popover-container.jsx';
-import {ANON_AVATAR_URL} from '../models/user.js';
+import {ANON_AVATAR_URL, getLink} from '../models/user.js';
 
 function addDefaultSrc(event) {
   event.target.src = ANON_AVATAR_URL;
@@ -20,24 +20,17 @@ UserAvatar.propTypes = {
   userAvatarUrl: PropTypes.string.isRequired,
 };
 
-const UserTile = ({
-  userLink,
-  tooltipName, 
-  style,
-  alt, 
-  userAvatarUrl,
-  extraClass="",
-}) => (
-  <a href={userLink} className={`user ${extraClass}`} data-tooltip={tooltipName} data-tooltip-left="true" style={style}>
-    <UserAvatar userAvatarUrl={userAvatarUrl} alt={alt} />
+const UserTile = (user) => (
+  <a href={getLink(user)} className="user" data-tooltip={user.tooltipName} data-tooltip-left="true" style={user.style}>
+    <UserAvatar userAvatarUrl={user.userAvatarUrl} alt={user.alt} />
   </a>
 );
 
 UserTile.propTypes = {
-  userLink: PropTypes.string,
+  id: PropTypes.number.isRequired,
+  login: PropTypes.string,
   tooltipName: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
-  extraClass: PropTypes.string,
 };
 
 export const PopulatedUsersList = ({users, extraClass="" }) => (
@@ -54,20 +47,20 @@ PopulatedUsersList.propTypes = {
   extraClass: PropTypes.string,
 };
 
+const glitchTeamAvatar = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267";
 const GlitchTeamUsersList = ({extraClass=''}) => (
   <ul className={`users ${extraClass}`}>
     <li>
       <span className="user made-by-glitch" data-tooltip="Glitch Team" data-tooltip-left="true" style={{backgroundColor:"#74ecfc"}}>
-        <UserAvatar userAvatarUrl="https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267" alt="Glitch Team"/>
+        <UserAvatar userAvatarUrl={glitchTeamAvatar} alt="Glitch Team"/>
       </span>
     </li>
   </ul>
 );
 
-const glitchTeamAvatar = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267";
 const UsersList = ({glitchTeam=false, users, extraClass}) => {
   if(glitchTeam) {
-    return <GlitchTeamUsersList extraClass={extraClass}/>
+    return <GlitchTeamUsersList extraClass={extraClass}/>;
   }
   return <PopulatedUsersList users={users} extraClass={extraClass}/>;
 };
