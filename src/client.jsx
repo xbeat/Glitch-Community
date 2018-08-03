@@ -22,7 +22,7 @@ console.log("#########");
 console.log("❓ query strings are", queryString);
 console.log("🎏 application is", application);
 console.log("👻 current user is", application.currentUser());
-console.log("🌈 isSignedIn", application.currentUser().isSignedIn());
+console.log("🌈 login", application.currentUser().login());
 console.log("#########");
 
 
@@ -36,7 +36,7 @@ function identifyUser(application) {
   }
   const user = application.currentUser();
   const analytics = window.analytics;
-  if (analytics && application.currentUser().isSignedIn()) {
+  if (analytics && application.currentUser().id()) {
     try {
       analytics.identify(user.id(), {
         name: user.name(),

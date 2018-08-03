@@ -43,10 +43,6 @@ export default User = function(I, self) {
 
   self.extend({
 
-    isSignedIn() {
-      return !!self.login();
-    },
-
     isAnon() {
       return !self.login();
     },
@@ -87,10 +83,6 @@ export default User = function(I, self) {
     
     style() {
       return {backgroundColor: I.color};
-    },
-
-    glitchTeamAvatar() {
-      return "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg";
     },
     
     asProps() {
