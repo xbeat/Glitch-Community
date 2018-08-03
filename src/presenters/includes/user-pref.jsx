@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const {Provider, Consumer} = React.createContext();
+
 class UserPref extends React.Component {
   constructor(props) {
     super(props);
