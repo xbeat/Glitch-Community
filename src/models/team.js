@@ -101,17 +101,6 @@ export default Team = function(I, self) {
 
 
     asProps() {
-      // const adminIds = (users) => {
-      //   console.log ('dsalk;jf',users)
-      //   let ADMIN_ACCESS_LEVEL = 30;
-      //   let adminUsers = users.filter(user => {
-      //     return user.teamsUser().accessLevel === ADMIN_ACCESS_LEVEL;
-      //   })
-      //   return adminUsers.map(user => {
-      //     return user.id();
-      //   });
-      // }
-
       return {
         get users() { return self.users().map(({asProps}) => asProps()); },
         get projects() { return self.projects().map(({asProps}) => asProps()); },
