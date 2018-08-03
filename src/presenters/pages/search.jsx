@@ -7,7 +7,6 @@ import Layout from '../layout.jsx';
 import ProjectModel from '../../models/project';
 import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
-import {ApiConsumer} from '../api.jsx';
 
 import ErrorHandlers from '../error-handlers.jsx';
 import Categories from '../categories.jsx';
@@ -130,15 +129,11 @@ const SearchPageContainer = ({application, query}) => (
     <Helmet>
       <title>Search for {query}</title>
     </Helmet>
-    <ApiConsumer>
-      {api => (
-        <ErrorHandlers>
-          {errorFuncs => (
-            <SearchPage {...errorFuncs} api={api} categories={application.categories} query={query}/>
-          )}
-        </ErrorHandlers>
+    <ErrorHandlers>
+      {errorFuncs => (
+        <SearchPage {...errorFuncs} api={application.api()} categories={application.categories} query={query}/>
       )}
-    </ApiConsumer>
+    </ErrorHandlers>
   </Layout>
 );
 

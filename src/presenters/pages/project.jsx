@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import Project, {getAvatarUrl} from '../../models/project';
-import {ApiConsumer} from '../api.jsx';
 
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
@@ -173,9 +172,7 @@ ProjectPageLoader.propTypes = {
 
 const ProjectPageContainer = ({application, name}) => (
   <Layout application={application}>
-    <ApiConsumer>
-      {api => <ProjectPageLoader api={api} domain={name} currentUserModel={application.currentUser()}/>}
-    </ApiConsumer>
+    <ProjectPageLoader api={application.api()} domain={name} currentUserModel={application.currentUser()}/>}
   </Layout>
 );
 

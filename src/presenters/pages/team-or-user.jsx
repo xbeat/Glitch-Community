@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import TeamModel from '../../models/team';
 
-import {ApiConsumer} from '../api.jsx';
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 
@@ -86,11 +85,7 @@ TeamOrUserPageLoader.propTypes = {
 
 const Presenter = (application, Loader, args) => (
   <Layout application={application}>
-    <ApiConsumer>
-      {api => (
-        <Loader api={api} currentUserModel={application.currentUser()} {...args}/>
-      )}
-    </ApiConsumer>
+    <Loader api={application.api()} currentUserModel={application.currentUser()} {...args}/>
   </Layout>
 );
 

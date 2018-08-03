@@ -6,7 +6,6 @@ import moment from 'moment-mini';
 import Layout from '../layout.jsx';
 
 import {getEditorUrl} from '../../models/project';
-import {ApiConsumer} from '../api.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
 import Categories from '../categories.jsx';
@@ -133,13 +132,9 @@ IndexPage.propTypes = {
 
 const IndexPageContainer = ({application}) => (
   <Layout application={application}>
-    <ApiConsumer>
-      {api => (
-        <CurrentUserConsumer>
-          {user => <IndexPage api={api} user={user} categories={application.categories}/>}
-        </CurrentUserConsumer>
-      )}
-    </ApiConsumer>
+    <CurrentUserConsumer>
+      {user => <IndexPage api={application.api()} user={user} categories={application.categories}/>}
+    </CurrentUserConsumer>
   </Layout>
 );
 
