@@ -122,7 +122,7 @@ class CreateTeamPop extends React.Component {
               value="Team Rocket" 
               update={this.handleChange} 
               placeholder='Your Team Name' 
-              fieldOnlyUpdatesOnSubmit={true}
+              //fieldOnlyUpdatesOnSubmit={true}
               submitError={this.state.errorMessage}
             />
             <p className="action-description team-url-preview">
