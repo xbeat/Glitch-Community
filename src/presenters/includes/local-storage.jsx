@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const {Provider, Consumer} = React.createContext();
-const KEY = 'community-userPrefs';
-
-class LocalStorage extends React.Component {
+export default class LocalStorage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: undefined};
@@ -14,7 +11,7 @@ class LocalStorage extends React.Component {
   handleStorage() {
     let value;
     try {
-      value = JSON.parse(window.localStorage[this.props.key]);
+      value = JSON.parse(window.localStorage.getItem(this.props.key));
     } catch (error) {
       console.error('Failed to read from localStorage!');
       value = undefined;
@@ -33,7 +30,7 @@ class LocalStorage extends React.Component {
   
   set(value) {
     try {
-      window.localStorage[this.props.key] = value;
+      window.localStorage.setItem(this.props.key, value);
     } catch (error) {
       console.error('Failed to write to localStorage!');
     }
@@ -44,12 +41,8 @@ class LocalStorage extends React.Component {
     return this.props.children(this.state.value, this.set.bind(this));
   }
 }
-UserPref.propTypes = {
+LocalStorage.propTypes = {
   children: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
+  key: PropTypes.string.isRequired,
   default: PropTypes.any.isRequired,
-  setUserPref: PropTypes.func.isRequired,
-  getUserPref: PropTypes.func.isRequired,
 };
-
-export default UserPref;
