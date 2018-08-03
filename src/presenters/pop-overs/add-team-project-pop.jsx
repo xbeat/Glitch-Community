@@ -19,6 +19,7 @@ export class AddTeamProjectPop extends React.Component {
     };
     this.onClick = this.onClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
+    this.filterInput = React.createRef()
   }
 
   normalizeTemplateProjects(data) {
@@ -151,7 +152,7 @@ export class AddTeamProjectPop extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.source !== this.state.source) {
       this.updateFilter("");
-      this.filterInput.focus();
+      this.filterInput.current.focus();
     }
     if (prevState.notifyTemplateIsRemixing !== this.state.notifyTemplateIsRemixing) {
       console.log('📟 time to toggle the `is remixing` notification to', this.state.notifyTemplateIsRemixing);
@@ -161,7 +162,7 @@ export class AddTeamProjectPop extends React.Component {
 
   componentDidMount() {
     this.getTemplateProjects();
-    this.filterInput.focus();
+    this.filterInput.current.focus();
     this.updateFilter("");
   }
 
@@ -191,7 +192,7 @@ export class AddTeamProjectPop extends React.Component {
           */}
 
           <input
-            ref={(input) => { this.filterInput = input; }}
+            ref={this.filterInput}
             onChange={(event) => {this.updateFilter(event.target.value);}}
             id="team-project-search" className="pop-over-input search-input pop-over-search"
             placeholder= {this.state.filterPlaceholder}
@@ -217,7 +218,9 @@ export class AddTeamProjectPop extends React.Component {
               </li>
             ))}
           </ul>
-          {}
+          { (filteredProjects.length === 0 && this.filterInput.current.value.length === 0 ) &&
+             <p>fds</p>
+          }
         </section>
       </dialog>
     );
