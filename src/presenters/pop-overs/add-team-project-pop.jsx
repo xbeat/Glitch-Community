@@ -19,7 +19,8 @@ export class AddTeamProjectPop extends React.Component {
     };
     this.onClick = this.onClick.bind(this);
     this.updateFilter = this.updateFilter.bind(this);
-    this.filterInput = React.createRef()
+    this.filterInputIsBlank = this.filterInputIsBlank.bind(this);
+    this.filterInput = React.createRef();
   }
 
   normalizeTemplateProjects(data) {
@@ -165,6 +166,14 @@ export class AddTeamProjectPop extends React.Component {
     this.filterInput.current.focus();
     this.updateFilter("");
   }
+  
+  filterInputIsBlank() {
+    console.log(this.filterInput.current.value)
+    if (this.filterInput.current.value.length === 0) {
+      console.log ('sdf')
+      return true
+    }
+  } 
 
   render() {
     const filteredProjects = this.state.filteredProjects;
@@ -218,7 +227,7 @@ export class AddTeamProjectPop extends React.Component {
               </li>
             ))}
           </ul>
-          { this.props.myProjects.length === 0 &&
+          { (this.state.filteredProjects.length === 0 && this.filterInputIsBlank) &&
              <p className="action-description">Create or Join projects to add them to the team</p>
           }
         </section>
