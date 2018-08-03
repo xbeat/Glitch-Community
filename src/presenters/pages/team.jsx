@@ -211,6 +211,7 @@ TeamPage.propTypes = {
   addUser: PropTypes.func.isRequired,
   api: PropTypes.func.isRequired,
   clearCover: PropTypes.func.isRequired,
+  
   currentUserId: PropTypes.number.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
@@ -242,7 +243,7 @@ const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
 
         <CurrentUserConsumer>
           {currentUser => (
-            <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} currentUserId={currentUser.id} myProjects={currentUser.projects} currentUserIsTeamAdmin={currentUserIsTeamAdmin} {...props}/>
+            <TeamPage api={api} team={team} {...funcs} currentUser={currentUser} currentUserIsOnTeam={currentUserIsOnTeam} currentUserId={currentUser.id} myProjects={currentUser.projects} currentUserIsTeamAdmin={currentUserIsTeamAdmin} {...props}/>
           )}
         </CurrentUserConsumer>
 
