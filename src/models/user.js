@@ -65,6 +65,7 @@ export default User = function(I, self) {
         get pins() { return self.pins(); },
 
         avatarUrl: self.avatarUrl(),
+        avatarThumbnailUrl: self.avatarThumbnailUrl(),
         color: self.color(),
         coverColor: self.coverColor(),
         description: self.description(),
@@ -130,6 +131,20 @@ export function getLink({id, login}) {
     return `/@${login}`;
   }
   return `/user/${id}`;
+}
+
+export function getAvatarUrl({login, avatarUrl}) {
+  if (login && avatarUrl) {
+    return avatarUrl;
+  }
+  return ANON_AVATAR_URL;
+}
+
+export function getAvatarThumbnailUrl({login, avatarThumbnailUrl}) {
+  if (login && avatarThumbnailUrl) {
+    return avatarThumbnailUrl;
+  }
+  return ANON_AVATAR_URL;
 }
 
 export function getAvatarStyle({avatarUrl, color}) {

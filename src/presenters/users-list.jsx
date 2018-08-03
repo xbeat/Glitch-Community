@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import PopoverContainer from './pop-overs/popover-container.jsx';
-import {ANON_AVATAR_URL, getDisplayName, getLink} from '../models/user.js';
+import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName, getLink} from '../models/user.js';
 
 function getStyle({color}) {
   return {backgroundColor: color};
@@ -14,19 +14,19 @@ function addDefaultSrc(event) {
 
 const UserAvatar = ({
   alt, 
-  userAvatarUrl,
+  avatarUrl,
 }) => (
-  <img onError={addDefaultSrc} className="user-list-avatar" width="32px" height="32px" src={userAvatarUrl} alt={alt}/>
+  <img onError={addDefaultSrc} className="user-list-avatar" width="32px" height="32px" src={avatarUrl} alt={alt}/>
 );
 
 UserAvatar.propTypes = {
   alt: PropTypes.string.isRequired,
-  userAvatarUrl: PropTypes.string.isRequired,
+  avatarUrl: PropTypes.string.isRequired,
 };
 
 const UserTile = (user) => (
   <a href={getLink(user)} className="user" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
-    <UserAvatar userAvatarUrl={user.userAvatarUrl} alt={getDisplayName(user)} />
+    <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
   </a>
 );
 
@@ -34,13 +34,14 @@ UserTile.propTypes = {
   id: PropTypes.number.isRequired,
   login: PropTypes.string,
   name: PropTypes.string,
+  avatarThumbnailUrl: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
 };
 
 export const PopulatedUsersList = ({users, extraClass="" }) => (
   <ul className={`users ${extraClass}`}>
-    {users.map((user, key) => (
-      <li key={key}>
+    {users.map(user => (
+      <li key={user.id}>
         <UserTile {...user} />
       </li>
     ))}
@@ -59,7 +60,7 @@ const GlitchTeamUsersList = ({extraClass=''}) => {
     <ul className={`users ${extraClass}`}>
       <li>
         <span className="user made-by-glitch" data-tooltip={name} data-tooltip-left="true" style={style}>
-          <UserAvatar userAvatarUrl={avatar} alt={name}/>
+          <UserAvatar avatarUrl={avatar} alt={name}/>
         </span>
       </li>
     </ul>
@@ -84,7 +85,7 @@ const UserPopoverTile = ({children, ...user}) => (
     {({visible, togglePopover}) => (
       <div className="button-wrap">
         <button onClick={togglePopover} className="user button-unstyled" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
-          <UserAvatar userAvatarUrl={user.userAvatarUrl} alt={getDisplayName(user)} />
+          <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
         </button>
         {!!visible && children(togglePopover)}
       </div>
