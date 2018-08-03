@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 // Image Buttons
 
 export const ImageButtons = ({name, uploadImage, clearImage}) => {
-  console.log(name, clearImage)
+  console.log('📟',name, clearImage)
   return (
     <div className="upload-image-buttons">
       { !!uploadImage && (
