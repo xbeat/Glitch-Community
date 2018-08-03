@@ -70,7 +70,7 @@ class TeamPage extends React.Component {
               <ImageButtons name="Cover"
                 uploadImage={this.props.uploadCover}
                 clearImage={this.props.team.hasCoverImage ? 
-                  this.props.team.clearCover : false
+                  this.props.clearCover : null
                 } 
               /> : null
             }>
