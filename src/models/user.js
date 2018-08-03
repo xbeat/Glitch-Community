@@ -67,19 +67,6 @@ export default User = function(I, self) {
   return self;
 };
 
-User.getUserByLogin = function(application, login) {
-  const userIdPath = `/userid/byLogin/${login}`;
-  return application.api().get(userIdPath)
-    .then(function(response) {
-      const userId = response.data;
-      if (userId === "NOT FOUND") {
-        application.user().notFound(true);
-        return;
-      }
-      return User.getUserById(application, userId);
-    }).catch(error => console.error(`getUserByLogin GET ${userIdPath}`, error));
-};
-
 User.getUserById = function(application, id) {
   const userPath = `users/${id}`;
   const promise = new Promise((resolve, reject) => {

@@ -36,7 +36,7 @@ function identifyUser(application) {
   }
   const user = application.currentUser();
   const analytics = window.analytics;
-  if (analytics && application.currentUser().id()) {
+  if (analytics && user.id()) {
     try {
       analytics.identify(user.id(), {
         name: user.name(),
