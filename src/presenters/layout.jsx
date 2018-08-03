@@ -5,6 +5,7 @@ import Header from './header.jsx';
 import Footer from './footer.jsx';
 
 const getHeaderProps = (application) => ({
+  api: application.api(),
   getUserPref: application.getUserPref,
   setUserPref: application.updateUserPrefs,
 });

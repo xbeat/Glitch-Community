@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {ApiConsumer} from '../api.jsx';
 import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
@@ -73,9 +72,4 @@ NewProjectPopButton.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
-const NewProjectPopContainer = () => (
-  <ApiConsumer>
-    {api => <NewProjectPopButton api={api}/>}
-  </ApiConsumer>
-);
-export default NewProjectPopContainer;
+export default NewProjectPopButton;

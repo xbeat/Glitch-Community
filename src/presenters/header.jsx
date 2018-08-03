@@ -74,7 +74,7 @@ UserOptionsPopWrapper.propTypes = {
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
-const Header = ({maybeUser, searchQuery, showNewStuffOverlay}) => {
+const Header = ({api, maybeUser, searchQuery, showNewStuffOverlay}) => {
   const signedIn = maybeUser && !!maybeUser.login;
   return (
     <header role="banner">
@@ -86,7 +86,7 @@ const Header = ({maybeUser, searchQuery, showNewStuffOverlay}) => {
      
       <nav>
         <SearchForm onSubmit={submitSearch} defaultValue={searchQuery}/>
-        <NewProjectPop/>
+        <NewProjectPop api={api}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
         { maybeUser && <UserOptionsPopWrapper user={maybeUser} showNewStuffOverlay={showNewStuffOverlay} />}
