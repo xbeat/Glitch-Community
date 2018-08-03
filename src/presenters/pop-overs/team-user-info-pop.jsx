@@ -39,7 +39,7 @@ UserActions.propTypes = {
   user: PropTypes.shape({
     userLink: PropTypes.string.isRequired,
     userAvatarUrl: PropTypes.string.isRequired,
-    login: PropTypes.string.isRequired,
+    login: PropTypes.string.,
   }).isRequired,
 };
 
@@ -143,11 +143,12 @@ export default class TeamUserInfoPop extends React.Component {
 TeamUserInfoPop.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
-    login: PropTypes.string.isRequired,
+    login: PropTypes.string,
     userAvatarUrl: PropTypes.string.isRequired,
     userLink: PropTypes.string.isRequired,
     thanksCount: PropTypes.number.isRequired,
     isOnTeam: PropTypes.bool,
+    color: PropTypes.string,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUser: PropTypes.func.isRequired,
