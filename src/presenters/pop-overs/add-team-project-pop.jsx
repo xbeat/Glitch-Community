@@ -228,7 +228,7 @@ export class AddTeamProjectPop extends React.Component {
             ))}
           </ul>
           { (this.state.filteredProjects.length === 0 && this.filterInputIsBlank) &&
-             <p className="action-description">Create or Join projects to add them to the team</p>
+             <p className="action-description no-projects-description">Create or Join projects to add them to the team</p>
           }
         </section>
       </dialog>
