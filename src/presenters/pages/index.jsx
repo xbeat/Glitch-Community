@@ -124,7 +124,6 @@ const IndexPage = ({api, categories, user}) => (
   </main>
 );
 IndexPage.propTypes = {
-  api: PropTypes.any.isRequired,
   user: PropTypes.shape({
     id: PropTypes.number,
     login: PropTypes.string,
@@ -134,7 +133,7 @@ IndexPage.propTypes = {
 const IndexPageContainer = ({application}) => (
   <Layout application={application}>
     <CurrentUserConsumer>
-      {user => <IndexPage user={user} api={application.api()} categories={application.categories}/>}
+      {user => <IndexPage api={application.api()} user={user} categories={application.categories}/>}
     </CurrentUserConsumer>
   </Layout>
 );

@@ -1,61 +1,18 @@
 /* global CDN_URL EDITOR_URL*/
 
-let Project;
-const cache = {};
-
-import Team from './team';
-import Model from './model';
-
 export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528812220123";
 
-export default Project = function(I, self) {
-  
-  if (I == null) { I = {}; }
-  if (self == null) { self = Model(I); }
-  if (cache[I.id]) {
-    return cache[I.id];
-  }
-
-  self.defaults(I, {
-    domain: undefined,
-    id: undefined,
-    description: undefined,
-    teams: undefined,
-    users: undefined,
-    showAsGlitchTeam: false,
-  }
-  );
-
-  self.attrObservable(...Array.from(Object.keys(I) || []));
-  self.attrObservable("readme", "readmeNotFound", "projectNotFound", "fetched", "displayName", "private");
-  self.attrModels('teams', Team);
-  self.attrModels('users', User);
-
-  self.extend({
-
-    asProps() {
-      const project = self;
-
-      return {
-        get teams() { return project.teams().map(team => team.asProps()); },
-        get users() { return project.users().map(user => user.asProps()); },
-        description: project.description(),
-        domain: project.domain(),
-        id: project.id(),
-        private: project.private(),
-        showAsGlitchTeam: !!(project.showAsGlitchTeam && project.showAsGlitchTeam()),
-      };
-    },
-  });
-      
-  cache[I.id] = self;
-  // console.log '💎 project cache', cache
-
-  return self;
-};
-
-
-Project._cache = cache;
+export default function Project({teams, users, ...project}) {
+  const props = {
+    get teams() { return teams ? teams.map(team => Team(team).asProps()) : []; },
+    get users() { return users ? users.map(user => User(user).asProps()) : []; },
+    ...project
+  };
+  return {
+    update: data => Project(data),
+    asProps: () => props,
+  };
+}
 
 export function getAvatarUrl(id) {
   return `${CDN_URL}/project-avatar/${id}.png`;
@@ -81,4 +38,5 @@ export function getRemixUrl(domain) {
 }
 
 // Circular dependencies must go below module.exports
+import Team from './team';
 import User from './user';

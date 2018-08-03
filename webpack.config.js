@@ -45,9 +45,9 @@ module.exports = () => {
         chunks: 'initial',
         maxInitialRequests: 5,
         cacheGroups: {
-          cache: {
-            name: 'cache',
-            test: /[\\/]src[\\/]cache[\\/]/,
+          curated: {
+            name: 'curated',
+            test: /[\\/]src[\\/](?:cache|curated)[\\/]/,
             minSize: 0,
           },
           react: {

@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {getAvatarThumbnailUrl} from '../../models/user';
 import {ThanksShort} from './thanks.jsx';
 
 const UserResultItem = ({user, action}) => {
-  const {userAvatarUrl, name, login, thanksCount} = user;
+  const {name, login, thanksCount} = user;
   
   const handleClick = (event) => {
     console.log('💣');
@@ -13,7 +14,7 @@ const UserResultItem = ({user, action}) => {
 
   return (
     <button onClick={handleClick} className="button-unstyled result">
-      <img className="avatar" src={userAvatarUrl} alt={`User avatar for ${login}`}/>
+      <img className="avatar" src={getAvatarThumbnailUrl(user)} alt={`User avatar for ${login}`}/>
       <div className="result-name" title={name}>{name}</div>
       <div className="result-description" title={login}>@{login}</div>
       { thanksCount > 0 && <ThanksShort count={thanksCount} />}
@@ -23,7 +24,7 @@ const UserResultItem = ({user, action}) => {
 
 UserResultItem.propTypes = {
   user: PropTypes.shape({
-    userAvatarUrl: PropTypes.string.isRequired,
+    avatarThumbnailUrl: PropTypes.string,
     name: PropTypes.string,
     login: PropTypes.string.isRequired,
     thanksCount: PropTypes.number.isRequired,

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {getAvatarThumbnailUrl, getLink} from '../../models/user';
 import Thanks from '../includes/thanks.jsx';
 
 const RemoveFromTeam = ({action}) => (
@@ -18,10 +19,10 @@ RemoveFromTeam.propTypes = {
 
 const UserActions = ({user}) => (
   <section className="pop-over-actions">
-    <a href={user.userLink}>
+    <a href={getLink(user)}>
       <button className="button-small has-emoji button-tertiary">
         <span>Profile </span>
-        <img className="emoji avatar" src={user.userAvatarUrl} alt={user.login}></img>
+        <img className="emoji avatar" src={getAvatarThumbnailUrl(user)} alt={user.login}></img>
       </button>
     </a>
   </section>
@@ -29,8 +30,8 @@ const UserActions = ({user}) => (
 
 UserActions.propTypes = {
   user: PropTypes.shape({
-    userLink: PropTypes.string.isRequired,
-    userAvatarUrl: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    avatarThumbnailUrl: PropTypes.string.isRequired,
     login: PropTypes.string.isRequired,
   }).isRequired,
 };
@@ -50,8 +51,8 @@ const UserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopov
   return (
     <dialog className="pop-over user-info-pop">
       <section className="pop-over-info">
-        <a href={user.userLink}>
-          <img className="avatar" src={user.userAvatarUrl} alt={user.login} style={user.style}/>
+        <a href={getLink(user)}>
+          <img className="avatar" src={getAvatarThumbnailUrl(user)} alt={user.login} style={{backgroundColor: user.color}}/>
         </a>
         <div className="info-container">
           <p className="name" title={user.name}>{user.name}</p>
@@ -67,21 +68,18 @@ const UserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopov
 
 UserInfoPop.propTypes = {
   user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     name: PropTypes.string,
     login: PropTypes.string.isRequired,
-    userAvatarUrl: PropTypes.string.isRequired,
-    userLink: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    avatarThumbnailUrl: PropTypes.string,
     thanksCount: PropTypes.number.isRequired,
-    isOnTeam: PropTypes.bool,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
 };
 
 UserInfoPop.defaultProps = {
-  user: {
-    isOnTeam: false
-  },
   currentUserIsOnTeam: false,
 };
 

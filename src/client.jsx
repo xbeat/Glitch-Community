@@ -11,14 +11,17 @@ import application from './application';
 import qs from 'querystringify';
 const queryString = qs.parse(window.location.search);
 
-import Routing from './presenters/pages/routing.jsx';
+import {CurrentUserProvider} from './presenters/current-user.jsx';
+import {Notifications} from './presenters/notifications.jsx';
+
+import Router from './presenters/pages/router.jsx';
 import ErrorPage from './presenters/pages/error.jsx';
 
 console.log("#########");
 console.log("❓ query strings are", queryString);
 console.log("🎏 application is", application);
 console.log("👻 current user is", application.currentUser());
-console.log("🌈 isSignedIn", application.currentUser().isSignedIn());
+console.log("🌈 login", application.currentUser().login());
 console.log("#########");
 
 
@@ -32,7 +35,7 @@ function identifyUser(application) {
   }
   const user = application.currentUser();
   const analytics = window.analytics;
-  if (analytics && application.currentUser().isSignedIn()) {
+  if (analytics && application.currentUser().id()) {
     try {
       analytics.identify(user.id(), {
         name: user.name(),
@@ -90,10 +93,19 @@ async function route(location, application) {
   //
   //  Page Routing
   //
-  const page = <BrowserRouter><Routing application={application}/></BrowserRouter>;
+
   const dom = document.createElement('div');
   document.body.appendChild(dom);
-  render(page, dom);
+  const App = ({application}) => (
+    <BrowserRouter>
+      <Notifications>
+        <CurrentUserProvider model={application.currentUser()}>
+          <Router application={application}/>
+        </CurrentUserProvider>
+      </Notifications>
+    </BrowserRouter>
+  );
+  render(<App application={application}/>, dom);
 }
 
 route(window.location, application);
