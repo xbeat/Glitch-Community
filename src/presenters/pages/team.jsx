@@ -132,7 +132,7 @@ class TeamPage extends React.Component {
         { (this.props.team.projects.length === 0 && this.props.currentUserIsOnTeam) &&
           <aside className="inline-banners add-project-to-empty-team-banner">
             <div className="description-container">
-              <img src={ADD_PROJECT_PALS} alt="add project pals" />
+              <img className="project-pals" src={ADD_PROJECT_PALS} alt="" />
               <div className="description">Add projects to build your team</div>
             </div>
             <AddTeamProject
@@ -140,6 +140,7 @@ class TeamPage extends React.Component {
               extraButtonClass = "button-small"
               teamProjects = {this.props.team.projects}
               api={() => this.props.api}
+              myProjects={this.props.currentUser ? this.props.currentUser.projects : []}
             />
           </aside>
         }

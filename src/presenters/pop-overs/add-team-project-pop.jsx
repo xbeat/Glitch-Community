@@ -217,6 +217,7 @@ export class AddTeamProjectPop extends React.Component {
               </li>
             ))}
           </ul>
+          {}
         </section>
       </dialog>
     );
