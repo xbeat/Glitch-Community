@@ -19,6 +19,7 @@ class TeamEditor extends React.Component {
       _cacheAvatar: Date.now(),
       _cacheCover: Date.now(),
     };
+    this.removeUserAdmin = this.removeUserAdmin.bind(this)
   }
 
   currentUserIsOnTeam() {
@@ -73,9 +74,14 @@ class TeamEditor extends React.Component {
       const model = this.props.currentUserModel;
       model.teams(model.teams().filter(({id}) => id() !== this.props.team.id));
     }
-  }
+  }removeUserAdmin
 
-  removeUserAdminPermissions(id) {}
+  removeUserAdmin(id) {
+    let index = this.state.adminIds.indexOf(id);
+    this.setState((prevState) => ({
+      counter: prevState.adminIds.splice(index, 1)
+    }));
+  }
   
   async updateUserPermissions(id, accessLevel) {
     if (accessLevel === MEMBER_ACCESS_LEVEL && this.state.adminIds.length <= 1) {
@@ -88,10 +94,7 @@ class TeamEditor extends React.Component {
         counter: prevState.adminIds.push(id)
       }));
     } else {
-      let index = this.state.adminIds.indexOf(id);
-      this.setState((prevState) => ({
-        counter: prevState.adminIds.splice(index, 1)
-      }));
+      this.removeUserAdmin(id)
     }
   }
 
