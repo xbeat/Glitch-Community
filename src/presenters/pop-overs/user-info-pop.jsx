@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getLink} from '../../models/user';
+import {getAvatarThumbnailUrl, getLink} from '../../models/user';
 import Thanks from '../includes/thanks.jsx';
 
 const RemoveFromTeam = ({action}) => (
@@ -22,7 +22,7 @@ const UserActions = ({user}) => (
     <a href={getLink(user)}>
       <button className="button-small has-emoji button-tertiary">
         <span>Profile </span>
-        <img className="emoji avatar" src={user.userAvatarUrl} alt={user.login}></img>
+        <img className="emoji avatar" src={getAvatarThumbnailUrl(user)} alt={user.login}></img>
       </button>
     </a>
   </section>
@@ -31,7 +31,7 @@ const UserActions = ({user}) => (
 UserActions.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    userAvatarUrl: PropTypes.string.isRequired,
+    avatarThumbnailUrl: PropTypes.string.isRequired,
     login: PropTypes.string.isRequired,
   }).isRequired,
 };
@@ -52,7 +52,7 @@ const UserInfoPop = ({user, currentUserIsOnTeam, removeUserFromTeam, togglePopov
     <dialog className="pop-over user-info-pop">
       <section className="pop-over-info">
         <a href={getLink(user)}>
-          <img className="avatar" src={user.userAvatarUrl} alt={user.login} style={{backgroundColor: user.color}}/>
+          <img className="avatar" src={getAvatarThumbnailUrl(user)} alt={user.login} style={{backgroundColor: user.color}}/>
         </a>
         <div className="info-container">
           <p className="name" title={user.name}>{user.name}</p>
@@ -72,7 +72,7 @@ UserInfoPop.propTypes = {
     name: PropTypes.string,
     login: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
-    userAvatarUrl: PropTypes.string.isRequired,
+    avatarThumbnailUrl: PropTypes.string,
     thanksCount: PropTypes.number.isRequired,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,

@@ -30,34 +30,14 @@ export default User = function(I, self) {
     teams: [],
     thanksCount: 0,
     fetched: false,
-    showAsGlitchTeam: false,
     persistentToken: null,
     pins: [],
-    deletedProjects: [],
   });
 
   self.attrObservable(...Array.from(Object.keys(I) || []));
-  self.attrObservable("notFound");
-  self.attrObservable("localCoverImage");
   self.attrModels('projects', Project);
 
   self.extend({
-
-    isAnon() {
-      return !self.login();
-    },
-
-    userAvatarUrl(size) {
-      size = size || 'small';
-      if (self.isAnon() || !self.avatarUrl()) {
-        return ANON_AVATAR_URL;
-      }
-      if (size === "large") {
-        return self.avatarUrl();
-      }
-      return self.avatarThumbnailUrl();
-    },
-    
     asProps() {
       return {
         get teams() { return self.teams.filter(({asProps}) => !!asProps).map(({asProps}) => asProps()); },
@@ -74,7 +54,6 @@ export default User = function(I, self) {
         login: self.login(),
         name: self.name(),
         thanksCount: self.thanksCount(),
-        userAvatarUrl: self.userAvatarUrl(),
       };
     },
   });
