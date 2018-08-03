@@ -12,9 +12,7 @@ export default class EditableField extends React.Component {
     this.textInput = React.createRef();
     
     this.onChange = this.onChange.bind(this);
-    if (!this.props.fieldOnlyUpdatesOnSubmit) {
-      this.update = debounce(this.update.bind(this), 500);
-    }
+    this.update = debounce(this.update.bind(this), 500);
   }
   
   componentDidMount() {
@@ -36,14 +34,9 @@ export default class EditableField extends React.Component {
   }
 
   update(value){
-    if (this.props.fieldOnlyUpdatesOnSubmit) {
-      this.props.update(value);
-    }
-    else {
-      this.props.update(value).then(
-        this.handleSuccess.bind(this),
-        this.handleFailure.bind(this, value));
-    }
+    this.props.update(value).then(
+      this.handleSuccess.bind(this),
+      this.handleFailure.bind(this, value));
   }
   
   handleSuccess() {
@@ -116,6 +109,5 @@ EditableField.propTypes = {
   update: PropTypes.func.isRequired,
   prefix: PropTypes.string,
   autoFocus: PropTypes.bool,
-  fieldOnlyUpdatesOnSubmit: PropTypes.bool,
   submitError: PropTypes.string,
 };
