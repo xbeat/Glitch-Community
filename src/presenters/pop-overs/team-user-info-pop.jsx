@@ -24,22 +24,29 @@ RemoveFromTeam.propTypes = {
 
 // User Actions Section
 
-const UserActions = ({user}) => (
-  <section className="pop-over-actions user-actions">
-    <a href={user.userLink}>
-      <button className="button-small has-emoji button-tertiary">
-        <span>Profile </span>
-        <img className="emoji avatar" src={user.userAvatarUrl} alt={user.login}></img>
-      </button>
-    </a>
-  </section>
-);
+const UserActions = ({user}) => {
+
+  let backgroundColor = () => {
+    return {backgroundColor: user.color}
+  }
+  
+  return (
+    <section className="pop-over-actions user-actions">
+      <a href={user.userLink}>
+        <button className="button-small has-emoji button-tertiary">
+          <span>Profile </span>
+          <img className="emoji avatar" src={user.userAvatarUrl} alt={user.login} style={backgroundColor()}></img>
+        </button>
+      </a>
+    </section>
+  )
+};
 
 UserActions.propTypes = {
   user: PropTypes.shape({
     userLink: PropTypes.string.isRequired,
     userAvatarUrl: PropTypes.string.isRequired,
-    login: PropTypes.string.,
+    login: PropTypes.string,
   }).isRequired,
 };
 
@@ -55,7 +62,7 @@ const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
   let addAdminStatus = () => {
     updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL);
   };
-
+  
   return (
     <section className="pop-over-actions admin-actions">
       { userIsTeamAdmin && 
@@ -76,7 +83,6 @@ const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
 AdminActions.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    login: PropTypes.string.isRequired,
   }).isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
   updateUserPermissions: PropTypes.func.isRequired,
@@ -114,8 +120,10 @@ export default class TeamUserInfoPop extends React.Component {
             <img className="avatar" src={this.props.user.userAvatarUrl} alt={this.props.user.login} style={this.props.user.style}/>
           </a>
           <div className="info-container">
-            <p className="name" title={this.props.user.name}>{this.props.user.name}</p>
-            <p className="user-login" title={this.props.user.login}>@{this.props.user.login}</p>
+            <p className="name" title={this.props.user.name}>{this.props.user.name || "Anonymous"}</p>
+            { this.props.user.login &&
+              <p className="user-login" title={this.props.user.login}>@{this.props.user.login}</p>
+            }
             { this.props.userIsTeamAdmin && 
               <div className="status-badge">
                 <span className="status admin" data-tooltip="Can edit team info and billing">
