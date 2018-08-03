@@ -67,6 +67,7 @@ class TeamEditor extends React.Component {
 
   async removeUser(id) {
     await this.props.api.delete(`teams/${this.state.id}/users/${id}`);
+    this.removeUserAdmin(id)
     this.setState(({users}) => ({
       users: users.filter(u => u.id !== id),
     }));
@@ -74,13 +75,15 @@ class TeamEditor extends React.Component {
       const model = this.props.currentUserModel;
       model.teams(model.teams().filter(({id}) => id() !== this.props.team.id));
     }
-  }removeUserAdmin
+  }
 
   removeUserAdmin(id) {
     let index = this.state.adminIds.indexOf(id);
-    this.setState((prevState) => ({
-      counter: prevState.adminIds.splice(index, 1)
-    }));
+    if (index !== -1) {
+      this.setState((prevState) => ({
+        counter: prevState.adminIds.splice(index, 1)
+      }));
+    }
   }
   
   async updateUserPermissions(id, accessLevel) {
