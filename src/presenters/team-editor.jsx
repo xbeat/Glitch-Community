@@ -75,12 +75,14 @@ class TeamEditor extends React.Component {
     }
   }
 
+  removeUserAdminPermissions(id) {}
+  
   async updateUserPermissions(id, accessLevel) {
     if (accessLevel === MEMBER_ACCESS_LEVEL && this.state.adminIds.length <= 1) {
       notify.createNotification(<div>A team must have at least one admin</div>, 'notifyError');
       return false;
     }
-    await this.props.api.patch(`teams/${this.state.id}/users/${id}`, {accessLevel: accessLevel});
+    await this.props.api.patch(`teams/${this.state.id}/users/${id}`, {access_level: accessLevel});
     if (accessLevel === ADMIN_ACCESS_LEVEL) {
       this.setState((prevState) => ({
         counter: prevState.adminIds.push(id)
