@@ -38,8 +38,8 @@ const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) 
 
   return (
     <React.Fragment>
-      <h1 className="username"><EditableField value={name||""} update={updateName} placeholder='Display name?'/></h1>
-      <h2 className="login"><EditableField value={login} update={updateLogin} prefix="@" placeholder='User ID?'/></h2>
+      <h1 className="username"><EditableField value={name||""} update={updateName} placeholder="What's your name?"/></h1>
+      <h2 className="login"><EditableField value={login} update={updateLogin} prefix="@" placeholder='Nickname?'/></h2>
     </React.Fragment>
   );
 };
