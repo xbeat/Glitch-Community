@@ -51,16 +51,12 @@ const ProjectOptionsPop = ({
       </section>
       {!!leaveProject &&
         <section className="pop-over-actions danger-zone">
-          <button className="button-small has-emoji button-tertiary" onClick={clickLeave}>
-            <span>Leave </span>
-            <span className="emoji wave" />
-            <img className="emoji avatar leave-user-avatar" src={currentUser.avatarUrl} style={currentUser.style} alt="Your avatar"></img>
-          </button>
+          {<PopoverButton onClick={clickLeave} text="Leave Project " emoji="wave"/>}
         </section>
       }
       <section className="pop-over-actions danger-zone last-section">
         {!!removeProjectFromTeam && <PopoverButton onClick={() => removeProjectFromTeam(project.id)} text="Remove Project " emoji="thumbs_down"/>}
-        {!!deleteProject && <PopoverButton onClick={clickDelete} text="Delete " emoji="bomb"/>}
+        {!!deleteProject && <PopoverButton onClick={clickDelete} text="Delete Project " emoji="bomb"/>}
       </section>
     </dialog>
   );
