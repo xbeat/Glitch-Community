@@ -129,11 +129,11 @@ class TeamEditor extends React.Component {
   }
   
   async joinTeamProject(projectId, userId) {
-    console.log('🚒')
+    console.log('🚒', projectId, userId)
   }
   
   async leaveTeamProject(projectId, userId) {
-    console.log('🍎')
+    console.log('🍎', projectId, userId)
   }
 
   currentUserIsTeamAdmin() {
