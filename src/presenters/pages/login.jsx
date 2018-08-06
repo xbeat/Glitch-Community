@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 import {Redirect} from 'react-router-dom';
 import ErrorPage from './error.jsx';
-import Loader from '../includes/loader.jsx';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -43,13 +42,9 @@ class LoginPage extends React.Component {
     if (this.state.done) {
       return <Redirect to="/"/>;
     } else if (this.state.error) {
-      return <ErrorPage title="OAuth Login Problem" body="Hard to say what happened, but we couldn't log you in. Try again?"/>;
+      return <ErrorPage title="OAuth Login Problem" description="Hard to say what happened, but we couldn't log you in. Try again?"/>;
     }
-    return (
-      <div className="content">
-        <Loader/>
-      </div>
-    );
+    return <div className="content"></div>;
   }
 }
 LoginPage.propTypes = {
@@ -61,7 +56,7 @@ LoginPage.propTypes = {
 export const FacebookLoginPage = ({api, code}) => {
   const callbackUrl = `${APP_URL}/login/facebook`;
   const url = `/auth/facebook/${code}?callbackURL=${encodeURIComponent(callbackUrl)}`;
-  return <LoginPage api={api} provider="Facebook" url={url}/>
+  return <LoginPage api={api} provider="Facebook" url={url}/>;
 };
 
 export const GitHubLoginPage = ({api, code}) => {
