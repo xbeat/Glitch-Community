@@ -125,7 +125,9 @@ class TeamPage extends React.Component {
           isAuthorized={this.props.currentUserIsOnTeam}
           addPin={this.props.addPin}
           removePin={this.props.removePin}
-          projectOptions={{removeProjectFromTeam: this.props.removeProject}}
+          projectOptions={{
+            removeProjectFromTeam: this.props.removeProject
+          }}
           api={this.props.api}
         />
 
