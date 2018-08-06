@@ -18,7 +18,7 @@ export default [
     link: 'http://marlow-moss.glitch.me/'
   }
   , {
-    title: 'Add Inches (And Feet)',
+    title: 'Arithmetic With Inches and Feet',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fshopcalc.jpg?1533554478824",
     link: 'https://shopcalc.glitch.me/'
   } 
