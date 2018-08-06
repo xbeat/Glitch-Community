@@ -11,7 +11,7 @@ const PopoverButton = ({onClick, text, emoji}) => (
 );
 
 const ProjectOptionsPop = ({
-  projectId, projectName,
+  project,
   addPin, removePin, deleteProject, 
   leaveProject, removeProjectFromTeam,
   togglePopover, currentUser
@@ -25,50 +25,49 @@ const ProjectOptionsPop = ({
   }
   
   function clickAddPin(event) {
-    animate(event, 'slide-up', () => addPin(projectId));
+    animate(event, 'slide-up', () => addPin(project.id));
   }
   
   function clickRemovePin(event) {
-    animate(event, 'slide-down', () => removePin(projectId));
+    animate(event, 'slide-down', () => removePin(project.id));
   }
   
   function clickLeave(event) {
-    const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${projectName}?`;
+    const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${project.name}?`;
     if (window.confirm(prompt)) {
-      leaveProject(projectId, event);
+      leaveProject(project.id, event);
     }
   }
   
   function clickDelete(event) {
-    animate(event, 'slide-down', () => deleteProject(projectId));
+    animate(event, 'slide-down', () => deleteProject(project.id));
   }
     
   return (
     <dialog className="pop-over project-options-pop">
       <section className="pop-over-actions">
-        {!!addPin && <PopoverButton onClick={clickAddPin} text="Pin" emoji="pushpin"/>}
-        {!!removePin && <PopoverButton onClick={clickRemovePin} text="Un-Pin" emoji="pushpin"/>}
+        {!!addPin && <PopoverButton onClick={clickAddPin} text="Pin " emoji="pushpin"/>}
+        {!!removePin && <PopoverButton onClick={clickRemovePin} text="Un-Pin " emoji="pushpin"/>}
       </section>
       {!!leaveProject &&
         <section className="pop-over-actions danger-zone">
           <button className="button-small has-emoji button-tertiary" onClick={clickLeave}>
-            Leave
+            <span>Leave </span>
             <span className="emoji wave" />
-            <span>PK</span>
+            <img className="emoji avatar leave-user-avatar" src={currentUser.avatarUrl} style={currentUser.style} alt="Your avatar"></img>
           </button>
         </section>
       }
       <section className="pop-over-actions danger-zone last-section">
-        {!!removeProjectFromTeam && <PopoverButton onClick={() => removeProjectFromTeam(projectId)} text="Remove Project" emoji="thumbs_down"/>}
-        {!!deleteProject && <PopoverButton onClick={clickDelete} text="Delete" emoji="bomb"/>}
+        {!!removeProjectFromTeam && <PopoverButton onClick={() => removeProjectFromTeam(project.id)} text="Remove Project " emoji="thumbs_down"/>}
+        {!!deleteProject && <PopoverButton onClick={clickDelete} text="Delete " emoji="bomb"/>}
       </section>
     </dialog>
   );
 };
 
 ProjectOptionsPop.propTypes = {
-  projectId: PropTypes.string.isRequired,
-  projectName: PropTypes.string.isRequired,
+  project: PropTypes.object.isRequired,
   togglePopover: PropTypes.func.isRequired,
   addPin: PropTypes.func,
   removePin: PropTypes.func,
@@ -82,12 +81,7 @@ export default function ProjectOptions({projectOptions={}, project}) {
   if(Object.keys(projectOptions).length === 0) {
     return null;
   }
-  
-  const popupProps = {
-    projectId: project.id,
-    projectName: project.domain,
-  };
-  
+    
   return (
     <PopoverContainer>
       {({togglePopover, visible}) => (
@@ -95,9 +89,9 @@ export default function ProjectOptions({projectOptions={}, project}) {
           {user => (
             <div>
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
-                <div className="down-arrow"></div>
+                <div className="down-arrow" />
               </button>
-              { visible && <ProjectOptionsPop {...popupProps} {...projectOptions} togglePopover={togglePopover} currentUser={user} /> }
+              { visible && <ProjectOptionsPop project={project} {...projectOptions} togglePopover={togglePopover} currentUser={user} /> }
             </div>
           )}
         </CurrentUserConsumer>
