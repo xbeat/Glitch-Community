@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default class LocalStorage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: undefined};
+    this.state = {value: undefined, loaded: false};
     this.handleStorage = this.handleStorage.bind(this);
   }
   
@@ -16,7 +16,7 @@ export default class LocalStorage extends React.Component {
       console.error('Failed to read from localStorage!', error);
       value = undefined;
     }
-    this.setState({value});
+    this.setState({value, loaded: true});
   }
   
   componentDidMount() {
@@ -40,7 +40,8 @@ export default class LocalStorage extends React.Component {
   render() {
     return this.props.children(
       this.state.value !== undefined ? this.state.value : this.props.default,
-      this.set.bind(this)
+      this.set.bind(this),
+      this.state.loaded,
     );
   }
 }

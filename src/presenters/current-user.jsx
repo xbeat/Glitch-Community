@@ -65,9 +65,9 @@ class CurrentUserManager extends React.Component {
   
   componentDidUpdate(prev) {
     const {currentUser} = this.props;
-    if (!!currentUser !== !!prev.currentUser) {
-      this.load();
-    } else if (currentUser && currentUser.persistentToken !== prev.currentUser.persistentToken) {
+    if (!!currentUser !== !!prev.currentUser || (
+      currentUser && currentUser.persistentToken !== prev.currentUser.persistentToken
+    )) {
       this.load();
     }
   }
@@ -92,11 +92,11 @@ class CurrentUserManager extends React.Component {
 
 export const CurrentUserProvider = ({children}) => (
   <LocalStorage name="cachedUser" default={null}>
-    {(currentUser, set) => (
+    {(currentUser, set, loaded) => (
       <CurrentUserManager currentUser={currentUser} setCurrentUser={set}>
         {(api, currentUser, fetched, update) => (
           <Provider value={{currentUser, fetched, update}}>
-            {children(api)}
+            {loaded && children(api)}
           </Provider>
         )}
       </CurrentUserManager>
