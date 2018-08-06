@@ -45,13 +45,17 @@ const ProjectOptionsPop = ({
   return (
     <dialog className="pop-over project-options-pop">
       <section className="pop-over-actions">
-        {!!addPin && <PopoverButton onClick={clickAddPin} text="Pin This" emoji="pushpin"/>}
-        {!!removePin && <PopoverButton onClick={clickRemovePin} text="Un-Pin This" emoji="pushpin"/>}
+        {!!addPin && <PopoverButton onClick={clickAddPin} text="Pin" emoji="pushpin"/>}
+        {!!removePin && <PopoverButton onClick={clickRemovePin} text="Un-Pin" emoji="pushpin"/>}
       </section>
+      {!!leaveProject &&
+        <section className="pop-over-actions danger-zone">
+          {<PopoverButton onClick={clickLeave} text="Leave" emoji="wave"/>}
+        </section>
+      }
       <section className="pop-over-actions danger-zone last-section">
         {!!removeProjectFromTeam && <PopoverButton onClick={() => removeProjectFromTeam(projectId)} text="Remove Project" emoji="thumbs_down"/>}
-        {!!deleteProject && <PopoverButton onClick={clickDelete} text="Delete This" emoji="bomb"/>}
-        {!!leaveProject && <PopoverButton onClick={clickLeave} text="Leave This" emoji="wave"/>}
+        {!!deleteProject && <PopoverButton onClick={clickDelete} text="Delete" emoji="bomb"/>}
       </section>
     </dialog>
   );
