@@ -1,13 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Observable from 'o_0';
-import Observed from './includes/observed.jsx';
+import LocalStorage from './includes/local-storage.jsx';
 
 const {Provider, Consumer} = React.createContext();
 
-export const CurrentUserProvider = ({model, children}) => (
-  <Provider value={model}>{children}</Provider>
+export const CurrentUserProvider = ({children}) => (
+  <LocalStorage name="cachedUser" default={null}>
+    {(currentUser, set) => {
+      const fetched = true;
+      function update(changes) {
+        if (changes) {
+          set({...currentUser, ...changes});
+        } else {
+          set(undefined);
+        }
+      }
+      return <Provider value={{currentUser, fetched, update}}>{children}</Provider>;
+    }}
+  </LocalStorage>
 );
 CurrentUserProvider.propTypes = {
   model: PropTypes.object.isRequired,
@@ -16,19 +27,7 @@ CurrentUserProvider.propTypes = {
 
 export const CurrentUserConsumer = ({children}) => (
   <Consumer>
-    {model => (
-      <Observed
-        propsObservable={Observable(() => {
-          if (model && model.id()) {
-            const user = model.asProps();
-            user.teams;
-            return {user, fetched: model.fetched()};
-          }
-          return {user: null, fetched: false};
-        })}
-        component={({user, fetched}) => children(user, fetched)}
-      />
-    )}
+    {({currentUser, fetched, update}) => children(currentUser, fetched, update)}
   </Consumer>
 );
 CurrentUserConsumer.propTypes = {

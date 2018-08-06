@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
 
+import {CurrentUserProvider} from './current-user.jsx';
 import ErrorHandlers from './error-handlers.jsx';
 import Uploader from './includes/uploader.jsx';
 
@@ -17,7 +18,7 @@ class UserEditor extends React.Component {
   }
   
   isCurrentUser() {
-    return this.state.id === this.props.currentUserModel.id();
+    return this.props.currentUser && (this.state.id === this.props.currentUser.id);
   }
   
   async updateFields(changes) {
@@ -28,7 +29,7 @@ class UserEditor extends React.Component {
   async updateName(name) {
     await this.updateFields({name});
     if (this.isCurrentUser()) {
-      this.props.currentUserModel.name(name);
+      this.props.updateCurrentUser({name});
     }
   }
   
@@ -144,7 +145,8 @@ class UserEditor extends React.Component {
 UserEditor.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
-  currentUserModel: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  updateCurrentUser: PropTypes.func.isRequired,
   handleError: PropTypes.func.isRequired,
   handleErrorForInput: PropTypes.func.isRequired,
   initialUser: PropTypes.shape({
@@ -154,14 +156,18 @@ UserEditor.propTypes = {
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
-const UserEditorContainer = ({api, children, currentUserModel, initialUser}) => (
+const UserEditorContainer = ({api, children, initialUser}) => (
   <ErrorHandlers>
     {errorFuncs => (
       <Uploader>
         {uploadFuncs => (
-          <UserEditor {...{api, currentUserModel, initialUser}} {...uploadFuncs} {...errorFuncs}>
-            {children}
-          </UserEditor>
+          <CurrentUserProvider>
+            {(currentUser, fetched, updateCurrentUser) => (
+              <UserEditor {...{api, currentUser, updateCurrentUser, initialUser}} {...uploadFuncs} {...errorFuncs}>
+                {children}
+              </UserEditor>
+            )}
+          </CurrentUserProvider>
         )}
       </Uploader>
     )}
@@ -170,7 +176,6 @@ const UserEditorContainer = ({api, children, currentUserModel, initialUser}) => 
 UserEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
-  currentUserModel: PropTypes.object.isRequired,
   initialUser: PropTypes.object.isRequired,
 };
 

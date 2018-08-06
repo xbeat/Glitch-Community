@@ -47,5 +47,5 @@ export default class LocalStorage extends React.Component {
 LocalStorage.propTypes = {
   children: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  default: PropTypes.any.isRequired,
+  default: PropTypes.any,
 };
