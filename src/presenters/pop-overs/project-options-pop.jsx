@@ -66,12 +66,14 @@ const ProjectOptionsPop = ({
 ProjectOptionsPop.propTypes = {
   project: PropTypes.object.isRequired,
   togglePopover: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired,
   addPin: PropTypes.func,
   removePin: PropTypes.func,
   deleteProject: PropTypes.func,
   leaveProject: PropTypes.func,
   removeProjectFromTeam: PropTypes.func,
-  currentUser: PropTypes.object.isRequired,
+  joinTeamProject: PropTypes.func,
+  leaveTeamProject: PropTypes.func,
 };
 
 

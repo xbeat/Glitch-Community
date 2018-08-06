@@ -127,6 +127,14 @@ class TeamEditor extends React.Component {
       teamPins: teamPins.filter(p => p.projectId !== id),
     }));
   }
+  
+  async joinTeamProject(projectId, userId) {
+    console.log('🚒')
+  }
+  
+  async leaveTeamProject(projectId, userId) {
+    console.log('🍎')
+  }
 
   currentUserIsTeamAdmin() {
     const currentUserId = this.props.currentUserModel.id();
@@ -163,6 +171,8 @@ class TeamEditor extends React.Component {
       teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
       teamHasBillingExposed: this.teamHasBillingExposed(),
       updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),
+      joinTeamProject: (projectId, userId) => this.joinTeamProject(projectId, userId).catch(handleError),
+      leaveTeamProject: (projectId, userId) => this.leaveTeamProject(projectId, userId).catch(handleError),
     };
     return this.props.children(this.state, funcs, this.currentUserIsOnTeam(), this.currentUserIsTeamAdmin());
   }
@@ -175,6 +185,7 @@ TeamEditor.propTypes = {
   initialTeam: PropTypes.object.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
 };
+
 
 const TeamEditorContainer = ({api, children, currentUserModel, initialTeam}) => (
   <ErrorHandlers>
