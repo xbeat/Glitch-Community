@@ -8,9 +8,6 @@ import {BrowserRouter} from 'react-router-dom';
 
 import application from './application';
 
-import qs from 'querystringify';
-const queryString = qs.parse(window.location.search);
-
 import {CurrentUserProvider} from './presenters/current-user.jsx';
 import {UserPrefsProvider} from './presenters/includes/user-prefs.jsx';
 import {Notifications} from './presenters/notifications.jsx';
@@ -34,32 +31,8 @@ async function route(location, application) {
   }
   
   //
-  // OAuth Handling
-  //
-  if (normalizedRoute.startsWith("login/")) {
-    const provider = normalizedRoute.substring("login/".length);
-    const code = queryString.code;
-   
-    try {
-      await application.login(provider, code);
-      window.location.replace("/");
-    } catch (error) {
-      const errorData = error && error.response && error.response.data;
-      const deets = {provider, queryString, error: errorData};
-      console.error("OAuth login error.", deets);
-      Raven.captureMessage("Oauth login error", {extra: deets});
-
-      const div = document.createElement('div');
-      document.body.appendChild(div);
-      render(<ErrorPage title="OAuth Login Problem" description="Hard to say what happened, but we couldn't log you in. Try again?"/>, div);
-    }
-    return;
-  }
-  
-  //
   //  Page Routing
   //
-
   const dom = document.createElement('div');
   document.body.appendChild(dom);
   const App = () => (

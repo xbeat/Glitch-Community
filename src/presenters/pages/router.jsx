@@ -9,6 +9,7 @@ import categories from '../../cache/categories';
 import rootTeams from '../../curated/teams';
 
 import IndexPage from './index.jsx';
+import {FacebookLoginPage, GitHubLoginPage} from './login.jsx';
 import QuestionsPage from './questions.jsx';
 import ProjectPage from './project.jsx';
 import {TeamPage, UserPage, TeamOrUserPage} from './team-or-user.jsx';
@@ -29,6 +30,9 @@ const Router = ({api}) => (
   <Switch>
     <Route path="/" exact render={() => <IndexPage api={api}/>}/>
     <Route path="/index.html" exact strict render={() => <IndexPage api={api}/>}/>
+    
+    <Route path="/login/facebook" exact render={({location}) => <FacebookLoginPage api={api} code={qs.parse(location.search).code}/>}/>
+    <Route path="/login/github" exact render={({location}) => <GitHubLoginPage api={api} code={qs.parse(location.search).code}/>}/>
     
     <Route path="/questions" exact render={() => <QuestionsPage api={api}/>}/>
     
