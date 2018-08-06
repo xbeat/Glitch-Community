@@ -78,9 +78,9 @@ CategoryPage.propTypes = {
   category: PropTypes.object.isRequired,
 };
 
-const CategoryPageContainer = ({application, category}) => (
-  <Layout application={application}>
-    <CategoryPage api={application.api()} category={category}/>
+const CategoryPageContainer = ({api, category}) => (
+  <Layout api={api}>
+    <CategoryPage api={api} category={category}/>
   </Layout>
 );
 

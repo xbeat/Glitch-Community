@@ -1,7 +1,8 @@
-/* globals Raven */
+/* globals API_URL Raven */
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import LocalStorage from './includes/local-storage.jsx';
 
@@ -29,26 +30,47 @@ function identifyUser(user) {
 class CurrentUserManager extends React.Component {
   constructor(props) {
     super(props);
+    this.api = null;
     this.state = {fetched: false};
   }
   
   async load() {
-    const {api, currentUser, setCurrentUser} = this.props;
+    const {currentUser, setCurrentUser} = this.props;
     if (currentUser) {
       this.setState({fetched: false});
-      const {data} = await api.get(`users/${currentUser.id}`);
+      const {data} = await this.api.get(`users/${currentUser.id}`);
       setCurrentUser(data);
       identifyUser(currentUser);
     }
     this.setState({fetched: true});
   }
   
+  handleUser() {
+    const token = this.props.currentUser && this.props.currentUser.persistentToken;
+    if (token) {
+      this.api = axios.create({  
+        baseURL: API_URL,
+        headers: {
+          Authorization: token,
+        },
+      });
+    } 
+    this.api = axios.create({
+      baseURL: API_URL,
+    });
+    this.load();
+  }
+  
+  componentDidMount() {
+    this.handleUser();
+  }
+  
   componentDidUpdate(prev) {
     const {currentUser} = this.props;
     if (!!currentUser !== !!prev.currentUser) {
-      this.load();
-    } else if (currentUser && currentUser.id !== prev.currentUser.id) {
-      this.load();
+      this.handleUser();
+    } else if (currentUser && currentUser.persistentToken !== prev.currentUser.persistentToken) {
+      this.handleUser();
     }
   }
   
@@ -67,17 +89,17 @@ class CurrentUserManager extends React.Component {
   render() {
     const {children, currentUser} = this.props;
     const {fetched} = this.state;
-    return children(currentUser, fetched, changes => this.update(changes));
+    return this.api ? children(this.api, currentUser, fetched, changes => this.update(changes)) : null;
   }
 }
 
-export const CurrentUserProvider = ({api, children}) => (
+export const CurrentUserProvider = ({children}) => (
   <LocalStorage name="cachedUser" default={null}>
     {(currentUser, set) => (
-      <CurrentUserManager api={api} currentUser={currentUser} setCurrentUser={set}>
-        {(currentUser, fetched, update) => (
+      <CurrentUserManager currentUser={currentUser} setCurrentUser={set}>
+        {(api, currentUser, fetched, update) => (
           <Provider value={{currentUser, fetched, update}}>
-            {children}
+            {children(api)}
           </Provider>
         )}
       </CurrentUserManager>
@@ -85,7 +107,6 @@ export const CurrentUserProvider = ({api, children}) => (
   </LocalStorage>
 );
 CurrentUserProvider.propTypes = {
-  api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
 };
 

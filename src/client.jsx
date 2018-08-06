@@ -62,18 +62,18 @@ async function route(location, application) {
 
   const dom = document.createElement('div');
   document.body.appendChild(dom);
-  const App = ({application}) => (
+  const App = () => (
     <BrowserRouter>
       <Notifications>
         <UserPrefsProvider>
-          <CurrentUserProvider api={application.api()}>
-            <Router application={application}/>
+          <CurrentUserProvider>
+            {api => <Router api={api}/>}
           </CurrentUserProvider>
         </UserPrefsProvider>
       </Notifications>
     </BrowserRouter>
   );
-  render(<App application={application}/>, dom);
+  render(<App/>, dom);
 }
 
 route(window.location, application);

@@ -130,10 +130,10 @@ IndexPage.propTypes = {
   }),
 };
 
-const IndexPageContainer = ({application}) => (
-  <Layout application={application}>
+const IndexPageContainer = ({api}) => (
+  <Layout api={api}>
     <CurrentUserConsumer>
-      {user => <IndexPage api={application.api()} user={user}/>}
+      {user => <IndexPage api={api} user={user}/>}
     </CurrentUserConsumer>
   </Layout>
 );

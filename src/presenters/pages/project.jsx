@@ -170,9 +170,9 @@ ProjectPageLoader.propTypes = {
   domain: PropTypes.string.isRequired,
 };
 
-const ProjectPageContainer = ({application, name}) => (
-  <Layout application={application}>
-    <ProjectPageLoader api={application.api()} domain={name}/>
+const ProjectPageContainer = ({api, name}) => (
+  <Layout api={api}>
+    <ProjectPageLoader api={api} domain={name}/>
   </Layout>
 );
 

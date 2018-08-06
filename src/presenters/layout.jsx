@@ -4,15 +4,15 @@ import PropTypes from 'prop-types';
 import Header from './header.jsx';
 import Footer from './footer.jsx';
 
-const Layout = ({children, application, searchQuery}) => (
+const Layout = ({children, api, searchQuery}) => (
   <div className="content">
-    <Header api={application.api()} searchQuery={searchQuery}/>
+    <Header api={api} searchQuery={searchQuery}/>
     {children}
     <Footer/>
   </div>
 );
 Layout.propTypes = {
-  application: PropTypes.any.isRequired,
+  api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
   searchQuery: PropTypes.string,
 };

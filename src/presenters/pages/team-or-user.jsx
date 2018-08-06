@@ -83,13 +83,13 @@ TeamOrUserPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-const Presenter = (application, Loader, args) => (
-  <Layout application={application}>
-    <Loader api={application.api()} {...args}/>
+const Presenter = (api, Loader, args) => (
+  <Layout api={api}>
+    <Loader api={api} {...args}/>
   </Layout>
 );
 
-const TeamPagePresenter = ({application, id, name}) => Presenter(application, TeamPageLoader, {id, name});
-const UserPagePresenter = ({application, id, name}) => Presenter(application, UserPageLoader, {id, name});
-const TeamOrUserPagePresenter = ({application, name}) => Presenter(application, TeamOrUserPageLoader, {name});
+const TeamPagePresenter = ({api, id, name}) => Presenter(api, TeamPageLoader, {id, name});
+const UserPagePresenter = ({api, id, name}) => Presenter(api, UserPageLoader, {id, name});
+const TeamOrUserPagePresenter = ({api, name}) => Presenter(api, TeamOrUserPageLoader, {name});
 export {TeamPagePresenter as TeamPage, UserPagePresenter as UserPage, TeamOrUserPagePresenter as TeamOrUserPage};

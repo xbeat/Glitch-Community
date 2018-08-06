@@ -123,14 +123,14 @@ SearchPage.propTypes = {
   query: PropTypes.string.isRequired,
 };
 
-const SearchPageContainer = ({application, query}) => (
-  <Layout application={application} searchQuery={query}>
+const SearchPageContainer = ({api, query}) => (
+  <Layout api={api} searchQuery={query}>
     <Helmet>
       <title>Search for {query}</title>
     </Helmet>
     <ErrorHandlers>
       {errorFuncs => (
-        <SearchPage {...errorFuncs} api={application.api()} query={query}/>
+        <SearchPage {...errorFuncs} api={api} query={query}/>
       )}
     </ErrorHandlers>
   </Layout>
