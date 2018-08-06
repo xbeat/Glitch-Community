@@ -5,22 +5,79 @@ import LocalStorage from './includes/local-storage.jsx';
 
 const {Provider, Consumer} = React.createContext();
 
+function identifyUser(user) {
+  const analytics = window.analytics;
+  if (analytics && user.id) {
+    try {
+      analytics.identify(user.id, {
+        name: user.name,
+        login: user.login,
+        email: user.email,
+        created_at: user.createdAt,
+      });
+    } catch (error) {
+      console.error(error);
+      Raven.captureException(error);
+    }
+  }
+}
+
+class CurrentUserManager extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {fetched: false};
+  }
+  
+  async load() {
+    const {api, currentUser, setCurrentUser} = this.props;
+    if (currentUser) {
+      this.setState({fetched: false});
+      const {data} = await api.get(`users/${currentUser.id}`);
+      setCurrentUser(data);
+      identifyUser(currentUser);
+    }
+    this.setState({fetched: true});
+  }
+  
+  componentDidUpdate(prev) {
+    const {currentUser} = this.props;
+    if (!!currentUser !== !!prev.currentUser) {
+      this.load();
+    } else if (currentUser && currentUser.id !== prev.currentUser.id) {
+      this.load();
+    }
+  }
+  
+  async update(changes) {
+    const {api, currentUser, setCurrentUser} = this.props;
+    if (changes) {
+      setCurrentUser({...currentUser, ...changes});
+    } else if (changes === null) {
+      setCurrentUser(undefined);
+    } else if (currentUser) {
+      const {data} = await api.get(`users/${currentUser.id}`);
+      setCurrentUser(data);
+    }
+  }
+  
+  render() {
+    const {children, currentUser} = this.props;
+    const {fetched} = this.state;
+    return children(currentUser, fetched, changes => this.update(changes));
+  }
+}
+
 export const CurrentUserProvider = ({api, children}) => (
   <LocalStorage name="cachedUser" default={null}>
-    {(currentUser, set) => {
-      const fetched = true;
-      async function update(changes) {
-        if (changes) {
-          set({...currentUser, ...changes});
-        } else if (changes === null) {
-          set(undefined);
-        } else if (currentUser) {
-          const {data} = await api.get(`users/${currentUser.id}`);
-          set(data);
-        }
-      }
-      return <Provider value={{currentUser, fetched, update}}>{children}</Provider>;
-    }}
+    {(currentUser, set) => (
+      <CurrentUserManager api={api} currentUser={currentUser} setCurrentUser={set}>
+        {(currentUser, fetched, update) => (
+          <Provider value={{currentUser, fetched, update}}>
+            {children}
+          </Provider>
+        )}
+      </CurrentUserManager>
+    )}
   </LocalStorage>
 );
 CurrentUserProvider.propTypes = {
