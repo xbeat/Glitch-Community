@@ -74,6 +74,9 @@ ProjectOptionsPop.propTypes = {
   currentUser: PropTypes.object.isRequired,
 };
 
+
+// Project Options Container
+
 export default function ProjectOptions({projectOptions={}, project}) {
   if(Object.keys(projectOptions).length === 0) {
     return null;
