@@ -49,16 +49,18 @@ class CurrentUserManager extends React.Component {
   }
   
   async load() {
+    this.setState({fetched: false});
     const {currentUser, setCurrentUser} = this.props;
     if (currentUser && currentUser.persistentToken) {
-      this.setState({fetched: false});
       const {data} = await this.api().get(`users/${currentUser.id}`);
       setCurrentUser(data);
       identifyUser(currentUser);
-    } else {
-      setCurrentUser(null);
+      this.setState({fetched: true});
     }
-    this.setState({fetched: true});
+  }
+  
+  componentDidMount() {
+    this.load();
   }
   
   componentDidUpdate(prev) {
