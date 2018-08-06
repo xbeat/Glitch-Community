@@ -101,7 +101,7 @@ async function route(location, application) {
     <BrowserRouter>
       <Notifications>
         <UserPrefsProvider>
-          <CurrentUserProvider model={application.currentUser()}>
+          <CurrentUserProvider api={application.api()}>
             <Router application={application}/>
           </CurrentUserProvider>
         </UserPrefsProvider>

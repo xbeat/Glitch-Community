@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
 
-import {CurrentUserProvider} from './current-user.jsx';
+import {CurrentUserConsumer} from './current-user.jsx';
 import ErrorHandlers from './error-handlers.jsx';
 import Uploader from './includes/uploader.jsx';
 
@@ -24,19 +24,8 @@ class UserEditor extends React.Component {
   async updateFields(changes) {
     const {data} = await this.props.api.patch(`users/${this.state.id}`, changes);
     this.setState(data);
-  }
-  
-  async updateName(name) {
-    await this.updateFields({name});
     if (this.isCurrentUser()) {
-      this.props.updateCurrentUser({name});
-    }
-  }
-  
-  async updateLogin(login) {
-    await this.updateFields({login});
-    if (this.isCurrentUser()) {
-      this.props.currentUserModel.login(login);
+      this.props.updateCurrentUser(data);
     }
   }
   
@@ -50,10 +39,6 @@ class UserEditor extends React.Component {
       avatarUrl: url,
       color: color,
     });
-    if (this.isCurrentUser()) {
-      this.props.currentUserModel.avatarUrl(this.state.avatarUrl);
-      this.props.currentUserModel.avatarThumbnailUrl(this.state.avatarThumbnailUrl);
-    }
   }
   
   async uploadCover(blob) {
@@ -126,8 +111,8 @@ class UserEditor extends React.Component {
   render() {
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
-      updateName: name => this.updateName(name).catch(handleErrorForInput),
-      updateLogin: login => this.updateLogin(login).catch(handleErrorForInput),
+      updateName: name => this.updateFields({name}).catch(handleErrorForInput),
+      updateLogin: login => this.updateFields({login}).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
       uploadCover: () => assets.requestFile(blob => this.uploadCover(blob).catch(handleError)),
@@ -161,13 +146,13 @@ const UserEditorContainer = ({api, children, initialUser}) => (
     {errorFuncs => (
       <Uploader>
         {uploadFuncs => (
-          <CurrentUserProvider>
+          <CurrentUserConsumer>
             {(currentUser, fetched, updateCurrentUser) => (
               <UserEditor {...{api, currentUser, updateCurrentUser, initialUser}} {...uploadFuncs} {...errorFuncs}>
                 {children}
               </UserEditor>
             )}
-          </CurrentUserProvider>
+          </CurrentUserConsumer>
         )}
       </Uploader>
     )}

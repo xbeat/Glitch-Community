@@ -5,15 +5,18 @@ import LocalStorage from './includes/local-storage.jsx';
 
 const {Provider, Consumer} = React.createContext();
 
-export const CurrentUserProvider = ({children}) => (
+export const CurrentUserProvider = ({api, children}) => (
   <LocalStorage name="cachedUser" default={null}>
     {(currentUser, set) => {
       const fetched = true;
-      function update(changes) {
+      async function update(changes) {
         if (changes) {
           set({...currentUser, ...changes});
-        } else {
+        } else if (changes === null) {
           set(undefined);
+        } else if (currentUser) {
+          const {data} = await api.get(`users/${currentUser.id}`);
+          set(data);
         }
       }
       return <Provider value={{currentUser, fetched, update}}>{children}</Provider>;
@@ -21,7 +24,7 @@ export const CurrentUserProvider = ({children}) => (
   </LocalStorage>
 );
 CurrentUserProvider.propTypes = {
-  model: PropTypes.object.isRequired,
+  api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
 };
 
