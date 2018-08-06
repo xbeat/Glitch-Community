@@ -33,10 +33,10 @@ const getTeam = async(api, name) => {
   return data && TeamModel(data).update(data).asProps();
 };
 
-const TeamPageLoader = ({api, currentUserModel, id, name, ...props}) => (
+const TeamPageLoader = ({api, id, name, ...props}) => (
   <DataLoader get={() => getTeamById(api, id)}>
     {team => team ? (
-      <TeamPage api={api} currentUserModel={currentUserModel} team={team} {...props}/>
+      <TeamPage api={api} team={team} {...props}/>
     ) : (
       <NotFound name={name}/>
     )}
@@ -48,10 +48,10 @@ TeamPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-const UserPageLoader = ({api, currentUserModel, id, name, ...props}) => (
+const UserPageLoader = ({api, id, name, ...props}) => (
   <DataLoader get={() => getUserById(api, id)}>
     {user => user ? (
-      <UserPage api={api} currentUserModel={currentUserModel} user={user} {...props}/>
+      <UserPage api={api} user={user} {...props}/>
     ) : (
       <NotFound name={name}/>
     )}
@@ -63,14 +63,14 @@ UserPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-const TeamOrUserPageLoader = ({api, currentUserModel, name, ...props}) => (
+const TeamOrUserPageLoader = ({api, name, ...props}) => (
   <DataLoader get={() => getTeam(api, name)}>
     {team => team ? (
-      <TeamPage api={api} currentUserModel={currentUserModel} team={team} {...props}/>
+      <TeamPage api={api} team={team} {...props}/>
     ) : (
       <DataLoader get={() => getUser(api, name)}>
         {user => user ? (
-          <UserPage api={api} currentUserModel={currentUserModel} user={user} {...props}/>
+          <UserPage api={api} user={user} {...props}/>
         ) : (
           <NotFound name={name}/>
         )}
@@ -85,7 +85,7 @@ TeamOrUserPageLoader.propTypes = {
 
 const Presenter = (application, Loader, args) => (
   <Layout application={application}>
-    <Loader api={application.api()} currentUserModel={application.currentUser()} {...args}/>
+    <Loader api={application.api()} {...args}/>
   </Layout>
 );
 

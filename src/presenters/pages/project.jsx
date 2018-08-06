@@ -150,10 +150,10 @@ async function getProject(api, domain) {
   return data ? Project(data).update(data).asProps() : null;
 }
 
-const ProjectPageLoader = ({domain, api, currentUserModel, ...props}) => (
+const ProjectPageLoader = ({domain, api, ...props}) => (
   <DataLoader get={() => getProject(api, domain)} renderError={() => <NotFound name={domain}/>}>
     {project => project ? (
-      <ProjectEditor api={api} initialProject={project} currentUserModel={currentUserModel}>
+      <ProjectEditor api={api} initialProject={project}>
         {(project, funcs, userIsMember) => (
           <React.Fragment>
             <Helmet>
@@ -172,7 +172,7 @@ ProjectPageLoader.propTypes = {
 
 const ProjectPageContainer = ({application, name}) => (
   <Layout application={application}>
-    <ProjectPageLoader api={application.api()} domain={name} currentUserModel={application.currentUser()}/>
+    <ProjectPageLoader api={application.api()} domain={name}/>
   </Layout>
 );
 

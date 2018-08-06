@@ -46,10 +46,12 @@ const ProjectEditorContainer = ({api, children, initialProject}) => (
   <ErrorHandlers>
     {wrapErrors => (
       <CurrentUserConsumer>
+        {currentUser => (
+          <ProjectEditor api={api} currentUser={currentUser} initialProject={initialProject} {...wrapErrors}>
+            {children}
+          </ProjectEditor>
+        )}
       </CurrentUserConsumer>
-      <ProjectEditor api={api} currentUser={currentUser} initialProject={initialProject} {...wrapErrors}>
-        {children}
-      </ProjectEditor>
     )}
   </ErrorHandlers>
 );

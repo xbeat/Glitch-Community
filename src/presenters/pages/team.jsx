@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import {getAvatarStyle, getProfileStyle} from '../../models/team';
+import {CurrentUserConsumer} from '../current-user.jsx';
 import TeamEditor from '../team-editor.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
 
@@ -71,22 +72,30 @@ TeamPage.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
-const teamConflictsWithUser = (team, currentUserModel) => {
-  if (currentUserModel.login()) {
-    return currentUserModel.login().toLowerCase() === team.url;
+const teamConflictsWithUser = (team, currentUser) => {
+  if (currentUser && currentUser.login) {
+    return currentUser.login.toLowerCase() === team.url;
   }
   return false;
 };
 
-const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
-  <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
+const TeamNameConflict = ({team}) => (
+  <CurrentUserConsumer>
+    {currentUser => (
+      teamConflictsWithUser(team, currentUser) && <NameConflictWarning/>
+    )}
+  </CurrentUserConsumer>
+);
+
+const TeamPageContainer = ({api, team, ...props}) => (
+  <TeamEditor api={api} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam) => (
       <React.Fragment>
         <Helmet>
           <title>{team.name}</title>
         </Helmet>
         <TeamPage api={api} team={team} {...funcs} currentUserIsOnTeam={currentUserIsOnTeam} {...props}/>
-        {teamConflictsWithUser(team, currentUserModel) && <NameConflictWarning/>}
+        <TeamNameConflict team={team}/>
       </React.Fragment>
     )}
   </TeamEditor>
