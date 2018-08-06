@@ -130,7 +130,7 @@ class UserEditor extends React.Component {
 UserEditor.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
-  currentUser: PropTypes.object.isRequired,
+  currentUser: PropTypes.object,
   updateCurrentUser: PropTypes.func.isRequired,
   handleError: PropTypes.func.isRequired,
   handleErrorForInput: PropTypes.func.isRequired,
