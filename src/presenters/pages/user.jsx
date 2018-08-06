@@ -87,8 +87,12 @@ const UserPage = ({
       </ProfileContainer>
     </section>
     <EntityPageProjects
-      projects={projects} pins={pins} isAuthorized={isAuthorized}
-      api={api} addPin={addPin} removePin={removePin}
+      projects={projects} 
+      pins={pins} 
+      isAuthorized={isAuthorized}
+      api={api} 
+      addPin={addPin} 
+      removePin={removePin}
       projectOptions={{leaveProject, deleteProject}}
     />
     {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}

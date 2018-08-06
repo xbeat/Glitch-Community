@@ -49,7 +49,8 @@ const ProjectOptionsPop = ({
         {!!addPin && <PopoverButton onClick={clickAddPin} text="Pin " emoji="pushpin"/>}
         {!!removePin && <PopoverButton onClick={clickRemovePin} text="Un-Pin " emoji="pushpin"/>}
       </section>
-      {!!leaveProject &&
+      
+      {(!!leaveProject && project.users.length > 1 ) &&
         <section className="pop-over-actions danger-zone">
           {<PopoverButton onClick={clickLeave} text="Leave Project " emoji="wave"/>}
         </section>
