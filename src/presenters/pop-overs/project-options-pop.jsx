@@ -64,20 +64,21 @@ const ProjectOptionsPop = ({...props}) => {
         {!!props.addPin && <PopoverButton onClick={addPinAction} text="Pin " emoji="pushpin"/>}
         {!!props.removePin && <PopoverButton onClick={removePinAction} text="Un-Pin " emoji="pushpin"/>}
       </section>
-        <section className="pop-over-actions">
-          {(!!props.joinTeamProject && !currentUserIsOnProject) &&
-            <PopoverButton onClick={joinTeamProjectAction} text="Leave Project " emoji="wave"/>
-          }          
-          {(!!props.leaveTeamProject && props.project.users.length > 1 && currentUserIsOnProject) &&
-            <PopoverButton onClick={leaveTeamProjectAction} text="Leave Project " emoji="wave"/>
-          }
-          {(!!props.leaveProject && props.project.users.length > 1 ) &&
-            <PopoverButton onClick={leaveProjectAction} text="Leave Project " emoji="wave"/>
-          }
-        </section>
+      
+      <section className="pop-over-actions team-project-actions">
+        {(!!props.joinTeamProject && !currentUserIsOnProject) &&
+          <PopoverButton onClick={joinTeamProjectAction} text="Join Project " emoji="wave"/>
+        }          
+        {(!!props.leaveTeamProject && props.project.users.length > 1 && currentUserIsOnProject) &&
+          <PopoverButton onClick={leaveTeamProjectAction} text="Leave Project " emoji="wave"/>
+        }
+        {(!!props.leaveProject && props.project.users.length > 1 ) &&
+          <PopoverButton onClick={leaveProjectAction} text="Leave Project " emoji="wave"/>
+        }
+      </section>
       
       {(!!props.leaveProject && props.project.users.length > 1 ) &&
-        <section className="pop-over-actions danger-zone">
+        <section className="pop-over-actions">
           <PopoverButton onClick={leaveProjectAction} text="Leave Project " emoji="wave"/>
         </section>
       }
