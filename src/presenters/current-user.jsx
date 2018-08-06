@@ -30,66 +30,61 @@ function identifyUser(user) {
 class CurrentUserManager extends React.Component {
   constructor(props) {
     super(props);
-    this.api = null;
     this.state = {fetched: false};
   }
   
-  async load() {
-    const {currentUser, setCurrentUser} = this.props;
-    if (currentUser) {
-      this.setState({fetched: false});
-      const {data} = await this.api.get(`users/${currentUser.id}`);
-      setCurrentUser(data);
-      identifyUser(currentUser);
-    }
-    this.setState({fetched: true});
-  }
-  
-  handleUser() {
+  api() {
     const token = this.props.currentUser && this.props.currentUser.persistentToken;
     if (token) {
-      this.api = axios.create({  
+      return axios.create({  
         baseURL: API_URL,
         headers: {
           Authorization: token,
         },
       });
     } 
-    this.api = axios.create({
+    return axios.create({
       baseURL: API_URL,
     });
-    this.load();
   }
   
-  componentDidMount() {
-    this.handleUser();
+  async load() {
+    const {currentUser, setCurrentUser} = this.props;
+    if (currentUser && currentUser.persistentToken) {
+      this.setState({fetched: false});
+      const {data} = await this.api().get(`users/${currentUser.id}`);
+      setCurrentUser(data);
+      identifyUser(currentUser);
+    } else {
+      setCurrentUser(null);
+    }
+    this.setState({fetched: true});
   }
   
   componentDidUpdate(prev) {
     const {currentUser} = this.props;
     if (!!currentUser !== !!prev.currentUser) {
-      this.handleUser();
+      this.load();
     } else if (currentUser && currentUser.persistentToken !== prev.currentUser.persistentToken) {
-      this.handleUser();
+      this.load();
     }
   }
   
   async update(changes) {
-    const {api, currentUser, setCurrentUser} = this.props;
+    const {currentUser, setCurrentUser} = this.props;
     if (changes) {
       setCurrentUser({...currentUser, ...changes});
     } else if (changes === null) {
       setCurrentUser(undefined);
-    } else if (currentUser) {
-      const {data} = await api.get(`users/${currentUser.id}`);
-      setCurrentUser(data);
+    } else {
+      this.load();
     }
   }
   
   render() {
     const {children, currentUser} = this.props;
     const {fetched} = this.state;
-    return this.api ? children(this.api, currentUser, fetched, changes => this.update(changes)) : null;
+    return children(this.api(), currentUser, fetched, changes => this.update(changes));
   }
 }
 
@@ -107,7 +102,7 @@ export const CurrentUserProvider = ({children}) => (
   </LocalStorage>
 );
 CurrentUserProvider.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.func.isRequired,
 };
 
 export const CurrentUserConsumer = ({children}) => (
