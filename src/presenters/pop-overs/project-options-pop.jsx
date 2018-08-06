@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
+import {CurrentUserConsumer} from '../current-user.jsx';
 
 const PopoverButton = ({onClick, text, emoji}) => (
   <button className="button-small has-emoji button-tertiary" onClick={onClick}>
@@ -13,7 +14,7 @@ const ProjectOptionsPop = ({
   projectId, projectName,
   addPin, removePin, deleteProject, 
   leaveProject, removeProjectFromTeam,
-  togglePopover,
+  togglePopover, currentUser
 }) => {
   
   function animate(event, className, func) {
@@ -50,7 +51,11 @@ const ProjectOptionsPop = ({
       </section>
       {!!leaveProject &&
         <section className="pop-over-actions danger-zone">
-          {<PopoverButton onClick={clickLeave} text="Leave" emoji="wave"/>}
+          <button className="button-small has-emoji button-tertiary" onClick={clickLeave}>
+            Leave
+            <span className="emoji wave" />
+            <span>PK</span>
+          </button>
         </section>
       }
       <section className="pop-over-actions danger-zone last-section">
@@ -86,13 +91,21 @@ export default function ProjectOptions({projectOptions={}, project}) {
   return (
     <PopoverContainer>
       {({togglePopover, visible}) => (
-        <div>
-          <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
-            <div className="down-arrow"></div>
-          </button>
-          { visible && <ProjectOptionsPop {...popupProps} {...projectOptions} togglePopover={togglePopover}/> }
-        </div>
+        <CurrentUserConsumer>
+          {user => (
+            <div>
+              <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
+                <div className="down-arrow"></div>
+              </button>
+              { visible && <ProjectOptionsPop {...popupProps} {...projectOptions} togglePopover={togglePopover} currentUser={user} /> }
+            </div>
+          )}
+        </CurrentUserConsumer>
       )}
     </PopoverContainer>
   );
+}
+
+ProjectOptions.propTypes = {
+  project: PropTypes.object.isRequired,
 }
