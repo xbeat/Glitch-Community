@@ -41,7 +41,7 @@ const ProjectOptionsPop = ({
   function clickDelete(event) {
     animate(event, 'slide-down', () => deleteProject(projectId));
   }
-  
+    
   return (
     <dialog className="pop-over project-options-pop">
       <section className="pop-over-actions">
@@ -70,6 +70,7 @@ ProjectOptionsPop.propTypes = {
   deleteProject: PropTypes.func,
   leaveProject: PropTypes.func,
   removeProjectFromTeam: PropTypes.func,
+  currentUser: PropTypes.object.isRequired,
 };
 
 export default function ProjectOptions({projectOptions={}, project}) {
