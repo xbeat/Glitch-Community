@@ -21,15 +21,15 @@ const ProjectOptionsPop = ({...props}) => {
     props.togglePopover();
   }
   
-  function addPinAction(event) {
+  function addPin(event) {
     animate(event, 'slide-up', () => props.addPin(props.project.id));
   }
   
-  function removePinAction(event) {
+  function removePin(event) {
     animate(event, 'slide-down', () => props.removePin(props.project.id));
   }
   
-  function leaveProjectAction(event) {
+  function leaveProject(event) {
     const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${props.project.name}?`;
     if (window.confirm(prompt)) {
       props.leaveProject(props.project.id, event);
@@ -45,12 +45,12 @@ const ProjectOptionsPop = ({...props}) => {
     }
   }
   
-  function leaveTeamProjectAction() {
+  function leaveTeamProject() {
     props.leaveTeamProject(props.project.id, props.currentUser.id)
   }
   
-  function joinTeamProjectAction() {
-    props.leaveTeamProject(props.project.id, props.currentUser.id)
+  function joinTeamProject() {
+    props.joinTeamProject(props.project.id, props.currentUser.id)
   }
   
   function deleteAction(event) {
@@ -61,24 +61,24 @@ const ProjectOptionsPop = ({...props}) => {
   return (
     <dialog className="pop-over project-options-pop">
       <section className="pop-over-actions">
-        {!!props.addPin && <PopoverButton onClick={addPinAction} text="Pin " emoji="pushpin"/>}
-        {!!props.removePin && <PopoverButton onClick={removePinAction} text="Un-Pin " emoji="pushpin"/>}
+        {!!props.addPin && <PopoverButton onClick={addPin} text="Pin " emoji="pushpin"/>}
+        {!!props.removePin && <PopoverButton onClick={removePin} text="Un-Pin " emoji="pushpin"/>}
       </section>
-      
+
       {props.project.users.length > 1 &&
         <section className="pop-over-actions collaborator-actions">
           {(!!props.joinTeamProject && !currentUserIsOnProject()) &&
-            <PopoverButton onClick={joinTeamProjectAction} text="Join Project " emoji="wave"/>
+            <PopoverButton onClick={joinTeamProject} text="Join Project " emoji="rainbow"/>
           }
           {(!!props.leaveTeamProject && currentUserIsOnProject()) &&
-            <PopoverButton onClick={leaveTeamProjectAction} text="Leave Project " emoji="wave"/>
+            <PopoverButton onClick={leaveTeamProject} text="Leave Project " emoji="wave"/>
           }
           {!!props.leaveProject &&
-            <PopoverButton onClick={leaveProjectAction} text="Leave Project " emoji="wave"/>
+            <PopoverButton onClick={leaveProject} text="Leave Project " emoji="wave"/>
           }
         </section>
       }
-      
+
       <section className="pop-over-actions danger-zone last-section">
         {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
         {!!props.deleteProject && <PopoverButton onClick={deleteAction} text="Delete Project " emoji="bomb"/>}
@@ -101,6 +101,9 @@ ProjectOptionsPop.propTypes = {
   joinTeamProject: PropTypes.func,
   leaveTeamProject: PropTypes.func,
   currentUserIsOnProject: PropTypes.bool.isRequired,
+};
+ProjectOptionsPop.defaultProps = {
+  currentUserIsOnProject: false
 };
 
 
