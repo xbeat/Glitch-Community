@@ -10,7 +10,7 @@ import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import Categories from '../categories.jsx';
 
-const CategoryPageWrap = ({category, categories, children}) => (
+const CategoryPageWrap = ({category, children}) => (
   <React.Fragment>
     <Helmet>
       <title>{category.name}</title>
@@ -27,7 +27,7 @@ const CategoryPageWrap = ({category, categories, children}) => (
         {children}
       </article>
     </main>
-    <Categories categories={categories}/>
+    <Categories/>
   </React.Fragment>
 );
 CategoryPageWrap.propTypes = {
@@ -37,7 +37,6 @@ CategoryPageWrap.propTypes = {
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
-  categories: PropTypes.array.isRequired,
   children: PropTypes.node.isRequired,
 };
 
@@ -81,7 +80,7 @@ CategoryPage.propTypes = {
 
 const CategoryPageContainer = ({application, category}) => (
   <Layout application={application}>
-    <CategoryPage api={application.api()} category={category} categories={application.categories}/>
+    <CategoryPage api={application.api()} category={category}/>
   </Layout>
 );
 

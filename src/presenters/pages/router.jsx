@@ -5,7 +5,8 @@ import qs from 'querystringify';
 import {Route, Switch} from 'react-router-dom';
 import Helmet from 'react-helmet';
 
-import rootTeams from '../../curated/teams.js';
+import categories from '../../cache/categories';
+import rootTeams from '../../curated/teams';
 
 import IndexPage from './index.jsx';
 import QuestionsPage from './questions.jsx';
@@ -43,7 +44,7 @@ const Router = ({application}) => (
     
     <Route path="/search" exact render={({location}) => <SearchPage application={application} query={qs.parse(location.search).q}/>}/>
     
-    {application.categories.map(category => (
+    {categories.map(category => (
       <Route key={category.url} path={`/${category.url}`} exact render={() => <CategoryPage application={application} category={category}/>}/>
     ))}
     

@@ -1,7 +1,6 @@
 /* globals API_URL APP_URL EDITOR_URL analytics application Raven */
 
 import axios from 'axios';
-import cachedCategories from './cache/categories.js';
 import Model from './models/model';
 import User from './models/user';
 import Project from './models/project';
@@ -104,10 +103,6 @@ var self = Model({
     user.teams(teams);
     
     return user;
-  },
- 
-  get categories() {
-    return cachedCategories;
   },
 });
 

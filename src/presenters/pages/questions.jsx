@@ -14,7 +14,7 @@ const QuestionsPage = ({application}) => (
     </Helmet>
     <main className="questions-page">
       <Questions api={application.api()} max={12}/>
-      <Categories categories={application.categories}/>
+      <Categories/>
     </main>
   </Layout>
 );
