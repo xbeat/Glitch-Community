@@ -18,38 +18,8 @@ import {Notifications} from './presenters/notifications.jsx';
 import Router from './presenters/pages/router.jsx';
 import ErrorPage from './presenters/pages/error.jsx';
 
-console.log("#########");
-console.log("❓ query strings are", queryString);
-console.log("🎏 application is", application);
-console.log("👻 current user is", application.currentUser());
-console.log("🌈 login", application.currentUser().login());
-console.log("#########");
-
-
 
 // client-side routing:
-
-function identifyUser(application) {
-  const currentUserId = application.currentUser().id();
-  if (currentUserId) {
-    application.getCurrentUserById(currentUserId);
-  }
-  const user = application.currentUser();
-  const analytics = window.analytics;
-  if (analytics && user.id()) {
-    try {
-      analytics.identify(user.id(), {
-        name: user.name(),
-        login: user.login(),
-        email: user.email(),
-        created_at: user.createdAt(),
-      });
-    } catch (error) {
-      console.error(error);
-      Raven.captureException(error);
-    }
-  }
-}
 
 async function route(location, application) {
   const normalizedRoute = location.pathname.replace(/^\/|\/$/g, "");
@@ -85,11 +55,6 @@ async function route(location, application) {
     }
     return;
   }
-  
-  //
-  // If we have a session, load it and notify our analytics:
-  //
-  identifyUser(application);
   
   //
   //  Page Routing

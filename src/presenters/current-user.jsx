@@ -1,3 +1,5 @@
+/* globals Raven */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,7 +9,9 @@ const {Provider, Consumer} = React.createContext();
 
 function identifyUser(user) {
   const analytics = window.analytics;
-  if (analytics && user.id) {
+  if (analytics && user) {
+    console.log("👻 current user is", user);
+    console.log("🌈 login", user.login);
     try {
       analytics.identify(user.id, {
         name: user.name,
