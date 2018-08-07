@@ -128,13 +128,22 @@ class TeamEditor extends React.Component {
     }));
   }
   
-  async joinTeamProject(projectId) {
-    console.log('🚒joinTeamProject', projectId, this.state, this.props)
+  async joinTeamProject(projectId, user) {
+    console.log('🚒joinTeamProject', projectId, user, this.state)
     // turtle joins project on coolteam
     ///teams/<teamId>/projects/<projectId>/join
     // https://www.notion.so/glitch/teams-teamId-projects-projectId-join-7e78ee4eef2644738a47c75dbfdffe83
     await this.props.api.post(`/teams/${this.state.id}/projects/${projectId}/join`)
     
+    this.setState((prevState, {projects}) => {
+      // newProjects = prevState
+      // in project matching id, add user
+      // let newProjects = 
+      return {
+        projects: projects.filter(project => project.id !== projectId),
+      }
+    });
+
   }
   
   async leaveTeamProject(projectId, userId) {

@@ -50,7 +50,7 @@ const ProjectOptionsPop = ({...props}) => {
   }
   
   function joinTeamProject() {
-    props.joinTeamProject(props.project.id)
+    props.joinTeamProject(props.project.id, props.currentUser)
   }
   
   function deleteAction(event) {
