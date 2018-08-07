@@ -174,7 +174,7 @@ class TeamPage extends React.Component {
           <DeleteTeam api={() => this.props.api}
             teamId={this.props.team.id}
             teamName={this.props.team.name}
-            teamAdmins={this.teamAdmins}
+            teamAdmins={this.teamAdmins()}
             users={this.props.team.users}
           />
         }
