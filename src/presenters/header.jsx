@@ -2,7 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Link} from 'react-router-dom';
 import {getAvatarThumbnailUrl, getLink} from '../models/user';
 
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
@@ -82,9 +81,9 @@ const Header = ({api, maybeUser, updateUser, searchQuery, showNewStuffOverlay}) 
   return (
     <header role="banner">
       <div className="header-info">
-        <Link to="/">
+        <a href="/">
           <Logo/>
-        </Link>
+        </a>
       </div>
      
       <nav>
