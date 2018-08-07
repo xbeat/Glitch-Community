@@ -136,11 +136,16 @@ class TeamEditor extends React.Component {
     await this.props.api.post(`/teams/${this.state.id}/projects/${projectId}/join`)
     
     this.setState((prevState, {projects}) => {
-      // newProjects = prevState
-      // in project matching id, add user
-      // let newProjects = 
+      let projectsWithUser = prevState.projects.map(project => {
+        if (project.id === projectId) {
+          project.users.push(user)
+          console.log ('🔮', project.id, project, project.users, user)
+        }
+        return project
+      })
+      console.log ('🌈', projectsWithUser, user)
       return {
-        projects: projects.filter(project => project.id !== projectId),
+        projects: projectsWithUser,
       }
     });
 
