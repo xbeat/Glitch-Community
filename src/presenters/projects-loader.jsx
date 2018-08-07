@@ -48,6 +48,13 @@ export default class ProjectsLoader extends React.Component {
     this.ensureProjects(this.props.projects);
   }
   
+  reloadProjects(projectId) {
+    // setting the project to undefined refetch
+    this.setState({
+      [projectId]: undefined
+    })
+  }
+  
   render() {
     const {children, projects} = this.props;
     const loadedProjects = projects.map(project => this.state[project.id] || project);

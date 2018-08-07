@@ -139,6 +139,7 @@ class TeamEditor extends React.Component {
       let projectsWithUser = prevState.projects.map(project => {
         if (project.id === projectId) {
           project.users.push(user);
+          
           console.log ('🔮', project.domain, project.users);
         }
         return project;

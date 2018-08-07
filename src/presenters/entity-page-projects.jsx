@@ -9,7 +9,7 @@ import ProjectsLoader from './projects-loader.jsx';
 
 const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, projectOptions}) => {
+const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, projectOptions, reloadProjects}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const [pinnedProjects, recentProjects] = partition(projects, ({id}) => pinnedSet.has(id));
   
@@ -31,6 +31,11 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, pr
       </p>
     </React.Fragment>
   );
+  
+  const joinTeamProjects = (projectId, user) => {
+    projectOptions.joinTeamProjects(projectId, user);
+    reloadProjects(projectId);
+  }
   
   return (
     <React.Fragment>
@@ -59,7 +64,7 @@ EntityPageProjects.propTypes = {
 
 const EntityPageProjectsContainer = ({api, projects, ...props}) => (
   <ProjectsLoader api={api} projects={projects}>
-    {projects => <EntityPageProjects projects={projects} {...props}/>}
+    {projects, reloadProjects => <EntityPageProjects projects={projects} reloadProjects={reloadProjects} {...props}/>}
   </ProjectsLoader>
 );
 
