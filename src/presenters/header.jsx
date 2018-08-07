@@ -101,10 +101,10 @@ Header.propTypes = {
 
 const HeaderContainer = ({...props}) => (
   <CurrentUserConsumer>
-    {user => (
+    {(user, userFetched, updateUser) => (
       <NewStuffContainer isSignedIn={!!user && !!user.login}>
         {showNewStuffOverlay => (
-          <Header {...props} maybeUser={user} showNewStuffOverlay={showNewStuffOverlay}/>
+          <Header {...props} maybeUser={user} updateUser={updateUser} showNewStuffOverlay={showNewStuffOverlay}/>
         )}
       </NewStuffContainer>
     )}
