@@ -147,8 +147,8 @@ const UserEditorContainer = ({api, children, initialUser}) => (
       <Uploader>
         {uploadFuncs => (
           <CurrentUserConsumer>
-            {(currentUser, fetched, updateCurrentUser) => (
-              <UserEditor {...{api, currentUser, updateCurrentUser, initialUser}} {...uploadFuncs} {...errorFuncs}>
+            {(currentUser, fetched, {update}) => (
+              <UserEditor {...{api, currentUser, initialUser}} updateCurrentUser={update} {...uploadFuncs} {...errorFuncs}>
                 {children}
               </UserEditor>
             )}

@@ -188,8 +188,8 @@ const TeamEditorContainer = ({api, children, initialTeam}) => (
           <Notifications>
             {notificationFuncs => (
               <CurrentUserConsumer>
-                {(currentUser, fetched, updateCurrentUser) => (
-                  <TeamEditor {...{api, currentUser, updateCurrentUser, initialTeam}} {...uploadFuncs} {...errorFuncs} {...notificationFuncs}>
+                {(currentUser, fetched, {update}) => (
+                  <TeamEditor {...{api, currentUser, initialTeam}} updateCurrentUser={update} {...uploadFuncs} {...errorFuncs} {...notificationFuncs}>
                     {children}
                   </TeamEditor>
                 )}

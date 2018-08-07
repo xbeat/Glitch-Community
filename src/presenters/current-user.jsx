@@ -72,21 +72,16 @@ class CurrentUserManager extends React.Component {
     }
   }
   
-  async update(changes) {
-    const {currentUser, setCurrentUser} = this.props;
-    if (changes) {
-      setCurrentUser({...currentUser, ...changes});
-    } else if (changes === null) {
-      setCurrentUser(undefined);
-    } else {
-      this.load();
-    }
-  }
-  
   render() {
-    const {children, currentUser} = this.props;
+    const {children, currentUser, setCurrentUser} = this.props;
     const {fetched} = this.state;
-    return children(this.api(), currentUser, fetched, changes => this.update(changes));
+    return children({
+      api: this.api(),
+      currentUser, fetched,
+      update: changes => setCurrentUser(...currentUser, ...changes),
+      reload: () => this.load(),
+      clear: () => setCurrentUser(undefined),
+    });
   }
 }
 
@@ -94,8 +89,8 @@ export const CurrentUserProvider = ({children}) => (
   <LocalStorage name="cachedUser" default={null}>
     {(currentUser, set, loaded) => (
       <CurrentUserManager currentUser={currentUser} setCurrentUser={set}>
-        {(api, currentUser, fetched, update) => (
-          <Provider value={{currentUser, fetched, update}}>
+        {({api, ...props}) => (
+          <Provider value={props}>
             {loaded && children(api)}
           </Provider>
         )}
@@ -109,7 +104,7 @@ CurrentUserProvider.propTypes = {
 
 export const CurrentUserConsumer = ({children}) => (
   <Consumer>
-    {({currentUser, fetched, update}) => children(currentUser, fetched, update)}
+    {({currentUser, fetched, ...funcs}) => children(currentUser, fetched, funcs)}
   </Consumer>
 );
 CurrentUserConsumer.propTypes = {

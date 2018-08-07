@@ -52,13 +52,13 @@ SearchForm.defaultProps = {
   defaultValue: '',
 };
 
-const UserOptionsPopWrapper = ({user, updateUser, showNewStuffOverlay, api}) => {
+const UserOptionsPopWrapper = ({user, clearUser, showNewStuffOverlay, api}) => {
   const props = {
     teams: user.teams,
     userLink: getLink(user),
     avatarUrl: getAvatarThumbnailUrl(user),
     avatarStyle: {backgroundColor: user.color},
-    signOut: () => updateUser(null),
+    signOut: clearUser,
     api: api,
     userIsAnon: !!user.logon,
     showNewStuffOverlay,
@@ -74,12 +74,12 @@ UserOptionsPopWrapper.propTypes = {
     id: PropTypes.number.isRequired,
     login: PropTypes.string,
   }).isRequired,
-  updateUser: PropTypes.func.isRequired,
+  clearUser: PropTypes.func.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
   api: PropTypes.any.isRequired,
 };
 
-const Header = ({api, maybeUser, updateUser, searchQuery, showNewStuffOverlay}) => {
+const Header = ({api, maybeUser, clearUser, searchQuery, showNewStuffOverlay}) => {
   const signedIn = maybeUser && !!maybeUser.login;
   return (
     <header role="banner">
@@ -94,7 +94,7 @@ const Header = ({api, maybeUser, updateUser, searchQuery, showNewStuffOverlay}) 
         <NewProjectPop api={api}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
-        { maybeUser && <UserOptionsPopWrapper user={maybeUser} updateUser={updateUser} showNewStuffOverlay={showNewStuffOverlay} api={api}/>}
+        { maybeUser && <UserOptionsPopWrapper user={maybeUser} clearUser={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api}/>}
       </nav>
     </header>
   );
@@ -107,10 +107,10 @@ Header.propTypes = {
 
 const HeaderContainer = ({...props}) => (
   <CurrentUserConsumer>
-    {(user, userFetched, updateUser) => (
+    {(user, userFetched, {clear}) => (
       <NewStuffContainer isSignedIn={!!user && !!user.login}>
         {showNewStuffOverlay => (
-          <Header {...props} maybeUser={user} updateUser={updateUser} showNewStuffOverlay={showNewStuffOverlay}/>
+          <Header {...props} maybeUser={user} clearUser={clear} showNewStuffOverlay={showNewStuffOverlay}/>
         )}
       </NewStuffContainer>
     )}
