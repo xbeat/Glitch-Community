@@ -131,7 +131,8 @@ class TeamEditor extends React.Component {
   }
 
   currentUserIsTeamAdmin() {
-    const currentUserId = this.props.currentUserModel.id();
+    if (!this.props.currentUser) return false;
+    const currentUserId = this.props.currentUser.id;
     if (this.state.adminIds.includes(currentUserId)) {
       return true;
     }
