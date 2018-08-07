@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Sync your Spotify tunes to Slack!',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fharmonious-shoemaker.jpg?1532951366324",
-    link: 'https://glitch.com/~harmonious-shoemaker'
+    title: 'Make Your Own Stencil Text',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fstencilfy.jpg?1532951362600",
+    link: 'https://glitch.com/~stencilfy'
   }
   , {
-    title: 'Hmm...what\'s in the fridge?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffridgemoji.jpg?1532951363259",
-    link: 'https://glitch.com/~fridgemoji'
+    title: 'Wax Poetic with Emoji Moons',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwaxing-poetic.jpg?1532951365562",
+    link: 'https://glitch.com/~waxing-poetic'
   } 
   , {
-    title: 'Animate those SVGs!',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsvg-animator.jpg?1532951363984",
-    link: 'https://glitch.com/~svg-animator'
+    title: 'Choose Your Own Adventure!',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fchoose-your-own-adventure.jpg?1532951364679",
+    link: 'https://glitch.com/~choose-your-own-adventure'
   }  
 ];

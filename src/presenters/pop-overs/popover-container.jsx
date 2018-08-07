@@ -23,7 +23,8 @@ export default class PopoverContainer extends React.Component {
 
     this.set = this.set.bind(this);
     this.toggle = this.toggle.bind(this);
-   
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+
     // We need to set up and instantiate an onClickOutside wrapper
     // It's important to instantiate it once and pass though its children,
     // otherwise the diff algorithm won't be able to figure out our hijinks.
@@ -38,25 +39,32 @@ export default class PopoverContainer extends React.Component {
     };
     this.MonitoredComponent = onClickOutside(Wrapper, clickOutsideConfig);
   }
-  
+
   handleClickOutside(event) {
     // On keyup events, only hide the popup if it was the Escape key
     if(event.type === "keyup" && !["Escape", "Esc"].includes(event.key)) {
       return;
     }
-    
+
     this.setState({visible: false});
   }
-  
+
   set(visible) {
     this.setState({visible});
   }
-  
+
   toggle() {
     this.setState((prevState) => {
       return {visible: !prevState.visible};
     });
   }
+
+  // show() {
+  //   this.setState(() => {
+  //     return {visible: true};
+  //   });
+  // }
+
 
   render() {
     const props = {

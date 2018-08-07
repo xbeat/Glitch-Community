@@ -22,7 +22,7 @@ const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) 
     // Just an ID? We're anonymous.
     return <h1 className="login">@{id}</h1>;
   }
-  
+
   if(!isAuthorized) {
     if(!name) {
       //promote login to an h1.
@@ -38,8 +38,8 @@ const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) 
 
   return (
     <React.Fragment>
-      <h1 className="username"><EditableField value={name||""} update={updateName} placeholder='Display name?'/></h1>
-      <h2 className="login"><EditableField value={login} update={updateLogin} prefix="@" placeholder='User ID?'/></h2>
+      <h1 className="username"><EditableField value={name||""} update={updateName} placeholder="What's your name?"/></h1>
+      <h2 className="login"><EditableField value={login} update={updateLogin} prefix="@" placeholder='Nickname?'/></h2>
     </React.Fragment>
   );
 };
@@ -57,8 +57,8 @@ const UserPage = ({
     id, login, name, description, thanksCount,
     avatarUrl, color,
     hasCoverImage, coverColor,
-    pins, projects,
-    _cacheCover, _deletedProjects,
+    pins, projects, _deletedProjects,
+    _cacheCover,
   },
   api, isAuthorized,
   updateDescription,

@@ -4,7 +4,7 @@ import TextArea from 'react-textarea-autosize';
 import Markdown from './markdown.jsx';
 import {debounce} from 'lodash';
 
-class EditableDescription extends React.Component {
+export class EditableDescription extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,14 +18,14 @@ class EditableDescription extends React.Component {
     this.update = debounce(this.props.updateDescription, 1000);
   }
   
-  onChange(evt) {
-    const description = evt.currentTarget.value;
+  onChange(event) {
+    const description = event.currentTarget.value;
     this.setState({ description });
     this.update(description.trim());
   }
   
-  onFocus(evt) {
-    if (evt.currentTarget === evt.target) {
+  onFocus(event) {
+    if (event.currentTarget === event.target) {
       this.setState({focused: true});
     }
   }
@@ -66,16 +66,25 @@ EditableDescription.propTypes = {
   updateDescription: PropTypes.func.isRequired,
 };
 
-const StaticDescription = ({description}) => (
-  description ? <p className="description read-only"><Markdown>{description}</Markdown></p> : null
+export const StaticDescription = ({description}) => (
+  description ? 
+    <p className="description read-only">
+      <Markdown>{description}</Markdown>
+    </p> 
+    : null
 );
 StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-const AuthDescription = ({authorized, description, placeholder, update}) => (
+export const AuthDescription = ({authorized, description, placeholder, update}) => (
   authorized ?
-    <EditableDescription initialDescription={description} updateDescription={update} placeholder={placeholder}/> :
+    <EditableDescription 
+      initialDescription={description} 
+      updateDescription={update} 
+      placeholder={placeholder} 
+    /> 
+    :
     <StaticDescription description={description}/>
 );
 AuthDescription.propTypes = {
@@ -85,4 +94,3 @@ AuthDescription.propTypes = {
   update: PropTypes.func.isRequired,
 };
 
-export { EditableDescription, StaticDescription, AuthDescription };
