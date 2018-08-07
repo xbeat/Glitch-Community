@@ -76,11 +76,9 @@ const ProjectOptionsPop = ({...props}) => {
         </section>
       }
       
-      {props.leaveProject &&
-        <section className="pop-over-actions collaborator-actions adsf">
-          {(props.project.users.length > 1) &&
-            <PopoverButton onClick={leaveProject} text="Leave Project " emoji="wave"/>
-          }
+      {(props.leaveProject && props.project.users.length > 1) &&
+        <section className="pop-over-actions collaborator-actions">
+          <PopoverButton onClick={leaveProject} text="Leave Project " emoji="wave"/>
         </section>
       }
 
