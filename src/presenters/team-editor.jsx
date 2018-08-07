@@ -130,7 +130,7 @@ class TeamEditor extends React.Component {
   
   async joinTeamProject(projectId, userId) {
     console.log('🚒joinTeamProject', projectId, userId)
-    // turtle joins proje
+    // turtle joins project on coolteam
     ///teams/<teamId>/projects/<projectId>/join
     // https://www.notion.so/glitch/teams-teamId-projects-projectId-join-7e78ee4eef2644738a47c75dbfdffe83
   }
