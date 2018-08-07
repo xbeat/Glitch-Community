@@ -95,7 +95,7 @@ const UserPopoverTile = ({children, adminIds, ...user}) => (
       <div className="button-wrap">
         <button onClick={togglePopover} className="user button-unstyled" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
           <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
-          {adminIds.includes(id) &&
+          {adminIds.includes(user.id) &&
             <div className="avatar-admin-badge"/>
           }
         </button>
@@ -113,7 +113,6 @@ UserPopoverTile.propTypes = {
   color: PropTypes.string.isRequired,
   children: PropTypes.func.isRequired,
   adminIds: PropTypes.array,
-  id: PropTypes.number.isRequired,
 };
 
 
