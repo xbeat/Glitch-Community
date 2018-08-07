@@ -41,7 +41,6 @@
     "mini-css-extract-plugin": "^0.4.1",
     "moment-mini": "^2.22.1",
     "nodemon": "^1.17.5",
-    "o_0": "^0.4.0-pre.0",
     "prop-types": "^15.6.2",
     "quantize": "^1.0.2",
     "querystringify": "^2.0.0",
