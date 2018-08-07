@@ -78,7 +78,7 @@ class CurrentUserManager extends React.Component {
     return children({
       api: this.api(),
       currentUser, fetched,
-      update: changes => setCurrentUser(...currentUser, ...changes),
+      update: changes => setCurrentUser({...currentUser, ...changes}),
       reload: () => this.load(),
       clear: () => setCurrentUser(undefined),
     });
