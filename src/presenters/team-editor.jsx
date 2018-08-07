@@ -130,10 +130,22 @@ class TeamEditor extends React.Component {
   
   async joinTeamProject(projectId, userId) {
     console.log('🚒joinTeamProject', projectId, userId)
+    // turtle joins proje
+    ///teams/<teamId>/projects/<projectId>/join
+    // https://www.notion.so/glitch/teams-teamId-projects-projectId-join-7e78ee4eef2644738a47c75dbfdffe83
   }
   
   async leaveTeamProject(projectId, userId) {
     console.log('🍎leaveTeamProject', projectId, userId)
+    await this.props.api.delete(`/projects/${projectId}/authorization`, {
+      data: {
+        targetUserId: userId,
+      },
+    });
+    // this.setState(({projects}) => ({
+    //   projects: projects.filter(project => project.id !== projectId),
+    // }));
+
   }
 
   currentUserIsTeamAdmin() {
