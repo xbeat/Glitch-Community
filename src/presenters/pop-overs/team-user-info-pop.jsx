@@ -27,8 +27,8 @@ RemoveFromTeam.propTypes = {
 const UserActions = ({user}) => {
 
   let backgroundColor = () => {
-    return {backgroundColor: user.color}
-  }
+    return {backgroundColor: user.color};
+  };
   
   return (
     <section className="pop-over-actions user-actions">
@@ -39,7 +39,7 @@ const UserActions = ({user}) => {
         </button>
       </a>
     </section>
-  )
+  );
 };
 
 UserActions.propTypes = {

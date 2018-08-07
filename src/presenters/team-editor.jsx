@@ -18,7 +18,7 @@ class TeamEditor extends React.Component {
       _cacheAvatar: Date.now(),
       _cacheCover: Date.now(),
     };
-    this.removeUserAdmin = this.removeUserAdmin.bind(this)
+    this.removeUserAdmin = this.removeUserAdmin.bind(this);
   }
 
   currentUserIsOnTeam() {
@@ -66,7 +66,7 @@ class TeamEditor extends React.Component {
 
   async removeUser(id) {
     await this.props.api.delete(`teams/${this.state.id}/users/${id}`);
-    this.removeUserAdmin(id)
+    this.removeUserAdmin(id);
     this.setState(({users}) => ({
       users: users.filter(u => u.id !== id),
     }));
@@ -96,7 +96,7 @@ class TeamEditor extends React.Component {
         counter: prevState.adminIds.push(id)
       }));
     } else {
-      this.removeUserAdmin(id)
+      this.removeUserAdmin(id);
     }
   }
 
@@ -129,29 +129,28 @@ class TeamEditor extends React.Component {
   }
   
   async joinTeamProject(projectId, user) {
-    console.log('🚒joinTeamProject', projectId, user, this.state)
+    console.log('🚒joinTeamProject', projectId, user, this.state);
     // turtle joins project on coolteam
     ///teams/<teamId>/projects/<projectId>/join
     // https://www.notion.so/glitch/teams-teamId-projects-projectId-join-7e78ee4eef2644738a47c75dbfdffe83
-    await this.props.api.post(`/teams/${this.state.id}/projects/${projectId}/join`)
+    await this.props.api.post(`/teams/${this.state.id}/projects/${projectId}/join`);
     
     this.setState((prevState) => {
       let projectsWithUser = prevState.projects.map(project => {
         if (project.id === projectId) {
-          project.users.push(user)
-          console.log ('🔮', project.domain, project.users)
+          project.users.push(user);
+          console.log ('🔮', project.domain, project.users);
         }
-        return project
-      })
+        return project;
+      });
       return {
         projects: projectsWithUser,
-      }
+      };
     });
-
   }
   
   async leaveTeamProject(projectId, userId) {
-    console.log('🍎leaveTeamProject', projectId, userId)
+    console.log('🍎leaveTeamProject', projectId, userId);
     await this.props.api.delete(`/projects/${projectId}/authorization`, {
       data: {
         targetUserId: userId,

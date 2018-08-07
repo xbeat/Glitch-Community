@@ -38,19 +38,19 @@ const ProjectOptionsPop = ({...props}) => {
   
   function currentUserIsOnProject() {
     let projectUsers = props.project.users.map(user => {
-      return user.id
-    })
+      return user.id;
+    });
     if (projectUsers.includes(props.currentUser.id)) {
-      return true
+      return true;
     }
   }
   
   function leaveTeamProject() {
-    props.leaveTeamProject(props.project.id, props.currentUser.id)
+    props.leaveTeamProject(props.project.id, props.currentUser.id);
   }
   
   function joinTeamProject() {
-    props.joinTeamProject(props.project.id, props.currentUser)
+    props.joinTeamProject(props.project.id, props.currentUser);
   }
   
   function deleteAction(event) {
@@ -121,10 +121,10 @@ export default function ProjectOptions({projectOptions={}, project}) {
 
   function currentUserIsOnProject(user) {
     let projectUsers = project.users.map(projectUser => {
-      return projectUser.id
-    })
+      return projectUser.id;
+    });
     if (projectUsers.includes(user.id)) {
-      return true
+      return true;
     }
   }
 
@@ -148,4 +148,4 @@ export default function ProjectOptions({projectOptions={}, project}) {
 
 ProjectOptions.propTypes = {
   project: PropTypes.object.isRequired,
-}
+};

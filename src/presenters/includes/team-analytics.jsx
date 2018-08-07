@@ -138,7 +138,7 @@ class TeamAnalytics extends React.Component {
       this.updateAnalytics();
       this.setState({
         currentProjectDomain: 'All Projects'
-      })
+      });
     }
   }
   
