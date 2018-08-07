@@ -1,22 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import {getAvatarUrl} from '../../models/team';
 import PopoverContainer from './popover-container.jsx';
 import CreateTeamPop from './create-team-pop.jsx';
 
 
-const TeamButton = ({url, name, teamAvatarUrl}) => (
+const TeamButton = ({url, name, ...team}) => (
   <a className="button-link" href={`/@${url}`}>
     <div className="button button-small has-emoji button-tertiary">
       <span>{name} </span>
-      <img className="emoji avatar" src={teamAvatarUrl} alt={`${name} team avatar`} width="16px" height="16px"/>
+      <img className="emoji avatar" src={getAvatarUrl({...team, size:'small'})} alt={`${name} team avatar`} width="16px" height="16px"/>
     </div>
   </a>
 );
 
 TeamButton.propTypes = {
-  url: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  hasAvatarImage: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
-  teamAvatarUrl: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 
@@ -54,7 +57,7 @@ CreateTeamButton.propTypes = {
 
 // Team List
 
-const TeamList = ({teams, toggleCreateTeamPop, userIsAnon}) => {
+const TeamList = ({teams, /*toggleCreateTeamPop, userIsAnon*/}) => {
   // const hasTeams = teams && teams.length;
   return (
     <section className="pop-over-actions">

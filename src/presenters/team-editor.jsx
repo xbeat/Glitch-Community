@@ -18,7 +18,7 @@ class TeamEditor extends React.Component {
       _cacheAvatar: Date.now(),
       _cacheCover: Date.now(),
     };
-    this.removeUserAdmin = this.removeUserAdmin.bind(this)
+    this.removeUserAdmin = this.removeUserAdmin.bind(this);
   }
 
   currentUserIsOnTeam() {
@@ -66,7 +66,7 @@ class TeamEditor extends React.Component {
 
   async removeUser(id) {
     await this.props.api.delete(`teams/${this.state.id}/users/${id}`);
-    this.removeUserAdmin(id)
+    this.removeUserAdmin(id);
     this.setState(({users}) => ({
       users: users.filter(u => u.id !== id),
     }));
@@ -96,7 +96,7 @@ class TeamEditor extends React.Component {
         counter: prevState.adminIds.push(id)
       }));
     } else {
-      this.removeUserAdmin(id)
+      this.removeUserAdmin(id);
     }
   }
 

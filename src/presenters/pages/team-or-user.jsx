@@ -99,18 +99,11 @@ TeamOrUserPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-const Presenter = (application, Loader, args) => {
-  const props = {
-    api: application.api(),
-    currentUserModel: application.currentUser(),
-    ...args,
-  };
-  return (
-    <Layout application={application}>
-      <Loader {...props}/>
-    </Layout>
-  );
-};
+const Presenter = (application, Loader, args) => (
+  <Layout application={application}>
+    <Loader api={application.api()} currentUserModel={application.currentUser()} {...args}/>
+  </Layout>
+);
 
 const TeamPagePresenter = ({application, id, name}) => Presenter(application, TeamPageLoader, {id, name});
 const UserPagePresenter = ({application, id, name}) => Presenter(application, UserPageLoader, {id, name});

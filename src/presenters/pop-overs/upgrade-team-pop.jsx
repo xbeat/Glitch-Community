@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import UsersList from "../users-list.jsx";
+import {StaticUsersList} from "../users-list.jsx";
 
 const PRICE_PER_USER = 10;
 
@@ -40,7 +40,7 @@ export class UpgradeTeamPop extends React.Component {
           <div className="action-description">
             Glitch Teams cost ${PRICE_PER_USER} per active user a month
           </div>
-          <UsersList users={users()}/>
+          <StaticUsersList users={users()}/>
         </section>
         <section className="pop-over-actions">
           <button className="button buttom-small button-cta has-emoji opens-pop-over" disabled>

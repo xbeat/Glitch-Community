@@ -19,7 +19,7 @@ export const ImageButtons = ({name, uploadImage, clearImage}) => {
       )}
     </div>
   );
-}
+};
 ImageButtons.propTypes = {
   name: PropTypes.string.isRequired,
   uploadImage: PropTypes.func,

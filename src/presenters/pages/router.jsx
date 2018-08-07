@@ -24,7 +24,7 @@ const NotFoundPage = () => (
   </React.Fragment>
 );
 
-const Routing = ({application}) => (
+const Router = ({application}) => (
   <Switch>
     <Route path="/" exact render={() => <IndexPage application={application}/>}/>
     <Route path="/index.html" exact strict render={() => <IndexPage application={application}/>}/>
@@ -50,8 +50,8 @@ const Routing = ({application}) => (
     <Route render={() => <NotFoundPage/>}/>
   </Switch>
 );
-Routing.propTypes = {
+Router.propTypes = {
   application: PropTypes.any.isRequired,
 };
 
-export default Routing;
+export default Router;

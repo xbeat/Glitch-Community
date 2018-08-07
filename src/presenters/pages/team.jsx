@@ -50,18 +50,8 @@ class TeamPage extends React.Component {
       <main className="profile-page team-page">
         <section>
           <ProfileContainer
-            avatarStyle={getAvatarStyle({
-              id: this.props.team.id,
-              hasAvatarImage: this.props.team.hasAvatarImage,
-              backgroundColor: this.props.team.backgroundColor,
-              cache: this.props.team._cacheAvatar,
-            })}
-            coverStyle={getProfileStyle({
-              id: this.props.team.id,
-              hasCoverImage: this.props.team.hasCoverImage,
-              coverColor: this.props.team.coverColor,
-              cache: this.props.team._cacheCover,
-            })}
+            avatarStyle={getAvatarStyle({...this.props.team, cache: this.props.team._cacheAvatar})}
+            coverStyle={getProfileStyle({...this.props.team, cache: this.props.team._cacheCover})}
             avatarButtons={this.props.currentUserIsTeamAdmin ? 
               <ImageButtons name="Avatar" uploadImage={this.props.uploadAvatar} /> 
               : null
@@ -205,8 +195,6 @@ TeamPage.propTypes = {
     projects: PropTypes.array.isRequired,
     teamPins: PropTypes.array.isRequired,
     users: PropTypes.array.isRequired,
-    verifiedImage: PropTypes.string.isRequired,
-    verifiedTooltip: PropTypes.string.isRequired,
   }),
   addPin: PropTypes.func.isRequired,
   addProject: PropTypes.func.isRequired,

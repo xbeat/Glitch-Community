@@ -96,9 +96,9 @@ export class AddTeamProjectPop extends React.Component {
     // temp: this code used by adding team templates
 
     // if (this.state.source === 'templates') {
-      // this.setState({
-      //   notifyTemplateIsRemixing: true
-      // });
+    // this.setState({
+    //   notifyTemplateIsRemixing: true
+    // });
     //   this.remixTemplate(projectId)
     //     .then(({data}) => {
     //       console.log ('yolooo' , data);
@@ -111,7 +111,7 @@ export class AddTeamProjectPop extends React.Component {
     //     });
     // } else {
     // have to be a member before this will work
-      this.props.addProject(project);
+    this.props.addProject(project);
     // }
   }
 
@@ -168,10 +168,10 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   filterInputIsBlank() {
-    console.log(this.filterInput.current.value)
+    console.log(this.filterInput.current.value);
     if (this.filterInput.current.value.length === 0) {
-      console.log ('sdf')
-      return true
+      console.log ('sdf');
+      return true;
     }
   } 
 

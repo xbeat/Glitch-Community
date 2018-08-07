@@ -2,6 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {getAvatarThumbnailUrl, getLink} from '../models/user';
+
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
@@ -53,11 +55,11 @@ SearchForm.defaultProps = {
 const UserOptionsPopWrapper = ({user, showNewStuffOverlay, api}) => {
   const props = {
     teams: user.teams,
-    userLink: user.userLink,
-    avatarUrl: user.userAvatarUrl,
+    userLink: getLink(user),
+    avatarUrl: getAvatarThumbnailUrl(user),
     avatarStyle: {backgroundColor: user.color},
     api: api,
-    userIsAnon: user.isAnon,
+    userIsAnon: !!user.logon,
     showNewStuffOverlay,
   };
 
@@ -66,6 +68,9 @@ const UserOptionsPopWrapper = ({user, showNewStuffOverlay, api}) => {
 
 UserOptionsPopWrapper.propTypes = {
   user: PropTypes.shape({
+    avatarThumbnailUrl: PropTypes.string,
+    color: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     login: PropTypes.string,
   }).isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,

@@ -26,7 +26,6 @@ const NewProjectPop = ({projects}) => (
     </section>
   </div>
 );
-
 NewProjectPop.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -34,7 +33,7 @@ NewProjectPop.propTypes = {
   })).isRequired,
 };
 
-class NewProjectPopContainer extends React.Component {
+class NewProjectPopButton extends React.Component {
   constructor(props) {
     super(props);
     
@@ -69,9 +68,8 @@ class NewProjectPopContainer extends React.Component {
     );
   }
 }
-
-NewProjectPopContainer.propTypes = {
+NewProjectPopButton.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
-export default NewProjectPopContainer;
+export default NewProjectPopButton;
