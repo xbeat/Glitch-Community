@@ -43,19 +43,18 @@ TeamButtons.propTypes = {
 
 
 
-const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay}) => {
+const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams, signOut, showNewStuffOverlay}) => {
   const clickNewStuff = (event) => {
     togglePopover();
     showNewStuffOverlay();
     event.stopPropagation();
   };
   
-  const signOut = () => {
+  const onSignout = () => {
     /* global analytics */
     analytics.track("Logout");
     analytics.reset();
-    localStorage.removeItem('cachedUser');
-    return location.reload();
+    signOut();
   };
 
   return (
@@ -82,7 +81,7 @@ const UserOptionsPop = ({togglePopover, userLink, avatarUrl, avatarStyle, teams,
             <span className="emoji ambulance"></span>
           </div>
         </a>        
-        <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={signOut}>
+        <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={onSignout}>
           <span>Sign Out</span>
           <span className="emoji balloon"></span>
         </button>

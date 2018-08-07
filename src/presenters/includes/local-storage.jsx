@@ -30,7 +30,11 @@ export default class LocalStorage extends React.Component {
   
   set(value) {
     try {
-      window.localStorage.setItem(this.props.name, JSON.stringify(value));
+      if (value !== undefined) {
+        window.localStorage.setItem(this.props.name, JSON.stringify(value));
+      } else {
+        window.localStorage.removeItem(this.props.name);
+      }
     } catch (error) {
       console.error('Failed to write to localStorage!', error);
     }

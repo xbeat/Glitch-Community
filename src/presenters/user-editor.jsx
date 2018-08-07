@@ -18,7 +18,7 @@ class UserEditor extends React.Component {
   }
   
   isCurrentUser() {
-    return this.props.currentUser && (this.state.id === this.props.currentUser.id);
+    return !!this.props.currentUser && (this.state.id === this.props.currentUser.id);
   }
   
   async updateFields(changes) {
