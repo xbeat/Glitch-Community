@@ -99,6 +99,8 @@ Only employees of Fog Creek will be able to do this step.
 1. Locally, resolve conflicts from master and update the PR if needed
 
 ```
+git checkout my-branch
+git pull https://api.glitch.com/community/git
 git checkout master
 git pull
 git checkout my-branch
@@ -118,7 +120,7 @@ git push origin my-branch
     git pull
     refresh # Updates the glitch editor with the new files
     ```
-  
+
 5. Your new version is now staged – View the site and the logs, make sure it's building and looks alive.
 
 5. Swap ~community with ~community-staging to put your new version in front of users. (there's a special endpoint for this, ask us about it)
