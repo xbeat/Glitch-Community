@@ -1,29 +1,33 @@
-//
-// Profile.jsx!  I export TeamProfile and UserProfile.
-//
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const ImageButtons = ({name, uploadImage, clearImage}) => (
-  <div className="upload-image-buttons">
-    { !!uploadImage && (
-      <button className="button-small button-tertiary" onClick={uploadImage}>
-        Upload {name}
-      </button>
-    )}
-    { !!clearImage && (
-      <button className="button-small button-tertiary" onClick={clearImage}>
-        Clear {name}  
-      </button>
-    )}
-  </div>
-);
+
+// Image Buttons
+
+export const ImageButtons = ({name, uploadImage, clearImage}) => {
+  return (
+    <div className="upload-image-buttons">
+      { !!uploadImage && (
+        <button className="button button-small button-tertiary" onClick={uploadImage}>
+          <span>Upload {name}</span>
+        </button>
+      )}
+      { !!clearImage && (
+        <button className="button button-small button-tertiary" onClick={clearImage}>
+          Clear {name} 
+        </button>
+      )}
+    </div>
+  );
+};
 ImageButtons.propTypes = {
   name: PropTypes.string.isRequired,
   uploadImage: PropTypes.func,
   clearImage: PropTypes.func,
 };
+
+
+// Project Info Container
 
 export const ProjectInfoContainer = ({
   style,
@@ -46,6 +50,9 @@ ProjectInfoContainer.propTypes = {
   buttons: PropTypes.element,
 };
 
+
+// Info Container (generic)
+
 export const InfoContainer = ({children}) => (
   <div className="profile-info">
     {children}
@@ -54,6 +61,9 @@ export const InfoContainer = ({children}) => (
 InfoContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+
+// Cover Container
 
 export const CoverContainer = ({
   buttons, children, className, ...props
@@ -68,6 +78,9 @@ CoverContainer.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
+
+
+// Profile Container
 
 export const ProfileContainer = ({
   avatarStyle, avatarButtons,
@@ -86,3 +99,4 @@ export const ProfileContainer = ({
     </InfoContainer>
   </CoverContainer>
 );
+ 

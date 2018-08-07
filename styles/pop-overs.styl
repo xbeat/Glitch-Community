@@ -33,9 +33,25 @@
       border-bottom: none
       border-bottom-left-radius: 3px
       border-bottom-right-radius: 3px
+
   .results-list
     padding: 6px
-
+    
+  .clickable-label
+    cursor: pointer
+    &:hover,
+    &:active
+      .back
+        opacity: 1
+        border-radius: 5px
+        border: none
+    &:hover
+      .back
+        background-color: secondary-background-hover
+    &:active
+      .back
+        background-color: secondary-background-active
+    
   .description-section
     margin: 0
     padding: 0
@@ -52,16 +68,20 @@
     .pop-title
       font-size: 14px
       font-weight: bold
+      display: inline-block
+      vertical-align: middle
     &.last-section
       border-bottom: none
     .info-description
       margin-bottom: 0
-      line-height: 16px
+      line-height: 17px
 
   .pop-over-actions
     margin: 0
     border-bottom: 1px solid secondary
     position: relative
+    .action-description
+      line-height: 17px
 
   .emoji
     display: inline-block
@@ -95,6 +115,27 @@
   top: 25px
   width: 160px
 
+.create-team-pop
+  right: 0
+  top: 25px
+  width: 200px
+  .info-description
+    margin: 0
+  form
+    margin: 0
+  .team-url-preview
+    font-family: monospace
+    font-size: 13px
+    color: tertiary
+    margin-top: 12px
+    margin-bottom: 12px
+  .loader
+    margin-left: 0
+  .editable-field-error-icon
+    top: 6px
+  .content-editable
+    padding-left: 5px
+    
 .project-options-pop
   right: 0
   top: 22px
@@ -105,9 +146,10 @@
   top: 26px
   width: 215px
 
-.user-info-pop
+.team-user-info-pop
   left: 2px
   top: 28px
+    
   .pop-over-info
     .avatar
       width: 44px
@@ -128,22 +170,26 @@
       color: text-on-secondary-background
     .thanks
       margin: 0 !important
-      
+
 .add-team-user-pop
   left: 5px
-  top: 100%
+  top: 20px
   @media(max-width: mediumViewport)
     left: initial
+    right: -100%
 
 .add-team-project-pop
   left: 2px
-  top: 30px
-
+  top: 26px
+  .segmented-buttons
+    button
+      margin: 0
+  .no-projects-description
+    margin: 6px
   
-// todo simplify to use project-result/results-list code/styles instead
 .analytics-projects-pop
-  left: 2px
-  top: 25px
+  top: 22px
+  left: 8px
   .results
     .result
       border-radius: 3px
@@ -176,11 +222,6 @@
     .result-name
       margin-left: 0 !important
 
-      
-.analytics-projects-pop    
-  top: 22px
-  left: 8px
-
 .analytics-time-pop
   top: 22px
   left: 8px
@@ -192,14 +233,6 @@
     &:active,
     &.active
       background-color: general-link
-      // .result-name
-      //   color: primary-background
-
-.analytics-time-pop,
-.analytics-projects-pop
-  @media(max-width: mediumViewport)
-    left: initial
-
 
 .new-project-pop
   top: 26px
@@ -207,4 +240,20 @@
     right: 0px
     max-width: 200px
 
+.delete-team-pop
+  top: 22px
+  left: 8px
+  margin-bottom: side-padding
+  .users 
+    margin: 0
+  .info-description
+    margin-top: 10px
+  .illustration
+    width: 110px
 
+.upgrade-team-pop
+  top: 26px
+  left: 8px
+  margin-bottom: side-padding
+  .users
+    margin-bottom: 0

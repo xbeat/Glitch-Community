@@ -16,11 +16,11 @@ class UserEditor extends React.Component {
       _cacheCover: Date.now(),
     };
   }
-  
+
   isCurrentUser() {
     return !!this.props.currentUser && (this.state.id === this.props.currentUser.id);
   }
-  
+
   async updateFields(changes) {
     const {data} = await this.props.api.patch(`users/${this.state.id}`, changes);
     this.setState(data);
@@ -28,7 +28,7 @@ class UserEditor extends React.Component {
       this.props.updateCurrentUser(data);
     }
   }
-  
+
   async uploadAvatar(blob) {
     const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, this.state.id);
     const url = await this.props.uploadAsset(blob, policy, 'temporary-user-avatar');
@@ -40,7 +40,7 @@ class UserEditor extends React.Component {
       color: color,
     });
   }
-  
+
   async uploadCover(blob) {
     const {data: policy} = await assets.getUserCoverImagePolicy(this.props.api, this.state.id);
     await this.props.uploadAssetSizes(blob, policy, assets.COVER_SIZES);
@@ -53,21 +53,21 @@ class UserEditor extends React.Component {
     });
     this.setState({_cacheCover: Date.now()});
   }
-  
+
   async addPin(id) {
     await this.props.api.post(`users/${this.state.id}/pinned-projects/${id}`);
     this.setState(({pins}) => ({
       pins: [...pins, {projectId: id}],
     }));
   }
-  
+
   async removePin(id) {
     await this.props.api.delete(`users/${this.state.id}/pinned-projects/${id}`);
     this.setState(({pins}) => ({
       pins: pins.filter(p => p.projectId !== id),
     }));
   }
-  
+
   async leaveProject(id) {
     await this.props.api.delete(`/projects/${id}/authorization`, {
       data: {
@@ -78,7 +78,7 @@ class UserEditor extends React.Component {
       projects: projects.filter(p => p.id !== id),
     }));
   }
-  
+
   async deleteProject(id) {
     await this.props.api.delete(`/projects/${id}`);
     const {data} = await this.props.api.get(`projects/${id}?showDeleted=true`);
@@ -87,7 +87,7 @@ class UserEditor extends React.Component {
       _deletedProjects: [data, ..._deletedProjects]
     }));
   }
-  
+
   async undeleteProject(id) {
     await this.props.api.post(`/projects/${id}/undelete`);
     const {data} = await this.props.api.get(`projects/${id}`);
@@ -107,7 +107,7 @@ class UserEditor extends React.Component {
       _deletedProjects: _deletedProjects.filter(p => p.id !== id)
     }));
   }
-  
+
   render() {
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {

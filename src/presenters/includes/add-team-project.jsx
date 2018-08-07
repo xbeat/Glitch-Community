@@ -14,8 +14,9 @@ const AddTeamProject = ({currentUserIsOnTeam, ...props}) => {
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <div className="button-wrap">
-            <button className="button add-project has-emoji opens-pop-over" onClick={togglePopover}>
-              Add Project <span className="emoji bento-box" role="img" aria-label=""></span>
+            {/* Add disabled={props.projectLimitIsReached} once billing is ready */}
+            <button className={`button add-project has-emoji opens-pop-over ${props.extraButtonClass}`} onClick={togglePopover}>
+              Add Project <span className="emoji bento-box" role="img" aria-label="" />
             </button>
             { visible && <AddTeamProjectPop {...props} togglePopover={togglePopover} /> }
           </div>
@@ -27,6 +28,12 @@ const AddTeamProject = ({currentUserIsOnTeam, ...props}) => {
 
 AddTeamProject.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
+  addProject: PropTypes.func.isRequired,
+  myProjects: PropTypes.array.isRequired,
+  teamProjects: PropTypes.array.isRequired,
+  extraButtonClass: PropTypes.string,
+  api: PropTypes.func.isRequired,
+  projectLimitIsReached: PropTypes.bool,
 };
 
 export default AddTeamProject;

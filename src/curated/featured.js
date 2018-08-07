@@ -13,18 +13,18 @@ Example:
 
 export default [
   {
-    title: 'Sync your Spotify tunes to Slack!',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fharmonious-shoemaker.jpg?1532951366324",
-    link: 'https://glitch.com/~harmonious-shoemaker'
+    title: 'Marlow Moss\'s Minimalist Art',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmarlow-moss.jpg?1533554478016",
+    link: 'http://marlow-moss.glitch.me/'
   }
   , {
-    title: 'Hmm...what\'s in the fridge?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffridgemoji.jpg?1532951363259",
-    link: 'https://glitch.com/~fridgemoji'
+    title: 'Arithmetic With Inches and Feet',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fshopcalc.jpg?1533554478824",
+    link: 'https://shopcalc.glitch.me/'
   } 
   , {
-    title: 'Animate those SVGs!',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsvg-animator.jpg?1532951363984",
-    link: 'https://glitch.com/~svg-animator'
+    title: 'Interact With A 3D Book',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fview-3d.jpg?1533554476536",
+    link: 'https://glitch.com/~view-3d'
   }  
 ];
