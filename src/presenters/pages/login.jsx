@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {Redirect} from 'react-router-dom';
+import {CurrentUserConsumer} from '../current-user.jsx';
 import ErrorPage from './error.jsx';
 
 class LoginPage extends React.Component {
@@ -22,9 +23,10 @@ class LoginPage extends React.Component {
       if (data.id <= 0) {
         throw new Error(`Bad user id (${data.id}) after ${provider} login`);
       }
-      analytics.track("Signed In", {provider});
       console.log("LOGGED IN", data);
+      this.props.setUser(data);
       this.setState({done: true});
+      analytics.track("Signed In", {provider});
     } catch (error) {
       this.setState({error: true});
       const errorData = error && error.response && error.response.data;
@@ -53,13 +55,19 @@ LoginPage.propTypes = {
   provider: PropTypes.string.isRequired,
 };
 
+const LoginPageContainer = (props) => (
+  <CurrentUserConsumer>
+    {(currentUser, fetched, updateUser) => <LoginPage setUser={updateUser} {...props}/>}
+  </CurrentUserConsumer>
+);
+
 export const FacebookLoginPage = ({api, code}) => {
   const callbackUrl = `${APP_URL}/login/facebook`;
   const url = `/auth/facebook/${code}?callbackURL=${encodeURIComponent(callbackUrl)}`;
-  return <LoginPage api={api} provider="Facebook" url={url}/>;
+  return <LoginPageContainer api={api} provider="Facebook" url={url}/>;
 };
 
 export const GitHubLoginPage = ({api, code}) => {
   const url = `/auth/github/${code}`;
-  return <LoginPage api={api} provider="GitHub" url={url}/>;
+  return <LoginPageContainer api={api} provider="GitHub" url={url}/>;
 };
