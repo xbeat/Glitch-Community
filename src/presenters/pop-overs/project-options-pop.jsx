@@ -65,15 +65,20 @@ const ProjectOptionsPop = ({...props}) => {
         {!!props.removePin && <PopoverButton onClick={removePin} text="Un-Pin " emoji="pushpin"/>}
       </section>
 
-      {props.project.users.length > 1 &&
+      {(props.joinTeamProject && props.leaveTeamProject) &&
         <section className="pop-over-actions collaborator-actions">
-          {(!!props.joinTeamProject && !currentUserIsOnProject()) &&
+          {!currentUserIsOnProject() &&
             <PopoverButton onClick={joinTeamProject} text="Join Project " emoji="rainbow"/>
           }
-          {(!!props.leaveTeamProject && currentUserIsOnProject()) &&
+          {currentUserIsOnProject() &&
             <PopoverButton onClick={leaveTeamProject} text="Leave Project " emoji="wave"/>
           }
-          {!!props.leaveProject &&
+        </section>
+      }
+      
+      {props.leaveProject &&
+        <section className="pop-over-actions collaborator-actions">
+          {(props.project.users.length > 1) &&
             <PopoverButton onClick={leaveProject} text="Leave Project " emoji="wave"/>
           }
         </section>
