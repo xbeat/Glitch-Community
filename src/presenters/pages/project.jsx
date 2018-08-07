@@ -14,7 +14,7 @@ import Expander from '../includes/expander.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
-import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-buttons.jsx';
+import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-actions.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
 

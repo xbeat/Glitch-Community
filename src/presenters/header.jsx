@@ -50,12 +50,14 @@ SearchForm.defaultProps = {
   defaultValue: '',
 };
 
-const UserOptionsPopWrapper = ({user, showNewStuffOverlay}) => {
+const UserOptionsPopWrapper = ({user, showNewStuffOverlay, api}) => {
   const props = {
     teams: user.teams,
     userLink: user.userLink,
     avatarUrl: user.userAvatarUrl,
     avatarStyle: {backgroundColor: user.color},
+    api: api,
+    userIsAnon: user.isAnon,
     showNewStuffOverlay,
   };
 
@@ -78,13 +80,13 @@ const Header = ({api, maybeUser, searchQuery, showNewStuffOverlay}) => {
           <Logo/>
         </a>
       </div>
-     
+
       <nav>
         <SearchForm onSubmit={submitSearch} defaultValue={searchQuery}/>
         <NewProjectPop api={api}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
-        { maybeUser && <UserOptionsPopWrapper user={maybeUser} showNewStuffOverlay={showNewStuffOverlay} />}
+        { maybeUser && <UserOptionsPopWrapper user={maybeUser} showNewStuffOverlay={showNewStuffOverlay} api={api} />}
       </nav>
     </header>
   );
@@ -92,6 +94,7 @@ const Header = ({api, maybeUser, searchQuery, showNewStuffOverlay}) => {
 
 Header.propTypes = {
   maybeUser: PropTypes.object,
+  api: PropTypes.func.isRequired,
 };
 
 const HeaderContainer = ({getUserPref, setUserPref, ...props}) => (

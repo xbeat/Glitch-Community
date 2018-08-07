@@ -13,7 +13,7 @@ export default Team = function(I, self) {
   if (cache[I.id]) {
     return cache[I.id];
   }
-  
+
   self.defaults(I, {
     id: undefined,
     name: undefined,
@@ -29,28 +29,30 @@ export default Team = function(I, self) {
     isVerified: false,
     teamPins: [],
     hasAvatarImage: false,
+    adminIds: [],
+    features: [],
   }
   );
-    
+
   self.attrObservable(...Array.from(Object.keys(I) || []));
-  
+
   self.attrModels('projects', Project);
   self.attrModels('users', User);
   self.attrObservable("localCoverImage");
   self.attrObservable("localAvatarImage");
 
   self.extend({
-    
+
     pins: self.teamPins,
-  
+
     coverUrl(size='large') {
       if(self.localCoverImage()) {
         return self.localCoverImage();
       }
-      
+
       if (self.hasCoverImage()) {
-        return `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-cover/${self.id()}/${size}?${cacheBuster}`;           
-      } 
+        return `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-cover/${self.id()}/${size}?${cacheBuster}`;
+      }
       return "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-cover-wide.svg?1503518400625";
     },
 
@@ -62,9 +64,9 @@ export default Team = function(I, self) {
       size = size || 'small';
       if (self.hasAvatarImage()) {
         return `https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/team-avatar/${self.id()}/${size}?${cacheBuster}`;
-      } 
+      }
       return "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-team-avatar.svg?1503510366819";
-      
+
     },
 
     thanksCount() {
@@ -96,13 +98,15 @@ export default Team = function(I, self) {
       }
       return {backgroundColor: self.backgroundColor()};
     },
-    
+
+
     asProps() {
       return {
         get users() { return self.users().map(({asProps}) => asProps()); },
         get projects() { return self.projects().map(({asProps}) => asProps()); },
         get teamPins() { return self.teamPins(); },
-        
+
+        adminIds: self.adminIds(),
         backgroundColor: self.backgroundColor(),
         coverColor: self.coverColor(),
         coverUrlSmall: self.coverUrl('small'),
@@ -120,6 +124,7 @@ export default Team = function(I, self) {
         url: self.url(),
         verifiedImage: self.verifiedImage(),
         verifiedTooltip: self.verifiedTooltip(),
+        features: self.features()
       };
     },
   });
@@ -131,7 +136,6 @@ export default Team = function(I, self) {
 
   return self;
 };
-
 
 Team._cache = cache;
 
