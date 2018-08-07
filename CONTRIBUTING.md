@@ -95,37 +95,41 @@ After you either wait or run the above commands, go to step 5 to update the pull
 
 Only employees of Fog Creek will be able to do this step. 
 
+1. Locally, get [~community-staging](https://glitch.com/~community-staging) on Github up to date with prod
+```
+  git checkout master
+  git pull https://api.glitch.com/community/git
+  git push origin master
+```
 
-1. Locally, resolve conflicts from master and update the PR if needed
+2. Locally, resolve conflicts from master and update the PR if needed
 
 ```
-git checkout my-branch
-git pull https://api.glitch.com/community/git
 git checkout master
 git pull
 git checkout my-branch
 git merge master
 git push origin my-branch
 ```
-2. Go through code/design review, to get your PR merged into master on [`Glitch-Community`](https://github.com/FogCreek/Glitch-Community)
+3. Go through code/design review, to get your PR merged into master on [`Glitch-Community`](https://github.com/FogCreek/Glitch-Community)
 
-3. Make sure staging is up to date. In [~community-staging](https://glitch.com/~community-staging), open up the console.
+4. Make sure staging is up to date. In [~community-staging](https://glitch.com/~community-staging), open up the console.
     ```
     git pull https://api.glitch.com/community/git
     ```
     
-4. Update staging with your PR code
+5. Update staging with your PR code
     ```
     git log -1 # Gets a stable changeset handy in case we need to revert
     git pull
     refresh # Updates the glitch editor with the new files
     ```
 
-5. Your new version is now staged – View the site and the logs, make sure it's building and looks alive.
+6. Your new version is now staged – View the site and the logs, make sure it's building and looks alive.
 
-5. Swap ~community with ~community-staging to put your new version in front of users. (there's a special endpoint for this, ask us about it)
+7. Swap ~community with ~community-staging to put your new version in front of users. (there's a special endpoint for this, ask us about it)
 
-6. Problem? No worries, swap it back!
+8. Problem? No worries, swap it back!
 
 #### Or just doing it live…
 
