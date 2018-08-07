@@ -52,12 +52,13 @@ SearchForm.defaultProps = {
   defaultValue: '',
 };
 
-const UserOptionsPopWrapper = ({user, showNewStuffOverlay}) => {
+const UserOptionsPopWrapper = ({user, updateUser, showNewStuffOverlay}) => {
   const props = {
     teams: user.teams,
     userLink: getLink(user),
     avatarUrl: getAvatarThumbnailUrl(user),
     avatarStyle: {backgroundColor: user.color},
+    signOut: () => updateUser(null),
     showNewStuffOverlay,
   };
 
@@ -71,10 +72,11 @@ UserOptionsPopWrapper.propTypes = {
     id: PropTypes.number.isRequired,
     login: PropTypes.string,
   }).isRequired,
+  updateUser: PropTypes.func.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
-const Header = ({api, maybeUser, searchQuery, showNewStuffOverlay}) => {
+const Header = ({api, maybeUser, updateUser, searchQuery, showNewStuffOverlay}) => {
   const signedIn = maybeUser && !!maybeUser.login;
   return (
     <header role="banner">
@@ -89,7 +91,7 @@ const Header = ({api, maybeUser, searchQuery, showNewStuffOverlay}) => {
         <NewProjectPop api={api}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
-        { maybeUser && <UserOptionsPopWrapper user={maybeUser} showNewStuffOverlay={showNewStuffOverlay} />}
+        { maybeUser && <UserOptionsPopWrapper user={maybeUser} updateUser={updateUser} showNewStuffOverlay={showNewStuffOverlay} />}
       </nav>
     </header>
   );

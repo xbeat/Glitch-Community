@@ -96,6 +96,7 @@ UserOptionsPop.propTypes = {
   userLink: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
+  signOut: PropTypes.func.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
