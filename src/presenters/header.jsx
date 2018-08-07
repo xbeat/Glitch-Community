@@ -59,7 +59,7 @@ const UserOptionsPopWrapper = ({user, showNewStuffOverlay, api}) => {
     avatarUrl: getAvatarThumbnailUrl(user),
     avatarStyle: {backgroundColor: user.color},
     api: api,
-    userIsAnon: user.isAnon,
+    userIsAnon: !!user.logon,
     showNewStuffOverlay,
   };
 

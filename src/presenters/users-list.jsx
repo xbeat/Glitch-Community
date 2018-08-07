@@ -22,10 +22,42 @@ const UserAvatar = ({
 }) => (
   <img onError={addDefaultSrc} className="user-list-avatar" width="32px" height="32px" src={avatarUrl} alt={alt}/>
 );
-
 UserAvatar.propTypes = {
   alt: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string.isRequired,
+};
+
+
+// StaticUserTile
+
+const StaticUserTile = (user) => (
+  <span className="user" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
+    <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
+  </span>
+);
+StaticUserTile.propTypes = {
+  id: PropTypes.number.isRequired,
+  login: PropTypes.string,
+  name: PropTypes.string,
+  avatarThumbnailUrl: PropTypes.string,
+  color: PropTypes.string.isRequired,
+};
+
+
+// StaticUsersList
+
+export const StaticUsersList = ({users, extraClass="" }) => (
+  <ul className={`users ${extraClass}`}>
+    {users.map(user => (
+      <li key={user.id}>
+        <StaticUserTile {...user} />
+      </li>
+    ))}
+  </ul>
+);
+StaticUsersList.propTypes = {
+  users: PropTypes.array.isRequired,
+  extraClass: PropTypes.string,
 };
 
 
@@ -36,7 +68,6 @@ const UserTile = (user) => (
     <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
   </a>
 );
-
 UserTile.propTypes = {
   id: PropTypes.number.isRequired,
   login: PropTypes.string,

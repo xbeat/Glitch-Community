@@ -195,8 +195,6 @@ TeamPage.propTypes = {
     projects: PropTypes.array.isRequired,
     teamPins: PropTypes.array.isRequired,
     users: PropTypes.array.isRequired,
-    verifiedImage: PropTypes.string.isRequired,
-    verifiedTooltip: PropTypes.string.isRequired,
   }),
   addPin: PropTypes.func.isRequired,
   addProject: PropTypes.func.isRequired,
