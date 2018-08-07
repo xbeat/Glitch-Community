@@ -107,14 +107,19 @@ git push origin my-branch
 ```
 2. Go through code/design review, to get your PR merged into master on [`Glitch-Community`](https://github.com/FogCreek/Glitch-Community)
 
-3. Inside of https://glitch.com/~community-staging, open up the console.
+3. Make sure staging is up to date. In [~community-staging](https://glitch.com/~community-staging), open up the console.
+    ```
+    git pull https://api.glitch.com/community/git
+    ```
+    
+4. Update staging with your PR code
     ```
     git log -1 # Gets a stable changeset handy in case we need to revert
     git pull
     refresh # Updates the glitch editor with the new files
     ```
   
-4. Your new version in staged!  View the site and the logs, make sure it's building and looks alive.
+5. Your new version is now staged – View the site and the logs, make sure it's building and looks alive.
 
 5. Swap ~community with ~community-staging to put your new version in front of users. (there's a special endpoint for this, ask us about it)
 
