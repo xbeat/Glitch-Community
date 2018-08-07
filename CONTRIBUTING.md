@@ -16,7 +16,7 @@ Philosophy
 Anyone in our community can feel welcome and supported in submitting improvements, fixes, and ideas to this Glitch community site.
 
 
-Contribution Workflow
+How Contributing Works
 ---------------------
 
 #### On Your Side
@@ -38,8 +38,8 @@ This site is also young and hungry.  We don't have a public "bug list" and a lot
 Accessible technologies are important to allowing people to contribute.  As we internally work on the code, we'll move incrementally towards ever-stronger documentation for the special pieces of this site and "boring"(easy to learn, perfectly fine) solutions for the standard components.
 
 
-Contribution Workflow
-----------------------
+Workflow
+--------
 
 First, remix from [https://glitch.com/~community](https://glitch.com/~community) into, e.g., "my-remix"
 
