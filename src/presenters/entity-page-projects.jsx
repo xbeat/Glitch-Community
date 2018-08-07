@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {partition} from 'lodash';
+import _ from 'lodash';
 
 import ProjectsList from './projects-list.jsx';
 import ProjectsLoader from './projects-loader.jsx';
-
-
 
 /* globals Set */
 
@@ -13,7 +11,7 @@ const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst
 
 const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, projectOptions, reloadProject}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
-  const [pinnedProjects, recentProjects] = partition(projects, ({id}) => pinnedSet.has(id));
+  const [pinnedProjects, recentProjects] = _.partition(projects, ({id}) => pinnedSet.has(id));
   
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
   
@@ -34,15 +32,12 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, pr
     </React.Fragment>
   );
   
-  const joinTeamProject = async (projectId, userId) => {
-    await projectOptions.joinTeamProject(projectId, userId);
-    reloadProject(projectId);
-  }
-
-  const leaveTeamProject = async (projectId, userId) => {
-    await projectOptions.leaveTeamProject(projectId, userId);
-    reloadProject(projectId);
-  }
+  projectOptions = _.mapValues(projectOptions, function(projectOption) {
+    return async (projectId, userId) => {
+      await projectOption(projectId, userId);
+      reloadProject(projectId);
+    }
+  });
 
   return (
     <React.Fragment>

@@ -77,7 +77,7 @@ const ProjectOptionsPop = ({...props}) => {
       }
       
       {props.leaveProject &&
-        <section className="pop-over-actions collaborator-actions">
+        <section className="pop-over-actions collaborator-actions adsf">
           {(props.project.users.length > 1) &&
             <PopoverButton onClick={leaveProject} text="Leave Project " emoji="wave"/>
           }
