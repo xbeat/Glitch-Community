@@ -15,7 +15,10 @@ const ADMIN_ACCESS_LEVEL = 30;
 const InvitedNotification = ({name, avatar, color}) => (
   <React.Fragment>
     <p>Sent team invite to {name}</p>
-    <p><span role="📧 {!!avatar && <img src={avatar} style={{backgroundColor: color}} alt={`${name} avatar`}/>}</p>
+    <p>
+      <span role="img" aria-label="emailed">📧</span>
+      {!!avatar && <img className="avatar" src={avatar} style={{backgroundColor: color}} alt={name}/>}
+    </p>
   </React.Fragment>
 );
 
@@ -176,7 +179,7 @@ class TeamEditor extends React.Component {
     const {handleError} = this.props;
     const funcs = {
       updateDescription: description => this.updateFields({description}).catch(handleError),
-      addUser: id => this.addUser(id).catch(handleError),
+      inviteUser: id => this.inviteUser(id).catch(handleError),
       removeUser: id => this.removeUser(id).catch(handleError),
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
       uploadCover: () => assets.requestFile(blob => this.uploadCover(blob).catch(handleError)),

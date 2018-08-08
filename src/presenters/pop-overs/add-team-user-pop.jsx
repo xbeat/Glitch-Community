@@ -83,7 +83,7 @@ class AddTeamUserPop extends React.Component {
   
   onClick(user) {
     this.props.togglePopover();
-    this.props.add(user);
+    this.props.inviteUser(user);
   }
   
   render() {
@@ -109,7 +109,7 @@ class AddTeamUserPop extends React.Component {
 
 AddTeamUserPop.propTypes = {
   api: PropTypes.func.isRequired,
-  add: PropTypes.func.isRequired,
+  inviteUser: PropTypes.func.isRequired,
   members: PropTypes.arrayOf(PropTypes.number.isRequired),
   togglePopover: PropTypes.func.isRequired,
 };
