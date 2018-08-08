@@ -20,13 +20,14 @@ const UserSearchResults = ({users, action}) => (
     <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>
   )
 );
-
 UserSearchResults.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired).isRequired,
   action: PropTypes.func.isRequired,
 };
+
+
 
 class AddTeamUserPop extends React.Component {
   constructor(props) {
@@ -106,7 +107,6 @@ class AddTeamUserPop extends React.Component {
     );
   }
 }
-
 AddTeamUserPop.propTypes = {
   api: PropTypes.func.isRequired,
   inviteUser: PropTypes.func.isRequired,
