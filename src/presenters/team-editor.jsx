@@ -17,7 +17,7 @@ const InvitedNotification = ({name, avatar, color}) => (
     <p>Sent team invite to {name}</p>
     <p>
       <span role="img" aria-label="emailed">📧</span>
-      {!!avatar && <img className="avatar" src={avatar} style={{backgroundColor: color}} alt={name}/>}
+      {!!avatar && <img className="emoji avatar" src={avatar} style={{backgroundColor: color}} alt={name}/>}
     </p>
   </React.Fragment>
 );
