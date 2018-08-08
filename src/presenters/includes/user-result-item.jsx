@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getAvatarThumbnailUrl} from '../../models/user';
+import {ANON_AVATAR_URL, getAvatarThumbnailUrl} from '../../models/user';
 import {ThanksShort} from './thanks.jsx';
 
 const UserResultItem = ({user, action}) => {
@@ -17,7 +17,7 @@ const UserResultItem = ({user, action}) => {
       <img className="avatar" src={getAvatarThumbnailUrl(user)} alt={`User avatar for ${login}`}/>
       <div className="result-name" title={name}>{name}</div>
       <div className="result-description" title={login}>@{login}</div>
-      { thanksCount > 0 && <ThanksShort count={thanksCount} />}
+      {thanksCount > 0 && <ThanksShort count={thanksCount} />}
     </button>
   );
 };
@@ -45,6 +45,8 @@ export class InviteByEmail extends React.Component {
   render() {
     return (
       <button onClick={this.props.onClick} className="button-unstyled result">
+        <img className="avatar" src={ANON_AVATAR_URL} alt=""/>
+        <div className="result-name"></div>
       </button>
     );
   }
