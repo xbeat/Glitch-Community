@@ -73,8 +73,12 @@ class CurrentUserManager extends React.Component {
   }
   
   render() {
-    const {children, currentUser, setCurrentUser} = this.props;
+    const {children, setCurrentUser} = this.props;
     const {fetched} = this.state;
+    let {currentUser} = this.props;
+    if (!currentUser || currentUser.id <= 0 || !currentUser.persistentToken) {
+      currentUser = null;
+    }
     return children({
       api: this.api(),
       currentUser, fetched,
