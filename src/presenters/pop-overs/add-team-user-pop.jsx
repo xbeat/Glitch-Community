@@ -27,8 +27,6 @@ UserSearchResults.propTypes = {
   action: PropTypes.func.isRequired,
 };
 
-
-
 class AddTeamUserPop extends React.Component {
   constructor(props) {
     super(props);

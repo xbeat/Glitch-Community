@@ -34,3 +34,18 @@ UserResultItem.propTypes = {
 
 
 export default UserResultItem;
+
+
+export class InviteByEmail extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {color: '#7a7'};
+  }
+  
+  render() {
+    return (
+      <button onClick={this.props.onClick} className="button-unstyled result">
+      </button>
+    );
+  }
+}
