@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import UserModel from '../models/user';
 import LocalStorage from './includes/local-storage.jsx';
 
 const {Provider, Consumer} = React.createContext();
@@ -65,6 +66,8 @@ class CurrentUserManager extends React.Component {
   
   componentDidUpdate(prev) {
     const {currentUser} = this.props;
+    const prevUser = prev.currentUser;
+    if (!!currentUser !== !prevUser)
     if (!!currentUser !== !!prev.currentUser || (
       currentUser && currentUser.persistentToken !== prev.currentUser.persistentToken
     )) {
@@ -73,12 +76,8 @@ class CurrentUserManager extends React.Component {
   }
   
   render() {
-    const {children, setCurrentUser} = this.props;
+    const {children, currentUser, setCurrentUser} = this.props;
     const {fetched} = this.state;
-    let {currentUser} = this.props;
-    if (!currentUser || currentUser.id <= 0 || !currentUser.persistentToken) {
-      currentUser = null;
-    }
     return children({
       api: this.api(),
       currentUser, fetched,
@@ -89,10 +88,17 @@ class CurrentUserManager extends React.Component {
   }
 }
 
+const cleanUser = (user) => {
+  if (!user || !(user.id > 0) || !user.persistentToken) {
+    return null;
+  }
+  return UserModel(user).asProps();
+};
+
 export const CurrentUserProvider = ({children}) => (
   <LocalStorage name="cachedUser" default={null}>
     {(currentUser, set, loaded) => (
-      <CurrentUserManager currentUser={currentUser} setCurrentUser={set}>
+      <CurrentUserManager currentUser={cleanUser(currentUser)} setCurrentUser={set}>
         {({api, ...props}) => (
           <Provider value={props}>
             {loaded && children(api)}
