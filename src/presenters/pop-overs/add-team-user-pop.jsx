@@ -69,18 +69,16 @@ class AddTeamUserPop extends React.Component {
     const isLoading = (!!maybeRequest || !maybeResults);
     const results = [];
     if (maybeResults) {
-      results.push(...maybeResults.map(user => (
-        <li key={user.id}>
-          <UserResultItem user={user} action={() => this.onClick(user)} />
-        </li>
-      )));
+      results.push(...maybeResults.map(user => ({
+        key: user.id,
+        item: <UserResultItem user={user} action={() => this.onClick(user)} />
+      })));
     }
     if (/.+@.+\..+/.test(query)) {
-      results.push(
-        <li>
-          <InviteEmailButton email={query}/>
-        </li>
-      );
+      results.push({
+        key: 'invite-by-email',
+        item: <InviteByEmail email={query}/>,
+      });
     }
     return (
       <dialog className="pop-over add-team-user-pop">
@@ -96,11 +94,7 @@ class AddTeamUserPop extends React.Component {
           {isLoading && <Loader />}
           {results.length ? (
             <ul className="results">
-              {maybeResults.map(user => (
-                <li key={user.id}>
-                  <UserResultItem user={user} action={() => this.onClick(user)} />
-                </li>
-              ))}
+              {results.map(({key, item}) => <li key={key}>{item}</li>)}
             </ul>
           ) : (maybeResults &&
             <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>

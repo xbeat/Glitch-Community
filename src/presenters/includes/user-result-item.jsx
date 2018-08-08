@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import randomColor from 'randomcolor';
 import {ANON_AVATAR_URL, getAvatarThumbnailUrl} from '../../models/user';
 import {ThanksShort} from './thanks.jsx';
 
@@ -39,7 +40,7 @@ export default UserResultItem;
 export class InviteByEmail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {color: '#7a7'};
+    this.state = {color: randomColor({luminosity: 'light'})};
   }
   
   render() {
