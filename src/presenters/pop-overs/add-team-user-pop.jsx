@@ -86,10 +86,7 @@ class AddTeamUserPop extends React.Component {
   
   render() {
     const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
-    let results = null;
-    if (this.state.maybeResults) {
-      const
-    }
+    const looksLikeEmail = /.+@.+\..+/.test(this.state.query);
     return (
       <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">
@@ -103,6 +100,10 @@ class AddTeamUserPop extends React.Component {
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
           {!!this.state.maybeResults && <UserSearchResults users={this.state.maybeResults} action={this.onClick} />}
+          
+    <ul className="results">
+      {users.map(user => (
+        <li key={user.id}>
         </section>}
       </dialog>
     );
