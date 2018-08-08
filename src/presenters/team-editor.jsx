@@ -11,10 +11,13 @@ import Notifications from './notifications.jsx';
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
 
+const InvitedNotification = (name) => 
+
 class TeamEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      whitelistedDomains: [], // imagine that this is an array of strings from the api
       ...props.initialTeam,
       _cacheAvatar: Date.now(),
       _cacheCover: Date.now(),
@@ -127,6 +130,20 @@ class TeamEditor extends React.Component {
     await this.props.api.delete(`teams/${this.state.id}/pinned-projects/${id}`);
     this.setState(({teamPins}) => ({
       teamPins: teamPins.filter(p => p.projectId !== id),
+    }));
+  }
+  
+  async addWhitelistedDomain(domain) {
+    await new Promise(res => setTimeout(res, 100));
+    this.setState(({whitelistedDomains}) => ({
+      whitelistedDomains: [...whitelistedDomains, domain],
+    }));
+  }
+  
+  async removeWhitelistedDomain(domain) {
+    await new Promise(res => setTimeout(res, 100));
+    this.setState(({whitelistedDomains}) => ({
+      whitelistedDomains: whitelistedDomains.filter(d => d !== domain),
     }));
   }
 
