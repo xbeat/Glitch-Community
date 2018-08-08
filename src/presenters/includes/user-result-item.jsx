@@ -59,10 +59,10 @@ InviteByEmail.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export const WhitelistEmailDomain = ({domain}) => (
-  <button onClick={this.props.onClick} className="button-unstyled result">
+export const WhitelistEmailDomain = ({domain, onClick}) => (
+  <button onClick={onClick} className="button-unstyled result">
     <img className="avatar" src={ANON_AVATAR_URL} alt=""/>
-    <div className="result-name">Allow anyone with an {domain} email to join</div>
+    <div className="result-name">Allow anyone with an @{domain} email to join</div>
   </button>
 );
 

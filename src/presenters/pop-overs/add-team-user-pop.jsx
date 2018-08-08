@@ -74,13 +74,14 @@ class AddTeamUserPop extends React.Component {
         item: <UserResultItem user={user} action={() => this.onClick(user)} />
       })));
     }
-    if (/^[^@]+@.+\..+$/.test(query)) {
+    const email = /^[^@]+@([^@]+\.[^@]+)$/.exec(query)
+    if (email) {
       results.push({
         key: 'invite-by-email',
-        item: <InviteByEmail email={query}/>,
+        item: <InviteByEmail email={email[0]}/>,
       }, {
         key: 'whitelist-email-domain',
-        item: <WhitelistEmailDomain domain={query}/>,
+        item: <WhitelistEmailDomain domain={email[1]}/>,
       });
     }
     return (
