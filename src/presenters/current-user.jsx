@@ -89,6 +89,8 @@ class CurrentUserManager extends React.Component {
 
 const cleanUser = (user) => {
   if (!user || !(user.id > 0) || !user.persistentToken) {
+    console.error('invalid cachedUser', user);
+    Raven.captureMessage("Invalid cachedUser", {extra: {user}});
     return null;
   }
   return UserModel(user).asProps();
