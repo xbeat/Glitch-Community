@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TeamModel from '../../models/team';
+import UserModel from '../../models/user';
 
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
@@ -12,7 +13,7 @@ import UserPage from './user.jsx';
 
 const getUserById = async (api, id) => {
   const {data} = await api.get(`users/${id}`);
-  return data;
+  return UserModel(data).asProps();
 };
 
 const getUser = async (api, name) => {
@@ -23,16 +24,11 @@ const getUser = async (api, name) => {
   return getUserById(api, data);
 };
 
-const getTeamById = async (api, id) => {
-  const {data} = await api.get(`teams/${id}`);
-  return data && TeamModel(data).update(data).asProps();
-};
-
 const parseTeamAdminIds = (data) => {
   if (!data) {
     return data;
   }
-  let ADMIN_ACCESS_LEVEL = 30;
+  const ADMIN_ACCESS_LEVEL = 30;
   let adminIds = data.users.filter(user => {
     return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
   });
@@ -42,11 +38,16 @@ const parseTeamAdminIds = (data) => {
   return data;
 };
 
+const getTeamById = async (api, id) => {
+  let {data} = await api.get(`teams/${id}`);
+  data = parseTeamAdminIds(data);
+  return data && TeamModel(data).asProps();
+};
 
 const getTeam = async(api, name) => {
   let {data} = await api.get(`teams/byUrl/${name}`);
   data = parseTeamAdminIds(data);
-  return data && TeamModel(data).update(data).asProps();
+  return data && TeamModel(data).asProps();
 };
 
 const TeamPageLoader = ({api, id, name, ...props}) => (
