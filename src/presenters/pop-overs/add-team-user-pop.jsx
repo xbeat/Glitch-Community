@@ -5,26 +5,7 @@ import {debounce} from 'lodash';
 import UserModel from '../../models/user';
 
 import Loader from '../includes/loader.jsx';
-import UserResultItem from '../includes/user-result-item.jsx';
-
-const UserSearchResults = ({users, action}) => {
-  (users.length > 0) ? (
-    <ul className="results">
-      {users.map(user => (
-        <li key={user.id}>
-          <UserResultItem user={user} action={() => action(user)} />
-        </li>
-      ))}
-    </ul>
-  ) : (
-    return <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>;
-};
-UserSearchResults.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-  }).isRequired).isRequired,
-  action: PropTypes.func.isRequired,
-};
+import UserResultItem, {InviteByEmail} from '../includes/user-result-item.jsx';
 
 class AddTeamUserPop extends React.Component {
   constructor(props) {
@@ -39,7 +20,6 @@ class AddTeamUserPop extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.startSearch = debounce(this.startSearch.bind(this), 300);
-    this.onClick = this.onClick.bind(this);
   }
   
   handleChange(evt) {
@@ -85,25 +65,46 @@ class AddTeamUserPop extends React.Component {
   }
   
   render() {
-    const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
-    const looksLikeEmail = /.+@.+\..+/.test(this.state.query);
+    const {maybeRequest, maybeResults, query} = this.state;
+    const isLoading = (!!maybeRequest || !maybeResults);
+    const results = [];
+    if (maybeResults) {
+      results.push(...maybeResults.map(user => (
+        <li key={user.id}>
+          <UserResultItem user={user} action={() => this.onClick(user)} />
+        </li>
+      )));
+    }
+    if (/.+@.+\..+/.test(query)) {
+      results.push(
+        <li>
+          <InviteEmailButton email={query}/>
+        </li>
+      );
+    }
     return (
       <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">
           <input id="team-user-search" 
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
-            value={this.state.query} onChange={this.handleChange}
+            value={query} onChange={this.handleChange}
             className="pop-over-input search-input pop-over-search"
             placeholder="Search for a user or email"
           />
         </section>
-        {!!this.state.query && <section className="pop-over-actions last-section results-list">
+        {!!query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
-          {!!this.state.maybeResults && <UserSearchResults users={this.state.maybeResults} action={this.onClick} />}
-          
-    <ul className="results">
-      {users.map(user => (
-        <li key={user.id}>
+          {results.length ? (
+            <ul className="results">
+              {maybeResults.map(user => (
+                <li key={user.id}>
+                  <UserResultItem user={user} action={() => this.onClick(user)} />
+                </li>
+              ))}
+            </ul>
+          ) : (maybeResults &&
+            <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>
+          )}
         </section>}
       </dialog>
     );
