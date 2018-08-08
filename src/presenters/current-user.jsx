@@ -67,9 +67,11 @@ class CurrentUserManager extends React.Component {
   componentDidUpdate(prev) {
     const {currentUser} = this.props;
     const prevUser = prev.currentUser;
-    if (!currentUser || !prevUser || currentUser.id !== prevUser.id ||
+    if (!currentUser && prevUser) {
+      this.load();
+    } else if (currentUser && (!prevUser || currentUser.id !== prevUser.id ||
       currentUser.persistentToken !== prevUser.persistentToken
-    ) {
+    )) {
       this.load();
     }
   }
