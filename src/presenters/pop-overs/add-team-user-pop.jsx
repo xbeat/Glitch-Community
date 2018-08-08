@@ -5,7 +5,7 @@ import {debounce} from 'lodash';
 import UserModel from '../../models/user';
 
 import Loader from '../includes/loader.jsx';
-import UserResultItem, {InviteByEmail} from '../includes/user-result-item.jsx';
+import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
 
 class AddTeamUserPop extends React.Component {
   constructor(props) {
@@ -74,10 +74,13 @@ class AddTeamUserPop extends React.Component {
         item: <UserResultItem user={user} action={() => this.onClick(user)} />
       })));
     }
-    if (/.+@.+\..+/.test(query)) {
+    if (/^[^@]+@.+\..+$/.test(query)) {
       results.push({
         key: 'invite-by-email',
         item: <InviteByEmail email={query}/>,
+      }, {
+        key: 'whitelist-email-domain',
+        item: <WhitelistEmailDomain domain={query}/>,
       });
     }
     return (
