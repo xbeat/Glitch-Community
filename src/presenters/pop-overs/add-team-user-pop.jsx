@@ -7,7 +7,7 @@ import UserModel from '../../models/user';
 import Loader from '../includes/loader.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
 
-const UserSearchResults = ({users, action}) => (
+const UserSearchResults = ({users, action}) => {
   (users.length > 0) ? (
     <ul className="results">
       {users.map(user => (
@@ -17,9 +17,8 @@ const UserSearchResults = ({users, action}) => (
       ))}
     </ul>
   ) : (
-    <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>
-  )
-);
+    return <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>;
+};
 UserSearchResults.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -87,6 +86,10 @@ class AddTeamUserPop extends React.Component {
   
   render() {
     const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
+    let results = null;
+    if (this.state.maybeResults) {
+      const
+    }
     return (
       <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">

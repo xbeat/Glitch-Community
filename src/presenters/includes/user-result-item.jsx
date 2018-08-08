@@ -43,11 +43,16 @@ export class InviteByEmail extends React.Component {
   }
   
   render() {
+    const style = {backgroundColor: this.state.color};
     return (
       <button onClick={this.props.onClick} className="button-unstyled result">
-        <img className="avatar" src={ANON_AVATAR_URL} alt=""/>
-        <div className="result-name"></div>
+        <img className="avatar" src={ANON_AVATAR_URL} style={style} alt=""/>
+        <div className="result-name">Invite {this.props.email}</div>
       </button>
     );
   }
 }
+
+InviteByEmail.propTypes = {
+  email: PropTypes.string.isRequired,
+};
