@@ -37,7 +37,7 @@ class CurrentUserManager extends React.Component {
   api() {
     const token = this.props.currentUser && this.props.currentUser.persistentToken;
     if (token) {
-      return axios.create({  
+      return axios.create({
         baseURL: API_URL,
         headers: {
           Authorization: token,
