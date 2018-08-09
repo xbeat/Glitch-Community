@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import randomColor from 'randomcolor';
-import {ANON_AVATAR_URL, getAvatarThumbnailUrl} from '../../models/user';
+import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName} from '../../models/user';
 import {ThanksShort} from './thanks.jsx';
 
 const UserResultItem = ({user, action}) => {
-  const {name, login, thanksCount} = user;
+  const name = getDisplayName(user);
+  const {login, thanksCount} = user;
   
   const handleClick = (event) => {
     console.log('💣');
@@ -15,9 +16,9 @@ const UserResultItem = ({user, action}) => {
 
   return (
     <button onClick={handleClick} className="button-unstyled result">
-      <img className="avatar" src={getAvatarThumbnailUrl(user)} alt={`User avatar for ${login}`}/>
-      <div className="result-name" title={name}>{name}</div>
-      <div className="result-description" title={login}>@{login}</div>
+      <img className="avatar" src={getAvatarThumbnailUrl(user)} alt=""/>
+      <div className="result-name" title={getDisplayName(user)}>{getDisplayName(user)}</div>
+      {!!user.name && <div className="result-description" title={login}>@{login}</div>}
       {thanksCount > 0 && <ThanksShort count={thanksCount} />}
     </button>
   );

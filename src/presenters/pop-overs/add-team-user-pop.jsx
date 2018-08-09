@@ -83,7 +83,7 @@ class AddTeamUserPop extends React.Component {
     const emailRegExp = new RegExp(`^(${emailChars})?@(${emailChars}\\.${emailChars})$`);
     const emailMatch = emailRegExp.exec(query);
     if (emailMatch) {
-      const [email, name, domain] = emailMatch;
+      const [email, name, domain] = emailMatch || [];
       if (name) {
         results.push({
           key: 'invite-by-email',
@@ -106,6 +106,7 @@ class AddTeamUserPop extends React.Component {
           />
         </section>
         {!!query && <section className="pop-over-actions last-section results-list">
+          <InviteByEmail email={query} onClick={() => null}/>
           {isLoading && <Loader />}
           {results.length ? (
             <ul className="results">
