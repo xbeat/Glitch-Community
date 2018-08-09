@@ -46,7 +46,7 @@ const UserActions = ({user}) => {
 UserActions.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    avatarThumbnailUrl: PropTypes.string.isRequired,
+    avatarThumbnailUrl: PropTypes.string,
     login: PropTypes.string,
   }).isRequired,
 };
@@ -114,11 +114,12 @@ export default class TeamUserInfoPop extends React.Component {
   }
 
   render() {
+    const userAvatarStyle = {backgroundColor: this.props.user.color};
     return (
       <dialog className="pop-over team-user-info-pop">
         <section className="pop-over-info">
           <a href={getLink(this.props.user)}>
-            <img className="avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={this.props.user.style}/>
+            <img className="avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
           </a>
           <div className="info-container">
             <p className="name" title={this.props.user.name}>{this.props.user.name || "Anonymous"}</p>

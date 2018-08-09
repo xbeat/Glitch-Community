@@ -82,19 +82,18 @@ TeamList.propTypes = {
 
 // User Options Pop
 
-const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay, toggleCreateTeamPop, userIsAnon}) => {
+const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle, teams, signOut, showNewStuffOverlay, toggleCreateTeamPop, userIsAnon}) => {
   const clickNewStuff = (event) => {
     toggleUserOptionsPop();
     showNewStuffOverlay();
     event.stopPropagation();
   };
-
-  const signOut = () => {
+  
+  const clickSignout = () => {
     /* global analytics */
     analytics.track("Logout");
     analytics.reset();
-    localStorage.removeItem('cachedUser');
-    return location.reload();
+    signOut();
   };
 
   return (
@@ -120,8 +119,8 @@ const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle,
             <span>Support </span>
             <span className="emoji ambulance"></span>
           </div>
-        </a>
-        <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={signOut}>
+        </a>        
+        <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickSignout}>
           <span>Sign Out</span>
           <span className="emoji balloon"></span>
         </button>
@@ -135,6 +134,7 @@ UserOptionsPop.propTypes = {
   userLink: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
+  signOut: PropTypes.func.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
   userIsAnon: PropTypes.bool.isRequired,
 };

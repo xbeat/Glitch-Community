@@ -5,9 +5,11 @@ import qs from 'querystringify';
 import {Route, Switch} from 'react-router-dom';
 import Helmet from 'react-helmet';
 
-import rootTeams from '../../curated/teams.js';
+import categories from '../../cache/categories';
+import rootTeams from '../../curated/teams';
 
 import IndexPage from './index.jsx';
+import {FacebookLoginPage, GitHubLoginPage} from './login.jsx';
 import QuestionsPage from './questions.jsx';
 import ProjectPage from './project.jsx';
 import {TeamPage, UserPage, TeamOrUserPage} from './team-or-user.jsx';
@@ -24,34 +26,37 @@ const NotFoundPage = () => (
   </React.Fragment>
 );
 
-const Router = ({application}) => (
+const Router = ({api}) => (
   <Switch>
-    <Route path="/" exact render={() => <IndexPage application={application}/>}/>
-    <Route path="/index.html" exact strict render={() => <IndexPage application={application}/>}/>
+    <Route path="/" exact render={() => <IndexPage api={api}/>}/>
+    <Route path="/index.html" exact strict render={() => <IndexPage api={api}/>}/>
     
-    <Route path="/questions" exact render={() => <QuestionsPage application={application}/>}/>
+    <Route path="/login/facebook" exact render={({location}) => <FacebookLoginPage api={api} code={qs.parse(location.search).code}/>}/>
+    <Route path="/login/github" exact render={({location}) => <GitHubLoginPage api={api} code={qs.parse(location.search).code}/>}/>
     
-    <Route path="/~:name" exact render={({match}) => <ProjectPage application={application} name={match.params.name}/>}/>
+    <Route path="/questions" exact render={() => <QuestionsPage api={api}/>}/>
     
-    <Route path="/@:name" exact render={({match}) => <TeamOrUserPage application={application} name={match.params.name}/>}/>
+    <Route path="/~:name" exact render={({match}) => <ProjectPage api={api} name={match.params.name}/>}/>
     
-    <Route path="/user/:id(\d+)" exact render={({match}) => <UserPage application={application} id={parseInt(match.params.id, 10)} name={`user ${match.params.id}`}/>}/>
+    <Route path="/@:name" exact render={({match}) => <TeamOrUserPage api={api} name={match.params.name}/>}/>
+    
+    <Route path="/user/:id(\d+)" exact render={({match}) => <UserPage api={api} id={parseInt(match.params.id, 10)} name={`user ${match.params.id}`}/>}/>
     
     {Object.keys(rootTeams).map(name => (
-      <Route key={name} path={`/${name}`} exact render={() => <TeamPage application={application} id={rootTeams[name]} name={name}/>}/>
+      <Route key={name} path={`/${name}`} exact render={() => <TeamPage api={api} id={rootTeams[name]} name={name}/>}/>
     ))}
     
-    <Route path="/search" exact render={({location}) => <SearchPage application={application} query={qs.parse(location.search).q}/>}/>
+    <Route path="/search" exact render={({location}) => <SearchPage api={api} query={qs.parse(location.search).q}/>}/>
     
-    {application.categories.map(category => (
-      <Route key={category.url} path={`/${category.url}`} exact render={() => <CategoryPage application={application} category={category}/>}/>
+    {categories.map(category => (
+      <Route key={category.url} path={`/${category.url}`} exact render={() => <CategoryPage api={api} category={category}/>}/>
     ))}
     
     <Route render={() => <NotFoundPage/>}/>
   </Switch>
 );
 Router.propTypes = {
-  application: PropTypes.any.isRequired,
+  api: PropTypes.any.isRequired,
 };
 
 export default Router;
