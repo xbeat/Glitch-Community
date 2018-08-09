@@ -60,19 +60,20 @@ class AddTeamUserPop extends React.Component {
     });
   }
   
-  onClick(user) {
+  togglePopoverAnd(func, ...params) {
     this.props.togglePopover();
-    this.props.inviteUser(user);
+    func(...params);
   }
   
   render() {
+    const {inviteEmail, inviteUser} = this.props;
     const {maybeRequest, maybeResults, query} = this.state;
     const isLoading = (!!maybeRequest || !maybeResults);
     const results = [];
     if (maybeResults) {
       results.push(...maybeResults.map(user => ({
         key: user.id,
-        item: <UserResultItem user={user} action={() => this.onClick(user)} />
+        item: <UserResultItem user={user} action={() => this.togglePopoverAnd(inviteUser, user)} />
       })));
     }
     // this regex is basically (a)?@(b.c)
@@ -86,7 +87,7 @@ class AddTeamUserPop extends React.Component {
       if (name) {
         results.push({
           key: 'invite-by-email',
-          item: <InviteByEmail email={email}/>,
+          item: <InviteByEmail email={email} onClick={() => this.togglePopoverAnd(inviteEmail, email)}/>,
         });
       }
       results.push({
