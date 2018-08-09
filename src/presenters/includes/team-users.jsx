@@ -59,7 +59,7 @@ export const WhitelistedDomain = ({domain, setDomain}) => {
             </section>
             {!!setDomain && (
               <section className="pop-over-actions danger-zone">
-                <button className="button-small button-tertiary button-on-secondary-background has-emoji">
+                <button className="button-small button-tertiary button-on-secondary-background has-emoji" onClick={() => setDomain(null)}>
                   Remove @{domain} <span className="emoji bomb"></span>
                 </button>
               </section>

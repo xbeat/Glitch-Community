@@ -78,7 +78,8 @@ class TeamPage extends React.Component {
               />
               { !!this.props.team.whitelistedDomain &&
                 <WhitelistedDomain domain={this.props.team.whitelistedDomain}
-                  setDomain={this.props.currentUserIsOnTeam ? this.props.setWhitelistedDomain : null}/>
+                  setDomain={this.props.currentUserIsOnTeam ? this.props.updateWhitelistedDomain : null}
+                />
               }
               { this.props.currentUserIsOnTeam &&
                 <AddTeamUser
