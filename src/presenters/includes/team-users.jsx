@@ -42,25 +42,38 @@ TeamUsers.propTypes = {
 
 // Whitelisted domain icon
 
-export const WhitelistedDomain = ({domain}) => (
-  <PopoverContainer>
-    {({visible, setVisible}) => (
-      <details onToggle={evt => setVisible(evt.target.open)} open={visible} className="popover-container">
-        <summary data-tooltip={`Anyone with an @${domain} email can join`}>
-          <div className="avatar whitelisted-domain">
-            {domain[0].toUpperCase()}
-          </div>
-        </summary>
-        <dialog className="pop-over">
-          asdf
-        </dialog>
-      </details>
-    )}
-  </PopoverContainer>
-);
+export const WhitelistedDomain = ({domain, setDomain}) => {
+  const tooltip = `Anyone with an @${domain} email can join`;
+  return (
+    <PopoverContainer>
+      {({visible, setVisible}) => (
+        <details onToggle={evt => setVisible(evt.target.open)} open={visible} className="popover-container">
+          <summary data-tooltip={!visible ? tooltip : null}>
+            <div className="avatar whitelisted-domain">
+              {domain[0].toUpperCase()}
+            </div>
+          </summary>
+          <dialog className="pop-over">
+            <section className="pop-over-info">
+              {tooltip}
+            </section>
+            {!!setDomain && (
+              <section className="pop-over-actions danger-zone">
+                <button className="button-small button-tertiary button-on-secondary-background has-emoji">
+                  Remove @{domain} <span className="emoji bomb"></span>
+                </button>
+              </section>
+            )}
+          </dialog>
+        </details>
+      )}
+    </PopoverContainer>
+  );
+};
 
 WhitelistedDomain.propTypes = {
   domain: PropTypes.string.isRequired,
+  setDomain: PropTypes.func,
 };
 
 
