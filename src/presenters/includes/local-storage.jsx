@@ -9,9 +9,12 @@ export default class LocalStorage extends React.Component {
   }
   
   handleStorage() {
-    let value;
+    let value = undefined;
     try {
-      value = JSON.parse(window.localStorage.getItem(this.props.name));
+      const raw = window.localStorage.getItem(this.props.name);
+      if (raw !== null) {
+        value = JSON.parse(raw);
+      }
     } catch (error) {
       console.error('Failed to read from localStorage!', error);
       value = undefined;
