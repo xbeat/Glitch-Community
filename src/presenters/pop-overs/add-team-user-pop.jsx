@@ -7,8 +7,10 @@ import UserModel from '../../models/user';
 import Loader from '../includes/loader.jsx';
 import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
 
-const emailSafe = '[^@\/\\]';
-const emailRegex = `^${emailSafe}+@
+// (a)?@(b.c)
+// domain required, name optional
+const emailChars = '[^@:\\/\\\\]+';
+const emailRegExp = new RegExp(`^(${emailChars})?@(${emailChars}\.${emailChars})$`);
 
 class AddTeamUserPop extends React.Component {
   constructor(props) {
@@ -77,13 +79,17 @@ class AddTeamUserPop extends React.Component {
         item: <UserResultItem user={user} action={() => this.onClick(user)} />
       })));
     }
-    if (email) {
+    const emailMatch = emailRegExp.exec(query);
+    if (emailMatch) {
+      if (emailMatch[1]) {
+        results.push({
+          key: 'invite-by-email',
+          item: <InviteByEmail email={query}/>,
+        });
+      }
       results.push({
-        key: 'invite-by-email',
-        item: <InviteByEmail email={email[0]}/>,
-      }, {
         key: 'whitelist-email-domain',
-        item: <WhitelistEmailDomain domain={email[1]}/>,
+        item: <WhitelistEmailDomain domain={emailMatch[2]}/>,
       });
     }
     return (
