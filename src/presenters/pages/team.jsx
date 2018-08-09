@@ -12,7 +12,7 @@ import Thanks from '../includes/thanks.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
 // import DeleteTeam from '../includes/delete-team.jsx';
-import {AddTeamUser, TeamUsers} from '../includes/team-users.jsx';
+import {AddTeamUser, TeamUsers, WhitelistedDomain} from '../includes/team-users.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
@@ -76,6 +76,7 @@ class TeamPage extends React.Component {
                 teamId={this.props.team.id}
                 adminIds={this.props.team.adminIds}
               />
+              { !!this.props.team.whitelistedDomain && <WhitelistedDomain domain={this.props.team.whitelistedDomain}/> }
               { this.props.currentUserIsOnTeam &&
                 <AddTeamUser
                   inviteEmail={this.props.inviteEmail}
