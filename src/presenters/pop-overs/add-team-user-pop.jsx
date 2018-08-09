@@ -91,7 +91,7 @@ class AddTeamUserPop extends React.Component {
           item: <InviteByEmail email={email} onClick={() => this.togglePopoverAnd(inviteEmail, email)}/>,
         });
       }
-      if (domain && !this.props.whitelistedDomain) {
+      if (domain && this.props.whitelistedDomain !== domain) {
         results.push({
           key: 'whitelist-email-domain',
           item: <WhitelistEmailDomain domain={domain} onClick={() => this.togglePopoverAnd(whitelistDomain, domain)}/>,

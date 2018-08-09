@@ -62,7 +62,7 @@ InviteByEmail.propTypes = {
 
 export const WhitelistEmailDomain = ({domain, onClick}) => (
   <button onClick={onClick} className="button-unstyled result">
-    <img className="avatar" src={ANON_AVATAR_URL} alt=""/>
+    <div className="avatar whitelisted-domain">{domain[0].toUpperCase()}</div>
     <div className="result-name">Allow anyone with an @{domain} email to join</div>
   </button>
 );
