@@ -67,7 +67,7 @@ class AddTeamUserPop extends React.Component {
   }
   
   render() {
-    const {inviteEmail, inviteUser} = this.props;
+    const {inviteEmail, inviteUser, whitelistDomain} = this.props;
     const {maybeRequest, maybeResults, query} = this.state;
     const isLoading = (!!maybeRequest || !maybeResults);
     const results = [];
@@ -80,21 +80,23 @@ class AddTeamUserPop extends React.Component {
     // this regex is basically (a)?@(b.c)
     // any match means we have a valid domain in group 2
     // group 1 is optional, but its presence means we have a full email
-    const emailChars = '[^@\\:/\\\\]+'; //escaping characters is gross
+    const emailChars = '[^@\\s\\:/\\\\]+'; //escaping characters is gross
     const emailRegExp = new RegExp(`^(${emailChars})?@(${emailChars}\\.${emailChars})$`);
     const emailMatch = emailRegExp.exec(query);
     if (emailMatch) {
-      const [email, name, domain] = emailMatch || [];
-      if (name) {
+      const [email, name, domain] = emailMatch;
+      if (name && email) {
         results.push({
           key: 'invite-by-email',
           item: <InviteByEmail email={email} onClick={() => this.togglePopoverAnd(inviteEmail, email)}/>,
         });
       }
-      results.push({
-        key: 'whitelist-email-domain',
-        item: <WhitelistEmailDomain domain={domain}/>,
-      });
+      if (domain && !this.props.whitelistedDomains.includes(domain)) {
+        results.push({
+          key: 'whitelist-email-domain',
+          item: <WhitelistEmailDomain domain={domain} onClick={() => this.togglePopoverAnd(whitelistDomain, domain)}/>,
+        });
+      }
     }
     return (
       <dialog className="pop-over add-team-user-pop">
@@ -124,7 +126,9 @@ AddTeamUserPop.propTypes = {
   api: PropTypes.func.isRequired,
   inviteEmail: PropTypes.func.isRequired,
   inviteUser: PropTypes.func.isRequired,
+  whitelistDomain: PropTypes.func.isRequired,
   members: PropTypes.arrayOf(PropTypes.number.isRequired),
+  whitelistedDomains: PropTypes.arrayOf(PropTypes.string.isRequired),
   togglePopover: PropTypes.func.isRequired,
 };
 

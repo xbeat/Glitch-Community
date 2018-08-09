@@ -80,7 +80,9 @@ class TeamPage extends React.Component {
                 <AddTeamUser
                   inviteEmail={this.props.inviteEmail}
                   inviteUser={this.props.inviteUser}
+                  whitelistDomain={this.props.addWhitelistedDomain}
                   members={this.props.team.users.map(({id}) => id)}
+                  whitelistedDomains={this.props.team.whitelistedDomains}
                   api={this.props.api}
                 />
               }
@@ -196,9 +198,12 @@ TeamPage.propTypes = {
     projects: PropTypes.array.isRequired,
     teamPins: PropTypes.array.isRequired,
     users: PropTypes.array.isRequired,
+    whitelistedDomains: PropTypes.array.isRequired,
   }),
   addPin: PropTypes.func.isRequired,
   addProject: PropTypes.func.isRequired,
+  addWhitelistedDomain: PropTypes.func.isRequired,
+  removeWhitelistedDomain: PropTypes.func.isRequired,
   inviteEmail: PropTypes.func.isRequired,
   inviteUser: PropTypes.func.isRequired,
   api: PropTypes.func.isRequired,

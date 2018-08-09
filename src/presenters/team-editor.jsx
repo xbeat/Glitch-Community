@@ -195,6 +195,8 @@ class TeamEditor extends React.Component {
       removeProject: id => this.removeProject(id).catch(handleError),
       addPin: id => this.addPin(id).catch(handleError),
       removePin: id => this.removePin(id).catch(handleError),
+      addWhitelistedDomain: domain => this.addWhitelistedDomain(domain).catch(handleError),
+      removeWhitelistedDomain: domain => this.removeWhitelistedDomain(domain).catch(handleError),
       teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
       teamHasBillingExposed: this.teamHasBillingExposed(),
       updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),
