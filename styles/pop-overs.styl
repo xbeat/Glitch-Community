@@ -1,3 +1,20 @@
+details.popover-container
+  display: inline-block
+  position: relative
+  > summary
+    list-style: none
+    &::-webkit-details-marker
+      display: none
+    &:not([data-tooltip]:hover, [data-tooltip]:focus)::before
+      display: none
+  &[open] > summary::after
+    content: ''
+  &:not([open]) > :not(summary)
+    display: none
+  > .pop-over
+    top: 100%
+    left: 0
+    
 .pop-over
   text-align: left
   background-color: background-color
