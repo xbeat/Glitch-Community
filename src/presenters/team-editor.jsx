@@ -26,7 +26,6 @@ class TeamEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      whitelistedDomains: [], // imagine that this is an array of strings from the api
       ...props.initialTeam,
       _cacheAvatar: Date.now(),
       _cacheCover: Date.now(),
@@ -146,20 +145,6 @@ class TeamEditor extends React.Component {
       teamPins: teamPins.filter(p => p.projectId !== id),
     }));
   }
-  
-  async addWhitelistedDomain(domain) {
-    await new Promise(res => setTimeout(res, 100));
-    this.setState(({whitelistedDomains}) => ({
-      whitelistedDomains: [...whitelistedDomains, domain],
-    }));
-  }
-  
-  async removeWhitelistedDomain(domain) {
-    await new Promise(res => setTimeout(res, 100));
-    this.setState(({whitelistedDomains}) => ({
-      whitelistedDomains: whitelistedDomains.filter(d => d !== domain),
-    }));
-  }
 
   currentUserIsTeamAdmin() {
     if (!this.props.currentUser) return false;
@@ -195,8 +180,7 @@ class TeamEditor extends React.Component {
       removeProject: id => this.removeProject(id).catch(handleError),
       addPin: id => this.addPin(id).catch(handleError),
       removePin: id => this.removePin(id).catch(handleError),
-      addWhitelistedDomain: domain => this.addWhitelistedDomain(domain).catch(handleError),
-      removeWhitelistedDomain: domain => this.removeWhitelistedDomain(domain).catch(handleError),
+      updateWhitelistedDomain: whitelistedDomain => this.updateFields({whitelistedDomain}).catch(handleError),
       teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
       teamHasBillingExposed: this.teamHasBillingExposed(),
       updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),
