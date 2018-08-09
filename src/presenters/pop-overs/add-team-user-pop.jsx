@@ -128,7 +128,7 @@ AddTeamUserPop.propTypes = {
   inviteUser: PropTypes.func.isRequired,
   whitelistDomain: PropTypes.func.isRequired,
   members: PropTypes.arrayOf(PropTypes.number.isRequired),
-  whitelistedDomain: PropTypes.string.isRequired,
+  whitelistedDomain: PropTypes.string,
   togglePopover: PropTypes.func.isRequired,
 };
 

@@ -52,7 +52,7 @@ class CurrentUserManager extends React.Component {
   async load() {
     this.setState({fetched: false});
     const {currentUser, setCurrentUser} = this.props;
-    if (currentUser && currentUser.persistentToken) {
+    if (currentUser) {
       const {data} = await this.api().get(`users/${currentUser.id}`);
       setCurrentUser(data);
       identifyUser(currentUser);
