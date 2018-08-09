@@ -43,7 +43,7 @@ TeamUsers.propTypes = {
 // Whitelisted domain icon
 
 export const WhitelistedDomain = ({domain}) => (
-  <button className="avatar whitelisted-domain" data-tooltip={`Anyone with an @${domain} email can join`}>
+  <button className="button-unstyled avatar whitelisted-domain" data-tooltip={`Anyone with an @${domain} email can join`}>
     {domain[0].toUpperCase()}
   </button>
 );
