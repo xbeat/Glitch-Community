@@ -120,6 +120,7 @@ class AddTeamUserPop extends React.Component {
 }
 AddTeamUserPop.propTypes = {
   api: PropTypes.func.isRequired,
+  inviteEmail: PropTypes.func.isRequired,
   inviteUser: PropTypes.func.isRequired,
   members: PropTypes.arrayOf(PropTypes.number.isRequired),
   togglePopover: PropTypes.func.isRequired,

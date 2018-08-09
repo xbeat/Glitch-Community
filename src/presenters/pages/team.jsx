@@ -78,6 +78,7 @@ class TeamPage extends React.Component {
               />
               { this.props.currentUserIsOnTeam &&
                 <AddTeamUser
+                  inviteEmail={this.props.inviteEmail}
                   inviteUser={this.props.inviteUser}
                   members={this.props.team.users.map(({id}) => id)}
                   api={this.props.api}
@@ -198,6 +199,7 @@ TeamPage.propTypes = {
   }),
   addPin: PropTypes.func.isRequired,
   addProject: PropTypes.func.isRequired,
+  inviteEmail: PropTypes.func.isRequired,
   inviteUser: PropTypes.func.isRequired,
   api: PropTypes.func.isRequired,
   clearCover: PropTypes.func.isRequired,

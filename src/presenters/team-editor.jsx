@@ -70,6 +70,12 @@ class TeamEditor extends React.Component {
     });
     this.setState({_cacheCover: Date.now()});
   }
+  
+  async inviteEmail(email) {
+    await new Promise(res => setTimeout(res, 100));
+    const notification = <InvitedNotification name={email}/>;
+    this.props.createNotification(notification, 'notifySuccess');
+  }
 
   async inviteUser(user) {
     await new Promise(res => setTimeout(res, 100));
@@ -179,6 +185,7 @@ class TeamEditor extends React.Component {
     const {handleError} = this.props;
     const funcs = {
       updateDescription: description => this.updateFields({description}).catch(handleError),
+      inviteEmail: email => this.inviteEmail(email).catch(handleError),
       inviteUser: id => this.inviteUser(id).catch(handleError),
       removeUser: id => this.removeUser(id).catch(handleError),
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
