@@ -43,9 +43,18 @@ TeamUsers.propTypes = {
 // Whitelisted domain icon
 
 export const WhitelistedDomain = ({domain}) => (
-  <button className="button-unstyled avatar whitelisted-domain" data-tooltip={`Anyone with an @${domain} email can join`}>
-    {domain[0].toUpperCase()}
-  </button>
+  <PopoverContainer>
+    {({visible, setVisible}) => (
+      <details onToggle={evt => setVisible(evt.target.open)} open={visible}>
+        <summary className="button-unstyled" data-tooltip={`Anyone with an @${domain} email can join`}>
+          <div className="avatar whitelisted-domain">
+            {domain[0].toUpperCase()}
+          </div>
+        </summary>
+        asdfasdfasdf
+      </details>
+    )}
+  </PopoverContainer>
 );
 
 WhitelistedDomain.propTypes = {
