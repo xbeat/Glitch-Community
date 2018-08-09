@@ -24,7 +24,7 @@ class AddTeamUserPop extends React.Component {
   }
   
   handleChange(evt) {
-    const query = evt.currentTarget.value.trim();
+    const query = evt.currentTarget.value.trimStart();
     this.setState({ query });
     if (query) {
       this.startSearch();
@@ -41,11 +41,12 @@ class AddTeamUserPop extends React.Component {
   }
   
   async startSearch() {
-    if (!this.state.query) {
+    const query = this.state.query.trim();
+    if (!query) {
       return this.clearSearch();
     }
     
-    const request = this.props.api.get(`users/search?q=${this.state.query}`);
+    const request = this.props.api.get(`users/search?q=${query}`);
     this.setState({ maybeRequest: request });
     
     const {data} = await request;
@@ -106,7 +107,6 @@ class AddTeamUserPop extends React.Component {
           />
         </section>
         {!!query && <section className="pop-over-actions last-section results-list">
-          <InviteByEmail email={query} onClick={() => null}/>
           {isLoading && <Loader />}
           {results.length ? (
             <ul className="results">
