@@ -7,6 +7,9 @@ import UserModel from '../../models/user';
 import Loader from '../includes/loader.jsx';
 import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
 
+const emailSafe = '[^@\/\\]';
+const emailRegex = `^${emailSafe}+@
+
 class AddTeamUserPop extends React.Component {
   constructor(props) {
     super(props);
@@ -74,7 +77,6 @@ class AddTeamUserPop extends React.Component {
         item: <UserResultItem user={user} action={() => this.onClick(user)} />
       })));
     }
-    const email = /^[^@]+@([^@]+\.[^@]+)$/.exec(query)
     if (email) {
       results.push({
         key: 'invite-by-email',
