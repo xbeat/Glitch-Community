@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Markdown from '../includes/markdown.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
-import UserPref from '../includes/user-pref.jsx';
+import UserPref from '../includes/user-prefs.jsx';
 
 import newStuffLog from '../../curated/new-stuff-log';
 const latestId = Math.max(...newStuffLog.map(({id}) => id));
@@ -102,10 +102,10 @@ NewStuff.propTypes = {
   setNewStuffReadId: PropTypes.func.isRequired,
 };
 
-const NewStuffContainer = ({children, isSignedIn, getUserPref, setUserPref}) => (
-  <UserPref name="showNewStuff" default={true} {...{getUserPref, setUserPref}}>
+const NewStuffContainer = ({children, isSignedIn}) => (
+  <UserPref name="showNewStuff" default={true}>
     {(showNewStuff, setShowNewStuff) => (
-      <UserPref name="newStuffReadId" default={0} {...{getUserPref, setUserPref}}>
+      <UserPref name="newStuffReadId" default={0}>
         {(newStuffReadId, setNewStuffReadId) => (
           <NewStuff {...{isSignedIn, showNewStuff, newStuffReadId, setShowNewStuff, setNewStuffReadId}}>
             {children}
@@ -118,8 +118,6 @@ const NewStuffContainer = ({children, isSignedIn, getUserPref, setUserPref}) => 
 NewStuffContainer.propTypes = {
   children: PropTypes.func.isRequired,
   isSignedIn: PropTypes.bool.isRequired,
-  getUserPref: PropTypes.func.isRequired,
-  setUserPref: PropTypes.func.isRequired,
 };
 
 export default NewStuffContainer;

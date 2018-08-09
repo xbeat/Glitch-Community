@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
 
+import {CurrentUserConsumer} from './current-user.jsx';
 import ErrorHandlers from './error-handlers.jsx';
 import Uploader from './includes/uploader.jsx';
 
@@ -17,25 +18,14 @@ class UserEditor extends React.Component {
   }
 
   isCurrentUser() {
-    return this.state.id === this.props.currentUserModel.id();
+    return !!this.props.currentUser && (this.state.id === this.props.currentUser.id);
   }
 
   async updateFields(changes) {
     const {data} = await this.props.api.patch(`users/${this.state.id}`, changes);
     this.setState(data);
-  }
-
-  async updateName(name) {
-    await this.updateFields({name});
     if (this.isCurrentUser()) {
-      this.props.currentUserModel.name(name);
-    }
-  }
-
-  async updateLogin(login) {
-    await this.updateFields({login});
-    if (this.isCurrentUser()) {
-      this.props.currentUserModel.login(login);
+      this.props.updateCurrentUser(data);
     }
   }
 
@@ -49,10 +39,6 @@ class UserEditor extends React.Component {
       avatarUrl: url,
       color: color,
     });
-    if (this.isCurrentUser()) {
-      this.props.currentUserModel.avatarUrl(this.state.avatarUrl);
-      this.props.currentUserModel.avatarThumbnailUrl(this.state.avatarThumbnailUrl);
-    }
   }
 
   async uploadCover(blob) {
@@ -125,8 +111,8 @@ class UserEditor extends React.Component {
   render() {
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
-      updateName: name => this.updateName(name).catch(handleErrorForInput),
-      updateLogin: login => this.updateLogin(login).catch(handleErrorForInput),
+      updateName: name => this.updateFields({name}).catch(handleErrorForInput),
+      updateLogin: login => this.updateFields({login}).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
       uploadCover: () => assets.requestFile(blob => this.uploadCover(blob).catch(handleError)),
@@ -144,7 +130,8 @@ class UserEditor extends React.Component {
 UserEditor.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
-  currentUserModel: PropTypes.object.isRequired,
+  currentUser: PropTypes.object,
+  updateCurrentUser: PropTypes.func.isRequired,
   handleError: PropTypes.func.isRequired,
   handleErrorForInput: PropTypes.func.isRequired,
   initialUser: PropTypes.shape({
@@ -154,14 +141,18 @@ UserEditor.propTypes = {
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
-const UserEditorContainer = ({api, children, currentUserModel, initialUser}) => (
+const UserEditorContainer = ({api, children, initialUser}) => (
   <ErrorHandlers>
     {errorFuncs => (
       <Uploader>
         {uploadFuncs => (
-          <UserEditor {...{api, currentUserModel, initialUser}} {...uploadFuncs} {...errorFuncs}>
-            {children}
-          </UserEditor>
+          <CurrentUserConsumer>
+            {(currentUser, fetched, {update}) => (
+              <UserEditor {...{api, currentUser, initialUser}} updateCurrentUser={update} {...uploadFuncs} {...errorFuncs}>
+                {children}
+              </UserEditor>
+            )}
+          </CurrentUserConsumer>
         )}
       </Uploader>
     )}
@@ -170,7 +161,6 @@ const UserEditorContainer = ({api, children, currentUserModel, initialUser}) => 
 UserEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
-  currentUserModel: PropTypes.object.isRequired,
   initialUser: PropTypes.object.isRequired,
 };
 

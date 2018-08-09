@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {CurrentUserConsumer} from './current-user.jsx';
 import ErrorHandlers from './error-handlers.jsx';
 
 class ProjectEditor extends React.Component {
@@ -12,7 +13,8 @@ class ProjectEditor extends React.Component {
   }
   
   userIsMember() {
-    const currentUserId = this.props.currentUserModel.id();
+    if (!this.props.currentUser) return false;
+    const currentUserId = this.props.currentUser.id;
     return this.state.users.some(({id}) => currentUserId === id);
   }
   
@@ -34,25 +36,28 @@ class ProjectEditor extends React.Component {
 ProjectEditor.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
-  currentUserModel: PropTypes.object.isRequired,
+  currentUser: PropTypes.object,
   handleError: PropTypes.func.isRequired,
   handleErrorForInput: PropTypes.func.isRequired,
   initialProject: PropTypes.object.isRequired,
 };
 
-const ProjectEditorContainer = ({api, children, currentUserModel, initialProject}) => (
+const ProjectEditorContainer = ({api, children, initialProject}) => (
   <ErrorHandlers>
     {wrapErrors => (
-      <ProjectEditor api={api} currentUserModel={currentUserModel} initialProject={initialProject} {...wrapErrors}>
-        {children}
-      </ProjectEditor>
+      <CurrentUserConsumer>
+        {currentUser => (
+          <ProjectEditor api={api} currentUser={currentUser} initialProject={initialProject} {...wrapErrors}>
+            {children}
+          </ProjectEditor>
+        )}
+      </CurrentUserConsumer>
     )}
   </ErrorHandlers>
 );
 ProjectEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
-  currentUserModel: PropTypes.object.isRequired,
   initialProject: PropTypes.object.isRequired,
 };
 

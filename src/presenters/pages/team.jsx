@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
+import {CurrentUserConsumer} from '../current-user.jsx';
 import TeamEditor from '../team-editor.jsx';
 import {getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -17,7 +18,6 @@ import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 import TeamUpgradeInfoBanner from '../includes/team-upgrade-info-banner.jsx';
 import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reached-banner.jsx';
-import {CurrentUserConsumer} from '../current-user.jsx';
 
 const FREE_TEAM_PROJECTS_LIMIT = 5;
 const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533137032374";
@@ -213,16 +213,23 @@ TeamPage.propTypes = {
   uploadCover: PropTypes.func.isRequired,
 };
 
-
-const teamConflictsWithUser = (team, currentUserModel) => {
-  if (currentUserModel.login()) {
-    return currentUserModel.login().toLowerCase() === team.url;
+const teamConflictsWithUser = (team, currentUser) => {
+  if (currentUser && currentUser.login) {
+    return currentUser.login.toLowerCase() === team.url;
   }
   return false;
 };
 
-const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
-  <TeamEditor api={api} currentUserModel={currentUserModel} initialTeam={team}>
+const TeamNameConflict = ({team}) => (
+  <CurrentUserConsumer>
+    {currentUser => (
+      teamConflictsWithUser(team, currentUser) && <NameConflictWarning/>
+    )}
+  </CurrentUserConsumer>
+);
+
+const TeamPageContainer = ({api, team, ...props}) => (
+  <TeamEditor api={api} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
       <React.Fragment>
         <Helmet>
@@ -235,7 +242,7 @@ const TeamPageContainer = ({api, currentUserModel, team, ...props}) => (
           )}
         </CurrentUserConsumer>
 
-        {teamConflictsWithUser(team, currentUserModel) && <NameConflictWarning/>}
+        <TeamNameConflict team={team}/>
       </React.Fragment>
     )}
   </TeamEditor>
