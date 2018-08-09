@@ -7,10 +7,6 @@ import UserModel from '../../models/user';
 import Loader from '../includes/loader.jsx';
 import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
 
-// (a)?@(b.c)
-// domain required, name optional
-const emailChars = '[^@:\\/\\\\]+';
-const emailRegExp = new RegExp(`^(${emailChars})?@(${emailChars}\.${emailChars})$`);
 
 class AddTeamUserPop extends React.Component {
   constructor(props) {
@@ -79,17 +75,23 @@ class AddTeamUserPop extends React.Component {
         item: <UserResultItem user={user} action={() => this.onClick(user)} />
       })));
     }
+    // this regex is basically (a)?@(b.c)
+    // any match means we have a valid domain in group 2
+    // group 1 is optional, but its presence means we have a full email
+    const emailChars = '[^@\\:/\\\\]+'; //escaping characters is gross
+    const emailRegExp = new RegExp(`^(${emailChars})?@(${emailChars}\\.${emailChars})$`);
     const emailMatch = emailRegExp.exec(query);
     if (emailMatch) {
-      if (emailMatch[1]) {
+      const [email, name, domain] = emailMatch;
+      if (name) {
         results.push({
           key: 'invite-by-email',
-          item: <InviteByEmail email={query}/>,
+          item: <InviteByEmail email={email}/>,
         });
       }
       results.push({
         key: 'whitelist-email-domain',
-        item: <WhitelistEmailDomain domain={emailMatch[2]}/>,
+        item: <WhitelistEmailDomain domain={domain}/>,
       });
     }
     return (
