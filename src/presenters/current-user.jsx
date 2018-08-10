@@ -11,7 +11,7 @@ const {Provider, Consumer} = React.createContext();
 
 function identifyUser(user) {
   if (user) {
-    console.log("👻 current user is", user);
+    console.log("👀 current user is", user);
     console.log("🌈 login", user.login);
   } else {
     console.log("👻 logged out");
@@ -75,7 +75,9 @@ class CurrentUserManager extends React.Component {
   }
   
   componentDidMount() {
-    this.load();
+    if (this.props.currentUser) {
+      this.load();
+    }
   }
   
   componentDidUpdate(prev) {
