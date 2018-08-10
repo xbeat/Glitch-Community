@@ -19,12 +19,12 @@ function identifyUser(user) {
   try {
     const analytics = window.analytics;
     if (analytics && user) {
-        analytics.identify(user.id, {
-          name: user.name,
-          login: user.login,
-          email: user.email,
-          created_at: user.createdAt,
-        });
+      analytics.identify(user.id, {
+        name: user.name,
+        login: user.login,
+        email: user.email,
+        created_at: user.createdAt,
+      });
     }
     if (window.Raven) {
       if (user) {
