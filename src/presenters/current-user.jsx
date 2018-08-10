@@ -10,21 +10,35 @@ import LocalStorage from './includes/local-storage.jsx';
 const {Provider, Consumer} = React.createContext();
 
 function identifyUser(user) {
-  const analytics = window.analytics;
-  if (analytics && user) {
+  if (user) {
     console.log("👻 current user is", user);
     console.log("🌈 login", user.login);
-    try {
-      analytics.identify(user.id, {
-        name: user.name,
-        login: user.login,
-        email: user.email,
-        created_at: user.createdAt,
-      });
-    } catch (error) {
-      console.error(error);
-      Raven.captureException(error);
+  } else {
+    console.log("👻 logged out");
+  }
+  try {
+    const analytics = window.analytics;
+    if (analytics && user) {
+        analytics.identify(user.id, {
+          name: user.name,
+          login: user.login,
+          email: user.email,
+          created_at: user.createdAt,
+        });
     }
+    if (window.Raven) {
+      if (user) {
+        Raven.setUserContext({
+          id: user.id,
+          login: user.login,
+        });
+      } else {
+        Raven.setUserContext();
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    Raven.captureException(error);
   }
 }
 
@@ -52,12 +66,12 @@ class CurrentUserManager extends React.Component {
   async load() {
     this.setState({fetched: false});
     const {currentUser, setCurrentUser} = this.props;
-    if (currentUser && currentUser.persistentToken) {
+    if (currentUser) {
       const {data} = await this.api().get(`users/${currentUser.id}`);
       setCurrentUser(data);
-      identifyUser(currentUser);
       this.setState({fetched: true});
     }
+    identifyUser(currentUser);
   }
   
   componentDidMount() {
