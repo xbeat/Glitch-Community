@@ -118,7 +118,7 @@ const cleanUser = (user) => {
 };
 
 export const CurrentUserProvider = ({children}) => (
-  <LocalStorage name="cachedUser" default={null}>
+  <LocalStorage name="cachedUser" default={null} ignoreChanges={true}>
     {(currentUser, set, loaded) => (
       <CurrentUserManager currentUser={cleanUser(currentUser)} setCurrentUser={set}>
         {({api, ...props}) => (

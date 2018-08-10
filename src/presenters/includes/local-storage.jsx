@@ -23,7 +23,9 @@ export default class LocalStorage extends React.Component {
   }
   
   componentDidMount() {
-    window.addEventListener('storage', this.handleStorage, {passive: true});
+    if (!this.props.ignoreChanges) {
+      window.addEventListener('storage', this.handleStorage, {passive: true});
+    }
     this.handleStorage();
   }
   
@@ -56,4 +58,5 @@ LocalStorage.propTypes = {
   children: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   default: PropTypes.any,
+  ignoreChanges: PropTypes.bool,
 };
