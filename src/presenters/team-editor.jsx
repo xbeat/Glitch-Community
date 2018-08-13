@@ -194,12 +194,7 @@ TeamEditor.propTypes = {
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
-<<<<<<< HEAD
-
-const TeamEditorContainer = ({api, children, currentUserModel, initialTeam}) => (
-=======
 const TeamEditorContainer = ({api, children, initialTeam}) => (
->>>>>>> 8fb7bda03dcc206fc9046002f7f4daec7e358914
   <ErrorHandlers>
     {errorFuncs => (
       <Uploader>
