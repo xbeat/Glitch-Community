@@ -47,7 +47,7 @@ export const WhitelistedDomain = ({domain, setDomain}) => {
   return (
     <PopoverContainer>
       {({visible, setVisible}) => (
-        <details onToggle={evt => setVisible(evt.target.open)} open={visible} className="popover-container">
+        <details onToggle={evt => setVisible(evt.target.open)} open={visible} className="popover-container whitelisted-domain-container">
           <summary data-tooltip={!visible ? tooltip : null}>
             <div className="avatar whitelisted-domain">
               {domain[0].toUpperCase()}
