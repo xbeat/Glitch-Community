@@ -37,25 +37,25 @@ Accessible technologies are important to allowing people to contribute.  As we i
 Contribution Workflow
 ----------------------
 
-First, remix from [https://glitch.com/~community](https://glitch.com/~community) into, e.g., "my-remix"
+First, remix from [https://glitch.com/~community](https://glitch.com/~community) into, e.g., `my-remix`
 
-Next, make your changes.  When you've got something you like, share it with us (see above), and you're all set.
+Next, make your changes.  When you've got something you like, share it with us (see above), and **you're all set**.
 
-***That's all you need to do,*** _but if you really want to be hands on with git pull requests, then read on._
+_If you're a core contributor or just really love Git, then read on._
 
 ### Pull Request Workflow
 
-Ok cool, these next steps are what we'd do internally and you're welcome to follow them as well if you choose.  Beyond this point, there be 🐉.
+Ok cool, these next steps are what we'd do internally and you're welcome to follow them as well if you choose.  Beyond this point, there be 🐉s.
 
 #### First Time Setup
 
-_(Do this once per computer)_
+_(Do this once per computer to create a local repository)_
 
   ```
   # 1. On your local machine, clone our git repository from Github: 
   git clone https://github.com/FogCreek/Glitch-Community
 
-  # 2. Inside of your new repo, also add a reference to our live site:
+  # 2. Inside of your new repo, add a remote endpoint for our live site:
   cd Glitch-Community
   git remote add live https://api.glitch.com/community/git
   ```
@@ -66,9 +66,9 @@ _(Do this once per remix/PR)_
 
 We're going to add a branch named after your remix, and set up a remote endpoint pointed at its git repo in glitch.  We're using `my-remix` as a placeholder for your project name.  Swap that out in the scripts below.
 
+In your local repository,
 ```
-  # 1. Add your remix as remote source in that repository
-  cd Glitch-Community
+  # 1. Add your remix as remote source
   git remote add my-remix https://api.glitch.com/my-remix/git
 
   # 2. Fetch your remix into a new branch of the same name
@@ -84,13 +84,13 @@ We're going to add a branch named after your remix, and set up a remote endpoint
 
 Now you can use the GitHub UI to turn your branch into a pull request. 
 
-    _(Don't have permission to push to github? You'll need to first [Fork](https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/) our [repository](https://github.com/FogCreek/Glitch-Community) and then [create a pull request from the fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) instead.)_
+_(Don't have permission to push to github? You'll need to first [Fork](https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/) our [repository](https://github.com/FogCreek/Glitch-Community) and then [create a pull request from the fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) instead.)_
 
 #### Updating an Existing Pull Request
 
-(Do this when you've made more changes in Glitch that you want to add in to the PR.)
+(Do this when you've made more changes in Glitch that you want to include in the PR.)
 
-In your local repository, run
+In your local repository,
  ```
    # Make sure we're on the right branch
    git checkout my-remix 
@@ -108,22 +108,22 @@ Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes. 
 
 Only employees of Fog Creek will be able to do this step, and here it is!  This happens _After_ a pull request has been approved and merged into master.
 
-First, let's make sure any changes made direct to Community are merged and happy.  This is a Glitch site, after all-- we're not forcing the PR workflow, especially for small changes.
-
 #### Merge in Live Changes
+
+We need to make sure any live changes are merged and happy.  This is a Glitch site, after all-- we're not forcing the PR workflow, especially for small changes.
 
 In your local git repository:
 
 ```
   # Make sure we're in the right place and up to date.
-  git checkout origin/master
-  git pull
+  git checkout master
+  git pull origin master
 
   # Pull in any live changes that aren't yet in Master:
-  git pull https://api.glitch.com/community/git
+  git pull live master
   
   # Merge if needed
-  # [ this is on you. ]
+  # [ This is on you. 🐉 ]
   
   # Then push these changes back up to github
   git push origin master
