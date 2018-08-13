@@ -15,7 +15,6 @@ const md = markdownIt({
   .use(markdownEmoji)
   .use(markdownSanitizer);
 
-
 const RawHTML = ({children}) => (
   children ? <span className="markdown-content" dangerouslySetInnerHTML={{__html: children}}></span> : null
 );
