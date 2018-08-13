@@ -21,14 +21,6 @@ const ProjectOptionsPop = ({...props}) => {
     props.togglePopover();
   }
   
-  function addPin(event) {
-    animate(event, 'slide-up', () => props.addPin(props.project.id));
-  }
-  
-  function removePin(event) {
-    animate(event, 'slide-down', () => props.removePin(props.project.id));
-  }
-  
   function leaveProject(event) {
     const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${props.project.name}?`;
     if (window.confirm(prompt)) {
@@ -44,7 +36,16 @@ const ProjectOptionsPop = ({...props}) => {
     props.joinTeamProject(props.project.id, props.currentUser);
   }
   
-  function deleteAction(event) {
+    
+  function animateThenAddPin(event) {
+    animate(event, 'slide-up', () => props.addPin(props.project.id));
+  }
+  
+  function animateThenRemovePin(event) {
+    animate(event, 'slide-down', () => props.removePin(props.project.id));
+  }
+  
+  function animateThenDeleteProject(event) {
     animate(event, 'slide-down', () => props.deleteProject(props.project.id));
   }
   
@@ -52,8 +53,8 @@ const ProjectOptionsPop = ({...props}) => {
   return (
     <dialog className="pop-over project-options-pop">
       <section className="pop-over-actions">
-        {!!props.addPin && <PopoverButton onClick={addPin} text="Pin " emoji="pushpin"/>}
-        {!!props.removePin && <PopoverButton onClick={removePin} text="Un-Pin " emoji="pushpin"/>}
+        {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
+        {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
       </section>
 
       {(props.joinTeamProject && props.leaveTeamProject) &&
@@ -75,7 +76,7 @@ const ProjectOptionsPop = ({...props}) => {
 
       <section className="pop-over-actions danger-zone last-section">
         {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
-        {!!props.deleteProject && <PopoverButton onClick={deleteAction} text="Delete Project " emoji="bomb"/>}
+        {!!props.deleteProject && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
       </section>
     </dialog>
   );
