@@ -84,6 +84,7 @@ In your local repository,
 
 Now you can use the GitHub UI to turn your branch into a pull request. 
 
+
 _(Don't have permission to push to github? You'll need to first [Fork](https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/) our [repository](https://github.com/FogCreek/Glitch-Community) and then [create a pull request from the fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) instead.)_
 
 #### Updating an Existing Pull Request
@@ -102,11 +103,11 @@ In your local repository,
    git push origin my-remix
  ```   
    
-Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes. If you make some quick changes, they may not show up in your diff on the Github pull request. If that is the case, you can either wait several minutes for the checkpoint to be made, or toggle Glitch Rewind on-and-off (which will force a checkpoint). 
+_Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes. If you make some quick changes, they may not show up in your diff on the Github pull request. If that is the case, you can either wait several minutes for the checkpoint to be made, or toggle Glitch Rewind on-and-off (which will force a checkpoint)._
 
 ### Deployment
 
-Only employees of Fog Creek will be able to do this step, and here it is!  This happens _After_ a pull request has been approved and merged into master.
+Only employees of Fog Creek will be able to do this step, and here it is!  This happens _after_ a pull request has been approved and merged into master.
 
 #### Merge in Live Changes
 
@@ -152,7 +153,7 @@ Now open up the logs and wait for the build to finish, then test your stuff.
 
 In particular test anything that you merged with.  Make sure there's no console errors, etc.  If you find a problem, stop here and go back to the PR phase to fix it up.
 
-Satisfied?  :shipit:
+Satisfied?  Deploy it.
 
 #### Deploy
 
