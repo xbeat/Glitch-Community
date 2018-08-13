@@ -27,6 +27,7 @@ dependencies:
   lodash: 4.17.10
   lodash-webpack-plugin: 0.11.5
   markdown-it: 8.4.2
+  markdown-it-checkbox: 1.1.0
   markdown-it-emoji: 1.4.0
   markdown-it-sanitizer: 0.4.3
   memory-cache: 0.2.0
@@ -3867,6 +3868,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
+  /markdown-it-checkbox/1.1.0:
+    dependencies:
+      underscore: 1.9.1
+    dev: false
+    resolution:
+      integrity: sha1-IM/5fzPXfRcvnc8bz8ks7MUzD6w=
   /markdown-it-emoji/1.4.0:
     dev: false
     resolution:
@@ -5819,6 +5826,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Il9rngM3Zj4Njnz9aG/Cg2zKznY=
+  /underscore/1.9.1:
+    dev: false
+    resolution:
+      integrity: sha512-5/4etnCkd9c8gwgowi5/om/mYO5ajCaOgdzj/oW+0eQV9WxKBDZw5+ycmKmeaTXjInS/W0BzpGLo2xR2aBwZdg==
   /union-value/1.0.0:
     dependencies:
       arr-union: 3.1.0
@@ -6230,6 +6241,7 @@ specifiers:
   lodash: ^4.17.10
   lodash-webpack-plugin: ^0.11.5
   markdown-it: ^8.4.1
+  markdown-it-checkbox: ^1.1.0
   markdown-it-emoji: ^1.4.0
   markdown-it-sanitizer: ^0.4.3
   memory-cache: ^0.2.0
