@@ -84,6 +84,7 @@ In your local repository,
 
 Now you can use the GitHub UI to turn your branch into a pull request. 
 
+It's good practice to share a link to your project in the PR and talk about teh functional changes you've made.  This allows the reviewers to easily visit your remix to test out your new behavior.
 
 _(Don't have permission to push to github? You'll need to first [Fork](https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/) our [repository](https://github.com/FogCreek/Glitch-Community) and then [create a pull request from the fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) instead.)_
 
@@ -163,10 +164,12 @@ Run the _special command_ to swap ~community with ~community-staging.
 
 #### Revert the Deploy.
 
-If something is going wrong with the latest version, repeat the swap command to swap things back and get to a healthy state. Now you have time to fix it and try again. 
+Repeat the _special command_ to swap ~community with ~community-staging.
 
-#### Making live edits
+Thereby putting things back the way they were. Now you have time to fix it and try again. 
 
- _Can I just edit community directly, since it’s Glitch we’re dealing with here?_
+#### Making Live Edits
+
+ _Can I just edit ~community directly, since it’s Glitch we’re dealing with here?_
   
 Sure thing. All standard caveats and cautions apply.  This is appropriate for updating the curated content, fixing typos, and one-line bug fixes. Our build scripts don't update the live site until the build is healthy and your changes are complete.
