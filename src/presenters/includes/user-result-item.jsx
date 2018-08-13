@@ -17,7 +17,7 @@ const UserResultItem = ({user, action}) => {
   return (
     <button onClick={handleClick} className="button-unstyled result">
       <img className="avatar" src={getAvatarThumbnailUrl(user)} alt=""/>
-      <div className="result-name" title={getDisplayName(user)}>{getDisplayName(user)}</div>
+      <div className="result-name" title={name}>{name}</div>
       {!!user.name && <div className="result-description" title={login}>@{login}</div>}
       {thanksCount > 0 && <ThanksShort count={thanksCount} />}
     </button>
