@@ -35,16 +35,7 @@ const ProjectOptionsPop = ({...props}) => {
       props.leaveProject(props.project.id, event);
     }
   }
-  
-  function currentUserIsOnProject() {
-    let projectUsers = props.project.users.map(user => {
-      return user.id;
-    });
-    if (projectUsers.includes(props.currentUser.id)) {
-      return true;
-    }
-  }
-  
+    
   function leaveTeamProject() {
     props.leaveTeamProject(props.project.id, props.currentUser.id);
   }
@@ -67,10 +58,10 @@ const ProjectOptionsPop = ({...props}) => {
 
       {(props.joinTeamProject && props.leaveTeamProject) &&
         <section className="pop-over-actions collaborator-actions">
-          {!currentUserIsOnProject() &&
+          {!props.currentUserIsOnProject &&
             <PopoverButton onClick={joinTeamProject} text="Join Project " emoji="rainbow"/>
           }
-          {currentUserIsOnProject() &&
+          {props.currentUserIsOnProject &&
             <PopoverButton onClick={leaveTeamProject} text="Leave Project " emoji="wave"/>
           }
         </section>
