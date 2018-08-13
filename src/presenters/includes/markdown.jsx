@@ -27,8 +27,7 @@ RawHTML.propTypes = {
 
 const Markdown = ({children}) => (
   <React.Fragment>
-    <RawHTML>{md.render(children || '')}</RawHTML>
-    <RawHTML>{md.render(`Bonus Markdown! **win**
+    <RawHTML>{md.render(`Hijacked 'yer markdown for checkboxes! **win**
 h1
 --
 let's test some checkboxes.
@@ -39,6 +38,7 @@ let's test some checkboxes.
 There they are.
 
 `)}</RawHTML>
+        { <RawHTML>{md.render(children || '')}</RawHTML>}
   </React.Fragment>
 );
 Markdown.propTypes = {
