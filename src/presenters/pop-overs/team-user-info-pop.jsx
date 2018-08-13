@@ -67,7 +67,7 @@ const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
   return (
     <section className="pop-over-actions admin-actions">
       <p className="action-description">
-        Admins can update 
+        Admins can update team info, billing, and remove users
       </p>
       { userIsTeamAdmin && 
         <button className="button-small button-tertiary has-emoji" onClick={() => {removeAdminStatus();}}>
