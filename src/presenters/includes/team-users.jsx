@@ -94,3 +94,11 @@ export const AddTeamUser = (props) => (
     )}
   </PopoverContainer>
 );
+
+// Join Team
+
+export const JoinTeam = ({onClick}) => (
+  <button className="button-small button-cta join-team-button" onClick={onClick}>
+    Join Team
+  </button>
+);
