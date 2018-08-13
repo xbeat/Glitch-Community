@@ -53,11 +53,12 @@ LoginPage.propTypes = {
   api: PropTypes.any.isRequired,
   url: PropTypes.string.isRequired,
   provider: PropTypes.string.isRequired,
+  setUser: PropTypes.func.isRequired,
 };
 
 const LoginPageContainer = (props) => (
   <CurrentUserConsumer>
-    {(currentUser, fetched, updateUser) => <LoginPage setUser={updateUser} {...props}/>}
+    {(currentUser, fetched, {update}) => <LoginPage setUser={update} {...props}/>}
   </CurrentUserConsumer>
 );
 

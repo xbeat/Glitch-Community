@@ -10,21 +10,35 @@ import LocalStorage from './includes/local-storage.jsx';
 const {Provider, Consumer} = React.createContext();
 
 function identifyUser(user) {
-  const analytics = window.analytics;
-  if (analytics && user) {
-    console.log("👻 current user is", user);
+  if (user) {
+    console.log("👀 current user is", user);
     console.log("🌈 login", user.login);
-    try {
+  } else {
+    console.log("👻 logged out");
+  }
+  try {
+    const analytics = window.analytics;
+    if (analytics && user) {
       analytics.identify(user.id, {
         name: user.name,
         login: user.login,
         email: user.email,
         created_at: user.createdAt,
       });
-    } catch (error) {
-      console.error(error);
-      Raven.captureException(error);
     }
+    if (window.Raven) {
+      if (user) {
+        Raven.setUserContext({
+          id: user.id,
+          login: user.login,
+        });
+      } else {
+        Raven.setUserContext();
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    Raven.captureException(error);
   }
 }
 
@@ -55,13 +69,15 @@ class CurrentUserManager extends React.Component {
     if (currentUser) {
       const {data} = await this.api().get(`users/${currentUser.id}`);
       setCurrentUser(data);
-      identifyUser(currentUser);
       this.setState({fetched: true});
     }
+    identifyUser(currentUser);
   }
   
   componentDidMount() {
-    this.load();
+    if (this.props.currentUser) {
+      this.load();
+    }
   }
   
   componentDidUpdate(prev) {
@@ -102,7 +118,7 @@ const cleanUser = (user) => {
 };
 
 export const CurrentUserProvider = ({children}) => (
-  <LocalStorage name="cachedUser" default={null}>
+  <LocalStorage name="cachedUser" default={null} ignoreChanges={true}>
     {(currentUser, set, loaded) => (
       <CurrentUserManager currentUser={cleanUser(currentUser)} setCurrentUser={set}>
         {({api, ...props}) => (

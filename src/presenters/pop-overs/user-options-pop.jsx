@@ -59,7 +59,7 @@ CreateTeamButton.propTypes = {
 
 const TeamList = ({teams, /*toggleCreateTeamPop, userIsAnon*/}) => {
   // const hasTeams = teams && teams.length;
-  return (
+  return (!!teams.length &&
     <section className="pop-over-actions">
       {/* Temporary: enable once team creation is public
       <CreateTeamButton toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />

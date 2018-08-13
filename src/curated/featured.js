@@ -13,18 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Marlow Moss\'s Minimalist Art',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmarlow-moss.jpg?1533554478016",
-    link: 'http://marlow-moss.glitch.me/'
-  }
-  , {
-    title: 'Arithmetic With Inches and Feet',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fshopcalc.jpg?1533554478824",
-    link: 'https://shopcalc.glitch.me/'
-  } 
-  , {
-    title: 'Interact With A 3D Book',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fview-3d.jpg?1533554476536",
-    link: 'https://glitch.com/~view-3d'
+    title: 'Roll Your Own Analytics',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fadalytics-live.jpg?1533554479512",
+    link: 'https://glitch.com/~adalytics-live'
+  }, {
+    title: 'What Do The Tarot Cards Say?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftarot.jpg?1533554480162",
+    link: 'https://tarot.glitch.me/'
+  }, {
+    title: 'Fun With Reactive Type Size',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Freactive-type-size.jpg?1533554477214",
+    link: 'https://glitch.com/~reactive-type-size'
   }  
 ];
