@@ -66,9 +66,7 @@ _(Do this once per computer)_
 
 _(Do this once per remix/PR)_
 
-We're going to add a branch named after your remix, and set up a remote endpoint pointed at its git repo in glitch.  We're using `my-remix` as a placeholder for whatever your
-
-In this example, we're assuming that your remix lives at `glitch.com/~my-remix` ; adjust the text below to replace "my-remix" with your actual project name.
+We're going to add a branch named after your remix, and set up a remote endpoint pointed at its git repo in glitch.  We're using `my-remix` as a placeholder for your project name.  Swap that out in the scripts below.
 
 ```
   # 1. Add your remix as remote source in that repository
@@ -77,52 +75,78 @@ In this example, we're assuming that your remix lives at `glitch.com/~my-remix` 
 
   # 2. Fetch your remix into a new branch of the same name
   git fetch my-remix master:my-remix
+  
+  # 3. Switch to your new branch
   git checkout my-remix
 
-  # 3. Push your branch to github
+  # 4. Push your branch to github
   git push origin my-branch
   
 ```
+
+Now you can use the GitHub UI to turn your branch into a pull request. 
+
     _(Don't have permission to push to github? You'll need to first [Fork](https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/) our [repository](https://github.com/FogCreek/Glitch-Community) and then [create a pull request from the fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) instead.)_
 
-#### Updating an existing PR with new changes
+#### Updating an Existing Pull Request
 
-5. In local console and run:
-   ```
-   git checkout my-branch  # Make sure we're on the right branch
-   git pull my-remix master
-   git push origin my-branch
-   ```   
+In your local repository, run
+ ```
+   # Make sure we're on the right branch
+   git checkout my-remix 
    
-Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes. If you make some quick changes, they may not show up in your diff on the Github pull request. If that is the case, you can either wait several minutes for the checkpoint to be made or manually commit your changes in your Glitch app's console (under "Advanced Options") by running:
-  ```
-  git add .
-  git commit -m "A short message about what your commit does"
-  ```
-After you either wait or run the above commands, go to step 5 to update the pull request.
+  # Pull from Glitch into your local branch.
+   git pull my-remix master
+   
+  # Update the PR in Github
+   git push origin my-remix
+ ```   
+   
+Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes. If you make some quick changes, they may not show up in your diff on the Github pull request. If that is the case, you can either wait several minutes for the checkpoint to be made, or toggle Glitch Rewind on-and-off (which will force a checkpoint). 
 
 #### Deployment
 
-Only employees of Fog Creek will be able to do this step, and here it is!  This generally happens immediately after we merge in any pull request.
+Only employees of Fog Creek will be able to do this step, and here it is!  This happens _After_ a pull request has been approved and merged into master.
 
 First, let's make sure any changes made direct to Community are merged and happy.  This is a Glitch site, after all-- we're not forcing the PR workflow, especially for small changes.
 
-1. In your local git repo, 
-```git checkout origin/master``` 
-2. then pull from the base community site to get any live changes
+## Merge in Live Changes
+
+In your local git repository:
+
 ```
-git pull https://api.glitch.com/community/git
+  # Make sure we're in the right place and up to date.
+  git checkout origin/master
+  git pull
+
+  # Pull in any live changes that aren't yet in Master:
+  git pull https://api.glitch.com/community/git
+  
+  # Merge if needed
+  # [ this is on you. ]
+  
+  # Then push these changes back up to github
+  git push origin master
+  
 ``` 
-and, if there were any changes, merge them and push them back to `origin/master`.
+
 Ok, now the GitHub repository is updated and stable. 
+
+# Stage the Deployment
+
+We're going to put our release candidate onto community-staging.glitch.me.
+
+Go to https://glitch.com/~community-staging and open up the console.
+  ```
+  git log -1 # Prints out a stable changeset in case we need it.
+  git pull # Update us to master.
   
-3. Inside of https://glitch.com/~community-staging, open up the console.
-    ```
-    git log -1 # Gets a stable changeset handy in case we need to revert
-    git pull
-    refresh # Updates the glitch editor with the new files
-    ```
+  # This last step should never need to merge; if it does, something went wrong or somebody edited community-staging directly. Ask Jude or Greg for help. 
   
+  refresh # Updates the glitch editor with the new files
+  ```
+
+Now open up the logs and wait for the build to finish, then test your stuff.  In particular test anything that you merged with.  Make sure there's no console errors, etc.  If you find a problem, go b
 4. Your new version in staged!  View the site and the logs, make sure it's building and looks alive.
 
 5. Swap ~community with ~community-staging to put your new version in front of users. (there's a special endpoint for this, ask us about it)
