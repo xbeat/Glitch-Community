@@ -13,7 +13,7 @@ Anyone in our community can feel welcome and supported in submitting improvement
 
 
 Philosophy
----------------------
+----------
 
 Our current ideal contribution flow works like this:
 
@@ -49,29 +49,41 @@ Next, make your changes.  When you've got something you like, share it with us (
 
 Ok cool, these next steps are what we'd do internally and you're welcome to follow them as well if you choose.  Beyond this point, there be dragons.
 
-1. On your local machine, clone our git repository from Github: 
+## First Time Setup
 
-    ```
-    git clone https://github.com/FogCreek/Glitch-Community
-    ```
+( Do this once per computer, then skip it thereafter)
 
-2. Add your remix as remote source in that repository (remember to swap 'my-remix' with your actual remix name)
-    ```
-    cd Glitch-Community
-    git remote add my-remix https://api.glitch.com/my-remix/git
-    ```
- 
-3. Fetch your remote into a new branch ("my-branch" here, but it's best if you name this branch something that indicates its purpose, e.g. "fix-avatars", etc.) based on your remix:
-    ```
-    git fetch my-remix master:my-branch
-    git checkout my-branch
-    ```
+  ```
+  # 1. On your local machine, clone our git repository from Github: 
+  git clone https://github.com/FogCreek/Glitch-Community
 
-4. Almost done!  This next step will submit your pull request to us in GitHub!
-    ```
-    git push origin my-branch
-    ```
-    _(Don't have permission to push? You'll need to first [Fork](https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/) our [repository](https://github.com/FogCreek/Glitch-Community) and then [create a pull request from the fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) instead.)_
+  # 2. Inside of your new repo, also add a reference to our live site:
+  cd Glitch-Community
+  git remote add live https://api.glitch.com/community/git
+  ```
+    
+## Creating a Pull Request
+
+( Do this once per remix/PR)
+
+( We're going to add a branch named after your remix, and set up a remote endpoint pointed at its git repo in glitch )
+
+In this example, we're assuming that your remix lives at `glitch.com/~my-remix` ; adjust the text below to replace "my-remix" with your actual project name.
+
+```
+  # 1. Add your remix as remote source in that repository
+  cd Glitch-Community
+  git remote add my-remix https://api.glitch.com/my-remix/git
+
+  # 2. Fetch your remix into a new branch of the same name
+  git fetch my-remix master:my-remix
+  git checkout my-remix
+
+  # 3. Push your branch to github
+  git push origin my-branch
+  
+```
+    _(Don't have permission to push to github? You'll need to first [Fork](https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/) our [repository](https://github.com/FogCreek/Glitch-Community) and then [create a pull request from the fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) instead.)_
 
 #### Updating an existing PR with new changes
 
