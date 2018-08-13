@@ -107,7 +107,6 @@ class TeamPage extends React.Component {
           teamProjects={this.props.team.projects}
           projectLimitIsReached={this.projectLimitIsReached()}
           api={this.props.api}
-          myProjects={this.props.currentUser ? this.props.currentUser.projects : []}
         />
         { this.projectLimitIsReached() &&
           <TeamProjectLimitReachedBanner
@@ -138,7 +137,6 @@ class TeamPage extends React.Component {
               extraButtonClass = "button-small"
               teamProjects = {this.props.team.projects}
               api={() => this.props.api}
-              myProjects={this.props.currentUser ? this.props.currentUser.projects : []}
             />
           </aside>
         }
