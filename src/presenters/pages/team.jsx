@@ -106,7 +106,7 @@ class TeamPage extends React.Component {
           {...this.props}
           teamProjects={this.props.team.projects}
           projectLimitIsReached={this.projectLimitIsReached()}
-          api={() => this.props.api}
+          api={this.props.api}
           myProjects={this.props.currentUser ? this.props.currentUser.projects : []}
         />
         { this.projectLimitIsReached() &&
