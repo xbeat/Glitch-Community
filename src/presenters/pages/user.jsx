@@ -119,8 +119,8 @@ UserPage.propTypes = {
   leaveProject: PropTypes.func.isRequired,
 };
 
-const UserPageContainer = ({api, user, currentUserModel}) => (
-  <UserEditor api={api} initialUser={user} currentUserModel={currentUserModel}>
+const UserPageContainer = ({api, user}) => (
+  <UserEditor api={api} initialUser={user}>
     {(user, funcs, isAuthorized) => (
       <React.Fragment>
         <Helmet>

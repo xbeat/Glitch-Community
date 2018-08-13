@@ -1,0 +1,74 @@
+/* globals APP_URL analytics Raven */
+
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import {Redirect} from 'react-router-dom';
+import {CurrentUserConsumer} from '../current-user.jsx';
+import ErrorPage from './error.jsx';
+
+class LoginPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      done: false,
+      error: false,
+    };
+  }
+  
+  async authenticate() {
+    const {api, provider, url} = this.props;
+    try {
+      const {data} = await api.post(url);
+      if (data.id <= 0) {
+        throw new Error(`Bad user id (${data.id}) after ${provider} login`);
+      }
+      console.log("LOGGED IN", data);
+      this.props.setUser(data);
+      this.setState({done: true});
+      analytics.track("Signed In", {provider});
+    } catch (error) {
+      this.setState({error: true});
+      const errorData = error && error.response && error.response.data;
+      const deets = {provider, error: errorData};
+      console.error("OAuth login error.", deets);
+      Raven.captureMessage("Oauth login error", {extra: deets});
+    }
+  }
+  
+  componentDidMount() {
+    this.authenticate();
+  }
+  
+  render() {
+    if (this.state.done) {
+      return <Redirect to="/"/>;
+    } else if (this.state.error) {
+      return <ErrorPage title="OAuth Login Problem" description="Hard to say what happened, but we couldn't log you in. Try again?"/>;
+    }
+    return <div className="content"></div>;
+  }
+}
+LoginPage.propTypes = {
+  api: PropTypes.any.isRequired,
+  url: PropTypes.string.isRequired,
+  provider: PropTypes.string.isRequired,
+  setUser: PropTypes.func.isRequired,
+};
+
+const LoginPageContainer = (props) => (
+  <CurrentUserConsumer>
+    {(currentUser, fetched, {update}) => <LoginPage setUser={update} {...props}/>}
+  </CurrentUserConsumer>
+);
+
+export const FacebookLoginPage = ({api, code}) => {
+  const callbackUrl = `${APP_URL}/login/facebook`;
+  const url = `/auth/facebook/${code}?callbackURL=${encodeURIComponent(callbackUrl)}`;
+  return <LoginPageContainer api={api} provider="Facebook" url={url}/>;
+};
+
+export const GitHubLoginPage = ({api, code}) => {
+  const url = `/auth/github/${code}`;
+  return <LoginPageContainer api={api} provider="GitHub" url={url}/>;
+};

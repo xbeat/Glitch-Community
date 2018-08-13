@@ -7,19 +7,19 @@ import Layout from '../layout.jsx';
 import Questions from '../questions.jsx';
 import Categories from '../categories.jsx';
 
-const QuestionsPage = ({application}) => (
-  <Layout application={application}>
+const QuestionsPage = ({api}) => (
+  <Layout api={api}>
     <Helmet>
       <title>Questions</title>
     </Helmet>
     <main className="questions-page">
-      <Questions api={application.api()} max={12}/>
-      <Categories categories={application.categories}/>
+      <Questions api={api} max={12}/>
+      <Categories/>
     </main>
   </Layout>
 );
 QuestionsPage.propTypes = {
-  application: PropTypes.any.isRequired,
+  api: PropTypes.any.isRequired,
 };
 
 export default QuestionsPage;

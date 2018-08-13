@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {getAvatarThumbnailUrl, getLink} from '../../models/user';
 import Thanks from '../includes/thanks.jsx';
 
 const MEMBER_ACCESS_LEVEL = 20;
@@ -32,10 +33,10 @@ const UserActions = ({user}) => {
   
   return (
     <section className="pop-over-actions user-actions">
-      <a href={user.userLink}>
+      <a href={getLink(user)}>
         <button className="button-small has-emoji button-tertiary">
           <span>Profile </span>
-          <img className="emoji avatar" src={user.userAvatarUrl} alt={user.login} style={backgroundColor()}></img>
+          <img className="emoji avatar" src={getAvatarThumbnailUrl(user)} alt={user.login} style={backgroundColor()}></img>
         </button>
       </a>
     </section>
@@ -44,8 +45,8 @@ const UserActions = ({user}) => {
 
 UserActions.propTypes = {
   user: PropTypes.shape({
-    userLink: PropTypes.string.isRequired,
-    userAvatarUrl: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    avatarThumbnailUrl: PropTypes.string,
     login: PropTypes.string,
   }).isRequired,
 };
@@ -113,11 +114,12 @@ export default class TeamUserInfoPop extends React.Component {
   }
 
   render() {
+    const userAvatarStyle = {backgroundColor: this.props.user.color};
     return (
       <dialog className="pop-over team-user-info-pop">
         <section className="pop-over-info">
-          <a href={this.props.user.userLink}>
-            <img className="avatar" src={this.props.user.userAvatarUrl} alt={this.props.user.login} style={this.props.user.style}/>
+          <a href={getLink(this.props.user)}>
+            <img className="avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
           </a>
           <div className="info-container">
             <p className="name" title={this.props.user.name}>{this.props.user.name || "Anonymous"}</p>
@@ -152,8 +154,6 @@ TeamUserInfoPop.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
     login: PropTypes.string,
-    userAvatarUrl: PropTypes.string.isRequired,
-    userLink: PropTypes.string.isRequired,
     thanksCount: PropTypes.number.isRequired,
     isOnTeam: PropTypes.bool,
     color: PropTypes.string,

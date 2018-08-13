@@ -13,18 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Make Your Own Stencil Text',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fstencilfy.jpg?1532951362600",
-    link: 'https://glitch.com/~stencilfy'
-  }
-  , {
-    title: 'Wax Poetic with Emoji Moons',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwaxing-poetic.jpg?1532951365562",
-    link: 'https://glitch.com/~waxing-poetic'
-  } 
-  , {
-    title: 'Choose Your Own Adventure!',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fchoose-your-own-adventure.jpg?1532951364679",
-    link: 'https://glitch.com/~choose-your-own-adventure'
+    title: 'Roll Your Own Analytics',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fadalytics-live.jpg?1533554479512",
+    link: 'https://glitch.com/~adalytics-live'
+  }, {
+    title: 'What Do The Tarot Cards Say?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftarot.jpg?1533554480162",
+    link: 'https://tarot.glitch.me/'
+  }, {
+    title: 'Fun With Reactive Type Size',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Freactive-type-size.jpg?1533554477214",
+    link: 'https://glitch.com/~reactive-type-size'
   }  
 ];

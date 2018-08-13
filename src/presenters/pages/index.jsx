@@ -107,7 +107,7 @@ const MadeInGlitch = () => (
   </section>
 );
 
-const IndexPage = ({api, categories, user}) => (
+const IndexPage = ({api, user}) => (
   <main>
     <h1 className="headline">
       <a href="https://glitch.com">Glitch</a>{' '}
@@ -117,24 +117,23 @@ const IndexPage = ({api, categories, user}) => (
     {!!user && <RecentProjects api={api}/>}
     <Featured/>
     <RandomCategories api={api}/>
-    <Categories categories={categories}/>
+    <Categories/>
     {!(user && user.login) && <WhatIsGlitch/>}
     <ByFogCreek/>
     <MadeInGlitch/>
   </main>
 );
 IndexPage.propTypes = {
-  api: PropTypes.any.isRequired,
   user: PropTypes.shape({
     id: PropTypes.number,
     login: PropTypes.string,
   }),
 };
 
-const IndexPageContainer = ({application}) => (
-  <Layout application={application}>
+const IndexPageContainer = ({api}) => (
+  <Layout api={api}>
     <CurrentUserConsumer>
-      {user => <IndexPage user={user} api={application.api()} categories={application.categories}/>}
+      {user => <IndexPage api={api} user={user}/>}
     </CurrentUserConsumer>
   </Layout>
 );

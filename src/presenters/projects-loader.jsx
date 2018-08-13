@@ -15,7 +15,7 @@ async function getProjects(api, ids) {
   return data.map(d => ProjectModel(d).update(d).asProps());
 }
 
-export default class ProjectsLoader extends React.Component {
+class ProjectsLoader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -72,3 +72,5 @@ ProjectsLoader.propTypes = {
   children: PropTypes.func.isRequired,
   projects: PropTypes.array.isRequired,
 };
+
+export default ProjectsLoader;

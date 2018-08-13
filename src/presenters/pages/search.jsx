@@ -113,25 +113,24 @@ class SearchPage extends React.Component {
           {showResults(projects) && <ProjectResults projects={projects}/>}
           {noResults && <NotFound name="any results"/>}
         </main>
-        <Categories categories={this.props.categories}/>
+        <Categories/>
       </React.Fragment>
     );
   }
 }
 SearchPage.propTypes = {
   api: PropTypes.any.isRequired,
-  categories: PropTypes.array.isRequired,
   query: PropTypes.string.isRequired,
 };
 
-const SearchPageContainer = ({application, query}) => (
-  <Layout application={application} searchQuery={query}>
+const SearchPageContainer = ({api, query}) => (
+  <Layout api={api} searchQuery={query}>
     <Helmet>
       <title>Search for {query}</title>
     </Helmet>
     <ErrorHandlers>
       {errorFuncs => (
-        <SearchPage {...errorFuncs} api={application.api()} categories={application.categories} query={query}/>
+        <SearchPage {...errorFuncs} api={api} query={query}/>
       )}
     </ErrorHandlers>
   </Layout>

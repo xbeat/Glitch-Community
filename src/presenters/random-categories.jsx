@@ -39,7 +39,7 @@ Category.propTypes = {
   }).isRequired,
 };
 
-export default class CategoryContainer extends React.Component {
+class CategoryLoader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,6 +75,8 @@ export default class CategoryContainer extends React.Component {
   }
 }
 
-CategoryContainer.propTypes = {
+CategoryLoader.propTypes = {
   api: PropTypes.any.isRequired,
 };
+
+export default CategoryLoader;

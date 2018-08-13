@@ -2,6 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {getAvatarThumbnailUrl, getLink} from '../models/user';
+
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
@@ -50,14 +52,15 @@ SearchForm.defaultProps = {
   defaultValue: '',
 };
 
-const UserOptionsPopWrapper = ({user, showNewStuffOverlay, api}) => {
+const UserOptionsPopWrapper = ({user, clearUser, showNewStuffOverlay, api}) => {
   const props = {
     teams: user.teams,
-    userLink: user.userLink,
-    avatarUrl: user.userAvatarUrl,
+    userLink: getLink(user),
+    avatarUrl: getAvatarThumbnailUrl(user),
     avatarStyle: {backgroundColor: user.color},
+    signOut: clearUser,
     api: api,
-    userIsAnon: user.isAnon,
+    userIsAnon: !!user.logon,
     showNewStuffOverlay,
   };
 
@@ -66,12 +69,17 @@ const UserOptionsPopWrapper = ({user, showNewStuffOverlay, api}) => {
 
 UserOptionsPopWrapper.propTypes = {
   user: PropTypes.shape({
+    avatarThumbnailUrl: PropTypes.string,
+    color: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     login: PropTypes.string,
   }).isRequired,
+  clearUser: PropTypes.func.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
+  api: PropTypes.any.isRequired,
 };
 
-const Header = ({api, maybeUser, searchQuery, showNewStuffOverlay}) => {
+const Header = ({api, maybeUser, clearUser, searchQuery, showNewStuffOverlay}) => {
   const signedIn = maybeUser && !!maybeUser.login;
   return (
     <header role="banner">
@@ -86,7 +94,7 @@ const Header = ({api, maybeUser, searchQuery, showNewStuffOverlay}) => {
         <NewProjectPop api={api}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
-        { maybeUser && <UserOptionsPopWrapper user={maybeUser} showNewStuffOverlay={showNewStuffOverlay} api={api} />}
+        { maybeUser && <UserOptionsPopWrapper user={maybeUser} clearUser={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api}/>}
       </nav>
     </header>
   );
@@ -97,15 +105,12 @@ Header.propTypes = {
   api: PropTypes.func.isRequired,
 };
 
-const HeaderContainer = ({getUserPref, setUserPref, ...props}) => (
+const HeaderContainer = ({...props}) => (
   <CurrentUserConsumer>
-    {user => (
-      <NewStuffContainer
-        isSignedIn={!!user && !!user.login}
-        getUserPref={getUserPref} setUserPref={setUserPref}
-      >
+    {(user, userFetched, {clear}) => (
+      <NewStuffContainer isSignedIn={!!user && !!user.login}>
         {showNewStuffOverlay => (
-          <Header {...props} maybeUser={user} showNewStuffOverlay={showNewStuffOverlay}/>
+          <Header {...props} maybeUser={user} clearUser={clear} showNewStuffOverlay={showNewStuffOverlay}/>
         )}
       </NewStuffContainer>
     )}

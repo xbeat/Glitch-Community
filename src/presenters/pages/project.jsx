@@ -145,10 +145,15 @@ ProjectPage.propTypes = {
   project: PropTypes.object.isRequired,
 };
 
-const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
-  <DataLoader get={get} renderError={() => <NotFound name={name}/>}>
+async function getProject(api, domain) {
+  const {data} = await api.get(`projects/${domain}`);
+  return data ? Project(data).update(data).asProps() : null;
+}
+
+const ProjectPageLoader = ({domain, api, ...props}) => (
+  <DataLoader get={() => getProject(api, domain)} renderError={() => <NotFound name={domain}/>}>
     {project => project ? (
-      <ProjectEditor api={api} initialProject={project} currentUserModel={currentUserModel}>
+      <ProjectEditor api={api} initialProject={project}>
         {(project, funcs, userIsMember) => (
           <React.Fragment>
             <Helmet>
@@ -158,23 +163,16 @@ const ProjectPageLoader = ({name, get, api, currentUserModel, ...props}) => (
           </React.Fragment>
         )}
       </ProjectEditor>
-    ) : <NotFound name={name}/>}
+    ) : <NotFound name={domain}/>}
   </DataLoader>
 );
 ProjectPageLoader.propTypes = {
-  name: PropTypes.string.isRequired,
+  domain: PropTypes.string.isRequired,
 };
 
-const getProps = (application, name) => ({
-  api: application.api(),
-  currentUserModel: application.currentUser(),
-  get: () => application.api().get(`projects/${name}`).then(({data}) => (data ? Project(data).update(data).asProps() : null)),
-  name,
-});
-
-const ProjectPageContainer = ({application, name}) => (
-  <Layout application={application}>
-    <ProjectPageLoader {...getProps(application, name)}/>
+const ProjectPageContainer = ({api, name}) => (
+  <Layout api={api}>
+    <ProjectPageLoader api={api} domain={name}/>
   </Layout>
 );
 

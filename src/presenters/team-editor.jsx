@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
 
+import {CurrentUserConsumer} from './current-user.jsx';
 import ErrorHandlers from './error-handlers.jsx';
 import Uploader from './includes/uploader.jsx';
 import Notifications from './notifications.jsx';
@@ -22,7 +23,8 @@ class TeamEditor extends React.Component {
   }
 
   currentUserIsOnTeam() {
-    const currentUserId = this.props.currentUserModel.id();
+    if (!this.props.currentUser) return false;
+    const currentUserId = this.props.currentUser.id;
     return this.state.users.some(({id}) => currentUserId === id);
   }
 
@@ -70,9 +72,9 @@ class TeamEditor extends React.Component {
     this.setState(({users}) => ({
       users: users.filter(u => u.id !== id),
     }));
-    if (id === this.props.currentUserModel.id()) {
-      const model = this.props.currentUserModel;
-      model.teams(model.teams().filter(({id}) => id() !== this.props.team.id));
+    if (this.props.currentUser && this.props.currentUser.id === id) {
+      const teams = this.props.currentUser.teams.filter(({id}) => id !== this.state.id);
+      this.props.updateCurrentUser({teams});
     }
   }
 
@@ -141,7 +143,8 @@ class TeamEditor extends React.Component {
   }
 
   currentUserIsTeamAdmin() {
-    const currentUserId = this.props.currentUserModel.id();
+    if (!this.props.currentUser) return false;
+    const currentUserId = this.props.currentUser.id;
     if (this.state.adminIds.includes(currentUserId)) {
       return true;
     }
@@ -184,23 +187,32 @@ class TeamEditor extends React.Component {
 TeamEditor.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
-  currentUserModel: PropTypes.object.isRequired,
+  currentUser: PropTypes.object,
+  updateCurrentUser: PropTypes.func.isRequired,
   handleError: PropTypes.func.isRequired,
   initialTeam: PropTypes.object.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
+<<<<<<< HEAD
 
 const TeamEditorContainer = ({api, children, currentUserModel, initialTeam}) => (
+=======
+const TeamEditorContainer = ({api, children, initialTeam}) => (
+>>>>>>> 8fb7bda03dcc206fc9046002f7f4daec7e358914
   <ErrorHandlers>
     {errorFuncs => (
       <Uploader>
         {uploadFuncs => (
           <Notifications>
             {notificationFuncs => (
-              <TeamEditor {...{api, currentUserModel, initialTeam}} {...uploadFuncs} {...errorFuncs} {...notificationFuncs}>
-                {children}
-              </TeamEditor>
+              <CurrentUserConsumer>
+                {(currentUser, fetched, {update}) => (
+                  <TeamEditor {...{api, currentUser, initialTeam}} updateCurrentUser={update} {...uploadFuncs} {...errorFuncs} {...notificationFuncs}>
+                    {children}
+                  </TeamEditor>
+                )}
+              </CurrentUserConsumer>
             )}
           </Notifications>
         )}
@@ -211,7 +223,6 @@ const TeamEditorContainer = ({api, children, currentUserModel, initialTeam}) => 
 TeamEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
-  currentUserModel: PropTypes.object.isRequired,
   initialTeam: PropTypes.object.isRequired,
 };
 

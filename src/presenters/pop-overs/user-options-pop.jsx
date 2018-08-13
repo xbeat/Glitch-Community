@@ -1,22 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import {getAvatarUrl} from '../../models/team';
 import PopoverContainer from './popover-container.jsx';
 import CreateTeamPop from './create-team-pop.jsx';
 
 
-const TeamButton = ({url, name, teamAvatarUrl}) => (
+const TeamButton = ({url, name, ...team}) => (
   <a className="button-link" href={`/@${url}`}>
     <div className="button button-small has-emoji button-tertiary">
       <span>{name} </span>
-      <img className="emoji avatar" src={teamAvatarUrl} alt={`${name} team avatar`} width="16px" height="16px"/>
+      <img className="emoji avatar" src={getAvatarUrl({...team, size:'small'})} alt={`${name} team avatar`} width="16px" height="16px"/>
     </div>
   </a>
 );
 
 TeamButton.propTypes = {
-  url: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  hasAvatarImage: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
-  teamAvatarUrl: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 
@@ -54,9 +57,9 @@ CreateTeamButton.propTypes = {
 
 // Team List
 
-const TeamList = ({teams, toggleCreateTeamPop, userIsAnon}) => {
+const TeamList = ({teams, /*toggleCreateTeamPop, userIsAnon*/}) => {
   // const hasTeams = teams && teams.length;
-  return (
+  return (!!teams.length &&
     <section className="pop-over-actions">
       {/* Temporary: enable once team creation is public
       <CreateTeamButton toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
@@ -79,19 +82,18 @@ TeamList.propTypes = {
 
 // User Options Pop
 
-const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle, teams, showNewStuffOverlay, toggleCreateTeamPop, userIsAnon}) => {
+const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle, teams, signOut, showNewStuffOverlay, toggleCreateTeamPop, userIsAnon}) => {
   const clickNewStuff = (event) => {
     toggleUserOptionsPop();
     showNewStuffOverlay();
     event.stopPropagation();
   };
-
-  const signOut = () => {
+  
+  const clickSignout = () => {
     /* global analytics */
     analytics.track("Logout");
     analytics.reset();
-    localStorage.removeItem('cachedUser');
-    return location.reload();
+    signOut();
   };
 
   return (
@@ -117,8 +119,8 @@ const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle,
             <span>Support </span>
             <span className="emoji ambulance"></span>
           </div>
-        </a>
-        <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={signOut}>
+        </a>        
+        <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickSignout}>
           <span>Sign Out</span>
           <span className="emoji balloon"></span>
         </button>
@@ -132,6 +134,7 @@ UserOptionsPop.propTypes = {
   userLink: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
+  signOut: PropTypes.func.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
   userIsAnon: PropTypes.bool.isRequired,
 };

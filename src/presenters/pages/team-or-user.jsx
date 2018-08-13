@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TeamModel from '../../models/team';
+import UserModel from '../../models/user';
 
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
@@ -12,7 +13,7 @@ import UserPage from './user.jsx';
 
 const getUserById = async (api, id) => {
   const {data} = await api.get(`users/${id}`);
-  return data;
+  return UserModel(data).asProps();
 };
 
 const getUser = async (api, name) => {
@@ -23,16 +24,11 @@ const getUser = async (api, name) => {
   return getUserById(api, data);
 };
 
-const getTeamById = async (api, id) => {
-  const {data} = await api.get(`teams/${id}`);
-  return data && TeamModel(data).update(data).asProps();
-};
-
 const parseTeamAdminIds = (data) => {
   if (!data) {
     return data;
   }
-  let ADMIN_ACCESS_LEVEL = 30;
+  const ADMIN_ACCESS_LEVEL = 30;
   let adminIds = data.users.filter(user => {
     return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
   });
@@ -42,17 +38,22 @@ const parseTeamAdminIds = (data) => {
   return data;
 };
 
+const getTeamById = async (api, id) => {
+  let {data} = await api.get(`teams/${id}`);
+  data = parseTeamAdminIds(data);
+  return data && TeamModel(data).asProps();
+};
 
 const getTeam = async(api, name) => {
   let {data} = await api.get(`teams/byUrl/${name}`);
   data = parseTeamAdminIds(data);
-  return data && TeamModel(data).update(data).asProps();
+  return data && TeamModel(data).asProps();
 };
 
-const TeamPageLoader = ({api, currentUserModel, id, name, ...props}) => (
+const TeamPageLoader = ({api, id, name, ...props}) => (
   <DataLoader get={() => getTeamById(api, id)}>
     {team => team ? (
-      <TeamPage api={api} currentUserModel={currentUserModel} team={team} {...props}/>
+      <TeamPage api={api} team={team} {...props}/>
     ) : (
       <NotFound name={name}/>
     )}
@@ -64,10 +65,10 @@ TeamPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-const UserPageLoader = ({api, currentUserModel, id, name, ...props}) => (
+const UserPageLoader = ({api, id, name, ...props}) => (
   <DataLoader get={() => getUserById(api, id)}>
     {user => user ? (
-      <UserPage api={api} currentUserModel={currentUserModel} user={user} {...props}/>
+      <UserPage api={api} user={user} {...props}/>
     ) : (
       <NotFound name={name}/>
     )}
@@ -79,14 +80,14 @@ UserPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-const TeamOrUserPageLoader = ({api, currentUserModel, name, ...props}) => (
+const TeamOrUserPageLoader = ({api, name, ...props}) => (
   <DataLoader get={() => getTeam(api, name)}>
     {team => team ? (
-      <TeamPage api={api} currentUserModel={currentUserModel} team={team} {...props}/>
+      <TeamPage api={api} team={team} {...props}/>
     ) : (
       <DataLoader get={() => getUser(api, name)}>
         {user => user ? (
-          <UserPage api={api} currentUserModel={currentUserModel} user={user} {...props}/>
+          <UserPage api={api} user={user} {...props}/>
         ) : (
           <NotFound name={name}/>
         )}
@@ -99,20 +100,13 @@ TeamOrUserPageLoader.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-const Presenter = (application, Loader, args) => {
-  const props = {
-    api: application.api(),
-    currentUserModel: application.currentUser(),
-    ...args,
-  };
-  return (
-    <Layout application={application}>
-      <Loader {...props}/>
-    </Layout>
-  );
-};
+const Presenter = (api, Loader, args) => (
+  <Layout api={api}>
+    <Loader api={api} {...args}/>
+  </Layout>
+);
 
-const TeamPagePresenter = ({application, id, name}) => Presenter(application, TeamPageLoader, {id, name});
-const UserPagePresenter = ({application, id, name}) => Presenter(application, UserPageLoader, {id, name});
-const TeamOrUserPagePresenter = ({application, name}) => Presenter(application, TeamOrUserPageLoader, {name});
+const TeamPagePresenter = ({api, id, name}) => Presenter(api, TeamPageLoader, {id, name});
+const UserPagePresenter = ({api, id, name}) => Presenter(api, UserPageLoader, {id, name});
+const TeamOrUserPagePresenter = ({api, name}) => Presenter(api, TeamOrUserPageLoader, {name});
 export {TeamPagePresenter as TeamPage, UserPagePresenter as UserPage, TeamOrUserPagePresenter as TeamOrUserPage};
