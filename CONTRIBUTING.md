@@ -47,11 +47,11 @@ Next, make your changes.  When you've got something you like, share it with us (
 
 #### Pull Request Workflow
 
-Ok cool, these next steps are what we'd do internally and you're welcome to follow them as well if you choose.  Beyond this point, there be dragons.
+Ok cool, these next steps are what we'd do internally and you're welcome to follow them as well if you choose.  Beyond this point, there be 🐉.
 
 ## First Time Setup
 
-( Do this once per computer, then skip it thereafter)
+_(Do this once per computer)_
 
   ```
   # 1. On your local machine, clone our git repository from Github: 
@@ -64,9 +64,9 @@ Ok cool, these next steps are what we'd do internally and you're welcome to foll
     
 ## Creating a Pull Request
 
-( Do this once per remix/PR)
+_(Do this once per remix/PR)_
 
-( We're going to add a branch named after your remix, and set up a remote endpoint pointed at its git repo in glitch )
+We're going to add a branch named after your remix, and set up a remote endpoint pointed at its git repo in glitch.  We're using `my-remix` as a placeholder for whatever your
 
 In this example, we're assuming that your remix lives at `glitch.com/~my-remix` ; adjust the text below to replace "my-remix" with your actual project name.
 
