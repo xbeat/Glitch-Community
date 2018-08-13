@@ -1,23 +1,25 @@
 Contributing
 ------------
 
-Hi, this document should give you all the steps you need to make contributions to the Glitch community site. This guide applies to full time makers of Glitch as well as all members of our Glitch community.
+Hey, welcome!  This document should give you all the steps you need to make contributions to the Glitch community site. This guide applies to full time makers of Glitch as well as all members of our Glitch community.
 
-👀 [Code of Conduct](https://glitch.com/edit/#!/community?path=CODE_OF_CONDUCT.md)
+Please note we have a [code of conduct](https://glitch.com/edit/#!/community?path=CODE_OF_CONDUCT.md), please follow it in all your interactions with the project and the denizens thereof.
 
-👀 [Code Style Guide](https://glitch.com/edit/#!/community?path=STYLE.md)
+We also having a [style guide](https://glitch.com/edit/#!/community?path=STYLE.md) discussing our coding conventions, styles, and goals.
 
 Wish List
 --------
 Check out our [Wish List](https://glitch.com/edit/#!/community?path=WISH_LIST.md) for ideas of things to get started on.
 
-Philosophy
-----------
+Contribution Mission
+--------------------
 Anyone in our community can feel welcome and supported in submitting improvements, fixes, and ideas to this Glitch community site.
 
 
-How Contributing Works
+Philosophy and Ideals
 ---------------------
+
+Our current ideal contribution flow works like this:
 
 #### On Your Side
 
@@ -38,8 +40,8 @@ This site is also young and hungry.  We don't have a public "bug list" and a lot
 Accessible technologies are important to allowing people to contribute.  As we internally work on the code, we'll move incrementally towards ever-stronger documentation for the special pieces of this site and "boring"(easy to learn, perfectly fine) solutions for the standard components.
 
 
-Workflow
---------
+Contribution Workflow
+----------------------
 
 First, remix from [https://glitch.com/~community](https://glitch.com/~community) into, e.g., "my-remix"
 
@@ -93,43 +95,31 @@ After you either wait or run the above commands, go to step 5 to update the pull
 
 #### Deployment
 
-Only employees of Fog Creek will be able to do this step. 
+Only employees of Fog Creek will be able to do this step, and here it is!  This generally happens immediately after we merge in any pull request.
 
-1. Locally, get [~community-staging](https://glitch.com/~community-staging) on Github up to date with prod
-```
-  git checkout master
-  git pull https://api.glitch.com/community/git
-  git push origin master
-```
+First, let's make sure any changes made direct to Community are merged and happy.  This is a Glitch site, after all-- we're not forcing the PR workflow, especially for small changes.
 
-2. Locally, resolve conflicts from master and update the PR if needed
-
+1. In your local git repo, 
+```git checkout origin/master``` 
+2. then pull from the base community site to get any live changes
 ```
-git checkout master
-git pull
-git checkout my-branch
-git merge master
-git push origin my-branch
-```
-3. Go through code/design review, to get your PR merged into master on [`Glitch-Community`](https://github.com/FogCreek/Glitch-Community)
-
-4. Make sure staging is up to date. In [~community-staging](https://glitch.com/~community-staging), open up the console.
-    ```
-    git pull https://api.glitch.com/community/git
-    ```
-    
-5. Update staging with your PR code
+git pull https://api.glitch.com/community/git
+``` 
+and, if there were any changes, merge them and push them back to `origin/master`.
+Ok, now the GitHub repository is updated and stable. 
+  
+3. Inside of https://glitch.com/~community-staging, open up the console.
     ```
     git log -1 # Gets a stable changeset handy in case we need to revert
     git pull
     refresh # Updates the glitch editor with the new files
     ```
+  
+4. Your new version in staged!  View the site and the logs, make sure it's building and looks alive.
 
-6. Your new version is now staged – View the site and the logs, make sure it's building and looks alive.
+5. Swap ~community with ~community-staging to put your new version in front of users. (there's a special endpoint for this, ask us about it)
 
-7. Swap ~community with ~community-staging to put your new version in front of users. (there's a special endpoint for this, ask us about it)
-
-8. Problem? No worries, swap it back!
+6. Problem? No worries, swap it back!
 
 #### Or just doing it live…
 
