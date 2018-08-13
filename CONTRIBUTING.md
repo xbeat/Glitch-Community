@@ -117,7 +117,7 @@ In your local git repository:
 ```
   # Make sure we're in the right place and up to date.
   git checkout master
-  git pull origin master
+  git pull
 
   # Pull in any live changes that aren't yet in Master:
   git pull live master
@@ -141,12 +141,16 @@ Go to https://glitch.com/~community-staging and open up the console.
   git log -1 # Prints out a stable changeset in case we need it.
   git pull # Update us to master.
   
-  # This last step should never need to merge; if it does, something went wrong or somebody edited community-staging directly. Ask Jude or Greg for help. 
+  # That last step should never need to merge.
+  # If it does, something went wrong or somebody edited community-staging directly.
+  # Ask Jude or Greg for help. 
   
-  refresh # Updates the glitch editor with the new files
+  refresh # Update the Glitch editor with the new files and kick off the build.
   ```
 
-Now open up the logs and wait for the build to finish, then test your stuff.  In particular test anything that you merged with.  Make sure there's no console errors, etc.  If you find a problem, stop here and go back to the PR phase to fix it up.
+Now open up the logs and wait for the build to finish, then test your stuff.
+
+In particular test anything that you merged with.  Make sure there's no console errors, etc.  If you find a problem, stop here and go back to the PR phase to fix it up.
 
 Satisfied?  :shipit:
 
@@ -154,7 +158,7 @@ Satisfied?  :shipit:
 
 Run the _special command_ to swap ~community with ~community-staging.
 
-(there's a special endpoint for this, ask us about it and sit beside a team member the first time you use it.)
+(there's a special endpoint for this, ask us about it and sit beside a team member the first time you use it.   It's the same thing as renaming the the two projects, but it does this atomically and without downtime, which you can't do if you rename then manually.)
 
 #### Revert the Deploy.
 

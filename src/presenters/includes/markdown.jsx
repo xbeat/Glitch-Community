@@ -4,7 +4,6 @@ import truncate from 'html-truncate';
 import markdownIt from 'markdown-it';
 import markdownEmoji from 'markdown-it-emoji';
 import markdownSanitizer from 'markdown-it-sanitizer';
-import markdownCheckbox from 'markdown-it-checkbox';
 
 const md = markdownIt({
   html: true,
@@ -14,7 +13,6 @@ const md = markdownIt({
 })
   .disable('smartquotes')
   .use(markdownEmoji)
-  .use(markdownCheckbox)
   .use(markdownSanitizer);
 
 
@@ -26,20 +24,7 @@ RawHTML.propTypes = {
 };
 
 const Markdown = ({children}) => (
-  <React.Fragment>
-    <RawHTML>{md.render(`Hijacked 'yer markdown for checkboxes! **win**
-h1
---
-let's test some checkboxes.
-
-[ ] unchecked
-[x] checked
-
-There they are.
-
-`)}</RawHTML>
-        { <RawHTML>{md.render(children || '')}</RawHTML>}
-  </React.Fragment>
+  <RawHTML>{md.render(children || '')}</RawHTML>
 );
 Markdown.propTypes = {
   children: PropTypes.string.isRequired,
