@@ -7,7 +7,7 @@ Please note we have a [code of conduct](https://glitch.com/edit/#!/community?pat
 
 We also having a [style guide](https://glitch.com/edit/#!/community?path=STYLE.md) discussing our coding conventions, styles, and goals.
 
-Contribution Mission
+Mission
 --------------------
 Anyone in our community can feel welcome and supported in submitting improvements, fixes, and ideas to this Glitch community site.
 
@@ -15,7 +15,7 @@ Anyone in our community can feel welcome and supported in submitting improvement
 Philosophy
 ----------
 
-Our current ideal contribution flow works like this:
+Our contribution flow is built around a hunger for creative expression. Build things fast, with glitch, and share them.  Here's how:
 
 #### On Your Side
 
@@ -26,8 +26,6 @@ Our current ideal contribution flow works like this:
 _behind the scenes_ we'll make use of GitHub's Pull Request workflow to incorporate changes.  If you're a part of that community, then feel free to submit pull requests directly-- if you're not,  don't worry about it and just focus on building and sharing your ideas.
 
 #### On Our Side
-
-Sometimes we'll have another feature or design underway that'll be in conflict with the direction that you took the site.  It's all good, let's keep it fun and keep it focused on the ideas and improvements.
 
 This site is open source. All interactions between this site and Glitch-the-application are using public API endpoints-- there aren't any special privileges or secret endpoints going on.
 
@@ -45,11 +43,11 @@ Next, make your changes.  When you've got something you like, share it with us (
 
 ***That's all you need to do,*** _but if you really want to be hands on with git pull requests, then read on._
 
-#### Pull Request Workflow
+### Pull Request Workflow
 
 Ok cool, these next steps are what we'd do internally and you're welcome to follow them as well if you choose.  Beyond this point, there be 🐉.
 
-## First Time Setup
+#### First Time Setup
 
 _(Do this once per computer)_
 
@@ -62,7 +60,7 @@ _(Do this once per computer)_
   git remote add live https://api.glitch.com/community/git
   ```
     
-## Creating a Pull Request
+#### Creating a Pull Request
 
 _(Do this once per remix/PR)_
 
@@ -90,6 +88,8 @@ Now you can use the GitHub UI to turn your branch into a pull request.
 
 #### Updating an Existing Pull Request
 
+(Do this when you've made more changes in Glitch that you want to add in to the PR.)
+
 In your local repository, run
  ```
    # Make sure we're on the right branch
@@ -104,13 +104,13 @@ In your local repository, run
    
 Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes. If you make some quick changes, they may not show up in your diff on the Github pull request. If that is the case, you can either wait several minutes for the checkpoint to be made, or toggle Glitch Rewind on-and-off (which will force a checkpoint). 
 
-#### Deployment
+### Deployment
 
 Only employees of Fog Creek will be able to do this step, and here it is!  This happens _After_ a pull request has been approved and merged into master.
 
 First, let's make sure any changes made direct to Community are merged and happy.  This is a Glitch site, after all-- we're not forcing the PR workflow, especially for small changes.
 
-## Merge in Live Changes
+#### Merge in Live Changes
 
 In your local git repository:
 
@@ -132,7 +132,7 @@ In your local git repository:
 
 Ok, now the GitHub repository is updated and stable. 
 
-# Stage the Deployment
+#### Stage the Deployment
 
 We're going to put our release candidate onto community-staging.glitch.me.
 
@@ -146,15 +146,22 @@ Go to https://glitch.com/~community-staging and open up the console.
   refresh # Updates the glitch editor with the new files
   ```
 
-Now open up the logs and wait for the build to finish, then test your stuff.  In particular test anything that you merged with.  Make sure there's no console errors, etc.  If you find a problem, go b
-4. Your new version in staged!  View the site and the logs, make sure it's building and looks alive.
+Now open up the logs and wait for the build to finish, then test your stuff.  In particular test anything that you merged with.  Make sure there's no console errors, etc.  If you find a problem, stop here and go back to the PR phase to fix it up.
 
-5. Swap ~community with ~community-staging to put your new version in front of users. (there's a special endpoint for this, ask us about it)
+Satisfied?  :shipit:
 
-6. Problem? No worries, swap it back!
+#### Deploy
 
-#### Or just doing it live…
+Run the _special command_ to swap ~community with ~community-staging.
 
- *Can I just edit community directly, since it’s Glitch we’re dealing with here?*
+(there's a special endpoint for this, ask us about it and sit beside a team member the first time you use it.)
+
+#### Revert the Deploy.
+
+If something is going wrong with the latest version, repeat the swap command to swap things back and get to a healthy state. Now you have time to fix it and try again. 
+
+#### Making live edits
+
+ _Can I just edit community directly, since it’s Glitch we’re dealing with here?_
   
-Sure, go for it. Viva la quick ways to make small changes. All standard caveats and cautions apply.
+Sure thing. All standard caveats and cautions apply.  This is appropriate for updating the curated content, fixing typos, and one-line bug fixes. Our build scripts don't update the live site until the build is healthy and your changes are complete.
