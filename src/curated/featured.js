@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Roll Your Own Analytics',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fadalytics-live.jpg?1533554479512",
-    link: 'https://glitch.com/~adalytics-live'
+    title: 'Remixable Machine Learning',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fteachable-redux.jpg?1534158444382",
+    link: 'https://glitch.com/~teachable-redux'
   }, {
-    title: 'What Do The Tarot Cards Say?',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftarot.jpg?1533554480162",
-    link: 'https://tarot.glitch.me/'
+    title: 'Soothing CSS Pendulum',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fswanky-bridge.jpg?1534158442684",
+    link: 'https://glitch.com/~swanky-bridge'
   }, {
-    title: 'Fun With Reactive Type Size',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Freactive-type-size.jpg?1533554477214",
-    link: 'https://glitch.com/~reactive-type-size'
+    title: '~Super Wavy Text~',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fwavywavy.jpg?1534158445157",
+    link: 'https://glitch.com/~wavywavy'
   }  
 ];
