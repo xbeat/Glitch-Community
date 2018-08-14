@@ -75,6 +75,10 @@ class TeamEditor extends React.Component {
     this.setState(({users}) => ({
       users: [...users, this.props.currentUser],
     }));
+    if (this.props.currentUser) {
+      const teams = this.props.currentUser.teams;
+      this.props.updateCurrentUser({teams: [...teams, this.state]});
+    }
   }
   
   async inviteEmail(emailAddress) {
