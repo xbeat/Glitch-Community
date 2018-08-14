@@ -29,6 +29,23 @@ export const VerifiedBadge = () => {
   );
 };
 
+export class WhitelistedDomainIcon extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {src: null};
+  }
+  
+  render() {
+    if (this.state.src) {
+      return <img className="whitelisted-domain" src={this.state.src} alt="/>
+    }
+    return (
+      <div className="whitelisted-domain avatar">
+      </div>
+    );
+  }
+}
+
 //temp
 export const AdminOnlyBadge = ({...props}) => {
   return (
