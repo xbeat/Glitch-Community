@@ -120,13 +120,13 @@ UsersList.propTypes = {
 
 export default UsersList;
 
-const UserPopoverTile = ({children, adminIds, ...user}) => (
+const UserPopoverTile = ({children, adminIds, currentUserIsTeamAdmin, ...user}) => (
   <PopoverContainer>
     {({visible, togglePopover}) => (
       <div className="button-wrap">
         <button onClick={togglePopover} className="user button-unstyled" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
           <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
-          {adminIds.includes(user.id) &&
+          {(adminIds.includes(user.id) && currentUserIsTeamAdmin) &&
             <div className="avatar-admin-badge"/>
           }
         </button>
@@ -143,7 +143,8 @@ UserPopoverTile.propTypes = {
   avatarThumbnailUrl: PropTypes.string,
   color: PropTypes.string.isRequired,
   children: PropTypes.func.isRequired,
-  adminIds: PropTypes.array,
+  adminIds: PropTypes.array.isRequired,
+  currentUserIsTeamAdmin: PropTypes.bool.isRequired,
 };
 
 
@@ -153,8 +154,8 @@ export const UserPopoversList = ({...props}) => (
   <ul className="users">
     {props.users.map(user => (
       <li key={user.id}>
-        <UserPopoverTile {...user} adminIds={adminIds} currentUserIsTeamAdmin={currentUserIsTeamAdmin}>
-          {(togglePopover) => children(user, togglePopover)}
+        <UserPopoverTile {...user} adminIds={props.adminIds} currentUserIsTeamAdmin={props.currentUserIsTeamAdmin}>
+          {(togglePopover) => props.children(user, togglePopover)}
         </UserPopoverTile>
       </li>
     ))}
