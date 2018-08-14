@@ -37,19 +37,39 @@ export class WhitelistedDomainIcon extends React.Component {
     this.state = {src: null};
   }
   
-  async componentDidMount() {
+  async load() {
     try {
       const {data} = await axios.get(`https://favicongrabber.com/api/grab/${this.props.domain}`);
-      console.log(data);
+      if (data.icons.length) {
+        this.setState({src: data.icons[0].src});
+      }
     } catch (error) {
       console.error(error);
+    }
+  }
+  
+  componentDidMount() {
+    this.load();
+  }
+  
+  componentDidUpdate(prevProps) {
+    if (prevProps.domain !== this.props.domain) {
+      this.setState({src: null});
+      this.load();
     }
   }
   
   render() {
     const {domain} = this.props;
     if (this.state.src) {
-      return <img className="whitelisted-domain" src={this.state.src} alt={domain}/>
+      return (
+        <img
+          className="whitelisted-domain"
+          alt={domain}
+          src={this.state.src}
+          onError={() => this.setState(
+        />
+      );
     }
     return (
       <div className="whitelisted-domain avatar" aria-label={domain}>
