@@ -67,7 +67,7 @@ class AddTeamUserPop extends React.Component {
   }
   
   render() {
-    const {inviteEmail, inviteUser, whitelistDomain} = this.props;
+    const {inviteEmail, inviteUser, setWhitelistedDomain} = this.props;
     const {maybeRequest, maybeResults, query} = this.state;
     const isLoading = (!!maybeRequest || !maybeResults);
     const results = [];
@@ -94,7 +94,7 @@ class AddTeamUserPop extends React.Component {
       if (domain && this.props.whitelistedDomain !== domain) {
         results.push({
           key: 'whitelist-email-domain',
-          item: <WhitelistEmailDomain domain={domain} onClick={() => this.togglePopoverAnd(whitelistDomain, domain)}/>,
+          item: <WhitelistEmailDomain domain={domain} onClick={() => this.togglePopoverAnd(setWhitelistedDomain, domain)}/>,
         });
       }
     }
@@ -126,7 +126,7 @@ AddTeamUserPop.propTypes = {
   api: PropTypes.func.isRequired,
   inviteEmail: PropTypes.func.isRequired,
   inviteUser: PropTypes.func.isRequired,
-  whitelistDomain: PropTypes.func.isRequired,
+  setWhitelistedDomain: PropTypes.func.isRequired,
   members: PropTypes.arrayOf(PropTypes.number.isRequired),
   whitelistedDomain: PropTypes.string,
   togglePopover: PropTypes.func.isRequired,
