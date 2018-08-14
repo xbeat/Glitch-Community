@@ -51,7 +51,8 @@ class AddTeamUserPop extends React.Component {
     
     const {data} = await request;
     const results = data.map(user => UserModel(user).asProps());
-    const nonMemberResults = results.filter(user => !this.props.members || !this.props.members.includes(user.id));
+    console.log(results);
+    const nonMemberResults = results.filter(user => !this.props.members.includes(user.id));
     
     this.setState(({ maybeRequest }) => {
       return (request === maybeRequest) ? {
@@ -126,7 +127,7 @@ AddTeamUserPop.propTypes = {
   api: PropTypes.func.isRequired,
   inviteEmail: PropTypes.func.isRequired,
   inviteUser: PropTypes.func.isRequired,
-  members: PropTypes.arrayOf(PropTypes.number.isRequired),
+  members: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   setWhitelistedDomain: PropTypes.func,
   whitelistedDomain: PropTypes.string,
   togglePopover: PropTypes.func.isRequired,
