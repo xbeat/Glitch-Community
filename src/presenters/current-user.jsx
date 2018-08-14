@@ -90,6 +90,10 @@ class CurrentUserManager extends React.Component {
     )) {
       this.load();
     }
+    
+    // hooks for easier debugging
+    window.currentUser = currentUser;
+    window.api = this.api();
   }
   
   render() {

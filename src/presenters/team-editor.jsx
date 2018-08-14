@@ -73,7 +73,7 @@ class TeamEditor extends React.Component {
   async joinTeam() {
     await this.props.api.post(`teams/${this.state.id}/join`);
     this.setState(({users}) => ({
-      projects: [this.props.currentUser, ...users],
+      users: [...users, this.props.currentUser],
     }));
   }
   

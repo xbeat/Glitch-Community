@@ -114,7 +114,9 @@ export default class TeamUserInfoPop extends React.Component {
   }
 
   render() {
-    const userAvatarStyle = {backgroundColor: this.props.user.color};
+    const {user, currentUser} = this.props;
+    const userAvatarStyle = {backgroundColor: user.color};
+    const canRemoveUser = this.props.currentUserIsTeamAdmin || (currentUser && currentUser.id === user.id);
     return (
       <dialog className="pop-over team-user-info-pop">
         <section className="pop-over-info">
@@ -144,7 +146,7 @@ export default class TeamUserInfoPop extends React.Component {
             updateUserPermissions={this.props.updateUserPermissions}
           />
         }
-        { this.props.currentUserIsTeamAdmin && <RemoveFromTeam removeFromTeam={this.removeFromTeam} /> }
+        { canRemoveUser && <RemoveFromTeam removeFromTeam={this.removeFromTeam} /> }
       </dialog>
     );
   }
