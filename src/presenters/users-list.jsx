@@ -149,11 +149,11 @@ UserPopoverTile.propTypes = {
 
 // UserPopoversList
 
-export const UserPopoversList = ({users, children, adminIds}) => (
+export const UserPopoversList = ({...props}) => (
   <ul className="users">
-    {users.map(user => (
+    {props.users.map(user => (
       <li key={user.id}>
-        <UserPopoverTile {...user} adminIds={adminIds}>
+        <UserPopoverTile {...user} adminIds={adminIds} currentUserIsTeamAdmin={currentUserIsTeamAdmin}>
           {(togglePopover) => children(user, togglePopover)}
         </UserPopoverTile>
       </li>
@@ -165,6 +165,7 @@ UserPopoversList.propTypes = {
   users: PropTypes.array.isRequired,
   children: PropTypes.func.isRequired,
   adminIds: PropTypes.array,
+  currentUserIsTeamAdmin: PropTypes.bool.isRequired,
 };
 
 UserPopoversList.defaultProps = {
