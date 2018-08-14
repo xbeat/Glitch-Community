@@ -17,21 +17,17 @@ Philosophy
 
 Our contribution flow is built around a hunger for creative expression. Build things fast, with glitch, and share them.  Here's how:
 
-#### On Your Side
-
 1. You remix this site, play with it, and show us what you made!  Tweeting [@Glitch](https://twitter.com/glitch) or posting to [our forum](https://support.glitch.com/) are good ways to get our attention.
 2. We say something like "We like what you got, good job!"
 3. Your changes (or something inspired by your changes) are prepared and make their way to our live production site.
-
-_behind the scenes_ we'll make use of GitHub's Pull Request workflow to incorporate changes.  If you're a part of that community, then feel free to submit pull requests directly-- if you're not,  don't worry about it and just focus on building and sharing your ideas.
-
-#### On Our Side
 
 This site is open source. All interactions between this site and Glitch-the-application are using public API endpoints-- there aren't any special privileges or secret endpoints going on.
 
 This site is also young and hungry.  We don't have a public "bug list" and a lot of processes that are best to formalize have yet to be. And this site believes in a Glitchy future-- it is built, maintained, and deployed entirely within Glitch itself.  We're living the Glitchy future of web development, and it's a blast.
 
 Accessible technologies are important to allowing people to contribute.  As we internally work on the code, we'll move incrementally towards ever-stronger documentation for the special pieces of this site and "boring"(easy to learn, perfectly fine) solutions for the standard components.
+
+Behind the scenes, we'll make use of GitHub's Pull Request workflow to incorporate changes into the site. If you're a part of the GitHub community, then feel free to submit pull requests directly-- if you're not,  don't worry about it and just focus on building cool stuff and sharing your ideas.
 
 
 Contribution Workflow
@@ -110,6 +106,8 @@ _Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes.
 
 Only employees of Fog Creek will be able to do this step, and here it is!  This happens _after_ a pull request has been approved and merged into master.
 
+As you go through these steps, be present in our team Slack room and communicate as you start and finish the deploy.
+
 #### Merge in Live Changes
 
 We need to make sure any live changes are merged and happy.  This is a Glitch site, after all-- we're not forcing the PR workflow, especially for small changes.
@@ -162,11 +160,13 @@ Run the _special command_ to swap ~community with ~community-staging.
 
 (there's a special endpoint for this, ask us about it and sit beside a team member the first time you use it.   It's the same thing as renaming the the two projects, but it does this atomically and without downtime, which you can't do if you rename then manually.)
 
-#### Revert the Deploy.
+#### If You Need to Revert the Deploy
 
 Repeat the _special command_ to swap ~community with ~community-staging.
 
 Thereby putting things back the way they were. Now you have time to fix it and try again. 
+
+After you revert, check on if any live changes were made to the site after you deployed and before you reverted. (Are the curated items the same on both ~community and ~community-staging?).  If so, port the curated updates to the reverted page so that the edits are preserved.
 
 #### Making Live Edits
 
