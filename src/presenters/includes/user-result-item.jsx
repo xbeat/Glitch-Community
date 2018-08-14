@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import randomColor from 'randomcolor';
 import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName} from '../../models/user';
 import {ThanksShort} from './thanks.jsx';
+import {WhitelistedDomainIcon} from './team-elements.jsx';
 
 const UserResultItem = ({user, action}) => {
   const name = getDisplayName(user);
@@ -62,7 +63,7 @@ InviteByEmail.propTypes = {
 
 export const WhitelistEmailDomain = ({domain, prevDomain, onClick}) => (
   <button onClick={onClick} className="button-unstyled result">
-    <div className="avatar whitelisted-domain">{domain[0].toUpperCase()}</div>
+    <WhitelistedDomainIcon domain={domain}/>
     <div className="result-name">Allow anyone with an @{domain} email to join</div>
     {!!prevDomain && <div className="result-description">This will replace @{prevDomain}</div>}
   </button>
