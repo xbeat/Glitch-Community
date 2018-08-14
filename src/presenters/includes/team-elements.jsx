@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import axios from 'axios';
+
 export const TeamMarketing = () => {
   const forPlatformsIcon = 'https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188';
   return (
@@ -35,12 +37,23 @@ export class WhitelistedDomainIcon extends React.Component {
     this.state = {src: null};
   }
   
+  async componentDidMount() {
+    try {
+      const {data} = await axios.get(`https://favicongrabber.com/api/grab/${this.props.domain}`);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
   render() {
+    const {domain} = this.props;
     if (this.state.src) {
-      return <img className="whitelisted-domain" src={this.state.src} alt="/>
+      return <img className="whitelisted-domain" src={this.state.src} alt={domain}/>
     }
     return (
-      <div className="whitelisted-domain avatar">
+      <div className="whitelisted-domain avatar" aria-label={domain}>
+        {domain[0].toUpperCase()}
       </div>
     );
   }

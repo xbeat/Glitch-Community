@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {WhitelistedDomainIcon} from './team-elements.jsx';
 import AddTeamUserPop from '../pop-overs/add-team-user-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 import TeamUserInfoPop from '../pop-overs/team-user-info-pop.jsx';
@@ -48,8 +49,8 @@ export const WhitelistedDomain = ({domain, setDomain}) => {
     <PopoverContainer>
       {({visible, setVisible}) => (
         <details onToggle={evt => setVisible(evt.target.open)} open={visible} className="popover-container whitelisted-domain-container">
-          <summary className="avatar whitelisted-domain" data-tooltip={!visible ? tooltip : null}>
-            {domain[0].toUpperCase()}
+          <summary data-tooltip={!visible ? tooltip : null}>
+            <WhitelistedDomainIcon domain={domain}/>
           </summary>
           <dialog className="pop-over">
             <section className="pop-over-info">
