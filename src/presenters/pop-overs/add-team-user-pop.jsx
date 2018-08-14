@@ -51,7 +51,6 @@ class AddTeamUserPop extends React.Component {
     
     const {data} = await request;
     const results = data.map(user => UserModel(user).asProps());
-    console.log(results);
     const nonMemberResults = results.filter(user => !this.props.members.includes(user.id));
     
     this.setState(({ maybeRequest }) => {
@@ -92,10 +91,11 @@ class AddTeamUserPop extends React.Component {
           item: <InviteByEmail email={email} onClick={() => this.togglePopoverAnd(inviteEmail, email)}/>,
         });
       }
-      if (domain && setWhitelistedDomain && this.props.whitelistedDomain !== domain) {
+      const prevDomain = this.props.whitelistedDomain;
+      if (domain && setWhitelistedDomain && prevDomain !== domain) {
         results.push({
           key: 'whitelist-email-domain',
-          item: <WhitelistEmailDomain domain={domain} onClick={() => this.togglePopoverAnd(setWhitelistedDomain, domain)}/>,
+          item: <WhitelistEmailDomain domain={domain} prevDomain={prevDomain} onClick={() => this.togglePopoverAnd(setWhitelistedDomain, domain)}/>,
         });
       }
     }
