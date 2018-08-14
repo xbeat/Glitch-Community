@@ -70,6 +70,13 @@ class TeamEditor extends React.Component {
     this.setState({_cacheCover: Date.now()});
   }
   
+  async joinTeam() {
+    await this.props.api.post(`teams/${this.state.id}/join`);
+    this.setState(({users}) => ({
+      projects: [this.props.currentUser, ...users],
+    }));
+  }
+  
   async inviteEmail(email) {
     await new Promise(res => setTimeout(res, 100));
     const notification = <InvitedNotification name={email}/>;
@@ -119,7 +126,7 @@ class TeamEditor extends React.Component {
   }
 
   async addProject(project) {
-    await this.props.api.post(`teams/${this.state.id}/projects/${project.id}`);    
+    await this.props.api.post(`teams/${this.state.id}/projects/${project.id}`);
     this.setState(({projects}) => ({
       projects: [project, ...projects],
     }));
@@ -170,6 +177,7 @@ class TeamEditor extends React.Component {
     const {handleError} = this.props;
     const funcs = {
       updateDescription: description => this.updateFields({description}).catch(handleError),
+      joinTeam: () => this.joinTeam().catch(handleError),
       inviteEmail: email => this.inviteEmail(email).catch(handleError),
       inviteUser: id => this.inviteUser(id).catch(handleError),
       removeUser: id => this.removeUser(id).catch(handleError),

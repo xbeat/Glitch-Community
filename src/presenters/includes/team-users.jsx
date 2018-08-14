@@ -57,7 +57,7 @@ export const WhitelistedDomain = ({domain, setDomain}) => {
             </section>
             {!!setDomain && (
               <section className="pop-over-actions danger-zone">
-                <button className="button-small button-tertiary button-on-secondary-background has-emoji" onClick={() => setDomain(null)}>
+                <button className="button button-small button-tertiary button-on-secondary-background has-emoji" onClick={() => setDomain(null)}>
                   Remove @{domain} <span className="emoji bomb"></span>
                 </button>
               </section>
@@ -96,7 +96,7 @@ export const AddTeamUser = (props) => (
 // Join Team
 
 export const JoinTeam = ({onClick}) => (
-  <button className="button-small button-cta join-team-button" onClick={onClick}>
+  <button className="button button-small button-cta join-team-button" onClick={onClick}>
     Join Team
   </button>
 );

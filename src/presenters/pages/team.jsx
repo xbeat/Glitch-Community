@@ -12,7 +12,7 @@ import Thanks from '../includes/thanks.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
 // import DeleteTeam from '../includes/delete-team.jsx';
-import {AddTeamUser, TeamUsers, WhitelistedDomain} from '../includes/team-users.jsx';
+import {AddTeamUser, TeamUsers, WhitelistedDomain, JoinTeam} from '../includes/team-users.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
@@ -36,13 +36,20 @@ class TeamPage extends React.Component {
       return true;
     }
     return false;
-
   }
 
   teamAdmins() {
     return this.props.team.users.filter(user => {
       return this.props.team.adminIds.includes(user.id);
     });
+  }
+  
+  userCanJoinTeam() {
+    const {currentUser, team} = this.props;
+    if (!this.props.currentUserIsOnTeam && team.whitelistedDomain && currentUser) {
+      return currentUser.emails.some(({email, verified}) => verified && email.endsWith(team.whitelistedDomain));
+    }
+    return false;
   }
 
   render() {
@@ -91,6 +98,7 @@ class TeamPage extends React.Component {
                   api={this.props.api}
                 />
               }
+              { this.userCanJoinTeam() && <JoinTeam onClick={this.props.joinTeam}/> }
             </div>
             <Thanks count={this.props.team.users.reduce((total, {thanksCount}) => total + thanksCount, 0)} />
             <AuthDescription
