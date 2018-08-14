@@ -39,6 +39,7 @@ export class WhitelistedDomainIcon extends React.Component {
   
   async load() {
     try {
+      // do not use the normal api here, we don't want to send our auth around
       const {data} = await axios.get(`https://favicongrabber.com/api/grab/${this.props.domain}`);
       if (data.icons.length) {
         this.setState({src: data.icons[0].src});
@@ -67,7 +68,7 @@ export class WhitelistedDomainIcon extends React.Component {
           className="whitelisted-domain"
           alt={domain}
           src={this.state.src}
-          onError={() => this.setState(
+          onError={() => this.setState({src: null})}
         />
       );
     }
