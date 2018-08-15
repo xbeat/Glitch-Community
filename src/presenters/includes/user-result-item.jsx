@@ -35,7 +35,6 @@ UserResultItem.propTypes = {
   action: PropTypes.func.isRequired,
 };
 
-
 export default UserResultItem;
 
 

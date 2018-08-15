@@ -94,7 +94,7 @@ export class AddTeamUser extends React.Component {
       addButtonLabel: 'Add',
       addButtonClass: undefined,
     };
-    this.updateAddButton = this.updateAddButton.bind(this);
+    this.updateAddButtonInviteSent = this.updateAddButtonInviteSent.bind(this);
   }
   
   updateAddButtonInviteSent() {
@@ -102,9 +102,9 @@ export class AddTeamUser extends React.Component {
       addButtonLabel: 'Invite Sent',
       addButtonClass: 'invite-sent',
     })
-    this.setTimeout({
-      conconsole
-    }), 500
+    window.setTimeout(function(){
+      console.log('💣 im reverted after some time')
+    }, 500)
   }
   
   render() {
@@ -117,6 +117,7 @@ export class AddTeamUser extends React.Component {
               <AddTeamUserPop 
                 {...this.props}
                 togglePopover={togglePopover}
+                updateAddButtonInviteSent={() => this.updateAddButtonInviteSent()}
               />
             }
           </span>

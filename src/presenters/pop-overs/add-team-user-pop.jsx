@@ -132,6 +132,7 @@ AddTeamUserPop.propTypes = {
   setWhitelistedDomain: PropTypes.func,
   whitelistedDomain: PropTypes.string,
   togglePopover: PropTypes.func.isRequired,
+  updateAddButtonInviteSent: PropTypes.func.isRequired,
 };
 
 export default AddTeamUserPop;
