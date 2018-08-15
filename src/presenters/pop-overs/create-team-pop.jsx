@@ -1,5 +1,3 @@
-/* not yet in use. 
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -159,7 +157,3 @@ CreateTeamPop.propTypes = {
 };
 
 export default CreateTeamPop;
-
-*/
-
-export default null;
