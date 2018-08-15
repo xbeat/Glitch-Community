@@ -100,7 +100,9 @@ In your local repository,
    git push origin my-remix
  ``` 
 
-And you're all set.  Try to keep your PR's small! (Days of work, not weeks.)  This will save you from having to think about and use all of the more advanced git hyjinks to keep your PR in sync with master (not documented here, because there would be _over 9000 🐉_'s. )
+And you're all set.
+
+Keep your PR's small! (Days of work, not weeks.)  This will save you from having to think about and use all of the more advanced git hyjinks to keep your PR in sync with master (not documented here, because there would be _over 9000 🐉_'s. )
 
 _Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes. If you make some quick changes, they may not show up in your diff on the Github pull request. If that is the case, you can either wait several minutes for the checkpoint to be made, or toggle Glitch Rewind on-and-off (which will force a checkpoint)._
 
