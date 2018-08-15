@@ -88,20 +88,20 @@ export class AddTeamUser extends React.Component {
       notifyInviteSentVisible: false,
     };
     this.updateInviteSent = this.updateInviteSent.bind(this);
+    this.removeInviteSent = this.removeInviteSent.bind(this);
   }
   
   updateInviteSent() {
     this.setState({
       notifyInviteSentVisible: true
     })
-    setTimeout(() => {
-      this.setState({
-        notifyInviteSentVisible: false
-      })
-    }, 20000)
   }
   
-  removeInviteSent() {}
+  removeInviteSent() {
+    this.setState({
+      notifyInviteSentVisible: false
+    })
+  }
   
   render() {
     return(
@@ -110,7 +110,7 @@ export class AddTeamUser extends React.Component {
           <span className="add-user-container">
             <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
             {this.state.notifyInviteSentVisible &&
-              <div className="notification notifySuccess" onAnimationEnd={remove}>
+              <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeInviteSent}>
                 Invite Sent
               </div>
             }
