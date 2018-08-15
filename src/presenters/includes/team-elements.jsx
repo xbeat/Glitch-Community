@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import axios from 'axios';
-import {
+import {debounce} from 'lodash';
 
 export const TeamMarketing = () => {
   const forPlatformsIcon = 'https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188';
@@ -36,7 +36,7 @@ export class WhitelistedDomainIcon extends React.Component {
   constructor(props) {
     super(props);
     this.state = {src: null};
-    this.load = throttle(() => this.load(), 100);
+    this.load = debounce(this.load.bind(this), 300);
   }
   
   async load() {
@@ -45,11 +45,10 @@ export class WhitelistedDomainIcon extends React.Component {
       icons: []
     };
     try {
-      // do not use the normal api here, we don't want to send our auth around
+      // Do not use the normal api here, we don't want to send our auth around
       ({data} = await axios.get(`https://favicongrabber.com/api/grab/${this.props.domain}`));
     } catch (error) {
       // The api returns an error when the domain doesn't exist, so ignore it
-      console.log(error);
     }
     if (data.domain === this.props.domain) {
       if (data.icons.length) {
@@ -68,6 +67,10 @@ export class WhitelistedDomainIcon extends React.Component {
     if (prevProps.domain !== this.props.domain) {
       this.load();
     }
+  }
+  
+  componentWillUnmount() {
+    this.load.cancel();
   }
   
   render() {
