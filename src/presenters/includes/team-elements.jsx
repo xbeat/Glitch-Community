@@ -38,15 +38,20 @@ export class WhitelistedDomainIcon extends React.Component {
   }
   
   async load() {
+    let data = {domain: this.props.domain, icons: []
     try {
       // do not use the normal api here, we don't want to send our auth around
-      const {data} = await axios.get(`https://favicongrabber.com/api/grab/${this.props.domain}`);
-      if (data.icons.length) {
-        this.setState({src: data.icons[0].src});
-      }
+      {data} = await axios.get(`https://favicongrabber.com/api/grab/${this.props.domain}`);
     } catch (error) {
       console.error(error);
     }
+      if (data.domain === this.props.domain) {
+        if (data.icons.length) {
+          this.setState({src: data.icons[0].src});
+        } else {
+          this.setState({src: null});
+        }
+      }
   }
   
   componentDidMount() {
@@ -55,7 +60,6 @@ export class WhitelistedDomainIcon extends React.Component {
   
   componentDidUpdate(prevProps) {
     if (prevProps.domain !== this.props.domain) {
-      this.setState({src: null});
       this.load();
     }
   }
