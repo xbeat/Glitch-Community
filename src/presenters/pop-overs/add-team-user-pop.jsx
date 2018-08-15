@@ -71,11 +71,11 @@ class AddTeamUserPop extends React.Component {
     const {maybeRequest, maybeResults, query} = this.state;
     const isLoading = (!!maybeRequest || !maybeResults);
     const results = [];
-    // this regex is basically (a)?(@b.c)
+    // this regex is basically (a)?@(b.c)
     // any match means we have a valid domain in group 2
     // group 1 is optional, but its presence means we have a full email
     const emailChars = '[^@\\s\\:/\\\\]+'; //escaping characters is gross
-    const emailRegExp = new RegExp(`^(${emailChars})?(@${emailChars}\\.${emailChars})$`);
+    const emailRegExp = new RegExp(`^(${emailChars})?@(${emailChars}\\.${emailChars})$`);
     const emailMatch = emailRegExp.exec(query);
     if (emailMatch) {
       const [email, name, domain] = emailMatch;
@@ -111,7 +111,6 @@ class AddTeamUserPop extends React.Component {
           />
         </section>
         {!!query && <section className="pop-over-actions last-section results-list">
-          {isLoading && <Loader />}
           {results.length ? (
             <ul className="results">
               {results.map(({key, item}) => <li key={key}>{item}</li>)}
@@ -119,6 +118,7 @@ class AddTeamUserPop extends React.Component {
           ) : (maybeResults &&
             <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>
           )}
+          {isLoading && <Loader />}
         </section>}
       </dialog>
     );

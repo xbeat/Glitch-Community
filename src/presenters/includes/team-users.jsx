@@ -44,7 +44,7 @@ TeamUsers.propTypes = {
 // Whitelisted domain icon
 
 export const WhitelistedDomain = ({domain, setDomain}) => {
-  const tooltip = `Anyone with an ${domain} email can join`;
+  const tooltip = `Anyone with an @${domain} email can join`;
   return (
     <PopoverContainer>
       {({visible, setVisible}) => (
