@@ -83,9 +83,11 @@ WhitelistedDomain.propTypes = {
 
 // TODO
 // done - convert to class
-// add state for addbuttonlabel
-// create updateAddButtonLabel , updates text, adds class, then after setTimeout removesclass and reverts label to add
-// on add user , trigger updateAddButtonLabel
+// done - add state for addbuttonlabel
+// done - create updateAddButtonLabel , updates text, adds class
+// done - on add user , trigger updateAddButtonLabel
+// after setTimeout removesclass and reverts label to add
+// style success and transitions between states
 // move this to pr
 export class AddTeamUser extends React.Component {
     constructor(props) {
@@ -103,7 +105,10 @@ export class AddTeamUser extends React.Component {
       addButtonClass: 'invite-sent',
     })
     window.setTimeout(function(){
-      console.log('💣 im reverted after some time')
+      this.setState({
+        addButtonLabel: 'Add',
+        addButtonClass: undefined,
+      })
     }, 500)
   }
   

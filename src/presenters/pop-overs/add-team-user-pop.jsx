@@ -64,6 +64,9 @@ class AddTeamUserPop extends React.Component {
   togglePopoverAnd(func, ...params) {
     this.props.togglePopover();
     func(...params);
+    if (func.name === 'inviteUser' || func.name === 'inviteEmail') {
+      this.props.updateAddButtonInviteSent()
+    }
   }
   
   render() {
