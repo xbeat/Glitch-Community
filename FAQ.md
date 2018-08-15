@@ -26,14 +26,17 @@ window.localStorage.cachedUser = JSON.stringify(`[Paste JSON Here]`)
 
 We use Raven.js to capture our exceptions and log messages to help us spot bugs in the wild.
 
-Because it wraps up exceptions and console.log messages, you might lose access to the line numbers you were looking for in your js console. Raven [may one day fix this](https://github.com/getsentry/sentry-javascript/issues/1003), but in the meantime you need to fix it with [BlackBoxing](https://developer.chrome.com/devtools/docs/blackboxing)
+Because it's a wrapper, you might lose access to the line numbers you were looking for in your js console. Raven [may one day fix this](https://github.com/getsentry/sentry-javascript/issues/1003), but in the meantime you can fix it with [BlackBoxing](https://developer.chrome.com/devtools/docs/blackboxing)
 
-In Chrome, open up your Devtools, go to the Sources tab, click the kebab, and click Settings:
+In Chrome, open up the developer tools, go to the Sources tab, click the kebab menu in the corner, and click Settings:
 
-![](https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fdevtools-settings.PNG?1534365344027)
+> ![](https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fdevtools-settings.PNG?1534365344027)
 
-![](https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fblackbox-raven-js.PNG?1534365343672)
+Now select 'BlackBoxing' on the left, and blackbox raven.js:
 
+> ![](https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fblackbox-raven-js.PNG?1534365343672)
+
+Now, in your devtools, it'll be just like Raven.js doesn't exist -- line numbers and exceptions will flow straight through, but it'll stay functional behind the scenes.
 
 
 ### How do I add a question to the FAQ?
