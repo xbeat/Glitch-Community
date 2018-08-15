@@ -65,7 +65,7 @@ class AddTeamUserPop extends React.Component {
     this.props.togglePopover();
     func(...params);
     if (func.name === 'inviteUser' || func.name === 'inviteEmail') {
-      this.props.updateAddButtonInviteSent()
+      this.props.updateInviteSent()
     }
   }
   
@@ -135,7 +135,7 @@ AddTeamUserPop.propTypes = {
   setWhitelistedDomain: PropTypes.func,
   whitelistedDomain: PropTypes.string,
   togglePopover: PropTypes.func.isRequired,
-  updateAddButtonInviteSent: PropTypes.func.isRequired,
+  updateInviteSent: PropTypes.func.isRequired,
 };
 
 export default AddTeamUserPop;

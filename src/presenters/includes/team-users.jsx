@@ -85,36 +85,40 @@ export class AddTeamUser extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
-      addButtonLabel: 'Add',
-      addButtonClass: undefined,
+      notifyInviteSentVisible: false,
     };
-    this.updateAddButtonInviteSent = this.updateAddButtonInviteSent.bind(this);
+    this.updateInviteSent = this.updateInviteSent.bind(this);
   }
   
-  updateAddButtonInviteSent() {
+  updateInviteSent() {
     this.setState({
-      addButtonLabel: 'Invite Sent',
-      addButtonClass: 'success',
+      notifyInviteSentVisible: true
     })
     setTimeout(() => {
       this.setState({
-        addButtonLabel: 'Add',
-        addButtonClass: undefined,
+        notifyInviteSentVisible: false
       })
-    }, 2000)
+    }, 20000)
   }
+  
+  removeInviteSent() {}
   
   render() {
     return(
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <span className="add-user-container">
-            <button onClick={togglePopover} className={"button button-small button-tertiary add-user " + this.state.addButtonClass}>{this.state.addButtonLabel}</button>
+            <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
+            {this.state.notifyInviteSentVisible &&
+              <div className="notification notifySuccess" onAnimationEnd={remove}>
+                Invite Sent
+              </div>
+            }
             {visible && 
               <AddTeamUserPop 
                 {...this.props}
                 togglePopover={togglePopover}
-                updateAddButtonInviteSent={() => this.updateAddButtonInviteSent()}
+                updateInviteSent={() => this.updateInviteSent()}
               />
             }
           </span>
