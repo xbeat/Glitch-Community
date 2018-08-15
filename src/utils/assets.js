@@ -53,7 +53,7 @@ const drawCanvasThumbnail = function(image, type, max) {
       blob.height = height;
       return resolve(blob);
     }
-      , type, quality);
+    , type, quality);
   });
 };
 
