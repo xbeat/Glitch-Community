@@ -36,7 +36,6 @@ export class WhitelistedDomainIcon extends React.Component {
   constructor(props) {
     super(props);
     this.state = {src: null};
-    this.load = debounce(this.load.bind(this), 300);
   }
   
   async load() {
@@ -61,6 +60,7 @@ export class WhitelistedDomainIcon extends React.Component {
   
   componentDidMount() {
     this.load();
+    this.load = debounce(this.load.bind(this), 500);
   }
   
   componentDidUpdate(prevProps) {
