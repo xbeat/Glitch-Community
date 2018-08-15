@@ -47,14 +47,15 @@ const drawCanvasThumbnail = function(image, type, max) {
     sourceCanvas = targetCanvas;
   }
 
-  return new Promise(function(resolve) {
-    return sourceCanvas.toBlob(function(blob) {
-      blob.width = width;
-      blob.height = height;
-      return resolve(blob);
+  return new Promise(
+    function(resolve) {
+      return sourceCanvas.toBlob(function(blob) {
+        blob.width = width;
+        blob.height = height;
+        return resolve(blob);
+      }, type, quality);
     }
-    , type, quality);
-  });
+  );
 };
 
 // Takes an HTML5 File and returns a promise for an HTML5 Blob that is fulfilled

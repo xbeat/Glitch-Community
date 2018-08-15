@@ -80,7 +80,7 @@ CoverContainer.propTypes = {
 };
 CoverContainer.defaultProps = {
   className: '',
-}
+};
 
 
 // Profile Container
