@@ -49,11 +49,11 @@ export class WhitelistedDomainIcon extends React.Component {
     };
     try {
       // Do not use the normal api here, we don't want to send our auth around
-      ({data} = await axios.get(`https://favicongrabber.com/api/grab/${this.domain}`));
+      ({data} = await axios.get(`https://favicongrabber.com/api/grab/${this.domain()}`));
     } catch (error) {
       // The api returns an error when the domain doesn't exist, so ignore it
     }
-    if (data.domain === this.props.domain) {
+    if (data.domain === this.domain()) {
       if (data.icons.length) {
         this.setState({src: data.icons[0].src});
       } else {
@@ -78,7 +78,7 @@ export class WhitelistedDomainIcon extends React.Component {
   }
   
   render() {
-    const {domain} = this.props;
+    const domain = this.domain();
     if (this.state.src) {
       return (
         <img

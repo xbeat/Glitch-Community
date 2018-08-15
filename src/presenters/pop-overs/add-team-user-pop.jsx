@@ -71,11 +71,11 @@ class AddTeamUserPop extends React.Component {
     const {maybeRequest, maybeResults, query} = this.state;
     const isLoading = (!!maybeRequest || !maybeResults);
     const results = [];
-    // this regex is basically (a)?@(b.c)
+    // this regex is basically (a)?(@b.c)
     // any match means we have a valid domain in group 2
     // group 1 is optional, but its presence means we have a full email
     const emailChars = '[^@\\s\\:/\\\\]+'; //escaping characters is gross
-    const emailRegExp = new RegExp(`^(${emailChars})?@(${emailChars}\\.${emailChars})$`);
+    const emailRegExp = new RegExp(`^(${emailChars})?(@${emailChars}\\.${emailChars})$`);
     const emailMatch = emailRegExp.exec(query);
     if (emailMatch) {
       const [email, name, domain] = emailMatch;
@@ -103,7 +103,7 @@ class AddTeamUserPop extends React.Component {
     return (
       <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">
-          <input id="team-user-search" 
+          <input id="team-user-search"
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={query} onChange={this.handleChange}
             className="pop-over-input search-input pop-over-search"

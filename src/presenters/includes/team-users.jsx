@@ -44,7 +44,7 @@ TeamUsers.propTypes = {
 // Whitelisted domain icon
 
 export const WhitelistedDomain = ({domain, setDomain}) => {
-  const tooltip = `Anyone with an @${domain} email can join`;
+  const tooltip = `Anyone with an ${domain} email can join`;
   return (
     <PopoverContainer>
       {({visible, setVisible}) => (
@@ -59,7 +59,7 @@ export const WhitelistedDomain = ({domain, setDomain}) => {
             {!!setDomain && (
               <section className="pop-over-actions danger-zone">
                 <button className="button button-small button-tertiary button-on-secondary-background has-emoji" onClick={() => setDomain(null)}>
-                  Remove @{domain} <span className="emoji bomb"></span>
+                  Remove {domain} <span className="emoji bomb"></span>
                 </button>
               </section>
             )}
