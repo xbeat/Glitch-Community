@@ -110,7 +110,7 @@ class AddTeamUserPop extends React.Component {
             placeholder="Search for a user or email"
           />
         </section>
-        {query ? (
+        {!!query && (
           <section className="pop-over-actions last-section results-list">
             {results.length ? (
               <ul className="results">
@@ -121,7 +121,8 @@ class AddTeamUserPop extends React.Component {
             )}
             {isLoading && <Loader />}
           </section>
-        ) : (
+        )}
+        {!query && setWhitelistedDomain && (
           <aside className="pop-over-info">
             You can also whitelist with @example.com
           </aside>
