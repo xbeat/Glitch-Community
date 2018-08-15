@@ -82,10 +82,13 @@ class AddTeamUserPop extends React.Component {
     const emailMatch = emailRegExp.exec(query);
     if (emailMatch) {
       const [email, name, domain] = emailMatch;
+      let options = {
+        inlineNotify: true
+      }
       if (name && email) {
         results.push({
           key: 'invite-by-email',
-          item: <InviteByEmail email={email} onClick={() => this.togglePopoverAnd(inviteEmail, email)}/>,
+          item: <InviteByEmail email={email} onClick={() => this.togglePopoverAnd(inviteEmail, email, options)}/>,
         });
       }
       const prevDomain = this.props.whitelistedDomain;
