@@ -71,12 +71,6 @@ class AddTeamUserPop extends React.Component {
     const {maybeRequest, maybeResults, query} = this.state;
     const isLoading = (!!maybeRequest || !maybeResults);
     const results = [];
-    if (maybeResults) {
-      results.push(...maybeResults.map(user => ({
-        key: user.id,
-        item: <UserResultItem user={user} action={() => this.togglePopoverAnd(inviteUser, user)} />
-      })));
-    }
     // this regex is basically (a)?@(b.c)
     // any match means we have a valid domain in group 2
     // group 1 is optional, but its presence means we have a full email
@@ -98,6 +92,13 @@ class AddTeamUserPop extends React.Component {
           item: <WhitelistEmailDomain domain={domain} prevDomain={prevDomain} onClick={() => this.togglePopoverAnd(setWhitelistedDomain, domain)}/>,
         });
       }
+    }
+    // now add the actual search results
+    if (maybeResults) {
+      results.push(...maybeResults.map(user => ({
+        key: user.id,
+        item: <UserResultItem user={user} action={() => this.togglePopoverAnd(inviteUser, user)} />
+      })));
     }
     return (
       <dialog className="pop-over add-team-user-pop">
