@@ -65,6 +65,7 @@ export class WhitelistedDomainIcon extends React.Component {
   
   componentDidUpdate(prevProps) {
     if (prevProps.domain !== this.props.domain) {
+      this.setState({src: null});
       this.load();
     }
   }
