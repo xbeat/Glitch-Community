@@ -102,14 +102,14 @@ export class AddTeamUser extends React.Component {
   updateAddButtonInviteSent() {
     this.setState({
       addButtonLabel: 'Invite Sent',
-      addButtonClass: 'invite-sent',
+      addButtonClass: 'success',
     })
-    window.setTimeout(function(){
+    setTimeout(() => {
       this.setState({
         addButtonLabel: 'Add',
         addButtonClass: undefined,
       })
-    }, 500)
+    }, 2000)
   }
   
   render() {
@@ -117,7 +117,7 @@ export class AddTeamUser extends React.Component {
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <span className="add-user-container">
-            <button onClick={togglePopover} className={"button button-small button-tertiary add-user" + this.state.addButtonClass}>{this.state.addButtonLabel}</button>
+            <button onClick={togglePopover} className={"button button-small button-tertiary add-user " + this.state.addButtonClass}>{this.state.addButtonLabel}</button>
             {visible && 
               <AddTeamUserPop 
                 {...this.props}
