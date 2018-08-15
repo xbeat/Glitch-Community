@@ -100,7 +100,7 @@ class CreateTeamPop extends React.Component {
   render() {
     return (
       <dialog className="pop-over create-team-pop">
-        <section className="pop-over-info clickable-label" onClick={() => this.props.toggleUserOptionsPop()}>
+        <button className="pop-over-info clickable-label" onClick={() => this.props.toggleUserOptionsPop()}>
           <div className="back icon">
             <div className="left-arrow icon" />
           </div>
@@ -108,7 +108,7 @@ class CreateTeamPop extends React.Component {
             <span>Create Team </span>
             <span className="emoji herb" />
           </div>
-        </section>
+        </button>
 
         <section className="pop-over-info">
           <p className="info-description">
