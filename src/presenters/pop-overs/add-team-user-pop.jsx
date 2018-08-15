@@ -110,16 +110,22 @@ class AddTeamUserPop extends React.Component {
             placeholder="Search for a user or email"
           />
         </section>
-        {!!query && <section className="pop-over-actions last-section results-list">
-          {results.length ? (
-            <ul className="results">
-              {results.map(({key, item}) => <li key={key}>{item}</li>)}
-            </ul>
-          ) : (maybeResults &&
-            <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>
-          )}
-          {isLoading && <Loader />}
-        </section>}
+        {query ? (
+          <section className="pop-over-actions last-section results-list">
+            {results.length ? (
+              <ul className="results">
+                {results.map(({key, item}) => <li key={key}>{item}</li>)}
+              </ul>
+            ) : (maybeResults &&
+              <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>
+            )}
+            {isLoading && <Loader />}
+          </section>
+        ) : (
+          <aside className="pop-over-info">
+            You can also whitelist with @example.com
+          </aside>
+        )}
       </dialog>
     );
   }
