@@ -54,7 +54,9 @@ export const WhitelistedDomain = ({domain, setDomain}) => {
           </summary>
           <dialog className="pop-over">
             <section className="pop-over-info">
-              {tooltip}
+              <p className="info-description">
+                {tooltip}
+              </p>
             </section>
             {!!setDomain && (
               <section className="pop-over-actions danger-zone">
@@ -78,6 +80,11 @@ WhitelistedDomain.propTypes = {
 
 // Add Team User
 
+
+// convert to class
+// add state for addbuttonlabel
+// create updateAddButtonLabel , updates text, adds class, then after setTimeout removesclass and reverts label to add
+// on add user , trigger updateAddButtonLabel
 export const AddTeamUser = (props) => (
   <PopoverContainer>
     {({visible, togglePopover}) => (
