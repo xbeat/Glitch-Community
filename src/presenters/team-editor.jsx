@@ -12,15 +12,15 @@ import Notifications from './notifications.jsx';
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
 
-const InvitedNotification = ({name, avatar, color}) => (
-  <React.Fragment>
-    <p>Sent team invite to {name}</p>
-    <p>
-      <span role="img" aria-label="emailed">📧</span>{' '}
-      {!!avatar && <img className="emoji avatar" src={avatar} style={{backgroundColor: color}} alt={name}/>}
-    </p>
-  </React.Fragment>
-);
+// const InvitedNotification = ({name, avatar, color}) => (
+//   <React.Fragment>
+//     <p>Sent team invite to {name}</p>
+//     <p>
+//       <span role="img" aria-label="emailed">📧</span>{' '}
+//       {!!avatar && <img className="emoji avatar" src={avatar} style={{backgroundColor: color}} alt={name}/>}
+//     </p>
+//   </React.Fragment>
+// );
 
 class TeamEditor extends React.Component {
   constructor(props) {
@@ -83,14 +83,14 @@ class TeamEditor extends React.Component {
   
   async inviteEmail(emailAddress) {
     //await this.props.api.post(`teams/${this.state.id}/sendJoinEmail`, {emailAddress});
-    const notification = <InvitedNotification name={emailAddress}/>;
-    this.props.createNotification(notification, 'notifySuccess');
+    // const notification = <InvitedNotification name={emailAddress}/>;
+    // this.props.createNotification(notification, 'notifySuccess');
   }
 
   async inviteUser(user) {
     await new Promise(res => setTimeout(res, 100));
-    const notification = <InvitedNotification name={getDisplayName(user)} avatar={getAvatarThumbnailUrl(user)} color={user.color}/>;
-    this.props.createNotification(notification, 'notifySuccess');
+    // const notification = <InvitedNotification name={getDisplayName(user)} avatar={getAvatarThumbnailUrl(user)} color={user.color}/>;
+    // this.props.createNotification(notification, 'notifySuccess');
   }
 
   async removeUser(id) {

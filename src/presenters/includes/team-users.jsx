@@ -80,29 +80,35 @@ WhitelistedDomain.propTypes = {
 
 // Add Team User
 
-
 export class AddTeamUser extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
       notifyInviteSentVisible: false,
+      invitee: '',
     };
     this.updateInviteSent = this.updateInviteSent.bind(this);
     this.removeInviteSent = this.removeInviteSent.bind(this);
   }
   
-  updateInviteSent() {
+  updateInviteSent(entity) {
+    console.log ('sd',entity)
     this.setState({
-      notifyInviteSentVisible: true
+      notifyInviteSentVisible: true,
+      invitee: entity,
     })
+  
+  // call either
+  // this.props.inviteEmail(params) {}
+  // this.props.inviteUser  
   }
   
-  removeInviteSent() {
+  removeInviteSent(name) {
     this.setState({
-      notifyInviteSentVisible: false
+      notifyInviteSentVisible: false,
     })
   }
-  
+    
   render() {
     return(
       <PopoverContainer>
@@ -111,7 +117,8 @@ export class AddTeamUser extends React.Component {
             <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
             {this.state.notifyInviteSentVisible &&
               <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeInviteSent}>
-                Invite Sent
+                <span>Invited </span>
+                <span>{}</span>
               </div>
             }
             {visible && 
