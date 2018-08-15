@@ -81,14 +81,6 @@ WhitelistedDomain.propTypes = {
 // Add Team User
 
 
-// TODO
-// done - convert to class
-// done - add state for addbuttonlabel
-// done - create updateAddButtonLabel , updates text, adds class
-// done - on add user , trigger updateAddButtonLabel
-// after setTimeout removesclass and reverts label to add
-// style success and transitions between states
-// move this to pr
 export class AddTeamUser extends React.Component {
     constructor(props) {
     super(props);
