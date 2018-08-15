@@ -81,25 +81,50 @@ WhitelistedDomain.propTypes = {
 // Add Team User
 
 
-// convert to class
+// TODO
+// done - convert to class
 // add state for addbuttonlabel
 // create updateAddButtonLabel , updates text, adds class, then after setTimeout removesclass and reverts label to add
 // on add user , trigger updateAddButtonLabel
-export const AddTeamUser = (props) => (
-  <PopoverContainer>
-    {({visible, togglePopover}) => (
-      <span className="add-user-container">
-        <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
-        {visible && 
-          <AddTeamUserPop 
-            {...props}
-            togglePopover={togglePopover}
-          />
-        }
-      </span>
-    )}
-  </PopoverContainer>
-);
+// move this to pr
+export class AddTeamUser extends React.Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+      addButtonLabel: 'Add',
+      addButtonClass: undefined,
+    };
+    this.updateAddButton = this.updateAddButton.bind(this);
+  }
+  
+  updateAddButtonInviteSent() {
+    this.setState({
+      addButtonLabel: 'Invite Sent',
+      addButtonClass: 'invite-sent',
+    })
+    this.setTimeout({
+      conconsole
+    }), 500
+  }
+  
+  render() {
+    return(
+      <PopoverContainer>
+        {({visible, togglePopover}) => (
+          <span className="add-user-container">
+            <button onClick={togglePopover} className={"button button-small button-tertiary add-user" + this.state.addButtonClass}>{this.state.addButtonLabel}</button>
+            {visible && 
+              <AddTeamUserPop 
+                {...this.props}
+                togglePopover={togglePopover}
+              />
+            }
+          </span>
+        )}
+      </PopoverContainer>
+    )
+  }
+};
 
 // Join Team
 
