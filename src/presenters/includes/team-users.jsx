@@ -15,7 +15,7 @@ export const TeamUsers = (props) => {
     return props.adminIds.includes(user.id);
   };
   return (
-    <UserPopoversList users={props.users} adminIds={props.adminIds} currentUserIsTeamAdmin={props.currentUserIsTeamAdmin}>
+    <UserPopoversList users={props.users} adminIds={props.adminIds}>
       {(user, togglePopover) => 
         <TeamUserInfoPop 
           userIsTeamAdmin={userIsTeamAdmin(user)}

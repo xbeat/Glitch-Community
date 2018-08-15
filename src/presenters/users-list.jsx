@@ -118,17 +118,28 @@ UsersList.propTypes = {
   glitchTeam: PropTypes.bool,
 };
 
+const adminStatusDisplay = (adminIds, user) => {
+  if (adminIds.includes(user.id)) {
+    return " (admin)"
+  } else {
+    return ""
+  }
+}
+
 export default UsersList;
 
-const UserPopoverTile = ({children, adminIds, currentUserIsTeamAdmin, ...user}) => (
+const UserPopoverTile = ({children, adminIds, ...user}) => (
   <PopoverContainer>
     {({visible, togglePopover}) => (
       <div className="button-wrap">
-        <button onClick={togglePopover} className="user button-unstyled" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
+        <button 
+          onClick={togglePopover} 
+          className="user button-unstyled" 
+          data-tooltip={getDisplayName(user) + adminStatusDisplay(adminIds, user)} 
+          data-tooltip-left="true" 
+          style={getStyle(user)}
+        >
           <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
-          {(adminIds.includes(user.id) && currentUserIsTeamAdmin) &&
-            <div className="avatar-admin-badge"/>
-          }
         </button>
         {!!visible && children(togglePopover)}
       </div>
@@ -144,7 +155,6 @@ UserPopoverTile.propTypes = {
   color: PropTypes.string.isRequired,
   children: PropTypes.func.isRequired,
   adminIds: PropTypes.array.isRequired,
-  currentUserIsTeamAdmin: PropTypes.bool.isRequired,
 };
 
 
@@ -154,7 +164,7 @@ export const UserPopoversList = ({...props}) => (
   <ul className="users">
     {props.users.map(user => (
       <li key={user.id}>
-        <UserPopoverTile {...user} adminIds={props.adminIds} currentUserIsTeamAdmin={props.currentUserIsTeamAdmin}>
+        <UserPopoverTile {...user} adminIds={props.adminIds}>
           {(togglePopover) => props.children(user, togglePopover)}
         </UserPopoverTile>
       </li>
@@ -166,7 +176,6 @@ UserPopoversList.propTypes = {
   users: PropTypes.array.isRequired,
   children: PropTypes.func.isRequired,
   adminIds: PropTypes.array,
-  currentUserIsTeamAdmin: PropTypes.bool.isRequired,
 };
 
 UserPopoversList.defaultProps = {
