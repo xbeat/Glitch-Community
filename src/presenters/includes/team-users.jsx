@@ -92,14 +92,14 @@ export class AddTeamUser extends React.Component {
   }
   
   notifyInvited(invitee) {
-    console.log ('notifyInvited', invitee)
+    invitee = invitee.name || invitee.login || invitee.email
     this.setState({
       notifyInvitedVisible: true,
-      invitee: invitee,
+      invitee: invitee
     })
   }
 
-  removeNotifyInvited(name) {
+  removeNotifyInvited() {
     this.setState({
       notifyInvitedVisible: false,
     })

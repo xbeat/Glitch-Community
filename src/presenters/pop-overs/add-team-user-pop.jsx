@@ -70,33 +70,20 @@ class AddTeamUserPop extends React.Component {
   }
   
   sendInviteEmail(email) {
-    console.log ('sendInviteEmail', email)
+    let invitee = {email: email}
     this.props.togglePopover();
-    this.props.notifyInvited(email);
+    this.props.notifyInvited(invitee);
     this.props.inviteEmail(email);
   }
   
   sendInviteUser(user) {
+    console.log (user)
     this.props.togglePopover();
     this.props.notifyInvited(user);
     this.props.inviteUser(user);
   }
-  
-  
-  // sendInviteUser(user)
-  
-  // togglePopoverAnd(action, params) {
-  //   this.props.togglePopover();
-  //   if (action === 'setWhitelistedDomain') {
-  //     this.props.setWhitelistedDomain(params.domain)
-  //   } else {
-  //     console.log('👀',params)
-  //     this.props.notifyInvited(params)
-  //   }
-  // }
-  
+    
   render() {
-    // const {inviteEmail, inviteUser, setWhitelistedDomain} = this.props;
     const {maybeRequest, maybeResults, query} = this.state;
     const isLoading = (!!maybeRequest || !maybeResults);
     const results = [];
