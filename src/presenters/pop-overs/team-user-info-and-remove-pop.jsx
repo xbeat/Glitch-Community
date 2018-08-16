@@ -135,7 +135,7 @@ const TeamUserInfo = (props, toggleUserInfoVisible) => {
           updateUserPermissions={props.updateUserPermissions}
         />
       }
-      { props.currentUserIsTeamAdmin && <RemoveFromTeam toggleUserInfoVisible={toggleUserInfoVisible} /> }
+      { props.currentUserIsTeamAdmin && <RemoveFromTeam toggleUserInfoVisible={() => toggleUserInfoVisible()} /> }
     </dialog>
   )
 }
@@ -177,6 +177,7 @@ export default class TeamUserInfoAndRemovePop extends React.Component {
   // }
   
   toggleUserInfoVisible(prevState) {
+    console.log ('📟', prevState)
     this.setState({
       userInfoVisible: !prevState.userInfoVisible
     })
