@@ -9,9 +9,9 @@ const ADMIN_ACCESS_LEVEL = 30;
 
 // Remove from Team 👋
 
-const RemoveFromTeam = ({removeFromTeam}) => (
+const RemoveFromTeam = ({toggleRemoveTeamUserVisible}) => (
   <section className="pop-over-actions danger-zone">
-    <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={removeFromTeam}>
+    <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={toggleRemoveTeamUserVisible}>
       Remove from Team
       <span className="emoji wave" />
     </button>
@@ -19,7 +19,7 @@ const RemoveFromTeam = ({removeFromTeam}) => (
 );
 
 RemoveFromTeam.propTypes = {
-  removeFromTeam: PropTypes.func.isRequired,
+  toggleRemoveTeamUserVisible: PropTypes.func.isRequired,
 };
 
 
@@ -102,70 +102,83 @@ const ThanksCount = ({count}) => (
 );
 
 
+const TeamUserInfo = (props, toggleRemoveTeamUserVisible) => {
+  const userAvatarStyle = {backgroundColor: props.user.color};
+
+  return(
+          <dialog className="pop-over team-user-info-pop">
+            <section className="pop-over-info">
+              <a href={getLink(props.user)}>
+                <img className="avatar" src={getAvatarThumbnailUrl(props.user)} alt={props.user.login} style={userAvatarStyle}/>
+              </a>
+              <div className="info-container">
+                <p className="name" title={props.user.name}>{props.user.name || "Anonymous"}</p>
+                { props.user.login &&
+                  <p className="user-login" title={props.user.login}>@{props.user.login}</p>
+                }
+                { props.userIsTeamAdmin && 
+                  <div className="status-badge">
+                    <span className="status admin" data-tooltip="Can edit team info and billing">
+                      Team Admin
+                    </span>
+                  </div>
+                }
+              </div>
+            </section>
+            { props.user.thanksCount > 0 && <ThanksCount count={props.user.thanksCount} /> }
+            <UserActions user={props.user} />
+            { props.currentUserIsTeamAdmin &&
+              <AdminActions 
+                user={props.user}
+                userIsTeamAdmin={props.userIsTeamAdmin}
+                updateUserPermissions={props.updateUserPermissions}
+              />
+            }
+            { props.currentUserIsTeamAdmin && <RemoveFromTeam toggleRemoveTeamUserVisible={toggleRemoveTeamUserVisible} /> }
+          </dialog>
+)
+}
+
+
+
 // Team User Info
 
-export default class TeamUserInfoPop extends React.Component {
+export default class TeamUserInfoAndRemovePop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       removeTeamUserVisible: false
     };
-    // this.removeFromTeam = this.removeFromTeam.bind(this);
+    this.removeFromTeam = this.removeFromTeam.bind(this);
+    this.toggleRemoveTeamUserVisible = this.toggleRemoveTeamUserVisible.bind(this);
   }
   
   removeFromTeam() {
     this.props.togglePopover();
     this.props.removeUserFromTeam(this.props.user.id);
   }
-
+  
+  toggleRemoveTeamUserVisible(prevState) {
+    this.setState({
+      removeTeamUserVisible: !prevState.removeTeamUserVisible
+    })
+  }
+  
   render() {
-    const userAvatarStyle = {backgroundColor: this.props.user.color};
     return (
-      <dialog className="pop-over team-user-info-pop">
+      <React.Fragment>
         { !this.state.removeTeamUserVisible &&
-
-        
-          <section className="pop-over-info">
-            <a href={getLink(this.props.user)}>
-              <img className="avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
-            </a>
-            <div className="info-container">
-              <p className="name" title={this.props.user.name}>{this.props.user.name || "Anonymous"}</p>
-              { this.props.user.login &&
-                <p className="user-login" title={this.props.user.login}>@{this.props.user.login}</p>
-              }
-              { this.props.userIsTeamAdmin && 
-                <div className="status-badge">
-                  <span className="status admin" data-tooltip="Can edit team info and billing">
-                    Team Admin
-                  </span>
-                </div>
-              }
-            </div>
-          </section>
-          <span>
-            { this.props.user.thanksCount > 0 && <ThanksCount count={this.props.user.thanksCount} /> }
-          </span>
-          <UserActions user={this.props.user} />
-          { this.props.currentUserIsTeamAdmin &&
-            <AdminActions 
-              user={this.props.user}
-              userIsTeamAdmin={this.props.userIsTeamAdmin}
-              updateUserPermissions={this.props.updateUserPermissions}
-            />
-          }
-          { this.props.currentUserIsTeamAdmin && <RemoveFromTeam removeFromTeam={this.removeFromTeam} /> }
-       
-         
+          <TeamUserInfo
+            {...this.props}
+            toggleRemoveTeamUserVisible = {() => this.toggleRemoveTeamUserVisible()}
+          />
          }
-         
-      </dialog>
-       
+     </React.Fragment>
     );
   }
 }
 
-TeamUserInfoPop.propTypes = {
+TeamUserInfoAndRemovePop.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
     login: PropTypes.string,
@@ -183,7 +196,7 @@ TeamUserInfoPop.propTypes = {
   updateUserPermissions: PropTypes.func.isRequired,
 };
 
-TeamUserInfoPop.defaultProps = {
+TeamUserInfoAndRemovePop.defaultProps = {
   user: {
     isOnTeam: false
   },

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import AddTeamUserPop from '../pop-overs/add-team-user-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
-import TeamUserInfoPop from '../pop-overs/team-user-info-pop.jsx';
+import TeamUserInfoAndRemovePop from '../pop-overs/team-user-info-and-remove-pop.jsx';
 import {UserPopoversList} from '../users-list.jsx';
 
 
@@ -21,7 +21,7 @@ export const TeamUsers = (props) => {
   return (
     <UserPopoversList users={props.users} adminIds={props.adminIds}>
       {(user, togglePopover) => 
-        <TeamUserInfoPop 
+        <TeamUserInfoAndRemovePop 
           userIsTeamAdmin={userIsTeamAdmin(user)}
           togglePopover={togglePopover}
           user={user}
