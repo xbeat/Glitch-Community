@@ -10,7 +10,6 @@ const getCategories = async () => {
     baseURL: API_URL,
     transformResponse: (data) => data // Don't bother parsing the JSON
   });
-  console.log("☂️ categories updated");
   return response.data;
 };
 
@@ -19,6 +18,7 @@ const updateCaches = async () => {
   try {
     const newCategories = await getCategories();
     categories = Promise.resolve(newCategories);
+    console.log("☂️ categories updated");
   } catch (error) {
     console.error(error);
   }
