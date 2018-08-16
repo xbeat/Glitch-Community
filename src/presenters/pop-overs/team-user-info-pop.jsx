@@ -113,16 +113,18 @@ export default class TeamUserInfoPop extends React.Component {
     // this.removeFromTeam = this.removeFromTeam.bind(this);
   }
   
-  // removeFromTeam() {
-  //   this.props.togglePopover();
-  //   this.props.removeUserFromTeam(this.props.user.id);
-  // }
+  removeFromTeam() {
+    this.props.togglePopover();
+    this.props.removeUserFromTeam(this.props.user.id);
+  }
 
   render() {
     const userAvatarStyle = {backgroundColor: this.props.user.color};
     return (
       <dialog className="pop-over team-user-info-pop">
         { !this.state.removeTeamUserVisible &&
+
+        
           <section className="pop-over-info">
             <a href={getLink(this.props.user)}>
               <img className="avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
@@ -141,7 +143,9 @@ export default class TeamUserInfoPop extends React.Component {
               }
             </div>
           </section>
-          { this.props.user.thanksCount > 0 && <ThanksCount count={this.props.user.thanksCount} /> }
+          <span>
+            { this.props.user.thanksCount > 0 && <ThanksCount count={this.props.user.thanksCount} /> }
+          </span>
           <UserActions user={this.props.user} />
           { this.props.currentUserIsTeamAdmin &&
             <AdminActions 
@@ -151,8 +155,12 @@ export default class TeamUserInfoPop extends React.Component {
             />
           }
           { this.props.currentUserIsTeamAdmin && <RemoveFromTeam removeFromTeam={this.removeFromTeam} /> }
-        }
+       
+         
+         }
+         
       </dialog>
+       
     );
   }
 }
@@ -166,7 +174,8 @@ TeamUserInfoPop.propTypes = {
     color: PropTypes.string,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
-  // removeUserPopVisible: PropTypes.func.isRequired,
+  removeUserFromTeam: PropTypes.func.isRequired,
+  removeUserFromProjects: PropTypes.func.isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
