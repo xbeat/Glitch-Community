@@ -42,6 +42,11 @@ function identifyUser(user) {
   }
 }
 
+function usersMatch(a, b) {
+  if ((a && !b) || (!a && b)) {
+    return false;
+  } else if (a && B && a.id === b.id && a.
+
 // This takes sharedUser and cachedUser
 // sharedUser is stored in localStorage['cachedUser']
 // cachedUser is stored in localStorage['community-cachedUser']
@@ -72,6 +77,8 @@ class CurrentUserManager extends React.Component {
     this.setState({fetched: false});
     const {sharedUser, cachedUser} = this.props;
     if (sharedUser) {
+      if (!cachedUser) {
+      }
       const {data} = await this.api().get(`users/${sharedUser.id}`);
       this.props.setCachedUser(data);
       this.setState({fetched: true});
@@ -105,7 +112,8 @@ class CurrentUserManager extends React.Component {
   }
   
   update(changes) {
-    const {cachedUser} = this.props;
+    const {cachedUser, sharedUser} = this.props;
+    if (!sharedUser || changes.id
     this.props.setCachedUser({...cachedUser, ...changes});
   }
   
@@ -149,9 +157,9 @@ const cleanUser = (user) => {
 };
 
 export const CurrentUserProvider = ({children}) => (
-  <LocalStorage name="cachedUser" default={null} ignoreChanges={true}>
+  <LocalStorage name="cachedUser" default={null}>
     {(sharedUser, setSharedUser, loadedSharedUser) => (
-      <LocalStorage name="community-cachedUser" default={null} ignoreChanges={true}>
+      <LocalStorage name="community-cachedUser" default={null}>
         {(cachedUser, setCachedUser, loadedCachedUser) => (
           <CurrentUserManager sharedUser={cleanUser(sharedUser)} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
             {({api, ...props}) => (
