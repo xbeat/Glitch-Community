@@ -56,7 +56,7 @@ function usersMatch(a, b) {
 // sharedUser is stored in localStorage['cachedUser']
 // cachedUser is stored in localStorage['community-cachedUser']
 // sharedUser syncs with the editor and is authoritative on id and persistentToken
-// cachedUser mirrors GET /users/{id} and is used for user name/projects/teams
+// cachedUser mirrors GET /users/{id} and is what we actually display
 
 class CurrentUserManager extends React.Component {
   constructor(props) {
@@ -116,9 +116,9 @@ class CurrentUserManager extends React.Component {
       api: this.api(),
       currentUser: cachedUser,
       fetched,
+      reload: () => this.load(),
       login: user => setSharedUser(user),
       update: changes => setCachedUser({...cachedUser, ...changes}),
-      reload: () => this.load(),
       clear: () => setSharedUser(undefined),
     });
   }
