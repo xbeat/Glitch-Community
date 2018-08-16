@@ -66,7 +66,7 @@ class TeamEditor extends React.Component {
     }));
   }
 
-  async removeUser(id) {
+  async removeUserFromTeam(id) {
     await this.props.api.delete(`teams/${this.state.id}/users/${id}`);
     this.removeUserAdmin(id);
     this.setState(({users}) => ({
@@ -76,6 +76,10 @@ class TeamEditor extends React.Component {
       const teams = this.props.currentUser.teams.filter(({id}) => id !== this.state.id);
       this.props.updateCurrentUser({teams});
     }
+  }
+  
+  async removeUserFromProjects(projects) {
+    console.log('💣 removeUserFromProjects', projects)
   }
 
   removeUserAdmin(id) {
@@ -167,7 +171,8 @@ class TeamEditor extends React.Component {
     const funcs = {
       updateDescription: description => this.updateFields({description}).catch(handleError),
       addUser: id => this.addUser(id).catch(handleError),
-      removeUser: id => this.removeUser(id).catch(handleError),
+      removeUserFromTeam: id => this.removeUserFromTeam(id).catch(handleError),
+      removeUserFromProjects: projects => this.removeUserFromProjects(projects).catch(handleError),
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
       uploadCover: () => assets.requestFile(blob => this.uploadCover(blob).catch(handleError)),
       clearCover: () => this.updateFields({hasCoverImage: false}).catch(handleError),
