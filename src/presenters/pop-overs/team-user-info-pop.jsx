@@ -107,7 +107,9 @@ const ThanksCount = ({count}) => (
 export default class TeamUserInfoPop extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      removeTeamUserVisible: false
+    };
     // this.removeFromTeam = this.removeFromTeam.bind(this);
   }
   
@@ -120,34 +122,36 @@ export default class TeamUserInfoPop extends React.Component {
     const userAvatarStyle = {backgroundColor: this.props.user.color};
     return (
       <dialog className="pop-over team-user-info-pop">
-        <section className="pop-over-info">
-          <a href={getLink(this.props.user)}>
-            <img className="avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
-          </a>
-          <div className="info-container">
-            <p className="name" title={this.props.user.name}>{this.props.user.name || "Anonymous"}</p>
-            { this.props.user.login &&
-              <p className="user-login" title={this.props.user.login}>@{this.props.user.login}</p>
-            }
-            { this.props.userIsTeamAdmin && 
-              <div className="status-badge">
-                <span className="status admin" data-tooltip="Can edit team info and billing">
-                  Team Admin
-                </span>
-              </div>
-            }
-          </div>
-        </section>
-        { this.props.user.thanksCount > 0 && <ThanksCount count={this.props.user.thanksCount} /> }
-        <UserActions user={this.props.user} />
-        { this.props.currentUserIsTeamAdmin &&
-          <AdminActions 
-            user={this.props.user}
-            userIsTeamAdmin={this.props.userIsTeamAdmin}
-            updateUserPermissions={this.props.updateUserPermissions}
-          />
+        { !this.state.removeTeamUserVisible &&
+          <section className="pop-over-info">
+            <a href={getLink(this.props.user)}>
+              <img className="avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
+            </a>
+            <div className="info-container">
+              <p className="name" title={this.props.user.name}>{this.props.user.name || "Anonymous"}</p>
+              { this.props.user.login &&
+                <p className="user-login" title={this.props.user.login}>@{this.props.user.login}</p>
+              }
+              { this.props.userIsTeamAdmin && 
+                <div className="status-badge">
+                  <span className="status admin" data-tooltip="Can edit team info and billing">
+                    Team Admin
+                  </span>
+                </div>
+              }
+            </div>
+          </section>
+          { this.props.user.thanksCount > 0 && <ThanksCount count={this.props.user.thanksCount} /> }
+          <UserActions user={this.props.user} />
+          { this.props.currentUserIsTeamAdmin &&
+            <AdminActions 
+              user={this.props.user}
+              userIsTeamAdmin={this.props.userIsTeamAdmin}
+              updateUserPermissions={this.props.updateUserPermissions}
+            />
+          }
+          { this.props.currentUserIsTeamAdmin && <RemoveFromTeam removeFromTeam={this.removeFromTeam} /> }
         }
-        { this.props.currentUserIsTeamAdmin && <RemoveFromTeam removeFromTeam={this.removeFromTeam} /> }
       </dialog>
     );
   }
