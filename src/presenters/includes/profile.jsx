@@ -78,6 +78,9 @@ CoverContainer.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
+CoverContainer.defaultProps = {
+  className: '',
+};
 
 
 // Profile Container

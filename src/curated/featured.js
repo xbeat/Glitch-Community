@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Roll Your Own Analytics',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fadalytics-live.jpg?1533554479512",
-    link: 'https://glitch.com/~adalytics-live'
+    title: 'Circles and Circles of Calm',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcalm.jpg?1534158446323",
+    link: 'https://globeards.glitch.me/calm.html'
   }, {
-    title: 'What Do The Tarot Cards Say?',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftarot.jpg?1533554480162",
-    link: 'https://tarot.glitch.me/'
+    title: 'Z-O-M-B-I-E-S',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftaptyping-vr-sgi.jpg?1534158443471",
+    link: 'https://glitch.com/~taptyping-vr-sgi'
   }, {
-    title: 'Fun With Reactive Type Size',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Freactive-type-size.jpg?1533554477214",
-    link: 'https://glitch.com/~reactive-type-size'
+    title: 'It\'s BOT LIFE Magazine!',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fbotlifemagazine.jpg?1534158441847",
+    link: 'https://glitch.com/edit/#!/botlifemagazine'
   }  
 ];

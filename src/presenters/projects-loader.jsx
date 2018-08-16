@@ -48,13 +48,20 @@ class ProjectsLoader extends React.Component {
     this.ensureProjects(this.props.projects);
   }
   
+  reloadProject(projectId) {
+    // setting the project to undefined refetches from the api (👀 ensureProjects())
+    this.setState({
+      [projectId]: undefined
+    })
+  }
+  
   render() {
     const {children, projects} = this.props;
     const loadedProjects = projects.map(project => this.state[project.id] || project);
     return (
       <CurrentUserConsumer>
         {currentUser => (
-          children(normalizeProjects(loadedProjects, currentUser))
+          children(normalizeProjects(loadedProjects, currentUser), this.reloadProject.bind(this))
         )}
       </CurrentUserConsumer>
     );

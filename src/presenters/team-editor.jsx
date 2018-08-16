@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
-import {getDisplayName, getAvatarThumbnailUrl} from '../models/user';
 
 import {CurrentUserConsumer} from './current-user.jsx';
 import ErrorHandlers from './error-handlers.jsx';
@@ -72,12 +71,12 @@ class TeamEditor extends React.Component {
   }
   
   async inviteEmail(emailAddress) {
-    console.log('💣 inviteEmail', emailAddress)
+    console.log('💣 inviteEmail', emailAddress);
     //await this.props.api.post(`teams/${this.state.id}/sendJoinEmail`, {emailAddress});
   }
 
   async inviteUser(user) {
-    console.log('💣 inviteUser', user)
+    console.log('💣 inviteUser', user);
     await new Promise(res => setTimeout(res, 100));
   }
 
@@ -144,6 +143,18 @@ class TeamEditor extends React.Component {
       teamPins: teamPins.filter(p => p.projectId !== id),
     }));
   }
+  
+  async joinTeamProject(projectId) {
+    await this.props.api.post(`/teams/${this.state.id}/projects/${projectId}/join`);    
+  }
+  
+  async leaveTeamProject(projectId, userId) {
+    await this.props.api.delete(`/projects/${projectId}/authorization`, {
+      data: {
+        targetUserId: userId,
+      },
+    });
+  }
 
   currentUserIsTeamAdmin() {
     if (!this.props.currentUser) return false;
@@ -184,6 +195,8 @@ class TeamEditor extends React.Component {
       teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
       teamHasBillingExposed: this.teamHasBillingExposed(),
       updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),
+      joinTeamProject: (projectId, userId) => this.joinTeamProject(projectId, userId).catch(handleError),
+      leaveTeamProject: (projectId, userId) => this.leaveTeamProject(projectId, userId).catch(handleError),
     };
     return this.props.children(this.state, funcs, this.currentUserIsOnTeam(), this.currentUserIsTeamAdmin());
   }

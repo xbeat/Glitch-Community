@@ -66,18 +66,18 @@ class AddTeamUserPop extends React.Component {
   
   updateWhiteListedDomain(domain) {
     this.props.togglePopover();
-    this.props.setWhitelistedDomain(domain)
+    this.props.setWhitelistedDomain(domain);
   }
   
   sendInviteEmail(email) {
-    let invitee = {email: email}
+    let invitee = {email: email};
     this.props.togglePopover();
     this.props.notifyInvited(invitee);
     this.props.inviteEmail(email);
   }
   
   sendInviteUser(user) {
-    console.log (user)
+    console.log (user);
     this.props.togglePopover();
     this.props.notifyInvited(user);
     this.props.inviteUser(user);
