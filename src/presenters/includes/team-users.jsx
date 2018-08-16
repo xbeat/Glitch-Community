@@ -31,7 +31,8 @@ export const TeamUsers = (props) => {
 TeamUsers.propTypes = {
   users: PropTypes.array.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
-  removeUser: PropTypes.func.isRequired,
+  removeUserFromTeam: PropTypes.func.isRequired,
+  removeUserFromProjects: PropTypes.func.isRequired,
   updateUserPermissions: PropTypes.func.isRequired,
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
