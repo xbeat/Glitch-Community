@@ -138,7 +138,7 @@ class AddTeamUserPop extends React.Component {
             {isLoading && <Loader />}
           </section>
         )}
-        {!query && setWhitelistedDomain && (
+        {!query && this.props.setWhitelistedDomain && (
           <aside className="pop-over-info">
             You can also whitelist with @example.com
           </aside>

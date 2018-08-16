@@ -52,7 +52,7 @@ class ProjectsLoader extends React.Component {
     // setting the project to undefined refetches from the api (👀 ensureProjects())
     this.setState({
       [projectId]: undefined
-    })
+    });
   }
   
   render() {

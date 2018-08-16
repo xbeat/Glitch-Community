@@ -120,11 +120,10 @@ UsersList.propTypes = {
 
 const adminStatusDisplay = (adminIds, user) => {
   if (adminIds.includes(user.id)) {
-    return " (admin)"
-  } else {
-    return ""
+    return " (admin)";
   }
-}
+  return "";
+};
 
 export default UsersList;
 
