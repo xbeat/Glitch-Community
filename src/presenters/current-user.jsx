@@ -109,25 +109,17 @@ class CurrentUserManager extends React.Component {
     }
   }
   
-  update(changes) {
-    const {cachedUser, sharedUser} = this.props;
-    this.props.setCachedUser({...cachedUser, ...changes});
-  }
-  
-  clear() {
-    this.props.setSharedUser(undefined);
-  }
-  
   render() {
-    const {children, cachedUser} = this.props;
+    const {children, cachedUser, setSharedUser, setCachedUser} = this.props;
     const {fetched} = this.state;
     return children({
       api: this.api(),
       currentUser: cachedUser,
       fetched,
-      update: changes => this.update(changes),
+      login: user => setSharedUser(user),
+      update: changes => setCachedUser({...cachedUser, ...changes}),
       reload: () => this.load(),
-      clear: () => this.clear(),
+      clear: () => setSharedUser(undefined),
     });
   }
 }
@@ -154,10 +146,10 @@ const cleanUser = (user) => {
 };
 
 export const CurrentUserProvider = ({children}) => (
-  <LocalStorage name="cachedUser" default={null}>
-    {(sharedUser, setSharedUser, loadedSharedUser) => (
-      <LocalStorage name="community-cachedUser" default={null}>
-        {(cachedUser, setCachedUser, loadedCachedUser) => (
+  <LocalStorage name="community-cachedUser" default={null}>
+    {(cachedUser, setCachedUser, loadedCachedUser) => (
+      <LocalStorage name="cachedUser" default={null}>
+        {(sharedUser, setSharedUser, loadedSharedUser) => (
           <CurrentUserManager sharedUser={cleanUser(sharedUser)} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
             {({api, ...props}) => (
               <Provider value={props}>
