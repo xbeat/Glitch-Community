@@ -42,6 +42,12 @@ function identifyUser(user) {
   }
 }
 
+// This takes sharedUser and cachedUser
+// sharedUser is stored in localStorage['cachedUser']
+// cachedUser is stored in localStorage['community-cachedUser']
+// sharedUser syncs with the editor and is authoritative on id and persistentToken
+// cachedUser mirrors GET /users/{id} and is used for user name/projects/teams
+
 class CurrentUserManager extends React.Component {
   constructor(props) {
     super(props);
@@ -64,26 +70,34 @@ class CurrentUserManager extends React.Component {
   
   async load() {
     this.setState({fetched: false});
-    const {currentUser, setCurrentUser} = this.props;
-    if (currentUser) {
-      const {data} = await this.api().get(`users/${currentUser.id}`);
-      setCurrentUser(data);
+    const {sharedUser, cachedUser} = this.props;
+    if (sharedUser) {
+      const {data} = await this.api().get(`users/${sharedUser.id}`);
+      this.props.setCachedUser(data);
       this.setState({fetched: true});
+      identifyUser(data);
+    } else {
+      if (cachedUser) {
+        this.props.setCachedUser(undefined);
+      }
+      identifyUser(null);
     }
-    identifyUser(currentUser);
   }
   
   componentDidMount() {
-    this.load();
+    const {sharedUser, cachedUser} = this.props;
+    if (sharedUser || cachedUser) {
+      this.load();
+    }
   }
   
   componentDidUpdate(prev) {
-    const {currentUser} = this.props;
-    const prevUser = prev.currentUser;
-    if (!currentUser && prevUser) {
+    const {sharedUser, cachedUser} = this.props;
+    const prevUser = prev.sharedUser;
+    if (!sharedUser && prevUser) {
       this.load();
-    } else if (currentUser && (!prevUser || currentUser.id !== prevUser.id ||
-      currentUser.persistentToken !== prevUser.persistentToken
+    } else if (sharedUser && (!prevUser || cachedUser.id !== sharedUser.id ||
+      cachedUser.persistentToken !== sharedUser.persistentToken
     )) {
       this.load();
     }
