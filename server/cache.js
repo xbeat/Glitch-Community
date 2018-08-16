@@ -7,19 +7,14 @@ const {API_URL} = require('./constants');
 
 const fs_writeFile = util.promisify(fs.writeFile);
 
-const updateCache = async type => {
-  let response = await axios.get(`${API_URL}${type}`, {
-    transformResponse: (data) => data // Override the default object transform
+const cache = null;
+
+const getCategories = async () => {
+  let response = await axios.get('categories', {
+    baseUrl: API_URL,
+    transformResponse: (data) => data // Don't bother parsing the JSON
   });
-  let json = response.data;
-  
-  try {
-    let fileContents = `export default ${json}`
-    await fs_writeFile(`./src/cache/${type}.js`, fileContents);
-    console.log(`☂️ ${type} re-cached`);
-  } catch (error) {
-    console.error("☔️", error);
-  }
+  return response.data;
 };
 
 const updateCaches = async () => {
@@ -27,11 +22,15 @@ const updateCaches = async () => {
   console.log("☂️ cache updated");
 };
 
-const CACHE_INTERVAL = moment.duration(10, 'minutes').asMilliseconds();
 
 const initCache = () => {
-  setInterval(updateCaches, CACHE_INTERVAL);
+  const interval = moment.duration(10, 'minutes').asMilliseconds();
+  setInterval(updateCaches, interval);
   updateCaches();
+};
+
+const getCache = () => {
+  return {categories};
 };
 
 module.exports = {initCache, updateCaches};
