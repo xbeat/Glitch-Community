@@ -1,6 +1,6 @@
 import React from 'react';
 
-import categories from '../cache/categories';
+const categories = window.CATEGORIES;
   
 const Categories = () => (
   <section className="categories" role="navigation">

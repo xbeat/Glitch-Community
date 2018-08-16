@@ -34,10 +34,13 @@
     <link rel="stylesheet" type="text/css" href="<%= styles[i] %>">
     <% } %>
 
+    <% for (let i = 0; i < scripts.length; ++i) { %>
+    <script src="<%= scripts[i] %>" defer></script>
+    <% } %>
   </head>
   <body> 
     <script>
-      var CACHE = <%- CACHE %>;
+      var CATEGORIES = <%- CATEGORIES %>;
       var APP_URL = '<%= APP_URL %>';
       var API_URL = '<%= API_URL %>';
       var EDITOR_URL = '<%= EDITOR_URL %>';
@@ -67,8 +70,5 @@
         serverName: '<%= PROJECT_DOMAIN %>'
       }).install();
     </script>
-    <% for (let i = 0; i < scripts.length; ++i) { %>
-    <script src="<%= scripts[i] %>" async></script>
-    <% } %>
   </body>
 </html>

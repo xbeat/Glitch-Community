@@ -8,7 +8,7 @@ let categories = Promise.resolve('[]');
 const getCategories = async () => {
   let response = await axios.get('categories', {
     baseURL: API_URL,
-    //transformResponse: (data) => data // Don't bother parsing the JSON
+    transformResponse: (data) => data // Don't bother parsing the JSON
   });
   console.log("☂️ categories updated");
   return response.data;
@@ -30,10 +30,8 @@ const initCaches = () => {
   categories = getCategories();
 };
 
-const getCaches = async () => {
-  return JSON.stringify({
-    categories: await categories,
-  });
+module.exports = {
+  initCaches,
+  updateCaches,
+  getCategories: () => categories,
 };
-
-module.exports = {initCaches, updateCaches, getCaches};

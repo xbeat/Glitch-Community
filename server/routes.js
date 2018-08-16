@@ -3,7 +3,7 @@ const fs = require('fs');
 const moment = require('moment-mini');
 
 const {getProject, getTeam, getUser} = require('./api');
-const {getCaches, updateCaches} = require('./cache');
+const {getCategories, updateCaches} = require('./cache');
 const constants = require('./constants');
 
 module.exports = function() {
@@ -49,7 +49,7 @@ module.exports = function() {
       title, description, image,
       scripts: Object.values(scripts),
       styles: Object.values(styles),
-      CACHE: await getCaches(),
+      CATEGORIES: await getCategories(),
       PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
       ENVIRONMENT: process.env.NODE_ENV || "dev",
       ...constants,
