@@ -49,12 +49,11 @@ class CurrentUserManager extends React.Component {
   }
   
   api() {
-    const token = this.props.currentUser && this.props.currentUser.persistentToken;
-    if (token) {
+    if (this.props.sharedUser) {
       return axios.create({
         baseURL: API_URL,
         headers: {
-          Authorization: token,
+          Authorization: this.props.sharedUser.persistentToken,
         },
       });
     } 
@@ -75,9 +74,7 @@ class CurrentUserManager extends React.Component {
   }
   
   componentDidMount() {
-    if (this.props.currentUser) {
-      this.load();
-    }
+    this.load();
   }
   
   componentDidUpdate(prev) {
@@ -92,18 +89,38 @@ class CurrentUserManager extends React.Component {
     }
   }
   
+  update(changes) {
+    this.props.setCurrentUser({...this.props.currentUser, ...changes});
+    if (changes.id || changes.persistentToken) {
+      this.load();
+    }
+  }
+  
+  clear() {
+    this.props.setCurrentUser(undefined);
+  }
+  
   render() {
-    const {children, currentUser, setCurrentUser} = this.props;
+    const {children, currentUser} = this.props;
     const {fetched} = this.state;
     return children({
       api: this.api(),
       currentUser, fetched,
-      update: changes => setCurrentUser({...currentUser, ...changes}),
+      update: changes => this.update(changes),
       reload: () => this.load(),
-      clear: () => setCurrentUser(undefined),
+      clear: () => this.clear(),
     });
   }
 }
+CurrentUserManager.propTypes = {
+  sharedUser: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    persistentToken: PropTypes.string.isRequired,
+  }),
+  setSharedUser: PropTypes.func.isRequired,
+  cachedUser: PropTypes.object,
+  setCachedUser: PropTypes.func.isRequired,
+};
 
 const cleanUser = (user) => {
   if (!user) {
@@ -119,14 +136,18 @@ const cleanUser = (user) => {
 
 export const CurrentUserProvider = ({children}) => (
   <LocalStorage name="cachedUser" default={null} ignoreChanges={true}>
-    {(currentUser, set, loaded) => (
-      <CurrentUserManager currentUser={cleanUser(currentUser)} setCurrentUser={set}>
-        {({api, ...props}) => (
-          <Provider value={props}>
-            {loaded && children(api)}
-          </Provider>
+    {(sharedUser, setSharedUser, loadedSharedUser) => (
+      <LocalStorage name="community-cachedUser" default={null} ignoreChanges={true}>
+        {(cachedUser, setCachedUser, loadedCachedUser) => (
+          <CurrentUserManager sharedUser={cleanUser(sharedUser)} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
+            {({api, ...props}) => (
+              <Provider value={props}>
+                {loadedSharedUser && loadedCachedUser && children(api)}
+              </Provider>
+            )}
+          </CurrentUserManager>
         )}
-      </CurrentUserManager>
+      </LocalStorage>
     )}
   </LocalStorage>
 );
