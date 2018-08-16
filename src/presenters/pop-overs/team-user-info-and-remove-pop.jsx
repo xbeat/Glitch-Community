@@ -9,9 +9,9 @@ const ADMIN_ACCESS_LEVEL = 30;
 
 // Remove from Team 👋
 
-const RemoveFromTeam = ({toggleUserInfoVisible}) => (
+const RemoveFromTeam = ({toggleUserInfoHidden}) => (
   <section className="pop-over-actions danger-zone">
-    <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={toggleUserInfoVisible}>
+    <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={toggleUserInfoHidden}>
       Remove from Team
       <span className="emoji wave" />
     </button>
@@ -19,7 +19,7 @@ const RemoveFromTeam = ({toggleUserInfoVisible}) => (
 );
 
 RemoveFromTeam.propTypes = {
-  toggleUserInfoVisible: PropTypes.func.isRequired,
+  toggleUserInfoHidden: PropTypes.func.isRequired,
 };
 
 
@@ -104,7 +104,7 @@ const ThanksCount = ({count}) => (
 
 // Team User Info 😍
 
-const TeamUserInfo = ({toggleUserInfoVisible, ...props}) => {
+const TeamUserInfo = ({toggleUserInfoHidden, ...props}) => {
   const userAvatarStyle = {backgroundColor: props.user.color};
   return (
     <dialog className="pop-over team-user-info-pop">
@@ -135,13 +135,13 @@ const TeamUserInfo = ({toggleUserInfoVisible, ...props}) => {
           updateUserPermissions={props.updateUserPermissions}
         />
       }
-      { props.currentUserIsTeamAdmin && <RemoveFromTeam toggleUserInfoVisible={() => toggleUserInfoVisible()} /> }
+      { props.currentUserIsTeamAdmin && <RemoveFromTeam toggleUserInfoHidden={() => toggleUserInfoHidden()} /> }
     </dialog>
   )
 }
 
 TeamUserInfo.propTypes = {
-  toggleUserInfoVisible: PropTypes.func.isRequired,
+  toggleUserInfoHidden: PropTypes.func.isRequired,
 }
 
 
@@ -149,7 +149,19 @@ TeamUserInfo.propTypes = {
 
 const TeamUserRemove = (props, toggleUserInfoVisible) => {
   return (
-    <p>yolooo</p>
+    <dialog className="pop-over team-user-info-pop">
+      <section className="pop-over-info clickable-label" click={toggleUserInfoVisible}>
+        <div className="back icon">
+          <div className="left-arrow icon" />
+        </div>
+        <div className="pop-title">
+          <span>hiii</span>
+        </div>
+      </section>
+      <section className="pop-over-actions">
+        suup
+      </section>
+    </dialog>
   )
 }
 
@@ -168,7 +180,7 @@ export default class TeamUserInfoAndRemovePop extends React.Component {
       userInfoVisible: true
     };
     // this.removeFromTeam = this.removeFromTeam.bind(this);
-    this.toggleUserInfoVisible = this.toggleUserInfoVisible.bind(this);
+    this.toggleUserInfoHidden = this.toggleUserInfoHidden.bind(this);
   }
   
   // removeFromTeam() {
@@ -176,10 +188,15 @@ export default class TeamUserInfoAndRemovePop extends React.Component {
   //   this.props.removeUserFromTeam(this.props.user.id);
   // }
   
-  toggleUserInfoVisible() {
-    console.log ('📟')
+  toggleUserInfoHidden() {
     this.setState({
       userInfoVisible: false
+    })
+  }
+
+  toggleUserInfoVisible() {
+    this.setState({
+      userInfoVisible: true
     })
   }
   
@@ -189,7 +206,7 @@ export default class TeamUserInfoAndRemovePop extends React.Component {
         { this.state.userInfoVisible &&
           <TeamUserInfo
             {...this.props}
-            toggleUserInfoVisible={() => this.toggleUserInfoVisible()}
+            toggleUserInfoHidden={() => this.toggleUserInfoHidden()}
           />
         ||
           <TeamUserRemove 
