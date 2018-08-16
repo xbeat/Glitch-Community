@@ -12,7 +12,7 @@ Raven.config('https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508', {
   },
 }).install();
 
-require("./cache").initCache();
+require("./cache").initCaches();
 
 const app = express();
 
