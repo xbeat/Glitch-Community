@@ -91,5 +91,5 @@ export default [
     "color": "#a3c4fd",
     "description": "The sounds of music created, connected, visualized and remixed.",
     "backgroundColor": "rgba(162, 193, 255, 0.5)",
-  }
+  },
 ];
