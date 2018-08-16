@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Circles and Circles of Calm',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcalm.jpg?1534158446323",
-    link: 'https://globeards.glitch.me/calm.html'
+    title: 'Remixable Machine Learning',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fteachable-redux.jpg?1534158444382",
+    link: 'https://glitch.com/~teachable-redux'
   }, {
-    title: 'Z-O-M-B-I-E-S',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftaptyping-vr-sgi.jpg?1534158443471",
-    link: 'https://glitch.com/~taptyping-vr-sgi'
+    title: 'Soothing CSS Pendulum',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fswanky-bridge.jpg?1534158442684",
+    link: 'https://glitch.com/~swanky-bridge'
   }, {
-    title: 'It\'s BOT LIFE Magazine!',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fbotlifemagazine.jpg?1534158441847",
-    link: 'https://glitch.com/edit/#!/botlifemagazine?path=README.md:1:0'
+    title: '~Super Wavy Text~',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fwavywavy.jpg?1534158445157",
+    link: 'https://glitch.com/~wavywavy'
   }  
 ];
