@@ -42,10 +42,15 @@ function identifyUser(user) {
   }
 }
 
+// Test if two user objects reference the same person
 function usersMatch(a, b) {
-  if ((a && !b) || (!a && b)) {
-    return false;
-  } else if (a && B && a.id === b.id && a.
+  if (a && b && a.id === b.id && a.persistentToken === b.persistentToken) {
+    return true;
+  } else if (!a && !b) {
+    return true;
+  }
+  return false;
+}
 
 // This takes sharedUser and cachedUser
 // sharedUser is stored in localStorage['cachedUser']
@@ -74,19 +79,18 @@ class CurrentUserManager extends React.Component {
   }
   
   async load() {
-    this.setState({fetched: false});
     const {sharedUser, cachedUser} = this.props;
+    console.log(sharedUser, cachedUser);
+    if (!usersMatch(sharedUser, cachedUser)) {
+      this.props.setCachedUser(sharedUser);
+    }
+    this.setState({fetched: false});
     if (sharedUser) {
-      if (!cachedUser) {
-      }
       const {data} = await this.api().get(`users/${sharedUser.id}`);
       this.props.setCachedUser(data);
       this.setState({fetched: true});
       identifyUser(data);
     } else {
-      if (cachedUser) {
-        this.props.setCachedUser(undefined);
-      }
       identifyUser(null);
     }
   }
@@ -100,20 +104,13 @@ class CurrentUserManager extends React.Component {
   
   componentDidUpdate(prev) {
     const {sharedUser, cachedUser} = this.props;
-    if (!sharedUser && cachedUser) {
-      this.props.setCachedUser(undefined);
-      this.load();
-    } else if (sharedUser && (!prev.sharedUser || !cachedUser || cachedUser.id !== sharedUser.id ||
-      cachedUser.persistentToken !== sharedUser.persistentToken
-    )) {
-      this.props.setCachedUser(sharedUser);
+    if (!usersMatch(sharedUser, cachedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
       this.load();
     }
   }
   
   update(changes) {
     const {cachedUser, sharedUser} = this.props;
-    if (!sharedUser || changes.id
     this.props.setCachedUser({...cachedUser, ...changes});
   }
   
