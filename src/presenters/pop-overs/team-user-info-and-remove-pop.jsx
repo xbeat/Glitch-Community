@@ -147,15 +147,17 @@ TeamUserInfo.propTypes = {
 
 // Team User Remove 💣
 
-const TeamUserRemove = (props, toggleUserInfoVisible) => {
+const TeamUserRemove = ({props, toggleUserInfoVisible}) => {
+  console.log (props)
   return (
     <dialog className="pop-over team-user-info-pop">
-      <section className="pop-over-info clickable-label" click={toggleUserInfoVisible}>
+      <section className="pop-over-info clickable-label" onClick={toggleUserInfoVisible}>
         <div className="back icon">
           <div className="left-arrow icon" />
         </div>
         <div className="pop-title">
-          <span>hiii</span>
+          <span>Remove </span>
+          <span>{props.user.name || props.user.login}</span>
         </div>
       </section>
       <section className="pop-over-actions">
@@ -167,6 +169,13 @@ const TeamUserRemove = (props, toggleUserInfoVisible) => {
 
 TeamUserRemove.propTypes = {
   toggleUserInfoVisible: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    login: PropTypes.string,
+    thanksCount: PropTypes.number.isRequired,
+    isOnTeam: PropTypes.bool,
+    color: PropTypes.string,
+  }).isRequired,
 }
 
 
@@ -179,7 +188,7 @@ export default class TeamUserInfoAndRemovePop extends React.Component {
     this.state = {
       userInfoVisible: true
     };
-    // this.removeFromTeam = this.removeFromTeam.bind(this);
+    this.toggleUserInfoVisible = this.toggleUserInfoVisible.bind(this);
     this.toggleUserInfoHidden = this.toggleUserInfoHidden.bind(this);
   }
   
