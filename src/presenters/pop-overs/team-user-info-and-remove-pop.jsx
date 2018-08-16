@@ -147,7 +147,7 @@ TeamUserInfo.propTypes = {
 
 // Team User Remove 💣
 
-const TeamUserRemove = ({props, toggleUserInfoVisible}) => {
+const TeamUserRemove = ({toggleUserInfoVisible, ...props}) => {
   console.log (props)
   return (
     <dialog className="pop-over team-user-info-pop">
@@ -157,7 +157,7 @@ const TeamUserRemove = ({props, toggleUserInfoVisible}) => {
         </div>
         <div className="pop-title">
           <span>Remove </span>
-          <span>{props.user.name || props.user.login}</span>
+          <span>{props.user.name || props.user.login || props.user.id}</span>
         </div>
       </section>
       <section className="pop-over-actions">
