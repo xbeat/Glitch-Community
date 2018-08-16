@@ -14,13 +14,17 @@ export const TeamUsers = (props) => {
   let userIsTeamAdmin = (user) => {
     return props.adminIds.includes(user.id);
   };
+  
+  // let removeUserPopVisible = () => {
+  // }
+  
   return (
     <UserPopoversList users={props.users} adminIds={props.adminIds}>
       {(user, togglePopover) => 
         <TeamUserInfoPop 
           userIsTeamAdmin={userIsTeamAdmin(user)}
-          togglePopover={togglePopover} 
-          user={user} 
+          togglePopover={togglePopover}
+          user={user}
           {...props}
         />
       }

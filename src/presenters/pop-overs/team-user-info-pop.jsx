@@ -108,13 +108,13 @@ export default class TeamUserInfoPop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.removeFromTeam = this.removeFromTeam.bind(this);
+    // this.removeFromTeam = this.removeFromTeam.bind(this);
   }
   
-  removeFromTeam() {
-    this.props.togglePopover();
-    this.props.removeUserFromTeam(this.props.user.id);
-  }
+  // removeFromTeam() {
+  //   this.props.togglePopover();
+  //   this.props.removeUserFromTeam(this.props.user.id);
+  // }
 
   render() {
     const userAvatarStyle = {backgroundColor: this.props.user.color};
@@ -162,8 +162,7 @@ TeamUserInfoPop.propTypes = {
     color: PropTypes.string,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
-  removeUserFromTeam: PropTypes.func.isRequired,
-  removeUserFromProjects: PropTypes.func.isRequired,
+  // removeUserPopVisible: PropTypes.func.isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
