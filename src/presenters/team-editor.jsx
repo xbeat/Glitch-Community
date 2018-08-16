@@ -129,6 +129,18 @@ class TeamEditor extends React.Component {
       teamPins: teamPins.filter(p => p.projectId !== id),
     }));
   }
+  
+  async joinTeamProject(projectId) {
+    await this.props.api.post(`/teams/${this.state.id}/projects/${projectId}/join`);    
+  }
+  
+  async leaveTeamProject(projectId, userId) {
+    await this.props.api.delete(`/projects/${projectId}/authorization`, {
+      data: {
+        targetUserId: userId,
+      },
+    });
+  }
 
   currentUserIsTeamAdmin() {
     if (!this.props.currentUser) return false;
@@ -166,6 +178,8 @@ class TeamEditor extends React.Component {
       teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
       teamHasBillingExposed: this.teamHasBillingExposed(),
       updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),
+      joinTeamProject: (projectId, userId) => this.joinTeamProject(projectId, userId).catch(handleError),
+      leaveTeamProject: (projectId, userId) => this.leaveTeamProject(projectId, userId).catch(handleError),
     };
     return this.props.children(this.state, funcs, this.currentUserIsOnTeam(), this.currentUserIsTeamAdmin());
   }

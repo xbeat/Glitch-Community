@@ -19,13 +19,11 @@ function syncPageToLogin(login) {
 
 const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
   if(!login) {
-    // Just an ID? We're anonymous.
-    return <h1 className="login">@{id}</h1>;
+    return <h1 className="login">Anonymous</h1>;
   }
 
   if(!isAuthorized) {
     if(!name) {
-      //promote login to an h1.
       return <h1 className="login">@{login}</h1>;
     }
     return (
@@ -87,9 +85,16 @@ const UserPage = ({
       </ProfileContainer>
     </section>
     <EntityPageProjects
-      projects={projects} pins={pins} isAuthorized={isAuthorized}
-      api={api} addPin={addPin} removePin={removePin}
-      projectOptions={{leaveProject, deleteProject}}
+      projects={projects} 
+      pins={pins} 
+      isAuthorized={isAuthorized}
+      api={api} 
+      addPin={addPin} 
+      removePin={removePin}
+      projectOptions={{
+        leaveProject, 
+        deleteProject
+      }}
     />
     {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
   </main>
