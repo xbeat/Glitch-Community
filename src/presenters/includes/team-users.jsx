@@ -92,25 +92,25 @@ export class AddTeamUser extends React.Component {
   }
   
   updateInviteSent(entity) {
-    console.log ('sd',entity)
+    console.log ('updateInviteSent', entity)
     this.setState({
       notifyInviteSentVisible: true,
       invitee: entity,
     })
-  
+
   // call either
   // this.props.inviteEmail(params) {}
   // this.props.inviteUser  
   }
-  
+
   removeInviteSent(name) {
     this.setState({
       notifyInviteSentVisible: false,
     })
   }
-    
+
   render() {
-    return(
+    return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <span className="add-user-container">
@@ -118,7 +118,7 @@ export class AddTeamUser extends React.Component {
             {this.state.notifyInviteSentVisible &&
               <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeInviteSent}>
                 <span>Invited </span>
-                <span>{}</span>
+                <span>{this.state.invitee}</span>
               </div>
             }
             {visible && 

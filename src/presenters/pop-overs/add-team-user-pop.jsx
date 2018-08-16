@@ -65,6 +65,8 @@ class AddTeamUserPop extends React.Component {
     this.props.togglePopover();
     func(...params);
     if (inlineNotifyInviteSent) {
+      console.log ('🚒')
+      console.log('👀',...params, inlineNotifyInviteSent)
       this.props.updateInviteSent(...params)
     }
   }

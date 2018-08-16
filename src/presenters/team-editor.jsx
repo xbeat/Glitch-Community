@@ -82,12 +82,14 @@ class TeamEditor extends React.Component {
   }
   
   async inviteEmail(emailAddress) {
+    console.log('💣 inviteEmail', emailAddress)
     //await this.props.api.post(`teams/${this.state.id}/sendJoinEmail`, {emailAddress});
     // const notification = <InvitedNotification name={emailAddress}/>;
     // this.props.createNotification(notification, 'notifySuccess');
   }
 
   async inviteUser(user) {
+    console.log('💣 inviteUser', user)
     await new Promise(res => setTimeout(res, 100));
     // const notification = <InvitedNotification name={getDisplayName(user)} avatar={getAvatarThumbnailUrl(user)} color={user.color}/>;
     // this.props.createNotification(notification, 'notifySuccess');

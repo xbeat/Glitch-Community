@@ -11,7 +11,6 @@ const UserResultItem = ({user, action}) => {
   const {login, thanksCount} = user;
   
   const handleClick = (event) => {
-    console.log('💣');
     action(event);
   };
 
