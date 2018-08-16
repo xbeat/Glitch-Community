@@ -104,7 +104,7 @@ const ThanksCount = ({count}) => (
 
 // Team User Info 😍
 
-const TeamUserInfo = (props, toggleUserInfoVisible) => {
+const TeamUserInfo = ({toggleUserInfoVisible, ...props}) => {
   const userAvatarStyle = {backgroundColor: props.user.color};
   return (
     <dialog className="pop-over team-user-info-pop">
@@ -176,10 +176,10 @@ export default class TeamUserInfoAndRemovePop extends React.Component {
   //   this.props.removeUserFromTeam(this.props.user.id);
   // }
   
-  toggleUserInfoVisible(prevState) {
-    console.log ('📟', prevState)
+  toggleUserInfoVisible() {
+    console.log ('📟')
     this.setState({
-      userInfoVisible: !prevState.userInfoVisible
+      userInfoVisible: false
     })
   }
   
