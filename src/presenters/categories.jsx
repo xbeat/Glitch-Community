@@ -1,6 +1,6 @@
 import React from 'react';
 
-const categories = window.CATEGORIES;
+import categories from '../curated/categories';
   
 const Categories = () => (
   <section className="categories" role="navigation">

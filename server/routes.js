@@ -3,7 +3,6 @@ const fs = require('fs');
 const moment = require('moment-mini');
 
 const {getProject, getTeam, getUser} = require('./api');
-const {getCategories, updateCaches} = require('./cache');
 const constants = require('./constants');
 
 module.exports = function() {
@@ -34,14 +33,9 @@ module.exports = function() {
     return next();
   });
 
-  app.post('/update-caches', async (request, response) => {
-    await updateCaches();
-    response.sendStatus(200);
-  });
-
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
 
-  async function render(res, title, description, image=imageDefault) {
+  function render(res, title, description, image=imageDefault) {
     const scripts = JSON.parse(fs.readFileSync('public/scripts.json'));
     const styles = JSON.parse(fs.readFileSync('public/styles.json'));
 
@@ -49,7 +43,6 @@ module.exports = function() {
       title, description, image,
       scripts: Object.values(scripts),
       styles: Object.values(styles),
-      CATEGORIES: await getCategories(),
       PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
       ENVIRONMENT: process.env.NODE_ENV || "dev",
       ...constants,

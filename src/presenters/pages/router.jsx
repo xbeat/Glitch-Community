@@ -5,7 +5,7 @@ import qs from 'querystringify';
 import {Route, Switch} from 'react-router-dom';
 import Helmet from 'react-helmet';
 
-const categories = window.CATEGORIES;
+import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
 
 import IndexPage from './index.jsx';
