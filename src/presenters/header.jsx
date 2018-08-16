@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import moment from 'moment-mini';
 import {getAvatarThumbnailUrl, getLink} from '../models/user';
 
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
@@ -10,7 +11,7 @@ import NewProjectPop from "./pop-overs/new-project-pop.jsx";
 import NewStuffContainer from './overlays/new-stuff.jsx';
 import {CurrentUserConsumer} from './current-user.jsx';
 
-class Logo extends React.Component {
+class Logo extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,11 +24,12 @@ class Logo extends React.Component {
       this.setState({
         hour: (new Date()).getHours(),
       });
-    }, 100000);
+    }, moment.duration(5, 'minutes').asMilliseconds());
   }
   
   componentWillUnmount() {
-    t
+    window.clearInterval(this.interval);
+  }
   
   render() {
     const {hour} = this.state;
