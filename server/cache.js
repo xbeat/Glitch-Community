@@ -3,7 +3,7 @@ const moment = require('moment-mini');
 
 const {API_URL} = require('./constants');
 
-let categories;
+let categories; // a promise that returns a json string
 
 const getCategories = async () => {
   let response = await axios.get('categories', {
