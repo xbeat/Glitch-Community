@@ -14,7 +14,7 @@ const getCategories = async () => {
 };
 
 const updateCaches = async () => {
-  // Wait until the catgegories are loaded then instantly swap
+  // Wait until the categories are loaded then instantly swap
   try {
     const newCategories = await getCategories();
     categories = Promise.resolve(newCategories);
