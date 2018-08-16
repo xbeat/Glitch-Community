@@ -84,28 +84,24 @@ export class AddTeamUser extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
-      notifyInviteSentVisible: false,
+      notifyInvitedVisible: false,
       invitee: '',
     };
-    this.updateInviteSent = this.updateInviteSent.bind(this);
-    this.removeInviteSent = this.removeInviteSent.bind(this);
+    this.notifyInvited = this.notifyInvited.bind(this);
+    this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
   
-  updateInviteSent(entity) {
-    console.log ('updateInviteSent', entity)
+  notifyInvited(invitee) {
+    console.log ('notifyInvited', invitee)
     this.setState({
-      notifyInviteSentVisible: true,
-      invitee: entity,
+      notifyInvitedVisible: true,
+      invitee: invitee,
     })
-
-  // call either
-  // this.props.inviteEmail(params) {}
-  // this.props.inviteUser  
   }
 
-  removeInviteSent(name) {
+  removeNotifyInvited(name) {
     this.setState({
-      notifyInviteSentVisible: false,
+      notifyInvitedVisible: false,
     })
   }
 
@@ -115,8 +111,8 @@ export class AddTeamUser extends React.Component {
         {({visible, togglePopover}) => (
           <span className="add-user-container">
             <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
-            {this.state.notifyInviteSentVisible &&
-              <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeInviteSent}>
+            {this.state.notifyInvitedVisible &&
+              <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeNotifyInvited}>
                 <span>Invited </span>
                 <span>{this.state.invitee}</span>
               </div>
@@ -125,7 +121,7 @@ export class AddTeamUser extends React.Component {
               <AddTeamUserPop 
                 {...this.props}
                 togglePopover={togglePopover}
-                updateInviteSent={() => this.updateInviteSent()}
+                notifyInvited={(invitee) => this.notifyInvited(invitee)}
               />
             }
           </span>

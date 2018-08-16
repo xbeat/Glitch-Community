@@ -21,6 +21,9 @@ class AddTeamUserPop extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.startSearch = debounce(this.startSearch.bind(this), 300);
+    this.updateWhiteListedDomain = this.updateWhiteListedDomain.bind(this);
+    this.sendInviteEmail = this.sendInviteEmail.bind(this);
+    this.sendInviteUser = this.sendInviteUser.bind(this);
   }
   
   handleChange(evt) {
@@ -63,17 +66,34 @@ class AddTeamUserPop extends React.Component {
   
   updateWhiteListedDomain(domain) {
     this.props.togglePopover();
+    this.props.setWhitelistedDomain(domain)
   }
   
-  togglePopoverAnd(action, params) {
+  sendInviteEmail(email) {
+    console.log ('sendInviteEmail', email)
     this.props.togglePopover();
-    if (action === 'setWhitelistedDomain') {
-      this.props.setWhitelistedDomain(params.domain)
-    } else {
-      console.log('👀',params)
-      this.props.updateInviteSent(params)
-    }
+    this.props.notifyInvited(email);
+    this.props.inviteEmail(email);
   }
+  
+  sendInviteUser(user) {
+    this.props.togglePopover();
+    this.props.notifyInvited(user);
+    this.props.inviteUser(user);
+  }
+  
+  
+  // sendInviteUser(user)
+  
+  // togglePopoverAnd(action, params) {
+  //   this.props.togglePopover();
+  //   if (action === 'setWhitelistedDomain') {
+  //     this.props.setWhitelistedDomain(params.domain)
+  //   } else {
+  //     console.log('👀',params)
+  //     this.props.notifyInvited(params)
+  //   }
+  // }
   
   render() {
     // const {inviteEmail, inviteUser, setWhitelistedDomain} = this.props;
@@ -91,14 +111,14 @@ class AddTeamUserPop extends React.Component {
       if (name && email) {
         results.push({
           key: 'invite-by-email',
-          item: <InviteByEmail email={email} onClick={() => this.togglePopoverAnd('inviteEmail', email)}/>,
+          item: <InviteByEmail email={email} onClick={() => this.sendInviteEmail(email)}/>,
         });
       }
       const prevDomain = this.props.whitelistedDomain;
       if (domain && this.props.setWhitelistedDomain && prevDomain !== domain) {
         results.push({
           key: 'whitelist-email-domain',
-          item: <WhitelistEmailDomain domain={domain} prevDomain={prevDomain} onClick={() => this.togglePopoverAnd('setWhitelistedDomain', domain)}/>,
+          item: <WhitelistEmailDomain domain={domain} prevDomain={prevDomain} onClick={() => this.updateWhiteListedDomain(domain)}/>,
         });
       }
     }
@@ -106,7 +126,7 @@ class AddTeamUserPop extends React.Component {
     if (maybeResults) {
       results.push(...maybeResults.map(user => ({
         key: user.id,
-        item: <UserResultItem user={user} action={() => this.togglePopoverAnd('inviteUser', user)} />
+        item: <UserResultItem user={user} action={() => this.sendInviteUser(user)} />
       })));
     }
     return (
@@ -135,13 +155,13 @@ class AddTeamUserPop extends React.Component {
 }
 AddTeamUserPop.propTypes = {
   api: PropTypes.func.isRequired,
-  // inviteEmail: PropTypes.func.isRequired,
-  // inviteUser: PropTypes.func.isRequired,
+  inviteEmail: PropTypes.func.isRequired,
+  inviteUser: PropTypes.func.isRequired,
   members: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   setWhitelistedDomain: PropTypes.func,
   whitelistedDomain: PropTypes.string,
   togglePopover: PropTypes.func.isRequired,
-  updateInviteSent: PropTypes.func.isRequired,
+  notifyInvited: PropTypes.func.isRequired,
 };
 
 export default AddTeamUserPop;
