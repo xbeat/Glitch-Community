@@ -54,7 +54,9 @@ export const WhitelistedDomain = ({domain, setDomain}) => {
           </summary>
           <dialog className="pop-over">
             <section className="pop-over-info">
-              {tooltip}
+              <p className="info-description">
+                {tooltip}
+              </p>
             </section>
             {!!setDomain && (
               <section className="pop-over-actions danger-zone">
@@ -78,21 +80,56 @@ WhitelistedDomain.propTypes = {
 
 // Add Team User
 
-export const AddTeamUser = (props) => (
-  <PopoverContainer>
-    {({visible, togglePopover}) => (
-      <span className="add-user-container">
-        <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
-        {visible && 
-          <AddTeamUserPop 
-            {...props}
-            togglePopover={togglePopover}
-          />
-        }
-      </span>
-    )}
-  </PopoverContainer>
-);
+export class AddTeamUser extends React.Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+      notifyInvitedVisible: false,
+      invitee: '',
+    };
+    this.notifyInvited = this.notifyInvited.bind(this);
+    this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
+  }
+  
+  notifyInvited(invitee) {
+    invitee = invitee.name || invitee.login || invitee.email
+    this.setState({
+      notifyInvitedVisible: true,
+      invitee: invitee
+    })
+  }
+
+  removeNotifyInvited() {
+    this.setState({
+      notifyInvitedVisible: false,
+    })
+  }
+
+  render() {
+    return (
+      <PopoverContainer>
+        {({visible, togglePopover}) => (
+          <span className="add-user-container">
+            <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
+            {this.state.notifyInvitedVisible &&
+              <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeNotifyInvited}>
+                <span>Invited </span>
+                <span>{this.state.invitee}</span>
+              </div>
+            }
+            {visible && 
+              <AddTeamUserPop 
+                {...this.props}
+                togglePopover={togglePopover}
+                notifyInvited={(invitee) => this.notifyInvited(invitee)}
+              />
+            }
+          </span>
+        )}
+      </PopoverContainer>
+    )
+  }
+};
 
 // Join Team
 
