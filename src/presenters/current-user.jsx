@@ -93,33 +93,33 @@ class CurrentUserManager extends React.Component {
   
   componentDidUpdate(prev) {
     const {sharedUser, cachedUser} = this.props;
-    const prevUser = prev.sharedUser;
-    if (!sharedUser && prevUser) {
+    if (!sharedUser && cachedUser) {
+      this.props.setCachedUser(undefined);
       this.load();
-    } else if (sharedUser && (!prevUser || cachedUser.id !== sharedUser.id ||
+    } else if (sharedUser && (!prev.sharedUser || !cachedUser || cachedUser.id !== sharedUser.id ||
       cachedUser.persistentToken !== sharedUser.persistentToken
     )) {
+      this.props.setCachedUser(sharedUser);
       this.load();
     }
   }
   
   update(changes) {
-    this.props.setCurrentUser({...this.props.currentUser, ...changes});
-    if (changes.id || changes.persistentToken) {
-      this.load();
-    }
+    const {cachedUser} = this.props;
+    this.props.setCachedUser({...cachedUser, ...changes});
   }
   
   clear() {
-    this.props.setCurrentUser(undefined);
+    this.props.setSharedUser(undefined);
   }
   
   render() {
-    const {children, currentUser} = this.props;
+    const {children, cachedUser} = this.props;
     const {fetched} = this.state;
     return children({
       api: this.api(),
-      currentUser, fetched,
+      currentUser: cachedUser,
+      fetched,
       update: changes => this.update(changes),
       reload: () => this.load(),
       clear: () => this.clear(),
