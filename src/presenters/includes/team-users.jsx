@@ -81,7 +81,7 @@ WhitelistedDomain.propTypes = {
 // Add Team User
 
 export class AddTeamUser extends React.Component {
-    constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       notifyInvitedVisible: false,
@@ -92,17 +92,17 @@ export class AddTeamUser extends React.Component {
   }
   
   notifyInvited(invitee) {
-    invitee = invitee.name || invitee.login || invitee.email
+    invitee = invitee.name || invitee.login || invitee.email;
     this.setState({
       notifyInvitedVisible: true,
       invitee: invitee
-    })
+    });
   }
 
   removeNotifyInvited() {
     this.setState({
       notifyInvitedVisible: false,
-    })
+    });
   }
 
   render() {
@@ -127,9 +127,9 @@ export class AddTeamUser extends React.Component {
           </span>
         )}
       </PopoverContainer>
-    )
+    );
   }
-};
+}
 
 // Join Team
 

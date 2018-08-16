@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
-import {getDisplayName, getAvatarThumbnailUrl} from '../models/user';
 
 import {CurrentUserConsumer} from './current-user.jsx';
 import ErrorHandlers from './error-handlers.jsx';
@@ -72,12 +71,12 @@ class TeamEditor extends React.Component {
   }
   
   async inviteEmail(emailAddress) {
-    console.log('💣 inviteEmail', emailAddress)
+    console.log('💣 inviteEmail', emailAddress);
     //await this.props.api.post(`teams/${this.state.id}/sendJoinEmail`, {emailAddress});
   }
 
   async inviteUser(user) {
-    console.log('💣 inviteUser', user)
+    console.log('💣 inviteUser', user);
     await new Promise(res => setTimeout(res, 100));
   }
 
