@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {partition} from 'lodash';
+import _ from 'lodash';
 
 import ProjectsList from './projects-list.jsx';
 import ProjectsLoader from './projects-loader.jsx';
@@ -9,9 +9,9 @@ import ProjectsLoader from './projects-loader.jsx';
 
 const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, projectOptions}) => {
+const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, projectOptions, reloadProject}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
-  const [pinnedProjects, recentProjects] = partition(projects, ({id}) => pinnedSet.has(id));
+  const [pinnedProjects, recentProjects] = _.partition(projects, ({id}) => pinnedSet.has(id));
   
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
   
@@ -32,6 +32,13 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, pr
     </React.Fragment>
   );
   
+  projectOptions = _.mapValues(projectOptions, function(projectOption) {
+    return async (projectId, userId) => {
+      await projectOption(projectId, userId);
+      reloadProject(projectId);
+    }
+  });
+
   return (
     <React.Fragment>
       {!!pinnedVisible && (
@@ -40,9 +47,11 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, pr
           projectOptions={isAuthorized ? {removePin, ...projectOptions} : {}}
         />
       )}
-      <ProjectsList title="Recent Projects" projects={recentProjects}
-        projectOptions={isAuthorized ? {addPin, ...projectOptions} : {}}
-      />
+      {!!recentProjects.length && (
+        <ProjectsList title="Recent Projects" projects={recentProjects}
+          projectOptions={isAuthorized ? {addPin, ...projectOptions} : {}}
+        />
+      )}
     </React.Fragment>
   );
 };
@@ -59,7 +68,7 @@ EntityPageProjects.propTypes = {
 
 const EntityPageProjectsContainer = ({api, projects, ...props}) => (
   <ProjectsLoader api={api} projects={projects}>
-    {projects => <EntityPageProjects projects={projects} {...props}/>}
+    {(projects, reloadProject) => <EntityPageProjects projects={projects} reloadProject={reloadProject} {...props}/>}
   </ProjectsLoader>
 );
 
