@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import axios from 'axios';
 import {debounce} from 'lodash';
 
 export const TeamMarketing = () => {
@@ -38,29 +37,13 @@ export class WhitelistedDomainIcon extends React.Component {
     this.state = {src: null};
   }
   
-  async load() {
-    let data = {
-      domain: this.props.domain,
-      icons: []
-    };
-    try {
-      // Do not use the normal api here, we don't want to send our auth around
-      ({data} = await axios.get(`https://favicongrabber.com/api/grab/${this.props.domain}`));
-    } catch (error) {
-      // The api returns an error when the domain doesn't exist, so ignore it
-    }
-    if (data.domain === this.props.domain) {
-      if (data.icons.length) {
-        this.setState({src: data.icons[0].src});
-      } else {
-        this.setState({src: null});
-      }
-    }
+  load() {
+    this.setState({src: 'https://favicon-fetcher.glitch.me/' + this.props.domain});
   }
   
   componentDidMount() {
     this.load();
-    this.load = debounce(this.load.bind(this), 500);
+    this.load = debounce(this.load.bind(this), 250);
   }
   
   componentDidUpdate(prevProps) {
