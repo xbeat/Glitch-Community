@@ -38,7 +38,7 @@ export class WhitelistedDomainIcon extends React.Component {
   }
   
   load() {
-    this.setState({src: 'https://favicon-fetcher.glitch.me/' + this.props.domain});
+    this.setState({src: 'https://favicon-fetcher.glitch.me/img/' + this.props.domain});
   }
   
   componentDidMount() {
