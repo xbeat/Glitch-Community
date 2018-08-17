@@ -85,25 +85,25 @@ class CurrentUserManager extends React.Component {
     }
     this.setState({fetched: false});
     if (sharedUser) {
-      let data;
       try {
-        ({data} = await this.api().get(`users/${sharedUser.id}`));
+        const {data} = await this.api().get(`users/${sharedUser.id}`);
+        if (usersMatch(sharedUser, data)) {
+          this.props.setCachedUser(data);
+          this.setState({fetched: true});
+          identifyUser(data);
+        } else {
+          // The token is not for this user? Something is wrong, so reboot
+          const {data: {user}} = await this.api().get(`boot`);
+          this.props.setSharedUser(user || undefined);
+        }
       } catch (error) {
-        if (!(error.response && error.response.status === 401)) {
+        if (error.response && error.response.status === 401) {
+          // The token is bad, so log the user out
+          this.props.setSharedUser(undefined);
+        } else {
           throw error;
         }
-        data = null;
       }
-      if (usersMatch(sharedUser, data)) {
-        this.props.setCachedUser(data);
-        this.setState({fetched: true});
-      } else {
-        // The user doesn't exist or the token is no good
-        // Either way something is wrong, so reset sharedUser
-        const {data: {user}} = await this.api().get(`boot`);
-        this.props.setSharedUser(user);
-      }
-      identifyUser(data);
     } else {
       identifyUser(null);
     }
