@@ -78,6 +78,21 @@ class CurrentUserManager extends React.Component {
     });
   }
   
+  async fix() {
+    // The token isn't working, or the id doesn't match the token
+    // So hit boot and get the right user for our token
+    try {
+      const {data: {user}} = await this.api().get(`boot?latestProjectOnly=true`);
+      this.props.setSharedUser(user);
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        this.props.setSharedUser(undefined);
+      } else {
+        throw error;
+      }
+    }
+  }
+  
   async load() {
     const {sharedUser, cachedUser} = this.props;
     if (!usersMatch(sharedUser, cachedUser)) {
@@ -92,14 +107,11 @@ class CurrentUserManager extends React.Component {
           this.setState({fetched: true});
           identifyUser(data);
         } else {
-          // The token is not for this user? Something is wrong, so reboot
-          const {data: {user}} = await this.api().get(`boot`);
-          this.props.setSharedUser(user || undefined);
+          this.fix();
         }
       } catch (error) {
-        if (error.response && error.response.status === 401) {
-          // The token is bad, so log the user out
-          this.props.setSharedUser(undefined);
+        if (error.response && (error.response.status === 401 || error.response.status === 404)) {
+          this.fix();
         } else {
           throw error;
         }
