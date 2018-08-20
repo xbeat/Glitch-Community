@@ -107,6 +107,8 @@ const UserOptionsPop = ({
     analytics.reset();
     signOut();
   };
+  
+  userName = userName || "Anonymous";
 
   return (
     <dialog className="pop-over user-options-pop">
@@ -115,7 +117,7 @@ const UserOptionsPop = ({
           <img className="avatar" src={avatarUrl} alt="Your avatar" style={avatarStyle}/>
         </a>
         <div className="info-container">
-          <p className="name" title={userName}>{userName || "Anonymous"}</p>
+          <p className="name" title={userName}>{userName}</p>
           { userLogin &&
             <p className="user-login" title={userLogin}>@{userLogin}</p>
           }
@@ -152,8 +154,8 @@ UserOptionsPop.propTypes = {
   signOut: PropTypes.func.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
   userIsAnon: PropTypes.bool.isRequired,
-  userName: PropTypes.string.isRequired,
-  userLogin: PropTypes.string.isRequired,
+  userName: PropTypes.string,
+  userLogin: PropTypes.string,
 };
 
 
