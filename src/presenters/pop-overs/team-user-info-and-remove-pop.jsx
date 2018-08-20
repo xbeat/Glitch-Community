@@ -149,6 +149,7 @@ TeamUserInfo.propTypes = {
 
 const TeamUserRemove = ({toggleUserInfoVisible, ...props}) => {
   console.log (props)
+  const userAvatarStyle = {backgroundColor: props.user.color};
   return (
     <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info clickable-label" onClick={toggleUserInfoVisible}>
@@ -161,7 +162,19 @@ const TeamUserRemove = ({toggleUserInfoVisible, ...props}) => {
         </div>
       </section>
       <section className="pop-over-actions">
-        suup
+        <p className="action-description">
+          Also remove them from these projects
+        </p>
+        <div className="button-wrap">
+          <button className="button-small">Select All</button>
+        </div>
+        <div>
+          <button className="button button-small has-emoji">
+            <span>Remove</span>
+            <img className="emoji avatar" src={getAvatarThumbnailUrl(props.user)} alt={props.user.login} style={userAvatarStyle}/>
+          </button>
+        </div>
+          
       </section>
     </dialog>
   )
