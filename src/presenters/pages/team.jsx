@@ -35,6 +35,7 @@ const TeamName = ({isAuthorized, team, updateName}) => {
   return  (
     <React.Fragment>
       <h1><EditableField value={team.name} placeholder="What's its name?" update={updateName} suffix={team.isVerified ? <VerifiedBadge/> : null}/></h1>
+      <h2><EditableField value={team.url} placeholder="Short url?" update={() => Promise.resolve()} prefix="@"/></h2>
     </React.Fragment>
   );
 };
