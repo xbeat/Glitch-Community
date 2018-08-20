@@ -43,7 +43,6 @@ TeamUsers.propTypes = {
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
   adminIds: PropTypes.array.isRequired,
   team: PropTypes.object.isRequired,
-  // teamProjects: PropTypes.array.isRequired,
 };
 
 
