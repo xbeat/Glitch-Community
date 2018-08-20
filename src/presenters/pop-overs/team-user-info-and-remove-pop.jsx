@@ -1,3 +1,5 @@
+/* global notify */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -163,24 +165,27 @@ class TeamUserRemove extends React.Component {
     this.getUserWithProjects = this.getUserWithProjects.bind(this);
     this.selectOrUnselectAllProjects = this.selectOrUnselectAllProjects.bind(this)
     this.removeUser = this.removeUser.bind(this)
+    this.userName = props.user.name || props.user.login || props.user.id
   }
   
   removeUser() {
+    this.props.togglePopover()
+    notify.createNotification(<div>{this.userName} removed from Team</div>);
     // get list of checboxes selected
     // remove user from projects
     var selectedProjects = []
     let checkboxes = document.getElementsByName('projects')
-    console.log (typeof checkboxes, checkboxes)
     checkboxes.forEach(checkbox => {
       if (checkbox.checked) {
-        selectedProjects.push(checkbox.data('id'))
+        console.log(checkbox)
+        selectedProjects.push(checkbox.dataset.id)
       }
     })
-    console.log (selectedProjects)
-    // removeUserFromProjects(selectedProjects)
+    console.log ('selectedProjects', selectedProjects)
+    this.props.removeUserFromProjects(selectedProjects)
     
 
-    // props.removeUserFromTeam(props.user.id)
+    // this.props.removeUserFromTeam(props.user.id)
   }
   
   selectOrUnselectAllProjects() {
@@ -238,7 +243,7 @@ class TeamUserRemove extends React.Component {
           </div>
           <div className="pop-title">
             <span>Remove </span>
-            <span>{this.props.user.name || this.props.user.login || this.props.user.id}</span>
+            <span>{this.userName}</span>
           </div>
         </section>
 
@@ -302,11 +307,6 @@ export default class TeamUserInfoAndRemovePop extends React.Component {
     this.toggleUserInfoVisible = this.toggleUserInfoVisible.bind(this);
     this.toggleUserInfoHidden = this.toggleUserInfoHidden.bind(this);
   }
-  
-  // removeFromTeam() {
-  //   this.props.togglePopover();
-  //   this.props.removeUserFromTeam(this.props.user.id);
-  // }
   
   toggleUserInfoHidden() {
     this.setState({
