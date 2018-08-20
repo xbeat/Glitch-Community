@@ -113,15 +113,15 @@ const UserOptionsPop = ({
   return (
     <dialog className="pop-over user-options-pop">
       <section className="pop-over-actions user-info">
-        <a href={userLink}>
+        <a href={userLink} className="user-info">
           <img className="avatar" src={avatarUrl} alt="Your avatar" style={avatarStyle}/>
+          <div className="info-container">
+            <p className="name" title={userName}>{userName}</p>
+            { userLogin &&
+              <p className="user-login" title={userLogin}>@{userLogin}</p>
+            }
+          </div>
         </a>
-        <div className="info-container">
-          <p className="name" title={userName}>{userName}</p>
-          { userLogin &&
-            <p className="user-login" title={userLogin}>@{userLogin}</p>
-          }
-        </div>
       </section>
 
       <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />

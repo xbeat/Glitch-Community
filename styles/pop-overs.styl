@@ -151,10 +151,19 @@
   top: 28px  
   
 .team-user-info-pop, .user-options-pop
-  .pop-over-actions.user-info, .pop-over-info.user-info
+  .pop-over-actions.user-info
+    .avatar
+      width: 30px
+      height: 30px
+  .pop-over-actions.user-info:hover
+      background-color: secondary-background
+      
+  .pop-over-info.user-info
     .avatar
       width: 44px
       height: 44px
+  .pop-over-actions.user-info, .pop-over-info.user-info
+    .avatar
       border-radius: 8px
       vertical-align: middle
       margin-right: 10px
