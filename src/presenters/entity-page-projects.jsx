@@ -36,7 +36,7 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, pr
     return async (projectId, userId) => {
       await projectOption(projectId, userId);
       reloadProject(projectId);
-    }
+    };
   });
 
   return (
