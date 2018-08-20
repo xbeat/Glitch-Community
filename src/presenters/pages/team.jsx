@@ -22,6 +22,11 @@ import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reache
 const FREE_TEAM_PROJECTS_LIMIT = 5;
 const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533137032374";
 
+const TeamName = ({isAuthorized, name, updateName}) => {
+  if (!isAuthorized) {
+  }
+};
+
 // Team Page
 
 class TeamPage extends React.Component {

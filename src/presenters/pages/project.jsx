@@ -36,7 +36,7 @@ const PrivateTooltip = "Only members can view code";
 const PublicTooltip = "Visible to everyone";
 
 const PrivateBadge = () => (
-  <span className="private-project-badge" aria-label={PrivateTooltip} data-tooltip={PrivateTooltip}></span>
+  <span className="project-badge private-project-badge" aria-label={PrivateTooltip} data-tooltip={PrivateTooltip}></span>
 );
 
 const PrivateToggle = ({isPrivate, setPrivate}) => {
