@@ -34,8 +34,7 @@ const TeamName = ({isAuthorized, team, updateName}) => {
   }
   return  (
     <React.Fragment>
-      <h1><EditableField value={team.name} placeholder="What's its name?" update={updateName} prefix={<VerifiedBadge/>}/></h1>
-      {team.isVerified && <VerifiedBadge/>}
+      <h1><EditableField value={team.name} placeholder="What's its name?" update={updateName} suffix={team.isVerified ? <VerifiedBadge/> : null}/></h1>
     </React.Fragment>
   );
 };

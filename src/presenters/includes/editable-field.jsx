@@ -88,7 +88,11 @@ export default class EditableField extends React.Component {
     );
     
     const maybePrefix = !!this.props.prefix && (
-      <span className={"content-editable-prefix " + classes}>{this.props.prefix}</span>
+      <span className={"content-editable-affix " + classes}>{this.props.prefix}</span>
+    );
+    
+    const maybeSuffix = !!this.props.suffix && (
+      <span className={"content-editable-affix " + classes}>{this.props.suffix}</span>
     );
     
     return (
@@ -97,6 +101,7 @@ export default class EditableField extends React.Component {
           {maybePrefix}
           <input {...inputProps} ref={this.textInput} />
           {maybeErrorIcon}
+          {maybeSuffix}
         </div>
         {maybeErrorMessage}
       </label>
@@ -108,6 +113,7 @@ EditableField.propTypes = {
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
   prefix: PropTypes.node,
+  suffix: PropTypes.node,
   autoFocus: PropTypes.bool,
   submitError: PropTypes.string,
 };

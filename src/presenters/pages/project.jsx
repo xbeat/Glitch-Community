@@ -97,16 +97,13 @@ const ProjectPage = ({
       <InfoContainer>
         <ProjectInfoContainer style={{backgroundImage: `url('${getAvatarUrl(id)}')`}}>
           <h1>
-            {(isAuthorized
-              ? <EditableField value={domain} update={domain => updateDomain(domain).then(() => syncPageToDomain(domain))} placeholder="Name your project"/>
-              : <React.Fragment>{domain} {project.private && <PrivateBadge/>}</React.Fragment>
-            )}
+            {(isAuthorized ? (
+              <EditableField value={domain} placeholder="Name your project"
+                update={domain => updateDomain(domain).then(() => syncPageToDomain(domain))}
+                suffix={<PrivateToggle isPrivate={project.private} isMember={isAuthorized} setPrivate={updatePrivate}/>}
+              />
+            ) : <React.Fragment>{domain} {project.private && <PrivateBadge/>}</React.Fragment>)}
           </h1>
-          {(isAuthorized &&
-            <div>
-              <PrivateToggle isPrivate={project.private} isMember={isAuthorized} setPrivate={updatePrivate}/>
-            </div>
-          )}
           <UsersList users={users} />
           <AuthDescription
             authorized={isAuthorized} description={description}
