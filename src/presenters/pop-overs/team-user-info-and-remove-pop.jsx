@@ -150,7 +150,14 @@ TeamUserInfo.propTypes = {
 const TeamUserRemove = ({toggleUserInfoVisible, ...props}) => {
   console.log (props)
   const userAvatarStyle = {backgroundColor: props.user.color};
-  const currentUserProjects = () => {
+  const userProjects = () => {
+    let id = props.user.id
+    let projects = props.team.projects
+    projects.filter(project => {
+      project.id === user.id
+    })
+    
+    return undefined
     
   }
   return (
@@ -164,16 +171,19 @@ const TeamUserRemove = ({toggleUserInfoVisible, ...props}) => {
           <span>{props.user.name || props.user.login || props.user.id}</span>
         </div>
       </section>
-      <section className="pop-over-actions">
-        <p className="action-description">
-          Also remove them from these projects
-        </p>
 
-        {/* get list of projects w user on them */}
-        {/* checklist (results list?) */}
+      {userProjects &&
+        <section className="pop-over-actions">
+          <p className="action-description">
+            Also remove them from these projects
+          </p>
 
-        <button className="button-small">Select All</button>
-      </section>
+          {/* get list of projects w user on them */}
+          {/* checklist (results list?) */}
+
+          <button className="button-small">Select All</button>
+        </section>
+      }
       
       <section className="pop-over-actions danger-zone">
         <button className="button-small has-emoji">
