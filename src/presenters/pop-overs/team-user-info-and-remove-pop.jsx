@@ -162,7 +162,10 @@ class TeamUserRemove extends React.Component {
   }
   
   selectAllProjects() {
-    console.log(document.getElements
+    let checkboxes = document.getElementsByName('projects')
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = true
+    })
   }
   
   filterUserTeamProjects(user) {
@@ -213,13 +216,15 @@ class TeamUserRemove extends React.Component {
             { this.state.gettingUser &&
               <Loader />
             }
-            { this.state.userTeamProjects.map(project => (
-              <label>
-                <input type="checkbox" name="projects" key={project.id} value={project.name} />
-                {project.name}
-              </label>
-            ))}
-            <button className="button-small">Select All</button>
+            <div className="projects-list">
+              { this.state.userTeamProjects.map(project => (
+                <label key={project.id}>
+                  <input type="checkbox" name="projects" id={project.id} value={project.name} />
+                  {project.name}
+                </label>
+              ))}
+            </div>
+            <button className="button-small" onClick={this.selectAllProjects}>Select All</button>
           </section>
         }
         <section className="pop-over-actions danger-zone">
