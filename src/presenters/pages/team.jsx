@@ -8,6 +8,7 @@ import {getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
+import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
@@ -22,9 +23,26 @@ import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reache
 const FREE_TEAM_PROJECTS_LIMIT = 5;
 const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533137032374";
 
-const TeamName = ({isAuthorized, name, updateName}) => {
+const TeamName = ({isAuthorized, team, updateName}) => {
   if (!isAuthorized) {
+    return (
+      <h1>
+        {team.name}
+        {team.isVerified && <VerifiedBadge/>}
+      </h1>
+    );
   }
+  return  (
+    <h1><EditableField value={team.name} placeholder="Name?"</h1>
+  );
+};
+TeamName.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
+  team: PropTypes.shape({
+    isVerified: PropTypes.bool.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  updateName: PropTypes.func.isRequired,
 };
 
 // Team Page
@@ -69,12 +87,11 @@ class TeamPage extends React.Component {
                 }
               /> : null
             }>
-            <h1>
-              { this.props.team.name }
-              { this.props.team.isVerified &&
-                <VerifiedBadge image={this.props.team.verifiedImage} tooltip={this.props.team.verifiedTooltip}/>
-              }
-            </h1>
+            <TeamName
+              isAuthorized={this.props.currentUserIsTeamAdmin}
+              team={this.props.team}
+              updateName={() => null}
+            />
             <div className="users-information">
               <TeamUsers {...this.props}
                 users={this.props.team.users}
