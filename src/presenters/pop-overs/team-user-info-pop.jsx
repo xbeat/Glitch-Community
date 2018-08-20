@@ -91,7 +91,7 @@ export default class TeamUserInfoPop extends React.Component {
     const userAvatarStyle = {backgroundColor: this.props.user.color};
     return (
       <dialog className="pop-over team-user-info-pop">
-        <section className="pop-over-info">
+        <section className="pop-over-info user-info">
           <a href={getLink(this.props.user)}>
             <img className="avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
           </a>

@@ -110,7 +110,7 @@ const UserOptionsPop = ({
 
   return (
     <dialog className="pop-over user-options-pop">
-     <section className="pop-over-actions">
+      <section className="pop-over-actions user-info">
         <a href={userLink}>
           <img className="avatar" src={avatarUrl} alt="Your avatar" style={avatarStyle}/>
         </a>
