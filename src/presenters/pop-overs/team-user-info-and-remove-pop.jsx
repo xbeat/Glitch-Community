@@ -153,9 +153,11 @@ const TeamUserRemove = ({toggleUserInfoVisible, ...props}) => {
   
   const userProjects = () => {
     let userId = props.user.id
-    let projects = props.team.projects
+    let projects = props.teamProjects
+    console.log(projects)
     return projects.filter(project => {
       project.users.filter(user => {
+        console.log(user)
         return user.id === userId
       })
     })
@@ -288,7 +290,8 @@ TeamUserInfoAndRemovePop.propTypes = {
   updateUserPermissions: PropTypes.func.isRequired,
   team: PropTypes.shape({
     projects: PropTypes.array.isRequired,
-  })
+  }),
+  teamProjects: PropTypes.array.isRequired,
 };
 
 TeamUserInfoAndRemovePop.defaultProps = {

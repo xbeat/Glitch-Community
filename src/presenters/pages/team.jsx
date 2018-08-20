@@ -71,7 +71,8 @@ class TeamPage extends React.Component {
               }
             </h1>
             <div className="users-information">
-              <TeamUsers {...this.props}
+              <TeamUsers 
+                {...this.props}
                 users={this.props.team.users}
                 teamId={this.props.team.id}
                 adminIds={this.props.team.adminIds}
