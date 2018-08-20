@@ -69,7 +69,7 @@ class TeamPage extends React.Component {
   }
 
   projectLimitIsReached() {
-    if ((this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects && this.props.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
+    if (this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects && (this.props.team.projects.length >= FREE_TEAM_PROJECTS_LIMIT)) {
       return true;
     }
     return false;
