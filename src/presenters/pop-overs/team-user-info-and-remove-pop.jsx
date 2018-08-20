@@ -150,6 +150,9 @@ TeamUserInfo.propTypes = {
 const TeamUserRemove = ({toggleUserInfoVisible, ...props}) => {
   console.log (props)
   const userAvatarStyle = {backgroundColor: props.user.color};
+  const currentUserProjects = () => {
+    
+  }
   return (
     <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info clickable-label" onClick={toggleUserInfoVisible}>
@@ -192,6 +195,9 @@ TeamUserRemove.propTypes = {
     isOnTeam: PropTypes.bool,
     color: PropTypes.string,
   }).isRequired,
+  team: PropTypes.shape({
+    projects: PropTypes.array.isRequired
+  })
 }
 
 
@@ -260,6 +266,9 @@ TeamUserInfoAndRemovePop.propTypes = {
   teamId: PropTypes.number.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
   updateUserPermissions: PropTypes.func.isRequired,
+  team: PropTypes.shape({
+    projects: PropTypes.array.isRequired
+  })
 };
 
 TeamUserInfoAndRemovePop.defaultProps = {
