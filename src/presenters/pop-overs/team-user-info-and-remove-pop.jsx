@@ -166,14 +166,20 @@ class TeamUserRemove extends React.Component {
   }
   
   removeUser() {
-    console.log ('removeUser')
     // get list of checboxes selected
     // remove user from projects
+    var selectedProjects = []
     let checkboxes = document.getElementsByName('projects')
-    let checked = checkboxes.filter(checkbox => {
-      checkbox.checked === true
+    console.log (typeof checkboxes, checkboxes)
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        selectedProjects.push(checkbox.data('id'))
+      }
     })
-    console.log (checked)
+    console.log (selectedProjects)
+    // removeUserFromProjects(selectedProjects)
+    
+
     // props.removeUserFromTeam(props.user.id)
   }
   
@@ -247,7 +253,7 @@ class TeamUserRemove extends React.Component {
             <div className="projects-list">
               { this.state.userTeamProjects.map(project => (
                 <label key={project.id}>
-                  <input className="checkbox-project" type="checkbox" name="projects" id={project.id} value={project.domain} />
+                  <input className="checkbox-project" type="checkbox" name="projects" data-id={project.id} value={project.domain} />
                   <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
                   {project.name}
                 </label>
@@ -257,7 +263,7 @@ class TeamUserRemove extends React.Component {
           </section>
         }
         <section className="pop-over-actions danger-zone">
-          <button className="button-small has-emoji" onClick=>
+          <button className="button-small has-emoji" onClick={this.removeUser}>
             <span>Remove</span>
             <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={this.userAvatarStyle}/>
           </button>
