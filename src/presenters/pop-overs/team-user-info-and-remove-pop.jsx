@@ -232,7 +232,7 @@ class TeamUserRemove extends React.Component {
             <div className="projects-list">
               { this.state.userTeamProjects.map(project => (
                 <label key={project.id}>
-                  <input type="checkbox" name="projects" id={project.id} value={project.name} />
+                  <input className="checkbox-project" type="checkbox" name="projects" id={project.id} value={project.name} />
                   {project.name}
                 </label>
               ))}
