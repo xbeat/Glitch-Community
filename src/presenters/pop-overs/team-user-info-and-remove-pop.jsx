@@ -147,68 +147,88 @@ TeamUserInfo.propTypes = {
 
 // Team User Remove 💣
 
-const TeamUserRemove = ({toggleUserInfoVisible, ...props}) => {
-  console.log (props)
-  const userAvatarStyle = {backgroundColor: props.user.color};
+class TeamUserRemove extends React.Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+      userProjects: []
+    };
+    this.toggleUserInfoVisible = this.toggleUserInfoVisible.bind(this);
+    this.userAvatarStyle = {backgroundColor: props.user.color};
+    this.userProjects = this.userProjects.bind(this);
+    this.getUserProjects = this.getUserProjects.bind(this);
+  }
+
+  // const userAvatarStyle = {backgroundColor: props.user.color};
   
-  const userProjects = () => {
-    let userId = props.user.id
-    let projects = props.teamProjects
-    console.log(projects)
+  filterUserTeamProjects(projects) {
+    let userId = this.props.user.id
     return projects.filter(project => {
       project.users.filter(user => {
-        console.log(user)
         return user.id === userId
       })
     })
-    
-    return undefined
-    
   }
-  return (
-    <dialog className="pop-over team-user-info-pop">
-      <section className="pop-over-info clickable-label" onClick={toggleUserInfoVisible}>
-        <div className="back icon">
-          <div className="left-arrow icon" />
-        </div>
-        <div className="pop-title">
-          <span>Remove </span>
-          <span>{props.user.name || props.user.login || props.user.id}</span>
-        </div>
-      </section>
-
-      {userProjects &&
-        <section className="pop-over-actions">
-          <p className="action-description">
-            Also remove them from these projects
-          </p>
-
-          {/* get list of projects w user on them */}
-          {/* checklist (results list?) */}
-
-          
-          { userProjects().map(project => (
-            <p key={project.id}>{project.name}</p>
-          ))}
-
-          
-          <button className="button-small">Select All</button>
-          
+  
+  async getUserProjects() {
+    let userPath = `users/{this.props.user.id}`
+    return await this.props.api().get(userPath)
+  }
+  
+  componentDidMount() {
+    let projects = this.getUserProjects()
+    this.setState({
+      userProjects: this.filterUserTeamProjects(projects)
+    })
+  }
+  
+  render() {
+    return (
+      <dialog className="pop-over team-user-info-pop">
+        <section className="pop-over-info clickable-label" onClick={this.toggleUserInfoVisible}>
+          <div className="back icon">
+            <div className="left-arrow icon" />
+          </div>
+          <div className="pop-title">
+            <span>Remove </span>
+            <span>{this.props.user.name || this.props.user.login || this.props.user.id}</span>
+          </div>
         </section>
-      }
-      
-      <section className="pop-over-actions danger-zone">
-        <button className="button-small has-emoji">
-          <span>Remove</span>
-          <img className="emoji avatar" src={getAvatarThumbnailUrl(props.user)} alt={props.user.login} style={userAvatarStyle}/>
-        </button>
-      </section>
 
-    </dialog>
-  )
+        {this.state.userProjects &&
+          <section className="pop-over-actions">
+            <p className="action-description">
+              Also remove them from these projects
+            </p>
+
+            {/* get list of projects w user on them */}
+            {/* checklist (results list?) */}
+
+
+            { this.state.userProjects.map(project => (
+              <p key={project.id}>{project.name}</p>
+            ))}
+
+
+            <button className="button-small">Select All</button>
+
+          </section>
+        }
+
+        <section className="pop-over-actions danger-zone">
+          <button className="button-small has-emoji">
+            <span>Remove</span>
+            <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={this.userAvatarStyle}/>
+          </button>
+        </section>
+
+      </dialog>
+    )
+  }
 }
 
 TeamUserRemove.propTypes = {
+  api: PropTypes.func.isRequired,
   toggleUserInfoVisible: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
