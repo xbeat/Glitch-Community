@@ -150,11 +150,14 @@ TeamUserInfo.propTypes = {
 const TeamUserRemove = ({toggleUserInfoVisible, ...props}) => {
   console.log (props)
   const userAvatarStyle = {backgroundColor: props.user.color};
+  
   const userProjects = () => {
-    let id = props.user.id
+    let userId = props.user.id
     let projects = props.team.projects
-    projects.filter(project => {
-      project.id === user.id
+    return projects.filter(project => {
+      project.users.filter(user => {
+        return user.id === userId
+      })
     })
     
     return undefined
@@ -181,7 +184,14 @@ const TeamUserRemove = ({toggleUserInfoVisible, ...props}) => {
           {/* get list of projects w user on them */}
           {/* checklist (results list?) */}
 
+          
+          { userProjects().map(project => (
+            <p key={project.id}>{project.name}</p>
+          ))}
+
+          
           <button className="button-small">Select All</button>
+          
         </section>
       }
       
@@ -267,7 +277,6 @@ TeamUserInfoAndRemovePop.propTypes = {
     thanksCount: PropTypes.number.isRequired,
     isOnTeam: PropTypes.bool,
     color: PropTypes.string,
-    teamProjects: PropTypes.array.isRequired,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
