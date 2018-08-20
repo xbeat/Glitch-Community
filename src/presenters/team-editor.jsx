@@ -72,7 +72,7 @@ class TeamEditor extends React.Component {
   
   async inviteEmail(emailAddress) {
     console.log('💣 inviteEmail', emailAddress);
-    //await this.props.api.post(`teams/${this.state.id}/sendJoinEmail`, {emailAddress});
+    await this.props.api.post(`teams/${this.state.id}/sendJoinEmail`, {emailAddress});
   }
 
   async inviteUser(user) {
