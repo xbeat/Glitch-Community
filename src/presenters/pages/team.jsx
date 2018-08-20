@@ -23,28 +23,34 @@ import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reache
 const FREE_TEAM_PROJECTS_LIMIT = 5;
 const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533137032374";
 
-function syncPageToUrl(url) {
-  history.replaceState(null, null, `/@${url}`);
-}
-
-const TeamName = ({isAuthorized, team, updateName, updateUrl}) => {
-  if (!isAuthorized) {
-    return (
-      <h1>
-        {team.name}
-        {team.isVerified && <VerifiedBadge/>}
-      </h1>
+class TeamNameField  extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {urlVisible: false};
+  }
+  
+  async updateUrl(url) {
+    await this.props.updateUrl(url);
+    history.replaceState(null, null, `/@${url}`);
+  }
+  
+  render() {
+    const {team, updateName} = this.props;
+    return  (
+      <React.Fragment>
+        <h1 onFocus={() => this.setState({urlVisible: true})}>
+          <EditableField value={team.name} placeholder="What's its name?" update={updateName} suffix={team.isVerified ? <VerifiedBadge/> : null}/>
+        </h1>
+        {this.state.urlVisible && (
+          <h2>
+            <EditableField value={team.url} placeholder="Short url?" update={this.updateUrl.bind(this)} prefix="@"/>
+          </h2>
+        )}
+      </React.Fragment>
     );
   }
-  return  (
-    <React.Fragment>
-      <h1><EditableField value={team.name} placeholder="What's its name?" update={updateName} suffix={team.isVerified ? <VerifiedBadge/> : null}/></h1>
-      <h2><EditableField value={team.url} placeholder="Short url?" update={url => updateUrl(url).then(() => syncPageToUrl(url))} prefix="@"/></h2>
-    </React.Fragment>
-  );
-};
-TeamName.propTypes = {
-  isAuthorized: PropTypes.bool.isRequired,
+}
+TeamNameField.propTypes = {
   team: PropTypes.shape({
     isVerified: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
@@ -95,12 +101,13 @@ class TeamPage extends React.Component {
                 }
               /> : null
             }>
-            <TeamName
-              isAuthorized={this.props.currentUserIsTeamAdmin}
-              team={this.props.team}
-              updateName={this.props.updateName}
-              updateUrl={this.props.updateUrl}
-            />
+            {this.props.currentUserIsTeamAdmin ? (
+              <TeamNameField
+                team={this.props.team}
+                updateName={this.props.updateName}
+                updateUrl={this.props.updateUrl}
+              />
+            ) : <h1>{this.props.team.name} {this.props.team.isVerified && <VerifiedBadge/>}</h1>}
             <div className="users-information">
               <TeamUsers {...this.props}
                 users={this.props.team.users}
