@@ -31,6 +31,14 @@ class TeamEditor extends React.Component {
   async updateFields(changes) {
     const {data} = await this.props.api.patch(`teams/${this.state.id}`, changes);
     this.setState(data);
+    if (this.props.currentUser) {
+      const teamIndex = this.props.currentUser.teams.findIndex(({id}) => id === this.state.id);
+      if (teamIndex >= 0) {
+        const teams = [...this.props.currentUser.teams];
+        teams[teamIndex] = this.state;
+        this.props.updateCurrentUser({teams});
+      }
+    }
   }
 
   async uploadAvatar(blob) {
@@ -163,8 +171,9 @@ class TeamEditor extends React.Component {
   }
 
   render() {
-    const {handleError} = this.props;
+    const {handleError, handleErrorForInput} = this.props;
     const funcs = {
+      updateName: name => this.updateFields({name}).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       addUser: id => this.addUser(id).catch(handleError),
       removeUser: id => this.removeUser(id).catch(handleError),

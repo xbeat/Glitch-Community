@@ -33,7 +33,7 @@ const TeamName = ({isAuthorized, team, updateName}) => {
     );
   }
   return  (
-    <h1><EditableField value={team.name} placeholder="Name?"</h1>
+    <h1><EditableField value={team.name} placeholder="What's its name?" update={updateName}/></h1>
   );
 };
 TeamName.propTypes = {
@@ -90,7 +90,7 @@ class TeamPage extends React.Component {
             <TeamName
               isAuthorized={this.props.currentUserIsTeamAdmin}
               team={this.props.team}
-              updateName={() => null}
+              updateName={this.props.updateName}
             />
             <div className="users-information">
               <TeamUsers {...this.props}
