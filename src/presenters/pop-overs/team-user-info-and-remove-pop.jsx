@@ -154,18 +154,31 @@ class TeamUserRemove extends React.Component {
     this.state = {
       gettingUser: true,
       userTeamProjects: [],
+      selectProjects: 'Select All'
     };
     this.userAvatarStyle = {backgroundColor: props.user.color};
     this.filterUserTeamProjects = this.filterUserTeamProjects.bind(this);
     this.getUserWithProjects = this.getUserWithProjects.bind(this);
-    this.selectAllProjects = this.selectAllProjects.bind(this)
+    this.selectOrUnselectAllProjects = this.selectOrUnselectAllProjects.bind(this)
   }
   
-  selectAllProjects() {
+  selectOrUnselectAllProjects() {
     let checkboxes = document.getElementsByName('projects')
-    checkboxes.forEach(checkbox => {
-      checkbox.checked = true
-    })
+    if (this.state.selectProjects === 'Select All') {
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = true
+      })
+      this.setState({
+        selectProjects: 'Unselect All'
+      })
+    } else {
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = false
+      })
+      this.setState({
+        selectProjects: 'Select All'
+      })
+    }
   }
   
   filterUserTeamProjects(user) {
@@ -197,7 +210,7 @@ class TeamUserRemove extends React.Component {
   
   render() {
     return (
-      <dialog className="pop-over team-user-info-pop">
+      <dialog className="pop-over team-user-info-pop team-user-remove-pop">
         <section className="pop-over-info clickable-label" onClick={this.props.toggleUserInfoVisible}>
           <div className="back icon">
             <div className="left-arrow icon" />
@@ -224,7 +237,7 @@ class TeamUserRemove extends React.Component {
                 </label>
               ))}
             </div>
-            <button className="button-small" onClick={this.selectAllProjects}>Select All</button>
+            <button className="button-small button-tertiary" onClick={this.selectOrUnselectAllProjects}>{this.state.selectProjects}</button>
           </section>
         }
         <section className="pop-over-actions danger-zone">
