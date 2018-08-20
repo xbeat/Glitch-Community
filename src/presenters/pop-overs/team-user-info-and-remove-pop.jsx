@@ -155,9 +155,14 @@ class TeamUserRemove extends React.Component {
       gettingUser: true,
       userTeamProjects: [],
     };
+    this.userAvatarStyle = {backgroundColor: props.user.color};
     this.filterUserTeamProjects = this.filterUserTeamProjects.bind(this);
     this.getUserWithProjects = this.getUserWithProjects.bind(this);
-    this.userAvatarStyle = {backgroundColor: props.user.color};
+    this.selectAllProjects = this.selectAllProjects.bind(this)
+  }
+  
+  selectAllProjects() {
+    console.log(document.getElements
   }
   
   filterUserTeamProjects(user) {
@@ -201,32 +206,28 @@ class TeamUserRemove extends React.Component {
         </section>
 
         {this.state.userTeamProjects &&
-          <section className="pop-over-actions">
+          <section className="pop-over-actions" id="user-team-projects">
             <p className="action-description">
               Also remove them from these projects
             </p>
-
             { this.state.gettingUser &&
               <Loader />
             }
-
-            
-            
-                { this.state.userTeamProjects.map(project => (
-                  <input type="checkbox" key={project.id} value={project.name}>project.name</input>
-                ))}
-              <button className="button-small">Select All</button>
-            
+            { this.state.userTeamProjects.map(project => (
+              <label>
+                <input type="checkbox" name="projects" key={project.id} value={project.name} />
+                {project.name}
+              </label>
+            ))}
+            <button className="button-small">Select All</button>
           </section>
         }
-
         <section className="pop-over-actions danger-zone">
           <button className="button-small has-emoji">
             <span>Remove</span>
             <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={this.userAvatarStyle}/>
           </button>
         </section>
-
       </dialog>
     )
   }
