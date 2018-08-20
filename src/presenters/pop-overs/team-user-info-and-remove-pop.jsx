@@ -165,10 +165,10 @@ const TeamUserRemove = ({toggleUserInfoVisible, ...props}) => {
         <p className="action-description">
           Also remove them from these projects
         </p>
-        
+
         {/* get list of projects w user on them */}
         {/* checklist (results list?) */}
-        
+
         <button className="button-small">Select All</button>
       </section>
       
