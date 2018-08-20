@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getAvatarThumbnailUrl, getLink} from '../../models/user';
+import {getAvatarUrl} from  '../../models/project';
+
 import Thanks from '../includes/thanks.jsx';
 import Loader from '../includes/loader.jsx';
 
@@ -232,7 +234,8 @@ class TeamUserRemove extends React.Component {
             <div className="projects-list">
               { this.state.userTeamProjects.map(project => (
                 <label key={project.id}>
-                  <input className="checkbox-project" type="checkbox" name="projects" id={project.id} value={project.name} />
+                  <input className="checkbox-project" type="checkbox" name="projects" id={project.id} value={project.domain} />
+                  <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
                   {project.name}
                 </label>
               ))}
