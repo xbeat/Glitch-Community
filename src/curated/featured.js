@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
+    title: 'Learn American Sign Language',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fasl-spell.jpg?1534767236249",
+    link: 'https://glitch.com/~asl-spell'
+  }, {
     title: 'Generate A List of Peoples\' Names',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frandom-people.jpg?1534767237598",
     link: 'https://glitch.com/~random-people'
   }, {
-    title: 'Z-O-M-B-I-E-S',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftaptyping-vr-sgi.jpg?1534158443471",
-    link: 'https://glitch.com/~asl-spell'
-  }, {
-    title: 'It\'s BOT LIFE Magazine!',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fbotlifemagazine.jpg?1534158441847",
-    link: 'https://glitch.com/edit/#!/botlifemagazine'
+    title: 'Play A Game of Sneaky Epic',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsneaky-epic.jpg?1534767236910",
+    link: 'https://glitch.com/~sneaky-epic'
   }  
 ];
