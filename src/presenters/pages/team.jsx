@@ -23,7 +23,11 @@ import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reache
 const FREE_TEAM_PROJECTS_LIMIT = 5;
 const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533137032374";
 
-const TeamName = ({isAuthorized, team, updateName}) => {
+function syncPageToUrl(url) {
+  history.replaceState(null, null, `/@${url}`);
+}
+
+const TeamName = ({isAuthorized, team, updateName, updateUrl}) => {
   if (!isAuthorized) {
     return (
       <h1>
@@ -35,7 +39,7 @@ const TeamName = ({isAuthorized, team, updateName}) => {
   return  (
     <React.Fragment>
       <h1><EditableField value={team.name} placeholder="What's its name?" update={updateName} suffix={team.isVerified ? <VerifiedBadge/> : null}/></h1>
-      <h2><EditableField value={team.url} placeholder="Short url?" update={() => Promise.resolve()} prefix="@"/></h2>
+      <h2><EditableField value={team.url} placeholder="Short url?" update={url => updateUrl(url).then(() => syncPageToUrl(url))} prefix="@"/></h2>
     </React.Fragment>
   );
 };
@@ -46,6 +50,7 @@ TeamName.propTypes = {
     name: PropTypes.string.isRequired,
   }).isRequired,
   updateName: PropTypes.func.isRequired,
+  updateUrl: PropTypes.func.isRequired,
 };
 
 // Team Page
@@ -94,6 +99,7 @@ class TeamPage extends React.Component {
               isAuthorized={this.props.currentUserIsTeamAdmin}
               team={this.props.team}
               updateName={this.props.updateName}
+              updateUrl={this.props.updateUrl}
             />
             <div className="users-information">
               <TeamUsers {...this.props}
