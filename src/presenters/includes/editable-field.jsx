@@ -107,7 +107,7 @@ EditableField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
-  prefix: PropTypes.string,
+  prefix: PropTypes.node,
   autoFocus: PropTypes.bool,
   submitError: PropTypes.string,
 };

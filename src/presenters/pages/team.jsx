@@ -33,7 +33,10 @@ const TeamName = ({isAuthorized, team, updateName}) => {
     );
   }
   return  (
-    <h1><EditableField value={team.name} placeholder="What's its name?" update={updateName}/></h1>
+    <React.Fragment>
+      <h1><EditableField value={team.name} placeholder="What's its name?" update={updateName} prefix={<VerifiedBadge/>}/></h1>
+      {team.isVerified && <VerifiedBadge/>}
+    </React.Fragment>
   );
 };
 TeamName.propTypes = {
