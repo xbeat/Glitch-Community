@@ -208,19 +208,15 @@ class TeamUserRemove extends React.Component {
 
             { this.state.gettingUser &&
               <Loader />
+            }
+
             
             
-              
-              
-            || 
-            { this.state.userTeamProjects.map(project => (
-              <p key={project.id}>{project.name}</p>
-            ))}
-
-            <button className="button-small">Select All</button>
-             
-           }
-
+                { this.state.userTeamProjects.map(project => (
+                  <input type="checkbox" key={project.id} value={project.name}>project.name</input>
+                ))}
+              <button className="button-small">Select All</button>
+            
           </section>
         }
 
