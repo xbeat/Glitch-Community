@@ -79,7 +79,7 @@ class TeamEditor extends React.Component {
   }
   
   async removeUserFromProjects(projects) {
-    console.log('💣 removeUserFromProjects', projects)
+    console.log('💣 removeUserFromProjects', projects);
   }
 
   removeUserAdmin(id) {

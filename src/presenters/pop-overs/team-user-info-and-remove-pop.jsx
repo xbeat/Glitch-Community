@@ -142,18 +142,18 @@ const TeamUserInfo = ({toggleUserInfoHidden, ...props}) => {
       }
       { props.currentUserIsTeamAdmin && <RemoveFromTeam toggleUserInfoHidden={() => toggleUserInfoHidden()} /> }
     </dialog>
-  )
-}
+  );
+};
 
 TeamUserInfo.propTypes = {
   toggleUserInfoHidden: PropTypes.func.isRequired,
-}
+};
 
 
 // Team User Remove 💣
 
 class TeamUserRemove extends React.Component {
-    constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       gettingUser: true,
@@ -163,75 +163,75 @@ class TeamUserRemove extends React.Component {
     this.userAvatarStyle = {backgroundColor: props.user.color};
     this.filterUserTeamProjects = this.filterUserTeamProjects.bind(this);
     this.getUserWithProjects = this.getUserWithProjects.bind(this);
-    this.selectOrUnselectAllProjects = this.selectOrUnselectAllProjects.bind(this)
-    this.removeUser = this.removeUser.bind(this)
-    this.userName = props.user.name || props.user.login || props.user.id
+    this.selectOrUnselectAllProjects = this.selectOrUnselectAllProjects.bind(this);
+    this.removeUser = this.removeUser.bind(this);
+    this.userName = props.user.name || props.user.login || props.user.id;
   }
   
   removeUser() {
-    this.props.togglePopover()
+    this.props.togglePopover();
     notify.createNotification(<div>{this.userName} removed from Team</div>);
     // get list of checboxes selected
     // remove user from projects
-    var selectedProjects = []
-    let checkboxes = document.getElementsByName('projects')
+    var selectedProjects = [];
+    let checkboxes = document.getElementsByName('projects');
     checkboxes.forEach(checkbox => {
       if (checkbox.checked) {
-        console.log(checkbox)
-        selectedProjects.push(checkbox.dataset.id)
+        console.log(checkbox);
+        selectedProjects.push(checkbox.dataset.id);
       }
-    })
-    console.log ('selectedProjects', selectedProjects)
-    this.props.removeUserFromProjects(selectedProjects)
+    });
+    console.log ('selectedProjects', selectedProjects);
+    this.props.removeUserFromProjects(selectedProjects);
     
 
     // this.props.removeUserFromTeam(props.user.id)
   }
   
   selectOrUnselectAllProjects() {
-    let checkboxes = document.getElementsByName('projects')
+    let checkboxes = document.getElementsByName('projects');
     if (this.state.selectProjects === 'Select All') {
       checkboxes.forEach(checkbox => {
-        checkbox.checked = true
-      })
+        checkbox.checked = true;
+      });
       this.setState({
         selectProjects: 'Unselect All'
-      })
+      });
     } else {
       checkboxes.forEach(checkbox => {
-        checkbox.checked = false
-      })
+        checkbox.checked = false;
+      });
       this.setState({
         selectProjects: 'Select All'
-      })
+      });
     }
   }
   
   filterUserTeamProjects(user) {
     let teamProjectIds = this.props.team.projects.map(project => {
-      return project.id
-    })
+      return project.id;
+    });
     let userTeamProjects = user.projects.filter(project => {
-      return teamProjectIds.includes(project.id)
-    })
+      return teamProjectIds.includes(project.id);
+    });
     this.setState({
       userTeamProjects: userTeamProjects
-    })
+    });
   }
   
   getUserWithProjects() {
     let userPath = `users/${this.props.user.id}`;
     this.props.api.get(userPath)
-    .then(({data}) => {
-      this.filterUserTeamProjects(data)
-      this.setState({
-        gettingUser: false
-      })
-    })
+      .then(({data}) => {
+        this.filterUserTeamProjects(data);
+        this.setState({
+          gettingUser: false
+        });
+      });
   }
   
   componentDidMount() {
-    this.getUserWithProjects()    
+    this.getUserWithProjects();    
   }
   
   render() {
@@ -274,7 +274,7 @@ class TeamUserRemove extends React.Component {
           </button>
         </section>
       </dialog>
-    )
+    );
   }
 }
 
@@ -292,7 +292,7 @@ TeamUserRemove.propTypes = {
     projects: PropTypes.array.isRequired
   }),
   removeUserFromTeam: PropTypes.func.isRequired,
-}
+};
 
 
 // Team User Info or Remove
@@ -311,13 +311,13 @@ export default class TeamUserInfoAndRemovePop extends React.Component {
   toggleUserInfoHidden() {
     this.setState({
       userInfoVisible: false
-    })
+    });
   }
 
   toggleUserInfoVisible() {
     this.setState({
       userInfoVisible: true
-    })
+    });
   }
   
   render() {
@@ -333,8 +333,8 @@ export default class TeamUserInfoAndRemovePop extends React.Component {
             {...this.props}
             toggleUserInfoVisible={() => this.toggleUserInfoVisible()}
           />
-         }
-     </React.Fragment>
+        }
+      </React.Fragment>
     );
   }
 }
