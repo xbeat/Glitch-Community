@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {getAvatarThumbnailUrl, getLink} from '../../models/user';
 import Thanks from '../includes/thanks.jsx';
+import Loader from '../includes/loader.jsx';
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
@@ -151,22 +152,21 @@ class TeamUserRemove extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
+      gettingUser: true,
       userTeamProjects: [],
     };
     this.filterUserTeamProjects = this.filterUserTeamProjects.bind(this);
     this.getUserWithProjects = this.getUserWithProjects.bind(this);
+    this.userAvatarStyle = {backgroundColor: props.user.color};
   }
   
   filterUserTeamProjects(user) {
-    if (user.projects.length === 0) {
-      return []
-    }
-    let userTeamProjects = user.projects.filter(project => {
-      project.users.filter(projectUser => {
-        return projectUser.id === user.id
-      })
+    let teamProjectIds = this.props.team.projects.map(project => {
+      return project.id
     })
-    console.log ('🌎 userTeamProjects', userTeamProjects)
+    let userTeamProjects = user.projects.filter(project => {
+      return teamProjectIds.includes(project.id)
+    })
     this.setState({
       userTeamProjects: userTeamProjects
     })
@@ -177,6 +177,9 @@ class TeamUserRemove extends React.Component {
     this.props.api.get(userPath)
     .then(({data}) => {
       this.filterUserTeamProjects(data)
+      this.setState({
+        gettingUser: false
+      })
     })
   }
   
@@ -203,17 +206,20 @@ class TeamUserRemove extends React.Component {
               Also remove them from these projects
             </p>
 
-            {/* get list of projects w user on them */}
-            {/* checklist (results list?) */}
-
-            {/*
-
+            { this.state.gettingUser &&
+              <Loader />
+            
+            
+              
+              
+            || 
             { this.state.userTeamProjects.map(project => (
               <p key={project.id}>{project.name}</p>
             ))}
-            */}
 
             <button className="button-small">Select All</button>
+             
+           }
 
           </section>
         }
