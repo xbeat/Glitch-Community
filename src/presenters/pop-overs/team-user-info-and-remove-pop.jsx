@@ -162,6 +162,19 @@ class TeamUserRemove extends React.Component {
     this.filterUserTeamProjects = this.filterUserTeamProjects.bind(this);
     this.getUserWithProjects = this.getUserWithProjects.bind(this);
     this.selectOrUnselectAllProjects = this.selectOrUnselectAllProjects.bind(this)
+    this.removeUser = this.removeUser.bind(this)
+  }
+  
+  removeUser() {
+    console.log ('removeUser')
+    // get list of checboxes selected
+    // remove user from projects
+    let checkboxes = document.getElementsByName('projects')
+    let checked = checkboxes.filter(checkbox => {
+      checkbox.checked === true
+    })
+    console.log (checked)
+    // props.removeUserFromTeam(props.user.id)
   }
   
   selectOrUnselectAllProjects() {
@@ -244,7 +257,7 @@ class TeamUserRemove extends React.Component {
           </section>
         }
         <section className="pop-over-actions danger-zone">
-          <button className="button-small has-emoji">
+          <button className="button-small has-emoji" onClick=>
             <span>Remove</span>
             <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={this.userAvatarStyle}/>
           </button>
@@ -266,7 +279,8 @@ TeamUserRemove.propTypes = {
   }).isRequired,
   team: PropTypes.shape({
     projects: PropTypes.array.isRequired
-  })
+  }),
+  removeUserFromTeam: PropTypes.func.isRequired,
 }
 
 
