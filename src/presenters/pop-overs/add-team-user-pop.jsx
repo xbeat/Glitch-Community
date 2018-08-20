@@ -88,24 +88,23 @@ class AddTeamUserPop extends React.Component {
     const {maybeRequest, maybeResults, query} = this.state;
     const isLoading = (!!maybeRequest || !maybeResults);
     const results = [];
-    // this regex is basically (a)?@(b.c)
-    // any match means we have a valid domain in group 2
-    // group 1 is optional, but its presence means we have a full email
-    const emailChars = '[^@\\s\\:/\\\\]+'; //escaping characters is gross
-    const emailRegExp = new RegExp(`^(${emailChars})?@(${emailChars}\\.${emailChars})$`);
-    const emailMatch = emailRegExp.exec(query);
     const email = parseOneAddress(query);
-    console.log(email);
-    if (emailMatch) {
-      const [email, name, domain] = emailMatch;
-      if (name && email) {
-        results.push({
-          key: 'invite-by-email',
-          item: <InviteByEmail email={email} onClick={() => this.sendInviteEmail(email)}/>,
-        });
+    let domain = null;
+    if (email) {
+      results.push({
+        key: 'invite-by-email',
+        item: <InviteByEmail email={email.address} onClick={() => this.sendInviteEmail(email.address)}/>,
+      });
+      domain = email.domain;
+    } else {
+      const fakeEmail = parseOneAddress(query.replace('@', 'test@'));
+      if (fakeEmail) {
+        domain = fakeEmail.domain;
       }
+    }
+    if (domain) {
       const prevDomain = this.props.whitelistedDomain;
-      if (domain && this.props.setWhitelistedDomain && prevDomain !== domain) {
+      if (this.props.setWhitelistedDomain && prevDomain !== domain) {
         results.push({
           key: 'whitelist-email-domain',
           item: <WhitelistEmailDomain domain={domain} prevDomain={prevDomain} onClick={() => this.updateWhiteListedDomain(domain)}/>,
