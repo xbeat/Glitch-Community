@@ -24,6 +24,7 @@
     "d3-array": "^1.2.1",
     "details-element-polyfill": "^2.0.1",
     "ejs": "^2.6.1",
+    "email-addresses": "^3.0.1",
     "eslint": "^5.2.0",
     "eslint-loader": "^2.1.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",

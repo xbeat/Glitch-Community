@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
+import {parseOneAddress} from 'email-addresses';
 
 import UserModel from '../../models/user';
 
@@ -70,7 +71,7 @@ class AddTeamUserPop extends React.Component {
   }
   
   sendInviteEmail(email) {
-    let invitee = {email: email};
+    const invitee = {email};
     this.props.togglePopover();
     this.props.notifyInvited(invitee);
     this.props.inviteEmail(email);
@@ -93,6 +94,8 @@ class AddTeamUserPop extends React.Component {
     const emailChars = '[^@\\s\\:/\\\\]+'; //escaping characters is gross
     const emailRegExp = new RegExp(`^(${emailChars})?@(${emailChars}\\.${emailChars})$`);
     const emailMatch = emailRegExp.exec(query);
+    const email = parseOneAddress(query);
+    console.log(email);
     if (emailMatch) {
       const [email, name, domain] = emailMatch;
       if (name && email) {
