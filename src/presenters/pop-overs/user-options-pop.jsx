@@ -91,7 +91,10 @@ const UserOptionsPop = ({
   signOut,
   showNewStuffOverlay,
   toggleCreateTeamPop,
-  userIsAnon}) => {
+  userIsAnon,
+  userName,
+  userLogin,
+}) => {
   const clickNewStuff = (event) => {
     toggleUserOptionsPop();
     showNewStuffOverlay();
@@ -107,33 +110,17 @@ const UserOptionsPop = ({
 
   return (
     <dialog className="pop-over user-options-pop">
-       <section className="pop-over-actions">
-          <a href={userLink}>
-            <img className="avatar" src={avatarUrl} alt="Your avatar" style={avatarStyle}/>
-          </a>
-          <div className="info-container">
-            <p className="name" title={this.props.user.name}>{this.props.user.name || "Anonymous"}</p>
-            { this.props.user.login &&
-              <p className="user-login" title={this.props.user.login}>@{this.props.user.login}</p>
-            }
-            { this.props.userIsTeamAdmin && 
-              <div className="status-badge">
-                <span className="status admin" data-tooltip="Can edit team info and billing">
-                  Team Admin
-                </span>
-              </div>
-            }
-          </div>
-        </section>
-      
-<!--       <section className="pop-over-actions">
-        <a className="button-link" href={userLink}>
-          <div className="button button-small has-emoji button-tertiary">
-            <span>Your Profile </span>
-            <img className="emoji avatar" src={avatarUrl} style={avatarStyle} alt="Your avatar"></img>
-          </div>
+     <section className="pop-over-actions">
+        <a href={userLink}>
+          <img className="avatar" src={avatarUrl} alt="Your avatar" style={avatarStyle}/>
         </a>
-      </section> -->
+        <div className="info-container">
+          <p className="name" title={userName}>{userName || "Anonymous"}</p>
+          { userLogin &&
+            <p className="user-login" title={userLogin}>@{userLogin}</p>
+          }
+        </div>
+      </section>
 
       <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
 
@@ -165,6 +152,8 @@ UserOptionsPop.propTypes = {
   signOut: PropTypes.func.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
   userIsAnon: PropTypes.bool.isRequired,
+  userName: PropTypes.string.isRequired,
+  userLogin: PropTypes.string.isRequired,
 };
 
 
