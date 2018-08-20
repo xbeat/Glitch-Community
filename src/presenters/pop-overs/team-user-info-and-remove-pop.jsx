@@ -151,40 +151,37 @@ class TeamUserRemove extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
-      userTeamProjects: []
+      userTeamProjects: [],
     };
-    // this.toggleUserInfoVisible = this.toggleUserInfoVisible.bind(this);
-    this.userAvatarStyle = {backgroundColor: props.user.color};
     this.filterUserTeamProjects = this.filterUserTeamProjects.bind(this);
-    this.getUser = this.getUser.bind(this);
+    this.getUserWithProjects = this.getUserWithProjects.bind(this);
   }
   
-  async filterUserTeamProjects(user) {
-    if (!user) {
-      return false
+  filterUserTeamProjects(user) {
+    if (user.projects.length === 0) {
+      return []
     }
-    debugger
-    let userId = user.id
-    return user.projects.filter(project => {
-      project.users.filter(user => {
-        return user.id === userId
+    let userTeamProjects = user.projects.filter(project => {
+      project.users.filter(projectUser => {
+        return projectUser.id === user.id
       })
     })
-  }
-  
-  async getUser() {
-    let userPath = `users/${this.props.user.id}`;
-    this.setState({
-      user: await this.props.api.get(userPath);
-    }) 
-  }
-  
-  componentDidMount() {
-    let user = this.getUser()
-    let userTeamProjects = this.filterUserTeamProjects(user)
+    console.log ('🌎 userTeamProjects', userTeamProjects)
     this.setState({
       userTeamProjects: userTeamProjects
     })
+  }
+  
+  getUserWithProjects() {
+    let userPath = `users/${this.props.user.id}`;
+    this.props.api.get(userPath)
+    .then(({data}) => {
+      this.filterUserTeamProjects(data)
+    })
+  }
+  
+  componentDidMount() {
+    this.getUserWithProjects()    
   }
   
   render() {
