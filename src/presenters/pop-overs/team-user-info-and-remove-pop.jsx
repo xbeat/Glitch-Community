@@ -151,41 +151,46 @@ class TeamUserRemove extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
-      userProjects: []
+      userTeamProjects: []
     };
-    this.toggleUserInfoVisible = this.toggleUserInfoVisible.bind(this);
+    // this.toggleUserInfoVisible = this.toggleUserInfoVisible.bind(this);
     this.userAvatarStyle = {backgroundColor: props.user.color};
-    this.userProjects = this.userProjects.bind(this);
-    this.getUserProjects = this.getUserProjects.bind(this);
+    this.filterUserTeamProjects = this.filterUserTeamProjects.bind(this);
+    this.getUser = this.getUser.bind(this);
   }
-
-  // const userAvatarStyle = {backgroundColor: props.user.color};
   
-  filterUserTeamProjects(projects) {
-    let userId = this.props.user.id
-    return projects.filter(project => {
+  async filterUserTeamProjects(user) {
+    if (!user) {
+      return false
+    }
+    debugger
+    let userId = user.id
+    return user.projects.filter(project => {
       project.users.filter(user => {
         return user.id === userId
       })
     })
   }
   
-  async getUserProjects() {
-    let userPath = `users/{this.props.user.id}`
-    return await this.props.api().get(userPath)
+  async getUser() {
+    let userPath = `users/${this.props.user.id}`;
+    this.setState({
+      user: await this.props.api.get(userPath);
+    }) 
   }
   
   componentDidMount() {
-    let projects = this.getUserProjects()
+    let user = this.getUser()
+    let userTeamProjects = this.filterUserTeamProjects(user)
     this.setState({
-      userProjects: this.filterUserTeamProjects(projects)
+      userTeamProjects: userTeamProjects
     })
   }
   
   render() {
     return (
       <dialog className="pop-over team-user-info-pop">
-        <section className="pop-over-info clickable-label" onClick={this.toggleUserInfoVisible}>
+        <section className="pop-over-info clickable-label" onClick={this.props.toggleUserInfoVisible}>
           <div className="back icon">
             <div className="left-arrow icon" />
           </div>
@@ -195,7 +200,7 @@ class TeamUserRemove extends React.Component {
           </div>
         </section>
 
-        {this.state.userProjects &&
+        {this.state.userTeamProjects &&
           <section className="pop-over-actions">
             <p className="action-description">
               Also remove them from these projects
@@ -204,11 +209,12 @@ class TeamUserRemove extends React.Component {
             {/* get list of projects w user on them */}
             {/* checklist (results list?) */}
 
+            {/*
 
-            { this.state.userProjects.map(project => (
+            { this.state.userTeamProjects.map(project => (
               <p key={project.id}>{project.name}</p>
             ))}
-
+            */}
 
             <button className="button-small">Select All</button>
 
@@ -311,7 +317,6 @@ TeamUserInfoAndRemovePop.propTypes = {
   team: PropTypes.shape({
     projects: PropTypes.array.isRequired,
   }),
-  teamProjects: PropTypes.array.isRequired,
 };
 
 TeamUserInfoAndRemovePop.defaultProps = {
