@@ -165,17 +165,20 @@ const TeamUserRemove = ({toggleUserInfoVisible, ...props}) => {
         <p className="action-description">
           Also remove them from these projects
         </p>
-        <div className="button-wrap">
-          <button className="button-small">Select All</button>
-        </div>
-        <div>
-          <button className="button button-small has-emoji">
-            <span>Remove</span>
-            <img className="emoji avatar" src={getAvatarThumbnailUrl(props.user)} alt={props.user.login} style={userAvatarStyle}/>
-          </button>
-        </div>
-          
+        
+        {/* get list of projects w user on them */}
+        {/* checklist (results list?) */}
+        
+        <button className="button-small">Select All</button>
       </section>
+      
+      <section className="pop-over-actions danger-zone">
+        <button className="button-small has-emoji">
+          <span>Remove</span>
+          <img className="emoji avatar" src={getAvatarThumbnailUrl(props.user)} alt={props.user.login} style={userAvatarStyle}/>
+        </button>
+      </section>
+
     </dialog>
   )
 }
