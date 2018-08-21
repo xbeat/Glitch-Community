@@ -178,10 +178,8 @@ class TeamUserRemove extends React.Component {
       }
     });
     console.log ('selectedProjects', selectedProjects);
-    this.props.removeUserFromProjects(selectedProjects);
-    
 
-    // this.props.removeUserFromTeam(props.user.id)
+    // this.props.removeUserFromTeam(props.user.id, selectedProjects)
   }
   
   selectOrUnselectAllProjects() {
@@ -336,7 +334,6 @@ TeamUserInfoAndRemovePop.propTypes = {
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
-  removeUserFromProjects: PropTypes.func.isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,

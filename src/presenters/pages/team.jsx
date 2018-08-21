@@ -210,7 +210,6 @@ TeamPage.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
-  removeUserFromProjects: PropTypes.func.isRequired,
   removePin: PropTypes.func.isRequired,
   removeProject: PropTypes.func.isRequired,
   teamHasUnlimitedProjects: PropTypes.bool.isRequired,

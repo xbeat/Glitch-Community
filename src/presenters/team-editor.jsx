@@ -79,10 +79,6 @@ class TeamEditor extends React.Component {
       this.props.updateCurrentUser({teams});
     }
   }
-  
-  async removeUserFromProjects(projects) {
-    console.log('💣 removeUserFromProjects', projects);
-  }
 
   removeUserAdmin(id) {
     let index = this.state.adminIds.indexOf(id);
@@ -174,7 +170,6 @@ class TeamEditor extends React.Component {
       updateDescription: description => this.updateFields({description}).catch(handleError),
       addUser: id => this.addUser(id).catch(handleError),
       removeUserFromTeam: id => this.removeUserFromTeam(id).catch(handleError),
-      removeUserFromProjects: projects => this.removeUserFromProjects(projects).catch(handleError),
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
       uploadCover: () => assets.requestFile(blob => this.uploadCover(blob).catch(handleError)),
       clearCover: () => this.updateFields({hasCoverImage: false}).catch(handleError),
