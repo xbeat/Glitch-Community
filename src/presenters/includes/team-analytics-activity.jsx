@@ -67,19 +67,27 @@ import groupByTime from 'group-by-time';
 
 const createHistogram = (buckets) => {
   let histogram = [];
+  
+  
   let bins = groupByTime(buckets, '@timestamp', 'day') // supports 'day', 'week', 'month'
   bins = Object.values(bins)
+  
+  
   bins.forEach (bin => {
     let uniqueAppViews = 0;
     let totalRemixes = 0;
+    let timestamp = undefined;
     // let codeViews = []
     bin.forEach (data => {
+      if (!timestamp) {
+        timestamp = data['@timestamp']
+      }
       totalRemixes += data.analytics.remixes;
       uniqueAppViews += data.analytics.uniqueIps;
       // referrers.push(data.analytics.referrers)
     });
     histogram.push({
-      time: bin.timestamp,
+      time: timestamp,
       appViews: uniqueAppViews,
       remixes: totalRemixes,
     });
