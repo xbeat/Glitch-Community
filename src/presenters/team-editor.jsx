@@ -66,9 +66,11 @@ class TeamEditor extends React.Component {
   }
 
   async removeUserFromTeam(id, projectIds) {
+    // Kick them out of every project at once, and wait until it's all done
     await Promise.all(projectIds.map(projectId => {
-      return this.props.api.delete(`projects/${projectId}/authorization`, {targetUserId: id});
+      return this.props.api.delete(`projects/${projectId}/authorization`, {data: {targetUserId: id}});
     }));
+    // Now remove them from the team. Remove them last so if something goes wrong you can do this over again
     await this.props.api.delete(`teams/${this.state.id}/users/${id}`);
     this.removeUserAdmin(id);
     this.setState(({users}) => ({
