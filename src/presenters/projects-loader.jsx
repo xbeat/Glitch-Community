@@ -1,25 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {chunk, keyBy} from 'lodash';
+import {chunk} from 'lodash';
 
 import ProjectModel from '../models/project';
 
 import {CurrentUserConsumer, normalizeProjects} from './current-user.jsx';
 
 function listToObject(list, val) {
-  return list.reduce((data, key) => ({[key]: val, ...data}), {});
+  return list.reduce((data, key) => ({...data, [key]: val}), {});
+}
+
+function keyByVal(list, key) {
+  return list.reduce((data, val) => ({...data, [val[key]]: val}), {});
 }
 
 class ProjectsLoader extends React.Component {
   constructor(props) {
     super(props);
+    // state is { [project id]: project }
     this.state = {};
   }
   
-  async loadProjects(ids) {
+  async loadProjects(...ids) {
     const {data} = await this.props.api.get(`projects/byIds?ids=${ids.join(',')}`);
     const projects = data.map(d => ProjectModel(d).update(d).asProps());
-    this.setState(projects.reduce((all, project)
+    this.setState(keyByVal(projects, 'id'));
   }
   
   ensureProjects(projects) {
@@ -33,7 +38,7 @@ class ProjectsLoader extends React.Component {
     const unloadedProjects = ids.filter(id => this.state[id] === undefined);
     if (unloadedProjects.length) {
       this.setState(listToObject(unloadedProjects, null));
-      chunk(unloadedProjects, 100).forEach(chunk => this.loadProjects(chunk));
+      chunk(unloadedProjects, 100).forEach(chunk => this.loadProjects(...chunk));
     }
   }
   
@@ -45,20 +50,13 @@ class ProjectsLoader extends React.Component {
     this.ensureProjects(this.props.projects);
   }
   
-  reloadProject(projectId) {
-    // setting the project to undefined refetches from the api (👀 ensureProjects())
-    this.setState({
-      [projectId]: undefined
-    });
-  }
-  
   render() {
     const {children, projects} = this.props;
     const loadedProjects = projects.map(project => this.state[project.id] || project);
     return (
       <CurrentUserConsumer>
         {currentUser => (
-          children(normalizeProjects(loadedProjects, currentUser), this.reloadProject.bind(this))
+          children(normalizeProjects(loadedProjects, currentUser), this.loadProjects.bind(this))
         )}
       </CurrentUserConsumer>
     );
