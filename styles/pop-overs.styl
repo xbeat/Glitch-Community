@@ -38,20 +38,21 @@
     padding: 6px
     
   .clickable-label
-    cursor: pointer
     .back
       background-color: transparent
       vertical-align: middle
-      padding: 3px 5px
+      padding: 0px 5px 2px
       opacity: 0.7
       width: auto
     &:hover,
+    &:focus,
     &:active
       .back
         opacity: 1
         border-radius: 5px
         border: none
-    &:hover
+    &:hover,
+    &:focus
       .back
         background-color: secondary-background-hover
     &:active

@@ -190,14 +190,16 @@ class TeamUserRemove extends React.Component {
     const userAvatarStyle = {backgroundColor: this.props.user.color};
     return (
       <dialog className="pop-over team-user-info-pop team-user-remove-pop">
-        <section className="pop-over-info clickable-label">
-          <button className="button-unstyled back icon" onClick={this.props.toggleUserInfoVisible}>
-            <div className="left-arrow icon" />
-          </button>
-          <div className="pop-title">
-            Remove {getDisplayName(this.props.user)}
-          </div>
-        </section>
+        <button className="button-unstyled clickable-label" onClick={this.props.toggleUserInfoVisible} aria-label="go back">
+          <section className="pop-over-info">
+            <div className="back icon">
+              <div className="left-arrow icon" />
+            </div>
+            <div className="pop-title">
+              Remove {getDisplayName(this.props.user)}
+            </div>
+          </section>
+        </button>
 
         {this.state.userTeamProjects &&
           <section className="pop-over-actions" id="user-team-projects">
