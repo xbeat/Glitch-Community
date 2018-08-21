@@ -67,14 +67,8 @@ import groupByTime from 'group-by-time';
 
 const createHistogram = (buckets) => {
   let histogram = [];
-  console.log(buckets)
-  // let bins = binData(buckets);
   let bins = groupByTime(buckets, '@timestamp', 'day') // supports 'day', 'week', 'month'
-  // let bins = buckets.map(groupByDay)
-  console.log('🌎', bins) // returns the number of bins that are displayed in ticks
-  
-  // convert obj {time1:[], time2:[]} to array
-  
+  bins = Object.values(bins)
   bins.forEach (bin => {
     let uniqueAppViews = 0;
     let totalRemixes = 0;
@@ -85,7 +79,7 @@ const createHistogram = (buckets) => {
       // referrers.push(data.analytics.referrers)
     });
     histogram.push({
-      time: bin.x0,
+      time: bin.timestamp,
       appViews: uniqueAppViews,
       remixes: totalRemixes,
     });
@@ -96,6 +90,7 @@ const createHistogram = (buckets) => {
 const chartColumns = (analytics) => {
   const buckets = analytics.buckets;
   let histogram = createHistogram(buckets);
+  console.log (histogram)
   let timestamps = ['x'];
   let remixes = ['Remixes'];
   let appViews = ['Unique App Views'];
