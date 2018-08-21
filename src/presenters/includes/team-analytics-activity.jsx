@@ -4,15 +4,26 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as d3Array from 'd3-array';
 
-const binData = d3Array.histogram()
-.thresholds(18)
-.value(function(data) {
+const binData = d3Array.histogram().value(function(data) {
   return data['@timestamp'];
 });
 
+
+var byday = {}
+
+const groupByDay(value, index, array) => {
+  d = new Date(value['date']);
+  d = Math.floor(d.getTime()/(1000*60*60*24));
+  byday[d]=byday[d]||[];
+  byday[d].push(value);
+  return byday
+}
+
+
 const createHistogram = (buckets) => {
-  let bins = binData(buckets);
-  console.log(bins)
+  // let bins = binData(buckets);
+  let bins = buckets.map(groupByDay)
+  console.log(bins) // returns the number of bins that are displayed in ticks
   let histogram = [];
   bins.forEach (bin => {
     let uniqueAppViews = 0;
@@ -76,10 +87,10 @@ const renderChart = (c3, analytics, currentTimeFrame) => {
         type: 'timeseries',
         tick: {
           format: dateFormat(currentTimeFrame),
-          fit: true,
-          culling: {
-            max: 12
-          },
+          // fit: true,
+          // culling: {
+          //   max: 12
+          // },
         }
       },
     },
