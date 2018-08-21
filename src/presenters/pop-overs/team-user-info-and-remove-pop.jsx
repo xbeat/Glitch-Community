@@ -260,7 +260,7 @@ class TeamUserRemove extends React.Component {
                 <label key={project.id}>
                   <input className="checkbox-project" type="checkbox" name="projects" data-id={project.id} value={project.domain} />
                   <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
-                  {project.name}
+                  {project.domain}
                 </label>
               ))}
             </div>
