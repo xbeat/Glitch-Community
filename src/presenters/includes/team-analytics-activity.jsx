@@ -7,7 +7,7 @@ import * as d3Array from 'd3-array';
 
 const createHistogram = (bins) => {
   let histogram = [];
-  bins = bins || []
+  bins = bins || [];
   bins.forEach (bin => {
     let uniqueAppViews = 0;
     let totalRemixes = 0;
@@ -15,7 +15,7 @@ const createHistogram = (bins) => {
     // let codeViews = []
     bin.forEach (data => {
       if (!timestamp) {
-        timestamp = data['@timestamp']
+        timestamp = data['@timestamp'];
       }
       totalRemixes += data.analytics.remixes;
       uniqueAppViews += data.analytics.uniqueIps;
@@ -35,18 +35,18 @@ const groupByRegularIntervals = d3Array.histogram().value(function(data) {
 });
 
 const createBins = (buckets, currentTimeFrame) => {
-  let bins = []
+  let bins = [];
   if (currentTimeFrame === "Last 24 Hours") {
-    return groupByRegularIntervals(buckets)
-  } else {
-    bins = groupByTime(buckets, '@timestamp', 'day') // supports 'day', 'week', 'month'
-    return Object.values(bins) 
-  }
-}
+    return groupByRegularIntervals(buckets);
+  } 
+  bins = groupByTime(buckets, '@timestamp', 'day'); // supports 'day', 'week', 'month'
+  return Object.values(bins); 
+  
+};
 
 const chartColumns = (analytics, currentTimeFrame) => {
   const buckets = analytics.buckets;
-  let bins = createBins(buckets, currentTimeFrame)
+  let bins = createBins(buckets, currentTimeFrame);
   let histogram = createHistogram(bins);
   let timestamps = ['x'];
   let remixes = ['Remixes'];
