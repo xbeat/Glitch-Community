@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import _ from 'lodash';
 import groupByTime from 'group-by-time';
+
 // import * as d3Array from 'd3-array';
 
 // const binData = d3Array.histogram().value(function(data) {
@@ -14,38 +15,38 @@ import groupByTime from 'group-by-time';
 
 // adapted from https://github.com/Techwraith/group-by-time
 
-function getMonday(d) {
-  var day = d.getDay(),
-      diff = d.getDate() - day + (day == 0 ? -6:1) // adjust when day is sunday
-  return new Date(d.setDate(diff))
-}
+// function getMonday(d) {
+//   var day = d.getDay(),
+//       diff = d.getDate() - day + (day == 0 ? -6:1) // adjust when day is sunday
+//   return new Date(d.setDate(diff))
+// }
 
-function groupByTime (arr, key, group) {
+// function groupByTime (arr, key, group) {
   
-  console.log ('🌹')
+//   console.log ('🌹')
 
-  var groupings = {
-    day: function (obj) {
-      var date = new Date(obj[key])
-      date.setHours(0, 0, 0, 0)
-      return date.valueOf()
-    }
-  , week: function (obj) {
-      var date = new Date(obj[key])
-      date.setHours(0, 0, 0, 0)
-      return getMonday(date).valueOf()
-    }
-  , month: function (obj) {
-      var date = new Date(obj[key])
-      return new Date(date.getFullYear(), date.getMonth(), 1).valueOf()
-    }
-  }
+//   var groupings = {
+//     day: function (obj) {
+//       var date = new Date(obj[key])
+//       date.setHours(0, 0, 0, 0)
+//       return date.valueOf()
+//     }
+//   , week: function (obj) {
+//       var date = new Date(obj[key])
+//       date.setHours(0, 0, 0, 0)
+//       return getMonday(date).valueOf()
+//     }
+//   , month: function (obj) {
+//       var date = new Date(obj[key])
+//       return new Date(date.getFullYear(), date.getMonth(), 1).valueOf()
+//     }
+//   }
 
-  if (!group) group == 'day'
+//   if (!group) group == 'day'
 
-  return _.groupby(arr, groupings[group])
+//   return _.groupby(arr, groupings[group])
 
-}
+// }
 
 // groupByTime.byDay = function (arr, key) { return groupByTime(arr, key, 'day') }
 // groupByTime.byWeek = function (arr, key) { return groupByTime(arr, key, 'week') }
@@ -65,12 +66,12 @@ function groupByTime (arr, key, group) {
 
 
 const createHistogram = (buckets) => {
+  let histogram = [];
   console.log(buckets)
   // let bins = binData(buckets);
   let bins = groupByTime(buckets, '@timestamp', 'day') // supports 'day', 'week', 'month'
   // let bins = buckets.map(groupByDay)
-  console.log(bins) // returns the number of bins that are displayed in ticks
-  let histogram = [];
+  console.log('🌎', bins) // returns the number of bins that are displayed in ticks
   
   // convert obj {time1:[], time2:[]} to array
   
