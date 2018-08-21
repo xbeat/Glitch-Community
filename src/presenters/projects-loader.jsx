@@ -10,15 +10,16 @@ function listToObject(list, val) {
   return list.reduce((data, key) => ({[key]: val, ...data}), {});
 }
 
-async function getProjects(api, ids) {
-  const {data} = await api.get(`projects/byIds?ids=${ids.join(',')}`);
-  return data.map(d => ProjectModel(d).update(d).asProps());
-}
-
 class ProjectsLoader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+  
+  async loadProjects(ids) {
+    const {data} = await this.props.api.get(`projects/byIds?ids=${ids.join(',')}`);
+    const projects = data.map(d => ProjectModel(d).update(d).asProps());
+    this.setState(projects.reduce((all, project)
   }
   
   ensureProjects(projects) {
@@ -32,11 +33,7 @@ class ProjectsLoader extends React.Component {
     const unloadedProjects = ids.filter(id => this.state[id] === undefined);
     if (unloadedProjects.length) {
       this.setState(listToObject(unloadedProjects, null));
-      chunk(unloadedProjects, 100).forEach(chunk => {
-        getProjects(this.props.api, chunk).then(projects => {
-          this.setState(keyBy(projects, ({id}) => id));
-        });
-      });
+      chunk(unloadedProjects, 100).forEach(chunk => this.loadProjects(chunk));
     }
   }
   
