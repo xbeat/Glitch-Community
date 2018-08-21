@@ -82,7 +82,7 @@ TeamList.propTypes = {
 
 // User Options Pop
 
-const UserOptionsPop = ({props}) => {
+const UserOptionsPop = ({...props}) => {
   const clickNewStuff = (event) => {
     props.toggleUserOptionsPop();
     props.showNewStuffOverlay();
