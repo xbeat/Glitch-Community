@@ -8,21 +8,65 @@ const binData = d3Array.histogram().value(function(data) {
   return data['@timestamp'];
 });
 
+var groupByTime
+  , groupBy = _.groupby
 
-var byday = {}
 
-const groupByDay(value, index, array) => {
-  d = new Date(value['date']);
-  d = Math.floor(d.getTime()/(1000*60*60*24));
-  byday[d]=byday[d]||[];
-  byday[d].push(value);
-  return byday
+function getMonday(d) {
+  var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6:1) // adjust when day is sunday
+  return new Date(d.setDate(diff))
 }
+
+function groupByTime (arr, key, group) {
+  
+  console.log ('🌹')
+
+  var groupings = {
+    day: function (obj) {
+      var date = new Date(obj[key])
+      date.setHours(0, 0, 0, 0)
+      return date.valueOf()
+    }
+  , week: function (obj) {
+      var date = new Date(obj[key])
+      date.setHours(0, 0, 0, 0)
+      return getMonday(date).valueOf()
+    }
+  , month: function (obj) {
+      var date = new Date(obj[key])
+      return new Date(date.getFullYear(), date.getMonth(), 1).valueOf()
+    }
+  }
+
+  if (!group) group == 'day'
+
+  return groupBy(arr, groupings[group])
+
+}
+
+groupByTime.byDay = function (arr, key) { return groupByTime(arr, key, 'day') }
+groupByTime.byWeek = function (arr, key) { return groupByTime(arr, key, 'week') }
+groupByTime.byMonth = function (arr, key) { return groupByTime(arr, key, 'month') }
+
+
+
+// var byday = {}
+
+// const groupByDay(value, index, array) => {
+//   d = new Date(value['date']);
+//   d = Math.floor(d.getTime()/(1000*60*60*24));
+//   byday[d]=byday[d]||[];
+//   byday[d].push(value);
+//   return byday
+// }
 
 
 const createHistogram = (buckets) => {
+  console.log(buckets)
   // let bins = binData(buckets);
-  let bins = buckets.map(groupByDay)
+  let bins = groupByTime.byDay(buckets, '@timestamp', 'day')
+  // let bins = buckets.map(groupByDay)
   console.log(bins) // returns the number of bins that are displayed in ticks
   let histogram = [];
   bins.forEach (bin => {
