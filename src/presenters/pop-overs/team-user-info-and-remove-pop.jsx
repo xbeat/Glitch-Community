@@ -179,7 +179,7 @@ class TeamUserRemove extends React.Component {
     });
     console.log ('selectedProjects', selectedProjects);
 
-    // this.props.removeUserFromTeam(props.user.id, selectedProjects)
+    this.props.removeUserFromTeam(this.props.user.id, selectedProjects)
   }
   
   selectOrUnselectAllProjects() {
