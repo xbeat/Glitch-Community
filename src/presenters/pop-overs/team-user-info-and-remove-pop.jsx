@@ -192,7 +192,9 @@ class TeamUserRemove extends React.Component {
       <dialog className="pop-over team-user-info-pop team-user-remove-pop">
         <section className="pop-over-info clickable-label" onClick={this.props.toggleUserInfoVisible}>
           <div className="back icon">
-            <div className="left-arrow icon" />
+            <button className="button-unstyled">
+              <div className="left-arrow icon" />
+            </button>
           </div>
           <div className="pop-title">
             Remove {getDisplayName(this.props.user)}
