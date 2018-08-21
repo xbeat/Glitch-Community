@@ -123,7 +123,6 @@ const adminStatusDisplay = (adminIds, user) => {
     return " (admin)";
   } 
   return "";
-  
 };
 
 export default UsersList;

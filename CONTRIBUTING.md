@@ -142,7 +142,7 @@ Ok, now the GitHub repository is updated and stable.
 
 We're going to put our release candidate onto community-staging.glitch.me.
 
-Go to https://glitch.com/~community-staging and open up the console.
+Go to [https://glitch.com/~community-staging](https://glitch.com/~community-staging) and open up the console.
   ```
   git log -1 # Prints out a stable changeset in case we need it.
   git pull # Update us to master.
