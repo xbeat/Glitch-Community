@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getAvatarThumbnailUrl, getLink} from '../../models/user';
+import {getAvatarThumbnailUrl, getDisplayName, getLink} from '../../models/user';
 import {getAvatarUrl} from  '../../models/project';
 
 import Thanks from '../includes/thanks.jsx';
@@ -160,17 +160,13 @@ class TeamUserRemove extends React.Component {
       userTeamProjects: [],
       selectProjects: 'Select All'
     };
-    this.userAvatarStyle = {backgroundColor: props.user.color};
-    this.filterUserTeamProjects = this.filterUserTeamProjects.bind(this);
-    this.getUserWithProjects = this.getUserWithProjects.bind(this);
     this.selectOrUnselectAllProjects = this.selectOrUnselectAllProjects.bind(this);
     this.removeUser = this.removeUser.bind(this);
-    this.userName = props.user.name || props.user.login || props.user.id;
   }
   
   removeUser() {
     this.props.togglePopover();
-    notify.createNotification(<div>{this.userName} removed from Team</div>);
+    notify.createNotification(<div>{getDisplayName(this.props.user)} removed from Team</div>);
     // get list of checboxes selected
     // remove user from projects
     var selectedProjects = [];
@@ -219,15 +215,13 @@ class TeamUserRemove extends React.Component {
     });
   }
   
-  getUserWithProjects() {
-    let userPath = `users/${this.props.user.id}`;
-    this.props.api.get(userPath)
-      .then(({data}) => {
-        this.filterUserTeamProjects(data);
-        this.setState({
-          gettingUser: false
-        });
-      });
+  async getUserWithProjects() {
+    const userPath = `users/${this.props.user.id}`;
+    const {data} = await this.props.api.get(userPath)
+    this.filterUserTeamProjects(data);
+    this.setState({
+      gettingUser: false
+    });
   }
   
   componentDidMount() {
@@ -235,6 +229,7 @@ class TeamUserRemove extends React.Component {
   }
   
   render() {
+    const userAvatarStyle = {backgroundColor: this.props.user.color};
     return (
       <dialog className="pop-over team-user-info-pop team-user-remove-pop">
         <section className="pop-over-info clickable-label" onClick={this.props.toggleUserInfoVisible}>
@@ -243,7 +238,7 @@ class TeamUserRemove extends React.Component {
           </div>
           <div className="pop-title">
             <span>Remove </span>
-            <span>{this.userName}</span>
+            <span>{getDisplayName(this.props.user)}</span>
           </div>
         </section>
 
@@ -270,7 +265,7 @@ class TeamUserRemove extends React.Component {
         <section className="pop-over-actions danger-zone">
           <button className="button-small has-emoji" onClick={this.removeUser}>
             <span>Remove</span>
-            <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={this.userAvatarStyle}/>
+            <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
           </button>
         </section>
       </dialog>
