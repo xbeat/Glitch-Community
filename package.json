@@ -60,7 +60,8 @@
     "webpack": "^4.16.2",
     "webpack-cli": "^3.1.0",
     "webpack-manifest-plugin": "^2.0.3",
-    "group-by-time": "^1.0.0"
+    "group-by-time": "^1.0.0",
+    "d3-array": "^1.2.1"
   },
   "engines": {
     "node": "8.x"
