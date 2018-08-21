@@ -220,6 +220,9 @@ class TeamUserRemove extends React.Component {
     const {data} = await this.props.api.get(userPath)
     this.filterUserTeamProjects(data);
     this.setState({
+      userTeamProjects: data.projects.filter(userProj => {
+        return this.props.team.projects.some(pteamPrj => p.id === userProj.id);
+      }),
       gettingUser: false
     });
   }
@@ -259,7 +262,9 @@ class TeamUserRemove extends React.Component {
                 </label>
               ))}
             </div>
-            <button className="button-small button-tertiary" onClick={this.selectOrUnselectAllProjects}>{this.state.selectProjects}</button>
+            { this.state.userTeamProjects.length > 0 && (
+              <button className="button-small button-tertiary" onClick={this.selectOrUnselectAllProjects}>{this.state.selectProjects}</button>
+            )}
           </section>
         }
         <section className="pop-over-actions danger-zone">
