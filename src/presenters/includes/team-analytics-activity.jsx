@@ -5,11 +5,13 @@ import _ from 'lodash';
 import * as d3Array from 'd3-array';
 
 const binData = d3Array.histogram().value(function(data) {
+  console.log(data['@timestamp'])
   return data['@timestamp'];
 });
 
 const createHistogram = (buckets) => {
   let data = binData(buckets);
+  console.log('data',data)
   let histogram = [];
   data.forEach (bin => {
     let uniqueAppViews = 0;
