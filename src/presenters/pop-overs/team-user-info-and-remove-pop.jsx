@@ -203,25 +203,12 @@ class TeamUserRemove extends React.Component {
     }
   }
   
-  filterUserTeamProjects(user) {
-    let teamProjectIds = this.props.team.projects.map(project => {
-      return project.id;
-    });
-    let userTeamProjects = user.projects.filter(project => {
-      return teamProjectIds.includes(project.id);
-    });
-    this.setState({
-      userTeamProjects: userTeamProjects
-    });
-  }
-  
   async getUserWithProjects() {
     const userPath = `users/${this.props.user.id}`;
     const {data} = await this.props.api.get(userPath)
-    this.filterUserTeamProjects(data);
     this.setState({
       userTeamProjects: data.projects.filter(userProj => {
-        return this.props.team.projects.some(pteamPrj => p.id === userProj.id);
+        return this.props.team.projects.some(teamProj => teamProj.id === userProj.id);
       }),
       gettingUser: false
     });
