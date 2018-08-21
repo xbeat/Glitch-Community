@@ -82,22 +82,10 @@ TeamList.propTypes = {
 
 // User Options Pop
 
-const UserOptionsPop = ({
-  toggleUserOptionsPop,
-  userLink,
-  avatarUrl,
-  avatarStyle,
-  teams,
-  signOut,
-  showNewStuffOverlay,
-  toggleCreateTeamPop,
-  userIsAnon,
-  userName,
-  userLogin,
-}) => {
+const UserOptionsPop = ({props}) => {
   const clickNewStuff = (event) => {
-    toggleUserOptionsPop();
-    showNewStuffOverlay();
+    props.toggleUserOptionsPop();
+    props.showNewStuffOverlay();
     event.stopPropagation();
   };
   
@@ -105,26 +93,26 @@ const UserOptionsPop = ({
     /* global analytics */
     analytics.track("Logout");
     analytics.reset();
-    signOut();
+    props.signOut();
   };
   
-  userName = userName || "Anonymous";
+  let userName = props.userName || "Anonymous";
 
   return (
     <dialog className="pop-over user-options-pop">
-      <a href={userLink} className="user-info">
+      <a href={props.userLink} className="user-info">
         <section className="pop-over-actions user-info">
-            <img className="avatar" src={avatarUrl} alt="Your avatar" style={avatarStyle}/>
+            <img className="avatar" src={props.avatarUrl} alt="Your avatar" style={props.avatarStyle}/>
             <div className="info-container">
               <p className="name" title={userName}>{userName}</p>
-              { userLogin &&
-                <p className="user-login" title={userLogin}>@{userLogin}</p>
+              { props.userLogin &&
+                <p className="user-login" title={props.userLogin}>@{props.userLogin}</p>
               }
             </div>
         </section>
       </a>
 
-      <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
+      <TeamList teams={props.teams} toggleCreateTeamPop={props.toggleCreateTeamPop} userIsAnon={props.userIsAnon} />
 
       <section className="pop-over-info section-has-tertiary-buttons">
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
