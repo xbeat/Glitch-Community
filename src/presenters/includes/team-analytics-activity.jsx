@@ -11,10 +11,10 @@ const binData = d3Array.histogram()
 });
 
 const createHistogram = (buckets) => {
-  let data = binData(buckets);
-  console.log(data)
+  let bins = binData(buckets);
+  console.log(bins)
   let histogram = [];
-  data.forEach (bin => {
+  bins.forEach (bin => {
     let uniqueAppViews = 0;
     let totalRemixes = 0;
     // let codeViews = []
