@@ -82,10 +82,22 @@ TeamList.propTypes = {
 
 // User Options Pop
 
-const UserOptionsPop = ({...props}) => {
+const UserOptionsPop = ({
+  toggleUserOptionsPop,
+  userLink,
+  avatarUrl,
+  avatarStyle,
+  teams,
+  signOut,
+  showNewStuffOverlay,
+  toggleCreateTeamPop,
+  userIsAnon,
+  userName,
+  userLogin,
+}) => {
   const clickNewStuff = (event) => {
-    props.toggleUserOptionsPop();
-    props.showNewStuffOverlay();
+    toggleUserOptionsPop();
+    showNewStuffOverlay();
     event.stopPropagation();
   };
   
@@ -93,26 +105,26 @@ const UserOptionsPop = ({...props}) => {
     /* global analytics */
     analytics.track("Logout");
     analytics.reset();
-    props.signOut();
+    signOut();
   };
   
-  let userName = props.userName || "Anonymous";
+  userName = userName || "Anonymous";
 
   return (
     <dialog className="pop-over user-options-pop">
-      <a href={props.userLink} className="user-info">
+      <a href={userLink} className="user-info">
         <section className="pop-over-actions user-info">
-            <img className="avatar" src={props.avatarUrl} alt="Your avatar" style={props.avatarStyle}/>
-            <div className="info-container">
-              <p className="name" title={userName}>{userName}</p>
-              { props.userLogin &&
-                <p className="user-login" title={props.userLogin}>@{props.userLogin}</p>
-              }
-            </div>
+          <img className="avatar" src={avatarUrl} alt="Your avatar" style={avatarStyle}/>
+          <div className="info-container">
+            <p className="name" title={userName}>{userName}</p>
+            { userLogin &&
+                <p className="user-login" title={userLogin}>@{userLogin}</p>
+            }
+          </div>
         </section>
       </a>
 
-      <TeamList teams={props.teams} toggleCreateTeamPop={props.toggleCreateTeamPop} userIsAnon={props.userIsAnon} />
+      <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
 
       <section className="pop-over-info section-has-tertiary-buttons">
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
