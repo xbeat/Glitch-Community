@@ -17,7 +17,7 @@ function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
 }
 
-const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) => {
+const NameAndLogin = ({name, login, isAuthorized, updateName, updateLogin}) => {
   if(!login) {
     return <h1 className="login">Anonymous</h1>;
   }
@@ -44,7 +44,6 @@ const NameAndLogin = ({name, login, id, isAuthorized, updateName, updateLogin}) 
 NameAndLogin.propTypes = {
   name: PropTypes.string,
   login: PropTypes.string,
-  id: PropTypes.number.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   updateName: PropTypes.func,
   updateLogin: PropTypes.func,
@@ -77,7 +76,7 @@ const UserPage = ({
         avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null }
       >
         <NameAndLogin
-          {...{name, login, id, isAuthorized, updateName}}
+          {...{name, login, isAuthorized, updateName}}
           updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
         />
         <Thanks count={thanksCount}/>
