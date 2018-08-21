@@ -17,13 +17,15 @@ function keyByVal(list, key) {
 class ProjectsLoader extends React.Component {
   constructor(props) {
     super(props);
-    // state is { [project id]: project }
+    // state is { [project id]: project|null|undefined }
+    // undefined means we haven't seen that project yet
+    // null means the project is still getting loaded
     this.state = {};
   }
   
   async loadProjects(...ids) {
     const {data} = await this.props.api.get(`projects/byIds?ids=${ids.join(',')}`);
-    const projects = data.map(d => ProjectModel(d).update(d).asProps());
+    const projects = data.map(d => ProjectModel(d).asProps());
     this.setState(keyByVal(projects, 'id'));
   }
   
