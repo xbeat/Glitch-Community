@@ -225,8 +225,7 @@ class TeamUserRemove extends React.Component {
             <div className="left-arrow icon" />
           </div>
           <div className="pop-title">
-            <span>Remove </span>
-            <span>{getDisplayName(this.props.user)}</span>
+            Remove {getDisplayName(this.props.user)}
           </div>
         </section>
 
