@@ -3,7 +3,6 @@ const fs = require('fs');
 const moment = require('moment-mini');
 
 const {getProject, getTeam, getUser} = require('./api');
-const {updateCaches} = require('./cache');
 const constants = require('./constants');
 
 module.exports = function() {
@@ -32,11 +31,6 @@ module.exports = function() {
   app.use(function(request, response, next) {
     console.log(request.method, request.originalUrl, request.body);
     return next();
-  });
-
-  app.post('/update-caches', async (request, response) => {
-    await updateCaches();
-    response.sendStatus(200);
   });
 
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';

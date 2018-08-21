@@ -58,7 +58,7 @@ LoginPage.propTypes = {
 
 const LoginPageContainer = (props) => (
   <CurrentUserConsumer>
-    {(currentUser, fetched, {update}) => <LoginPage setUser={update} {...props}/>}
+    {(currentUser, fetched, {login}) => <LoginPage setUser={login} {...props}/>}
   </CurrentUserConsumer>
 );
 

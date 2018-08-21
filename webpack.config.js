@@ -47,7 +47,7 @@ module.exports = () => {
         cacheGroups: {
           curated: {
             name: 'curated',
-            test: /[\\/]src[\\/](?:cache|curated)[\\/]/,
+            test: /[\\/]src[\\/]curated[\\/]/,
             minSize: 0,
           },
           react: {
