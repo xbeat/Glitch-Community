@@ -149,7 +149,7 @@ class TeamUserRemove extends React.Component {
     });
     console.log ('selectedProjects', selectedProjects);
 
-    this.props.removeUserFromTeam(this.props.user.id, selectedProjects)
+    this.props.removeUserFromTeam(this.props.user.id, selectedProjects);
   }
   
   selectOrUnselectAllProjects() {
@@ -173,7 +173,7 @@ class TeamUserRemove extends React.Component {
   
   async getUserWithProjects() {
     const userPath = `users/${this.props.user.id}`;
-    const {data} = await this.props.api.get(userPath)
+    const {data} = await this.props.api.get(userPath);
     this.setState({
       userTeamProjects: data.projects.filter(userProj => {
         return this.props.team.projects.some(teamProj => teamProj.id === userProj.id);
@@ -209,8 +209,8 @@ class TeamUserRemove extends React.Component {
             }
             <div className="projects-list">
               { this.state.userTeamProjects.map(project => (
-                <label key={project.id}>
-                  <input className="checkbox-project" type="checkbox" name="projects" data-id={project.id} value={project.domain} />
+                <label key={project.id} htmlFor={`remove-user-project-${project.id}`}>
+                  <input className="checkbox-project" type="checkbox" name="projects" id={`remove-user-project-${project.id}`} data-id={project.id} value={project.domain} />
                   <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
                   {project.domain}
                 </label>
