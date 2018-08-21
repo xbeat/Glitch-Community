@@ -2,15 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import _ from 'lodash';
-import * as d3Array from 'd3-array';
+import groupByTime from 'group-by-time';
+// import * as d3Array from 'd3-array';
 
-const binData = d3Array.histogram().value(function(data) {
-  return data['@timestamp'];
-});
+// const binData = d3Array.histogram().value(function(data) {
+//   return data['@timestamp'];
+// });
 
-var groupByTime
-  , groupBy = _.groupby
+// var groupByTime
 
+
+// adapted from https://github.com/Techwraith/group-by-time
 
 function getMonday(d) {
   var day = d.getDay(),
@@ -41,13 +43,13 @@ function groupByTime (arr, key, group) {
 
   if (!group) group == 'day'
 
-  return groupBy(arr, groupings[group])
+  return _.groupby(arr, groupings[group])
 
 }
 
-groupByTime.byDay = function (arr, key) { return groupByTime(arr, key, 'day') }
-groupByTime.byWeek = function (arr, key) { return groupByTime(arr, key, 'week') }
-groupByTime.byMonth = function (arr, key) { return groupByTime(arr, key, 'month') }
+// groupByTime.byDay = function (arr, key) { return groupByTime(arr, key, 'day') }
+// groupByTime.byWeek = function (arr, key) { return groupByTime(arr, key, 'week') }
+// groupByTime.byMonth = function (arr, key) { return groupByTime(arr, key, 'month') }
 
 
 
@@ -65,10 +67,13 @@ groupByTime.byMonth = function (arr, key) { return groupByTime(arr, key, 'month'
 const createHistogram = (buckets) => {
   console.log(buckets)
   // let bins = binData(buckets);
-  let bins = groupByTime.byDay(buckets, '@timestamp', 'day')
+  let bins = groupByTime(buckets, '@timestamp', 'day') // supports 'day', 'week', 'month'
   // let bins = buckets.map(groupByDay)
   console.log(bins) // returns the number of bins that are displayed in ticks
   let histogram = [];
+  
+  // convert obj {time1:[], time2:[]} to array
+  
   bins.forEach (bin => {
     let uniqueAppViews = 0;
     let totalRemixes = 0;
