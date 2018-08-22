@@ -32,7 +32,7 @@ export default function Footer() {
       <hr/>
       <FooterLine href="https://glitch.com/forteams" track="platforms">
         <img className="for-platforms-icon" src={srcForPlatforms} alt=""/>
-        <span className="for-platforms-text">Glitch for Teams</span>
+        <span className="for-platforms-text">Glitch Teams</span>
       </FooterLine>
     </footer>
   );
