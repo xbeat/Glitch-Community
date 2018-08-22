@@ -14,6 +14,10 @@ export default function Team({projects, users, ...team}) {
   };
 }
 
+export const getLink = ({url}) => {
+  return `/@${url}`;
+};
+
 export const getAvatarUrl = ({id, hasAvatarImage, cache=cacheBuster, size='large'}) => {
   const customImage = `${CDN_URL}/team-avatar/${id}/${size}?${cache}`;
   const defaultImage = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-team-avatar.svg?1503510366819";
