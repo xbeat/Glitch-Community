@@ -145,6 +145,18 @@ class TeamUserRemove extends React.Component {
     });
   }
   
+  handleCheckboxChange(checked, id) {
+    this.setState(({selectedProjects}) => {
+      selectedProjects = new Set(selectedProjects);
+      if (checked) {
+        selectedProjects.add(id);
+      } else {
+        selectedProjects.delete(id);
+      }
+      return {selectedProjects};
+    });
+  }
+  
   async getUserWithProjects() {
     const userPath = `users/${this.props.user.id}`;
     const {data} = await this.props.api.get(userPath);
@@ -187,7 +199,10 @@ class TeamUserRemove extends React.Component {
             <div className="projects-list">
               { this.state.userTeamProjects.map(project => (
                 <label key={project.id} htmlFor={`remove-user-project-${project.id}`}>
-                  <input className="checkbox-project" type="checkbox" id={`remove-user-project-${project.id}`} checked={this.state.selectedProjects.has(project.id)}/>
+                  <input className="checkbox-project" type="checkbox" id={`remove-user-project-${project.id}`}
+                    checked={this.state.selectedProjects.has(project.id)}
+                    onChange={evt => this.handleCheckboxChange(evt.target.checked, project.id)}
+                  />
                   <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
                   {project.domain}
                 </label>
