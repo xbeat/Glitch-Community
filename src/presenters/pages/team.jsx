@@ -224,6 +224,7 @@ TeamPage.propTypes = {
   removePin: PropTypes.func.isRequired,
   removeProject: PropTypes.func.isRequired,
   teamHasUnlimitedProjects: PropTypes.bool.isRequired,
+  updateName: PropTypes.func.isRequired,
   updateDescription: PropTypes.func.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
   uploadCover: PropTypes.func.isRequired,
