@@ -26,9 +26,6 @@ export default function Footer() {
       <FooterLine href="http://status.glitch.com/" track="system status">
         System Status <span role="img" aria-label="">🚥</span>
       </FooterLine>
-      <FooterLine href="https://support.glitch.com" track="support forum">
-        Support Forum <span role="img" aria-label="">🚑</span>
-      </FooterLine>
       <FooterLine href="https://glitch.com/legal" track="legal stuff">
         Legal Stuff <span role="img" aria-label="">👮‍</span>
       </FooterLine>
