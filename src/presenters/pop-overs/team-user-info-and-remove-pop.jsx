@@ -131,7 +131,7 @@ class TeamUserRemove extends React.Component {
   removeUser() {
     this.props.togglePopover();
     this.props.createNotification(`${getDisplayName(this.props.user)} removed from Team`);
-    this.props.removeUserFromTeam(this.props.user.id, this.state.selectedProjects);
+    this.props.removeUserFromTeam(this.props.user.id, Array.from(this.state.selectedProjects));
   }
   
   selectAllProjects() {
