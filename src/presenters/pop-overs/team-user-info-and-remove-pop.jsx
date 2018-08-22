@@ -6,7 +6,7 @@ import {getAvatarUrl} from  '../../models/project';
 
 import Thanks from '../includes/thanks.jsx';
 import Loader from '../includes/loader.jsx';
-import {Notifications} from '../notifications.jsx';
+import Notifications from '../notifications.jsx';
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
@@ -118,7 +118,6 @@ class TeamUserRemove extends React.Component {
     this.state = {
       gettingUser: true,
       userTeamProjects: [],
-      selectedProjects: new Set(),
       selectProjects: 'Select All'
     };
     this.selectOrUnselectAllProjects = this.selectOrUnselectAllProjects.bind(this);
@@ -127,7 +126,7 @@ class TeamUserRemove extends React.Component {
   
   removeUser() {
     this.props.togglePopover();
-    this.props.createNotification(<div>{getDisplayName(this.props.user)} removed from Team</div>);
+    this.props.createNotification(`${getDisplayName(this.props.user)} removed from Team`);
     // get list of checboxes selected
     // remove user from projects
     var selectedProjects = [];
