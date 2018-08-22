@@ -48,7 +48,7 @@ const TeamAnalyticsReferrers = ({analytics, totalRemixes, uniqueAppViews}) => {
     <div className="referrers-content">
       <article className="referrers-column app-views">
         <h4>
-          App Views
+          Unique App Views
         </h4>
         <ul>
           <ReferrerPlaceholder

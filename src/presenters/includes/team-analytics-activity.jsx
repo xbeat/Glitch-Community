@@ -1,3 +1,6 @@
+// transforms the individual data points (buckets) we get from the api into grouped 'bins' of data
+// each bin is then rendered as a point on the graph
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -35,11 +38,10 @@ const groupByRegularIntervals = d3Array.histogram().value(function(data) {
 });
 
 const createBins = (buckets, currentTimeFrame) => {
-  let bins = [];
   if (currentTimeFrame === "Last 24 Hours") {
     return groupByRegularIntervals(buckets);
   } 
-  bins = groupByTime(buckets, '@timestamp', 'day'); // supports 'day', 'week', 'month'
+  let bins = groupByTime(buckets, '@timestamp', 'day'); // supports 'day', 'week', 'month'
   return Object.values(bins); 
   
 };
@@ -89,10 +91,6 @@ const renderChart = (c3, analytics, currentTimeFrame) => {
         type: 'timeseries',
         tick: {
           format: dateFormat(currentTimeFrame),
-          // fit: true,
-          // culling: {
-          //   max: 12
-          // },
         }
       },
     },
