@@ -1,5 +1,3 @@
-/* global notify */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,6 +6,7 @@ import {getAvatarUrl} from  '../../models/project';
 
 import Thanks from '../includes/thanks.jsx';
 import Loader from '../includes/loader.jsx';
+import {Notifications} from '../notifications.jsx';
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
@@ -31,27 +30,18 @@ RemoveFromTeam.propTypes = {
 // Admin Actions Section ⏫⏬
 
 const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
-  
-  let removeAdminStatus = () => {
-    updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL);
-  };
-  
-  let addAdminStatus = () => {
-    updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL);
-  };
-  
   return (
     <section className="pop-over-actions admin-actions">
       <p className="action-description">
         Admins can update team info, billing, and remove users
       </p>
       { userIsTeamAdmin && 
-        <button className="button-small button-tertiary has-emoji" onClick={() => {removeAdminStatus();}}>
+        <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)}>
           <span>Remove Admin Status </span>
           <span className="emoji fast-down" />
         </button>
       ||
-        <button className="button-small button-tertiary has-emoji" onClick={() => {addAdminStatus();}}>
+        <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)}>
           <span>Make an Admin </span>
           <span className="emoji fast-up" />
         </button>
@@ -128,6 +118,7 @@ class TeamUserRemove extends React.Component {
     this.state = {
       gettingUser: true,
       userTeamProjects: [],
+      selectedProjects: new Set(),
       selectProjects: 'Select All'
     };
     this.selectOrUnselectAllProjects = this.selectOrUnselectAllProjects.bind(this);
@@ -136,7 +127,7 @@ class TeamUserRemove extends React.Component {
   
   removeUser() {
     this.props.togglePopover();
-    notify.createNotification(<div>{getDisplayName(this.props.user)} removed from Team</div>);
+    this.props.createNotification(<div>{getDisplayName(this.props.user)} removed from Team</div>);
     // get list of checboxes selected
     // remove user from projects
     var selectedProjects = [];
@@ -248,6 +239,7 @@ TeamUserRemove.propTypes = {
     projects: PropTypes.array.isRequired
   }),
   removeUserFromTeam: PropTypes.func.isRequired,
+  createNotification: PropTypes.func.isRequired,
 };
 
 
@@ -279,17 +271,22 @@ export default class TeamUserInfoAndRemovePop extends React.Component {
   render() {
     return (
       <React.Fragment>
-        { this.state.userInfoVisible &&
+        { this.state.userInfoVisible ? (
           <TeamUserInfo
             {...this.props}
             toggleUserInfoHidden={() => this.toggleUserInfoHidden()}
           />
-        ||
-          <TeamUserRemove 
-            {...this.props}
-            toggleUserInfoVisible={() => this.toggleUserInfoVisible()}
-          />
-        }
+        ) : (
+          <Notifications>
+            {notifyFuncs => (
+              <TeamUserRemove
+                {...notifyFuncs}
+                {...this.props}
+                toggleUserInfoVisible={() => this.toggleUserInfoVisible()}
+              />
+            )}
+          </Notifications>
+        )}
       </React.Fragment>
     );
   }

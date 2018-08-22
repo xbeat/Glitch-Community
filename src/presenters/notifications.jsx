@@ -61,7 +61,7 @@ export class Notifications extends React.Component {
       createErrorNotification: this.createError.bind(this),
     };
     const {notifications} = this.state;
-    window.notify = funcs; //weewoo weeoo test code here
+    window.notify = funcs; //weewoo weeoo test code here, don't reference this in react code
     return (
       <React.Fragment>
         <Provider value={funcs}>
