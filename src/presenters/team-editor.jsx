@@ -42,8 +42,11 @@ class TeamEditor extends React.Component {
   }
   
   async updateName(name) {
-    const url = name.replace(/.([^\w]+)./ig, match => {
-      console.log(match);
+    const url = name.replace(/(.)?([^\w]+)(.)?/ig, (match, pre, str, post) => {
+      if (pre && post) {
+        return `${pre}-${post}`;
+      }
+      return pre || post;
     });
     await this.updateFields({name, url});
   }
