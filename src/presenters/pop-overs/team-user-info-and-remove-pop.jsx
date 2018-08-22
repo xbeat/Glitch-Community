@@ -221,7 +221,7 @@ class TeamUserRemove extends React.Component {
         }
         <section className="pop-over-actions danger-zone">
           <button className="button-small has-emoji" onClick={this.removeUser}>
-            Remove
+            Remove{' '}
             <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
           </button>
         </section>
