@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {generateUrlForName} from '../models/team';
 import * as assets from '../utils/assets';
 
 import {CurrentUserConsumer} from './current-user.jsx';
@@ -42,7 +43,7 @@ class TeamEditor extends React.Component {
   }
   
   async updateName(name) {
-    const url = url.replace(/[^\w]+/g, ' ').trim().replace(/\w/g, '-').toLowerCase();
+    const url = generateUrlForName(name);
     await this.updateFields({name, url});
   }
 
