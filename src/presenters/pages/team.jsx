@@ -81,7 +81,7 @@ class TeamPage extends React.Component {
                 <React.Fragment>{this.props.team.name} {this.props.team.isVerified && <VerifiedBadge/>}</React.Fragment>
               )}
             </h1>
-            <p>@{this.props.team.url}</p>
+            <h2>@{this.props.team.url}</h2>
             <div className="users-information">
               <TeamUsers {...this.props}
                 users={this.props.team.users}
