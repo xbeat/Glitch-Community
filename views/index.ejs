@@ -34,6 +34,9 @@
     <link rel="stylesheet" type="text/css" href="<%= styles[i] %>">
     <% } %>
 
+    <% for (let i = 0; i < scripts.length; ++i) { %>
+    <script src="<%= scripts[i] %>" defer></script>
+    <% } %>
   </head>
   <body> 
     <script>
@@ -66,8 +69,5 @@
         serverName: '<%= PROJECT_DOMAIN %>'
       }).install();
     </script>
-    <% for (let i = 0; i < scripts.length; ++i) { %>
-    <script src="<%= scripts[i] %>" async></script>
-    <% } %>
   </body>
 </html>
