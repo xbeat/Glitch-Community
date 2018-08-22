@@ -124,6 +124,7 @@ class TeamUserRemove extends React.Component {
     };
     this.selectAllProjects = this.selectAllProjects.bind(this);
     this.unselectAllProjects = this.unselectAllProjects.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.removeUser = this.removeUser.bind(this);
   }
   
@@ -146,13 +147,13 @@ class TeamUserRemove extends React.Component {
   }
   
   handleCheckboxChange(evt) {
-    console.log(JSON.stringify(evt.target.value));
+    const {checked, value} = evt.target;
     this.setState(({selectedProjects}) => {
       selectedProjects = new Set(selectedProjects);
-      if (evt.target.checked) {
-        selectedProjects.add(evt.target.value);
+      if (checked) {
+        selectedProjects.add(value);
       } else {
-        selectedProjects.delete(evt.target.value);
+        selectedProjects.delete(value);
       }
       return {selectedProjects};
     });
@@ -202,7 +203,7 @@ class TeamUserRemove extends React.Component {
                 <label key={project.id} htmlFor={`remove-user-project-${project.id}`}>
                   <input className="checkbox-project" type="checkbox" id={`remove-user-project-${project.id}`}
                     checked={this.state.selectedProjects.has(project.id)} value={project.id}
-                    onChange={evt => this.handleCheckboxChange(evt, project.id)}
+                    onChange={this.handleCheckboxChange}
                   />
                   <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
                   {project.domain}
@@ -220,7 +221,7 @@ class TeamUserRemove extends React.Component {
         }
         <section className="pop-over-actions danger-zone">
           <button className="button-small has-emoji" onClick={this.removeUser}>
-            <span>Remove</span>
+            Remove
             <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
           </button>
         </section>
