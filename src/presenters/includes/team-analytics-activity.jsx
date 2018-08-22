@@ -1,3 +1,6 @@
+// transforms the individual data points (buckets) we get from the api into grouped 'bins' of data
+// each bin is then rendered as a point on the graph
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
