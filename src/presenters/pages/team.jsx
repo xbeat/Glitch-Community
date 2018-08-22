@@ -23,8 +23,8 @@ import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reache
 const FREE_TEAM_PROJECTS_LIMIT = 5;
 const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533137032374";
 
-function syncPageToUrl(url) {
-  history.replaceState(null, null, getLink(url));
+function syncPageToUrl(team) {
+  history.replaceState(null, null, getLink(team));
 }
 
 // Team Page
@@ -74,14 +74,14 @@ class TeamPage extends React.Component {
                 <EditableField
                   value={this.props.team.name}
                   placeholder="What's its name?"
-                  update={this.props.updateName}
+                  update={name => this.props.updateName(name).then(() => syncPageToUrl(this.props.team))}
                   suffix={this.props.team.isVerified ? <VerifiedBadge/> : null}
                 />
               ) : (
                 <React.Fragment>{this.props.team.name} {this.props.team.isVerified && <VerifiedBadge/>}</React.Fragment>
               )}
             </h1>
-            <h2>@{this.props.team.url}</h2>
+            <p className="team-url">@{this.props.team.url}</p>
             <div className="users-information">
               <TeamUsers {...this.props}
                 users={this.props.team.users}
