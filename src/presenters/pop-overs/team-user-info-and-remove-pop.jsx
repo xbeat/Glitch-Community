@@ -1,3 +1,5 @@
+/* globals Set */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -118,47 +120,29 @@ class TeamUserRemove extends React.Component {
     this.state = {
       gettingUser: true,
       userTeamProjects: [],
-      selectProjects: 'Select All'
+      selectedProjects: new Set(),
     };
-    this.selectOrUnselectAllProjects = this.selectOrUnselectAllProjects.bind(this);
+    this.selectAllProjects = this.selectAllProjects.bind(this);
+    this.unselectAllProjects = this.unselectAllProjects.bind(this);
     this.removeUser = this.removeUser.bind(this);
   }
   
   removeUser() {
     this.props.togglePopover();
     this.props.createNotification(`${getDisplayName(this.props.user)} removed from Team`);
-    // get list of checboxes selected
-    // remove user from projects
-    var selectedProjects = [];
-    let checkboxes = document.getElementsByName('projects');
-    checkboxes.forEach(checkbox => {
-      if (checkbox.checked) {
-        console.log(checkbox);
-        selectedProjects.push(checkbox.dataset.id);
-      }
-    });
-    console.log ('selectedProjects', selectedProjects);
-
-    this.props.removeUserFromTeam(this.props.user.id, selectedProjects);
+    this.props.removeUserFromTeam(this.props.user.id, this.state.selectedProjects);
   }
   
-  selectOrUnselectAllProjects() {
-    let checkboxes = document.getElementsByName('projects');
-    if (this.state.selectProjects === 'Select All') {
-      checkboxes.forEach(checkbox => {
-        checkbox.checked = true;
-      });
-      this.setState({
-        selectProjects: 'Unselect All'
-      });
-    } else {
-      checkboxes.forEach(checkbox => {
-        checkbox.checked = false;
-      });
-      this.setState({
-        selectProjects: 'Select All'
-      });
-    }
+  selectAllProjects() {
+    this.setState(({userTeamProjects}) => ({
+      selectedProjects: new Set(userTeamProjects.map(p => p.id))
+    }));
+  }
+  
+  unselectAllProjects() {
+    this.setState({
+      selectedProjects: new Set()
+    });
   }
   
   async getUserWithProjects() {
@@ -177,6 +161,7 @@ class TeamUserRemove extends React.Component {
   }
   
   render() {
+    const allProjectsSelected = this.state.userTeamProjects.every(p => this.state.selectedProjects.has(p.id));
     const userAvatarStyle = {backgroundColor: this.props.user.color};
     return (
       <dialog className="pop-over team-user-info-pop team-user-remove-pop">
@@ -202,14 +187,18 @@ class TeamUserRemove extends React.Component {
             <div className="projects-list">
               { this.state.userTeamProjects.map(project => (
                 <label key={project.id} htmlFor={`remove-user-project-${project.id}`}>
-                  <input className="checkbox-project" type="checkbox" name="projects" id={`remove-user-project-${project.id}`} data-id={project.id} value={project.domain} />
+                  <input className="checkbox-project" type="checkbox" id={`remove-user-project-${project.id}`} checked={this.state.selectedProjects.has(project.id)}/>
                   <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
                   {project.domain}
                 </label>
               ))}
             </div>
             { this.state.userTeamProjects.length > 0 && (
-              <button className="button-small button-tertiary" onClick={this.selectOrUnselectAllProjects}>{this.state.selectProjects}</button>
+              <button className="button-small button-tertiary"
+                onClick={allProjectsSelected ? this.unselectAllProjects : this.selectAllProjects}
+              >
+                {allProjectsSelected ? 'Unselect All' : 'Select All'}
+              </button>
             )}
           </section>
         }
