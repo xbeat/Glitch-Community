@@ -184,6 +184,7 @@ class TeamUserRemove extends React.Component {
             <div className="back icon">
               <div className="left-arrow icon" />
             </div>
+            {' '}
             <div className="pop-title">
               Remove {getDisplayName(this.props.user)}
             </div>
@@ -221,8 +222,7 @@ class TeamUserRemove extends React.Component {
         }
         <section className="pop-over-actions danger-zone">
           <button className="button-small has-emoji" onClick={this.removeUser}>
-            Remove{' '}
-            <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
+            Remove <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
           </button>
         </section>
       </dialog>
