@@ -79,29 +79,29 @@ export default class EditableField extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.update = debounce(this.update.bind(this), 500);
   }
-
+  
   async update(value) {
     try {
       await this.props.update(value);
       this.setState(prevState => {
         // if value didn't change during this update then switch back to props
-        if (prevState.value !== null && prevState.value.trim() === value.trim()) {
+        if (prevState.value !== null && prevState.value.trim() === value) {
           return {value: null, error: null};
         }
         return {error: null};
       });
     } catch (message) {
       // The update failed; we can ignore this if our state has already moved on
-      if (this.state.value === null || value.trim() !== this.state.value.trim()) {
+      if (this.state.value === null || value !== this.state.value.trim()) {
         return;
       }
-
+      
       // Ah, we haven't moved on, and we know the last edit failed.
       // Ok, display an error.
       this.setState({error: message});
     }
   }
-
+  
   onChange(evt) {
     const value = evt.target.value;
     this.update(value.trim());
