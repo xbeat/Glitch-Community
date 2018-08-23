@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Learn American Sign Language',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fasl-spell.jpg?1534767236249",
-    link: 'https://glitch.com/~asl-spell'
+    title: 'Fortnite x Splatoon Dance Mashup',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffortnite-splatoon.jpg?1535022650801",
+    link: 'https://glitch.com/~fortnite-splatoon'
+  },{
+    title: 'Empower Black Voters #Remix4Change',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FcocBanner.png?1534933464755",
+    link: 'https://about.glitch.me/remix4change'
   }, {
-    title: 'Generate A List of Peoples\' Names',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frandom-people.jpg?1534767237598",
-    link: 'https://glitch.com/~random-people'
-  }, {
-    title: 'Play A Game of Sneaky Epic',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsneaky-epic.jpg?1534767236910",
-    link: 'https://glitch.com/~sneaky-epic'
+    title: 'Hear the Image. See the Music.',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fjidiji.jpg?1535022649357",
+    link: 'https://jidiji.glitch.me/'
   }  
 ];
