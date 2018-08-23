@@ -69,30 +69,31 @@ class TeamPage extends React.Component {
                 }
               /> : null
             }>
-            <h1>
-              {this.props.currentUserIsTeamAdmin ? (
-                <EditableField
-                  value={this.props.team.name}
-                  placeholder="What's its name?"
-                  update={name => this.props.updateName(name).then(() => syncPageToUrl(this.props.team))}
-                  suffix={this.props.team.isVerified ? <VerifiedBadge/> : null}
-                />
-              ) : (
-                <React.Fragment>{this.props.team.name} {this.props.team.isVerified && <VerifiedBadge/>}</React.Fragment>
-              )}
-            </h1>
-            <p className="team-url">
-              {this.props.currentUserIsTeamAdmin ? (
-                <EditableField
-                  value={this.props.team.url}
-                  placeholder="What's its name?"
-                  update={name => this.props.updateName(name).then(() => syncPageToUrl(this.props.team))}
-                  suffix={this.props.team.isVerified ? <VerifiedBadge/> : null}
-                />
-              ) : (
-                <React.Fragment>@{this.props.team.url}</React.Fragment>
-              )}
-            </p>
+            {this.props.currentUserIsTeamAdmin ? (
+              <React.Fragment>
+                <h1>
+                  <EditableField
+                    value={this.props.team.name}
+                    placeholder="What's its name?"
+                    update={name => this.props.updateName(name).then(() => syncPageToUrl(this.props.team))}
+                    suffix={this.props.team.isVerified ? <VerifiedBadge/> : null}
+                  />
+                </h1>
+                <p className="team-url">
+                  <EditableField
+                    value={this.props.team.url}
+                    placeholder="Short url?"
+                    update={url => this.props.}
+                    prefix="@"
+                  />
+                </p>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <h1>{this.props.team.name} {this.props.team.isVerified && <VerifiedBadge/>}</h1>
+                <p className="team-url">@{this.props.team.url}</p>
+              </React.Fragment>
+            )}
             <div className="users-information">
               <TeamUsers {...this.props}
                 users={this.props.team.users}
