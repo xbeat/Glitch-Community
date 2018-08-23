@@ -31,28 +31,26 @@ export default class EditableField extends React.Component {
         this.textInput.current.select();
       }
     }
-  }
-
-  update(value){
-    this.props.update(value).then(
-      this.handleSuccess.bind(this),
-      this.handleFailure.bind(this, value));
-  }
-  
-  handleSuccess() {
-    this.setState({error: ""});
-  }
-  
-  handleFailure(data, message) {
-    // The update failed; we can ignore this if our state has already moved on
-    console.log('data', data, message);
-    if(data !== this.state.value.trim()){
-      return;
+    
+    if (prevProps.value !== this.props.value) {
+      this.setState({value: this.props.value});
     }
+  }
 
-    // Ah, we haven't moved on, and we know the last edit failed.
-    // Ok, display an error.
-    this.setState({error: message || ""});
+  async update(value) {
+    try {
+      await this.props.update(value);
+      this.setState({error: ""});
+    } catch (message) {
+      // The update failed; we can ignore this if our state has already moved on
+      if (value !== this.state.value.trim()) {
+        return;
+      }
+
+      // Ah, we haven't moved on, and we know the last edit failed.
+      // Ok, display an error.
+      this.setState({error: message || ""});
+    }
   }
 
   onChange(evt) {
@@ -64,6 +62,7 @@ export default class EditableField extends React.Component {
       return {value};
     });
   }
+  
   render() {
     const classes = ["content-editable", this.state.error ? "error" : ""].join(" ");
     const inputProps = {
@@ -97,12 +96,12 @@ export default class EditableField extends React.Component {
     
     return (
       <label htmlFor={inputProps.id}>
-        <div className="editable-field-flex">
+        <span className="editable-field-flex">
           {maybePrefix}
           <input {...inputProps} ref={this.textInput} />
           {maybeErrorIcon}
           {maybeSuffix}
-        </div>
+        </span>
         {maybeErrorMessage}
       </label>
     );
