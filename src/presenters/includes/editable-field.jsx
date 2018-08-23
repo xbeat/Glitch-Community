@@ -28,7 +28,7 @@ export class PureEditableField extends React.Component {
     const inputProps = {
       className: classes,
       value: this.props.value,
-      onChange: this.onChange,
+      onChange: this.props.update,
       spellCheck: false,
       autoComplete: "off",
       placeholder: this.props.placeholder,
@@ -67,35 +67,33 @@ export class PureEditableField extends React.Component {
     );
   }
 }
+PureEditableField.propTypes = {
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
+  prefix: PropTypes.node,
+  suffix: PropTypes.node,
+  autoFocus: PropTypes.bool,
+  submitError: PropTypes.string,
+};
 
 export default class EditableField extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       value: this.props.value,
-      error: this.props.submitError,
+      error: "",
     };
-    this.textInput = React.createRef();
     
     this.onChange = this.onChange.bind(this);
     this.update = debounce(this.update.bind(this), 500);
   }
   
   componentDidUpdate(prevProps) {
-    if (prevProps.submitError !== this.props.submitError) {
-      this.setState({
-        error: this.props.submitError
-      });
-      // focus the field if an error has been created
-      if (this.props.submitError.length) {
-        this.textInput.current.select();
-      }
-    }
-    
     if (prevProps.value !== this.props.value) {
       this.setState({
         value: this.props.value,
-        error: this.props.submitError,
+        error: "",
       });
     }
   }
@@ -106,7 +104,7 @@ export default class EditableField extends React.Component {
       this.setState({error: ""});
     } catch (message) {
       // The update failed; we can ignore this if our state has already moved on
-      if (value !== this.state.value.trim()) {
+      if (value.trim() !== this.state.value.trim()) {
         return;
       }
 
@@ -117,7 +115,7 @@ export default class EditableField extends React.Component {
   }
 
   onChange(evt) {
-    let value = evt.currentTarget.value;
+    const value = evt.target.value;
     this.setState((lastState) => {
       if(lastState.value.trim() !== value.trim()) {
         this.update(value.trim());
@@ -127,46 +125,13 @@ export default class EditableField extends React.Component {
   }
   
   render() {
-    const classes = ["content-editable", this.state.error ? "error" : ""].join(" ");
-    const inputProps = {
-      className: classes,
-      value: this.state.value,
-      onChange: this.onChange,
-      spellCheck: false,
-      autoComplete: "off",
-      placeholder: this.props.placeholder,
-      id: uniqueId("editable-field-"),
-      autoFocus: this.props.autoFocus,
-    };
-    
-    const maybeErrorIcon = !!this.state.error && (
-      <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
-    );
-    
-    const maybeErrorMessage = !!this.state.error && (
-      <div className="editable-field-error-message">
-        {this.state.error}
-      </div>
-    );
-    
-    const maybePrefix = !!this.props.prefix && (
-      <span className={"content-editable-affix " + classes}>{this.props.prefix}</span>
-    );
-    
-    const maybeSuffix = !!this.props.suffix && (
-      <span className={"content-editable-affix " + classes}>{this.props.suffix}</span>
-    );
-    
     return (
-      <label htmlFor={inputProps.id}>
-        <span className="editable-field-flex">
-          {maybePrefix}
-          <input {...inputProps} ref={this.textInput} />
-          {maybeErrorIcon}
-          {maybeSuffix}
-        </span>
-        {maybeErrorMessage}
-      </label>
+      <PureEditableField
+        {...this.props}
+        value={this.state.value}
+        update={this.onChange}
+        submitError={this.state.error}
+      />
     );
   }
 }
@@ -177,5 +142,4 @@ EditableField.propTypes = {
   prefix: PropTypes.node,
   suffix: PropTypes.node,
   autoFocus: PropTypes.bool,
-  submitError: PropTypes.string,
 };
