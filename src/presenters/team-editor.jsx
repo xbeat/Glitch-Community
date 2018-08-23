@@ -43,8 +43,13 @@ class TeamEditor extends React.Component {
   }
   
   async updateName(name) {
-    const url = generateUrlForName(name);
-    await this.updateFields({name, url});
+    // If their url matches the auto format, update it too
+    if (generateUrlForName(this.state.name) === this.state.url) {
+      const url = generateUrlForName(name);
+      await this.updateFields({name, url});
+    } else {
+      await this.updateFields({name});
+    }
   }
 
   async uploadAvatar(blob) {
@@ -180,6 +185,7 @@ class TeamEditor extends React.Component {
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
       updateName: name => this.updateName(name).catch(handleErrorForInput),
+      updateUrl: url => this.updateFields({url}).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       addUser: id => this.addUser(id).catch(handleError),
       removeUser: id => this.removeUser(id).catch(handleError),

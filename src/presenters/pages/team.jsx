@@ -81,7 +81,18 @@ class TeamPage extends React.Component {
                 <React.Fragment>{this.props.team.name} {this.props.team.isVerified && <VerifiedBadge/>}</React.Fragment>
               )}
             </h1>
-            <p className="team-url">@{this.props.team.url}</p>
+            <p className="team-url">
+              {this.props.currentUserIsTeamAdmin ? (
+                <EditableField
+                  value={this.props.team.url}
+                  placeholder="What's its name?"
+                  update={name => this.props.updateName(name).then(() => syncPageToUrl(this.props.team))}
+                  suffix={this.props.team.isVerified ? <VerifiedBadge/> : null}
+                />
+              ) : (
+                <React.Fragment>@{this.props.team.url}</React.Fragment>
+              )}
+            </p>
             <div className="users-information">
               <TeamUsers {...this.props}
                 users={this.props.team.users}
@@ -225,6 +236,7 @@ TeamPage.propTypes = {
   removeProject: PropTypes.func.isRequired,
   teamHasUnlimitedProjects: PropTypes.bool.isRequired,
   updateName: PropTypes.func.isRequired,
+  updateUrl: PropTypes.func.isRequired,
   updateDescription: PropTypes.func.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
   uploadCover: PropTypes.func.isRequired,
