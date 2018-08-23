@@ -23,6 +23,6 @@ export default [
   }, {
     title: 'Hear the Image. See the Music.',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fjidiji.jpg?1535022649357",
-    link: 'https://glitch.com/~jidiji'
+    link: 'https://jidiji.glitch.me/'
   }  
 ];
