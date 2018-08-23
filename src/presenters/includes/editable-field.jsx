@@ -85,7 +85,7 @@ export default class EditableField extends React.Component {
       await this.props.update(value);
       this.setState(prevState => {
         // if value didn't change during this update then switch back to props
-        if (prevState.value.trim() === value.trim()) {
+        if (prevState.value !== null && prevState.value.trim() === value.trim()) {
           return {value: null, error: null};
         }
         return {error: null};
