@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {generateUrlForName} from '../models/team';
 import * as assets from '../utils/assets';
 
 import {CurrentUserConsumer} from './current-user.jsx';
@@ -40,25 +39,6 @@ class TeamEditor extends React.Component {
         this.props.updateCurrentUser({teams});
       }
     }
-  }
-  
-  async updateName(name) {
-    // If their url matches the auto format, update it too
-    if (generateUrlForName(this.state.name) === this.state.url) {
-      const url = generateUrlForName(name);
-      try {
-        await this.updateFields({name, url});
-      } catch (error) {
-        // If something goes wrong, ignore the url and just update the name
-        await this.updateFields({name});
-      }
-    } else {
-      await this.updateFields({name});
-    }
-  }
-  
-  async updateUrl(url) {
-    await this.updateFields({url});
   }
 
   async uploadAvatar(blob) {
@@ -193,8 +173,8 @@ class TeamEditor extends React.Component {
   render() {
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
-      updateName: name => this.updateName(name).catch(handleErrorForInput),
-      updateUrl: url => this.updateUrl(url).catch(handleErrorForInput),
+      updateName: name => this.updateFields({name}).catch(handleErrorForInput),
+      updateUrl: url => this.updateFields({url}).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       addUser: id => this.addUser(id).catch(handleError),
       removeUser: id => this.removeUser(id).catch(handleError),

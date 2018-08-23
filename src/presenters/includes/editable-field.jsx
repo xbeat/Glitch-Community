@@ -68,7 +68,7 @@ PureEditableField.propTypes = {
   submitError: PropTypes.string,
 };
 
-export default class EditableField extends React.Component {
+export class OptimisticValue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -102,23 +102,32 @@ export default class EditableField extends React.Component {
     }
   }
   
-  onChange(evt) {
-    const value = evt.target.value;
+  onChange(value) {
     this.update(value.trim());
     this.setState({value: value});
   }
   
   render() {
-    return (
-      <PureEditableField
-        {...this.props}
-        value={this.state.value !== null ? this.state.value : this.props.value}
-        update={this.onChange}
-        submitError={this.state.error}
-      />
-    );
+    return this.props.children({
+      value: this.state.value !== null ? this.state.value : this.props.value,
+      error: this.state.error,
+      update: this.onChange,
+    });
   }
 }
+OptimisticValue.propTypes = {
+  value: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
+};
+
+const EditableField = ({value, update, ...props}) => (
+  <OptimisticValue value={value} update={update}>
+    {({value, error, update}) => (
+      <PureEditableField {...props} value={value} submitError={error} update={evt => update(evt.target.value)}/>
+    )}
+  </OptimisticValue>
+);
+export default EditableField;
 EditableField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,

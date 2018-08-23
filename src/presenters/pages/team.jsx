@@ -23,11 +23,11 @@ import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reache
 const FREE_TEAM_PROJECTS_LIMIT = 5;
 const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533137032374";
 
-function syncPageToUrl(team) {
-  history.replaceState(null, null, getLink(team));
+function syncPageToUrl(url) {
+  history.replaceState(null, null, getLink({url}));
 }
 
-const TeamNameUrlFields = ({team, updateName, updateUrl}) => {
+const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
   <React.Fragment>
     <h1>
       <EditableField
@@ -41,12 +41,12 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => {
       <EditableField
         value={team.url}
         placeholder="Short url?"
-        update={url => updateUrl(url).then(() => syncPageToUrl(team))}
+        update={url => updateUrl(url).then(() => syncPageToUrl(url))}
         prefix="@"
       />
     </p>
   </React.Fragment>
-};
+);
 
 // Team Page
 
@@ -91,7 +91,7 @@ class TeamPage extends React.Component {
               /> : null
             }>
             {this.props.currentUserIsTeamAdmin ? (
-              <TeamNameUrlFields name={this.props.team.name} url={this.props.team.url} updateName={this.props.updateName} updateUrl={this.props.updateUrl}/>
+              <TeamNameUrlFields team={this.props.team} updateName={this.props.updateName} updateUrl={this.props.updateUrl}/>
             ) : (
               <React.Fragment>
                 <h1>{this.props.team.name} {this.props.team.isVerified && <VerifiedBadge/>}</h1>
