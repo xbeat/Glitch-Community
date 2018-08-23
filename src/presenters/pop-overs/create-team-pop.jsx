@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Loader from '../includes/loader.jsx';
-import EditableField from '../includes/editable-field.jsx';
+import {PureEditableField} from '../includes/editable-field.jsx';
 
 class CreateTeamPop extends React.Component {
   constructor(props) {
@@ -118,10 +118,10 @@ class CreateTeamPop extends React.Component {
         <section className="pop-over-actions">
           
           <form onSubmit={this.handleSubmit}>
-            <EditableField 
-              value="Team Rocket" 
-              update={this.handleChange} 
-              placeholder='Your Team Name' 
+            <PureEditableField
+              value="Team Rocket"
+              update={this.handleChange}
+              placeholder='Your Team Name'
               //fieldOnlyUpdatesOnSubmit={true}
               submitError={this.state.errorMessage}
             />

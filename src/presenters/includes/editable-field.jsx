@@ -2,23 +2,83 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce, uniqueId} from 'lodash';
 
-export default class EditableField extends React.Component {
+export class PureEditableField extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: this.props.value,
-      error: "",
-    };
     this.textInput = React.createRef();
-    
-    this.onChange = this.onChange.bind(this);
-    this.update = debounce(this.update.bind(this), 500);
   }
   
   componentDidMount() {
     if (this.props.autoFocus) {
       this.textInput.current.select();
     }
+  }
+  
+  componentDidUpdate(prevProps) {
+    if (prevProps.submitError !== this.props.submitError) {
+      // focus the field if an error has been created
+      if (this.props.submitError.length) {
+        this.textInput.current.select();
+      }
+    }
+  }
+  
+  render() {
+    const classes = ["content-editable", this.props.submitError ? "error" : ""].join(" ");
+    const inputProps = {
+      className: classes,
+      value: this.props.value,
+      onChange: this.onChange,
+      spellCheck: false,
+      autoComplete: "off",
+      placeholder: this.props.placeholder,
+      id: uniqueId("editable-field-"),
+      autoFocus: this.props.autoFocus,
+    };
+    
+    const maybeErrorIcon = !!this.submitError && (
+      <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
+    );
+    
+    const maybeErrorMessage = !!this.props.submitError && (
+      <div className="editable-field-error-message">
+        {this.state.error}
+      </div>
+    );
+    
+    const maybePrefix = !!this.props.prefix && (
+      <span className={"content-editable-affix " + classes}>{this.props.prefix}</span>
+    );
+    
+    const maybeSuffix = !!this.props.suffix && (
+      <span className={"content-editable-affix " + classes}>{this.props.suffix}</span>
+    );
+    
+    return (
+      <label htmlFor={inputProps.id}>
+        <span className="editable-field-flex">
+          {maybePrefix}
+          <input {...inputProps} ref={this.textInput} />
+          {maybeErrorIcon}
+          {maybeSuffix}
+        </span>
+        {maybeErrorMessage}
+      </label>
+    );
+  }
+}
+
+export default class EditableField extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: this.props.value,
+      error: this.props.submitError,
+    };
+    this.textInput = React.createRef();
+    
+    this.onChange = this.onChange.bind(this);
+    this.update = debounce(this.update.bind(this), 500);
   }
   
   componentDidUpdate(prevProps) {
@@ -33,7 +93,10 @@ export default class EditableField extends React.Component {
     }
     
     if (prevProps.value !== this.props.value) {
-      this.setState({value: this.props.value});
+      this.setState({
+        value: this.props.value,
+        error: this.props.submitError,
+      });
     }
   }
 
