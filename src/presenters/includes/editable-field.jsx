@@ -72,8 +72,8 @@ export default class EditableField extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      maybeValue: null, // value is only set when waiting for server response
-      maybeError: null, // error is only set if there is an error ¯\_(ツ)_/¯
+      value: null, // value is only set when waiting for server response
+      error: null, // error is only set if there is an error ¯\_(ツ)_/¯
     };
     
     this.onChange = this.onChange.bind(this);
@@ -83,30 +83,36 @@ export default class EditableField extends React.Component {
   async update(value) {
     try {
       await this.props.update(value);
-      this.setState({maybeError: null});
+      this.setState(prevState => {
+        // if value didn't change during this update then switch back to props
+        if (prevState.value.trim() === value.trim()) {
+          return {value: null, error: null};
+        }
+        return {error: null};
+      });
     } catch (message) {
       // The update failed; we can ignore this if our state has already moved on
-      if (value.trim() !== this.state.value.trim()) {
+      if (this.state.value === null || value.trim() !== this.state.value.trim()) {
         return;
       }
 
       // Ah, we haven't moved on, and we know the last edit failed.
       // Ok, display an error.
-      this.setState({maybeError: message});
+      this.setState({error: message});
     }
   }
 
   onChange(evt) {
     const value = evt.target.value;
     this.update(value.trim());
-    this.setState({maybeValue: value});
+    this.setState({value: value});
   }
   
   render() {
     return (
       <PureEditableField
         {...this.props}
-        value={this.state.value}
+        value={this.state.value !== null ? this.state.value : this.props.value}
         update={this.onChange}
         submitError={this.state.error}
       />
