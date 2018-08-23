@@ -83,7 +83,7 @@ class TeamPage extends React.Component {
                   <EditableField
                     value={this.props.team.url}
                     placeholder="Short url?"
-                    update={url => this.props.}
+                    update={url => this.props.updateUrl(url).then(() => syncPageToUrl(this.props.team))}
                     prefix="@"
                   />
                 </p>
