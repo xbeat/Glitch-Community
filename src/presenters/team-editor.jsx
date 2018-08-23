@@ -51,6 +51,13 @@ class TeamEditor extends React.Component {
       await this.updateFields({name});
     }
   }
+  
+  async updateUrl(url) {
+    if (url.length === 0) {
+      url = generateUrlForName(this.state.name);
+    }
+    await this.updateFields({url});
+  }
 
   async uploadAvatar(blob) {
     const {data: policy} = await assets.getTeamAvatarImagePolicy(this.props.api, this.state.id);
@@ -185,7 +192,7 @@ class TeamEditor extends React.Component {
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
       updateName: name => this.updateName(name).catch(handleErrorForInput),
-      updateUrl: url => this.updateFields({url}).catch(handleErrorForInput),
+      updateUrl: url => this.updateUrl(url).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       addUser: id => this.addUser(id).catch(handleError),
       removeUser: id => this.removeUser(id).catch(handleError),

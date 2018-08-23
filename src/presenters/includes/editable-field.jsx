@@ -41,9 +41,9 @@ export class PureEditableField extends React.Component {
     );
     
     const maybeErrorMessage = !!this.props.submitError && (
-      <div className="editable-field-error-message">
+      <span className="editable-field-error-message">
         {this.props.submitError}
-      </div>
+      </span>
     );
     
     const maybePrefix = !!this.props.prefix && (
@@ -86,19 +86,11 @@ export default class EditableField extends React.Component {
     };
     
     this.onChange = this.onChange.bind(this);
-    this.pending = false;
-    const debouncedUpdate = debounce(async value => {
-      await this.update(value);
-      this.pending = false;
-    }, 500);
-    this.debouncedUpdate = value => {
-      this.pending = true;
-      debouncedUpdate(value);
-    };
+    this.update = debounce(this.update.bind(this), 500);
   }
   
   componentDidUpdate(prevProps) {
-    if (!this.pending && prevProps.value !== this.props.value) {
+    if (prevProps.value !== this.props.value) {
       this.setState({
         value: this.props.value,
         error: "",
@@ -110,9 +102,6 @@ export default class EditableField extends React.Component {
     try {
       await this.props.update(value);
       this.setState({error: ""});
-      if (!this.pending) {
-        this.setState({value: this.props.value});
-      }
     } catch (message) {
       // The update failed; we can ignore this if our state has already moved on
       if (value.trim() !== this.state.value.trim()) {
@@ -129,7 +118,7 @@ export default class EditableField extends React.Component {
     const value = evt.target.value;
     this.setState((lastState) => {
       if(lastState.value.trim() !== value.trim()) {
-        this.debouncedUpdate(value.trim());
+        this.update(value.trim());
       }
       return {value};
     });
