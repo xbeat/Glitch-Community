@@ -14,15 +14,6 @@ export class PureEditableField extends React.Component {
     }
   }
   
-  componentDidUpdate(prevProps) {
-    if (prevProps.submitError !== this.props.submitError) {
-      // focus the field if an error has been created
-      if (this.props.submitError.length) {
-        this.textInput.current.select();
-      }
-    }
-  }
-  
   render() {
     const classes = ["content-editable", this.props.submitError ? "error" : ""].join(" ");
     const inputProps = {
@@ -81,27 +72,18 @@ export default class EditableField extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: this.props.value,
-      error: "",
+      maybeValue: null, // value is only set when waiting for server response
+      maybeError: null, // error is only set if there is an error ¯\_(ツ)_/¯
     };
     
     this.onChange = this.onChange.bind(this);
     this.update = debounce(this.update.bind(this), 500);
   }
-  
-  componentDidUpdate(prevProps) {
-    if (prevProps.value !== this.props.value) {
-      this.setState({
-        value: this.props.value,
-        error: "",
-      });
-    }
-  }
 
   async update(value) {
     try {
       await this.props.update(value);
-      this.setState({error: ""});
+      this.setState({maybeError: null});
     } catch (message) {
       // The update failed; we can ignore this if our state has already moved on
       if (value.trim() !== this.state.value.trim()) {
@@ -110,18 +92,14 @@ export default class EditableField extends React.Component {
 
       // Ah, we haven't moved on, and we know the last edit failed.
       // Ok, display an error.
-      this.setState({error: message || ""});
+      this.setState({maybeError: message});
     }
   }
 
   onChange(evt) {
     const value = evt.target.value;
-    this.setState((lastState) => {
-      if(lastState.value.trim() !== value.trim()) {
-        this.update(value.trim());
-      }
-      return {value};
-    });
+    this.update(value.trim());
+    this.setState({maybeValue: value});
   }
   
   render() {
