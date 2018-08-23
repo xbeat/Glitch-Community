@@ -43,19 +43,21 @@ class TeamEditor extends React.Component {
   }
   
   async updateName(name) {
+    const prevName = this.state.name;
+    await this.updateFields({name});
+    
     // If their url matches the auto format, update it too
-    if (generateUrlForName(this.state.name) === this.state.url) {
+    if (generateUrlForName(prevName) === this.state.url) {
       const url = generateUrlForName(name);
-      await this.updateFields({name, url});
-    } else {
-      await this.updateFields({name});
+      try {
+        await this.updateFields({url});
+      } catch (error) {
+        // if the url fails to update just ignore it
+      }
     }
   }
   
   async updateUrl(url) {
-    if (url.length === 0) {
-      url = generateUrlForName(this.state.name);
-    }
     await this.updateFields({url});
   }
 
