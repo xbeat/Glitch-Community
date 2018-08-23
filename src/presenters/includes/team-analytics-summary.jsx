@@ -19,11 +19,11 @@ class TeamAnalyticsSummary extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <span className="summary-item" onClick={() => {this.toggleGraph('Unique-App-Views');}} onKeyPress={() => {this.toggleGraph('App-Views');}} role="button" tabIndex={0}>
+        <span className="summary-item" onClick={() => {this.toggleGraph('Total-App-Views');}} onKeyPress={() => {this.toggleGraph('App-Views');}} role="button" tabIndex={0}>
           <span className="total app-views">
-            {this.props.uniqueAppViews.toLocaleString('en')}
+            {this.props.totalAppViews.toLocaleString('en')}
           </span>{' '}
-          <Pluralize className="summary-label" singular="Unique App View" plural="Unique App Views" count={this.props.uniqueAppViews} showCount={false} />
+          <Pluralize className="summary-label" singular="Total App View" plural="Total App Views" count={this.props.totalAppViews} showCount={false} />
         </span>
         
         ,{' '}
@@ -40,7 +40,7 @@ class TeamAnalyticsSummary extends React.Component {
 }
 
 TeamAnalyticsSummary.propTypes = {
-  uniqueAppViews: PropTypes.number.isRequired,
+  totalAppViews: PropTypes.number.isRequired,
   totalRemixes: PropTypes.number.isRequired,
 };
 

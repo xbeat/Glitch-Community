@@ -12,7 +12,7 @@ const createHistogram = (bins) => {
   let histogram = [];
   bins = bins || [];
   bins.forEach (bin => {
-    let uniqueAppViews = 0;
+    let totalAppViews = 0;
     let totalRemixes = 0;
     let timestamp = undefined;
     // let codeViews = []
@@ -22,12 +22,12 @@ const createHistogram = (bins) => {
       }
       console.log(data.analytics)
       totalRemixes += data.analytics.remixes;
-      uniqueAppViews += data.analytics.uniqueIps;
+      totalAppViews += data.analytics.requests;
       // referrers.push(data.analytics.referrers)
     });
     histogram.push({
       time: timestamp,
-      appViews: uniqueAppViews,
+      appViews: totalAppViews,
       remixes: totalRemixes,
     });
   });
@@ -53,7 +53,7 @@ const chartColumns = (analytics, currentTimeFrame) => {
   let histogram = createHistogram(bins);
   let timestamps = ['x'];
   let remixes = ['Remixes'];
-  let appViews = ['Unique App Views'];
+  let appViews = ['Total App Views'];
   // let codeViews = ['Code Views']
   histogram.shift();
   histogram.forEach(bucket => {
