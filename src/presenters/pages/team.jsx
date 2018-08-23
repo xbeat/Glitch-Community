@@ -27,6 +27,27 @@ function syncPageToUrl(team) {
   history.replaceState(null, null, getLink(team));
 }
 
+const TeamNameUrlFields = ({team, updateName, updateUrl}) => {
+  <React.Fragment>
+    <h1>
+      <EditableField
+        value={team.name}
+        placeholder="What's its name?"
+        update={updateName}
+        suffix={team.isVerified ? <VerifiedBadge/> : null}
+      />
+    </h1>
+    <p className="team-url">
+      <EditableField
+        value={team.url}
+        placeholder="Short url?"
+        update={url => updateUrl(url).then(() => syncPageToUrl(team))}
+        prefix="@"
+      />
+    </p>
+  </React.Fragment>
+};
+
 // Team Page
 
 class TeamPage extends React.Component {
@@ -70,24 +91,7 @@ class TeamPage extends React.Component {
               /> : null
             }>
             {this.props.currentUserIsTeamAdmin ? (
-              <React.Fragment>
-                <h1>
-                  <EditableField
-                    value={this.props.team.name}
-                    placeholder="What's its name?"
-                    update={name => this.props.updateName(name).then(() => syncPageToUrl(this.props.team))}
-                    suffix={this.props.team.isVerified ? <VerifiedBadge/> : null}
-                  />
-                </h1>
-                <p className="team-url">
-                  <EditableField
-                    value={this.props.team.url}
-                    placeholder="Short url?"
-                    update={url => this.props.updateUrl(url).then(() => syncPageToUrl(this.props.team))}
-                    prefix="@"
-                  />
-                </p>
-              </React.Fragment>
+              <TeamNameUrlFields name={this.props.team.name} url={this.props.team.url} updateName={this.props.updateName} updateUrl={this.props.updateUrl}/>
             ) : (
               <React.Fragment>
                 <h1>{this.props.team.name} {this.props.team.isVerified && <VerifiedBadge/>}</h1>
