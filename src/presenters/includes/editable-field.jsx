@@ -20,7 +20,7 @@ export class PureEditableField extends React.Component {
   }
   
   render() {
-    const classes = ["content-editable", this.props.submitError ? "error" : ""].join(" ");
+    const classes = ["content-editable", this.props.error ? "error" : ""].join(" ");
     const inputProps = {
       className: classes,
       value: this.props.value,
@@ -32,13 +32,13 @@ export class PureEditableField extends React.Component {
       autoFocus: this.props.autoFocus,
     };
     
-    const maybeErrorIcon = !!this.props.submitError && (
+    const maybeErrorIcon = !!this.props.error && (
       <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
     );
     
-    const maybeErrorMessage = !!this.props.submitError && (
+    const maybeErrorMessage = !!this.props.error && (
       <span className="editable-field-error-message">
-        {this.props.submitError}
+        {this.props.error}
       </span>
     );
     
@@ -70,7 +70,7 @@ PureEditableField.propTypes = {
   prefix: PropTypes.node,
   suffix: PropTypes.node,
   autoFocus: PropTypes.bool,
-  submitError: PropTypes.string,
+  error: PropTypes.string,
 };
 
 export class OptimisticValue extends React.Component {
@@ -127,8 +127,8 @@ OptimisticValue.propTypes = {
 
 const EditableField = ({value, update, ...props}) => (
   <OptimisticValue value={value} update={update}>
-    {({value, error, update}) => (
-      <PureEditableField {...props} value={value} submitError={error} update={update}/>
+    {valueProps => (
+      <PureEditableField {...props} {...valueProps}/>
     )}
   </OptimisticValue>
 );

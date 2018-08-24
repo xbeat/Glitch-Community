@@ -32,17 +32,22 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
     {nameProps => (
       <OptimisticValue value={team.url} update={url => updateUrl(url).then(() => syncPageToUrl(url))}>
         {urlProps => {
-          const updateName = (name) => {
-            if (generateUrlForName(nameProps.name) === urlProps.url) {
+          
+          // When you type in the name field, it mirrors keystrokes to the url field
+          // That way it shows errors on the right field, and makes it immediately clear that we'
+          const updateNameAndUrl = (name) => {
+            if (generateUrlForName(nameProps.value) === urlProps.value) {
               urlProps.update(generateUrlForName(name));
             }
             nameProps.update(name);
           };
+          
           return (
             <React.Fragment>
               <h1>
                 <PureEditableField
                   {...nameProps}
+                  update={updateNameAndUrl}
                   placeholder="What's its name?"
                   suffix={team.isVerified ? <VerifiedBadge/> : null}
                 />
