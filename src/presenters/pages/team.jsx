@@ -8,7 +8,8 @@ import {getLink, getAvatarStyle, getProfileStyle, generateUrlForName} from '../.
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
-import {OptimisticValue, PureEditableField} from '../includes/editable-field.jsx';
+import {PureEditableField} from '../includes/editable-field.jsx';
+import {OptimisticValue} from '../includes/field-helpers.jsx';
 import Thanks from '../includes/thanks.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
@@ -28,10 +29,10 @@ function syncPageToUrl(url) {
 }
 
 const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
-  <OptimisticValue value={team.url} update={url => updateUrl(url).then(() => syncPageToUrl(url))}>
+  <OptimisticValue value={team.url} update={url => updateUrl(url).then(() => syncPageToUrl(url))} resetOnError={false}>
     {urlProps => (
       <React.Fragment>
-        <OptimisticValue value={team.name} update={updateName}>
+        <OptimisticValue value={team.name} update={updateName} resetOnError={false}>
           {nameProps => {
             
             // This func mirrors the name field to the url input, which will follow its normal update path and show errors

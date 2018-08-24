@@ -76,7 +76,7 @@ PureEditableField.propTypes = {
 };
 
 const EditableField = ({value, update, ...props}) => (
-  <OptimisticValue value={value} update={update}>
+  <OptimisticValue value={value} update={update} resetOnError={false}>
     {valueProps => (
       <PureEditableField {...props} {...valueProps}/>
     )}

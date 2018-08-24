@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
+
 import Markdown from './markdown.jsx';
-import {OptimisticValue} from './editable-field.jsx';
+import {OptimisticValue} from './field-helpers.jsx';
 
 class EditableDescriptionImpl extends React.Component {
   constructor(props) {

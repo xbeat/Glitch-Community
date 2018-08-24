@@ -17,22 +17,22 @@ export class OptimisticValue extends React.Component {
   async update(value) {
     try {
       await this.props.update(value);
-      this.setState(prevState => {
+      this.setState((prevState, props) => {
         // if value didn't change during this update then switch back to props
-        if (prevState.value === value) {
+        if (prevState.value === props.value) {
           return {value: null, error: null};
         }
         return {error: null};
       });
     } catch (error) {
-      // The update failed; we can ignore this if our state has already moved on
-      if (this.state.value !== value) {
-        return;
-      }
-      
-      // Ah, we haven't moved on, and we know the last edit failed.
-      // Ok, display an error.
       this.setState((prevState, props) => {
+        // The update failed; we can ignore this if our state has already moved on
+        if (prevState.value !== props.value) {
+          return {};
+        }
+        
+        // Ah, we haven't moved on, and we know the last edit failed.
+        // Ok, display an error.
         if (props.resetOnError) {
           return {error, value: null};
         }
@@ -61,4 +61,7 @@ OptimisticValue.propTypes = {
   value: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
   resetOnError: PropTypes.bool,
+};
+OptimisticValue.defaultProps = {
+  resetOnError: true,
 };
