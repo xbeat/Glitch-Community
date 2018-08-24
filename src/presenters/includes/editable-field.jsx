@@ -77,7 +77,7 @@ export class OptimisticValue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: null, // value is only set when waiting for server response
+      value: this.props.value,
       error: null, // error is only set if there is an error ¯\_(ツ)_/¯
     };
     
