@@ -73,6 +73,8 @@ PureEditableField.propTypes = {
   error: PropTypes.string,
 };
 
+
+
 export class OptimisticValue extends React.Component {
   constructor(props) {
     super(props);
@@ -127,6 +129,17 @@ OptimisticValue.propTypes = {
   value: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
 };
+
+export class OptimisticValueWithError extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {error: null};
+  }
+  
+  render() {
+    
+  }
+}
 
 const EditableField = ({value, update, ...props}) => (
   <OptimisticValue value={value} update={update}>
