@@ -38,7 +38,10 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
             // Handling it here means we don't have to worry about failed updates desyncing them unintentionally
             const updateNameAndUrl = (name) => {
               if (generateUrlForName(nameProps.value) === urlProps.value) {
-                urlProps.update(generateUrlForName(name));
+                const url = generateUrlForName(name);
+                if (url !== urlProps.value) {
+                  urlProps.update(generateUrlForName(name));
+                }
               }
               nameProps.update(name);
             };

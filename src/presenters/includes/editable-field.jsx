@@ -109,7 +109,7 @@ export class OptimisticValue extends React.Component {
   
   onChange(value) {
     this.update(value);
-    this.setState({value: value});
+    this.setState({value});
   }
   
   render() {
