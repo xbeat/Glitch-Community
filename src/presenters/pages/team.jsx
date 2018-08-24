@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import TeamEditor from '../team-editor.jsx';
-import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
+import {getLink, getAvatarStyle, getProfileStyle, generateUrlForName} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
-import EditableField from '../includes/editable-field.jsx';
+import {OptimisticValue, PureEditableField} from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
@@ -28,24 +28,38 @@ function syncPageToUrl(url) {
 }
 
 const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
-  <React.Fragment>
-    <h1>
-      <EditableField
-        value={team.name}
-        placeholder="What's its name?"
-        update={updateName}
-        suffix={team.isVerified ? <VerifiedBadge/> : null}
-      />
-    </h1>
-    <p className="team-url">
-      <EditableField
-        value={team.url}
-        placeholder="Short url?"
-        update={url => updateUrl(url).then(() => syncPageToUrl(url))}
-        prefix="@"
-      />
-    </p>
-  </React.Fragment>
+  <OptimisticValue value={team.name} update={updateName}>
+    {nameProps => (
+      <OptimisticValue value={team.url} update={url => updateUrl(url).then(() => syncPageToUrl(url))}>
+        {urlProps => {
+          const updateName = (name) => {
+            if (generateUrlForName(nameProps.name) === urlProps.url) {
+              urlProps.update(generateUrlForName(name));
+            }
+            nameProps.update(name);
+          };
+          return (
+            <React.Fragment>
+              <h1>
+                <PureEditableField
+                  {...nameProps}
+                  placeholder="What's its name?"
+                  suffix={team.isVerified ? <VerifiedBadge/> : null}
+                />
+              </h1>
+              <p className="team-url">
+                <PureEditableField
+                  {...urlProps}
+                  placeholder="Short url?"
+                  prefix="@"
+                />
+              </p>
+            </React.Fragment>
+          );
+        }}
+      </OptimisticValue>
+    )}
+  </OptimisticValue>
 );
 
 // Team Page

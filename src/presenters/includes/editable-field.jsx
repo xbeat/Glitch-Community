@@ -6,6 +6,7 @@ export class PureEditableField extends React.Component {
   constructor(props) {
     super(props);
     this.textInput = React.createRef();
+    this.onChange = this.onChange.bind(this);
   }
   
   componentDidMount() {
@@ -14,12 +15,16 @@ export class PureEditableField extends React.Component {
     }
   }
   
+  onChange(evt) {
+    this.props.update(evt.target.value);
+  }
+  
   render() {
     const classes = ["content-editable", this.props.submitError ? "error" : ""].join(" ");
     const inputProps = {
       className: classes,
       value: this.props.value,
-      onChange: this.props.update,
+      onChange: this.onChange,
       spellCheck: false,
       autoComplete: "off",
       placeholder: this.props.placeholder,
@@ -123,7 +128,7 @@ OptimisticValue.propTypes = {
 const EditableField = ({value, update, ...props}) => (
   <OptimisticValue value={value} update={update}>
     {({value, error, update}) => (
-      <PureEditableField {...props} value={value} submitError={error} update={evt => update(evt.target.value)}/>
+      <PureEditableField {...props} value={value} submitError={error} update={update}/>
     )}
   </OptimisticValue>
 );
