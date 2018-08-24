@@ -55,6 +55,7 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
             );
           }}
         </OptimisticValue>
+        
         <p className="team-url">
           <PureEditableField
             {...urlProps}
