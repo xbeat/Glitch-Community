@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
 import Markdown from './markdown.jsx';
+import {OptimisticValue} from './editable-field.jsx';
 import {debounce} from 'lodash';
 
-export class EditableDescription extends React.Component {
+class EditableDescriptionImpl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -60,10 +61,23 @@ export class EditableDescription extends React.Component {
     );
   }
 }
-EditableDescription.propTypes = {
+EditableDescriptionImpl.propTypes = {
   initialDescription: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   updateDescription: PropTypes.func.isRequired,
+};
+
+const EditableDescription = ({description, placeholder, update}) => (
+  <OptimisticValue value={description} update={update}>
+    {({value, update}) => (
+      <EditableDescriptionImpl description={value} update={update} placeholder={placeholder}/>
+    )}
+  </OptimisticValue>
+);
+EditableDescription.propTypes = {
+  description: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  update: PropTypes.func.isRequired,
 };
 
 export const StaticDescription = ({description}) => (
