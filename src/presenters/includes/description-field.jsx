@@ -3,26 +3,16 @@ import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
 import Markdown from './markdown.jsx';
 import {OptimisticValue} from './editable-field.jsx';
-import {debounce} from 'lodash';
 
 class EditableDescriptionImpl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       focused: false,
-      description: this.props.initialDescription,
     };
     
-    this.onChange = this.onChange.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
-    this.update = debounce(this.props.updateDescription, 1000);
-  }
-  
-  onChange(event) {
-    const description = event.currentTarget.value;
-    this.setState({ description });
-    this.update(description.trim());
   }
   
   onFocus(event) {
@@ -36,14 +26,13 @@ class EditableDescriptionImpl extends React.Component {
   }
   
   render() {
-    const {placeholder} = this.props;
-    const {description} = this.state;
+    const {description, placeholder} = this.props;
     return (this.state.focused
       ?
       <TextArea
         className="description content-editable"
         value={description}
-        onChange={this.onChange}
+        onChange={evt => this.props.update(evt.target.value)}
         onFocus={this.onFocus} onBlur={this.onBlur}
         placeholder={placeholder}
         spellCheck={false}
@@ -62,9 +51,9 @@ class EditableDescriptionImpl extends React.Component {
   }
 }
 EditableDescriptionImpl.propTypes = {
-  initialDescription: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  updateDescription: PropTypes.func.isRequired,
+  update: PropTypes.func.isRequired,
 };
 
 const EditableDescription = ({description, placeholder, update}) => (
@@ -94,8 +83,8 @@ StaticDescription.propTypes = {
 export const AuthDescription = ({authorized, description, placeholder, update}) => (
   authorized ?
     <EditableDescription 
-      initialDescription={description} 
-      updateDescription={update} 
+      description={description} 
+      update={update} 
       placeholder={placeholder} 
     /> 
     :
