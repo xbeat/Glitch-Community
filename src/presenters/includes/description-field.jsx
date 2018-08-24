@@ -58,8 +58,8 @@ EditableDescriptionImpl.propTypes = {
 
 const EditableDescription = ({description, placeholder, update}) => (
   <OptimisticValue value={description} update={update}>
-    {({value, update, error}) => (
-      <EditableDescriptionImpl description={error ? description : value} update={update} placeholder={placeholder}/>
+    {({value, update}) => (
+      <EditableDescriptionImpl description={value} update={update} placeholder={placeholder}/>
     )}
   </OptimisticValue>
 );

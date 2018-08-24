@@ -87,7 +87,7 @@ export class OptimisticValue extends React.Component {
   
   async update(value) {
     try {
-      await this.props.update(value.trim());
+      await this.props.update(value);
       this.setState(prevState => {
         // if value didn't change during this update then switch back to props
         if (prevState.value !== null && prevState.value === value) {
@@ -97,7 +97,7 @@ export class OptimisticValue extends React.Component {
       });
     } catch (message) {
       // The update failed; we can ignore this if our state has already moved on
-      if (this.state.value === null || value !== this.state.value) {
+      if (this.state.value === null || this.state.value !== value) {
         return;
       }
       
@@ -108,7 +108,7 @@ export class OptimisticValue extends React.Component {
   }
   
   onChange(value) {
-    this.update(value);
+    this.update(value.trim());
     this.setState({value});
   }
   
