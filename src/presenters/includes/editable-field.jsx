@@ -87,9 +87,6 @@ export class OptimisticValue extends React.Component {
   
   async update(value) {
     try {
-      // note that we only trim here, that means we won't reset value if there's whitespace at the end
-      // if we did it would clip off the whitespace in the input and potentially trip up slow typers
-      // maybe we should add in awareness of input focus so the whitespace resets on blur?
       await this.props.update(value);
       this.setState(prevState => {
         // if value didn't change during this update then switch back to props
@@ -111,6 +108,9 @@ export class OptimisticValue extends React.Component {
   }
   
   onChange(value) {
+    // note that we only trim update, that means we won't reset value if there's whitespace at the end
+    // if we did it would clip off whitespace in the input and potentially trip up slow typers
+    // maybe we should add in awareness of input focus so the whitespace resets on blur?
     this.update(value.trim());
     this.setState({value});
   }
