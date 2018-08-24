@@ -108,7 +108,7 @@ export class OptimisticValue extends React.Component {
   }
   
   onChange(value) {
-    // note that we only trim update, that means we won't reset value if there's whitespace at the end
+    // note that we trim update, that means we won't reset value if there's whitespace at the end
     // if we did it would clip off whitespace in the input and potentially trip up slow typers
     // maybe we should add in awareness of input focus so the whitespace resets on blur?
     this.update(value.trim());
