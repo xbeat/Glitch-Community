@@ -28,22 +28,22 @@ function syncPageToUrl(url) {
 }
 
 const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
-  <OptimisticValue value={team.name} update={updateName}>
-    {nameProps => (
-      <OptimisticValue value={team.url} update={url => updateUrl(url).then(() => syncPageToUrl(url))}>
-        {urlProps => {
-          
-          // When you type in the name field, it mirrors keystrokes to the url field
-          // That way it shows errors on the right field, and makes it immediately clear that we'
-          const updateNameAndUrl = (name) => {
-            if (generateUrlForName(nameProps.value) === urlProps.value) {
-              urlProps.update(generateUrlForName(name));
-            }
-            nameProps.update(name);
-          };
-          
-          return (
-            <React.Fragment>
+  <OptimisticValue value={team.url} update={url => updateUrl(url).then(() => syncPageToUrl(url))}>
+    {urlProps => (
+      <React.Fragment>
+        <OptimisticValue value={team.name} update={updateName}>
+          {nameProps => {
+            
+            // This func mirrors the name field to the url input, which will follow its normal update path and show errors
+            // Handling it here means we don't have to worry about failed updates desyncing them unintentionally
+            const updateNameAndUrl = (name) => {
+              if (generateUrlForName(nameProps.value) === urlProps.value) {
+                urlProps.update(generateUrlForName(name));
+              }
+              nameProps.update(name);
+            };
+            
+            return (
               <h1>
                 <PureEditableField
                   {...nameProps}
@@ -52,17 +52,17 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
                   suffix={team.isVerified ? <VerifiedBadge/> : null}
                 />
               </h1>
-              <p className="team-url">
-                <PureEditableField
-                  {...urlProps}
-                  placeholder="Short url?"
-                  prefix="@"
-                />
-              </p>
-            </React.Fragment>
-          );
-        }}
-      </OptimisticValue>
+            );
+          }}
+        </OptimisticValue>
+        <p className="team-url">
+          <PureEditableField
+            {...urlProps}
+            placeholder="Short url?"
+            prefix="@"
+          />
+        </p>
+      </React.Fragment>
     )}
   </OptimisticValue>
 );
