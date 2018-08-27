@@ -13,8 +13,6 @@ const {Provider, Consumer} = React.createContext();
 //
 //  Define your dev toggles here.
 //  We can only have three.
-//
-// Configure them globally here.
 // Individual users can override them with the /secret page.
 const toggleData = [
   {name: "add-teams", description: "The add-team UI", default: true},
