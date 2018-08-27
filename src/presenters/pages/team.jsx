@@ -246,7 +246,8 @@ const TeamPageContainer = ({api, team, ...props}) => (
           {currentUser => (
             <ProjectsLoader api={api} projects={team.projects}>
               {(projects, reloadProjects) => (
-                <TeamPage api={api} team={team} {...funcs}
+                <TeamPage api={api} team={team}
+                  {...funcs}
                   currentUser={currentUser} currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
                   {...props}
                 />
