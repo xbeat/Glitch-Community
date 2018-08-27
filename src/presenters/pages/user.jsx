@@ -130,7 +130,6 @@ const UserPageContainer = ({api, user}) => (
         <ProjectsLoader api={api} projects={user.projects}>
           {projects => <UserPage api={api} user={{...user, projects}} {...funcs} isAuthorized={isAuthorized}/>}
         </ProjectsLoader>
-        
       </React.Fragment>
     )}
   </UserEditor>

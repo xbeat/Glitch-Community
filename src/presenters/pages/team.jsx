@@ -14,6 +14,7 @@ import AddTeamProject from '../includes/add-team-project.jsx';
 // import DeleteTeam from '../includes/delete-team.jsx';
 import {AddTeamUser, TeamUsers} from '../includes/team-users.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
+import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 import TeamUpgradeInfoBanner from '../includes/team-upgrade-info-banner.jsx';
@@ -243,7 +244,14 @@ const TeamPageContainer = ({api, team, ...props}) => (
 
         <CurrentUserConsumer>
           {currentUser => (
-            <TeamPage api={api} team={team} {...funcs} currentUser={currentUser} currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin} {...props}/>
+            <ProjectsLoader api={api} projects={team.projects}>
+              {(projects, reloadProjects) => (
+                <TeamPage api={api} team={team} {...funcs}
+                  currentUser={currentUser} currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
+                  {...props}
+                />
+              )}
+            </ProjectsLoader>
           )}
         </CurrentUserConsumer>
 
