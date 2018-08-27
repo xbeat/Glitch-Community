@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import {UserPrefsProvider, UserPref} from '../includes/user-prefs.jsx';
 
-const SecretPageContainer = ({api}) => {
+const SecretPageContainer = () => {
   const toggles = [
     {name: "fish", description: "Whether or not fish.", default: true},
     {name: "cakes", description: "Whether or not cakes.", default: false},
@@ -29,7 +29,7 @@ const SecretPageContainer = ({api}) => {
   );
 };
 
-const Secret = ({toggles, enabledToggles, setEnabled}) => { 
+const Secret = ({toggles, enabledToggles=[], setEnabled}) => { 
   const toggleTheToggle = (name) => {
     let newToggles = null;
     if(isEnabled(name)) {
@@ -43,9 +43,13 @@ const Secret = ({toggles, enabledToggles, setEnabled}) => {
   };
   
   const isEnabled = (toggleName) => {
-    console.log("checking ", enabledToggles, toggleName)
-    return enabledToggles.includes(toggleName);
-  }
+    console.log("checking ", enabledToggles, toggleName);
+    return enabledToggles && enabledToggles.includes(toggleName);
+  };
+  
+  const resetToDefaults = () => {
+    setEnabled();
+  };
   
   return (
     <section className="secretPage">
@@ -55,16 +59,19 @@ const Secret = ({toggles, enabledToggles, setEnabled}) => {
       <ul>
         {toggles.map(({name, description}) => (
           <li key={name}>
-            <button onClick={() => toggleTheToggle(name)} className={isEnabled(name) ? "lit" : "dark"}>{name}</button>
-            <span style={{backgroundColor: "white"}}>I AM {isEnabled(name) ? "ENABLED" : "a sad panda"}</span>
-            <span>{description}</span>
+            <button title={description} onClick={() => toggleTheToggle(name)} className={isEnabled(name) ? "lit" : "dark"}>{name}</button>
           </li>
         ))}
       </ul>
-      
-      
+      <button onClick={resetToDefaults}>Reset to Defaults</button>
     </section>
   );
-}
+};
+
+Secret.propTypes = {
+  toggles: PropTypes.array.isRequired,
+  enabledToggles: PropTypes.array.isRequired,
+  setEnabled: PropTypes.func.isRequired,
+};
 
 export default SecretPageContainer;
