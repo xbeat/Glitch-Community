@@ -27,8 +27,8 @@ const SecretPageContainer = () => {
     <UserPrefsProvider>
       <DevTogglesProvider>
         <DevToggles>
-          {(enabledToggles, devToggles, setEnabled) => (
-            <Secret enabledToggles={enabledToggles} toggles={devToggles} setEnabled={setEnabled}></Secret>
+          {(enabledToggles, toggles, setEnabledToggles) => (
+            <Secret {...{enabledToggles, toggles, setEnabledToggles}}/>
           )}
         </DevToggles>
       </DevTogglesProvider>
@@ -36,7 +36,7 @@ const SecretPageContainer = () => {
   );
 };
 
-const Secret = ({toggles, enabledToggles=[], setEnabled}) => { 
+const Secret = ({toggles, enabledToggles=[], setEnabledToggles}) => { 
   const toggleTheToggle = (name) => {
     let newToggles = null;
     if(isEnabled(name)) {
@@ -46,7 +46,7 @@ const Secret = ({toggles, enabledToggles=[], setEnabled}) => {
     } else {
       newToggles = enabledToggles.concat([name]);
     }
-    setEnabled(newToggles);
+    setEnabledToggles(newToggles);
   };
   
   const isEnabled = (toggleName) => {
@@ -54,9 +54,9 @@ const Secret = ({toggles, enabledToggles=[], setEnabled}) => {
   };
   
   const resetToDefaults = () => {
-    // Clear the localstorage set of enabled toggles:
-    setEnabled(undefined);
-  };SecretEffectsOnMount
+    // Clear the localstorage set of enabled toggles so we go back to using the defaults.
+    setEnabledToggles(undefined);
+  };
   
   return (
     <section className="secretPage">
@@ -79,7 +79,7 @@ const Secret = ({toggles, enabledToggles=[], setEnabled}) => {
 Secret.propTypes = {
   toggles: PropTypes.array.isRequired,
   enabledToggles: PropTypes.array.isRequired,
-  setEnabled: PropTypes.func.isRequired,
+  setEnabledToggles: PropTypes.func.isRequired,
 };
 
 export default SecretPageContainer;

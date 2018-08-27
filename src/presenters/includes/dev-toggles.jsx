@@ -9,61 +9,40 @@ const {Provider, Consumer} = React.createContext();
 //  Define your dev toggles here.
 //  We can only have three.
 //
-const devToggles = [
+const toggles = [
   {name: "add-team", description: "The add-team UI", default: true},
   {name: "team-billing", description: "can you pay for teams?.", default: false},
   {name: "fishcakes", description: "opinions on if it's a cake or not", default: true},
 ].splice(0,3); // <-- Yeah really, only 3.
 
-const defaultToggles = devToggles.filter(
+const defaultToggles = toggles.filter(
   (toggle) => toggle.default
 ).map(
   ({name}) => name
 );
 
-/*
-
-
-  <DevTogglesProvider>
-    <UserPref name="devToggles" default={defaultToggles}>
-      {(enabledToggles, set) => (
-        <Secret enabledToggles={enabledToggles} toggles={devToggles} setEnabled={set}></Secret>
-      )}
-    </UserPref>
-  </DevTogglesProvider>
-*/
-
 export const DevTogglesProvider = ({children}) => (
   <UserPref name="devToggles" default={defaultToggles}>
-      {(enabledToggles, set) => (
-        children(enabledToggles, devToggles, set);
+      {(enabledToggles, setEnabledToggles) => (
+        <Provider value={{enabledToggles, toggles, setEnabledToggles}}>
+          {children}
+        </Provider>
       )}
   </UserPref>
-  
-  <LocalStorage name="community-userPrefs" default={{}}>
-    {(prefs, set) => (
-      <Provider value={{prefs, set}}>
-        {children}
-      </Provider>
-    )}
-  </LocalStorage>
 );
 DevTogglesProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export const UserPref = ({children, name, ...props}) => (
+export const DevToggles = ({children}) => (
   <Consumer>
-    {({prefs, set}) => children(
-      prefs[name] !== undefined ? prefs[name] : props.default,
-      value => set({...prefs, [name]: value})
+    {({enabledToggles, toggles, setEnabledToggles}) => children(
+      enabledToggles, toggles, setEnabledToggles
     )}
   </Consumer>
 );
-UserPref.propTypes = {
+DevToggles.propTypes = {
   children: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  default: PropTypes.any.isRequired,
 };
 
-export default UserPref;
+export default DevToggles;
