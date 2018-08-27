@@ -53,7 +53,7 @@ const Router = ({api}) => (
       <Route key={category.url} path={`/${category.url}`} exact render={() => <CategoryPage api={api} category={category}/>}/>
     ))}
     
-    <Route path="/secret" exact render={() => <SecretPage api={api}/>}></Route>
+    <Route path="/secret" exact render={() => <SecretPage/>}></Route>
     
     <Route render={() => <NotFoundPage/>}/>
   </Switch>

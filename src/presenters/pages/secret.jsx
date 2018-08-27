@@ -8,8 +8,7 @@ class SecretEffectsOnMount extends React.Component {
   componentDidMount() {
     // Style the body, which is otherwise outside our scope:
     document.body.style.backgroundColor = "black";
-    
-    
+      
     //try to play the secret sound:
     const audio = new Audio('https://cdn.glitch.com/a5a035b7-e3db-4b07-910a-b5c3ca9d8e86%2Fsecret.mp3?1535396729988');
     audio.play().then( () => {
