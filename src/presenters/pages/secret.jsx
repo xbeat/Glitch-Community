@@ -2,17 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
-import {UserPrefsProvider, UserPref} from '../includes/user-prefs.jsx';
-
-//
-//  Define your dev toggles here.
-//  We can only have three.
-//
-const devToggles = [
-  {name: "add-team", description: "The add-team UI", default: true},
-  {name: "team-billing", description: "can you pay for teams?.", default: false},
-  {name: "fishcakes", description: "opinions on if it's a cake or not", default: true},
-].splice(0,3); // <-- Yeah really, only 3.
+import {DevTogglesProvider, DevToggles} from '../includes/dev-toggles.jsx';
+import {UserPrefsProvider} from '../includes/user-prefs.jsx';
 
 class SecretEffectsOnMount extends React.Component {
   componentDidMount() {
@@ -31,21 +22,16 @@ class SecretEffectsOnMount extends React.Component {
   }
 }
 
-const SecretPageContainer = () => {
-  const defaultToggles = devToggles.filter(
-    (toggle) => toggle.default
-  ).map(
-    ({name}) => name
-  );
-  
-  
+const SecretPageContainer = () => { 
   return (
     <UserPrefsProvider>
-      <UserPref name="devToggles" default={defaultToggles}>
-        {(enabledToggles, set) => (
-          <Secret enabledToggles={enabledToggles} toggles={devToggles} setEnabled={set}></Secret>
-        )}
-      </UserPref>
+      <DevTogglesProvider>
+        <DevToggles>
+          {(enabledToggles, devToggles, setEnabled) => (
+            <Secret enabledToggles={enabledToggles} toggles={devToggles} setEnabled={setEnabled}></Secret>
+          )}
+        </DevToggles>
+      </DevTogglesProvider>
     </UserPrefsProvider>
   );
 };
