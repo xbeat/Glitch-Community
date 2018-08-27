@@ -70,7 +70,7 @@ const Secret = ({toggles, enabledToggles=[], setEnabled}) => {
         <title>Glitch -- It's a secret to everybody.</title>
       </Helmet>
       <SetBodyBackground color="black"/>
-      <audio controls>
+      <audio controls style={{display:'none'}}>
         <source src="horse.ogg" type="audio/ogg"/>
         <source src="horse.mp3" type="audio/mpeg"/>
       Your browser does not support the audio element.
