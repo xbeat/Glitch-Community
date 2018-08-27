@@ -30,8 +30,8 @@ const SecretPageContainer = () => {
     <UserPrefsProvider>
       <DevTogglesProvider>
         <DevToggles>
-          {(enabledToggles, toggles, setEnabledToggles) => (
-            <Secret {...{enabledToggles, toggles, setEnabledToggles}}/>
+          {(enabledToggles, toggleData, setEnabledToggles) => (
+            <Secret {...{enabledToggles, toggleData, setEnabledToggles}}/>
           )}
         </DevToggles>
       </DevTogglesProvider>
@@ -39,7 +39,7 @@ const SecretPageContainer = () => {
   );
 };
 
-const Secret = ({toggles, enabledToggles=[], setEnabledToggles}) => { 
+const Secret = ({enabledToggles, toggleData, setEnabledToggles}) => { 
   const toggleTheToggle = (name) => {
     let newToggles = null;
     if(isEnabled(name)) {
@@ -68,7 +68,7 @@ const Secret = ({toggles, enabledToggles=[], setEnabledToggles}) => {
       </Helmet>
       <SecretEffectsOnMount/>
       <ul>
-        {toggles.map(({name, description}) => (
+        {toggleData.map(({name, description}) => (
           <li key={name}>
             <button title={description} onClick={() => toggleTheToggle(name)} className={isEnabled(name) ? "lit" : "dark"}>{name}</button>
           </li>
@@ -80,7 +80,7 @@ const Secret = ({toggles, enabledToggles=[], setEnabledToggles}) => {
 };
 
 Secret.propTypes = {
-  toggles: PropTypes.array.isRequired,
+  toggleData: PropTypes.array.isRequired,
   enabledToggles: PropTypes.array.isRequired,
   setEnabledToggles: PropTypes.func.isRequired,
 };
