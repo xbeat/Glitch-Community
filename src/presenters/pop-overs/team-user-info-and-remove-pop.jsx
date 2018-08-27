@@ -194,7 +194,11 @@ class TeamUserRemove extends React.Component {
         {this.state.userTeamProjects &&
           <section className="pop-over-actions" id="user-team-projects">
             <p className="action-description">
-              Also remove them from these projects
+              {(this.state.gettingUser || this.state.userTeamProjects.length > 0) ? (
+                <React.Fragment>Also remove them from these projects</React.Fragment>
+              ) : (
+                <React.Fragment>They aren't a member of any projects here</React.Fragment>
+              )}
             </p>
             { this.state.gettingUser &&
               <Loader />
