@@ -16,31 +16,31 @@ module.exports = function(app) {
   
   // Pages hosted by 'about.glitch.me':
   [
+    'react-starter-kit',
+    'website-starter-kit',
+    'forteams',
+    'forplatforms',
+    'you-got-this',
+    'email-sales',
+    'foryourapi',
   ].forEach((route) => proxyGlitch(app, route, 'about.glitch.me'));
-  'react-starter-kit',
-  'website-starter-kit',
-  'forteams',
-  'forplatforms',
-  'you-got-this',
-  'email-sales',
-  'foryourapi',
 
 }
 
-function proxyGlitch(app, route, target) {
-  const routeWithLeadingSlash = `/${route}`;
+function proxyGlitch(app, route, target, pathOnTarget="") {
+  let routeWithLeadingSlash = route.startsWith('/') ? route : `/${route}`;
   app.use(routeWithLeadingSlash, proxy(target, {
     preserveHostHdr: false, // glitch routes based on this, so we have to reset it
     https: false, // allows the proxy to do less work
     proxyReqPathResolver: function(req) {
-      const path = routeWithLeadingSlash + url.parse(req.url).path;
+      const path = pathOnTarget + routeWithLeadingSlash + url.parse(req.url).path;
       console.log("Proxied:", path);
       return path;
     }
   }));
 }
 
-function proxyGhost(app, route, glitchTarget, proxyPath="") {
+function proxyGhost(app, route, glitchTarget, pathOnTarget) {
   const routeWithLeadingSlash = `/${route}`;
   const sandwichedRoute = `/${route}/`;
   // node matches /{route} and /{route}/;
@@ -55,14 +55,6 @@ function proxyGhost(app, route, glitchTarget, proxyPath="") {
       return next();
   });
 
-  // Proxy all the requests to /{route}/ over to glitchTarget:
-  app.use(sandwichedRoute, proxy(glitchTarget, {
-    preserveHostHdr: false, // glitch routes based on this, so we have to reset it
-    https: false, // allows the proxy to do less work
-    proxyReqPathResolver: function(req) {
-      const path = proxyPath + routeWithLeadingSlash + url.parse(req.url).path;
-      console.log("Proxied:", path);
-      return path;
-    }
-  }));
+  // Proxy all the requests to /{route}/ over to glitchTarget
+  proxyGlitch(app, sandwichedRoute, glitchTarget, pathOnTarget);
 }
