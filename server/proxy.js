@@ -11,19 +11,25 @@ module.exports = function(app) {
   // Proxy the some parts of our site over to ghost blogs:
   proxyGhost(app, 'help', 'help-center.glitch.me');
   proxyGhost(app, 'featured', 'featured.glitch.me');
+  proxyGhost(app, 'about', 'about-glitch.glitch.me',);
   proxyGhost(app, 'legal', 'about-glitch.glitch.me', '/about');
-  const simpleRedirects = [];
-  [
-    'about',
-    'partners',
-    'react-starter-kit',
-    'website-starter-kit',
-    'you-got-this*',
-    'email-sales',
-    'for-your-api',
-    'forplatforms*',
-    'forteams*',
-  ].forEach((route) => proxyGhost(app, route, 'about-glitch.glitch.me'));
+  
+  simpleProxy(app, 'react-starter-kit', 'about.glitch.me');
+  simpleProxy(app, 'forteams', 'about.glitch.me');
+}
+
+function simpleProxy(app, route, target) {
+  const routeWithLeadingSlash = `/${route}`;
+  const sandwichedRoute = `/${route}/`;
+  app.use(sandwichedRoute, proxy(target, {
+    preserveHostHdr: false, // glitch routes based on this, so we have to reset it
+    https: false, // allows the proxy to do less work
+    proxyReqPathResolver: function(req) {
+      const path = routeWithLeadingSlash + url.parse(req.url).path;
+      console.log("Proxied:", path);
+      return path;
+    }
+  }));
 }
 
 function proxyGhost(app, route, glitchTarget, proxyPath="") {
