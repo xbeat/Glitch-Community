@@ -71,8 +71,8 @@ const Secret = ({toggles, enabledToggles=[], setEnabled}) => {
       </Helmet>
       <SetBodyBackground color="black"/>
       <audio controls>
-        <source src="horse.ogg" type="audio/ogg">
-        <source src="horse.mp3" type="audio/mpeg">
+        <source src="horse.ogg" type="audio/ogg"/>
+        <source src="horse.mp3" type="audio/mpeg"/>
       Your browser does not support the audio element.
       </audio>
       <ul>
