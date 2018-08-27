@@ -16,6 +16,7 @@ import {TeamPage, UserPage, TeamOrUserPage} from './team-or-user.jsx';
 import SearchPage from './search.jsx';
 import CategoryPage from './category.jsx';
 import ErrorPage from './error.jsx';
+import SecretPage from './secret.jsx';
 
 const NotFoundPage = () => (
   <React.Fragment>
@@ -51,6 +52,8 @@ const Router = ({api}) => (
     {categories.map(category => (
       <Route key={category.url} path={`/${category.url}`} exact render={() => <CategoryPage api={api} category={category}/>}/>
     ))}
+    
+    <Route path="/secret" exact render={() => <SecretPage api={api}/>}></Route>
     
     <Route render={() => <NotFoundPage/>}/>
   </Switch>
