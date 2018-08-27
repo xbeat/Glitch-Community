@@ -13,9 +13,9 @@ Example:
 
 export default [
   {
-    title: 'Fortnite x Splatoon Dance Mashup',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffortnite-splatoon.jpg?1535022650801",
-    link: 'https://glitch.com/~fortnite-splatoon'
+    title: 'Gender Analyze ',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fradio-station-scraper.jpg?1535022650114",
+    link: 'https://glitch.com/~radio-station-scraper'
   },{
     title: 'Empower Black Voters #Remix4Change',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FcocBanner.png?1534933464755",
