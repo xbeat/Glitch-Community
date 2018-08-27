@@ -13,10 +13,17 @@ module.exports = function(app) {
   proxyGhost(app, 'featured', 'featured.glitch.me');
   proxyGhost(app, 'legal', 'about-glitch.glitch.me', '/about');
   const simpleRedirects = [];
-  proxyGhost(app, 'about', 'about-glitch.glitch.me');
-  proxyGhost(app, 'faq', 'about-glitch.glitch.me');
-  proxyGhost(app, 'partners', 'about-glitch.glitch.me');
-  proxyGhost(app, 'react-starter-kit', 'about-glitch.glitch.me');
+  [
+    'about',
+    'partners',
+    'react-starter-kit',
+    'website-starter-kit',
+    'you-got-this*',
+    'email-sales',
+    'for-your-api',
+    'forplatforms*',
+    'forteams*',
+  ].forEach((route) => proxyGhost(app, route, 'about-glitch.glitch.me'));
 }
 
 function proxyGhost(app, route, glitchTarget, proxyPath="") {
