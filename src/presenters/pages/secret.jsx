@@ -15,22 +15,27 @@ const SecretPageContainer = ({api}) => {
   
   return (
     <UserPrefsProvider>
-      <UserPref name="devToggle" default={{}}>{(toggles, set) => (
-        <Secret toggles={toggles} set={set}></Secret>
+      <UserPref name="devToggles" default={toggles}>
+        {(toggles, set) => (
+          <Secret toggles={toggles} updateToggles={set}></Secret>
         )}
       </UserPref>
     </UserPrefsProvider>
   );
 };
 
-const Secret = ({toggles}) => { 
+const Secret = ({toggles, updateToggles}) => { 
+  const toggle = (name) => {
+    togg
+  };
+  
   return (
     <section className="secretPage">
-      
       <ul>
         {toggles.map(({name, description, enabled}) => (
-          <li>
-            <button className={enabled ? "lit" : "dark"}>{name}</button>
+          <li key={name}>
+            <button onClick={() => toggle(name)} className={enabled ? "lit" : "dark"}>{name}</button>
+            <span style={{backgroundColor: "white"}}>I AM {enabled ? "ENABLED" : "a sad panda"}</span>
             <span>{description}</span>
           </li>
         ))}
@@ -39,7 +44,6 @@ const Secret = ({toggles}) => {
       
     </section>
   );
-  
 }
 
 export default SecretPageContainer;
