@@ -177,6 +177,36 @@ class TeamUserRemove extends React.Component {
   render() {
     const allProjectsSelected = this.state.userTeamProjects.every(p => this.state.selectedProjects.has(p.id));
     const userAvatarStyle = {backgroundColor: this.props.user.color};
+    
+    let projects;
+    if (this.state.gettingUser) {
+      projects = <Loader/>;
+    } else if (this.state.userTeamProjects.length > 0) {
+      projects = (
+        <React.Fragment>
+          <div className="projects-list">
+            { this.state.userTeamProjects.map(project => (
+              <label key={project.id} htmlFor={`remove-user-project-${project.id}`}>
+                <input className="checkbox-project" type="checkbox" id={`remove-user-project-${project.id}`}
+                  checked={this.state.selectedProjects.has(project.id)} value={project.id}
+                  onChange={this.handleCheckboxChange}
+                />
+                <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
+                {project.domain}
+              </label>
+            ))}
+          </div>
+          <button className="button-small button-tertiary"
+            onClick={allProjectsSelected ? this.unselectAllProjects : this.selectAllProjects}
+          >
+            {allProjectsSelected ? 'Unselect All' : 'Select All'}
+          </button>
+        </React.Fragment>
+      );
+    } else {
+      projects = <p className="action-description"></p>;
+    }
+    
     return (
       <dialog className="pop-over team-user-info-pop team-user-remove-pop">
         <button className="button-unstyled clickable-label" onClick={this.props.toggleUserInfoVisible} aria-label="go back">
@@ -190,40 +220,14 @@ class TeamUserRemove extends React.Component {
             </div>
           </section>
         </button>
-
-        {this.state.userTeamProjects &&
-          <section className="pop-over-actions" id="user-team-projects">
-            <p className="action-description">
-              {(this.state.gettingUser || this.state.userTeamProjects.length > 0) ? (
-                <React.Fragment>Also remove them from these projects</React.Fragment>
-              ) : (
-                <React.Fragment>They aren't a member of any projects here</React.Fragment>
-              )}
-            </p>
-            { this.state.gettingUser &&
-              <Loader />
-            }
-            <div className="projects-list">
-              { this.state.userTeamProjects.map(project => (
-                <label key={project.id} htmlFor={`remove-user-project-${project.id}`}>
-                  <input className="checkbox-project" type="checkbox" id={`remove-user-project-${project.id}`}
-                    checked={this.state.selectedProjects.has(project.id)} value={project.id}
-                    onChange={this.handleCheckboxChange}
-                  />
-                  <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
-                  {project.domain}
-                </label>
-              ))}
-            </div>
-            { this.state.userTeamProjects.length > 0 && (
-              <button className="button-small button-tertiary"
-                onClick={allProjectsSelected ? this.unselectAllProjects : this.selectAllProjects}
-              >
-                {allProjectsSelected ? 'Unselect All' : 'Select All'}
-              </button>
-            )}
-          </section>
-        }
+        
+        <section className="pop-over-actions" id="user-team-projects">
+          <p className="action-description">
+            Also remove them from these projects
+          </p>
+          {projects}
+        </section>
+        
         <section className="pop-over-actions danger-zone">
           <button className="button-small has-emoji" onClick={this.removeUser}>
             Remove <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
