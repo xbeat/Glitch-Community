@@ -70,10 +70,8 @@ const Secret = ({toggles, enabledToggles=[], setEnabled}) => {
         <title>Glitch -- It's a secret to everybody.</title>
       </Helmet>
       <SetBodyBackground color="black"/>
-      <audio controls style={{display:'none'}}>
-        <source src="horse.ogg" type="audio/ogg"/>
-        <source src="horse.mp3" type="audio/mpeg"/>
-      Your browser does not support the audio element.
+      <audio autoPlay>
+        <source src="https://cdn.glitch.com/a5a035b7-e3db-4b07-910a-b5c3ca9d8e86%2Fsecret.mp3?1535396729988" type="audio/mpeg"/>
       </audio>
       <ul>
         {toggles.map(({name, description}) => (
