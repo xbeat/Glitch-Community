@@ -27,6 +27,7 @@ const App = () => (
   <BrowserRouter>
     <Notifications>
       <UserPrefsProvider>
+        
         <CurrentUserProvider>
           {api => <Router api={api}/>}
         </CurrentUserProvider>
