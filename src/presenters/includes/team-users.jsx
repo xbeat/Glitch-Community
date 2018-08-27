@@ -85,24 +85,35 @@ export class AddTeamUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      notifyInvitedVisible: false,
       invitee: '',
     };
-    this.notifyInvited = this.notifyInvited.bind(this);
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
   
-  notifyInvited(invitee) {
-    invitee = invitee.name || invitee.login || invitee.email;
+  setWhitelistedDomain(togglePopover, domain) {
+    togglePopover();
+    this.props.setWhitelistedDomain(domain);
+  }
+  
+  async inviteUser(togglePopover, user) {
+    togglePopover();
+    await this.props.inviteUser(user);
     this.setState({
-      notifyInvitedVisible: true,
-      invitee: invitee
+      invitee: getDisplayName(user),
+    });
+  }
+  
+  async inviteEmail(togglePopover, email) {
+    togglePopover();
+    await this.props.inviteEmail(email);
+    this.setState({
+      invitee: email,
     });
   }
 
   removeNotifyInvited() {
     this.setState({
-      notifyInvitedVisible: false,
+      invitee: '',
     });
   }
 
@@ -112,17 +123,17 @@ export class AddTeamUser extends React.Component {
         {({visible, togglePopover}) => (
           <span className="add-user-container">
             <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
-            {this.state.notifyInvitedVisible &&
+            {!!this.state.invitee &&
               <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeNotifyInvited}>
-                <span>Invited </span>
-                <span>{this.state.invitee}</span>
+                Invited {this.state.invitee}
               </div>
             }
             {visible && 
               <AddTeamUserPop 
                 {...this.props}
-                togglePopover={togglePopover}
-                notifyInvited={this.notifyInvited}
+                setWhitelistedDomain={domain => this.setWhitelistedDomain(togglePopover, domain)}
+                inviteUser={user => this.inviteUser(togglePopover, user)}
+                inviteEmail={email => this.inviteEmail(togglePopover, email)}
               />
             }
           </span>
@@ -131,6 +142,11 @@ export class AddTeamUser extends React.Component {
     );
   }
 }
+AddTeamUser.propTypes = {
+  inviteEmail: PropTypes.func,
+  inviteUser: PropTypes.func,
+  setWhitelistedDomain: PropTypes.func,
+};
 
 // Join Team
 
