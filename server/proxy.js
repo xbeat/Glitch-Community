@@ -14,14 +14,22 @@ module.exports = function(app) {
   proxyGhost(app, 'about', 'about-glitch.glitch.me',);
   proxyGhost(app, 'legal', 'about-glitch.glitch.me', '/about');
   
-  simpleProxy(app, 'react-starter-kit', 'about.glitch.me');
-  simpleProxy(app, 'forteams', 'about.glitch.me');
+  // Pages hosted by 'about.glitch.me':
+  [
+  ].forEach((route) => proxyGlitch(app, route, 'about.glitch.me'));
+  'react-starter-kit',
+  'website-starter-kit',
+  'forteams',
+  'forplatforms',
+  'you-got-this',
+  'email-sales',
+  'foryourapi',
+
 }
 
-function simpleProxy(app, route, target) {
+function proxyGlitch(app, route, target) {
   const routeWithLeadingSlash = `/${route}`;
-  const sandwichedRoute = `/${route}/`;
-  app.use(sandwichedRoute, proxy(target, {
+  app.use(routeWithLeadingSlash, proxy(target, {
     preserveHostHdr: false, // glitch routes based on this, so we have to reset it
     https: false, // allows the proxy to do less work
     proxyReqPathResolver: function(req) {
