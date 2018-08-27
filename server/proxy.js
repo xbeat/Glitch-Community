@@ -32,7 +32,7 @@ function proxyGlitch(app, route, target, pathOnTarget="") {
   app.use(routeWithLeadingSlash, proxy(target, {
     preserveHostHdr: false, // glitch routes based on this, so we have to reset it
     https: false, // allows the proxy to do less work
-    proxyReqPathResolver: function(req) {
+    proxyReqPathResolver: (req) => {
       const path = pathOnTarget + routeWithLeadingSlash + url.parse(req.url).path;
       console.log("Proxied:", path);
       return path;
