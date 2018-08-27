@@ -4,14 +4,18 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import {UserPrefsProvider, UserPref} from '../includes/user-prefs.jsx';
 
+//
+//  Define your dev toggles here.
+//  We can only have three.
+//
+const devToggles = [
+  {name: "fish", description: "Whether or not fish.", default: true},
+  {name: "cakes", description: "Whether or not cakes.", default: false},
+  {name: "fishcakes", description: "opinions on if it's a cake or not", default: true},
+].splice(0,3); // <-- 
+
 const SecretPageContainer = () => {
-  const toggles = [
-    {name: "fish", description: "Whether or not fish.", default: true},
-    {name: "cakes", description: "Whether or not cakes.", default: false},
-    {name: "fishcakes", description: "opinions on if it's a cake or not", default: true},
-  ];
-  
-  const defaultToggles = toggles.filter(
+  const defaultToggles = devToggles.filter(
     (toggle) => toggle.default
   ).map(
     ({name}) => name
@@ -22,7 +26,7 @@ const SecretPageContainer = () => {
     <UserPrefsProvider>
       <UserPref name="devToggles" default={defaultToggles}>
         {(enabledToggles, set) => (
-          <Secret enabledToggles={enabledToggles} toggles={toggles} setEnabled={set}></Secret>
+          <Secret enabledToggles={enabledToggles} toggles={devToggles} setEnabled={set}></Secret>
         )}
       </UserPref>
     </UserPrefsProvider>
@@ -43,12 +47,12 @@ const Secret = ({toggles, enabledToggles=[], setEnabled}) => {
   };
   
   const isEnabled = (toggleName) => {
-    console.log("checking ", enabledToggles, toggleName);
     return enabledToggles && enabledToggles.includes(toggleName);
   };
   
   const resetToDefaults = () => {
-    setEnabled();
+    // Clear the localstorage set of enabled toggles:
+    setEnabled(undefined);
   };
   
   return (
@@ -63,7 +67,7 @@ const Secret = ({toggles, enabledToggles=[], setEnabled}) => {
           </li>
         ))}
       </ul>
-      <button onClick={resetToDefaults}>Reset to Defaults</button>
+      <button className="default" onClick={resetToDefaults}>Reset to defaults</button>
     </section>
   );
 };
