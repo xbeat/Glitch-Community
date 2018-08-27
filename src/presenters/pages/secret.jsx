@@ -17,14 +17,16 @@ const SecretPageContainer = ({api}) => {
   );
 };
 
-const Secret = ({toggles}) => {
-  
+const Secret = ({toggles}) => { 
   return (
-    <section style={{backgroundColor: "black"}}>
+    <section className="secretPage">
       
       <ul>
-        {toggles.map((toggle) => (
-          
+        {toggles.map(({name, description, enabled}) => (
+          <li>
+            <button className={enabled ? "lit" : "dark"}>{name}</button>
+            <span>{description}</span>
+          </li>
         ))}
       </ul>
       
