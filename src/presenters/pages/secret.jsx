@@ -74,7 +74,7 @@ const Secret = ({enabledToggles, toggleData, setEnabledToggles}) => {
           </li>
         ))}
       </ul>
-      <div className="default"><button onClick={resetToDefaults}>Reset to defaults</button></div>
+      <div className="reset-to-defaults"><button onClick={resetToDefaults}>Reset to defaults</button></div>
     </section>
   );
 };

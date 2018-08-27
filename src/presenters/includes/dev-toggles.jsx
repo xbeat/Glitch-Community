@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {UserPrefsProvider, UserPref} from '../includes/user-prefs.jsx';
+import {UserPref} from '../includes/user-prefs.jsx';
 const {Provider, Consumer} = React.createContext();
 
 //  Dev Toggles!
@@ -19,7 +19,7 @@ const {Provider, Consumer} = React.createContext();
 const toggleData = [
   {name: "add-teams", description: "The add-team UI", default: true},
   {name: "team-billing", description: "can you pay for teams?.", default: false},
-  {name: "fishcakes", description: "opinions on if it's a cake or not", default: true},
+  {name: "placebo", description: "Doesn't do anything... or does it?", default: true},
 ].splice(0,3); // <-- Yeah really, only 3.  If you need more, clean up one first.
 
 
@@ -28,9 +28,11 @@ const toggleData = [
 
 //    import DevToggles from '../includes/dev-toggles.jsx`
 
+// Use the DevToggles from inside of a DevTogglesProvider
+// (Which in turn must be inside of a UserPrefProvider,
+// both of which are provided by the <Layout/>.
 
-// Use the DevToggles consumer to see what's what,
-// and test a toggle enabledToggles.includes:
+// Fetch the array enabledToggles and test for features with [].includes:
 /*
   <DevToggles>
     {(enabledToggles) => (
