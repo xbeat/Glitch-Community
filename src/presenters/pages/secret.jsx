@@ -9,8 +9,8 @@ import {UserPrefsProvider, UserPref} from '../includes/user-prefs.jsx';
 //  We can only have three.
 //
 const devToggles = [
-  {name: "fish", description: "Whether or not fish.", default: true},
-  {name: "cakes", description: "Whether or not cakes.", default: false},
+  {name: "add-team", description: "The add-team UI", default: true},
+  {name: "team-billing", description: "can you pay for teams?.", default: false},
   {name: "fishcakes", description: "opinions on if it's a cake or not", default: true},
 ].splice(0,3); // <-- Yeah really, only 3.
 
@@ -70,6 +70,11 @@ const Secret = ({toggles, enabledToggles=[], setEnabled}) => {
         <title>Glitch -- It's a secret to everybody.</title>
       </Helmet>
       <SetBodyBackground color="black"/>
+      <audio controls>
+        <source src="horse.ogg" type="audio/ogg">
+        <source src="horse.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+      </audio>
       <ul>
         {toggles.map(({name, description}) => (
           <li key={name}>
