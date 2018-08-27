@@ -14,9 +14,17 @@ const devToggles = [
   {name: "fishcakes", description: "opinions on if it's a cake or not", default: true},
 ].splice(0,3); // <-- Yeah really, only 3.
 
-class SetBodyBackground extends React.Component {
+class SecretEffectsOnMount extends React.Component {
   componentDidMount() {
-    document.body.style.backgroundColor = this.props.color;
+    document.body.style.backgroundColor = "black";
+    
+    const audio = new Audio('https://cdn.glitch.com/a5a035b7-e3db-4b07-910a-b5c3ca9d8e86%2Fsecret.mp3?1535396729988');
+    try {
+      audio.play();
+    } catch (exception) {
+      // play() will fail if the user hasn't interacted with the dom yet.
+      // s'fine, let it.
+    }
   }
   render() {
     return null;
@@ -62,17 +70,14 @@ const Secret = ({toggles, enabledToggles=[], setEnabled}) => {
   const resetToDefaults = () => {
     // Clear the localstorage set of enabled toggles:
     setEnabled(undefined);
-  };
+  };SecretEffectsOnMount
   
   return (
     <section className="secretPage">
       <Helmet>
-        <title>Glitch -- It's a secret to everybody.</title>
+        <title>Glitch - It's a secret to everybody.</title>
       </Helmet>
-      <SetBodyBackground color="black"/>
-      <audio autoPlay>
-        <source src="https://cdn.glitch.com/a5a035b7-e3db-4b07-910a-b5c3ca9d8e86%2Fsecret.mp3?1535396729988" type="audio/mpeg"/>
-      </audio>
+      <SecretEffectsOnMount/>
       <ul>
         {toggles.map(({name, description}) => (
           <li key={name}>
@@ -80,7 +85,7 @@ const Secret = ({toggles, enabledToggles=[], setEnabled}) => {
           </li>
         ))}
       </ul>
-      <button className="default" onClick={resetToDefaults}>Reset to defaults</button>
+      <div className="default"><button onClick={resetToDefaults}>Reset to defaults</button></div>
     </section>
   );
 };
