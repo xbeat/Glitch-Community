@@ -23,6 +23,7 @@ dependencies:
   eslint-scope: 4.0.0
   express: 4.16.3
   express-http-proxy: 1.2.0
+  group-by-time: 1.0.0
   html-truncate: 1.2.2
   lodash: 4.17.10
   lodash-webpack-plugin: 0.11.5
@@ -3022,6 +3023,12 @@ packages:
       node: '>=0.4.0'
     resolution:
       integrity: sha1-Dovf5NHduIVNZOBOp8AOKgJuVlg=
+  /group-by-time/1.0.0:
+    dependencies:
+      lodash.groupby: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-sIX0bgAugM8eSFjEx8XSvNfLqKk=
   /has-ansi/2.0.0:
     dependencies:
       ansi-regex: 2.1.1
@@ -3774,6 +3781,121 @@ packages:
       webpack: ^2.0.0 || ^3.0.0 || ^4.0.0
     resolution:
       integrity: sha512-QWfEIYxpixOdbd6KBe5g6MDWcyTgP3trDXwKHFqTlXrWiLcs/67fGQ0IWeRyhWlTITQIgMpJAYd2oeIztuV5VA==
+  /lodash._arraypool/2.4.1:
+    dev: false
+    resolution:
+      integrity: sha1-6I7suS4ruEyQZWEv2VigcZzUf5Q=
+  /lodash._basebind/2.4.1:
+    dependencies:
+      lodash._basecreate: 2.4.1
+      lodash._setbinddata: 2.4.1
+      lodash._slice: 2.4.1
+      lodash.isobject: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-6UC5690nwyfgqNqxtVkWxTQelXU=
+  /lodash._basecreate/2.4.1:
+    dependencies:
+      lodash._isnative: 2.4.1
+      lodash.isobject: 2.4.1
+      lodash.noop: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-+Ob1tXip405UEXm1a47uv0oofgg=
+  /lodash._basecreatecallback/2.4.1:
+    dependencies:
+      lodash._setbinddata: 2.4.1
+      lodash.bind: 2.4.1
+      lodash.identity: 2.4.1
+      lodash.support: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-fQsmdknLKeehOdAQO3wR+uhOSFE=
+  /lodash._basecreatewrapper/2.4.1:
+    dependencies:
+      lodash._basecreate: 2.4.1
+      lodash._setbinddata: 2.4.1
+      lodash._slice: 2.4.1
+      lodash.isobject: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-TTHy595+E0+/KAN2K4FQsyUZZm8=
+  /lodash._baseisequal/2.4.1:
+    dependencies:
+      lodash._getarray: 2.4.1
+      lodash._objecttypes: 2.4.1
+      lodash._releasearray: 2.4.1
+      lodash.forin: 2.4.1
+      lodash.isfunction: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-ax5i5YfFUjER9vIoVT2rGeRF/AM=
+  /lodash._createaggregator/2.4.1:
+    dependencies:
+      lodash.createcallback: 2.4.4
+      lodash.forown: 2.4.1
+      lodash.isarray: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-bnGC+fWlhLcl0QY3JdajXRVZGfE=
+  /lodash._createwrapper/2.4.1:
+    dependencies:
+      lodash._basebind: 2.4.1
+      lodash._basecreatewrapper: 2.4.1
+      lodash._slice: 2.4.1
+      lodash.isfunction: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-UdaVeXPaTtVW43KQ2MGhjFPeFgc=
+  /lodash._getarray/2.4.1:
+    dependencies:
+      lodash._arraypool: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-+vH3+BD6mFolHCGHQESBCUg55e4=
+  /lodash._isnative/2.4.1:
+    dev: false
+    resolution:
+      integrity: sha1-PqZAS3hKe+g2x7V1gOHN95sUgyw=
+  /lodash._maxpoolsize/2.4.1:
+    dev: false
+    resolution:
+      integrity: sha1-nUgvRjuOZq++WcLBTtsRcGAXIzQ=
+  /lodash._objecttypes/2.4.1:
+    dev: false
+    resolution:
+      integrity: sha1-fAt/admKH3ZSn4kLDNsbTf7BHBE=
+  /lodash._releasearray/2.4.1:
+    dependencies:
+      lodash._arraypool: 2.4.1
+      lodash._maxpoolsize: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-phOWMNdtFTawfdyAliiJsIL2pkE=
+  /lodash._setbinddata/2.4.1:
+    dependencies:
+      lodash._isnative: 2.4.1
+      lodash.noop: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-98IAzRuS7yNrOZ7s9zxkjReqlNI=
+  /lodash._shimkeys/2.4.1:
+    dependencies:
+      lodash._objecttypes: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-bpzJZm/wgfC1psl4uD4kLmlJ0gM=
+  /lodash._slice/2.4.1:
+    dev: false
+    resolution:
+      integrity: sha1-dFz0GlNZexj2iImFREBe+isG2Q8=
+  /lodash.bind/2.4.1:
+    dependencies:
+      lodash._createwrapper: 2.4.1
+      lodash._slice: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-XRn6AFyMTSNvr0dCx7eh/Kvikmc=
   /lodash.camelcase/4.3.0:
     dev: false
     resolution:
@@ -3782,10 +3904,84 @@ packages:
     dev: false
     resolution:
       integrity: sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
+  /lodash.createcallback/2.4.4:
+    dependencies:
+      lodash._basecreatecallback: 2.4.1
+      lodash._baseisequal: 2.4.1
+      lodash.isobject: 2.4.1
+      lodash.keys: 2.4.1
+      lodash.property: 2.4.1
+    deprecated: This package is discontinued. Use lodash.iteratee@^4.0.0.
+    dev: false
+    resolution:
+      integrity: sha1-SkUwhJsBZVAD/L31Y1JO/zzrAsQ=
   /lodash.debounce/4.0.8:
     dev: false
     resolution:
       integrity: sha1-gteb/zCmfEAF/9XiUVMArZyk168=
+  /lodash.forin/2.4.1:
+    dependencies:
+      lodash._basecreatecallback: 2.4.1
+      lodash._objecttypes: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-gInq7X0lsIZyt8Zv0HrFXQYjIOs=
+  /lodash.forown/2.4.1:
+    dependencies:
+      lodash._basecreatecallback: 2.4.1
+      lodash._objecttypes: 2.4.1
+      lodash.keys: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-eLQer+FAX6lmRZ6kGT/VAtCEUks=
+  /lodash.groupby/2.4.1:
+    dependencies:
+      lodash._createaggregator: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-4Shu6WSTqrGrhnQZWGaP8tRpU3k=
+  /lodash.identity/2.4.1:
+    dev: false
+    resolution:
+      integrity: sha1-ZpTP+mX++TH3wxzobHRZfPVg9PE=
+  /lodash.isarray/2.4.1:
+    dependencies:
+      lodash._isnative: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-tSoybB9i9tfac6MdVAHfbvRPD6E=
+  /lodash.isfunction/2.4.1:
+    dev: false
+    resolution:
+      integrity: sha1-LP1XXHPkmKtX4xm3f6Aq3vE6lNE=
+  /lodash.isobject/2.4.1:
+    dependencies:
+      lodash._objecttypes: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-Wi5H/mmVPx7mMafrof5k0tBlWPU=
+  /lodash.keys/2.4.1:
+    dependencies:
+      lodash._isnative: 2.4.1
+      lodash._shimkeys: 2.4.1
+      lodash.isobject: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-SN6kbfj/djKxDXBrissmWR4rNyc=
+  /lodash.noop/2.4.1:
+    dev: false
+    resolution:
+      integrity: sha1-T7VPgWZS5a4Q6PcvcXo4jHMmU4o=
+  /lodash.property/2.4.1:
+    dev: false
+    resolution:
+      integrity: sha1-QEnAVJ2vWnECvF6T7q67N53rEy8=
+  /lodash.support/2.4.1:
+    dependencies:
+      lodash._isnative: 2.4.1
+    dev: false
+    resolution:
+      integrity: sha1-Mg4LZwMWc8KNeiu12eAzGkUkBRU=
   /lodash/4.17.10:
     dev: false
     resolution:
@@ -6226,6 +6422,7 @@ specifiers:
   eslint-scope: ^4.0.0
   express: ^4.16.3
   express-http-proxy: ^1.2.0
+  group-by-time: ^1.0.0
   html-truncate: ^1.2.2
   lodash: ^4.17.10
   lodash-webpack-plugin: ^0.11.5
