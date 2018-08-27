@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Fortnite x Splatoon Dance Mashup',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffortnite-splatoon.jpg?1535022650801",
-    link: 'https://glitch.com/~fortnite-splatoon'
+    title: 'Gender Analyze Your Radio Station',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fradio-station-scraper.jpg?1535022650114",
+    link: 'https://glitch.com/~radio-station-scraper'
   },{
-    title: 'Empower Black Voters #Remix4Change',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FcocBanner.png?1534933464755",
-    link: 'https://about.glitch.me/remix4change'
+    title: 'Make Your Own Movie Poster',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmovieposters.jpg?1535368252714",
+    link: 'https://glitch.com/~movieposters'
   }, {
-    title: 'Hear the Image. See the Music.',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fjidiji.jpg?1535022649357",
-    link: 'https://jidiji.glitch.me/'
+    title: 'Reader View, Everywhere',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Freader-view.jpg?1535368251978",
+    link: 'https://glitch.com/~legend-football'
   }  
 ];
