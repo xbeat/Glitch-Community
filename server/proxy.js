@@ -11,9 +11,11 @@ module.exports = function(app) {
   // Proxy the some parts of our site over to ghost blogs:
   proxyGhost(app, 'help', 'help-center.glitch.me');
   proxyGhost(app, 'featured', 'featured.glitch.me');
+  proxyGhost(app, 'about', 'about-glitch.glitch.me');
+  proxyGhost(app, 'legal', 'about-glitch.glitch.me', '/about');
 }
 
-function proxyGhost(app, route, glitchTarget) {
+function proxyGhost(app, route, glitchTarget, proxyPath="") {
   const routeWithLeadingSlash = `/${route}`;
   const sandwichedRoute = `/${route}/`;
   // node matches /{route} and /{route}/;
@@ -33,7 +35,7 @@ function proxyGhost(app, route, glitchTarget) {
     preserveHostHdr: false, // glitch routes based on this, so we have to reset it
     https: false, // allows the proxy to do less work
     proxyReqPathResolver: function(req) {
-      const path = routeWithLeadingSlash + url.parse(req.url).path;
+      const path = proxyPath + routeWithLeadingSlash + url.parse(req.url).path;
       console.log("Proxied:", path);
       return path;
     }
