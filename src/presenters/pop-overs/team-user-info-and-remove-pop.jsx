@@ -178,7 +178,7 @@ class TeamUserRemove extends React.Component {
     const allProjectsSelected = this.state.userTeamProjects.every(p => this.state.selectedProjects.has(p.id));
     const userAvatarStyle = {backgroundColor: this.props.user.color};
     
-    let projects;
+    let projects = null;
     if (this.state.gettingUser) {
       projects = <Loader/>;
     } else if (this.state.userTeamProjects.length > 0) {
@@ -204,7 +204,7 @@ class TeamUserRemove extends React.Component {
         </React.Fragment>
       );
     } else {
-      projects = <p className="action-description"></p>;
+      projects = <p className="action-description">(they aren't in any projects here)</p>;
     }
     
     return (
