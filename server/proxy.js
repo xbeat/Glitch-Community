@@ -22,7 +22,6 @@ module.exports = function(app) {
     'forplatforms',
     'you-got-this',
     'email-sales',
-    'foryourapi',
   ].forEach((route) => proxyGlitch(app, route, 'about.glitch.me'));
 
 }
