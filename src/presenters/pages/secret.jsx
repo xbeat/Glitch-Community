@@ -12,7 +12,16 @@ const devToggles = [
   {name: "fish", description: "Whether or not fish.", default: true},
   {name: "cakes", description: "Whether or not cakes.", default: false},
   {name: "fishcakes", description: "opinions on if it's a cake or not", default: true},
-].splice(0,3); // <-- 
+].splice(0,3); // <-- Yeah really, only 3.
+
+class SetBodyBackground extends React.Component {
+  componentDidMount() {
+    document.body.style.backgroundColor = this.props.color;
+  }
+  render() {
+    return null;
+  }
+}
 
 const SecretPageContainer = () => {
   const defaultToggles = devToggles.filter(
@@ -60,6 +69,7 @@ const Secret = ({toggles, enabledToggles=[], setEnabled}) => {
       <Helmet>
         <title>Glitch -- It's a secret to everybody.</title>
       </Helmet>
+      <SetBodyBackground color="black"/>
       <ul>
         {toggles.map(({name, description}) => (
           <li key={name}>
