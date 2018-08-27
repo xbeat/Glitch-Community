@@ -22,7 +22,7 @@ const SecretPageContainer = ({api}) => {
     <UserPrefsProvider>
       <UserPref name="devToggles" default={defaultToggles}>
         {(enabledToggles, set) => (
-          <Secret enabledToggles={enabledToggles} toggles={toggles} updateToggles={set}></Secret>
+          <Secret enabledToggles={enabledToggles} toggles={toggles} setEnabled={set}></Secret>
         )}
       </UserPref>
     </UserPrefsProvider>
@@ -31,10 +31,19 @@ const SecretPageContainer = ({api}) => {
 
 const Secret = ({toggles, enabledToggles, setEnabled}) => { 
   const toggleTheToggle = (name) => {
-    if(isEnabled(name)
+    let newToggles = null;
+    if(isEnabled(name)) {
+      newToggles = enabledToggles.filter(
+        (enabledToggleName) => enabledToggleName !== name
+      );
+    } else {
+      newToggles = enabledToggles.concat([name]);
+    }
+    setEnabled(newToggles);
   };
   
   const isEnabled = (toggleName) => {
+    console.log("checking ", enabledToggles, toggleName)
     return enabledToggles.includes(toggleName);
   }
   
@@ -44,10 +53,10 @@ const Secret = ({toggles, enabledToggles, setEnabled}) => {
         <title>Glitch -- It's a secret to everybody.</title>
       </Helmet>
       <ul>
-        {toggles.map(({name, description, enabled}) => (
+        {toggles.map(({name, description}) => (
           <li key={name}>
-            <button onClick={() => toggleTheToggle(name)} className={enabled ? "lit" : "dark"}>{name}</button>
-            <span style={{backgroundColor: "white"}}>I AM {enabled ? "ENABLED" : "a sad panda"}</span>
+            <button onClick={() => toggleTheToggle(name)} className={isEnabled(name) ? "lit" : "dark"}>{name}</button>
+            <span style={{backgroundColor: "white"}}>I AM {isEnabled(name) ? "ENABLED" : "a sad panda"}</span>
             <span>{description}</span>
           </li>
         ))}
