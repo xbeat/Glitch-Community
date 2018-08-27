@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
+import {UserPrefsProvider, UserPref} from '../includes/user-prefs.jsx';
 
 const SecretPageContainer = ({api}) => {
   const toggles = [
@@ -13,7 +14,12 @@ const SecretPageContainer = ({api}) => {
   
   
   return (
-    <Secret toggles={toggles}></Secret>
+    <UserPrefsProvider>
+      <UserPref name="devToggle" default={{}}>{(toggles, set) => (
+        <Secret toggles={toggles} set={set}></Secret>
+        )}
+      </UserPref>
+    </UserPrefsProvider>
   );
 };
 
