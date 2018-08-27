@@ -234,8 +234,30 @@ const TeamNameConflict = ({team}) => (
   </CurrentUserConsumer>
 );
 
-const TeamPageContainer = ({api, team, ...props}) => (
+const TeamPageEditor = ({api, team, children}) => (
   <TeamEditor api={api} initialTeam={team}>
+    {(team, funcs, ...args) => (
+      <ProjectsLoader api={api} projects={team.projects}>
+        {(projects, reloadProjects) => {
+          // Add calls to reloadProjects as necessary here
+          
+          const removeUserFromTeam = async (user, projectIds) => {
+            await funcs.removeUserFromTeam(user, projectIds);
+            reloadProjects(projectIds);
+          };
+          
+          return children({...team, projects}, {
+            ...funcs,
+            removeUserFromTeam,
+          }, ...args);
+        }}
+      </ProjectsLoader>
+    )}
+  </TeamEditor>
+);
+
+const TeamPageContainer = ({api, team, ...props}) => (
+  <TeamPageEditor api={api} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
       <React.Fragment>
         <Helmet>
@@ -244,22 +266,17 @@ const TeamPageContainer = ({api, team, ...props}) => (
 
         <CurrentUserConsumer>
           {currentUser => (
-            <ProjectsLoader api={api} projects={team.projects}>
-              {(projects, reloadProjects) => (
-                <TeamPage api={api} team={team}
-                  {...funcs}
-                  currentUser={currentUser} currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
+                <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
+                  currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
                   {...props}
                 />
-              )}
-            </ProjectsLoader>
           )}
         </CurrentUserConsumer>
 
         <TeamNameConflict team={team}/>
       </React.Fragment>
     )}
-  </TeamEditor>
+  </TeamPageEditor>
 );
 
 export default TeamPageContainer;
