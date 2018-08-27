@@ -32,12 +32,14 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, pr
     </React.Fragment>
   );
   
+  /*
   projectOptions = _.mapValues(projectOptions, function(projectOption) {
     return async (projectId, userId) => {
       await projectOption(projectId, userId);
       reloadProject(projectId);
     };
   });
+  */
 
   return (
     <React.Fragment>
@@ -72,4 +74,4 @@ const EntityPageProjectsContainer = ({api, projects, ...props}) => (
   </ProjectsLoader>
 );
 
-export default EntityPageProjectsContainer;
+export default EntityPageProjects;
