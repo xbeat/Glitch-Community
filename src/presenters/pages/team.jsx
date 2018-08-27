@@ -234,21 +234,34 @@ const TeamNameConflict = ({team}) => (
   </CurrentUserConsumer>
 );
 
-const TeamPageEditor = ({api, team, children}) => (
-  <TeamEditor api={api} initialTeam={team}>
+const TeamPageEditor = ({api, initialTeam, children}) => (
+  <TeamEditor api={api} initialTeam={initialTeam}>
     {(team, funcs, ...args) => (
       <ProjectsLoader api={api} projects={team.projects}>
         {(projects, reloadProjects) => {
-          // Add calls to reloadProjects as necessary here
+          // Inject page specific changes to the editor
+          // Mainly url updating and calls to reloadProjects
           
           const removeUserFromTeam = async (user, projectIds) => {
             await funcs.removeUserFromTeam(user, projectIds);
-            reloadProjects(projectIds);
+            reloadProjects(...projectIds);
+          };
+          
+          const joinTeamProject = async (projectId, userId) => {
+            await funcs.joinTeamProject(projectId, userId);
+            reloadProjects(projectId);
+          };
+          
+          const leaveTeamProject = async (projectId, userId) => {
+            await funcs.leaveTeamProject(projectId, userId);
+            reloadProjects(projectId);
           };
           
           return children({...team, projects}, {
             ...funcs,
             removeUserFromTeam,
+            joinTeamProject,
+            leaveTeamProject,
           }, ...args);
         }}
       </ProjectsLoader>
@@ -266,10 +279,10 @@ const TeamPageContainer = ({api, team, ...props}) => (
 
         <CurrentUserConsumer>
           {currentUser => (
-                <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
-                  currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
-                  {...props}
-                />
+            <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
+              currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
+              {...props}
+            />
           )}
         </CurrentUserConsumer>
 
