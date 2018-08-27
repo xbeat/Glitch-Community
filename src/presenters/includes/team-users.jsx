@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {getDisplayName} from '../../models/user';
 import {WhitelistedDomainIcon} from './team-elements.jsx';
 import AddTeamUserPop from '../pop-overs/add-team-user-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
@@ -121,7 +122,7 @@ export class AddTeamUser extends React.Component {
               <AddTeamUserPop 
                 {...this.props}
                 togglePopover={togglePopover}
-                notifyInvited={(invitee) => this.notifyInvited(invitee)}
+                notifyInvited={this.notifyInvited}
               />
             }
           </span>
