@@ -27,7 +27,7 @@ export class OptimisticValue extends React.Component {
     } catch (error) {
       this.setState((prevState, props) => {
         // The update failed; we can ignore this if our state has already moved on
-        if (prevState.value !== props.value) {
+        if (prevState.value !== value) {
           return {};
         }
         
