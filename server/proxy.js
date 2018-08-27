@@ -11,8 +11,12 @@ module.exports = function(app) {
   // Proxy the some parts of our site over to ghost blogs:
   proxyGhost(app, 'help', 'help-center.glitch.me');
   proxyGhost(app, 'featured', 'featured.glitch.me');
-  proxyGhost(app, 'about', 'about-glitch.glitch.me');
   proxyGhost(app, 'legal', 'about-glitch.glitch.me', '/about');
+  const simpleRedirects = [];
+  proxyGhost(app, 'about', 'about-glitch.glitch.me');
+  proxyGhost(app, 'faq', 'about-glitch.glitch.me');
+  proxyGhost(app, 'partners', 'about-glitch.glitch.me');
+  proxyGhost(app, 'react-starter-kit', 'about-glitch.glitch.me');
 }
 
 function proxyGhost(app, route, glitchTarget, proxyPath="") {
