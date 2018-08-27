@@ -77,7 +77,7 @@ class TeamEditor extends React.Component {
 
   async inviteUser(user) {
     console.log('💣 inviteUser', user);
-    await new Promise(res => setTimeout(res, 100));
+    await this.props.api.post(`teams/${this.state.id}/sendJoinEmail`, {userId: user.id});
   }
 
   async removeUser(id) {
