@@ -30,7 +30,7 @@ const toggleData = [
 
 // Use the DevToggles from inside of a DevTogglesProvider
 // (Which in turn must be inside of a UserPrefProvider,
-// both of which are provided by the <Layout/>.
+// both of which are provided by the Client.jsx
 
 // Fetch the array enabledToggles and test for features with [].includes:
 /*

@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
-import {DevTogglesProvider, DevToggles} from '../includes/dev-toggles.jsx';
-import {UserPrefsProvider} from '../includes/user-prefs.jsx';
+import {DevToggles} from '../includes/dev-toggles.jsx';
 
 class SecretEffectsOnMount extends React.Component {
   componentDidMount() {
@@ -27,15 +26,11 @@ class SecretEffectsOnMount extends React.Component {
 
 const SecretPageContainer = () => { 
   return (
-    <UserPrefsProvider>
-      <DevTogglesProvider>
-        <DevToggles>
-          {(enabledToggles, toggleData, setEnabledToggles) => (
-            <Secret {...{enabledToggles, toggleData, setEnabledToggles}}/>
-          )}
-        </DevToggles>
-      </DevTogglesProvider>
-    </UserPrefsProvider>
+    <DevToggles>
+      {(enabledToggles, toggleData, setEnabledToggles) => (
+        <Secret {...{enabledToggles, toggleData, setEnabledToggles}}/>
+      )}
+    </DevToggles>
   );
 };
 
