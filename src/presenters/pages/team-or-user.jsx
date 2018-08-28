@@ -21,6 +21,8 @@ const getUser = async (api, name) => {
   if (data === "NOT FOUND") {
     return null;
   }
+  
+  // add collection info to data here?
   return getUserById(api, data);
 };
 
