@@ -4,12 +4,11 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import TeamEditor from '../team-editor.jsx';
-import {getLink, getAvatarStyle, getProfileStyle, generateUrlForName} from '../../models/team';
+import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
-import {PureEditableField} from '../includes/editable-field.jsx';
-import {OptimisticValue} from '../includes/field-helpers.jsx';
+import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
@@ -29,47 +28,24 @@ function syncPageToUrl(url) {
 }
 
 const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
-  <OptimisticValue value={team.url} update={url => updateUrl(url).then(() => syncPageToUrl(url))} resetOnError={false}>
-    {urlProps => (
-      <React.Fragment>
-        <OptimisticValue value={team.name} update={updateName} resetOnError={false}>
-          {nameProps => {
-            
-            // This func mirrors the name field to the url input, which will follow its normal update path and show errors
-            // Handling it here means we don't have to worry about failed updates desyncing them unintentionally
-            const updateNameAndUrl = (name) => {
-              if (generateUrlForName(nameProps.value) === urlProps.value) {
-                const url = generateUrlForName(name);
-                if (url !== urlProps.value) {
-                  urlProps.update(generateUrlForName(name));
-                }
-              }
-              nameProps.update(name);
-            };
-            
-            return (
-              <h1>
-                <PureEditableField
-                  {...nameProps}
-                  update={updateNameAndUrl}
-                  placeholder="What's its name?"
-                  suffix={team.isVerified ? <VerifiedBadge/> : null}
-                />
-              </h1>
-            );
-          }}
-        </OptimisticValue>
-        
-        <p className="team-url">
-          <PureEditableField
-            {...urlProps}
-            placeholder="Short url?"
-            prefix="@"
-          />
-        </p>
-      </React.Fragment>
-    )}
-  </OptimisticValue>
+  <React.Fragment>
+    <h1>
+      <EditableField
+        value={team.name}
+        update={updateName}
+        placeholder="What's its name?"
+        suffix={team.isVerified ? <VerifiedBadge/> : null}
+      />
+    </h1>
+    <p className="team-url">
+      <EditableField
+        value={team.url}
+        update={url => updateUrl(url).then(() => syncPageToUrl(url))}
+        placeholder="Short url?"
+        prefix="@"
+      />
+    </p>
+  </React.Fragment>
 );
 
 // Team Page

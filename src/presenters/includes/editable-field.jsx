@@ -75,14 +75,13 @@ PureEditableField.propTypes = {
   error: PropTypes.string,
 };
 
-const EditableField = ({value, update, ...props}) => (
+export const EditableField = ({value, update, ...props}) => (
   <OptimisticValue value={value} update={update} resetOnError={false}>
     {valueProps => (
       <PureEditableField {...props} {...valueProps}/>
     )}
   </OptimisticValue>
 );
-export default EditableField;
 EditableField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
@@ -91,3 +90,5 @@ EditableField.propTypes = {
   suffix: PropTypes.node,
   autoFocus: PropTypes.bool,
 };
+
+export default EditableField;
