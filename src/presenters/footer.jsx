@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function FooterLine({href, track, children}) {
+import {Redirect} from 'react-router-dom';
+import Konami from './includes/konami.jsx';
+
+const FooterLine = ({href, track, children}) => {
   return <p><a href={href} data-track={'footer → '+track}>{children}</a></p>;
-}
+};
+
 FooterLine.propTypes = {
   href: PropTypes.string.isRequired,
   track: PropTypes.string.isRequired,
@@ -34,6 +38,9 @@ export default function Footer() {
         <img className="for-platforms-icon" src={srcForPlatforms} alt=""/>
         <span className="for-platforms-text">Glitch Teams</span>
       </FooterLine>
+      <Konami>
+        <Redirect to={"/secret"}/>
+      </Konami>
     </footer>
   );
 }
