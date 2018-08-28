@@ -7,7 +7,7 @@ import ProjectsLoader from './projects-loader.jsx';
 
 /* globals Set */
 
-const EntityPageCollections = ({collections, collectionOptions}) => {
+const EntityPageCollections = ({collections}) => {
   
   // collectionOptions = _.mapValues(collectionOptions, function(collectionOption) {
   //   return async (collectionId, userId) => {
@@ -17,6 +17,8 @@ const EntityPageCollections = ({collections, collectionOptions}) => {
   // });
   
   collections; // define some dummy collections here
+  collections = {
+    
 
   return (
     <React.Fragment>
