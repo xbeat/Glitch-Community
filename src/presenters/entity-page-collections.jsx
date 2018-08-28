@@ -15,11 +15,13 @@ const EntityPageCollections = ({collections, collectionOptions}) => {
   //     reloadCollection(collectionId);
   //   };
   // });
+  
+  collections; // define some dummy collections here
 
   return (
     <React.Fragment>
       {!!collections.length && (
-        <CollectionList title="Recent Collections" projects={collections}
+        <CollectionList title="Recent Collections" collections={collections}
         />
       )}
     </React.Fragment>

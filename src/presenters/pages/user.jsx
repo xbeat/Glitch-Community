@@ -85,10 +85,10 @@ const UserPage = ({
         <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
     </section>
-    <EntityPageCollections
-      collections={collections}
-      api={api}
-    />
+    {/* Dummy section for collections */}
+    <div>
+      Recent Collections
+    </div>
     <EntityPageProjects
       projects={projects} 
       pins={pins} 
