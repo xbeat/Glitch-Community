@@ -5,10 +5,7 @@ import Helmet from 'react-helmet';
 import {DevToggles} from '../includes/dev-toggles.jsx';
 
 class SecretEffectsOnMount extends React.Component {
-  componentDidMount() {
-    // Style the body, which is otherwise outside our scope:
-    document.body.style.backgroundColor = "black";
-      
+  componentDidMount() {    
     //try to play the secret sound:
     const audio = new Audio('https://cdn.glitch.com/a5a035b7-e3db-4b07-910a-b5c3ca9d8e86%2Fsecret.mp3?1535396729988');
     audio.play().then( () => {
@@ -50,13 +47,9 @@ const Secret = ({enabledToggles, toggleData, setEnabledToggles}) => {
     return enabledToggles && enabledToggles.includes(toggleName);
   };
   
-  const resetToDefaults = () => {
-    // Clear the localstorage set of enabled toggles so we go back to using the defaults.
-    setEnabledToggles(undefined);
-  };
-  
   return (
     <section className="secretPage">
+      <div className="filler"></div>
       <Helmet>
         <title>Glitch - It's a secret to everybody.</title>
       </Helmet>
@@ -68,7 +61,6 @@ const Secret = ({enabledToggles, toggleData, setEnabledToggles}) => {
           </li>
         ))}
       </ul>
-      <div className="reset-to-defaults"><button onClick={resetToDefaults}>Reset to defaults</button></div>
     </section>
   );
 };

@@ -13,18 +13,18 @@ const {Provider, Consumer} = React.createContext();
 //
 //  Define your dev toggles here.
 //  We can only have three.
-// Individual users can override them with the /secret page.
+//  Users can enable them with the /secret page.
 const toggleData = [
-  {name: "add-teams", description: "The add-team UI", default: true},
-  {name: "team-billing", description: "can you pay for teams?.", default: false},
-  {name: "placebo", description: "Doesn't do anything... or does it?", default: true},
+  {name: "add-teams", description: "The add-team UI"},
+  {name: "team-billing", description: "can you pay for teams?."},
+  {name: "placebo", description: "Doesn't do anything... or does it?"},
 ].splice(0,3); // <-- Yeah really, only 3.  If you need more, clean up one first.
 
 
 // Usage:
 // Import Devtoggles into your scope:
 
-//    import DevToggles from '../includes/dev-toggles.jsx`
+// import DevToggles from '../includes/dev-toggles.jsx`
 
 // Use the DevToggles from inside of a DevTogglesProvider
 // (Which in turn must be inside of a UserPrefProvider,
@@ -41,14 +41,8 @@ const toggleData = [
   </DevToggles>
 */
 
-const defaultToggles = toggleData.filter(
-  (toggle) => toggle.default
-).map(
-  ({name}) => name
-);
-
 export const DevTogglesProvider = ({children}) => (
-  <UserPref name="devToggles" default={defaultToggles}>
+  <UserPref name="devToggles" default={[]}>
     {(enabledToggles, setEnabledToggles) => (
       <Provider value={{enabledToggles, toggleData, setEnabledToggles}}>
         {children}
