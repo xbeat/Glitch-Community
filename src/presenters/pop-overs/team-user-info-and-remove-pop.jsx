@@ -160,8 +160,7 @@ class TeamUserRemove extends React.Component {
   }
   
   async getUserWithProjects() {
-    const userPath = `users/${this.props.user.id}`;
-    const {data} = await this.props.api.get(userPath);
+    const {data} = await this.props.api.get(`users/${this.props.user.id}`);
     this.setState({
       userTeamProjects: data.projects.filter(userProj => {
         return this.props.team.projects.some(teamProj => teamProj.id === userProj.id);
@@ -196,11 +195,13 @@ class TeamUserRemove extends React.Component {
               </label>
             ))}
           </div>
-          <button className="button-small button-tertiary"
-            onClick={allProjectsSelected ? this.unselectAllProjects : this.selectAllProjects}
-          >
-            {allProjectsSelected ? 'Unselect All' : 'Select All'}
-          </button>
+          {this.state.userTeamProjects.length > 1 && (
+            <button className="button-small button-tertiary"
+              onClick={allProjectsSelected ? this.unselectAllProjects : this.selectAllProjects}
+            >
+              {allProjectsSelected ? 'Unselect All' : 'Select All'}
+            </button>
+          )}
         </React.Fragment>
       );
     } else {

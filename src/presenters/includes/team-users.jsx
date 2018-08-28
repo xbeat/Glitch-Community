@@ -9,28 +9,18 @@ import {UserPopoversList} from '../users-list.jsx';
 
 // Team Users list (in profile container)
 
-export const TeamUsers = (props) => {
-  
-  let userIsTeamAdmin = (user) => {
-    return props.adminIds.includes(user.id);
-  };
-  
-  // let removeUserPopVisible = () => {
-  // }
-  
-  return (
-    <UserPopoversList users={props.users} adminIds={props.adminIds}>
-      {(user, togglePopover) => 
-        <TeamUserInfoAndRemovePop 
-          userIsTeamAdmin={userIsTeamAdmin(user)}
-          togglePopover={togglePopover}
-          user={user}
-          {...props}
-        />
-      }
-    </UserPopoversList>
-  );
-};
+export const TeamUsers = (props) => (
+  <UserPopoversList users={props.users} adminIds={props.adminIds}>
+    {(user, togglePopover) => 
+      <TeamUserInfoAndRemovePop 
+        userIsTeamAdmin={props.adminIds.includes(user.id)}
+        togglePopover={togglePopover}
+        user={user}
+        {...props}
+      />
+    }
+  </UserPopoversList>
+);
 
 TeamUsers.propTypes = {
   users: PropTypes.array.isRequired,
