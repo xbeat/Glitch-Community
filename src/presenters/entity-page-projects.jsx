@@ -47,6 +47,7 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, pr
           projectOptions={isAuthorized ? {removePin, ...projectOptions} : {}}
         />
       )}
+      
       {!!recentProjects.length && (
         <ProjectsList title="Recent Projects" projects={recentProjects}
           projectOptions={isAuthorized ? {addPin, ...projectOptions} : {}}
