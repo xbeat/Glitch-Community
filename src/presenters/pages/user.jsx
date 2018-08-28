@@ -11,6 +11,7 @@ import Thanks from '../includes/thanks.jsx';
 
 import DeletedProjects from '../deleted-projects.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
+import EntityPageCollections from '../entity-page-collections.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
 function syncPageToLogin(login) {
@@ -55,6 +56,7 @@ const UserPage = ({
     avatarUrl, color,
     hasCoverImage, coverColor,
     pins, projects, _deletedProjects,
+    collections,
     _cacheCover,
   },
   api, isAuthorized,
@@ -83,6 +85,10 @@ const UserPage = ({
         <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
     </section>
+    <EntityPageCollections
+      collections={collections}
+      api={api}
+    />
     <EntityPageProjects
       projects={projects} 
       pins={pins} 

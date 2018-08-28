@@ -16,16 +16,16 @@ export const CollectionItem = ({collection, collectionColor, projectOptions}) =>
 
       <a href={getLink(collection.users[0], collection.domain)}>
         <div className={['collection'].join(' ')} 
-          style={{backgroundColor: collectionColor, borderBottomColor:categoryColor}}
-          data-track="project" data-track-label={project.domain}>
-          <div className="project-container">
-            <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
+          style={{backgroundColor: collectionColor}}
+          data-track="collection" data-track-label={collection.domain}>
+          <div className="collection-container">
+            <img className="avatar" src={getAvatarUrl(collection.id)} alt={`${collection.domain} avatar`}/>
             <div className="button">
               <span className="project-badge private-project-badge" aria-label="private"></span>
-              <div className="project-name">{project.domain}</div>
+              <div className="project-name">{collection.domain}</div>
             </div>
-            <div className="description"><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
-            <div className="overflow-mask" style={{backgroundColor: categoryColor}}></div>
+            <div className="description"><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
+            <div className="overflow-mask" style={{backgroundColor: collectionColor}}></div>
           </div>
         </div>
       </a>
@@ -33,18 +33,18 @@ export const CollectionItem = ({collection, collectionColor, projectOptions}) =>
   );
 };
 
-ProjectItem.propTypes = {
-  project: PropTypes.shape({
+CollectionItem.propTypes = {
+  collection: PropTypes.shape({
     description: PropTypes.string.isRequired,
     domain: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     private: PropTypes.bool.isRequired,
-    showAsGlitchTeam: PropTypes.bool.isRequired,
+    // showAsGlitchTeam: PropTypes.bool.isRequired,
     users: PropTypes.array.isRequired,
   }).isRequired,
-  categoryColor: PropTypes.string,
-  projectOptions: PropTypes.object,
+  collectionColor: PropTypes.string,
+  // projectOptions: PropTypes.object,
 };
 
 
-export default ProjectItem;
+export default CollectionItem;
