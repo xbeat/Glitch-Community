@@ -135,7 +135,7 @@ class CurrentUserManager extends React.Component {
     }
     
     // hooks for easier debugging
-    window.currentUser = currentUser;
+    window.currentUser = cachedUser;
     window.api = this.api();
   }
   
