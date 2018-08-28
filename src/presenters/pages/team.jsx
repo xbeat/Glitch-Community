@@ -247,13 +247,13 @@ const TeamPageEditor = ({api, initialTeam, children}) => (
             reloadProjects(...projectIds);
           };
           
-          const joinTeamProject = async (projectId, userId) => {
-            await funcs.joinTeamProject(projectId, userId);
+          const joinTeamProject = async (projectId) => {
+            await funcs.joinTeamProject(projectId);
             reloadProjects(projectId);
           };
           
-          const leaveTeamProject = async (projectId, userId) => {
-            await funcs.leaveTeamProject(projectId, userId);
+          const leaveTeamProject = async (projectId) => {
+            await funcs.leaveTeamProject(projectId);
             reloadProjects(projectId);
           };
           

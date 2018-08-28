@@ -285,7 +285,8 @@
 .team-user-remove-pop
   .projects-list
     label
-      display: block
+      display: flex
+      align-items: center
       padding-bottom: 10px
     input
       width: auto
@@ -294,3 +295,10 @@
     .avatar
       vertical-align: middle
       margin-right: 5px
+    
+    // shrink avatars if there are more than 10 projects
+    label:nth-last-child(n+10) // every label at least ten from the end
+      &, & ~ label // will style itself and all following labels
+        .avatar
+          width: 20px
+          height: 20px

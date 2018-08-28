@@ -138,10 +138,10 @@ class TeamEditor extends React.Component {
     await this.props.api.post(`/teams/${this.state.id}/projects/${projectId}/join`);    
   }
   
-  async leaveTeamProject(projectId, userId) {
+  async leaveTeamProject(projectId) {
     await this.props.api.delete(`/projects/${projectId}/authorization`, {
       data: {
-        targetUserId: userId,
+        targetUserId: this.props.currentUser.id,
       },
     });
   }
@@ -182,8 +182,8 @@ class TeamEditor extends React.Component {
       teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
       teamHasBillingExposed: this.teamHasBillingExposed(),
       updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),
-      joinTeamProject: (projectId, userId) => this.joinTeamProject(projectId, userId).catch(handleError),
-      leaveTeamProject: (projectId, userId) => this.leaveTeamProject(projectId, userId).catch(handleError),
+      joinTeamProject: projectId => this.joinTeamProject(projectId).catch(handleError),
+      leaveTeamProject: projectId => this.leaveTeamProject(projectId).catch(handleError),
     };
     return this.props.children(this.state, funcs, this.currentUserIsOnTeam(), this.currentUserIsTeamAdmin());
   }
