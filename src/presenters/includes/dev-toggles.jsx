@@ -10,10 +10,10 @@ const {Provider, Consumer} = React.createContext();
 //   ship things _extra_ early without impacting customer UX
 //
 
-//
-//  Define your dev toggles here.
-//  We can only have three.
-//  Users can enable them with the /secret page.
+
+// Define your dev toggles here.
+// We can only have three.
+// Users can enable them with the /secret page.
 const toggleData = [
   {name: "add-teams", description: "The add-team UI"},
   {name: "team-billing", description: "can you pay for teams?."},
