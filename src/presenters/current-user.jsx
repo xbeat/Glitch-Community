@@ -42,6 +42,22 @@ function identifyUser(user) {
   }
 }
 
+// Test if two user objects reference the same person
+function usersMatch(a, b) {
+  if (a && b && a.id === b.id && a.persistentToken === b.persistentToken) {
+    return true;
+  } else if (!a && !b) {
+    return true;
+  }
+  return false;
+}
+
+// This takes sharedUser and cachedUser
+// sharedUser is stored in localStorage['cachedUser']
+// cachedUser is stored in localStorage['community-cachedUser']
+// sharedUser syncs with the editor and is authoritative on id and persistentToken
+// cachedUser mirrors GET /users/{id} and is what we actually display
+
 class CurrentUserManager extends React.Component {
   constructor(props) {
     super(props);
@@ -49,12 +65,11 @@ class CurrentUserManager extends React.Component {
   }
   
   api() {
-    const token = this.props.currentUser && this.props.currentUser.persistentToken;
-    if (token) {
+    if (this.props.sharedUser) {
       return axios.create({
         baseURL: API_URL,
         headers: {
-          Authorization: token,
+          Authorization: this.props.sharedUser.persistentToken,
         },
       });
     } 
@@ -63,31 +78,59 @@ class CurrentUserManager extends React.Component {
     });
   }
   
-  async load() {
-    this.setState({fetched: false});
-    const {currentUser, setCurrentUser} = this.props;
-    if (currentUser) {
-      const {data} = await this.api().get(`users/${currentUser.id}`);
-      setCurrentUser(data);
-      this.setState({fetched: true});
+  async fix() {
+    // The token isn't working, or the id doesn't match the token
+    // So hit boot and get the right user for our token
+    try {
+      const {data: {user}} = await this.api().get(`boot?latestProjectOnly=true`);
+      this.props.setSharedUser(user);
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        this.props.setSharedUser(undefined);
+      } else {
+        throw error;
+      }
     }
-    identifyUser(currentUser);
+  }
+  
+  async load() {
+    const {sharedUser, cachedUser} = this.props;
+    if (!usersMatch(sharedUser, cachedUser)) {
+      this.props.setCachedUser(sharedUser || undefined);
+    }
+    this.setState({fetched: false});
+    if (sharedUser) {
+      try {
+        const {data} = await this.api().get(`users/${sharedUser.id}`);
+        if (usersMatch(sharedUser, data)) {
+          this.props.setCachedUser(data);
+          this.setState({fetched: true});
+          identifyUser(data);
+        } else {
+          this.fix();
+        }
+      } catch (error) {
+        if (error.response && (error.response.status === 401 || error.response.status === 404)) {
+          this.fix();
+        } else {
+          throw error;
+        }
+      }
+    } else {
+      identifyUser(null);
+    }
   }
   
   componentDidMount() {
-    if (this.props.currentUser) {
+    const {sharedUser, cachedUser} = this.props;
+    if (sharedUser || cachedUser) {
       this.load();
     }
   }
   
   componentDidUpdate(prev) {
-    const {currentUser} = this.props;
-    const prevUser = prev.currentUser;
-    if (!currentUser && prevUser) {
-      this.load();
-    } else if (currentUser && (!prevUser || currentUser.id !== prevUser.id ||
-      currentUser.persistentToken !== prevUser.persistentToken
-    )) {
+    const {sharedUser, cachedUser} = this.props;
+    if (!usersMatch(sharedUser, cachedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
       this.load();
     }
     
@@ -97,17 +140,28 @@ class CurrentUserManager extends React.Component {
   }
   
   render() {
-    const {children, currentUser, setCurrentUser} = this.props;
+    const {children, cachedUser, setSharedUser, setCachedUser} = this.props;
     const {fetched} = this.state;
     return children({
       api: this.api(),
-      currentUser, fetched,
-      update: changes => setCurrentUser({...currentUser, ...changes}),
+      currentUser: cachedUser ? UserModel(cachedUser).asProps() : null,
+      fetched,
       reload: () => this.load(),
-      clear: () => setCurrentUser(undefined),
+      login: user => setSharedUser(user),
+      update: changes => setCachedUser({...cachedUser, ...changes}),
+      clear: () => setSharedUser(undefined),
     });
   }
 }
+CurrentUserManager.propTypes = {
+  sharedUser: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    persistentToken: PropTypes.string.isRequired,
+  }),
+  setSharedUser: PropTypes.func.isRequired,
+  cachedUser: PropTypes.object,
+  setCachedUser: PropTypes.func.isRequired,
+};
 
 const cleanUser = (user) => {
   if (!user) {
@@ -118,19 +172,23 @@ const cleanUser = (user) => {
     Raven.captureMessage("Invalid cachedUser", {extra: {user}});
     return null;
   }
-  return UserModel(user).asProps();
+  return user;
 };
 
 export const CurrentUserProvider = ({children}) => (
-  <LocalStorage name="cachedUser" default={null} ignoreChanges={true}>
-    {(currentUser, set, loaded) => (
-      <CurrentUserManager currentUser={cleanUser(currentUser)} setCurrentUser={set}>
-        {({api, ...props}) => (
-          <Provider value={props}>
-            {loaded && children(api)}
-          </Provider>
+  <LocalStorage name="community-cachedUser" default={null}>
+    {(cachedUser, setCachedUser, loadedCachedUser) => (
+      <LocalStorage name="cachedUser" default={null}>
+        {(sharedUser, setSharedUser, loadedSharedUser) => (
+          <CurrentUserManager sharedUser={cleanUser(sharedUser)} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
+            {({api, ...props}) => (
+              <Provider value={props}>
+                {loadedSharedUser && loadedCachedUser && children(api)}
+              </Provider>
+            )}
+          </CurrentUserManager>
         )}
-      </CurrentUserManager>
+      </LocalStorage>
     )}
   </LocalStorage>
 );

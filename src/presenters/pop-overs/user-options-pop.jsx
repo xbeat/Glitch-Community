@@ -82,7 +82,19 @@ TeamList.propTypes = {
 
 // User Options Pop
 
-const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle, teams, signOut, showNewStuffOverlay, toggleCreateTeamPop, userIsAnon}) => {
+const UserOptionsPop = ({
+  toggleUserOptionsPop,
+  userLink,
+  avatarUrl,
+  avatarStyle,
+  teams,
+  signOut,
+  showNewStuffOverlay,
+  toggleCreateTeamPop,
+  userIsAnon,
+  userName,
+  userLogin,
+}) => {
   const clickNewStuff = (event) => {
     toggleUserOptionsPop();
     showNewStuffOverlay();
@@ -95,17 +107,22 @@ const UserOptionsPop = ({toggleUserOptionsPop, userLink, avatarUrl, avatarStyle,
     analytics.reset();
     signOut();
   };
+  
+  userName = userName || "Anonymous";
 
   return (
     <dialog className="pop-over user-options-pop">
-      <section className="pop-over-actions">
-        <a className="button-link" href={userLink}>
-          <div className="button button-small has-emoji button-tertiary">
-            <span>Your Profile </span>
-            <img className="emoji avatar" src={avatarUrl} style={avatarStyle} alt="Your avatar"></img>
+      <a href={userLink} className="user-info">
+        <section className="pop-over-actions user-info">
+          <img className="avatar" src={avatarUrl} alt="Your avatar" style={avatarStyle}/>
+          <div className="info-container">
+            <p className="name" title={userName}>{userName}</p>
+            { userLogin &&
+                <p className="user-login" title={userLogin}>@{userLogin}</p>
+            }
           </div>
-        </a>
-      </section>
+        </section>
+      </a>
 
       <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
 
@@ -137,6 +154,8 @@ UserOptionsPop.propTypes = {
   signOut: PropTypes.func.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
   userIsAnon: PropTypes.bool.isRequired,
+  userName: PropTypes.string,
+  userLogin: PropTypes.string,
 };
 
 

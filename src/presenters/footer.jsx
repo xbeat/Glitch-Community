@@ -26,16 +26,13 @@ export default function Footer() {
       <FooterLine href="http://status.glitch.com/" track="system status">
         System Status <span role="img" aria-label="">🚥</span>
       </FooterLine>
-      <FooterLine href="https://support.glitch.com" track="support forum">
-        Support Forum <span role="img" aria-label="">🚑</span>
-      </FooterLine>
       <FooterLine href="https://glitch.com/legal" track="legal stuff">
         Legal Stuff <span role="img" aria-label="">👮‍</span>
       </FooterLine>
       <hr/>
       <FooterLine href="https://glitch.com/forteams" track="platforms">
         <img className="for-platforms-icon" src={srcForPlatforms} alt=""/>
-        <span className="for-platforms-text">Glitch for Teams</span>
+        <span className="for-platforms-text">Glitch Teams</span>
       </FooterLine>
     </footer>
   );

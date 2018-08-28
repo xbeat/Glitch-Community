@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Circles and Circles of Calm',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcalm.jpg?1534158446323",
-    link: 'https://globeards.glitch.me/calm.html'
+    title: 'Gender Analyze Your Radio Station',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fradio-station-scraper.jpg?1535022650114",
+    link: 'https://glitch.com/~radio-station-scraper'
+  },{
+    title: 'Make Your Own Movie Poster',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmovieposters.jpg?1535368252714",
+    link: 'https://glitch.com/~movieposters'
   }, {
-    title: 'Z-O-M-B-I-E-S',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftaptyping-vr-sgi.jpg?1534158443471",
-    link: 'https://glitch.com/~taptyping-vr-sgi'
-  }, {
-    title: 'It\'s BOT LIFE Magazine!',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fbotlifemagazine.jpg?1534158441847",
-    link: 'https://glitch.com/edit/#!/botlifemagazine'
+    title: 'Reader View, Everywhere',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Freader-view.jpg?1535368251978",
+    link: 'https://glitch.com/~legend-football'
   }  
 ];

@@ -58,19 +58,19 @@ class TeamAnalytics extends React.Component {
       isGettingData: true,
       isGettingC3: true,
       totalRemixes: 0,
-      uniqueAppViews: 0,
+      totalAppViews: 0,
     };
   }
 
   updateTotals() {
-    let uniqueAppViews = 0;
+    let totalAppViews = 0;
     let totalRemixes = 0;
     this.state.analytics.buckets.forEach(bucket => {
-      uniqueAppViews += bucket.analytics.uniqueIps;
+      totalAppViews += bucket.analytics.requests;
       totalRemixes += bucket.analytics.remixes;
     });
     this.setState({
-      uniqueAppViews: uniqueAppViews,
+      totalAppViews: totalAppViews,
       totalRemixes: totalRemixes,
     });
   }
@@ -166,7 +166,7 @@ class TeamAnalytics extends React.Component {
             <Loader />
           ||
             <TeamAnalyticsSummary
-              uniqueAppViews = {this.state.uniqueAppViews}
+              totalAppViews = {this.state.totalAppViews}
               totalRemixes = {this.state.totalRemixes}
             />
           }
@@ -195,11 +195,11 @@ class TeamAnalytics extends React.Component {
             <TeamAnalyticsReferrers 
               analytics = {this.state.analytics}
               totalRemixes = {this.state.totalRemixes}
-              uniqueAppViews = {this.state.uniqueAppViews}
+              totalAppViews = {this.state.totalAppViews}
             />
           }
         </section>
-
+                
         <section className="project-details">
           <h3>Project Details</h3>
           <TeamAnalyticsProjectPop
@@ -219,6 +219,14 @@ class TeamAnalytics extends React.Component {
             />
           }
         </section>
+
+        { this.props.projects.length > 0 &&
+          <section className="explanation">
+            <p>
+              Because Glitch doesn't inject code or cookies into your projects we don't collect the data required for unique app views. You can get uniques by adding Google Analytics to your project.
+            </p>
+          </section>
+        }
 
         { this.props.projects.length === 0 &&
           <aside className="inline-banners add-project-to-analytics-banner">

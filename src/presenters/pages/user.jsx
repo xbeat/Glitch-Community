@@ -76,7 +76,7 @@ const UserPage = ({
         avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null }
       >
         <NameAndLogin
-          {...{name, login, id, isAuthorized, updateName}}
+          {...{name, login, isAuthorized, updateName}}
           updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
         />
         <Thanks count={thanksCount}/>

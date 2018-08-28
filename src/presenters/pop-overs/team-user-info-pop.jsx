@@ -23,35 +23,6 @@ RemoveFromTeam.propTypes = {
 };
 
 
-// User Actions Section
-
-const UserActions = ({user}) => {
-
-  let backgroundColor = () => {
-    return {backgroundColor: user.color};
-  };
-  
-  return (
-    <section className="pop-over-actions user-actions">
-      <a href={getLink(user)}>
-        <button className="button-small has-emoji button-tertiary">
-          <span>Profile </span>
-          <img className="emoji avatar" src={getAvatarThumbnailUrl(user)} alt={user.login} style={backgroundColor()}></img>
-        </button>
-      </a>
-    </section>
-  );
-};
-
-UserActions.propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    avatarThumbnailUrl: PropTypes.string,
-    login: PropTypes.string,
-  }).isRequired,
-};
-
-
 // Admin Actions Section ⏫⏬
 
 const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
@@ -122,7 +93,7 @@ export default class TeamUserInfoPop extends React.Component {
     const canRemoveUser = this.props.currentUserIsTeamAdmin || (currentUser && currentUser.id === user.id);
     return (
       <dialog className="pop-over team-user-info-pop">
-        <section className="pop-over-info">
+        <section className="pop-over-info user-info">
           <a href={getLink(this.props.user)}>
             <img className="avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
           </a>
@@ -141,7 +112,6 @@ export default class TeamUserInfoPop extends React.Component {
           </div>
         </section>
         { this.props.user.thanksCount > 0 && <ThanksCount count={this.props.user.thanksCount} /> }
-        <UserActions user={this.props.user} />
         { this.props.currentUserIsTeamAdmin &&
           <AdminActions 
             user={this.props.user}
