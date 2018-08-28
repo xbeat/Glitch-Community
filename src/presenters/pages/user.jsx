@@ -86,8 +86,7 @@ const UserPage = ({
       </ProfileContainer>
     </section>
     {/* Dummy section for collections */}
-    <EntityPageCollections
-    />
+    
     <EntityPageProjects
       projects={projects} 
       pins={pins} 
