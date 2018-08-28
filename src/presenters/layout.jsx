@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EasterEgg from 'react-easter-egg';
 import {Redirect} from 'react-router-dom';
 
+import Konami from './includes/konami.jsx';
 import Header from './header.jsx';
 import Footer from './footer.jsx';
 
