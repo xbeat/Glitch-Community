@@ -1,16 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import KonamiUtil from 'react-konami';
+import ReactKonami from 'react-konami';
 
-class Konami extends React.Component() {
-  
-  
+// Usage:
+// <Konami>
+//   Inner part will render once konami code is entered.
+// </Konami>
+
+export default class Konami extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {active: false};
+  }
   
   render() {  
     return (
-      <KonamiUtil easterEgg={()=>this.setState({s}/>
+      <React.Fragment>
+        <ReactKonami easterEgg={()=>this.setState({active: true})}/>
+        { !!this.state.active && this.props.children }
+      </React.Fragment>
     );
   }
 }
 
-export default Konami;
+Konami.propTypes = {
+  children: PropTypes.node.isRequired,
+};
