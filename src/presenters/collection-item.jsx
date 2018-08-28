@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getAvatarUrl, getLink} from '../models/project.js';
+import {getAvatarUrl, getLink} from '../models/collection.js';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
-import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
+// import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
-export const ProjectItem = ({project, categoryColor, projectOptions}) => {
+export const CollectionItem = ({collection, collectionColor, projectOptions}) => {
   return (
     <li>
-      <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
-      <ProjectOptionsContainer project={project} projectOptions={projectOptions}></ProjectOptionsContainer>
+      <UsersList glitchTeam={collection.showAsGlitchTeam} users={collection.users} extraClass="single-line"/>
+      {/* TO DO: add options for collections */}
+      {/* <ProjectOptionsContainer project={project} projectOptions={projectOptions}></ProjectOptionsContainer> */}
 
-      <a href={getLink(project.domain)}>
-        <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
-          style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
+      <a href={getLink(collection.users[0], collection.domain)}>
+        <div className={['collection'].join(' ')} 
+          style={{backgroundColor: collectionColor, borderBottomColor:categoryColor}}
           data-track="project" data-track-label={project.domain}>
           <div className="project-container">
             <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
