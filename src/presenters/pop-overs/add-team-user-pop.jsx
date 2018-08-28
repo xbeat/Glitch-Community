@@ -108,16 +108,19 @@ class AddTeamUserPop extends React.Component {
           />
         </section>
         {!!query && (
+            results.length ? (
           <section className="pop-over-actions last-section results-list">
-            {results.length ? (
               <ul className="results">
                 {results.map(({key, item}) => <li key={key}>{item}</li>)}
               </ul>
-            ) : (maybeResults &&
-              <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>
-            )}
             {isLoading && <Loader />}
           </section>
+            ) : (
+          <section className="pop-over-actions last-section">
+                {isLoading
+              <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>
+             </section>
+            )
         )}
         {!query && setWhitelistedDomain && (
           <aside className="pop-over-info">
