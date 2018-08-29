@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getDisplayName} from '../../models/user';
+//import {getDisplayName} from '../../models/user';
 import {WhitelistedDomainIcon} from './team-elements.jsx';
 import AddTeamUserPop from '../pop-overs/add-team-user-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
@@ -90,16 +90,16 @@ export class AddTeamUser extends React.Component {
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
   
-  setWhitelistedDomain(togglePopover, domain) {
+  async setWhitelistedDomain(togglePopover, domain) {
     togglePopover();
-    this.props.setWhitelistedDomain(domain);
+    await this.props.setWhitelistedDomain(domain);
   }
   
   async inviteUser(togglePopover, user) {
     togglePopover();
     await this.props.inviteUser(user);
     this.setState({
-      invitee: getDisplayName(user),
+      invitee: '', //getDisplayName(user),
     });
   }
   
@@ -131,7 +131,7 @@ export class AddTeamUser extends React.Component {
             {visible && 
               <AddTeamUserPop 
                 {...this.props}
-                setWhitelistedDomain={domain => this.setWhitelistedDomain(togglePopover, domain)}
+                setWhitelistedDomain={this.props.setWhitelistedDomain ? domain => this.setWhitelistedDomain(togglePopover, domain) : null}
                 inviteUser={user => this.inviteUser(togglePopover, user)}
                 inviteEmail={email => this.inviteEmail(togglePopover, email)}
               />
