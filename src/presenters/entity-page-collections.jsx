@@ -44,7 +44,7 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, pr
     <React.Fragment>
       {console.log(JSON.stringify(recentProjects))}
       {!!recentProjects.length && (
-        <CollectionsList title="Recent Collections" projects={recentProjects.slice(0,3)}
+        <CollectionsList title="Collections" projects={recentProjects.slice(0,3)}
           projectOptions={isAuthorized ? {addPin, ...projectOptions} : {}}
         />
       )}

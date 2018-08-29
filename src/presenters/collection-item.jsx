@@ -36,7 +36,7 @@ export const CollectionItem = ({project, categoryColor, projectOptions}) => {
             </div>
             
             <div className="projects-preview">
-              <div className="project-container" style={{borderBottom: '1px solid' + randomColor}}>
+              <div className="project-container">
                 <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
                 <div className="project-name">{project.domain}</div>
               </div>
