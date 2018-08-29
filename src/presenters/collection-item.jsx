@@ -20,7 +20,7 @@ export const CollectionItem = ({project, categoryColor, projectOptions}) => {
           <div className="collection-container">
             <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
             <div className="collection-info">
-              <div className="button">
+              <div className="button helloWorld">
                 <span className="project-badge private-project-badge" aria-label="private"></span>
                 <div className="project-name">{project.domain}</div>
               </div>
