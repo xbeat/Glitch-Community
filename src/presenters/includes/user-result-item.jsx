@@ -19,7 +19,7 @@ const UserResultItem = ({user, action}) => {
       <img className="avatar" src={getAvatarThumbnailUrl(user)} alt=""/>
       <div className="result-name" title={name}>{name}</div>
       {!!user.name && <div className="result-description">@{login}</div>}
-      {thanksCount > 0 && <div className="result-description"><ThanksShort count={thanksCount} /></div>}
+      {thanksCount > 0 && <ThanksShort count={thanksCount} />}
     </button>
   );
 };

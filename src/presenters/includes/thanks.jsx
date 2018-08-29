@@ -24,13 +24,13 @@ Thanks.propTypes = {
   count: PropTypes.number.isRequired,
 };
 
-const ThanksShort = ({count}) => (count > 0 ? (
-  <span className="thanks">
+const ThanksShort = ({count}) => (
+  <p className="thanks">
     <span className="emoji sparkling_heart" />
     &nbsp;
     {count}
-  </span>
-) : null);
+  </p>
+);
 ThanksShort.propTypes = {
   count: PropTypes.number.isRequired,
 };
