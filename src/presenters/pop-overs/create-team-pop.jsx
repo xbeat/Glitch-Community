@@ -84,7 +84,7 @@ class CreateTeamPop extends React.Component {
   
   randomDescription() {
     let adjectives = _.sampleSize(this.descriptiveAdjectives(), 2);
-    return `A ${adjectives[0]} ${_.sample(this.teamSynonyms())} that makes ${adjectives[1]} things`;
+    return `A ${adjectives[0]} team that makes ${adjectives[1]} things`;
   }
   
   randomName() {
@@ -108,7 +108,6 @@ class CreateTeamPop extends React.Component {
   }
   
   handleChange(newValue) {
-    console.log ('🚓', newValue)
     let url = _.kebabCase(newValue)
     this.setState({
       teamName: newValue, 
@@ -168,7 +167,7 @@ class CreateTeamPop extends React.Component {
               value={this.state.teamName}
               update={this.handleChange}
               placeholder='Your Team Name'
-              submitError={this.state.error}
+              error={this.state.error}
             />
             <p className="action-description team-url-preview">
             /@{this.state.teamUrl}
