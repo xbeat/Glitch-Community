@@ -82,9 +82,9 @@ class CreateTeamPop extends React.Component {
       teamUrl: _.kebabCase(newValue),
       errorMessage: "",
     });
-    this.props.api().get(`teams/byUrl/${this.state.teamUrl}`)
+    this.props.api.get(`teams/byUrl/${this.state.teamUrl}`)
     .then (response => {
-      console.log ('🌎',response)
+      console.log ('🌎',response) // if data is null then name is available
     })
     
   }
