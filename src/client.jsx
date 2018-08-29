@@ -7,6 +7,8 @@ import {render} from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import App from './app.jsx';
 
+console.log('debugger?')
+  debugger;
 var passed = false;
 try {
   /* eslint-disable no-unused-vars */
