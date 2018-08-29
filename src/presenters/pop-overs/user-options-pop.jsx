@@ -57,13 +57,11 @@ CreateTeamButton.propTypes = {
 
 // Team List
 
-const TeamList = ({teams, /*toggleCreateTeamPop, userIsAnon*/}) => {
+const TeamList = ({teams, toggleCreateTeamPop, userIsAnon}) => {
   // const hasTeams = teams && teams.length;
   return (!!teams.length &&
     <section className="pop-over-actions">
-      {/* Temporary: enable once team creation is public
       <CreateTeamButton toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
-      */}
       {teams.map((team) => (
         <TeamButton key={team.name} {...team}/>
       ))}
