@@ -8,58 +8,29 @@ import ProjectsLoader from './projects-loader.jsx';
 
 /* globals Set */
 
-const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
+// const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, projectOptions, reloadProject}) => {
-  const pinnedSet = new Set(pins.map(({projectId}) => projectId));
-  const [pinnedProjects, recentProjects] = _.partition(projects, ({id}) => pinnedSet.has(id));
+const EntityPageCollections = ({collections}) => {
   
-  const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
-  
-  const pinnedTitle = (
-    <React.Fragment>
-      Pinned Projects
-      <span className="emoji pushpin emoji-in-title"></span>
-    </React.Fragment>
-  );
-  
-  const pinnedEmpty = (
-    <React.Fragment>
-      <img className="psst" src={psst} alt="psst"></img>
-      <p>
-        Pin your projects to show them off
-        <span className="emoji pushpin"></span>
-      </p>
-    </React.Fragment>
-  );
-  
-  projectOptions = _.mapValues(projectOptions, function(projectOption) {
-    return async (projectId, userId) => {
-      await projectOption(projectId, userId);
-      reloadProject(projectId);
-    };
-  });
+  // projectOptions = _.mapValues(projectOptions, function(projectOption) {
+  //   return async (projectId, userId) => {
+  //     await projectOption(projectId, userId);
+  //     reloadProject(projectId);
+  //   };
+  // });
 
   return (
     <React.Fragment>
-      {console.log(JSON.stringify(recentProjects))}
-      {!!recentProjects.length && (
-        <CollectionsList title="Collections" projects={recentProjects.slice(0,3)}
-          projectOptions={isAuthorized ? {addPin, ...projectOptions} : {}}
-        />
+      {console.log(JSON.stringify(collections))}
+      {!!collections.length && (
+        <CollectionsList title="Collections" projects={collections.slice(0,3) api={api}}/>
       )}
     </React.Fragment>
   );
 };
-EntityPageProjects.propTypes = {
-  isAuthorized: PropTypes.bool.isRequired,
-  projects: PropTypes.array.isRequired,
-  pins: PropTypes.arrayOf(PropTypes.shape({
-    projectId: PropTypes.string.isRequired,
-  }).isRequired).isRequired,
-  addPin: PropTypes.func.isRequired,
-  removePin: PropTypes.func.isRequired,
-  projectOptions: PropTypes.object.isRequired,
+EntityPageCollections.propTypes = {
+  collections: PropTypes.array.isRequired,
+  
 };
 
 const EntityPageProjectsContainer = ({api, projects, ...props}) => (

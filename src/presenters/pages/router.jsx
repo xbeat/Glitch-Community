@@ -15,6 +15,7 @@ import ProjectPage from './project.jsx';
 import {TeamPage, UserPage, TeamOrUserPage} from './team-or-user.jsx';
 import SearchPage from './search.jsx';
 import CategoryPage from './category.jsx';
+import CollectionPage from './collection.jsx';
 import ErrorPage from './error.jsx';
 
 const NotFoundPage = () => (

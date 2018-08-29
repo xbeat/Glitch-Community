@@ -14,6 +14,8 @@ import EntityPageProjects from '../entity-page-projects.jsx';
 import EntityPageCollections from '../entity-page-collections.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
+import categories from '../curated/categories.js';
+
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
 }
@@ -88,16 +90,8 @@ const UserPage = ({
     {/* Dummy section for collections */}
     
     <EntityPageCollections
-      projects={projects} 
-      pins={pins} 
-      isAuthorized={isAuthorized}
       api={api} 
-      addPin={addPin} 
-      removePin={removePin}
-      projectOptions={{
-        leaveProject, 
-        deleteProject
-      }}
+      collections={categories}
     />
     
     <EntityPageProjects
