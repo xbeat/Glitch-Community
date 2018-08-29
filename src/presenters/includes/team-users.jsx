@@ -90,25 +90,19 @@ export class AddTeamUser extends React.Component {
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
   
-  async setWhitelistedDomain(togglePopover, domain) {
-    togglePopover();
-    await this.props.setWhitelistedDomain(domain);
-  }
-  
-  async inviteUser(togglePopover, user) {
-    togglePopover();
-    await this.props.inviteUser(user);
-    this.setState({
-      invitee: '', //getDisplayName(user),
-    });
-  }
-  
-  async inviteEmail(togglePopover, email) {
-    togglePopover();
-    await this.props.inviteEmail(email);
-    this.setState({
-      invitee: email,
-    });
+  wrapFunction(togglePopover, func, invitee) {
+    if (!func) {
+      return null;
+    }
+    return async (...args) => {
+      togglePopover();
+      await func(...args);
+      if (invitee) {
+        this.setState({
+          invitee: invitee(...args),
+        });
+      }
+    };
   }
 
   removeNotifyInvited() {
@@ -131,9 +125,9 @@ export class AddTeamUser extends React.Component {
             {visible && 
               <AddTeamUserPop 
                 {...this.props}
-                setWhitelistedDomain={this.props.setWhitelistedDomain ? domain => this.setWhitelistedDomain(togglePopover, domain) : null}
-                inviteUser={user => this.inviteUser(togglePopover, user)}
-                inviteEmail={email => this.inviteEmail(togglePopover, email)}
+                setWhitelistedDomain={this.wrapFunction(togglePopover, this.props.setWhitelistedDomain)}
+                inviteUser={this.wrapFunction(togglePopover, this.props.inviteUser)}
+                inviteEmail={this.wrapFunction(togglePopover, this.props.inviteEmail, email => email)}
               />
             }
           </span>
