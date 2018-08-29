@@ -104,6 +104,7 @@ class CreateTeamPop extends React.Component {
   }
 
   ComponentDidMount() {
+    console.log ('🌹')
     let initialName = this.randomName()
     this.setState({
       teamName: initialName,
