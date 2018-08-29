@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
+import ProjectModel from '../models/project';
 import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
-import Loader, {DataLoader} from '../includes/loader.jsx';
+import Loader, {DataLoader} from './includes/loader.jsx';
 import {getAvatarUrl, getLink} from '../models/project.js';
 
 const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163,187,0.40)", "rgba(251,160,88,0.40)", "rgba(252,243,175,0.40)", "rgba(48,220,166,0.40)", 
@@ -69,7 +70,7 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
             
             
             
-            {/* DUMMY PROJECTS DATA */}
+            {/* DUMMY PROJECTS DATA 
             <div className="projects-preview">
               <div className="project-container">
                 <img className="avatar" src={collection.avatarUrl}/>
@@ -87,12 +88,14 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
               </div>
 
             </div>
+            */}
             
             <div className="collection-link">
               <a href="#">
                 View all {Math.floor(Math.random() * 10)+3} projects →
               </a>            
             </div>
+            
             
           </div>
         </div>

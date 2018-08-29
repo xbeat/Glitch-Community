@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CollectionItem from "./collection-item.jsx";
 
-export const CollectionsList = ({title, collections, placeholder, projectOptions}) => (
+export const CollectionsList = ({title, collections, placeholder, projectOptions, api}) => (
   <article className="collections">
     <h2>{title}</h2>
 
@@ -10,7 +10,7 @@ export const CollectionsList = ({title, collections, placeholder, projectOptions
       <div className="placeholder">{placeholder}</div>
     )}
 
-    <CollectionsUL {...{collections, projectOptions}}></CollectionsUL>
+    <CollectionsUL {...{collections, projectOptions, api}}></CollectionsUL>
 
   </article>
 );
@@ -22,17 +22,18 @@ CollectionsList.propTypes = {
   api: PropTypes.func.isRequired
 };
 
-export const CollectionsUL = ({collections, projectOptions, categoryColor}) => {
+export const CollectionsUL = ({collections, projectOptions, categoryColor, api}) => {
   return (
     <ul className="collections-container">
       { collections.map(collection => (
-        <CollectionItem key={collection.id} collection={collection}></CollectionItem>
+        <CollectionItem key={collection.id} collection={collection} api={api}></CollectionItem>
       ))}
     </ul>
   );
 };
 
 CollectionsUL.propTypes = {
+  api: PropTypes.func.isRequired,
   collections: PropTypes.array.isRequired,
 };
 
