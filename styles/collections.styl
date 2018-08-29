@@ -85,15 +85,14 @@ collection-avatar-size = 80px
   .collection
     margin-top: 6px
     font-size: 0.9rem
-    background-color: section-line
-    border-bottom-color: section-line
+    background-color: rgba(103,190,255,0.40)
+    border-bottom-color: rgba(103,190,255,0.40)
     border-radius: 5px
     width: 100%
     padding-bottom: 1.5rem
     height: 250px
     position: relative
     transition: 0.1s all
-    cursor: pointer
     overflow: visible
     &:hover
       .button
@@ -122,7 +121,7 @@ collection-avatar-size = 80px
 
     .collection-container
       overflow: hidden
-      height: calc(100% + 12px)
+      height: calc(100% + 30px)
 
     .collection-info
       display: flex
@@ -160,7 +159,6 @@ collection-avatar-size = 80px
       opacity: .6
       border-bottom-left-radius: 5px
       border-bottom-right-radius: 5px
-      background-color: section-line
 
     .private-project-badge
       display: none
@@ -176,14 +174,19 @@ collection-avatar-size = 80px
     .projects-preview
       background-color: rgba(255,255,255,0.8)
       .project-container
-        padding: 5px 15px
-        border-bottom: 1px solid secondary
+        padding: 7px 15px
+        border-bottom: 1px solid rgba(103,190,255,0.40)
         .avatar
-          width: 25px;
-          height: 25px;
+          width: 25px
+          height: 25px
         .project-name
           margin-top: 5px
           margin-left: 5px
+          
+    .collection-link
+      padding: 7px 12px
+      font-weight: 600
+      font-size: 13px
 
 .project-badge
   display: inline-block

@@ -13,7 +13,6 @@ export const CollectionItem = ({project, categoryColor, projectOptions}) => {
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
       <ProjectOptionsContainer project={project} projectOptions={projectOptions}></ProjectOptionsContainer>
 
-      <a href={getLink(project.domain)}>
         <div className={['collection', project.private ? 'private-project' : ''].join(' ')} 
           style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
           data-track="project" data-track-label={project.domain}>
@@ -38,23 +37,29 @@ export const CollectionItem = ({project, categoryColor, projectOptions}) => {
                 <div className="project-name">{project.domain}</div>
               </div>
 
-            <div className="projects-preview">
-              <div className="project-container">
-                <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
-                <div className="project-name">{project.domain}</div>
+              <div className="projects-preview">
+                <div className="project-container">
+                  <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
+                  <div className="project-name">{project.domain}</div>
+                </div>
+              </div>
+
+              <div className="projects-preview">
+                <div className="project-container">
+                  <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
+                  <div className="project-name">{project.domain}</div>
+                </div>
               </div>
             </div>
-
-            <div className="projects-preview">
-              <div className="project-container">
-                <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
-                <div className="project-name">{project.domain}</div>
-              </div>
+            
+            <div className="collection-link">
+              <a href="#">
+                View all {Math.floor(Math.random() * 10)+3} projects →
+              </a>            
             </div>
             
           </div>
         </div>
-      </a>
     </li>
   );
 };
