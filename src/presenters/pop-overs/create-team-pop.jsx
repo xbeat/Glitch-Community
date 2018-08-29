@@ -4,7 +4,7 @@ import _ from 'lodash';
 import Loader from '../includes/loader.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
 
-let initialTeamName = ''
+// let initialTeamName = ''
 const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another"
 
 class CreateTeamPop extends React.Component {
@@ -12,11 +12,11 @@ class CreateTeamPop extends React.Component {
     // initialTeamName = this.randomName()
     super(props);
     this.state = {
-      initialTeamName: this.randomName(),
-      teamName: initialTeamName,
+      // initialTeamName: this.randomName(),
+      teamName: '',
       teamUrl: '',
       isLoading: false,
-      errorMessage: ''
+      error: ''
     };
 
     // initialTeamName = this.randomName()
@@ -79,6 +79,7 @@ class CreateTeamPop extends React.Component {
   }
   
   componentDidMount() {
+    let initialTeamName = this.randomName()
     this.setState({
       teamName: initialTeamName,
       teamUrl: _.kebabCase(initialTeamName),
@@ -100,11 +101,11 @@ class CreateTeamPop extends React.Component {
     .then (({data}) => {
       if (data) {
         this.setState({
-          errorMessage: TEAM_ALREADY_EXISTS_ERROR
+          error: TEAM_ALREADY_EXISTS_ERROR
         })
       } else {
         this.setState({
-          errorMessage: ""
+          error: ""
         })
       }
     })
@@ -114,7 +115,7 @@ class CreateTeamPop extends React.Component {
     this.setState({
       teamName: newValue, 
       teamUrl: _.kebabCase(newValue),
-      errorMessage: "",
+      error: "",
     });
     this.isTeamUrlAvailable()
   }
@@ -139,7 +140,7 @@ class CreateTeamPop extends React.Component {
       }).catch (error => {
         this.setState({
           isLoading: false,
-          errorMessage: TEAM_ALREADY_EXISTS_ERROR,
+          error: TEAM_ALREADY_EXISTS_ERROR,
         });
       });
   }
@@ -167,10 +168,10 @@ class CreateTeamPop extends React.Component {
         <section className="pop-over-actions">  
           <form onSubmit={this.handleSubmit}>
             <PureEditableField
-              value={this.state.initialTeamName}
+              value={this.state.teamName}
               update={this.handleChange}
               placeholder='Your Team Name'
-              submitError={this.state.errorMessage}
+              submitError={this.state.error}
             />
             <p className="action-description team-url-preview">
             /@{this.state.teamUrl}
