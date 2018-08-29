@@ -4,46 +4,9 @@ import _ from 'lodash';
 import Loader from '../includes/loader.jsx';
 import EditableField from '../includes/editable-field.jsx';
 
-const DESCRIPTIVE_ADJECTIVES = [
-  'charming',
-  'bold',
-  'brave',
-  'cool',
-  'docile',
-  'dope',
-  'faithful',
-  'fertile',
-  'fervent',
-  'forgiving',
-  'genial',
-  'genteel',
-  'grouchy',
-  'hopeful',
-  'humane',
-  'jolly',
-  'joyful',
-  'loving',
-  'magical',
-  'moral',
-  'mysterious',
-  'notorious',
-  'passionate',
-  'preposterous',
-  'quaint',
-  'quirky',
-  'scrumptious',
-  'sensitive',
-  'sober',
-  'tropical',
-  'woeful',
-  'whimsical',
-  'zealous',
-];
-
 class CreateTeamPop extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       teamName: 'Team Rocket',
       teamUrl: 'team-rocket',
@@ -56,15 +19,54 @@ class CreateTeamPop extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  descriptiveAdjectives() { 
+    return [
+      'charming',
+      'bold',
+      'brave',
+      'cool',
+      'docile',
+      'dope',
+      'faithful',
+      'fertile',
+      'fervent',
+      'forgiving',
+      'genial',
+      'genteel',
+      'grouchy',
+      'hopeful',
+      'humane',
+      'jolly',
+      'joyful',
+      'loving',
+      'magical',
+      'moral',
+      'mysterious',
+      'notorious',
+      'passionate',
+      'preposterous',
+      'quaint',
+      'quirky',
+      'scrumptious',
+      'sensitive',
+      'sober',
+      'tropical',
+      'woeful',
+      'whimsical',
+      'zealous',
+    ];
+  }
+
   randomDescription() {
-    let adjectives = _.sampleSize(DESCRIPTIVE_ADJECTIVES, 2);
+    let adjectives = _.sampleSize(this.descriptiveAdjectives(), 2);
     return `A ${adjectives[0]} team that makes ${adjectives[1]} things`;
   }
   
   randomName() {
-    return ``
+    // let adjective = _.sample(this.descriptiveAdjectives())
+    // return `${_.capitalize(adjective)} Team`
+    return 'hi'
   }
-
   
   handleChange(newValue) {
     this.setState({
@@ -102,6 +104,14 @@ class CreateTeamPop extends React.Component {
       });
   }
 
+  // ComponentDidMount() {
+  //   let initialName = this.randomName()
+  //   this.setState({
+  //     teamName: initialName,
+  //     teamUrl: _.kebabCase(initialName),
+  //   })
+  // }
+  
   render() {
     return (
       <dialog className="pop-over create-team-pop">
