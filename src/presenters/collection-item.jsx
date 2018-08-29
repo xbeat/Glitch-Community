@@ -10,22 +10,21 @@ import Loader, {DataLoader} from '../includes/loader.jsx';
 const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163,187,0.40)", "rgba(251,160,88,0.40)", "rgba(252,243,175,0.40)", "rgba(48,220,166,0.40)", 
                "rgba(103,190,255,0.40)", "rgba(201,191,244,0.40)"];
 
+const ProjectsPreview = ({projects, ...props}) => (
+  <div className="projects-preview" projects={projects}>
+    {projects => 
+      <div className="project-container">
+      </div
+    }
+  </div>
+);
+ProjectsPreview.propTypes = {
+  projects: PropTypes.any.isRequired
+};
+
+
 export const CollectionItem = ({collection, categoryColor, projectOptions, api}) => {
   let randomColor = colors[Math.floor(Math.random() * colors.length)];
-  
-   <DataLoader
-    get={() => loadCategory(api, collection.id)}
-    renderLoader={() => <Loader/>}
-    renderError={() => <CategoryPageError category={category} {...props}/>}
-  >
-    {category => (
-      <CategoryPageWrap category={category} {...props}>
-        <ProjectsLoader api={api} projects={category.projects}>
-          {projects => <ProjectsUL projects={projects} categoryColor={category.color}/>}
-        </ProjectsLoader>
-      </CategoryPageWrap>
-    )}
-  </DataLoader>
   
   return (
     <li>
@@ -50,6 +49,19 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
             </div>
             
             {/* LOAD PROJECTS IN COLLECTION HERE */}
+            <DataLoader
+              get={() => loadCategory(api, collection.id)}
+              renderLoader={() => <Loader />}
+               renderError={() => <div>Something went wrong. Try refreshing?</div>}
+            >
+              {category => (
+                <CategoryPageWrap category={category} {...props}>
+                  <ProjectsLoader api={api} projects={category.projects}>
+                    {projects => <ProjectsUL projects={projects} categoryColor={category.color}/>}
+                  </ProjectsLoader>
+                </CategoryPageWrap>
+              )}
+            </DataLoader>
             
             
             
