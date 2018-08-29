@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import TeamEditor from '../team-editor.jsx';
-import {getAvatarStyle, getProfileStyle} from '../../models/team';
+import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
+import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
@@ -22,6 +23,31 @@ import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reache
 const FREE_TEAM_PROJECTS_LIMIT = 5;
 const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533137032374";
 
+function syncPageToUrl(url) {
+  history.replaceState(null, null, getLink({url}));
+}
+
+const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
+  <React.Fragment>
+    <h1>
+      <EditableField
+        value={team.name}
+        update={updateName}
+        placeholder="What's its name?"
+        suffix={team.isVerified ? <VerifiedBadge/> : null}
+      />
+    </h1>
+    <p className="team-url">
+      <EditableField
+        value={team.url}
+        update={url => updateUrl(url).then(() => syncPageToUrl(url))}
+        placeholder="Short url?"
+        prefix="@"
+      />
+    </p>
+  </React.Fragment>
+);
+
 // Team Page
 
 class TeamPage extends React.Component {
@@ -32,7 +58,7 @@ class TeamPage extends React.Component {
   }
 
   projectLimitIsReached() {
-    if ((this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects && this.props.team.projects.length) >= FREE_TEAM_PROJECTS_LIMIT) {
+    if (this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects && (this.props.team.projects.length >= FREE_TEAM_PROJECTS_LIMIT)) {
       return true;
     }
     return false;
@@ -64,12 +90,14 @@ class TeamPage extends React.Component {
                 }
               /> : null
             }>
-            <h1>
-              { this.props.team.name }
-              { this.props.team.isVerified &&
-                <VerifiedBadge image={this.props.team.verifiedImage} tooltip={this.props.team.verifiedTooltip}/>
-              }
-            </h1>
+            {this.props.currentUserIsTeamAdmin ? (
+              <TeamNameUrlFields team={this.props.team} updateName={this.props.updateName} updateUrl={this.props.updateUrl}/>
+            ) : (
+              <React.Fragment>
+                <h1>{this.props.team.name} {this.props.team.isVerified && <VerifiedBadge/>}</h1>
+                <p className="team-url">@{this.props.team.url}</p>
+              </React.Fragment>
+            )}
             <div className="users-information">
               <TeamUsers {...this.props}
                 users={this.props.team.users}
@@ -212,6 +240,8 @@ TeamPage.propTypes = {
   removePin: PropTypes.func.isRequired,
   removeProject: PropTypes.func.isRequired,
   teamHasUnlimitedProjects: PropTypes.bool.isRequired,
+  updateName: PropTypes.func.isRequired,
+  updateUrl: PropTypes.func.isRequired,
   updateDescription: PropTypes.func.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
   uploadCover: PropTypes.func.isRequired,
