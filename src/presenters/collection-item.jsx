@@ -7,6 +7,10 @@ import {TruncatedMarkdown} from './includes/markdown.jsx';
 import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
+const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163,187,0.40)", "rgba(251,160,88,0.40)", "rgba(252,243,175,0.40)", "rgba(48,220,166,0.40)", 
+               "rgba(103,190,255,0.40)", "rgba(201,191,244,0.40)"];
+let randomColor = colors[Math.floor(Math.random() * colors.length)];
+
 export const CollectionItem = ({project, categoryColor, projectOptions}) => {
   return (
     <li>
@@ -14,7 +18,7 @@ export const CollectionItem = ({project, categoryColor, projectOptions}) => {
       <ProjectOptionsContainer project={project} projectOptions={projectOptions}></ProjectOptionsContainer>
 
         <div className={['collection', project.private ? 'private-project' : ''].join(' ')} 
-          style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
+          style={{backgroundColor: randomColor, borderBottomColor:randomColor}}
           data-track="project" data-track-label={project.domain}>
           <div className="collection-container">
             
@@ -28,28 +32,25 @@ export const CollectionItem = ({project, categoryColor, projectOptions}) => {
                 <div className="description"><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
               </div>
               
-              <div className="overflow-mask" style={{backgroundColor: categoryColor}}></div>
+              <div className="overflow-mask"></div>
             </div>
             
             <div className="projects-preview">
+              <div className="project-container" style={{borderBottom: '1px solid' + randomColor}}>
+                <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
+                <div className="project-name">{project.domain}</div>
+              </div>
+
               <div className="project-container">
                 <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
                 <div className="project-name">{project.domain}</div>
               </div>
 
-              <div className="projects-preview">
-                <div className="project-container">
-                  <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
-                  <div className="project-name">{project.domain}</div>
-                </div>
+              <div className="project-container">
+                <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
+                <div className="project-name">{project.domain}</div>
               </div>
 
-              <div className="projects-preview">
-                <div className="project-container">
-                  <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
-                  <div className="project-name">{project.domain}</div>
-                </div>
-              </div>
             </div>
             
             <div className="collection-link">
