@@ -18,8 +18,8 @@ const UserResultItem = ({user, action}) => {
     <button onClick={handleClick} className="button-unstyled result">
       <img className="avatar" src={getAvatarThumbnailUrl(user)} alt=""/>
       <div className="result-name" title={name}>{name}</div>
-      {!!user.name && <div className="result-description" title={login}>@{login}</div>}
-      {thanksCount > 0 && <ThanksShort count={thanksCount} />}
+      {!!user.name && <div className="result-description">@{login}</div>}
+      {thanksCount > 0 && <div className="result-description"><ThanksShort count={thanksCount} /></div>}
     </button>
   );
 };
