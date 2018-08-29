@@ -9,14 +9,17 @@ const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another"
 
 class CreateTeamPop extends React.Component {
   constructor(props) {
+    // initialTeamName = this.randomName()
     super(props);
     this.state = {
-      teamName: '',
+      initialTeamName: this.randomName(),
+      teamName: initialTeamName,
       teamUrl: '',
       isLoading: false,
       errorMessage: ''
     };
 
+    // initialTeamName = this.randomName()
     this.randomDescription = this.randomDescription.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -142,7 +145,7 @@ class CreateTeamPop extends React.Component {
   }
   
   render() {
-    initialTeamName = this.randomName()
+    // initialTeamName = this.randomName()
     return (
       <dialog className="pop-over create-team-pop">
         <section className="pop-over-info clickable-label" onClick={() => this.props.toggleUserOptionsPop()}>
@@ -164,7 +167,7 @@ class CreateTeamPop extends React.Component {
         <section className="pop-over-actions">  
           <form onSubmit={this.handleSubmit}>
             <PureEditableField
-              value="Team Rocket"
+              value={this.state.initialTeamName}
               update={this.handleChange}
               placeholder='Your Team Name'
               submitError={this.state.errorMessage}
