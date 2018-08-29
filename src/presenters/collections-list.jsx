@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import CollectionItem from "./collection-item.jsx";
 
 export const CollectionsList = ({title, projects, placeholder, projectOptions}) => (
-  <article className="projects">
+  <article className="collections">
     <h2>{title}</h2>
 
     {!!(placeholder && !projects.length) && (
       <div className="placeholder">{placeholder}</div>
     )}
 
-    <ProjectsUL {...{projects, projectOptions}}></ProjectsUL>
+    <CollectionsUL {...{projects, projectOptions}}></CollectionsUL>
 
   </article>
 );
@@ -21,7 +21,7 @@ CollectionsList.propTypes = {
   placeholder: PropTypes.node,
 };
 
-export const ProjectsUL = ({projects, projectOptions, categoryColor}) => {
+export const CollectionsUL = ({projects, projectOptions, categoryColor}) => {
   return (
     <ul className="collections-container">
       { projects.map(project => (
@@ -31,7 +31,7 @@ export const ProjectsUL = ({projects, projectOptions, categoryColor}) => {
   );
 };
 
-ProjectsUL.propTypes = {
+CollectionsUL.propTypes = {
   projects: PropTypes.array.isRequired,
 };
 
