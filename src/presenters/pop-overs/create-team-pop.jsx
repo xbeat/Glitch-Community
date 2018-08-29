@@ -5,6 +5,7 @@ import Loader from '../includes/loader.jsx';
 import EditableField from '../includes/editable-field.jsx';
 
 let initialTeamName = ''
+const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another"
 
 class CreateTeamPop extends React.Component {
   constructor(props) {
@@ -84,21 +85,25 @@ class CreateTeamPop extends React.Component {
   
   randomDescription() {
     let adjectives = _.sampleSize(this.descriptiveAdjectives(), 2);
-    return `A ${adjectives[0]} team that makes ${adjectives[1]} things`;
+    return `A ${adjectives[0]} ${_.sample(this.teamSynonyms())} that makes ${adjectives[1]} things`;
   }
   
   randomName() {
     let adjective = _.sample(this.descriptiveAdjectives())
-    return `${_.capitalize(adjective)} ${this.teamSynonyms()}`
+    return `${_.capitalize(adjective)} ${_.sample(this.teamSynonyms())}`
   }
   
   isTeamUrlAvailable() {
     this.props.api.get(`teams/byUrl/${this.state.teamUrl}`)
     .then (({data}) => {
       if (data) {
-        console.log ('name is taken')
+        this.setState({
+          errorMessage: TEAM_ALREADY_EXISTS_ERROR
+        })
       } else {
-        console.log ('✅')
+        this.setState({
+          errorMessage: ""
+        })
       }
     })
   }
@@ -115,7 +120,7 @@ class CreateTeamPop extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
-    this.props.api().post(('teams'), {
+    this.props.api.post(('teams'), {
       name: this.state.teamName,
       url: this.state.teamUrl,
       hasAvatarImage: false,
@@ -130,12 +135,9 @@ class CreateTeamPop extends React.Component {
         this.setState({ isLoading: false });
         window.location = `/@${response.data.url}`;
       }).catch (error => {
-        let statusCode = error.response.data.status;
-        let message = error.response.data.message;
-        console.error(error, statusCode, message);
         this.setState({
           isLoading: false,
-          errorMessage: message,
+          errorMessage: TEAM_ALREADY_EXISTS_ERROR,
         });
       });
   }
@@ -156,7 +158,7 @@ class CreateTeamPop extends React.Component {
 
         <section className="pop-over-info">
           <p className="info-description">
-            Showcase your team's projects and manage project members
+            Showcase your projects in one place, manage collaborators, and view analytics
           </p>
         </section>
         
@@ -166,7 +168,6 @@ class CreateTeamPop extends React.Component {
               value={initialTeamName}
               update={this.handleChange} 
               placeholder='Your Team Name' 
-              //fieldOnlyUpdatesOnSubmit={true}
               submitError={this.state.errorMessage}
             />
             <p className="action-description team-url-preview">
