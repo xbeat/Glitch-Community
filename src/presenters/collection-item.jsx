@@ -14,7 +14,7 @@ import {getAvatarUrl, getLink} from '../models/project.js';
 const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163,187,0.40)", "rgba(251,160,88,0.40)", "rgba(252,243,175,0.40)", "rgba(48,220,166,0.40)", 
                "rgba(103,190,255,0.40)", "rgba(201,191,244,0.40)"];
 
-const ProjectsPreview = ({projects, projectOptions, categoryColor}) => {
+const ProjectsPreview = ({projects, projectOptions, categoryColor, collectionUrl}) => {
   return (
     <React.Fragment>
       <div className="projects-preview" projects={projects}>
@@ -26,7 +26,7 @@ const ProjectsPreview = ({projects, projectOptions, categoryColor}) => {
         )) }
       </div>
       <div className="collection-link">
-        <a href={category.url}>
+        <a href={collectionUrl}>
           View all {projects.length} projects →
         </a>            
     </div>
@@ -35,7 +35,8 @@ const ProjectsPreview = ({projects, projectOptions, categoryColor}) => {
 };
 
 ProjectsPreview.propTypes = {
-  projects: PropTypes.any.isRequired
+  projects: PropTypes.any.isRequired,
+  collectionUrl: PropTypes.string.isRequired
 };
 
 
@@ -54,10 +55,12 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
             <div className="collection-info">
               <img className="avatar" src={collection.avatarUrl}/>
               <div className="collection-name-description">
-                <div className="button helloWorld">
-                  <span className="project-badge private-project-badge" aria-label="private"></span>
-                  <div className="project-name">{collection.name}</div>
-                </div>
+                <a href={collection.url}>
+                  <div className="button helloWorld">
+                    <span className="project-badge private-project-badge" aria-label="private"></span>
+                    <div className="project-name">{collection.name}</div>
+                  </div>
+                </a>
                 <div className="description"><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
               </div>
               
@@ -70,9 +73,9 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
               renderLoader={() => <Loader />}
                renderError={() => <div>Something went wrong. Try refreshing?</div>}
             >
-              {category => (
-                <ProjectsLoader api={api} projects={category.projects}>
-                    {projects => <ProjectsPreview projects={category.projects} categoryColor={category.color}/>}
+              {collection => (
+                <ProjectsLoader api={api} projects={collection.projects}>
+                    {projects => <ProjectsPreview projects={collection.projects} categoryColor={collection.color} collectionUrl={collection.url}/>}
                 </ProjectsLoader>
               )}
             </DataLoader>
