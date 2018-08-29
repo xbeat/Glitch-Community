@@ -14,17 +14,19 @@ export const CollectionItem = ({project, categoryColor, projectOptions}) => {
       <ProjectOptionsContainer project={project} projectOptions={projectOptions}></ProjectOptionsContainer>
 
       <a href={getLink(project.domain)}>
-        <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
+        <div className={['collection', project.private ? 'private-project' : ''].join(' ')} 
           style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
           data-track="project" data-track-label={project.domain}>
-          <div className="project-container">
+          <div className="collection-container">
             <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
-            <div className="button">
-              <span className="project-badge private-project-badge" aria-label="private"></span>
-              <div className="project-name">{project.domain}</div>
+            <div className="collection-info">
+              <div className="button">
+                <span className="project-badge private-project-badge" aria-label="private"></span>
+                <div className="project-name">{project.domain}</div>
+              </div>
+              <div className="description"><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
+              <div className="overflow-mask" style={{backgroundColor: categoryColor}}></div>
             </div>
-            <div className="description"><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
-            <div className="overflow-mask" style={{backgroundColor: categoryColor}}></div>
           </div>
         </div>
       </a>
