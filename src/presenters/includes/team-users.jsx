@@ -90,19 +90,25 @@ export class AddTeamUser extends React.Component {
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
   
-  wrapFunction(togglePopover, func, invitee) {
-    if (!func) {
-      return null;
-    }
-    return async (...args) => {
-      togglePopover();
-      await func(...args);
-      if (invitee) {
-        this.setState({
-          invitee: invitee(...args),
-        });
-      }
-    };
+  async setWhitelistedDomain(togglePopover, domain) {
+    togglePopover();
+    await this.props.setWhitelistedDomain(domain);
+  }
+  
+  async inviteUser(togglePopover, user) {
+    togglePopover();
+    await this.props.inviteUser(user);
+    this.setState({
+      invitee: '', //getDisplayName(user),
+    });
+  }
+  
+  async inviteEmail(togglePopover, email) {
+    togglePopover();
+    await this.props.inviteEmail(email);
+    this.setState({
+      invitee: email,
+    });
   }
 
   removeNotifyInvited() {
@@ -112,6 +118,7 @@ export class AddTeamUser extends React.Component {
   }
 
   render() {
+    const {inviteEmail, inviteUser, setWhitelistedDomain, ...props} = this.props;
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
@@ -124,10 +131,10 @@ export class AddTeamUser extends React.Component {
             }
             {visible && 
               <AddTeamUserPop 
-                {...this.props}
-                setWhitelistedDomain={this.wrapFunction(togglePopover, this.props.setWhitelistedDomain)}
-                inviteUser={this.wrapFunction(togglePopover, this.props.inviteUser)}
-                inviteEmail={this.wrapFunction(togglePopover, this.props.inviteEmail, email => email)}
+                {...props}
+                setWhitelistedDomain={setWhitelistedDomain ? domain => this.setWhitelistedDomain(togglePopover, domain) : null}
+                inviteUser={inviteUser ? user => this.inviteUser(togglePopover, user) : null}
+                inviteEmail={inviteEmail ? email => this.inviteEmail(togglePopover, email) : null}
               />
             }
           </span>
