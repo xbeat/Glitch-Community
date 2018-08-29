@@ -58,7 +58,6 @@ const UserPage = ({
     avatarUrl, color,
     hasCoverImage, coverColor,
     pins, projects, _deletedProjects,
-    collections,
     _cacheCover,
   },
   api, isAuthorized,
