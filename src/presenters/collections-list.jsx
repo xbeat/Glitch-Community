@@ -19,13 +19,14 @@ CollectionsList.propTypes = {
   collections: PropTypes.array.isRequired,
   title: PropTypes.node.isRequired,
   placeholder: PropTypes.node,
+  api: PropTypes.func.isRequired
 };
 
 export const CollectionsUL = ({collections, projectOptions, categoryColor}) => {
   return (
     <ul className="collections-container">
-      { collections.map(project => (
-        <CollectionItem key={project.id} {...{project, projectOptions, categoryColor}}></CollectionItem>
+      { collections.map(collection => (
+        <CollectionItem key={collection.id} collection={collection}></CollectionItem>
       ))}
     </ul>
   );

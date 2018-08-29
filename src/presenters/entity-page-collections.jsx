@@ -10,7 +10,7 @@ import ProjectsLoader from './projects-loader.jsx';
 
 // const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-const EntityPageCollections = ({collections}) => {
+const EntityPageCollections = ({collections, api}) => {
   
   // projectOptions = _.mapValues(projectOptions, function(projectOption) {
   //   return async (projectId, userId) => {
@@ -23,20 +23,21 @@ const EntityPageCollections = ({collections}) => {
     <React.Fragment>
       {console.log(JSON.stringify(collections))}
       {!!collections.length && (
-        <CollectionsList title="Collections" projects={collections.slice(0,3) api={api}}/>
+        <CollectionsList title="Collections" collections={collections.slice(0,3)} api={api}/>
       )}
     </React.Fragment>
   );
 };
 EntityPageCollections.propTypes = {
   collections: PropTypes.array.isRequired,
-  
+  api: PropTypes.func.isRequired  
 };
 
-const EntityPageProjectsContainer = ({api, projects, ...props}) => (
-  <ProjectsLoader api={api} projects={projects}>
-    {(projects, reloadProject) => <EntityPageProjects projects={projects} reloadProject={reloadProject} {...props}/>}
-  </ProjectsLoader>
-);
+// const EntityPageProjectsContainer = ({api, projects, ...props}) => (
+//   <ProjectsLoader api={api} projects={projects}>
+//     {(projects, reloadProject) => <EntityPageProjects projects={projects} reloadProject={reloadProject} {...props}/>}
+//   </ProjectsLoader>
+// );
 
-export default EntityPageProjectsContainer;
+// export default EntityPageProjectsContainer;
+export default EntityPageCollections;

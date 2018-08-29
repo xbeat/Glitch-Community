@@ -14,7 +14,7 @@ import EntityPageProjects from '../entity-page-projects.jsx';
 import EntityPageCollections from '../entity-page-collections.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
-import categories from '../curated/categories.js';
+import categories from '../../curated/categories.js';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
