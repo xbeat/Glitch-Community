@@ -46,7 +46,6 @@ const CreateTeamButton = ({toggleCreateTeamPop, userIsAnon}) => {
       <span className="emoji herb"></span>
     </button>
   );
-
 };
 
 CreateTeamButton.propTypes = {
