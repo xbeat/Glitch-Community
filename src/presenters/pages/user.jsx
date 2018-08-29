@@ -88,7 +88,16 @@ const UserPage = ({
     {/* Dummy section for collections */}
     
     <EntityPageCollections
-      collections={collections}
+      projects={projects} 
+      pins={pins} 
+      isAuthorized={isAuthorized}
+      api={api} 
+      addPin={addPin} 
+      removePin={removePin}
+      projectOptions={{
+        leaveProject, 
+        deleteProject
+      }}
     />
     
     <EntityPageProjects
