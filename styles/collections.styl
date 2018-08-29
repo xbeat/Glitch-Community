@@ -89,7 +89,6 @@ collection-avatar-size = 80px
     border-bottom-color: section-line
     border-radius: 5px
     width: 100%
-    padding: 12px
     padding-bottom: 1.5rem
     height: 250px
     position: relative
@@ -126,7 +125,8 @@ collection-avatar-size = 80px
       height: calc(100% + 12px)
 
     .collection-info
-      display: flex;
+      display: flex
+      padding: 12px
       
     .collection-name-description
       margin-left: 15px
@@ -172,6 +172,18 @@ collection-avatar-size = 80px
         background-color: private
       .private-project-badge
         display: inline-block
+    
+    .projects-preview
+      background-color: rgba(255,255,255,0.8)
+      .project-container
+        padding: 5px 15px
+        border-bottom: 1px solid secondary
+        .avatar
+          width: 25px;
+          height: 25px;
+        .project-name
+          margin-top: 5px
+          margin-left: 5px
 
 .project-badge
   display: inline-block
