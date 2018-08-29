@@ -63,9 +63,8 @@ class CreateTeamPop extends React.Component {
   }
   
   randomName() {
-    // let adjective = _.sample(this.descriptiveAdjectives())
-    // return `${_.capitalize(adjective)} Team`
-    return 'hi'
+    let adjective = _.sample(this.descriptiveAdjectives())
+    return `${_.capitalize(adjective)} Team`
   }
   
   handleChange(newValue) {
@@ -104,13 +103,13 @@ class CreateTeamPop extends React.Component {
       });
   }
 
-  // ComponentDidMount() {
-  //   let initialName = this.randomName()
-  //   this.setState({
-  //     teamName: initialName,
-  //     teamUrl: _.kebabCase(initialName),
-  //   })
-  // }
+  ComponentDidMount() {
+    let initialName = this.randomName()
+    this.setState({
+      teamName: initialName,
+      teamUrl: _.kebabCase(initialName),
+    })
+  }
   
   render() {
     return (
