@@ -4,22 +4,18 @@ import _ from 'lodash';
 import Loader from '../includes/loader.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
 
-// let initialTeamName = ''
 const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another"
 
 class CreateTeamPop extends React.Component {
   constructor(props) {
-    // initialTeamName = this.randomName()
     super(props);
     this.state = {
-      // initialTeamName: this.randomName(),
       teamName: '',
       teamUrl: '',
       isLoading: false,
       error: ''
     };
 
-    // initialTeamName = this.randomName()
     this.randomDescription = this.randomDescription.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -96,8 +92,8 @@ class CreateTeamPop extends React.Component {
     return `${_.capitalize(adjective)} ${_.sample(this.teamSynonyms())}`
   }
   
-  isTeamUrlAvailable() {
-    this.props.api.get(`teams/byUrl/${this.state.teamUrl}`)
+  isTeamUrlAvailable(url) {
+    this.props.api.get(`teams/byUrl/${url}`)
     .then (({data}) => {
       if (data) {
         this.setState({
@@ -112,12 +108,14 @@ class CreateTeamPop extends React.Component {
   }
   
   handleChange(newValue) {
+    console.log ('🚓', newValue)
+    let url = _.kebabCase(newValue)
     this.setState({
       teamName: newValue, 
-      teamUrl: _.kebabCase(newValue),
+      teamUrl: url,
       error: "",
     });
-    this.isTeamUrlAvailable()
+    this.isTeamUrlAvailable(url)
   }
 
   handleSubmit(event) {
@@ -146,7 +144,6 @@ class CreateTeamPop extends React.Component {
   }
   
   render() {
-    // initialTeamName = this.randomName()
     return (
       <dialog className="pop-over create-team-pop">
         <section className="pop-over-info clickable-label" onClick={() => this.props.toggleUserOptionsPop()}>
