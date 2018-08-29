@@ -7,8 +7,6 @@ import {render} from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import App from './app.jsx';
 
-console.log('debugger?')
-  debugger;
 var passed = false;
 try {
   /* eslint-disable no-unused-vars */
@@ -23,7 +21,7 @@ try {
 } catch (error) {
   passed = false;
   Raven.captureException(error);
-  console.warn("Sorry, but your browser doesn't support recent JS features, so you're getting the barebones site");
+  console.warn("Sorry, but your browser doesn't support recent JS features. You're getting the barebones site");
 }
 
 if (passed) {
