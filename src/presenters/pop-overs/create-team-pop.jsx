@@ -4,6 +4,42 @@ import _ from 'lodash';
 import Loader from '../includes/loader.jsx';
 import EditableField from '../includes/editable-field.jsx';
 
+const DESCRIPTIVE_ADJECTIVES = [
+  'charming',
+  'bold',
+  'brave',
+  'cool',
+  'docile',
+  'dope',
+  'faithful',
+  'fertile',
+  'fervent',
+  'forgiving',
+  'genial',
+  'genteel',
+  'grouchy',
+  'hopeful',
+  'humane',
+  'jolly',
+  'joyful',
+  'loving',
+  'magical',
+  'moral',
+  'mysterious',
+  'notorious',
+  'passionate',
+  'preposterous',
+  'quaint',
+  'quirky',
+  'scrumptious',
+  'sensitive',
+  'sober',
+  'tropical',
+  'woeful',
+  'whimsical',
+  'zealous',
+];
+
 class CreateTeamPop extends React.Component {
   constructor(props) {
     super(props);
@@ -21,43 +57,12 @@ class CreateTeamPop extends React.Component {
   }
 
   randomDescription() {
-    let descriptiveAdjectives = [
-      'charming',
-      'bold',
-      'brave',
-      'cool',
-      'docile',
-      'dope',
-      'faithful',
-      'fertile',
-      'fervent',
-      'forgiving',
-      'genial',
-      'genteel',
-      'grouchy',
-      'hopeful',
-      'humane',
-      'jolly',
-      'joyful',
-      'loving',
-      'magical',
-      'moral',
-      'mysterious',
-      'notorious',
-      'passionate',
-      'preposterous',
-      'quaint',
-      'quirky',
-      'scrumptious',
-      'sensitive',
-      'sober',
-      'tropical',
-      'woeful',
-      'whimsical',
-      'zealous',
-    ];
-    let adjectives = _.sampleSize(descriptiveAdjectives, 2);
+    let adjectives = _.sampleSize(DESCRIPTIVE_ADJECTIVES, 2);
     return `A ${adjectives[0]} team that makes ${adjectives[1]} things`;
+  }
+  
+  randomName() {
+    return ``
   }
 
   
