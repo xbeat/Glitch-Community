@@ -76,7 +76,7 @@ module.exports = function() {
 
   app.get('*', (req, res) => {
     render(res,
-      "Glitch - The Friendly, Creative Community",
+      "Glitch - Discover and create the best stuff on the web",
       "The friendly community where you’ll build the app of your dreams");
   });
 
