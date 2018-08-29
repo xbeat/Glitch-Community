@@ -4,6 +4,8 @@ import _ from 'lodash';
 import Loader from '../includes/loader.jsx';
 import EditableField from '../includes/editable-field.jsx';
 
+let initialTeamName = ''
+
 class CreateTeamPop extends React.Component {
   constructor(props) {
     super(props);
@@ -58,11 +60,9 @@ class CreateTeamPop extends React.Component {
   }
 
   componentDidMount() {
-    console.log('🌹')
-    let initialName = this.randomName()
     this.setState({
-      teamName: initialName,
-      teamUrl: _.kebabCase(initialName),
+      teamName: initialTeamName,
+      teamUrl: _.kebabCase(initialTeamName),
     })
   }
   
@@ -82,6 +82,11 @@ class CreateTeamPop extends React.Component {
       teamUrl: _.kebabCase(newValue),
       errorMessage: "",
     });
+    this.props.api().get(`teams/byUrl/${this.state.teamUrl}`)
+    .then (response => {
+      console.log ('🌎',response)
+    })
+    
   }
   
   handleSubmit(event) {
@@ -98,7 +103,7 @@ class CreateTeamPop extends React.Component {
       hasCoverImage: false,
       isVerified: false,
     })
-      .then (response => {
+    .then (response => {
         this.setState({ isLoading: false });
         window.location = `/@${response.data.url}`;
       }).catch (error => {
@@ -113,6 +118,7 @@ class CreateTeamPop extends React.Component {
   }
   
   render() {
+    initialTeamName = this.randomName()
     return (
       <dialog className="pop-over create-team-pop">
         <section className="pop-over-info clickable-label" onClick={() => this.props.toggleUserOptionsPop()}>
@@ -134,7 +140,7 @@ class CreateTeamPop extends React.Component {
         <section className="pop-over-actions">  
           <form onSubmit={this.handleSubmit}>
             <EditableField 
-              value={this.state.teamName} 
+              value={initialTeamName}
               update={this.handleChange} 
               placeholder='Your Team Name' 
               //fieldOnlyUpdatesOnSubmit={true}
