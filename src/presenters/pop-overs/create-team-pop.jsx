@@ -40,10 +40,11 @@ class CreateTeamPop extends React.Component {
       'humane',
       'jolly',
       'joyful',
-      'loving',
+      'lunar',
       'magical',
       'moral',
       'mysterious',
+      'mystery',
       'notorious',
       'passionate',
       'preposterous',
@@ -59,6 +60,21 @@ class CreateTeamPop extends React.Component {
     ];
   }
 
+  teamSynonyms() {
+    return [
+      'team',
+      'group',
+      'collective',
+      'coven',
+      'squad',
+      'crew',
+      'party',
+      'troupe',
+      'band',
+      'posse',
+    ]
+  }
+  
   componentDidMount() {
     this.setState({
       teamName: initialTeamName,
@@ -73,7 +89,18 @@ class CreateTeamPop extends React.Component {
   
   randomName() {
     let adjective = _.sample(this.descriptiveAdjectives())
-    return `${_.capitalize(adjective)} Team`
+    return `${_.capitalize(adjective)} ${this.teamSynonyms()}`
+  }
+  
+  isTeamUrlAvailable() {
+    this.props.api.get(`teams/byUrl/${this.state.teamUrl}`)
+    .then (({data}) => {
+      if (data) {
+        console.log ('name is taken')
+      } else {
+        console.log ('✅')
+      }
+    })
   }
   
   handleChange(newValue) {
@@ -82,13 +109,9 @@ class CreateTeamPop extends React.Component {
       teamUrl: _.kebabCase(newValue),
       errorMessage: "",
     });
-    this.props.api.get(`teams/byUrl/${this.state.teamUrl}`)
-    .then (response => {
-      console.log ('🌎',response) // if data is null then name is available
-    })
-    
+    this.isTeamUrlAvailable()
   }
-  
+
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
