@@ -4,7 +4,7 @@ import _ from 'lodash';
 import Loader from '../includes/loader.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
 
-const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another";
+const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another"
 
 class CreateTeamPop extends React.Component {
   constructor(props) {
@@ -71,15 +71,15 @@ class CreateTeamPop extends React.Component {
       'troupe',
       'band',
       'posse',
-    ];
+    ]
   }
   
   componentDidMount() {
-    let initialTeamName = this.randomName();
+    let initialTeamName = this.randomName()
     this.setState({
       teamName: initialTeamName,
       teamUrl: _.kebabCase(initialTeamName),
-    });
+    })
   }
   
   randomDescription() {
@@ -88,33 +88,33 @@ class CreateTeamPop extends React.Component {
   }
   
   randomName() {
-    let adjective = _.sample(this.descriptiveAdjectives());
-    return `${_.capitalize(adjective)} ${_.sample(this.teamSynonyms())}`;
+    let adjective = _.sample(this.descriptiveAdjectives())
+    return `${_.capitalize(adjective)} ${_.sample(this.teamSynonyms())}`
   }
   
   isTeamUrlAvailable(url) {
     this.props.api.get(`teams/byUrl/${url}`)
-      .then (({data}) => {
-        if (data) {
-          this.setState({
-            error: TEAM_ALREADY_EXISTS_ERROR
-          });
-        } else {
-          this.setState({
-            error: ""
-          });
-        }
-      });
+    .then (({data}) => {
+      if (data) {
+        this.setState({
+          error: TEAM_ALREADY_EXISTS_ERROR
+        })
+      } else {
+        this.setState({
+          error: ""
+        })
+      }
+    })
   }
   
   handleChange(newValue) {
-    let url = _.kebabCase(newValue);
+    let url = _.kebabCase(newValue)
     this.setState({
       teamName: newValue, 
       teamUrl: url,
       error: "",
     });
-    this.isTeamUrlAvailable(url);
+    this.isTeamUrlAvailable(url)
   }
 
   handleSubmit(event) {
@@ -131,7 +131,7 @@ class CreateTeamPop extends React.Component {
       hasCoverImage: false,
       isVerified: false,
     })
-      .then (response => {
+    .then (response => {
         this.setState({ isLoading: false });
         window.location = `/@${response.data.url}`;
       }).catch (() => {
@@ -146,15 +146,10 @@ class CreateTeamPop extends React.Component {
     return (
       <dialog className="pop-over create-team-pop">
         <section className="pop-over-info">
-          <link className="clickable-label" onClick={() => this.props.toggleUserOptionsPop()}>
-            <div className="back icon">
-              <div className="left-arrow icon" />
-            </div>
-            <div className="pop-title">
-              <span>Create Team </span>
-              <span className="emoji herb" />
-            </div>
-          </link>
+          <div className="pop-title">
+            <span>Create Team </span>
+            <span className="emoji herb" />
+          </div>
         </section>
 
         <section className="pop-over-info">

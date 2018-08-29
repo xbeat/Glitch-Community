@@ -26,11 +26,11 @@ class Logo extends React.PureComponent {
       });
     }, moment.duration(5, 'minutes').asMilliseconds());
   }
-  
+
   componentWillUnmount() {
     window.clearInterval(this.interval);
   }
-  
+
   render() {
     const {hour} = this.state;
     
