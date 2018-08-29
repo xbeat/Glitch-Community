@@ -7,6 +7,8 @@ import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
 import Loader, {DataLoader} from './includes/loader.jsx';
+import ProjectsLoader from './projects-loader.jsx';
+
 import {getAvatarUrl, getLink} from '../models/project.js';
 
 const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163,187,0.40)", "rgba(251,160,88,0.40)", "rgba(252,243,175,0.40)", "rgba(48,220,166,0.40)", 
@@ -20,7 +22,7 @@ const ProjectsPreview = ({projects, projectOptions, categoryColor}) => {
           <img className="avatar" src={getAvatarUrl(project.id)}/>
           <div className="project-name">{project.domain}</div>
         </div>
-      )) };
+      )) }
     </div>
   );
 };
@@ -63,7 +65,7 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
             >
               {category => (
                 <ProjectsLoader api={api} projects={category.projects}>
-                    {projects => <ProjectsPreview projects={category.projects} categoryColor={category.color}/>}
+                    {projects => <ProjectsPreview projects={category.projects.slice(0,3)} categoryColor={category.color}/>}
                 </ProjectsLoader>
               )}
             </DataLoader>
@@ -105,14 +107,6 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
 
 CollectionItem.propTypes = {
   api: PropTypes.func.isRequired,
-  project: PropTypes.shape({
-    description: PropTypes.string.isRequired,
-    domain: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    private: PropTypes.bool.isRequired,
-    showAsGlitchTeam: PropTypes.bool.isRequired,
-    users: PropTypes.array.isRequired,
-  }).isRequired,
   categoryColor: PropTypes.string,
   projectOptions: PropTypes.object,
 };
