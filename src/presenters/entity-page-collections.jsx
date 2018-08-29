@@ -56,7 +56,7 @@ const EntityPageCollections = ({collections}) => {
   return (
     <React.Fragment>
       {!!collections.length && (
-        <CollectionList title="Recent Collections" collections={collections}
+        <CollectionsList title="Recent Collections" collections={collections}
         />
       )}
     </React.Fragment>

@@ -86,11 +86,11 @@ const UserPage = ({
       </ProfileContainer>
     </section>
     {/* Dummy section for collections */}
-    {/*
+    
     <EntityPageCollections
       collections={collections}
     />
-    */}
+    
     <EntityPageProjects
       projects={projects} 
       pins={pins} 
