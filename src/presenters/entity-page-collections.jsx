@@ -23,7 +23,7 @@ const EntityPageCollections = ({collections, api}) => {
     <React.Fragment>
       {console.log(JSON.stringify(collections))}
       {!!collections.length && (
-        <CollectionsList title="Collections" collections={collections.slice(0,3)} api={api}/>
+        <CollectionsList title="Collections" collections={collections.slice(Math.floor(Math.random() * collections.length-3)+0,3)} api={api}/>
       )}
     </React.Fragment>
   );
