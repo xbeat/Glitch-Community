@@ -10,19 +10,19 @@ import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import Categories from '../categories.jsx';
 
-const CategoryPageWrap = ({category, children}) => (
+const CollectionPageWrap = ({collection, children}) => (
   <React.Fragment>
     <Helmet>
-      <title>{category.name}</title>
+      <title>{collection.name}</title>
     </Helmet>
-    <main className="category-page hello-world">
-      <article className="projects" style={{backgroundColor: category.backgroundColor}}>
-        <header className="category">
-          <h2 className="category-name">{category.name}</h2>
-          <span className="category-image-container">
-            <img src={category.avatarUrl} alt=""/>
+    <main className="collection-page">
+      <article className="projects" style={{backgroundColor: collection.backgroundColor}}>
+        <header className="collection">
+          <h2 className="collection-name">{collection.name}</h2>
+          <span className="collection-image-container">
+            <img src={collection.avatarUrl} alt=""/>
           </span>
-          <p className="description">{category.description}</p>
+          <p className="description">{collection.description}</p>
         </header>
         {children}
       </article>
@@ -30,8 +30,8 @@ const CategoryPageWrap = ({category, children}) => (
     <Categories/>
   </React.Fragment>
 );
-CategoryPageWrap.propTypes = {
-  category: PropTypes.shape({
+CollectionPageWrap.propTypes = {
+  collection: PropTypes.shape({
     avatarUrl: PropTypes.string.isRequired,
     backgroundColor: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
@@ -40,16 +40,16 @@ CategoryPageWrap.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const CategoryPageLoader = ({...props}) => (
-  <CategoryPageWrap {...props}>
+const CollectionPageLoader = ({...props}) => (
+  <CollectionPageWrap {...props}>
     <Loader/>
-  </CategoryPageWrap>
+  </CollectionPageWrap>
 );
 
-const CategoryPageError = ({...props}) => (
-  <CategoryPageWrap {...props}>
+const CollectionPageError = ({...props}) => (
+  <CollectionPageWrap {...props}>
     Something went wrong. Try refreshing?
-  </CategoryPageWrap>
+  </CollectionPageWrap>
 );
 
 async function loadCategory(api, id) {
@@ -58,30 +58,30 @@ async function loadCategory(api, id) {
   return data;
 }
 
-const CategoryPage = ({api, category, ...props}) => (
+const CollectionPage = ({api, collection, ...props}) => (
   <DataLoader
-    get={() => loadCategory(api, category.id)}
-    renderLoader={() => <CategoryPageLoader category={category} {...props}/>}
-    renderError={() => <CategoryPageError category={category} {...props}/>}
+    get={() => loadCategory(api, collection.id)}
+    renderLoader={() => <CollectionPageLoader collection={collection} {...props}/>}
+    renderError={() => <CollectionPageError collection={collection} {...props}/>}
   >
-    {category => (
-      <CategoryPageWrap category={category} {...props}>
-        <ProjectsLoader api={api} projects={category.projects}>
-          {projects => <ProjectsUL projects={projects} categoryColor={category.color}/>}
+    {collection => (
+      <CollectionPageWrap collection={collection} {...props}>
+        <ProjectsLoader api={api} projects={collection.projects}>
+          {projects => <ProjectsUL projects={projects} collectionColor={collection.color}/>}
         </ProjectsLoader>
-      </CategoryPageWrap>
+      </CollectionPageWrap>
     )}
   </DataLoader>
 );
-CategoryPage.propTypes = {
+CollectionPage.propTypes = {
   api: PropTypes.any.isRequired,
-  category: PropTypes.object.isRequired,
+  collection: PropTypes.object.isRequired,
 };
 
-const CategoryPageContainer = ({api, category}) => (
+const CollectionPageContainer = ({api, collection}) => (
   <Layout api={api}>
-    <CategoryPage api={api} category={category}/>
+    <CollectionPage api={api} collection={collection}/>
   </Layout>
 );
 
-export default CategoryPageContainer;
+export default CollectionPageContainer;
