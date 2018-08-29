@@ -8,8 +8,8 @@ class CreateTeamPop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      teamName: 'Team Rocket',
-      teamUrl: 'team-rocket',
+      teamName: '',
+      teamUrl: '',
       isLoading: false,
       errorMessage: ''
     };
@@ -115,7 +115,7 @@ class CreateTeamPop extends React.Component {
   render() {
     return (
       <dialog className="pop-over create-team-pop">
-        <button className="pop-over-info clickable-label" onClick={() => this.props.toggleUserOptionsPop()}>
+        <section className="pop-over-info clickable-label" onClick={() => this.props.toggleUserOptionsPop()}>
           <div className="back icon">
             <div className="left-arrow icon" />
           </div>
@@ -123,18 +123,18 @@ class CreateTeamPop extends React.Component {
             <span>Create Team </span>
             <span className="emoji herb" />
           </div>
-        </button>
+        </section>
 
         <section className="pop-over-info">
           <p className="info-description">
             Showcase your team's projects and manage project members
           </p>
         </section>
-        <section className="pop-over-actions">
-          
+        
+        <section className="pop-over-actions">  
           <form onSubmit={this.handleSubmit}>
             <EditableField 
-              value="Team Rocket" 
+              value={this.state.teamName} 
               update={this.handleChange} 
               placeholder='Your Team Name' 
               //fieldOnlyUpdatesOnSubmit={true}
