@@ -16,14 +16,21 @@ const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163
 
 const ProjectsPreview = ({projects, projectOptions, categoryColor}) => {
   return (
-    <div className="projects-preview" projects={projects}>
-      { projects.map(project => (
-        <div className="project-container">
-          <img className="avatar" src={getAvatarUrl(project.id)}/>
-          <div className="project-name">{project.domain}</div>
-        </div>
-      )) }
+    <React.Fragment>
+      <div className="projects-preview" projects={projects}>
+        { projects.slice(0,3).map(project => (
+          <div className="project-container">
+            <img className="avatar" src={getAvatarUrl(project.id)}/>
+            <div className="project-name">{project.domain}</div>
+          </div>
+        )) }
+      </div>
+      <div className="collection-link">
+        <a href={category.url}>
+          View all {projects.length} projects →
+        </a>            
     </div>
+  </React.Fragment>
   );
 };
 
@@ -65,7 +72,7 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
             >
               {category => (
                 <ProjectsLoader api={api} projects={category.projects}>
-                    {projects => <ProjectsPreview projects={category.projects.slice(0,3)} categoryColor={category.color}/>}
+                    {projects => <ProjectsPreview projects={category.projects} categoryColor={category.color}/>}
                 </ProjectsLoader>
               )}
             </DataLoader>
@@ -91,12 +98,6 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
 
             </div>
             */}
-            
-            <div className="collection-link">
-              <a href="#">
-                View all {Math.floor(Math.random() * 10)+3} projects →
-              </a>            
-            </div>
             
             
           </div>
