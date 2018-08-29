@@ -6,18 +6,24 @@ import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
 import Loader, {DataLoader} from '../includes/loader.jsx';
+import {getAvatarUrl, getLink} from '../models/project.js';
 
 const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163,187,0.40)", "rgba(251,160,88,0.40)", "rgba(252,243,175,0.40)", "rgba(48,220,166,0.40)", 
                "rgba(103,190,255,0.40)", "rgba(201,191,244,0.40)"];
 
-const ProjectsPreview = ({projects, ...props}) => (
-  <div className="projects-preview" projects={projects}>
-    {projects => 
-      <div className="project-container">
-      </div
-    }
-  </div>
-);
+const ProjectsPreview = ({projects, projectOptions, categoryColor}) => {
+  return (
+    <div className="projects-preview" projects={projects}>
+      { projects.map(project => (
+        <div className="project-container">
+          <img className="avatar" src={getAvatarUrl(project.id)}/>
+          <div className="project-name">{project.domain}</div>
+        </div>
+      )) };
+    </div>
+  );
+};
+
 ProjectsPreview.propTypes = {
   projects: PropTypes.any.isRequired
 };
@@ -55,16 +61,15 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
                renderError={() => <div>Something went wrong. Try refreshing?</div>}
             >
               {category => (
-                <CategoryPageWrap category={category} {...props}>
-                  <ProjectsLoader api={api} projects={category.projects}>
-                    {projects => <ProjectsUL projects={projects} categoryColor={category.color}/>}
-                  </ProjectsLoader>
-                </CategoryPageWrap>
+                <ProjectsLoader api={api} projects={category.projects}>
+                    {projects => <ProjectsPreview projects={category.projects} categoryColor={category.color}/>}
+                </ProjectsLoader>
               )}
             </DataLoader>
             
             
             
+            {/* DUMMY PROJECTS DATA */}
             <div className="projects-preview">
               <div className="project-container">
                 <img className="avatar" src={collection.avatarUrl}/>
