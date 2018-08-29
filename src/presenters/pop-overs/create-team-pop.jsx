@@ -65,7 +65,6 @@ class CreateTeamPop extends React.Component {
     return [
       'team',
       'group',
-      'collective',
       'coven',
       'squad',
       'crew',
