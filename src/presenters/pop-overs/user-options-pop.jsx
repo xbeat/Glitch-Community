@@ -173,38 +173,6 @@ UserOptionsPop.propTypes = {
 
 
 
-// delete
-export default function UserOptionsAndCreateTeamPopContainer(props) {
-  const {avatarUrl, avatarStyle, api} = props;
-  return (
-
-    <PopoverContainer>
-      {({togglePopover: toggleUserOptionsPop, visible: userOptionsPopVisible}) => (
-        <PopoverContainer>
-          {({togglePopover: toggleCreateTeamPop, visible: createTeamPopVisible}) => (
-            <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
-              <button className="user" onClick={() => {toggleUserOptionsPop(); }}>
-                <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
-                <span className="down-arrow icon"/>
-              </button>
-              {userOptionsPopVisible && <UserOptionsPop
-                {...props}
-                toggleUserOptionsPop={toggleUserOptionsPop}
-                toggleCreateTeamPop={() => { toggleUserOptionsPop(); toggleCreateTeamPop(); }}
-              />
-              }
-              {createTeamPopVisible && <CreateTeamPop
-                api={api}
-                toggleUserOptionsPop={() => {  toggleCreateTeamPop(); toggleUserOptionsPop(); }}
-              />
-              }
-            </div>
-          )}
-        </PopoverContainer>
-      )}
-    </PopoverContainer>
-  );
-}
 
 UserOptionsAndCreateTeamPopContainer.propTypes = {
   avatarUrl: PropTypes.string.isRequired,
@@ -263,3 +231,26 @@ UserOptionsAndCreateTeamPop.propTypes = {
   avatarStyle: PropTypes.object.isRequired,
   api: PropTypes.func.isRequired,
 };
+
+
+export default function UserOptionsAndCreateTeamPopContainer(props) {
+  const {avatarUrl, avatarStyle, api} = props;
+  return (
+
+    <PopoverContainer>
+      {({togglePopover: togglePopover, visible: popVisible}) => (
+        <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
+          <button className="user" onClick={() => {togglePopover(); }}>
+            <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
+            <span className="down-arrow icon"/>
+          </button>
+          {popVisible && <UserOptionsAndCreateTeamPop
+            {...props}
+            togglePopover={togglePopover}
+          />
+          }
+        </div>
+      )}
+    </PopoverContainer>
+  );
+}
