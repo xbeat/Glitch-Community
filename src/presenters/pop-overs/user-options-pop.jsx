@@ -1,9 +1,17 @@
+// rename this to user-options-and-create-team-pop.jsx
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import _ from 'lodash';
+import Loader from '../includes/loader.jsx';
+import {PureEditableField} from '../includes/editable-field.jsx';
 import {getAvatarUrl} from '../../models/team';
 import PopoverContainer from './popover-container.jsx';
-import CreateTeamPop from './create-team-pop.jsx';
+// import CreateTeamPop from './create-team-pop.jsx';
+
+const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another"
+
 
 
 const TeamButton = ({url, name, ...team}) => (
@@ -23,7 +31,7 @@ TeamButton.propTypes = {
 };
 
 
-// Create Team button (temp hidden in prod)
+// Create Team button
 
 const CreateTeamButton = ({toggleCreateTeamPop, userIsAnon}) => {
   if (userIsAnon === true) {
@@ -35,7 +43,7 @@ const CreateTeamButton = ({toggleCreateTeamPop, userIsAnon}) => {
         </p>
         <button className="button button-small has-emoji button-tertiary" disabled={true}>
           <span>Create Team </span>
-          <span className="emoji herb"></span>
+          <span className="emoji herb" />
         </button>
       </React.Fragment>
     );
@@ -43,7 +51,7 @@ const CreateTeamButton = ({toggleCreateTeamPop, userIsAnon}) => {
   return (
     <button onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
       <span>Create Team </span>
-      <span className="emoji herb"></span>
+      <span className="emoji herb" />
     </button>
   );
 };
@@ -62,7 +70,7 @@ const TeamList = ({teams, toggleCreateTeamPop, userIsAnon}) => {
     <section className="pop-over-actions">
       <CreateTeamButton toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
       {teams.map((team) => (
-        <TeamButton key={team.name} {...team}/>
+        <TeamButton key={team.name} {...team} />
       ))}
     </section>
   );

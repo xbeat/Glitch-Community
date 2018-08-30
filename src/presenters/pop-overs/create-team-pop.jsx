@@ -1,3 +1,6 @@
+// unused
+// move all this into user-options-pop , then delete me
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
