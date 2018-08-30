@@ -63,12 +63,14 @@
         environment: '<%= ENVIRONMENT %>',
         serverName: '<%= PROJECT_DOMAIN %>',
         sanitizeKeys: ['persistentToken'],
+        tags: {bootstrap: true},
       }).install();
     </script>
     <% for (let i = 0; i < scripts.length; ++i) { %>
     <script src="<%= scripts[i] %>"></script>
     <% } %>
     <script>
+      Raven.setTagsContext();
       if (window.bootstrap) {
         Raven.context(window.bootstrap);
       } else {
