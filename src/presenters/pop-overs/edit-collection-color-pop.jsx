@@ -41,13 +41,18 @@ class EditColorColorPop extends React.Component {
       <dialog className="pop-over edit-collection-color-pop">
         <section className="pop-over-info">
           {/* TO DO - add buttons and input field*/}
+          
+          <button className="button-tertiary">
+            <div className="color-option" style={{backgroundColor: red}}>place Avatar</div>
+          </button>
+          
           <input id="color-picker" 
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}
             className="pop-over-input search-input pop-over-search"
             placeholder="Custom color hex"
           />
-        </section>}
+        </section>
       </dialog>
     );
   }

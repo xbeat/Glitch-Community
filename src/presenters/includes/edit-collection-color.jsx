@@ -14,7 +14,7 @@ const EditCollectionColor = ({currentUserIsOwner, ...props}) => {
         {({visible, togglePopover}) => (
           <div className="button-wrap">
             <button className={`button add-project opens-pop-over`} onClick={togglePopover}>
-              Add Project
+              Color
             </button>
             { visible && <EditCollectionColorPop {...props} togglePopover={togglePopover} /> }
           </div>
@@ -27,6 +27,60 @@ EditCollectionColor.propTypes = {
   api: PropTypes.func.isRequired,
   collectionID: PropTypes.number.isRequired,
   currentUserIsOwner: PropTypes.bool.isRequired
+};
+
+class EditColorColorPop extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      query: '', //The hex value entered into search
+      color: null,
+      maybeRequest: null,
+      maybeResults: null
+    };
+    
+    this.onClick = this.onClick.bind(this);
+  }
+    
+  handleChange(evt) {
+    const query = evt.currentTarget.value.trim();
+    this.setState({ query });
+    if (query) {
+      {/* TO DO: check if valid hex and apply color to background */}
+      
+    } else {
+      {/* TO DO: error message here if invalid */}
+      
+    }
+  }
+    
+  onClick() {
+    this.props.togglePopover();
+    {/* TO DO - apply color change here*/}
+  }
+  
+  render() {
+    const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
+    return (
+      <dialog className="pop-over edit-collection-color-pop">
+        <section className="pop-over-info">
+          {/* TO DO - add buttons and input field*/}
+          <input id="color-picker" 
+            autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+            value={this.state.query} onChange={this.handleChange}
+            className="pop-over-input search-input pop-over-search"
+            placeholder="Custom color hex"
+          />
+        </section>}
+      </dialog>
+    );
+  }
+}
+
+EditColorColorPop.propTypes = {
+  api: PropTypes.func.isRequired,
+  collectionID: PropTypes.number.isRequired
 };
 
 export default EditCollectionColor;

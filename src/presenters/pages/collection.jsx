@@ -19,30 +19,45 @@ class CollectionColorWrap extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      color: this.props.collection.color
+      color: this.props.collection.color,
+      backgroundColor: this.props.collection.backgroundColor
     };
+    this.setColor = this.setColor.bind(this);
   }
   
   setColor(newColor){
     this.setState({
-      color: newColor
+      color: newColor,
+      backgroundColor: this.hexToRgbA(newColor)
     });
   }
-
+  
+  hexToRgbA(hex){
+    var c;
+    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+        c= hex.substring(1).split('');
+        if(c.length== 3){
+            c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+        }
+        c= '0x'+c.join('');
+        return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.4)';
+    }
+    throw new Error('Bad Hex');
+  }
   
   render(){
-    return this.props.children(this.state.color, this.setColor);
+    return this.props.children(this.state.backgroundColor, this.state.color, this.setColor);
   }
 };
 
-const CollectionPageWrap = ({collection, api, color, setColor}) => (
+const CollectionPageWrap = ({collection, api, backgroundColor, color, setColor}) => (
   <React.Fragment>
     
     <Helmet>
       <title>{collection.name}</title>
     </Helmet>
     <main className="collection-page">
-      <article className="projects" style={{backgroundColor: color}}>
+      <article className="projects" style={{backgroundColor: backgroundColor}}>
         <header className="collection">
           <h1 className="collection-name">{collection.name}</h1>
           <div className="collection-image-container">
@@ -59,8 +74,8 @@ const CollectionPageWrap = ({collection, api, color, setColor}) => (
             api={api}
             collectionID={collection.id}
             currentUserIsOwner={true}
-            />
-          
+            setColor={setColor}
+          />
           
           {/*
           <div className="button">
@@ -83,7 +98,7 @@ const CollectionPageWrap = ({collection, api, color, setColor}) => (
                 myProjects= {[]}
               />
           
-              <ProjectsUL projects={projects} categoryColor={collection.color}/>
+              <ProjectsUL projects={projects} categoryColor={color}/>
             </React.Fragment>
           }
         </ProjectsLoader>
@@ -129,7 +144,7 @@ const CollectionPage = ({api, collection, ...props}) => (
     >
       {collection => (
         <CollectionColorWrap collection={collection}>
-          {(color, setColor) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} api={api} {...props}/>}
+          {(backgroundColor, color, setColor) => <CollectionPageWrap collection={collection} setColor={setColor} backgroundColor={backgroundColor} color={color} api={api} {...props}/>}
         </CollectionColorWrap>
       )}
     </DataLoader>
