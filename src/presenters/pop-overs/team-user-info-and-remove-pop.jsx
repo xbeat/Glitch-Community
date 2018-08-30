@@ -72,10 +72,9 @@ const ThanksCount = ({count}) => (
 
 // Team User Info 😍
 
-const TeamUserInfo = ({toggleUserInfoHidden, ...props}) => {
-  const {user, currentUser} = this.props;
-  const userAvatarStyle = {backgroundColor: user.color};
-  const canRemoveUser = this.props.currentUserIsTeamAdmin || (currentUser && currentUser.id === user.id);
+const TeamUserInfo = ({toggleUserInfoHidden, currentUser, ...props}) => {
+  const userAvatarStyle = {backgroundColor: props.user.color};
+  const canRemoveUser = props.currentUserIsTeamAdmin || (currentUser && currentUser.id === props.user.id);
   return (
     <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info user-info">
