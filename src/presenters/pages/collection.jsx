@@ -15,8 +15,9 @@ import AddCollectionProject from '../includes/add-collection-project.jsx';
 
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
-const CollectionPageWrap = ({collection, children, api}) => (
+const CollectionPageWrap = ({collection, api}) => (
   <React.Fragment>
+    
     <Helmet>
       <title>{collection.name}</title>
     </Helmet>
@@ -48,7 +49,25 @@ const CollectionPageWrap = ({collection, children, api}) => (
           */}
           
         </header>
-        {children}
+        
+        <ProjectsLoader api={api} projects={collection.projects}>
+          {projects => 
+            <React.Fragment>
+              <h3 className="collection-project-header">Projects ({collection.projects.length})</h3>
+            
+          {/* TO DO - CHECK IF CURRENT USER IS OWNER OF COLLECTION */}
+              <AddCollectionProject
+                api={api}
+                collectionProjects={collection.projects}
+                currentUserIsOwner={true}
+                myProjects= {[]}
+              />
+          
+              <ProjectsUL projects={projects} categoryColor={collection.color}/>
+            </React.Fragment>
+          }
+        </ProjectsLoader>
+        
       </article>
     </main>
     <Categories/>
@@ -85,43 +104,22 @@ async function loadCategory(api, id) {
   
 
 const CollectionPage = ({api, collection, ...props}) => (
-  <DataLoader
-    get={() => loadCategory(api, collection.id)}
-    renderLoader={() => <CollectionPageLoader collection={collection} {...props}/>}
-    renderError={() => <CollectionPageError collection={collection} {...props}/>}
-  >
-    {collection => (
-      <CollectionPageWrap collection={collection} api={api} {...props}>
-        <ProjectsLoader api={api} projects={collection.projects}>
-          {projects => 
-            <React.Fragment>
-              <h3 className="collection-project-header">Projects ({collection.projects.length})</h3>
-            
-          {/* TO DO - CHECK IF CURRENT USER IS OWNER OF COLLECTION */}
-              <AddCollectionProject
-                api={api}
-                collectionProjects={collection.projects}
-                currentUserIsOwner={true}
-                myProjects= {[]}
-              />
-          
-              <ProjectsUL projects={projects} categoryColor={collection.color}/>
-            </React.Fragment>
-          }
-        </ProjectsLoader>
-      </CollectionPageWrap>
-    )}
-  </DataLoader>
+  <Layout api={api}>
+    <DataLoader
+      get={() => loadCategory(api, collection.id)}
+      renderLoader={() => <CollectionPageLoader collection={collection} {...props}/>}
+      renderError={() => <CollectionPageError collection={collection} {...props}/>}
+    >
+      {collection => (
+        <CollectionPageWrap collection={collection} api={api} {...props}/>
+      )}
+    </DataLoader>
+  </Layout>
 );
+
 CollectionPage.propTypes = {
   api: PropTypes.any.isRequired,
   collection: PropTypes.object.isRequired,
 };
 
-const CollectionPageContainer = ({api, collection}) => (
-  <Layout api={api}>
-    <CollectionPage api={api} collection={collection}/>
-  </Layout>
-);
-
-export default CollectionPageContainer;
+export default CollectionPage;
