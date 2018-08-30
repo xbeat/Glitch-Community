@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
+import {colors} from '../../models/collection.js';
 
 import Loader from '../includes/loader.jsx';
 
@@ -42,9 +43,7 @@ class EditColorColorPop extends React.Component {
         <section className="pop-over-info">
           {/* TO DO - add buttons and input field*/}
           
-          <button className="button-tertiary">
-            <div className="color-option" style={{backgroundColor: red}}>place Avatar</div>
-          </button>
+          <button className="button-tertiary" style={{backgroundColor: colors.pink}} onClick={() => this.props.setColor(colors.pink)}/>
           
           <input id="color-picker" 
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
