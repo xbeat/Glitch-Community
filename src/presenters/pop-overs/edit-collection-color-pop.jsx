@@ -2,24 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
-import ProjectModel from '../../models/project';
-import UserModel from '../../models/user';
-
 import Loader from '../includes/loader.jsx';
-import ProjectResultItem from '../includes/project-result-item.jsx';
-import UserResultItem from '../includes/user-result-item.jsx';
 
 class EditColorColorPop extends React.Component {
   constructor(props) {
     super(props);
     
     this.state = {
-      color: null
+      query: '', //The hex value entered into search
+      color: null,
+      maybeRequest: null,
+      maybeResults: null
     };
     
     this.onClick = this.onClick.bind(this);
   }
-  
+    
+  handleChange(evt) {
+    const query = evt.currentTarget.value.trim();
+    this.setState({ query });
+    if (query) {
+      {/* TO DO: check if valid hex and apply color to background */}
+      
+    } else {
+      {/* TO DO: error message here if invalid */}
+      
+    }
+  }
+    
   onClick() {
     this.props.togglePopover();
     {/* TO DO - apply color change here*/}
@@ -28,18 +38,15 @@ class EditColorColorPop extends React.Component {
   render() {
     const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
     return (
-      <dialog className="pop-over add-collection-project-pop">
+      <dialog className="pop-over edit-collection-color-pop">
         <section className="pop-over-info">
-          <input id="team-user-search" 
+          {/* TO DO - add buttons and input field*/}
+          <input id="color-picker" 
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}
             className="pop-over-input search-input pop-over-search"
-            placeholder="Search by project name or URL"
+            placeholder="Custom color hex"
           />
-        </section>
-        {!!this.state.query && <section className="pop-over-actions last-section results-list">
-          {isLoading && <Loader />}
-          {!!this.state.maybeResults && <ProjectSearchResults projects={this.state.maybeResults} action={this.onClick} />}
         </section>}
       </dialog>
     );

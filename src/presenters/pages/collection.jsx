@@ -13,7 +13,9 @@ import Categories from '../categories.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 import AddCollectionProject from '../includes/add-collection-project.jsx';
 
-const CollectionPageWrap = ({collection, children}) => (
+import EditCollectionColor from '../includes/edit-collection-color.jsx';
+
+const CollectionPageWrap = ({collection, children, api}) => (
   <React.Fragment>
     <Helmet>
       <title>{collection.name}</title>
@@ -30,9 +32,16 @@ const CollectionPageWrap = ({collection, children}) => (
           </div>
           
           <p className="description">{collection.description}</p>
-           <div className="button">
+          
+          <EditCollectionColor
+            api={api}
+            collectionID={collection.id}
+            />
+          {/*
+          <div className="button">
               <div className="collection-color">Color</div>
             </div>
+          */}
         </header>
         {children}
       </article>
@@ -47,6 +56,7 @@ CollectionPageWrap.propTypes = {
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
+  api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
 };
 
@@ -76,7 +86,7 @@ const CollectionPage = ({api, collection, ...props}) => (
     renderError={() => <CollectionPageError collection={collection} {...props}/>}
   >
     {collection => (
-      <CollectionPageWrap collection={collection} {...props}>
+      <CollectionPageWrap collection={collection} api={api} {...props}>
         <ProjectsLoader api={api} projects={collection.projects}>
           {projects => 
             <React.Fragment>
