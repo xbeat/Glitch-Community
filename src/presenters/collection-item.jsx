@@ -78,9 +78,7 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
                     {projects => <ProjectsPreview projects={collection.projects} categoryColor={collection.color} collectionUrl={collection.url}/>}
                 </ProjectsLoader>
               )}
-            </DataLoader>
-            
-            
+            </DataLoader>            
             
             {/* DUMMY PROJECTS DATA 
             <div className="projects-preview">

@@ -22,7 +22,7 @@ const CollectionPageWrap = ({collection, children}) => (
           <div className="collection-image-container">
             <img src={collection.avatarUrl} alt=""/>
           </div>
-           <div className="button button-secondary">
+           <div className="button button-tertiary">
             <div className="collection-avatar">Replace Avatar</div>
           </div>
           
@@ -74,7 +74,10 @@ const CollectionPage = ({api, collection, ...props}) => (
     {collection => (
       <CollectionPageWrap collection={collection} {...props}>
         <ProjectsLoader api={api} projects={collection.projects}>
-          {projects => <ProjectsUL projects={projects} collectionColor={collection.color}/>}
+          <div className="button">
+            <div className="collection-add-project">Add Project</div>
+          </div>
+          {projects => <ProjectsUL projects={projects} categoryColor={collection.color}/>}
         </ProjectsLoader>
       </CollectionPageWrap>
     )}
