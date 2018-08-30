@@ -52,20 +52,22 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
           style={{backgroundColor: collection.backgroundColor, borderBottomColor:collection.backgroundColor}}>
           <div className="collection-container">
             
-            <div className="collection-info">
-              <img className="avatar" src={collection.avatarUrl}/>
-              <div className="collection-name-description">
-                <a href={collection.url}>
-                  <div className="button">
-                    <span className="project-badge private-project-badge" aria-label="private"></span>
-                    <div className="project-name">{collection.name}</div>
-                  </div>
-                </a>
-                <div className="description"><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
-              </div>
+            <a href={collection.url}>
+              <div className="collection-info">
+                <img className="avatar" src={collection.avatarUrl}/>
+                <div className="collection-name-description">
+                  <a href={collection.url}>
+                    <div className="button">
+                      <span className="project-badge private-project-badge" aria-label="private"></span>
+                      <div className="project-name">{collection.name}</div>
+                    </div>
+                  </a>
+                  <div className="description"><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
+                </div>
               
-              <div className="overflow-mask"></div>
-            </div>
+                <div className="overflow-mask"></div>
+              </div>
+            </a>
             
             {/* LOAD PROJECTS IN COLLECTION HERE */}
             <DataLoader
