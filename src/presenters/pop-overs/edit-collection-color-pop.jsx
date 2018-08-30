@@ -43,7 +43,12 @@ class EditColorColorPop extends React.Component {
         <section className="pop-over-info">
           {/* TO DO - add buttons and input field*/}
           
-          <button className="button-tertiary" style={{backgroundColor: colors.pink}} onClick={() => this.props.setColor(colors.pink)}/>
+          {Object.keys(colors).map((key => 
+            <button className="button-tertiary" 
+              style={{backgroundColor: colors[key]}} 
+              onClick={() => this.props.setColor(colors[key])}
+            />
+          ))}
           
           <input id="color-picker" 
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
