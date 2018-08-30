@@ -50,6 +50,7 @@ class AddTeamUserPop extends React.Component {
     const query = evt.currentTarget.value.trim();
     this.setState({ query });
     if (query) {
+      {/* TO DO: SEARCH BY URL */}
       this.startSearch();
     } else {
       this.clearSearch();

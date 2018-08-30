@@ -82,6 +82,7 @@ const CollectionPage = ({api, collection, ...props}) => (
             <React.Fragment>
               <h3 className="collection-project-header">Projects ({collection.projects.length})</h3>
             
+          {/* TO DO - CHECK IF CURRENT USER IS OWNER OF COLLECTION */}
               <AddCollectionProject
                 api={api}
                 collectionProjects={collection.projects}
