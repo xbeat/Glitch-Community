@@ -18,7 +18,7 @@ const CollectionPageWrap = ({collection, children}) => (
     <main className="collection-page">
       <article className="projects" style={{backgroundColor: collection.backgroundColor}}>
         <header className="collection">
-          <h2 className="collection-name">{collection.name}</h2>
+          <h1 className="collection-name">{collection.name}</h1>
           <div className="collection-image-container">
             <img src={collection.avatarUrl} alt=""/>
           </div>
@@ -74,10 +74,16 @@ const CollectionPage = ({api, collection, ...props}) => (
     {collection => (
       <CollectionPageWrap collection={collection} {...props}>
         <ProjectsLoader api={api} projects={collection.projects}>
-          <div className="button">
-            <div className="collection-add-project">Add Project</div>
-          </div>
-          {projects => <ProjectsUL projects={projects} categoryColor={collection.color}/>}
+          {projects => 
+            <React.Fragment>
+              <h3 className="collection-project-header">Projects ({collection.projects.length})</h3>
+            
+              <div className="button collection-add-project-button">
+                <div>Add Project</div>
+              </div>
+              <ProjectsUL projects={projects} categoryColor={collection.color}/>
+            </React.Fragment>
+          }
         </ProjectsLoader>
       </CollectionPageWrap>
     )}
