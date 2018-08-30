@@ -2,17 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
+import ProjectModel from '../../models/project';
 import UserModel from '../../models/user';
 
 import Loader from '../includes/loader.jsx';
+import ProjectResultItem from '../includes/project-result-item.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
 
-const UserSearchResults = ({users, action}) => (
-  (users.length > 0) ? (
+const ProjectSearchResults = ({projects, action}) => (
+  (projects.length > 0) ? (
     <ul className="results">
-      {users.map(user => (
-        <li key={user.id}>
-          <UserResultItem user={user} action={() => action(user)} />
+      {projects.map(project => (
+        <li key={project.id}>
+          <ProjectResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} action={() => action(project)} />
         </li>
       ))}
     </ul>
@@ -21,7 +23,7 @@ const UserSearchResults = ({users, action}) => (
   )
 );
 
-UserSearchResults.propTypes = {
+ProjectSearchResults.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired).isRequired,
@@ -71,19 +73,19 @@ class AddTeamUserPop extends React.Component {
     
     const {data} = await request;
     const results = data.map(project => ProjectModel(project).asProps());
-    const nonMemberResults = results.filter(user => !this.props.members || !this.props.members.includes(user.id));
+    const nonCollectionResults = results.filter(project => !this.props.collectionProjects || !this.props.collectionProjects.includes(project));
     
     this.setState(({ maybeRequest }) => {
       return (request === maybeRequest) ? {
         maybeRequest: null,
-        maybeResults: nonMemberResults.slice(0, 5),
+        maybeResults: nonCollectionResults.slice(0, 5),
       } : {};
     });
   }
   
-  onClick(user) {
+  onClick(project) {
     this.props.togglePopover();
-    this.props.add(user);
+    this.props.add(project);
   }
   
   render() {
@@ -95,12 +97,12 @@ class AddTeamUserPop extends React.Component {
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}
             className="pop-over-input search-input pop-over-search"
-            placeholder="Search for a user or email"
+            placeholder="Search by project name or URL"
           />
         </section>
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
-          {!!this.state.maybeResults && <UserSearchResults users={this.state.maybeResults} action={this.onClick} />}
+          {!!this.state.maybeResults && <ProjectSearchResults projects={this.state.maybeResults} action={this.onClick} />}
         </section>}
       </dialog>
     );
@@ -110,8 +112,8 @@ class AddTeamUserPop extends React.Component {
 AddTeamUserPop.propTypes = {
   api: PropTypes.func.isRequired,
   add: PropTypes.func.isRequired,
-  members: PropTypes.arrayOf(PropTypes.number.isRequired),
-  togglePopover: PropTypes.func.isRequired,
+  collectionProjects: PropTypes.any.isRequired,
+  togglePopover: PropTypes.array.isRequired,
 };
 
 export default AddTeamUserPop;
