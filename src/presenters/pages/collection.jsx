@@ -28,20 +28,21 @@ class CollectionColorWrap extends React.Component {
       color: newColor
     });
   }
+
   
   render(){
-    return this.props.children(this.state.color, this.setColor, this.props);
+    return this.props.children(this.state.color, this.setColor);
   }
 };
 
-const CollectionPageWrap = ({collection, api}) => (
+const CollectionPageWrap = ({collection, api, color, setColor}) => (
   <React.Fragment>
     
     <Helmet>
       <title>{collection.name}</title>
     </Helmet>
     <main className="collection-page">
-      <article className="projects" style={{backgroundColor: collection.backgroundColor}}>
+      <article className="projects" style={{backgroundColor: color}}>
         <header className="collection">
           <h1 className="collection-name">{collection.name}</h1>
           <div className="collection-image-container">
@@ -98,21 +99,18 @@ CollectionPageWrap.propTypes = {
     backgroundColor: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    projects: PropTypes.array.isRequired
   }).isRequired,
   api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
 };
 
 const CollectionPageLoader = ({...props}) => (
-  <CollectionPageWrap {...props}>
     <Loader/>
-  </CollectionPageWrap>
 );
 
 const CollectionPageError = ({...props}) => (
-  <CollectionPageWrap {...props}>
-    Something went wrong. Try refreshing?
-  </CollectionPageWrap>
+  "Something went wrong. Try refreshing?"  
 );
 
 async function loadCategory(api, id) {
@@ -126,12 +124,13 @@ const CollectionPage = ({api, collection, ...props}) => (
   <Layout api={api}>
     <DataLoader
       get={() => loadCategory(api, collection.id)}
-      renderLoader={() => <CollectionPageLoader collection={collection} {...props}/>}
-      renderError={() => <CollectionPageError collection={collection} {...props}/>}
+      renderLoader={() => <CollectionPageLoader collection={collection} api={api} {...props}/>}
+      renderError={() => <CollectionPageError collection={collection} api={api} {...props}/>}
     >
       {collection => (
         <CollectionColorWrap collection={collection}>
-          <CollectionPageWrap collection={collection} api={api} {...props}/>
+          {(color, setColor) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} api={api} {...props}/>}
+        </CollectionColorWrap>
       )}
     </DataLoader>
   </Layout>
