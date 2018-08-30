@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 import {getAvatarThumbnailUrl, getLink} from '../models/user';
 
-import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
+import UserOptionsAndCreateTeamPop from "./pop-overs/user-options-and-create-team-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
 import NewStuffContainer from './overlays/new-stuff.jsx';
@@ -89,7 +89,7 @@ const UserOptionsPopWrapper = ({user, clearUser, showNewStuffOverlay, api}) => {
     userLogin: user.login,
   };
 
-  return <UserOptionsPop {...props}/>;
+  return <UserOptionsAndCreateTeamPop {...props}/>;
 };
 
 UserOptionsPopWrapper.propTypes = {

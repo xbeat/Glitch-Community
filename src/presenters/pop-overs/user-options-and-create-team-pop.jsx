@@ -1,5 +1,3 @@
-// rename this to user-options-and-create-team-pop.jsx
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,11 +6,11 @@ import Loader from '../includes/loader.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
 import {getAvatarUrl} from '../../models/team';
 import PopoverContainer from './popover-container.jsx';
-// import CreateTeamPop from './create-team-pop.jsx';
 
 const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another"
 
 
+// Create Team 🌿
 
 class CreateTeam extends React.Component {
   constructor(props) {
@@ -23,7 +21,6 @@ class CreateTeam extends React.Component {
       isLoading: false,
       error: ''
     };
-
     this.randomDescription = this.randomDescription.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -55,7 +52,6 @@ class CreateTeam extends React.Component {
       'mystery',
       'notorious',
       'passionate',
-      'preposterous',
       'quaint',
       'quirky',
       'scrumptious',
@@ -201,7 +197,6 @@ class CreateTeam extends React.Component {
 
 CreateTeam.propTypes = {
   api: PropTypes.func.isRequired,
-  toggleUserOptionsVisible: PropTypes.func.isRequired,
 };
 
 
@@ -278,7 +273,7 @@ TeamList.propTypes = {
 };
 
 
-// User Options
+// User Options 🧕
 
 const UserOptions = ({
   togglePopover,
@@ -361,7 +356,7 @@ UserOptions.propTypes = {
 
 
 // User Options or Create Team
-// uses userOptionsVisible state to show either user options or create team
+// uses userOptionsVisible state to show either UserOptions or CreateTeam content
 
 class UserOptionsAndCreateTeamPop extends React.Component {
   constructor(props) {
