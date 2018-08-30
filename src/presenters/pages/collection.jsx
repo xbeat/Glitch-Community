@@ -19,10 +19,17 @@ const CollectionPageWrap = ({collection, children}) => (
       <article className="projects" style={{backgroundColor: collection.backgroundColor}}>
         <header className="collection">
           <h2 className="collection-name">{collection.name}</h2>
-          <span className="collection-image-container">
+          <div className="collection-image-container">
             <img src={collection.avatarUrl} alt=""/>
-          </span>
+          </div>
+           <div className="button button-secondary">
+            <div className="collection-avatar">Replace Avatar</div>
+          </div>
+          
           <p className="description">{collection.description}</p>
+           <div className="button">
+              <div className="collection-color">Color</div>
+            </div>
         </header>
         {children}
       </article>

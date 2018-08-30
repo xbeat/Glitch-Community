@@ -56,7 +56,7 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
               <img className="avatar" src={collection.avatarUrl}/>
               <div className="collection-name-description">
                 <a href={collection.url}>
-                  <div className="button helloWorld">
+                  <div className="button">
                     <span className="project-badge private-project-badge" aria-label="private"></span>
                     <div className="project-name">{collection.name}</div>
                   </div>
