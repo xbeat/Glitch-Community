@@ -56,7 +56,6 @@ class CreateTeam extends React.Component {
       'quirky',
       'scrumptious',
       'sensitive',
-      'sober',
       'tropical',
       'woeful',
       'whimsical',
