@@ -16,6 +16,7 @@ module.exports = function(app) {
   
   // Pages hosted by 'about.glitch.me':
   [
+    'faq',
     'react-starter-kit',
     'website-starter-kit',
     'forteams',
