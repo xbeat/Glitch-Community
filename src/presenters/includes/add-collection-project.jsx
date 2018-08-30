@@ -10,7 +10,6 @@ const AddCollectionProject = ({currentUserIsOwner, ...props}) => {
   }
   
   return (
-    <section className="add-project-container">
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <div className="button-wrap">
@@ -21,7 +20,6 @@ const AddCollectionProject = ({currentUserIsOwner, ...props}) => {
           </div>
         )}
       </PopoverContainer>
-    </section>
   );
 };
 
@@ -29,8 +27,7 @@ AddCollectionProject.propTypes = {
   currentUserIsOwner: PropTypes.bool.isRequired,
   addProject: PropTypes.func.isRequired,
   myProjects: PropTypes.array.isRequired,
-  teamProjects: PropTypes.array.isRequired,
-  extraButtonClass: PropTypes.string,
+  collectionProjects: PropTypes.array.isRequired,
   api: PropTypes.func.isRequired
 };
 

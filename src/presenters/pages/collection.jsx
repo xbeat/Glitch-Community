@@ -85,6 +85,8 @@ const CollectionPage = ({api, collection, ...props}) => (
               <AddCollectionProject
                 api={api}
                 collectionProjects={collection.projects}
+                currentUserIsOwner={true}
+                myProjects= {[]}
               />
           
               {/*  
