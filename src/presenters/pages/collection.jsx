@@ -90,12 +90,6 @@ const CollectionPage = ({api, collection, ...props}) => (
                 myProjects= {[]}
               />
           
-              {/*  
-              <div className="button collection-add-project-button">
-                <div>Add Project</div>
-              </div>
-              */}
-          
               <ProjectsUL projects={projects} categoryColor={collection.color}/>
             </React.Fragment>
           }
