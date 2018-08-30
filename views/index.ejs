@@ -44,7 +44,7 @@
       var FACEBOOK_CLIENT_ID = '<%= FACEBOOK_CLIENT_ID %>';
     </script>
 
-    <noscript>
+    <noscript id="noscript">
       <div class="content">
         <main>
           <h1><%= title %></h1>
@@ -72,7 +72,8 @@
         Raven.context(window.bootstrap);
       } else {
         console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
-        var content = document.querySelector('noscript').textContent;
+        // Copy noscript content to a visible area. Maybe some day we'll do ssr and not need this bit?
+        var content = document.getElementById('noscript').innerText;
         document.body.insertAdjacentHTML('beforeend', content);
       }
     </script>
