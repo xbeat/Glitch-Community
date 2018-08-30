@@ -44,7 +44,7 @@ class EditColorColorPop extends React.Component {
           {/* TO DO - add buttons and input field*/}
           
           {Object.keys(colors).map((key => 
-            <button className="button-tertiary" 
+            <button className="button-tertiary" key={key}
               style={{backgroundColor: colors[key]}} 
               onClick={() => this.props.setColor(colors[key])}
             />

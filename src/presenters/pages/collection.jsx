@@ -24,25 +24,24 @@ class CollectionColorWrap extends React.Component {
     this.setColor = this.setColor.bind(this);
   }
   
-  static getDerivedStateFromProps(props, state) {
-    // Any time the current user changes,
-    // Reset any parts of state that are tied to that user.
-    // In this simple example, that's just the email.
-    if (props.collection.color !== state.color) {
-      return {
-        color: props.collection.color
-      };
-    }
-    return null;
-  }
+  // static getDerivedStateFromProps(props, state) {
+  //   // Any time the current user changes,
+  //   // Reset any parts of state that are tied to that user.
+  //   // In this simple example, that's just the email.
+  //   if (props.collection.color !== this.props.color) {
+  //     return {
+  //       color: props.collection.color
+  //     };
+  //   }
+  //   return null;
+  // }
   
   setColor(newColor){
     this.setState({
       color: newColor
     });
+    console.log(`newColor: ${newColor}`);
   }
-  
-
   
   render(){
     return this.props.children(this.state.color, this.setColor);
@@ -156,7 +155,7 @@ const CollectionPage = ({api, collection, ...props}) => (
     >
       {collection => (
         <CollectionColorWrap collection={collection}>
-          {(backgroundColor, color, setColor) => <CollectionPageWrap collection={collection} setColor={setColor} backgroundColor={backgroundColor} color={color} api={api} {...props}/>}
+          {(color, setColor) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} api={api} {...props}/>}
         </CollectionColorWrap>
       )}
     </DataLoader>
