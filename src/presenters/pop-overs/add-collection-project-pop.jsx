@@ -2,19 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
-import ProjectModel from '../../models/project';
 import UserModel from '../../models/user';
 
 import Loader from '../includes/loader.jsx';
-import ProjectResultItem from '../includes/project-result-item.jsx';
-import ProjectResultItem from '../includes/user-result-item.jsx';
+import UserResultItem from '../includes/user-result-item.jsx';
 
-const ProjectSearchResults = ({projects, action}) => (
-  (projects.length > 0) ? (
+const UserSearchResults = ({users, action}) => (
+  (users.length > 0) ? (
     <ul className="results">
-      {projects.map(project => (
-        <li key={project.id}>
-          <ProjectResultItem project={project} action={() => action(project)} />
+      {users.map(user => (
+        <li key={user.id}>
+          <UserResultItem user={user} action={() => action(user)} />
         </li>
       ))}
     </ul>
@@ -23,21 +21,21 @@ const ProjectSearchResults = ({projects, action}) => (
   )
 );
 
-ProjectSearchResults.propTypes = {
-  projects: PropTypes.arrayOf(PropTypes.shape({
+UserSearchResults.propTypes = {
+  users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired).isRequired,
   action: PropTypes.func.isRequired,
 };
 
-class AddProjectPop extends React.Component {
+class AddTeamUserPop extends React.Component {
   constructor(props) {
     super(props);
     
     this.state = {
       query: '', //The actual search text
       maybeRequest: null, //The active request promise
-      maybeResults: null, //Null means still waiting vs empty 
+      maybeResults: null, //Null means still waiting vs empty -- [jude: i suggest the 'maybe' convention for nullable fields with meaning.  'maybeResults'] --greg: i like it
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -83,37 +81,37 @@ class AddProjectPop extends React.Component {
     });
   }
   
-  onClick(project) {
+  onClick(user) {
     this.props.togglePopover();
-    this.props.add(project);
+    this.props.add(user);
   }
   
   render() {
     const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
     return (
-      <dialog className="pop-over add-collection-project-pop">
+      <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">
-          <input id="project-search" 
+          <input id="team-user-search" 
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}
             className="pop-over-input search-input pop-over-search"
-            placeholder="Search by project name or URL"
+            placeholder="Search for a user or email"
           />
         </section>
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
-          {!!this.state.maybeResults && <ProjectSearchResults projects={this.state.maybeResults} action={this.onClick} />}
+          {!!this.state.maybeResults && <UserSearchResults users={this.state.maybeResults} action={this.onClick} />}
         </section>}
       </dialog>
     );
   }
 }
 
-AddProjectPop.propTypes = {
+AddTeamUserPop.propTypes = {
   api: PropTypes.func.isRequired,
-  add: PropTypes.func,
+  add: PropTypes.func.isRequired,
   members: PropTypes.arrayOf(PropTypes.number.isRequired),
   togglePopover: PropTypes.func.isRequired,
 };
 
-export default AddProjectPop;
+export default AddTeamUserPop;
