@@ -11,7 +11,7 @@ const ProjectResultItem = ({id, domain, description, users, action, isActive}) =
   }
 
   return (
-    <button className={resultClass} onClick={action}>
+    <button className={resultClass} onClick={action} data-project-id={id}>
       <img className="avatar" src={getAvatarUrl(id)} alt={`Project avatar for ${domain}`}/>
       <div className="result-name" title={domain}>{domain}</div>
       
