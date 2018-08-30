@@ -31,7 +31,7 @@ export class DeleteTeamPop extends React.Component {
         this.setState({
           teamIsDeleting: false
         });
-      });    
+      });
   }
     
   render() {
@@ -56,10 +56,14 @@ export class DeleteTeamPop extends React.Component {
             { this.state.teamIsDeleting && <Loader /> }
           </button>
         </section>
+        
+        {/* temp hidden until the email part of this is ready
         <section className="pop-over-info">
-          <UsersList users={this.props.admins()}/>
+          <UsersList users={this.props.teamAdmins}/>
           <p className="info-description">This will also email all team admins, giving them an option to undelete it later</p>
         </section>
+         */}
+
       </dialog>
     );
   }
@@ -70,9 +74,8 @@ DeleteTeamPop.propTypes = {
   teamId: PropTypes.number.isRequired,
   teamName: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,
-  admins: PropTypes.func.isRequired,
+  teamAdmins: PropTypes.array.isRequired,
   togglePopover: PropTypes.func.isRequired,
 };
-
 
 export default DeleteTeamPop;
