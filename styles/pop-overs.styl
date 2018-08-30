@@ -7,9 +7,9 @@ details.popover-container
     &::-webkit-details-marker
       display: none
     &:not([data-tooltip])::before
-      content: ''
+      display: none
   &[open] > summary::after
-    content: ''
+    display: none
   &:not([open]) > :not(summary)
     display: none
   > .pop-over
