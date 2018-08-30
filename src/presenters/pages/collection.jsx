@@ -65,6 +65,24 @@ async function loadCategory(api, id) {
   return data;
 }
 
+export const AddProject = (props) => (
+  <PopoverContainer>
+    {({visible, togglePopover}) => (
+      <span className="add-project-container">
+        <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add Project</button>
+        {visible && 
+          <AddUserPop 
+            {...props}
+            togglePopover={togglePopover}
+          />
+        }
+      </span>
+    )}
+  </PopoverContainer>
+);
+
+  
+
 const CollectionPage = ({api, collection, ...props}) => (
   <DataLoader
     get={() => loadCategory(api, collection.id)}
@@ -78,9 +96,13 @@ const CollectionPage = ({api, collection, ...props}) => (
             <React.Fragment>
               <h3 className="collection-project-header">Projects ({collection.projects.length})</h3>
             
+                
+              {/*  
               <div className="button collection-add-project-button">
                 <div>Add Project</div>
               </div>
+              */}
+          
               <ProjectsUL projects={projects} categoryColor={collection.color}/>
             </React.Fragment>
           }
