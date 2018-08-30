@@ -66,11 +66,11 @@ class AddTeamUserPop extends React.Component {
       return this.clearSearch();
     }
     
-    const request = this.props.api.get(`users/search?q=${this.state.query}`);
+    const request = this.props.api.get(`projects/search?q=${this.state.query}`);
     this.setState({ maybeRequest: request });
     
     const {data} = await request;
-    const results = data.map(user => UserModel(user).asProps());
+    const results = data.map(project => ProjectModel(project).asProps());
     const nonMemberResults = results.filter(user => !this.props.members || !this.props.members.includes(user.id));
     
     this.setState(({ maybeRequest }) => {
