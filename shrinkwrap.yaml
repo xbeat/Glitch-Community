@@ -16,6 +16,7 @@ dependencies:
   d3-array: 1.2.1
   details-element-polyfill: 2.0.1
   ejs: 2.6.1
+  email-addresses: 3.0.1
   eslint: 5.2.0
   eslint-loader: 2.1.0
   eslint-plugin-jsx-a11y: 6.1.1
@@ -2257,6 +2258,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-ysmvh2LIWDYYcAPI3+GT5eLq5d8=
+  /email-addresses/3.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-wfwgwYnn+W1AEtN121/qzN0kORw=
   /emoji-regex/6.5.1:
     dev: false
     resolution:
@@ -6417,6 +6422,7 @@ specifiers:
   d3-array: ^1.2.1
   details-element-polyfill: ^2.0.1
   ejs: ^2.6.1
+  email-addresses: ^3.0.1
   eslint: ^5.2.0
   eslint-loader: ^2.1.0
   eslint-plugin-jsx-a11y: ^6.1.1

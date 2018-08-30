@@ -121,7 +121,7 @@ UsersList.propTypes = {
 const adminStatusDisplay = (adminIds, user) => {
   if (adminIds.includes(user.id)) {
     return " (admin)";
-  } 
+  }
   return "";
 };
 
