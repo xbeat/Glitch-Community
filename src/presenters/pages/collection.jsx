@@ -11,7 +11,7 @@ import ProjectsLoader from '../projects-loader.jsx';
 import Categories from '../categories.jsx';
 
 import PopoverContainer from '../pop-overs/popover-container.jsx';
-import AddProjectPop from '../pop-overs/add-project-pop.jsx';
+import AddCollectionProject from '../includes/add-collection-project.jsx';
 
 const CollectionPageWrap = ({collection, children}) => (
   <React.Fragment>
@@ -67,23 +67,6 @@ async function loadCategory(api, id) {
   data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
   return data;
 }
-
-const AddProject = (props) => (
-  <PopoverContainer>
-    {({visible, togglePopover}) => (
-      <span className="add-project-container">
-        <button onClick={togglePopover} className="button collection-add-project-button">Add Project</button>
-        {visible && 
-          <AddProjectPop 
-            {...props}
-            togglePopover={togglePopover}
-          />
-        }
-      </span>
-    )}
-  </PopoverContainer>
-);
-
   
 
 const CollectionPage = ({api, collection, ...props}) => (
@@ -99,8 +82,9 @@ const CollectionPage = ({api, collection, ...props}) => (
             <React.Fragment>
               <h3 className="collection-project-header">Projects ({collection.projects.length})</h3>
             
-              <AddProject
+              <AddCollectionProject
                 api={api}
+                collectionProjects={collection.projects}
               />
           
               {/*  

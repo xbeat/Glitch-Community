@@ -28,14 +28,14 @@ UserSearchResults.propTypes = {
   action: PropTypes.func.isRequired,
 };
 
-class AddTeamUserPop extends React.Component {
+class AddProjectPop extends React.Component {
   constructor(props) {
     super(props);
     
     this.state = {
       query: '', //The actual search text
       maybeRequest: null, //The active request promise
-      maybeResults: null, //Null means still waiting vs empty -- [jude: i suggest the 'maybe' convention for nullable fields with meaning.  'maybeResults'] --greg: i like it
+      maybeResults: null, //Null means still waiting vs empty 
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -66,7 +66,7 @@ class AddTeamUserPop extends React.Component {
       return this.clearSearch();
     }
     
-    const request = this.props.api.get(`users/search?q=${this.state.query}`);
+    const request = this.props.api.get(`projects/search?q=${this.state.query}`);
     this.setState({ maybeRequest: request });
     
     const {data} = await request;
@@ -107,11 +107,11 @@ class AddTeamUserPop extends React.Component {
   }
 }
 
-AddTeamUserPop.propTypes = {
+AddProjectPop.propTypes = {
   api: PropTypes.func.isRequired,
-  add: PropTypes.func.isRequired,
+  add: PropTypes.func,
   members: PropTypes.arrayOf(PropTypes.number.isRequired),
   togglePopover: PropTypes.func.isRequired,
 };
 
-export default AddTeamUserPop;
+export default AddProjectPop;
