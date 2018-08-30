@@ -205,8 +205,6 @@ class TeamUserRemove extends React.Component {
           )}
         </React.Fragment>
       );
-    } else {
-      projects = null; // <p className="action-description">(they aren't in any projects here)</p>;
     }
     
     return (
@@ -219,14 +217,20 @@ class TeamUserRemove extends React.Component {
           </section>
         </button>
         
-        {!!projects && (
         <section className="pop-over-actions" id="user-team-projects">
-          <p className="action-description">
-            Also remove them from these projects
-          </p>
-          {projects}
+          {projects ? (
+            <React.Fragment>
+              <p className="action-description">
+                Also remove them from these projects
+              </p>
+              {projects}
+            </React.Fragment>
+          ) : (
+            <p className="action-description">
+              They won't be able to join any of this team's projects
+            </p>
+          )}
         </section>
-        )}
         
         <section className="pop-over-actions danger-zone">
           <button className="button-small has-emoji" onClick={this.removeUser}>
