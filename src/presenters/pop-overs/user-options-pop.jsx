@@ -14,7 +14,7 @@ const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another"
 
 
 
-const TeamButton = ({url, name, ...team}) => (
+const TeamItemButton = ({url, name, ...team}) => (
   <a className="button-link" href={`/@${url}`}>
     <div className="button button-small has-emoji button-tertiary">
       <span>{name} </span>
@@ -23,7 +23,7 @@ const TeamButton = ({url, name, ...team}) => (
   </a>
 );
 
-TeamButton.propTypes = {
+TeamItemButton.propTypes = {
   id: PropTypes.number.isRequired,
   hasAvatarImage: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
@@ -70,7 +70,7 @@ const TeamList = ({teams, toggleCreateTeamPop, userIsAnon}) => {
     <section className="pop-over-actions">
       <CreateTeamButton toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
       {teams.map((team) => (
-        <TeamButton key={team.name} {...team} />
+        <TeamItemButton key={team.name} {...team} />
       ))}
     </section>
   );
@@ -164,7 +164,17 @@ UserOptionsPop.propTypes = {
 };
 
 
-export default function UserOptionsPopContainer(props) {
+
+
+
+
+
+
+
+
+
+// delete
+export  function UserOptionsPopContainer(props) {
   const {avatarUrl, avatarStyle, api} = props;
   return (
 
@@ -202,3 +212,56 @@ UserOptionsPopContainer.propTypes = {
   api: PropTypes.func.isRequired,
 };
 
+
+
+// user-options-and-create-team-pop
+
+// User Options or Create Team
+// uses userOptionsVisible state to toggle between showing user info and remove views
+
+export default class TeamUserInfoAndRemovePop extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userOptionsVisible: true
+    };
+    this.toggleUserOptionsVisible = this.toggleUserOptionsVisible.bind(this);
+    this.toggleUserOptionsHidden = this.toggleUserOptionsHidden.bind(this);
+  }
+  
+  toggleUserOptionsHidden() {
+    this.setState({
+      userOptionsVisible: false
+    });
+  }
+
+  toggleUserOptionsVisible() {
+    this.setState({
+      userOptionsVisible: true
+    });
+  }
+  
+  render() {
+    return (
+      <React.Fragment>
+        { this.state.userOptionsVisible ? (
+          <UserInfo
+            {...this.props}
+            toggleUserOptionsHidden={() => this.toggleUserOptionsHidden()}
+          />
+        ) : (
+          <CreateTeam
+            {...this.props}
+            toggleUserOptionsVisible={() => this.toggleUserOptionsVisible()}
+          />
+        )}
+      </React.Fragment>
+    );
+  }
+}
+
+TeamUserInfoAndRemovePop.propTypes = {
+  avatarUrl: PropTypes.string.isRequired,
+  avatarStyle: PropTypes.object.isRequired,
+  api: PropTypes.func.isRequired,
+};
