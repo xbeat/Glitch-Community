@@ -8,7 +8,6 @@ const UserResultItem = ({user, action}) => {
   const {name, login, thanksCount} = user;
   
   const handleClick = (event) => {
-    console.log('💣');
     action(event);
   };
 
