@@ -89,13 +89,13 @@ class AddTeamUserPop extends React.Component {
   render() {
     const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
     return (
-      <dialog className="pop-over add-team-user-pop">
+      <dialog className="pop-over add-collection-project-pop">
         <section className="pop-over-info">
           <input id="team-user-search" 
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}
             className="pop-over-input search-input pop-over-search"
-            placeholder="Search for a user or email"
+            placeholder="Search by project name or URL"
           />
         </section>
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
