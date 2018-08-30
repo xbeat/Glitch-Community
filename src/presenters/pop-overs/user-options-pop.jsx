@@ -174,7 +174,7 @@ UserOptionsPop.propTypes = {
 
 
 // delete
-export  function UserOptionsPopContainer(props) {
+export default function UserOptionsAndCreateTeamPopContainer(props) {
   const {avatarUrl, avatarStyle, api} = props;
   return (
 
@@ -206,7 +206,7 @@ export  function UserOptionsPopContainer(props) {
   );
 }
 
-UserOptionsPopContainer.propTypes = {
+UserOptionsAndCreateTeamPopContainer.propTypes = {
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
   api: PropTypes.func.isRequired,
@@ -214,12 +214,10 @@ UserOptionsPopContainer.propTypes = {
 
 
 
-// user-options-and-create-team-pop
-
 // User Options or Create Team
 // uses userOptionsVisible state to toggle between showing user info and remove views
 
-export default class TeamUserInfoAndRemovePop extends React.Component {
+class UserOptionsAndCreateTeamPop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -245,7 +243,7 @@ export default class TeamUserInfoAndRemovePop extends React.Component {
     return (
       <React.Fragment>
         { this.state.userOptionsVisible ? (
-          <UserInfo
+          <UserOptions
             {...this.props}
             toggleUserOptionsHidden={() => this.toggleUserOptionsHidden()}
           />
@@ -260,7 +258,7 @@ export default class TeamUserInfoAndRemovePop extends React.Component {
   }
 }
 
-TeamUserInfoAndRemovePop.propTypes = {
+UserOptionsAndCreateTeamPop.propTypes = {
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
   api: PropTypes.func.isRequired,
