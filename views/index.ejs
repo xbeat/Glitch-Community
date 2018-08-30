@@ -73,7 +73,9 @@
         } else {
           console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
           var nodes = document.querySelector('noscript').children;
+          console.log(nodes);
           for (var i = 0; i < nodes.length; ++i) {
+            console.log(nodes[i]);
             nodes[i].cloneNode(true).appendChild(document.body);
           }
         }
