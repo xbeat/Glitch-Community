@@ -133,6 +133,10 @@ class CurrentUserManager extends React.Component {
     if (!usersMatch(sharedUser, cachedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
       this.load();
     }
+    
+    // hooks for easier debugging
+    window.currentUser = cachedUser;
+    window.api = this.api();
   }
   
   render() {
