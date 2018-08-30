@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
+import ProjectModel from '../../models/project';
 import UserModel from '../../models/user';
 
 import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
+import ProjectResultItem from '../includes/user-result-item.jsx';
 
 const ProjectSearchResults = ({projects, action}) => (
   (projects.length > 0) ? (
@@ -66,7 +68,7 @@ class AddProjectPop extends React.Component {
       return this.clearSearch();
     }
     
-    const request = this.props.api.get(`projects/search?q=${this.state.query}`);
+    const request = this.props.api.get(`users/search?q=${this.state.query}`);
     this.setState({ maybeRequest: request });
     
     const {data} = await request;
@@ -81,9 +83,9 @@ class AddProjectPop extends React.Component {
     });
   }
   
-  onClick(user) {
+  onClick(project) {
     this.props.togglePopover();
-    this.props.add(user);
+    this.props.add(project);
   }
   
   render() {
