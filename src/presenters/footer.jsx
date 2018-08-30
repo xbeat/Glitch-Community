@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function FooterLine({href, track, children}) {
+const FooterLine = ({href, track, children}) => {
   return <p><a href={href} data-track={'footer → '+track}>{children}</a></p>;
-}
+};
+
 FooterLine.propTypes = {
   href: PropTypes.string.isRequired,
   track: PropTypes.string.isRequired,
