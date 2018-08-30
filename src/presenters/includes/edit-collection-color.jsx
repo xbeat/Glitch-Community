@@ -25,7 +25,8 @@ const EditCollectionColor = ({currentUserIsOwner, ...props}) => {
 
 EditCollectionColor.propTypes = {
   api: PropTypes.func.isRequired,
-  collectionID: PropTypes.number.isRequired
+  collectionID: PropTypes.number.isRequired,
+  currentUserIsOwner: PropTypes.bool.isRequired
 };
 
 export default EditCollectionColor;
