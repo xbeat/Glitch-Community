@@ -15,6 +15,25 @@ import AddCollectionProject from '../includes/add-collection-project.jsx';
 
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
+class CollectionColorWrap extends React.Component { 
+  constructor(props){
+    super(props);
+    this.state = {
+      color: this.props.collection.color
+    };
+  }
+  
+  setColor(newColor){
+    this.setState({
+      color: newColor
+    });
+  }
+  
+  render(){
+    return this.props.children(this.state.color, this.setColor, this.props);
+  }
+};
+
 const CollectionPageWrap = ({collection, api}) => (
   <React.Fragment>
     
@@ -111,7 +130,8 @@ const CollectionPage = ({api, collection, ...props}) => (
       renderError={() => <CollectionPageError collection={collection} {...props}/>}
     >
       {collection => (
-        <CollectionPageWrap collection={collection} api={api} {...props}/>
+        <CollectionColorWrap collection={collection}>
+          <CollectionPageWrap collection={collection} api={api} {...props}/>
       )}
     </DataLoader>
   </Layout>
