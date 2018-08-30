@@ -21,7 +21,7 @@ try {
 } catch (error) {
   passed = false;
   Raven.captureException(error);
-  console.warn("Sorry, but your browser doesn't support recent JS features. You're getting the barebones site");
+  console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
 }
 
 if (passed) {
