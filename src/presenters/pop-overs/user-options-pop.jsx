@@ -85,10 +85,10 @@ TeamList.propTypes = {
 };
 
 
-// User Options Pop
+// User Options
 
-const UserOptionsPop = ({
-  toggleUserOptionsPop,
+const UserOptions = ({
+  togglePopover,
   userLink,
   avatarUrl,
   avatarStyle,
@@ -101,7 +101,7 @@ const UserOptionsPop = ({
   userLogin,
 }) => {
   const clickNewStuff = (event) => {
-    toggleUserOptionsPop();
+    togglePopover();
     showNewStuffOverlay();
     event.stopPropagation();
   };
@@ -151,8 +151,8 @@ const UserOptionsPop = ({
   );
 };
 
-UserOptionsPop.propTypes = {
-  toggleUserOptionsPop: PropTypes.func.isRequired,
+UserOptions.propTypes = {
+  togglePopover: PropTypes.func.isRequired,
   userLink: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string.isRequired,
   avatarStyle: PropTypes.object.isRequired,
@@ -161,29 +161,12 @@ UserOptionsPop.propTypes = {
   userIsAnon: PropTypes.bool.isRequired,
   userName: PropTypes.string,
   userLogin: PropTypes.string,
+  toggleUserOptionsVisible: PropTypes.func.isRequired,
 };
-
-
-
-
-
-
-
-
-
-
-
-
-UserOptionsAndCreateTeamPopContainer.propTypes = {
-  avatarUrl: PropTypes.string.isRequired,
-  avatarStyle: PropTypes.object.isRequired,
-  api: PropTypes.func.isRequired,
-};
-
 
 
 // User Options or Create Team
-// uses userOptionsVisible state to toggle between showing user info and remove views
+// uses userOptionsVisible state to show either user options or create team
 
 class UserOptionsAndCreateTeamPop extends React.Component {
   constructor(props) {
@@ -192,28 +175,21 @@ class UserOptionsAndCreateTeamPop extends React.Component {
       userOptionsVisible: true
     };
     this.toggleUserOptionsVisible = this.toggleUserOptionsVisible.bind(this);
-    this.toggleUserOptionsHidden = this.toggleUserOptionsHidden.bind(this);
   }
   
-  toggleUserOptionsHidden() {
-    this.setState({
-      userOptionsVisible: false
-    });
-  }
-
   toggleUserOptionsVisible() {
-    this.setState({
-      userOptionsVisible: true
-    });
+    this.setState(prevState => ({
+      userOptionsVisible: !prevState.userOptionsVisible
+    }));
   }
-  
+    
   render() {
     return (
       <React.Fragment>
         { this.state.userOptionsVisible ? (
           <UserOptions
             {...this.props}
-            toggleUserOptionsHidden={() => this.toggleUserOptionsHidden()}
+            toggleUserOptionsVisible={() => this.toggleUserOptionsVisible()}
           />
         ) : (
           <CreateTeam
@@ -233,10 +209,11 @@ UserOptionsAndCreateTeamPop.propTypes = {
 };
 
 
+// Header button and init pop
+
 export default function UserOptionsAndCreateTeamPopContainer(props) {
   const {avatarUrl, avatarStyle, api} = props;
   return (
-
     <PopoverContainer>
       {({togglePopover: togglePopover, visible: popVisible}) => (
         <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
@@ -254,3 +231,9 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
     </PopoverContainer>
   );
 }
+
+UserOptionsAndCreateTeamPopContainer.propTypes = {
+  avatarUrl: PropTypes.string.isRequired,
+  avatarStyle: PropTypes.object.isRequired,
+  api: PropTypes.func.isRequired,
+};
