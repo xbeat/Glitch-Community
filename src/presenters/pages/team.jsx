@@ -12,7 +12,7 @@ import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
-// import DeleteTeam from '../includes/delete-team.jsx';
+import DeleteTeam from '../includes/delete-team.jsx';
 import {AddTeamUser, TeamUsers} from '../includes/team-users.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
@@ -191,8 +191,7 @@ class TeamPage extends React.Component {
 
         {/* billing info section goes here */}
 
-        {/* Temporary: enable once team creation is public
-        { currentUserIsTeamAdmin &&
+        { this.props.currentUserIsTeamAdmin &&
           <DeleteTeam api={() => this.props.api}
             teamId={this.props.team.id}
             teamName={this.props.team.name}
@@ -200,7 +199,6 @@ class TeamPage extends React.Component {
             users={this.props.team.users}
           />
         }
-       */}
 
         { !this.props.currentUserIsOnTeam &&
           <TeamMarketing />
