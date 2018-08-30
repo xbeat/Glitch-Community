@@ -41,6 +41,8 @@ const Router = ({api}) => (
     
     <Route path="/@:name" exact render={({match}) => <TeamOrUserPage api={api} name={match.params.name}/>}/>
     
+    <Route path="/@:name/:collection" exact render={({match}) => <CollectionPage api={api} name={match.params.name} collection={match.params.collection}/>}/>
+    
     <Route path="/user/:id(\d+)" exact render={({match}) => <UserPage api={api} id={parseInt(match.params.id, 10)} name={`user ${match.params.id}`}/>}/>
     
     {Object.keys(rootTeams).map(name => (

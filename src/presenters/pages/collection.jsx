@@ -33,15 +33,17 @@ const CollectionPageWrap = ({collection, children, api}) => (
           
           <p className="description">{collection.description}</p>
           
+          {/*
           <EditCollectionColor
             api={api}
             collectionID={collection.id}
             />
-          {/*
+          */}
+          
           <div className="button">
               <div className="collection-color">Color</div>
             </div>
-          */}
+          
         </header>
         {children}
       </article>
