@@ -33,10 +33,6 @@
     <% for (let i = 0; i < styles.length; ++i) { %>
     <link rel="stylesheet" type="text/css" href="<%= styles[i] %>">
     <% } %>
-
-    <% for (let i = 0; i < scripts.length; ++i) { %>
-    <script src="<%= scripts[i] %>" defer></script>
-    <% } %>
   </head>
   <body> 
     <script>
@@ -63,23 +59,22 @@
 
     <script src="https://cdn.ravenjs.com/3.26.2/raven.min.js" crossorigin="anonymous"></script>
     <script>
-      window.addEventListener('load', function () {
-        if (window.bootstrap) {
-          Raven.config('https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508', {
-            environment: '<%= ENVIRONMENT %>',
-            serverName: '<%= PROJECT_DOMAIN %>'
-          }).install();
-          Raven.context(window.bootstrap);
-        } else {
-          console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
-          var nodes = document.querySelector('noscript').children;
-          console.log(nodes);
-          for (var i = 0; i < nodes.length; ++i) {
-            console.log(nodes[i]);
-            nodes[i].cloneNode(true).appendChild(document.body);
-          }
-        }
-      });
+      Raven.config('https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508', {
+        environment: '<%= ENVIRONMENT %>',
+        serverName: '<%= PROJECT_DOMAIN %>'
+      }).install();
+    </script>
+    <% for (let i = 0; i < scripts.length; ++i) { %>
+    <script src="<%= scripts[i] %>"></script>
+    <% } %>
+    <script>
+      if (window.bootstrap) {
+        Raven.context(window.bootstrap);
+      } else {
+        console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
+        var content = document.querySelector('noscript').textContent;
+        document.body.insertAdjacentHTML('beforeend', content);
+      }
     </script>
   </body>
 </html>
