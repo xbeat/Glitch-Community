@@ -19,20 +19,37 @@ class CollectionColorWrap extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      color: this.props.collection.color,
-      backgroundColor: this.props.collection.backgroundColor
+      color: this.props.collection.color
     };
     this.setColor = this.setColor.bind(this);
   }
   
+  static getDerivedStateFromProps(props, state) {
+    // Any time the current user changes,
+    // Reset any parts of state that are tied to that user.
+    // In this simple example, that's just the email.
+    if (props.collection.color !== state.color) {
+      return {
+        color: props.collection.color
+      };
+    }
+    return null;
+  }
+  
   setColor(newColor){
     this.setState({
-      color: newColor,
-      backgroundColor: this.hexToRgbA(newColor)
+      color: newColor
     });
   }
   
-  hexToRgbA(hex){
+
+  
+  render(){
+    return this.props.children(this.state.color, this.setColor);
+  }
+};
+
+const hexToRgbA = (hex) => {
     var c;
     if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
         c= hex.substring(1).split('');
@@ -43,21 +60,16 @@ class CollectionColorWrap extends React.Component {
         return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.4)';
     }
     throw new Error('Bad Hex');
-  }
-  
-  render(){
-    return this.props.children(this.state.backgroundColor, this.state.color, this.setColor);
-  }
-};
+  };
 
-const CollectionPageWrap = ({collection, api, backgroundColor, color, setColor}) => (
+const CollectionPageWrap = ({collection, api, color, setColor}) => (
   <React.Fragment>
     
     <Helmet>
       <title>{collection.name}</title>
     </Helmet>
     <main className="collection-page">
-      <article className="projects" style={{backgroundColor: backgroundColor}}>
+      <article className="projects" style={{backgroundColor: hexToRgbA(color)}}>
         <header className="collection">
           <h1 className="collection-name">{collection.name}</h1>
           <div className="collection-image-container">
