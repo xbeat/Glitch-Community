@@ -14,6 +14,199 @@ const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another"
 
 
 
+class CreateTeam extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      teamName: '',
+      teamUrl: '',
+      isLoading: false,
+      error: ''
+    };
+
+    this.randomDescription = this.randomDescription.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  descriptiveAdjectives() { 
+    return [
+      'charming',
+      'bold',
+      'brave',
+      'cool',
+      'docile',
+      'dope',
+      'faithful',
+      'fertile',
+      'fervent',
+      'forgiving',
+      'genial',
+      'genteel',
+      'grouchy',
+      'hopeful',
+      'humane',
+      'jolly',
+      'joyful',
+      'lunar',
+      'magical',
+      'moral',
+      'mysterious',
+      'mystery',
+      'notorious',
+      'passionate',
+      'preposterous',
+      'quaint',
+      'quirky',
+      'scrumptious',
+      'sensitive',
+      'sober',
+      'tropical',
+      'woeful',
+      'whimsical',
+      'zealous',
+    ];
+  }
+
+  teamSynonyms() {
+    return [
+      'team',
+      'group',
+      'coven',
+      'squad',
+      'crew',
+      'party',
+      'troupe',
+      'band',
+      'posse',
+    ]
+  }
+  
+  componentDidMount() {
+    let initialTeamName = this.randomName()
+    this.setState({
+      teamName: initialTeamName,
+      teamUrl: _.kebabCase(initialTeamName),
+    })
+  }
+  
+  randomDescription() {
+    let adjectives = _.sampleSize(this.descriptiveAdjectives(), 2);
+    return `A ${adjectives[0]} team that makes ${adjectives[1]} things`;
+  }
+  
+  randomName() {
+    let adjective = _.sample(this.descriptiveAdjectives())
+    return `${_.capitalize(adjective)} ${_.sample(this.teamSynonyms())}`
+  }
+  
+  isTeamUrlAvailable(url) {
+    this.props.api.get(`teams/byUrl/${url}`)
+    .then (({data}) => {
+      if (data) {
+        this.setState({
+          error: TEAM_ALREADY_EXISTS_ERROR
+        })
+      } else {
+        this.setState({
+          error: ""
+        })
+      }
+    })
+  }
+  
+  handleChange(newValue) {
+    let url = _.kebabCase(newValue)
+    this.setState({
+      teamName: newValue, 
+      teamUrl: url,
+      error: "",
+    });
+    this.isTeamUrlAvailable(url)
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.setState({ isLoading: true });
+    this.props.api.post(('teams'), {
+      name: this.state.teamName,
+      url: this.state.teamUrl,
+      hasAvatarImage: false,
+      coverColor: '',
+      location: '',
+      description: this.randomDescription(),
+      backgroundColor: '',
+      hasCoverImage: false,
+      isVerified: false,
+    })
+    .then (response => {
+        this.setState({ isLoading: false });
+        window.location = `/@${response.data.url}`;
+      }).catch (() => {
+        this.setState({
+          isLoading: false,
+          error: TEAM_ALREADY_EXISTS_ERROR,
+        });
+      });
+  }
+  
+  render() {
+    return (
+      <dialog className="pop-over create-team-pop">
+        <section className="pop-over-info">
+          <div className="pop-title">
+            <span>Create Team </span>
+            <span className="emoji herb" />
+          </div>
+        </section>
+
+        <section className="pop-over-info">
+          <p className="info-description">
+            Showcase your projects in one place, manage collaborators, and view analytics
+          </p>
+        </section>
+        
+        <section className="pop-over-actions">  
+          <form onSubmit={this.handleSubmit}>
+            <PureEditableField
+              value={this.state.teamName}
+              update={this.handleChange}
+              placeholder='Your Team Name'
+              error={this.state.error}
+            />
+            <p className="action-description team-url-preview">
+            /@{this.state.teamUrl}
+            </p>
+          
+            {this.state.isLoading && 
+            <Loader />
+          ||
+            <button type="submit" className="button-small has-emoji">
+              <span>Create Team </span>
+              <span className="emoji thumbs_up" />
+            </button>
+            }
+          </form>
+
+        </section>
+        <section className="pop-over-info">
+          <p className="info-description">
+            You can change this later
+          </p>
+        </section>
+      </dialog>
+    );
+  }
+}
+
+CreateTeam.propTypes = {
+  api: PropTypes.func.isRequired,
+  toggleUserOptionsVisible: PropTypes.func.isRequired,
+};
+
+
+// Team Item
+
 const TeamItemButton = ({url, name, ...team}) => (
   <a className="button-link" href={`/@${url}`}>
     <div className="button button-small has-emoji button-tertiary">
@@ -33,7 +226,7 @@ TeamItemButton.propTypes = {
 
 // Create Team button
 
-const CreateTeamButton = ({toggleCreateTeamPop, userIsAnon}) => {
+const CreateTeamButton = ({toggleUserOptionsVisible, userIsAnon}) => {
   if (userIsAnon === true) {
     return (
       <React.Fragment>
@@ -49,7 +242,7 @@ const CreateTeamButton = ({toggleCreateTeamPop, userIsAnon}) => {
     );
   }
   return (
-    <button onClick={toggleCreateTeamPop} className="button button-small has-emoji button-tertiary">
+    <button onClick={toggleUserOptionsVisible} className="button button-small has-emoji button-tertiary">
       <span>Create Team </span>
       <span className="emoji herb" />
     </button>
@@ -57,18 +250,18 @@ const CreateTeamButton = ({toggleCreateTeamPop, userIsAnon}) => {
 };
 
 CreateTeamButton.propTypes = {
-  toggleCreateTeamPop: PropTypes.func.isRequired,
+  toggleUserOptionsVisible: PropTypes.func.isRequired,
   userIsAnon: PropTypes.bool.isRequired,
 };
 
 
 // Team List
 
-const TeamList = ({teams, toggleCreateTeamPop, userIsAnon}) => {
+const TeamList = ({teams, toggleUserOptionsVisible, userIsAnon}) => {
   // const hasTeams = teams && teams.length;
   return (!!teams.length &&
     <section className="pop-over-actions">
-      <CreateTeamButton toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
+      <CreateTeamButton toggleUserOptionsVisible={toggleUserOptionsVisible} userIsAnon={userIsAnon} />
       {teams.map((team) => (
         <TeamItemButton key={team.name} {...team} />
       ))}
@@ -80,7 +273,7 @@ TeamList.propTypes = {
   teams: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
   })),
-  toggleCreateTeamPop: PropTypes.func.isRequired,
+  toggleUserOptionsVisible: PropTypes.func.isRequired,
   userIsAnon: PropTypes.bool.isRequired,
 };
 
@@ -95,7 +288,7 @@ const UserOptions = ({
   teams,
   signOut,
   showNewStuffOverlay,
-  toggleCreateTeamPop,
+  toggleUserOptionsVisible,
   userIsAnon,
   userName,
   userLogin,
@@ -123,14 +316,16 @@ const UserOptions = ({
           <div className="info-container">
             <p className="name" title={userName}>{userName}</p>
             { userLogin &&
-                <p className="user-login" title={userLogin}>@{userLogin}</p>
+              <p className="user-login" title={userLogin}>@{userLogin}</p>
             }
           </div>
         </section>
       </a>
-
-      <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
-
+      <TeamList 
+        teams={teams} 
+        toggleUserOptionsVisible={toggleUserOptionsVisible} 
+        userIsAnon={userIsAnon} 
+      />
       <section className="pop-over-info section-has-tertiary-buttons">
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
           <span>New Stuff </span>
@@ -141,7 +336,7 @@ const UserOptions = ({
             <span>Support </span>
             <span className="emoji ambulance"></span>
           </div>
-        </a>        
+        </a>
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickSignout}>
           <span>Sign Out</span>
           <span className="emoji balloon"></span>
