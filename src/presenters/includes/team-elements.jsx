@@ -9,7 +9,7 @@ export const TeamMarketing = () => {
         <img className="for-platforms-icon" src={forPlatformsIcon} alt="fishing emoji"></img>
         <span>Want your own team page, complete with detailed app analytics?</span>
       </p>
-      <a href="https://glitch.com/forteams">
+      <a href="/forteams">
         <button className="button has-emoji">
           About Teams 
           <span className="emoji fishing_pole" role="img" aria-label="emoji" />
