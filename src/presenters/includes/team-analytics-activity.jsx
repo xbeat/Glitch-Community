@@ -1,40 +1,58 @@
+// transforms the individual data points (buckets) we get from the api into grouped 'bins' of data
+// each bin is then rendered as a point on the graph
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import _ from 'lodash';
+import groupByTime from 'group-by-time';
 import * as d3Array from 'd3-array';
 
-const binData = d3Array.histogram().value(function(data) {
-  return data['@timestamp'];
-});
-
-const createHistogram = (buckets) => {
-  let data = binData(buckets);
+const createHistogram = (bins) => {
   let histogram = [];
-  data.forEach (bin => {
-    let uniqueAppViews = 0;
+  bins = bins || [];
+  bins.forEach (bin => {
+    let totalAppViews = 0;
     let totalRemixes = 0;
+    let timestamp = undefined;
     // let codeViews = []
     bin.forEach (data => {
+      if (!timestamp) {
+        timestamp = data['@timestamp'];
+      }
       totalRemixes += data.analytics.remixes;
-      uniqueAppViews += data.analytics.uniqueIps;
+      totalAppViews += data.analytics.requests;
       // referrers.push(data.analytics.referrers)
     });
     histogram.push({
-      time: bin.x0,
-      appViews: uniqueAppViews,
+      time: timestamp,
+      appViews: totalAppViews,
       remixes: totalRemixes,
     });
   });
   return histogram;
 };
 
-const chartColumns = (analytics) => {
+const groupByRegularIntervals = d3Array.histogram().value(function(data) {
+  return data['@timestamp'];
+});
+
+const createBins = (buckets, currentTimeFrame) => {
+  if (currentTimeFrame === "Last 24 Hours") {
+    return groupByRegularIntervals(buckets);
+  } 
+  let bins = groupByTime(buckets, '@timestamp', 'day'); // supports 'day', 'week', 'month'
+  return Object.values(bins); 
+  
+};
+
+const chartColumns = (analytics, currentTimeFrame) => {
   const buckets = analytics.buckets;
-  let histogram = createHistogram(buckets);
+  let bins = createBins(buckets, currentTimeFrame);
+  let histogram = createHistogram(bins);
   let timestamps = ['x'];
   let remixes = ['Remixes'];
-  let appViews = ['Unique App Views'];
+  let appViews = ['Total App Views'];
   // let codeViews = ['Code Views']
   histogram.shift();
   histogram.forEach(bucket => {
@@ -55,7 +73,7 @@ const dateFormat = (currentTimeFrame) => {
 const renderChart = (c3, analytics, currentTimeFrame) => {
   let columns = [];
   if (!_.isEmpty(analytics)) {
-    columns = chartColumns(analytics);
+    columns = chartColumns(analytics, currentTimeFrame);
   }
   
   // eslint-disable-next-line no-unused-vars
@@ -73,10 +91,6 @@ const renderChart = (c3, analytics, currentTimeFrame) => {
         type: 'timeseries',
         tick: {
           format: dateFormat(currentTimeFrame),
-          fit: true,
-          culling: {
-            max: 12
-          },
         }
       },
     },

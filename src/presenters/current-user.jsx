@@ -133,6 +133,10 @@ class CurrentUserManager extends React.Component {
     if (!usersMatch(sharedUser, cachedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
       this.load();
     }
+    
+    // hooks for easier debugging
+    window.currentUser = cachedUser;
+    window.api = this.api();
   }
   
   render() {
@@ -140,7 +144,7 @@ class CurrentUserManager extends React.Component {
     const {fetched} = this.state;
     return children({
       api: this.api(),
-      currentUser: cachedUser,
+      currentUser: cachedUser ? UserModel(cachedUser).asProps() : null,
       fetched,
       reload: () => this.load(),
       login: user => setSharedUser(user),
@@ -168,7 +172,7 @@ const cleanUser = (user) => {
     Raven.captureMessage("Invalid cachedUser", {extra: {user}});
     return null;
   }
-  return UserModel(user).asProps();
+  return user;
 };
 
 export const CurrentUserProvider = ({children}) => (

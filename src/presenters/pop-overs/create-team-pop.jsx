@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Loader from '../includes/loader.jsx';
-import EditableField from '../includes/editable-field.jsx';
+import {PureEditableField} from '../includes/editable-field.jsx';
 
 class CreateTeamPop extends React.Component {
   constructor(props) {
@@ -100,7 +100,7 @@ class CreateTeamPop extends React.Component {
   render() {
     return (
       <dialog className="pop-over create-team-pop">
-        <button className="pop-over-info clickable-label" onClick={() => this.props.toggleUserOptionsPop()}>
+        <div className="pop-over-info clickable-label" role="button" tabIndex={0} onClick={() => this.props.toggleUserOptionsPop()} onKeyDown={this.handleClick}>
           <div className="back icon">
             <div className="left-arrow icon" />
           </div>
@@ -108,7 +108,7 @@ class CreateTeamPop extends React.Component {
             <span>Create Team </span>
             <span className="emoji herb" />
           </div>
-        </button>
+        </div>
 
         <section className="pop-over-info">
           <p className="info-description">
@@ -118,10 +118,10 @@ class CreateTeamPop extends React.Component {
         <section className="pop-over-actions">
           
           <form onSubmit={this.handleSubmit}>
-            <EditableField 
-              value="Team Rocket" 
-              update={this.handleChange} 
-              placeholder='Your Team Name' 
+            <PureEditableField
+              value="Team Rocket"
+              update={this.handleChange}
+              placeholder='Your Team Name'
               //fieldOnlyUpdatesOnSubmit={true}
               submitError={this.state.errorMessage}
             />
