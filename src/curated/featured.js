@@ -17,7 +17,7 @@ export default [
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fboxmaker.png?1535971898294",
     link: 'https://glitch.com/~box-maker'
   },{
-    title: 'Live Code Visuals',
+    title: 'Live Coded Visuals',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhydra.png?1535971898489",
     link: 'https://glitch.com/~hydra-editor-v1'
   }, {
