@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 
 export const Link = ({href, children, ...props}) => (
-  <Link to={href} {...props}>{children}</Link>
+  <RouterLink to={href} {...props}>{children}</RouterLink>
 );
 
 Link.propTypes = {

@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getAvatarUrl} from '../../models/team';
-import Link
+import {getAvatarUrl, getLink as getTeamLink} from '../../models/team';
+import Link from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
 import CreateTeamPop from './create-team-pop.jsx';
 
 
-const TeamButton = ({url, name, ...team}) => (
-  <a className="button-link" href={`/@${url}`}>
+const TeamButton = (team) => (
+  <Link className="button-link" href={getTeamLink(team)}>
     <div className="button button-small has-emoji button-tertiary">
-      <span>{name} </span>
-      <img className="emoji avatar" src={getAvatarUrl({...team, size:'small'})} alt={`${name} team avatar`} width="16px" height="16px"/>
+      {team.name}&nbsp;
+      <img className="emoji avatar" src={getAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
     </div>
-  </a>
+  </Link>
 );
 
 TeamButton.propTypes = {
@@ -113,7 +113,7 @@ const UserOptionsPop = ({
 
   return (
     <dialog className="pop-over user-options-pop">
-      <a href={userLink} className="user-info">
+      <Link href={userLink} className="user-info">
         <section className="pop-over-actions user-info">
           <img className="avatar" src={avatarUrl} alt="Your avatar" style={avatarStyle}/>
           <div className="info-container">
@@ -123,7 +123,7 @@ const UserOptionsPop = ({
             }
           </div>
         </section>
-      </a>
+      </Link>
 
       <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
 
