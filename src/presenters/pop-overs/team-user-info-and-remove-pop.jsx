@@ -227,7 +227,7 @@ class TeamUserRemove extends React.Component {
             </React.Fragment>
           ) : (
             <p className="action-description">
-              They won't be able to join any of this team's projects
+              {getDisplayName(this.props.user)} is not a member of any projects
             </p>
           )}
         </section>
