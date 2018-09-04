@@ -50,6 +50,8 @@ class EditColorColorPop extends React.Component {
             />
           ))}
           
+          <hr/>
+          
           <input id="color-picker" 
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}
