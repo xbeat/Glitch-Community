@@ -3,13 +3,24 @@ import PropTypes from 'prop-types';
 
 import { Link as RouterLink } from 'react-router-dom';
 
-const isSameDomain = (a, b) => (
-  
+const isNewDomain = (a, b) => (
+  a.origin === b.origin
+);
+
+const proxied = new Set([]);
+const isProxied = (url) => (
+  proxied.has(url.pathname)
 );
 
 export const Link = ({href, children, ...props}) => {
-  const hrefUrl = new URL(href, window.location.href);
-  <RouterLink to={href} {...props}>{children}</RouterLink>
+  const currentUrl = new URL(window.location.href);
+  const targetUrl = new URL(href, currentUrl);
+  
+  if (isNewDomain(targetUrl, currentUrl) || isProxied(targetUrl)) {
+    return <a href={href} {...props}>{children}</a>;
+  }
+  
+  return <RouterLink to={href} {...props}>{children}</RouterLink>;
 };
 
 Link.propTypes = {

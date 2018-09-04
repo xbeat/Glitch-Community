@@ -132,12 +132,12 @@ const UserOptionsPop = ({
           <span>New Stuff </span>
           <span className="emoji dog-face"></span>
         </button>
-        <a className="button-link" href="https://support.glitch.com">
+        <Link className="button-link" href="https://support.glitch.com">
           <div className="button button-small has-emoji button-tertiary button-on-secondary-background">
             <span>Support </span>
             <span className="emoji ambulance"></span>
           </div>
-        </a>        
+        </Link>        
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickSignout}>
           <span>Sign Out</span>
           <span className="emoji balloon"></span>
