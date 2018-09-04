@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import moment from 'moment-mini';
 import {getAvatarThumbnailUrl, getLink} from '../models/user';
+import Link from './includes/link.jsx';
 
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
@@ -50,9 +51,9 @@ class Logo extends React.PureComponent {
 }
 
 const ResumeCoding = () => (
-  <a className="button button-small button-cta" href={EDITOR_URL} data-track="resume coding">
+  <Link className="button button-small button-cta" href={EDITOR_URL} data-track="resume coding">
     <div className="">Resume Coding</div>
-  </a>
+  </Link>
 );
 
 const submitSearch = (event) => {
@@ -109,9 +110,9 @@ const Header = ({api, maybeUser, clearUser, searchQuery, showNewStuffOverlay}) =
   return (
     <header role="banner">
       <div className="header-info">
-        <a href="/">
+        <Link href="/">
           <Logo/>
-        </a>
+        </Link>
       </div>
 
       <nav>

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getAvatarUrl} from '../../models/team';
+import Link
 import PopoverContainer from './popover-container.jsx';
 import CreateTeamPop from './create-team-pop.jsx';
 
