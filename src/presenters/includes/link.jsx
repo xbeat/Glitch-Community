@@ -4,10 +4,18 @@ import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 
 const isNewDomain = (a, b) => (
-  a.origin === b.origin
+  a.origin !== b.origin
 );
 
-const proxied = new Set([]);
+const proxied = new Set([
+  'help', 'featured', 'about', 'legal', 'faq',
+  'react-starter-kit',
+  'website-starter-kit',
+  'forteams',
+  'forplatforms',
+  'you-got-this',
+  'email-sales',
+]);
 const isProxied = (url) => (
   proxied.has(url.pathname)
 );
