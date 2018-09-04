@@ -7,6 +7,7 @@ const isNewDomain = (a, b) => (
   a.origin !== b.origin
 );
 
+// This should be provided by the server
 const proxied = new Set([
   'help', 'featured', 'about', 'legal', 'faq',
   'react-starter-kit',
@@ -17,7 +18,7 @@ const proxied = new Set([
   'email-sales',
 ]);
 const isProxied = (url) => (
-  proxied.has(url.pathname)
+  proxied.has(url.pathname.slice(1).split('/')[0])
 );
 
 export const Link = ({href, children, ...props}) => {
