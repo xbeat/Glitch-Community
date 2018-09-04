@@ -5,7 +5,7 @@ import {getAvatarUrl} from  '../../models/project';
 import UsersList from '../users-list.jsx';
 
 const ProjectResultItem = ({id, domain, description, users, action, isActive}) => {
-  var resultClass = "button-unstyled result ";
+  var resultClass = "button-unstyled result result-project";
   if(isActive) {
     resultClass += " active";
   }
@@ -13,10 +13,17 @@ const ProjectResultItem = ({id, domain, description, users, action, isActive}) =
   return (
     <button className={resultClass} onClick={action} data-project-id={id}>
       <img className="avatar" src={getAvatarUrl(id)} alt={`Project avatar for ${domain}`}/>
-      <div className="result-name" title={domain}>{domain}</div>
-      
-      { description.length > 0 && <div className="result-description">{description}</div> }
-      { users.length > 0 && <UsersList users={users} /> }
+      <div className="results-info">
+        <div className="result-name" title={domain}>{domain}</div>
+        { description.length > 0 && <div className="result-description">{description}</div> }
+        { users.length > 0 && <UsersList users={users} /> }
+      </div>
+      <a href={`/~${domain}`} className="view-project-link">
+        <button className="view-project button-small button-docs">
+          View →
+        </button>
+      </a>
+        
     </button>
   );
 };
