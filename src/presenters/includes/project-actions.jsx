@@ -54,17 +54,6 @@ RemixButton.propTypes = {
   className: PropTypes.string,
 };
 
-export const AddToCollectionButton = ({name, className, ...props}) => (
-  <ButtonLink href={getRemixUrl(name)} className={`has-emoji ${className}`} {...props}>
-    Add to Collection {' '}
-    <span className="emoji framed-picture" role="presentation"></span>
-  </ButtonLink>
-);
-RemixButton.propTypes = {
-  name: PropTypes.string.isRequired,
-  className: PropTypes.string,
-};
-
 export const ReportButton = ({name, id, ...props}) => {
   const support = 'support@glitch.com';
   const subject = `[Glitch] I want to report ${name}`;
