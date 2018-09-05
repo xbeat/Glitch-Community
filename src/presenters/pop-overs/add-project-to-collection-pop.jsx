@@ -117,17 +117,18 @@ class AddProjectToCollection extends React.Component {
           <section class="pop-over-actions results-list">
             <ul class="results">
               <li>
-               <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} isActive={false} action={() => null} />
+               <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={() => null} />
               </li>
             </ul>
           </section>
           <section className="pop-over-info">
             <input id="collection-name"  
-              autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+              no-autoFocus // eslint-disable-line jsx-a11y/no-autofocus
               value={this.state.query} onChange={this.handleChange}
               className="pop-over-input create-input"
               placeholder="New Collection Name"
             />
+            {/* TO DO: Actually create a new collection here */}
             <button className="create-collection button-small">
               Create
             </button>

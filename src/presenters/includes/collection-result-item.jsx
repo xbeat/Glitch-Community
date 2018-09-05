@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {getAvatarUrl} from  '../../models/project';
 import UsersList from '../users-list.jsx';
 
-const CollectionResultItem = ({id, domain, description, action, isActive, avatarUrl}) => {
+const CollectionResultItem = ({id, domain, description, action, isActive, avatarUrl, url}) => {
   var resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
@@ -17,7 +17,7 @@ const CollectionResultItem = ({id, domain, description, action, isActive, avatar
         <div className="result-name" title={domain}>{domain}</div>
         { description.length > 0 && <div className="result-description">{description}</div> }
       </div>
-      <a href={`/~${domain}`} className="view-project-link" target="_blank">
+      <a href={`/${url}`} className="view-project-link" target="_blank">
         <button className="view-project button-small button-docs">
           View →
         </button>
@@ -35,6 +35,7 @@ CollectionResultItem.propTypes = {
   users: PropTypes.array.isRequired,
   isActive: PropTypes.bool,
   avatarUrl: PropTypes.string,
+  url: PropTypes.string
 };
 
 export default CollectionResultItem;
