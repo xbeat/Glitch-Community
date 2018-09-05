@@ -84,7 +84,14 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
             <img src={collection.avatarUrl} alt=""/>
           </div>
            <div className="button button-tertiary">
-            <div className="collection-avatar">Replace Avatar</div>
+             {isAuthorized 
+               ? <div className="upload-image-buttons">
+                   <button className="button button-small button-tertiary" onClick={null}>
+                     <span>Replace Avatar</span>  
+                   </button>
+                 </div>
+               : null
+             }
           </div>
           
           <p className="description">
