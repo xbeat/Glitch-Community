@@ -66,7 +66,7 @@ const hexToRgbA = (hex) => {
     throw new Error('Bad Hex');
   };
 
-const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, updateName, updateDescription}) => (
+const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, updateName, updateDescription, removeProject, projectOptions}) => (
   <React.Fragment>
     
     <Helmet>
@@ -124,15 +124,17 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
             <React.Fragment>
               <h3 className="collection-project-header">Projects ({collection.projects.length})</h3>
             
-          {/* TO DO - CHECK IF CURRENT USER IS OWNER OF COLLECTION */}
-              <AddCollectionProject
-                api={api}
-                collectionProjects={collection.projects}
-                currentUserIsOwner={true}
-                myProjects= {[]}
-              />
+            {(isAuthorized 
+              ? <AddCollectionProject
+                  api={api}
+                  collectionProjects={collection.projects}
+                  currentUserIsOwner={true}
+                  myProjects= {[]}
+                />
+              : null
+            )}
           
-              <ProjectsUL projects={projects} categoryColor={color}/>
+              <ProjectsUL projects={projects} categoryColor={color} projectOptions={{removeProject}}/>
             </React.Fragment>
           }
         </ProjectsLoader>
@@ -153,6 +155,8 @@ CollectionPageWrap.propTypes = {
   isAuthorized: PropTypes.any.isRequired,
   api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
+  projectOptions: PropTypes.object.isRequired,
+  removeProject: PropTypes.func.isRequired
 };
 
 const CollectionPageLoader = ({...props}) => (

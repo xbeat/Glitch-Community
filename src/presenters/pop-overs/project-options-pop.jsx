@@ -55,6 +55,7 @@ const ProjectOptionsPop = ({...props}) => {
       <section className="pop-over-actions">
         {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
         {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
+        {!!props.removeProject && <PopoverButton onClick={null} text="Remove Project " emoji="bomb"/>}
       </section>
 
       {(props.joinTeamProject && props.leaveTeamProject) &&
@@ -91,6 +92,7 @@ ProjectOptionsPop.propTypes = {
   addPin: PropTypes.func,
   removePin: PropTypes.func,
   deleteProject: PropTypes.func,
+  removeProject: PropTypes.func,
   leaveProject: PropTypes.func,
   removeProjectFromTeam: PropTypes.func,
   joinTeamProject: PropTypes.func,
