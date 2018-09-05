@@ -2,16 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getShowUrl, getEditorUrl, getRemixUrl } from '../../models/project';
+import Link from './link.jsx';
 
 const showIcon = "https://cdn.gomix.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg";
 
 const ButtonLink = ({href, children, className, onClick}) => (
-  <a
+  <Link
     href={href} onClick={onClick}
     className={`button button-link ${className}`}
   >
     {children}
-  </a>
+  </Link>
 );
 ButtonLink.propTypes = {
   href: PropTypes.string.isRequired,

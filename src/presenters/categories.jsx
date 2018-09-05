@@ -1,6 +1,8 @@
 import React from 'react';
 
 import categories from '../curated/categories';
+
+import Link from './includes/link.jsx';
   
 const Categories = () => (
   <section className="categories" role="navigation">

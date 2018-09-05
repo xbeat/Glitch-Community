@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Link from './includes/link.jsx';
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import Thanks from './includes/thanks.jsx';
 
@@ -13,7 +14,7 @@ function addDefaultSrc(event) {
 export default function UserItem({user}) {
   const style = getProfileStyle({...user, size: 'medium'});
   return (
-    <a href={getLink(user)}>
+    <Link href={getLink(user)}>
       <div className="item" style={style}>
         <div className="content">
           <img onError={addDefaultSrc} className="avatar" src={getAvatarUrl(user)} alt=""></img>
@@ -25,7 +26,7 @@ export default function UserItem({user}) {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Link from './includes/link.jsx';
 import PopoverContainer from './pop-overs/popover-container.jsx';
 import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName, getLink} from '../models/user.js';
 
@@ -64,9 +65,9 @@ StaticUsersList.propTypes = {
 // UserTile
 
 const UserTile = (user) => (
-  <a href={getLink(user)} className="user" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
+  <Link href={getLink(user)} className="user" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
     <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
-  </a>
+  </Link>
 );
 UserTile.propTypes = {
   id: PropTypes.number.isRequired,

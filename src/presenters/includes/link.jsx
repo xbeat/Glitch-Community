@@ -8,7 +8,8 @@ const isNewDomain = (a, b) => (
 );
 
 // This should be provided by the server
-const proxied = new Set([
+const external = new Set([
+  'edit',
   'help', 'featured', 'about', 'legal', 'faq',
   'react-starter-kit',
   'website-starter-kit',
@@ -17,15 +18,15 @@ const proxied = new Set([
   'you-got-this',
   'email-sales',
 ]);
-const isProxied = (url) => (
-  proxied.has(url.pathname.slice(1).split('/')[0])
+const isExternal = (url) => (
+  external.has(url.pathname.slice(1).split('/')[0])
 );
 
 export const Link = ({href, children, ...props}) => {
   const currentUrl = new URL(window.location.href);
   const targetUrl = new URL(href, currentUrl);
   
-  if (isNewDomain(targetUrl, currentUrl) || isProxied(targetUrl)) {
+  if (isNewDomain(targetUrl, currentUrl) || isExternal(targetUrl)) {
     return <a href={href} {...props}>{children}</a>;
   }
   
