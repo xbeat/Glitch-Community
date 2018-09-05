@@ -16,6 +16,8 @@ import {AuthDescription} from '../includes/description-field.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 import AddCollectionProject from '../includes/add-collection-project.jsx';
 
+import * as assets from '../utils/assets';
+
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
 class CollectionColorWrap extends React.Component { 
@@ -83,6 +85,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
           <div className="collection-image-container">
             <img src={collection.avatarUrl} alt=""/>
           </div>
+              {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
              {isAuthorized 
                ? <div className="upload-image-buttons">
                    <button className="button button-small button-tertiary" onClick={null}>
