@@ -17,7 +17,7 @@ const Layout = ({children, api, searchQuery}) => (
     {children}
     <Footer/>
     <Konami>
-      <Redirect to={"/secret"} push={true}/>
+      <Redirect to="/secret" push={true}/>
     </Konami>
   </div>
 );
