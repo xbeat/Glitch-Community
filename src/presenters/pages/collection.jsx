@@ -16,8 +16,6 @@ import {AuthDescription} from '../includes/description-field.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 import AddCollectionProject from '../includes/add-collection-project.jsx';
 
-import * as assets from '../utils/assets';
-
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
 class CollectionColorWrap extends React.Component { 
@@ -134,7 +132,12 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
               : null
             )}
           
-              <ProjectsUL projects={projects} categoryColor={color} projectOptions={projectOptions} {...props}/>
+              <ProjectsUL projects={projects} categoryColor={color} 
+                projectOptions={{
+                    removeProjectFromCollection: this.props.removeProject
+                }} 
+                {...props}/>
+          
             </React.Fragment>
           }
         </ProjectsLoader>
@@ -155,8 +158,7 @@ CollectionPageWrap.propTypes = {
   isAuthorized: PropTypes.any.isRequired,
   api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
-  projectOptions: PropTypes.object.isRequired,
-  removeProjectFromCollection: PropTypes.func.isRequired
+  projectOptions: PropTypes.object.isRequired
 };
 
 const CollectionPageLoader = ({...props}) => (
@@ -174,7 +176,7 @@ async function loadCategory(api, id) {
 }
   
 
-const CollectionPage = ({api, collection, ...props}) => (
+const CollectionPage = ({api, collection, removeProject, ...props}) => (
   <Layout api={api}>
     <DataLoader
       get={() => loadCategory(api, collection.id)}
