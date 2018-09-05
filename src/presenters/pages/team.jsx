@@ -73,7 +73,7 @@ class TeamPage extends React.Component {
   
   userCanJoinTeam() {
     const {currentUser, team} = this.props;
-    if (!this.props.currentUserIsOnTeam && team.whitelistedDomain && currentUser) {
+    if (!this.props.currentUserIsOnTeam && team.whitelistedDomain && currentUser && currentUser.emails) {
       return currentUser.emails.some(({email, verified}) => verified && email.endsWith(`@${team.whitelistedDomain}`));
     }
     return false;
