@@ -23,7 +23,7 @@ const external = new Set([
   'email-sales',
 ]);
 const isExternal = (url) => (
-  external.has(url.pathname.replace(/^\/*([^\/]+).*$/, '$1'))
+  external.has(url.pathname.replace(/^[/]*([^/]+).*$/, '$1'))
 );
 
 export const Link = ({href, children, ...props}) => {
