@@ -83,7 +83,6 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
           <div className="collection-image-container">
             <img src={collection.avatarUrl} alt=""/>
           </div>
-           <div className="button button-tertiary">
              {isAuthorized 
                ? <div className="upload-image-buttons">
                    <button className="button button-small button-tertiary" onClick={null}>
@@ -92,7 +91,6 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
                  </div>
                : null
              }
-          </div>
           
           <p className="description">
             {/* TO DO: actually update description */}
