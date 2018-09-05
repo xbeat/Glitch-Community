@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(compression());
 
-const {redirects} = require('./redirects');
+const redirects = require('./redirects');
 redirects(app);
 
 const proxy = require('./proxy');
@@ -37,6 +37,6 @@ app.use(function(req, res, next) {
 });
 
 // Listen on App port
-var listener = app.listen(process.env.PORT, () => {
+const listener = app.listen(process.env.PORT, () => {
   console.log(`Your app is listening on port ${listener.address().port}.`);
 });
