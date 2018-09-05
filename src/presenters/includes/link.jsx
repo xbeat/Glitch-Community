@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 import { Link as RouterLink } from 'react-router-dom';
 
+import { getLink as getProjectLink } from '../../models/project';
+import { getLink as getTeamLink } from '../../models/team';
+import { getLink as getUserLink } from '../../models/user';
+
 const isNewDomain = (a, b) => (
   a.origin !== b.origin
 );
@@ -37,5 +41,17 @@ Link.propTypes = {
   href: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
+
+export const ProjectLink = ({project, children, ...props}) => (
+  <Link href={getProjectLink(project)} {...props}>{children}</Link>
+);
+
+export const TeamLink = ({team, children, ...props}) => (
+  <Link href={getTeamLink(team)} {...props}>{children}</Link>
+);
+
+export const UserLink = ({user, children, ...props}) => (
+  <Link href={getUserLink(user)} {...props}>{children}</Link>
+);
 
 export default Link;

@@ -3,6 +3,7 @@ import React from 'react';
 
 import {getAvatarUrl, getLink, getProfileStyle} from '../models/team';
 
+import Link from './includes/link.jsx';
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import Thanks from './includes/thanks.jsx';
 import UsersList from './users-list.jsx';
@@ -18,7 +19,7 @@ export default function TeamItem({team}) {
       <div className="content">
         <img className="avatar" src={getAvatarUrl(team)} alt="" />
         <div className="information">
-          <a href={link} className="button">{team.name}</a>
+          <Link href={link} className="button">{team.name}</Link>
           {!!team.isVerified && <VerifiedBadge/>}
           <UsersList users={team.users} />
           {thanksCount > 0 && <Thanks count={thanksCount} />}

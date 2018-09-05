@@ -8,6 +8,7 @@ import {getDisplayName, getLink as getUserLink, getProfileStyle as getUserProfil
 
 import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
+import Link from './link.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 
 const PROJECT_COUNT = 3;
@@ -73,6 +74,7 @@ class RelatedProjects extends React.Component {
         {teams.map(({id, name, url, ...team}) => (
           <li key={id}>
             <RelatedProjectsHeader name={name} url={`/@${url}`}/>
+            <h2><TeamLink team</h2>
             <DataLoader get={() => this.getProjects(id, getTeamPins, getTeam)}>
               {projects => <RelatedProjectsBody projects={projects} coverStyle={getTeamProfileStyle({id, ...team})}/>}
             </DataLoader>
