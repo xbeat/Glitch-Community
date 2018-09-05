@@ -73,8 +73,18 @@ class AddCollectionProjectPop extends React.Component {
     // Project URL pattern: https://glitch.com/~power-port, https://power-port.glitch.me/
     var httpsKeyword = "https://";
     var glitchKeyword = "glitch";
-    if(this.state.query.includes(httpsKeyword) && this.state.query.includes(glitchKeyword)
-    
+    console.log(this.state.query);
+    if(this.state.query.includes(httpsKeyword) && this.state.query.includes(glitchKeyword)){
+      // get project domain
+      if(this.state.query.includes("me")){
+        this.state.query = this.state.query.substring(this.state.query.indexOf("https://"
+        
+      }else if(this.state.query.includes("~")){
+        this.state.query = this.state.query.substring(this.state.query.indexOf("~")+1);
+      }
+    }else{
+      // search by project name
+    }
     
     
     const request = this.props.api.get(`projects/search?q=${this.state.query}`);
