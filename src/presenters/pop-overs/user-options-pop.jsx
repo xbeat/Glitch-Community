@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getAvatarUrl, getLink as getTeamLink} from '../../models/team';
-import Link from '../includes/link.jsx';
+import {getAvatarUrl} from '../../models/team';
+import {Link, TeamLink} from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
 import CreateTeamPop from './create-team-pop.jsx';
 
 
 const TeamButton = (team) => (
-  <Link className="button-link" href={getTeamLink(team)}>
+  <TeamLink team={team} className="button-link">
     <div className="button button-small has-emoji button-tertiary">
       {team.name}&nbsp;
       <img className="emoji avatar" src={getAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
     </div>
-  </Link>
+  </TeamLink>
 );
 
 TeamButton.propTypes = {
