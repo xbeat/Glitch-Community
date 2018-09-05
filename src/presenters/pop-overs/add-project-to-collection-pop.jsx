@@ -112,19 +112,25 @@ class AddProjectToCollection extends React.Component {
   render() {
     const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
     return (
-      <dialog className="pop-over add-project-to-collection-pop">
-        <section className="pop-over-info">
+      <dialog className="pop-over add-project-to-collection-pop wide-pop">
           {/* TO DO: Replace category with user's collections */}
-           <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} isActive={false} action={() => null} />
-          <input id="collection-name"  
-            autoFocus // eslint-disable-line jsx-a11y/no-autofocus
-            value={this.state.query} onChange={this.handleChange}
-            className="pop-over-input create-input"
-            placeholder="New Collection Name"
-          />
-          <button className="create-collection button-small">
-            Create
-          </button>
+          <section class="pop-over-actions results-list">
+            <ul class="results">
+              <li>
+               <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} isActive={false} action={() => null} />
+              </li>
+            </ul>
+          </section>
+          <section className="pop-over-info">
+            <input id="collection-name"  
+              autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+              value={this.state.query} onChange={this.handleChange}
+              className="pop-over-input create-input"
+              placeholder="New Collection Name"
+            />
+            <button className="create-collection button-small">
+              Create
+            </button>
         </section>
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}

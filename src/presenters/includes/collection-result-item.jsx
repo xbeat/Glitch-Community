@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {getAvatarUrl} from  '../../models/project';
 import UsersList from '../users-list.jsx';
 
-const CollectionResultItem = ({id, domain, description, action, isActive}) => {
+const CollectionResultItem = ({id, domain, description, action, isActive, avatarUrl}) => {
   var resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
@@ -12,7 +12,7 @@ const CollectionResultItem = ({id, domain, description, action, isActive}) => {
 
   return (
     <button className={resultClass} onClick={action} data-project-id={id}>
-      <img className="avatar" src={getAvatarUrl(id)} alt={`Project avatar for ${domain}`}/>
+      <img className="avatar" src={avatarUrl} alt={`Project avatar for ${domain}`}/>
       <div className="results-info">
         <div className="result-name" title={domain}>{domain}</div>
         { description.length > 0 && <div className="result-description">{description}</div> }
@@ -33,7 +33,8 @@ CollectionResultItem.propTypes = {
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,
-  isActive: PropTypes.bool
+  isActive: PropTypes.bool,
+  avatarUrl: PropTypes.string,
 };
 
 export default CollectionResultItem;
