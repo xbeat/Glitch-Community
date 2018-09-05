@@ -56,8 +56,8 @@ RemixButton.propTypes = {
 
 export const AddToCollectionButton = ({name, className, ...props}) => (
   <ButtonLink href={getRemixUrl(name)} className={`has-emoji ${className}`} {...props}>
-    Add to Collection
-    <span className="emoji frameed-picture" role="presentation"></span>
+    Add to Collection {' '}
+    <span className="emoji framed-picture" role="presentation"></span>
   </ButtonLink>
 );
 RemixButton.propTypes = {

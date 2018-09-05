@@ -14,7 +14,7 @@ import Expander from '../includes/expander.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
-import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-actions.jsx';
+import {ShowButton, EditButton, RemixButton, ReportButton, AddToCollectionButton} from '../includes/project-actions.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
 
@@ -122,6 +122,10 @@ const ProjectPage = ({
     <section id="embed">
       <Embed domain={domain}/>
       <div className="buttons buttons-right">
+        <AddToCollectionButton className="button-small"
+            name={domain} 
+            onClick={() => null}
+          />
         <RemixButton className="button-small"
           name={domain} isMember={isAuthorized}
           onClick={() => trackRemix(id, domain)}
