@@ -10,7 +10,7 @@ const AddProjectToCollection = ({...props}) => {
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <div className="button-wrap">
-            <button className={`button add-project opens-pop-over`} onClick={togglePopover}>
+            <button className={`button button-small has-emoji add-project opens-pop-over`} onClick={togglePopover}>
               Add to Collection {' '}
               <span className="emoji framed-picture" role="presentation"></span>
             </button>

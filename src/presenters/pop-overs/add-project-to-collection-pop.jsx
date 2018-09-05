@@ -30,7 +30,7 @@ ProjectSearchResults.propTypes = {
   action: PropTypes.func.isRequired,
 };
 
-class AddCollectionProjectPop extends React.Component {
+class AddProjectToCollection extends React.Component {
   constructor(props) {
     super(props);
     
@@ -127,11 +127,11 @@ class AddCollectionProjectPop extends React.Component {
   }
 }
 
-AddCollectionProjectPop.propTypes = {
+AddProjectToCollection.propTypes = {
   api: PropTypes.func.isRequired,
   add: PropTypes.func.isRequired,
   collectionProjects: PropTypes.any.isRequired,
   togglePopover: PropTypes.array.isRequired,
 };
 
-export default AddCollectionProjectPop;
+export default AddProjectToCollection;
