@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {withRouter} from 'react-router';
 import moment from 'moment-mini';
 import {getAvatarThumbnailUrl, getLink} from '../models/user';
 import Link from './includes/link.jsx';
@@ -56,20 +57,21 @@ const ResumeCoding = () => (
   </Link>
 );
 
-const submitSearch = (event) => {
-  if (event.target.children.q.value.trim().length === 0) {
-    return event.preventDefault();
+const submitSearch = (event, history) => {
+  event.preventDefault();
+  const query = event.target.children.q.value.trim();
+  if (query.length > 0) {
+    history.push(`${event.target.action}?q=${query}`);
   }
 };
 
-const SearchForm = ({onSubmit, defaultValue}) => (
-  <form action="/search" method="get" role="search" onSubmit={onSubmit}>
+const SearchForm = withRouter(({defaultValue, history}) => (
+  <form action="/search" method="get" role="search" onSubmit={event => submitSearch(event, history}>
     <input className="search-input" name="q" placeholder="bots, apps, users" defaultValue={defaultValue}/>
   </form>
-);
+));
 
 SearchForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
   defaultValue: PropTypes.string,
 };
 SearchForm.defaultProps = {
@@ -116,7 +118,7 @@ const Header = ({api, maybeUser, clearUser, searchQuery, showNewStuffOverlay}) =
       </div>
 
       <nav>
-        <SearchForm onSubmit={submitSearch} defaultValue={searchQuery}/>
+        <SearchForm defaultValue={searchQuery}/>
         <NewProjectPop api={api}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
