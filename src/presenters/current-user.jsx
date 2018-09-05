@@ -18,7 +18,7 @@ function identifyUser(user) {
   }
   try {
     const analytics = window.analytics;
-    if (analytics && user) {
+    if (analytics && user && user.login) {
       analytics.identify(user.id, {
         name: user.name,
         login: user.login,
@@ -133,6 +133,10 @@ class CurrentUserManager extends React.Component {
     if (!usersMatch(sharedUser, cachedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
       this.load();
     }
+    
+    // hooks for easier debugging
+    window.currentUser = cachedUser;
+    window.api = this.api();
   }
   
   render() {

@@ -11,9 +11,36 @@ module.exports = function(app) {
   // Proxy the some parts of our site over to ghost blogs:
   proxyGhost(app, 'help', 'help-center.glitch.me');
   proxyGhost(app, 'featured', 'featured.glitch.me');
+  proxyGhost(app, 'about', 'about-glitch.glitch.me',);
+  proxyGhost(app, 'legal', 'about-glitch.glitch.me', '/about');
+  
+  // Pages hosted by 'about.glitch.me':
+  [
+    'faq',
+    'react-starter-kit',
+    'website-starter-kit',
+    'forteams',
+    'forplatforms',
+    'you-got-this',
+    'email-sales',
+  ].forEach((route) => proxyGlitch(app, route, 'about.glitch.me'));
+
 }
 
-function proxyGhost(app, route, glitchTarget) {
+function proxyGlitch(app, route, target, pathOnTarget="") {
+  let routeWithLeadingSlash = route.startsWith('/') ? route : `/${route}`;
+  app.use(routeWithLeadingSlash, proxy(target, {
+    preserveHostHdr: false, // glitch routes based on this, so we have to reset it
+    https: false, // allows the proxy to do less work
+    proxyReqPathResolver: (req) => {
+      const path = pathOnTarget + routeWithLeadingSlash + url.parse(req.url).path;
+      console.log("Proxied:", path);
+      return path;
+    }
+  }));
+}
+
+function proxyGhost(app, route, glitchTarget, pathOnTarget) {
   const routeWithLeadingSlash = `/${route}`;
   const sandwichedRoute = `/${route}/`;
   // node matches /{route} and /{route}/;
@@ -28,14 +55,6 @@ function proxyGhost(app, route, glitchTarget) {
       return next();
   });
 
-  // Proxy all the requests to /{route}/ over to glitchTarget:
-  app.use(sandwichedRoute, proxy(glitchTarget, {
-    preserveHostHdr: false, // glitch routes based on this, so we have to reset it
-    https: false, // allows the proxy to do less work
-    proxyReqPathResolver: function(req) {
-      const path = routeWithLeadingSlash + url.parse(req.url).path;
-      console.log("Proxied:", path);
-      return path;
-    }
-  }));
+  // Proxy all the requests to /{route}/ over to glitchTarget
+  proxyGlitch(app, sandwichedRoute, glitchTarget, pathOnTarget);
 }
