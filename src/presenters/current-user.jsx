@@ -18,7 +18,7 @@ function identifyUser(user) {
   }
   try {
     const analytics = window.analytics;
-    if (analytics && user) {
+    if (analytics && user && user.login) {
       analytics.identify(user.id, {
         name: user.name,
         login: user.login,

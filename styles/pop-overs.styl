@@ -59,14 +59,22 @@ details.popover-container
     padding: 6px
     
   .clickable-label
-    cursor: pointer
+    width: 100%
+    .back
+      background-color: transparent
+      vertical-align: middle
+      padding: 0px 4px 3px
+      opacity: 0.7
+      width: auto
     &:hover,
+    &:focus,
     &:active
       .back
         opacity: 1
         border-radius: 5px
         border: none
-    &:hover
+    &:hover,
+    &:focus
       .back
         background-color: secondary-background-hover
     &:active
@@ -294,3 +302,31 @@ details.popover-container
   margin-bottom: side-padding
   .users
     margin-bottom: 0
+
+    
+.team-user-remove-pop
+  .team-user-remove-header
+    display: flex
+    align-items: center
+  .projects-list
+    label
+      display: flex
+      align-items: center
+      margin-bottom: 10px
+      cursor: pointer
+      user-select: none
+    input
+      width: auto
+      margin: 0
+      margin-right: 5px
+      cursor: pointer
+    .avatar
+      vertical-align: middle
+      margin-right: 5px
+    
+    // shrink avatars if there are more than 10 projects
+    label:nth-last-child(n+10) // every label at least ten from the end
+      &, & ~ label // will style itself and all following labels
+        .avatar
+          width: 20px
+          height: 20px
