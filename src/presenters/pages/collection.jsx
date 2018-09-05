@@ -134,7 +134,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
           
               <ProjectsUL projects={projects} categoryColor={color} 
                 projectOptions={{
-                    removeProjectFromCollection: this.props.removeProject
+                    removeProjectFromCollection: null
                 }} 
                 {...props}/>
           
@@ -158,7 +158,8 @@ CollectionPageWrap.propTypes = {
   isAuthorized: PropTypes.any.isRequired,
   api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
-  projectOptions: PropTypes.object.isRequired
+  projectOptions: PropTypes.object.isRequired,
+  removeProject: PropTypes.func.isRequired,
 };
 
 const CollectionPageLoader = ({...props}) => (
@@ -185,7 +186,7 @@ const CollectionPage = ({api, collection, removeProject, ...props}) => (
     >
       {collection => (
         <CollectionColorWrap collection={collection}>
-          {(color, setColor) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} api={api} isAuthorized={true} {...props}/>}
+          {(color, setColor) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} api={api} isAuthorized={true} removeProject={null} {...props}/>}
         </CollectionColorWrap>
       )}
     </DataLoader>
