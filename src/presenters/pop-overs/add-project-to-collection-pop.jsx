@@ -6,7 +6,7 @@ import ProjectModel from '../../models/project';
 import UserModel from '../../models/user';
 
 import Loader from '../includes/loader.jsx';
-import ProjectResultItem from '../includes/project-result-item.jsx';
+import CollectionResultItem from '../includes/collection-result-item.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
 
 const ProjectSearchResults = ({projects, action}) => (
@@ -112,10 +112,11 @@ class AddProjectToCollection extends React.Component {
       <dialog className="pop-over add-project-to-collection-pop">
         <section className="pop-over-info">
           {/* TO DO: Add user's collections here */}
-          <input id="collection-name create-input" 
+           <CollectionResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} action={() => action(project)} />
+          <input id="collection-name"  
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}
-            className="pop-over-input"
+            className="pop-over-input create-input"
             placeholder="New Collection Name"
           />
           <button className="create-collection button-small">
