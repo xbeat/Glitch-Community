@@ -10,6 +10,9 @@ import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import Categories from '../categories.jsx';
 
+import EditableField from '../includes/editable-field.jsx';
+import {AuthDescription} from '../includes/description-field.jsx';
+
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 import AddCollectionProject from '../includes/add-collection-project.jsx';
 
@@ -61,7 +64,7 @@ const hexToRgbA = (hex) => {
     throw new Error('Bad Hex');
   };
 
-const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized}) => (
+const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, updateName, updateDescription}) => (
   <React.Fragment>
     
     <Helmet>
@@ -70,7 +73,13 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized}) =>
     <main className="collection-page">
       <article className="projects" style={{backgroundColor: hexToRgbA(color)}}>
         <header className="collection">
-          <h1 className="collection-name">{collection.name}</h1>
+          <h1 className="collection-name">
+            {/* TO DO: actually update name */}
+            {(isAuthorized 
+              ? <EditableField value={collection.name} update={updateName} placeholder="Name your collection"/> 
+              : <React.Fragment>{collection.name} </React.Fragment>
+             )}
+          </h1>
           <div className="collection-image-container">
             <img src={collection.avatarUrl} alt=""/>
           </div>
@@ -78,7 +87,13 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized}) =>
             <div className="collection-avatar">Replace Avatar</div>
           </div>
           
-          <p className="description">{collection.description}</p>
+          <p className="description">
+            {/* TO DO: actually update description */}
+            <AuthDescription
+              authorized={isAuthorized} description={collection.description}
+              update={updateDescription} placeholder="Tell us about your collection"
+            />
+          </p>
           
           
           <EditCollectionColor
