@@ -9,6 +9,9 @@ import Loader from '../includes/loader.jsx';
 import CollectionResultItem from '../includes/collection-result-item.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
 
+{/* NOTE: Categories are just used to load dummy info - should get rid of in final implementaiton */}
+import categories from '../../curated/categories.js';
+
 const ProjectSearchResults = ({projects, action}) => (
   (projects.length > 0) ? (
     <ul className="results">
@@ -111,8 +114,8 @@ class AddProjectToCollection extends React.Component {
     return (
       <dialog className="pop-over add-project-to-collection-pop">
         <section className="pop-over-info">
-          {/* TO DO: Add user's collections here */}
-           <CollectionResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} action={() => action(project)} />
+          {/* TO DO: Replace category with user's collections */}
+           <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} isActive={false} action={() => null} />
           <input id="collection-name"  
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}

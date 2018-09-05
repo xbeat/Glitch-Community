@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import {getAvatarUrl} from  '../../models/project';
 import UsersList from '../users-list.jsx';
 
-const ProjectResultItem = ({id, domain, description, users, action, isActive}) => {
-  var resultClass = "button-unstyled result result-project";
+const CollectionResultItem = ({id, domain, description, action, isActive}) => {
+  var resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
   }
@@ -27,7 +27,7 @@ const ProjectResultItem = ({id, domain, description, users, action, isActive}) =
   );
 };
 
-ProjectResultItem.propTypes = {
+CollectionResultItem.propTypes = {
   action: PropTypes.func.isRequired,
   domain: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -36,5 +36,5 @@ ProjectResultItem.propTypes = {
   isActive: PropTypes.bool
 };
 
-export default ProjectResultItem;
+export default CollectionResultItem;
 
