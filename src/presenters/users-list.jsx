@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import UserLink from './includes/link.jsx';
+import {UserLink} from './includes/link.jsx';
 import PopoverContainer from './pop-overs/popover-container.jsx';
 import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName} from '../models/user.js';
 
