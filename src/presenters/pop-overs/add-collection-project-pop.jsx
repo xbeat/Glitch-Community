@@ -30,7 +30,7 @@ ProjectSearchResults.propTypes = {
   action: PropTypes.func.isRequired,
 };
 
-class AddTeamUserPop extends React.Component {
+class AddCollectionProjectPop extends React.Component {
   constructor(props) {
     super(props);
     
@@ -92,7 +92,7 @@ class AddTeamUserPop extends React.Component {
   render() {
     const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
     return (
-      <dialog className="pop-over add-collection-project-pop">
+      <dialog className="pop-over add-collection-project-pop wide-pop">
         <section className="pop-over-info">
           <input id="team-user-search" 
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
@@ -110,11 +110,11 @@ class AddTeamUserPop extends React.Component {
   }
 }
 
-AddTeamUserPop.propTypes = {
+AddCollectionProjectPop.propTypes = {
   api: PropTypes.func.isRequired,
   add: PropTypes.func.isRequired,
   collectionProjects: PropTypes.any.isRequired,
   togglePopover: PropTypes.array.isRequired,
 };
 
-export default AddTeamUserPop;
+export default AddCollectionProjectPop;
