@@ -19,7 +19,6 @@ class TeamEditor extends React.Component {
       _cacheAvatar: Date.now(),
       _cacheCover: Date.now(),
     };
-    this.removeUserAdmin = this.removeUserAdmin.bind(this);
   }
 
   currentUserIsOnTeam() {
@@ -92,7 +91,12 @@ class TeamEditor extends React.Component {
     }));
   }
 
-  async removeUser(id) {
+  async removeUserFromTeam(id, projectIds) {
+    // Kick them out of every project at once, and wait until it's all done
+    await Promise.all(projectIds.map(projectId => {
+      return this.props.api.delete(`projects/${projectId}/authorization`, {data: {targetUserId: id}});
+    }));
+    // Now remove them from the team. Remove them last so if something goes wrong you can do this over again
     await this.props.api.delete(`teams/${this.state.id}/users/${id}`);
     this.removeUserAdmin(id);
     this.setState(({users}) => ({
@@ -160,10 +164,10 @@ class TeamEditor extends React.Component {
     await this.props.api.post(`/teams/${this.state.id}/projects/${projectId}/join`);    
   }
   
-  async leaveTeamProject(projectId, userId) {
+  async leaveTeamProject(projectId) {
     await this.props.api.delete(`/projects/${projectId}/authorization`, {
       data: {
-        targetUserId: userId,
+        targetUserId: this.props.currentUser.id,
       },
     });
   }
@@ -197,7 +201,7 @@ class TeamEditor extends React.Component {
       joinTeam: () => this.joinTeam().catch(handleError),
       inviteEmail: email => this.inviteEmail(email).catch(handleError),
       inviteUser: id => this.inviteUser(id).catch(handleError),
-      removeUser: id => this.removeUser(id).catch(handleError),
+      removeUserFromTeam: (id, projectIds) => this.removeUserFromTeam(id, projectIds).catch(handleError),
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
       uploadCover: () => assets.requestFile(blob => this.uploadCover(blob).catch(handleError)),
       clearCover: () => this.updateFields({hasCoverImage: false}).catch(handleError),
@@ -209,8 +213,8 @@ class TeamEditor extends React.Component {
       teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
       teamHasBillingExposed: this.teamHasBillingExposed(),
       updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),
-      joinTeamProject: (projectId, userId) => this.joinTeamProject(projectId, userId).catch(handleError),
-      leaveTeamProject: (projectId, userId) => this.leaveTeamProject(projectId, userId).catch(handleError),
+      joinTeamProject: projectId => this.joinTeamProject(projectId).catch(handleError),
+      leaveTeamProject: projectId => this.leaveTeamProject(projectId).catch(handleError),
     };
     return this.props.children(this.state, funcs, this.currentUserIsOnTeam(), this.currentUserIsTeamAdmin());
   }
