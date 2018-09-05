@@ -102,6 +102,8 @@ class AddCollectionProjectPop extends React.Component {
   onClick(project) {
     this.props.togglePopover();
     this.props.add(project);
+    
+    // add project to page
   }
   
   render() {
