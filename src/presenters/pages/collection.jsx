@@ -66,7 +66,7 @@ const hexToRgbA = (hex) => {
     throw new Error('Bad Hex');
   };
 
-const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, updateName, updateDescription, ...props}) => (
+const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, updateName, updateDescription, projectOptions, ...props}) => (
   <React.Fragment>
     
     <Helmet>
@@ -134,7 +134,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
               : null
             )}
           
-              <ProjectsUL projects={projects} categoryColor={color} {...props}/>
+              <ProjectsUL projects={projects} categoryColor={color} projectOptions={projectOptions} {...props}/>
             </React.Fragment>
           }
         </ProjectsLoader>
@@ -156,7 +156,7 @@ CollectionPageWrap.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
   projectOptions: PropTypes.object.isRequired,
-  removeProject: PropTypes.func.isRequired
+  removeProjectFromCollection: PropTypes.func.isRequired
 };
 
 const CollectionPageLoader = ({...props}) => (
@@ -193,6 +193,7 @@ const CollectionPage = ({api, collection, ...props}) => (
 CollectionPage.propTypes = {
   api: PropTypes.any.isRequired,
   collection: PropTypes.object.isRequired,
+  removeProject: PropTypes.func.isRequired,
 };
 
 export default CollectionPage;

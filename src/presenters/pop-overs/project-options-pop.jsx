@@ -56,7 +56,6 @@ const ProjectOptionsPop = ({...props}) => {
         {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
         {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
         {/* TO DO: implement removeProject async function*/}
-        {!!props.removeProject && <PopoverButton onClick={null} text="Remove Project " emoji="bomb"/>}
       </section>
 
       {(props.joinTeamProject && props.leaveTeamProject) &&
@@ -79,6 +78,7 @@ const ProjectOptionsPop = ({...props}) => {
       <section className="pop-over-actions danger-zone last-section">
         {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
         {!!props.deleteProject && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
+        {!!props.removeProjectFromCollection && <PopoverButton onClick={null} text="Remove Project " emoji="thumbs_down"/>}
       </section>
     </dialog>
   );
@@ -93,12 +93,12 @@ ProjectOptionsPop.propTypes = {
   addPin: PropTypes.func,
   removePin: PropTypes.func,
   deleteProject: PropTypes.func,
-  removeProject: PropTypes.func,
   leaveProject: PropTypes.func,
   removeProjectFromTeam: PropTypes.func,
   joinTeamProject: PropTypes.func,
   leaveTeamProject: PropTypes.func,
   currentUserIsOnProject: PropTypes.bool.isRequired,
+  removeProjectfromCollection: PropTypes.func,
 };
 ProjectOptionsPop.defaultProps = {
   currentUserIsOnProject: false
