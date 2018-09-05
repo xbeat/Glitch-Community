@@ -59,14 +59,15 @@ const ResumeCoding = () => (
 
 const submitSearch = (event, history) => {
   event.preventDefault();
+  const route = event.target.getAttribute('action');
   const query = event.target.children.q.value.trim();
   if (query.length > 0) {
-    history.push(`${event.target.action}?q=${query}`);
+    history.push(`${route}?q=${query}`);
   }
 };
 
 const SearchForm = withRouter(({defaultValue, history}) => (
-  <form action="/search" method="get" role="search" onSubmit={event => submitSearch(event, history}>
+  <form action="/search" method="get" role="search" onSubmit={event => submitSearch(event, history)}>
     <input className="search-input" name="q" placeholder="bots, apps, users" defaultValue={defaultValue}/>
   </form>
 ));
