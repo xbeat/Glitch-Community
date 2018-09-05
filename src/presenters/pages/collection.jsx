@@ -66,7 +66,7 @@ const hexToRgbA = (hex) => {
     throw new Error('Bad Hex');
   };
 
-const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, updateName, updateDescription, removeProject, projectOptions}) => (
+const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, updateName, updateDescription, ...props}) => (
   <React.Fragment>
     
     <Helmet>
@@ -134,7 +134,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
               : null
             )}
           
-              <ProjectsUL projects={projects} categoryColor={color} projectOptions={{removeProject}}/>
+              <ProjectsUL projects={projects} categoryColor={color} {...props}/>
             </React.Fragment>
           }
         </ProjectsLoader>

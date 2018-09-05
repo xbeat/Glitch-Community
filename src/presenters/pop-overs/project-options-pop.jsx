@@ -55,6 +55,7 @@ const ProjectOptionsPop = ({...props}) => {
       <section className="pop-over-actions">
         {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
         {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
+        {/* TO DO: implement removeProject async function*/}
         {!!props.removeProject && <PopoverButton onClick={null} text="Remove Project " emoji="bomb"/>}
       </section>
 
