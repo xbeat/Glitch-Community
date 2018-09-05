@@ -109,14 +109,18 @@ class AddProjectToCollection extends React.Component {
   render() {
     const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
     return (
-      <dialog className="pop-over add-collection-project-pop wide-pop">
+      <dialog className="pop-over add-project-to-collection-pop">
         <section className="pop-over-info">
-          <input id="team-user-search" 
+          {/* TO DO: Add user's collections here */}
+          <input id="collection-name create-input" 
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}
-            className="pop-over-input search-input pop-over-search"
-            placeholder="Search by project name or URL"
+            className="pop-over-input"
+            placeholder="New Collection Name"
           />
+          <button className="create-collection button-small">
+            Create
+          </button>
         </section>
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
