@@ -184,6 +184,9 @@ class TeamUserRemove extends React.Component {
     } else if (this.state.userTeamProjects.length > 0) {
       projects = (
         <React.Fragment>
+          <p className="action-description">
+            Also remove them from these projects
+          </p>
           <div className="projects-list">
             { this.state.userTeamProjects.map(project => (
               <label key={project.id} htmlFor={`remove-user-project-${project.id}`}>
@@ -197,7 +200,7 @@ class TeamUserRemove extends React.Component {
             ))}
           </div>
           {this.state.userTeamProjects.length > 1 && (
-            <button className="button-small button-tertiary"
+            <button className="button-small"
               onClick={allProjectsSelected ? this.unselectAllProjects : this.selectAllProjects}
             >
               {allProjectsSelected ? 'Unselect All' : 'Select All'}
@@ -218,14 +221,7 @@ class TeamUserRemove extends React.Component {
         </button>
         
         <section className="pop-over-actions" id="user-team-projects">
-          {projects ? (
-            <React.Fragment>
-              <p className="action-description">
-                Also remove them from these projects
-              </p>
-              {projects}
-            </React.Fragment>
-          ) : (
+          {projects || (
             <p className="action-description">
               {getDisplayName(this.props.user)} is not a member of any projects
             </p>
