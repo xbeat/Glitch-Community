@@ -52,7 +52,7 @@ class Logo extends React.PureComponent {
 
 const ResumeCoding = () => (
   <Link className="button button-small button-cta" href={EDITOR_URL} data-track="resume coding">
-    <div className="">Resume Coding</div>
+    Resume Coding
   </Link>
 );
 

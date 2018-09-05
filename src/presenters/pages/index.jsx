@@ -91,7 +91,7 @@ class ByFogCreek extends React.PureComponent {
         <img src={logo} alt="Fog Creek logo"/>
         <p>
           You might know us for making Trello, FogBugz, and co-creating Stack Overflow. 
-          We're <a href="https://www.fogcreek.com">a friendly, self-funded company</a> that's
+          We're <Link href="https://www.fogcreek.com">a friendly, self-funded company</Link> that's
           been helping people make stuff for over {this.state.age} years.
         </p>
       </section>

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getAvatarThumbnailUrl, getLink} from '../../models/user';
-import {UserLink} from '..
+import {getAvatarThumbnailUrl} from '../../models/user';
+import {UserLink} from '../includes/link.jsx';
 import Thanks from '../includes/thanks.jsx';
 
 const MEMBER_ACCESS_LEVEL = 20;
@@ -95,9 +95,9 @@ export default class TeamUserInfoPop extends React.Component {
     return (
       <dialog className="pop-over team-user-info-pop">
         <section className="pop-over-info user-info">
-          <a href={getLink(this.props.user)}>
+          <UserLink user={this.props.user}>
             <img className="avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
-          </a>
+          </UserLink>
           <div className="info-container">
             <p className="name" title={this.props.user.name}>{this.props.user.name || "Anonymous"}</p>
             { this.props.user.login &&

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 
+import {Link, ProjectLink} from './link.jsx';
 import Loader from './loader.jsx';
 import {FALLBACK_AVATAR_URL, getAvatarUrl} from '../../models/project.js';
 
@@ -26,12 +27,11 @@ const communityProjectUrl = (domain) => {
 
 const ProjectDetails = ({projectDetails}) => {
   let projectAvatar = getAvatarUrl(projectDetails.id);
-  let projectUrl = communityProjectUrl(projectDetails.domain);
   return (
     <article className="project-details">
-      <a href={projectUrl}>
+      <ProjectLink project={projectDetails}>
         <img className="avatar" src={projectAvatar} onError={addFallbackSrc} alt="project avatar" />
-      </a>
+      </ProjectLink>
       <table>
         <tbody>
           <tr>
