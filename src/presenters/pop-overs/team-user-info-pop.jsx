@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getAvatarThumbnailUrl, getLink} from '../../models/user';
+import {UserLink} from '..
 import Thanks from '../includes/thanks.jsx';
 
 const MEMBER_ACCESS_LEVEL = 20;

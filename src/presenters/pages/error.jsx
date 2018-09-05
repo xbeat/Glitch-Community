@@ -78,6 +78,7 @@ const ErrorPage = ({title, description}) => (
       <h2>{description}</h2>
       <div className="actions">
         <a href="/">
+          {/* This is not a Link so it does a full reload */}
           <img src={logo} width="80px" height="66px" alt="Glitch"/>
         </a>
       </div>
