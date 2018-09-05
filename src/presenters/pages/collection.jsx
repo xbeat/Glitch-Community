@@ -91,7 +91,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
             {/* TO DO: actually update description */}
             <AuthDescription
               authorized={isAuthorized} description={collection.description}
-              update={updateDescription} placeholder="Tell us about your collection"
+              update={updateDescription => null} placeholder="Tell us about your collection"
             />
           </p>
           
