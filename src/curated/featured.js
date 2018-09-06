@@ -13,13 +13,13 @@ Example:
 
 export default [
   {
-    title: 'Make a Box',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fboxmaker.png?1535971898294",
-    link: 'https://glitch.com/~box-maker'
+    title: 'Crystalis-VR',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcrystalis-vr.png?1535971898756",
+    link: 'https://crystalis-vr.glitch.me/'
   },{
-    title: 'Live Coded Visuals',
+    title: 'Turn Off-retweets',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhydra.png?1535971898489",
-    link: 'https://glitch.com/~hydra-editor-v1'
+    link: 'https://turn-off-retweets.glitch.me/'
   }, {
     title: 'Subscribe2Me',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsubscribe2me.png?1535971898937",
