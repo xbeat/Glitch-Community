@@ -11,9 +11,11 @@ export const CollectionsList = ({title, collections, placeholder, projectOptions
     )}
     
     {( isAuthorized 
-      ? <button className={`button create-collection`} onClick={null}>
+      ? <a href="/wondrous">
+          <button className={`button create-collection`} onClick={null}>
             Create Collection
-        </button>
+          </button>
+        </a>
       : null      
       )}
 

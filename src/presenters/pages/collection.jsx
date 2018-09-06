@@ -182,12 +182,11 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
                       />
                     : null
                   )}
+              <div class="empty-collection-hint">
+                Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
+            </div>
                 
               </div>
-          
-            <div class="empty-collection-hint">
-              Click <b>Add Project</b> to search for projects to add to your collection.<br/>You can add any project, created by any user.
-            </div>
           
             </React.Fragment>
         }
