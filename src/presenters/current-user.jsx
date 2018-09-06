@@ -86,10 +86,11 @@ class CurrentUserManager extends React.Component {
       const {data: {user}} = await this.api().get(`boot?latestProjectOnly=true`);
       this.props.setSharedUser(user);
       Raven.captureMessage("Invalid cachedUser id for token");
+      return user;
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        this.props.setSharedUser(undefined);
         Raven.captureMessage("Invalid cachedUser token");
+        return undefined;
       } else {
         throw error;
       }
