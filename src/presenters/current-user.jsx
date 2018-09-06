@@ -61,7 +61,7 @@ function usersMatch(a, b) {
 class CurrentUserManager extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {fetched: false};
+    this.state = {fetched: false, working: false,};
   }
   
   api() {
@@ -115,14 +115,22 @@ class CurrentUserManager extends React.Component {
       this.props.setCachedUser(undefined);
     }
     if (sharedUser) {
-      const user = this.getCachedUser();
-      if (user !=== 'invalid')
+      const newCachedUser = await this.getCachedUser();
+      if (newCachedUser === 'invalid') {
+        // Sounds like our shared user is bad. Fix it and let componentDidUpdate cycle
+        console.
+        const newSharedUser = await this.getSharedUser();
+        this.props.setSharedUser(newSharedUser);
+      } else {
+        this.props.setCachedUser(newCachedUser);
+        this.setState({fetched: true});
+      }
     }
     this.setState({working: false});
   }
   
   componentDidMount() {
-    this.sync();
+    this.load();
   }
   
   componentDidUpdate(prev) {
@@ -132,8 +140,10 @@ class CurrentUserManager extends React.Component {
       identifyUser(cachedUser);
     }
     
-    if (!usersMatch(cachedUser, sharedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
-      this.sync();
+    if (!this.state.working) {
+      if (!usersMatch(cachedUser, sharedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
+        this.load();
+      }
     }
     
     // hooks for easier debugging
