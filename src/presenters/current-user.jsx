@@ -61,7 +61,14 @@ function usersMatch(a, b) {
 class CurrentUserManager extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {fetched: false, working: false};
+    this.state = {
+      // Set to true the first time we successfully load the user
+      fetched: false,
+      // Indicates that we're doing something, prevents componentDidUpdate
+      // That way setState calls mid operation don't trigger extra loads
+      // We'll check everything again once working is set back to false
+      working: false,
+    };
   }
   
   api() {
@@ -105,12 +112,11 @@ class CurrentUserManager extends React.Component {
     if (sharedUser) {
       try {
         const {data} = await this.api().get(`users/${sharedUser.id}`);
+        // If it's us it will have a bonus persistentToken field
         if (usersMatch(sharedUser, data)) {
           this.props.setCachedUser(data);
           identifyUser(data);
-          if (!this.state.fetched) {
-            this.setState({fetched: true});
-          }
+          this.setState({fetched: true});
         } else {
           await this.fix();
         }
@@ -136,6 +142,7 @@ class CurrentUserManager extends React.Component {
     const {sharedUser, cachedUser} = this.props;
     if (!this.state.working) {
       if (!usersMatch(sharedUser, cachedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
+        this.setState({fetched: false});
         this.load();
       }
     }
