@@ -70,16 +70,21 @@ class AddCollectionProjectPop extends React.Component {
     }
     
     // check if the query is a URL or a name of a project
-    // Project URL pattern: https://glitch.com/~power-port, https://power-port.glitch.me/
+    // Project URL pattern: https://glitch.com/~power-port, https://power-port.glitch.me/, https://humorous-spaghetti.glitch.me/~slack-bot-persist
     const httpsKeyword = "https://";
     const glitchKeyword = "glitch";
     let query = this.state.query;
     
     if(this.state.query.includes(httpsKeyword) && this.state.query.includes(glitchKeyword)){
       // get project domain
-      if(this.state.query.includes("me")){
+      if(this.state.query.includes("me") && !this.state.query.includes("~")){
+        // https://power-port.glitch.me/
         query = query.substring(query.indexOf("//")+"//".length, query.indexOf("."));
-      }else if(this.state.query.includes("~")){
+      }else if(this.state.query.includes("~") && !this.state.query.includes("me")){
+        // https://glitch.com/~power-port
+        query = query.substring(query.indexOf("~")+1);
+      }else if(this.state.query.includes("~") && this.state.query.includes("me")){
+        // https://humorous-spaghetti.glitch.me/~slack-bot-persist
         query = query.substring(query.indexOf("~")+1);
       }
     }
