@@ -92,4 +92,13 @@ export default [
     "description": "The sounds of music created, connected, visualized and remixed.",
     "backgroundColor": "rgba(162, 193, 255, 0.5)",
   },
+  {
+    "id": 14,
+    "name": "Wondrous Collection",
+    "url": "wondrous",
+    "avatarUrl": "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fmusic.svg?1502555440002",
+    "color": "#a3c4fd",
+    "description": "A collection of projects that does wondrous things.",
+    "backgroundColor": "rgba(162, 193, 255, 0.5)",
+  },
 ];
