@@ -18,11 +18,22 @@ import AddCollectionProject from '../includes/add-collection-project.jsx';
 
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
+// some dummy info for testing
+const name = "Wondrous Collection";
+const url = "wondrous"
+const avatarUrl = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fart.svg?1499357014248";
+let color = "#FFA3BB";
+const description = "A collection of projects that does wondrous things.";
+
 class CollectionColorWrap extends React.Component { 
   constructor(props){
     super(props);
+    
+    if(this.props.collection){
+      color= this.props.collection.color
+    }
     this.state = {
-      color: this.props.collection.color
+      color: color
     };
     this.setColor = this.setColor.bind(this);
   }
@@ -68,7 +79,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
   <React.Fragment>
     
     <Helmet>
-      <title>{collection.name}</title>
+      <title>{(collection ? collection.name : name)}</title>
     </Helmet>
     <main className="collection-page">
       <article className="projects" style={{backgroundColor: hexToRgbA(color)}}>
@@ -77,14 +88,14 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
             {/* TO DO: actually update name */}
             {(isAuthorized 
               ? <AuthDescription authorized={isAuthorized}
-                  description={collection.name} 
+                  description={(collection ? collection.name : name)} 
                   update={updateName => null} 
                   placeholder="Name your collection"/> 
               : <React.Fragment>{collection.name} </React.Fragment>
              )}
           </h1>
           <div className="collection-image-container">
-            <img src={collection.avatarUrl} alt=""/>
+            <img src={(collection ? collection.avatarUrl : avatarUrl)} alt=""/>
           </div>
               {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
              {isAuthorized 
@@ -99,7 +110,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
           <p className="description">
             {/* TO DO: actually update description */}
             <AuthDescription
-              authorized={isAuthorized} description={collection.description}
+              authorized={isAuthorized} description={(collection ? collection.description : description)}
               update={updateDescription => null} placeholder="Tell us about your collection"
             />
           </p>
@@ -201,7 +212,9 @@ const CollectionPageError = ({...props}) => (
 
 async function loadCategory(api, id) {
   const {data} = await api.get(`categories/${id}`);
-  data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
+  if(data){
+      data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
+  }
   return data;
 }
   
