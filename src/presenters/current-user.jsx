@@ -61,14 +61,8 @@ function usersMatch(a, b) {
 class CurrentUserManager extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      // Set to true when we successfully load the user
-      fetched: false,
-      // Indicates that we're doing something, prevents componentDidUpdate
-      // That way setState calls mid operation don't trigger extra load calls
-      // When it gets set back to false we'll check everything in xDidUpdate
-      working: false,
-    };
+    // Fetched here does not map directly to fetched farther down
+    this.state = {fetched: false};
   }
   
   api() {
@@ -105,11 +99,11 @@ class CurrentUserManager extends React.Component {
   
   async load() {
     const {sharedUser} = this.props;
+    if (!sharedUser) return;
     try {
       const {data} = await this.api().get(`users/${sharedUser.id}`);
       if (usersMatch(sharedUser, data)) {
         this.props.setCachedUser(data);
-        identifyUser(data);
         this.setState({fetched: true});
       } else {
         await this.fix();
@@ -124,34 +118,28 @@ class CurrentUserManager extends React.Component {
     }
   }
   
-  async check() {
-    this.setState({working: true});
+  async sync() {
     const {sharedUser, cachedUser} = this.props;
     if (cachedUser && !usersMatch(sharedUser, cachedUser)) {
       this.props.setCachedUser(undefined);
+      return;
     }
     if (sharedUser) {
       await this.load();
     } else {
-      identifyUser(null);
+      
     }
-    this.setState({working: false});
   }
   
   componentDidMount() {
-    this.load();
+    this.sync();
   }
   
   componentDidUpdate(prev) {
-    const {sharedUser, cachedUser} = this.props;
-    if (!this.state.working) {
-      if (!usersMatch(sharedUser, cachedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
-        this.load();
-      }
-    }
+    this.sync();
     
     // hooks for easier debugging
-    window.currentUser = cachedUser;
+    window.currentUser = this.props.cachedUser;
     window.api = this.api();
   }
   
