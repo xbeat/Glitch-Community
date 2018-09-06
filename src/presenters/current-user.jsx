@@ -78,55 +78,47 @@ class CurrentUserManager extends React.Component {
     });
   }
   
-  async fix() {
-    // The token isn't working, or the id doesn't match the token
-    // So hit boot and get the right user for our token
-    console.warn('Fixing cachedUser', this.props.sharedUser);
+  async getSharedUser() {
     try {
       const {data: {user}} = await this.api().get(`boot?latestProjectOnly=true`);
-      this.props.setSharedUser(user);
-      Raven.captureMessage("Invalid cachedUser id for token");
       return user;
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        Raven.captureMessage("Invalid cachedUser token");
         return undefined;
-      } else {
-        throw error;
       }
+      throw error;
+    }
+  }
+  
+  async getCachedUser() {
+    const {sharedUser} = this.props;
+    if (!sharedUser) return undefined;
+    try {
+      const {data} = await this.api().get(`users/${sharedUser.id}`);
+      if (!usersMatch(sharedUser, data)) {
+        return 'invalid';
+      }
+      return data;
+    } catch (error) {
+      if (error.response && (error.response.status === 401 || error.response.status === 404)) {
+        // 401 means our token is bad, 404 means the user doesn't exist
+        return 'invalid';
+      }
+      throw error;
     }
   }
   
   async load() {
-    const {sharedUser} = this.props;
-    if (!sharedUser) return;
-    try {
-      const {data} = await this.api().get(`users/${sharedUser.id}`);
-      if (usersMatch(sharedUser, data)) {
-        this.props.setCachedUser(data);
-        this.setState({fetched: true});
-      } else {
-        await this.fix();
-      }
-    } catch (error) {
-      if (error.response && (error.response.status === 401 || error.response.status === 404)) {
-        // 401 means our token is bad, 404 means the user doesn't exist
-        await this.fix();
-      } else {
-        throw error;
-      }
-    }
-  }
-  
-  async sync() {
+    this.setState({working: true});
     const {sharedUser, cachedUser} = this.props;
-    if (cachedUser && !usersMatch(sharedUser, cachedUser)) {
+    if (!usersMatch(sharedUser, cachedUser)) {
       this.props.setCachedUser(undefined);
-      return;
     }
     if (sharedUser) {
-      await this.load();
+      const user = this.getCachedUser();
+      if (user !=== 'invalid')
     }
+    this.setState({working: false});
   }
   
   componentDidMount() {
