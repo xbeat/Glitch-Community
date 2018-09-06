@@ -99,13 +99,13 @@ class CurrentUserManager extends React.Component {
     try {
       const {data} = await this.api().get(`users/${sharedUser.id || 0}`);
       if (!usersMatch(sharedUser, data)) {
-        return 'invalid';
+        return 'error';
       }
       return data;
     } catch (error) {
       if (error.response && (error.response.status === 401 || error.response.status === 404)) {
         // 401 means our token is bad, 404 means the user doesn't exist
-        return 'invalid';
+        return 'error';
       }
       throw error;
     }
@@ -120,10 +120,11 @@ class CurrentUserManager extends React.Component {
     }
     if (sharedUser) {
       const newCachedUser = await this.getCachedUser();
-      if (newCachedUser === 'invalid') {
+      if (newCachedUser === 'error') {
         // Sounds like our shared user is bad
-        // Fix it and componentDidUpdate will try again
+        // Fix it and componentDidUpdate will reload
         console.warn('Fixing shared cachedUser');
+        this.setState({fetched: false});
         const newSharedUser = await this.getSharedUser();
         this.props.setSharedUser(newSharedUser);
       } else {
