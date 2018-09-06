@@ -8,7 +8,8 @@ export default class LocalStorage extends React.Component {
     this.handleStorage = this.handleStorage.bind(this);
   }
   
-  handleStorage() {
+  handleStorage(event) {
+    if (event && event.key !== this.props.name) return;
     let value = undefined;
     try {
       const raw = window.localStorage.getItem(this.props.name);

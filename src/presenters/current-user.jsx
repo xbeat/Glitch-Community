@@ -105,13 +105,11 @@ class CurrentUserManager extends React.Component {
         this.props.setCachedUser(data);
         this.setState({fetched: true});
       } else {
-        console.log('get');
         await this.fix();
       }
     } catch (error) {
       if (error.response && (error.response.status === 401 || error.response.status === 404)) {
         // 401 means our token is bad, 404 means the user doesn't exist
-        console.log(error.response.status);
         await this.fix();
       } else {
         throw error;
@@ -142,7 +140,6 @@ class CurrentUserManager extends React.Component {
     }
     
     if (!usersMatch(cachedUser, sharedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
-      console.log(cachedUser, sharedUser);
       this.sync();
     }
     
