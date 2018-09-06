@@ -109,6 +109,13 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
             setColor={setColor}
           />
           
+          {(isAuthorized
+            ? <button className={`button delete-collection button-tertiary`} >
+              Delete Collection
+            </button>
+            : null
+          )}
+          
           {/*
           <div className="button">
               <div className="collection-color">Color</div>
@@ -143,6 +150,18 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
         </ProjectsLoader>
         
       </article>
+      
+      {/*
+      <div class="buttons buttons-right">
+        {(isAuthorized
+          ? <button className={`button delete-collection button-small`} >
+            Delete Collection
+          </button>
+          : null
+          )}
+      </div>   
+      */}
+      
     </main>
     <Categories/>
   </React.Fragment>
