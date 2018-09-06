@@ -76,7 +76,10 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
           <h1 className="collection-name">
             {/* TO DO: actually update name */}
             {(isAuthorized 
-              ? <EditableField value={collection.name} update={updateName} placeholder="Name your collection"/> 
+              ? <AuthDescription authorized={isAuthorized}
+                  description={collection.name} 
+                  update={updateName => null} 
+                  placeholder="Name your collection"/> 
               : <React.Fragment>{collection.name} </React.Fragment>
              )}
           </h1>
