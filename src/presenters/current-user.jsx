@@ -98,7 +98,6 @@ class CurrentUserManager extends React.Component {
     if (!usersMatch(sharedUser, cachedUser)) {
       this.props.setCachedUser(sharedUser || undefined);
     }
-    this.setState({fetched: false});
     if (sharedUser) {
       try {
         const {data} = await this.api().get(`users/${sharedUser.id}`);
@@ -111,6 +110,7 @@ class CurrentUserManager extends React.Component {
         }
       } catch (error) {
         if (error.response && (error.response.status === 401 || error.response.status === 404)) {
+          // 401 means our token is bad, 404 means the user doesn't exist
           this.fix();
         } else {
           throw error;
@@ -122,15 +122,13 @@ class CurrentUserManager extends React.Component {
   }
   
   componentDidMount() {
-    const {sharedUser, cachedUser} = this.props;
-    if (sharedUser || cachedUser) {
-      this.load();
-    }
+    this.load();
   }
   
   componentDidUpdate(prev) {
     const {sharedUser, cachedUser} = this.props;
     if (!usersMatch(sharedUser, cachedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
+      this.setState({fetched: false});
       this.load();
     }
     
