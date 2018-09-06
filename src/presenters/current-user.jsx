@@ -81,12 +81,15 @@ class CurrentUserManager extends React.Component {
   async fix() {
     // The token isn't working, or the id doesn't match the token
     // So hit boot and get the right user for our token
+    console.warn('Fixing cachedUser', this.props.sharedUser);
     try {
       const {data: {user}} = await this.api().get(`boot?latestProjectOnly=true`);
       this.props.setSharedUser(user);
+      Raven.captureMessage("Invalid cachedUser id for token");
     } catch (error) {
       if (error.response && error.response.status === 401) {
         this.props.setSharedUser(undefined);
+        Raven.captureMessage("Invalid cachedUser token");
       } else {
         throw error;
       }
@@ -162,24 +165,12 @@ CurrentUserManager.propTypes = {
   setCachedUser: PropTypes.func.isRequired,
 };
 
-const cleanUser = (user) => {
-  if (!user) {
-    return null;
-  }
-  if (!(user.id > 0) || !user.persistentToken) {
-    console.error('invalid cachedUser', user);
-    Raven.captureMessage("Invalid cachedUser", {extra: {user}});
-    return null;
-  }
-  return user;
-};
-
 export const CurrentUserProvider = ({children}) => (
   <LocalStorage name="community-cachedUser" default={null}>
     {(cachedUser, setCachedUser, loadedCachedUser) => (
       <LocalStorage name="cachedUser" default={null}>
         {(sharedUser, setSharedUser, loadedSharedUser) => (
-          <CurrentUserManager sharedUser={cleanUser(sharedUser)} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
+          <CurrentUserManager sharedUser={sharedUser} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
             {({api, ...props}) => (
               <Provider value={props}>
                 {loadedSharedUser && loadedCachedUser && children(api)}
