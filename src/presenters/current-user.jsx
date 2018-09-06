@@ -90,7 +90,7 @@ class CurrentUserManager extends React.Component {
   
   async load() {
     const {sharedUser, cachedUser} = this.props;
-    if (!usersMatch(sharedUser, cachedUser)) {
+    if (cachedUser && !usersMatch(sharedUser, cachedUser)) {
       this.props.setCachedUser(undefined);
     }
     if (sharedUser) {
