@@ -59,6 +59,11 @@ function usersMatch(a, b) {
 // cachedUser mirrors GET /users/{id} and is what we actually display
 
 class CurrentUserManager extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {fetched: false};
+  }
+  
   api() {
     if (this.props.sharedUser) {
       return axios.create({
@@ -99,6 +104,9 @@ class CurrentUserManager extends React.Component {
         if (usersMatch(sharedUser, data)) {
           this.props.setCachedUser(data);
           identifyUser(data);
+          if (!this.state.fetched) {
+            this.setState({fetched: true});
+          }
         } else {
           this.fix();
         }
@@ -136,7 +144,7 @@ class CurrentUserManager extends React.Component {
     return children({
       api: this.api(),
       currentUser: currentUser ? UserModel(currentUser).asProps() : null,
-      fetched: !!cachedUser,
+      fetched: !!cachedUser && this.state.fetched,
       reload: () => this.load(),
       login: user => setSharedUser(user),
       update: changes => setCachedUser({...cachedUser, ...changes}),
