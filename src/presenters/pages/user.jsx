@@ -91,6 +91,7 @@ const UserPage = ({
     <EntityPageCollections
       api={api} 
       collections={categories}
+      isAuthorized={isAuthorized}
     />
     
     <EntityPageProjects

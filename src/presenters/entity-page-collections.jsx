@@ -10,7 +10,7 @@ import ProjectsLoader from './projects-loader.jsx';
 
 // const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-const EntityPageCollections = ({collections, api}) => {
+const EntityPageCollections = ({collections, api, isAuthorized}) => {
   
   // projectOptions = _.mapValues(projectOptions, function(projectOption) {
   //   return async (projectId, userId) => {
@@ -23,14 +23,15 @@ const EntityPageCollections = ({collections, api}) => {
     <React.Fragment>
       {console.log(JSON.stringify(collections))}
       {!!collections.length && (
-        <CollectionsList title="Collections" collections={collections.slice(0,3)} api={api}/>
+        <CollectionsList title="Collections" collections={collections.slice(0,3)} api={api} isAuthorized={isAuthorized} />
       )}
     </React.Fragment>
   );
 };
 EntityPageCollections.propTypes = {
   collections: PropTypes.array.isRequired,
-  api: PropTypes.func.isRequired  
+  api: PropTypes.func.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
 };
 
 // const EntityPageProjectsContainer = ({api, projects, ...props}) => (
