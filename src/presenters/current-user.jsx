@@ -61,7 +61,6 @@ function usersMatch(a, b) {
 class CurrentUserManager extends React.Component {
   constructor(props) {
     super(props);
-    // Fetched here does not map directly to fetched farther down
     this.state = {fetched: false};
   }
   
@@ -106,11 +105,13 @@ class CurrentUserManager extends React.Component {
         this.props.setCachedUser(data);
         this.setState({fetched: true});
       } else {
+        console.log('get');
         await this.fix();
       }
     } catch (error) {
       if (error.response && (error.response.status === 401 || error.response.status === 404)) {
         // 401 means our token is bad, 404 means the user doesn't exist
+        console.log(error.response.status);
         await this.fix();
       } else {
         throw error;
@@ -126,8 +127,6 @@ class CurrentUserManager extends React.Component {
     }
     if (sharedUser) {
       await this.load();
-    } else {
-      
     }
   }
   
@@ -136,10 +135,19 @@ class CurrentUserManager extends React.Component {
   }
   
   componentDidUpdate(prev) {
-    this.sync();
+    const {cachedUser, sharedUser} = this.props;
+    
+    if (!usersMatch(cachedUser, prev.cachedUser)) {
+      identifyUser(cachedUser);
+    }
+    
+    if (!usersMatch(cachedUser, sharedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
+      console.log(cachedUser, sharedUser);
+      this.sync();
+    }
     
     // hooks for easier debugging
-    window.currentUser = this.props.cachedUser;
+    window.currentUser = cachedUser;
     window.api = this.api();
   }
   
