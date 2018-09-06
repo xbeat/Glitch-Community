@@ -127,17 +127,20 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
         <ProjectsLoader api={api} projects={collection.projects}>
           {projects => 
             <React.Fragment>
-              <h3 className="collection-project-header">Projects ({collection.projects.length})</h3>
-            
-            {(isAuthorized 
-              ? <AddCollectionProject
-                  api={api}
-                  collectionProjects={collection.projects}
-                  currentUserIsOwner={true}
-                  myProjects= {[]}
-                />
-              : null
-            )}
+              <div class="collection-project-container-header">
+                <h3>Projects ({collection.projects.length})</h3>
+                
+                {(isAuthorized 
+                    ? <AddCollectionProject
+                        api={api}
+                        collectionProjects={collection.projects}
+                        currentUserIsOwner={true}
+                        myProjects= {[]}
+                      />
+                    : null
+                  )}
+                
+              </div>
           
               <ProjectsUL projects={projects} categoryColor={color} 
                 projectOptions={{
