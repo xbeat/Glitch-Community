@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {withRouter} from 'react-router';
+import {Redirect} from 'react-router-dom';
 import moment from 'moment-mini';
 import {getAvatarThumbnailUrl, getLink} from '../models/user';
 import Link from './includes/link.jsx';
@@ -57,26 +57,34 @@ const ResumeCoding = () => (
   </Link>
 );
 
-const submitSearch = (event, history) => {
-  event.preventDefault();
-  const route = event.target.getAttribute('action');
-  const query = event.target.children.q.value.trim();
-  if (query.length > 0) {
-    history.push(`${route}?q=${query}`);
+class SearchForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.defaultValue || '',
+      submitted: false,
+    };
   }
-};
-
-const SearchForm = withRouter(({defaultValue, history}) => (
-  <form action="/search" method="get" role="search" onSubmit={event => submitSearch(event, history)}>
-    <input className="search-input" name="q" placeholder="bots, apps, users" defaultValue={defaultValue}/>
-  </form>
-));
-
+  onChange(event) {
+    this.setState({value: event.target.value});
+  }
+  onSubmit(event) {
+    event.preventDefault();
+    if (!this.state.value) return;
+    this.setState({submitted: true});
+  }
+  render() {
+    const {value, submitted} = this.state;
+    return (
+      <form action="/search" method="get" role="search" onSubmit={this.onSubmit.bind(this)}>
+        <input className="search-input" name="q" placeholder="bots, apps, users" value={value} onChange={this.onChange.bind(this)}/>
+        {submitted && <Redirect to={`/search?q=${value}`} push={true}/>}
+      </form>
+    );
+  }
+}
 SearchForm.propTypes = {
   defaultValue: PropTypes.string,
-};
-SearchForm.defaultProps = {
-  defaultValue: '',
 };
 
 const UserOptionsPopWrapper = ({user, clearUser, showNewStuffOverlay, api}) => {
