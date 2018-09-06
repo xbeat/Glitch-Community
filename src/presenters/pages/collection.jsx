@@ -24,6 +24,7 @@ const url = "wondrous"
 const avatarUrl = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fart.svg?1499357014248";
 let color = "#FFA3BB";
 const description = "A collection of projects that does wondrous things.";
+const id = "14";
 
 class CollectionColorWrap extends React.Component { 
   constructor(props){
@@ -118,7 +119,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
           
           <EditCollectionColor
             api={api}
-            collectionID={collection.id}
+            collectionID={(collection ? collection.id : id)}
             currentUserIsOwner={true}
             setColor={setColor}
           />
@@ -138,7 +139,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
           
         </header>
         
-        {collection.projects.length > 0
+        {collection
          ? <ProjectsLoader api={api} projects={collection.projects}>
           {projects => 
             <React.Fragment>
@@ -167,7 +168,28 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
           }
         </ProjectsLoader>
         
-          : null
+          : 
+          <React.Fragment>
+              <div class="collection-project-container-header">
+                <h3>Projects</h3>
+                
+                {(isAuthorized 
+                    ? <AddCollectionProject
+                        api={api}
+                        collectionProjects={null}
+                        currentUserIsOwner={true}
+                        myProjects= {[]}
+                      />
+                    : null
+                  )}
+                
+              </div>
+          
+            <div class="empty-collection-hint">
+              Click <b>Add Project</b> to search for projects to add to your collection.<br/>You can add any project, created by any user.
+            </div>
+          
+            </React.Fragment>
         }
         
       </article>
