@@ -61,7 +61,10 @@ function usersMatch(a, b) {
 class CurrentUserManager extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {fetched: false, working: false,};
+    this.state = {
+      fetched: false, // Set true on first complete load
+      working: false, // Used to prevent simultaneous loading
+    };
   }
   
   api() {
@@ -94,7 +97,7 @@ class CurrentUserManager extends React.Component {
     const {sharedUser} = this.props;
     if (!sharedUser) return undefined;
     try {
-      const {data} = await this.api().get(`users/${sharedUser.id}`);
+      const {data} = await this.api().get(`users/${sharedUser.id || 0}`);
       if (!usersMatch(sharedUser, data)) {
         return 'invalid';
       }
@@ -109,6 +112,7 @@ class CurrentUserManager extends React.Component {
   }
   
   async load() {
+    if (this.state.working) return;
     this.setState({working: true});
     const {sharedUser, cachedUser} = this.props;
     if (!usersMatch(sharedUser, cachedUser)) {
@@ -117,8 +121,9 @@ class CurrentUserManager extends React.Component {
     if (sharedUser) {
       const newCachedUser = await this.getCachedUser();
       if (newCachedUser === 'invalid') {
-        // Sounds like our shared user is bad. Fix it and let componentDidUpdate cycle
-        console.
+        // Sounds like our shared user is bad
+        // Fix it and componentDidUpdate will try again
+        console.warn('Fixing shared cachedUser');
         const newSharedUser = await this.getSharedUser();
         this.props.setSharedUser(newSharedUser);
       } else {
@@ -140,10 +145,8 @@ class CurrentUserManager extends React.Component {
       identifyUser(cachedUser);
     }
     
-    if (!this.state.working) {
-      if (!usersMatch(cachedUser, sharedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
-        this.load();
-      }
+    if (!usersMatch(cachedUser, sharedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
+      this.load();
     }
     
     // hooks for easier debugging
