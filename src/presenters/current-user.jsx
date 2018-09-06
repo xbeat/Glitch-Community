@@ -62,11 +62,11 @@ class CurrentUserManager extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // Set to true the first time we successfully load the user
+      // Set to true when we successfully load the user
       fetched: false,
       // Indicates that we're doing something, prevents componentDidUpdate
-      // That way setState calls mid operation don't trigger extra loads
-      // We'll check everything again once working is set back to false
+      // That way setState calls mid operation don't trigger extra load calls
+      // When it gets set back to false we'll check everything in xDidUpdate
       working: false,
     };
   }
@@ -104,30 +104,34 @@ class CurrentUserManager extends React.Component {
   }
   
   async load() {
+    const {sharedUser} = this.props;
+    try {
+      const {data} = await this.api().get(`users/${sharedUser.id}`);
+      if (usersMatch(sharedUser, data)) {
+        this.props.setCachedUser(data);
+        identifyUser(data);
+        this.setState({fetched: true});
+      } else {
+        await this.fix();
+      }
+    } catch (error) {
+      if (error.response && (error.response.status === 401 || error.response.status === 404)) {
+        // 401 means our token is bad, 404 means the user doesn't exist
+        await this.fix();
+      } else {
+        throw error;
+      }
+    }
+  }
+  
+  async check() {
     this.setState({working: true});
     const {sharedUser, cachedUser} = this.props;
     if (cachedUser && !usersMatch(sharedUser, cachedUser)) {
       this.props.setCachedUser(undefined);
     }
     if (sharedUser) {
-      try {
-        const {data} = await this.api().get(`users/${sharedUser.id}`);
-        // If it's us it will have a bonus persistentToken field
-        if (usersMatch(sharedUser, data)) {
-          this.props.setCachedUser(data);
-          identifyUser(data);
-          this.setState({fetched: true});
-        } else {
-          await this.fix();
-        }
-      } catch (error) {
-        if (error.response && (error.response.status === 401 || error.response.status === 404)) {
-          // 401 means our token is bad, 404 means the user doesn't exist
-          await this.fix();
-        } else {
-          throw error;
-        }
-      }
+      await this.load();
     } else {
       identifyUser(null);
     }
@@ -142,7 +146,6 @@ class CurrentUserManager extends React.Component {
     const {sharedUser, cachedUser} = this.props;
     if (!this.state.working) {
       if (!usersMatch(sharedUser, cachedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
-        this.setState({fetched: false});
         this.load();
       }
     }
