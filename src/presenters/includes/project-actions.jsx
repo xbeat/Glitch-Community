@@ -6,11 +6,8 @@ import Link from './link.jsx';
 
 const showIcon = "https://cdn.gomix.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg";
 
-const ButtonLink = ({href, children, className, onClick}) => (
-  <Link
-    href={href} onClick={onClick}
-    className={`button button-link ${className}`}
-  >
+const ButtonLink = ({href, children, className, ...props}) => (
+  <Link href={href} className={`button button-link ${className}`} {...props}>
     {children}
   </Link>
 );
@@ -18,7 +15,6 @@ ButtonLink.propTypes = {
   href: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  onClick: PropTypes.func,
 };
 
 export const ShowButton = ({name, className, ...props}) => (
