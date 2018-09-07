@@ -96,8 +96,9 @@ class CurrentUserManager extends React.Component {
   async getCachedUser() {
     const {sharedUser} = this.props;
     if (!sharedUser) return undefined;
+    if (!sharedUser.id || !sharedUser.persistentToken) return 'error';
     try {
-      const {data} = await this.api().get(`users/${sharedUser.id || 0}`);
+      const {data} = await this.api().get(`users/${sharedUser.id}`);
       if (!usersMatch(sharedUser, data)) {
         return 'error';
       }
@@ -123,10 +124,14 @@ class CurrentUserManager extends React.Component {
       if (newCachedUser === 'error') {
         // Sounds like our shared user is bad
         // Fix it and componentDidUpdate will reload
-        console.warn('Fixing shared cachedUser');
         this.setState({fetched: false});
         const newSharedUser = await this.getSharedUser();
+        console.warn('Fixed shared cachedUser from', sharedUser, 'to', newSharedUser);
         this.props.setSharedUser(newSharedUser);
+        Raven.captureMessage('Invalid cachedUser', {extra: {
+          from: sharedUser||null,
+          to: newSharedUser||null,
+        }});
       } else {
         this.props.setCachedUser(newCachedUser);
         this.setState({fetched: true});
