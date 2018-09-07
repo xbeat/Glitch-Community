@@ -126,11 +126,11 @@ class CurrentUserManager extends React.Component {
         // Fix it and componentDidUpdate will reload
         this.setState({fetched: false});
         const newSharedUser = await this.getSharedUser();
-        console.warn('Fixed shared cachedUser from', sharedUser, 'to', newSharedUser);
         this.props.setSharedUser(newSharedUser);
+        console.warn('Fixed shared cachedUser from', sharedUser, 'to', newSharedUser);
         Raven.captureMessage('Invalid cachedUser', {extra: {
-          from: sharedUser||null,
-          to: newSharedUser||null,
+          from: sharedUser || null,
+          to: newSharedUser || null,
         }});
       } else {
         this.props.setCachedUser(newCachedUser);
