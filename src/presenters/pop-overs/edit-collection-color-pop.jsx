@@ -46,10 +46,17 @@ class EditColorColorPop extends React.Component {
     }
   }
   
+  clearSearch() {
+    this.setState({
+      maybeRequest: null,
+      maybeResults: null,
+    });
+  }
+  
   keyPress(e){
     if(e.keyCode == 13){
       // enter key pressed - dismiss pop-over
-      
+      this.props.togglePopover();
     }
   }
     
