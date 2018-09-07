@@ -40,7 +40,7 @@ ProjectsPreview.propTypes = {
 };
 
 
-export const CollectionItem = ({collection, categoryColor, projectOptions, api}) => {
+export const CollectionItem = ({collection, categoryColor, projectOptions, api, isAuthorized}) => {
   let randomColor = colors[Math.floor(Math.random() * colors.length)];
   
   return (
@@ -82,7 +82,10 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
               </DataLoader>   
               
               :  <div className="projects-preview empty">
-                  No projects to see in this collection just yet.
+              {(isAuthorized
+                ? <a href="/wondrous">Open this collection to start adding projects to it.</a>
+                : "No projects to see in this collection just yet."
+              )}
                  </div>
             }
           </div>
@@ -95,6 +98,7 @@ CollectionItem.propTypes = {
   api: PropTypes.func.isRequired,
   categoryColor: PropTypes.string,
   projectOptions: PropTypes.object,
+  isAuthorized: PropTypes.bool.isRequired,
 };
 
 async function loadCategory(api, id) {

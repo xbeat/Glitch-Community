@@ -34,7 +34,7 @@ class EditCollectionColorPop extends React.Component {
     const query = e.currentTarget.value.trim();
     document.getElementsByClassName("editable-field-error-message")[0].style.display = "none";
     this.setState({ query });
-    if (query) {
+    if (query && query.length <=7) {
       if(validHex(query)){
         console.log('valid hex!');
         // change color of customHex preview
@@ -44,6 +44,8 @@ class EditCollectionColorPop extends React.Component {
       }else{
         document.getElementsByClassName("editable-field-error-message")[0].style.display = "inherit";
       }
+    }else{
+      document.getElementsByClassName("editable-field-error-message")[0].style.display = "inherit";
     }
   }
   

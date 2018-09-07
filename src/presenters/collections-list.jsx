@@ -19,7 +19,7 @@ export const CollectionsList = ({title, collections, placeholder, projectOptions
       : null      
       )}
 
-    <CollectionsUL {...{collections, projectOptions, api}}></CollectionsUL>
+    <CollectionsUL {...{collections, projectOptions, api, isAuthorized}}></CollectionsUL>
 
   </article>
 );
@@ -32,13 +32,13 @@ CollectionsList.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
 };
 
-export const CollectionsUL = ({collections, projectOptions, categoryColor, api}) => {
+export const CollectionsUL = ({collections, projectOptions, categoryColor, api, isAuthorized}) => {
   return (
     <ul className="collections-container">
       {/* DUMMY EMPTY COLLECTION CARD */}
-      <CollectionItem key={null} collection={null} api={api}></CollectionItem>
+      <CollectionItem key={null} collection={null} api={api} isAuthorized={isAuthorized}></CollectionItem>
       { collections.map(collection => (
-        <CollectionItem key={collection.id} collection={collection} api={api}></CollectionItem>
+        <CollectionItem key={collection.id} collection={collection} api={api} isAuthorized={isAuthorized}></CollectionItem>
       ))}
     </ul>
   );
@@ -47,6 +47,7 @@ export const CollectionsUL = ({collections, projectOptions, categoryColor, api})
 CollectionsUL.propTypes = {
   api: PropTypes.func.isRequired,
   collections: PropTypes.array.isRequired,
+  isAuthorized: PropTypes.bool.isRequired,
 };
 
 
