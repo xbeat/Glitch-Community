@@ -77,7 +77,7 @@
         console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
         // Copy noscript content to a visible area. Maybe some day we'll do ssr and not need this bit?
         var content = document.getElementById('noscript').innerText;
-        document.body.insertAdjacentHTML('beforeend', content);
+        document.write(content);
       }
     </script>
   </body>
