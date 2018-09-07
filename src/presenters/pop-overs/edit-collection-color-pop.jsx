@@ -5,6 +5,15 @@ import {colors} from '../../models/collection.js';
 
 import Loader from '../includes/loader.jsx';
 
+const validHex = (hex) =>{
+  var re = /[0-9A-Fa-f]{6}/g;
+  if(re.test(hex)){
+    return true;
+  }else{
+    return false;
+  }
+}
+
 class EditColorColorPop extends React.Component {
   constructor(props) {
     super(props);
@@ -17,16 +26,22 @@ class EditColorColorPop extends React.Component {
     };
     
     this.onClick = this.onClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
     
   handleChange(evt) {
     const query = evt.currentTarget.value.trim();
     this.setState({ query });
     if (query) {
-      {/* TO DO: check if valid hex and apply color to background */}
-      
-    } else {
-      {/* TO DO: error message here if invalid */}
+      if(validHex(query)){
+        console.log('valid hex!');
+        // change color of customHex preview
+        
+        // apply color change
+        this.props.setColor(query);
+      }else{
+        // show error message here
+      }
       
     }
   }
