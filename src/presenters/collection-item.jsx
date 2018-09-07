@@ -45,47 +45,46 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
   
   return (
     <li>
-      {(collection 
-        ? 
-        :
-        )}
-        
       <ProjectOptionsContainer collection={collection} projectOptions={projectOptions}></ProjectOptionsContainer>
 
         <div className={['collection']} 
-          style={{backgroundColor: collection.backgroundColor, borderBottomColor:collection.backgroundColor}}>
+          style={(collection ? {backgroundColor: collection.backgroundColor, borderBottomColor:collection.backgroundColor} : null)}>
           <div className="collection-container">
             
-            <a href={collection.url}>
+            <a href={collection ? collection.url : "/wondrous"}>
               <div className="collection-info">
-                <img className="avatar" src={collection.avatarUrl}/>
+                <img className="avatar" src={collection ? collection.avatarUrl : "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"}/>
                 <div className="collection-name-description">
-                  <a href={collection.url}>
+                  <a href={collection ? collection.url : "/wondrous"}>
                     <div className="button">
                       <span className="project-badge private-project-badge" aria-label="private"></span>
-                      <div className="project-name">{collection.name}</div>
+                      <div className="project-name">{collection ? collection.name : "Wondrous Collection"}</div>
                     </div>
                   </a>
-                  <div className="description"><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
+                  <div className="description"><TruncatedMarkdown length={96}>{collection ? collection.description : "A collection of projects that does wondrous things"}</TruncatedMarkdown></div>
                 </div>
               
                 <div className="overflow-mask"></div>
               </div>
             </a>
             
-            {/* LOAD PROJECTS IN COLLECTION HERE */}
-            <DataLoader
-              get={() => loadCategory(api, collection.id)}
-              renderLoader={() => <Loader />}
-               renderError={() => <div>Something went wrong. Try refreshing?</div>}
-            >
-              {collection => (
-                <ProjectsLoader api={api} projects={collection.projects}>
-                    {projects => <ProjectsPreview projects={collection.projects} categoryColor={collection.color} collectionUrl={collection.url}/>}
-                </ProjectsLoader>
-              )}
-            </DataLoader>                       
-            
+            {collection 
+              ? <DataLoader
+                get={() => loadCategory(api, collection.id)}
+                renderLoader={() => <Loader />}
+                 renderError={() => <div>Something went wrong. Try refreshing?</div>}
+              >
+                {collection => (
+                  <ProjectsLoader api={api} projects={collection.projects}>
+                      {projects => <ProjectsPreview projects={collection.projects} categoryColor={collection.color} collectionUrl={collection.url}/>}
+                  </ProjectsLoader>
+                )}
+              </DataLoader>   
+              
+              :  <div className="projects-preview empty">
+                  No projects to see in this collection just yet.
+                 </div>
+            }
           </div>
         </div>
     </li>
