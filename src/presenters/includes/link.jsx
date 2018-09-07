@@ -20,7 +20,7 @@ const external = new Set([
 ]);
 
 const isExternal = (url, currentUrl) => {
-  const route = url.pathname.replace(/^[/]*([^/]+).*$/, '$1');
+  const route = url.pathname.split('/')[1];
   return url.origin !== currentUrl.origin || external.has(route);
 };
 

@@ -24,7 +24,8 @@ const redirects = require('./redirects');
 redirects(app);
 
 const proxy = require('./proxy');
-proxy(app);
+const proxied = proxy(app);
+console.log(proxied);
 
 const router = require('./routes')();
 app.use('/', router);
