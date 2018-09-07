@@ -14,7 +14,7 @@ const validHex = (hex) =>{
   }
 }
 
-class EditColorColorPop extends React.Component {
+class EditCollectionColorPop extends React.Component {
   constructor(props) {
     super(props);
     
@@ -76,7 +76,7 @@ class EditColorColorPop extends React.Component {
           
           <input id="color-picker" 
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
-            value={this.state.query} onChange={this.handleChange} onKeyDown={this.keyPress}
+            value={this.state.query} onChange={this.handleChange} 
             className="pop-over-input pop-over-search"
             placeholder="Custom color hex"
           />
@@ -87,9 +87,9 @@ class EditColorColorPop extends React.Component {
   }
 }
 
-EditColorColorPop.propTypes = {
+EditCollectionColorPop.propTypes = {
   api: PropTypes.func.isRequired,
   collectionID: PropTypes.number.isRequired
 };
 
-export default EditColorColorPop;
+export default EditCollectionColorPop;

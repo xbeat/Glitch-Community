@@ -12,12 +12,12 @@ const EditCollectionColor = ({currentUserIsOwner, ...props}) => {
   return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
-            <React.Fragment>
+            <div className="button-wrap">
               <button className={`button add-project opens-pop-over`} onClick={togglePopover}>
                 Color
               </button>
               { visible && <EditCollectionColorPop {...props} togglePopover={togglePopover} /> }
-            </React.Fragment>
+            </div>
         )}
       </PopoverContainer>
   );

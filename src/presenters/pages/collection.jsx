@@ -60,7 +60,7 @@ const url = "wondrous"
 const avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // to be replaced
 let color = "#FFA3BB";
 let description = "A collection of projects that does wondrous things.";
-const id = "14";
+const id = 14;
 
 const randomName = () => {
   let randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
@@ -186,8 +186,8 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
          ? <ProjectsLoader api={api} projects={collection.projects}>
           {projects => 
             <React.Fragment>
-            <div class="collection-contents">
-              <div class="collection-project-container-header">
+            <div className="collection-contents">
+              <div className="collection-project-container-header">
                 <h3>Projects ({collection.projects.length})</h3>
                 
                 {(isAuthorized 
@@ -215,7 +215,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
         
           : 
           <React.Fragment>
-              <div class="collection-project-container-header">
+              <div className="collection-project-container-header">
                 <h3>Projects</h3>
                 
                 {(isAuthorized 
@@ -227,7 +227,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
                       />
                     : null
                   )}
-              <div class="empty-collection-hint">
+              <div className="empty-collection-hint">
                 Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
             </div>
                 
