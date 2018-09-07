@@ -27,10 +27,11 @@ class EditColorColorPop extends React.Component {
     
     this.onClick = this.onClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.keyPress = this.keyPress.bind(this);
   }
     
-  handleChange(evt) {
-    const query = evt.currentTarget.value.trim();
+  handleChange(e) {
+    const query = e.currentTarget.value.trim();
     this.setState({ query });
     if (query) {
       if(validHex(query)){
@@ -42,6 +43,12 @@ class EditColorColorPop extends React.Component {
       }else{
         // show error message here
       }
+    }
+  }
+  
+  keyPress(e){
+    if(e.keyCode == 13){
+      // enter key pressed - dismiss pop-over
       
     }
   }
@@ -53,12 +60,10 @@ class EditColorColorPop extends React.Component {
   
   render() {
     const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
-    let customHex = "red";
     
     return (
       <dialog className="pop-over edit-collection-color-pop">
         <section className="pop-over-info">
-          {/* TO DO - add buttons and input field*/}
           
           {Object.keys(colors).map((key => 
             <button className="button-tertiary" key={key}
@@ -71,14 +76,10 @@ class EditColorColorPop extends React.Component {
           
           <input id="color-picker" 
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
-            value={this.state.query} onChange={this.handleChange}
+            value={this.state.query} onChange={this.handleChange} onKeyDown={this.keyPress}
             className="pop-over-input pop-over-search"
             placeholder="Custom color hex"
           />
-          
-          <button className="custom-color button-tertiary"
-            style={{backgroundColor: customHex}}
-            />
           
         </section>
       </dialog>
