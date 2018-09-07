@@ -10,6 +10,10 @@ const Category = ({category}) => {
   const ulProps = {
     projects: category.projects||[],
     categoryColor: category.color,
+    projectOptions: { 
+      homepageCollection: true,
+      collectionUrl: category.url
+    },
   };
   return (
     <article className="projects" style={{backgroundColor: category.backgroundColor}}>
@@ -25,7 +29,6 @@ const Category = ({category}) => {
         <p className="category-description">{category.description}</p>
       </header>
       <ProjectsUL {...ulProps}/>
-      <a href={category.url}></a>
     </article>
   );
 };
