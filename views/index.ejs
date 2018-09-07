@@ -33,6 +33,7 @@
     <% for (let i = 0; i < styles.length; ++i) { %>
     <link rel="stylesheet" type="text/css" href="<%= styles[i] %>">
     <% } %>
+    <noscript><style>#fallback { display: none; }</style></noscript>
   </head>
   <body> 
     <script>
