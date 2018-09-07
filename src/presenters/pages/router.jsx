@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import qs from 'querystringify';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, withRouter} from 'react-router-dom';
 import Helmet from 'react-helmet';
 
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
+
+import {CurrentUserConsumer} from '../current-user.jsx';
 
 import IndexPage from './index.jsx';
 import {FacebookLoginPage, GitHubLoginPage} from './login.jsx';
@@ -26,6 +28,23 @@ const NotFoundPage = () => (
     </Helmet>
   </React.Fragment>
 );
+
+class PageChangeHandlerImpl extends React.Component {
+  componentDidUpdate(prev) {
+    if (this.props.location.key !== prev.location.key) {
+      window.scrollTo({left: 0, top: 0, behavior: 'instant'});
+      this.props.reloadCurrentUser();
+    }
+  }
+  render() {
+    return null;
+  }
+}
+const PageChangeHandler = withRouter(({location}) => (
+  <CurrentUserConsumer>
+    {(user, fetched, {reload}) => <PageChangeHandlerImpl location={location} reloadCurrentUser={reload}/>}
+  </CurrentUserConsumer>
+));
 
 const Router = ({api}) => (
   <Switch>

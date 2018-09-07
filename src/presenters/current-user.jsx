@@ -2,7 +2,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router';
 import axios from 'axios';
 
 import UserModel from '../models/user';
@@ -180,17 +179,6 @@ CurrentUserManager.propTypes = {
   setCachedUser: PropTypes.func.isRequired,
 };
 
-const CurrentUserReloader = withRouter(class CurrentUserReloader extends React.Component {
-  componentDidUpdate(prev) {
-    if (this.props.location.key !== prev.location.key) {
-      this.props.reload();
-    }
-  }
-  render() {
-    return null;
-  }
-});
-
 export const CurrentUserProvider = ({children}) => (
   <LocalStorage name="community-cachedUser" default={null}>
     {(cachedUser, setCachedUser, loadedCachedUser) => (
@@ -199,7 +187,6 @@ export const CurrentUserProvider = ({children}) => (
           <CurrentUserManager sharedUser={sharedUser} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
             {({api, ...props}) => (
               <Provider value={props}>
-                <CurrentUserReloader reload={props.reload}/>
                 {loadedSharedUser && loadedCachedUser && children(api)}
               </Provider>
             )}
