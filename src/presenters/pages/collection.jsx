@@ -227,7 +227,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
                       />
                     : null
                   )}
-              <div className="empty-collection-hint">
+              <div className="empty-collection-hint" style={{backgroundColor: hexToRgbA(color)}}>
                 Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
             </div>
                 
