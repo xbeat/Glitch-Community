@@ -11,7 +11,7 @@ module.exports = function(app) {
   const routes = [];
   
   function proxyGlitch(route, target, pathOnTarget="") {
-    let routeWithLeadingSlash = route.startsWith('/') ? route : `/${route}`;
+    const routeWithLeadingSlash = `/${route}`;
     app.use(routeWithLeadingSlash, proxy(target, {
       preserveHostHdr: false, // glitch routes based on this, so we have to reset it
       https: false, // allows the proxy to do less work
@@ -21,7 +21,7 @@ module.exports = function(app) {
         return path;
       }
     }));
-    routes.push(route.replace(/\//g, ''));
+    routes.push(route);
   }
 
   function proxyGhost(route, glitchTarget, pathOnTarget) {
@@ -40,7 +40,7 @@ module.exports = function(app) {
     });
 
     // Proxy all the requests to /{route}/ over to glitchTarget
-    proxyGlitch(sandwichedRoute, glitchTarget, pathOnTarget);
+    proxyGlitch(route, glitchTarget, pathOnTarget);
   }
 
   // Proxy the some parts of our site over to ghost blogs:

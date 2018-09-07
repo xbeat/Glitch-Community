@@ -25,9 +25,8 @@ redirects(app);
 
 const proxy = require('./proxy');
 const proxied = proxy(app);
-console.log(proxied);
 
-const router = require('./routes')();
+const router = require('./routes')(proxied);
 app.use('/', router);
 
 // Add an explicit no-cache to 404 responses

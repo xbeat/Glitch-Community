@@ -5,7 +5,7 @@ const moment = require('moment-mini');
 const {getProject, getTeam, getUser} = require('./api');
 const constants = require('./constants');
 
-module.exports = function() {
+module.exports = function(external) {
 
   const app = express.Router();
 
@@ -43,6 +43,7 @@ module.exports = function() {
       title, description, image,
       scripts: Object.values(scripts),
       styles: Object.values(styles),
+      EXTERNAL_ROUTES: JSON.stringify(external),
       PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
       ENVIRONMENT: process.env.NODE_ENV || "dev",
       ...constants,
