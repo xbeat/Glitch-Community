@@ -55,18 +55,18 @@ let adjectives = [
       'zealous',
     ];
 
-const name = "Wondrous Collection";
+let name = "Wondrous Collection";
 const url = "wondrous"
 const avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // to be replaced
 let color = "#FFA3BB";
-const description = "A collection of projects that does wondrous things.";
+let description = "A collection of projects that does wondrous things.";
 const id = "14";
 
 const randomName = () => {
   let randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
   let randomName = randomAdjective.charAt(0).toUpperCase() + randomAdjective.slice(1); // capitalize first letter
   name = `${randomName} Collection`;
-  description = `A collection that does ${randomAdjective} things`
+  description = `A collection of projects that does ${randomAdjective} things`;
 }
 
 class CollectionColorWrap extends React.Component { 
@@ -282,6 +282,10 @@ async function loadCategory(api, id) {
   if(data){
       data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
   }
+  
+  // TO DO: put this in the collection creation
+  // set random name stuff
+  randomName();
   return data;
 }
   
