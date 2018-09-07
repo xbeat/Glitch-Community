@@ -7,10 +7,6 @@ import { getLink as getProjectLink } from '../../models/project';
 import { getLink as getTeamLink } from '../../models/team';
 import { getLink as getUserLink } from '../../models/user';
 
-const isNewDomain = (a, b) => (
-  a.origin !== b.origin
-);
-
 // This should be provided by the server
 const external = new Set([
   'edit',
@@ -22,15 +18,17 @@ const external = new Set([
   'you-got-this',
   'email-sales',
 ]);
-const isExternal = (url) => (
-  external.has(url.pathname.replace(/^[/]*([^/]+).*$/, '$1'))
-);
+
+const isExternal = (url, currentUrl) => {
+  const route = url.pathname.replace(/^[/]*([^/]+).*$/, '$1');
+  return url.origin !== currentUrl.origin || external.has(route);
+};
 
 export const Link = ({href, children, ...props}) => {
   const currentUrl = new URL(window.location.href);
   const targetUrl = new URL(href, currentUrl);
   
-  if (isNewDomain(targetUrl, currentUrl) || isExternal(targetUrl)) {
+  if (isExternal(targetUrl, currentUrl)) {
     return <a href={href} {...props}>{children}</a>;
   }
   
