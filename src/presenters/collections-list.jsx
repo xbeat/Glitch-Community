@@ -35,6 +35,8 @@ CollectionsList.propTypes = {
 export const CollectionsUL = ({collections, projectOptions, categoryColor, api}) => {
   return (
     <ul className="collections-container">
+      {/* DUMMY EMPTY COLLECTION CARD */}
+      <CollectionItem key={null} collection={null} api={api}></CollectionItem>
       { collections.map(collection => (
         <CollectionItem key={collection.id} collection={collection} api={api}></CollectionItem>
       ))}

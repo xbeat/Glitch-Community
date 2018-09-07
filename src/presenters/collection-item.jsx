@@ -45,7 +45,11 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
   
   return (
     <li>
-      {/* <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/> */}
+      {(collection 
+        ? 
+        :
+        )}
+        
       <ProjectOptionsContainer collection={collection} projectOptions={projectOptions}></ProjectOptionsContainer>
 
         <div className={['collection']} 
@@ -80,28 +84,7 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api})
                     {projects => <ProjectsPreview projects={collection.projects} categoryColor={collection.color} collectionUrl={collection.url}/>}
                 </ProjectsLoader>
               )}
-            </DataLoader>            
-            
-            {/* DUMMY PROJECTS DATA 
-            <div className="projects-preview">
-              <div className="project-container">
-                <img className="avatar" src={collection.avatarUrl}/>
-                <div className="project-name">{collection.name}</div>
-              </div>
-
-              <div className="project-container">
-                <img className="avatar" src={collection.avatarUrl}/>
-                <div className="project-name">{collection.name}</div>
-              </div>
-
-              <div className="project-container">
-                <img className="avatar" src={collection.avatarUrl}/>
-                <div className="project-name">{collection.name}</div>
-              </div>
-
-            </div>
-            */}
-            
+            </DataLoader>                       
             
           </div>
         </div>
