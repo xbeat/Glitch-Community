@@ -32,6 +32,7 @@ class EditCollectionColorPop extends React.Component {
     
   handleChange(e) {
     const query = e.currentTarget.value.trim();
+    document.getElementsByClassName("editable-field-error-message")[0].style.display = "none";
     this.setState({ query });
     if (query) {
       if(validHex(query)){
@@ -41,7 +42,7 @@ class EditCollectionColorPop extends React.Component {
         // apply color change
         this.props.setColor(query);
       }else{
-        // show error message here
+        document.getElementsByClassName("editable-field-error-message")[0].style.display = "inherit";
       }
     }
   }
@@ -50,6 +51,7 @@ class EditCollectionColorPop extends React.Component {
     if(e.keyCode == 13){
       // enter key pressed - dismiss pop-over
       this.props.togglePopover();
+    }else{
     }
   }
     
@@ -75,11 +77,15 @@ class EditCollectionColorPop extends React.Component {
           <hr/>
           
           <input id="color-picker" 
-            autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+            no-autofocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange} 
             className="pop-over-input pop-over-search"
             placeholder="Custom color hex"
           />
+          
+          <div className="editable-field-error-message">
+            Invalid Hex!
+          </div>
           
         </section>
       </dialog>
