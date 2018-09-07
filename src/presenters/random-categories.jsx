@@ -25,6 +25,7 @@ const Category = ({category}) => {
         <p className="category-description">{category.description}</p>
       </header>
       <ProjectsUL {...ulProps}/>
+      <a href={category.url}></a>
     </article>
   );
 };

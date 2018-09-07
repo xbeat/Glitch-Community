@@ -52,6 +52,7 @@ class EditCollectionColorPop extends React.Component {
       // enter key pressed - dismiss pop-over
       this.props.togglePopover();
     }else{
+      document.getElementsByClassName("editable-field-error-message")[0].style.display = "none";
     }
   }
     
