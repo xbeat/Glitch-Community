@@ -21,18 +21,22 @@ ProjectsList.propTypes = {
   placeholder: PropTypes.node,
 };
 
-export const ProjectsUL = ({projects, projectOptions, categoryColor}) => {
+export const ProjectsUL = ({projects, projectOptions, categoryColor, homepageCollection, collectionUrl, ...props}) => {
   return (
     <React.Fragment>
       <ul className="projects-container">
         { projects.map(project => (
           <ProjectItem key={project.id} {...{project, projectOptions, categoryColor}}></ProjectItem>
         ))}
-      </ul>
-      { projectOptions.homepageCollection 
-       ? <a href={projectOptions.collectionUrl} className="collection-view-all">View all {projects.length} projects →</a>
+        
+        {/* The link to view all projects for collections on the homepage  TO DO show actual count of projects*/}  
+      {homepageCollection
+        ? <a href={collectionUrl} className="collection-view-all">View all {projects.length} projects →</a>
         : null
       }
+        
+      </ul>
+
     </React.Fragment>
   );
 };
