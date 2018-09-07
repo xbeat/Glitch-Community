@@ -143,6 +143,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
          ? <ProjectsLoader api={api} projects={collection.projects}>
           {projects => 
             <React.Fragment>
+            <div class="collection-contents">
               <div class="collection-project-container-header">
                 <h3>Projects ({collection.projects.length})</h3>
                 
@@ -163,6 +164,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
                     removeProjectFromCollection: null
                 }} 
                 {...props}/>
+            </div>
           
             </React.Fragment>
           }
