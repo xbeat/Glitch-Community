@@ -19,12 +19,55 @@ import AddCollectionProject from '../includes/add-collection-project.jsx';
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
 // some dummy info for testing
+let adjectives = [
+      'charming',
+      'bold',
+      'brave',
+      'cool',
+      'docile',
+      'dope',
+      'faithful',
+      'fertile',
+      'fervent',
+      'forgiving',
+      'genial',
+      'genteel',
+      'grouchy',
+      'hopeful',
+      'humane',
+      'jolly',
+      'joyful',
+      'loving',
+      'magical',
+      'moral',
+      'mysterious',
+      'notorious',
+      'passionate',
+      'preposterous',
+      'quaint',
+      'quirky',
+      'scrumptious',
+      'sensitive',
+      'sober',
+      'tropical',
+      'woeful',
+      'whimsical',
+      'zealous',
+    ];
+
 const name = "Wondrous Collection";
 const url = "wondrous"
 const avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // to be replaced
 let color = "#FFA3BB";
 const description = "A collection of projects that does wondrous things.";
 const id = "14";
+
+const randomName = () => {
+  let randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+  let randomName = randomAdjective.charAt(0).toUpperCase() + randomAdjective.slice(1); // capitalize first letter
+  name = `${randomName} Collection`;
+  description = `A collection that does ${randomAdjective} things`
+}
 
 class CollectionColorWrap extends React.Component { 
   constructor(props){
@@ -210,6 +253,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
     <Categories/>
   </React.Fragment>
 );
+
 CollectionPageWrap.propTypes = {
   collection: PropTypes.shape({
     avatarUrl: PropTypes.string.isRequired,
