@@ -81,7 +81,6 @@ class EditCollectionColorPop extends React.Component {
             placeholder="Custom color hex"
           />
           
-          
         </section>
       </dialog>
     );
