@@ -21,7 +21,7 @@ import EditCollectionColor from '../includes/edit-collection-color.jsx';
 // some dummy info for testing
 const name = "Wondrous Collection";
 const url = "wondrous"
-const avatarUrl = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fart.svg?1499357014248";
+const avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // to be replaced
 let color = "#FFA3BB";
 const description = "A collection of projects that does wondrous things.";
 const id = "14";
