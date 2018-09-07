@@ -45,7 +45,7 @@ class EditColorColorPop extends React.Component {
     
   handleChange(evt) {
     const query = evt.currentTarget.value.trim();
-    this.setState({ query });
+    // this.setState({ query });
     if (query) {
       {/* TO DO: check if valid hex and apply color to background */}
       
@@ -67,7 +67,7 @@ class EditColorColorPop extends React.Component {
         <section className="pop-over-info">
           {/* TO DO - add buttons and input field*/}
           <input id="color-picker" 
-            autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+            no-autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}
             className="pop-over-input search-input pop-over-search"
             placeholder="Custom color hex"
