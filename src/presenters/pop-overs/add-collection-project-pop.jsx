@@ -75,6 +75,7 @@ class AddCollectionProjectPop extends React.Component {
     const glitchKeyword = "glitch";
     let query = this.state.query;
     
+    // TO DO - search results needs to match URL exactly, not search only by project name extracted from URL
     if(this.state.query.includes(httpsKeyword) && this.state.query.includes(glitchKeyword)){
       // get project domain
       if(this.state.query.includes("me") && !this.state.query.includes("~")){

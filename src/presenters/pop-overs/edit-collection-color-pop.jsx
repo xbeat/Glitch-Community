@@ -36,10 +36,6 @@ class EditCollectionColorPop extends React.Component {
     this.setState({ query });
     if (query && query.length <=7) {
       if(validHex(query)){
-        console.log('valid hex!');
-        // change color of customHex preview
-        
-        // apply color change
         this.props.setColor(query);
       }else{
         document.getElementsByClassName("editable-field-error-message")[0].style.display = "inherit";
@@ -50,7 +46,7 @@ class EditCollectionColorPop extends React.Component {
   }
   
   keyPress(e){
-    if(e.keyCode == 13){
+    if(e.which == 13 || e.keyCode == 13){
       // enter key pressed - dismiss pop-over
       this.props.togglePopover();
     }else{
@@ -81,7 +77,7 @@ class EditCollectionColorPop extends React.Component {
           
           <input id="color-picker" 
             no-autofocus // eslint-disable-line jsx-a11y/no-autofocus
-            value={this.state.query} onChange={this.handleChange} 
+            value={this.state.query} onChange={this.handleChange} onKeyPress={this.keyPress}
             className="pop-over-input pop-over-search"
             placeholder="Custom color hex"
           />
