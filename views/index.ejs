@@ -33,7 +33,7 @@
     <% for (let i = 0; i < styles.length; ++i) { %>
     <link rel="stylesheet" type="text/css" href="<%= styles[i] %>">
     <% } %>
-    <noscript><style>#fallback { display: none; }</style></noscript>
+    <noscript><style>#fallback { display: initial !important; }</style></noscript>
   </head>
   <body> 
     <script>
@@ -45,7 +45,7 @@
       var FACEBOOK_CLIENT_ID = '<%= FACEBOOK_CLIENT_ID %>';
     </script>
 
-    <noscript id="noscript">
+    <div id="fallback" style="display: none">
       <div class="content">
         <main>
           <h1><%= title %></h1>
@@ -56,7 +56,7 @@
           <p>To use this app, please enable JavaScript</p>
         </footer>
       </div>
-    </noscript>
+    </div>
 
     <script src="https://cdn.ravenjs.com/3.26.2/raven.min.js" crossorigin="anonymous"></script>
     <script>
@@ -76,9 +76,7 @@
         Raven.context(window.bootstrap);
       } else {
         console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
-        // Copy noscript content to a visible area. Maybe some day we'll do ssr and not need this bit?
-        var content = document.getElementById('noscript').innerText;
-        document.write(content);
+        document.getElementById('fallback').removeAttribute('style');
       }
     </script>
   </body>
