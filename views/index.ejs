@@ -33,7 +33,7 @@
     <% for (let i = 0; i < styles.length; ++i) { %>
     <link rel="stylesheet" type="text/css" href="<%= styles[i] %>">
     <% } %>
-    <noscript><style>#fallback { display: initial !important; }</style></noscript>
+    <noscript><style>#fallback, #fallback-noscript { display: initial !important; }</style></noscript>
   </head>
   <body> 
     <script>
@@ -53,7 +53,8 @@
         </main>
         <footer>
           <p>We can't wait to see what you create!</p>
-          <p>To use this app, please enable JavaScript</p>
+          <p id="fallback-noscript" style="display: none">To use this app, please enable JavaScript</p>
+          <p id="fallback-yesscript" style="display: none">To use this app, please update your browser</p>
         </footer>
       </div>
     </div>
@@ -77,6 +78,7 @@
       } else {
         console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
         document.getElementById('fallback').removeAttribute('style');
+        document.getElementById('fallback-yesscript').removeAttribute('style');
       }
     </script>
   </body>
