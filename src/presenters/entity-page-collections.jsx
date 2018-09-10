@@ -21,7 +21,6 @@ const EntityPageCollections = ({collections, api, isAuthorized}) => {
 
   return (
     <React.Fragment>
-      {console.log(JSON.stringify(collections))}
       {!!collections.length && (
         <CollectionsList title="Collections" collections={collections.slice(0,2)} api={api} isAuthorized={isAuthorized} />
       )}

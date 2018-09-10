@@ -10,7 +10,10 @@ const OverlaySelectCollection = ({children}) => (
         <summary>{children}</summary>
         <dialog className="overlay">
           <section className="pop-over-actions">
-            Hello World
+            <div className="title">
+              Add ProjectName to collection
+            </div>
+            
           </section>
         </dialog>
       </details>
