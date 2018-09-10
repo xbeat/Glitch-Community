@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Crystalis VR',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcrystalis-vr.png?1535971898756",
-    link: 'https://crystalis-vr.glitch.me/'
+    title: 'Artist Explorer',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fartist_explorer.png?1536570040809",
+    link: 'https://artist-explorer.glitch.me/'
   },{
-    title: 'Turn Off Retweets',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fturn-off-retweets.png?1535971899505",
-    link: 'https://turn-off-retweets.glitch.me/'
+    title: 'Bring Back Your 1st Site',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fwayback_importer.png?1536570052496",
+    link: 'https://glitch.com/~wayback-importer'
   }, {
-    title: 'Literature Clock',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fliterature-clock.png?1535971899672",
-    link: 'https://literature-clock.glitch.me/'
+    title: 'VR Seed Library',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fseed_library.png?1536570049651",
+    link: 'http://seedlibrary.glitch.me/'
   }  
 ];
