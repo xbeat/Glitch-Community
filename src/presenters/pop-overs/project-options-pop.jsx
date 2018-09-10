@@ -55,11 +55,13 @@ const ProjectOptionsPop = ({...props}) => {
 
   return (
     <dialog className="pop-over project-options-pop">
-      <section className="pop-over-actions">
-        {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
-        {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
-        {!!props.addProjectToCollection && <PopoverButton onClick={null} text="Add to Collection " emoji="framed_picture"/>}
-      </section>
+      {props.currentUserIsOnProject &&
+        <section className="pop-over-actions">
+            {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
+            {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
+            {!!props.addProjectToCollection && <PopoverButton onClick={null} text="Add to Collection " emoji="framed_picture"/>}
+        </section>
+      }
 
       {(props.joinTeamProject && props.leaveTeamProject) &&
         <section className="pop-over-actions collaborator-actions">
@@ -80,11 +82,10 @@ const ProjectOptionsPop = ({...props}) => {
 
       <section className="pop-over-actions danger-zone last-section">
         {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
-        <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>
-        <PopoverButton onClick={null} text="Remove Project " emoji="thumbs_down"/>
-        {/*
         {!!props.removeProjectFromCollection && <PopoverButton onClick={null} text="Remove Project " emoji="thumbs_down"/>}
-         */}
+         
+        {!props.addProjectToCollection && <PopoverButton onClick={null} text="Remove from Collection" emoji="thumbs_down"/>}
+        {props.currentUserIsOnProject && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
       </section>
     </dialog>
   );
