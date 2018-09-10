@@ -71,8 +71,8 @@
     <script src="<%= scripts[i] %>"></script>
     <% } %>
     <script>
-      Raven.setTagsContext();
       if (window.bootstrap) {
+        Raven.setTagsContext();
         Raven.context(window.bootstrap);
       } else {
         console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
