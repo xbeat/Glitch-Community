@@ -18,6 +18,8 @@ import AddCollectionProject from '../includes/add-collection-project.jsx';
 
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
+import {CurrentUserConsumer} from '../current-user.jsx';
+
 // some dummy info for testing
 let adjectives = [
       'charming',
