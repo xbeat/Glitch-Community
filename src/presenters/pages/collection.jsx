@@ -12,6 +12,7 @@ import Categories from '../categories.jsx';
 
 import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
+import CollectionEditor from '../collection-editor.jsx';
 
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 import AddCollectionProject from '../includes/add-collection-project.jsx';
@@ -128,7 +129,7 @@ const hexToRgbA = (hex) => {
     throw new Error('Bad Hex');
   };
 
-const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, updateName, updateDescription, projectOptions, ...props}) => (
+const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, updateName, updateDescription, projectOptions, uploadAvatar, ...props}) => (
   <React.Fragment>
     
     <Helmet>
@@ -153,7 +154,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
               {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
              {isAuthorized 
                ? <div className="upload-image-buttons">
-                   <button className="button button-small button-tertiary" onClick={null}>
+                   <button className="button button-small button-tertiary" onClick={uploadAvatar}>
                      <span>Replace Avatar</span>  
                    </button>
                  </div>
@@ -276,6 +277,7 @@ CollectionPageWrap.propTypes = {
   children: PropTypes.node.isRequired,
   projectOptions: PropTypes.object.isRequired,
   removeProjectFromCollection: PropTypes.func.isRequired,
+  uploadAvatar: PropTypes.func.isRequired,
 };
 
 const CollectionPageLoader = ({...props}) => (
