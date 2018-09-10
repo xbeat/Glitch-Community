@@ -36,6 +36,9 @@ const ProjectOptionsPop = ({...props}) => {
     props.joinTeamProject(props.project.id, props.currentUser);
   }
   
+  function addToCollection(){
+    // TO DO - trigger add to collection modal
+  }
     
   function animateThenAddPin(event) {
     animate(event, 'slide-up', () => props.addPin(props.project.id));
@@ -75,9 +78,11 @@ const ProjectOptionsPop = ({...props}) => {
         </section>
       }
       
-     <section className="pop-over-actions collection-actions">
-        <PopoverButton onClick={null} text="Add to Collection " emoji="framed_picture"/>
-      </section>
+      {(props.addToCollection) &&      
+       <section className="pop-over-actions collection-actions">
+          <PopoverButton onClick={null} text="Add to Collection " emoji="framed_picture"/>
+        </section>
+       }
 
       <section className="pop-over-actions danger-zone last-section">
         {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
@@ -98,6 +103,7 @@ ProjectOptionsPop.propTypes = {
   removePin: PropTypes.func,
   deleteProject: PropTypes.func,
   leaveProject: PropTypes.func,
+  addToCollection: PropTypes.func, 
   removeProjectFromTeam: PropTypes.func,
   joinTeamProject: PropTypes.func,
   leaveTeamProject: PropTypes.func,
