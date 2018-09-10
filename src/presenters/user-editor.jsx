@@ -107,6 +107,20 @@ class UserEditor extends React.Component {
       _deletedProjects: _deletedProjects.filter(p => p.id !== id)
     }));
   }
+  
+  async addProjectToCollection(id) {
+    // await this.props.api.post(`users/${this.state.id}/pinned-projects/${id}`);
+    // this.setState(({pins}) => ({
+    //   pins: [...pins, {projectId: id}],
+    // }));
+  }
+  
+  async removeProjectFromCollection(id) {
+    // await this.props.api.post(`users/${this.state.id}/pinned-projects/${id}`);
+    // this.setState(({pins}) => ({
+    //   pins: [...pins, {projectId: id}],
+    // }));
+  }
 
   render() {
     const {handleError, handleErrorForInput} = this.props;
@@ -123,6 +137,9 @@ class UserEditor extends React.Component {
       deleteProject: id => this.deleteProject(id).catch(handleError),
       undeleteProject: id => this.undeleteProject(id).catch(handleError),
       setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
+      addProjectToCollection: id => this.addProjectToCollection(id).catch(handleError),
+      removeProjectFromCollection: id => this.removeProjectFromCollection(id).catch(handleError),
+      
     };
     return this.props.children(this.state, funcs, this.isCurrentUser());
   }

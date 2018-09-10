@@ -69,6 +69,7 @@ const UserPage = ({
   leaveProject,
   deleteProject, undeleteProject,
   setDeletedProjects,
+  addProjectToCollection
 }) => (
   <main className="profile-page user-page">
     <section>
@@ -101,6 +102,7 @@ const UserPage = ({
       api={api} 
       addPin={addPin} 
       removePin={removePin}
+      addProjectToCollection = {addProjectToCollection}
       projectOptions={{
         leaveProject, 
         deleteProject

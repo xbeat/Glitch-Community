@@ -9,7 +9,7 @@ import ProjectsLoader from './projects-loader.jsx';
 
 const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, addToCollection, projectOptions, reloadProject}) => {
+const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, addProjectToCollection, projectOptions, reloadProject}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const [pinnedProjects, recentProjects] = _.partition(projects, ({id}) => pinnedSet.has(id));
   
@@ -44,12 +44,12 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, ad
       {!!pinnedVisible && (
         <ProjectsList title={pinnedTitle}
           projects={pinnedProjects} placeholder={pinnedEmpty}
-          projectOptions={isAuthorized ? {removePin, addToCollection, ...projectOptions} : {}}
+          projectOptions={isAuthorized ? {removePin, addProjectToCollection, ...projectOptions} : {}}
         />
       )}
       {!!recentProjects.length && (
         <ProjectsList title="Recent Projects" projects={recentProjects}
-          projectOptions={isAuthorized ? {addPin, addToCollection, ...projectOptions} : {}}
+          projectOptions={isAuthorized ? {addPin, addProjectToCollection, ...projectOptions} : {}}
         />
       )}
     </React.Fragment>
@@ -63,7 +63,7 @@ EntityPageProjects.propTypes = {
   }).isRequired).isRequired,
   addPin: PropTypes.func.isRequired,
   removePin: PropTypes.func.isRequired,
-  addToCollection: PropTypes.func,
+  addProjectToCollection: PropTypes.func,
   projectOptions: PropTypes.object.isRequired,
 };
 
