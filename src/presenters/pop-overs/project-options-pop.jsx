@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
+import OverlaySelectCollection from '../overlays/overlay-select-collection.jsx';
+
 const PopoverButton = ({onClick, text, emoji}) => (
   <button className="button-small has-emoji button-tertiary" onClick={onClick}>
     <span>{text} </span>
@@ -59,7 +61,11 @@ const ProjectOptionsPop = ({...props}) => {
         <section className="pop-over-actions">
             {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
             {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
-            {!!props.addProjectToCollection && <PopoverButton onClick={null} text="Add to Collection " emoji="framed_picture"/>}
+            {!!props.addProjectToCollection && 
+              <OverlaySelectCollection>
+                <PopoverButton onClick={null} text="Add to Collection " emoji="framed_picture"/>
+              </OverlaySelectCollection>
+            }
         </section>
       }
 
