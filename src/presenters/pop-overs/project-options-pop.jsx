@@ -80,8 +80,10 @@ const ProjectOptionsPop = ({...props}) => {
 
       <section className="pop-over-actions danger-zone last-section">
         {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
-        {!!props.deleteProject && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
+        <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>
+        {/*
         {!!props.removeProjectFromCollection && <PopoverButton onClick={null} text="Remove Project " emoji="thumbs_down"/>}
+         /*}
       </section>
     </dialog>
   );

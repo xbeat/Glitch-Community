@@ -101,6 +101,13 @@ class CollectionColorWrap extends React.Component {
     console.log(`newColor: ${newColor}`);
   }
   
+  async removeProjectFromCollection(id) {
+    // await this.props.api.post(`users/${this.state.id}/pinned-projects/${id}`);
+    // this.setState(({pins}) => ({
+    //   pins: [...pins, {projectId: id}],
+    // }));
+  }
+  
   render(){
     return this.props.children(this.state.color, this.setColor);
   }
@@ -266,7 +273,7 @@ CollectionPageWrap.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
   projectOptions: PropTypes.object.isRequired,
-  removeProject: PropTypes.func.isRequired,
+  removeProjectFromCollection: PropTypes.func.isRequired,
 };
 
 const CollectionPageLoader = ({...props}) => (
@@ -290,7 +297,7 @@ async function loadCategory(api, id) {
 }
   
 
-const CollectionPage = ({api, collection, removeProject, ...props}) => (
+const CollectionPage = ({api, collection, removeProjectFromCollection, ...props}) => (
   <Layout api={api}>
     <DataLoader
       get={() => loadCategory(api, collection.id)}
@@ -299,7 +306,7 @@ const CollectionPage = ({api, collection, removeProject, ...props}) => (
     >
       {collection => (
         <CollectionColorWrap collection={collection}>
-          {(color, setColor) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} api={api} isAuthorized={true} removeProject={null} {...props}/>}
+          {(color, setColor) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} api={api} isAuthorized={true} removeProjectFromCollection={null} {...props}/>}
         </CollectionColorWrap>
       )}
     </DataLoader>
@@ -309,7 +316,7 @@ const CollectionPage = ({api, collection, removeProject, ...props}) => (
 CollectionPage.propTypes = {
   api: PropTypes.any.isRequired,
   collection: PropTypes.object.isRequired,
-  removeProject: PropTypes.func.isRequired,
+  removeProjectFromCollection: PropTypes.func.isRequired,
 };
 
 export default CollectionPage;
