@@ -16,6 +16,7 @@ dependencies:
   d3-array: 1.2.1
   details-element-polyfill: 2.0.1
   ejs: 2.6.1
+  email-addresses: 3.0.1
   eslint: 5.2.0
   eslint-loader: 2.1.0
   eslint-plugin-jsx-a11y: 6.1.1
@@ -43,6 +44,7 @@ dependencies:
   react-dom: 16.4.2
   react-helmet: 5.2.0
   react-is: 16.4.2
+  react-konami: 0.5.0
   react-onclickoutside: 6.7.1
   react-pluralize: 1.4.1
   react-router-dom: 4.3.1
@@ -2257,6 +2259,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-ysmvh2LIWDYYcAPI3+GT5eLq5d8=
+  /email-addresses/3.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-wfwgwYnn+W1AEtN121/qzN0kORw=
   /emoji-regex/6.5.1:
     dev: false
     resolution:
@@ -5062,6 +5068,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-rI3cGFj/obHbBz156PvErrS5xc6f1eWyTwyV4mo0vF2lGgXgS+mm7EKD5buLJq6jNgIagQescGSVG2YzgXt8Yg==
+  /react-konami/0.5.0:
+    dependencies:
+      prop-types: 15.6.2
+      react: 16.4.2
+    dev: false
+    resolution:
+      integrity: sha512-z8jSYVIwN3V9N/HXG8PCgvgFNpxj1dyXZBR83vBaiF9Pru8peOqxFfAW2bbX+NtgjhF204rBqXoptpKH87ocrQ==
   /react-onclickoutside/6.7.1:
     dev: false
     peerDependencies:
@@ -6417,6 +6430,7 @@ specifiers:
   d3-array: ^1.2.1
   details-element-polyfill: ^2.0.1
   ejs: ^2.6.1
+  email-addresses: ^3.0.1
   eslint: ^5.2.0
   eslint-loader: ^2.1.0
   eslint-plugin-jsx-a11y: ^6.1.1
@@ -6444,6 +6458,7 @@ specifiers:
   react-dom: ^16.4.1
   react-helmet: ^5.2.0
   react-is: ^16.4.1
+  react-konami: ^0.5.0
   react-onclickoutside: ^6.7.1
   react-pluralize: ^1.4.0
   react-router-dom: ^4.3.1

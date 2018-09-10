@@ -20,6 +20,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(compression());
 
+const redirects = require('./redirects');
+redirects(app);
+
 const proxy = require('./proxy');
 proxy(app);
 

@@ -72,8 +72,9 @@ const ThanksCount = ({count}) => (
 
 // Team User Info 😍
 
-const TeamUserInfo = ({toggleUserInfoHidden, ...props}) => {
+const TeamUserInfo = ({toggleUserInfoHidden, currentUser, ...props}) => {
   const userAvatarStyle = {backgroundColor: props.user.color};
+  const canRemoveUser = props.currentUserIsTeamAdmin || (currentUser && currentUser.id === props.user.id);
   return (
     <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info user-info">
@@ -102,7 +103,7 @@ const TeamUserInfo = ({toggleUserInfoHidden, ...props}) => {
           updateUserPermissions={props.updateUserPermissions}
         />
       }
-      { props.currentUserIsTeamAdmin && <RemoveFromTeam toggleUserInfoHidden={() => toggleUserInfoHidden()} /> }
+      { canRemoveUser && <RemoveFromTeam toggleUserInfoHidden={() => toggleUserInfoHidden()} /> }
     </dialog>
   );
 };
@@ -183,6 +184,9 @@ class TeamUserRemove extends React.Component {
     } else if (this.state.userTeamProjects.length > 0) {
       projects = (
         <React.Fragment>
+          <p className="action-description">
+            Also remove them from these projects
+          </p>
           <div className="projects-list">
             { this.state.userTeamProjects.map(project => (
               <label key={project.id} htmlFor={`remove-user-project-${project.id}`}>
@@ -196,7 +200,7 @@ class TeamUserRemove extends React.Component {
             ))}
           </div>
           {this.state.userTeamProjects.length > 1 && (
-            <button className="button-small button-tertiary"
+            <button className="button-small"
               onClick={allProjectsSelected ? this.unselectAllProjects : this.selectAllProjects}
             >
               {allProjectsSelected ? 'Unselect All' : 'Select All'}
@@ -204,8 +208,6 @@ class TeamUserRemove extends React.Component {
           )}
         </React.Fragment>
       );
-    } else {
-      projects = <p className="action-description">(they aren't in any projects here)</p>;
     }
     
     return (
@@ -219,10 +221,11 @@ class TeamUserRemove extends React.Component {
         </button>
         
         <section className="pop-over-actions" id="user-team-projects">
-          <p className="action-description">
-            Also remove them from these projects
-          </p>
-          {projects}
+          {projects || (
+            <p className="action-description">
+              {getDisplayName(this.props.user)} is not a member of any projects
+            </p>
+          )}
         </section>
         
         <section className="pop-over-actions danger-zone">

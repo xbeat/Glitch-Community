@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Gender Analyze Your Radio Station',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fradio-station-scraper.jpg?1535022650114",
-    link: 'https://glitch.com/~radio-station-scraper'
+    title: 'Make a Box',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fboxmaker.png?1535971898294",
+    link: 'https://glitch.com/~box-maker'
   },{
-    title: 'Make Your Own Movie Poster',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmovieposters.jpg?1535368252714",
-    link: 'https://glitch.com/~movieposters'
+    title: 'Live Coded Visuals',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhydra.png?1535971898489",
+    link: 'https://glitch.com/~hydra-editor-v1'
   }, {
-    title: 'Reader View, Everywhere',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Freader-view.jpg?1535368251978",
-    link: 'https://glitch.com/~legend-football'
+    title: 'Subscribe2Me',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsubscribe2me.png?1535971898937",
+    link: 'https://subscribe2me.glitch.me'
   }  
 ];

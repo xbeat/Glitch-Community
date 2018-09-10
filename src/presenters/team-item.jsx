@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {getAvatarUrl, getProfileStyle} from '../models/team';
+import {getAvatarUrl, getLink, getProfileStyle} from '../models/team';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import Thanks from './includes/thanks.jsx';
@@ -10,14 +10,15 @@ import WrappingLink from './includes/wrapping-link.jsx';
 import {VerifiedBadge} from './includes/team-elements.jsx';
 
 export default function TeamItem({team}) {
+  const link = getLink(team);
   const style = getProfileStyle({...team, size: 'medium'});
   const thanksCount = team.users.reduce((total, {thanksCount}) => total + thanksCount, 0);
   return (
-    <WrappingLink href={team.url} className="item" style={style}>
+    <WrappingLink href={link} className="item" style={style}>
       <div className="content">
         <img className="avatar" src={getAvatarUrl(team)} alt="" />
         <div className="information">
-          <a href={team.url} className="button">{team.name}</a>
+          <a href={link} className="button">{team.name}</a>
           {!!team.isVerified && <VerifiedBadge/>}
           <UsersList users={team.users} />
           {thanksCount > 0 && <Thanks count={thanksCount} />}

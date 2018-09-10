@@ -13,7 +13,7 @@ import Thanks from '../includes/thanks.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
 // import DeleteTeam from '../includes/delete-team.jsx';
-import {AddTeamUser, TeamUsers} from '../includes/team-users.jsx';
+import {AddTeamUser, TeamUsers, WhitelistedDomain, JoinTeam} from '../includes/team-users.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
@@ -63,13 +63,20 @@ class TeamPage extends React.Component {
       return true;
     }
     return false;
-
   }
 
   teamAdmins() {
     return this.props.team.users.filter(user => {
       return this.props.team.adminIds.includes(user.id);
     });
+  }
+  
+  userCanJoinTeam() {
+    const {currentUser, team} = this.props;
+    if (!this.props.currentUserIsOnTeam && team.whitelistedDomain && currentUser && currentUser.emails) {
+      return currentUser.emails.some(({email, verified}) => verified && email.endsWith(`@${team.whitelistedDomain}`));
+    }
+    return false;
   }
 
   render() {
@@ -106,13 +113,22 @@ class TeamPage extends React.Component {
                 teamId={this.props.team.id}
                 adminIds={this.props.team.adminIds}
               />
+              { !!this.props.team.whitelistedDomain &&
+                <WhitelistedDomain domain={this.props.team.whitelistedDomain}
+                  setDomain={this.props.currentUserIsTeamAdmin ? this.props.updateWhitelistedDomain : null}
+                />
+              }
               { this.props.currentUserIsOnTeam &&
                 <AddTeamUser
-                  add={this.props.addUser}
+                  inviteEmail={this.props.inviteEmail}
+                  inviteUser={this.props.inviteUser}
+                  setWhitelistedDomain={this.props.currentUserIsTeamAdmin ? this.props.updateWhitelistedDomain : null}
                   members={this.props.team.users.map(({id}) => id)}
+                  whitelistedDomain={this.props.team.whitelistedDomain}
                   api={this.props.api}
                 />
               }
+              { this.userCanJoinTeam() && <JoinTeam onClick={this.props.joinTeam}/> }
             </div>
             <Thanks count={this.props.team.users.reduce((total, {thanksCount}) => total + thanksCount, 0)} />
             <AuthDescription
@@ -128,8 +144,7 @@ class TeamPage extends React.Component {
           {...this.props}
           teamProjects={this.props.team.projects}
           projectLimitIsReached={this.projectLimitIsReached()}
-          api={() => this.props.api}
-          myProjects={this.props.currentUser ? this.props.currentUser.projects : []}
+          api={this.props.api}
         />
         { this.projectLimitIsReached() &&
           <TeamProjectLimitReachedBanner
@@ -164,7 +179,6 @@ class TeamPage extends React.Component {
               extraButtonClass = "button-small"
               teamProjects = {this.props.team.projects}
               api={() => this.props.api}
-              myProjects={this.props.currentUser ? this.props.currentUser.projects : []}
             />
           </aside>
         }
@@ -229,10 +243,13 @@ TeamPage.propTypes = {
     projects: PropTypes.array.isRequired,
     teamPins: PropTypes.array.isRequired,
     users: PropTypes.array.isRequired,
+    whitelistedDomain: PropTypes.string,
   }),
   addPin: PropTypes.func.isRequired,
   addProject: PropTypes.func.isRequired,
-  addUser: PropTypes.func.isRequired,
+  updateWhitelistedDomain: PropTypes.func.isRequired,
+  inviteEmail: PropTypes.func.isRequired,
+  inviteUser: PropTypes.func.isRequired,
   api: PropTypes.func.isRequired,
   clearCover: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
