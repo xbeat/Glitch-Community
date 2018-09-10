@@ -7,7 +7,7 @@ import {PureEditableField} from '../includes/editable-field.jsx';
 import {getAvatarUrl} from '../../models/team';
 import PopoverContainer from './popover-container.jsx';
 
-const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another"
+const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another";
 
 
 // Create Team 🌿
@@ -74,15 +74,15 @@ class CreateTeam extends React.Component {
       'troupe',
       'band',
       'posse',
-    ]
+    ];
   }
   
   componentDidMount() {
-    let initialTeamName = this.randomName()
+    let initialTeamName = this.randomName();
     this.setState({
       teamName: initialTeamName,
       teamUrl: _.kebabCase(initialTeamName),
-    })
+    });
   }
   
   randomDescription() {
@@ -91,33 +91,33 @@ class CreateTeam extends React.Component {
   }
   
   randomName() {
-    let adjective = _.sample(this.descriptiveAdjectives())
-    return `${_.capitalize(adjective)} ${_.sample(this.teamSynonyms())}`
+    let adjective = _.sample(this.descriptiveAdjectives());
+    return `${_.capitalize(adjective)} ${_.sample(this.teamSynonyms())}`;
   }
   
   isTeamUrlAvailable(url) {
     this.props.api.get(`teams/byUrl/${url}`)
-    .then (({data}) => {
-      if (data) {
-        this.setState({
-          error: TEAM_ALREADY_EXISTS_ERROR
-        })
-      } else {
-        this.setState({
-          error: ""
-        })
-      }
-    })
+      .then (({data}) => {
+        if (data) {
+          this.setState({
+            error: TEAM_ALREADY_EXISTS_ERROR
+          });
+        } else {
+          this.setState({
+            error: ""
+          });
+        }
+      });
   }
   
   handleChange(newValue) {
-    let url = _.kebabCase(newValue)
+    let url = _.kebabCase(newValue);
     this.setState({
       teamName: newValue, 
       teamUrl: url,
       error: "",
     });
-    this.isTeamUrlAvailable(url)
+    this.isTeamUrlAvailable(url);
   }
 
   handleSubmit(event) {
@@ -134,7 +134,7 @@ class CreateTeam extends React.Component {
       hasCoverImage: false,
       isVerified: false,
     })
-    .then (response => {
+      .then (response => {
         this.setState({ isLoading: false });
         window.location = `/@${response.data.url}`;
       }).catch (() => {
@@ -401,7 +401,7 @@ UserOptionsAndCreateTeamPop.propTypes = {
 // Header button and init pop
 
 export default function UserOptionsAndCreateTeamPopContainer(props) {
-  const {avatarUrl, avatarStyle, api} = props;
+  const {avatarUrl, avatarStyle} = props;
   return (
     <PopoverContainer>
       {({togglePopover: togglePopover, visible: popVisible}) => (
