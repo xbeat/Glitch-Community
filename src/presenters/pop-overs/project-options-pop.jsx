@@ -62,7 +62,7 @@ const ProjectOptionsPop = ({...props}) => {
             {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
             {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
             {!!props.addProjectToCollection && 
-              <OverlaySelectCollection>
+              <OverlaySelectCollection domain={props.project.domain}>
                 <PopoverButton onClick={null} text="Add to Collection " emoji="framed_picture"/>
               </OverlaySelectCollection>
             }
