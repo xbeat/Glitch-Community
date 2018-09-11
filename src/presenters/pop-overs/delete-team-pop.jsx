@@ -1,11 +1,10 @@
-/* global notify */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import UsersList from "../users-list.jsx";
+//import UsersList from "../users-list.jsx";
 import Loader from '../includes/loader.jsx';
+import NotificationsConsumer from '../notifications.jsx';
 
-export class DeleteTeamPop extends React.Component {
+class DeleteTeamPopImpl extends React.Component {
   constructor(props) {
     super(props);    
     this.state = {
@@ -27,7 +26,7 @@ export class DeleteTeamPop extends React.Component {
         window.location = '/';
       }).catch(error => {
         console.error("deleteTeam", error, error.response);
-        notify.createNotification(<div>Something went wrong, try refreshing?</div>, 'notifyError');
+        this.props.createNotification(<div>Something went wrong, try refreshing?</div>, 'notifyError');
         this.setState({
           teamIsDeleting: false
         });
@@ -68,6 +67,12 @@ export class DeleteTeamPop extends React.Component {
     );
   }
 }
+
+export const DeleteTeamPop = (props) => (
+  <NotificationsConsumer>
+    {notifyFuncs => <DeleteTeamPopImpl {...notifyFuncs} {...props}/>}
+  </NotificationsConsumer>
+);
 
 DeleteTeamPop.propTypes = {
   api: PropTypes.func.isRequired,
