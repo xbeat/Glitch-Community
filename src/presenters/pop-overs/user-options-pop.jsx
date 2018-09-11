@@ -102,6 +102,12 @@ const UserOptionsPop = ({
   };
   
   const clickSignout = () => {
+    if(userIsAnon) {
+      if(!window.confirm(`You won't be able to sign back in under this same anonymous account.
+Are you sure you want to sign out?`)) {
+        return;
+      }
+    }
     /* global analytics */
     analytics.track("Logout");
     analytics.reset();
@@ -162,7 +168,6 @@ UserOptionsPop.propTypes = {
 export default function UserOptionsPopContainer(props) {
   const {avatarUrl, avatarStyle, api} = props;
   return (
-
     <PopoverContainer>
       {({togglePopover: toggleUserOptionsPop, visible: userOptionsPopVisible}) => (
         <PopoverContainer>
