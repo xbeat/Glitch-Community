@@ -14,7 +14,8 @@ const OverlaySelectCollection = ({children, domain}) => (
         <dialog className="overlay overlay-collection">
           <section className="pop-over-actions">
             <section className="title">
-              Add {domain} to collection
+              <span>Add {domain} to collection</span>
+              
             </section>
             
             <section class="pop-over-actions results-list">
