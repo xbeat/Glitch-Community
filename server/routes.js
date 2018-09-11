@@ -69,7 +69,7 @@ module.exports = function() {
     }
     const user = await getUser(name);
     if (user) {
-      return render(res, user.name, user.description, user.avatarThumbnailUrl);
+      return render(res, user.name || `@${user.login}`, user.description, user.avatarThumbnailUrl);
     }
     return render(res, `@${name}`, `We couldn't find @${name}`);
   });
