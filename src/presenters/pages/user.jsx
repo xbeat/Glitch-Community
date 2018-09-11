@@ -15,7 +15,6 @@ import EntityPageCollections from '../entity-page-collections.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
 import Notifications from '../notifications.jsx';
-import AddProjectNotify from '../includes/added-project-to-collection.jsx';
 
 import categories from '../../curated/categories.js';
 
@@ -55,32 +54,6 @@ NameAndLogin.propTypes = {
   updateLogin: PropTypes.func,
 };
 
-class AddProjectNotification extends React.Component {
-  componentDidMount(){
-    const content = addProjectNotificationContents();
-    this.notification = this.props.createPersistentNotification(content);
-  }
-  
-  componentWillUnmount(){
-    this.notificaiton.removeNotification();
-  }
-  
-  render(){
-    return null;
-  }
-}
-
-AddProjectNotification.propTypes = {
-  createPersistentNotification: PropTypes.func.isRequired
-}
-
-const addProjectNotificationContents = () => {
-  <React.Fragment>
-    <p>Added ProjectName to CollectionName</p>
-    <a href="#">Take me there</a>
-  </React.Fragment>
-}
-
 const UserPage = ({
   user: { //has science gone too far?
     id, login, name, description, thanksCount,
@@ -102,7 +75,6 @@ const UserPage = ({
   createPersistentNotification
 }) => (
   <main className="profile-page user-page">
-    AddProjectNotify
     
     <section>
       <ProfileContainer

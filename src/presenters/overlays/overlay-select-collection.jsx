@@ -6,6 +6,8 @@ import categories from '../../curated/categories.js';
 
 import CollectionResultItem from '../includes/collection-result-item.jsx';
 
+import AddProjectNotify from '../includes/added-project-to-collection.jsx';
+
 const OverlaySelectCollection = ({children, domain}) => (
   <PopoverContainer>
     {({visible, setVisible}) => (
@@ -16,8 +18,7 @@ const OverlaySelectCollection = ({children, domain}) => (
             <section className="title">
               <span>Add {domain} to collection</span>
               
-            </section>
-            
+            </section>            
             <section class="pop-over-actions results-list">
               <ul class="results">
               <li>
@@ -48,4 +49,9 @@ OverlaySelectCollection.propTypes = {
   domain: PropTypes.string.isRequired,
 };
 
-export default OverlaySelectCollection;
+export default OverlaySelectCollection
+
+{/*
+TO DO: trigger project notify
+  <AddProjectNotify/>
+*/
