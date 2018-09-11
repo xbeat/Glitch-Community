@@ -6,7 +6,7 @@ import Notifications from '../notifications.jsx';
 
 const AddProjectMessage = (projectName, collectionName) => (
   <React.Fragment>
-    <p>Added ProjectName to CollectionName</p>
+    <p>Added <span className=ProjectName to CollectionName</p>
     <a href="#" className="button button-small button-tertiary button-in-notification-container">Take me there</a>
   </React.Fragment>
 );

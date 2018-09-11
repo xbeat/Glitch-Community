@@ -77,7 +77,9 @@ const UserPage = ({
 }) => (
   <main className="profile-page user-page">
     
+    {/* TO DO - remove */}
     <AddProjectNotify project={"ProjectName"} collection={"CollectionName"}/>
+    
     
     <section>
       <ProfileContainer

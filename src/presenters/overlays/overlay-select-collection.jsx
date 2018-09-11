@@ -9,10 +9,11 @@ import CollectionResultItem from '../includes/collection-result-item.jsx';
 import AddProjectNotify from '../includes/added-project-to-collection.jsx';
 
 
-const notify = (togglePopover, projectName, collectionName) => {
+const notify = (togglePopover, projectName, collectionName, notification) => {
   console.log("clicked");
   togglePopover();
   // show project notify window
+  // document.body.innerHTML += notification;
   document.getElementsByClassName('notifications')[0].style.visibility = "visible";
   console.log('attempt to open up project notification');
 }
@@ -32,7 +33,8 @@ const OverlaySelectCollection = ({children, domain}) => (
             <section class="pop-over-actions results-list">
               <ul class="results">
               <li>
-               <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={evt => notify(togglePopover, domain, categories[0].name)} />
+               <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} 
+                 action={ () => notify(togglePopover, domain, categories[0].name, <AddProjectNotify project={domain} collection={categories[0].name} /> )} />
               </li>
             </ul>
           </section>
