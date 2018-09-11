@@ -8,6 +8,11 @@ import CollectionResultItem from '../includes/collection-result-item.jsx';
 
 import AddProjectNotify from '../includes/added-project-to-collection.jsx';
 
+const notify = () => {
+  console.log("clicked");
+}
+
+
 const OverlaySelectCollection = ({children, domain}) => (
   <PopoverContainer>
     {({visible, setVisible}) => (
@@ -22,7 +27,7 @@ const OverlaySelectCollection = ({children, domain}) => (
             <section class="pop-over-actions results-list">
               <ul class="results">
               <li>
-               <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={() => null} />
+               <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={() => notify()} />
               </li>
             </ul>
           </section>
@@ -48,6 +53,7 @@ OverlaySelectCollection.propTypes = {
   children: PropTypes.node.isRequired,
   domain: PropTypes.string.isRequired,
 };
+
 
 export default OverlaySelectCollection
 
