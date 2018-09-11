@@ -7,7 +7,7 @@ import Notifications from '../notifications.jsx';
 const AddProjectMessage = (projectName, collectionName) => (
   <React.Fragment>
     <p>Added <b><span className="project-name">ProjectName</span></b> to collection <b><span className="collection-name">CollectionName</span></b></p>
-    <a href="#" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
+    <a href="#" target="_blank" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
   </React.Fragment>
 );
 AddProjectMessage.propTypes = {
@@ -24,7 +24,7 @@ class AddProjectToCollection extends React.Component {
   }
   componentDidMount() {
     const content = AddProjectMessage(this.props.projectName, this.props.collectionName);
-    this.notification = this.props.createPersistentNotification(content);
+    this.notification = this.props.createNotification(content);
   }
   
   componentWillUnmount() {

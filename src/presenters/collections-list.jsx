@@ -11,7 +11,7 @@ export const CollectionsList = ({title, collections, placeholder, projectOptions
     )}
     
     {( isAuthorized 
-      ? <a href="/wondrous">
+      ? <a href="/favorites">
           <button className={`button create-collection`} onClick={null}>
             Create Collection
           </button>
@@ -37,6 +37,7 @@ export const CollectionsUL = ({collections, projectOptions, categoryColor, api, 
     <ul className="collections-container">
       {/* DUMMY EMPTY COLLECTION CARD */}
       <CollectionItem key={null} collection={null} api={api} isAuthorized={isAuthorized}></CollectionItem>
+      
       { collections.map(collection => (
         <CollectionItem key={collection.id} collection={collection} api={api} isAuthorized={isAuthorized}></CollectionItem>
       ))}

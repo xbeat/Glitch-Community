@@ -35,7 +35,7 @@ const OverlaySelectCollection = ({children, domain}) => (
               <ul class="results">
               <li>
                <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} 
-                 action={ () => notify(togglePopover, domain, categories[0].name, <AddProjectNotify project={domain} collection={categories[0].name} /> )} />
+                 action={ () => notify(togglePopover, domain, categories[0].url, <AddProjectNotify project={domain} collection={categories[0].name} /> )} />
               </li>
             </ul>
           </section>
