@@ -13,7 +13,8 @@ const notify = (evt, togglePopover) => {
   console.log("clicked");
   togglePopover();
   // show project notify window
-  document.body.innerHTML += `${<AddProjectNotify/>}`;
+  // document.body.innerHTML += `${<AddProjectNotify/>}`;
+  console.log('attempt to open up project notification');
 }
 
 
