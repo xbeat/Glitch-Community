@@ -10,12 +10,13 @@ import AddProjectNotify from '../includes/added-project-to-collection.jsx';
 
 
 const notify = (togglePopover, projectName, collectionName, notification) => {
-  console.log("clicked");
   togglePopover();
   // show project notify window
   // document.body.innerHTML += notification;
+  document.getElementsByClassName('project-name')[0].innerHTML = projectName;
+  document.getElementsByClassName('collection-name')[0].innerHTML = collectionName;
+  document.getElementsByClassName('notify-collection-link')[0].setAttribute("href", "/"+collectionName);
   document.getElementsByClassName('notifications')[0].style.visibility = "visible";
-  console.log('attempt to open up project notification');
 }
 
 
