@@ -8,8 +8,12 @@ import CollectionResultItem from '../includes/collection-result-item.jsx';
 
 import AddProjectNotify from '../includes/added-project-to-collection.jsx';
 
-const notify = () => {
+const notify = (evt) => {
   console.log("clicked");
+  console.log(evt);
+  evt.target.toggle;
+  // show project notify window
+  <AddProjectNotify/>
 }
 
 
@@ -27,7 +31,7 @@ const OverlaySelectCollection = ({children, domain}) => (
             <section class="pop-over-actions results-list">
               <ul class="results">
               <li>
-               <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={() => notify()} />
+               <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={evt => notify(evt)} />
               </li>
             </ul>
           </section>
