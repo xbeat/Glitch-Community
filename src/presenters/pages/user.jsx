@@ -76,9 +76,8 @@ const UserPage = ({
   createPersistentNotification
 }) => (
   <main className="profile-page user-page">
-    {/*
+    
     <AddProjectNotify project={"ProjectName"} collection={"CollectionName"}/>
-    */}
     
     <section>
       <ProfileContainer

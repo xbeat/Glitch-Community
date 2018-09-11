@@ -5,10 +5,10 @@ import {CurrentUserConsumer} from '../current-user.jsx';
 import Notifications from '../notifications.jsx';
 
 const AddProjectMessage = (projectName, collectionName) => (
-  <div className="notify">
+  <React.Fragment>
     <p>Added ProjectName to CollectionName</p>
     <a href="#" className="button button-small button-tertiary button-in-notification-container">Take me there</a>
-  </div>
+  </React.Fragment>
 );
 AddProjectMessage.propTypes = {
   projectName: PropTypes.string.isRequired,
@@ -44,7 +44,7 @@ AddProjectToCollection.propTypes = {
 const AddProjectToCollectionContainer = () => (
   <CurrentUserConsumer>
     {() => (
-      <Notifications>
+      <Notifications className="add-project-to-collection-notify">
         {notifyFuncs => (
           <AddProjectToCollection {...notifyFuncs}/>
         )}
