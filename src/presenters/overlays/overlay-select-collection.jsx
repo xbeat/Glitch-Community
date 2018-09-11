@@ -54,4 +54,4 @@ export default OverlaySelectCollection
 {/*
 TO DO: trigger project notify
   <AddProjectNotify/>
-*/
+*/}
