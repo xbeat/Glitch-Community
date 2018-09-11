@@ -9,19 +9,17 @@ import CollectionResultItem from '../includes/collection-result-item.jsx';
 import AddProjectNotify from '../includes/added-project-to-collection.jsx';
 
 
-const notify = (evt) => {
+const notify = (evt, togglePopover) => {
   console.log("clicked");
-  console.log(evt);
-  document.getElementsByClassName('overlay-collection')[0].setState({visible: false});
-  // evt.target.style.visibility = 'hidden';
+  togglePopover();
   // show project notify window
-  <AddProjectNotify/>
+  document.body.innerHTML += `${<AddProjectNotify/>}`;
 }
 
 
 const OverlaySelectCollection = ({children, domain}) => (
   <PopoverContainer>
-    {({visible, setVisible}) => (
+    {({visible, setVisible, togglePopover}) => (
       <details onToggle={evt => setVisible(evt.target.open)} open={visible} className="overlay-container">
         <summary>{children}</summary>
         <dialog className="overlay overlay-collection">
@@ -33,7 +31,7 @@ const OverlaySelectCollection = ({children, domain}) => (
             <section class="pop-over-actions results-list">
               <ul class="results">
               <li>
-               <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={evt => notify(evt)} />
+               <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={evt => notify(evt, togglePopover)} />
               </li>
             </ul>
           </section>
