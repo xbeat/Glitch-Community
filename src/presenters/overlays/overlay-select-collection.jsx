@@ -13,7 +13,7 @@ const notify = (togglePopover, projectName, collectionName) => {
   console.log("clicked");
   togglePopover();
   // show project notify window
-  // document.body.innerHTML += `${<AddProjectNotify project={projectName} collection={collectionName}/>}`;
+  document.getElementsByClassName('notifications')[0].style.visibility = "visible";
   console.log('attempt to open up project notification');
 }
 
@@ -61,8 +61,3 @@ OverlaySelectCollection.propTypes = {
 
 
 export default OverlaySelectCollection
-
-{/*
-TO DO: trigger project notify
-  <AddProjectNotify/>
-*/}
