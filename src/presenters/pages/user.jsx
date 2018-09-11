@@ -54,6 +54,30 @@ NameAndLogin.propTypes = {
   updateLogin: PropTypes.func,
 };
 
+class addProjectNotification extends React.Component {
+  componentDidMount(){
+  }
+  
+  componentWillUnmount(){
+    this.notificaiton.removeNotification();
+  }
+  
+  render(){
+    return null;
+  }
+}
+
+addProjectNotification.propTypes = {
+  createPersistentNotification: PropTypes.func.isRequired
+}
+
+const addProjectNotification = () => {
+  <React.Fragment>
+    <p>Added ProjectName to CollectionName</p>
+    <a href="#">Take me there</a>
+  </React.Fragment>
+}
+
 const UserPage = ({
   user: { //has science gone too far?
     id, login, name, description, thanksCount,
@@ -71,12 +95,13 @@ const UserPage = ({
   leaveProject,
   deleteProject, undeleteProject,
   setDeletedProjects,
-  addProjectToCollection
+  addProjectToCollection,
+  createPersistentNotification
 }) => (
   <main className="profile-page user-page">
     <Notifications>
     {notifications => (
-      <div class="notification">Hello World</div>
+      createPersistentNotification(addProjectNotification())
     )}
     </Notifications>
     
@@ -137,6 +162,7 @@ UserPage.propTypes = {
   uploadCover: PropTypes.func.isRequired,
   clearCover: PropTypes.func.isRequired,
   leaveProject: PropTypes.func.isRequired,
+  createPersistentNotification: PropTypes.func.isRequired,
 };
 
 const UserPageContainer = ({api, user}) => (
