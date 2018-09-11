@@ -39,66 +39,22 @@ class AddProjectToCollection extends React.Component {
     
     this.state = {
       query: '', //The actual search text
-      maybeRequest: null, //The active request promise
-      maybeResults: null, //Null means still waiting vs empty -- [jude: i suggest the 'maybe' convention for nullable fields with meaning.  'maybeResults'] --greg: i like it
     };
     
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
-    this.startSearch = debounce(this.startSearch.bind(this), 300);
     this.onClick = this.onClick.bind(this);
   }
   
   handleChange(evt) {
     const query = evt.currentTarget.value.trim();
     this.setState({ query });
-    if (query) {
-      {/* TO DO: SEARCH BY URL */}
-      this.startSearch();
-    } else {
-      this.clearSearch();
-    }
   }
   
   clearSearch() {
     this.setState({
       maybeRequest: null,
       maybeResults: null,
-    });
-  }
-  
-  async startSearch() {
-    if (!this.state.query) {
-      return this.clearSearch();
-    }
-    
-    // check if the query is a URL or a name of a project
-    // Project URL pattern: https://glitch.com/~power-port, https://power-port.glitch.me/
-    const httpsKeyword = "https://";
-    const glitchKeyword = "glitch";
-    let query = this.state.query;
-    
-    if(this.state.query.includes(httpsKeyword) && this.state.query.includes(glitchKeyword)){
-      // get project domain
-      if(this.state.query.includes("me")){
-        query = query.substring(query.indexOf("//")+"//".length, query.indexOf("."));
-      }else if(this.state.query.includes("~")){
-        query = query.substring(query.indexOf("~")+1);
-      }
-    }
-    
-    const request = this.props.api.get(`projects/search?q=${query}`);
-    this.setState({ maybeRequest: request });
-    
-    const {data} = await request;
-    const results = data.map(project => ProjectModel(project).asProps());
-    const nonCollectionResults = results.filter(project => !this.props.collectionProjects || !this.props.collectionProjects.includes(project));
-    
-    this.setState(({ maybeRequest }) => {
-      return (request === maybeRequest) ? {
-        maybeRequest: null,
-        maybeResults: nonCollectionResults.slice(0, 5),
-      } : {};
     });
   }
   
@@ -110,7 +66,6 @@ class AddProjectToCollection extends React.Component {
   }
   
   render() {
-    const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
           {/* TO DO: Replace category with user's collections */}
@@ -123,7 +78,7 @@ class AddProjectToCollection extends React.Component {
           </section>
           <section className="pop-over-info">
             <input id="collection-name"  
-              no-autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+              no-autofocus // eslint-disable-line jsx-a11y/no-autofocus
               value={this.state.query} onChange={this.handleChange}
               className="pop-over-input create-input"
               placeholder="New Collection Name"
@@ -133,10 +88,6 @@ class AddProjectToCollection extends React.Component {
               Create
             </button>
         </section>
-        {!!this.state.query && <section className="pop-over-actions last-section results-list">
-          {isLoading && <Loader />}
-          {!!this.state.maybeResults && <ProjectSearchResults projects={this.state.maybeResults} action={this.onClick} />}
-        </section>}
       </dialog>
     );
   }
