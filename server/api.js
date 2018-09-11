@@ -43,8 +43,10 @@ async function getTeamFromApi(url) {
 }
 
 async function getUserFromApi(login) {
-  const response = await api.get(`/users/byLogins?logins=${login}`);
-  return response.data.length ? response.data[0] : null;
+  const {data} = await api.get(`/userId/byLogin/${login}`);
+  if (data === 'NOT FOUND') return null;
+  const response = await api.get(`/users/${data}`);
+  return response.data;
 }
 
 module.exports = {
