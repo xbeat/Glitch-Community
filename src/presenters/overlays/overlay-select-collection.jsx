@@ -8,10 +8,12 @@ import CollectionResultItem from '../includes/collection-result-item.jsx';
 
 import AddProjectNotify from '../includes/added-project-to-collection.jsx';
 
+
 const notify = (evt) => {
   console.log("clicked");
   console.log(evt);
-  evt.target.toggle;
+  document.getElementsByClassName('overlay-collection')[0].setState({visible: false});
+  // evt.target.style.visibility = 'hidden';
   // show project notify window
   <AddProjectNotify/>
 }
