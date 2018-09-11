@@ -14,6 +14,8 @@ import EntityPageProjects from '../entity-page-projects.jsx';
 import EntityPageCollections from '../entity-page-collections.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
+import Notifications from '../notifications.jsx';
+
 import categories from '../../curated/categories.js';
 
 function syncPageToLogin(login) {
@@ -72,6 +74,12 @@ const UserPage = ({
   addProjectToCollection
 }) => (
   <main className="profile-page user-page">
+    <Notifications>
+    {notifications => (
+      <div class="notification">Hello World</div>
+    )}
+    </Notifications>
+    
     <section>
       <ProfileContainer
         avatarStyle={getAvatarStyle({avatarUrl, color})}
