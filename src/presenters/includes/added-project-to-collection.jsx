@@ -4,19 +4,26 @@ import PropTypes from 'prop-types';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import Notifications from '../notifications.jsx';
 
-const AddProjectMessage = () => (
+const AddProjectMessage = (projectName, collectionName) => (
   <div className="notify">
     <p>Added ProjectName to CollectionName</p>
     <a href="#" className="button button-small button-tertiary button-in-notification-container">Take me there</a>
   </div>
 );
 AddProjectMessage.propTypes = {
-  // id: PropTypes.number.isRequired,
+  projectName: PropTypes.string.isRequired,
+  collectionName: PropTypes.string.isRequired
 };
 
 class AddProjectToCollection extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      ...props
+    }
+  }
   componentDidMount() {
-    const content = AddProjectMessage();
+    const content = AddProjectMessage(this.props.projectName, this.props.collectionName);
     this.notification = this.props.createPersistentNotification(content);
   }
   
@@ -30,6 +37,8 @@ class AddProjectToCollection extends React.Component {
 }
 AddProjectToCollection.propTypes = {
   createPersistentNotification: PropTypes.func.isRequired,
+  projectName: PropTypes.string.isRequired,
+  collectionName: PropTypes.string.isRequired
 };
 
 const AddProjectToCollectionContainer = () => (

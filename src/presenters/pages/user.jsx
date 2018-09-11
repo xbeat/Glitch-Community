@@ -17,6 +17,7 @@ import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import Notifications from '../notifications.jsx';
 
 import categories from '../../curated/categories.js';
+import AddProjectNotify from '../includes/added-project-to-collection.jsx';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
@@ -75,6 +76,9 @@ const UserPage = ({
   createPersistentNotification
 }) => (
   <main className="profile-page user-page">
+    {/*
+    <AddProjectNotify project={"ProjectName"} collection={"CollectionName"}/>
+    */}
     
     <section>
       <ProfileContainer
