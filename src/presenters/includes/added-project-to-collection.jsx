@@ -42,15 +42,11 @@ AddProjectToCollection.propTypes = {
 };
 
 const AddProjectToCollectionContainer = () => (
-  <CurrentUserConsumer>
-    {() => (
-      <Notifications className="add-project-to-collection-notify">
-        {notifyFuncs => (
-          <AddProjectToCollection {...notifyFuncs}/>
-        )}
-      </Notifications>
+  <Notifications className="add-project-to-collection-notify">
+    {notifyFuncs => (
+      <AddProjectToCollection {...notifyFuncs}/>
     )}
-  </CurrentUserConsumer>
+  </Notifications>
 );
 
 export default AddProjectToCollectionContainer;
