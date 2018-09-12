@@ -12,12 +12,12 @@ export const CollectionsList = ({title, collections, placeholder, projectOptions
     
     {( isAuthorized 
       ? <a href="/favorites">
-          <button className={`button create-collection`} onClick={null}>
+        <button className={`button create-collection`} onClick={null}>
             Create Collection
-          </button>
-        </a>
+        </button>
+      </a>
       : null      
-      )}
+    )}
 
     <CollectionsUL {...{collections, projectOptions, api, isAuthorized}}></CollectionsUL>
 

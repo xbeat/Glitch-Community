@@ -20,7 +20,7 @@ const createHistogram = (bins) => {
       if (!timestamp) {
         timestamp = data['@timestamp'];
       }
-      console.log(data.analytics)
+      console.log(data.analytics);
       totalRemixes += data.analytics.remixes;
       totalAppViews += data.analytics.requests;
       // referrers.push(data.analytics.referrers)

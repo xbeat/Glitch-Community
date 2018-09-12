@@ -68,25 +68,25 @@ class AddProjectToCollection extends React.Component {
   render() {
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
-          {/* TO DO: Replace category with user's collections */}
-          <section class="pop-over-actions results-list">
-            <ul class="results">
-              <li>
-               <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={() => null} />
-              </li>
-            </ul>
-          </section>
-          <section className="pop-over-info">
-            <input id="collection-name"  
-              no-autofocus // eslint-disable-line jsx-a11y/no-autofocus
-              value={this.state.query} onChange={this.handleChange}
-              className="pop-over-input create-input"
-              placeholder="New Collection Name"
-            />
-            {/* TO DO: Actually create a new collection here */}
-            <button className="create-collection button-small">
+        {/* TO DO: Replace category with user's collections */}
+        <section className="pop-over-actions results-list">
+          <ul className="results">
+            <li>
+              <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={() => null} />
+            </li>
+          </ul>
+        </section>
+        <section className="pop-over-info">
+          <input id="collection-name"  
+            no-autofocus // eslint-disable-line jsx-a11y/no-autofocus
+            value={this.state.query} onChange={this.handleChange}
+            className="pop-over-input create-input"
+            placeholder="New Collection Name"
+          />
+          {/* TO DO: Actually create a new collection here */}
+          <button className="create-collection button-small">
               Create
-            </button>
+          </button>
         </section>
       </dialog>
     );

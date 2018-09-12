@@ -10,16 +10,16 @@ const AddCollectionProject = ({currentUserIsOwner, ...props}) => {
   }
   
   return (
-      <PopoverContainer>
-        {({visible, togglePopover}) => (
-          <div className="button-wrap">
-            <button className={`button add-project opens-pop-over`} onClick={togglePopover}>
+    <PopoverContainer>
+      {({visible, togglePopover}) => (
+        <div className="button-wrap">
+          <button className={`button add-project opens-pop-over`} onClick={togglePopover}>
               Add Project
-            </button>
-            { visible && <AddCollectionProjectPop {...props} togglePopover={togglePopover} /> }
-          </div>
-        )}
-      </PopoverContainer>
+          </button>
+          { visible && <AddCollectionProjectPop {...props} togglePopover={togglePopover} /> }
+        </div>
+      )}
+    </PopoverContainer>
   );
 };
 

@@ -23,43 +23,43 @@ import {CurrentUserConsumer} from '../current-user.jsx';
 
 // some dummy info for testing
 let adjectives = [
-      'charming',
-      'bold',
-      'brave',
-      'cool',
-      'docile',
-      'dope',
-      'faithful',
-      'fertile',
-      'fervent',
-      'forgiving',
-      'genial',
-      'genteel',
-      'grouchy',
-      'hopeful',
-      'humane',
-      'jolly',
-      'joyful',
-      'loving',
-      'magical',
-      'moral',
-      'mysterious',
-      'notorious',
-      'passionate',
-      'preposterous',
-      'quaint',
-      'quirky',
-      'scrumptious',
-      'sensitive',
-      'sober',
-      'tropical',
-      'woeful',
-      'whimsical',
-      'zealous',
-    ];
+  'charming',
+  'bold',
+  'brave',
+  'cool',
+  'docile',
+  'dope',
+  'faithful',
+  'fertile',
+  'fervent',
+  'forgiving',
+  'genial',
+  'genteel',
+  'grouchy',
+  'hopeful',
+  'humane',
+  'jolly',
+  'joyful',
+  'loving',
+  'magical',
+  'moral',
+  'mysterious',
+  'notorious',
+  'passionate',
+  'preposterous',
+  'quaint',
+  'quirky',
+  'scrumptious',
+  'sensitive',
+  'sober',
+  'tropical',
+  'woeful',
+  'whimsical',
+  'zealous',
+];
 
 let name = "Wondrous Collection";
-const url = "wondrous"
+const url = "wondrous";
 const avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // to be replaced
 let color = "#FFA3BB";
 let description = "A collection of projects that does wondrous things.";
@@ -70,14 +70,14 @@ const randomName = () => {
   let randomName = randomAdjective.charAt(0).toUpperCase() + randomAdjective.slice(1); // capitalize first letter
   name = `${randomName} Collection`;
   description = `A collection of projects that does ${randomAdjective} things`;
-}
+};
 
 class CollectionColorWrap extends React.Component { 
   constructor(props){
     super(props);
     
     if(this.props.collection){
-      color= this.props.collection.color
+      color= this.props.collection.color;
     }
     this.state = {
       color: color
@@ -114,20 +114,20 @@ class CollectionColorWrap extends React.Component {
   render(){
     return this.props.children(this.state.color, this.setColor);
   }
-};
+}
 
 const hexToRgbA = (hex) => {
-    var c;
-    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
-        c= hex.substring(1).split('');
-        if(c.length== 3){
-            c= [c[0], c[0], c[1], c[1], c[2], c[2]];
-        }
-        c= '0x'+c.join('');
-        return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.4)';
+  var c;
+  if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+    c= hex.substring(1).split('');
+    if(c.length== 3){
+      c= [c[0], c[0], c[1], c[1], c[2], c[2]];
     }
-    throw new Error('Bad Hex');
-  };
+    c= '0x'+c.join('');
+    return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.4)';
+  }
+  throw new Error('Bad Hex');
+};
 
 const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, updateName, updateDescription, projectOptions, uploadAvatar, ...props}) => (
   <React.Fragment>
@@ -142,24 +142,24 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
             {/* TO DO: actually update name */}
             {(isAuthorized 
               ? <AuthDescription authorized={isAuthorized}
-                  description={(collection ? collection.name : name)} 
-                  update={updateName => null} 
-                  placeholder="Name your collection"/> 
+                description={(collection ? collection.name : name)} 
+                update={updateName => null} 
+                placeholder="Name your collection"/> 
               : <React.Fragment>{collection.name} </React.Fragment>
-             )}
+            )}
           </h1>
           <div className="collection-image-container">
             <img src={(collection ? collection.avatarUrl : avatarUrl)} alt=""/>
           </div>
-              {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
-             {isAuthorized 
-               ? <div className="upload-image-buttons">
-                   <button className="button button-small button-tertiary" onClick={uploadAvatar}>
-                     <span>Replace Avatar</span>  
-                   </button>
-                 </div>
-               : null
-             }
+          {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
+          {isAuthorized 
+            ? <div className="upload-image-buttons">
+              <button className="button button-small button-tertiary" onClick={uploadAvatar}>
+                <span>Replace Avatar</span>  
+              </button>
+            </div>
+            : null
+          }
           
           <p className="description">
             {/* TO DO: actually update description */}
@@ -193,57 +193,57 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
         </header>
         
         {collection
-         ? <ProjectsLoader api={api} projects={collection.projects}>
-          {projects => 
-            <React.Fragment>
-            <div className="collection-contents">
-              <div className="collection-project-container-header">
-                <h3>Projects ({collection.projects.length})</h3>
+          ? <ProjectsLoader api={api} projects={collection.projects}>
+            {projects => 
+              <React.Fragment>
+                <div className="collection-contents">
+                  <div className="collection-project-container-header">
+                    <h3>Projects ({collection.projects.length})</h3>
                 
-                {(isAuthorized 
-                    ? <AddCollectionProject
+                    {(isAuthorized 
+                      ? <AddCollectionProject
                         api={api}
                         collectionProjects={collection.projects}
                         currentUserIsOwner={true}
                         myProjects= {[]}
                       />
-                    : null
-                  )}
+                      : null
+                    )}
                 
-              </div>
+                  </div>
           
-              <ProjectsUL projects={projects} categoryColor={color} 
-                projectOptions={{
-                    removeProjectFromCollection: null
-                }} 
-                {...props}/>
-            </div>
+                  <ProjectsUL projects={projects} categoryColor={color} 
+                    projectOptions={{
+                      removeProjectFromCollection: null
+                    }} 
+                    {...props}/>
+                </div>
           
-            </React.Fragment>
-          }
-        </ProjectsLoader>
+              </React.Fragment>
+            }
+          </ProjectsLoader>
         
           : 
           <React.Fragment>
-              <div className="collection-project-container-header">
-                <h3>Projects</h3>
+            <div className="collection-project-container-header">
+              <h3>Projects</h3>
                 
-                {(isAuthorized 
-                    ? <AddCollectionProject
-                        api={api}
-                        collectionProjects={null}
-                        currentUserIsOwner={true}
-                        myProjects= {[]}
-                      />
-                    : null
-                  )}
+              {(isAuthorized 
+                ? <AddCollectionProject
+                  api={api}
+                  collectionProjects={null}
+                  currentUserIsOwner={true}
+                  myProjects= {[]}
+                />
+                : null
+              )}
               <div className="empty-collection-hint" style={{backgroundColor: color}}>
                 Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
-            </div>
-                
               </div>
+                
+            </div>
           
-            </React.Fragment>
+          </React.Fragment>
         }
         
       </article>
@@ -281,7 +281,7 @@ CollectionPageWrap.propTypes = {
 };
 
 const CollectionPageLoader = ({...props}) => (
-    <Loader/>
+  <Loader/>
 );
 
 const CollectionPageError = ({...props}) => (
@@ -291,7 +291,7 @@ const CollectionPageError = ({...props}) => (
 async function loadCategory(api, id) {
   const {data} = await api.get(`categories/${id}`);
   if(data){
-      data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
+    data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
   }
   
   // TO DO: put this in the collection creation

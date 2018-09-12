@@ -124,8 +124,8 @@ const ProjectPage = ({
       <Embed domain={domain}/>
       <div className="buttons buttons-right">
         <AddProjectToCollection className="button-small" 
-            onClick={() => null}
-          />
+          onClick={() => null}
+        />
         <RemixButton className="button-small"
           name={domain} isMember={isAuthorized}
           onClick={() => trackRemix(id, domain)}

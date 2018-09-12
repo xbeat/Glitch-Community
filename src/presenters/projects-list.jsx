@@ -30,10 +30,10 @@ export const ProjectsUL = ({projects, projectOptions, categoryColor, homepageCol
         ))}
         
         {/* The link to view all projects for collections on the homepage  TO DO show actual count of projects*/}  
-      {homepageCollection
-        ? <a href={collectionUrl} className="collection-view-all">View all {projects.length} projects →</a>
-        : null
-      }
+        {homepageCollection
+          ? <a href={collectionUrl} className="collection-view-all">View all {projects.length} projects →</a>
+          : null
+        }
         
       </ul>
 

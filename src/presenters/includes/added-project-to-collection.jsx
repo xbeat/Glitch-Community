@@ -19,7 +19,7 @@ class AddProjectToCollection extends React.Component {
     super(props);
     this.state = {
       ...props
-    }
+    };
   }
   componentDidMount() {
     const content = AddProjectMessage(this.props.projectName, this.props.collectionName);

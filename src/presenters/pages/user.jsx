@@ -14,10 +14,7 @@ import EntityPageProjects from '../entity-page-projects.jsx';
 import EntityPageCollections from '../entity-page-collections.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 
-import Notifications from '../notifications.jsx';
-
 import categories from '../../curated/categories.js';
-import AddProjectNotify from '../includes/added-project-to-collection.jsx';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
@@ -75,11 +72,7 @@ const UserPage = ({
   addProjectToCollection,
   createPersistentNotification
 }) => (
-  <main className="profile-page user-page">
-    
-    {/* TO DO - remove */}
-    <AddProjectNotify project={"ProjectName"} collection={"CollectionName"}/>
-    
+  <main className="profile-page user-page">   
     <section>
       <ProfileContainer
         avatarStyle={getAvatarStyle({avatarUrl, color})}
