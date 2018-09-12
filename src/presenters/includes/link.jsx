@@ -11,18 +11,20 @@ import { getLink as getUserLink } from '../../models/user';
 const external = new Set(EXTERNAL_ROUTES);
 
 export const Link = ({href, children, ...props}) => {
-  const currentUrl = new URL(window.location.href);
-  const targetUrl = new URL(href, currentUrl);
-  const route = targetUrl.pathname.split('/')[1];
-  
-  if (targetUrl.origin !== currentUrl.origin || external.has(route)) {
-    return <a href={href} {...props}>{children}</a>;
+  if (typeof href === 'string') {
+    const currentUrl = new URL(window.location.href);
+    const targetUrl = new URL(href, currentUrl);
+    const route = targetUrl.pathname.split('/')[1];
+
+    if (targetUrl.origin !== currentUrl.origin || external.has(route)) {
+      return <a href={href} {...props}>{children}</a>;
+    }
   }
   
   return <RouterLink to={href} {...props}>{children}</RouterLink>;
 };
 Link.propTypes = {
-  href: PropTypes.string.isRequired,
+  href: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   children: PropTypes.node.isRequired,
 };
 
