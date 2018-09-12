@@ -10,7 +10,7 @@ const Categories = () => (
     <ul>
       { categories.map(({avatarUrl, color, id, name, url}) => (
         <li key={id}>
-          <Link className="category-box-link" href={`/${url}`}>
+          <Link className="category-box-link" to={`/${url}`}>
             <div className="category-box centered" style={{backgroundColor: color}}>
               <img src={avatarUrl} alt={name}/>
             </div>

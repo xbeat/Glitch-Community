@@ -10,11 +10,10 @@ export const TeamMarketing = () => {
     <section className="team-marketing">
       <p>
         <img className="for-platforms-icon" src={forPlatformsIcon} alt="fishing emoji"></img>
-        <span>Want your own team page, complete with detailed app analytics?</span>
+        Want your own team page, complete with detailed app analytics?
       </p>
-      <Link href="/forteams" className="button button-link has-emoji">
-        About Teams&nbsp;
-        <span className="emoji fishing_pole" role="img" aria-label="emoji" />
+      <Link to="/forteams" className="button button-link has-emoji">
+        About Teams <span className="emoji fishing_pole" role="img" aria-label="emoji" />
       </Link>
     </section>
   );

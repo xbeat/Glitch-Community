@@ -7,7 +7,7 @@ import Link from './link.jsx';
 const showIcon = "https://cdn.gomix.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg";
 
 const ButtonLink = ({href, children, className, ...props}) => (
-  <Link href={href} className={`button button-link ${className}`} {...props}>
+  <Link to={href} className={`button button-link ${className}`} {...props}>
     {children}
   </Link>
 );

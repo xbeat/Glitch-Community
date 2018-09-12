@@ -29,21 +29,21 @@ Link.propTypes = {
 };
 
 export const ProjectLink = ({project, children, ...props}) => (
-  <Link href={getProjectLink(project.domain)} {...props}>{children}</Link>
+  <Link to={getProjectLink(project.domain)} {...props}>{children}</Link>
 );
 ProjectLink.propTypes = {
   project: PropTypes.object.isRequired,
 };
 
 export const TeamLink = ({team, children, ...props}) => (
-  <Link href={getTeamLink(team)} {...props}>{children}</Link>
+  <Link to={getTeamLink(team)} {...props}>{children}</Link>
 );
 TeamLink.propTypes = {
   team: PropTypes.object.isRequired,
 };
 
 export const UserLink = ({user, children, ...props}) => (
-  <Link href={getUserLink(user)} {...props}>{children}</Link>
+  <Link to={getUserLink(user)} {...props}>{children}</Link>
 );
 UserLink.propTypes = {
   user: PropTypes.object.isRequired,

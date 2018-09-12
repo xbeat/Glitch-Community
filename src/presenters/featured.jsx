@@ -11,7 +11,7 @@ const Witch = () => (
 );
 
 const FeaturedPanel = ({img, link, title}) => (
-  <Link href={link} data-track="featured-project" data-track-label={title}>
+  <Link to={link} data-track="featured-project" data-track-label={title}>
     <div className="featured-container">
       <img className="featured" src={img} alt=""/>
       <p className="project-name">{title}</p>

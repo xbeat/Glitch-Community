@@ -52,7 +52,7 @@ class Logo extends React.PureComponent {
 }
 
 const ResumeCoding = () => (
-  <Link className="button button-small button-cta" href={EDITOR_URL} data-track="resume coding">
+  <Link className="button button-small button-cta" to={EDITOR_URL} data-track="resume coding">
     Resume Coding
   </Link>
 );
@@ -121,7 +121,7 @@ const Header = ({api, maybeUser, clearUser, searchQuery, showNewStuffOverlay}) =
   return (
     <header role="banner">
       <div className="header-info">
-        <Link href="/">
+        <Link to="/">
           <Logo/>
         </Link>
       </div>

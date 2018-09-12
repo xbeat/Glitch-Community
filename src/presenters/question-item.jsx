@@ -22,7 +22,7 @@ function truncateTag(tag) {
 const QuestionItem = ({colorOuter, colorInner, domain, question, tags, userAvatar, userColor, userLogin, path, line, character}) => (
   <React.Fragment>
     <img className="help-icon" src={iconHelp} alt=""/>
-    <Link href={getEditorUrl(domain, path, line, character)} data-track="question" data-track-label={domain}>
+    <Link to={getEditorUrl(domain, path, line, character)} data-track="question" data-track-label={domain}>
       <div className="project" style={{backgroundColor: colorOuter}}>
         <div className="project-container" style={{backgroundColor: colorInner}}>
           <img className="avatar" src={userAvatar} style={{backgroundColor: userColor}} alt=""/>

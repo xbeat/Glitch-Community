@@ -30,7 +30,7 @@ const NewStuffOverlay = ({setShowNewStuff, showNewStuff, newStuff}) => (
           <div className="body"><Markdown>{body}</Markdown></div>
           {!!link && (
             <p>
-              <Link className="link" href={link}>
+              <Link className="link" to={link}>
                 Read the blog post →
               </Link>
             </p>

@@ -15,11 +15,11 @@ const Category = ({category}) => {
   return (
     <article className="projects" style={{backgroundColor: category.backgroundColor}}>
       <header className="category">
-        <Link className="category-name" href={category.url}>
+        <Link className="category-name" to={category.url}>
           <h2>{category.name} <span className="arrow">→</span></h2>
         </Link>
         <span className="category-image-container">
-          <Link className="category-image" href={category.url}>
+          <Link className="category-image" to={category.url}>
             <img  height="80px" width="120px" src={category.avatarUrl} alt={category.name} />
           </Link>
         </span>

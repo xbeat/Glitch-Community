@@ -17,7 +17,8 @@ export const ProjectItem = ({project, categoryColor, projectOptions}) => {
       <ProjectLink project={project}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
           style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
-          data-track="project" data-track-label={project.domain}>
+          data-track="project" data-track-label={project.domain}
+        >
           <div className="project-container">
             <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
             <div className="button">
