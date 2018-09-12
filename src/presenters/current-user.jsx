@@ -22,7 +22,7 @@ function identifyUser(user) {
       analytics.identify(user.id, {
         name: user.name,
         login: user.login,
-        email: user.email,
+        email: user.emails && user.emails.filter((email) => email.primary)[0],
         created_at: user.createdAt,
       });
     }
