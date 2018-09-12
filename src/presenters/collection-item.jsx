@@ -87,7 +87,7 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api, 
               
               :  <div className="projects-preview empty">
               {(isAuthorized
-                ? <a href={defaultUrl}>Open this collection to start adding projects to it.</a>
+                ? <a href={defaultUrl}>This collection is empty.  Add some projects to it!</a>
                 : "No projects to see in this collection just yet."
               )}
                  </div>
