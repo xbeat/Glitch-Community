@@ -23,7 +23,7 @@ class AddProjectToCollection extends React.Component {
   }
   componentDidMount() {
     const content = AddProjectMessage(this.props.projectName, this.props.collectionName);
-    this.notification = this.props.createPersistentNotification(content);
+    this.notification = this.props.createNotification(content);
   }
   
   componentWillUnmount() {

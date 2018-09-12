@@ -25,6 +25,7 @@ const notify = (togglePopover, projectName, collectionName, notification) => {
 
 const OverlaySelectCollection = ({children, domain}) => (
   <React.Fragment>
+    <div>I am visible!</div>
     <AddProjectNotify project={domain} collection={categories[0].name} /> 
     <PopoverContainer>
       {({visible, setVisible, togglePopover}) => (
