@@ -48,13 +48,13 @@ function proxyGlitch(app, route, target, pathOnTarget="") {
 }
 
 function proxyGhost(app, route, glitchTarget, pathOnTarget) {
-  const routeWithLeadingSlash = `/${route}`;
-  const sandwichedRoute = `/${route}/`;
+  const routeWithLeadingSlash = urlJoin("/", route);
+  const sandwichedRoute = urlJoin("/", route, "/");
   // node matches /{route} and /{route}/;
   // we need to force /{route}/ so that relative links in Ghost work. 
   app.all(routeWithLeadingSlash, (req, res, next) => {
       const path = req.path;
-      if(!path.toLowerCase().startsWith(sandwichedRoute)) {
+      if(!path.toLowerCase().startsWith(sandwichedRoute.toLowerCase())) {
          //therefore, path is "/{route}[^/]"/i
          const rest = path.substring(sandwichedRoute.length);
          return res.redirect(301, sandwichedRoute + rest);
