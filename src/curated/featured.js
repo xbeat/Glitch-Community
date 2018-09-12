@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Make a Box',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fboxmaker.png?1535971898294",
-    link: 'https://glitch.com/~box-maker'
+    title: 'Musician Explorer',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fartist_explorer.png?1536570040809",
+    link: 'https://artist-explorer.glitch.me/'
   },{
-    title: 'Live Coded Visuals',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhydra.png?1535971898489",
-    link: 'https://glitch.com/~hydra-editor-v1'
+    title: 'Bring Back Your 1st Site',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fwayback_importer.png?1536570052496",
+    link: 'https://glitch.com/~wayback-importer'
   }, {
-    title: 'Subscribe2Me',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsubscribe2me.png?1535971898937",
-    link: 'https://subscribe2me.glitch.me'
+    title: 'VR Seed Herbarium',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fseed_library.png?1536570049651",
+    link: 'http://seedlibrary.glitch.me/'
   }  
 ];
