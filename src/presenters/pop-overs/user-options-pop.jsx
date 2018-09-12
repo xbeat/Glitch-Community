@@ -113,7 +113,7 @@ const UserOptionsPop = ({
 
   return (
     <dialog className="pop-over user-options-pop">
-      <Link href={userLink} className="user-info">
+      <Link to={userLink} className="user-info">
         <section className="pop-over-actions user-info">
           <img className="avatar" src={avatarUrl} alt="Your avatar" style={avatarStyle}/>
           <div className="info-container">
@@ -129,18 +129,13 @@ const UserOptionsPop = ({
 
       <section className="pop-over-info section-has-tertiary-buttons">
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
-          <span>New Stuff </span>
-          <span className="emoji dog-face"></span>
+          New Stuff <span className="emoji dog-face"></span>
         </button>
-        <Link className="button-link" href="https://support.glitch.com">
-          <div className="button button-small has-emoji button-tertiary button-on-secondary-background">
-            <span>Support </span>
-            <span className="emoji ambulance"></span>
-          </div>
+        <Link className="button button-link button-small has-emoji button-tertiary button-on-secondary-background" to="https://support.glitch.com">
+          Support <span className="emoji ambulance"></span>
         </Link>        
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickSignout}>
-          <span>Sign Out</span>
-          <span className="emoji balloon"></span>
+          Sign Out <span className="emoji balloon"></span>
         </button>
       </section>
     </dialog>

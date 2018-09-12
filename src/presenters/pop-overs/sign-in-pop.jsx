@@ -20,7 +20,7 @@ function facebookAuthLink() {
 }
 
 const SignInPopButton = (props) => (
-  <Link className="button-link" href={props.href}>
+  <Link className="button-link" to={props.href}>
     <div className="button button-small">Sign in with {props.company}
       <span className={`emoji ${props.emoji}`}></span>
     </div>

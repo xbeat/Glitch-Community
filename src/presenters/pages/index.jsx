@@ -41,7 +41,7 @@ class WhatIsGlitch extends React.Component {
       <section className="what-is-glitch">
         <h2>How It Works</h2>
         <span>
-          <Link href="/about">
+          <Link to="/about">
             <figure title="How Glitch works">
               <img className="wide" src={whatsGlitchWide} alt={whatsGlitchAlt}/>
               <img className="narrow" src={whatsGlitchNarrow} alt={whatsGlitchAlt}/>
@@ -91,7 +91,7 @@ class ByFogCreek extends React.PureComponent {
         <img src={logo} alt="Fog Creek logo"/>
         <p>
           You might know us for making Trello, FogBugz, and co-creating Stack Overflow. 
-          We're <Link href="https://www.fogcreek.com">a friendly, self-funded company</Link> that's
+          We're <Link to="https://www.fogcreek.com">a friendly, self-funded company</Link> that's
           been helping people make stuff for over {this.state.age} years.
         </p>
       </section>
@@ -102,7 +102,7 @@ class ByFogCreek extends React.PureComponent {
 const MadeInGlitch = () => (
   <section className="made-in-glitch">
     <p>Of course, this site was made on Glitch too</p>
-    <Link href={getEditorUrl('community')} className="button button-link has-emoji">
+    <Link to={getEditorUrl('community')} className="button button-link has-emoji">
       View Source <span className="emoji carp_streamer"></span>
     </Link>
   </section>
@@ -111,7 +111,7 @@ const MadeInGlitch = () => (
 const IndexPage = ({api, user}) => (
   <main>
     <h1 className="headline">
-      <Link href="https://glitch.com">Glitch</Link>{' '}
+      <Link to="https://glitch.com">Glitch</Link>{' '}
       is the friendly community where you'll build the app of your dreams
     </h1>
     {!!(user && user.login) && <Questions api={api}/>}

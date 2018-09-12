@@ -13,7 +13,7 @@ const NewProjectPop = ({projects}) => (
     <section className="pop-over-actions results-list">
       <div className="results">
         {projects.length ? projects.map((project) => (
-          <Link key={project.id} href={getRemixUrl(project.domain)}>
+          <Link key={project.id} to={getRemixUrl(project.domain)}>
             <ProjectResultItem {...project} users={[]} action={()=>{
               /* global analytics */
               analytics.track("New Project Clicked", {
