@@ -27,6 +27,9 @@ class AddProjectToCollection extends React.Component {
   }
   
   componentWillUnmount() {
+    ///
+    /// jude:  I was wrong about having to move this;  instead we just need to remove this removeNotification line :-)
+    ///
     this.notification.removeNotification();
   }
   
