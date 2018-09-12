@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {CurrentUserConsumer} from '../current-user.jsx';
 import Notifications from '../notifications.jsx';
 
 const AddProjectMessage = (projectName, collectionName) => (
@@ -42,7 +41,7 @@ AddProjectToCollection.propTypes = {
 };
 
 const AddProjectToCollectionContainer = () => (
-  <Notifications className="add-project-to-collection-notify">
+  <Notifications>
     {notifyFuncs => (
       <AddProjectToCollection {...notifyFuncs}/>
     )}

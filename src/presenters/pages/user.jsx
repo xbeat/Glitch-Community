@@ -80,7 +80,6 @@ const UserPage = ({
     {/* TO DO - remove */}
     <AddProjectNotify project={"ProjectName"} collection={"CollectionName"}/>
     
-    
     <section>
       <ProfileContainer
         avatarStyle={getAvatarStyle({avatarUrl, color})}
