@@ -1,5 +1,6 @@
 const proxy = require('express-http-proxy');
 const url = require('url');
+const urlJoin = require('url-join');
 
 //
 // Some glitch.com urls are served by other sites.
@@ -34,12 +35,12 @@ module.exports = function(app) {
 }
 
 function proxyGlitch(app, route, target, pathOnTarget="") {
-  let routeWithLeadingSlash = route.startsWith('/') ? route : `/${route}`;
+  let routeWithLeadingSlash = urlJoin("/", route);
   app.use(routeWithLeadingSlash, proxy(target, {
     preserveHostHdr: false, // glitch routes based on this, so we have to reset it
-    https: false, // allows the proxy to do less work
+    https: true,
     proxyReqPathResolver: (req) => {
-      const path = pathOnTarget + routeWithLeadingSlash + url.parse(req.url).path;
+      const path = urlJoin("/", pathOnTarget, route, url.parse(req.url).path)
       console.log("Proxied:", path);
       return path;
     }
