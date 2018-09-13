@@ -5,7 +5,7 @@
 echo "Starting webpack watcher"
 
 while true; do
-  pnpx webpack --watch
+  webpack --watch
   
   echo "Webpack crashed; Restarting webpack --watch"
 done
