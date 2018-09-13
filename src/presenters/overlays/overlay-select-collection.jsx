@@ -10,8 +10,8 @@ import Notifications from '../notifications.jsx';
 
 const AddProjectMessage = ({projectName, collectionName}) => (
   <React.Fragment>
-    <p>Added <b><span className="project-name">projectName</span></b> to collection <b><span className="collection-name">collectionName</span></b></p>
-    <a href="#" target="_blank" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
+    <p>Added <b><span className="project-name">{projectName}</span></b> to collection <b><span className="collection-name">{collectionName}</span></b></p>
+    <a href={collectionName} target="_blank" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
   </React.Fragment>
 );
 AddProjectMessage.propTypes = {
@@ -19,35 +19,20 @@ AddProjectMessage.propTypes = {
   collectionName: PropTypes.string.isRequired
 };
 
-<Notifications>
-  {({createNotification}) => (
-    const content = AddProjectMessage(projectName, collectionName);
-    this.notification = createNotification(content);
-   )
-    <AddProjectToCollection {...notifyFuncs}/>
-  )}
-</Notifications>
-);
-
-
-const notify = (togglePopover, projectName, collectionName, notification) => {
+const notify = (togglePopover, projectName, collectionName, createPersistentNotification) => {
   togglePopover();
   
-  // show project notify window
-  // document.body.innerHTML += notification;
-  /*
-    document.getElementsByClassName('project-name')[0].innerHTML = projectName;
-    document.getElementsByClassName('collection-name')[0].innerHTML = collectionName;
-    document.getElementsByClassName('notify-collection-link')[0].setAttribute("href", "/"+collectionName);
-    document.getElementsByClassName('notifications')[0].style.visibility = "visible";
-  */
+  const content = <AddProjectMessage {...{projectName, collectionName}}/>;
+  createPersistentNotification(content);  createPersistentNotification(content);
+  createPersistentNotification(content);
+  createPersistentNotification(content);
+  createPersistentNotification(content);
+
 };
 
 
 const OverlaySelectCollection = ({children, domain}) => (
   <React.Fragment>
-    <div>I am visible!</div>
-    <AddProjectNotify project={domain} collection={categories[0].name} /> 
     <PopoverContainer>
       {({visible, setVisible, togglePopover}) => (
         <details onToggle={evt => setVisible(evt.target.open)} open={visible} className="overlay-container">
@@ -56,21 +41,21 @@ const OverlaySelectCollection = ({children, domain}) => (
             <section className="pop-over-actions">
               <section className="title">
                 <span>Add {domain} to collection</span>
-
               </section>            
               <section className="pop-over-actions results-list">
                 <ul className="results">
                   <li>
                     <Notifications>
-                      {({createNotification}) => (
+                      {({createPersistentNotification}) => (
                         <CollectionResultItem
                           domain={categories[0].name}
                           description={categories[0].description}
-                          id={categories[0].id}avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} 
-                        action={ () => 
-                          notify(togglePopover, domain, categories[0].url, 
-                            <AddProjectNotify project={domain} collection={categories[0].name} /> 
-                          )
+                          id={categories[0].id}
+                          avatarUrl={categories[0].avatarUrl}
+                          url={categories[0].url}
+                          isActive={false} 
+                          action={ () => 
+                            notify(togglePopover, domain, categories[0].url, createPersistentNotification)
                         } />
                       )}
                     </Notifications>
