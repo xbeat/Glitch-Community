@@ -19,7 +19,7 @@ function identifyUser(user) {
   try {
     const analytics = window.analytics;
     if (analytics && user && user.login) {
-      const primaryEmail = user.emails.find((email) => email.primary);
+      const primaryEmail = user.emails && user.emails.find((email) => email.primary);
       const email = primaryEmail && primaryEmail.email;
       analytics.identify(user.id, {
         name: user.name,
