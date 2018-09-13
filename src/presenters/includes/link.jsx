@@ -14,9 +14,10 @@ export const Link = ({to, children, ...props}) => {
   if (typeof to === 'string') {
     const currentUrl = new URL(window.location.href);
     const targetUrl = new URL(to, currentUrl);
-    const route = targetUrl.pathname.split('/')[1];
 
-    if (targetUrl.origin !== currentUrl.origin || external.has(route)) {
+    if (targetUrl.origin !== currentUrl.origin ||
+      EXTERNAL_ROUTES.some(route => targetUrl.pathname.startsWith(route))
+    ) {
       return <a href={to} {...props}>{children}</a>;
     }
   }

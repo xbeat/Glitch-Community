@@ -21,7 +21,7 @@ module.exports = function(app) {
         return path;
       }
     }));
-    routes.push(route);
+    routes.push(routeWithLeadingSlash);
   }
 
   function proxyGhost(route, glitchTarget, pathOnTarget) {
