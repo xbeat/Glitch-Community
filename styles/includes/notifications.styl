@@ -26,6 +26,7 @@
     animation-timing-function: ease-out
     margin-bottom: 5px
     line-height: 16px
+    animation-play-state: running
     p
       margin: 0
     hr
@@ -38,6 +39,10 @@
       height: 19px
       margin: 0
       margin-right: 5px
+      
+  .notification:hover
+    animation-play-state: paused
+    opacity: 1
   
   .notifyPersistent
     animation: none
@@ -68,6 +73,3 @@
     opacity: 1
   100%
     opacity: 0
-
-.add-project-to-collection-notify
-  display: none

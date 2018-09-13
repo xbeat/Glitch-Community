@@ -19,14 +19,11 @@ AddProjectMessage.propTypes = {
   collectionName: PropTypes.string.isRequired
 };
 
-const notify = (togglePopover, projectName, collectionName, createPersistentNotification) => {
+const notify = (togglePopover, projectName, collectionName, createNotification) => {
   togglePopover();
   
   const content = <AddProjectMessage {...{projectName, collectionName}}/>;
-  createPersistentNotification(content);  createPersistentNotification(content);
-  createPersistentNotification(content);
-  createPersistentNotification(content);
-  createPersistentNotification(content);
+  createNotification(content);
 
 };
 
@@ -46,7 +43,7 @@ const OverlaySelectCollection = ({children, domain}) => (
                 <ul className="results">
                   <li>
                     <Notifications>
-                      {({createPersistentNotification}) => (
+                      {({createNotification}) => (
                         <CollectionResultItem
                           domain={categories[0].name}
                           description={categories[0].description}
@@ -55,7 +52,7 @@ const OverlaySelectCollection = ({children, domain}) => (
                           url={categories[0].url}
                           isActive={false} 
                           action={ () => 
-                            notify(togglePopover, domain, categories[0].url, createPersistentNotification)
+                            notify(togglePopover, domain, categories[0].url, createNotification)
                         } />
                       )}
                     </Notifications>
