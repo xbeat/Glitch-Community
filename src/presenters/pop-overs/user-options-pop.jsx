@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getAvatarUrl} from '../../models/team';
-import {Link, TeamLink} from '../includes/link.jsx';
+import {getAvatarThumbnailUrl as getUserAvatarUrl} from '../../models/user';
+import {Link, TeamLink, UserLink} from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
 import CreateTeamPop from './create-team-pop.jsx';
 
@@ -85,16 +86,11 @@ TeamList.propTypes = {
 
 const UserOptionsPop = ({
   toggleUserOptionsPop,
-  userLink,
-  avatarUrl,
-  avatarStyle,
+  user,
   teams,
   signOut,
   showNewStuffOverlay,
   toggleCreateTeamPop,
-  userIsAnon,
-  userName,
-  userLogin,
 }) => {
   const clickNewStuff = (event) => {
     toggleUserOptionsPop();
@@ -103,7 +99,7 @@ const UserOptionsPop = ({
   };
   
   const clickSignout = () => {
-    if(userIsAnon) {
+    if(!user.login) {
       if(!window.confirm(`You won't be able to sign back in under this same anonymous account.
 Are you sure you want to sign out?`)) {
         return;
@@ -115,23 +111,24 @@ Are you sure you want to sign out?`)) {
     signOut();
   };
   
-  userName = userName || "Anonymous";
+  const userName = user.name || "Anonymous";
+  const userAvatarStyle = {backgroundColor: user.color};
 
   return (
     <dialog className="pop-over user-options-pop">
-      <Link to={userLink} className="user-info">
+      <UserLink user={user} className="user-info">
         <section className="pop-over-actions user-info">
-          <img className="avatar" src={avatarUrl} alt="Your avatar" style={avatarStyle}/>
+          <img className="avatar" src={getUserAvatarUrl(user)} alt="Your avatar" style={userAvatarStyle}/>
           <div className="info-container">
             <p className="name" title={userName}>{userName}</p>
-            { userLogin &&
-                <p className="user-login" title={userLogin}>@{userLogin}</p>
+            { user.login &&
+                <p className="user-login" title={user.login}>@{user.login}</p>
             }
           </div>
         </section>
-      </Link>
+      </UserLink>
 
-      <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
+      <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={!user.login} />
 
       <section className="pop-over-info section-has-tertiary-buttons">
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
@@ -150,19 +147,15 @@ Are you sure you want to sign out?`)) {
 
 UserOptionsPop.propTypes = {
   toggleUserOptionsPop: PropTypes.func.isRequired,
-  userLink: PropTypes.string.isRequired,
-  avatarUrl: PropTypes.string.isRequired,
-  avatarStyle: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   signOut: PropTypes.func.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
-  userIsAnon: PropTypes.bool.isRequired,
-  userName: PropTypes.string,
-  userLogin: PropTypes.string,
 };
 
 
-export default const UserOptionsPopContainer = (props) => {
-  const {avatarUrl, avatarStyle, api} = props;
+export default function UserOptionsPopContainer(props) {
+  const {user, api} = props;
+  const avatarStyle = {backgroundColor: user.color};
   return (
     <PopoverContainer>
       {({togglePopover: toggleUserOptionsPop, visible: userOptionsPopVisible}) => (
@@ -170,7 +163,7 @@ export default const UserOptionsPopContainer = (props) => {
           {({togglePopover: toggleCreateTeamPop, visible: createTeamPopVisible}) => (
             <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
               <button className="user" onClick={() => {toggleUserOptionsPop(); }}>
-                <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
+                <img src={getUserAvatarUrl(user)} style={avatarStyle} width="30px" height="30px" alt="User options"/>
                 <span className="down-arrow icon"/>
               </button>
               {userOptionsPopVisible && <UserOptionsPop
@@ -193,8 +186,7 @@ export default const UserOptionsPopContainer = (props) => {
 }
 
 UserOptionsPopContainer.propTypes = {
-  avatarUrl: PropTypes.string.isRequired,
-  avatarStyle: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   api: PropTypes.func.isRequired,
 };
 
