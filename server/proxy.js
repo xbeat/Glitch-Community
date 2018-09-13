@@ -12,12 +12,12 @@ module.exports = function(app) {
   const routes = [];
   
   function proxyGlitch(route, target, pathOnTarget="") {
-    let routeWithLeadingSlash = urlJoin("/", route);
+    const routeWithLeadingSlash = urlJoin("/", route);
     app.use(routeWithLeadingSlash, proxy(target, {
       preserveHostHdr: false, // glitch routes based on this, so we have to reset it
       https: true,
       proxyReqPathResolver: (req) => {
-        const path = urlJoin("/", pathOnTarget, route, url.parse(req.url).path)
+        const path = urlJoin("/", pathOnTarget, route, url.parse(req.url).path);
         console.log("Proxied:", path);
         return path;
       }
