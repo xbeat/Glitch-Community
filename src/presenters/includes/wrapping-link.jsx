@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {withRouter} from 'react-router';
+import {withRouter} from 'react-router-dom';
 
 // react tells me that nested <a> tags are bad and I shouldn't do that
 // so we will replace the outer tags with a special on click <div> tag
