@@ -8,7 +8,7 @@ import { getLink as getTeamLink } from '../../models/team';
 import { getLink as getUserLink } from '../../models/user';
 
 /* global EXTERNAL_ROUTES */
-const external = new Set(EXTERNAL_ROUTES);
+const external = Array.from(EXTERNAL_ROUTES);
 
 export const Link = ({to, children, ...props}) => {
   if (typeof to === 'string') {
@@ -16,7 +16,7 @@ export const Link = ({to, children, ...props}) => {
     const targetUrl = new URL(to, currentUrl);
 
     if (targetUrl.origin !== currentUrl.origin ||
-      EXTERNAL_ROUTES.some(route => targetUrl.pathname.startsWith(route))
+      external.some(route => targetUrl.pathname.startsWith(route))
     ) {
       return <a href={to} {...props}>{children}</a>;
     }
