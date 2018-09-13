@@ -89,6 +89,7 @@ SearchForm.propTypes = {
 
 const UserOptionsPopWrapper = ({user, clearUser, showNewStuffOverlay, api}) => {
   const props = {
+    user,
     teams: user.teams,
     userLink: getLink(user),
     avatarUrl: getAvatarThumbnailUrl(user),

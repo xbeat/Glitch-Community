@@ -161,7 +161,7 @@ UserOptionsPop.propTypes = {
 };
 
 
-export default function UserOptionsPopContainer(props) {
+export default const UserOptionsPopContainer = (props) => {
   const {avatarUrl, avatarStyle, api} = props;
   return (
     <PopoverContainer>
