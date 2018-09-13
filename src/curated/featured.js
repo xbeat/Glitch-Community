@@ -17,7 +17,7 @@ export default [
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fwhac_emoji.png?1536836279842",
     link: 'http://glitch.com/~whac-emoji'
   },{
-    title: 'A Twin Peaks Password Generator',
+    title: 'Twin Peaks Password Generator',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpassword_generator.png?1536836278805",
     link: 'http://glitch.com/~twin-peaks-password-generator'
   }, {
