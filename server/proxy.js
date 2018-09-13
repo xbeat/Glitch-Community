@@ -44,10 +44,16 @@ module.exports = function(app) {
   }
 
   // Proxy the some parts of our site over to ghost blogs:
-  proxyGhost('help', 'help-center.glitch.me');
-  proxyGhost('featured', 'featured.glitch.me');
-  proxyGhost('about', 'about-glitch.glitch.me');
-  proxyGhost('legal', 'about-glitch.glitch.me', '/about');
+  proxyGhost(app, 'help', 'help-center.glitch.me');
+  proxyGhost(app, 'featured', 'featured.glitch.me');
+  
+  // pending legal change -- case 3323312
+  // proxyGhost(app, 'about', 'about-glitch.glitch.me',);
+  // proxyGhost(app, 'legal', 'about-glitch.glitch.me', '/about');
+  // ..and then also remove these two special lines:
+  proxyGlitch(app, 'about', 'about.glitch.me');
+  proxyGlitch(app, 'legal', 'about.glitch.me');
+  // End special considerations.
   
   // Pages hosted by 'about.glitch.me':
   [

@@ -95,7 +95,7 @@ const UserOptionsPopWrapper = ({user, clearUser, showNewStuffOverlay, api}) => {
     avatarStyle: {backgroundColor: user.color},
     signOut: clearUser,
     api: api,
-    userIsAnon: !!user.logon,
+    userIsAnon: !user.login,
     showNewStuffOverlay,
     userName: user.name,
     userLogin: user.login,
