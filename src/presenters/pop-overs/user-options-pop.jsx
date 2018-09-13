@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getAvatarUrl} from '../../models/team';
+import {getAvatarUrl as getTeamAvatarUrl} from '../../models/team';
 import {getAvatarThumbnailUrl as getUserAvatarUrl} from '../../models/user';
 import {Link, TeamLink, UserLink} from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
@@ -12,7 +12,7 @@ const TeamButton = (team) => (
   <TeamLink team={team} className="button-link">
     <div className="button button-small has-emoji button-tertiary">
       {team.name}&nbsp;
-      <img className="emoji avatar" src={getAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
+      <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
     </div>
   </TeamLink>
 );
@@ -87,7 +87,6 @@ TeamList.propTypes = {
 const UserOptionsPop = ({
   toggleUserOptionsPop,
   user,
-  teams,
   signOut,
   showNewStuffOverlay,
   toggleCreateTeamPop,
@@ -128,7 +127,7 @@ Are you sure you want to sign out?`)) {
         </section>
       </UserLink>
 
-      <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={!user.login} />
+      <TeamList teams={user.teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={!user.login} />
 
       <section className="pop-over-info section-has-tertiary-buttons">
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
@@ -186,7 +185,13 @@ export default function UserOptionsPopContainer(props) {
 }
 
 UserOptionsPopContainer.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    avatarThumbnailUrl: PropTypes.string,
+    color: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    login: PropTypes.string,
+    teams: PropTypes.array.isRequired,
+  }).isRequired,
   api: PropTypes.func.isRequired,
 };
 
