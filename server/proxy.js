@@ -41,7 +41,7 @@ module.exports = function(app) {
     });
   
     // Proxy all the requests to /{route}/ over to glitchTarget
-    proxyGlitch(sandwichedRoute, glitchTarget, pathOnTarget);
+    proxyGlitch(route, glitchTarget, pathOnTarget);
   }
 
   // Proxy the some parts of our site over to ghost blogs:
