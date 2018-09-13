@@ -7,7 +7,28 @@ import categories from '../../curated/categories.js';
 import CollectionResultItem from '../includes/collection-result-item.jsx';
 
 import Notifications from '../notifications.jsx';
-import AddProjectNotify from '../includes/added-project-to-collection.jsx';
+
+const AddProjectMessage = ({projectName, collectionName}) => (
+  <React.Fragment>
+    <p>Added <b><span className="project-name">projectName</span></b> to collection <b><span className="collection-name">collectionName</span></b></p>
+    <a href="#" target="_blank" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
+  </React.Fragment>
+);
+AddProjectMessage.propTypes = {
+  projectName: PropTypes.string.isRequired,
+  collectionName: PropTypes.string.isRequired
+};
+
+<Notifications>
+  {({createNotification}) => (
+    const content = AddProjectMessage(projectName, collectionName);
+    this.notification = createNotification(content);
+   )
+    <AddProjectToCollection {...notifyFuncs}/>
+  )}
+</Notifications>
+);
+
 
 const notify = (togglePopover, projectName, collectionName, notification) => {
   togglePopover();
@@ -40,12 +61,19 @@ const OverlaySelectCollection = ({children, domain}) => (
               <section className="pop-over-actions results-list">
                 <ul className="results">
                   <li>
-                    <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} 
-                      action={ () => 
-                        notify(togglePopover, domain, categories[0].url, 
-                          <AddProjectNotify project={domain} collection={categories[0].name} /> 
-                        )
-                      } />
+                    <Notifications>
+                      {({createNotification}) => (
+                        <CollectionResultItem
+                          domain={categories[0].name}
+                          description={categories[0].description}
+                          id={categories[0].id}avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} 
+                        action={ () => 
+                          notify(togglePopover, domain, categories[0].url, 
+                            <AddProjectNotify project={domain} collection={categories[0].name} /> 
+                          )
+                        } />
+                      )}
+                    </Notifications>
                   </li>
                 </ul>
               </section>
