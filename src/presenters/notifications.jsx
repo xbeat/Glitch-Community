@@ -2,12 +2,8 @@ import React from 'react';
 
 const {Provider, Consumer} = React.createContext();
 
-const hover = () => {
-  console.log("hover....");
-};
-
 const Notification = ({children, className, remove}) => (
-  <aside className={`notification ${className}`} onMouseOver={hover} onAnimationEnd={remove}>
+  <aside className={`notification ${className}`} onMouseEnter={()=>console.log("enter")} onMouseLeave={()=>console.log("leave")} onAnimationEnd={remove}>
     {children}
   </aside>
 );
