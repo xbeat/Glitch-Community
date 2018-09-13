@@ -20,6 +20,11 @@ export const Link = ({to, children, ...props}) => {
     ) {
       return <a href={to} {...props}>{children}</a>;
     }
+    to = {
+      pathname: targetUrl.pathname,
+      search: targetUrl.search,
+      hash: targetUrl.hash,
+    };
   }
   
   return <RouterLink to={to} {...props}>{children}</RouterLink>;
