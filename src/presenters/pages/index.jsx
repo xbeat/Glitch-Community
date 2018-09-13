@@ -111,7 +111,7 @@ const MadeInGlitch = () => (
 const IndexPage = ({api, user}) => (
   <main>
     <h1 className="headline">
-      <Link to="https://nova-chance.glitch.me">Glitch</Link>{' '}
+      <Link to="https://glitch.com">Glitch</Link>{' '}
       is the friendly community where you'll build the app of your dreams
     </h1>
     {!!(user && user.login) && <Questions api={api}/>}

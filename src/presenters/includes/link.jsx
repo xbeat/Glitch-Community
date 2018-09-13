@@ -8,7 +8,7 @@ import { getLink as getTeamLink } from '../../models/team';
 import { getLink as getUserLink } from '../../models/user';
 
 /* global EXTERNAL_ROUTES */
-const external = Array.from(EXTERNAL_ROUTES);
+const external = ['edit', ...EXTERNAL_ROUTES];
 
 export const Link = ({to, children, ...props}) => {
   if (typeof to === 'string') {
