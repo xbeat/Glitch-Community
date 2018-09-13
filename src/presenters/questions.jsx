@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import randomColor from 'randomcolor';
 import {sample} from 'lodash';
 
+import Link from './includes/link.jsx';
 import QuestionItem from './question-item.jsx';
 
 const kaomojis = [
@@ -64,7 +65,7 @@ class Questions extends React.Component {
     return (
       <section className="questions">
         <h2>
-          <a href="/questions">Help Others, Get Thanks →</a>{' '}
+          <Link to="/questions">Help Others, Get Thanks →</Link>{' '}
           <QuestionTimer animating={!loading} callback={() => this.load()}/>
         </h2>
         <article className="projects">
@@ -79,7 +80,7 @@ class Questions extends React.Component {
           ) : (
             <React.Fragment>
               {kaomoji} Looks like nobody is asking for help right now.{' '}
-              <a className="general-link" href="/help/how-can-i-get-help-with-code-in-my-project/">Learn about helping</a>
+              <Link className="general-link" to="/help/how-can-i-get-help-with-code-in-my-project/">Learn about helping</Link>
             </React.Fragment>
           )}
         </article>

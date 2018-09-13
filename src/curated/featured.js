@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Musician Explorer',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fartist_explorer.png?1536570040809",
-    link: 'https://artist-explorer.glitch.me/'
+    title: 'Whac-Emoji!',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fwhac_emoji.png?1536836279842",
+    link: 'http://glitch.com/~whac-emoji'
   },{
-    title: 'Bring Back Your 1st Site',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fwayback_importer.png?1536570052496",
-    link: 'https://glitch.com/~wayback-importer'
+    title: 'Twin Peaks Password Generator',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpassword_generator.png?1536836278805",
+    link: 'http://glitch.com/~twin-peaks-password-generator'
   }, {
-    title: 'VR Seed Herbarium',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fseed_library.png?1536570049651",
-    link: 'http://seedlibrary.glitch.me/'
+    title: 'The Sound of Machine Learning',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsound_of_learning.png?1536836281262",
+    link: 'https://glitch.com/~sound-of-learning'
   }  
 ];

@@ -4,6 +4,7 @@ import {sampleSize} from 'lodash';
 
 import ProjectModel from '../models/project';
 
+import Link from './includes/link.jsx';
 import {ProjectsUL} from './projects-list.jsx';
 
 const Category = ({category}) => {
@@ -14,13 +15,13 @@ const Category = ({category}) => {
   return (
     <article className="projects" style={{backgroundColor: category.backgroundColor}}>
       <header className="category">
-        <a className="category-name" href={category.url}>
+        <Link className="category-name" to={category.url}>
           <h2>{category.name} <span className="arrow">→</span></h2>
-        </a>
+        </Link>
         <span className="category-image-container">
-          <a className="category-image" href={category.url}>
+          <Link className="category-image" to={category.url}>
             <img  height="80px" width="120px" src={category.avatarUrl} alt={category.name} />
-          </a>
+          </Link>
         </span>
         <p className="category-description">{category.description}</p>
       </header>
