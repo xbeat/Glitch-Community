@@ -24,9 +24,9 @@ const redirects = require('./redirects');
 redirects(app);
 
 const proxy = require('./proxy');
-proxy(app);
+const proxied = proxy(app);
 
-const router = require('./routes')();
+const router = require('./routes')(proxied);
 app.use('/', router);
 
 // Add an explicit no-cache to 404 responses
@@ -37,6 +37,6 @@ app.use(function(req, res, next) {
 });
 
 // Listen on App port
-var listener = app.listen(process.env.PORT, () => {
+const listener = app.listen(process.env.PORT, () => {
   console.log(`Your app is listening on port ${listener.address().port}.`);
 });

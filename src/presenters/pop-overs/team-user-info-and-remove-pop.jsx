@@ -3,12 +3,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getAvatarThumbnailUrl, getDisplayName, getLink} from '../../models/user';
+import {getAvatarThumbnailUrl, getDisplayName} from '../../models/user';
 import {getAvatarUrl} from  '../../models/project';
 
-import Thanks from '../includes/thanks.jsx';
+import {UserLink} from '../includes/link.jsx';
 import Loader from '../includes/loader.jsx';
 import Notifications from '../notifications.jsx';
+import Thanks from '../includes/thanks.jsx';
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
@@ -39,13 +40,11 @@ const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
       </p>
       { userIsTeamAdmin && 
         <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)}>
-          <span>Remove Admin Status </span>
-          <span className="emoji fast-down" />
+          Remove Admin Status <span className="emoji fast-down" />
         </button>
       ||
         <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)}>
-          <span>Make an Admin </span>
-          <span className="emoji fast-up" />
+          Make an Admin <span className="emoji fast-up" />
         </button>
       }
     </section>
@@ -78,9 +77,9 @@ const TeamUserInfo = ({toggleUserInfoHidden, currentUser, ...props}) => {
   return (
     <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info user-info">
-        <a href={getLink(props.user)}>
+        <UserLink user={props.user}>
           <img className="avatar" src={getAvatarThumbnailUrl(props.user)} alt={props.user.login} style={userAvatarStyle}/>
-        </a>
+        </UserLink>
         <div className="info-container">
           <p className="name" title={props.user.name}>{props.user.name || "Anonymous"}</p>
           { props.user.login &&
