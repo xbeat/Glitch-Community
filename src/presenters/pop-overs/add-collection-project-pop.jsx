@@ -15,9 +15,13 @@ const ProjectSearchResults = ({projects, action}) => (
   (projects.length > 0) ? (
     <ul className="results">
       {projects.map(project => (
-        <li key={project.id}>
-          <ProjectResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} action={() => action(project)} />
-        </li>
+        <Notifications className="added-project">
+          {({createPersistentNotification}) => (
+            <li key={project.id}>
+              <ProjectResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} action={() => action(project, createPersistentNotification)} />
+            </li>
+          )}
+        </Notifications>
       ))}
     </ul>
   ) : (
@@ -107,16 +111,12 @@ class AddCollectionProjectPop extends React.Component {
     });
   }
   
-  onClick(project) {
+  onClick(project, createPersistentNotification) {
     this.props.togglePopover();
     console.log(`clicked ${project.domain}`);
     
     // show notification
-    <Notifications>
-      { ({createNotification}) => 
-          createNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>)
-      }
-    </Notifications>
+    createPersistentNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>)
     
     // add project to page if successful
   }
@@ -136,11 +136,7 @@ class AddCollectionProjectPop extends React.Component {
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
           {!!this.state.maybeResults && 
-            <Notifications>
-              {({createNotification}) => (
-                  <ProjectSearchResults projects={this.state.maybeResults} action={this.onClick} />
-                )}
-            </Notifications>
+              <ProjectSearchResults projects={this.state.maybeResults} action={this.onClick} />
           }
         </section>}
       </dialog>
