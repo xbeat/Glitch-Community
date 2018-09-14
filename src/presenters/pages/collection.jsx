@@ -248,17 +248,6 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
         
       </article>
       
-      {/*
-      <div class="buttons buttons-right">
-        {(isAuthorized
-          ? <button className={`button delete-collection button-small`} >
-            Delete Collection
-          </button>
-          : null
-          )}
-      </div>   
-      */}
-      
     </main>
     <Categories/>
   </React.Fragment>

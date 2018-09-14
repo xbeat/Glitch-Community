@@ -17,7 +17,6 @@ AddProjectMessage.propTypes = {
 };
 
 const notify = (projectName, collectionName, url, notification, togglePopover) => {
-  console.log(`clicked on ${collectionName}`);
   // toggle popover
   togglePopover();
   

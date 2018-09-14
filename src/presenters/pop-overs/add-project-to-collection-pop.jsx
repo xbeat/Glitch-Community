@@ -50,20 +50,15 @@ class AddProjectToCollection extends React.Component {
         <section className="pop-over-actions results-list">
           <ul className="results">
             <li>
-               <Notifications>
-                {({createPersistentNotification}) => (
-                  <CollectionResultItem 
-                    projectName={this.props.projectName}
-                    collectionName={categories[0].name} 
-                    description={categories[0].description} 
-                    id={categories[0].id.toString()} 
-                    avatarUrl={categories[0].avatarUrl} 
-                    url={categories[0].url} isActive={false} 
-                    togglePopover={this.props.togglePopover} 
-                    />
-                   )}
-              </Notifications>
-
+              <CollectionResultItem 
+                projectName={this.props.projectName}
+                collectionName={categories[0].name} 
+                description={categories[0].description} 
+                id={categories[0].id.toString()} 
+                avatarUrl={categories[0].avatarUrl} 
+                url={categories[0].url} isActive={false} 
+                togglePopover={this.props.togglePopover} 
+                />
             </li>
           </ul>
         </section>
