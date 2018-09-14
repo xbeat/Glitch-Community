@@ -222,14 +222,14 @@ TeamItemButton.propTypes = {
 // Create Team button
 
 const CreateTeamButton = ({toggleUserOptionsVisible, userIsAnon}) => {
-  if (userIsAnon === true) {
+  if (userIsAnon) {
     return (
       <React.Fragment>
         <button className="button button-small button-tertiary">Sign in</button>
         <p className="description action-description">
           to create a team
         </p>
-        <button className="button button-small has-emoji button-tertiary" disabled={true}>
+        <button className="button button-small has-emoji button-tertiary" disabled>
           Create Team <span className="emoji herb" />
         </button>
       </React.Fragment>
@@ -255,7 +255,9 @@ const TeamList = ({teams, toggleUserOptionsVisible, userIsAnon}) => {
   return (!!teams.length &&
     <section className="pop-over-actions">
       <DevToggles>
-        {toggles => toggles.includes('add-teams') && <CreateTeamButton toggleUserOptionsVisible={toggleUserOptionsVisible} userIsAnon={userIsAnon} />}
+        {toggles => toggles.includes('add-teams') && (
+          <CreateTeamButton toggleUserOptionsVisible={toggleUserOptionsVisible} userIsAnon={userIsAnon} />
+        )}
       </DevToggles>
       {teams.map((team) => (
         <TeamItemButton key={team.name} {...team} />
