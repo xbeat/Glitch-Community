@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import qs from 'querystringify';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, withRouter} from 'react-router-dom';
 import Helmet from 'react-helmet';
 
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
+
+import {CurrentUserConsumer} from '../current-user.jsx';
 
 import IndexPage from './index.jsx';
 import {FacebookLoginPage, GitHubLoginPage} from './login.jsx';
@@ -27,36 +29,56 @@ const NotFoundPage = () => (
   </React.Fragment>
 );
 
+class PageChangeHandlerImpl extends React.Component {
+  componentDidUpdate(prev) {
+    if (this.props.location.key !== prev.location.key) {
+      window.scrollTo({left: 0, top: 0, behavior: 'instant'});
+      this.props.reloadCurrentUser();
+    }
+  }
+  render() {
+    return null;
+  }
+}
+const PageChangeHandler = withRouter(({location}) => (
+  <CurrentUserConsumer>
+    {(user, fetched, {reload}) => <PageChangeHandlerImpl location={location} reloadCurrentUser={reload}/>}
+  </CurrentUserConsumer>
+));
+
 const Router = ({api}) => (
-  <Switch>
-    <Route path="/" exact render={() => <IndexPage api={api}/>}/>
-    <Route path="/index.html" exact strict render={() => <IndexPage api={api}/>}/>
-    
-    <Route path="/login/facebook" exact render={({location}) => <FacebookLoginPage api={api} code={qs.parse(location.search).code}/>}/>
-    <Route path="/login/github" exact render={({location}) => <GitHubLoginPage api={api} code={qs.parse(location.search).code}/>}/>
-    
-    <Route path="/questions" exact render={() => <QuestionsPage api={api}/>}/>
-    
-    <Route path="/~:name" exact render={({match}) => <ProjectPage api={api} name={match.params.name}/>}/>
-    
-    <Route path="/@:name" exact render={({match}) => <TeamOrUserPage api={api} name={match.params.name}/>}/>
-    
-    <Route path="/user/:id(\d+)" exact render={({match}) => <UserPage api={api} id={parseInt(match.params.id, 10)} name={`user ${match.params.id}`}/>}/>
-    
-    {Object.keys(rootTeams).map(name => (
-      <Route key={name} path={`/${name}`} exact render={() => <TeamPage api={api} id={rootTeams[name]} name={name}/>}/>
-    ))}
-    
-    <Route path="/search" exact render={({location}) => <SearchPage api={api} query={qs.parse(location.search).q}/>}/>
-    
-    {categories.map(category => (
-      <Route key={category.url} path={`/${category.url}`} exact render={() => <CategoryPage api={api} category={category}/>}/>
-    ))}
-    
-    <Route path="/secret" exact render={() => <SecretPage/>}></Route>
-    
-    <Route render={() => <NotFoundPage/>}/>
-  </Switch>
+  <React.Fragment>
+    <PageChangeHandler/>
+    <Switch>
+      <Route path="/" exact render={({location}) => <IndexPage key={location.key} api={api}/>}/>
+      <Route path="/index.html" exact strict render={({location}) => <IndexPage key={location.key} api={api}/>}/>
+
+      <Route path="/login/facebook" exact render={({location}) => <FacebookLoginPage key={location.key} api={api} code={qs.parse(location.search).code}/>}/>
+      <Route path="/login/github" exact render={({location}) => <GitHubLoginPage key={location.key} api={api} code={qs.parse(location.search).code}/>}/>
+
+      <Route path="/questions" exact render={({location}) => <QuestionsPage key={location.key} api={api}/>}/>
+
+      <Route path="/~:name" exact render={({location, match}) => <ProjectPage key={location.key} api={api} name={match.params.name}/>}/>
+
+      <Route path="/@:name" exact render={({location, match}) => <TeamOrUserPage key={location.key} api={api} name={match.params.name}/>}/>
+
+      <Route path="/user/:id(\d+)" exact render={({location, match}) => <UserPage key={location.key} api={api} id={parseInt(match.params.id, 10)} name={`user ${match.params.id}`}/>}/>
+
+      {Object.keys(rootTeams).map(name => (
+        <Route key={name} path={`/${name}`} exact render={({location}) => <TeamPage key={location.key} api={api} id={rootTeams[name]} name={name}/>}/>
+      ))}
+
+      <Route path="/search" exact render={({location}) => <SearchPage key={location.key} api={api} query={qs.parse(location.search).q}/>}/>
+
+      {categories.map(category => (
+        <Route key={category.url} path={`/${category.url}`} exact render={({location}) => <CategoryPage key={location.key} api={api} category={category}/>}/>
+      ))}
+
+      <Route path="/secret" exact render={({location}) => <SecretPage key={location.key}/>}></Route>
+
+      <Route render={({location}) => <NotFoundPage key={location.key}/>}/>
+    </Switch>
+  </React.Fragment>
 );
 Router.propTypes = {
   api: PropTypes.any.isRequired,

@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Gender Analyze Your Radio Station',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fradio-station-scraper.jpg?1535022650114",
-    link: 'https://glitch.com/~radio-station-scraper'
+    title: 'Whac-Emoji!',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fwhac_emoji.png?1536836279842",
+    link: 'https://glitch.com/~whac-emoji'
   },{
-    title: 'Make Your Own Movie Poster',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmovieposters.jpg?1535368252714",
-    link: 'https://glitch.com/~movieposters'
+    title: 'Twin Peaks Password Generator',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpassword_generator.png?1536836278805",
+    link: 'https://glitch.com/~twin-peaks-password-generator'
   }, {
-    title: 'Reader View, Everywhere',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Freader-view.jpg?1535368251978",
-    link: 'https://glitch.com/~legend-football'
+    title: 'The Sound of Machine Learning',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsound_of_learning.png?1536836281262",
+    link: 'https://glitch.com/~sound-of-learning'
   }  
 ];

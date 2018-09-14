@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getLink, getAvatarStyle, getProfileStyle} from '../models/user';
+import {getAvatarStyle, getProfileStyle} from '../models/user';
 import {CurrentUserConsumer} from './current-user.jsx';
+import {UserLink} from './includes/link.jsx';
 
 import {CoverContainer} from './includes/profile.jsx';
 import Loader from './includes/loader.jsx';
@@ -12,13 +13,13 @@ import SignInPop from './pop-overs/sign-in-pop.jsx';
 
 const RecentProjectsContainer = ({children, user}) => (
   <section className="profile recent-projects">
-    <h2><a href={getLink(user)}>Your Projects →</a></h2>
+    <h2><UserLink user={user}>Your Projects →</UserLink></h2>
     <CoverContainer style={getProfileStyle(user)}>
       <div className="profile-avatar">
         <div className="user-avatar-container">
-          <a href={getLink(user)}>
+          <UserLink user={user}>
             <div className={`user-avatar ${!user.login ? 'anon-user-avatar' : ''}`} style={getAvatarStyle(user)} alt=""></div>
-          </a>
+          </UserLink>
           {!user.login && <div className="anon-user-sign-up"><SignInPop/></div>}
         </div>
       </div>

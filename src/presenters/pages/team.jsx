@@ -15,6 +15,7 @@ import AddTeamProject from '../includes/add-team-project.jsx';
 import DeleteTeam from '../includes/delete-team.jsx';
 import {AddTeamUser, TeamUsers, WhitelistedDomain, JoinTeam} from '../includes/team-users.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
+import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 import TeamUpgradeInfoBanner from '../includes/team-upgrade-info-banner.jsx';
@@ -72,8 +73,8 @@ class TeamPage extends React.Component {
   
   userCanJoinTeam() {
     const {currentUser, team} = this.props;
-    if (!this.props.currentUserIsOnTeam && team.whitelistedDomain && currentUser) {
-      return currentUser.emails.some(({email, verified}) => verified && email.endsWith(team.whitelistedDomain));
+    if (!this.props.currentUserIsOnTeam && team.whitelistedDomain && currentUser && currentUser.emails) {
+      return currentUser.emails.some(({email, verified}) => verified && email.endsWith(`@${team.whitelistedDomain}`));
     }
     return false;
   }
@@ -106,7 +107,8 @@ class TeamPage extends React.Component {
               </React.Fragment>
             )}
             <div className="users-information">
-              <TeamUsers {...this.props}
+              <TeamUsers 
+                {...this.props}
                 users={this.props.team.users}
                 teamId={this.props.team.id}
                 adminIds={this.props.team.adminIds}
@@ -251,7 +253,7 @@ TeamPage.propTypes = {
   currentUser: PropTypes.object,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
-  removeUser: PropTypes.func.isRequired,
+  removeUserFromTeam: PropTypes.func.isRequired,
   removePin: PropTypes.func.isRequired,
   removeProject: PropTypes.func.isRequired,
   teamHasUnlimitedProjects: PropTypes.bool.isRequired,
@@ -277,8 +279,43 @@ const TeamNameConflict = ({team}) => (
   </CurrentUserConsumer>
 );
 
+const TeamPageEditor = ({api, initialTeam, children}) => (
+  <TeamEditor api={api} initialTeam={initialTeam}>
+    {(team, funcs, ...args) => (
+      <ProjectsLoader api={api} projects={team.projects}>
+        {(projects, reloadProjects) => {
+          // Inject page specific changes to the editor
+          // Mainly url updating and calls to reloadProjects
+          
+          const removeUserFromTeam = async (user, projectIds) => {
+            await funcs.removeUserFromTeam(user, projectIds);
+            reloadProjects(...projectIds);
+          };
+          
+          const joinTeamProject = async (projectId) => {
+            await funcs.joinTeamProject(projectId);
+            reloadProjects(projectId);
+          };
+          
+          const leaveTeamProject = async (projectId) => {
+            await funcs.leaveTeamProject(projectId);
+            reloadProjects(projectId);
+          };
+          
+          return children({...team, projects}, {
+            ...funcs,
+            removeUserFromTeam,
+            joinTeamProject,
+            leaveTeamProject,
+          }, ...args);
+        }}
+      </ProjectsLoader>
+    )}
+  </TeamEditor>
+);
+
 const TeamPageContainer = ({api, team, ...props}) => (
-  <TeamEditor api={api} initialTeam={team}>
+  <TeamPageEditor api={api} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
       <React.Fragment>
         <Helmet>
@@ -287,14 +324,17 @@ const TeamPageContainer = ({api, team, ...props}) => (
 
         <CurrentUserConsumer>
           {currentUser => (
-            <TeamPage api={api} team={team} {...funcs} currentUser={currentUser} currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin} {...props}/>
+            <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
+              currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
+              {...props}
+            />
           )}
         </CurrentUserConsumer>
 
         <TeamNameConflict team={team}/>
       </React.Fragment>
     )}
-  </TeamEditor>
+  </TeamPageEditor>
 );
 
 export default TeamPageContainer;

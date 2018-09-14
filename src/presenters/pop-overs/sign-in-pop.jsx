@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
@@ -19,11 +20,11 @@ function facebookAuthLink() {
 }
 
 const SignInPopButton = (props) => (
-  <a className="button-link" href={props.href}>
+  <Link className="button-link" to={props.href}>
     <div className="button button-small">Sign in with {props.company}
       <span className={`emoji ${props.emoji}`}></span>
     </div>
-  </a>
+  </Link>
 );
 
 const SignInPop = () => (

@@ -3,8 +3,8 @@ const cacheBuster = Math.floor(Math.random() * 1000);
 
 export default function Team({projects, users, ...team}) {
   const props = {
-    get users() { return users ? users.map(user => User(user).asProps()) : []; },
-    get projects() { return projects ? projects.map(project => Project(project).asProps()) : []; },
+    users: users ? users.map(user => User(user).asProps()) : [],
+    projects: projects ? projects.map(project => Project(project).asProps()) : [],
     features: [], //shim until the api returns something real
     ...team
   };

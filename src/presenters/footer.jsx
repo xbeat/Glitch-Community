@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function FooterLine({href, track, children}) {
-  return <p><a href={href} data-track={'footer → '+track}>{children}</a></p>;
-}
+import Link from './includes/link.jsx';
+
+const FooterLine = ({href, track, children}) => {
+  return <p><Link to={href} data-track={'footer → '+track}>{children}</Link></p>;
+};
+
 FooterLine.propTypes = {
   href: PropTypes.string.isRequired,
   track: PropTypes.string.isRequired,
@@ -14,7 +17,7 @@ export default function Footer() {
   const srcForPlatforms = "https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188";
   return (
     <footer role="contentinfo">
-      <FooterLine href="https://glitch.com/about" track="about">
+      <FooterLine href="/about" track="about">
         About Glitch <span role="img" aria-label="">🔮</span>
       </FooterLine>
       <FooterLine href="https://medium.com/glitch" track="blog">
@@ -26,11 +29,11 @@ export default function Footer() {
       <FooterLine href="http://status.glitch.com/" track="system status">
         System Status <span role="img" aria-label="">🚥</span>
       </FooterLine>
-      <FooterLine href="https://glitch.com/legal" track="legal stuff">
+      <FooterLine href="/legal" track="legal stuff">
         Legal Stuff <span role="img" aria-label="">👮‍</span>
       </FooterLine>
       <hr/>
-      <FooterLine href="https://glitch.com/forteams" track="platforms">
+      <FooterLine href="/forteams" track="platforms">
         <img className="for-platforms-icon" src={srcForPlatforms} alt=""/>
         <span className="for-platforms-text">Glitch Teams</span>
       </FooterLine>

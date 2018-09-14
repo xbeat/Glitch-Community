@@ -2,8 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {Redirect} from 'react-router-dom';
 import moment from 'moment-mini';
 import {getAvatarThumbnailUrl, getLink} from '../models/user';
+import Link from './includes/link.jsx';
 
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
@@ -50,29 +52,39 @@ class Logo extends React.PureComponent {
 }
 
 const ResumeCoding = () => (
-  <a className="button button-small button-cta" href={EDITOR_URL} data-track="resume coding">
-    <div className="">Resume Coding</div>
-  </a>
+  <Link className="button button-small button-cta" to={EDITOR_URL} data-track="resume coding">
+    Resume Coding
+  </Link>
 );
 
-const submitSearch = (event) => {
-  if (event.target.children.q.value.trim().length === 0) {
-    return event.preventDefault();
+class SearchForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.defaultValue || '',
+      submitted: false,
+    };
   }
-};
-
-const SearchForm = ({onSubmit, defaultValue}) => (
-  <form action="/search" method="get" role="search" onSubmit={onSubmit}>
-    <input className="search-input" name="q" placeholder="bots, apps, users" defaultValue={defaultValue}/>
-  </form>
-);
-
+  onChange(event) {
+    this.setState({value: event.target.value});
+  }
+  onSubmit(event) {
+    event.preventDefault();
+    if (!this.state.value) return;
+    this.setState({submitted: true});
+  }
+  render() {
+    const {value, submitted} = this.state;
+    return (
+      <form action="/search" method="get" role="search" onSubmit={this.onSubmit.bind(this)}>
+        <input className="search-input" name="q" placeholder="bots, apps, users" value={value} onChange={this.onChange.bind(this)}/>
+        {submitted && <Redirect to={`/search?q=${value}`} push={true}/>}
+      </form>
+    );
+  }
+}
 SearchForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
   defaultValue: PropTypes.string,
-};
-SearchForm.defaultProps = {
-  defaultValue: '',
 };
 
 const UserOptionsPopWrapper = ({user, clearUser, showNewStuffOverlay, api}) => {
@@ -83,7 +95,7 @@ const UserOptionsPopWrapper = ({user, clearUser, showNewStuffOverlay, api}) => {
     avatarStyle: {backgroundColor: user.color},
     signOut: clearUser,
     api: api,
-    userIsAnon: !!user.logon,
+    userIsAnon: !user.login,
     showNewStuffOverlay,
     userName: user.name,
     userLogin: user.login,
@@ -109,13 +121,13 @@ const Header = ({api, maybeUser, clearUser, searchQuery, showNewStuffOverlay}) =
   return (
     <header role="banner">
       <div className="header-info">
-        <a href="/">
+        <Link to="/">
           <Logo/>
-        </a>
+        </Link>
       </div>
 
       <nav>
-        <SearchForm onSubmit={submitSearch} defaultValue={searchQuery}/>
+        <SearchForm defaultValue={searchQuery}/>
         <NewProjectPop api={api}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
