@@ -208,16 +208,14 @@ class TeamPage extends React.Component {
 
         {/* billing info section goes here */}
         <DevToggles>
-          {({enabledToggles}) => (
-            enabledToggles.has('delete-team') && this.props.currentUserIsTeamAdmin && (
-              <DeleteTeam api={() => this.props.api}
-                teamId={this.props.team.id}
-                teamName={this.props.team.name}
-                teamAdmins={this.teamAdmins()}
-                users={this.props.team.users}
-              />
-            )
-          )}
+          {toggles => (toggles.includes('delete-teams') && this.props.currentUserIsTeamAdmin && (
+            <DeleteTeam api={() => this.props.api}
+              teamId={this.props.team.id}
+              teamName={this.props.team.name}
+              teamAdmins={this.teamAdmins()}
+              users={this.props.team.users}
+            />
+          ))}
         </DevToggles>
 
         { !this.props.currentUserIsOnTeam &&
