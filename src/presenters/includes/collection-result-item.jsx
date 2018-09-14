@@ -7,20 +7,21 @@ import Notifications from '../notifications.jsx';
 
 const notify = (togglePopover, collectionName, createPersistentNotification) => {
   togglePopover();
+  console.log(`clicked on ${collectionName}`);
   
   // show notification
   createPersistentNotification(<p>Added to <b><span className="collection-name">{collectionName}</span></b></p>, "notifySuccess")
 
 };
 
-const CollectionResultItem = ({id, domain, description, isActive, avatarUrl, url}) => {
+const CollectionResultItem = ({id, domain, description, isActive, avatarUrl, url, togglePopover, createPersistentNotification}) => {
   var resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
   }
 
   return (
-    <button className={resultClass} onClick={notify()} data-project-id={id}>
+    <button className={resultClass} onClick={notify(togglePopover, domain, createPersistentNotification)} data-project-id={id}>
       <img className="avatar" src={avatarUrl} alt={`Project avatar for ${domain}`}/>
       <div className="results-info">
         <div className="result-name" title={domain}>{domain}</div>
@@ -42,7 +43,9 @@ CollectionResultItem.propTypes = {
   id: PropTypes.string.isRequired,
   isActive: PropTypes.bool,
   avatarUrl: PropTypes.string,
-  url: PropTypes.string
+  url: PropTypes.string,
+  createPersistentNotification: PropTypes.func,
+  togglePopover: PropTypes.func,
 };
 
 export default CollectionResultItem;

@@ -9,6 +9,8 @@ import Loader from '../includes/loader.jsx';
 import CollectionResultItem from '../includes/collection-result-item.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
 
+import Notifications from '../notifications.jsx';
+
 {/* NOTE: Categories are just used to load dummy info - should get rid of in final implementation */}
 import categories from '../../curated/categories.js';
 
@@ -37,7 +39,7 @@ class AddProjectToCollection extends React.Component {
     });
   }
   
-  onClick(collection, createPersistentNotification) {
+  onClick(collection) {
     this.props.togglePopover();    
   }
   
@@ -50,7 +52,7 @@ class AddProjectToCollection extends React.Component {
             <li>
                <Notifications>
                 {({createPersistentNotification}) => (
-                  <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id.toString()} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false}/>
+                  <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id.toString()} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} togglePopover={this.props.togglePopover} createPersistentNotification={createPersistentNotification}/>
                    )}
               </Notifications>
 
