@@ -11,15 +11,6 @@ import UserResultItem from '../includes/user-result-item.jsx';
 
 import Notifications from '../notifications.jsx';
 
-const AddProjectMessage = ({project}) => (
-  <React.Fragment>
-    <p>Added <b><span className="project-name">{project.domain}</span></b></p>
-  </React.Fragment>
-);
-AddProjectMessage.propTypes = {
-  projectName: PropTypes.string.isRequired
-};
-
 const ProjectSearchResults = ({projects, action}) => (
   (projects.length > 0) ? (
     <ul className="results">
@@ -118,13 +109,12 @@ class AddCollectionProjectPop extends React.Component {
   
   onClick(project) {
     this.props.togglePopover();
-    this.props.add(project);
     console.log(`clicked ${project.domain}`);
     
     // show notification
     <Notifications>
       { ({createNotification}) => 
-          createNotification(<AddProjectMessage {...{project}}/>)
+          createNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>)
       }
     </Notifications>
     
@@ -145,7 +135,13 @@ class AddCollectionProjectPop extends React.Component {
         </section>
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
-          {!!this.state.maybeResults && <ProjectSearchResults projects={this.state.maybeResults} action={this.onClick} />}
+          {!!this.state.maybeResults && 
+            <Notifications>
+              {({createNotification}) => (
+                  <ProjectSearchResults projects={this.state.maybeResults} action={this.onClick} />
+                )}
+            </Notifications>
+          }
         </section>}
       </dialog>
     );

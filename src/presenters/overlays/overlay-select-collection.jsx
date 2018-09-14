@@ -51,9 +51,8 @@ const OverlaySelectCollection = ({children, domain}) => (
                           avatarUrl={categories[0].avatarUrl}
                           url={categories[0].url}
                           isActive={false} 
-                          action={ () => 
-                            notify(togglePopover, domain, categories[0].url, createNotification)
-                        } />
+                          action={notify(togglePopover, domain, categories[0].url, createNotification)}
+                        />
                       )}
                     </Notifications>
                   </li>
