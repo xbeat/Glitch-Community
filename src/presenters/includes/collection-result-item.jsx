@@ -3,14 +3,24 @@ import PropTypes from 'prop-types';
 
 import {getAvatarUrl} from  '../../models/project';
 
-const CollectionResultItem = ({id, domain, description, action, isActive, avatarUrl, url}) => {
+import Notifications from '../notifications.jsx';
+
+const notify = (togglePopover, collectionName, createPersistentNotification) => {
+  togglePopover();
+  
+  // show notification
+  createPersistentNotification(<p>Added to <b><span className="collection-name">{collectionName}</span></b></p>, "notifySuccess")
+
+};
+
+const CollectionResultItem = ({id, domain, description, isActive, avatarUrl, url}) => {
   var resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
   }
 
   return (
-    <button className={resultClass} onClick={action} data-project-id={id}>
+    <button className={resultClass} onClick={notify()} data-project-id={id}>
       <img className="avatar" src={avatarUrl} alt={`Project avatar for ${domain}`}/>
       <div className="results-info">
         <div className="result-name" title={domain}>{domain}</div>
@@ -27,7 +37,6 @@ const CollectionResultItem = ({id, domain, description, action, isActive, avatar
 };
 
 CollectionResultItem.propTypes = {
-  action: PropTypes.func.isRequired,
   domain: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,

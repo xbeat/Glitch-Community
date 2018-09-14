@@ -9,9 +9,7 @@ import Loader from '../includes/loader.jsx';
 import CollectionResultItem from '../includes/collection-result-item.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
 
-import Notifications from '../notifications.jsx';
-
-{/* NOTE: Categories are just used to load dummy info - should get rid of in final implementaiton */}
+{/* NOTE: Categories are just used to load dummy info - should get rid of in final implementation */}
 import categories from '../../curated/categories.js';
 
 class AddProjectToCollection extends React.Component {
@@ -39,11 +37,8 @@ class AddProjectToCollection extends React.Component {
     });
   }
   
-  onClick(project) {
-    this.props.togglePopover();
-    
-    
-    // add project to page
+  onClick(collection, createPersistentNotification) {
+    this.props.togglePopover();    
   }
   
   render() {
@@ -55,7 +50,7 @@ class AddProjectToCollection extends React.Component {
             <li>
                <Notifications>
                 {({createPersistentNotification}) => (
-                  <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id.toString()} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={this.onClick(project, createPersistentNotification)} />
+                  <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id.toString()} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false}/>
                    )}
               </Notifications>
 
@@ -85,18 +80,5 @@ AddProjectToCollection.propTypes = {
   collectionProjects: PropTypes.any.isRequired,
   togglePopover: PropTypes.array.isRequired,
 };
-
-const AddProjectMessage = ({collectionName}) => (
-  <React.Fragment>
-    <p>Added to collection <b><span className="collection-name">{collectionName}</span></b></p>
-    <a href={collectionName} target="_blank" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
-  </React.Fragment>
-);
-
-AddProjectMessage.propTypes = {
-  projectName: PropTypes.string.isRequired,
-  collectionName: PropTypes.string.isRequired
-};
-
 
 export default AddProjectToCollection;
