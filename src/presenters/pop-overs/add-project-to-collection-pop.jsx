@@ -9,6 +9,8 @@ import Loader from '../includes/loader.jsx';
 import CollectionResultItem from '../includes/collection-result-item.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
 
+import Notifications from '../notifications.jsx';
+
 {/* NOTE: Categories are just used to load dummy info - should get rid of in final implementaiton */}
 import categories from '../../curated/categories.js';
 
@@ -72,7 +74,11 @@ class AddProjectToCollection extends React.Component {
         <section className="pop-over-actions results-list">
           <ul className="results">
             <li>
-              <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={() => null} />
+              <Notifications>
+                {({createNotification}) => (
+                  <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={() => null} />
+                )}
+              </Notifications>
             </li>
           </ul>
         </section>
