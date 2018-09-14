@@ -8,26 +8,6 @@ import CollectionResultItem from '../includes/collection-result-item.jsx';
 
 import Notifications from '../notifications.jsx';
 
-const AddProjectMessage = ({projectName, collectionName}) => (
-  <React.Fragment>
-    <p>Added <b><span className="project-name">{projectName}</span></b> to collection <b><span className="collection-name">{collectionName}</span></b></p>
-    <a href={collectionName} target="_blank" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
-  </React.Fragment>
-);
-AddProjectMessage.propTypes = {
-  projectName: PropTypes.string.isRequired,
-  collectionName: PropTypes.string.isRequired
-};
-
-const notify = (togglePopover, projectName, collectionName, createNotification) => {
-  togglePopover();
-  
-  const content = <AddProjectMessage {...{projectName, collectionName}}/>;
-  createNotification(content, "notifySuccess");
-
-};
-
-
 const OverlaySelectCollection = ({children, domain}) => (
   <React.Fragment>
     <PopoverContainer>
@@ -50,8 +30,8 @@ const OverlaySelectCollection = ({children, domain}) => (
                           id={categories[0].id}
                           avatarUrl={categories[0].avatarUrl}
                           url={categories[0].url}
-                          isActive={false} 
-                          action={() => notify(togglePopover, domain, categories[0].url, createNotification)}
+                          isActive={false}
+                          notification={createNotification}
                         />
                       )}
                     </Notifications>

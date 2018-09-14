@@ -5,23 +5,33 @@ import {getAvatarUrl} from  '../../models/project';
 
 import Notifications from '../notifications.jsx';
 
-const notify = (togglePopover, collectionName, createPersistentNotification) => {
-  togglePopover();
+const AddProjectMessage = ({projectName, collectionName}) => (
+  <React.Fragment>
+    <p>Added <b><span className="project-name">{projectName}</span></b> to collection <b><span className="collection-name">{collectionName}</span></b></p>
+    <a href={collectionName} target="_blank" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
+  </React.Fragment>
+);
+AddProjectMessage.propTypes = {
+  projectName: PropTypes.string.isRequired,
+  collectionName: PropTypes.string.isRequired
+};
+
+const notify = (projectName, collectionName, notification) => {
   console.log(`clicked on ${collectionName}`);
   
   // show notification
-  createPersistentNotification(<p>Added to <b><span className="collection-name">{collectionName}</span></b></p>, "notifySuccess")
-
+  const content = <AddProjectMessage {...{projectName, collectionName}}/>;
+  notification(content, "notifySuccess");
 };
 
-const CollectionResultItem = ({id, domain, description, isActive, avatarUrl, url, togglePopover, createPersistentNotification}) => {
+const CollectionResultItem = ({id, domain, description, isActive, avatarUrl, url, notification}) => {
   var resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
   }
 
   return (
-    <button className={resultClass} onClick={notify(togglePopover, domain, createPersistentNotification)} data-project-id={id}>
+    <button className={resultClass} onClick={() => notify(domain, notification)} data-project-id={id}>
       <img className="avatar" src={avatarUrl} alt={`Project avatar for ${domain}`}/>
       <div className="results-info">
         <div className="result-name" title={domain}>{domain}</div>
@@ -44,8 +54,7 @@ CollectionResultItem.propTypes = {
   isActive: PropTypes.bool,
   avatarUrl: PropTypes.string,
   url: PropTypes.string,
-  createPersistentNotification: PropTypes.func,
-  togglePopover: PropTypes.func,
+  notification: PropTypes.func,
 };
 
 export default CollectionResultItem;
