@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import AddProjectToCollectionPop from '../pop-overs/add-project-to-collection-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 
-const AddProjectToCollection = ({...props}) => {
+const AddProjectToCollection = ({projectName, ...props}) => {
   
   return (
     <PopoverContainer>
@@ -14,7 +14,7 @@ const AddProjectToCollection = ({...props}) => {
               Add to Collection {' '}
             <span className="emoji framed-picture" role="presentation"></span>
           </button>
-          { visible && <AddProjectToCollectionPop {...props} togglePopover={togglePopover} /> }
+          { visible && <AddProjectToCollectionPop {...props} togglePopover={togglePopover} projectName={projectName}/> }
         </div>
       )}
     </PopoverContainer>
@@ -23,7 +23,8 @@ const AddProjectToCollection = ({...props}) => {
 
 AddProjectToCollection .propTypes = {
   addProject: PropTypes.func.isRequired,
-  api: PropTypes.func.isRequired
+  api: PropTypes.func.isRequired,
+  projectName: PropTypes.string.isRequired,
 };
 
 export default AddProjectToCollection;
