@@ -15,7 +15,7 @@ const ProjectSearchResults = ({projects, action}) => (
   (projects.length > 0) ? (
     <ul className="results">
       {projects.map(project => (
-        <Notifications className="added-project">
+        <Notifications>
           {({createPersistentNotification}) => (
             <li key={project.id}>
               <ProjectResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} action={() => action(project, createPersistentNotification)} />
@@ -116,7 +116,7 @@ class AddCollectionProjectPop extends React.Component {
     console.log(`clicked ${project.domain}`);
     
     // show notification
-    createPersistentNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>)
+    createPersistentNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>, "notifySuccess")
     
     // add project to page if successful
   }
