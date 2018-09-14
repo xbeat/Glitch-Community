@@ -251,18 +251,19 @@ CreateTeamButton.propTypes = {
 // Team List
 
 const TeamList = ({teams, toggleUserOptionsVisible, userIsAnon}) => {
-  // const hasTeams = teams && teams.length;
-  return (!!teams.length &&
-    <section className="pop-over-actions">
-      <DevToggles>
-        {toggles => toggles.includes('add-teams') && (
-          <CreateTeamButton toggleUserOptionsVisible={toggleUserOptionsVisible} userIsAnon={userIsAnon} />
-        )}
-      </DevToggles>
-      {teams.map((team) => (
-        <TeamItemButton key={team.name} {...team} />
-      ))}
-    </section>
+  return (
+    <DevToggles>
+      {toggles => (!!teams.length || toggles.includes('add-teams')) && (
+        <section className="pop-over-actions">
+          {toggles.includes('add-teams') && (
+            <CreateTeamButton toggleUserOptionsVisible={toggleUserOptionsVisible} userIsAnon={userIsAnon} />
+          )}
+          {teams.map(team => (
+            <TeamItemButton key={team.name} {...team} />
+          ))}
+        </section>
+      )}
+    </DevToggles>
   );
 };
 
