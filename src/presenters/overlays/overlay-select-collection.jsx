@@ -6,8 +6,6 @@ import categories from '../../curated/categories.js';
 
 import CollectionResultItem from '../includes/collection-result-item.jsx';
 
-import Notifications from '../notifications.jsx';
-
 const OverlaySelectCollection = ({children, domain}) => (
   <React.Fragment>
     <PopoverContainer>
@@ -22,25 +20,22 @@ const OverlaySelectCollection = ({children, domain}) => (
               <section className="pop-over-actions results-list">
                 <ul className="results">
                   <li>
-                    <Notifications>
-                      {({createNotification}) => (
-                        <CollectionResultItem
-                          domain={categories[0].name}
-                          description={categories[0].description}
-                          id={categories[0].id}
-                          avatarUrl={categories[0].avatarUrl}
-                          url={categories[0].url}
-                          isActive={false}
-                          notification={createNotification}
-                        />
-                      )}
-                    </Notifications>
+                    <CollectionResultItem
+                      projectName={domain}
+                      collectionName={categories[0].name}
+                      description={categories[0].description}
+                      id={categories[0].id}
+                      avatarUrl={categories[0].avatarUrl}
+                      url={categories[0].url}
+                      isActive={false}
+                      togglePopover={togglePopover}
+                    />
                   </li>
                 </ul>
               </section>
               <section className="pop-over-info">
                 <input id="collection-name"  
-                  no-autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+                  no-autofocus // eslint-disable-line jsx-a11y/no-autofocus
                   value={null} onChange={null}
                   className="pop-over-input create-input"
                   placeholder="New Collection Name"

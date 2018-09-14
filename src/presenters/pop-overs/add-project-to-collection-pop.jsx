@@ -52,7 +52,9 @@ class AddProjectToCollection extends React.Component {
             <li>
                <Notifications>
                 {({createPersistentNotification}) => (
-                  <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id.toString()} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} togglePopover={this.props.togglePopover} createPersistentNotification={createPersistentNotification}/>
+                  <CollectionResultItem 
+                    projectName=
+                    collectionName={categories[0].name} description={categories[0].description} id={categories[0].id.toString()} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} togglePopover={this.props.togglePopover} createPersistentNotification={createPersistentNotification}/>
                    )}
               </Notifications>
 
