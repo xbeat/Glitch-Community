@@ -268,6 +268,7 @@ TeamList.propTypes = {
 
 const UserOptionsPop = ({
   togglePopover,
+  toggleUserOptionsVisible,
   user,
   signOut,
   showNewStuffOverlay,
@@ -301,25 +302,25 @@ Are you sure you want to sign out?`)) {
           <img className="avatar" src={getUserAvatarUrl(user)} alt="Your avatar" style={userAvatarStyle}/>
           <div className="info-container">
             <p className="name" title={userName}>{userName}</p>
-            { userLogin &&
-              <p className="user-login" title={userLogin}>@{userLogin}</p>
+            { user.login &&
+              <p className="user-login" title={user.login}>@{user.login}</p>
             }
           </div>
         </section>
       </UserLink>
       <TeamList 
-        teams={teams} 
+        teams={user.teams} 
         toggleUserOptionsVisible={toggleUserOptionsVisible} 
         userIsAnon={!user.login} 
       />
       <section className="pop-over-info section-has-tertiary-buttons">
-        <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
+        <button onClick={clickNewStuff} className="button-small has-emoji button-tertiary button-on-secondary-background">
           New Stuff <span className="emoji dog-face"></span>
         </button>
         <Link to="https://support.glitch.com" className="button button-small has-emoji button-tertiary button-on-secondary-background">
-          ort <span className="emoji ambulance"></span>
+          Support <span className="emoji ambulance"></span>
         </Link>        
-        <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickSignout}>
+        <button onClick={clickSignout} className="button-small has-emoji button-tertiary button-on-secondary-background">
           Sign Out <span className="emoji balloon"></span>
         </button>
       </section>
@@ -329,6 +330,7 @@ Are you sure you want to sign out?`)) {
 
 UserOptionsPop.propTypes = {
   togglePopover: PropTypes.func.isRequired,
+  toggleUserOptionsVisible: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   signOut: PropTypes.func.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
@@ -357,7 +359,7 @@ class UserOptionsAndCreateTeamPop extends React.Component {
     return (
       <React.Fragment>
         { this.state.userOptionsVisible ? (
-          <UserOptions
+          <UserOptionsPop
             {...this.props}
             toggleUserOptionsVisible={() => this.toggleUserOptionsVisible()}
           />
@@ -372,17 +374,12 @@ class UserOptionsAndCreateTeamPop extends React.Component {
   }
 }
 
-UserOptionsAndCreateTeamPop.propTypes = {
-  avatarUrl: PropTypes.string.isRequired,
-  avatarStyle: PropTypes.object.isRequired,
-  api: PropTypes.func.isRequired,
-};
-
 
 // Header button and init pop
 
 export default function UserOptionsAndCreateTeamPopContainer(props) {
-  const {avatarUrl, avatarStyle} = props;
+  const avatarUrl = getUserAvatarUrl(props.user);
+  const avatarStyle = {backgroundColor: props.user.color};
   return (
     <PopoverContainer>
       {({togglePopover: togglePopover, visible: popVisible}) => (
@@ -402,7 +399,7 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
   );
 }
 
-UserOptionsPopContainer.propTypes = {
+UserOptionsAndCreateTeamPopContainer.propTypes = {
   user: PropTypes.shape({
     avatarThumbnailUrl: PropTypes.string,
     color: PropTypes.string.isRequired,
