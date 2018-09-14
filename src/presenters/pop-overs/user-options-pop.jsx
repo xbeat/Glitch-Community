@@ -9,11 +9,9 @@ import CreateTeamPop from './create-team-pop.jsx';
 
 
 const TeamButton = (team) => (
-  <TeamLink team={team}>
-    <div className="button button-small has-emoji button-tertiary">
-      {team.name}&nbsp;
-      <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
-    </div>
+  <TeamLink team={team} className="button button-small has-emoji button-tertiary">
+    {team.name}&nbsp;
+    <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
   </TeamLink>
 );
 
@@ -133,7 +131,7 @@ Are you sure you want to sign out?`)) {
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
           New Stuff <span className="emoji dog-face"></span>
         </button>
-        <Link className="button button-link button-small has-emoji button-tertiary button-on-secondary-background" to="https://support.glitch.com">
+        <Link className="button button-small has-emoji button-tertiary button-on-secondary-background" to="https://support.glitch.com">
           Support <span className="emoji ambulance"></span>
         </Link>        
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickSignout}>
