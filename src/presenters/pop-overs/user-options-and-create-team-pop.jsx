@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import _ from 'lodash';
+import DevToggles from '../includes/dev-toggles.jsx';
 import Loader from '../includes/loader.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
 import {getAvatarUrl} from '../../models/team';
@@ -170,7 +171,7 @@ class CreateTeam extends React.Component {
               error={this.state.error}
             />
             <p className="action-description team-url-preview">
-            /@{this.state.teamUrl}
+              /@{this.state.teamUrl}
             </p>
           
             {this.state.isLoading && 
@@ -229,16 +230,14 @@ const CreateTeamButton = ({toggleUserOptionsVisible, userIsAnon}) => {
           to create a team
         </p>
         <button className="button button-small has-emoji button-tertiary" disabled={true}>
-          <span>Create Team </span>
-          <span className="emoji herb" />
+          Create Team <span className="emoji herb" />
         </button>
       </React.Fragment>
     );
   }
   return (
     <button onClick={toggleUserOptionsVisible} className="button button-small has-emoji button-tertiary">
-      <span>Create Team </span>
-      <span className="emoji herb" />
+      Create Team <span className="emoji herb" />
     </button>
   );
 };
@@ -255,7 +254,9 @@ const TeamList = ({teams, toggleUserOptionsVisible, userIsAnon}) => {
   // const hasTeams = teams && teams.length;
   return (!!teams.length &&
     <section className="pop-over-actions">
-      <CreateTeamButton toggleUserOptionsVisible={toggleUserOptionsVisible} userIsAnon={userIsAnon} />
+      <DevToggles>
+        {toggles => toggles.includes('add-teams') && <CreateTeamButton toggleUserOptionsVisible={toggleUserOptionsVisible} userIsAnon={userIsAnon} />}
+      </DevToggles>
       {teams.map((team) => (
         <TeamItemButton key={team.name} {...team} />
       ))}
