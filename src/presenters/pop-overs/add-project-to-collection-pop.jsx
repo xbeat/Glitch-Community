@@ -76,7 +76,7 @@ class AddProjectToCollection extends React.Component {
             <li>
               <Notifications>
                 {({createNotification}) => (
-                  <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={() => null} />
+                  <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id.toString()} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={notify(categories[0].name, createNotification)} />
                 )}
               </Notifications>
             </li>
@@ -105,5 +105,24 @@ AddProjectToCollection.propTypes = {
   collectionProjects: PropTypes.any.isRequired,
   togglePopover: PropTypes.array.isRequired,
 };
+
+const notify = (collectionName, createNotification) => {
+  console.log(`clicked ${collectionName}`);  
+  const content = <AddProjectMessage {...{collectionName}}/>;
+  createNotification(content, "notifySuccess");
+};
+
+const AddProjectMessage = ({collectionName}) => (
+  <React.Fragment>
+    <p>Added to collection <b><span className="collection-name">{collectionName}</span></b></p>
+    <a href={collectionName} target="_blank" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
+  </React.Fragment>
+);
+
+AddProjectMessage.propTypes = {
+  projectName: PropTypes.string.isRequired,
+  collectionName: PropTypes.string.isRequired
+};
+
 
 export default AddProjectToCollection;

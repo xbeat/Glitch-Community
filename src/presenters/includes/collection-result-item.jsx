@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getAvatarUrl} from  '../../models/project';
-import UsersList from '../users-list.jsx';
 
 const CollectionResultItem = ({id, domain, description, action, isActive, avatarUrl, url}) => {
   var resultClass = "button-unstyled result result-collection";
@@ -32,7 +31,6 @@ CollectionResultItem.propTypes = {
   domain: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  users: PropTypes.array.isRequired,
   isActive: PropTypes.bool,
   avatarUrl: PropTypes.string,
   url: PropTypes.string

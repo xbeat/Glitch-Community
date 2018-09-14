@@ -23,7 +23,7 @@ const notify = (togglePopover, projectName, collectionName, createNotification) 
   togglePopover();
   
   const content = <AddProjectMessage {...{projectName, collectionName}}/>;
-  createNotification(content);
+  createNotification(content, "notifySuccess");
 
 };
 
