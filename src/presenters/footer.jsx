@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Link from './includes/link.jsx';
+
 const FooterLine = ({href, track, children}) => {
-  return <p><a href={href} data-track={'footer → '+track}>{children}</a></p>;
+  return <p><Link to={href} data-track={'footer → '+track}>{children}</Link></p>;
 };
 
 FooterLine.propTypes = {

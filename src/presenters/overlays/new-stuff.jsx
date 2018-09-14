@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Link from '../includes/link.jsx';
 import Markdown from '../includes/markdown.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 import UserPref from '../includes/user-prefs.jsx';
@@ -29,9 +30,9 @@ const NewStuffOverlay = ({setShowNewStuff, showNewStuff, newStuff}) => (
           <div className="body"><Markdown>{body}</Markdown></div>
           {!!link && (
             <p>
-              <a className="link" href={link}>
+              <Link className="link" to={link}>
                 Read the blog post →
-              </a>
+              </Link>
             </p>
           )}
         </article>

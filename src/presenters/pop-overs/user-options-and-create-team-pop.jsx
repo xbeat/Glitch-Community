@@ -5,7 +5,9 @@ import _ from 'lodash';
 import DevToggles from '../includes/dev-toggles.jsx';
 import Loader from '../includes/loader.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
-import {getAvatarUrl} from '../../models/team';
+import {getAvatarUrl as getTeamAvatarUrl} from '../../models/team';
+import {getAvatarThumbnailUrl as getUserAvatarUrl} from '../../models/user';
+import {Link, TeamLink, UserLink} from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
 
 const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another";
@@ -200,25 +202,6 @@ CreateTeam.propTypes = {
 };
 
 
-// Team Item
-
-const TeamItemButton = ({url, name, ...team}) => (
-  <a className="button-link" href={`/@${url}`}>
-    <div className="button button-small has-emoji button-tertiary">
-      <span>{name} </span>
-      <img className="emoji avatar" src={getAvatarUrl({...team, size:'small'})} alt={`${name} team avatar`} width="16px" height="16px"/>
-    </div>
-  </a>
-);
-
-TeamItemButton.propTypes = {
-  id: PropTypes.number.isRequired,
-  hasAvatarImage: PropTypes.bool.isRequired,
-  name: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-};
-
-
 // Create Team button
 
 const CreateTeamButton = ({toggleUserOptionsVisible, userIsAnon}) => {
@@ -258,7 +241,10 @@ const TeamList = ({teams, toggleUserOptionsVisible, userIsAnon}) => {
             <CreateTeamButton toggleUserOptionsVisible={toggleUserOptionsVisible} userIsAnon={userIsAnon} />
           )}
           {teams.map(team => (
-            <TeamItemButton key={team.name} {...team} />
+            <TeamLink key={team.id} team={team} className="button button-small has-emoji button-tertiary">
+              {team.name}&nbsp;
+              <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
+            </TeamLink>
           ))}
         </section>
       )}
@@ -268,7 +254,10 @@ const TeamList = ({teams, toggleUserOptionsVisible, userIsAnon}) => {
 
 TeamList.propTypes = {
   teams: PropTypes.arrayOf(PropTypes.shape({
+    hasAvatarImage: PropTypes.bool.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
   })),
   toggleUserOptionsVisible: PropTypes.func.isRequired,
   userIsAnon: PropTypes.bool.isRequired,
@@ -277,18 +266,11 @@ TeamList.propTypes = {
 
 // User Options 🧕
 
-const UserOptions = ({
+const UserOptionsPop = ({
   togglePopover,
-  userLink,
-  avatarUrl,
-  avatarStyle,
-  teams,
+  user,
   signOut,
   showNewStuffOverlay,
-  toggleUserOptionsVisible,
-  userIsAnon,
-  userName,
-  userLogin,
 }) => {
   const clickNewStuff = (event) => {
     togglePopover();
@@ -297,19 +279,26 @@ const UserOptions = ({
   };
   
   const clickSignout = () => {
+    if(!user.login) {
+      if(!window.confirm(`You won't be able to sign back in under this same anonymous account.
+Are you sure you want to sign out?`)) {
+        return;
+      }
+    }
     /* global analytics */
     analytics.track("Logout");
     analytics.reset();
     signOut();
   };
   
-  userName = userName || "Anonymous";
+  const userName = user.name || "Anonymous";
+  const userAvatarStyle = {backgroundColor: user.color};
 
   return (
     <dialog className="pop-over user-options-pop">
-      <a href={userLink} className="user-info">
+      <UserLink user={user} className="user-info">
         <section className="pop-over-actions user-info">
-          <img className="avatar" src={avatarUrl} alt="Your avatar" style={avatarStyle}/>
+          <img className="avatar" src={getUserAvatarUrl(user)} alt="Your avatar" style={userAvatarStyle}/>
           <div className="info-container">
             <p className="name" title={userName}>{userName}</p>
             { userLogin &&
@@ -317,43 +306,32 @@ const UserOptions = ({
             }
           </div>
         </section>
-      </a>
+      </UserLink>
       <TeamList 
         teams={teams} 
         toggleUserOptionsVisible={toggleUserOptionsVisible} 
-        userIsAnon={userIsAnon} 
+        userIsAnon={!user.login} 
       />
       <section className="pop-over-info section-has-tertiary-buttons">
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
-          <span>New Stuff </span>
-          <span className="emoji dog-face"></span>
+          New Stuff <span className="emoji dog-face"></span>
         </button>
-        <a className="button-link" href="https://support.glitch.com">
-          <div className="button button-small has-emoji button-tertiary button-on-secondary-background">
-            <span>Support </span>
-            <span className="emoji ambulance"></span>
-          </div>
-        </a>
+        <Link to="https://support.glitch.com" className="button button-small has-emoji button-tertiary button-on-secondary-background">
+          ort <span className="emoji ambulance"></span>
+        </Link>        
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickSignout}>
-          <span>Sign Out</span>
-          <span className="emoji balloon"></span>
+          Sign Out <span className="emoji balloon"></span>
         </button>
       </section>
     </dialog>
   );
 };
 
-UserOptions.propTypes = {
+UserOptionsPop.propTypes = {
   togglePopover: PropTypes.func.isRequired,
-  userLink: PropTypes.string.isRequired,
-  avatarUrl: PropTypes.string.isRequired,
-  avatarStyle: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   signOut: PropTypes.func.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
-  userIsAnon: PropTypes.bool.isRequired,
-  userName: PropTypes.string,
-  userLogin: PropTypes.string,
-  toggleUserOptionsVisible: PropTypes.func.isRequired,
 };
 
 
@@ -424,8 +402,13 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
   );
 }
 
-UserOptionsAndCreateTeamPopContainer.propTypes = {
-  avatarUrl: PropTypes.string.isRequired,
-  avatarStyle: PropTypes.object.isRequired,
+UserOptionsPopContainer.propTypes = {
+  user: PropTypes.shape({
+    avatarThumbnailUrl: PropTypes.string,
+    color: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    login: PropTypes.string,
+    teams: PropTypes.array.isRequired,
+  }).isRequired,
   api: PropTypes.func.isRequired,
 };

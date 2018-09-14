@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {UserLink} from './includes/link.jsx';
 import PopoverContainer from './pop-overs/popover-container.jsx';
-import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName, getLink} from '../models/user.js';
+import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName} from '../models/user.js';
 
 function getStyle({color}) {
   return {backgroundColor: color};
@@ -64,9 +65,9 @@ StaticUsersList.propTypes = {
 // UserTile
 
 const UserTile = (user) => (
-  <a href={getLink(user)} className="user" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
+  <UserLink user={user} className="user" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
     <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
-  </a>
+  </UserLink>
 );
 UserTile.propTypes = {
   id: PropTypes.number.isRequired,

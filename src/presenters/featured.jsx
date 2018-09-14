@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import EmbedHtml from '../curated/embed';
 import FeaturedItems from '../curated/featured';
+import Link from './includes/link.jsx';
 
 const imgWitch = 'https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2Fwitch-2.svg?1521578927355';
 const Witch = () => (
@@ -10,12 +11,12 @@ const Witch = () => (
 );
 
 const FeaturedPanel = ({img, link, title}) => (
-  <a href={link} data-track="featured-project" data-track-label={title}>
+  <Link to={link} data-track="featured-project" data-track-label={title}>
     <div className="featured-container">
       <img className="featured" src={img} alt=""/>
       <p className="project-name">{title}</p>
     </div>
-  </a>
+  </Link>
 );
 FeaturedPanel.propTypes = {
   img: PropTypes.string.isRequired,
