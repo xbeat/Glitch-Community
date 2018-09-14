@@ -14,27 +14,6 @@ import Notifications from '../notifications.jsx';
 {/* NOTE: Categories are just used to load dummy info - should get rid of in final implementaiton */}
 import categories from '../../curated/categories.js';
 
-const ProjectSearchResults = ({projects, action}) => (
-  (projects.length > 0) ? (
-    <ul className="results">
-      {projects.map(project => (
-        <li key={project.id}>
-          <ProjectResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} action={() => action(project)} />
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>
-  )
-);
-
-ProjectSearchResults.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-  }).isRequired).isRequired,
-  action: PropTypes.func.isRequired,
-};
-
 class AddProjectToCollection extends React.Component {
   constructor(props) {
     super(props);
@@ -62,7 +41,7 @@ class AddProjectToCollection extends React.Component {
   
   onClick(project) {
     this.props.togglePopover();
-    this.props.add(project);
+    
     
     // add project to page
   }
@@ -74,11 +53,12 @@ class AddProjectToCollection extends React.Component {
         <section className="pop-over-actions results-list">
           <ul className="results">
             <li>
-              <Notifications>
-                {({createNotification}) => (
-                  <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id.toString()} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={notify(categories[0].name, createNotification)} />
-                )}
+               <Notifications>
+                {({createPersistentNotification}) => (
+                  <CollectionResultItem domain={categories[0].name} description={categories[0].description} id={categories[0].id.toString()} avatarUrl={categories[0].avatarUrl} url={categories[0].url} isActive={false} action={this.onClick(project, createPersistentNotification)} />
+                   )}
               </Notifications>
+
             </li>
           </ul>
         </section>
@@ -104,12 +84,6 @@ AddProjectToCollection.propTypes = {
   add: PropTypes.func.isRequired,
   collectionProjects: PropTypes.any.isRequired,
   togglePopover: PropTypes.array.isRequired,
-};
-
-const notify = (collectionName, createNotification) => {
-  console.log(`clicked ${collectionName}`);  
-  const content = <AddProjectMessage {...{collectionName}}/>;
-  createNotification(content, "notifySuccess");
 };
 
 const AddProjectMessage = ({collectionName}) => (
