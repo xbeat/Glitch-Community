@@ -8,21 +8,6 @@ import PopoverContainer from './popover-container.jsx';
 import CreateTeamPop from './create-team-pop.jsx';
 
 
-const TeamButton = (team) => (
-  <TeamLink team={team} className="button button-small has-emoji button-tertiary">
-    {team.name}&nbsp;
-    <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
-  </TeamLink>
-);
-
-TeamButton.propTypes = {
-  id: PropTypes.number.isRequired,
-  hasAvatarImage: PropTypes.bool.isRequired,
-  name: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-};
-
-
 // Create Team button (temp hidden in prod)
 
 const CreateTeamButton = ({toggleCreateTeamPop, userIsAnon}) => {
@@ -65,7 +50,10 @@ const TeamList = ({teams, /*toggleCreateTeamPop, userIsAnon*/}) => {
       <CreateTeamButton toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
       */}
       {teams.map((team) => (
-        <TeamButton key={team.name} {...team}/>
+        <TeamLink key={team.id} team={team} className="button button-small has-emoji button-tertiary">
+          {team.name}&nbsp;
+          <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
+        </TeamLink>
       ))}
     </section>
   );
@@ -73,7 +61,10 @@ const TeamList = ({teams, /*toggleCreateTeamPop, userIsAnon*/}) => {
 
 TeamList.propTypes = {
   teams: PropTypes.arrayOf(PropTypes.shape({
+    hasAvatarImage: PropTypes.bool.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
   })),
   toggleCreateTeamPop: PropTypes.func.isRequired,
   userIsAnon: PropTypes.bool.isRequired,
@@ -119,7 +110,7 @@ Are you sure you want to sign out?`)) {
           <div className="info-container">
             <p className="name" title={userName}>{userName}</p>
             { user.login &&
-                <p className="user-login" title={user.login}>@{user.login}</p>
+              <p className="user-login" title={user.login}>@{user.login}</p>
             }
           </div>
         </section>
