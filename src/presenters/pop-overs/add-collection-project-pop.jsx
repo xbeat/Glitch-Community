@@ -9,6 +9,17 @@ import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
 
+import Notifications from '../notifications.jsx';
+
+const AddProjectMessage = ({project}) => (
+  <React.Fragment>
+    <p>Added <b><span className="project-name">{project.domain}</span></b></p>
+  </React.Fragment>
+);
+AddProjectMessage.propTypes = {
+  projectName: PropTypes.string.isRequired
+};
+
 const ProjectSearchResults = ({projects, action}) => (
   (projects.length > 0) ? (
     <ul className="results">
@@ -108,8 +119,16 @@ class AddCollectionProjectPop extends React.Component {
   onClick(project) {
     this.props.togglePopover();
     this.props.add(project);
+    console.log(`clicked ${project.domain}`);
     
-    // add project to page
+    // show notification
+    <Notifications>
+      { ({createNotification}) => 
+          createNotification(<AddProjectMessage {...{project}}/>)
+      }
+    </Notifications>
+    
+    // add project to page if successful
   }
   
   render() {
