@@ -9,7 +9,7 @@ import CreateTeamPop from './create-team-pop.jsx';
 
 
 const TeamButton = (team) => (
-  <TeamLink team={team} className="button-link">
+  <TeamLink team={team}>
     <div className="button button-small has-emoji button-tertiary">
       {team.name}&nbsp;
       <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
