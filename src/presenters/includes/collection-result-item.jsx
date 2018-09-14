@@ -6,11 +6,12 @@ import {getAvatarUrl} from  '../../models/project';
 import Notifications from '../notifications.jsx';
 
 const notify = (togglePopover, collectionName, createPersistentNotification) => {
-//   togglePopover();
-//   console.log(`clicked on ${collectionName}`);
+  togglePopover();
+  console.log(`clicked on ${collectionName}`);
   
-//   // show notification
-//   createPersistentNotification(<p>Added to <b><span className="collection-name">{collectionName}</span></b></p>, "notifySuccess")
+  // show notification
+  createPersistentNotification(<p>Added to <b><span className="collection-name">{collectionName}</span></b></p>, "notifySuccess")
+
 };
 
 const CollectionResultItem = ({id, domain, description, isActive, avatarUrl, url, togglePopover, createPersistentNotification}) => {
