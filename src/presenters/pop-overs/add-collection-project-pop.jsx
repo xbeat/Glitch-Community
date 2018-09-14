@@ -16,9 +16,9 @@ const ProjectSearchResults = ({projects, action}) => (
     <ul className="results">
       {projects.map(project => (
         <Notifications>
-          {({createPersistentNotification}) => (
+          {({createNotification}) => (
             <li key={project.id}>
-              <ProjectResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} action={() => action(project, createPersistentNotification)} />
+              <ProjectResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} action={() => action(project, createNotification)} />
             </li>
           )}
         </Notifications>

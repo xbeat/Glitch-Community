@@ -33,8 +33,8 @@ const CollectionResultItem = ({id, projectName, collectionName, description, isA
 
   return (
     <Notifications>
-      {({createPersistentNotification}) => (
-        <button className={resultClass} onClick={() => notify(projectName, collectionName, url, createPersistentNotification, togglePopover)} data-project-id={id}>
+      {({createNotification}) => (
+        <button className={resultClass} onClick={() => notify(projectName, collectionName, url, createNotification, togglePopover)} data-project-id={id}>
           <img className="avatar" src={avatarUrl} alt={`Project avatar for ${collectionName}`}/>
           <div className="results-info">
             <div className="result-name" title={collectionName}>{collectionName}</div>
