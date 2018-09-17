@@ -98,29 +98,24 @@ class CreateTeam extends React.Component {
     return `${_.capitalize(adjective)} ${_.sample(this.teamSynonyms())}`;
   }
   
-  isTeamUrlAvailable(url) {
-    this.props.api.get(`teams/byUrl/${url}`)
-      .then (({data}) => {
-        if (data) {
-          this.setState({
-            error: TEAM_ALREADY_EXISTS_ERROR
-          });
-        } else {
-          this.setState({
-            error: ""
-          });
-        }
-      });
+  async isTeamUrlNotAvailable(url) {
+    const user = await this.props.api.get(`userId/byName/${url}`);
+    const team = await this.props.api.get(`teams/byUrl/${url}`);
+    return user.data === 'NOT FOUND' ||
   }
   
-  handleChange(newValue) {
-    let url = _.kebabCase(newValue);
+  async handleChange(newValue) {
+    const url = _.kebabCase(newValue);
     this.setState({
       teamName: newValue, 
       teamUrl: url,
       error: "",
     });
-    this.isTeamUrlAvailable(url);
+    if (await this.isTeamUrlNotAvailable(url)) {
+      this.setState({
+        error: TEAM_ALREADY_EXISTS_ERROR
+      });
+    }
   }
 
   handleSubmit(event) {
@@ -138,7 +133,6 @@ class CreateTeam extends React.Component {
       isVerified: false,
     })
       .then (response => {
-        this.setState({ isLoading: false });
         window.location = `/@${response.data.url}`;
       }).catch (() => {
         this.setState({
