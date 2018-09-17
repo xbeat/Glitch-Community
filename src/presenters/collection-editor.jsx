@@ -39,15 +39,20 @@ class CollectionEditor extends React.Component {
     });
   }
   
-  async addProject(project) {
+  // TO DO: async function
+  addProject(project) {
     // need to replace api request temporarily before returning updated project list
-    await this.props.api.post(`collections/${this.state.id}/projects/${project.id}`);
+    // await this.props.api.post(`collections/${this.state.id}/projects/${project.id}`);
+    console.log(`attempting to add project ${project.domain}`);
     this.setState(({projects}) => ({
       projects: [project, ...projects],
     }));
   }
-  async removeProject(id) {
-    await this.props.api.delete(`collections/${this.state.id}/projects/${id}`);
+  
+  // TO DO: async function
+  removeProject(id) {
+    // await this.props.api.delete(`collections/${this.state.id}/projects/${id}`);
+    console.log(`attempting to delete project with id ${id}`);
     this.setState(({projects}) => ({
       projects: projects.filter(p => p.id !== id),
     }));

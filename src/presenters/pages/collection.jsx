@@ -134,7 +134,7 @@ const hexToRgbA = (hex) => {
   throw new Error('Bad Hex');
 };
 
-const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar, isAuthorized, updateName, updateDescription, projectOptions, uploadAvatar, addProject, ...props}) => (
+const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar, isAuthorized, updateName, updateDescription, projectOptions, uploadAvatar, addProject, removeProject, ...props}) => (
   <React.Fragment>
     
     <Helmet>
@@ -223,7 +223,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar
           
                   <ProjectsUL projects={projects} categoryColor={color} 
                     projectOptions={{
-                      removeProjectFromCollection: null
+                      removeProjectFromCollection: removeProject
                     }} 
                     {...props}/>
                 </div>
@@ -270,11 +270,13 @@ CollectionPageWrap.propTypes = {
     name: PropTypes.string.isRequired,
     projects: PropTypes.array.isRequired
   }).isRequired,
-  isAuthorized: PropTypes.any.isRequired,
+  addProject: PropTypes.func.isRequired,
   api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
+  isAuthorized: PropTypes.any.isRequired,  
   projectOptions: PropTypes.object.isRequired,
   removeProjectFromCollection: PropTypes.func.isRequired,
+  removeProject: PropTypes.func.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
 };
 
