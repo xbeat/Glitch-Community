@@ -20,6 +20,8 @@ import AddCollectionAvatar from '../includes/add-collection-avatar.jsx';
 
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
+import {avatars} from '../../models/collection.js'; 
+
 import {CurrentUserConsumer} from '../current-user.jsx';
 
 // some dummy info for testing
@@ -81,9 +83,11 @@ class CollectionColorWrap extends React.Component {
       color= this.props.collection.color;
     }
     this.state = {
-      color: color
+      color: color,
+      avatar: avatarUrl,
     };
     this.setColor = this.setColor.bind(this);
+    this.setAvatar = this.setAvatar.bind(this);
   }
   
   // static getDerivedStateFromProps(props, state) {
@@ -97,6 +101,12 @@ class CollectionColorWrap extends React.Component {
   //   }
   //   return null;
   // }
+  
+  setAvatar(newAvatar){
+    this.setState({
+      avatar: newAvatar
+    });
+  }
   
   setColor(newColor){
     this.setState({
