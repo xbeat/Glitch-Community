@@ -62,6 +62,8 @@ class CollectionEditor extends React.Component {
   render() {
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
+      addProject: project => this.addProject(project).catch(handleError),
+      removeProject: id => this.removeProject(id).catch(handleError),
       updateName: name => this.updateFields({name}).catch(handleErrorForInput),
       updateLogin: login => this.updateFields({login}).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
@@ -72,6 +74,7 @@ class CollectionEditor extends React.Component {
 }
 CollectionEditor.propTypes = {
   api: PropTypes.any.isRequired,
+  addProject: PropTypes.func.isRequired,
   children: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   updateCurrentUser: PropTypes.func.isRequired,
@@ -80,6 +83,7 @@ CollectionEditor.propTypes = {
   initialUser: PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired,
+  removeProject: PropTypes.func.isRequired,
   uploadAsset: PropTypes.func.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
 };
