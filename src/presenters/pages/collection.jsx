@@ -84,7 +84,7 @@ class CollectionColorWrap extends React.Component {
     }
     this.state = {
       color: color,
-      avatar: avatarUrl,
+      avatar: (this.props.collection ? this.props.collection.avatar : avatarUrl),
     };
     this.setColor = this.setColor.bind(this);
     this.setAvatar = this.setAvatar.bind(this);
@@ -161,7 +161,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar
             )}
           </h1>
           <div className="collection-image-container">
-            <img src={(collection ? collection.avatarUrl : avatar)} alt=""/>
+            <img src={avatar} alt=""/>
           </div>
           {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
           {isAuthorized 
@@ -315,7 +315,7 @@ const CollectionPage = ({api, collection, removeProjectFromCollection, ...props}
     >
       {collection => (
         <CollectionColorWrap collection={collection}>
-          {(color, setColor) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} api={api} isAuthorized={true} removeProjectFromCollection={null} {...props}/>}
+          {(color, setColor, avatar, setAvatar) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} setAvatar={setAvatar} avatar={avatar} api={api} isAuthorized={true} removeProjectFromCollection={null} {...props}/>}
         </CollectionColorWrap>
       )}
     </DataLoader>
