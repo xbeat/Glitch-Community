@@ -166,6 +166,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
                   <span>Replace Avatar</span>  
                 </button>
               */}
+              
             </div>
             : null
           }

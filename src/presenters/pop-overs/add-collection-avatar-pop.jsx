@@ -13,13 +13,16 @@ class AddCollectionAvatarPop extends React.Component {
     
     this.handleChange = this.handleChange.bind(this);
     this.onClick = this.onClick.bind(this);
+
   }
   
   handleChange(evt) {
+    console.log(evt);
     // apply styling change to selected button
   }
   
   onClick() {
+    console.log('toggling popover');
     this.props.togglePopover();    
   }
   
@@ -65,8 +68,6 @@ class AddCollectionAvatarPop extends React.Component {
 
 AddCollectionAvatarPop.propTypes = {
   api: PropTypes.func.isRequired,
-  add: PropTypes.func.isRequired,
-  togglePopover: PropTypes.array.isRequired,
 };
 
 export default AddCollectionAvatarPop;
