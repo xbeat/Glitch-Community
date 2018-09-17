@@ -275,7 +275,6 @@ CollectionPageWrap.propTypes = {
   children: PropTypes.node.isRequired,
   isAuthorized: PropTypes.any.isRequired,  
   projectOptions: PropTypes.object.isRequired,
-  removeProjectFromCollection: PropTypes.func.isRequired,
   removeProject: PropTypes.func.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
 };
@@ -301,7 +300,7 @@ async function loadCategory(api, id) {
 }
   
 
-const CollectionPage = ({api, collection, addProject, removeProjectFromCollection, ...props}) => (
+const CollectionPage = ({api, collection, addProject, removeProject, ...props}) => (
   <Layout api={api}>
     <DataLoader
       get={() => loadCategory(api, collection.id)}
@@ -310,7 +309,7 @@ const CollectionPage = ({api, collection, addProject, removeProjectFromCollectio
     >
       {collection => (
         <CollectionColorWrap collection={collection}>
-          {(color, setColor, avatar, setAvatar) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} setAvatar={setAvatar} avatar={avatar} api={api} isAuthorized={true} removeProjectFromCollection={null} addProject={addProject} {...props}/>}
+          {(color, setColor, avatar, setAvatar) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} setAvatar={setAvatar} avatar={avatar} api={api} isAuthorized={true} removeProject={removeProject} addProject={addProject} {...props}/>}
         </CollectionColorWrap>
       )}
     </DataLoader>
@@ -321,7 +320,7 @@ CollectionPage.propTypes = {
   api: PropTypes.any.isRequired,
   collection: PropTypes.object.isRequired,
   addProject: PropTypes.func.isRequired,
-  removeProjectFromCollection: PropTypes.func.isRequired,
+  removeProject: PropTypes.func.isRequired,
 };
 
 export default CollectionPage;

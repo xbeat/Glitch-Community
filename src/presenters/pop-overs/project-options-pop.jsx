@@ -90,7 +90,7 @@ const ProjectOptionsPop = ({...props}) => {
         {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
         {!!props.removeProjectFromCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
          
-        {!props.addProjectToCollection && <PopoverButton onClick={null} text="Remove from Collection" emoji="thumbs_down"/>}
+        {!props.addProjectToCollection && <PopoverButton onClick= text="Remove from Collection" emoji="thumbs_down"/>}
         {props.currentUserIsOnProject && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
       </section>
     </dialog>
