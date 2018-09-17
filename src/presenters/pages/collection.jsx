@@ -116,13 +116,6 @@ class CollectionColorWrap extends React.Component {
     console.log(`newColor: ${newColor}`);
   }
   
-  async removeProjectFromCollection(id) {
-    // await this.props.api.post(`users/${this.state.id}/pinned-projects/${id}`);
-    // this.setState(({pins}) => ({
-    //   pins: [...pins, {projectId: id}],
-    // }));
-  }
-  
   render(){
     return this.props.children(this.state.color, this.setColor, this.state.avatar, this.setAvatar);
   }

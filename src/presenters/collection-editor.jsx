@@ -38,6 +38,20 @@ class CollectionEditor extends React.Component {
       color: color,
     });
   }
+  
+  async addProject(project) {
+    // need to replace api request temporarily before returning updated project list
+    await this.props.api.post(`collections/${this.state.id}/projects/${project.id}`);
+    this.setState(({projects}) => ({
+      projects: [project, ...projects],
+    }));
+  }
+  async removeProject(id) {
+    await this.props.api.delete(`collections/${this.state.id}/projects/${id}`);
+    this.setState(({projects}) => ({
+      projects: projects.filter(p => p.id !== id),
+    }));
+  }
 
 
   render() {
