@@ -39,6 +39,9 @@ class AddCollectionAvatarPop extends React.Component {
     return (
       <dialog className="pop-over add-collection-project-pop wide-pop">
         <section className="pop-over-info">
+          <button className="avatar">
+            <img src="https://cdn.hyperdev.com/us-east-1%3Acba180f4-ee65-4dfc-8dd5-f143280d3c10%2Fcomputer.svg"/>
+          </button>
 
         </section>
       </dialog>

@@ -13,8 +13,8 @@ const AddCollectionProject = ({currentUserIsOwner, ...props}) => {
     <PopoverContainer>
       {({visible, togglePopover}) => (
         <div className="button-wrap">
-          <button className={`button add-project opens-pop-over`} onClick={togglePopover}>
-              Replace Avatar
+          <button className={`button replace-avatar opens-pop-over`} onClick={togglePopover}>
+              Hello World
           </button>
           { visible && <AddCollectionAvatarPop {...props} togglePopover={togglePopover} /> }
         </div>
@@ -24,10 +24,6 @@ const AddCollectionProject = ({currentUserIsOwner, ...props}) => {
 };
 
 AddCollectionProject.propTypes = {
-  currentUserIsOwner: PropTypes.bool.isRequired,
-  addProjectToCollection: PropTypes.func.isRequired,
-  myProjects: PropTypes.array.isRequired,
-  collectionProjects: PropTypes.array.isRequired,
   api: PropTypes.func.isRequired
 };
 
