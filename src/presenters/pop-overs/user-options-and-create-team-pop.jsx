@@ -6,7 +6,7 @@ import {withRouter} from 'react-router-dom';
 import DevToggles from '../includes/dev-toggles.jsx';
 import Loader from '../includes/loader.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
-import {getAvatarUrl as getTeamAvatarUrl} from '../../models/team';
+import {getAvatarUrl as getTeamAvatarUrl, getLink as getTeamLink} from '../../models/team';
 import {getAvatarThumbnailUrl as getUserAvatarUrl} from '../../models/user';
 import {Link, TeamLink, UserLink} from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
@@ -19,7 +19,6 @@ class CreateTeamImpl extends React.Component {
     super(props);
     this.state = {
       teamName: '',
-      teamUrl: '',
       isLoading: false,
       error: ''
     };
@@ -83,7 +82,6 @@ class CreateTeamImpl extends React.Component {
     let initialTeamName = this.randomName();
     this.setState({
       teamName: initialTeamName,
-      teamUrl: _.kebabCase(initialTeamName),
     });
   }
   
@@ -98,27 +96,20 @@ class CreateTeamImpl extends React.Component {
   }
   
   async handleChange(newValue) {
-    if (newValue === '') {
-      this.setState({
-        teamName: '', 
-        teamUrl: 'your-team-name',
-        error: '',
-      });
-      return;
-    }
-    const url = _.kebabCase(newValue);
     this.setState({
       teamName: newValue, 
-      teamUrl: url,
       error: '',
     });
-    const userReq = this.props.api.get(`userId/byLogin/${url}`);
-    const teamReq = this.props.api.get(`teams/byUrl/${url}`);
-    const [user, team] = await Promise.all([userReq, teamReq]);
-    if (user.data !== 'NOT FOUND' || !!team.data) {
-      this.setState(({teamUrl}) => (url === teamUrl) ? {
-        error: 'Team already exists, try another'
-      } : {});
+    if (newValue) {
+      const url = _.kebabCase(newValue);
+      const userReq = this.props.api.get(`userId/byLogin/${url}`);
+      const teamReq = this.props.api.get(`teams/byUrl/${url}`);
+      const [user, team] = await Promise.all([userReq, teamReq]);
+      if (user.data !== 'NOT FOUND' || !!team.data) {
+        this.setState(({teamName}) => (newValue === teamName) ? {
+          error: 'Team already exists, try another'
+        } : {});
+      }
     }
   }
 
@@ -128,7 +119,7 @@ class CreateTeamImpl extends React.Component {
     try {
       const {data} = await this.props.api.post('teams', {
         name: this.state.teamName,
-        url: this.state.teamUrl,
+        url: _.kebabCase(this.state.teamName),
         hasAvatarImage: false,
         coverColor: '',
         location: '',
@@ -137,7 +128,7 @@ class CreateTeamImpl extends React.Component {
         hasCoverImage: false,
         isVerified: false,
       });
-      this.props.history.push(`/@${data.url}`);
+      this.props.history.push(getTeamLink(data));
     } catch (error) {
       const message = error && error.response && error.response.data && error.response.data.message;
       this.setState({
@@ -172,7 +163,7 @@ class CreateTeamImpl extends React.Component {
               error={this.state.error}
             />
             <p className="action-description team-url-preview">
-              /@{this.state.teamUrl}
+              /@{_.kebabCase(this.state.teamName)}
             </p>
           
             {this.state.isLoading && 
