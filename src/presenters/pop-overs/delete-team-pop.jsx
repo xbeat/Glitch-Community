@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from 'react-router-dom';
 //import UsersList from "../users-list.jsx";
 import Loader from '../includes/loader.jsx';
 import NotificationsConsumer from '../notifications.jsx';
@@ -13,24 +14,23 @@ class DeleteTeamPopImpl extends React.Component {
     this.deleteTeam = this.deleteTeam.bind(this);
   }
     
-  deleteTeam() {
+  async deleteTeam() {
     if (this.state.teamIsDeleting) {
       return null;
     }
     this.setState({
       teamIsDeleting: true
     });
-    let team = `teams/${this.props.teamId}`;
-    this.props.api().delete(team)
-      .then(() => {
-        window.location = '/';
-      }).catch(error => {
-        console.error("deleteTeam", error, error.response);
-        this.props.createErrorNotification('Something went wrong, try refreshing?');
-        this.setState({
-          teamIsDeleting: false
-        });
+    try {
+      await this.props.api().delete(`teams/${this.props.teamId}`);
+      this.props.history.push('/');
+    } catch (error) {
+      console.error("deleteTeam", error, error.response);
+      this.props.createErrorNotification('Something went wrong, try refreshing?');
+      this.setState({
+        teamIsDeleting: false
       });
+    }
   }
     
   render() {
@@ -68,11 +68,11 @@ class DeleteTeamPopImpl extends React.Component {
   }
 }
 
-export const DeleteTeamPop = (props) => (
+export const DeleteTeamPop = withRouter(props => (
   <NotificationsConsumer>
     {notifyFuncs => <DeleteTeamPopImpl {...notifyFuncs} {...props}/>}
   </NotificationsConsumer>
-);
+));
 
 DeleteTeamPop.propTypes = {
   api: PropTypes.func.isRequired,
