@@ -106,6 +106,7 @@ class CollectionColorWrap extends React.Component {
     this.setState({
       avatar: newAvatar
     });
+    console.log(`newAvatar: ${newAvatar}`);
   }
   
   setColor(newColor){
@@ -123,7 +124,7 @@ class CollectionColorWrap extends React.Component {
   }
   
   render(){
-    return this.props.children(this.state.color, this.setColor);
+    return this.props.children(this.state.color, this.setColor, this.state.avatar, this.setAvatar);
   }
 }
 
@@ -140,7 +141,7 @@ const hexToRgbA = (hex) => {
   throw new Error('Bad Hex');
 };
 
-const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, updateName, updateDescription, projectOptions, uploadAvatar, ...props}) => (
+const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar, isAuthorized, updateName, updateDescription, projectOptions, uploadAvatar, ...props}) => (
   <React.Fragment>
     
     <Helmet>
@@ -160,7 +161,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
             )}
           </h1>
           <div className="collection-image-container">
-            <img src={(collection ? collection.avatarUrl : avatarUrl)} alt=""/>
+            <img src={(collection ? collection.avatarUrl : avatar)} alt=""/>
           </div>
           {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
           {isAuthorized 
@@ -169,6 +170,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
               <AddCollectionAvatar
                 api={api}
                 collectionID = {(collection ? collection.id : id)}
+                setAvatar={setAvatar}
               />
               
               {/*

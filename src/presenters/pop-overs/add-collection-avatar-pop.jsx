@@ -4,19 +4,6 @@ import {debounce} from 'lodash';
 
 import {avatars} from '../../models/collection.js'; 
 
-// const avatars = {
-//   computer: "https://cdn.hyperdev.com/us-east-1%3Acba180f4-ee65-4dfc-8dd5-f143280d3c10%2Fcomputer.svg",
-//   tetris: "https://cdn.hyperdev.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Ftetris.svg",
-//   shapes: "https://cdn.hyperdev.com/0a15009e-17ee-4915-bc29-5ba03bb09517%2Fshapes.svg",
-//   education: "https://cdn.hyperdev.com/us-east-1%3Acba180f4-ee65-4dfc-8dd5-f143280d3c10%2Feducation.svg",
-//   coffee: "https://cdn.hyperdev.com/0a15009e-17ee-4915-bc29-5ba03bb09517%2Fcoffee.svg",
-//   diamond: "https://cdn.hyperdev.com/us-east-1%3Acba180f4-ee65-4dfc-8dd5-f143280d3c10%2Fdiamond.svg",
-//   robot: "https://cdn.hyperdev.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Frobot.svg",
-//   hardware: "https://cdn.gomix.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fhardware.svg",
-//   art: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fart.svg?1499357014248",
-//   music: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fmusic.svg?1502555440002",
-// }
-
 class AddCollectionAvatarPop extends React.Component {
   constructor(props) {
     super(props);
@@ -38,7 +25,7 @@ class AddCollectionAvatarPop extends React.Component {
   onClick(type) {
     console.log(`toggling popover for ${type}`);
     // change the avatar on the page
-    
+    this.props.setAvatar(avatars[type]);
     
     // toggle the pop-over
     this.props.togglePopover();      
@@ -51,7 +38,7 @@ class AddCollectionAvatarPop extends React.Component {
         <section className="pop-over-info">
           { Object.keys(avatars).map( type => (
             <button className="collection-avatar button-tertiary" onClick={() => this.onClick(type)}>
-              <img src={avatars[type]}/>
+              <img src={avatars[type]} alt={type}/>
             </button>
           )) }
         </section>
