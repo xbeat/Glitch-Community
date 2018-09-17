@@ -28,9 +28,9 @@ class AddCollectionAvatarPop extends React.Component {
   
   render() {
     return (
-      <dialog className="pop-over add-collection-project-pop wide-pop">
+      <dialog className="pop-over add-collection-avatar-pop wide-pop">
         <section className="pop-over-info">
-          <button className="collection-avatar button-tertiary">
+          <button className="collection-avatar button-tertiary" onClick={changeAvatar}>
             <img src="https://cdn.hyperdev.com/us-east-1%3Acba180f4-ee65-4dfc-8dd5-f143280d3c10%2Fcomputer.svg"/>
           </button>
           <button className="collection-avatar button-tertiary">
@@ -69,5 +69,10 @@ class AddCollectionAvatarPop extends React.Component {
 AddCollectionAvatarPop.propTypes = {
   api: PropTypes.func.isRequired,
 };
+
+const changeAvatar = () => {
+  // change the avatar on the page
+  // toggle the pop-over
+}
 
 export default AddCollectionAvatarPop;
