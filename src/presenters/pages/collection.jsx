@@ -184,12 +184,6 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
             : null
           )}
           
-          {/*
-          <div className="button">
-              <div className="collection-color">Color</div>
-            </div>
-          */}
-          
         </header>
         
         {collection
