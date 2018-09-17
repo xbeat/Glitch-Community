@@ -26,7 +26,6 @@ const AddCollectionProject = ({currentUserIsOwner, ...props}) => {
 AddCollectionProject.propTypes = {
   currentUserIsOwner: PropTypes.bool.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
-  myProjects: PropTypes.array.isRequired,
   collectionProjects: PropTypes.array.isRequired,
   api: PropTypes.func.isRequired
 };

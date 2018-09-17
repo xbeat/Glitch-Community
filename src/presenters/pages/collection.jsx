@@ -141,7 +141,7 @@ const hexToRgbA = (hex) => {
   throw new Error('Bad Hex');
 };
 
-const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar, isAuthorized, updateName, updateDescription, projectOptions, uploadAvatar, ...props}) => (
+const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar, isAuthorized, updateName, updateDescription, projectOptions, uploadAvatar, addProject, ...props}) => (
   <React.Fragment>
     
     <Helmet>
@@ -218,10 +218,10 @@ const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar
                 
                     {(isAuthorized 
                       ? <AddCollectionProject
+                        addProject={addProject}
                         api={api}
                         collectionProjects={collection.projects}
                         currentUserIsOwner={true}
-                        myProjects= {[]}
                       />
                       : null
                     )}
@@ -315,7 +315,7 @@ const CollectionPage = ({api, collection, addProject, removeProjectFromCollectio
     >
       {collection => (
         <CollectionColorWrap collection={collection}>
-          {(color, setColor, avatar, setAvatar) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} setAvatar={setAvatar} avatar={avatar} api={api} isAuthorized={true} removeProjectFromCollection={null} {...props}/>}
+          {(color, setColor, avatar, setAvatar) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} setAvatar={setAvatar} avatar={avatar} api={api} isAuthorized={true} removeProjectFromCollection={null} addProject={addProject} {...props}/>}
         </CollectionColorWrap>
       )}
     </DataLoader>
@@ -325,6 +325,7 @@ const CollectionPage = ({api, collection, addProject, removeProjectFromCollectio
 CollectionPage.propTypes = {
   api: PropTypes.any.isRequired,
   collection: PropTypes.object.isRequired,
+  addProject: PropTypes.func.isRequired,
   removeProjectFromCollection: PropTypes.func.isRequired,
 };
 
