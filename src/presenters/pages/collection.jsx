@@ -84,7 +84,7 @@ class CollectionColorWrap extends React.Component {
     }
     this.state = {
       color: color,
-      avatar: (this.props.collection ? this.props.collection.avatar : avatarUrl),
+      avatar: (this.props.collection ? this.props.collection.avatarUrl : avatarUrl),
     };
     this.setColor = this.setColor.bind(this);
     this.setAvatar = this.setAvatar.bind(this);
