@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import _ from 'lodash';
+import {withRouter} from 'react-router-dom';
 import DevToggles from '../includes/dev-toggles.jsx';
 import Loader from '../includes/loader.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
@@ -10,12 +11,10 @@ import {getAvatarThumbnailUrl as getUserAvatarUrl} from '../../models/user';
 import {Link, TeamLink, UserLink} from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
 
-const TEAM_ALREADY_EXISTS_ERROR = "Team already exists, try another";
-
 
 // Create Team 🌿
 
-class CreateTeam extends React.Component {
+class CreateTeamImpl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -98,19 +97,12 @@ class CreateTeam extends React.Component {
     return `${_.capitalize(adjective)} ${_.sample(this.teamSynonyms())}`;
   }
   
-  async isTeamUrlNotAvailable(url) {
-    const userReq = this.props.api.get(`userId/byLogin/${url}`);
-    const teamReq = this.props.api.get(`teams/byUrl/${url}`);
-    const [user, team] = await Promise.all([userReq, teamReq]);
-    return user.data !== 'NOT FOUND' || !!team.data;
-  }
-  
   async handleChange(newValue) {
     if (newValue === '') {
       this.setState({
         teamName: '', 
         teamUrl: 'your-team-name',
-        error: "",
+        error: '',
       });
       return;
     }
@@ -118,12 +110,15 @@ class CreateTeam extends React.Component {
     this.setState({
       teamName: newValue, 
       teamUrl: url,
-      error: "",
+      error: '',
     });
-    if (await this.isTeamUrlNotAvailable(url)) {
-      this.setState({
-        error: TEAM_ALREADY_EXISTS_ERROR
-      });
+    const userReq = this.props.api.get(`userId/byLogin/${url}`);
+    const teamReq = this.props.api.get(`teams/byUrl/${url}`);
+    const [user, team] = await Promise.all([userReq, teamReq]);
+    if (user.data !== 'NOT FOUND' || !!team.data) {
+      this.setState(({teamUrl}) => (url === teamUrl) ? {
+        error: 'Team already exists, try another'
+      } : {});
     }
   }
 
@@ -131,23 +126,17 @@ class CreateTeam extends React.Component {
     event.preventDefault();
     this.setState({ isLoading: true });
     try {
-      const {data} = await this.props.api.post(('teams'), {
+      const {data} = await this.props.api.post('teams', {
         name: this.state.teamName,
         url: this.state.teamUrl,
-        hasAvatarImage: false,
-        coverColor: '',
-        location: '',
         description: this.randomDescription(),
-        backgroundColor: '',
-        hasCoverImage: false,
-        isVerified: false,
-      })
+      });
       this.props.history.push(`/@${data.url}`);
     } catch (error) {
-      console.log(error.data.message);
+      const message = error && error.response && error.response.data && error.response.data.message;
       this.setState({
         isLoading: false,
-        error: TEAM_ALREADY_EXISTS_ERROR,
+        error: message || 'Something went wrong',
       });
     }
   }
@@ -201,9 +190,11 @@ class CreateTeam extends React.Component {
   }
 }
 
-CreateTeam.propTypes = {
+CreateTeamImpl.propTypes = {
   api: PropTypes.func.isRequired,
 };
+
+const CreateTeam = withRouter(CreateTeamImpl);
 
 
 // Create Team button
