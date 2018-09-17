@@ -161,9 +161,11 @@ const CollectionPageWrap = ({collection, api, color, setColor, isAuthorized, upd
                 collectionID = {(collection ? collection.id : id)}
               />
               
-              <button className="button button-small button-tertiary" onClick={uploadAvatar}>
-                <span>Replace Avatar</span>  
-              </button>
+              {/*
+                <button className="button button-small button-tertiary" onClick={uploadAvatar}>
+                  <span>Replace Avatar</span>  
+                </button>
+              */}
             </div>
             : null
           }
