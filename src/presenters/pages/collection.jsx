@@ -134,6 +134,23 @@ const hexToRgbA = (hex) => {
   throw new Error('Bad Hex');
 };
 
+{/*
+const CollectionPageEditor = ({api, initialCollection, children}) => (
+  <CollectionEditor api={api} initialCollection={initialCollection}>
+    {(collection, funcs, ...args) =>{
+      <ProjectsLoader api={api} projects={collection.projects}>
+          {(projects, reloadProjects) => {
+          return children({...collection, projects}, {
+            ...funcs,
+          }, ...args);
+          }}
+           )}
+     </ProjectsLoader>
+    }};
+  </CollectionEditor>
+  );
+*/}
+
 const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar, isAuthorized, updateName, updateDescription, projectOptions, uploadAvatar, addProject, removeProject, ...props}) => (
   <React.Fragment>
     
@@ -309,7 +326,7 @@ const CollectionPage = ({api, collection, addProject, removeProject, ...props}) 
     >
       {collection => (
         <CollectionColorWrap collection={collection}>
-          {(color, setColor, avatar, setAvatar) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} setAvatar={setAvatar} avatar={avatar} api={api} isAuthorized={true} removeProject={removeProject} addProject={addProject} {...props}/>}
+          {(color, setColor, avatar, setAvatar) => <CollectionPageWrap collection={collection} setColor={setColor} color={color} setAvatar={setAvatar} avatar={avatar} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...props}/>}
         </CollectionColorWrap>
       )}
     </DataLoader>
