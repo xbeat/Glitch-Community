@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Whac-Emoji!',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fwhac_emoji.png?1536836279842",
-    link: 'https://glitch.com/~whac-emoji'
+    title: 'AI-Powered Musical Spinners',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fspinners.jpg?1537183212696",
+    link: 'https://glitch.com/~incredible-spinners'
   },{
-    title: 'Twin Peaks Password Generator',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpassword_generator.png?1536836278805",
-    link: 'https://glitch.com/~twin-peaks-password-generator'
+    title: 'Make Your Own Space Invaders',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fspace.jpg?1537183214030",
+    link: 'https://glitch.com/~remixable-space-invaders'
   }, {
-    title: 'The Sound of Machine Learning',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsound_of_learning.png?1536836281262",
-    link: 'https://glitch.com/~sound-of-learning'
+    title: 'Play the Wikipedia Game',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwiki-game.jpg?1537183217930",
+    link: 'https://glitch.com/~wikipedia-game'
   }  
 ];
