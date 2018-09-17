@@ -99,12 +99,21 @@ class CreateTeam extends React.Component {
   }
   
   async isTeamUrlNotAvailable(url) {
-    const user = await this.props.api.get(`userId/byName/${url}`);
-    const team = await this.props.api.get(`teams/byUrl/${url}`);
-    return user.data === 'NOT FOUND' ||
+    const userReq = this.props.api.get(`userId/byLogin/${url}`);
+    const teamReq = this.props.api.get(`teams/byUrl/${url}`);
+    const [user, team] = await Promise.all([userReq, teamReq]);
+    return user.data !== 'NOT FOUND' || !!team.data;
   }
   
   async handleChange(newValue) {
+    if (newValue === '') {
+      this.setState({
+        teamName: '', 
+        teamUrl: 'your-team-name',
+        error: "",
+      });
+      return;
+    }
     const url = _.kebabCase(newValue);
     this.setState({
       teamName: newValue, 
@@ -118,28 +127,29 @@ class CreateTeam extends React.Component {
     }
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
-    this.props.api.post(('teams'), {
-      name: this.state.teamName,
-      url: this.state.teamUrl,
-      hasAvatarImage: false,
-      coverColor: '',
-      location: '',
-      description: this.randomDescription(),
-      backgroundColor: '',
-      hasCoverImage: false,
-      isVerified: false,
-    })
-      .then (response => {
-        window.location = `/@${response.data.url}`;
-      }).catch (() => {
-        this.setState({
-          isLoading: false,
-          error: TEAM_ALREADY_EXISTS_ERROR,
-        });
+    try {
+      const {data} = await this.props.api.post(('teams'), {
+        name: this.state.teamName,
+        url: this.state.teamUrl,
+        hasAvatarImage: false,
+        coverColor: '',
+        location: '',
+        description: this.randomDescription(),
+        backgroundColor: '',
+        hasCoverImage: false,
+        isVerified: false,
+      })
+      this.props.history.push(`/@${data.url}`);
+    } catch (error) {
+      console.log(error.data.message);
+      this.setState({
+        isLoading: false,
+        error: TEAM_ALREADY_EXISTS_ERROR,
       });
+    }
   }
   
   render() {
