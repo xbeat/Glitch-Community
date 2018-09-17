@@ -100,14 +100,20 @@ class CreateTeamImpl extends React.Component {
     const name = this.state.teamName;
     if (name) {
       const url = _.kebabCase(name);
+      
       const userReq = this.props.api.get(`userId/byLogin/${url}`);
       const teamReq = this.props.api.get(`teams/byUrl/${url}`);
       const [user, team] = await Promise.all([userReq, teamReq]);
-      if (user.data !== 'NOT FOUND')) {
+      
+      let error = null;
+      if (user.data !== 'NOT FOUND') {
+        error = 'Name in use, try another';
+      } else if (team.data) {
+        error = 'Team already exists, try another';
       }
-        this.setState(({teamName}) => (name === teamName) ? {
-          error: 'Team already exists, try another'
-        } : {});
+      if (error) {
+        this.setState(({teamName}) => (name === teamName) ? {error} : {});
+      }
     }
   }
   
