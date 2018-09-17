@@ -22,7 +22,7 @@ class CreateTeamImpl extends React.Component {
       isLoading: false,
       error: ''
     };
-    this.randomDescription = this.randomDescription.bind(this);
+    this.validate = _.debounce(this.validate.bind(this), 300);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -83,6 +83,7 @@ class CreateTeamImpl extends React.Component {
     this.setState({
       teamName: initialTeamName,
     });
+    this.validate();
   }
   
   randomDescription() {
@@ -95,22 +96,25 @@ class CreateTeamImpl extends React.Component {
     return `${_.capitalize(adjective)} ${_.sample(this.teamSynonyms())}`;
   }
   
-  async handleChange(newValue) {
-    this.setState({
-      teamName: newValue, 
-      error: '',
-    });
-    if (newValue) {
-      const url = _.kebabCase(newValue);
+  async validate() {
+    this.setState({ error: '' });
+    const name = this.state.teamName;
+    if (name) {
+      const url = _.kebabCase(name);
       const userReq = this.props.api.get(`userId/byLogin/${url}`);
       const teamReq = this.props.api.get(`teams/byUrl/${url}`);
       const [user, team] = await Promise.all([userReq, teamReq]);
       if (user.data !== 'NOT FOUND' || !!team.data) {
-        this.setState(({teamName}) => (newValue === teamName) ? {
+        this.setState(({teamName}) => (name === teamName) ? {
           error: 'Team already exists, try another'
         } : {});
       }
     }
+  }
+  
+  async handleChange(newValue) {
+    this.setState({ teamName: newValue });
+    this.validate();
   }
 
   async handleSubmit(event) {
@@ -139,12 +143,12 @@ class CreateTeamImpl extends React.Component {
   }
   
   render() {
+    const placeholder = 'Your Team Name';
     return (
       <dialog className="pop-over create-team-pop">
         <section className="pop-over-info">
           <div className="pop-title">
-            <span>Create Team </span>
-            <span className="emoji herb" />
+            Create Team <span className="emoji herb" />
           </div>
         </section>
 
@@ -159,21 +163,18 @@ class CreateTeamImpl extends React.Component {
             <PureEditableField
               value={this.state.teamName}
               update={this.handleChange}
-              placeholder='Your Team Name'
+              placeholder={placeholder}
               error={this.state.error}
             />
             <p className="action-description team-url-preview">
-              /@{_.kebabCase(this.state.teamName)}
+              /@{_.kebabCase(this.state.teamName || placeholder)}
             </p>
           
-            {this.state.isLoading && 
-            <Loader />
-          ||
-            <button type="submit" className="button-small has-emoji">
-              <span>Create Team </span>
-              <span className="emoji thumbs_up" />
-            </button>
-            }
+            {this.state.isLoading ? <Loader /> : (
+              <button type="submit" className="button-small has-emoji">
+                Create Team <span className="emoji thumbs_up" />
+              </button>
+            )}
           </form>
 
         </section>
