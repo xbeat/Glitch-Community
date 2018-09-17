@@ -306,7 +306,7 @@ async function loadCategory(api, id) {
 }
   
 
-const CollectionPage = ({api, collection, removeProjectFromCollection, ...props}) => (
+const CollectionPage = ({api, collection, addProject, removeProjectFromCollection, ...props}) => (
   <Layout api={api}>
     <DataLoader
       get={() => loadCategory(api, collection.id)}
