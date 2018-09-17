@@ -129,7 +129,13 @@ class CreateTeamImpl extends React.Component {
       const {data} = await this.props.api.post('teams', {
         name: this.state.teamName,
         url: this.state.teamUrl,
+        hasAvatarImage: false,
+        coverColor: '',
+        location: '',
         description: this.randomDescription(),
+        backgroundColor: '',
+        hasCoverImage: false,
+        isVerified: false,
       });
       this.props.history.push(`/@${data.url}`);
     } catch (error) {
