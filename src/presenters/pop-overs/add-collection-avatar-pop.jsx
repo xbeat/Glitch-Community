@@ -64,43 +64,16 @@ class AddCollectionAvatarPop extends React.Component {
     this.props.togglePopover();      
   }
   
+  
   render() {
     return (
       <dialog className="pop-over add-collection-avatar-pop wide-pop">
         <section className="pop-over-info">
-          { avatars.forEach( type => {
-            
+          { Object.keys(avatars).map( type => (
+            <button className="collection-avatar button-tertiary" onClick={() => this.onClick(type)}>
+              <img src={avatars[type]}/>
+            </button>
           }) }
-          <button className="collection-avatar button-tertiary" onClick={() => this.onClick("computer")}>
-            <img src={avatars["computer"]}/>
-          </button>
-          <button className="collection-avatar button-tertiary" onClick={() => this.onClick("tetris")}>
-            <img src={avatars["tetris"]}/>
-          </button>
-          <button className="collection-avatar button-tertiary" onClick={() => this.onClick("shapes")}>
-            <img src={shapes}/>
-          </button>
-          <button className="collection-avatar button-tertiary" onClick={() => this.onClick("education")}>
-            <img src={education}/>
-          </button>
-          <button className="collection-avatar button-tertiary" onClick={() => this.onClick("coffee")}>
-            <img src={coffee}/>
-          </button>
-          <button className="collection-avatar button-tertiary" onClick={() => this.onClick("diamond")}>
-            <img src={diamond}/>
-          </button>
-          <button className="collection-avatar button-tertiary" onClick={() => this.onClick("robot")}>
-            <img src={robot}/>
-          </button>
-          <button className="collection-avatar button-tertiary" onClick={() => this.onClick("hardware")}>
-            <img src={hardware}/>
-          </button>
-          <button className="collection-avatar button-tertiary" onClick={() => this.onClick("art")}>
-            <img src={art}/>
-          </button>
-          <button className="collection-avatar button-tertiary" onClick={() => this.onClick("'music")}>
-            <img src={music}/>
-          </button>
         </section>
       </dialog>
     );
