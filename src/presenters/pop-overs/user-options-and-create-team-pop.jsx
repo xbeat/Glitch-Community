@@ -22,7 +22,7 @@ class CreateTeamImpl extends React.Component {
       isLoading: false,
       error: ''
     };
-    this.validate = _.debounce(this.validate.bind(this), 300);
+    this.validate = _.debounce(this.validate.bind(this), 200);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -97,23 +97,25 @@ class CreateTeamImpl extends React.Component {
   }
   
   async validate() {
-    this.setState({ error: '' });
     const name = this.state.teamName;
     if (name) {
       const url = _.kebabCase(name);
       const userReq = this.props.api.get(`userId/byLogin/${url}`);
       const teamReq = this.props.api.get(`teams/byUrl/${url}`);
       const [user, team] = await Promise.all([userReq, teamReq]);
-      if (user.data !== 'NOT FOUND' || !!team.data) {
+      if (user.data !== 'NOT FOUND')) {
+      }
         this.setState(({teamName}) => (name === teamName) ? {
           error: 'Team already exists, try another'
         } : {});
-      }
     }
   }
   
   async handleChange(newValue) {
-    this.setState({ teamName: newValue });
+    this.setState({
+      teamName: newValue,
+      error: '',
+    });
     this.validate();
   }
 
