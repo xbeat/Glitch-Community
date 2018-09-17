@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 import {colors} from '../../models/collection.js';
 
-import Loader from '../includes/loader.jsx';
-
 const validHex = (hex) =>{
   var re = /[0-9A-Fa-f]{6}/g;
   if(re.test(hex)){
