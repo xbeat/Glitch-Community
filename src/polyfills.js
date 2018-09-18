@@ -1,4 +1,5 @@
 /// Polyfills that aren't done using babel go here
+// In general we want to manage them with babel
 
 import 'details-element-polyfill';
 
