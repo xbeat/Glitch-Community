@@ -1,12 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const {Provider, Consumer} = React.createContext();
+
 export class PopoverNested extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       page: false, // true for alt page, false for main
     };
+  }
+  
+  toggle() {
+    this.setState(({page}) => ({page: !page}));
   }
   
   render() {
