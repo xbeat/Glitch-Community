@@ -5,21 +5,21 @@ export class PopoverNested extends React.Fragment {
   constructor(props) {
     super(props);
     this.state = {
-      page: null, // null or undefined show the default page
+      page: false, // true for alt page, false for main
     };
-    this.setPage = this.setPage.bind(this);
-  }
-  
-  setPage(page) {
-    this.setState({page});
   }
   
   render() {
+    if (this.state.page) {
+      return this.props.menu(() => this.setState({page: false}));
+    }
+    return this.props.children(() => this.setState({page: true}));
   }
 }
 
 PopoverNested.propTypes = {
-  children: PropTypes.objectOf(PropTypes.func).isRequired,
+  children: PropTypes.func.isRequired,
+  menu: PropTypes.func.isRequired,
 };
 
 export default PopoverNested;
