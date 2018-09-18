@@ -6,3 +6,6 @@ import 'details-element-polyfill';
 if (!String.prototype.trimStart) {
   String.prototype.trimStart = String.prototype.trimLeft;
 }
+if (!String.prototype.trimEnd) {
+  String.prototype.trimEnd = String.prototype.trimRight;
+}
