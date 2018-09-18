@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import {getAvatarThumbnailUrl, getDisplayName} from '../../models/user';
 import {getAvatarUrl} from  '../../models/project';
 
-import PopoverNested, {NestedPopoverTitle} from './popover-nested.jsx';
+import PopoverNested, {NestedPopoverConsumer, NestedPopoverTitle} from './popover-nested.jsx';
 import {UserLink} from '../includes/link.jsx';
 import Loader from '../includes/loader.jsx';
 import Notifications from '../notifications.jsx';
@@ -17,18 +17,17 @@ const ADMIN_ACCESS_LEVEL = 30;
 
 // Remove from Team 👋
 
-const RemoveFromTeam = ({toggleUserInfoHidden}) => (
+const RemoveFromTeam = () => (
   <section className="pop-over-actions danger-zone">
-    <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={toggleUserInfoHidden}>
-      Remove from Team
-      <span className="emoji wave" />
-    </button>
+    <NestedPopoverConsumer>
+      {toggle => (
+        <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={toggle}>
+          Remove from Team <span className="emoji wave" role="img" aria-label=""/>
+        </button>
+      )}
+    </NestedPopoverConsumer>
   </section>
 );
-
-RemoveFromTeam.propTypes = {
-  toggleUserInfoHidden: PropTypes.func.isRequired,
-};
 
 
 // Admin Actions Section ⏫⏬
@@ -72,7 +71,7 @@ const ThanksCount = ({count}) => (
 
 // Team User Info 😍
 
-const TeamUserInfo = ({toggleUserInfoHidden, currentUser, ...props}) => {
+const TeamUserInfo = ({currentUser, ...props}) => {
   const userAvatarStyle = {backgroundColor: props.user.color};
   const canRemoveUser = props.currentUserIsTeamAdmin || (currentUser && currentUser.id === props.user.id);
   return (
@@ -103,13 +102,9 @@ const TeamUserInfo = ({toggleUserInfoHidden, currentUser, ...props}) => {
           updateUserPermissions={props.updateUserPermissions}
         />
       }
-      { canRemoveUser && <RemoveFromTeam toggleUserInfoHidden={() => toggleUserInfoHidden()} /> }
+      { canRemoveUser && <RemoveFromTeam /> }
     </dialog>
   );
-};
-
-TeamUserInfo.propTypes = {
-  toggleUserInfoHidden: PropTypes.func.isRequired,
 };
 
 
@@ -212,13 +207,6 @@ class TeamUserRemove extends React.Component {
     
     return (
       <dialog className="pop-over team-user-info-pop team-user-remove-pop">
-        <button className="button-unstyled clickable-label" onClick={this.props.toggleUserInfoVisible} aria-label="go back">
-          <section className="pop-over-info team-user-remove-header">
-            <div className="back icon"><div className="left-arrow icon" /></div>
-            &nbsp;
-            <div className="pop-title">Remove {getDisplayName(this.props.user)}</div>
-          </section>
-        </button>
         <NestedPopoverTitle>
           Remove {getDisplayName(this.props.user)}
         </NestedPopoverTitle>
@@ -243,7 +231,6 @@ class TeamUserRemove extends React.Component {
 
 TeamUserRemove.propTypes = {
   api: PropTypes.func.isRequired,
-  toggleUserInfoVisible: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
     login: PropTypes.string,
@@ -263,15 +250,15 @@ TeamUserRemove.propTypes = {
 // uses removeTeamUserVisible state to toggle between showing user info and remove views
 
 const TeamUserInfoAndRemovePop = (props) => (
-  <PopoverNested menu={toggle => (
+  <PopoverNested menu={() => (
     <Notifications>
       {notifyFuncs => (
-        <TeamUserRemove {...notifyFuncs} {...props} toggleUserInfoVisible={toggle}/>
+        <TeamUserRemove {...notifyFuncs} {...props}/>
       )}
     </Notifications>
   )}>
-    {toggle => (
-      <TeamUserInfo {...props} toggleUserInfoHidden={toggle}/>
+    {() => (
+      <TeamUserInfo {...props}/>
     )}
   </PopoverNested>
 );
