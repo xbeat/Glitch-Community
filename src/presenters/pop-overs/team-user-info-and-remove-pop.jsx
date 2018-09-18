@@ -259,51 +259,19 @@ TeamUserRemove.propTypes = {
 // Team User Info or Remove
 // uses removeTeamUserVisible state to toggle between showing user info and remove views
 
-export default class TeamUserInfoAndRemovePop extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userInfoVisible: true
-    };
-    this.toggleUserInfoVisible = this.toggleUserInfoVisible.bind(this);
-    this.toggleUserInfoHidden = this.toggleUserInfoHidden.bind(this);
-  }
-  
-  toggleUserInfoHidden() {
-    this.setState({
-      userInfoVisible: false
-    });
-  }
-
-  toggleUserInfoVisible() {
-    this.setState({
-      userInfoVisible: true
-    });
-  }
-  
-  render() {
-    return (
-      <React.Fragment>
-        { this.state.userInfoVisible ? (
-          <TeamUserInfo
-            {...this.props}
-            toggleUserInfoHidden={() => this.toggleUserInfoHidden()}
-          />
-        ) : (
-          <Notifications>
-            {notifyFuncs => (
-              <TeamUserRemove
-                {...notifyFuncs}
-                {...this.props}
-                toggleUserInfoVisible={() => this.toggleUserInfoVisible()}
-              />
-            )}
-          </Notifications>
-        )}
-      </React.Fragment>
-    );
-  }
-}
+const TeamUserInfoAndRemovePop = (props) => (
+  <PopoverNested menu={toggle => (
+    <Notifications>
+      {notifyFuncs => (
+        <TeamUserRemove {...notifyFuncs} {...props} toggleUserInfoVisible={toggle}/>
+      )}
+    </Notifications>
+  )}>
+    {toggle => (
+      <TeamUserInfo {...props} toggleUserInfoHidden={toggle}/>
+    )}
+  </PopoverNested>
+);
 
 TeamUserInfoAndRemovePop.propTypes = {
   user: PropTypes.shape({
@@ -332,3 +300,4 @@ TeamUserInfoAndRemovePop.defaultProps = {
   currentUserIsOnTeam: false,
 };
 
+export default TeamUserInfoAndRemovePop;
