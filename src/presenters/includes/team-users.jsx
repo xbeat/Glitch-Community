@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {WhitelistedDomainIcon} from './team-elements.jsx';
 import AddTeamUserPop from '../pop-overs/add-team-user-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
-import TeamUserInfoAndRemovePop from '../pop-overs/team-user-info-and-remove-pop.jsx';
+import TeamUserInfoPop from '../pop-overs/team-user-info-pop.jsx';
 import {UserPopoversList} from '../users-list.jsx';
 
 
@@ -13,10 +13,9 @@ import {UserPopoversList} from '../users-list.jsx';
 
 export const TeamUsers = (props) => (
   <UserPopoversList users={props.users} adminIds={props.adminIds}>
-    {(user, togglePopover) => 
-      <TeamUserInfoAndRemovePop 
+    {user => 
+      <TeamUserInfoPop 
         userIsTeamAdmin={props.adminIds.includes(user.id)}
-        togglePopover={togglePopover}
         user={user}
         {...props}
       />

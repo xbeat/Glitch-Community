@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {getAvatarThumbnailUrl} from '../../models/user';
 
-import PopoverNested, {NestedPopoverConsumer} from './popover-nested.jsx';
+import PopoverNested from './popover-nested.jsx';
 import {UserLink} from '../includes/link.jsx';
 import Thanks from '../includes/thanks.jsx';
 
@@ -14,15 +14,11 @@ const ADMIN_ACCESS_LEVEL = 30;
 
 // Remove from Team 👋
 
-const RemoveFromTeam = () => (
+const RemoveFromTeam = ({onClick}) => (
   <section className="pop-over-actions danger-zone">
-    <NestedPopoverConsumer>
-      {toggle => (
-        <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={toggle}>
-          Remove from Team <span className="emoji wave" role="img" aria-label=""/>
-        </button>
-      )}
-    </NestedPopoverConsumer>
+    <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={onClick}>
+      Remove from Team <span className="emoji wave" role="img" aria-label=""/>
+    </button>
   </section>
 );
 
@@ -68,7 +64,7 @@ const ThanksCount = ({count}) => (
 
 // Team User Info 😍
 
-const TeamUserInfo = ({currentUser, ...props}) => {
+const TeamUserInfo = ({currentUser, showRemove, ...props}) => {
   const userAvatarStyle = {backgroundColor: props.user.color};
   const canRemoveUser = props.currentUserIsTeamAdmin || (currentUser && currentUser.id === props.user.id);
   return (
@@ -99,7 +95,7 @@ const TeamUserInfo = ({currentUser, ...props}) => {
           updateUserPermissions={props.updateUserPermissions}
         />
       }
-      { canRemoveUser && <RemoveFromTeam /> }
+      { canRemoveUser && <RemoveFromTeam onClick={showRemove}/> }
     </dialog>
   );
 };
