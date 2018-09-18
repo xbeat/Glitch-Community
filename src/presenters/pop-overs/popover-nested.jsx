@@ -13,11 +13,11 @@ export default class NestedPopover extends React.Component {
   }
   
   toggle() {
-    this.setState(({menu}) => ({page: !page}));
+    this.setState(({menu}) => ({menu: !menu}));
   }
   
   render() {
-    if (this.state.page) {
+    if (this.state.menu) {
       return (
         <Provider value={this.toggle}>
           {this.props.menu(this.toggle)}
