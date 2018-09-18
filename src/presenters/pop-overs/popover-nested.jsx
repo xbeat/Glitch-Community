@@ -3,37 +3,35 @@ import PropTypes from 'prop-types';
 
 const {Provider, Consumer} = React.createContext();
 
-export class NestedPopover extends React.Component {
+export default class NestedPopover extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: false, // true for alt page, false for main
+      menu: false, // true for alt page, false for main
     };
     this.toggle = this.toggle.bind(this);
   }
   
   toggle() {
-    this.setState(({page}) => ({page: !page}));
+    this.setState(({menu}) => ({page: !page}));
   }
   
   render() {
-    const {children, menu} = this.props;
-    return (
-      <Provider value={this.toggle}>
-        {this.state.page ? menu(this.toggle) : children(this.toggle)}
-      </Provider>
-    );
+    if (this.state.page) {
+      return (
+        <Provider value={this.toggle}>
+          {this.props.menu(this.toggle)}
+        </Provider>
+      );
+    }
+    return this.props.children(this.toggle);
   }
 }
-
 NestedPopover.propTypes = {
   children: PropTypes.func.isRequired,
   menu: PropTypes.func.isRequired,
 };
 
-export default NestedPopover;
-
-export {Consumer as NestedPopoverConsumer};
 
 export const NestedPopoverTitle = ({children}) => (
   <Consumer>
