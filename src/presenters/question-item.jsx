@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getEditorUrl} from '../models/project';
+import Link from './includes/link.jsx';
 
 const iconHelp = 'https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fask-for-help.svg?1494954687906';
 
@@ -21,7 +22,7 @@ function truncateTag(tag) {
 const QuestionItem = ({colorOuter, colorInner, domain, question, tags, userAvatar, userColor, userLogin, path, line, character}) => (
   <React.Fragment>
     <img className="help-icon" src={iconHelp} alt=""/>
-    <a href={getEditorUrl(domain, path, line, character)} data-track="question" data-track-label={domain}>
+    <Link to={getEditorUrl(domain, path, line, character)} data-track="question" data-track-label={domain}>
       <div className="project" style={{backgroundColor: colorOuter}}>
         <div className="project-container" style={{backgroundColor: colorInner}}>
           <img className="avatar" src={userAvatar} style={{backgroundColor: userColor}} alt=""/>
@@ -32,7 +33,7 @@ const QuestionItem = ({colorOuter, colorInner, domain, question, tags, userAvata
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   </React.Fragment>
 );
 QuestionItem.propTypes = {

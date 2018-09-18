@@ -18,11 +18,13 @@ function identifyUser(user) {
   }
   try {
     const analytics = window.analytics;
-    if (analytics && user) {
+    if (analytics && user && user.login) {
+      const emailObj = Array.isArray(user.emails) && user.emails.find((email) => email.primary);
+      const email = emailObj && emailObj.email;
       analytics.identify(user.id, {
         name: user.name,
         login: user.login,
-        email: user.email,
+        email,
         created_at: user.createdAt,
       });
     }
@@ -61,7 +63,10 @@ function usersMatch(a, b) {
 class CurrentUserManager extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {fetched: false};
+    this.state = {
+      fetched: false, // Set true on first complete load
+      working: false, // Used to prevent simultaneous loading
+    };
   }
   
   api() {
@@ -78,59 +83,77 @@ class CurrentUserManager extends React.Component {
     });
   }
   
-  async fix() {
-    // The token isn't working, or the id doesn't match the token
-    // So hit boot and get the right user for our token
+  async getSharedUser() {
     try {
       const {data: {user}} = await this.api().get(`boot?latestProjectOnly=true`);
-      this.props.setSharedUser(user);
+      return user;
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        this.props.setSharedUser(undefined);
-      } else {
-        throw error;
+        return undefined;
       }
+      throw error;
+    }
+  }
+  
+  async getCachedUser() {
+    const {sharedUser} = this.props;
+    if (!sharedUser) return undefined;
+    if (!sharedUser.id || !sharedUser.persistentToken) return 'error';
+    try {
+      const {data} = await this.api().get(`users/${sharedUser.id}`);
+      if (!usersMatch(sharedUser, data)) {
+        return 'error';
+      }
+      return data;
+    } catch (error) {
+      if (error.response && (error.response.status === 401 || error.response.status === 404)) {
+        // 401 means our token is bad, 404 means the user doesn't exist
+        return 'error';
+      }
+      throw error;
     }
   }
   
   async load() {
+    if (this.state.working) return;
+    this.setState({working: true});
     const {sharedUser, cachedUser} = this.props;
     if (!usersMatch(sharedUser, cachedUser)) {
-      this.props.setCachedUser(sharedUser || undefined);
+      this.props.setCachedUser(undefined);
     }
-    this.setState({fetched: false});
     if (sharedUser) {
-      try {
-        const {data} = await this.api().get(`users/${sharedUser.id}`);
-        if (usersMatch(sharedUser, data)) {
-          this.props.setCachedUser(data);
-          this.setState({fetched: true});
-          identifyUser(data);
-        } else {
-          this.fix();
-        }
-      } catch (error) {
-        if (error.response && (error.response.status === 401 || error.response.status === 404)) {
-          this.fix();
-        } else {
-          throw error;
-        }
+      const newCachedUser = await this.getCachedUser();
+      if (newCachedUser === 'error') {
+        // Sounds like our shared user is bad
+        // Fix it and componentDidUpdate will reload
+        this.setState({fetched: false});
+        const newSharedUser = await this.getSharedUser();
+        this.props.setSharedUser(newSharedUser);
+        console.warn('Fixed shared cachedUser from', sharedUser, 'to', newSharedUser);
+        Raven.captureMessage('Invalid cachedUser', {extra: {
+          from: sharedUser || null,
+          to: newSharedUser || null,
+        }});
+      } else {
+        this.props.setCachedUser(newCachedUser);
+        this.setState({fetched: true});
       }
-    } else {
-      identifyUser(null);
     }
+    this.setState({working: false});
   }
   
   componentDidMount() {
-    const {sharedUser, cachedUser} = this.props;
-    if (sharedUser || cachedUser) {
-      this.load();
-    }
+    this.load();
   }
   
   componentDidUpdate(prev) {
-    const {sharedUser, cachedUser} = this.props;
-    if (!usersMatch(sharedUser, cachedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
+    const {cachedUser, sharedUser} = this.props;
+    
+    if (!usersMatch(cachedUser, prev.cachedUser)) {
+      identifyUser(cachedUser);
+    }
+    
+    if (!usersMatch(cachedUser, sharedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
       this.load();
     }
     
@@ -140,12 +163,12 @@ class CurrentUserManager extends React.Component {
   }
   
   render() {
-    const {children, cachedUser, setSharedUser, setCachedUser} = this.props;
-    const {fetched} = this.state;
+    const {children, sharedUser, cachedUser, setSharedUser, setCachedUser} = this.props;
+    const currentUser = cachedUser || sharedUser;
     return children({
       api: this.api(),
-      currentUser: cachedUser ? UserModel(cachedUser).asProps() : null,
-      fetched,
+      currentUser: currentUser ? UserModel(currentUser).asProps() : null,
+      fetched: !!cachedUser && this.state.fetched,
       reload: () => this.load(),
       login: user => setSharedUser(user),
       update: changes => setCachedUser({...cachedUser, ...changes}),
@@ -163,24 +186,12 @@ CurrentUserManager.propTypes = {
   setCachedUser: PropTypes.func.isRequired,
 };
 
-const cleanUser = (user) => {
-  if (!user) {
-    return null;
-  }
-  if (!(user.id > 0) || !user.persistentToken) {
-    console.error('invalid cachedUser', user);
-    Raven.captureMessage("Invalid cachedUser", {extra: {user}});
-    return null;
-  }
-  return user;
-};
-
 export const CurrentUserProvider = ({children}) => (
   <LocalStorage name="community-cachedUser" default={null}>
     {(cachedUser, setCachedUser, loadedCachedUser) => (
       <LocalStorage name="cachedUser" default={null}>
         {(sharedUser, setSharedUser, loadedSharedUser) => (
-          <CurrentUserManager sharedUser={cleanUser(sharedUser)} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
+          <CurrentUserManager sharedUser={sharedUser} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
             {({api, ...props}) => (
               <Provider value={props}>
                 {loadedSharedUser && loadedCachedUser && children(api)}

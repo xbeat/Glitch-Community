@@ -5,8 +5,8 @@ export const ANON_AVATAR_URL = "https://cdn.glitch.com/f6949da2-781d-4fd5-81e6-1
 
 export default function User({projects, teams, ...user}) {
   const props = {
-    get projects() { return projects ? projects.map(project => Project(project).asProps()) : []; },
-    get teams() { return teams ? teams.map(team => Team(team).asProps()) : []; },
+    projects: projects ? projects.map(project => Project(project).asProps()) : [],
+    teams: teams ? teams.map(team => Team(team).asProps()) : [],
     ...user
   };
   return {

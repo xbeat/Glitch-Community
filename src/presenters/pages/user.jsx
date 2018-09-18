@@ -12,6 +12,7 @@ import Thanks from '../includes/thanks.jsx';
 import DeletedProjects from '../deleted-projects.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
+import ProjectsLoader from '../projects-loader.jsx';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
@@ -125,7 +126,10 @@ const UserPageContainer = ({api, user}) => (
         <Helmet>
           <title>{user.name || (user.login ? `@${user.login}` : `User ${user.id}`)}</title>
         </Helmet>
-        <UserPage api={api} user={user} {...funcs} isAuthorized={isAuthorized}/>
+        
+        <ProjectsLoader api={api} projects={user.projects}>
+          {projects => <UserPage api={api} user={{...user, projects}} {...funcs} isAuthorized={isAuthorized}/>}
+        </ProjectsLoader>
       </React.Fragment>
     )}
   </UserEditor>

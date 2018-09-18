@@ -7,6 +7,7 @@ import Layout from '../layout.jsx';
 
 import {getEditorUrl} from '../../models/project';
 import {CurrentUserConsumer} from '../current-user.jsx';
+import Link from '../includes/link.jsx';
 
 import Categories from '../categories.jsx';
 import Featured from '../featured.jsx';
@@ -40,12 +41,12 @@ class WhatIsGlitch extends React.Component {
       <section className="what-is-glitch">
         <h2>How It Works</h2>
         <span>
-          <a href="https://glitch.com/about">
+          <Link to="/about">
             <figure title="How Glitch works">
               <img className="wide" src={whatsGlitchWide} alt={whatsGlitchAlt}/>
               <img className="narrow" src={whatsGlitchNarrow} alt={whatsGlitchAlt}/>
             </figure>
-          </a>
+          </Link>
           <div>
             And it's <img className="free" src={free} alt="free"/>.{' '}
             <OverlayVideo>
@@ -90,7 +91,7 @@ class ByFogCreek extends React.PureComponent {
         <img src={logo} alt="Fog Creek logo"/>
         <p>
           You might know us for making Trello, FogBugz, and co-creating Stack Overflow. 
-          We're <a href="https://www.fogcreek.com">a friendly, self-funded company</a> that's
+          We're <Link to="https://www.fogcreek.com">a friendly, self-funded company</Link> that's
           been helping people make stuff for over {this.state.age} years.
         </p>
       </section>
@@ -101,16 +102,16 @@ class ByFogCreek extends React.PureComponent {
 const MadeInGlitch = () => (
   <section className="made-in-glitch">
     <p>Of course, this site was made on Glitch too</p>
-    <a href={getEditorUrl('community')} className="button button-link has-emoji">
+    <Link to={getEditorUrl('community')} className="button button-link has-emoji">
       View Source <span className="emoji carp_streamer"></span>
-    </a>
+    </Link>
   </section>
 );
 
 const IndexPage = ({api, user}) => (
   <main>
     <h1 className="headline">
-      <a href="https://glitch.com">Glitch</a>{' '}
+      <Link to="https://glitch.com">Glitch</Link>{' '}
       is the friendly community where you'll build the app of your dreams
     </h1>
     {!!(user && user.login) && <Questions api={api}/>}

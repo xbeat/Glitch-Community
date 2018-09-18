@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Link from '../includes/link.jsx';
 import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
@@ -12,7 +13,7 @@ const NewProjectPop = ({projects}) => (
     <section className="pop-over-actions results-list">
       <div className="results">
         {projects.length ? projects.map((project) => (
-          <a key={project.id} href={getRemixUrl(project.domain)}>
+          <Link key={project.id} to={getRemixUrl(project.domain)}>
             <ProjectResultItem {...project} users={[]} action={()=>{
               /* global analytics */
               analytics.track("New Project Clicked", {
@@ -20,7 +21,7 @@ const NewProjectPop = ({projects}) => (
                 origin: "community new project pop",
               });
             }} />
-          </a>
+          </Link>
         )) : <Loader/>}
       </div>
     </section>

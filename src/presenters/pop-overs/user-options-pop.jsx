@@ -2,17 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getAvatarUrl} from '../../models/team';
+import {Link, TeamLink} from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
 import CreateTeamPop from './create-team-pop.jsx';
 
 
-const TeamButton = ({url, name, ...team}) => (
-  <a className="button-link" href={`/@${url}`}>
+const TeamButton = (team) => (
+  <TeamLink team={team} className="button-link">
     <div className="button button-small has-emoji button-tertiary">
-      <span>{name} </span>
-      <img className="emoji avatar" src={getAvatarUrl({...team, size:'small'})} alt={`${name} team avatar`} width="16px" height="16px"/>
+      {team.name}&nbsp;
+      <img className="emoji avatar" src={getAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
     </div>
-  </a>
+  </TeamLink>
 );
 
 TeamButton.propTypes = {
@@ -102,6 +103,12 @@ const UserOptionsPop = ({
   };
   
   const clickSignout = () => {
+    if(userIsAnon) {
+      if(!window.confirm(`You won't be able to sign back in under this same anonymous account.
+Are you sure you want to sign out?`)) {
+        return;
+      }
+    }
     /* global analytics */
     analytics.track("Logout");
     analytics.reset();
@@ -112,7 +119,7 @@ const UserOptionsPop = ({
 
   return (
     <dialog className="pop-over user-options-pop">
-      <a href={userLink} className="user-info">
+      <Link to={userLink} className="user-info">
         <section className="pop-over-actions user-info">
           <img className="avatar" src={avatarUrl} alt="Your avatar" style={avatarStyle}/>
           <div className="info-container">
@@ -122,24 +129,19 @@ const UserOptionsPop = ({
             }
           </div>
         </section>
-      </a>
+      </Link>
 
       <TeamList teams={teams} toggleCreateTeamPop={toggleCreateTeamPop} userIsAnon={userIsAnon} />
 
       <section className="pop-over-info section-has-tertiary-buttons">
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickNewStuff}>
-          <span>New Stuff </span>
-          <span className="emoji dog-face"></span>
+          New Stuff <span className="emoji dog-face"></span>
         </button>
-        <a className="button-link" href="https://support.glitch.com">
-          <div className="button button-small has-emoji button-tertiary button-on-secondary-background">
-            <span>Support </span>
-            <span className="emoji ambulance"></span>
-          </div>
-        </a>        
+        <Link className="button button-link button-small has-emoji button-tertiary button-on-secondary-background" to="https://support.glitch.com">
+          Support <span className="emoji ambulance"></span>
+        </Link>        
         <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={clickSignout}>
-          <span>Sign Out</span>
-          <span className="emoji balloon"></span>
+          Sign Out <span className="emoji balloon"></span>
         </button>
       </section>
     </dialog>
@@ -162,7 +164,6 @@ UserOptionsPop.propTypes = {
 export default function UserOptionsPopContainer(props) {
   const {avatarUrl, avatarStyle, api} = props;
   return (
-
     <PopoverContainer>
       {({togglePopover: toggleUserOptionsPop, visible: userOptionsPopVisible}) => (
         <PopoverContainer>
