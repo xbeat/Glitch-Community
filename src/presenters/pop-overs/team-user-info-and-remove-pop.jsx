@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import {getAvatarThumbnailUrl, getDisplayName} from '../../models/user';
 import {getAvatarUrl} from  '../../models/project';
 
+import PopoverNested from './popover-nested.jsx';
 import {UserLink} from '../includes/link.jsx';
 import Loader from '../includes/loader.jsx';
 import Notifications from '../notifications.jsx';
