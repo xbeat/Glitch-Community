@@ -74,56 +74,81 @@ class ProjectOptionsPop extends React.Component {
   
 
   render(){
-    <dialog className="pop-over project-options-pop">
-      {props.currentUserIsOnProject &&
-        <section className="pop-over-actions">
-          {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
-          {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
-          
-          {/* FOR OVERLAY COLLECTION SELECTOR UI 
-          {!!props.addProjectToCollection && 
-              <OverlaySelectCollection domain={props.project.domain}>
-                <PopoverButton onClick={null} text="Add to Collection " emoji="framed_picture"/>
-              </OverlaySelectCollection>
-          }
-          */}
-          
-          {!!props.addProjectToCollection && 
-              <button className="button-small button-tertiary has-emoji" onClick={toggleCollectionSelector}>
-                  Add to Collection &nbsp;
-                  <span className="emoji framed-picture"/>
-              </button>
-          }
-          
-        </section>
-      }
+    return(
+      <dialog className="pop-over project-options-pop">
+        {this.props.currentUserIsOnProject &&
+          <section className="pop-over-actions">
+            {!!this.props.addPin && <PopoverButton onClick={this.animateThenAddPin} text="Pin " emoji="pushpin"/>}
+            {!!this.props.removePin && <PopoverButton onClick={this.animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
 
-      {(props.joinTeamProject && props.leaveTeamProject) &&
-        <section className="pop-over-actions collaborator-actions">
-          {!props.currentUserIsOnProject &&
-            <PopoverButton onClick={joinTeamProject} text="Join Project " emoji="rainbow"/>
-          }
-          {props.currentUserIsOnProject &&
-            <PopoverButton onClick={leaveTeamProject} text="Leave Project " emoji="wave"/>
-          }
-        </section>
-      }
-      
-      {(props.leaveProject && props.project.users.length > 1) &&
-        <section className="pop-over-actions collaborator-actions">
-          <PopoverButton onClick={leaveProject} text="Leave Project " emoji="wave"/>
-        </section>
-      }
+            {/* FOR OVERLAY COLLECTION SELECTOR UI 
+            {!!props.addProjectToCollection && 
+                <OverlaySelectCollection domain={props.project.domain}>
+                  <PopoverButton onClick={null} text="Add to Collection " emoji="framed_picture"/>
+                </OverlaySelectCollection>
+            }this.
+            */}
 
-      <section className="pop-over-actions danger-zone last-section">
-        {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
-        {!!props.removeProjectFromCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
-         
-        {!props.addProjectToCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project.id)} text="Remove from Collection" emoji="thumbs_down"/>}
-        {props.currentUserIsOnProject && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
-      </section>
-    </dialog>
-  }
+            {!!this.props.addProjectToCollection && 
+                <button className="button-small button-tertiary has-emoji" onClick={this.toggleCollectionSelector}>
+                    Add to Collection &nbsp;
+                    <span className="emoji framed-picture"/>
+                </button>
+            }
+
+          </section>
+        }
+
+        {(this.props.joinTeamProject && this.props.leaveTeamProject) &&
+          <section className="pop-over-actions collaborator-actions">
+            {!this.props.currentUserIsOnProject &&
+              <PopoverButton onClick={this.joinTeamProject} text="Join Project " emoji="rainbow"/>
+            }
+            {this.props.currentUserIsOnProject &&
+              <PopoverButton onClick={this.leaveTeamProject} text="Leave Project " emoji="wave"/>
+            }
+          </section>
+        }
+
+        {(this.props.leaveProject && this.props.project.users.length > 1) &&
+          <section className="pop-over-actions collaborator-actions">
+            <PopoverButton onClick={this.leaveProject} text="Leave Project " emoji="wave"/>
+          </section>
+        }
+
+        <section className="pop-over-actions danger-zone last-section">
+          {!!this.props.removeProjectFromTeam && <PopoverButton onClick={() => this.props.removeProjectFromTeam(this.props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
+          {!!this.props.removeProjectFromCollection && <PopoverButton onClick={() => this.props.removeProjectFromCollection(this.props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
+
+          {!this.props.addProjectToCollection && <PopoverButton onClick={() => this.props.removeProjectFromCollection(this.props.project.id)} text="Remove from Collection" emoji="thumbs_down"/>}
+          {this.props.currentUserIsOnProject && <PopoverButton onClick={this.animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
+        </section>
+      </dialog>
+      );
+    }
+};
+
+ProjectOptionsPop.propTypes = {
+  project: PropTypes.shape({
+    users: PropTypes.array.isRequired,
+  }),
+  addPin: PropTypes.func,
+  addProjectToCollection: PropTypes.func,
+  addToCollection: PropTypes.func, 
+  currentUser: PropTypes.object.isRequired,
+  currentUserIsOnProject: PropTypes.bool.isRequired,
+  deleteProject: PropTypes.func,
+  joinTeamProject: PropTypes.func,
+  leaveProject: PropTypes.func,
+  leaveTeamProject: PropTypes.func,
+  removePin: PropTypes.func,
+  removeProjectFromTeam: PropTypes.func,
+  removeProjectFromCollection: PropTypes.func,
+  toggleCollectionSelector: PropTypes.func,
+  togglePopover: PropTypes.func.isRequired,
+};
+ProjectOptionsPop.defaultProps = {
+  currentUserIsOnProject: false
 };
 
 {/* Original Project Options Pop
@@ -223,30 +248,6 @@ const ProjectOptionsPop = ({toggleCollectionSelector, ...props}) => {
   );
 };
 */};
-
-ProjectOptionsPop.propTypes = {
-  project: PropTypes.shape({
-    users: PropTypes.array.isRequired,
-  }),
-  addPin: PropTypes.func,
-  addProjectToCollection: PropTypes.func,
-  addToCollection: PropTypes.func, 
-  currentUser: PropTypes.object.isRequired,
-  currentUserIsOnProject: PropTypes.bool.isRequired,
-  deleteProject: PropTypes.func,
-  joinTeamProject: PropTypes.func,
-  leaveProject: PropTypes.func,
-  leaveTeamProject: PropTypes.func,
-  removePin: PropTypes.func,
-  removeProjectFromTeam: PropTypes.func,
-  removeProjectFromCollection: PropTypes.func,
-  toggleCollectionSelector: PropTypes.func,
-  togglePopover: PropTypes.func.isRequired,
-};
-ProjectOptionsPop.defaultProps = {
-  currentUserIsOnProject: false
-};
-
 
 // Project Options Container
 
