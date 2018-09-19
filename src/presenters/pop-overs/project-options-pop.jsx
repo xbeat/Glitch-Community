@@ -15,7 +15,7 @@ const PopoverButton = ({onClick, text, emoji}) => (
 
 // Project Options Pop
 
-const ProjectOptionsPop = ({...props}) => {
+const ProjectOptionsPop = ({toggleCollectionSelector, ...props}) => {
   function animate(event, className, func) {
     const projectContainer = event.target.closest('li');
     projectContainer.addEventListener('animationend', func, {once: true});
@@ -54,6 +54,18 @@ const ProjectOptionsPop = ({...props}) => {
     animate(event, 'slide-down', () => props.deleteProject(props.project.id));
   }
   
+  function toggleCollectionSelectorHidden(){
+    this.setState({
+      collectorSelectorVisible: false
+    });
+  }
+  
+  function toggleCollectionSelectorVisible(){
+    this.setState({
+      collectorSelectorVisible: true
+    });
+  }
+  
 
   return (
     <dialog className="pop-over project-options-pop">
@@ -71,9 +83,9 @@ const ProjectOptionsPop = ({...props}) => {
           */}
           
           {!!props.addProjectToCollection && 
-              <button className="button-small button-tertiary has-emoji" onClick={null}>
-                  Add to Collection
-                  <span className="framed-picture"/>
+              <button className="button-small button-tertiary has-emoji" onClick={toggleCollectionSelector}>
+                  Add to Collection &nbsp;
+                  <span className="emoji framed-picture"/>
               </button>
           }
           
@@ -112,19 +124,20 @@ ProjectOptionsPop.propTypes = {
   project: PropTypes.shape({
     users: PropTypes.array.isRequired,
   }),
-  togglePopover: PropTypes.func.isRequired,
-  currentUser: PropTypes.object.isRequired,
   addPin: PropTypes.func,
-  removePin: PropTypes.func,
-  deleteProject: PropTypes.func,
-  leaveProject: PropTypes.func,
-  addToCollection: PropTypes.func, 
-  removeProjectFromTeam: PropTypes.func,
-  joinTeamProject: PropTypes.func,
-  leaveTeamProject: PropTypes.func,
-  currentUserIsOnProject: PropTypes.bool.isRequired,
   addProjectToCollection: PropTypes.func,
+  addToCollection: PropTypes.func, 
+  currentUser: PropTypes.object.isRequired,
+  currentUserIsOnProject: PropTypes.bool.isRequired,
+  deleteProject: PropTypes.func,
+  joinTeamProject: PropTypes.func,
+  leaveProject: PropTypes.func,
+  leaveTeamProject: PropTypes.func,
+  removePin: PropTypes.func,
+  removeProjectFromTeam: PropTypes.func,
   removeProjectFromCollection: PropTypes.func,
+  toggleCollectionSelector: PropTypes.func,
+  togglePopover: PropTypes.func.isRequired,
 };
 ProjectOptionsPop.defaultProps = {
   currentUserIsOnProject: false
