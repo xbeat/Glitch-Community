@@ -61,11 +61,22 @@ const ProjectOptionsPop = ({...props}) => {
         <section className="pop-over-actions">
           {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
           {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
+          
+          {/* FOR OVERLAY COLLECTION SELECTOR UI 
           {!!props.addProjectToCollection && 
               <OverlaySelectCollection domain={props.project.domain}>
                 <PopoverButton onClick={null} text="Add to Collection " emoji="framed_picture"/>
               </OverlaySelectCollection>
           }
+          */}
+          
+          {!!props.addProjectToCollection && 
+              <button className="button-small button-tertiary has-emoji" onClick={null}>
+                  Add to Collection
+                  <span className="framed-picture"/>
+              </button>
+          }
+          
         </section>
       }
 
