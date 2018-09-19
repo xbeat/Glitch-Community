@@ -13,10 +13,12 @@ export default class NestedPopover extends React.Component {
   }
   
   toggle() {
-    this.setState(({menu}) => ({menu: !menu}));
+    this.setState(prevState => ({menu: !prevState.menu}));
   }
   
   render() {
+    // Only use the provider on the sub menu
+    // Nested consumers want the back button, not the open menu
     if (this.state.menu) {
       return (
         <Provider value={this.toggle}>
