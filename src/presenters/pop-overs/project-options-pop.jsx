@@ -250,7 +250,7 @@ const ProjectOptionsPop = ({toggleCollectionSelector, ...props}) => {
 */};
 
 // Project Options Container
-
+// create as stateful react component
 export default function ProjectOptions({projectOptions={}, project}) {
   if(Object.keys(projectOptions).length === 0) {
     return null;
