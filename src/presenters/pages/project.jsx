@@ -123,7 +123,7 @@ const ProjectPage = ({
     <section id="embed">
       <Embed domain={domain}/>
       <div className="buttons buttons-right">
-        <AddProjectToCollection className="button-small" projectName={domain} projectID={id} fromProject={true}/>
+        <AddProjectToCollection className="button-small" project={project} fromProject={true}/>
         <RemixButton className="button-small"
           name={domain} isMember={isAuthorized}
           onClick={() => trackRemix(id, domain)}

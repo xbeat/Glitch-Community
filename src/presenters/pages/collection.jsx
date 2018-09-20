@@ -241,7 +241,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar
                   <ProjectsUL projects={projects} categoryColor={color} 
                     projectOptions={{
                       removeProjectFromCollection: removeProject,
-                      addProjectToCollection: {addProjectToCollection}
+                      addProjectToCollection: {addProject}
                     }} 
                     {...props}/>
                 </div>
