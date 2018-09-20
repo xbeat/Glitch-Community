@@ -38,12 +38,10 @@ NestedPopover.propTypes = {
 export const NestedPopoverTitle = ({children}) => (
   <Consumer>
     {toggle => (
-      <button className="button-unstyled clickable-label" onClick={toggle} aria-label="go back">
-        <section className="pop-over-info">
-          <div className="back icon"><div className="left-arrow icon" /></div>
-          &nbsp;
-          <div className="pop-title">{children}</div>
-        </section>
+      <button className="button-unstyled pop-over-section pop-over-info clickable-label" onClick={toggle} aria-label="go back">
+        <div className="back icon"><div className="left-arrow icon" /></div>
+        &nbsp;
+        <div className="pop-title">{children}</div>
       </button>
     )}
   </Consumer>
