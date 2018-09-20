@@ -31,15 +31,15 @@ const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
       <p className="action-description">
         Admins can update team info, billing, and remove users
       </p>
-      { userIsTeamAdmin && 
+      { userIsTeamAdmin ? (
         <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)}>
           Remove Admin Status <span className="emoji fast-down" />
         </button>
-      ||
+      ) : (
         <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)}>
           Make an Admin <span className="emoji fast-up" />
         </button>
-      }
+      )}
     </section>
   );
 };
