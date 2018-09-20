@@ -49,7 +49,7 @@ class AddProjectToCollection extends React.Component {
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
         <NestedPopoverTitle>
-          Add {this.props.projectName} to collection
+          Add to collection
         </NestedPopoverTitle>
         
         {/* TO DO: Replace category with user's collections */}
