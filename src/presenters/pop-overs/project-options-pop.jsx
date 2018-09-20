@@ -16,7 +16,7 @@ const PopoverButton = ({onClick, text, emoji}) => (
 );
 
 // Project Options Content
-const projectOptionsContent = ({...props}) => {
+const ProjectOptionsContent = ({addToCollection, ...props}) => {
   function animate(event, className, func) {
     const projectContainer = event.target.closest('li');
     projectContainer.addEventListener('animationend', func, {once: true});
@@ -38,10 +38,6 @@ const projectOptionsContent = ({...props}) => {
   function joinTeamProject() {
     props.joinTeamProject(props.project.id, props.currentUser);
   }
-  
-  function addToCollection(){
-    // TO DO - trigger add to collection modal
-  }
     
   function animateThenAddPin(event) {
     animate(event, 'slide-up', () => props.addPin(props.project.id));
@@ -55,31 +51,13 @@ const projectOptionsContent = ({...props}) => {
     animate(event, 'slide-down', () => props.deleteProject(props.project.id));
   }
   
-  function toggleCollectionSelectorHidden(){
-    // this.setState({
-    //   collectorSelectorVisible: false
-    // });
-  }
-  
-  function toggleCollectionSelectorVisible(){
-    // this.setState({
-    //   collectorSelectorVisible: true
-    // });
-  }
-  
   return(
     <dialog className="pop-over project-options-pop">
       {props.currentUserIsOnProject &&
         <section className="pop-over-actions">
           {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
           {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
-
-          {!!props.addProjectToCollection && 
-              <OverlaySelectCollection domain={props.project.domain}>
-                <PopoverButton onClick={null} text="Add to Collection " emoji="framed_picture"/>
-              </OverlaySelectCollection>
-          }
-          
+          {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to Collection " emoji="framed_picture"/>}
         </section>
       }
 
@@ -114,11 +92,13 @@ const projectOptionsContent = ({...props}) => {
 
 // Project Options Pop
 const ProjectOptionsPop = (props) => {
-  <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props}/>}>
-    { showRemove => (
-      <ProjectOptionsContent {...props} showRemove={showRemove}/>
-      )}
-  </NestedPopover>
+  return(
+    <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props}/>}>
+      { addToCollection => (
+        <ProjectOptionsContent {...props} addToCollection={addToCollection}/>
+        )}
+    </NestedPopover>
+  );
 };
 
 ProjectOptionsPop.propTypes = {

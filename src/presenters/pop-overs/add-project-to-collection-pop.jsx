@@ -11,6 +11,8 @@ import UserResultItem from '../includes/user-result-item.jsx';
 
 import Notifications from '../notifications.jsx';
 
+import {NestedPopoverTitle} from './popover-nested.jsx';
+
 {/* NOTE: Categories are just used to load dummy info - should get rid of in final implementation */}
 import categories from '../../curated/categories.js';
 
@@ -46,6 +48,10 @@ class AddProjectToCollection extends React.Component {
   render() {
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
+        <NestedPopoverTitle>
+          Add {this.props.projectName} to collection
+        </NestedPopoverTitle>
+        
         {/* TO DO: Replace category with user's collections */}
         <section className="pop-over-actions results-list">
           <ul className="results">
