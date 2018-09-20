@@ -58,6 +58,11 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
           {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
           {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
           {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to Collection " emoji="framed_picture"/>}
+          {!!props.addProjectToCollection && 
+              <OverlaySelectCollection domain={props.project.domain}>
+                <PopoverButton onClick={null} text="Add to Collection Overlay "/>
+              </OverlaySelectCollection>
+          }
         </section>
       }
 
@@ -93,7 +98,7 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
 // Project Options Pop
 const ProjectOptionsPop = (props) => {
   return(
-    <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props}/>}>
+    <NestedPopover alternateContent={() => <AddProjectToCollectionPop projectName = {props.project.domain} {...props}/>}>
       { addToCollection => (
         <ProjectOptionsContent {...props} addToCollection={addToCollection}/>
         )}

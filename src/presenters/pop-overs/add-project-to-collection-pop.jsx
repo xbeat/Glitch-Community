@@ -49,7 +49,7 @@ class AddProjectToCollection extends React.Component {
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
         <NestedPopoverTitle>
-          Add to collection
+          Add {this.props.projectName} to collection
         </NestedPopoverTitle>
         
         {/* TO DO: Replace category with user's collections */}
@@ -63,6 +63,39 @@ class AddProjectToCollection extends React.Component {
                 id={categories[0].id.toString()} 
                 avatarUrl={categories[0].avatarUrl} 
                 url={categories[0].url} isActive={false} 
+                togglePopover={this.props.togglePopover} 
+                />
+            </li>
+            <li>
+              <CollectionResultItem 
+                projectName={this.props.projectName}
+                collectionName={categories[1].name} 
+                description={categories[1].description} 
+                id={categories[1].id.toString()} 
+                avatarUrl={categories[1].avatarUrl} 
+                url={categories[1].url} isActive={false} 
+                togglePopover={this.props.togglePopover} 
+                />
+            </li>
+          <li>
+              <CollectionResultItem 
+                projectName={this.props.projectName}
+                collectionName={categories[2].name} 
+                description={categories[2].description} 
+                id={categories[2].id.toString()} 
+                avatarUrl={categories[2].avatarUrl} 
+                url={categories[2].url} isActive={false} 
+                togglePopover={this.props.togglePopover} 
+                />
+            </li>
+          <li>
+              <CollectionResultItem 
+                projectName={this.props.projectName}
+                collectionName={categories[3].name} 
+                description={categories[3].description} 
+                id={categories[3].id.toString()} 
+                avatarUrl={categories[3].avatarUrl} 
+                url={categories[3].url} isActive={false} 
                 togglePopover={this.props.togglePopover} 
                 />
             </li>
