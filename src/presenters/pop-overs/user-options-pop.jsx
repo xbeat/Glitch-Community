@@ -6,11 +6,12 @@ import {getAvatarUrl as getTeamAvatarUrl} from '../../models/team';
 import {getAvatarThumbnailUrl as getUserAvatarUrl} from '../../models/user';
 import {Link, TeamLink, UserLink} from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
+import NestedPopover from './popover-nested.jsx';
 import CreateTeamPop from './create-team-pop.jsx';
 
 // Create Team button
 
-const CreateTeamButton = ({toggleUserOptionsVisible, userIsAnon}) => {
+const CreateTeamButton = ({showCreateTeam, userIsAnon}) => {
   if (userIsAnon) {
     return (
       <React.Fragment>
@@ -24,27 +25,27 @@ const CreateTeamButton = ({toggleUserOptionsVisible, userIsAnon}) => {
     );
   }
   return (
-    <button onClick={toggleUserOptionsVisible} className="button button-small has-emoji button-tertiary">
+    <button onClick={showCreateTeam} className="button button-small has-emoji button-tertiary">
       Create Team <span className="emoji herb" />
     </button>
   );
 };
 
 CreateTeamButton.propTypes = {
-  toggleUserOptionsVisible: PropTypes.func.isRequired,
+  showCreateTeam: PropTypes.func.isRequired,
   userIsAnon: PropTypes.bool.isRequired,
 };
 
 
 // Team List
 
-const TeamList = ({teams, toggleUserOptionsVisible, userIsAnon}) => {
+const TeamList = ({teams, showCreateTeam, userIsAnon}) => {
   return (
     <DevToggles>
       {toggles => (!!teams.length || toggles.includes('add-teams')) && (
         <section className="pop-over-actions">
           {toggles.includes('add-teams') && (
-            <CreateTeamButton toggleUserOptionsVisible={toggleUserOptionsVisible} userIsAnon={userIsAnon} />
+            <CreateTeamButton showCreateTeam={showCreateTeam} userIsAnon={userIsAnon} />
           )}
           {teams.map(team => (
             <TeamLink key={team.id} team={team} className="button button-small has-emoji button-tertiary">
@@ -65,7 +66,7 @@ TeamList.propTypes = {
     name: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
   })),
-  toggleUserOptionsVisible: PropTypes.func.isRequired,
+  showCreateTeam: PropTypes.func.isRequired,
   userIsAnon: PropTypes.bool.isRequired,
 };
 
@@ -74,7 +75,7 @@ TeamList.propTypes = {
 
 const UserOptionsPop = ({
   togglePopover,
-  toggleUserOptionsVisible,
+  showCreateTeam,
   user,
   signOut,
   showNewStuffOverlay,
@@ -116,7 +117,7 @@ Are you sure you want to sign out?`)) {
       </UserLink>
       <TeamList 
         teams={user.teams} 
-        toggleUserOptionsVisible={toggleUserOptionsVisible} 
+        showCreateTeam={showCreateTeam} 
         userIsAnon={!user.login} 
       />
       <section className="pop-over-info section-has-tertiary-buttons">
@@ -136,7 +137,7 @@ Are you sure you want to sign out?`)) {
 
 UserOptionsPop.propTypes = {
   togglePopover: PropTypes.func.isRequired,
-  toggleUserOptionsVisible: PropTypes.func.isRequired,
+  showCreateTeam: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   signOut: PropTypes.func.isRequired,
   showNewStuffOverlay: PropTypes.func.isRequired,
@@ -144,41 +145,12 @@ UserOptionsPop.propTypes = {
 
 
 // User Options or Create Team
-// uses userOptionsVisible state to show either UserOptions or CreateTeam content
 
-class UserOptionsAndCreateTeamPop extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userOptionsVisible: true
-    };
-    this.toggleUserOptionsVisible = this.toggleUserOptionsVisible.bind(this);
-  }
-  
-  toggleUserOptionsVisible() {
-    this.setState(prevState => ({
-      userOptionsVisible: !prevState.userOptionsVisible
-    }));
-  }
-    
-  render() {
-    return (
-      <React.Fragment>
-        { this.state.userOptionsVisible ? (
-          <UserOptionsPop
-            {...this.props}
-            toggleUserOptionsVisible={() => this.toggleUserOptionsVisible()}
-          />
-        ) : (
-          <CreateTeamPop
-            {...this.props}
-            toggleUserOptionsVisible={() => this.toggleUserOptionsVisible()}
-          />
-        )}
-      </React.Fragment>
-    );
-  }
-}
+const UserOptionsAndCreateTeamPop = (props) => (
+  <NestedPopover alternateContent={() => <CreateTeamPop {...props}/>}>
+    {toggle => <UserOptionsPop {...props} showCreateTeam={toggle}/>}
+  </NestedPopover>
+);
 
 
 // Header button and init pop
