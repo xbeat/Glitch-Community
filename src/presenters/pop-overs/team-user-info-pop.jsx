@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {getAvatarThumbnailUrl} from '../../models/user';
 
-import PopoverNested from './popover-nested.jsx';
+import NestedPopover from './popover-nested.jsx';
 import {UserLink} from '../includes/link.jsx';
 import Thanks from '../includes/thanks.jsx';
 
@@ -108,11 +108,11 @@ const TeamUserInfo = ({currentUser, showRemove, ...props}) => {
 // uses removeTeamUserVisible state to toggle between showing user info and remove views
 
 const TeamUserInfoAndRemovePop = (props) => (
-  <PopoverNested menu={() => <TeamUserRemovePop {...props}/>}>
+  <NestedPopover alternateContent={() => <TeamUserRemovePop {...props}/>}>
     {showRemove => (
       <TeamUserInfo {...props} showRemove={showRemove}/>
     )}
-  </PopoverNested>
+  </NestedPopover>
 );
 
 TeamUserInfoAndRemovePop.propTypes = {

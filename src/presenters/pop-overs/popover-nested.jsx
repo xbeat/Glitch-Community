@@ -7,22 +7,22 @@ export default class NestedPopover extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      menu: false, // true for alt page, false for main
+      alternateContentVisible: false,
     };
     this.toggle = this.toggle.bind(this);
   }
   
   toggle() {
-    this.setState(prevState => ({menu: !prevState.menu}));
+    this.setState(prevState => ({alternateContentVisible: !prevState.alternateContentVisible}));
   }
   
   render() {
     // Only use the provider on the sub menu
     // Nested consumers want the back button, not the open menu
-    if (this.state.menu) {
+    if (this.state.alternateContentVisible) {
       return (
         <Provider value={this.toggle}>
-          {this.props.menu(this.toggle)}
+          {this.props.alternateContent(this.toggle)}
         </Provider>
       );
     }
@@ -31,7 +31,7 @@ export default class NestedPopover extends React.Component {
 }
 NestedPopover.propTypes = {
   children: PropTypes.func.isRequired,
-  menu: PropTypes.func.isRequired,
+  alternateContent: PropTypes.func.isRequired,
 };
 
 
