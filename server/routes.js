@@ -36,8 +36,14 @@ module.exports = function(external) {
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
 
   function render(res, title, description, image=imageDefault) {
-    const scripts = JSON.parse(fs.readFileSync('public/scripts.json'));
-    const styles = JSON.parse(fs.readFileSync('public/styles.json'));
+    let scripts = {};
+    let styles = {};
+    try {
+      scripts = JSON.parse(fs.readFileSync('public/scripts.json'));
+      styles = JSON.parse(fs.readFileSync('public/styles.json'));
+    } catch (error) {
+      console.error("Failed to load manifests, the initial build probably isn't done yet");
+    }
 
     res.render('index.ejs', {
       title, description, image,
