@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import _ from 'lodash';
 import {withRouter} from 'react-router-dom';
-import Loader from '../includes/loader.jsx';
-import {PureEditableField} from '../includes/editable-field.jsx';
 import {getLink} from '../../models/team';
+import Loader from '../includes/loader.jsx';
+import {NestedPopoverTitle} from '../pop-overs/popover-nested.jsx';
+import {PureEditableField} from '../includes/editable-field.jsx';
 
 // Create Team 🌿
 
@@ -149,11 +150,9 @@ class CreateTeamPopBase extends React.Component {
     const placeholder = 'Your Team Name';
     return (
       <dialog className="pop-over create-team-pop">
-        <section className="pop-over-info">
-          <div className="pop-title">
-            Create Team <span className="emoji herb" />
-          </div>
-        </section>
+        <NestedPopoverTitle>
+          Create Team <span className="emoji herb" />
+        </NestedPopoverTitle>
 
         <section className="pop-over-info">
           <p className="info-description">
