@@ -6,7 +6,7 @@ import {Redirect} from 'react-router-dom';
 import moment from 'moment-mini';
 import Link from './includes/link.jsx';
 
-import UserOptionsAndCreateTeamPop from "./pop-overs/user-options-and-create-team-pop.jsx";
+import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
 import SignInPop from "./pop-overs/sign-in-pop.jsx";
 import NewProjectPop from "./pop-overs/new-project-pop.jsx";
 import NewStuffContainer from './overlays/new-stuff.jsx';
@@ -101,7 +101,7 @@ const Header = ({api, maybeUser, clearUser, searchQuery, showNewStuffOverlay}) =
         <NewProjectPop api={api}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
-        { maybeUser && <UserOptionsAndCreateTeamPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api}/>}
+        { maybeUser && <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api}/>}
       </nav>
     </header>
   );

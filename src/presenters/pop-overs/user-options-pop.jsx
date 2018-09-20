@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import _ from 'lodash';
-import {withRouter} from 'react-router-dom';
 import DevToggles from '../includes/dev-toggles.jsx';
-import Loader from '../includes/loader.jsx';
-import {PureEditableField} from '../includes/editable-field.jsx';
-import {getAvatarUrl as getTeamAvatarUrl, getLink as getTeamLink} from '../../models/team';
+import {getAvatarUrl as getTeamAvatarUrl} from '../../models/team';
 import {getAvatarThumbnailUrl as getUserAvatarUrl} from '../../models/user';
 import {Link, TeamLink, UserLink} from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
-
+import CreateTeamPop from './create-team-pop.jsx';
 
 // Create Team button
 
@@ -174,7 +170,7 @@ class UserOptionsAndCreateTeamPop extends React.Component {
             toggleUserOptionsVisible={() => this.toggleUserOptionsVisible()}
           />
         ) : (
-          <CreateTeam
+          <CreateTeamPop
             {...this.props}
             toggleUserOptionsVisible={() => this.toggleUserOptionsVisible()}
           />
