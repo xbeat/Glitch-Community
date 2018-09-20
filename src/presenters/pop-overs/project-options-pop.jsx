@@ -13,8 +13,8 @@ const PopoverButton = ({onClick, text, emoji}) => (
   </button>
 );
 
-// Project Options 
-const projectOptions = ({...props}) => {
+// Project Options Content
+const projectOptionsContent = ({...props}) => {
   function animate(event, className, func) {
     const projectContainer = event.target.closest('li');
     projectContainer.addEventListener('animationend', func, {once: true});
@@ -111,11 +111,50 @@ const projectOptions = ({...props}) => {
 
 
 // Project Options Pop
-const ProjectOptionsPop = ({toggleCollectionSelector, ...props}) => {
+const ProjectOptionsPop = (props) => {
+  <NestedPopover alternateContent={() => <AddToCollectionPop {...props}/>}>
+    { showRemove => (
+      <ProjectOptionsContent {...props} showRemove={showRemove}/>
+      )}
+  </NestedPopover>
+};
+
+// Project Options Container
+// create as stateful react component
+export default function ProjectOptions({projectOptions={}, project}) {
+  if(Object.keys(projectOptions).length === 0) {
+    return null;
+  }
+
+  function currentUserIsOnProject(user) {
+    let projectUsers = project.users.map(projectUser => {
+      return projectUser.id;
+    });
+    if (projectUsers.includes(user.id)) {
+      return true;
+    }
+  }
 
   return (
-    
+    <PopoverContainer>
+      {({togglePopover, visible}) => (
+        <CurrentUserConsumer>
+          {user => (
+            <div>
+              <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
+                <div className="down-arrow" />
+              </button>
+              { visible && <ProjectOptionsPop project={project} {...projectOptions} togglePopover={togglePopover} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+            </div>
+          )}
+        </CurrentUserConsumer>
+      )}
+    </PopoverContainer>
   );
+}
+
+ProjectOptions.propTypes = {
+  project: PropTypes.object.isRequired,
 };
 
 {/*
@@ -216,40 +255,3 @@ const ProjectOptionsPop = ({toggleCollectionSelector, ...props}) => {
 };
 */}
 
-// Project Options Container
-// create as stateful react component
-export default function ProjectOptions({projectOptions={}, project}) {
-  if(Object.keys(projectOptions).length === 0) {
-    return null;
-  }
-
-  function currentUserIsOnProject(user) {
-    let projectUsers = project.users.map(projectUser => {
-      return projectUser.id;
-    });
-    if (projectUsers.includes(user.id)) {
-      return true;
-    }
-  }
-
-  return (
-    <PopoverContainer>
-      {({togglePopover, visible}) => (
-        <CurrentUserConsumer>
-          {user => (
-            <div>
-              <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
-                <div className="down-arrow" />
-              </button>
-              { visible && <ProjectOptionsPop project={project} {...projectOptions} togglePopover={togglePopover} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
-            </div>
-          )}
-        </CurrentUserConsumer>
-      )}
-    </PopoverContainer>
-  );
-}
-
-ProjectOptions.propTypes = {
-  project: PropTypes.object.isRequired,
-};
