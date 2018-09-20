@@ -33,35 +33,35 @@ const OverlaySelectCollection = ({children, domain}) => (
                   </li>
                   <li>
                     <CollectionResultItem 
-                      projectName={this.props.projectName}
+                      projectName={domain}
                       collectionName={categories[1].name} 
                       description={categories[1].description} 
                       id={categories[1].id.toString()} 
                       avatarUrl={categories[1].avatarUrl} 
                       url={categories[1].url} isActive={false} 
-                      togglePopover={this.props.togglePopover} 
+                      togglePopover={togglePopover} 
                       />
                   </li>
                 <li>
                     <CollectionResultItem 
-                      projectName={this.props.projectName}
+                      projectName={domain}
                       collectionName={categories[2].name} 
                       description={categories[2].description} 
                       id={categories[2].id.toString()} 
                       avatarUrl={categories[2].avatarUrl} 
                       url={categories[2].url} isActive={false} 
-                      togglePopover={this.props.togglePopover} 
+                      togglePopover={togglePopover} 
                       />
                   </li>
                 <li>
                     <CollectionResultItem 
-                      projectName={this.props.projectName}
+                      projectName={domain}
                       collectionName={categories[3].name} 
                       description={categories[3].description} 
                       id={categories[3].id.toString()} 
                       avatarUrl={categories[3].avatarUrl} 
                       url={categories[3].url} isActive={false} 
-                      togglePopover={this.props.togglePopover} 
+                      togglePopover={togglePopover} 
                       />
                   </li>
                 </ul>
