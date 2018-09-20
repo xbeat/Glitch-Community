@@ -240,7 +240,8 @@ const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar
           
                   <ProjectsUL projects={projects} categoryColor={color} 
                     projectOptions={{
-                      removeProjectFromCollection: removeProject
+                      removeProjectFromCollection: removeProject,
+                      addProjectToCollection: {addProjectToCollection}
                     }} 
                     {...props}/>
                 </div>
@@ -288,6 +289,7 @@ CollectionPageWrap.propTypes = {
     projects: PropTypes.array.isRequired
   }).isRequired,
   addProject: PropTypes.func.isRequired,
+  addProjectToCollection: PropTypes.func,
   api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
   isAuthorized: PropTypes.any.isRequired,  
