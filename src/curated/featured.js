@@ -13,11 +13,11 @@ Example:
 
 export default [
   {
-    title: 'A DIY IoT-Powered Mood Ring',
+    title: 'A DIY IoT Mood Ring',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fring.jpg?1537183211561",
     link: 'https://glitch.com/~mood-ring-light'
   },{
-    title: 'Play WikiBot for WhatsApp',
+    title: 'Ask WikiBot from WhatsApp',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwiki-bot.jpg?1537183215946",
     link: 'https://glitch.com/~wealthy-plate'
   }, {
