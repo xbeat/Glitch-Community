@@ -53,19 +53,30 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
   
   return(
     <dialog className="pop-over project-options-pop">
-      {props.currentUserIsOnProject &&
-        <section className="pop-over-actions">
-          {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
-          {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
-          {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to Collection " emoji="framed_picture"/>}
-          
-          {/*
-          {!!props.addProjectToCollection && 
-              <OverlaySelectCollection domain={props.project.domain}>
-                <PopoverButton onClick={null} text="Add to Collection Overlay "/>
-              </OverlaySelectCollection>
-          }
-          */}
+      {props.currentUserIsOnProject 
+        ? <section className="pop-over-actions">
+            {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
+            {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
+            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to Collection " emoji="framed_picture"/>}
+
+            {/*
+            {!!props.addProjectToCollection && 
+                <OverlaySelectCollection domain={props.project.domain}>
+                  <PopoverButton onClick={null} text="Add to Collection Overlay "/>
+                </OverlaySelectCollection>
+            }
+            */}
+        </section>
+        : <section className="pop-over-actions">
+            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to Collection " emoji="framed_picture"/>}
+
+            {/*
+            {!!props.addProjectToCollection && 
+                <OverlaySelectCollection domain={props.project.domain}>
+                  <PopoverButton onClick={null} text="Add to Collection Overlay "/>
+                </OverlaySelectCollection>
+            }
+            */}
         </section>
       }
 
@@ -86,13 +97,15 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
         </section>
       }
 
-      <section className="pop-over-actions danger-zone last-section">
-        {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
-        {!!props.removeProjectFromCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
-         
-        {!props.addProjectToCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project.id)} text="Remove from Collection" emoji="thumbs_down"/>}
-        {props.currentUserIsOnProject && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
-      </section>
+      {props.currentUserIsOnProject && 
+        <section className="pop-over-actions danger-zone last-section">
+          {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
+          {!!props.removeProjectFromCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
+
+          {!props.addProjectToCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project.id)} text="Remove from Collection" emoji="thumbs_down"/>}
+          {props.currentUserIsOnProject && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
+        </section>
+      }
     </dialog>
     );
 }
