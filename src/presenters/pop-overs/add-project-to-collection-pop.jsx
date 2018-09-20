@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
 import ProjectModel from '../../models/project';
+import Project, {getAvatarUrl} from '../../models/project';
 import UserModel from '../../models/user';
 
 import Loader from '../includes/loader.jsx';
@@ -49,7 +50,7 @@ class AddProjectToCollection extends React.Component {
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
         <NestedPopoverTitle>
-          Add {this.props.projectName} to collection
+          <img src={getAvatarUrl(this.props.project.id)}/> Add {this.props.project.domain} to collection
         </NestedPopoverTitle>
         
         {/* TO DO: Replace category with user's collections */}
@@ -57,7 +58,7 @@ class AddProjectToCollection extends React.Component {
           <ul className="results">
             <li>
               <CollectionResultItem 
-                projectName={this.props.projectName}
+                projectName={this.props.project.domain}
                 collectionName={categories[0].name} 
                 description={categories[0].description} 
                 id={categories[0].id.toString()} 
@@ -68,7 +69,7 @@ class AddProjectToCollection extends React.Component {
             </li>
             <li>
               <CollectionResultItem 
-                projectName={this.props.projectName}
+                projectName={this.props.project.domain}
                 collectionName={categories[1].name} 
                 description={categories[1].description} 
                 id={categories[1].id.toString()} 
@@ -79,7 +80,7 @@ class AddProjectToCollection extends React.Component {
             </li>
           <li>
               <CollectionResultItem 
-                projectName={this.props.projectName}
+                projectName={this.props.project.domain}
                 collectionName={categories[2].name} 
                 description={categories[2].description} 
                 id={categories[2].id.toString()} 
@@ -90,7 +91,7 @@ class AddProjectToCollection extends React.Component {
             </li>
           <li>
               <CollectionResultItem 
-                projectName={this.props.projectName}
+                projectName={this.props.project.domain}
                 collectionName={categories[3].name} 
                 description={categories[3].description} 
                 id={categories[3].id.toString()} 
@@ -123,7 +124,7 @@ AddProjectToCollection.propTypes = {
   add: PropTypes.func.isRequired,
   collectionProjects: PropTypes.any.isRequired,
   togglePopover: PropTypes.array.isRequired,
-  projectName: PropTypes.string.isRequired,
+  project: PropTypes.object.isRequired,
 };
 
 export default AddProjectToCollection;
