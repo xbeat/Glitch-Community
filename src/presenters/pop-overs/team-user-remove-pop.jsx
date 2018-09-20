@@ -9,7 +9,7 @@ import {NestedPopoverTitle} from './popover-nested.jsx';
 import {getAvatarThumbnailUrl, getDisplayName} from '../../models/user';
 import {getAvatarUrl as getProjectAvatarUrl} from  '../../models/project';
 
-class TeamUserRemovePopImpl extends React.Component {
+class TeamUserRemovePopBase extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -127,7 +127,7 @@ class TeamUserRemovePopImpl extends React.Component {
     );
   }
 }
-TeamUserRemovePopImpl.propTypes = {
+TeamUserRemovePopBase.propTypes = {
   api: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
@@ -145,7 +145,7 @@ TeamUserRemovePopImpl.propTypes = {
 
 export const TeamUserRemovePop = (props) => (
   <NotificationsConsumer>
-    {notifyFuncs => <TeamUserRemovePopImpl {...notifyFuncs} {...props}/>}
+    {notifyFuncs => <TeamUserRemovePopBase {...notifyFuncs} {...props}/>}
   </NotificationsConsumer>
 );
 
