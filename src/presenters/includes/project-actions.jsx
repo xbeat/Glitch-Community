@@ -52,7 +52,7 @@ RemixButton.propTypes = {
 };
 
 export const ReportButton = ({name, id, ...props}) => {
-  const support = 'support@glitch.com';
+  const support = 'glitch-support@fogcreek.com';
   const subject = `[Glitch] I want to report ${name}`;
   const body = `\
 What do you think of the ${name} project? 
