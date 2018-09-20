@@ -6,6 +6,8 @@ import {CurrentUserConsumer} from '../current-user.jsx';
 import OverlaySelectCollection from '../overlays/overlay-select-collection.jsx';
 import NestedPopover from './popover-nested.jsx';
 
+import AddProjectToCollectionPop from '../pop-overs/add-project-to-collection-pop.jsx';
+
 const PopoverButton = ({onClick, text, emoji}) => (
   <button className="button-small has-emoji button-tertiary" onClick={onClick}>
     <span>{text} </span>
@@ -112,11 +114,30 @@ const projectOptionsContent = ({...props}) => {
 
 // Project Options Pop
 const ProjectOptionsPop = (props) => {
-  <NestedPopover alternateContent={() => <AddToCollectionPop {...props}/>}>
+  <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props}/>}>
     { showRemove => (
       <ProjectOptionsContent {...props} showRemove={showRemove}/>
       )}
   </NestedPopover>
+};
+
+ProjectOptionsPop.propTypes = {
+  project: PropTypes.shape({
+    users: PropTypes.array.isRequired,
+  }),
+  togglePopover: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  addPin: PropTypes.func,
+  removePin: PropTypes.func,
+  deleteProject: PropTypes.func,
+  leaveProject: PropTypes.func,
+  removeProjectFromTeam: PropTypes.func,
+  joinTeamProject: PropTypes.func,
+  leaveTeamProject: PropTypes.func,
+  currentUserIsOnProject: PropTypes.bool.isRequired,
+};
+ProjectOptionsPop.defaultProps = {
+  currentUserIsOnProject: false
 };
 
 // Project Options Container
