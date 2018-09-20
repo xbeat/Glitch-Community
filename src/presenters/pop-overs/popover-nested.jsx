@@ -1,0 +1,53 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const {Provider, Consumer} = React.createContext();
+
+export default class NestedPopover extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      alternateContentVisible: false,
+    };
+    this.toggle = this.toggle.bind(this);
+  }
+  
+  toggle() {
+    this.setState(prevState => ({alternateContentVisible: !prevState.alternateContentVisible}));
+  }
+  
+  render() {
+    // Only use the provider on the sub menu
+    // Nested consumers want the back button, not the open menu
+    if (this.state.alternateContentVisible) {
+      return (
+        <Provider value={this.toggle}>
+          {this.props.alternateContent(this.toggle)}
+        </Provider>
+      );
+    }
+    return this.props.children(this.toggle);
+  }
+}
+NestedPopover.propTypes = {
+  children: PropTypes.func.isRequired,
+  alternateContent: PropTypes.func.isRequired,
+};
+
+
+export const NestedPopoverTitle = ({children}) => (
+  <Consumer>
+    {toggle => (
+      <button className="button-unstyled clickable-label" onClick={toggle} aria-label="go back">
+        <section className="pop-over-info">
+          <div className="back icon"><div className="left-arrow icon" /></div>
+          &nbsp;
+          <div className="pop-title">{children}</div>
+        </section>
+      </button>
+    )}
+  </Consumer>
+);
+NestedPopoverTitle.propTypes = {
+  children: PropTypes.node.isRequired,
+};

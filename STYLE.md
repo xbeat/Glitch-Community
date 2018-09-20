@@ -42,7 +42,7 @@ Prefer Common React Patterns
 
 Avoid Components That Think Too Hard
 ------------------------------------
-Think about React components like you do functions.  If the component is getting to complicated, it probably needs to be decomposed.
+Think about React components like you do functions.  If the component is getting too complicated, it probably needs to be decomposed.
 
 Use React Prop-Types
 --------------------

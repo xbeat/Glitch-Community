@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Whac-Emoji!',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fwhac_emoji.png?1536836279842",
-    link: 'https://glitch.com/~whac-emoji'
+    title: 'A DIY IoT Mood Ring',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fring.jpg?1537183211561",
+    link: 'https://glitch.com/~mood-ring-light'
   },{
-    title: 'Twin Peaks Password Generator',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpassword_generator.png?1536836278805",
-    link: 'https://glitch.com/~twin-peaks-password-generator'
+    title: 'Ask WikiBot from WhatsApp',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwiki-bot.jpg?1537183215946",
+    link: 'https://glitch.com/~wealthy-plate'
   }, {
-    title: 'The Sound of Machine Learning',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsound_of_learning.png?1536836281262",
-    link: 'https://glitch.com/~sound-of-learning'
+    title: 'Remember That One Friends Episode?',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffriends.jpg?1537183216935",
+    link: 'https://glitch.com/~arandomone'
   }  
 ];
