@@ -30,9 +30,7 @@ class CreateTeamPopBase extends React.Component {
   
   async componentDidMount() {
     const {data} = await wordsApi.get('team-pairs');
-    this.setState({
-      teamName: data[0],
-    });
+    this.setState(prevState => (!prevState.teamName ? {teamName: data[0]} : {}));
     this.validate();
   }
   
