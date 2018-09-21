@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import axios from 'axios';
 import _ from 'lodash';
 import {withRouter} from 'react-router-dom';
 import {getLink} from '../../models/team';
 import Loader from '../includes/loader.jsx';
 import {NestedPopoverTitle} from '../pop-overs/popover-nested.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
+
+const wordsApi = axios.create({
+  baseURL: 'https://friendly-words.glitch.me/',
+});
 
 // Create Team 🌿
 
@@ -22,74 +27,13 @@ class CreateTeamPopBase extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  descriptiveAdjectives() { 
-    return [
-      'charming',
-      'bold',
-      'brave',
-      'cool',
-      'docile',
-      'dope',
-      'faithful',
-      'fertile',
-      'fervent',
-      'forgiving',
-      'genial',
-      'genteel',
-      'grouchy',
-      'hopeful',
-      'humane',
-      'jolly',
-      'joyful',
-      'lunar',
-      'magical',
-      'moral',
-      'mysterious',
-      'mystery',
-      'notorious',
-      'passionate',
-      'quaint',
-      'quirky',
-      'scrumptious',
-      'sensitive',
-      'tropical',
-      'woeful',
-      'whimsical',
-      'zealous',
-    ];
-  }
-
-  teamSynonyms() {
-    return [
-      'team',
-      'group',
-      'coven',
-      'squad',
-      'crew',
-      'party',
-      'troupe',
-      'band',
-      'posse',
-    ];
-  }
   
-  componentDidMount() {
-    let initialTeamName = this.randomName();
+  async componentDidMount() {
+    const {data} = await wordsApi.get('team-pairs');
     this.setState({
-      teamName: initialTeamName,
+      teamName: data[0],
     });
     this.validate();
-  }
-  
-  randomDescription() {
-    let adjectives = _.sampleSize(this.descriptiveAdjectives(), 2);
-    return `A ${adjectives[0]} team that makes ${adjectives[1]} things`;
-  }
-  
-  randomName() {
-    let adjective = _.sample(this.descriptiveAdjectives());
-    return `${_.capitalize(adjective)} ${_.sample(this.teamSynonyms())}`;
   }
   
   async validate() {
@@ -125,18 +69,19 @@ class CreateTeamPopBase extends React.Component {
     event.preventDefault();
     this.setState({ isLoading: true });
     try {
-      const {data} = await this.props.api.post('teams', {
+      const {data: predicates} = await wordsApi.get('predicates');
+      const {data: team} = await this.props.api.post('teams', {
         name: this.state.teamName,
         url: _.kebabCase(this.state.teamName),
         hasAvatarImage: false,
         coverColor: '',
         location: '',
-        description: this.randomDescription(),
+        description: `A ${predicates[0]} team that makes ${predicates[1]} things`,
         backgroundColor: '',
         hasCoverImage: false,
         isVerified: false,
       });
-      this.props.history.push(getLink(data));
+      this.props.history.push(getLink(team));
     } catch (error) {
       const message = error && error.response && error.response.data && error.response.data.message;
       this.setState({
