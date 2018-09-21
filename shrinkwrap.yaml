@@ -37,7 +37,6 @@ dependencies:
   nodemon: 1.18.3
   prop-types: 15.6.2
   quantize: 1.0.2
-  querystringify: 2.0.0
   randomcolor: 0.5.3
   raven: 2.6.3
   react: 16.4.2
@@ -4970,10 +4969,6 @@ packages:
       node: '>=0.4.x'
     resolution:
       integrity: sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
-  /querystringify/2.0.0:
-    dev: false
-    resolution:
-      integrity: sha512-eTPo5t/4bgaMNZxyjWx6N2a6AuE0mq51KWvpc7nU/MAqixcI6v6KrGUKES0HaomdnolQBBXU/++X6/QQ9KL4tw==
   /randombytes/2.0.6:
     dependencies:
       safe-buffer: 5.1.2
@@ -6451,7 +6446,6 @@ specifiers:
   nodemon: ^1.17.5
   prop-types: ^15.6.2
   quantize: ^1.0.2
-  querystringify: ^2.0.0
   randomcolor: ^0.5.3
   raven: ^2.6.3
   react: ^16.4.1
