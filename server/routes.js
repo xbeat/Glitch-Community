@@ -37,14 +37,24 @@ module.exports = function(external) {
 
   function render(res, title, description, image=imageDefault) {
     let built = true;
+    
     let scripts = {};
-    let styles = {};
     try {
       scripts = JSON.parse(fs.readFileSync('public/scripts.json'));
+    } catch (error) {
+      console.error("Failed to load script manifest");
+      built = false;
+    }
+    let styles = {};
+    try {
       styles = JSON.parse(fs.readFileSync('public/styles.json'));
     } catch (error) {
-      console.error("Failed to load manifests, the initial build probably isn't done yet");
+      console.error("Failed to load style manifest");
       built = false;
+    }
+    
+    if (!built) {
+      console.error("The initial build probably isn't ready yet");
     }
 
     res.render('index.ejs', {
