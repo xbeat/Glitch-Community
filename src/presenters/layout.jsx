@@ -11,7 +11,7 @@ import Konami from './includes/konami.jsx';
 const Layout = ({children, api, searchQuery}) => (
   <div className="content">
     <Helmet>
-      <title>Glitch - Discover and create the best stuff on the web</title>
+      <title>Glitch</title>
     </Helmet>
     <Header api={api} searchQuery={searchQuery}/>
     {children}
