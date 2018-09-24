@@ -278,17 +278,18 @@ class TeamInviteHandlerBase extends React.Component {
   
   async componentDidMount() {
     const params = new URLSearchParams(this.props.location.search);
-    if (params.has('inviteToken')) {
+    if (params.has('joinToken')) {
       try {
-        await this.props.api.post(`/teams/${this.props.team.id}/join/${params.get('inviteToken')}`);
+        await this.props.api.post(`/teams/${this.props.team.id}/join/${params.get('joinToken')}`);
+        this.setState({reload: true});
       } catch (error) {
         if (error && error.response && error.response.data && error.response.data.message) {
           this.props.createErrorNotification(`Failed to accept invite: ${error.response.data.message}`);
         } else {
-          this.props.createErrorNotification('Failed to accept invite');
+          this.props.createErrorNotification('Failed to accept invitation');
         }
+        window.history.replaceState(this.props.location.pathname);
       }
-      this.setState({reload: true});
     }
   }
   
