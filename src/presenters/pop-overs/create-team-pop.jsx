@@ -23,14 +23,18 @@ class CreateTeamPopBase extends React.Component {
       isLoading: false,
       error: ''
     };
-    this.validate = _.debounce(this.validate.bind(this), 200);
+    this.debouncedValidate = _.debounce(this.validate.bind(this), 200);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   
   async componentDidMount() {
-    const {data} = await wordsApi.get('team-pairs');
-    this.setState(prevState => (!prevState.teamName ? {teamName: data[0]} : {}));
+    try {
+      const {data} = await wordsApi.get('team-pairs');
+      this.setState(prevState => (!prevState.teamName ? {teamName: data[0]} : {}));
+    } catch (error) {
+      // If something goes wrong just leave the field empty
+    }
     this.validate();
   }
   
@@ -60,7 +64,7 @@ class CreateTeamPopBase extends React.Component {
       teamName: newValue,
       error: '',
     });
-    this.validate();
+    this.debouncedValidate();
   }
 
   async handleSubmit(event) {
