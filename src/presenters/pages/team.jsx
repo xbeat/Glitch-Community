@@ -272,6 +272,7 @@ class TeamInviteHandlerBase extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      pending: true,
       reload: false,
     };
   }
@@ -281,20 +282,25 @@ class TeamInviteHandlerBase extends React.Component {
     if (params.has('joinToken')) {
       try {
         await this.props.api.post(`/teams/${this.props.team.id}/join/${params.get('joinToken')}`);
-        this.setState({reload: true});
       } catch (error) {
         if (error && error.response && error.response.data && error.response.data.message) {
           this.props.createErrorNotification(`Failed to accept invite: ${error.response.data.message}`);
         } else {
           this.props.createErrorNotification('Failed to accept invitation');
         }
-        window.history.replaceState(this.props.location.pathname);
       }
+      this.setState({reload: true});
     }
+    this.setState({pending: false});
   }
   
   render() {
-    return this.state.reload && <Redirect to={this.props.location.pathname}/>;
+    if (this.state.reload) {
+      return <Redirect to={this.props.location.pathname}/>;
+    } else if (this.state.pending) {
+      return null;
+    }
+    return this.props.children;
   }
 }
 const TeamInviteHandler = withRouter(props => (
@@ -356,11 +362,11 @@ const TeamPageEditor = ({api, initialTeam, children}) => (
 const TeamPageContainer = ({api, team, ...props}) => (
   <TeamPageEditor api={api} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
-      <React.Fragment>
+      <TeamInviteHandler team={team} api={api}>
         <Helmet>
           <title>{team.name}</title>
         </Helmet>
-
+        
         <CurrentUserConsumer>
           {currentUser => (
             <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
@@ -369,10 +375,9 @@ const TeamPageContainer = ({api, team, ...props}) => (
             />
           )}
         </CurrentUserConsumer>
-
+        
         <TeamNameConflict team={team}/>
-        <TeamInviteHandler team={team} api={api}/>
-      </React.Fragment>
+      </TeamInviteHandler>
     )}
   </TeamPageEditor>
 );
