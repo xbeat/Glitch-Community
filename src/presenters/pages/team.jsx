@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
+import {withRouter} from 'react-router-dom';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import TeamEditor from '../team-editor.jsx';
 import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
@@ -265,6 +266,25 @@ TeamPage.propTypes = {
   uploadAvatar: PropTypes.func.isRequired,
   uploadCover: PropTypes.func.isRequired,
 };
+
+const TeamInviteHandler = withRouter(class TeamInviteHandler extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      reload: false,
+    };
+  }
+  
+  componentDidMount() {
+    const params = new URLSearchParams(this.props.location.search);
+    if (params.has('inviteToken')) {
+    }
+  }
+  
+  render() {
+    return null;
+  }
+});
 
 const teamConflictsWithUser = (team, currentUser) => {
   if (currentUser && currentUser.login) {
