@@ -71,19 +71,25 @@ class CreateTeamPopBase extends React.Component {
     event.preventDefault();
     this.setState({ isLoading: true });
     try {
-      const {data: predicates} = await wordsApi.get('predicates');
-      const {data: team} = await this.props.api.post('teams', {
+      let description = 'A team that makes things';
+      try {
+        const {data} = await wordsApi.get('predicates');
+        description = `A ${data[0]} team that makes ${data[1]} things`;
+      } catch (error) {
+        // Just use the plain description
+      }
+      const {data} = await this.props.api.post('teams', {
         name: this.state.teamName,
         url: _.kebabCase(this.state.teamName),
         hasAvatarImage: false,
         coverColor: '',
         location: '',
-        description: `A ${predicates[0]} team that makes ${predicates[1]} things`,
+        description,
         backgroundColor: '',
         hasCoverImage: false,
         isVerified: false,
       });
-      this.props.history.push(getLink(team));
+      this.props.history.push(getLink(data));
     } catch (error) {
       const message = error && error.response && error.response.data && error.response.data.message;
       this.setState({
