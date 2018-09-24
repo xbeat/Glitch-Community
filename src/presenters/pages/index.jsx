@@ -112,7 +112,7 @@ const IndexPage = ({api, user}) => (
   <main>
     <h1 className="headline">
       <Link to="https://glitch.com">Glitch</Link>{' '}
-      is the friendly community where you'll build the app of your dreams
+      is the friendly community where everyone can discover & create the best stuff on the web
     </h1>
     {!!(user && user.login) && <Questions api={api}/>}
     {!!user && <RecentProjects api={api}/>}
