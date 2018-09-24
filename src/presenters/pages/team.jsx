@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import axios from 'axios';
 import Helmet from 'react-helmet';
-import {withRouter} from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import TeamEditor from '../team-editor.jsx';
 import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
+import NotificationsConsumer from '../notifications.jsx';
 
 import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -268,7 +268,7 @@ TeamPage.propTypes = {
   uploadCover: PropTypes.func.isRequired,
 };
 
-const TeamInviteHandler = withRouter(class TeamInviteHandler extends React.Component {
+class TeamInviteHandlerBase extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -280,16 +280,23 @@ const TeamInviteHandler = withRouter(class TeamInviteHandler extends React.Compo
     const params = new URLSearchParams(this.props.location.search);
     if (params.has('inviteToken')) {
       try {
-        await axios.post(``);
+        await this.props.api.post(`/teams/${this.props.team.id}/join/${params.get('inviteToken')}`);
       } catch (error) {
+        this.props.createErrorNotification('Failed to accept invite');
       }
+      this.setState({reload: true});
     }
   }
   
   render() {
-    return null;
+    return this.state.reload && <Redirect to={this.props.location.pathname}/>;
   }
-});
+}
+const TeamInviteHandler = withRouter(props => (
+  <NotificationsConsumer>
+    {notify => <TeamInviteHandlerBase {...notify} {...props}/>}
+  </NotificationsConsumer>
+));
 
 const teamConflictsWithUser = (team, currentUser) => {
   if (currentUser && currentUser.login) {
@@ -359,7 +366,7 @@ const TeamPageContainer = ({api, team, ...props}) => (
         </CurrentUserConsumer>
 
         <TeamNameConflict team={team}/>
-        <TeamInviteHandler team={team}/>
+        <TeamInviteHandler team={team} api={api}/>
       </React.Fragment>
     )}
   </TeamPageEditor>
