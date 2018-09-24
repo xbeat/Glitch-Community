@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import axios from 'axios';
 import Helmet from 'react-helmet';
 import {withRouter} from 'react-router-dom';
 import {CurrentUserConsumer} from '../current-user.jsx';
@@ -275,9 +276,13 @@ const TeamInviteHandler = withRouter(class TeamInviteHandler extends React.Compo
     };
   }
   
-  componentDidMount() {
+  async componentDidMount() {
     const params = new URLSearchParams(this.props.location.search);
     if (params.has('inviteToken')) {
+      try {
+        await axios.post(``);
+      } catch (error) {
+      }
     }
   }
   
@@ -354,6 +359,7 @@ const TeamPageContainer = ({api, team, ...props}) => (
         </CurrentUserConsumer>
 
         <TeamNameConflict team={team}/>
+        <TeamInviteHandler team={team}/>
       </React.Fragment>
     )}
   </TeamPageEditor>
