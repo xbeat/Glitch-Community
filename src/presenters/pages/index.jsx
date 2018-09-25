@@ -27,7 +27,7 @@ function loadScript(src) {
   
 class WhatIsGlitch extends React.Component {
   componentDidMount() {
-    loadScript('//fast.wistia.com/embed/medias/vskja9agqj.jsonp');
+    loadScript('//fast.wistia.com/embed/medias/i0m98yntdb.jsonp');
     loadScript('//fast.wistia.com/assets/external/E-v1.js');
   }
   
