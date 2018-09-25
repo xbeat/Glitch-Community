@@ -364,20 +364,22 @@ const TeamPageContainer = ({api, team, ...props}) => (
   <TeamInviteHandler team={team} api={api}>
     <TeamPageEditor api={api} initialTeam={team}>
       {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
-        <Helmet>
-          <title>{team.name}</title>
-        </Helmet>
-        
-        <CurrentUserConsumer>
-          {currentUser => (
-            <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
-              currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
-              {...props}
-            />
-          )}
-        </CurrentUserConsumer>
-        
-        <TeamNameConflict team={team}/>
+        <React.Fragment>
+          <Helmet>
+            <title>{team.name}</title>
+          </Helmet>
+
+          <CurrentUserConsumer>
+            {currentUser => (
+              <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
+                currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
+                {...props}
+              />
+            )}
+          </CurrentUserConsumer>
+
+          <TeamNameConflict team={team}/>
+        </React.Fragment>
       )}
     </TeamPageEditor>
   </TeamInviteHandler>
