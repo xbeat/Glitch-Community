@@ -361,9 +361,9 @@ const TeamPageEditor = ({api, initialTeam, children}) => (
 );
 
 const TeamPageContainer = ({api, team, ...props}) => (
-  <TeamPageEditor api={api} initialTeam={team}>
-    {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
-      <TeamInviteHandler team={team} api={api}>
+  <TeamInviteHandler team={team} api={api}>
+    <TeamPageEditor api={api} initialTeam={team}>
+      {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
         <Helmet>
           <title>{team.name}</title>
         </Helmet>
@@ -378,9 +378,9 @@ const TeamPageContainer = ({api, team, ...props}) => (
         </CurrentUserConsumer>
         
         <TeamNameConflict team={team}/>
-      </TeamInviteHandler>
-    )}
-  </TeamPageEditor>
+      )}
+    </TeamPageEditor>
+  </TeamInviteHandler>
 );
 
 export default TeamPageContainer;
