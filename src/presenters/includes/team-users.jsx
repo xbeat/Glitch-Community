@@ -13,8 +13,8 @@ import {UserPopoversList} from '../users-list.jsx';
 
 export const TeamUsers = (props) => (
   <UserPopoversList users={props.users} adminIds={props.adminIds}>
-    {(user, togglePopover) => 
-      <TeamUserInfoPop 
+    {(user, togglePopover) =>
+      <TeamUserInfoPop
         userIsTeamAdmin={props.adminIds.includes(user.id)}
         user={user} togglePopover={togglePopover}
         {...props}

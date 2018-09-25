@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'A DIY IoT Mood Ring',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fring.jpg?1537183211561",
-    link: 'https://glitch.com/~mood-ring-light'
+    title: 'A Brazilian Jiu-Jitsu Guide',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FWazaoracle.png?1537791216072",
+    link: 'https://glitch.com/~neat-roast'
   },{
-    title: 'Ask WikiBot from WhatsApp',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwiki-bot.jpg?1537183215946",
-    link: 'https://glitch.com/~wealthy-plate'
+    title: 'Which Headlines Are Real?',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FLivingwhileblack_1.png?1537791215940",
+    link: 'https://glitch.com/~livingwhileblack'
   }, {
-    title: 'Remember That One Friends Episode?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffriends.jpg?1537183216935",
-    link: 'https://glitch.com/~arandomone'
+    title: 'Revisit Your Old Twitter Likes',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FTwitterwaybackmachine_1.png?1537791215723",
+    link: 'https://glitch.com/~twitter-wayback'
   }  
 ];
