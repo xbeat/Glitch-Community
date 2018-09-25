@@ -9,6 +9,7 @@ import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import NotificationsConsumer from '../notifications.jsx';
+import Loader from '../includes/loader.jsx';
 
 import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -298,7 +299,7 @@ class TeamInviteHandlerBase extends React.Component {
     if (this.state.reload) {
       return <Redirect to={this.props.location.pathname}/>;
     } else if (this.state.pending) {
-      return null;
+      return <Loader/>;
     }
     return this.props.children;
   }
