@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import moment from 'moment-mini';
-
 import Layout from '../layout.jsx';
 
 import {getEditorUrl} from '../../models/project';
@@ -62,43 +60,6 @@ class WhatIsGlitch extends React.Component {
   }
 }
 
-class ByFogCreek extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {age: this.age()};
-  }
-  
-  age() {
-    const FOUNDED = '2000-08-14';
-    return moment().diff(FOUNDED, 'years');
-  }
-  
-  componentDidMount() {
-    this.timer = window.setInterval(() => {
-      this.setState({age: this.age()});
-    }, moment.duration(5, 'minutes').asMilliseconds());
-  }
-  
-  componentWillUnmount() {
-    window.clearInterval(this.timer);
-  }
-  
-  render() {
-    const logo = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffogcreek.svg";
-    return (
-      <section className="by-fogcreek" role="complementary">
-        <h2>Made By Fog Creek</h2>
-        <img src={logo} alt="Fog Creek logo"/>
-        <p>
-          You might know us for making Trello, FogBugz, and co-creating Stack Overflow. 
-          We're <Link to="https://www.fogcreek.com">a friendly, self-funded company</Link> that's
-          been helping people make stuff for over {this.state.age} years.
-        </p>
-      </section>
-    );
-  }
-}
-
 const MadeInGlitch = () => (
   <section className="made-in-glitch">
     <p>Of course, this site was made on Glitch too</p>
@@ -120,7 +81,6 @@ const IndexPage = ({api, user}) => (
     <RandomCategories api={api}/>
     <Categories/>
     {!(user && user.login) && <WhatIsGlitch/>}
-    <ByFogCreek/>
     <MadeInGlitch/>
   </main>
 );
