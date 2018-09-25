@@ -61,7 +61,7 @@ const ProjectResults = ({projects}) => (
 const MAX_RESULTS = 20;
 const showResults = (results) => !results || !!results.length;
 
-class SearchPage extends React.Component {
+class SearchResults extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -106,34 +106,38 @@ class SearchPage extends React.Component {
     const {teams, users, projects} = this.state;
     const noResults = [teams, users, projects].every(results => !showResults(results));
     return (
-      <React.Fragment>
-        <main className="search-results">
-          {showResults(teams) && <TeamResults teams={teams}/>}
-          {showResults(users) && <UserResults users={users}/>}
-          {showResults(projects) && <ProjectResults projects={projects}/>}
-          {noResults && <NotFound name="any results"/>}
-        </main>
-        <Categories/>
-      </React.Fragment>
+      <main className="search-results">
+        {showResults(teams) && <TeamResults teams={teams}/>}
+        {showResults(users) && <UserResults users={users}/>}
+        {showResults(projects) && <ProjectResults projects={projects}/>}
+        {noResults && <NotFound name="any results"/>}
+      </main>
     );
   }
 }
-SearchPage.propTypes = {
+SearchResults.propTypes = {
   api: PropTypes.any.isRequired,
   query: PropTypes.string.isRequired,
 };
 
-const SearchPageContainer = ({api, query}) => (
+const SearchPage = ({api, query}) => (
   <Layout api={api} searchQuery={query}>
     <Helmet>
-      <title>Search for {query}</title>
+      {!!query && <title>Search for {query}</title>}
     </Helmet>
-    <ErrorHandlers>
-      {errorFuncs => (
-        <SearchPage {...errorFuncs} api={api} query={query}/>
-      )}
-    </ErrorHandlers>
+    {query ? (
+      <ErrorHandlers>
+        {errorFuncs => (
+          <SearchResults {...errorFuncs} api={api} query={query}/>
+        )}
+      </ErrorHandlers>
+    ) : <NotFound name="anything"/>}
+    <Categories/>
   </Layout>
 );
+SearchPage.propTypes = {
+  api: PropTypes.any.isRequired,
+  query: PropTypes.string,
+};
 
-export default SearchPageContainer;
+export default SearchPage;
