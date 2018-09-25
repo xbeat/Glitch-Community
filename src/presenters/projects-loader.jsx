@@ -24,6 +24,7 @@ class ProjectsLoader extends React.Component {
   }
   
   async loadProjects(...ids) {
+    if (!ids.length) return;
     const {data} = await this.props.api.get(`projects/byIds?ids=${ids.join(',')}`);
     const projects = data.map(d => ProjectModel(d).asProps());
     this.setState(keyByVal(projects, 'id'));
