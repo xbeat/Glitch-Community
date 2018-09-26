@@ -5,7 +5,7 @@ import {withRouter} from 'react-router-dom';
 import Loader from '../includes/loader.jsx';
 import NotificationsConsumer from '../notifications.jsx';
 
-class DeleteTeamPopImpl extends React.Component {
+class DeleteTeamPopBase extends React.Component {
   constructor(props) {
     super(props);    
     this.state = {
@@ -36,7 +36,7 @@ class DeleteTeamPopImpl extends React.Component {
   render() {
     let illustration = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fdelete-team.svg?1531267699621";
     return (
-      <dialog className="pop-over delete-team-pop">
+      <dialog className="pop-over delete-team-pop" open>
         <section className="pop-over-info">
           <div className="pop-title">
             Delete {this.props.teamName}
@@ -70,7 +70,7 @@ class DeleteTeamPopImpl extends React.Component {
 
 export const DeleteTeamPop = withRouter(props => (
   <NotificationsConsumer>
-    {notifyFuncs => <DeleteTeamPopImpl {...notifyFuncs} {...props}/>}
+    {notifyFuncs => <DeleteTeamPopBase {...notifyFuncs} {...props}/>}
   </NotificationsConsumer>
 ));
 
