@@ -16,21 +16,26 @@ class JoinTeamPageBase extends React.Component {
   
   async componentDidMount() {
     try {
-      throw 'asdf';
       var {data: team} = await this.props.api.get(`/teams/byUrl/${this.props.teamUrl}`);
     } catch (error) {
       Raven.captureException(error);
     }
     if (!team) {
-      // There was an api error or the team doesn't exist
-      // Either way we can't process the join request
+      // Either the api is down or the team doesn't exist
+      // Regardless we can't really do anything with this
+      this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
       this.setState({redirect: getLink({url: this.props.teamUrl})});
       return;
     }
     try {
       var {data} = await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`);
     } catch (error) {
-
+      // We know the team is real but the token failed
+      // Maybe it's been used already or expired?
+      const errorData = error && error.response && error.response.data;
+      console.log('Team invite error', errorData);
+      Raven.captureMessage('Team invite error', {extra: {error, errorData}});
+      this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
     }
     this.setState({redirect: getLink(team)});
   }
