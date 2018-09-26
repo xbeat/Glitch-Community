@@ -60,7 +60,7 @@ const OverlaySelectCollection = ({children, domain}) => (
                       description={categories[3].description} 
                       id={categories[3].id.toString()} 
                       avatarUrl={categories[3].avatarUrl} 
-                      url={categories[3].url} isActive={false} 
+                      url={categories[3].url} isActive={true} 
                       togglePopover={togglePopover} 
                       />
                   </li>
