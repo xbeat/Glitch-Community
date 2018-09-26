@@ -28,7 +28,7 @@ class JoinTeamPageBase extends React.Component {
       return;
     }
     try {
-      var {data} = await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`);
+      await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`);
     } catch (error) {
       // We know the team is real but the token failed
       // Maybe it's been used already or expired?
