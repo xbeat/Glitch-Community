@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {Redirect} from 'react-router-dom';
+import {getLink} from '../../models/team';
 
 class JoinTeamPage extends React.Component {
   constructor(props) {
@@ -12,6 +13,12 @@ class JoinTeamPage extends React.Component {
   }
   
   async componentDidMount() {
+    const {data: team} = await this.props.api.get(`/teams/byUrl/${this.props.teamUrl}`);
+    try {
+      const {data} = await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`);
+    } catch (error) {
+    }
+    this.setState({redirect: getLink(team)});
   }
   
   render() {
