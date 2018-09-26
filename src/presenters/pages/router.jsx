@@ -11,6 +11,7 @@ import {CurrentUserConsumer} from '../current-user.jsx';
 
 import IndexPage from './index.jsx';
 import {FacebookLoginPage, GitHubLoginPage} from './login.jsx';
+import JoinTeamPage from './join-team.jsx';
 import QuestionsPage from './questions.jsx';
 import ProjectPage from './project.jsx';
 import {TeamPage, UserPage, TeamOrUserPage} from './team-or-user.jsx';
@@ -59,6 +60,8 @@ const Router = ({api}) => (
 
       <Route path="/login/facebook" exact render={({location}) => <FacebookLoginPage key={location.key} api={api} code={parse(location.search, 'code')}/>}/>
       <Route path="/login/github" exact render={({location}) => <GitHubLoginPage key={location.key} api={api} code={parse(location.search, 'code')}/>}/>
+      
+      <Route path="/join/@:teamUrl/:joinToken" exact render={({match}) => <JoinTeamPage key={location.key} api={api} {...match.params}/>}/>
 
       <Route path="/questions" exact render={({location}) => <QuestionsPage key={location.key} api={api}/>}/>
 

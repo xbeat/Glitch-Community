@@ -2,14 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
-import {Redirect, withRouter} from 'react-router-dom';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import TeamEditor from '../team-editor.jsx';
 import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
-import NotificationsConsumer from '../notifications.jsx';
-import Loader from '../includes/loader.jsx';
 
 import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -269,47 +266,6 @@ TeamPage.propTypes = {
   uploadCover: PropTypes.func.isRequired,
 };
 
-class TeamInviteHandlerBase extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pending: true,
-      reload: false,
-    };
-  }
-  
-  async componentDidMount() {
-    const params = new URLSearchParams(this.props.location.search);
-    if (params.has('joinToken')) {
-      try {
-        await this.props.api.post(`/teams/${this.props.team.id}/join/${params.get('joinToken')}`);
-      } catch (error) {
-        if (error && error.response && error.response.data && error.response.data.message) {
-          this.props.createErrorNotification(`Failed to accept invite: ${error.response.data.message}`);
-        } else {
-          this.props.createErrorNotification('Failed to accept invitation');
-        }
-      }
-      this.setState({reload: true});
-    }
-    this.setState({pending: false});
-  }
-  
-  render() {
-    if (this.state.reload) {
-      return <Redirect to={this.props.location.pathname}/>;
-    } else if (this.state.pending) {
-      return <Loader/>;
-    }
-    return this.props.children;
-  }
-}
-const TeamInviteHandler = withRouter(props => (
-  <NotificationsConsumer>
-    {notify => <TeamInviteHandlerBase {...notify} {...props}/>}
-  </NotificationsConsumer>
-));
-
 const teamConflictsWithUser = (team, currentUser) => {
   if (currentUser && currentUser.login) {
     return currentUser.login.toLowerCase() === team.url;
@@ -361,28 +317,26 @@ const TeamPageEditor = ({api, initialTeam, children}) => (
 );
 
 const TeamPageContainer = ({api, team, ...props}) => (
-  <TeamInviteHandler team={team} api={api}>
-    <TeamPageEditor api={api} initialTeam={team}>
-      {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
-        <React.Fragment>
-          <Helmet>
-            <title>{team.name}</title>
-          </Helmet>
+  <TeamPageEditor api={api} initialTeam={team}>
+    {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
+      <React.Fragment>
+        <Helmet>
+          <title>{team.name}</title>
+        </Helmet>
 
-          <CurrentUserConsumer>
-            {currentUser => (
-              <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
-                currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
-                {...props}
-              />
-            )}
-          </CurrentUserConsumer>
+        <CurrentUserConsumer>
+          {currentUser => (
+            <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
+              currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
+              {...props}
+            />
+          )}
+        </CurrentUserConsumer>
 
-          <TeamNameConflict team={team}/>
-        </React.Fragment>
-      )}
-    </TeamPageEditor>
-  </TeamInviteHandler>
+        <TeamNameConflict team={team}/>
+      </React.Fragment>
+    )}
+  </TeamPageEditor>
 );
 
 export default TeamPageContainer;
