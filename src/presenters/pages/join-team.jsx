@@ -29,8 +29,9 @@ class JoinTeamPageBase extends React.Component {
     }
     try {
       await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`);
+      this.props.createNotification('Invitation accepted');
     } catch (error) {
-      // We know the team is real but the token failed
+      // The team is real but the token didn't work
       // Maybe it's been used already or expired?
       const errorData = error && error.response && error.response.data;
       console.log('Team invite error', errorData);
@@ -52,6 +53,7 @@ JoinTeamPageBase.propTypes = {
   teamUrl: PropTypes.string.isRequired,
   joinToken: PropTypes.string.isRequired,
   createErrorNotification: PropTypes.func.isRequired,
+  createNotification: PropTypes.func.isRequired,
 };
 
 export const JoinTeamPage = (props) => (
