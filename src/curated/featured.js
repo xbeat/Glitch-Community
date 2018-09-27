@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'A Brazilian Jiu-Jitsu Guide',
+    title: 'Find Tesla Body Shops Near You',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FTeslabodyshops_1.png?1537793190626",
-    link: 'https://glitch.com/~neat-roast'
+    link: 'https://glitch.com/~tesla-body-shops'
   },{
-    title: 'Which Headlines Are Real?',
+    title: 'Guess the Hearthstone Character',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FSavory_1.png?1537793190951",
-    link: 'https://glitch.com/~livingwhileblack'
+    link: 'https://glitch.com/~savory'
   }, {
-    title: 'Revisit Your Old Twitter Likes',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FTwitterwaybackmachine_1.png?1537791215723",
-    link: 'https://glitch.com/~twitter-wayback'
+    title: 'Mesmerizing Mandalas with p5.js',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FTurtleart_1.png?1537793190781",
+    link: 'https://glitch.com/~turtleart'
   }  
 ];
