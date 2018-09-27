@@ -12,7 +12,7 @@ const {Provider, Consumer} = React.createContext();
 function identifyUser(user) {
   if (user) {
     console.log("👀 current user is", user);
-    console.log("🌈 login", user.login);
+    console.log("🌈 login", user.login, user.id);
   } else {
     console.log("👻 logged out");
   }
