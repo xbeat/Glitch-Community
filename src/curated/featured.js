@@ -14,11 +14,11 @@ Example:
 export default [
   {
     title: 'A Brazilian Jiu-Jitsu Guide',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FWazaoracle.png?1537791216072",
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FTeslabodyshops_1.png?1537793190626",
     link: 'https://glitch.com/~neat-roast'
   },{
     title: 'Which Headlines Are Real?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FLivingwhileblack_1.png?1537791215940",
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FSavory_1.png?1537793190951",
     link: 'https://glitch.com/~livingwhileblack'
   }, {
     title: 'Revisit Your Old Twitter Likes',
