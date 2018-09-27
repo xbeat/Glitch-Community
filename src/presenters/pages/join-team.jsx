@@ -33,9 +33,8 @@ class JoinTeamPageBase extends React.Component {
     } catch (error) {
       // The team is real but the token didn't work
       // Maybe it's been used already or expired?
-      const errorData = error && error.response && error.response.data;
-      console.log('Team invite error', errorData);
-      Raven.captureMessage('Team invite error', {extra: {error, errorData}});
+      console.log('Team invite error', error && error.response && error.response.data);
+      Raven.captureMessage('Team invite error', {extra: {error}});
       this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
     }
     this.setState({redirect: getLink(team)});
