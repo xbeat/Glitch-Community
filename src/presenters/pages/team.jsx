@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import {CurrentUserConsumer} from '../current-user.jsx';
+import DevToggles from '../includes/dev-toggles.jsx';
 import TeamEditor from '../team-editor.jsx';
 import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -12,7 +13,7 @@ import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
-// import DeleteTeam from '../includes/delete-team.jsx';
+import DeleteTeam from '../includes/delete-team.jsx';
 import {AddTeamUser, TeamUsers, WhitelistedDomain, JoinTeam} from '../includes/team-users.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
@@ -206,17 +207,16 @@ class TeamPage extends React.Component {
         }
 
         {/* billing info section goes here */}
-
-        {/* Temporary: enable once team creation is public
-        { currentUserIsTeamAdmin &&
-          <DeleteTeam api={() => this.props.api}
-            teamId={this.props.team.id}
-            teamName={this.props.team.name}
-            teamAdmins={this.teamAdmins()}
-            users={this.props.team.users}
-          />
-        }
-       */}
+        <DevToggles>
+          {toggles => (toggles.includes('delete-teams') && this.props.currentUserIsTeamAdmin && (
+            <DeleteTeam api={() => this.props.api}
+              teamId={this.props.team.id}
+              teamName={this.props.team.name}
+              teamAdmins={this.teamAdmins()}
+              users={this.props.team.users}
+            />
+          ))}
+        </DevToggles>
 
         { !this.props.currentUserIsOnTeam &&
           <TeamMarketing />

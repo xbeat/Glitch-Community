@@ -1,5 +1,5 @@
 /* globals EDITOR_URL */
-import 'details-element-polyfill';
+import './polyfills.js';
 
 import React from 'react';
 import {render} from 'react-dom';

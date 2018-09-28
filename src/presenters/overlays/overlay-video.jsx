@@ -6,7 +6,7 @@ import PopoverContainer from '../pop-overs/popover-container.jsx';
 const Video = () => (
   <div className="wistia_responsive_padding">
     <div className="wistia_responsive_wrapper">
-      <div className="wistia_embed wistia_async_vskja9agqj" videofoam="true">
+      <div className="wistia_embed wistia_async_i0m98yntdb" videofoam="true">
       </div>
     </div>
   </div>

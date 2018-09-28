@@ -1,11 +1,11 @@
-/* global notify */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import UsersList from "../users-list.jsx";
+import {withRouter} from 'react-router-dom';
+//import UsersList from "../users-list.jsx";
 import Loader from '../includes/loader.jsx';
+import NotificationsConsumer from '../notifications.jsx';
 
-export class DeleteTeamPop extends React.Component {
+class DeleteTeamPopBase extends React.Component {
   constructor(props) {
     super(props);    
     this.state = {
@@ -14,30 +14,29 @@ export class DeleteTeamPop extends React.Component {
     this.deleteTeam = this.deleteTeam.bind(this);
   }
     
-  deleteTeam() {
+  async deleteTeam() {
     if (this.state.teamIsDeleting) {
       return null;
     }
     this.setState({
       teamIsDeleting: true
     });
-    let team = `teams/${this.props.teamId}`;
-    this.props.api().delete(team)
-      .then(() => {
-        window.location = '/';
-      }).catch(error => {
-        console.error("deleteTeam", error, error.response);
-        notify.createNotification(<div>Something went wrong, try refreshing?</div>, 'notifyError');
-        this.setState({
-          teamIsDeleting: false
-        });
-      });    
+    try {
+      await this.props.api().delete(`teams/${this.props.teamId}`);
+      this.props.history.push('/');
+    } catch (error) {
+      console.error("deleteTeam", error, error.response);
+      this.props.createErrorNotification('Something went wrong, try refreshing?');
+      this.setState({
+        teamIsDeleting: false
+      });
+    }
   }
     
   render() {
     let illustration = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fdelete-team.svg?1531267699621";
     return (
-      <dialog className="pop-over delete-team-pop">
+      <dialog className="pop-over delete-team-pop" open>
         <section className="pop-over-info">
           <div className="pop-title">
             Delete {this.props.teamName}
@@ -56,23 +55,32 @@ export class DeleteTeamPop extends React.Component {
             { this.state.teamIsDeleting && <Loader /> }
           </button>
         </section>
+        
+        {/* temp hidden until the email part of this is ready
         <section className="pop-over-info">
-          <UsersList users={this.props.admins()}/>
+          <UsersList users={this.props.teamAdmins}/>
           <p className="info-description">This will also email all team admins, giving them an option to undelete it later</p>
         </section>
+         */}
+
       </dialog>
     );
   }
 }
+
+export const DeleteTeamPop = withRouter(props => (
+  <NotificationsConsumer>
+    {notifyFuncs => <DeleteTeamPopBase {...notifyFuncs} {...props}/>}
+  </NotificationsConsumer>
+));
 
 DeleteTeamPop.propTypes = {
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   teamName: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,
-  admins: PropTypes.func.isRequired,
+  teamAdmins: PropTypes.array.isRequired,
   togglePopover: PropTypes.func.isRequired,
 };
-
 
 export default DeleteTeamPop;

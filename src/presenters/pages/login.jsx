@@ -13,6 +13,7 @@ class LoginPage extends React.Component {
     this.state = {
       done: false,
       error: false,
+      errorMessage: null,
     };
   }
   
@@ -30,6 +31,9 @@ class LoginPage extends React.Component {
     } catch (error) {
       this.setState({error: true});
       const errorData = error && error.response && error.response.data;
+      if (errorData && errorData.message) {
+        this.setState({errorMessage: errorData.message});
+      }
       const deets = {provider, error: errorData};
       console.error("OAuth login error.", deets);
       Raven.captureMessage("Oauth login error", {extra: deets});
@@ -44,7 +48,8 @@ class LoginPage extends React.Component {
     if (this.state.done) {
       return <Redirect to="/"/>;
     } else if (this.state.error) {
-      return <ErrorPage title="OAuth Login Problem" description="Hard to say what happened, but we couldn't log you in. Try again?"/>;
+      const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
+      return <ErrorPage title="OAuth Login Problem" description={this.state.errorMessage || genericDescription}/>;
     }
     return <div className="content"></div>;
   }
