@@ -20,11 +20,8 @@ class CollectionEditor extends React.Component {
   }
 
   async updateFields(changes) {
-    const {data} = await this.props.api.patch(`users/${this.state.id}`, changes);
-    this.setState(data);
-    if (this.isCurrentUser()) {
-      this.props.updateCurrentUser(data);
-    }
+    const {data} = await this.props.api.patch(`collections/${this.state.id}`, changes);
+    this.setState(data);    
   }
 
   async uploadAvatar(blob) {
@@ -65,7 +62,6 @@ class CollectionEditor extends React.Component {
       addProject: project => this.addProject(project).catch(handleError),
       removeProject: id => this.removeProject(id).catch(handleError),
       updateName: name => this.updateFields({name}).catch(handleErrorForInput),
-      updateLogin: login => this.updateFields({login}).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
     };
