@@ -6,7 +6,7 @@ import {parseOneAddress} from 'email-addresses';
 import UserModel from '../../models/user';
 
 import Loader from '../includes/loader.jsx';
-import UserResultItem, {/*InviteByEmail,*/ WhitelistEmailDomain} from '../includes/user-result-item.jsx';
+import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
 
 
 class AddTeamUserPop extends React.Component {
@@ -63,7 +63,7 @@ class AddTeamUserPop extends React.Component {
   }
     
   render() {
-    const {/*inviteEmail,*/ inviteUser, setWhitelistedDomain} = this.props;
+    const {inviteEmail, inviteUser, setWhitelistedDomain} = this.props;
     const {maybeRequest, maybeResults, query} = this.state;
     const isLoading = (!!maybeRequest || !maybeResults);
     const results = [];
@@ -71,12 +71,10 @@ class AddTeamUserPop extends React.Component {
     const email = parseOneAddress(query);
     let domain = null;
     if (email) {
-      /* Disallow invite by email until its ready
-      results.push({
+      ({ //results.push({
         key: 'invite-by-email',
         item: <InviteByEmail email={email.address} onClick={() => inviteEmail(email.address)}/>,
       });
-      */
       domain = email.domain;
     } else {
       const fakeEmail = parseOneAddress(query.replace('@', 'test@'));

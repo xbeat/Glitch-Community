@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-//import {getDisplayName} from '../../models/user';
+import {getDisplayName} from '../../models/user';
 import {WhitelistedDomainIcon} from './team-elements.jsx';
 import AddTeamUserPop from '../pop-overs/add-team-user-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
@@ -93,7 +93,7 @@ export class AddTeamUser extends React.Component {
     togglePopover();
     await this.props.inviteUser(user);
     this.setState({
-      invitee: '', //getDisplayName(user),
+      invitee: getDisplayName(user),
     });
   }
   
