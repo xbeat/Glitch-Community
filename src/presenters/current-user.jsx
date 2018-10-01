@@ -144,8 +144,8 @@ class CurrentUserManager extends React.Component {
         this.props.setCachedUser(newCachedUser);
       }
     } else {
-      const newAnonUser = await this.createAnonUser();
-      this.props.setSharedUser(newAnonUser);
+      const {data} = await this.api().post('users/anon');
+      this.props.setSharedUser(data);
     }
     this.setState({working: false});
   }
