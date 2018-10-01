@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import {Redirect} from 'react-router-dom';
 import {getLink} from '../../models/team';
+import {CurrentUserConsumer} from '../current-user.jsx';
 import NotificationsConsumer from '../notifications.jsx';
 
 class JoinTeamPageBase extends React.Component {
