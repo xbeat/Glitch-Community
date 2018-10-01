@@ -76,22 +76,20 @@ CollectionEditor.propTypes = {
   updateCurrentUser: PropTypes.func.isRequired,
   handleError: PropTypes.func.isRequired,
   handleErrorForInput: PropTypes.func.isRequired,
-  initialUser: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-  }).isRequired,
+  initialCollection: PropTypes.func.isRequired,
   removeProject: PropTypes.func.isRequired,
   uploadAsset: PropTypes.func.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
-const CollectionEditorContainer = ({api, children, initialUser}) => (
+const CollectionEditorContainer = ({api, children, initialCollection}) => (
   <ErrorHandlers>
     {errorFuncs => (
       <Uploader>
         {uploadFuncs => (
           <CurrentUserConsumer>
             {(currentUser, fetched, {update}) => (
-              <CollectionEditor {...{api, currentUser, initialUser}} updateCurrentUser={update} {...uploadFuncs} {...errorFuncs}>
+              <CollectionEditor {...{api, currentUser, initialCollection}} {...uploadFuncs} {...errorFuncs}>
                 {children}
               </CollectionEditor>
             )}
@@ -104,7 +102,7 @@ const CollectionEditorContainer = ({api, children, initialUser}) => (
 CollectionEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
-  initialUser: PropTypes.object.isRequired,
+  initialCollection: PropTypes.object.isRequired,
 };
 
 export default CollectionEditorContainer;
