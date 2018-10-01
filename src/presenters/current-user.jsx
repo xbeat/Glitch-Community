@@ -83,6 +83,9 @@ class CurrentUserManager extends React.Component {
     });
   }
   
+  async getAnonUser() {
+  }
+  
   async getSharedUser() {
     try {
       const {data: {user}} = await this.api().get(`boot?latestProjectOnly=true`);
