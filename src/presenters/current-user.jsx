@@ -138,6 +138,9 @@ class CurrentUserManager extends React.Component {
         this.props.setCachedUser(newCachedUser);
         this.setState({fetched: true});
       }
+    } else {
+      const {data} = await this.api().post('users/anon');
+      this.props.setSharedUser(data);
     }
     this.setState({working: false});
   }
@@ -181,8 +184,8 @@ CurrentUserManager.propTypes = {
     id: PropTypes.number.isRequired,
     persistentToken: PropTypes.string.isRequired,
   }),
-  setSharedUser: PropTypes.func.isRequired,
   cachedUser: PropTypes.object,
+  setSharedUser: PropTypes.func.isRequired,
   setCachedUser: PropTypes.func.isRequired,
 };
 
@@ -190,11 +193,11 @@ export const CurrentUserProvider = ({children}) => (
   <LocalStorage name="community-cachedUser" default={null}>
     {(cachedUser, setCachedUser, loadedCachedUser) => (
       <LocalStorage name="cachedUser" default={null}>
-        {(sharedUser, setSharedUser, loadedSharedUser) => (
+        {(sharedUser, setSharedUser, loadedSharedUser) => (loadedSharedUser && loadedCachedUser &&
           <CurrentUserManager sharedUser={sharedUser} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
             {({api, ...props}) => (
               <Provider value={props}>
-                {loadedSharedUser && loadedCachedUser && children(api)}
+                {children(api)}
               </Provider>
             )}
           </CurrentUserManager>
