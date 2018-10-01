@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CollectionItem from "./collection-item.jsx";
+import axios from 'axios';
+
+const wordsApi = axios.create({
+  baseURL: 'https://friendly-words.glitch.me/',
+});
 
 export const CollectionsList = ({title, collections, placeholder, projectOptions, api, isAuthorized}) => (
   <article className="collections">
@@ -33,10 +38,17 @@ CollectionsList.propTypes = {
 };
 
 // Create a new collection
-function createCollection(){
+async function createCollection(){
   console.log('attempt to create collection!');
   // generate random name for collection
-  let name = $.get("https://friendly-words.glitch.me/word-pairs/");
+  let name = ''; // name for collection
+  name = await wordsApi.get('word-pairs')[0];
+  description = `A collection of projects that does wondrous things`;
+  $.get("https://friendly-words.glitch.me/word-pairs/").then((data) => {
+    name = data[0];
+    console.log(`name: ${name}`);
+  });
+  
   
   // open up new collection
 }
