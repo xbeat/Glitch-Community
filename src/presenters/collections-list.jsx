@@ -11,13 +11,13 @@ export const CollectionsList = ({title, collections, placeholder, projectOptions
     )}
     
     {( isAuthorized 
-      ? <a href="/favorites">
-        <button className={`button create-collection`} onClick={null}>
+      ? <button className={`button create-collection`} onClick={createCollection}>
             Create Collection
-        </button>
-      </a>
+        </button>      
       : null      
     )}
+    
+    {/* <a href="/favorites"><button className={`button create-collection`} onClick={createCollection}>Create Collection</button></a>*/}
 
     <CollectionsUL {...{collections, projectOptions, api, isAuthorized}}></CollectionsUL>
 
@@ -34,7 +34,9 @@ CollectionsList.propTypes = {
 
 // Create a new collection
 function createCollection(){
+  console.log('attempt to create collection!');
   // generate random name for collection
+  let name = $.get("https://friendly-words.glitch.me/word-pairs/");
   
   // open up new collection
 }
