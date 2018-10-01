@@ -143,24 +143,18 @@ UserOptionsPop.propTypes = {
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
-class CallFuncIfHashCreateTeam extends React.Component {
+class CheckForCreateTeamHash extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {active: window.location.hash === 'create-team'};
+  }
   componentDidMount() {
-    if (window.location.hash === '#create-team') {
-      window.history.replaceState(window.history.state, window.history.
-    }
+    this.setState({active: false});
   }
   render() {
-    return this.props.children(window.location.hash === '#create-team');
+    return this.props.children(this.state.active);
   }
 }
-
-// User Options or Create Team
-
-const UserOptionsAndCreateTeamPop = (props) => (
-  <NestedPopover alternateContent={() => <CreateTeamPop {...props}/>}>
-    {toggle => <UserOptionsPop {...props} showCreateTeam={toggle}/>}
-  </NestedPopover>
-);
 
 
 // Header button and init pop
@@ -169,20 +163,25 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
   const avatarUrl = getUserAvatarUrl(props.user);
   const avatarStyle = {backgroundColor: props.user.color};
   return (
-    <PopoverContainer>
-      {({togglePopover: togglePopover, visible: popVisible}) => (
-        <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
-          <button className="user" onClick={togglePopover}>
-            <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
-            <span className="down-arrow icon"/>
-          </button>
-          {popVisible && <UserOptionsAndCreateTeamPop
-            {...props}
-            togglePopover={togglePopover}
-          />}
-        </div>
+    <CheckForCreateTeamHash>
+      {createTeamOpen => (
+        <PopoverContainer startOpen={createTeamOpen}>
+          {({togglePopover, visible}) => (
+            <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
+              <button className="user" onClick={togglePopover}>
+                <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
+                <span className="down-arrow icon"/>
+              </button>
+              {visible && (
+                <NestedPopover alternateContent={() => <CreateTeamPop {...props}/>}>
+                  {showCreateTeam => <UserOptionsPop {...props} {...{togglePopover, showCreateTeam}}/>}
+                </NestedPopover>
+              )}
+            </div>
+          )}
+        </PopoverContainer>
       )}
-    </PopoverContainer>
+    </CheckForCreateTeamHash>
   );
 }
 
