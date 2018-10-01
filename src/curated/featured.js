@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Find Tesla Body Shops Near You',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FTeslabodyshops_1.png?1537793190626",
-    link: 'https://glitch.com/~tesla-body-shops'
+    title: 'Make Your Own Planet',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fplanetgenerator.jpg?1538392449068",
+    link: 'https://glitch.com/~planet-generator'
   },{
-    title: 'Guess the Hearthstone Character',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FSavory_1.png?1537793190951",
-    link: 'https://glitch.com/~savory'
+    title: 'Should You Do That Project?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fshould-i-do-it.jpg?1538392879435",
+    link: 'https://glitch.com/~shouldidoit'
   }, {
-    title: 'Mesmerizing Mandalas with p5.js',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FTurtleart_1.png?1537793190781",
-    link: 'https://glitch.com/~turtleart'
+    title: 'Custom Collections on Spotify',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcollections-spotify.jpg?1538392448572",
+    link: 'https://glitch.com/~collections'
   }  
 ];
