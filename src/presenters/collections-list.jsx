@@ -57,6 +57,7 @@ async function createCollection(api){
   // console.log(`response: ${response}`);
   
   // open up new collection
+  // replace with getLI
   // window.location.replace(url);
 }
 
