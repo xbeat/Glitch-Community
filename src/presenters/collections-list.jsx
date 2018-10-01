@@ -32,6 +32,13 @@ CollectionsList.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
 };
 
+// Create a new collection
+function createCollection(){
+  // generate random name for collection
+  
+  // open up new collection
+}
+
 export const CollectionsUL = ({collections, projectOptions, categoryColor, api, isAuthorized}) => {
   return (
     <ul className="collections-container">
