@@ -146,7 +146,7 @@ UserOptionsPop.propTypes = {
 class CheckForCreateTeamHash extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {active: window.location.hash === 'create-team'};
+    this.state = {active: window.location.hash === '#create-team'};
   }
   componentDidMount() {
     this.setState({active: false});
@@ -173,7 +173,7 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
                 <span className="down-arrow icon"/>
               </button>
               {visible && (
-                <NestedPopover alternateContent={() => <CreateTeamPop {...props}/>}>
+                <NestedPopover alternateContent={() => <CreateTeamPop {...props}/>} startAlternateVisible={createTeamOpen}>
                   {showCreateTeam => <UserOptionsPop {...props} {...{togglePopover, showCreateTeam}}/>}
                 </NestedPopover>
               )}

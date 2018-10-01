@@ -7,7 +7,7 @@ export default class NestedPopover extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      alternateContentVisible: false,
+      alternateContentVisible: props.startAlternateVisible,
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -32,6 +32,10 @@ export default class NestedPopover extends React.Component {
 NestedPopover.propTypes = {
   children: PropTypes.func.isRequired,
   alternateContent: PropTypes.func.isRequired,
+  startAlternateVisible: PropTypes.bool,
+};
+NestedPopover.defaultProps = {
+  startAlternateVisible: false,
 };
 
 
