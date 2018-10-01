@@ -38,6 +38,7 @@ class JoinTeamPageBase extends React.Component {
       Raven.captureMessage('Team invite error', {extra: {error}});
       this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
     }
+    await this.props.reloadCurrentUser();
     this.setState({redirect: getLink(team)});
   }
   
@@ -54,12 +55,17 @@ JoinTeamPageBase.propTypes = {
   joinToken: PropTypes.string.isRequired,
   createErrorNotification: PropTypes.func.isRequired,
   createNotification: PropTypes.func.isRequired,
+  reloadCurrentUser: PropTypes.func.isRequired,
 };
 
 export const JoinTeamPage = (props) => (
-  <NotificationsConsumer>
-    {notify => <JoinTeamPageBase {...notify} {...props}/>}
-  </NotificationsConsumer>
+  <CurrentUserConsumer>
+    {(currentUser, fetched, {reload}) => (
+      <NotificationsConsumer>
+        {notify => <JoinTeamPageBase {...notify} {...props} reloadCurrentUser={reload}/>}
+      </NotificationsConsumer>
+    )}
+  </CurrentUserConsumer>
 );
 
 export default JoinTeamPage;
