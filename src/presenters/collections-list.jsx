@@ -17,7 +17,7 @@ export const CollectionsList = ({title, collections, placeholder, projectOptions
     )}
     
     {( isAuthorized 
-      ? <button className={`button create-collection`} onClick={createCollection}>
+      ? <button className={`button create-collection`} onClick={createCollection(api)}>
             Create Collection
         </button>      
       : null      
@@ -39,21 +39,24 @@ CollectionsList.propTypes = {
 };
 
 // Create a new collection
-async function createCollection(){
+async function createCollection(api){
   console.log('attempt to create collection!');
   // generate random name for collection
-  let name = await wordsApi.get('word-pairs')[0];
+  const {data} = await wordsApi.get('word-pairs');
+  console.log(`data: ${data}`);
+  let name = data[0];
   console.log(`name: ${name}`);
   let description = `A collection of ${name.split("-")[0]} projects that does ${name.split("-")[1]} things`;
   console.log(`description: ${description}`);
-  const {data} = await this.props.api.post('collections', {
+  let url = _.kebabCase(name);
+  await api.post('collections', {
     name,
     description,
-    url: _.kebabCase(name),
+    url,
   });
   
-  
   // open up new collection
+  window.location.replace(url);
 }
 
 export const CollectionsUL = ({collections, projectOptions, categoryColor, api, isAuthorized}) => {
@@ -77,3 +80,4 @@ CollectionsUL.propTypes = {
 
 
 export default CollectionsList;
+
