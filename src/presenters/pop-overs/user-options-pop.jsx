@@ -143,6 +143,16 @@ UserOptionsPop.propTypes = {
   showNewStuffOverlay: PropTypes.func.isRequired,
 };
 
+class CallFuncIfHashCreateTeam extends React.Component {
+  componentDidMount() {
+    if (window.location.hash === '#create-team') {
+      window.history.replaceState(window.history.state, window.history.
+    }
+  }
+  render() {
+    return this.props.children(window.location.hash === '#create-team');
+  }
+}
 
 // User Options or Create Team
 
@@ -162,15 +172,14 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
     <PopoverContainer>
       {({togglePopover: togglePopover, visible: popVisible}) => (
         <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
-          <button className="user" onClick={() => {togglePopover(); }}>
+          <button className="user" onClick={togglePopover}>
             <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
             <span className="down-arrow icon"/>
           </button>
           {popVisible && <UserOptionsAndCreateTeamPop
             {...props}
             togglePopover={togglePopover}
-          />
-          }
+          />}
         </div>
       )}
     </PopoverContainer>
