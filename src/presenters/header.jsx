@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import {Redirect} from 'react-router-dom';
 import moment from 'moment-mini';
-import {getAvatarThumbnailUrl, getLink} from '../models/user';
 import Link from './includes/link.jsx';
 
 import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
@@ -28,11 +27,11 @@ class Logo extends React.PureComponent {
       });
     }, moment.duration(5, 'minutes').asMilliseconds());
   }
-  
+
   componentWillUnmount() {
     window.clearInterval(this.interval);
   }
-  
+
   render() {
     const {hour} = this.state;
     
@@ -87,35 +86,6 @@ SearchForm.propTypes = {
   defaultValue: PropTypes.string,
 };
 
-const UserOptionsPopWrapper = ({user, clearUser, showNewStuffOverlay, api}) => {
-  const props = {
-    teams: user.teams,
-    userLink: getLink(user),
-    avatarUrl: getAvatarThumbnailUrl(user),
-    avatarStyle: {backgroundColor: user.color},
-    signOut: clearUser,
-    api: api,
-    userIsAnon: !user.login,
-    showNewStuffOverlay,
-    userName: user.name,
-    userLogin: user.login,
-  };
-
-  return <UserOptionsPop {...props}/>;
-};
-
-UserOptionsPopWrapper.propTypes = {
-  user: PropTypes.shape({
-    avatarThumbnailUrl: PropTypes.string,
-    color: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    login: PropTypes.string,
-  }).isRequired,
-  clearUser: PropTypes.func.isRequired,
-  showNewStuffOverlay: PropTypes.func.isRequired,
-  api: PropTypes.any.isRequired,
-};
-
 const Header = ({api, maybeUser, clearUser, searchQuery, showNewStuffOverlay}) => {
   const signedIn = maybeUser && !!maybeUser.login;
   return (
@@ -131,7 +101,7 @@ const Header = ({api, maybeUser, clearUser, searchQuery, showNewStuffOverlay}) =
         <NewProjectPop api={api}/>
         <ResumeCoding/>
         { !signedIn && <SignInPop/> }
-        { maybeUser && <UserOptionsPopWrapper user={maybeUser} clearUser={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api}/>}
+        { maybeUser && <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api}/>}
       </nav>
     </header>
   );

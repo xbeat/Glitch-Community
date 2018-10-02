@@ -51,10 +51,6 @@ export const getProfileStyle = ({id, hasCoverImage, coverColor, cache, size}) =>
   };
 };
 
-export const generateUrlForName = (name) => {
-  return name.replace(/[^\w]+/g, ' ').trim().replace(/\s+/g, '-').toLowerCase();
-};
-
 
 // Circular dependencies must go below module.exports
 import Project from './project';

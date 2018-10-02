@@ -38,10 +38,10 @@ details.popover-container
     color: primary
     font-weight: normal
     margin-bottom: 10px
-  section, >form
+  section, .pop-over-section, >form
     color: primary
     padding: 14px 12px
-  section
+  section, .pop-over-section
     &:first-child
       border-top-left-radius: 3px
       border-top-right-radius: 3px
@@ -60,9 +60,8 @@ details.popover-container
     
   .clickable-label
     width: 100%
-    .pop-over-info
-      display: flex
-      align-items: center
+    display: flex
+    align-items: center
     .back
       background-color: transparent
       vertical-align: middle
@@ -83,7 +82,7 @@ details.popover-container
     &:active
       .back
         background-color: secondary-background-active
-    
+            
   .description-section
     margin: 0
     padding: 0
@@ -117,18 +116,17 @@ details.popover-container
 
   .emoji
     display: inline-block
-  .button,button
+  .button, button
     display: inline-block
     margin-bottom: 12px
     margin-left: 0
     max-width: initial
+    &:last-child
+      margin: 0
   .button-small
     margin-bottom: 10px
   .button-link
     color: #000
-  .button-link:last-child
-    .button
-      margin: 0
   button:last-child
     margin-bottom: 0
   &.last-section
@@ -146,7 +144,10 @@ details.popover-container
   right: 0
   top: 25px
   width: 160px
-
+  .user-info
+    padding-bottom: 12px
+    padding-top: 12px
+  
 .create-team-pop
   right: 0
   top: 25px
