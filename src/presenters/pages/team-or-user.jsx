@@ -44,7 +44,7 @@ const getTeamById = async (api, id) => {
   return data && TeamModel(data).asProps();
 };
 
-const getTeam = async(api, name) => {
+const getTeam = async (api, name) => {
   let {data} = await api.get(`teams/byUrl/${name}`);
   data = parseTeamAdminIds(data);
   return data && TeamModel(data).asProps();
