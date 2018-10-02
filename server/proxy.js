@@ -55,7 +55,7 @@ module.exports = function(app) {
     'faq',
     'react-starter-kit',
     'website-starter-kit',
-    'forteams',
+    'teams',
     'forplatforms',
     'you-got-this',
     'email-sales',

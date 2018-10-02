@@ -1,6 +1,7 @@
 module.exports = function(app) {
-  redirect(app, '/partners*', '/forteams');
-  redirect(app, '/foryourapi*', '/forteams');
+  redirect(app, '/partners*', '/teams');
+  redirect(app, '/foryourapi*', '/teams');
+  redirect(app, '/forteams*', '/teams');
 }
 
 function redirect(app, route, target) {
