@@ -54,6 +54,7 @@ module.exports = function(app) {
   
   // Pages hosted by 'about.glitch.me':
   [
+    'faq',
     'forplatforms',
     'email-sales',
   ].forEach((route) => proxyGlitch(route, 'about.glitch.me', route));
