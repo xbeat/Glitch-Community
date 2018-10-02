@@ -12,7 +12,7 @@ export const TeamMarketing = () => {
         <img className="for-platforms-icon" src={forPlatformsIcon} alt="fishing emoji"></img>
         Want your own team page, complete with detailed app analytics?
       </p>
-      <Link to="/forteams" className="button button-link has-emoji">
+      <Link to="/teams" className="button button-link has-emoji">
         About Teams <span className="emoji fishing_pole" role="img" aria-label="emoji" />
       </Link>
     </section>
