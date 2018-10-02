@@ -33,7 +33,7 @@ export default function Footer() {
         Legal Stuff <span role="img" aria-label="">👮‍</span>
       </FooterLine>
       <hr/>
-      <FooterLine href="/forteams" track="platforms">
+      <FooterLine href="/teams" track="platforms">
         <img className="for-platforms-icon" src={srcForPlatforms} alt=""/>
         <span className="for-platforms-text">Glitch Teams</span>
       </FooterLine>
