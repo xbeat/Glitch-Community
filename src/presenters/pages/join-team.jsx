@@ -29,7 +29,8 @@ class JoinTeamPageBase extends React.Component {
       return;
     }
     try {
-      await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`, {}, { headers: { Authorization: null } });
+      // Suppress the authorization header to prevent user merging
+      await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`, {}, { headers: { Authorization: '' } });
       this.props.createNotification('Invitation accepted');
     } catch (error) {
       // The team is real but the token didn't work
