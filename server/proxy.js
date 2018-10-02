@@ -41,9 +41,9 @@ module.exports = function(app) {
     routes.push(routeWithLeadingSlash);
   }
 
-  function proxyGhost(route, glitchTarget, pathOnTarget='') {
+  function proxyGhost(route, glitchTarget, pathOnTarget="") {
     // Proxy all the requests to /{route}/ over to glitchTarget
-    proxyGlitch(route, glitchTarget, urlJoin(pathOnTarget, route));
+    proxyGlitch(route, glitchTarget, urlJoin("/", pathOnTarget, route));
   }
 
   // Proxy the some parts of our site over to ghost blogs:
@@ -56,9 +56,10 @@ module.exports = function(app) {
   [
     'forplatforms',
     'email-sales',
+    'teams',
   ].forEach((route) => proxyGlitch(route, 'about.glitch.me', route));
   
-  proxyGlitch('teams', 'teams.glitch.me');
+  //proxyGlitch('teams', 'teams.glitch.me');
   
   return routes;
 }
