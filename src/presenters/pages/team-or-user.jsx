@@ -24,12 +24,12 @@ const getOrNull = async(api, route) => {
 };
 
 const getUserById = async (api, id) => {
-  const user = await getOrNull(api, `users/${id}`);
+  const user = await getOrNull(api, `/users/${id}`);
   return user && UserModel(user).asProps();
 };
 
 const getUser = async (api, name) => {
-  const id = await getOrNull(api, `userId/byLogin/${name}`);
+  const id = await getOrNull(api, `/userId/byLogin/${name}`);
   if (id === "NOT FOUND") {
     return null;
   }
@@ -46,12 +46,12 @@ const parseTeam = (team) => {
 };
 
 const getTeamById = async (api, id) => {
-  const team = await getOrNull(api, `teams/${id}`);
+  const team = await getOrNull(api, `/teams/${id}`);
   return team && parseTeam(team);
 };
 
 const getTeam = async (api, name) => {
-  const team = await getOrNull(api, `teams/byUrl/${name}`);
+  const team = await getOrNull(api, `/teams/byUrl/${name}`);
   return team && parseTeam(team);
 };
 
