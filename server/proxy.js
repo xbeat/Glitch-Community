@@ -56,10 +56,9 @@ module.exports = function(app) {
   [
     'forplatforms',
     'email-sales',
-    'teams',
   ].forEach((route) => proxyGlitch(route, 'about.glitch.me', route));
   
-  //proxyGlitch('teams', 'teams.glitch.me');
+  proxyGlitch('teams', 'teams.glitch.me');
   
   return routes;
 }
