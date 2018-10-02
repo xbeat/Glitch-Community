@@ -17,7 +17,7 @@ module.exports = function(app) {
       preserveHostHdr: false, // glitch routes based on this, so we have to reset it
       https: true,
       proxyReqPathResolver: (req) => {
-        const path = urlJoin("/", pathOnTarget, route, url.parse(req.url).path);
+        const path = urlJoin("/", pathOnTarget, url.parse(req.url).path);
         console.log("Proxied:", path);
         return path;
       }
@@ -25,7 +25,7 @@ module.exports = function(app) {
     routes.push(routeWithLeadingSlash);
   }
 
-  function proxyGhost(route, glitchTarget, pathOnTarget) {
+  function proxyGhost(route, glitchTarget, pathOnTarget='') {
     const routeWithLeadingSlash = urlJoin("/", route);
     const sandwichedRoute = urlJoin("/", route, "/");
     // node matches /{route} and /{route}/;
@@ -41,7 +41,7 @@ module.exports = function(app) {
     });
   
     // Proxy all the requests to /{route}/ over to glitchTarget
-    proxyGlitch(route, glitchTarget, pathOnTarget);
+    proxyGlitch(route, glitchTarget, urlJoin(pathOnTarget, route));
   }
 
   // Proxy the some parts of our site over to ghost blogs:
@@ -49,18 +49,18 @@ module.exports = function(app) {
   proxyGhost('featured', 'featured.glitch.me');
   proxyGhost('about', 'about-glitch.glitch.me');
   proxyGhost('legal', 'about-glitch.glitch.me', '/about');
-  proxyGlitch('teams', 'teams.glitch.me');
   
   // Pages hosted by 'about.glitch.me':
   [
     'faq',
     'react-starter-kit',
     'website-starter-kit',
-    'teams',
     'forplatforms',
     'you-got-this',
     'email-sales',
-  ].forEach((route) => proxyGlitch(route, 'about.glitch.me'));
+  ].forEach((route) => proxyGlitch(route, 'about.glitch.me', route));
+  
+  proxyGlitch('teams', 'teams.glitch.me');
   
   return routes;
 }
