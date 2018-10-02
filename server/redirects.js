@@ -1,4 +1,5 @@
 module.exports = function(app) {
+  redirect(app, '/faq', '/help');
   redirect(app, '/partners*', '/teams');
   redirect(app, '/foryourapi*', '/teams');
   redirect(app, '/forteams*', '/teams');
