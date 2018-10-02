@@ -49,12 +49,12 @@ async function createCollection(api){
   let description = `A collection of ${name.split("-")[0]} projects that does ${name.split("-")[1]} things`;
   console.log(`description: ${description}`);
   let url = _.kebabCase(name); // what is the typical format for this URL?  relative?
-  // const {response} = await api.post('collections', {
-  //   name,
-  //   description,
-  //   url,
-  // });
-  // console.log(`response: ${response}`);
+  const {response} = await api.post('collections', {
+    name,
+    description,
+    url,
+  });
+  console.log(`response: ${response}`);
   
   // open up new collection
   // replace with getLI
