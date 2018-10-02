@@ -29,7 +29,7 @@ class JoinTeamPageBase extends React.Component {
       return;
     }
     try {
-      await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`);
+      await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`, {}, { headers: { Authorization: null } });
       this.props.createNotification('Invitation accepted');
     } catch (error) {
       // The team is real but the token didn't work
