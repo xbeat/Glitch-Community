@@ -40,8 +40,9 @@ CollectionsList.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
 };
 
-// ensure that the collection name doesn't already exist
-async validate(name){
+// ensure that the user doesn't already have a collection with this name
+async function validate(name){
+  return true
 }
 
 // Create a new collection
@@ -56,16 +57,18 @@ async function createCollection(api){
   let description = `A collection of ${name.split("-")[0]} projects that does ${name.split("-")[1]} things`;
   console.log(`description: ${description}`);
   let url = _.kebabCase(name);
-  // TO DO - error checking here to see if the collection name already exists
-  // const {response} = await api.post('collections', {
-  //   name,
-  //   description,
-  //   url,
-  // });
+  if(validate(name)){
+    const {response} = await api.post('collections', {
+      name,
+      description,
+      url,
+    });
   // console.log(`response: ${response}`);
   
   // open up new collection
   // window.location.replace(url);
+  }
+
 }
 
 export const CollectionsUL = ({collections, projectOptions, categoryColor, api, isAuthorized}) => {
