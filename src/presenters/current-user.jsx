@@ -146,6 +146,7 @@ class CurrentUserManager extends React.Component {
   }
   
   componentDidMount() {
+    identifyUser(this.props.cachedUser);
     this.load();
   }
   
