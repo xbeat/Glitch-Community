@@ -35,7 +35,7 @@ export function getAvatarUrl(id) {
 }
 
 export function getLink(user, domain) {
-  return `/${user}/~${domain}`;
+  return `/@${user}/~${domain}`;
 }
 
 // export function getShowUrl(domain) {

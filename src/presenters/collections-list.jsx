@@ -40,6 +40,10 @@ CollectionsList.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
 };
 
+// ensure that the collection name doesn't already exist
+async validate(name){
+}
+
 // Create a new collection
 async function createCollection(api){
   console.log('attempt to create collection!');
@@ -51,16 +55,16 @@ async function createCollection(api){
   console.log(`name: ${name}`);
   let description = `A collection of ${name.split("-")[0]} projects that does ${name.split("-")[1]} things`;
   console.log(`description: ${description}`);
-  let url = _.kebabCase(name); // what is the typical format for this URL?  relative?
-  const {response} = await api.post('collections', {
-    name,
-    description,
-    url,
-  });
-  console.log(`response: ${response}`);
+  let url = _.kebabCase(name);
+  // TO DO - error checking here to see if the collection name already exists
+  // const {response} = await api.post('collections', {
+  //   name,
+  //   description,
+  //   url,
+  // });
+  // console.log(`response: ${response}`);
   
   // open up new collection
-  // replace with getLI
   // window.location.replace(url);
 }
 
