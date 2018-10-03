@@ -19,7 +19,7 @@ export const CollectionsList = ({title, collections, placeholder, projectOptions
     )}
     
     {( isAuthorized 
-      ? <button className={`button create-collection`} onClick={createCollection(api)}>
+      ? <button className={`button create-collection`} onClick={() => createCollection(api)}>
             Create Collection
         </button>      
       : null      
