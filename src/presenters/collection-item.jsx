@@ -72,7 +72,7 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api, 
             </div>
           </a>
             
-          {collection 
+          {collection && collection.projects
             ? <DataLoader
               get={() => loadCategory(api, collection.id)}
               renderLoader={() => <Loader />}

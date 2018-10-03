@@ -54,9 +54,10 @@ async function createCollection(api){
   console.log(`word_pair: ${word_pair}`);
   let name = word_pair[0];
   console.log(`name: ${name}`);
-  let description = `A collection of ${name.split("-")[0]} projects that does ${name.split("-")[1]} things`;
+  let description = `A collection of projects that does ${name.split("-")[0]} things`;
   console.log(`description: ${description}`);
   let url = _.kebabCase(name);
+  let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
   if(validate(name)){
     const {data} = await api.post('collections', {
       name,
