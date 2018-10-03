@@ -19,7 +19,9 @@ async function getFromCacheOrApi(id, cache, api) {
   if (item === null) {
     try {
       item = (await api(id)) || NOT_FOUND;
-    } catch (e) {
+    } catch (error) {
+      // Technically anything other than a 404 is a 'real' error
+      // but for our usage we can just go on as if it doesn't exist
       item = NOT_FOUND;
     }
     cache.put(id, item, CACHE_TIMEOUT);
