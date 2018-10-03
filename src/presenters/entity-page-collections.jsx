@@ -4,15 +4,16 @@ import _ from 'lodash';
 
 import ProjectsList from './projects-list.jsx';
 import CollectionsList from './collections-list.jsx';
-import {Loader} from './includes/loader.jsx';
+import {DataLoader} from './includes/loader.jsx';
 
 const EntityPageCollections = ({api, isAuthorized, userId}) => {
   return (
-    <Loader get={() => this.props.api.get(`collections/?userId=${userId}`)}>
-      {collections => 
-        <div>{collections}</div>
+    
+    <DataLoader get={() => api.get(`collections/?userId=${userId}`)}>
+      { ({data}) => 
+        <CollectionsList title="Collections" collections={data} api={api} isAuthorized={isAuthorized}/>
       }
-    </Loader>
+    </DataLoader>    
   );
 };
 
