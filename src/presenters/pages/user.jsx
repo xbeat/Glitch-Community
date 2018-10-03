@@ -94,7 +94,7 @@ const UserPage = ({
       api={api} 
       collections={categories}
       isAuthorized={isAuthorized}
-      userId={login} // having trouble with user.id instead of login
+      userId={id} 
     />
     
     <EntityPageProjects
