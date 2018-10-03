@@ -16,19 +16,24 @@ const EntityPageCollections = ({collections, api, isAuthorized, userId}) => {
   // });
   
   async function loadCollections(){
-    const {data} = await this.props.api.get(`collections/?userId=${userId}`);
+    console.log('load collections');
+    const userId = 867163; // placeholder since can't pass it correctly yet
+    const [data] = await this.props.api.get(`collections/?userId=${userId}`);
+    console.log([data]);
   }
 
   return (
     <React.Fragment>
-      {!!collections.length && (
-        <CollectionsList title="Collections" collections={loadCollections} api={api} isAuthorized={isAuthorized} />
-      )}
+      {/*
+      <CollectionsList title="Collections" collections={loadCollections} api={api} isAuthorized={isAuthorized} />
+       */}
+      
+      <CollectionsList title="Collections" collections={collections.slice(0,2)} api={api} isAuthorized={isAuthorized} />
+      
     </React.Fragment>
+    
   );
 };
-
-
 
 
 EntityPageCollections.propTypes = {
