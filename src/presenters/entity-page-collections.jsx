@@ -6,10 +6,6 @@ import ProjectsList from './projects-list.jsx';
 import CollectionsList from './collections-list.jsx';
 import ProjectsLoader from './projects-loader.jsx';
 
-/* globals Set */
-
-// const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
-
 const EntityPageCollections = ({collections, api, isAuthorized}) => {
   
   // projectOptions = _.mapValues(projectOptions, function(projectOption) {
@@ -38,6 +34,10 @@ EntityPageCollections.propTypes = {
 //     {(projects, reloadProject) => <EntityPageProjects projects={projects} reloadProject={reloadProject} {...props}/>}
 //   </ProjectsLoader>
 // );
+
+async function loadCollections
+
+
 
 // export default EntityPageProjectsContainer;
 export default EntityPageCollections;
