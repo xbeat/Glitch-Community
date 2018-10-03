@@ -47,25 +47,25 @@ async function validate(name){
 
 // Create a new collection
 async function createCollection(api){
-//   console.log('attempt to create collection!');
+  console.log('attempt to create collection!');
   
-//   // generate random name for collection
-//   const {word_pair} = await wordsApi.get('word-pairs');
-//   console.log(`word_pair: ${word_pair}`);
-//   let name = word_pair[0];
-//   console.log(`name: ${name}`);
-//   let description = `A collection of ${name.split("-")[0]} projects that does ${name.split("-")[1]} things`;
-//   console.log(`description: ${description}`);
-//   let url = _.kebabCase(name);
-//   if(validate(name)){
-//     const {data} = await api.post('collections', {
-//       name,
-//       description,
-//       url,
-//     });
-//    console.log(`data: ${data}`);
-//    history.push(getLink(data));
-//   }
+  // generate random name for collection
+  const {word_pair} = await wordsApi.get('word-pairs');
+  console.log(`word_pair: ${word_pair}`);
+  let name = word_pair[0];
+  console.log(`name: ${name}`);
+  let description = `A collection of ${name.split("-")[0]} projects that does ${name.split("-")[1]} things`;
+  console.log(`description: ${description}`);
+  let url = _.kebabCase(name);
+  if(validate(name)){
+    const {data} = await api.post('collections', {
+      name,
+      description,
+      url,
+    });
+   console.log(`data: ${data}`);
+   history.push(getLink(data));
+  }
 }
 
 export const CollectionsUL = ({collections, projectOptions, categoryColor, api, isAuthorized}) => {
