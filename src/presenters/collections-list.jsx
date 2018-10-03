@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CollectionItem from "./collection-item.jsx";
+import {getLink} from '../../models/collection';
+
 import axios from 'axios';
 import _ from 'lodash';
 
