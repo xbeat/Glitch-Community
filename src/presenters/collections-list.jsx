@@ -41,6 +41,7 @@ CollectionsList.propTypes = {
 // Create a new collection
 async function createCollection(api){
   console.log('attempt to create collection!');
+  
   // generate random name for collection
   const {data} = await wordsApi.get('word-pairs');
   console.log(`data: ${data}`);

@@ -24,7 +24,7 @@ import {avatars} from '../../models/collection.js';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
 
-// some dummy info for testing
+// some dummy info for testing - to be eventually removed as name generation happens outside of collection page
 let adjectives = [
   'charming',
   'bold',
