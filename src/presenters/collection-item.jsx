@@ -33,7 +33,7 @@ const ProjectsPreview = ({projects, projectOptions, categoryColor, collectionUrl
       </div>
       <div className="collection-link">
         <a href={collectionUrl}>
-          View {projects.length} {pluralize('project', projects.length)} →
+          View {projects.length} {(projects.length > 0 ? 'projects' : 'project')} →
         </a>            
       </div>
     </React.Fragment>
