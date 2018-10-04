@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import Project, {getAvatarUrl} from '../../models/project';
+import {getAvatarUrl as getTeamAvatar} from '../../models/team';
+import {TeamLink} from '../includes/link.jsx';
 
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
@@ -108,7 +110,10 @@ const ProjectPage = ({
             <UsersList users={users} />
             {teams.length && <ul className="users">
               {teams.map(team => <li key={team.id}>
-               </li>)}
+                <TeamLink team={team} className="user" data-tooltip={team.name} data-tooltip-left="true">
+                  <img className="user-list-avatar" src={getTeamAvatar(team)} alt={team.name} width="32px" height="32px"/>
+                </TeamLink>
+              </li>)}
             </ul>}
           </div>
           <AuthDescription
