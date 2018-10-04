@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import ProjectModel from '../models/project';
-import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
+import CollectionOptionsContainer from "./pop-overs/collection-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
 import Loader, {DataLoader} from './includes/loader.jsx';
@@ -20,7 +20,7 @@ const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163
 const defaultUrl = "/favorites";
 const defaultName = "My Favorite Projects";
 
-const ProjectsPreview = ({projects, projectOptions, categoryColor, collectionUrl}) => {
+const ProjectsPreview = ({projects, categoryColor, collectionUrl}) => {
   return (
     <React.Fragment>
       <div className="projects-preview" projects={projects}>
@@ -42,16 +42,17 @@ const ProjectsPreview = ({projects, projectOptions, categoryColor, collectionUrl
 
 ProjectsPreview.propTypes = {
   projects: PropTypes.any.isRequired,
-  collectionUrl: PropTypes.string.isRequired
+  collectionUrl: PropTypes.string.isRequired,
+  collectionOptions: PropTypes.object,
 };
 
 
-export const CollectionItem = ({collection, categoryColor, projectOptions, api, isAuthorized}) => {
+export const CollectionItem = ({collection, categoryColor, collectionOptions, api, isAuthorized}) => {
   let randomColor = colors[Math.floor(Math.random() * colors.length)];
   
   return (
     <li>
-      <ProjectOptionsContainer collection={collection} projectOptions={projectOptions}></ProjectOptionsContainer>
+      <CollectionOptionsContainer collection={collection} collectionOptions={collectionOptions}></CollectionOptionsContainer>
 
       <div className={['collection']} 
         style={(collection ? {backgroundColor: collection.backgroundColor, borderBottomColor:collection.backgroundColor} : null)}>
@@ -112,7 +113,7 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api, 
 CollectionItem.propTypes = {
   api: PropTypes.func.isRequired,
   categoryColor: PropTypes.string,
-  projectOptions: PropTypes.object,
+  collectionOptions: PropTypes.object,
   isAuthorized: PropTypes.bool.isRequired,
 };
 

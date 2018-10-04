@@ -77,7 +77,7 @@ export const CollectionsUL = ({collections, collectionOptions, categoryColor, ap
       <CollectionItem key={null} collection={null} api={api} isAuthorized={isAuthorized}></CollectionItem>
       
       { collections.map(collection => (
-        <CollectionItem key={collection.id} collection={collection} api={api} isAuthorized={isAuthorized}></CollectionItem>
+        <CollectionItem key={collection.id} collection={collection} api={api} isAuthorized={isAuthorized} collectionOptions={collectionOptions}></CollectionItem>
       ))}
     </ul>
   );
