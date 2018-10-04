@@ -319,6 +319,7 @@ async function loadCategory(api, id) {
 }
 
 async function loadCollection(api, id){
+  console.log(`id: ${id}`);
   const {data} = await api.get(`collections/${id}`);
   if(data){
     data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
