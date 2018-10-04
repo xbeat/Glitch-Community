@@ -17,41 +17,36 @@ function addDefaultSrc(event) {
   event.target.src = ANON_AVATAR_URL;
 }
 
-const UserAvatar = ({
-  alt, 
-  avatarUrl,
-}) => (
-  <img onError={addDefaultSrc} className="user-list-avatar" width="32px" height="32px" src={avatarUrl} alt={alt}/>
+const UserAvatarRaw = ({name, src, style}) => (
+  <img onError={addDefaultSrc} className="user-list-avatar" width="32px" height="32px"
+    src={getAvatarThumbnailUrl(user)} style={getStyle(user)} alt={getDisplayName(user)}
+    data-tooltip={getDisplayName(user)} data-tooltip-left="true"
+  />
+);
+
+const UserAvatar = ({user}) => (
+  <UserAvatarRaw name={getDisplayName(user)} src={getAvatarThumbnailUrl(user)} style=
 );
 UserAvatar.propTypes = {
-  alt: PropTypes.string.isRequired,
-  avatarUrl: PropTypes.string.isRequired,
-};
-
-
-// StaticUserTile
-
-const StaticUserTile = (user) => (
-  <span className="user" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
-    <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
-  </span>
-);
-StaticUserTile.propTypes = {
-  id: PropTypes.number.isRequired,
-  login: PropTypes.string,
-  name: PropTypes.string,
-  avatarThumbnailUrl: PropTypes.string,
-  color: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    login: PropTypes.string,
+    name: PropTypes.string,
+    avatarThumbnailUrl: PropTypes.string,
+    color: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 
 // StaticUsersList
 
-export const StaticUsersList = ({users, extraClass="" }) => (
+export const StaticUsersList = ({users, extraClass=""}) => (
   <ul className={`users ${extraClass}`}>
     {users.map(user => (
       <li key={user.id}>
-        <StaticUserTile {...user} />
+        <span className="user">
+          <UserAvatar user={user}/>
+        </span>
       </li>
     ))}
   </ul>
@@ -62,29 +57,15 @@ StaticUsersList.propTypes = {
 };
 
 
-// UserTile
-
-const UserTile = (user) => (
-  <UserLink user={user} className="user" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
-    <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
-  </UserLink>
-);
-UserTile.propTypes = {
-  id: PropTypes.number.isRequired,
-  login: PropTypes.string,
-  name: PropTypes.string,
-  avatarThumbnailUrl: PropTypes.string,
-  color: PropTypes.string.isRequired,
-};
-
-
 // PopulatedUsersList
 
 export const PopulatedUsersList = ({users, extraClass="" }) => (
   <ul className={`users ${extraClass}`}>
     {users.map(user => (
       <li key={user.id}>
-        <UserTile {...user} />
+        <UserLink user={user} className="user">
+          <UserAvatar user={user} />
+        </UserLink>
       </li>
     ))}
   </ul>
