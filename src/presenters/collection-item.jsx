@@ -11,6 +11,8 @@ import ProjectsLoader from './projects-loader.jsx';
 
 import {getAvatarUrl, getLink} from '../models/project.js';
 
+var pluralize = require('pluralize');
+
 const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163,187,0.40)", "rgba(251,160,88,0.40)", "rgba(252,243,175,0.40)", "rgba(48,220,166,0.40)", 
   "rgba(103,190,255,0.40)", "rgba(201,191,244,0.40)"];
 
@@ -31,7 +33,7 @@ const ProjectsPreview = ({projects, projectOptions, categoryColor, collectionUrl
       </div>
       <div className="collection-link">
         <a href={collectionUrl}>
-          View all {projects.length} projects →
+          View {projects.length} {pluralize('project', projects.length)} →
         </a>            
       </div>
     </React.Fragment>
@@ -72,17 +74,26 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api, 
             </div>
           </a>
             
-          {collection && collection.projects
+          {collection
             ? <DataLoader
               get={() => loadCollection(api, collection.id)}
               renderLoader={() => <Loader />}
               renderError={() => <div>Something went wrong. Try refreshing?</div>}
-            >
-              {collection => (
-                <ProjectsLoader api={api} projects={collection.projects}>
-                  {projects => <ProjectsPreview projects={collection.projects} categoryColor={collection.color} collectionUrl={collection.url}/>}
-                </ProjectsLoader>
-              )}
+              >
+                {collection => (
+                  collection.projects.length > 0
+                    ?
+                    <ProjectsLoader api={api} projects={collection.projects}>
+                      {projects => <ProjectsPreview projects={collection.projects} categoryColor={collection.color} collectionUrl={collection.url}/>}
+                    </ProjectsLoader>
+                   :
+                   <div className="projects-preview empty">
+                      {(isAuthorized
+                        ? <a href={defaultUrl}>This collection is empty.  Add some projects to it!</a>
+                        : "No projects to see in this collection just yet."
+                      )}
+                    </div>
+                )}
             </DataLoader>   
               
             :  <div className="projects-preview empty">
