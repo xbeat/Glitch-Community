@@ -68,6 +68,7 @@ const UserPage = ({
   addPin, removePin,
   leaveProject,
   deleteProject, undeleteProject,
+  deleteCollection,
   setDeletedProjects,
   addProjectToCollection,
   createPersistentNotification
@@ -94,6 +95,7 @@ const UserPage = ({
       api={api} 
       isAuthorized={isAuthorized}
       userId={id} 
+      deleteCollection={deleteCollection}
     />
     
     <EntityPageProjects

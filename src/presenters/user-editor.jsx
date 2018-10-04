@@ -108,6 +108,11 @@ class UserEditor extends React.Component {
     }));
   }
   
+  async deleteCollection(id){
+    await this.props.api.delete(`/collections/${id}`);
+    // maybe need to pass back updated set of collections here
+  }
+  
   async addProjectToCollection(id) {
     // await this.props.api.post(`users/${this.state.id}/pinned-projects/${id}`);
     // this.setState(({pins}) => ({
