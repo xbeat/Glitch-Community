@@ -18,9 +18,9 @@ function addDefaultSrc(event) {
 }
 
 const Avatar = ({name, src, style}) => (
-  <span>
-    <img onError={addDefaultSrc} className="user-list-avatar" width="32px" height="32px"
-      src={src} style={style} alt={name} data-tooltip={name} data-tooltip-left="true"
+  <span className="user-list-avatar" data-tooltip={name} data-tooltip-left="true">
+    <img width="32px" height="32px"
+      src={src} style={style} alt={name} onError={addDefaultSrc}
     />
   </span>
 );
