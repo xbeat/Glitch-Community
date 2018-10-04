@@ -106,6 +106,10 @@ const ProjectPage = ({
           </h1>
           <div className="users-information">
             <UsersList users={users} />
+            {teams.length && <ul className="users">
+              {teams.map(team => <li key={team.id}>
+               </li>)}
+            </ul>}
           </div>
           <AuthDescription
             authorized={isAuthorized} description={description}
