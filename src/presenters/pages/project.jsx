@@ -107,7 +107,7 @@ const ProjectPage = ({
           </h1>
           <div className="users-information">
             <UsersList users={users} />
-            {teams.length && <TeamsList teams={teams}/>}
+            {!!teams.length && <TeamsList teams={teams}/>}
           </div>
           <AuthDescription
             authorized={isAuthorized} description={description}
