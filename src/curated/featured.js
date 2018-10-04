@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Make Your Own Planet',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fplanetgenerator.jpg?1538392449068",
-    link: 'https://glitch.com/~planet-generator'
+    title: 'Play Along with Bongo-Cat!',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fbongo-cat-remix.jpg?1538392448735",
+    link: 'https://glitch.com/~bongo-cat'
   },{
-    title: 'Should You Do That Project?',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fshould-i-do-it.jpg?1538392879435",
-    link: 'https://glitch.com/~shouldidoit'
+    title: 'Colorful Generative Crystals',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcrystal-generator.jpg?1538392448859",
+    link: 'https://generative-crystals.glitch.me'
   }, {
-    title: 'Custom Collections on Spotify',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcollections-spotify.jpg?1538392448572",
-    link: 'https://glitch.com/~collections'
+    title: 'The Sound of Data',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fweb-sonify.jpg?1538392448280",
+    link: 'https://glitch.com/~web-sonify'
   }  
 ];
