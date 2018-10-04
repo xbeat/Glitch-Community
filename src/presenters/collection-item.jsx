@@ -11,8 +11,6 @@ import ProjectsLoader from './projects-loader.jsx';
 
 import {getAvatarUrl, getLink} from '../models/project.js';
 
-var pluralize = require('pluralize');
-
 const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163,187,0.40)", "rgba(251,160,88,0.40)", "rgba(252,243,175,0.40)", "rgba(48,220,166,0.40)", 
   "rgba(103,190,255,0.40)", "rgba(201,191,244,0.40)"];
 

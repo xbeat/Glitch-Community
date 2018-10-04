@@ -6,7 +6,7 @@ import ProjectsList from './projects-list.jsx';
 import CollectionsList from './collections-list.jsx';
 import {DataLoader} from './includes/loader.jsx';
 
-const EntityPageCollections = ({api, isAuthorized, userId, deleteCollection}) => {
+const EntityPageCollections = ({api, isAuthorized, userId, collectionOptions}) => {
   return (
     
     <DataLoader get={() => api.get(`collections/?userId=${userId}`)}>
@@ -26,7 +26,7 @@ EntityPageCollections.propTypes = {
   api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   userId: PropTypes.number.isRequired,
-  deleteCollection: PropTypes.func,
+  collectionOptions: PropTypes.object,
 };
 
 // export default EntityPageProjectsContainer;

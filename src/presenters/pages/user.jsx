@@ -95,7 +95,7 @@ const UserPage = ({
       api={api} 
       isAuthorized={isAuthorized}
       userId={id} 
-      deleteCollection={deleteCollection}
+      collectionOptions={{deleteCollection}}
     />
     
     <EntityPageProjects
