@@ -74,7 +74,7 @@ export const CollectionItem = ({collection, categoryColor, projectOptions, api, 
             
           {collection && collection.projects
             ? <DataLoader
-              get={() => loadCategory(api, collection.id)}
+              get={() => loadCollection(api, collection.id)}
               renderLoader={() => <Loader />}
               renderError={() => <div>Something went wrong. Try refreshing?</div>}
             >
@@ -104,6 +104,14 @@ CollectionItem.propTypes = {
   projectOptions: PropTypes.object,
   isAuthorized: PropTypes.bool.isRequired,
 };
+
+async function loadCollection(api, id){
+  const {data} = await api.get(`collections/${id}`);
+  if(data){
+    data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
+  }
+  return data;
+}
 
 async function loadCategory(api, id) {
   const {data} = await api.get(`categories/${id}`);
