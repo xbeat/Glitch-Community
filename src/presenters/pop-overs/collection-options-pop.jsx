@@ -13,9 +13,8 @@ const PopoverButton = ({onClick, text, emoji}) => (
   </button>
 );
 
-// Collection Options Content
-const CollectionOptionsContent = ({...props}) => {
-  
+// Collection Options Pop
+const CollectionOptionsPop = (props) => {
   return(
     <dialog className="pop-over collection-options-pop">
       <section className="pop-over-actions danger-zone last-section">
@@ -23,17 +22,10 @@ const CollectionOptionsContent = ({...props}) => {
           <PopoverButton onClick={() => props.deleteCollection(props.collection.id)} text="Delete Collection " emoji="bomb"/>
           */}
         
-        {props.deleteCollection && <PopoverButton onClick={() => props.deleteCollection(props.collection.id)} text="Delete Collection " emoji="bomb"/>}
+        {props.collectionOptions.deleteCollection && <PopoverButton onClick={() => props.collectionOptions.deleteCollection(props.collection.id)} text="Delete Collection " emoji="bomb"/>}
         
         </section>
     </dialog>
-    );
-}
-
-// Collection Options Pop
-const CollectionOptionsPop = (props) => {
-  return(
-    <CollectionOptionsContent {...props} />
   );
 };
 
@@ -43,8 +35,8 @@ CollectionOptionsPop.propTypes = {
 };
   
 // Collection Options Container
-export default function CollectionOptions({collectionOptions, collection}) {
-  if(Object.keys(collectionOptions).length === 0) {
+export default function CollectionOptions({deleteCollection, collection}) {
+  if(eleteCollection) {
     return null;
   }
 
@@ -57,7 +49,7 @@ export default function CollectionOptions({collectionOptions, collection}) {
               <button className="collection-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <CollectionOptionsPop collection={collection} {...collectionOptions} togglePopover={togglePopover} currentUser={user}/> }
+              { visible && <CollectionOptionsPop collection={collection} deleteCollection={deleteCollection} togglePopover={togglePopover} currentUser={user}/> }
             </div>
           )}
         </CurrentUserConsumer>
@@ -68,6 +60,6 @@ export default function CollectionOptions({collectionOptions, collection}) {
 
 CollectionOptions.propTypes = {
   collection: PropTypes.object.isRequired,
-  collectionOptions: PropTypes.object.isRequired,
+  deleteCollection: PropTypes.func
 };
 

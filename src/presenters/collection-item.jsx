@@ -41,16 +41,15 @@ const ProjectsPreview = ({projects, categoryColor, collectionUrl}) => {
 ProjectsPreview.propTypes = {
   projects: PropTypes.any.isRequired,
   collectionUrl: PropTypes.string.isRequired,
-  collectionOptions: PropTypes.object,
 };
 
 
-export const CollectionItem = ({collection, categoryColor, collectionOptions, api, isAuthorized}) => {
+export const CollectionItem = ({collection, categoryColor, deleteCollection, api, isAuthorized}) => {
   let randomColor = colors[Math.floor(Math.random() * colors.length)];
   
   return (
     <li>
-      <CollectionOptionsContainer collection={collection} collectionOptions={collectionOptions}></CollectionOptionsContainer>
+      <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>
 
       <a href={collection ? collection.url : defaultUrl}>
         <div className={['collection']} 
@@ -109,8 +108,8 @@ export const CollectionItem = ({collection, categoryColor, collectionOptions, ap
 CollectionItem.propTypes = {
   api: PropTypes.func.isRequired,
   categoryColor: PropTypes.string,
-  collectionOptions: PropTypes.object,
   isAuthorized: PropTypes.bool.isRequired,
+  deleteCollection: PropTypes.func
 };
 
 async function loadCollection(api, id){
@@ -118,12 +117,6 @@ async function loadCollection(api, id){
   if(data){
     data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
   }
-  return data;
-}
-
-async function loadCategory(api, id) {
-  const {data} = await api.get(`categories/${id}`);
-  data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
   return data;
 }
 

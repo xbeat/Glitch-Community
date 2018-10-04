@@ -10,7 +10,7 @@ const wordsApi = axios.create({
   baseURL: 'https://friendly-words.glitch.me/',
 });
 
-export const CollectionsList = ({title, collections, placeholder, collectionOptions, api, isAuthorized}) => (
+export const CollectionsList = ({title, collections, placeholder, deleteCollection, api, isAuthorized}) => (
   <article className="collections">
     <h2>{title}</h2>
 
@@ -27,7 +27,7 @@ export const CollectionsList = ({title, collections, placeholder, collectionOpti
     
     {/* <a href="/favorites"><button className={`button create-collection`} onClick={createCollection}>Create Collection</button></a>*/}
 
-    <CollectionsUL {...{collections, collectionOptions, api, isAuthorized}}></CollectionsUL>
+    <CollectionsUL {...{collections, deleteCollection, api, isAuthorized}}></CollectionsUL>
 
   </article>
 );
@@ -38,7 +38,7 @@ CollectionsList.propTypes = {
   placeholder: PropTypes.node,
   api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  collectionOptions: PropTypes.object,
+  deleteCollection: PropTypes.func,
 };
 
 // ensure that the user doesn't already have a collection with this name
