@@ -20,54 +20,19 @@ const CollectionOptionsContent = ({ ...props}) => {
     projectContainer.addEventListener('animationend', func, {once: true});
     projectContainer.classList.add(className);
     props.togglePopover();
+  }
   
   
   return(
     <dialog className="pop-over collection-options-pop">
-      {props.currentUserIsOnProject 
-        ? <section className="pop-over-actions">
-            {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
-            {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
-            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to Collection " emoji="framed_picture"/>}
-
+      <section className="pop-over-actions danger-zone last-section">
+        {!!props.deleteCollection && <PopoverButton onClick={() => props.deleteCollection(props.collection.id)} text="Delete Collection " emoji="bomb"/>}
         </section>
-        : <section className="pop-over-actions">
-            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to Collection " emoji="framed_picture"/>}
-        </section>
-      }
-
-      {(props.joinTeamProject && props.leaveTeamProject) &&
-        <section className="pop-over-actions collaborator-actions">
-          {!props.currentUserIsOnProject &&
-            <PopoverButton onClick={joinTeamProject} text="Join Project " emoji="rainbow"/>
-          }
-          {props.currentUserIsOnProject &&
-            <PopoverButton onClick={leaveTeamProject} text="Leave Project " emoji="wave"/>
-          }
-        </section>
-      }
-      
-      {(props.leaveProject && props.project.users.length > 1) &&
-        <section className="pop-over-actions collaborator-actions">
-          <PopoverButton onClick={leaveProject} text="Leave Project " emoji="wave"/>
-        </section>
-      }
-
-      {props.currentUserIsOnProject && 
-        <section className="pop-over-actions danger-zone last-section">
-          {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
-          {!!props.removeProjectFromCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
-
-          {!props.addProjectToCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project.id)} text="Remove from Collection" emoji="thumbs_down"/>}
-          {props.currentUserIsOnProject && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
-        </section>
-      }
     </dialog>
     );
 }
 
-
-// Project Options Pop
+// Collection Options Pop
 const CollectionOptionsPop = (props) => {
   return(
     <CollectionOptionsContent {...props} />
@@ -76,26 +41,12 @@ const CollectionOptionsPop = (props) => {
 
 CollectionOptionsPop.propTypes = {
   deleteCollection: PropTypes.func,
-  currentUserIsOnProject: PropTypes.bool.isRequired,
 };
-CollectionOptionsPop.defaultProps = {
-  currentUserIsOnProject: false
-};
-
-// Project Options Container
-// create as stateful react component
-export default function ProjectOptions({projectOptions={}, project}) {
-  if(Object.keys(projectOptions).length === 0) {
+  
+// Collection Options Container
+export default function CollectionOptions({collectionOptions={}, collection}) {
+  if(Object.keys(collectionOptions).length === 0) {
     return null;
-  }
-
-  function currentUserIsOnProject(user) {
-    let projectUsers = project.users.map(projectUser => {
-      return projectUser.id;
-    });
-    if (projectUsers.includes(user.id)) {
-      return true;
-    }
   }
 
   return (
@@ -107,7 +58,7 @@ export default function ProjectOptions({projectOptions={}, project}) {
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <CollectionOptionsPop project={project} {...projectOptions} togglePopover={togglePopover} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+              { visible && <CollectionOptionsPop collection={collection} {...collectionOptions} togglePopover={togglePopover} currentUser={user}/> }
             </div>
           )}
         </CurrentUserConsumer>
@@ -116,7 +67,7 @@ export default function ProjectOptions({projectOptions={}, project}) {
   );
 }
 
-ProjectOptions.propTypes = {
-  project: PropTypes.object.isRequired,
+CollectionOptions.propTypes = {
+  collection: PropTypes.object.isRequired,
 };
 
