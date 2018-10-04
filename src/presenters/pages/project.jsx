@@ -104,7 +104,9 @@ const ProjectPage = ({
               />
             ) : <React.Fragment>{domain} {project.private && <PrivateBadge/>}</React.Fragment>)}
           </h1>
-          <UsersList users={users} />
+          <div className="users-information">
+            <UsersList users={users} />
+          </div>
           <AuthDescription
             authorized={isAuthorized} description={description}
             update={updateDescription} placeholder="Tell us about your app"
