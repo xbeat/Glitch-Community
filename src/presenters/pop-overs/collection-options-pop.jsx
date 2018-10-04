@@ -54,8 +54,8 @@ export default function CollectionOptions({collectionOptions={}, collection}) {
       {({togglePopover, visible}) => (
         <CurrentUserConsumer>
           {user => (
-            <div>
-              <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
+            <div className="collection-pop-over">
+              <button className="collection-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
               { visible && <CollectionOptionsPop collection={collection} {...collectionOptions} togglePopover={togglePopover} currentUser={user}/> }

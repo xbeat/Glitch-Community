@@ -15,7 +15,7 @@ const EntityPageCollections = ({api, isAuthorized, userId, collectionOptions}) =
           collections={data} 
           api={api} 
           isAuthorized={isAuthorized}
-          collectionOptions={isAuthorized ? {deleteCollection} : null}
+          collectionOptions={isAuthorized ? collectionOptions : null}
           />
       }
     </DataLoader>    
