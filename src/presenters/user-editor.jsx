@@ -144,7 +144,7 @@ class UserEditor extends React.Component {
       setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
       addProjectToCollection: id => this.addProjectToCollection(id).catch(handleError),
       removeProjectFromCollection: id => this.removeProjectFromCollection(id).catch(handleError),
-      
+      deleteCollection: id => this.deleteCollection(id).catch(handleError),      
     };
     return this.props.children(this.state, funcs, this.isCurrentUser());
   }

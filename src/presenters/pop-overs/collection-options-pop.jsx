@@ -22,7 +22,7 @@ const CollectionOptionsPop = (props) => {
           <PopoverButton onClick={() => props.deleteCollection(props.collection.id)} text="Delete Collection " emoji="bomb"/>
           */}
         
-        {props.collectionOptions.deleteCollection && <PopoverButton onClick={() => props.collectionOptions.deleteCollection(props.collection.id)} text="Delete Collection " emoji="bomb"/>}
+        {props.deleteCollection && <PopoverButton onClick={() => props.deleteCollection(props.collection.id)} text="Delete Collection " emoji="bomb"/>}
         
         </section>
     </dialog>
@@ -36,7 +36,7 @@ CollectionOptionsPop.propTypes = {
   
 // Collection Options Container
 export default function CollectionOptions({deleteCollection, collection}) {
-  if(eleteCollection) {
+  if(!deleteCollection) {
     return null;
   }
 

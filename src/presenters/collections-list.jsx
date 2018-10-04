@@ -70,14 +70,14 @@ async function createCollection(api){
   }
 }
 
-export const CollectionsUL = ({collections, collectionOptions, categoryColor, api, isAuthorized}) => {
+export const CollectionsUL = ({collections, deleteCollection, categoryColor, api, isAuthorized}) => {
   return (
     <ul className="collections-container">
       {/* DUMMY EMPTY COLLECTION CARD */}
       <CollectionItem key={null} collection={null} api={api} isAuthorized={isAuthorized}></CollectionItem>
       
       { collections.map(collection => (
-        <CollectionItem key={collection.id} collection={collection} api={api} isAuthorized={isAuthorized} collectionOptions={collectionOptions}></CollectionItem>
+        <CollectionItem key={collection.id} collection={collection} api={api} isAuthorized={isAuthorized} deleteCollection={deleteCollection}></CollectionItem>
       ))}
     </ul>
   );
@@ -87,6 +87,7 @@ CollectionsUL.propTypes = {
   api: PropTypes.func.isRequired,
   collections: PropTypes.array.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
+  deleteCollection: PropTypes.func,
 };
 
 
