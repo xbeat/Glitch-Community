@@ -317,12 +317,20 @@ async function loadCategory(api, id) {
   randomName();
   return data;
 }
+
+async function loadCollection(api, id){
+  const {data} = await api.get(`collections/${id}`);
+  if(data){
+    data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
+  }
+  return data;
+}
   
 
 const CollectionPage = ({api, collection, addProject, removeProject, ...props}) => (
   <Layout api={api}>
     <DataLoader
-      get={() => loadCategory(api, collection.id)}
+      get={() => loadCollection(api, collection.id)}
       renderLoader={() => <CollectionPageLoader collection={collection} api={api} {...props}/>}
       renderError={() => <CollectionPageError collection={collection} api={api} {...props}/>}
     >
