@@ -23,7 +23,7 @@ const CollectionOptionsContent = ({ ...props}) => {
   
   
   return(
-    <dialog className="pop-over project-options-pop">
+    <dialog className="pop-over collection-options-pop">
       {props.currentUserIsOnProject 
         ? <section className="pop-over-actions">
             {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
@@ -68,32 +68,17 @@ const CollectionOptionsContent = ({ ...props}) => {
 
 
 // Project Options Pop
-const ProjectOptionsPop = (props) => {
+const CollectionOptionsPop = (props) => {
   return(
-    <NestedPopover alternateContent={() => <AddProjectToCollectionPop project={props.project} {...props}/>}>
-      { addToCollection => (
-        <ProjectOptionsContent {...props} addToCollection={addToCollection}/>
-        )}
-    </NestedPopover>
+    <CollectionOptionsContent {...props} />
   );
 };
 
-ProjectOptionsPop.propTypes = {
-  project: PropTypes.shape({
-    users: PropTypes.array.isRequired,
-  }),
-  togglePopover: PropTypes.func.isRequired,
-  currentUser: PropTypes.object.isRequired,
-  addPin: PropTypes.func,
-  removePin: PropTypes.func,
-  deleteProject: PropTypes.func,
-  leaveProject: PropTypes.func,
-  removeProjectFromTeam: PropTypes.func,
-  joinTeamProject: PropTypes.func,
-  leaveTeamProject: PropTypes.func,
+CollectionOptionsPop.propTypes = {
+  deleteCollection: PropTypes.func,
   currentUserIsOnProject: PropTypes.bool.isRequired,
 };
-ProjectOptionsPop.defaultProps = {
+CollectionOptionsPop.defaultProps = {
   currentUserIsOnProject: false
 };
 
@@ -122,7 +107,7 @@ export default function ProjectOptions({projectOptions={}, project}) {
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <ProjectOptionsPop project={project} {...projectOptions} togglePopover={togglePopover} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+              { visible && <CollectionOptionsPop project={project} {...projectOptions} togglePopover={togglePopover} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
             </div>
           )}
         </CurrentUserConsumer>
