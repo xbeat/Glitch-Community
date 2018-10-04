@@ -51,12 +51,6 @@ const Router = ({api}) => (
     
     <Route path="/search" exact render={({location}) => <SearchPage api={api} query={qs.parse(location.search).q}/>}/>
     
-    {/*
-      {categories.map(category => (
-        <Route key={category.url} path={`/${category.url}`} exact render={() => <CategoryPage api={api} category={category}/>}/>
-      ))}
-    */}
-    
     {categories.map(category => (
       <Route key={category.url} path={`/${category.url}`} exact render={() => <CollectionPage api={api} collection={category}/>}/>
     ))}
