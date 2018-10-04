@@ -17,15 +17,21 @@ function addDefaultSrc(event) {
   event.target.src = ANON_AVATAR_URL;
 }
 
-const UserAvatarRaw = ({name, src, style}) => (
-  <img onError={addDefaultSrc} className="user-list-avatar" width="32px" height="32px"
-    src={getAvatarThumbnailUrl(user)} style={getStyle(user)} alt={getDisplayName(user)}
-    data-tooltip={getDisplayName(user)} data-tooltip-left="true"
-  />
+const Avatar = ({name, src, style}) => (
+  <span>
+    <img onError={addDefaultSrc} className="user-list-avatar" width="32px" height="32px"
+      src={src} style={style} alt={name} data-tooltip={name} data-tooltip-left="true"
+    />
+  </span>
 );
+Avatar.propTypes = {
+  name: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
+  style: PropTypes.object,
+};
 
 const UserAvatar = ({user}) => (
-  <UserAvatarRaw name={getDisplayName(user)} src={getAvatarThumbnailUrl(user)} style=
+  <Avatar name={getDisplayName(user)} src={getAvatarThumbnailUrl(user)} style={getStyle(user)}/>
 );
 UserAvatar.propTypes = {
   user: PropTypes.shape({
@@ -76,13 +82,12 @@ PopulatedUsersList.propTypes = {
 };
 
 const GlitchTeamUsersList = ({extraClass=''}) => {
-  const name = 'Glitch Team';
   const style = getStyle({color: "#74ecfc"});
   return (
     <ul className={`users ${extraClass}`}>
       <li>
-        <span className="user made-by-glitch" data-tooltip={name} data-tooltip-left="true" style={style}>
-          <UserAvatar avatarUrl={GLITCH_TEAM_AVATAR} alt={name}/>
+        <span className="user made-by-glitch">
+          <Avatar name="Glitch Team" src={GLITCH_TEAM_AVATAR} style={style}/>
         </span>
       </li>
     </ul>
@@ -113,14 +118,11 @@ const UserPopoverTile = ({children, adminIds, ...user}) => (
   <PopoverContainer>
     {({visible, togglePopover}) => (
       <div className="button-wrap">
-        <button 
-          onClick={togglePopover} 
-          className="user button-unstyled" 
-          data-tooltip={getDisplayName(user) + adminStatusDisplay(adminIds, user)} 
-          data-tooltip-left="true" 
-          style={getStyle(user)}
-        >
-          <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
+        <button onClick={togglePopover} className="user button-unstyled">
+          <Avatar
+            name={getDisplayName(user) + adminStatusDisplay(adminIds, user)}
+            src={getAvatarThumbnailUrl(user)} style={getStyle(user)}
+          />
         </button>
         {!!visible && children(togglePopover)}
       </div>
