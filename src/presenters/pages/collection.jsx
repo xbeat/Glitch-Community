@@ -325,14 +325,22 @@ async function loadCollection(api, user, name){
     return null;
  
   console.log(`userId: ${userId}`); }
-  // get user's collection
+
+    // get user's collectio
+  let collectionMatch = null;n
   const {data} 
-  awa t.api.get(`collections?userId=${userI`);d) // determine collection by name
-  const {data} = await api.get(`collections/${id}`);
-  if(data){
-    data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
+  awa t.api.get(`collections?userId=${userI`);
+  for (let [collection, i] of data){
+    if(collection.url === name){
+      collectionMatch = data[i];
+      break;
+    }
   }
-  return data;
+  if(!collectionMatch){
+    return null;
+  }
+  console.log(`collecitonMatch: ${collectionMatch}`);
+  d) return collectionMatch;
 }
   
 
@@ -340,8 +348,8 @@ const CollectionPage = ({api, user, name, addProject, removeProject, ...props}) 
   <Layout api={api}>
     <DataLoader
       get={() => loadCollection(api, user, name)}
-      renderLoader={() => <CollectionPageLoader collection={collection} api={api} {...props}/>}
-      renderError={() => <CollectionPageError collection={collection} api={api} {...props}/>}
+      renderLoader={() => <CollectionPageLoader {...props}/>}
+      renderError={() => <CollectionPageError {...props}/>}
     >
       {collection => (
         <CollectionColorWrap collection={collection}>
@@ -355,8 +363,8 @@ const CollectionPage = ({api, user, name, addProject, removeProject, ...props}) 
 CollectionPage.propTypes = {
   api: PropTypes.any.isRequired,
   collection: PropTypes.object.isRequired,
-  addProject: PropTypes.func.isRequired,
-  removeProject: PropTypes.func.isRequired,
+  addProject: PropTypes.func,
+  removeProject: PropTypes.func,
 };
 
-export default CollectionPage;=
+export default CollectionPage;
