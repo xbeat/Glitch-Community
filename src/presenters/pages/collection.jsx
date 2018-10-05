@@ -258,7 +258,7 @@ const CollectionPageError = ({...props}) => (
 async function loadCollection(api, user, name){
   console.log(`loadCollection with user ${user} and name ${name}`);
   // get userId from login
-  const {userId} = await api.get(`userId/byLogin/${user}`);
+  const {userId} = await api.get(`userid/byLogin/${user}`);
   if(userId === "NOT FOUND"){
     return null;
   }
