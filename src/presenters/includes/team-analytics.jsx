@@ -40,7 +40,7 @@ const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
     path = `analytics/${id}/project/${currentProjectDomain}?from=${fromDate}`;
   }
   try {
-    return await api().get(path);
+    return await api.get(path);
   } catch (error) {
     console.error('getAnalytics', error);
   }
@@ -231,7 +231,7 @@ class TeamAnalytics extends React.Component {
         { this.props.projects.length === 0 &&
           <aside className="inline-banners add-project-to-analytics-banner">
             <div className="description">Add Projects to see who's viewing and remixing</div>
-            <AddTeamProject 
+            <AddTeamProject
               {...this.props}
               extraButtonClass = "button-small"
               teamProjects = {this.props.projects}
@@ -245,7 +245,7 @@ class TeamAnalytics extends React.Component {
 
 TeamAnalytics.propTypes = {
   id: PropTypes.number,
-  api: PropTypes.func.isRequired,
+  api: PropTypes.any.isRequired,
   projects: PropTypes.array.isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   addProject: PropTypes.func.isRequired,

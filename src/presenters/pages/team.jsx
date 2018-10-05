@@ -179,14 +179,14 @@ class TeamPage extends React.Component {
               {...this.props}
               extraButtonClass = "button-small"
               teamProjects = {this.props.team.projects}
-              api={() => this.props.api}
+              api={this.props.api}
             />
           </aside>
         }
 
         { this.props.currentUserIsOnTeam &&
           <TeamAnalytics
-            api={() => this.props.api}
+            api={this.props.api}
             id={this.props.team.id}
             currentUserIsOnTeam={this.props.currentUserIsOnTeam}
             projects={this.props.team.projects}
