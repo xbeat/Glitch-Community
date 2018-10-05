@@ -67,66 +67,84 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
     <li>
       <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>
 
-      <DataLoader
-        get={() => }
-        renderLoader={() => <Loader />}
-        renderError={() => <div>Something went wrong. Try refreshing?</div>}
-        >
-          {(collection 
-            ? <div>{`/${getLoginById(api, collection.userId)}/${collection.url}`}</div>
-            : null
-          )}
-      </DataLoader>
-      <a href={collection ? getCollectionUrl(api, collection.userId, collection.url) : defaultUrl}>
-        <div className={['collection']} 
-          style={(collection ? {backgroundColor: collection.backgroundColor, borderBottomColor:collection.backgroundColor} : null)}>
+      {(collection  
+        ? <DataLoader
+          get={() => getCollectionUrl(api, collection.userId, collection.url)}
+          renderLoader={() => <Loader />}
+          renderError={() => <div>Something went wrong. Try refreshing?</div>}
+          >
+           {path => (
+              <a href={path}>
+                <div className={['collection']} 
+                  style={{backgroundColor: collection.backgroundColor, borderBottomColor:collection.backgroundColor}}>
+                  <div className="collection-container">
+                      <div className="collection-info">
+                        <img className="avatar" src={collection.avatarUrl}/>
+                        <div className="collection-name-description">
+                            <div className="button">
+                              <span className="project-badge private-project-badge" aria-label="private"></span>
+                              <div className="project-name">{collection.name}</div>
+                            </div>
+                          <div className="description"><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
+                        </div>
+
+                        <div className="overflow-mask"></div>
+                      </div>
+
+                      <DataLoader
+                        get={() => loadCollection(api, collection.id)}
+                        renderLoader={() => <Loader />}
+                        renderError={() => <div>Something went wrong. Try refreshing?</div>}
+                        >
+                          {collection => (
+                            collection.projects.length > 0
+                              ?
+                              <ProjectsLoader api={api} projects={collection.projects}>
+                                {projects => <ProjectsPreview projects={collection.projects} categoryColor={collection.color} collectionUrl={collection.url}/>}
+                              </ProjectsLoader>
+                             :
+                             <div className="projects-preview empty">
+                                {(isAuthorized
+                                  ? <a href={defaultUrl}>This collection is empty.  Add some projects to it!</a>
+                                  : "No projects to see in this collection just yet."
+                                )}
+                              </div>
+                          )}
+                      </DataLoader>   
+                    }
+                  </div>
+                </div>
+              </a>             
+            )}
+          </DataLoader>
+        : <a href={defaultUrl}>
+        <div className={['collection']} >
           <div className="collection-container">
 
               <div className="collection-info">
-                <img className="avatar" src={collection ? collection.avatarUrl : "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"}/>
+                <img className="avatar" src={"https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"}/>
                 <div className="collection-name-description">
                     <div className="button">
                       <span className="project-badge private-project-badge" aria-label="private"></span>
-                      <div className="project-name">{collection ? collection.name : defaultName}</div>
+                      <div className="project-name">{defaultName}</div>
                     </div>
-                  <div className="description"><TruncatedMarkdown length={96}>{collection ? collection.description : "A collection of my favorite projects"}</TruncatedMarkdown></div>
+                  <div className="description"><TruncatedMarkdown length={96}>{"A collection of my favorite projects"}</TruncatedMarkdown></div>
                 </div>
 
                 <div className="overflow-mask"></div>
               </div>
 
-            {collection
-              ? <DataLoader
-                get={() => loadCollection(api, collection.id)}
-                renderLoader={() => <Loader />}
-                renderError={() => <div>Something went wrong. Try refreshing?</div>}
-                >
-                  {collection => (
-                    collection.projects.length > 0
-                      ?
-                      <ProjectsLoader api={api} projects={collection.projects}>
-                        {projects => <ProjectsPreview projects={collection.projects} categoryColor={collection.color} collectionUrl={collection.url}/>}
-                      </ProjectsLoader>
-                     :
-                     <div className="projects-preview empty">
-                        {(isAuthorized
-                          ? <a href={defaultUrl}>This collection is empty.  Add some projects to it!</a>
-                          : "No projects to see in this collection just yet."
-                        )}
-                      </div>
-                  )}
-              </DataLoader>   
-
-              :  <div className="projects-preview empty">
+             <div className="projects-preview empty">
                 {(isAuthorized
                   ? <a href={defaultUrl}>This collection is empty.  Add some projects to it!</a>
                   : "No projects to see in this collection just yet."
                 )}
-              </div>
-            }
+            </div>
+            
           </div>
         </div>
       </a>
+      )}
     </li>
   );
 };
