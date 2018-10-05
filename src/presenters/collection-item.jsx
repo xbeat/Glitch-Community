@@ -45,15 +45,13 @@ ProjectsPreview.propTypes = {
   collectionUrl: PropTypes.string.isRequired,
 };
 
-const getUserLoginById = async (api, id) => {
-  const {data} = await api.get(`users/${id}`);
-  return UserModel(data).asProps().login;
-};
+async function getUs
 
 async function getCollectionUrl(api, userId, collectionUrl){
-  // get username
-  let username = getUserLoginById(api, userId);
-  let path = `/${username}/collectionUrl`;
+  const {data} = await api.get(`users/${userId}`);
+  const username = data.login;
+  let path = `/${username}/${collectionUrl}`;
+  console.log(`path: ${path}`);
   return path;
 }
 
@@ -65,6 +63,10 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
     <li>
       <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>
 
+      {(collection 
+        ? <div>{getCollectionUrl(api, collection.userId, collection.url)}</div>
+        : null
+      )}
       <a href={collection ? getCollectionUrl(api, collection.userId, collection.url) : defaultUrl}>
         <div className={['collection']} 
           style={(collection ? {backgroundColor: collection.backgroundColor, borderBottomColor:collection.backgroundColor} : null)}>
