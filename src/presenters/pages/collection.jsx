@@ -1,4 +1,4 @@
-``import React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
@@ -23,57 +23,6 @@ import EditCollectionColor from '../includes/edit-collection-color.jsx';
 import {avatars} from '../../models/collection.js'; 
 
 import {CurrentUserConsumer} from '../current-user.jsx';
-
-// some dummy info for testing - to be eventually removed as name generation happens outside of collection page
-let adjectives = [
-  'charming',
-  'bold',
-  'brave',
-  'cool',
-  'docile',
-  'dope',
-  'faithful',
-  'fertile',
-  'fervent',
-  'forgiving',
-  'genial',
-  'genteel',
-  'grouchy',
-  'hopeful',
-  'humane',
-  'jolly',
-  'joyful',
-  'loving',
-  'magical',
-  'moral',
-  'mysterious',
-  'notorious',
-  'passionate',
-  'preposterous',
-  'quaint',
-  'quirky',
-  'scrumptious',
-  'sensitive',
-  'sober',
-  'tropical',
-  'woeful',
-  'whimsical',
-  'zealous',
-];
-
-let name = "Wondrous Collection";
-const url = "wondrous";
-const avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // to be replaced
-let color = "#FFA3BB";
-let description = "A collection of projects that does wondrous things.";
-const id = 14;
-
-const randomName = () => {
-  let randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-  let randomName = randomAdjective.charAt(0).toUpperCase() + randomAdjective.slice(1); // capitalize first letter
-  name = `${randomName} Collection`;
-  description = `A collection of projects that does ${randomAdjective} things`;
-};
 
 class CollectionColorWrap extends React.Component { 
   constructor(props){
@@ -306,30 +255,19 @@ const CollectionPageError = ({...props}) => (
   "Something went wrong. Try refreshing?"  
 );
 
-async function loadCategory(api, id) {
-  const {data} = await api.get(`categories/${id}`);
-  if(data){
-    data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
-  }
-  
-  // TO DO: put this in the collection creation
-  // set random name stuff
-  randomName();
-  return data;
-}
-
 async function loadCollection(api, user, name){
+  console.log(`loadCollection with user ${user} and name ${name}`);
   // get userId from login
   const {userId} = await api.get(`userId/byLogin/${user}`);
   if(userId === "NOT FOUND"){
     return null;
+  }
  
-  console.log(`userId: ${userId}`); }
+  console.log(`userId: ${userId}`);
 
     // get user's collectio
-  let collectionMatch = null;n
-  const {data} 
-  awa t.api.get(`collections?userId=${userI`);
+  let collectionMatch = null;
+  const {data} = await api.get(`collections?userId=${userId}`);
   for (let [collection, i] of data){
     if(collection.url === name){
       collectionMatch = data[i];
@@ -339,8 +277,8 @@ async function loadCollection(api, user, name){
   if(!collectionMatch){
     return null;
   }
-  console.log(`collecitonMatch: ${collectionMatch}`);
-  d) return collectionMatch;
+  console.log(`collectionMatch: ${collectionMatch}`);
+  return collectionMatch;
 }
   
 
@@ -362,9 +300,8 @@ const CollectionPage = ({api, user, name, addProject, removeProject, ...props}) 
 
 CollectionPage.propTypes = {
   api: PropTypes.any.isRequired,
-  collection: PropTypes.object.isRequired,
   addProject: PropTypes.func,
   removeProject: PropTypes.func,
-};
+}
 
 export default CollectionPage;
