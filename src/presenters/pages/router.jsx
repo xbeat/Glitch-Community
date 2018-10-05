@@ -41,7 +41,7 @@ const Router = ({api}) => (
     
     <Route path="/@:name" exact render={({match}) => <TeamOrUserPage api={api} name={match.params.name}/>}/>
     
-    <Route path="/@:name/:collection" exact render={({match}) => <CollectionPage api={api} name={match.params.name} collection={match.params.collection}/>}/>
+    <Route path="/@:user/:name" exact render={({match}) => <CollectionPage api={api} user={match.params.user} name={match.params.name}/>}/>
     
     <Route path="/user/:id(\d+)" exact render={({match}) => <UserPage api={api} id={parseInt(match.params.id, 10)} name={`user ${match.params.id}`}/>}/>
     
@@ -52,7 +52,7 @@ const Router = ({api}) => (
     <Route path="/search" exact render={({location}) => <SearchPage api={api} query={qs.parse(location.search).q}/>}/>
     
     {categories.map(category => (
-      <Route key={category.url} path={`/${category.url}`} exact render={() => <CollectionPage api={api} collection={category}/>}/>
+      <Route key={category.url} path={`/${category.url}`} exact render={() => <CategoryPage api={api} collection={category}/>}/>
     ))}
     
     
