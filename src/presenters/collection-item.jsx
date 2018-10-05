@@ -45,7 +45,11 @@ ProjectsPreview.propTypes = {
   collectionUrl: PropTypes.string.isRequired,
 };
 
-async function getUs
+async function getLoginById(api, userId){
+  const {data} = await api.get(`users/${userId}`);
+  const username = data.login;
+  return username;
+}
 
 async function getCollectionUrl(api, userId, collectionUrl){
   const {data} = await api.get(`users/${userId}`);
@@ -63,10 +67,16 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
     <li>
       <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>
 
-      {(collection 
-        ? <div>{getCollectionUrl(api, collection.userId, collection.url)}</div>
-        : null
-      )}
+      <DataLoader
+        get={() => }
+        renderLoader={() => <Loader />}
+        renderError={() => <div>Something went wrong. Try refreshing?</div>}
+        >
+          {(collection 
+            ? <div>{`/${getLoginById(api, collection.userId)}/${collection.url}`}</div>
+            : null
+          )}
+      </DataLoader>
       <a href={collection ? getCollectionUrl(api, collection.userId, collection.url) : defaultUrl}>
         <div className={['collection']} 
           style={(collection ? {backgroundColor: collection.backgroundColor, borderBottomColor:collection.backgroundColor} : null)}>
