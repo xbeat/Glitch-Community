@@ -76,7 +76,7 @@ const IndexPage = ({api, user}) => (
       is the friendly community where everyone can discover & create the best stuff on the web
     </h1>
     {!!(user && user.login) && <Questions api={api}/>}
-    {!!user && <RecentProjects api={api}/>}
+    {!!(user && user.projects.length) && <RecentProjects api={api}/>}
     <Featured/>
     <RandomCategories api={api}/>
     <Categories/>

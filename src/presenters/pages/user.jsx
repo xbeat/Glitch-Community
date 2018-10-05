@@ -73,15 +73,15 @@ const UserPage = ({
       <ProfileContainer
         avatarStyle={getAvatarStyle({avatarUrl, color})}
         coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
-        coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
-        avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null }
+        coverButtons={isAuthorized && !!login && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
+        avatarButtons={isAuthorized && !!login && <ImageButtons name="Avatar" uploadImage={uploadAvatar}/>}
       >
         <NameAndLogin
           {...{name, login, isAuthorized, updateName}}
           updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
         />
         <Thanks count={thanksCount}/>
-        <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
+        <AuthDescription authorized={isAuthorized && !!login} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
     </section>
     <EntityPageProjects
