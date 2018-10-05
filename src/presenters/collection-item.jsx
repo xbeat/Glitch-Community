@@ -45,12 +45,6 @@ ProjectsPreview.propTypes = {
   collectionUrl: PropTypes.string.isRequired,
 };
 
-async function getLoginById(api, userId){
-  const {data} = await api.get(`users/${userId}`);
-  const username = data.login;
-  return username;
-}
-
 async function getCollectionUrl(api, userId, collectionUrl){
   const {data} = await api.get(`users/${userId}`);
   const username = data.login;

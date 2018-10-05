@@ -1,4 +1,4 @@
-import React from 'react';
+``import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
@@ -318,8 +318,16 @@ async function loadCategory(api, id) {
   return data;
 }
 
-async function loadCollection(api, id){
-  console.log(`id: ${id}`);
+async function loadCollection(api, user, name){
+  // get userId from login
+  const {userId} = await api.get(`userId/byLogin/${user}`);
+  if(userId === "NOT FOUND"){
+    return null;
+ 
+  console.log(`userId: ${userId}`); }
+  // get user's collection
+  const {data} 
+  awa t.api.get(`collections?userId=${userI`);d) // determine collection by name
   const {data} = await api.get(`collections/${id}`);
   if(data){
     data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
@@ -351,4 +359,4 @@ CollectionPage.propTypes = {
   removeProject: PropTypes.func.isRequired,
 };
 
-export default CollectionPage;
+export default CollectionPage;=
