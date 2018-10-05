@@ -255,17 +255,18 @@ const CollectionPageError = ({...props}) => (
   "Something went wrong. Try refreshing?"  
 );
 
-async function loadCollection(api, user, name){
-  console.log(`loadCollection with user ${user} and name ${name}`);
-  // get userId from login
-  const {userId} = await api.get(`userid/byLogin/${user}`);
-  if(userId === "NOT FOUND"){
+async function getUserIdByLogin(api, user){
+  let {data} = await api.get(`userid/byLogin/${user}`);
+  if(data === "NOT FOUND"){
     return null;
   }
- 
-  console.log(`userId: ${userId}`);
+  return data;
+}
 
-    // get user's collectio
+async function loadCollection(api, user, name){
+  console.log(`loadCollection with user ${user} and name ${name}`);
+
+  // get user's collectio
   let collectionMatch = null;
   const {data} = await api.get(`collections?userId=${userId}`);
   for (let [collection, i] of data){
