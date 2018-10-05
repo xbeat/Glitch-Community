@@ -54,7 +54,7 @@ async function getLoginById(api, userId){
 async function getCollectionUrl(api, userId, collectionUrl){
   const {data} = await api.get(`users/${userId}`);
   const username = data.login;
-  let path = `/${username}/${collectionUrl}`;
+  let path = `/@${username}/${collectionUrl}`;
   console.log(`path: ${path}`);
   return path;
 }
@@ -111,38 +111,39 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
                               </div>
                           )}
                       </DataLoader>   
-                    }
                   </div>
                 </div>
               </a>             
             )}
           </DataLoader>
-        : <a href={defaultUrl}>
-        <div className={['collection']} >
-          <div className="collection-container">
+        : 
+        // empty collection
+        <a href={defaultUrl}>
+          <div className={['collection']} >
+            <div className="collection-container">
 
-              <div className="collection-info">
-                <img className="avatar" src={"https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"}/>
-                <div className="collection-name-description">
-                    <div className="button">
-                      <span className="project-badge private-project-badge" aria-label="private"></span>
-                      <div className="project-name">{defaultName}</div>
-                    </div>
-                  <div className="description"><TruncatedMarkdown length={96}>{"A collection of my favorite projects"}</TruncatedMarkdown></div>
+                <div className="collection-info">
+                  <img className="avatar" src={"https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"}/>
+                  <div className="collection-name-description">
+                      <div className="button">
+                        <span className="project-badge private-project-badge" aria-label="private"></span>
+                        <div className="project-name">{defaultName}</div>
+                      </div>
+                    <div className="description"><TruncatedMarkdown length={96}>{"A collection of my favorite projects"}</TruncatedMarkdown></div>
+                  </div>
+
+                  <div className="overflow-mask"></div>
                 </div>
 
-                <div className="overflow-mask"></div>
+               <div className="projects-preview empty">
+                  {(isAuthorized
+                    ? <a href={defaultUrl}>This collection is empty.  Add some projects to it!</a>
+                    : "No projects to see in this collection just yet."
+                  )}
               </div>
 
-             <div className="projects-preview empty">
-                {(isAuthorized
-                  ? <a href={defaultUrl}>This collection is empty.  Add some projects to it!</a>
-                  : "No projects to see in this collection just yet."
-                )}
             </div>
-            
           </div>
-        </div>
       </a>
       )}
     </li>
