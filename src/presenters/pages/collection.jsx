@@ -27,13 +27,11 @@ import {CurrentUserConsumer} from '../current-user.jsx';
 class CollectionColorWrap extends React.Component { 
   constructor(props){
     super(props);
+    let color = "#FFA3BB"; // default color
     
-    if(this.props.collection){
-      color= this.props.collection.color;
-    }
     this.state = {
-      color: color,
-      avatar: (this.props.collection ? this.props.collection.avatarUrl : avatarUrl),
+      color: this.props.collection.coverColor,
+      avatar: this.props.collection.avatarUrl,
     };
     this.setColor = this.setColor.bind(this);
     this.setAvatar = this.setAvatar.bind(this);
