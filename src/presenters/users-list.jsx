@@ -105,6 +105,11 @@ UsersList.propTypes = {
   glitchTeam: PropTypes.bool,
 };
 
+export default UsersList;
+
+
+// UserPopoversList
+
 const adminStatusDisplay = (adminIds, user) => {
   if (adminIds.includes(user.id)) {
     return " (admin)";
@@ -112,51 +117,36 @@ const adminStatusDisplay = (adminIds, user) => {
   return "";
 };
 
-export default UsersList;
-
-const UserPopoverTile = ({children, adminIds, ...user}) => (
-  <PopoverContainer>
-    {({visible, togglePopover}) => (
-      <div className="button-wrap">
-        <button onClick={togglePopover} className="user button-unstyled">
-          <Avatar
-            name={getDisplayName(user) + adminStatusDisplay(adminIds, user)}
-            src={getAvatarThumbnailUrl(user)} style={getStyle(user)}
-          />
-        </button>
-        {!!visible && children(togglePopover)}
-      </div>
-    )}
-  </PopoverContainer>
-);
-
-UserPopoverTile.propTypes = {
-  id: PropTypes.number.isRequired,
-  login: PropTypes.string,
-  name: PropTypes.string,
-  avatarThumbnailUrl: PropTypes.string,
-  color: PropTypes.string.isRequired,
-  children: PropTypes.func.isRequired,
-  adminIds: PropTypes.array.isRequired,
-};
-
-
-// UserPopoversList
-
-export const UserPopoversList = ({...props}) => (
+export const UserPopoversList = ({users, adminIds, children}) => (
   <ul className="users">
-    {props.users.map(user => (
+    {users.map(user => (
       <li key={user.id}>
-        <UserPopoverTile {...user} adminIds={props.adminIds}>
-          {(togglePopover) => props.children(user, togglePopover)}
-        </UserPopoverTile>
+        <PopoverContainer>
+          {({visible, togglePopover}) => (
+            <div className="button-wrap">
+              <button onClick={togglePopover} className="user button-unstyled">
+                <Avatar
+                  name={getDisplayName(user) + adminStatusDisplay(adminIds, user)}
+                  src={getAvatarThumbnailUrl(user)} style={getStyle(user)}
+                />
+              </button>
+              {!!visible && children(user, togglePopover)}
+            </div>
+          )}
+        </PopoverContainer>
       </li>
     ))}
   </ul>
 );
 
 UserPopoversList.propTypes = {
-  users: PropTypes.array.isRequired,
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    login: PropTypes.string,
+    name: PropTypes.string,
+    avatarThumbnailUrl: PropTypes.string,
+    color: PropTypes.string.isRequired,
+  })).isRequired,
   children: PropTypes.func.isRequired,
   adminIds: PropTypes.array,
 };
