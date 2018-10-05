@@ -328,10 +328,10 @@ async function loadCollection(api, id){
 }
   
 
-const CollectionPage = ({api, collection, user, name, addProject, removeProject, ...props}) => (
+const CollectionPage = ({api, user, name, addProject, removeProject, ...props}) => (
   <Layout api={api}>
     <DataLoader
-      get={() => loadCollection(api, collection)}
+      get={() => loadCollection(api, user, name)}
       renderLoader={() => <CollectionPageLoader collection={collection} api={api} {...props}/>}
       renderError={() => <CollectionPageError collection={collection} api={api} {...props}/>}
     >
