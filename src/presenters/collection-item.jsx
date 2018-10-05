@@ -11,6 +11,8 @@ import ProjectsLoader from './projects-loader.jsx';
 
 import {getAvatarUrl, getLink} from '../models/project.js';
 
+import UserModel from '../models/user'; 
+
 const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163,187,0.40)", "rgba(251,160,88,0.40)", "rgba(252,243,175,0.40)", "rgba(48,220,166,0.40)", 
   "rgba(103,190,255,0.40)", "rgba(201,191,244,0.40)"];
 
@@ -43,6 +45,18 @@ ProjectsPreview.propTypes = {
   collectionUrl: PropTypes.string.isRequired,
 };
 
+const getUserLoginById = async (api, id) => {
+  const {data} = await api.get(`users/${id}`);
+  return UserModel(data).asProps().login;
+};
+
+async function getCollectionUrl(api, userId, collectionUrl){
+  // get username
+  let username = getUserLoginById(api, userId);
+  let path = `/${username}/collectionUrl`;
+  return path;
+}
+
 
 export const CollectionItem = ({collection, categoryColor, deleteCollection, api, isAuthorized}) => {
   let randomColor = colors[Math.floor(Math.random() * colors.length)];
@@ -51,7 +65,7 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
     <li>
       <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>
 
-      <a href={collection ? collection.url : defaultUrl}>
+      <a href={collection ? getCollectionUrl(api, collection.userId, collection.url) : defaultUrl}>
         <div className={['collection']} 
           style={(collection ? {backgroundColor: collection.backgroundColor, borderBottomColor:collection.backgroundColor} : null)}>
           <div className="collection-container">
