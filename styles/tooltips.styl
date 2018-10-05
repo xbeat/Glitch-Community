@@ -54,7 +54,8 @@ secondary = #9B9B9B
 
 [data-tooltip]:hover,
 [data-tooltip]:focus,
-[data-tooltip]:focus-within
+[data-tooltip]:focus-within,
+button:hover [data-tooltip] // workaround for a firefox bug where stuff inside a button ignores :hover
   &::before, &::after
     visibility: visible
     opacity: 1
