@@ -16,7 +16,7 @@ const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163
 
 // SOME DUMMY DEFAULT STUFF
 const defaultUrl = "/favorites";
-const defaultName = "My Favorite Projects";
+const defaultName = "Favorites";
 
 const ProjectsPreview = ({projects, categoryColor, collectionUrl}) => {
   return (
@@ -63,7 +63,7 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
                       <span className="project-badge private-project-badge" aria-label="private"></span>
                       <div className="project-name">{collection ? collection.name : defaultName}</div>
                     </div>
-                  <div className="description"><TruncatedMarkdown length={96}>{collection ? collection.description : "A collection of projects that does wondrous things"}</TruncatedMarkdown></div>
+                  <div className="description"><TruncatedMarkdown length={96}>{collection ? collection.description : "A collection of my favorite projects"}</TruncatedMarkdown></div>
                 </div>
 
                 <div className="overflow-mask"></div>
