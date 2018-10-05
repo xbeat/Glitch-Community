@@ -260,21 +260,27 @@ async function getUserIdByLogin(api, user){
   if(data === "NOT FOUND"){
     return null;
   }
+  console.log(`userId: ${data}`);
   return data;
 }
 
 async function loadCollection(api, user, name){
   console.log(`loadCollection with user ${user} and name ${name}`);
-
-  // get user's collectio
+  
+  const userId = await getUserIdByLogin(api,user);
+  
   let collectionMatch = null;
   const {data} = await api.get(`collections?userId=${userId}`);
-  for (let [collection, i] of data){
-    if(collection.url === name){
+  console.log(`data: ${data}`);
+  
+  data.forEach(function loop(el, i){
+    if(loop.stop){return;}
+    if(el.url === name){
+      console.log(el.url);
       collectionMatch = data[i];
-      break;
+      loop.stop = true;
     }
-  }
+  });
   if(!collectionMatch){
     return null;
   }
