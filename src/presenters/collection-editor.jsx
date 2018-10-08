@@ -10,9 +10,30 @@ import Uploader from './includes/uploader.jsx';
 class CollectionEditor extends React.Component {
   constructor(props) {
     super(props);
+    let color = "#FFA3BB"; // default color
+    
     this.state = {
+      color: this.props.collection.coverColor,
+      avatar: this.props.collection.avatarUrl,
       ...props.initialCollection
     };
+    
+    this.setColor = this.setColor.bind(this);
+    this.setAvatar = this.setAvatar.bind(this); 
+  }
+  
+  setAvatar(newAvatar){
+    this.setState({
+      avatar: newAvatar
+    });
+    console.log(`newAvatar: ${newAvatar}`);
+  }
+  
+  setColor(newColor){
+    this.setState({
+      color: newColor
+    });
+    console.log(`newColor: ${newColor}`);
   }
 
   isCurrentUser() {
@@ -66,7 +87,7 @@ class CollectionEditor extends React.Component {
       updateDescription: description => this.updateFields({description}).catch(handleError),
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
     };
-    return this.props.children(this.state, funcs, this.isCurrentUser());
+    return this.props.children(this.state, funcs, this.isCurrentUser(), this.state.color, this.setColor, this.state.avatar, this.setAvatar);
   }
 }
 CollectionEditor.propTypes = {
@@ -81,6 +102,19 @@ CollectionEditor.propTypes = {
   removeProject: PropTypes.func.isRequired,
   uploadAsset: PropTypes.func.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
+};
+
+const hexToRgbA = (hex) => {
+  var c;
+  if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+    c= hex.substring(1).split('');
+    if(c.length== 3){
+      c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+    }
+    c= '0x'+c.join('');
+    return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.4)';
+  }
+  throw new Error('Bad Hex');
 };
 
 const CollectionEditorContainer = ({api, children, initialCollection}) => (
