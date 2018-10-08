@@ -19,9 +19,7 @@ export const CollectionsList = ({title, collections, placeholder, deleteCollecti
     )}
     
     {( isAuthorized 
-      ? <button className={`button create-collection`} onClick={() => createCollection(api)}>
-            Create Collection
-        </button>      
+      ? <CreateCollectionButton api={api}/>   
       : null      
     )}
     
@@ -46,12 +44,13 @@ async function validate(name){
   return true
 }
 
-class createCollectionButton extends React.Component{
+class CreateCollectionButton extends React.Component{
   constructor(props){
     super(props);
     this.state={
       done: false,
       error: false,
+      newCollectionUrl: "",
     }
   }
   async createCollection(api){
@@ -80,7 +79,9 @@ class createCollectionButton extends React.Component{
            console.log(data);
            userName = data.login;
            console.log(`userName: ${userName}`);
-           history.pushState(getLink(userName, data.url));
+           let newCollectionUrl = getLink(userName, data.url);
+           console.log(`newCollectionUrl: ${newCollectionUrl}`);
+           this.setState({newCollectionUrl: newCollectionUrl});
         });
       } 
     }catch(error){
@@ -90,51 +91,51 @@ class createCollectionButton extends React.Component{
   
   render(){
     if(this.state.done){
-      
+      return <Redirect to={this.state.newCollectionUrl}/>
     }
     return (
-      <button className={`button create-collection`} onClick={() => createCollection(this.props.api)}>
-            Create Collection
-      </button>     
+      <button className={`button create-collection`} onClick={() => this.createCollection(this.props.api)}>
+          Create Collection
+      </button>    
     )
   }
 }
 
-createCollectionButton.propTypes = {
+CreateCollectionButton.propTypes = {
   api: PropTypes.any.isRequired,
 }
 
 
 // Create a new collection
-async function createCollection(api){
-  console.log('attempt to create collection!');
+// async function createCollection(api){
+//   console.log('attempt to create collection!');
   
-  // generate random name for collection
-  const {data} = await wordsApi.get('word-pairs');
-  let name = data[0];
-  let description = `A collection of projects that does ${name.split("-")[0]} things`;
-  let url = _.kebabCase(name);
-  let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
-  let coverColor = colors[Math.floor(Math.random()*colors.length)];
-  if(validate(name)){
-    const {data} = await api.post('collections', {
-      name,
-      description,
-      url,
-      avatarUrl,
-      coverColor,
-    });
-   // console.log("data: %O", data);
-  // get username from userId
-  let userName = "";
-  api.get(`users/${data.userId}`).then(({data}) => {
-     console.log(data);
-     userName = data.login;
-     console.log(`userName: ${userName}`);
-     history.pushState(getLink(userName, data.url));
-  });
-  }
-}
+//   // generate random name for collection
+//   const {data} = await wordsApi.get('word-pairs');
+//   let name = data[0];
+//   let description = `A collection of projects that does ${name.split("-")[0]} things`;
+//   let url = _.kebabCase(name);
+//   let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
+//   let coverColor = colors[Math.floor(Math.random()*colors.length)];
+//   if(validate(name)){
+//     const {data} = await api.post('collections', {
+//       name,
+//       description,
+//       url,
+//       avatarUrl,
+//       coverColor,
+//     });
+//    // console.log("data: %O", data);
+//   // get username from userId
+//   let userName = "";
+//   api.get(`users/${data.userId}`).then(({data}) => {
+//      console.log(data);
+//      userName = data.login;
+//      console.log(`userName: ${userName}`);
+//      history.pushState(getLink(userName, data.url));
+//   });
+//   }
+// }
 
     
 

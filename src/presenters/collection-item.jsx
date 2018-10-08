@@ -49,7 +49,7 @@ async function getCollectionUrl(api, userId, collectionUrl){
   const {data} = await api.get(`users/${userId}`);
   const username = data.login;
   let path = `/@${username}/${collectionUrl}`;
-  console.log(`path: ${path}`);
+  // console.log(`path: ${path}`);
   return path;
 }
 
