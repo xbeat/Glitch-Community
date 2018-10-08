@@ -51,9 +51,9 @@ async function createCollection(api){
   console.log('attempt to create collection!');
   
   // generate random name for collection
-  const {word_pair} = await wordsApi.get('word-pairs');
-  console.log(`word_pair: ${word_pair}`);
-  let name = word_pair[0];
+  const {data} = await wordsApi.get('word-pairs');
+  console.log(`word_pair: ${data}`);
+  let name = data[0];
   console.log(`name: ${name}`);
   let description = `A collection of projects that does ${name.split("-")[0]} things`;
   console.log(`description: ${description}`);
