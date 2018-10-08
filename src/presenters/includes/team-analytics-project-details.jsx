@@ -11,7 +11,7 @@ const RECENT_REMIXES_COUNT = 100;
 const getProjectDetails = async ({id, api, currentProjectDomain}) => {
   let path = `analytics/${id}/project/${currentProjectDomain}/overview`;
   try {
-    return await api().get(path);
+    return await api.get(path);
   } catch (error) {
     console.error('getProjectDetails', error);
   }
@@ -153,7 +153,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
 TeamAnalyticsProjectDetails.propTypes = {
   currentProjectDomain: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  api: PropTypes.func.isRequired,
+  api: PropTypes.any.isRequired,
 };
 
 export default TeamAnalyticsProjectDetails;

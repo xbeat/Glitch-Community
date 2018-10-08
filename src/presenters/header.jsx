@@ -87,7 +87,6 @@ SearchForm.propTypes = {
 };
 
 const Header = ({api, maybeUser, clearUser, searchQuery, showNewStuffOverlay}) => {
-  const signedIn = maybeUser && !!maybeUser.login;
   return (
     <header role="banner">
       <div className="header-info">
@@ -99,9 +98,9 @@ const Header = ({api, maybeUser, clearUser, searchQuery, showNewStuffOverlay}) =
       <nav>
         <SearchForm defaultValue={searchQuery}/>
         <NewProjectPop api={api}/>
-        <ResumeCoding/>
-        { !signedIn && <SignInPop/> }
-        { maybeUser && <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api}/>}
+        { maybeUser && !!maybeUser.projects.length && <ResumeCoding/> }
+        { !(maybeUser && maybeUser.login) && <SignInPop/> }
+        { maybeUser && <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api}/> }
       </nav>
     </header>
   );
