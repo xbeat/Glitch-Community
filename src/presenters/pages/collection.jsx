@@ -42,10 +42,6 @@ const hexToRgbA = (hex) => {
 const CollectionPage = ({
   collection, 
   api, 
-  color, 
-  setColor, 
-  avatar, 
-  setAvatar, 
   isAuthorized, 
   updateName, 
   updateDescription, 
@@ -60,7 +56,7 @@ const CollectionPage = ({
       <title>{(collection ? collection.name : name)}</title>
     </Helmet>
     <main className="collection-page">
-      <article className="projects" style={{backgroundColor: hexToRgbA(color)}}>
+      <article className="projects" style={{backgroundColor: hexToRgbA(collection.coverColor)}}>
         <header className="collection">
           <h1 className="collection-name">
             {/* TO DO: actually update name */}
@@ -73,7 +69,7 @@ const CollectionPage = ({
             )}
           </h1>
           <div className="collection-image-container">
-            <img src={avatar} alt=""/>
+            <img src={collection.avatarUrl} alt=""/>
           </div>
           {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
           {isAuthorized 
@@ -82,7 +78,6 @@ const CollectionPage = ({
               <AddCollectionAvatar
                 api={api}
                 collectionID = {collection.id}
-                setAvatar={setAvatar}
               />
               
               {/*
@@ -108,7 +103,6 @@ const CollectionPage = ({
             api={api}
             collectionID={collection.id}
             currentUserIsOwner={true}
-            setColor={setColor}
           />
           
           {(isAuthorized
@@ -140,7 +134,7 @@ const CollectionPage = ({
                 
                   </div>
           
-                  <ProjectsUL projects={projects} categoryColor={color} 
+                  <ProjectsUL projects={projects} categoryColor={collection.coverColor} 
                     projectOptions={{
                       removeProjectFromCollection: removeProject,
                       addProjectToCollection: {addProject}
@@ -166,7 +160,7 @@ const CollectionPage = ({
                 />
                 : null
               )}
-              <div className="empty-collection-hint" style={{backgroundColor: color}}>
+              <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor}}>
                 Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
               </div>
                 
@@ -238,8 +232,8 @@ const CollectionPageLoader = ({api, user, name, addProject, removeProject, ...pr
     >
       {collection => (
         <CollectionEditor api={api} initialCollection={collection}>
-          {(collection, funcs, color, setColor, avatar, setAvatar) =>{
-              <CollectionPage collection={collection} setColor={setColor} color={color} setAvatar={setAvatar} avatar={avatar} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...props}/>
+          {(collection, funcs) =>{
+              <CollectionPage collection={collection} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...props}/>
                 }
           }
         </CollectionEditor>

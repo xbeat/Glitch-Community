@@ -18,22 +18,22 @@ class CollectionEditor extends React.Component {
       ...props.initialCollection
     };
     
-    this.setColor = this.setColor.bind(this);
-    this.setAvatar = this.setAvatar.bind(this); 
+    this.updateColor = this.updateColor.bind(this);
+    this.updateAvatar = this.updateAvatar.bind(this); 
   }
   
-  setAvatar(newAvatar){
+  updateColor(coverColor){
     this.setState({
-      avatar: newAvatar
+      color: coverColor
     });
-    console.log(`newAvatar: ${newAvatar}`);
+    this.updateFields({coverColor});
   }
   
-  async updateColor(newColor){
+  updateAvatar(avatarUrl){
     this.setState({
-      color: newColor
+      avatar: avatarUrl
     });
-    console.log(`newColor: ${newColor}`);
+    this.updateFields({avatarUrl});
   }
 
   async updateFields(changes) {
@@ -73,7 +73,6 @@ class CollectionEditor extends React.Component {
     }));
   }
 
-
   render() {
     console.log('render in collection editor');
     const {handleError, handleErrorForInput} = this.props;
@@ -82,10 +81,10 @@ class CollectionEditor extends React.Component {
       removeProject: id => this.removeProject(id).catch(handleError),
       updateName: name => this.updateFields({name}).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
-      uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
+      updateAvatar: avatarUrl => this.updateAvatar(avatarUrl).catch(handleError),
       updateColor: color => this.updateColor(color).catch(handleError),
     };
-    return this.props.children(this.state, funcs, this.state.color, this.setColor, this.state.avatar, this.setAvatar);
+    return this.props.children(this.state, funcs);
   }
 }
 CollectionEditor.propTypes = {
