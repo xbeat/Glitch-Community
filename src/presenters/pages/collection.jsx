@@ -212,6 +212,7 @@ async function getUserIdByLogin(api, user){
 }
 
 async function loadCollection(api, user, name){
+  console.log('loadCollection');
   
   const userId = await getUserIdByLogin(api,user);
   
@@ -235,8 +236,7 @@ async function loadCollection(api, user, name){
 
 const CollectionPageLoader = ({api, user, name, addProject, removeProject, ...props}) => (
   <Layout api={api}>
-    <DataLoader
-      get={() => loadCollection(api, user, name)}
+    <DataLoader get={() => loadCollection(api, user, name)}
       renderLoader={() => <Loader/>}
       renderError={() => <CollectionPageError {...props}/>}
     >
@@ -258,4 +258,4 @@ CollectionPageLoader.propTypes = {
   removeProject: PropTypes.func,
 }
 
-export default CollectionPage;
+export default CollectionPageLoader;
