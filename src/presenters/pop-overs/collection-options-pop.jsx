@@ -24,7 +24,7 @@ const CollectionOptionsPop = (props) => {
   }
 
   function animateThenDeleteCollection(event) {
-    animate(event, 'slide-down', () => props.deleteProject(props.collection.id));
+    animate(event, 'slide-down', () => props.deleteCollection(props.collection.id));
   }  
   
   return(
