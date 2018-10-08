@@ -58,9 +58,7 @@ const CollectionPage = ({
     <main className="collection-page">
       <article className="projects" style={{backgroundColor: hexToRgbA(collection.coverColor)}}>
         <header className="collection">
-          <h1 className="collection-name">
-            {/* TO DO: actually update name */}
-            
+          <h1 className="collection-name">            
             {(isAuthorized 
               ? <AuthDescription authorized={isAuthorized}
                 description={collection.name} 
@@ -74,7 +72,7 @@ const CollectionPage = ({
             <img src={collection.avatarUrl} alt=""/>
           </div>
           {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
-          {isAuthorized 
+          {(isAuthorized 
             ? <div className="upload-image-buttons">
               
               <AddCollectionAvatar
@@ -90,16 +88,16 @@ const CollectionPage = ({
               
             </div>
             : null
-          }
+          )}
           
           <p className="description">
-            {/* TO DO: actually update description */}
-            {/*
-            <AuthDescription
-              authorized={isAuthorized} description={collection.description}
-              update={updateDescription} placeholder="Tell us about your collection"
-            />
-            */}
+            {(isAuthorized
+              ? <AuthDescription
+                authorized={isAuthorized} description={collection.description}
+                update={updateDescription} placeholder="Tell us about your collection"
+                />
+              : <React.Fragment>{collection.description}</React.Fragment>
+            )}
           </p>
           
           
@@ -236,7 +234,7 @@ const CollectionPageLoader = ({api, user, name, addProject, removeProject, ...pr
       {collection => (
         <CollectionEditor api={api} initialCollection={collection}>
           {(collection, funcs) =>(
-              <CollectionPage collection={collection} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...props}/>
+              <CollectionPage collection={collection} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...funcs} {...props}/>
                 )
           }
         </CollectionEditor>

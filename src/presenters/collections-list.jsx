@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CollectionItem from "./collection-item.jsx";
-import {getLink} from '../models/collection';
+import {getLink,colors} from '../models/collection';
 
 import axios from 'axios';
 import _ from 'lodash';
@@ -59,12 +59,14 @@ async function createCollection(api){
   console.log(`description: ${description}`);
   let url = _.kebabCase(name);
   let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
+  let coverColor = colors[Math.floor(Math.random()*colors.length)];
   if(validate(name)){
     const {data} = await api.post('collections', {
       name,
       description,
       url,
       avatarUrl,
+      coverColor,
     });
    console.log("data: %O", data);
   // get username from userId

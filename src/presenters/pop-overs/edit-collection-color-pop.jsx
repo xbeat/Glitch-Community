@@ -34,7 +34,7 @@ class EditCollectionColorPop extends React.Component {
     this.setState({ query });
     if (query && query.length <=7) {
       if(validHex(query)){
-        this.props.setColor(query);
+        this.props.setState({color: query});
       }else{
         document.getElementsByClassName("editable-field-error-message")[0].style.display = "inherit";
       }
