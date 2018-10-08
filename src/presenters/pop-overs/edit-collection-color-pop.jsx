@@ -54,7 +54,6 @@ class EditCollectionColorPop extends React.Component {
     
   onClick() {
     this.props.togglePopover();
-    {/* TO DO - apply color change here*/}
   }
   
   render() {
@@ -67,14 +66,16 @@ class EditCollectionColorPop extends React.Component {
           {Object.keys(colors).map((key => 
             <button className="button-tertiary" key={key}
               style={{backgroundColor: colors[key]}} 
-              onClick={() => this.props.setColor(colors[key])}
+              onClick={this.updateColor(colors[key])}
             />
           ))}
           
+          {/*
+            onClick={() => this.setState({color: colors[key]})
+          */}
           <hr/>
           
           <input id="color-picker" 
-            no-autofocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange} onKeyPress={this.keyPress}
             className="pop-over-input pop-over-search"
             placeholder="Custom color hex"
@@ -92,7 +93,8 @@ class EditCollectionColorPop extends React.Component {
 
 EditCollectionColorPop.propTypes = {
   api: PropTypes.func.isRequired,
-  collectionID: PropTypes.number.isRequired
+  collectionID: PropTypes.number.isRequired,
+  updateColor: PropTypes.func.isRequired,
 };
 
 export default EditCollectionColorPop;

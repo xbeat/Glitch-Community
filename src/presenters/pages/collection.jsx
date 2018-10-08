@@ -49,6 +49,8 @@ const CollectionPage = ({
   uploadAvatar, 
   addProject, 
   removeProject,
+  updateColor,
+  updateAvatar,
   ...props}) => (
   
     <React.Fragment>  
@@ -103,8 +105,9 @@ const CollectionPage = ({
           
           <EditCollectionColor
             api={api}
-            collectionID={collection.id}
+            collectionId={collection.id}
             currentUserIsOwner={true}
+            updateColor={updateColor}
           />
           
           {(isAuthorized
