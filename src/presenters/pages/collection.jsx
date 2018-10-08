@@ -127,7 +127,7 @@ const CollectionPage = ({
                         addProject={addProject}
                         api={api}
                         collectionProjects={collection.projects}
-                        currentUserIsOwner={true}
+                        currentUsercreateIsOwner={true}
                       />
                       : null
                     )}
