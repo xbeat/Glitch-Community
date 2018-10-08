@@ -67,10 +67,11 @@ class EditCollectionColorPop extends React.Component {
           {Object.keys(colors).map((key => 
             <button className="button-tertiary" key={key}
               style={{backgroundColor: colors[key]}} 
-              onClick={() => 
-                this.setState({color: colors[key]});
+              onClick={evt => {
+                console.log(`set color to ${colors[key]}`);
+                this.setState({ color: colors[key] });
                 this.update(colors[key]);
-              }
+              }}
             />
           ))}
           
@@ -97,7 +98,7 @@ class EditCollectionColorPop extends React.Component {
 
 EditCollectionColorPop.propTypes = {
   api: PropTypes.func.isRequired,
-  collectionID: PropTypes.number.isRequired,
+  collectionId: PropTypes.number.isRequired,
   updateColor: PropTypes.func.isRequired,
 };
 
