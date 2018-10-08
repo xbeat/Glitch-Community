@@ -13,8 +13,8 @@ class CollectionEditor extends React.Component {
     let color = "#FFA3BB"; // default color
     
     this.state = {
-      color: this.props.collection.coverColor,
-      avatar: this.props.collection.avatarUrl,
+      color: this.props.initialCollection.coverColor,
+      avatar: this.props.initialCollection.avatarUrl,
       ...props.initialCollection
     };
     
@@ -92,14 +92,14 @@ class CollectionEditor extends React.Component {
 }
 CollectionEditor.propTypes = {
   api: PropTypes.any.isRequired,
-  addProject: PropTypes.func.isRequired,
+  addProject: PropTypes.func,
   children: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
-  updateCurrentUser: PropTypes.func.isRequired,
+  updateCurrentUser: PropTypes.func,
   handleError: PropTypes.func.isRequired,
   handleErrorForInput: PropTypes.func.isRequired,
-  initialCollection: PropTypes.func.isRequired,
-  removeProject: PropTypes.func.isRequired,
+  initialCollection: PropTypes.object.isRequired,
+  removeProject: PropTypes.func,
   uploadAsset: PropTypes.func.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
 };

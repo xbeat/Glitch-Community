@@ -176,7 +176,7 @@ CollectionPageWrap.propTypes = {
     name: PropTypes.string.isRequired,
     projects: PropTypes.array.isRequired
   }).isRequired,
-  addProject: PropTypes.func.isRequired,
+  addProject: PropTypes.func.i,
   addProjectToCollection: PropTypes.func,
   api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
@@ -199,23 +199,19 @@ async function getUserIdByLogin(api, user){
   if(data === "NOT FOUND"){
     return null;
   }
-  console.log(`userId: ${data}`);
   return data;
 }
 
 async function loadCollection(api, user, name){
-  console.log(`loadCollection with user ${user} and name ${name}`);
   
   const userId = await getUserIdByLogin(api,user);
   
   let collectionMatch = null;
   const {data} = await api.get(`collections?userId=${userId}`);
-  console.log(`data: ${data}`);
   
   data.forEach(function loop(el, i){
     if(loop.stop){return;}
     if(el.url === name){
-      console.log(el.url);
       collectionMatch = data[i];
       loop.stop = true;
     }
@@ -223,7 +219,7 @@ async function loadCollection(api, user, name){
   if(!collectionMatch){
     return null;
   }
-  console.log(`collectionMatch: ${collectionMatch}`);
+  console.log("load collection complete with collectionMatch: %O", collectionMatch);
   return collectionMatch;
 }
   
@@ -236,11 +232,12 @@ const CollectionPage = ({api, user, name, addProject, removeProject, ...props}) 
       renderError={() => <CollectionPageError {...props}/>}
     >
       {collection => (
-        <CollectionEditor api={api} initialCollection={initialCollection} collection={collection}>
+        <CollectionEditor api={api} initialCollection={collection}>
           {(collection, color, setColor, avatar, setAvatar, funcs, ...args) =>{
               <CollectionPageWrap collection={collection} setColor={setColor} color={color} setAvatar={setAvatar} avatar={avatar} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...props}/>
                 }
           }
+        </CollectionEditor>
       )}
     </DataLoader>
   </Layout>
