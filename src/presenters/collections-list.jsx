@@ -68,7 +68,7 @@ async function createCollection(api){
     });
    console.log("data: %O", data);
   // get username from userId
-  let userName = api.get(`users/${data.userId}`).then(({data}) => data.id);
+  let userName = await api.get(`users/${data.userId}`).name;
   console.log(`userName: ${userName}`);
   history.pushState(getLink(userName, data.url));
   }
