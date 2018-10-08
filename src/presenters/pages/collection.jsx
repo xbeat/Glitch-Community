@@ -232,9 +232,9 @@ const CollectionPageLoader = ({api, user, name, addProject, removeProject, ...pr
     >
       {collection => (
         <CollectionEditor api={api} initialCollection={collection}>
-          {(collection, funcs) =>{
+          {(collection, funcs) =>(
               <CollectionPage collection={collection} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...props}/>
-                }
+                )
           }
         </CollectionEditor>
       )}
