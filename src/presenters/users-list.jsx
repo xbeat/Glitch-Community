@@ -13,25 +13,22 @@ const GLITCH_TEAM_AVATAR = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-204396
 
 // UserAvatar
 
-function addDefaultSrc(event) {
-  event.target.src = ANON_AVATAR_URL;
-}
-
-const Avatar = ({name, src, style}) => (
+const Avatar = ({name, src, style, srcFallback}) => (
   <span className="user-list-avatar" data-tooltip={name} data-tooltip-left="true">
     <img width="32px" height="32px"
-      src={src} style={style} alt={name} onError={addDefaultSrc}
+      src={src} style={style} alt={name} onError={event => event.target.src = ANON_AVATAR_URL}
     />
   </span>
 );
 Avatar.propTypes = {
   name: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
+  srcFallback: PropTypes.string.isRequired,
   style: PropTypes.object,
 };
 
-const UserAvatar = ({user}) => (
-  <Avatar name={getDisplayName(user)} src={getAvatarThumbnailUrl(user)} style={getStyle(user)}/>
+const UserAvatar = ({user, title=''}) => (
+  <Avatar name={getDisplayName(user) + title} src={getAvatarThumbnailUrl(user)} style={getStyle(user)} srcFallback={ANON_AVATAR_URL}/>
 );
 UserAvatar.propTypes = {
   user: PropTypes.shape({
@@ -41,6 +38,7 @@ UserAvatar.propTypes = {
     avatarThumbnailUrl: PropTypes.string,
     color: PropTypes.string.isRequired,
   }).isRequired,
+  title: PropTypes.string,
 };
 
 

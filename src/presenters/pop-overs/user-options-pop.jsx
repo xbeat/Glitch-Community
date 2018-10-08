@@ -120,7 +120,7 @@ Are you sure you want to sign out?`)) {
         showCreateTeam={showCreateTeam} 
         userIsAnon={!user.login} 
       />
-      <section className="pop-over-info section-has-tertiary-buttons">
+      <section className="pop-over-info">
         <button onClick={clickNewStuff} className="button-small has-emoji button-tertiary button-on-secondary-background">
           New Stuff <span className="emoji dog-face"></span>
         </button>
