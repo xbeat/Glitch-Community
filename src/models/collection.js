@@ -34,8 +34,8 @@ export function getAvatarUrl(id) {
   return `${CDN_URL}/collection-avatar/${id}.png`;
 }
 
-export async function getLink(userName, url) {
-  return `/@${userName}/~${url}`;
+export function getLink(userName, url) {
+  return `/@${userName}/${url}`;
 }
 
 // export function getShowUrl(domain) {

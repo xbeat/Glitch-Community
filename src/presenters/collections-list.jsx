@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Redirect} from 'react-router-dom';
 import CollectionItem from "./collection-item.jsx";
 import {getLink,colors} from '../models/collection';
 
@@ -72,6 +73,8 @@ class CreateCollectionButton extends React.Component{
           avatarUrl,
           coverColor,
         });
+        let collectionUrl = data.url;
+        console.log(`collectionUrl: ${collectionUrl}`);
        
         let userName = "";
         api.get(`users/${data.userId}`).then(({data}) => {
@@ -79,9 +82,9 @@ class CreateCollectionButton extends React.Component{
            console.log(data);
            userName = data.login;
            console.log(`userName: ${userName}`);
-           let newCollectionUrl = getLink(userName, data.url);
+           let newCollectionUrl = getLink(userName, collectionUrl);
            console.log(`newCollectionUrl: ${newCollectionUrl}`);
-           this.setState({newCollectionUrl: newCollectionUrl});
+           this.setState({newCollectionUrl: {newCollectionUrl}});
         });
       } 
     }catch(error){
