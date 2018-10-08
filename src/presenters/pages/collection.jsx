@@ -24,8 +24,21 @@ import {avatars} from '../../models/collection.js';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
 
+const hexToRgbA = (hex) => {
+  var c;
+  if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+    c= hex.substring(1).split('');
+    if(c.length== 3){
+      c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+    }
+    c= '0x'+c.join('');
+    return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.4)';
+  }
+  throw new Error('Bad Hex');
+};
 
-const CollectionPageWrap = ({
+
+const CollectionPage = ({
   collection, 
   api, 
   color, 
@@ -168,7 +181,7 @@ const CollectionPageWrap = ({
   </React.Fragment>
 );
 
-CollectionPageWrap.propTypes = {
+CollectionPage.propTypes = {
   collection: PropTypes.shape({
     avatarUrl: PropTypes.string.isRequired,
     backgroundColor: PropTypes.string,
@@ -176,19 +189,15 @@ CollectionPageWrap.propTypes = {
     name: PropTypes.string.isRequired,
     projects: PropTypes.array.isRequired
   }).isRequired,
-  addProject: PropTypes.func.i,
+  addProject: PropTypes.func,
   addProjectToCollection: PropTypes.func,
   api: PropTypes.any.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   isAuthorized: PropTypes.any.isRequired,  
-  projectOptions: PropTypes.object.isRequired,
-  removeProject: PropTypes.func.isRequired,
-  uploadAvatar: PropTypes.func.isRequired,
+  projectOptions: PropTypes.object,
+  removeProject: PropTypes.func,
+  uploadAvatar: PropTypes.func,
 };
-
-const CollectionPageLoader = ({...props}) => (
-  <Loader/>
-);
 
 const CollectionPageError = ({...props}) => (
   "Something went wrong. Try refreshing?"  
@@ -224,17 +233,17 @@ async function loadCollection(api, user, name){
 }
   
 
-const CollectionPage = ({api, user, name, addProject, removeProject, ...props}) => (
+const CollectionPageLoader = ({api, user, name, addProject, removeProject, ...props}) => (
   <Layout api={api}>
     <DataLoader
       get={() => loadCollection(api, user, name)}
-      renderLoader={() => <CollectionPageLoader {...props}/>}
+      renderLoader={() => <Loader/>}
       renderError={() => <CollectionPageError {...props}/>}
     >
       {collection => (
         <CollectionEditor api={api} initialCollection={collection}>
           {(collection, color, setColor, avatar, setAvatar, funcs, ...args) =>{
-              <CollectionPageWrap collection={collection} setColor={setColor} color={color} setAvatar={setAvatar} avatar={avatar} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...props}/>
+              <CollectionPage collection={collection} setColor={setColor} color={color} setAvatar={setAvatar} avatar={avatar} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...props}/>
                 }
           }
         </CollectionEditor>
@@ -243,7 +252,7 @@ const CollectionPage = ({api, user, name, addProject, removeProject, ...props}) 
   </Layout>
 );
 
-CollectionPage.propTypes = {
+CollectionPageLoader.propTypes = {
   api: PropTypes.any.isRequired,
   addProject: PropTypes.func,
   removeProject: PropTypes.func,
