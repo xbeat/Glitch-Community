@@ -63,7 +63,10 @@ class CreateCollectionButton extends React.Component{
       
       // defaults
       let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
-      let coverColor = colors[Math.floor(Math.random()*colors.length)];
+      // get a random color
+      let randomHex = Object.values(colors);
+      let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
+      console.log(`coverColor: ${coverColor}`);
       
       if(validate(name)){
         const {data} = await api.post('collections', {
@@ -78,13 +81,13 @@ class CreateCollectionButton extends React.Component{
        
         let userName = "";
         api.get(`users/${data.userId}`).then(({data}) => {
+          console.log(data);
+          userName = data.login;
+          console.log(`userName: ${userName}`);
+          let newCollectionUrl = getLink(userName, collectionUrl);
+          console.log(`newCollectionUrl: ${newCollectionUrl}`);
+          this.setState({newCollectionUrl: newCollectionUrl});
           this.setState({done: true});
-           console.log(data);
-           userName = data.login;
-           console.log(`userName: ${userName}`);
-           let newCollectionUrl = getLink(userName, collectionUrl);
-           console.log(`newCollectionUrl: ${newCollectionUrl}`);
-           this.setState({newCollectionUrl: {newCollectionUrl}});
         });
       } 
     }catch(error){
