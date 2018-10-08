@@ -13,8 +13,6 @@ class CollectionEditor extends React.Component {
     let color = "#FFA3BB"; // default color
     
     this.state = {
-      color: this.props.initialCollection.coverColor,
-      avatar: this.props.initialCollection.avatarUrl,
       ...props.initialCollection
     };
     
@@ -84,6 +82,7 @@ class CollectionEditor extends React.Component {
       updateAvatar: avatarUrl => this.updateAvatar(avatarUrl).catch(handleError),
       updateColor: color => this.updateColor(color).catch(handleError),
     };
+    console.log('later');
     return this.props.children(this.state, funcs);
   }
 }
