@@ -52,6 +52,7 @@ class createCollectionButton extends React.Component{
     this.state={
       done: false,
       error: false,
+      ur
     }
   }
   async createCollection(api){
@@ -90,8 +91,18 @@ class createCollectionButton extends React.Component{
   
   render(){
     if(this.state.done){
+      
     }
+    return (
+      <button className={`button create-collection`} onClick={() => createCollection(this.props.api)}>
+            Create Collection
+      </button>     
+    )
   }
+}
+
+createCollectionButton.propTypes = {
+  api: PropTypes.any.isRequired,
 }
 
 
