@@ -16,7 +16,7 @@ const GLITCH_TEAM_AVATAR = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-204396
 const Avatar = ({name, src, style, srcFallback}) => (
   <span className="user-list-avatar" data-tooltip={name} data-tooltip-left="true">
     <img width="32px" height="32px"
-      src={src} style={style} alt={name} onError={event => event.target.src = ANON_AVATAR_URL}
+      src={src} style={style} alt={name} onError={event => event.target.src = srcFallback}
     />
   </span>
 );
@@ -27,8 +27,8 @@ Avatar.propTypes = {
   style: PropTypes.object,
 };
 
-const UserAvatar = ({user, title=''}) => (
-  <Avatar name={getDisplayName(user) + title} src={getAvatarThumbnailUrl(user)} style={getStyle(user)} srcFallback={ANON_AVATAR_URL}/>
+const UserAvatar = ({user, suffix=''}) => (
+  <Avatar name={getDisplayName(user) + suffix} src={getAvatarThumbnailUrl(user)} style={getStyle(user)} srcFallback={ANON_AVATAR_URL}/>
 );
 UserAvatar.propTypes = {
   user: PropTypes.shape({
@@ -38,7 +38,7 @@ UserAvatar.propTypes = {
     avatarThumbnailUrl: PropTypes.string,
     color: PropTypes.string.isRequired,
   }).isRequired,
-  title: PropTypes.string,
+  suffix: PropTypes.string,
 };
 
 
@@ -123,10 +123,7 @@ export const UserPopoversList = ({users, adminIds, children}) => (
           {({visible, togglePopover}) => (
             <div className="button-wrap">
               <button onClick={togglePopover} className="user button-unstyled">
-                <Avatar
-                  name={getDisplayName(user) + adminStatusDisplay(adminIds, user)}
-                  src={getAvatarThumbnailUrl(user)} style={getStyle(user)}
-                />
+                <UserAvatar user={user} suffix={adminStatusDisplay(adminIds, user)}/>
               </button>
               {!!visible && children(user, togglePopover)}
             </div>
@@ -140,10 +137,6 @@ export const UserPopoversList = ({users, adminIds, children}) => (
 UserPopoversList.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
-    login: PropTypes.string,
-    name: PropTypes.string,
-    avatarThumbnailUrl: PropTypes.string,
-    color: PropTypes.string.isRequired,
   })).isRequired,
   children: PropTypes.func.isRequired,
   adminIds: PropTypes.array,
