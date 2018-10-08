@@ -7,12 +7,12 @@ import {DEFAULT_TEAM_AVATAR, getAvatarUrl as getTeamAvatarUrl} from '../../model
 // UserAvatar
 
 export const Avatar = ({name, src, color, srcFallback}) => (
-  <span className="user-list-avatar" data-tooltip={name} data-tooltip-left="true">
+  <div data-tooltip={name} data-tooltip-left="true">
     <img width="32px" height="32px" src={src} alt={name}
       style={color ? {backgroundColor: color} : null}
       onError={srcFallback ? (event => event.target.src = srcFallback) : null}
     />
-  </span>
+  </div>
 );
 Avatar.propTypes = {
   name: PropTypes.string.isRequired,
