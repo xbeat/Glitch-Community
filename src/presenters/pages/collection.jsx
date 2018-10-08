@@ -53,20 +53,22 @@ const CollectionPage = ({
   
     <React.Fragment>  
     <Helmet>
-      <title>{(collection ? collection.name : name)}</title>
+      <title>{collection.name}</title>
     </Helmet>
     <main className="collection-page">
       <article className="projects" style={{backgroundColor: hexToRgbA(collection.coverColor)}}>
         <header className="collection">
           <h1 className="collection-name">
             {/* TO DO: actually update name */}
+            
             {(isAuthorized 
               ? <AuthDescription authorized={isAuthorized}
-                description={(collection ? collection.name : name)} 
-                update={updateName => null} 
+                description={collection.name} 
+                update={updateName} 
                 placeholder="Name your collection"/> 
               : <React.Fragment>{collection.name} </React.Fragment>
             )}
+            
           </h1>
           <div className="collection-image-container">
             <img src={collection.avatarUrl} alt=""/>
@@ -92,10 +94,12 @@ const CollectionPage = ({
           
           <p className="description">
             {/* TO DO: actually update description */}
+            {/*
             <AuthDescription
               authorized={isAuthorized} description={collection.description}
               update={updateDescription} placeholder="Tell us about your collection"
             />
+            */}
           </p>
           
           
@@ -127,7 +131,7 @@ const CollectionPage = ({
                         addProject={addProject}
                         api={api}
                         collectionProjects={collection.projects}
-                        currentUsercreateIsOwner={true}
+                        currentUserIsOwner={true}
                       />
                       : null
                     )}
@@ -172,7 +176,6 @@ const CollectionPage = ({
       </article>
       
     </main>
-    <Categories/>
   </React.Fragment>
 );
 

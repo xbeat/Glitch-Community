@@ -77,12 +77,11 @@ class CollectionEditor extends React.Component {
     const funcs = {
       addProject: project => this.addProject(project).catch(handleError),
       removeProject: id => this.removeProject(id).catch(handleError),
-      updateName: name => this.updateFields({name}).catch(handleErrorForInput),
+      updateName: name => this.updateFields({name}).catch(handleError),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       updateAvatar: avatarUrl => this.updateAvatar(avatarUrl).catch(handleError),
       updateColor: color => this.updateColor(color).catch(handleError),
     };
-    console.log('later');
     return this.props.children(this.state, funcs);
   }
 }
