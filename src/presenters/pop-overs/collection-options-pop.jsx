@@ -17,9 +17,9 @@ const PopoverButton = ({onClick, text, emoji}) => (
 const CollectionOptionsPop = (props) => {
   
   function animate(event, className, func) {
-    const projectContainer = event.target.closest('li');
-    projectContainer.addEventListener('animationend', func, {once: true});
-    projectContainer.classList.add(className);
+    const collectionContainer = event.target.closest('li');
+    collectionContainer.addEventListener('animationend', func, {once: true});
+    collectionContainer.classList.add(className);
     props.togglePopover();
   }
 

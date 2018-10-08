@@ -41,10 +41,59 @@ CollectionsList.propTypes = {
   deleteCollection: PropTypes.func,
 };
 
-// ensure that the user doesn't already have a collection with this name
+// TO DO: ensure that the user doesn't already have a collection with this name
 async function validate(name){
   return true
 }
+
+class createCollectionButton extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={
+      done: false,
+      error: false,
+    }
+  }
+  async createCollection(api){
+    try{
+      const {data} = await wordsApi.get('word-pairs');
+      let name = data[0];
+      let description = `A collection of projects that does ${name.split("-")[0]} things`;
+      let url = _.kebabCase(name);
+      
+      // defaults
+      let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
+      let coverColor = colors[Math.floor(Math.random()*colors.length)];
+      
+      if(validate(name)){
+        const {data} = await api.post('collections', {
+          name,
+          description,
+          url,
+          avatarUrl,
+          coverColor,
+        });
+       
+        let userName = "";
+        api.get(`users/${data.userId}`).then(({data}) => {
+          this.setState({done: true});
+           console.log(data);
+           userName = data.login;
+           console.log(`userName: ${userName}`);
+           history.pushState(getLink(userName, data.url));
+        });
+      } 
+    }catch(error){
+      this.setState({error: true});
+    }
+  }
+  
+  render(){
+    if(this.state.done){
+    }
+  }
+}
+
 
 // Create a new collection
 async function createCollection(api){
@@ -52,11 +101,8 @@ async function createCollection(api){
   
   // generate random name for collection
   const {data} = await wordsApi.get('word-pairs');
-  console.log(`word_pair: ${data}`);
   let name = data[0];
-  console.log(`name: ${name}`);
   let description = `A collection of projects that does ${name.split("-")[0]} things`;
-  console.log(`description: ${description}`);
   let url = _.kebabCase(name);
   let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
   let coverColor = colors[Math.floor(Math.random()*colors.length)];
@@ -68,7 +114,7 @@ async function createCollection(api){
       avatarUrl,
       coverColor,
     });
-   console.log("data: %O", data);
+   // console.log("data: %O", data);
   // get username from userId
   let userName = "";
   api.get(`users/${data.userId}`).then(({data}) => {
