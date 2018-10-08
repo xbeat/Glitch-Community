@@ -66,10 +66,16 @@ async function createCollection(api){
       url,
       avatarUrl,
     });
-   console.log(`data: ${data}`);
-   history.push(getLink(data));
+   console.log("data: %O", data);
+  // get username from userId
+  let userId = api.get(`users/${data.userId}`).then(({data}) => data.id);
+  console.log(`userId: ${userId}`);
+  history.push(getLink(userId, data.));
   }
 }
+
+    
+
 
 export const CollectionsUL = ({collections, deleteCollection, categoryColor, api, isAuthorized}) => {
   return (
