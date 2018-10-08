@@ -160,45 +160,57 @@ class TeamAnalytics extends React.Component {
             currentTimeFrame = {this.state.currentTimeFrame}
           />
         </section>
-        
-        <section className="summary">
-          { (this.state.isGettingData) &&
-            <Loader />
-          ||
-            <TeamAnalyticsSummary
-              totalAppViews = {this.state.totalAppViews}
-              totalRemixes = {this.state.totalRemixes}
-            />
-          }
-        </section>
-        
-        <section className="activity">
-          <figure id="chart" className="c3"/>
-          { (this.state.isGettingData || this.state.isGettingC3) && 
-            <Loader /> 
-          }
-          { (!this.state.isGettingC3) &&
-            <TeamAnalyticsActivity 
-              c3 = {this.state.c3}
-              analytics = {this.state.analytics}
-              isGettingData = {this.state.isGettingData}
-              currentTimeFrame = {this.state.currentTimeFrame}
-            />
-          }
-        </section>
 
-        <section className="referrers">
-          <h3>Referrers</h3>
-          { (this.state.isGettingData) &&
-            <Loader />
-          ||
-            <TeamAnalyticsReferrers 
-              analytics = {this.state.analytics}
-              totalRemixes = {this.state.totalRemixes}
-              totalAppViews = {this.state.totalAppViews}
+        { this.props.projects.length > 0 ? <React.Fragment>
+            <section className="summary">
+              {this.state.isGettingData ?
+                <Loader />
+              :
+                <TeamAnalyticsSummary
+                  totalAppViews = {this.state.totalAppViews}
+                  totalRemixes = {this.state.totalRemixes}
+                />
+              }
+            </section>
+
+            <section className="activity">
+              <figure id="chart" className="c3"/>
+              { (this.state.isGettingData || this.state.isGettingC3) && 
+                <Loader /> 
+              }
+              { (!this.state.isGettingC3) &&
+                <TeamAnalyticsActivity 
+                  c3 = {this.state.c3}
+                  analytics = {this.state.analytics}
+                  isGettingData = {this.state.isGettingData}
+                  currentTimeFrame = {this.state.currentTimeFrame}
+                />
+              }
+            </section>
+
+            <section className="referrers">
+              <h3>Referrers</h3>
+              { (this.state.isGettingData) &&
+                <Loader />
+              ||
+                <TeamAnalyticsReferrers 
+                  analytics = {this.state.analytics}
+                  totalRemixes = {this.state.totalRemixes}
+                  totalAppViews = {this.state.totalAppViews}
+                />
+              }
+            </section>
+            
+          </React.Fragment> :
+          <aside className="inline-banners add-project-to-analytics-banner">
+            <div className="description">Add Projects to see who's viewing and remixing</div>
+            <AddTeamProject
+              {...this.props}
+              extraButtonClass = "button-small"
+              teamProjects = {this.props.projects}
             />
-          }
-        </section>
+          </aside>
+        }
                 
         <section className="project-details">
           <h3>Project Details</h3>
@@ -207,11 +219,11 @@ class TeamAnalytics extends React.Component {
             currentProjectDomain = {this.state.currentProjectDomain}
             projects = {this.props.projects}
           />
-          { (this.state.currentProjectDomain === "All Projects") &&
+          { (this.state.currentProjectDomain === "All Projects") ?
             <p>
               <span className="up-arrow">↑ </span>
               Select a project for details and the latest remixes</p>
-            ||
+            :
             <TeamAnalyticsProjectDetails
               currentProjectDomain = {this.state.currentProjectDomain}
               id = {this.props.id}
@@ -226,17 +238,6 @@ class TeamAnalytics extends React.Component {
               Because Glitch doesn't inject code or cookies into your projects we don't collect the data required for unique app views. You can get uniques by adding Google Analytics to your project.
             </p>
           </section>
-        }
-
-        { this.props.projects.length === 0 &&
-          <aside className="inline-banners add-project-to-analytics-banner">
-            <div className="description">Add Projects to see who's viewing and remixing</div>
-            <AddTeamProject
-              {...this.props}
-              extraButtonClass = "button-small"
-              teamProjects = {this.props.projects}
-            />
-          </aside>
         }
       </section>
     );
