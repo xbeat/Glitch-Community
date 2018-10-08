@@ -10,14 +10,14 @@ export const Avatar = ({name, src, color, srcFallback}) => (
   <span className="user-list-avatar" data-tooltip={name} data-tooltip-left="true">
     <img width="32px" height="32px" src={src} alt={name}
       style={color ? {backgroundColor: color} : null}
-      onError={event => event.target.src = srcFallback}
+      onError={srcFallback ? (event => event.target.src = srcFallback) : null}
     />
   </span>
 );
 Avatar.propTypes = {
   name: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
-  srcFallback: PropTypes.string.isRequired,
+  srcFallback: PropTypes.string,
   color: PropTypes.string,
 };
 
