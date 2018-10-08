@@ -98,7 +98,21 @@ const CollectionPageEditor = ({api, initialCollection, children}) => (
   );
 */}
 
-const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar, isAuthorized, updateName, updateDescription, projectOptions, uploadAvatar, addProject, removeProject, ...props}) => (
+const CollectionPageWrap = ({
+  collection, 
+  api, 
+  color, 
+  setColor, 
+  avatar, 
+  setAvatar, 
+  isAuthorized, 
+  updateName, 
+  updateDescription, 
+  projectOptions, 
+  uploadAvatar, 
+  addProject, 
+  removeProject,
+  ...props}) => (
   <React.Fragment>
     
     <Helmet>
@@ -126,7 +140,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar
               
               <AddCollectionAvatar
                 api={api}
-                collectionID = {(collection ? collection.id : id)}
+                collectionID = {collection.id}
                 setAvatar={setAvatar}
               />
               
@@ -143,15 +157,15 @@ const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar
           <p className="description">
             {/* TO DO: actually update description */}
             <AuthDescription
-              authorized={isAuthorized} description={(collection ? collection.description : description)}
-              update={updateDescription => null} placeholder="Tell us about your collection"
+              authorized={isAuthorized} description={collection.description}
+              update={updateDescription} placeholder="Tell us about your collection"
             />
           </p>
           
           
           <EditCollectionColor
             api={api}
-            collectionID={(collection ? collection.id : id)}
+            collectionID={collection.id}
             currentUserIsOwner={true}
             setColor={setColor}
           />
@@ -230,7 +244,7 @@ const CollectionPageWrap = ({collection, api, color, setColor, avatar, setAvatar
 CollectionPageWrap.propTypes = {
   collection: PropTypes.shape({
     avatarUrl: PropTypes.string.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
+    backgroundColor: PropTypes.string,
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     projects: PropTypes.array.isRequired
