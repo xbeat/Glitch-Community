@@ -26,7 +26,7 @@ class EditCollectionColorPop extends React.Component {
     this.onClick = this.onClick.bind(this);
     this.handleChange = this.handleChange.bind(this); // for when user enters in custom hex
     this.keyPress = this.keyPress.bind(this); // handles enter key for custom hex
-    this.update = debounce(this.props.updateColor, 1000);
+    this.update = this.props.updateColor;
   }
     
   handleChange(e) {
@@ -35,7 +35,8 @@ class EditCollectionColorPop extends React.Component {
     this.setState({ query });
     if (query && query.length <=7) {
       if(validHex(query)){
-        this.props.setState({color: query});
+        this.setState({color: query});
+        this.update(query);
       }else{
         document.getElementsByClassName("editable-field-error-message")[0].style.display = "inherit";
       }
@@ -75,9 +76,6 @@ class EditCollectionColorPop extends React.Component {
             />
           ))}
           
-          {/*
-            onClick={() => this.setState({color: colors[key]})
-          */}
           <hr/>
           
           <input id="color-picker" 

@@ -80,7 +80,7 @@ class CollectionEditor extends React.Component {
       updateName: name => this.updateFields({name}).catch(handleError),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       updateAvatar: avatarUrl => this.updateAvatar(avatarUrl).catch(handleError),
-      updateColor: color => this.updateColor(color).catch(handleError),
+      updateColor: color => this.updateColor(color),
     };
     return this.props.children(this.state, funcs);
   }
