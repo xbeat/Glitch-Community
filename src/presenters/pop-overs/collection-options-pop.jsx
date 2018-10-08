@@ -30,10 +30,6 @@ const CollectionOptionsPop = (props) => {
   return(
     <dialog className="pop-over collection-options-pop">
       <section className="pop-over-actions danger-zone last-section">
-        {/*
-          <PopoverButton onClick={() => props.deleteCollection(props.collection.id)} text="Delete Collection " emoji="bomb"/>
-          */}
-        
         {props.deleteCollection && <PopoverButton onClick={animateThenDeleteCollection} text="Delete Collection " emoji="bomb"/>}
         
         </section>

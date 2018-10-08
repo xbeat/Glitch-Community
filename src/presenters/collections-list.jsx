@@ -52,7 +52,6 @@ class createCollectionButton extends React.Component{
     this.state={
       done: false,
       error: false,
-      ur
     }
   }
   async createCollection(api){
