@@ -64,6 +64,7 @@ async function createCollection(api){
       name,
       description,
       url,
+      avatarUrl,
     });
    console.log(`data: ${data}`);
    history.push(getLink(data));
