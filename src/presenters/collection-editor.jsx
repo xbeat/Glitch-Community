@@ -36,10 +36,6 @@ class CollectionEditor extends React.Component {
     console.log(`newColor: ${newColor}`);
   }
 
-  isCurrentUser() {
-    return !!this.props.currentUser && (this.state.id === this.props.currentUser.id);
-  }
-
   async updateFields(changes) {
     console.log('update collection fields');
     const {data} = await this.props.api.patch(`collections/${this.state.id}`, changes);
@@ -79,6 +75,7 @@ class CollectionEditor extends React.Component {
 
 
   render() {
+    console.log('render in collection editor');
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
       addProject: project => this.addProject(project).catch(handleError),
@@ -87,7 +84,7 @@ class CollectionEditor extends React.Component {
       updateDescription: description => this.updateFields({description}).catch(handleError),
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
     };
-    return this.props.children(this.state, funcs, this.isCurrentUser(), this.state.color, this.setColor, this.state.avatar, this.setAvatar);
+    return this.props.children(this.state, funcs, this.state.color, this.setColor, this.state.avatar, this.setAvatar);
   }
 }
 CollectionEditor.propTypes = {

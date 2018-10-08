@@ -242,7 +242,7 @@ const CollectionPageLoader = ({api, user, name, addProject, removeProject, ...pr
     >
       {collection => (
         <CollectionEditor api={api} initialCollection={collection}>
-          {(collection, color, setColor, avatar, setAvatar, funcs, ...args) =>{
+          {(collection, funcs, color, setColor, avatar, setAvatar) =>{
               <CollectionPage collection={collection} setColor={setColor} color={color} setAvatar={setAvatar} avatar={avatar} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...props}/>
                 }
           }
