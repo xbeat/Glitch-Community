@@ -161,11 +161,11 @@ class TeamAnalytics extends React.Component {
           />
         </section>
 
-        { this.props.projects.length > 0 ? <React.Fragment>
+        { this.props.projects.length > 0 ? (
+          <React.Fragment>
+            
             <section className="summary">
-              {this.state.isGettingData ?
-                <Loader />
-              :
+              {this.state.isGettingData ? <Loader /> :
                 <TeamAnalyticsSummary
                   totalAppViews = {this.state.totalAppViews}
                   totalRemixes = {this.state.totalRemixes}
@@ -201,16 +201,19 @@ class TeamAnalytics extends React.Component {
               }
             </section>
             
-          </React.Fragment> :
-          <aside className="inline-banners add-project-to-analytics-banner">
-            <div className="description">Add Projects to see who's viewing and remixing</div>
-            <AddTeamProject
-              {...this.props}
-              extraButtonClass = "button-small"
-              teamProjects = {this.props.projects}
-            />
-          </aside>
-        }
+          </React.Fragment>
+        ) : (
+          <section>
+            <aside className="inline-banners add-project-to-analytics-banner">
+              <div className="description">Add Projects to see who's viewing and remixing</div>
+              <AddTeamProject
+                {...this.props}
+                extraButtonClass = "button-small"
+                teamProjects = {this.props.projects}
+              />
+            </aside>
+          </section>
+        )}
                 
         <section className="project-details">
           <h3>Project Details</h3>
