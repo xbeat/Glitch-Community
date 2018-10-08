@@ -29,7 +29,7 @@ class CollectionEditor extends React.Component {
     console.log(`newAvatar: ${newAvatar}`);
   }
   
-  setColor(newColor){
+  async updateColor(newColor){
     this.setState({
       color: newColor
     });
@@ -83,6 +83,7 @@ class CollectionEditor extends React.Component {
       updateName: name => this.updateFields({name}).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
+      updateColor: color => this.updateColor(color).catch(handleError),
     };
     return this.props.children(this.state, funcs, this.state.color, this.setColor, this.state.avatar, this.setAvatar);
   }

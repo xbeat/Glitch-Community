@@ -9,6 +9,7 @@ import Loader, {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import Categories from '../categories.jsx';
+import NotFound from '../includes/not-found.jsx';
 
 import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -199,10 +200,6 @@ CollectionPage.propTypes = {
   uploadAvatar: PropTypes.func,
 };
 
-const CollectionPageError = ({...props}) => (
-  "Something went wrong. Try refreshing?"  
-);
-
 async function getUserIdByLogin(api, user){
   let {data} = await api.get(`userid/byLogin/${user}`);
   if(data === "NOT FOUND"){
@@ -237,8 +234,7 @@ async function loadCollection(api, user, name){
 const CollectionPageLoader = ({api, user, name, addProject, removeProject, ...props}) => (
   <Layout api={api}>
     <DataLoader get={() => loadCollection(api, user, name)}
-      renderLoader={() => <Loader/>}
-      renderError={() => <CollectionPageError {...props}/>}
+      renderError={() =>  "Something went wrong. Try refreshing?"}
     >
       {collection => (
         <CollectionEditor api={api} initialCollection={collection}>
