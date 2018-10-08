@@ -107,7 +107,7 @@ const CollectionPage = ({
             api={api}
             collectionId={collection.id}
             currentUserIsOwner={true}
-            updateColor={updateColor}
+            update={updateColor}
           />
           
           {(isAuthorized

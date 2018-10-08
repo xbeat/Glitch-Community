@@ -24,8 +24,9 @@ class EditCollectionColorPop extends React.Component {
     };
     
     this.onClick = this.onClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.keyPress = this.keyPress.bind(this);
+    this.handleChange = this.handleChange.bind(this); // for when user enters in custom hex
+    this.keyPress = this.keyPress.bind(this); // handles enter key for custom hex
+    this.update = debounce(this.props.updateColor, 1000);
   }
     
   handleChange(e) {
@@ -66,7 +67,10 @@ class EditCollectionColorPop extends React.Component {
           {Object.keys(colors).map((key => 
             <button className="button-tertiary" key={key}
               style={{backgroundColor: colors[key]}} 
-              onClick={this.updateColor(colors[key])}
+              onClick={() => 
+                this.setState({color: colors[key]});
+                this.update(colors[key]);
+              }
             />
           ))}
           
