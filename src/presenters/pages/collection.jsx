@@ -113,7 +113,7 @@ const CollectionPageWrap = ({
   addProject, 
   removeProject,
   ...props}) => (
-  <React.Fragment>
+  
     
     <Helmet>
       <title>{(collection ? collection.name : name)}</title>
