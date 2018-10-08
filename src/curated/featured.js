@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Play Along with Bongo-Cat!',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fbongo-cat-remix.jpg?1538392448735",
-    link: 'https://glitch.com/~bongo-cat'
+    title: 'Sing Like A Piano',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fpiano-scribe.jpg?1538999010225",
+    link: 'https://glitch.com/~piano-scribe'
   },{
-    title: 'Colorful Generative Crystals',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcrystal-generator.jpg?1538392448859",
-    link: 'https://generative-crystals.glitch.me'
+    title: 'Poetry From The Red Planet',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fmars-mars.jpg?1538999009783",
+    link: 'https://glitch.com/~mars-mars-mars'
   }, {
-    title: 'The Sound of Data',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fweb-sonify.jpg?1538392448280",
-    link: 'https://glitch.com/~web-sonify'
+    title: 'Voilà! The Magic of CSS Houdini',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhoudini.jpg?1538999010456",
+    link: 'https://glitch.com/~houdini'
   }  
 ];
