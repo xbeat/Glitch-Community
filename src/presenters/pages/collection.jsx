@@ -104,8 +104,6 @@ const CollectionPage = ({
           </p>
           
           <EditCollectionColor
-            api={api}
-            collection={collection}
             currentUserIsOwner={true}
             update={updateColor}
           />

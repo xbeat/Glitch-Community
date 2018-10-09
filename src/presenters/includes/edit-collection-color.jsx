@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import EditCollectionColorPop from '../pop-overs/edit-collection-color-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 
-const EditCollectionColor = ({currentUserIsOwner, collection, update, ...props}) => {
+const EditCollectionColor = ({currentUserIsOwner, update, ...props}) => {
   if(!currentUserIsOwner) {
     return null;
   }
@@ -14,7 +14,7 @@ const EditCollectionColor = ({currentUserIsOwner, collection, update, ...props})
       {({visible, togglePopover}) => (
         <div className="button-wrap">
           <button className={`button add-project opens-pop-over`} onClick={togglePopover}>
-                Color <span style={{backgroundColor: collection.coverColor}}/>
+                Color
           </button>
           { visible && <EditCollectionColorPop {...props} togglePopover={togglePopover} updateColor={update} /> }
         </div>
