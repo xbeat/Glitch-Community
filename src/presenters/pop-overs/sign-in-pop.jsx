@@ -28,7 +28,7 @@ const SignInPopButton = (props) => (
 
 export const SignInPop = ({prompt, params}) => (
   <div className="pop-over sign-in-pop">
-    {!!prompt && <section className="pop-over-info">{prompt}</section>}
+    {prompt}
     <section className="pop-over-actions last-section">
       <SignInPopButton href={facebookAuthLink(params)} company="Facebook" emoji="facebook"/>
       <SignInPopButton href={githubAuthLink(params)} company="GitHub" emoji="octocat"/>
