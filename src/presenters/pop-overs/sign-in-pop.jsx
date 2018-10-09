@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Link from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
@@ -23,14 +24,18 @@ const SignInPopButton = (props) => (
   </Link>
 );
 
-export const SignInPop = () => (
+export const SignInPop = ({prompt}) => (
   <div className="pop-over sign-in-pop">
+    {!!prompt && <section className="pop-over-info">{prompt}</section>}
     <section className="pop-over-actions last-section">
       <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook"/>
       <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat"/>
     </section>
   </div>
 );
+SignInPop.propTypes = {
+  prompt: PropTypes.string,
+};
 
 export default function SignInPopContainer() {
   return (

@@ -156,7 +156,7 @@ const CreateTeamPopOrSignIn = ({api}) => (
     {user => (user && user.login ? (
       <CreateTeamPop api={api}/>
     ) : (
-      <SignInPop prompt="You'll need "/>
+      <SignInPop prompt="You'll need to sign up to create a team"/>
     ))}
   </CurrentUserConsumer>
 );
