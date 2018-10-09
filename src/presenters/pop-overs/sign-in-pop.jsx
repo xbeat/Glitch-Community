@@ -23,7 +23,7 @@ const SignInPopButton = (props) => (
   </Link>
 );
 
-const SignInPop = () => (
+export const SignInPop = () => (
   <div className="pop-over sign-in-pop">
     <section className="pop-over-actions last-section">
       <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook"/>
