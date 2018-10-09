@@ -206,19 +206,16 @@ CollectionPage.propTypes = {
 };
 
 async function getUserIdByLogin(api, userLogin){
-  let {data} = await api.get(`userid/byLogin/${userLogin}`);
+  const {data} = await api.get(`userid/byLogin/${userLogin}`);
   if(data === "NOT FOUND"){
     return null;
   }
   return data;
 }
 
-async function loadCollection(api, userLogin, collectionName){
-  console.log('loadCollection');
-  
-  const userId = await getUserIdByLogin(api,userLogin);
-  
+async function getCollectionId(userId){
   let collectionMatch = null;
+  // parse through user's collections to find collection that matches the name of the collection
   const {data} = await api.get(`collections?userId=${userId}`);
   
   data.forEach(function loop(el, i){
@@ -230,9 +227,27 @@ async function loadCollection(api, userLogin, collectionName){
   });
   if(!collectionMatch){
     return null;
+  }else{
+    return collectionMatch.id; 
   }
-  // console.log("load collection complete with collectionMatch: %O", collectionMatch);
-  return collectionMatch;
+}
+
+async function loadCollection(api, userLogin, collectionName){
+  console.log('loadCollection');
+  
+  // get userId by login name
+  const userId = await getUserIdByLogin(api,userLogin);
+  
+  // get collection id
+  const collectionMatch = await getCollectionId(userId);
+  
+  // get collection
+
+  // return full collection info based on collectionMath Id
+  {data} = api.get(`collections/${collectionMatch.id}`).data;
+  console.log("load collection %O", collection);
+  
+  return collection;
 }  
 
 const CollectionPageLoader = ({api, userLogin, name, addProject, removeProject, ...props}) => (
