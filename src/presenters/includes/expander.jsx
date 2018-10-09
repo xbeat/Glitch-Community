@@ -49,7 +49,7 @@ export default class Expander extends React.Component {
             {!expanded && (
               <button
                 onClick={this.expand.bind(this)}
-                className="expander-button button button-tertiary button-link"
+                className="expander-button button-tertiary"
               >
                 Show More
               </button>
