@@ -92,6 +92,9 @@ export default [
     "description": "The sounds of music created, connected, visualized and remixed.",
     "backgroundColor": "rgba(162, 193, 255, 0.5)",
   },
+];
+
+  {/*
   {
     "id": 14,
     "name": "My Favorites",
@@ -101,4 +104,4 @@ export default [
     "description": "A collection of my favorite projects",
     "backgroundColor": "rgba(162, 193, 255, 0.5)",
   },
-];
+  */}

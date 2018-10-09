@@ -53,7 +53,7 @@ class CollectionEditor extends React.Component {
   }
   
   // TO DO: async function
-  addProject(project) {
+  async addProjectToCollection(project) {
     // need to replace api request temporarily before returning updated project list
     // await this.props.api.post(`collections/${this.state.id}/projects/${project.id}`);
     console.log(`attempting to add project ${project.domain}`);
@@ -63,9 +63,9 @@ class CollectionEditor extends React.Component {
   }
   
   // TO DO: async function
-  removeProject(id) {
-    // await this.props.api.delete(`collections/${this.state.id}/projects/${id}`);
-    console.log(`attempting to delete project with id ${id}`);
+  async removeProjectFromCollection(id) {
+    await this.props.api.patch(`collections/${this.state.id}/remove/${id}`);
+    console.log(`attempting to remove project ${id} from collection ${this.state.id}`);
     this.setState(({projects}) => ({
       projects: projects.filter(p => p.id !== id),
     }));

@@ -102,7 +102,6 @@ const CollectionPage = ({
             )}
           </p>
           
-          
           <EditCollectionColor
             api={api}
             collectionId={collection.id}
@@ -139,12 +138,20 @@ const CollectionPage = ({
                 
                   </div>
           
-                  <ProjectsUL projects={projects} categoryColor={collection.coverColor} 
+                  {(isAuthorized
+                    ? <ProjectsUL projects={projects} categoryColor={collection.coverColor} 
                     projectOptions={{
-                      removeProjectFromCollection: removeProject,
+                      removeProjectFromCollection: {removeProject},
+                      addProjectToCollection: {addProject},
+                    }} 
+                    {...props}/>
+                    
+                    : <ProjectsUL projects={projects} categoryColor={collection.coverColor} 
+                    projectOptions={{
                       addProjectToCollection: {addProject}
                     }} 
                     {...props}/>
+                  )}
                 </div>
           
               </React.Fragment>
