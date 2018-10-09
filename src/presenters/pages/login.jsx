@@ -46,7 +46,7 @@ class LoginPage extends React.Component {
   
   render() {
     if (this.state.done) {
-      return <Redirect to="/"/>;
+      return <Redirect to={this.props.target || '/'}/>;
     } else if (this.state.error) {
       const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
       return <ErrorPage title="OAuth Login Problem" description={this.state.errorMessage || genericDescription}/>;
@@ -59,6 +59,7 @@ LoginPage.propTypes = {
   url: PropTypes.string.isRequired,
   provider: PropTypes.string.isRequired,
   setUser: PropTypes.func.isRequired,
+  target: PropTypes.string,
 };
 
 const LoginPageContainer = (props) => (
@@ -67,13 +68,13 @@ const LoginPageContainer = (props) => (
   </CurrentUserConsumer>
 );
 
-export const FacebookLoginPage = ({api, code}) => {
+export const FacebookLoginPage = ({code, ...props}) => {
   const callbackUrl = `${APP_URL}/login/facebook`;
   const url = `/auth/facebook/${code}?callbackURL=${encodeURIComponent(callbackUrl)}`;
-  return <LoginPageContainer api={api} provider="Facebook" url={url}/>;
+  return <LoginPageContainer {...props} provider="Facebook" url={url}/>;
 };
 
-export const GitHubLoginPage = ({api, code}) => {
+export const GitHubLoginPage = ({code, ...props}) => {
   const url = `/auth/github/${code}`;
-  return <LoginPageContainer api={api} provider="GitHub" url={url}/>;
+  return <LoginPageContainer {...props} provider="GitHub" url={url}/>;
 };

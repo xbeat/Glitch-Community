@@ -8,7 +8,8 @@ function githubAuthLink() {
   const params = new URLSearchParams();
   params.append('client_id', GITHUB_CLIENT_ID);
   params.append('scope', 'user:email');
-  params.append('redirect_uri', `${APP_URL}/login/github`);
+  const target = encodeURIComponent('#create-team');
+  params.append('redirect_uri', `${APP_URL}/login/github?target=${target}`);
   return `https://github.com/login/oauth/authorize?${params}`;
 }
 
