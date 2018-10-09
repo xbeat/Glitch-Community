@@ -156,7 +156,9 @@ const CreateTeamPopOrSignIn = ({api}) => (
     {user => (user && user.login ? (
       <CreateTeamPop api={api}/>
     ) : (
-      <SignInPop prompt="You'll need to sign up to create a team" params="hash=create-team"/>
+      <SignInPop params="hash=create-team"
+        prompt={<NestedPopoverTitle>You'll need to sign up to create a team</NestedPopoverTitle>}
+      />
     ))}
   </CurrentUserConsumer>
 );

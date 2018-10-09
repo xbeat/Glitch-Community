@@ -36,7 +36,7 @@ export const SignInPop = ({prompt, params}) => (
   </div>
 );
 SignInPop.propTypes = {
-  prompt: PropTypes.string,
+  prompt: PropTypes.node,
   params: PropTypes.string,
 };
 
