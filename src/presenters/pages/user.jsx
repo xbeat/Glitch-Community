@@ -13,6 +13,7 @@ import DeletedProjects from '../deleted-projects.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
+import TeamsList from '../teams-list.jsx';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
@@ -56,6 +57,7 @@ const UserPage = ({
     avatarUrl, color,
     hasCoverImage, coverColor,
     pins, projects, _deletedProjects,
+    teams,
     _cacheCover,
   },
   api, isAuthorized,
@@ -80,7 +82,12 @@ const UserPage = ({
           {...{name, login, isAuthorized, updateName}}
           updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
         />
-        <Thanks count={thanksCount}/>
+        {!!teams.length && (
+          <div className="users-information">
+            <TeamsList teams={teams}/>
+          </div>
+        )}
+        {!!thanksCount && <Thanks count={thanksCount}/>}
         <AuthDescription authorized={isAuthorized && !!login} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
     </section>

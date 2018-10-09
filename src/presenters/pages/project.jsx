@@ -15,6 +15,7 @@ import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-actions.jsx';
+import TeamsList from '../teams-list.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
 
@@ -104,7 +105,10 @@ const ProjectPage = ({
               />
             ) : <React.Fragment>{domain} {project.private && <PrivateBadge/>}</React.Fragment>)}
           </h1>
-          <UsersList users={users} />
+          <div className="users-information">
+            <UsersList users={users} />
+            {!!teams.length && <TeamsList teams={teams}/>}
+          </div>
           <AuthDescription
             authorized={isAuthorized} description={description}
             update={updateDescription} placeholder="Tell us about your app"
