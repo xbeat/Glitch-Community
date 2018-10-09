@@ -46,7 +46,7 @@ class LoginPage extends React.Component {
   
   render() {
     if (this.state.done) {
-      return <Redirect to={this.props.target || '/'}/>;
+      return <Redirect to={this.props.hash ? `/#${this.props.hash}` : '/'}/>;
     } else if (this.state.error) {
       const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
       return <ErrorPage title="OAuth Login Problem" description={this.state.errorMessage || genericDescription}/>;
@@ -59,7 +59,7 @@ LoginPage.propTypes = {
   url: PropTypes.string.isRequired,
   provider: PropTypes.string.isRequired,
   setUser: PropTypes.func.isRequired,
-  target: PropTypes.string,
+  hash: PropTypes.string,
 };
 
 const LoginPageContainer = (props) => (

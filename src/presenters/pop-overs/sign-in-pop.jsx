@@ -4,20 +4,19 @@ import Link from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
-function githubAuthLink() {
+function githubAuthLink(data) {
   const params = new URLSearchParams();
   params.append('client_id', GITHUB_CLIENT_ID);
   params.append('scope', 'user:email');
-  const target = encodeURIComponent('#create-team');
-  params.append('redirect_uri', `${APP_URL}/login/github?target=${target}`);
+  params.append('redirect_uri', `${APP_URL}/login/github?${data || ''}`);
   return `https://github.com/login/oauth/authorize?${params}`;
 }
 
-function facebookAuthLink() {
+function facebookAuthLink(data) {
   const params = new URLSearchParams();
   params.append('client_id', FACEBOOK_CLIENT_ID);
   params.append('scope', 'email');
-  params.append('redirect_uri', `${APP_URL}/login/facebook`);
+  params.append('redirect_uri', `${APP_URL}/login/facebook?${data || ''}`);
   return `https://www.facebook.com/v2.9/dialog/oauth?${params}`;
 }
 
@@ -27,17 +26,18 @@ const SignInPopButton = (props) => (
   </Link>
 );
 
-export const SignInPop = ({prompt}) => (
+export const SignInPop = ({prompt, params}) => (
   <div className="pop-over sign-in-pop">
     {!!prompt && <section className="pop-over-info">{prompt}</section>}
     <section className="pop-over-actions last-section">
-      <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook"/>
-      <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat"/>
+      <SignInPopButton href={facebookAuthLink(params)} company="Facebook" emoji="facebook"/>
+      <SignInPopButton href={githubAuthLink(params)} company="GitHub" emoji="octocat"/>
     </section>
   </div>
 );
 SignInPop.propTypes = {
   prompt: PropTypes.string,
+  params: PropTypes.string,
 };
 
 export default function SignInPopContainer() {
