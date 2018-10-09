@@ -50,7 +50,7 @@ const CollectionPage = ({
   removeProject,
   updateColor,
   updateAvatar,
-  user,
+  userLogin,
   ...props}) => (
   
     <React.Fragment>  
@@ -60,7 +60,7 @@ const CollectionPage = ({
     <main className="collection-page">
       <article className="projects" style={{backgroundColor: hexToRgbA(collection.coverColor)}}>
         <header className="collection">
-          <img className="user-list-avatar" width="32px" height="32px" src={user.avatarUrl} alt={user.login}/>
+          <img className="user-list-avatar" width="32px" height="32px" src={""} alt={userLogin}/>
           <h1 className="collection-name">            
             {(isAuthorized 
               ? <AuthDescription authorized={isAuthorized}
@@ -205,25 +205,25 @@ CollectionPage.propTypes = {
   uploadAvatar: PropTypes.func,
 };
 
-async function getUserIdByLogin(api, user){
-  let {data} = await api.get(`userid/byLogin/${user}`);
+async function getUserIdByLogin(api, userLogin){
+  let {data} = await api.get(`userid/byLogin/${userLogin}`);
   if(data === "NOT FOUND"){
     return null;
   }
   return data;
 }
 
-async function loadCollection(api, user, name){
+async function loadCollection(api, userLogin, collectionName){
   console.log('loadCollection');
   
-  const userId = await getUserIdByLogin(api,user);
+  const userId = await getUserIdByLogin(api,userLogin);
   
   let collectionMatch = null;
   const {data} = await api.get(`collections?userId=${userId}`);
   
   data.forEach(function loop(el, i){
     if(loop.stop){return;}
-    if(el.url === name){
+    if(el.url === collectionName){
       collectionMatch = data[i];
       loop.stop = true;
     }
@@ -231,20 +231,19 @@ async function loadCollection(api, user, name){
   if(!collectionMatch){
     return null;
   }
-  console.log("load collection complete with collectionMatch: %O", collectionMatch);
+  // console.log("load collection complete with collectionMatch: %O", collectionMatch);
   return collectionMatch;
-}
-  
+}  
 
-const CollectionPageLoader = ({api, user, name, addProject, removeProject, ...props}) => (
+const CollectionPageLoader = ({api, userLogin, name, addProject, removeProject, ...props}) => (
   <Layout api={api}>
-    <DataLoader get={() => loadCollection(api, user, name)}
+    <DataLoader get={() => loadCollection(api, userLogin, name)}
       renderError={() =>  "Something went wrong. Try refreshing?"}
     >
       {collection => (
         <CollectionEditor api={api} initialCollection={collection}>
           {(collection, funcs) =>(
-              <CollectionPage collection={collection} user={user} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...funcs} {...props}/>
+              <CollectionPage collection={collection} userLogin={userLogin} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...funcs} {...props}/>
                 )
           }
         </CollectionEditor>
