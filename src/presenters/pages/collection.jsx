@@ -23,8 +23,7 @@ import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
 import {avatars} from '../../models/collection.js'; 
 
-import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName, getLink} from '../models/user.js';
-import {UserAvatar, UserTile} from '../users-list.jsx';
+import {UserTile} from '../users-list.jsx';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
 
@@ -63,7 +62,7 @@ const CollectionPage = ({
     <main className="collection-page">
       <article className="projects" style={{backgroundColor: hexToRgbA(collection.coverColor)}}>
         <header className="collection">
-          <img className="user-list-avatar" width="32px" height="32px" src={collection.user.avatarUrl} alt={userLogin}/>
+          <UserTile {...collection.user}/>
           <h1 className="collection-name">            
             {(isAuthorized 
               ? <AuthDescription authorized={isAuthorized}

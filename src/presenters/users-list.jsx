@@ -63,7 +63,7 @@ StaticUsersList.propTypes = {
 
 // UserTile
 
-const UserTile = (user) => (
+export const UserTile = (user) => (
   <a href={getLink(user)} className="user" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
     <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
   </a>
