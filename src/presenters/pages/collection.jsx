@@ -38,7 +38,6 @@ const hexToRgbA = (hex) => {
   throw new Error('Bad Hex');
 };
 
-
 const CollectionPage = ({
   collection, 
   api, 
@@ -51,6 +50,7 @@ const CollectionPage = ({
   removeProject,
   updateColor,
   updateAvatar,
+  user,
   ...props}) => (
   
     <React.Fragment>  
@@ -60,7 +60,7 @@ const CollectionPage = ({
     <main className="collection-page">
       <article className="projects" style={{backgroundColor: hexToRgbA(collection.coverColor)}}>
         <header className="collection">
-          
+          <img className="user-list-avatar" width="32px" height="32px" src={user.avatarUrl} alt={user.login}/>
           <h1 className="collection-name">            
             {(isAuthorized 
               ? <AuthDescription authorized={isAuthorized}
@@ -244,7 +244,7 @@ const CollectionPageLoader = ({api, user, name, addProject, removeProject, ...pr
       {collection => (
         <CollectionEditor api={api} initialCollection={collection}>
           {(collection, funcs) =>(
-              <CollectionPage collection={collection} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...funcs} {...props}/>
+              <CollectionPage collection={collection} user={user} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...funcs} {...props}/>
                 )
           }
         </CollectionEditor>
