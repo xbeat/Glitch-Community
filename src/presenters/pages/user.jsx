@@ -58,6 +58,7 @@ const UserPage = ({
     avatarUrl, color,
     hasCoverImage, coverColor,
     pins, projects, _deletedProjects,
+    collections,
     _cacheCover,
   },
   api, isAuthorized,
@@ -92,6 +93,7 @@ const UserPage = ({
     {/* Dummy section for collections */}
     
     <EntityPageCollections
+      collections={collections}
       api={api} 
       isAuthorized={isAuthorized}
       userId={id} 
