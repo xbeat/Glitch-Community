@@ -160,61 +160,55 @@ class TeamAnalytics extends React.Component {
             currentTimeFrame = {this.state.currentTimeFrame}
           />
         </section>
+        
+          <section className="summary">
+          {this.state.isGettingData ? <Loader /> :
+            <TeamAnalyticsSummary
+              totalAppViews = {this.state.totalAppViews}
+              totalRemixes = {this.state.totalRemixes}
+            />
+          }
+        </section>
 
-        { this.props.projects.length > 0 ? (
-          <React.Fragment>
-            
-            <section className="summary">
-              {this.state.isGettingData ? <Loader /> :
-                <TeamAnalyticsSummary
-                  totalAppViews = {this.state.totalAppViews}
-                  totalRemixes = {this.state.totalRemixes}
-                />
-              }
-            </section>
-
-            <section className="activity">
-              <figure id="chart" className="c3"/>
-              { (this.state.isGettingData || this.state.isGettingC3) && 
-                <Loader /> 
-              }
-              { (!this.state.isGettingC3) &&
-                <TeamAnalyticsActivity 
-                  c3 = {this.state.c3}
-                  analytics = {this.state.analytics}
-                  isGettingData = {this.state.isGettingData}
-                  currentTimeFrame = {this.state.currentTimeFrame}
-                />
-              }
-            </section>
-
-            <section className="referrers">
-              <h3>Referrers</h3>
-              { (this.state.isGettingData) &&
-                <Loader />
-              ||
-                <TeamAnalyticsReferrers 
-                  analytics = {this.state.analytics}
-                  totalRemixes = {this.state.totalRemixes}
-                  totalAppViews = {this.state.totalAppViews}
-                />
-              }
-            </section>
-            
-          </React.Fragment>
-        ) : (
-          <section>
-            <aside className="inline-banners add-project-to-analytics-banner">
-              <div className="description">Add Projects to see who's viewing and remixing</div>
-              <AddTeamProject
-                {...this.props}
-                extraButtonClass = "button-small"
-                teamProjects = {this.props.projects}
-              />
-            </aside>
-          </section>
+        { (this.props.projects.length === 0) && (
+          <aside className="inline-banners add-project-to-analytics-banner">
+            <div className="description">Add Projects to see who's viewing and remixing</div>
+            <AddTeamProject
+              {...this.props}
+              extraButtonClass = "button-small"
+              teamProjects = {this.props.projects}
+            />
+          </aside>
         )}
-                
+
+        <section className="activity">
+          <figure id="chart" className="c3"/>
+          { (this.state.isGettingData || this.state.isGettingC3) && 
+            <Loader /> 
+          }
+          { (!this.state.isGettingC3) &&
+            <TeamAnalyticsActivity 
+              c3 = {this.state.c3}
+              analytics = {this.state.analytics}
+              isGettingData = {this.state.isGettingData}
+              currentTimeFrame = {this.state.currentTimeFrame}
+            />
+          }
+        </section>
+
+        <section className="referrers">
+          <h3>Referrers</h3>
+          { (this.state.isGettingData) &&
+            <Loader />
+          ||
+            <TeamAnalyticsReferrers 
+              analytics = {this.state.analytics}
+              totalRemixes = {this.state.totalRemixes}
+              totalAppViews = {this.state.totalAppViews}
+            />
+          }
+        </section>
+        
         <section className="project-details">
           <h3>Project Details</h3>
           <TeamAnalyticsProjectPop
