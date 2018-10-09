@@ -161,7 +161,7 @@ class TeamAnalytics extends React.Component {
           />
         </section>
         
-          <section className="summary">
+        <section className="summary">
           {this.state.isGettingData ? <Loader /> :
             <TeamAnalyticsSummary
               totalAppViews = {this.state.totalAppViews}
@@ -170,7 +170,7 @@ class TeamAnalytics extends React.Component {
           }
         </section>
 
-        { (this.props.projects.length === 0) && (
+        { (this.props.projects.length === 0) && !this.state.isGettingData && (
           <aside className="inline-banners add-project-to-analytics-banner">
             <div className="description">Add Projects to see who's viewing and remixing</div>
             <AddTeamProject
