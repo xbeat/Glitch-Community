@@ -105,9 +105,9 @@ const CollectionPage = ({
           
           <EditCollectionColor
             api={api}
-            collectionId={collection.id}
+            collection={collection}
             currentUserIsOwner={true}
-            update={updateAvatar}
+            update={updateColor}
           />
           
           {(isAuthorized

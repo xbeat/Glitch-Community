@@ -95,8 +95,6 @@ class EditCollectionColorPop extends React.Component {
 }
 
 EditCollectionColorPop.propTypes = {
-  api: PropTypes.func.isRequired,
-  collectionId: PropTypes.number.isRequired,
   updateColor: PropTypes.func.isRequired,
 };
 
