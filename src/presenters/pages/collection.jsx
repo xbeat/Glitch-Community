@@ -23,6 +23,9 @@ import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
 import {avatars} from '../../models/collection.js'; 
 
+import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName, getLink} from '../models/user.js';
+import {UserAvatar, UserTile} from '../users-list.jsx';
+
 import {CurrentUserConsumer} from '../current-user.jsx';
 
 const hexToRgbA = (hex) => {
@@ -60,7 +63,7 @@ const CollectionPage = ({
     <main className="collection-page">
       <article className="projects" style={{backgroundColor: hexToRgbA(collection.coverColor)}}>
         <header className="collection">
-          <img className="user-list-avatar" width="32px" height="32px" src={""} alt={userLogin}/>
+          <img className="user-list-avatar" width="32px" height="32px" src={collection.user.avatarUrl} alt={userLogin}/>
           <h1 className="collection-name">            
             {(isAuthorized 
               ? <AuthDescription authorized={isAuthorized}
@@ -213,7 +216,7 @@ async function getUserIdByLogin(api, userLogin){
   return data;
 }
 
-async function getCollectionId(userId){
+async function getCollectionId(api, userId, collectionName){
   let collectionMatch = null;
   // parse through user's collections to find collection that matches the name of the collection
   const {data} = await api.get(`collections?userId=${userId}`);
@@ -232,19 +235,25 @@ async function getCollectionId(userId){
   }
 }
 
+async function getCollection(api, collectionId){
+  const {data} = await api.get(`collections/${collectionId}`);
+  return data;
+}
+
 async function loadCollection(api, userLogin, collectionName){
-  console.log('loadCollection');
   
   // get userId by login name
   const userId = await getUserIdByLogin(api,userLogin);
+  // console.log(`userId: ${userId}`);
   
   // get collection id
-  const collectionMatch = await getCollectionId(userId);
+  const collectionId = await getCollectionId(api, userId, collectionName);
+  // console.log(`collectionId: ${collectionId}`);
   
   // get collection
-
-  // return full collection info based on collectionMath Id
-  {data} = api.get(`collections/${collectionMatch.id}`).data;
+  const collection = await getCollection(api, collectionId);
+  // console.log(`${collection}`);
+  
   console.log("load collection %O", collection);
   
   return collection;

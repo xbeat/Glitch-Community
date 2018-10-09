@@ -72,7 +72,6 @@ class CollectionEditor extends React.Component {
   }
 
   render() {
-    console.log('render in collection editor');
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
       addProject: project => this.addProject(project).catch(handleError),
