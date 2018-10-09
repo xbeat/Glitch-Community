@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import AddCollectionAvatarPop from '../pop-overs/add-collection-avatar-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 
-const AddCollectionAvatar = ({...props}) => {
+const AddCollectionAvatar = ({update, ...props}) => {
   
   return (
     <PopoverContainer>
@@ -13,7 +13,7 @@ const AddCollectionAvatar = ({...props}) => {
           <button className={`button button-small button-tertiary replace-avatar opens-pop-over`} onClick={togglePopover}>
               Replace Avatar
           </button>
-          { visible && <AddCollectionAvatarPop {...props} togglePopover={togglePopover} /> }
+          { visible && <AddCollectionAvatarPop {...props} togglePopover={togglePopover} updateAvatar={update} /> }
         </div>
       )}
     </PopoverContainer>

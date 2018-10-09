@@ -14,7 +14,7 @@ const EditCollectionColor = ({currentUserIsOwner, update, api, collectionId, ...
       {({visible, togglePopover}) => (
         <div className="button-wrap">
           <button className={`button add-project opens-pop-over`} onClick={togglePopover}>
-                Color
+                Color <span style={{backgroundColor: {}}}></span>
           </button>
           { visible && <EditCollectionColorPop {...props} togglePopover={togglePopover} updateColor={update} /> }
         </div>

@@ -14,6 +14,7 @@ class AddCollectionAvatarPop extends React.Component {
     
     this.handleChange = this.handleChange.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.update = this.props.updateAvatar;
 
   }
   
@@ -23,9 +24,10 @@ class AddCollectionAvatarPop extends React.Component {
   }
   
   onClick(type) {
-    console.log(`toggling popover for ${type}`);
+    // console.log(`toggling popover for ${type}`);
     // change the avatar on the page
-    this.props.setAvatar(avatars[type]);
+    this.setState({avatar: avatars[type]});
+    this.update(avatars[type]);
     
     // toggle the pop-over
     this.props.togglePopover();      
@@ -49,6 +51,7 @@ class AddCollectionAvatarPop extends React.Component {
 
 AddCollectionAvatarPop.propTypes = {
   api: PropTypes.func.isRequired,
+  updateAvatar: PropTypes.func.isRequired,
 };
 
 export default AddCollectionAvatarPop;

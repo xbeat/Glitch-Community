@@ -80,6 +80,7 @@ const CollectionPage = ({
               <AddCollectionAvatar
                 api={api}
                 collectionID = {collection.id}
+                update={updateAvatar}
               />
               
               {/*
@@ -106,7 +107,7 @@ const CollectionPage = ({
             api={api}
             collectionId={collection.id}
             currentUserIsOwner={true}
-            update={updateColor}
+            update={updateAvatar}
           />
           
           {(isAuthorized
