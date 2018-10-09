@@ -60,6 +60,7 @@ const CollectionPage = ({
     <main className="collection-page">
       <article className="projects" style={{backgroundColor: hexToRgbA(collection.coverColor)}}>
         <header className="collection">
+          
           <h1 className="collection-name">            
             {(isAuthorized 
               ? <AuthDescription authorized={isAuthorized}
