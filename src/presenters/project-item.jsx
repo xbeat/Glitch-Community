@@ -34,6 +34,7 @@ export const ProjectItem = ({api, currentUser, project, categoryColor, projectOp
 
 ProjectItem.propTypes = {
   api: PropTypes.any.isRequired,
+  currentCollection: PropTypes.object,
   currentUser: PropTypes.object,
   project: PropTypes.shape({
     description: PropTypes.string.isRequired,
