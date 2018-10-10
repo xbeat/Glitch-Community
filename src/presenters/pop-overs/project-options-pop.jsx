@@ -130,7 +130,7 @@ ProjectOptionsPop.defaultProps = {
 
 // Project Options Container
 // create as stateful react component
-export default function ProjectOptions({projectOptions={}, project, api}, {...props}) {
+export default function ProjectOptions({projectOptions={}, project, api, currentCollectionId}, {...props}) {
   if(Object.keys(projectOptions).length === 0) {
     return null;
   }
@@ -153,7 +153,7 @@ export default function ProjectOptions({projectOptions={}, project, api}, {...pr
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <ProjectOptionsPop {...props} {...projectOptions} currentCollectionId={props.currentCollectionId} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+              { visible && <ProjectOptionsPop {...props} {...projectOptions} currentCollectionId={currentCollectionId} api={api} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
             </div>
           )}
         </CurrentUserConsumer>
