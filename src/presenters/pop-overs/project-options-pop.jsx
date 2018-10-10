@@ -16,7 +16,7 @@ const PopoverButton = ({onClick, text, emoji}) => (
 );
 
 // Project Options Content
-const ProjectOptionsContent = ({addToCollection, ...props}) => {
+const ProjectOptionsContent = ({...props}) => {
   function animate(event, className, func) {
     const projectContainer = event.target.closest('li');
     projectContainer.addEventListener('animationend', func, {once: true});
@@ -57,10 +57,10 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
         ? <section className="pop-over-actions">
             {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
             {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
-            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to My Collection " emoji="framed_picture"/>}
+            {!!props.addProjectToCollection && <PopoverButton onClick={props.addProjectToCollection} text="Add to My Collection " emoji="framed_picture"/>}
         </section>
         : <section className="pop-over-actions">
-            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to My Collection " emoji="framed_picture"/>}
+            {!!props.addProjectToCollection && <PopoverButton onClick={props.addProjectToCollection} text="Add to My Collection " emoji="framed_picture"/>}
         </section>
       }
 
@@ -99,7 +99,7 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
 const ProjectOptionsPop = (props) => {
   return(
     <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props}/>}>
-      { addToCollection => (
+      { switchPopover => (
         <ProjectOptionsContent {...props} />
         )}
     </NestedPopover>
@@ -107,7 +107,6 @@ const ProjectOptionsPop = (props) => {
 };
 
 ProjectOptionsPop.propTypes = {
-  addProjectToCollection: PropTypes.func,
   api: PropTypes.any.isRequired,
   currentCollectionId: PropTypes.number,
   currentUser: PropTypes.object,
@@ -124,8 +123,6 @@ ProjectOptionsPop.propTypes = {
   joinTeamProject: PropTypes.func,
   leaveTeamProject: PropTypes.func,
   currentUserIsOnProject: PropTypes.bool.isRequired,
-  addProject: PropTypes.func,
-  removeProject: PropTypes.func,
 };
 ProjectOptionsPop.defaultProps = {
   currentUserIsOnProject: false

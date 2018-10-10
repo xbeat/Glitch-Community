@@ -146,14 +146,14 @@ const CollectionPageContents = ({
                   {(isAuthorized
                     ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} categoryColor={collection.coverColor} currentCollectionId={collection.id} 
                     projectOptions={{
-                      removeProjectFromCollection: {removeProjectFromCollection},
-                      addProjectToCollection: {addProjectToCollection},
+                      removeProjectFromCollection,
+                      addProjectToCollection,
                     }} 
                     {...props}/>
                     
                     : <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} categoryColor={collection.coverColor} currentCollectionId={collection.id} 
                     projectOptions={{
-                      addProjectToCollection: {addProjectToCollection}
+                      addProjectToCollection
                     }} 
                     {...props}/>
                   )}
