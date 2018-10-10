@@ -270,14 +270,12 @@ const CollectionPage = ({api, userLogin, name, addProjectToCollection, removePro
                 <CollectionEditor api={api} initialCollection={collection} >
                   {(collection, funcs, userIsAuthor) =>(
                       <CollectionPageContents collection={collection} userLogin={userLogin} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} addProjectToCollection={addProjectToCollection} removeProjectFromCollection={removeProjectFromCollection} {...funcs} {...props}/>
-                        )
-                  }
+                  )}
                 </CollectionEditor>
               )}
             </CurrentUserConsumer>
           )}
         </DataLoader>
-      )}
   </Layout>
 );
 
