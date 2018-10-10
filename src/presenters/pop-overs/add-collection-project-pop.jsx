@@ -25,7 +25,6 @@ const ProjectSearchResults = ({projects, action, projectName}) => (
       ))}
     </ul>
   ) : 
-  {projectName}
     (projectName ? (
       <p className="results-empty">{projectName} is already in this collection <span role="img" aria-label="">💫</span></p>
       ): 
@@ -69,6 +68,7 @@ class AddCollectionProjectPop extends React.Component {
   }
   
   clearSearch() {
+    console.log('clear search');
     this.setState({
       maybeRequest: null,
       maybeResults: null,
@@ -82,7 +82,7 @@ class AddCollectionProjectPop extends React.Component {
     }
     
     // check if the query is a URL or a name of a project
-    // Project URL pattern: https://glitch.com/~power-port, https://power-port.glitch.me/, https://humorous-spaghetti.glitch.me/~slack-bot-persist
+    // Project URL pattern: https://glitch.com/~power-port, https://power-port.glitch.me/, https://humorous-spaghetti.glitch.me/~slack-bot-persist, https://community.glitch.me/
     const httpsKeyword = "https://";
     const glitchKeyword = "glitch";
     let searchByUrl = false;
@@ -92,15 +92,21 @@ class AddCollectionProjectPop extends React.Component {
     if(this.state.query.includes(httpsKeyword) && this.state.query.includes(glitchKeyword)){
       searchByUrl = true;
       // get project domain
-      if(this.state.query.includes("me") && !this.state.query.includes("~")){
+      if(query.includes("me") && !query.includes("~")){
         // https://power-port.glitch.me/
         query = query.substring(query.indexOf("//")+"//".length, query.indexOf("."));
-      }else if(this.state.query.includes("~") && !this.state.query.includes("me")){
+      }else if(query.includes("~") && !query.includes(".me")){
         // https://glitch.com/~power-port
         query = query.substring(query.indexOf("~")+1);
-      }else if(this.state.query.includes("~") && this.state.query.includes("me")){
+      }else if(query.includes("~") && query.includes("me")){
         // https://humorous-spaghetti.glitch.me/~slack-bot-persist
         query = query.substring(query.indexOf("~")+1);
+      }else if(query.includes(".me")){
+        // https://community.glitch.me/
+        if(query.includes("https://")){
+          query = query.substring(query.indexOf("https://")
+        }else if(query.includes("http://")){
+        }
       }
     }
     console.log(`query: ${query}`);
@@ -164,7 +170,7 @@ class AddCollectionProjectPop extends React.Component {
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
           {!!this.state.maybeResults && 
-              <ProjectSearchResults projects={this.state.maybeResults} action={this.onClick} projectName={this.projectName}/>
+              <ProjectSearchResults projects={this.state.maybeResults} action={this.onClick} projectName={this.state.projectName}/>
           }
         </section>}
       </dialog>
