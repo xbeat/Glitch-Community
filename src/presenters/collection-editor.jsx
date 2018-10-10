@@ -20,6 +20,12 @@ class CollectionEditor extends React.Component {
     this.updateAvatar = this.updateAvatar.bind(this); 
   }
   
+  userIsAuthor(){
+    if (!this.props.currentUser) return false;
+    const currentUserId = this.props.currentUser.id;
+    return this.state.users.some(({id}) => currentUserId === id);
+  }
+  
   updateColor(coverColor){
     this.setState({
       color: coverColor
