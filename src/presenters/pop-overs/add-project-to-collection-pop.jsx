@@ -98,10 +98,9 @@ class AddProjectToCollection extends React.Component {
 
 AddProjectToCollection.propTypes = {
   api: PropTypes.func.isRequired,
-  add: PropTypes.func.isRequired,
   collectionProjects: PropTypes.any.isRequired,
   currentUser: PropTypes.object,
-  togglePopover: PropTypes.array.isRequired,
+  togglePopover: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
   fromProject: PropTypes.bool,
 };

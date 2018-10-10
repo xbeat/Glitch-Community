@@ -7,11 +7,11 @@ import {TruncatedMarkdown} from './includes/markdown.jsx';
 import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
-export const ProjectItem = ({currentUser, project, categoryColor, projectOptions}) => {
+export const ProjectItem = ({api, currentUser, project, categoryColor, projectOptions, ...props}) => {
   return (
     <li>
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
-      <ProjectOptionsContainer project={project} projectOptions={projectOptions} currentUser={currentUser}></ProjectOptionsContainer>
+      <ProjectOptionsContainer api={api} project={project} projectOptions={projectOptions} currentUser={currentUser} {...props}></ProjectOptionsContainer>
 
       <a href={getLink(project.domain)}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 

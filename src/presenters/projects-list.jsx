@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from "./project-item.jsx";
 
-export const ProjectsList = ({title, projects, placeholder, projectOptions}) => (
+export const ProjectsList = ({title, projects, placeholder, projectOptions, api}) => (
   <article className="projects">
     <h2>{title}</h2>
 
@@ -10,24 +10,25 @@ export const ProjectsList = ({title, projects, placeholder, projectOptions}) => 
       <div className="placeholder">{placeholder}</div>
     )}
 
-    <ProjectsUL {...{projects, projectOptions}}></ProjectsUL>
+    <ProjectsUL api={api} {...{projects, projectOptions}}></ProjectsUL>
 
   </article>
 );
 
 ProjectsList.propTypes = {
+  api: PropTypes.any.isRequired,
   projects: PropTypes.array.isRequired,
   title: PropTypes.node,
   placeholder: PropTypes.node,
   projectOptions: PropTypes.object.isRequired,
 };
 
-export const ProjectsUL = ({projects, projectOptions, categoryColor, homepageCollection, collectionUrl, currentUser, ...props}) => {
+export const ProjectsUL = ({api, projects, projectOptions, categoryColor, homepageCollection, collectionUrl, currentUser, ...props}) => {
   return (
     <React.Fragment>
       <ul className="projects-container">
         { projects.map(project => (
-          <ProjectItem key={project.id} {...{project, projectOptions, categoryColor}}></ProjectItem>
+          <ProjectItem key={project.id} {...{project, projectOptions, categoryColor, api}}></ProjectItem>
         ))}
         
         {/* The link to view all projects for collections on the homepage  TO DO show actual correct count of projects in categories*/}  

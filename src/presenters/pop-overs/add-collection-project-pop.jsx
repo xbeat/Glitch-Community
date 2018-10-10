@@ -155,8 +155,6 @@ class AddCollectionProjectPop extends React.Component {
     this.props.togglePopover();
     console.log(`clicked ${project.domain}`);
     
-    // add the project to the collection
-    
     // show notification
     createPersistentNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>, "notifySuccess")
     
@@ -189,9 +187,9 @@ class AddCollectionProjectPop extends React.Component {
 
 AddCollectionProjectPop.propTypes = {
   api: PropTypes.func.isRequired,
-  add: PropTypes.func.isRequired,
+  addProjectToCollection: PropTypes.func.isRequired,
   collectionProjects: PropTypes.any.isRequired,
-  togglePopover: PropTypes.array.isRequired,
+  togglePopover: PropTypes.func.isRequired,
 };
 
 export default AddCollectionProjectPop;
