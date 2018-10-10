@@ -106,10 +106,11 @@ const CollectionPage = ({
             )}
           </p>
           
-          <EditCollectionColor
+          {(isAuthorized && <EditCollectionColor
             currentUserIsOwner={true}
             update={updateColor}
           />
+          )}
           
           {(isAuthorized
             ? <button className={`button delete-collection button-tertiary`} >
@@ -261,12 +262,12 @@ async function loadCollection(api, userLogin, collectionName){
 const CollectionPageLoader = ({api, userLogin, name, addProject, removeProject, ...props}) => (
   <Layout api={api}>
     <DataLoader get={() => loadCollection(api, userLogin, name)}
-      renderError={() =>  "Something went wrong. Try refreshing?"}
+      renderError={() => <NotFound name={name}/>}
     >
       {collection => (
-        <CollectionEditor api={api} initialCollection={collection}>
-          {(collection, funcs) =>(
-              <CollectionPage collection={collection} userLogin={userLogin} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...funcs} {...props}/>
+        <CollectionEditor api={api} initialCollection={collection} >
+          {(collection, funcs, userIsAuthor) =>(
+              <CollectionPage collection={collection} userLogin={userLogin} api={api} isAuthorized={userIsAuthor} addProject={addProject} removeProject={removeProject} {...funcs} {...props}/>
                 )
           }
         </CollectionEditor>

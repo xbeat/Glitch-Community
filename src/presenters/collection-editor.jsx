@@ -23,7 +23,7 @@ class CollectionEditor extends React.Component {
   userIsAuthor(){
     if (!this.props.currentUser) return false;
     const currentUserId = this.props.currentUser.id;
-    return this.state.users.some(({id}) => currentUserId === id);
+    return this.state.user.id === currentUserId;
   }
   
   updateColor(coverColor){
@@ -87,7 +87,7 @@ class CollectionEditor extends React.Component {
       updateAvatar: avatarUrl => this.updateAvatar(avatarUrl),
       updateColor: color => this.updateColor(color),
     };
-    return this.props.children(this.state, funcs);
+    return this.props.children(this.state, funcs, this.userIsAuthor());
   }
 }
 CollectionEditor.propTypes = {
