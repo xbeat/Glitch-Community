@@ -98,15 +98,16 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
 // Project Options Pop
 const ProjectOptionsPop = (props) => {
   return(
-    <NestedPopover alternateContent={() => <AddProjectToCollectionPop project={props.project} api={props.api} currentCollectionId={props.currentCollectionId} {...props}/>}>
+    <NestedPopover alternateContent={() => <AddProjectToCollectionPop project={props.project} api={props.api} currentCollectionId={props.currentCollectionId} addProjectToCollection={props.addProjectToCollection} {...props}/>}>
       { addToCollection => (
-        <ProjectOptionsContent {...props} addToCollection={addToCollection} api={props.api}/>
+        <ProjectOptionsContent {...props} addToCollection={addToCollection}/>
         )}
     </NestedPopover>
   );
 };
 
 ProjectOptionsPop.propTypes = {
+  addProjectToCollection: PropTypes.func,
   api: PropTypes.any.isRequired,
   currentCollectionId: PropTypes,
   currentUser: PropTypes.object,

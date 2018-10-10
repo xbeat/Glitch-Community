@@ -67,6 +67,7 @@ class AddProjectToCollection extends React.Component {
                       (collection.id !== this.props.currentCollectionId && 
                         <li>     
                            <CollectionResultItem 
+                             addProjectToCollection={this.props.addProjectToCollection}
                              projectName={this.props.project.domain}
                              collectionName={collection.name}                         
                              description={collection.description} 
@@ -99,6 +100,7 @@ class AddProjectToCollection extends React.Component {
 }
 
 AddProjectToCollection.propTypes = {
+  addProjectToCollection: PropTypes.func,
   api: PropTypes.func.isRequired,
   currentCollectionId: PropTypes.number,
   currentUser: PropTypes.object,

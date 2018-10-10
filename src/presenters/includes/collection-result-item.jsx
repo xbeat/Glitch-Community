@@ -16,7 +16,10 @@ AddProjectMessage.propTypes = {
   collectionName: PropTypes.string.isRequired
 };
 
-const notify = (projectName, collectionName, url, notification, togglePopover) => {
+const notify = (addProjectToCollection, projectName, collectionName, url, notification, togglePopover) => {
+
+  // add project to collection
+  add
   // toggle popover
   togglePopover();
   
@@ -27,7 +30,7 @@ const notify = (projectName, collectionName, url, notification, togglePopover) =
   notification(content, "notifySuccess");
 };
 
-const CollectionResultItem = ({id, projectName, collectionName, description, isActive, avatarUrl, url, togglePopover}) => {
+const CollectionResultItem = ({addProjectToCollection, id, projectName, collectionName, description, isActive, avatarUrl, url, togglePopover}) => {
   var resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
@@ -36,7 +39,7 @@ const CollectionResultItem = ({id, projectName, collectionName, description, isA
   return (
     <Notifications>
       {({createNotification}) => (
-        <button className={resultClass} onClick={() => notify(projectName, collectionName, url, createNotification, togglePopover)} data-project-id={id}>
+        <button className={resultClass} onClick={() => notify(addProjectToCollection, projectName, collectionName, url, createNotification, togglePopover)} data-project-id={id}>
           <img className="avatar" src={avatarUrl} alt={`Project avatar for ${collectionName}`}/>
           <div className="results-info">
             <div className="result-name" title={collectionName}>{collectionName}</div>
@@ -54,6 +57,7 @@ const CollectionResultItem = ({id, projectName, collectionName, description, isA
 };
 
 CollectionResultItem.propTypes = {
+  addProjectToCollection: PropTypes.func,
   projectName: PropTypes.string.isRequired,
   collectionName: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,

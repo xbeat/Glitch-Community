@@ -7,11 +7,11 @@ import {TruncatedMarkdown} from './includes/markdown.jsx';
 import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
-export const ProjectItem = ({api, currentUser, project, categoryColor, projectOptions, currentCollectionId, ...props}) => {
+export const ProjectItem = ({api, currentUser, project, categoryColor, projectOptions, currentCollectionId, addProjectToCollection, ...props}) => {
   return (
     <li>
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
-      <ProjectOptionsContainer api={api} project={project} projectOptions={projectOptions} currentUser={currentUser} currentCollectionId={currentCollectionId} {...props}/>
+      <ProjectOptionsContainer api={api} project={project} projectOptions={projectOptions} currentUser={currentUser} currentCollectionId={currentCollectionId} addProjectToCollection={addProjectToCollection} {...props}/>
 
       <a href={getLink(project.domain)}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
@@ -33,6 +33,7 @@ export const ProjectItem = ({api, currentUser, project, categoryColor, projectOp
 };
 
 ProjectItem.propTypes = {
+  addProjectToCollection: PropTypes.func,
   api: PropTypes.any.isRequired,
   currentCollectionId: PropTypes.number,
   currentUser: PropTypes.object,
