@@ -142,7 +142,7 @@ const CollectionPageContents = ({
                   </div>
           
                   {(isAuthorized
-                    ? <ProjectsUL projects={projects} categoryColor={collection.coverColor} api={api} currentCollectionId={collection.id} currentUser={currentUser} addProjectToCollection={addProjectToCollection}
+                    ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} categoryColor={collection.coverColor} currentCollectionId={collection.id} 
                     projectOptions={{
                       removeProjectFromCollection: {removeProjectFromCollection},
                       addProjectToCollection: {addProjectToCollection},
@@ -269,7 +269,7 @@ const CollectionPage = ({api, userLogin, name, ...props}) => (
               {(currentUser) => (
                 <CollectionEditor api={api} initialCollection={collection} >
                   {(collection, funcs, userIsAuthor) =>(
-                      <CollectionPageContents collection={collection} userLogin={userLogin} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} addProjectToCollection={props.addProjectToCollection} removeProjectFromCollection={props.removeProjectFromCollection} {...funcs} {...props}/>
+                      <CollectionPageContents collection={collection} userLogin={userLogin} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} {...funcs} {...props}/>
                   )}
                 </CollectionEditor>
               )}
@@ -278,11 +278,5 @@ const CollectionPage = ({api, userLogin, name, ...props}) => (
         </DataLoader>
   </Layout>
 );
-
-CollectionPage.propTypes = {
-  api: PropTypes.any.isRequired,
-  addProjectToCollection: PropTypes.func,
-  removeProjectFromCollection: PropTypes.func,
-}
 
 export default CollectionPage;
