@@ -57,10 +57,10 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
         ? <section className="pop-over-actions">
             {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
             {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
-            {!!props.addProject && <PopoverButton onClick={addToCollection} text="Add to My Collection " emoji="framed_picture"/>}
+            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to My Collection " emoji="framed_picture"/>}
         </section>
         : <section className="pop-over-actions">
-            {!!props.addProject && <PopoverButton onClick={addToCollection} text="Add to My Collection " emoji="framed_picture"/>}
+            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to My Collection " emoji="framed_picture"/>}
         </section>
       }
 
@@ -86,12 +86,12 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
           {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
           {!!props.removeProject && props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProject(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
 
-          {props.addProjectToCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project.id)} text="Remove from Collection" emoji="thumbs_down"/>}
-          {props.currentUserIsOnProject && props.removeProjectFromCollection && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
+          {props.removeProjectFromCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project.id)} text="Remove from Collection" emoji="thumbs_down"/>}
+          {props.currentUserIsOnProject && !props.removeProjectFromCollection && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
         </section>
       }
     </dialog>
-    );
+    ); 
 }
 
 
