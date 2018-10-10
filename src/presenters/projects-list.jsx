@@ -10,7 +10,7 @@ export const ProjectsList = ({title, projects, placeholder, projectOptions, api}
       <div className="placeholder">{placeholder}</div>
     )}
 
-    <ProjectsUL api={api} {...{projects, projectOptions}}></ProjectsUL>
+    <ProjectsUL {...{projects, projectOptions, api}}></ProjectsUL>
 
   </article>
 );
@@ -23,7 +23,7 @@ ProjectsList.propTypes = {
   projectOptions: PropTypes.object.isRequired,
 };
 
-export const ProjectsUL = ({api, projects, projectOptions, categoryColor, homepageCollection, collectionUrl, currentUser, ...props}) => {
+export const ProjectsUL = ({projects, projectOptions, categoryColor, homepageCollection, collectionUrl, currentUser, api, ...props}) => {
   return (
     <React.Fragment>
       <ul className="projects-container">

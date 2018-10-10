@@ -98,9 +98,9 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
 // Project Options Pop
 const ProjectOptionsPop = (props) => {
   return(
-    <NestedPopover alternateContent={() => <AddProjectToCollectionPop project={props.project} {...props}/>}>
+    <NestedPopover alternateContent={() => <AddProjectToCollectionPop project={props.project} api={props.api} {...props}/>}>
       { addToCollection => (
-        <ProjectOptionsContent {...props} addToCollection={addToCollection}/>
+        <ProjectOptionsContent {...props} addToCollection={addToCollection} api={props.api}/>
         )}
     </NestedPopover>
   );
@@ -131,11 +131,9 @@ ProjectOptionsPop.defaultProps = {
 
 // Project Options Container
 // create as stateful react component
-export default function ProjectOptions({projectOptions={}, project}) {
+export default function ProjectOptions({projectOptions={}, project, api}) {
   if(Object.keys(projectOptions).length === 0) {
     return null;
-  }else{
-    console.log("projectOptions: %O", Object.keys(projectOptions)); 
   }
 
   function currentUserIsOnProject(user) {
@@ -156,7 +154,7 @@ export default function ProjectOptions({projectOptions={}, project}) {
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <ProjectOptionsPop project={project} {...projectOptions} togglePopover={togglePopover} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+              { visible && <ProjectOptionsPop api={api} project={project} {...projectOptions} togglePopover={togglePopover} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
             </div>
           )}
         </CurrentUserConsumer>
@@ -166,6 +164,7 @@ export default function ProjectOptions({projectOptions={}, project}) {
 }
 
 ProjectOptions.propTypes = {
+  api: PropTypes.object.isRequired,
   project: PropTypes.object.isRequired,
 };
 
