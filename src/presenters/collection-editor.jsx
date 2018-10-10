@@ -63,10 +63,12 @@ class CollectionEditor extends React.Component {
     console.log(`project.id ${project.id}`);
     console.log(`collection.id ${collection.id}`);
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
-    console.log(`attempting to add project ${project.domain}`);
-    this.setState(({projects}) => ({
-      projects: [...projects, project],
-    }));
+    if(collection.id !== this.state.id){
+      console.log(`attempting to add project ${project.domain}`);
+      this.setState(({projects}) => ({
+        projects: [...projects, project],
+      }));
+    }
   }
   
   async removeProjectFromCollection(project) {
@@ -81,7 +83,7 @@ class CollectionEditor extends React.Component {
   render() {
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
-      addProjectToCollection: project => this.addProjectToCollection(project).catch(handleError),
+      addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(handleError),
       removeProjectFromCollection: project => this.removeProjectFromCollection(project).catch(handleError),
       updateName: name => this.updateFields({name}).catch(handleError),
       updateDescription: description => this.updateFields({description}).catch(handleError),
