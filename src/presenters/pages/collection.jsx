@@ -27,6 +27,8 @@ import {UserTile} from '../users-list.jsx';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
 
+import _ from 'lodash';
+
 const hexToRgbA = (hex) => {
   var c;
   if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
@@ -39,6 +41,14 @@ const hexToRgbA = (hex) => {
   }
   throw new Error('Bad Hex');
 };
+
+
+function projectOptions = _.mapValues(projectOptions, function(projectOption) {
+  return async (projectId, userId) => {
+    await projectOption(projectId, userId);
+    reloadProject(projectId);
+  };
+});
 
 const CollectionPageContents = ({
   api, 

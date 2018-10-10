@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import {getAvatarUrl, getLink} from '../models/project.js';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
-import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
+import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
 export const ProjectItem = ({project, categoryColor, ...props}) => {
   return (
     <li>
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
-      <ProjectOptionsContainer {...props}/>
+      <ProjectOptionsPop {...{project}} {...props}/>
 
       <a href={getLink(project.domain)}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
