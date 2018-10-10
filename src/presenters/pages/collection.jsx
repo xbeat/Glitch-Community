@@ -144,13 +144,13 @@ const CollectionPageContents = ({
                     ? <ProjectsUL projects={projects} categoryColor={collection.coverColor} 
                     projectOptions={{
                       removeProjectFromCollection: {removeProject},
-                      addProjectToCollection: {addProject},
+                      addProject: {addProject},
                     }} 
                     {...props}/>
                     
                     : <ProjectsUL projects={projects} categoryColor={collection.coverColor} 
                     projectOptions={{
-                      addProjectToCollection: {addProject}
+                      addProject: {addProject}
                     }} 
                     {...props}/>
                   )}
@@ -198,7 +198,7 @@ CollectionPageContents.propTypes = {
     projects: PropTypes.array.isRequired
   }).isRequired,
   addProject: PropTypes.func,
-  addProjectToCollection: PropTypes.func,
+  addProject: PropTypes.func,
   api: PropTypes.any.isRequired,
   children: PropTypes.node,
   isAuthorized: PropTypes.any.isRequired,  
