@@ -22,7 +22,7 @@ const AddProjectToCollection = ({projectName, ...props}) => {
 };
 
 AddProjectToCollection .propTypes = {
-  addProject: PropTypes.func.isRequired,
+  addProjectToCollection: PropTypes.func.isRequired,
   api: PropTypes.func.isRequired,
   projectName: PropTypes.string.isRequired,
 };

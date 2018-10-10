@@ -48,8 +48,8 @@ const CollectionPageContents = ({
   updateDescription, 
   projectOptions, 
   uploadAvatar, 
-  addProject, 
-  removeProject,
+  addProjectToCollection, 
+  removeProjectFromCollection,
   updateColor,
   updateAvatar,
   userLogin,
@@ -130,7 +130,7 @@ const CollectionPageContents = ({
                 
                     {(isAuthorized 
                       ? <AddCollectionProject
-                        addProject={addProject}
+                        addProjectToCollection={addProjectToCollection}
                         api={api}
                         collectionProjects={collection.projects}
                         currentUserIsOwner={true}
@@ -143,14 +143,14 @@ const CollectionPageContents = ({
                   {(isAuthorized
                     ? <ProjectsUL projects={projects} categoryColor={collection.coverColor} 
                     projectOptions={{
-                      removeProject: {removeProject},
-                      addProject: {addProject},
+                      removeProjectFromCollection: {removeProjectFromCollection},
+                      addProjectToCollection: {addProjectToCollection},
                     }} 
                     {...props}/>
                     
                     : <ProjectsUL projects={projects} categoryColor={collection.coverColor} 
                     projectOptions={{
-                      addProject: {addProject}
+                      addProjectToCollection: {addProjectToCollection}
                     }} 
                     {...props}/>
                   )}
@@ -190,7 +190,7 @@ const CollectionPageContents = ({
 );
 
 CollectionPageContents.propTypes = {
-  addProject: PropTypes.func,
+  addProjectToCollection: PropTypes.func,
   api: PropTypes.any.isRequired,
   collection: PropTypes.shape({
     avatarUrl: PropTypes.string.isRequired,
@@ -202,7 +202,7 @@ CollectionPageContents.propTypes = {
   children: PropTypes.node,
   isAuthorized: PropTypes.any.isRequired,  
   projectOptions: PropTypes.object,
-  removeProject: PropTypes.func,
+  removeProjectFromCollection: PropTypes.func,
   uploadAvatar: PropTypes.func,
 };
 
@@ -257,7 +257,7 @@ async function loadCollection(api, userLogin, collectionName){
   return collection;
 }  
 
-const CollectionPage = ({api, userLogin, name, addProject, removeProject, ...props}) => (
+const CollectionPage = ({api, userLogin, name, addProjectToCollection, removeProjectFromCollection, ...props}) => (
   <Layout api={api}>
     <DataLoader get={() => loadCollection(api, userLogin, name)}
       renderError={() => <NotFound name={name}/>}
@@ -265,7 +265,7 @@ const CollectionPage = ({api, userLogin, name, addProject, removeProject, ...pro
       {collection => (
         <CollectionEditor api={api} initialCollection={collection} >
           {(collection, funcs, userIsAuthor) =>(
-              <CollectionPageContents collection={collection} userLogin={userLogin} api={api} isAuthorized={userIsAuthor} addProject={addProject} removeProject={removeProject} {...funcs} {...props}/>
+              <CollectionPageContents collection={collection} userLogin={userLogin} api={api} isAuthorized={userIsAuthor} addProjectToCollection={addProjectToCollection} removeProjectFromCollection={removeProjectFromCollection} {...funcs} {...props}/>
                 )
           }
         </CollectionEditor>
@@ -276,8 +276,8 @@ const CollectionPage = ({api, userLogin, name, addProject, removeProject, ...pro
 
 CollectionPage.propTypes = {
   api: PropTypes.any.isRequired,
-  addProject: PropTypes.func,
-  removeProject: PropTypes.func,
+  addProjectToCollection: PropTypes.func,
+  removeProjectFromCollection: PropTypes.func,
 }
 
 export default CollectionPage;

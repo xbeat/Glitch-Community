@@ -161,7 +161,7 @@ class AddCollectionProjectPop extends React.Component {
     createPersistentNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>, "notifySuccess")
     
     // add project to page if successful
-    this.props.addProject(project);
+    this.props.addProjectToCollection(project);
   }
   
   render() {

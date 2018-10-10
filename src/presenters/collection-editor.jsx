@@ -58,7 +58,7 @@ class CollectionEditor extends React.Component {
     });
   }
   
-  async addProject(project) {
+  async addProjectToCollection(project) {
     console.log(`in addProject in collection-editor`);
     await this.props.api.patch(`collections/${this.state.id}/add/${project.id}`);
     console.log(`attempting to add project ${project.domain}`);
@@ -67,7 +67,7 @@ class CollectionEditor extends React.Component {
     }));
   }
   
-  async removeProject(project) {
+  async removeProjectFromCollection(project) {
     await this.props.api.patch(`collections/${this.state.id}/remove/${project.id}`);
     console.log(`attempting to remove project ${project.id} from collection ${this.state.id}`);
     this.setState(({projects}) => ({
@@ -78,8 +78,8 @@ class CollectionEditor extends React.Component {
   render() {
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
-      addProject: project => this.addProject(project).catch(handleError),
-      removeProject: id => this.removeProject(id).catch(handleError),
+      addProjectToCollection: project => this.addProjectToCollection(project).catch(handleError),
+      removeProjectFromCollection: id => this.removeProjectFromCollection(id).catch(handleError),
       updateName: name => this.updateFields({name}).catch(handleError),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       updateAvatar: avatarUrl => this.updateAvatar(avatarUrl),
@@ -90,14 +90,14 @@ class CollectionEditor extends React.Component {
 }
 CollectionEditor.propTypes = {
   api: PropTypes.any.isRequired,
-  addProject: PropTypes.func,
+  addProjectToCollection: PropTypes.func,
   children: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   updateCurrentUser: PropTypes.func,
   handleError: PropTypes.func.isRequired,
   handleErrorForInput: PropTypes.func.isRequired,
   initialCollection: PropTypes.object.isRequired,
-  removeProject: PropTypes.func,
+  removeProjectFromCollection: PropTypes.func,
   uploadAsset: PropTypes.func.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
 };
