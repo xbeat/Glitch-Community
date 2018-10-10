@@ -156,7 +156,7 @@ export default function ProjectOptions({projectOptions={}, project, api}, props)
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <ProjectOptionsPop api={props.api} project={project} {...projectOptions} currentCollectionId={props.currentCollectionId} togglePopover={togglePopover} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+              { visible && <ProjectOptionsPop api={api} project={project} {...projectOptions} currentCollectionId={props.currentCollectionId} togglePopover={togglePopover} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
             </div>
           )}
         </CurrentUserConsumer>

@@ -42,14 +42,6 @@ const hexToRgbA = (hex) => {
   throw new Error('Bad Hex');
 };
 
-
-function projectOptions = _.mapValues(projectOptions, function(projectOption) {
-  return async (projectId, userId) => {
-    await projectOption(projectId, userId);
-    reloadProject(projectId);
-  };
-});
-
 const CollectionPageContents = ({
   api, 
   collection, 
