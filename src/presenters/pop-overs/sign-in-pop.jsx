@@ -26,16 +26,18 @@ const SignInPopButton = (props) => (
   </Link>
 );
 
-export const SignInPop = ({prompt, params}) => (
+export const SignInPop = ({header, prompt, params}) => (
   <div className="pop-over sign-in-pop">
-    {prompt}
+    {header}
     <section className="pop-over-actions last-section">
+      {prompt}
       <SignInPopButton href={facebookAuthLink(params)} company="Facebook" emoji="facebook"/>
       <SignInPopButton href={githubAuthLink(params)} company="GitHub" emoji="octocat"/>
     </section>
   </div>
 );
 SignInPop.propTypes = {
+  header: PropTypes.node,
   prompt: PropTypes.node,
   params: PropTypes.string,
 };
