@@ -102,15 +102,18 @@ class AddCollectionProjectPop extends React.Component {
         query = query.substring(query.indexOf("~")+1);
       }
     }
-    
+    console.log(`query: ${query}`);
     const request = this.props.api.get(`projects/search?q=${query}`);
     this.setState({ maybeRequest: request });
     
     const {data} = await request;
     const results = data.map(project => ProjectModel(project).asProps());
+    console.log(results);
+    console.log(this.props.collectionProjects);
     let nonCollectionResults = null;
     if(searchByUrl){
-      nonCollectionResults = results.filter(project => (!this.props.collectionProjects || !this.props.collectionProjects.includes(project)) && project.domain == query);
+      let projectByDomain = results.filter(project => project.domain == query);
+      nonCollectionResults = projectByDomain.filter(project => (!this.props.collectionProjects || !this.props.collectionProjects.includes(project)));
       this.setState({projectName: query});
     }else{
       nonCollectionResults = results.filter(project => !this.props.collectionProjects || !this.props.collectionProjects.includes(project));
