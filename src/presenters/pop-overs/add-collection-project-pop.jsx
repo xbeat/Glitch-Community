@@ -24,12 +24,13 @@ const ProjectSearchResults = ({projects, action, projectName}) => (
         </Notifications>
       ))}
     </ul>
-  ) : (
-    (projectName.length > 0) ? (
+  ) : 
+  {projectName}
+    (projectName ? (
       <p className="results-empty">{projectName} is already in this collection <span role="img" aria-label="">💫</span></p>
       ): 
     (<p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>)
-  )
+    )
 );
 
 ProjectSearchResults.propTypes = {
@@ -108,18 +109,23 @@ class AddCollectionProjectPop extends React.Component {
     
     const {data} = await request;
     const results = data.map(project => ProjectModel(project).asProps());
-    console.log(results);
-    console.log(this.props.collectionProjects);
+    
+    console.log("this.props.collectionProjects %O", this.props.collectionProjects);
     let nonCollectionResults = null;
     if(searchByUrl){
       let projectByDomain = results.filter(project => project.domain == query);
-      nonCollectionResults = projectByDomain.filter(project => (!this.props.collectionProjects || !this.props.collectionProjects.includes(project)));
-      this.setState({projectName: query});
+      console.log("projectByDomain %O", projectByDomain);
+      // get names of all collectionProjects
+      if(this.props.collectionProjects.find(project => project.domain == query)){
+        nonCollectionResults =[];
+        this.setState({projectName: query});
+        console.log(` set state to ${this.state.projectName} with query ${query}`);
+      }else{
+        nonCollectionResults = projectByDomain;
+      }      
     }else{
       nonCollectionResults = results.filter(project => !this.props.collectionProjects || !this.props.collectionProjects.includes(project));
     }
-
-    console.log(nonCollectionResults);
 
     this.setState(({ maybeRequest }) => {
     return (request === maybeRequest) ? {
