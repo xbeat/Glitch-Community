@@ -64,17 +64,19 @@ class AddProjectToCollection extends React.Component {
             <DataLoader get={() => this.props.api.get(`collections/?userId=${this.props.currentUser.id}`)}>
               { ({data}) => 
                   data.map(collection =>                      
-                      <li>
-                         <CollectionResultItem 
-                           projectName={this.props.project.domain}
-                           collectionName={collection.name}                         
-                           description={collection.description} 
-                           id={collection.id.toString()} 
-                           avatarUrl={collection.avatarUrl} 
-                           url={collection.url} isActive={false} 
-                           togglePopover={this.props.togglePopover} 
-                           />
-                       </li>
+                      (collection.id !== this.props.currentCollectionId && 
+                        <li>     
+                           <CollectionResultItem 
+                             projectName={this.props.project.domain}
+                             collectionName={collection.name}                         
+                             description={collection.description} 
+                             id={collection.id.toString()} 
+                             avatarUrl={collection.avatarUrl} 
+                             url={collection.url} isActive={false} 
+                             togglePopover={this.props.togglePopover} 
+                             />
+                         </li>
+                     )
                    )
                }
             </DataLoader>
@@ -98,7 +100,7 @@ class AddProjectToCollection extends React.Component {
 
 AddProjectToCollection.propTypes = {
   api: PropTypes.func.isRequired,
-  currentCollection: PropTypes.object,
+  currentCollectionId: PropTypes.number,
   currentUser: PropTypes.object,
   togglePopover: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,

@@ -98,7 +98,7 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
 // Project Options Pop
 const ProjectOptionsPop = (props) => {
   return(
-    <NestedPopover alternateContent={() => <AddProjectToCollectionPop project={props.project} api={props.api} {...props}/>}>
+    <NestedPopover alternateContent={() => <AddProjectToCollectionPop project={props.project} api={props.api} currentCollectionId={props.currentCollectionId} {...props}/>}>
       { addToCollection => (
         <ProjectOptionsContent {...props} addToCollection={addToCollection} api={props.api}/>
         )}
@@ -108,6 +108,7 @@ const ProjectOptionsPop = (props) => {
 
 ProjectOptionsPop.propTypes = {
   api: PropTypes.any.isRequired,
+  currentCollectionId: PropTypes,
   currentUser: PropTypes.object,
   project: PropTypes.shape({
     users: PropTypes.array.isRequired,
@@ -131,7 +132,7 @@ ProjectOptionsPop.defaultProps = {
 
 // Project Options Container
 // create as stateful react component
-export default function ProjectOptions({projectOptions={}, project, api}) {
+export default function ProjectOptions({projectOptions={}, project, api, currentCollectionId,}) {
   if(Object.keys(projectOptions).length === 0) {
     return null;
   }
@@ -154,7 +155,7 @@ export default function ProjectOptions({projectOptions={}, project, api}) {
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <ProjectOptionsPop api={api} project={project} {...projectOptions} togglePopover={togglePopover} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+              { visible && <ProjectOptionsPop api={api} project={project} {...projectOptions} currentCollectionId={currentCollectionId} togglePopover={togglePopover} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
             </div>
           )}
         </CurrentUserConsumer>
@@ -165,6 +166,7 @@ export default function ProjectOptions({projectOptions={}, project, api}) {
 
 ProjectOptions.propTypes = {
   api: PropTypes.func.isRequired,
+  currentCollectionId: PropTypes.number,
   project: PropTypes.object.isRequired,
 };
 
