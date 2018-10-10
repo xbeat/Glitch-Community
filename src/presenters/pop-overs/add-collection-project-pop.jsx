@@ -43,7 +43,7 @@ class AddCollectionProjectPop extends React.Component {
     this.state = {
       query: '', //The actual search text
       maybeRequest: null, //The active request promise
-      maybeResults: null, //Null means still waiting vs empty -- [jude: i suggest the 'maybe' convention for nullable fields with meaning.  'maybeResults'] --greg: i like it
+      maybeResults: null, //Null means still waiting vs empty
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -56,7 +56,6 @@ class AddCollectionProjectPop extends React.Component {
     const query = evt.currentTarget.value.trim();
     this.setState({ query });
     if (query) {
-      {/* TO DO: SEARCH BY URL */}
       this.startSearch();
     } else {
       this.clearSearch();
@@ -79,10 +78,12 @@ class AddCollectionProjectPop extends React.Component {
     // Project URL pattern: https://glitch.com/~power-port, https://power-port.glitch.me/, https://humorous-spaghetti.glitch.me/~slack-bot-persist
     const httpsKeyword = "https://";
     const glitchKeyword = "glitch";
+    let searchByUrl = false;
     let query = this.state.query;
     
     // TO DO - search results needs to match URL exactly, not search only by project name extracted from URL
     if(this.state.query.includes(httpsKeyword) && this.state.query.includes(glitchKeyword)){
+      searchByUrl = true;
       // get project domain
       if(this.state.query.includes("me") && !this.state.query.includes("~")){
         // https://power-port.glitch.me/
@@ -101,19 +102,27 @@ class AddCollectionProjectPop extends React.Component {
     
     const {data} = await request;
     const results = data.map(project => ProjectModel(project).asProps());
-    const nonCollectionResults = results.filter(project => !this.props.collectionProjects || !this.props.collectionProjects.includes(project));
     
+    let nonCollectionResults = results.filter(project => !this.props.collectionProjects || !this.props.collectionProjects.includes(project));
+    if(searchByUrl){
+      // get only exact match by domain name
+      nonCollectionResults = results.filter(project => project.domain === query);
+    }
+
     this.setState(({ maybeRequest }) => {
-      return (request === maybeRequest) ? {
-        maybeRequest: null,
-        maybeResults: nonCollectionResults.slice(0, 5),
+    return (request === maybeRequest) ? {
+      maybeRequest: null,
+      maybeResults: nonCollectionResults.slice(0, 5),
       } : {};
     });
+
   }
   
   onClick(project, createPersistentNotification) {
     this.props.togglePopover();
     console.log(`clicked ${project.domain}`);
+    
+    // add the project to the collection
     
     // show notification
     createPersistentNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>, "notifySuccess")
