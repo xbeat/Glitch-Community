@@ -7,14 +7,14 @@ import Project, {getAvatarUrl} from '../../models/project';
 import UserModel from '../../models/user';
 
 import Loader from '../includes/loader.jsx';
+import {DataLoader} from '../includes/loader.jsx';
+
 import CollectionResultItem from '../includes/collection-result-item.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
 
 import Notifications from '../notifications.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
-
-import {DataLoader} from './includes/loader.jsx';
 
 {/* NOTE: Categories are just used to load dummy info - should get rid of in final implementation */}
 import categories from '../../curated/categories.js';
@@ -63,17 +63,18 @@ class AddProjectToCollection extends React.Component {
           <ul className="results">
             <DataLoader get={() => this.props.api.get(`collections/?userId=${this.props.currentUser.id}`)}>
               { ({data}) => 
-                  { data.map(collection =>                      li>
-                       CollectionResultItem 
-                         rojectName={this.props.project.domain}
-                         ollectionName={ccollection.name}                         escription={ccollectiondescription} 
-                         d={ccollectionid.toString()} 
-                         vatarUrl={ccollectionavatarUrl} 
-                         rl={ccollectionurl} isActive={false} 
-                         ogglePopover={this.props.togglePopover} 
-                         >
-                       /li>
-
+                  { data.map(collection =>                      
+                      <li>
+                       <CollectionResultItem 
+                         ProjectName={this.props.project.domain}
+                         CollectionName={collection.name}                         
+                         Description={collection.description} 
+                         id={collection.id.toString()} 
+                         avatarUrl={collection.avatarUrl} 
+                         url={collection.url} isActive={false} 
+                         togglePopover={this.props.togglePopover} 
+                         />
+                       </li>
                    )}              }
             </DataLoader>
           </ul>

@@ -73,4 +73,4 @@ const EntityPageProjectsContainer = ({api, projects, ...props}) => (
   </ProjectsLoader>
 );
 
-export default EntityPageProjectsContainer;
+export default EntityPageProjectsContainer;  
