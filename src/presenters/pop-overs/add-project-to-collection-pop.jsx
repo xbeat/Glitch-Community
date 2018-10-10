@@ -19,7 +19,7 @@ import {NestedPopoverTitle} from './popover-nested.jsx';
 {/* NOTE: Categories are just used to load dummy info - should get rid of in final implementation */}
 import categories from '../../curated/categories.js';
 
-class AddProjectToCollection extends React.Component {
+class AddProjectToCollectionPop extends React.Component {
   constructor(props) {
     super(props);
     
@@ -99,7 +99,7 @@ class AddProjectToCollection extends React.Component {
   }
 }
 
-AddProjectToCollection.propTypes = {
+AddProjectToCollectionPop.propTypes = {
   addProjectToCollection: PropTypes.func,
   api: PropTypes.func.isRequired,
   currentCollectionId: PropTypes.number,
@@ -109,4 +109,4 @@ AddProjectToCollection.propTypes = {
   fromProject: PropTypes.bool,
 };
 
-export default AddProjectToCollection;
+export default AddProjectToCollectionPop;

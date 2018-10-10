@@ -86,7 +86,7 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
           {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
           {!!props.removeProject && props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProject(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
 
-          {props.removeProjectFromCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project.id)} text="Remove from Collection" emoji="thumbs_down"/>}
+          {props.removeProjectFromCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project)} text="Remove from Collection" emoji="thumbs_down"/>}
           {props.currentUserIsOnProject && !props.removeProjectFromCollection && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
         </section>
       }
@@ -98,9 +98,9 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
 // Project Options Pop
 const ProjectOptionsPop = (props) => {
   return(
-    <NestedPopover alternateContent={() => <AddProjectToCollectionPop project={props.project} api={props.api} currentCollectionId={props.currentCollectionId} {...props}/>}>
+    <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props}/>}>
       { addToCollection => (
-        <ProjectOptionsContent {...props} addToCollection={addToCollection}/>
+        <ProjectOptionsContent {...props} />
         )}
     </NestedPopover>
   );

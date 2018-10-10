@@ -7,7 +7,7 @@ import {TruncatedMarkdown} from './includes/markdown.jsx';
 import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
-export const ProjectItem = ({api, currentUser, project, categoryColor, projectOptions, currentCollectionId, addProjectToCollection, ...props}) => {
+export const ProjectItem = ({api, currentUser, project, categoryColor, projectOptions, currentCollectionId, ...props}) => {
   return (
     <li>
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
