@@ -164,7 +164,7 @@ export default function ProjectOptions({projectOptions={}, project, api}) {
 }
 
 ProjectOptions.propTypes = {
-  api: PropTypes.object.isRequired,
+  api: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
 };
 

@@ -59,7 +59,7 @@ CollectionResultItem.propTypes = {
   isActive: PropTypes.bool,
   avatarUrl: PropTypes.string,
   url: PropTypes.string,
-  togglePopover: PropTypes.array.isRequired,
+  togglePopover: PropTypes.func.isRequired,
 };
 
 export default CollectionResultItem;

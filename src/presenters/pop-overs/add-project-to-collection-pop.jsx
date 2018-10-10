@@ -63,25 +63,25 @@ class AddProjectToCollection extends React.Component {
           <ul className="results">
             <DataLoader get={() => this.props.api.get(`collections/?userId=${this.props.currentUser.id}`)}>
               { ({data}) => 
-                  { data.map(collection =>                      
+                  data.map(collection =>                      
                       <li>
-                       <CollectionResultItem 
-                         ProjectName={this.props.project.domain}
-                         CollectionName={collection.name}                         
-                         Description={collection.description} 
-                         id={collection.id.toString()} 
-                         avatarUrl={collection.avatarUrl} 
-                         url={collection.url} isActive={false} 
-                         togglePopover={this.props.togglePopover} 
-                         />
+                         <CollectionResultItem 
+                           projectName={this.props.project.domain}
+                           collectionName={collection.name}                         
+                           description={collection.description} 
+                           id={collection.id.toString()} 
+                           avatarUrl={collection.avatarUrl} 
+                           url={collection.url} isActive={false} 
+                           togglePopover={this.props.togglePopover} 
+                           />
                        </li>
-                   )}              }
+                   )
+               }
             </DataLoader>
           </ul>
         </section>
         <section className="pop-over-info">
           <input id="collection-name"  
-            no-autofocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}
             className="pop-over-input create-input"
             placeholder="New Collection Name"
