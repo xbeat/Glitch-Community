@@ -149,7 +149,7 @@ const CollectionPageContents = ({
                     }} 
                     {...props}/>
                     
-                    : <ProjectsUL projects={projects} categoryColor={collection.coverColor} api={api} currentCollectionId={collection.id} currentUser={currentUser}  addProjectToCollection={addProjectToCollection}
+                    : <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} categoryColor={collection.coverColor} currentCollectionId={collection.id} 
                     projectOptions={{
                       addProjectToCollection: {addProjectToCollection}
                     }} 
