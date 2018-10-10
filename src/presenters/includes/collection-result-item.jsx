@@ -17,20 +17,20 @@ AddProjectMessage.propTypes = {
 };
 
 const notify = (addProjectToCollection, project, collection, url, notification, togglePopover) => {
-  console.log('notify');
+  console.log(`notify with project ${project.id} collection ${collection.id}`);
 
   // add project to collection via api
-  addProjectToCollection(project), collection;
+  addProjectToCollection(project, collection);
   
   // toggle popover
   togglePopover();
   
   // show notification
-  const content = <AddProjectMessage projectName={project.name} collectionName={collection.name} {...{url}}/>;
+  const content = <AddProjectMessage projectName={project.name} collectionName={collection.name} url={collection.url}/>;
   notification(content, "notifySuccess");
 };
 
-const CollectionResultItem = ({addProjectToCollection, id, project, collection,  togglePopover}) => {
+const CollectionResultItem = ({addProjectToCollection, id, project, collection, isActive, togglePopover}) => {
   var resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
@@ -39,13 +39,13 @@ const CollectionResultItem = ({addProjectToCollection, id, project, collection, 
   return (
     <Notifications>
       {({createNotification}) => (
-        <button className={resultClass} onClick={() => notify(addProjectToCollection, project, collection, url, createNotification, togglePopover)} data-project-id={id}>
-          <img className="avatar" src={avatarUrl} alt={`Project avatar for ${collection.name}`}/>
+        <button className={resultClass} onClick={() => notify(addProjectToCollection, project, collection, createNotification, togglePopover)} data-project-id={id}>
+          <img className="avatar" src={collection.avatarUrl} alt={`Project avatar for ${collection.name}`}/>
           <div className="results-info">
             <div className="result-name" title={collection.name}>{collection.name}</div>
-            { description.length > 0 && <div className="result-description">{description}</div> }
+            { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
           </div>
-          <a href={`/${url}`} className="view-project-link" target="_blank">
+          <a href={`/${collection.url}`} className="view-project-link" target="_blank">
             <button className="view-project button-small button-docs">
               View →
             </button>
@@ -58,13 +58,9 @@ const CollectionResultItem = ({addProjectToCollection, id, project, collection, 
 
 CollectionResultItem.propTypes = {
   addProjectToCollection: PropTypes.func,
-  avatarUrl: PropTypes.string,
   collection: PropTypes.object.isRequired,
-  description: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
   isActive: PropTypes.bool,
   project: PropTypes.object.isRequired,
-  url: PropTypes.string,
   togglePopover: PropTypes.func.isRequired,
 };
 
