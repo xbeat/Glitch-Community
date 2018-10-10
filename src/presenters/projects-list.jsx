@@ -23,12 +23,12 @@ ProjectsList.propTypes = {
   projectOptions: PropTypes.object.isRequired,
 };
 
-export const ProjectsUL = ({projects, projectOptions, categoryColor, homepageCollection, collectionUrl, currentUser, api, currentCollectionId, addProjectToCollection, ...props}) => {
+export const ProjectsUL = ({projects, projectOptions, categoryColor, homepageCollection, collectionUrl, currentUser, api, currentCollectionId, ...props}) => {
   return (
     <React.Fragment>
       <ul className="projects-container">
         { projects.map(project => (
-          <ProjectItem key={project.id} {...{project, projectOptions, categoryColor, api, currentCollectionId, addProjectToCollection, ...props}}></ProjectItem>
+          <ProjectItem key={project.id} {...{project, projectOptions, categoryColor, api, currentCollectionId, ...props}}></ProjectItem>
         ))}
         
         {/* The link to view all projects for collections on the homepage  TO DO show actual correct count of projects in categories*/}  

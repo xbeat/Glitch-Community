@@ -11,7 +11,7 @@ export const ProjectItem = ({api, currentUser, project, categoryColor, projectOp
   return (
     <li>
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
-      <ProjectOptionsContainer api={api} project={project} projectOptions={projectOptions} currentUser={currentUser} currentCollectionId={currentCollectionId} addProjectToCollection={addProjectToCollection} {...props}/>
+      <ProjectOptionsContainer api={api} project={project} projectOptions={projectOptions} currentUser={currentUser} currentCollectionId={currentCollectionId} {...props}/>
 
       <a href={getLink(project.domain)}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 

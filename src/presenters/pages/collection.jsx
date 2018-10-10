@@ -259,7 +259,7 @@ async function loadCollection(api, userLogin, collectionName){
   return collection;
 }  
 
-const CollectionPage = ({api, userLogin, name, addProjectToCollection, removeProjectFromCollection, ...props}) => (
+const CollectionPage = ({api, userLogin, name, ...props}) => (
   <Layout api={api}>
         <DataLoader get={() => loadCollection(api, userLogin, name)}
           renderError={() => <NotFound name={name}/>}
@@ -269,7 +269,7 @@ const CollectionPage = ({api, userLogin, name, addProjectToCollection, removePro
               {(currentUser) => (
                 <CollectionEditor api={api} initialCollection={collection} >
                   {(collection, funcs, userIsAuthor) =>(
-                      <CollectionPageContents collection={collection} userLogin={userLogin} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} addProjectToCollection={addProjectToCollection} removeProjectFromCollection={removeProjectFromCollection} {...funcs} {...props}/>
+                      <CollectionPageContents collection={collection} userLogin={userLogin} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} addProjectToCollection={props.addProjectToCollection} removeProjectFromCollection={props.removeProjectFromCollection} {...funcs} {...props}/>
                   )}
                 </CollectionEditor>
               )}

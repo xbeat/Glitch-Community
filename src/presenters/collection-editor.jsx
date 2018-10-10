@@ -68,6 +68,7 @@ class CollectionEditor extends React.Component {
   }
   
   async removeProjectFromCollection(project) {
+    console.log(`in removeProjectFromCollection in collection-editor`);
     await this.props.api.patch(`collections/${this.state.id}/remove/${project.id}`);
     console.log(`attempting to remove project ${project.id} from collection ${this.state.id}`);
     this.setState(({projects}) => ({
@@ -79,7 +80,7 @@ class CollectionEditor extends React.Component {
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
       addProjectToCollection: project => this.addProjectToCollection(project).catch(handleError),
-      removeProjectFromCollection: id => this.removeProjectFromCollection(id).catch(handleError),
+      removeProjectFromCollection: project => this.removeProjectFromCollection(project).catch(handleError),
       updateName: name => this.updateFields({name}).catch(handleError),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       updateAvatar: avatarUrl => this.updateAvatar(avatarUrl),
