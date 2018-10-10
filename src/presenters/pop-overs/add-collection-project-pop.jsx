@@ -103,9 +103,12 @@ class AddCollectionProjectPop extends React.Component {
         query = query.substring(query.indexOf("~")+1);
       }else if(query.includes(".me")){
         // https://community.glitch.me/
-        if(query.includes("https://")){
-          query = query.substring(query.indexOf("https://")
-        }else if(query.includes("http://")){
+        let https = "https://";
+        let http = "http://";
+        if(query.includes(https)){
+          query = query.substring(query.indexOf(https)+https.length, query.indexOf("."));
+        }else if(query.includes(http)){
+          query = query.substring(query.indexOf(http)+http.length, query.indexOf("."));
         }
       }
     }
@@ -115,6 +118,7 @@ class AddCollectionProjectPop extends React.Component {
     
     const {data} = await request;
     const results = data.map(project => ProjectModel(project).asProps());
+    console.log("results %O", results);
     
     console.log("this.props.collectionProjects %O", this.props.collectionProjects);
     let nonCollectionResults = null;
@@ -130,13 +134,18 @@ class AddCollectionProjectPop extends React.Component {
         nonCollectionResults = projectByDomain;
       }      
     }else{
-      nonCollectionResults = results.filter(project => !this.props.collectionProjects || !this.props.collectionProjects.includes(project));
+      if(this.props.collectionProjects.find(project => project.domain == query)){
+        nonCollectionResults = [];
+        this.setState({projectName: query});
+      }else{
+        nonCollectionResults = results.filter(project => !this.props.collectionProjects || !this.props.collectionProjects.includes(project));
+      }
     }
 
     this.setState(({ maybeRequest }) => {
     return (request === maybeRequest) ? {
       maybeRequest: null,
-      maybeResults: nonCollectionResults.slice(0, 5),
+      maybeResults: nonCollectionResults,
       } : {};
     });
 
