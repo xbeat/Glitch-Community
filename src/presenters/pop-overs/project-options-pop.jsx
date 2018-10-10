@@ -98,7 +98,7 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
 // Project Options Pop
 const ProjectOptionsPop = ({...props}) => {
   return(
-    <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props}/>}>
+    <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} api={props.api}/>}>
       { addToCollection => (
         <ProjectOptionsContent {...props} addToCollection={addToCollection}/>
         )}
@@ -153,7 +153,7 @@ export default function ProjectOptions({projectOptions={}, project, api, current
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <ProjectOptionsPop {...props} {...projectOptions} currentCollectionId={currentCollectionId} api={api} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+              { visible && <ProjectOptionsPop {...props} {...projectOptions} project={project} currentCollectionId={currentCollectionId} api={api} currentUser={user} togglePopover={togglePopover} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
             </div>
           )}
         </CurrentUserConsumer>
