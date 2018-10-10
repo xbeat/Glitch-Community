@@ -7,7 +7,7 @@ import {TruncatedMarkdown} from './includes/markdown.jsx';
 import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
-export const ProjectItem = ({api, currentUser, project, categoryColor, projectOptions, ...props}) => {
+export const ProjectItem = ({api, currentUser, project, categoryColor, projectOptions, currentCollect, ...props}) => {
   return (
     <li>
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
@@ -34,7 +34,7 @@ export const ProjectItem = ({api, currentUser, project, categoryColor, projectOp
 
 ProjectItem.propTypes = {
   api: PropTypes.any.isRequired,
-  currentCollection: PropTypes.object,
+  currentCollectionId: PropTypes.number,
   currentUser: PropTypes.object,
   project: PropTypes.shape({
     description: PropTypes.string.isRequired,

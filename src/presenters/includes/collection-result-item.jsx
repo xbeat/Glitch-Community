@@ -20,6 +20,8 @@ const notify = (projectName, collectionName, url, notification, togglePopover) =
   // toggle popover
   togglePopover();
   
+  // add the project to the collection via the api
+  
   // show notification
   const content = <AddProjectMessage {...{projectName, collectionName, url}}/>;
   notification(content, "notifySuccess");
