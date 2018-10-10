@@ -104,9 +104,10 @@ class AddCollectionProjectPop extends React.Component {
     const results = data.map(project => ProjectModel(project).asProps());
     
     let nonCollectionResults = results.filter(project => !this.props.collectionProjects || !this.props.collectionProjects.includes(project));
+    console.log(nonCollectionResults);
     if(searchByUrl){
       // get only exact match by domain name
-      nonCollectionResults = results.filter(project => project.domain === query);
+      nonCollectionResults = nonCollectionResults.filter(project => project.domain === query);
     }
 
     this.setState(({ maybeRequest }) => {

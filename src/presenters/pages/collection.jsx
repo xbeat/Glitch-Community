@@ -40,7 +40,7 @@ const hexToRgbA = (hex) => {
   throw new Error('Bad Hex');
 };
 
-const CollectionPage = ({
+const CollectionPageContents = ({
   collection, 
   api, 
   isAuthorized, 
@@ -107,7 +107,6 @@ const CollectionPage = ({
           </p>
           
           {(isAuthorized && <EditCollectionColor
-            currentUserIsOwner={true}
             update={updateColor}
           />
           )}
@@ -190,7 +189,7 @@ const CollectionPage = ({
   </React.Fragment>
 );
 
-CollectionPage.propTypes = {
+CollectionPageContents.propTypes = {
   collection: PropTypes.shape({
     avatarUrl: PropTypes.string.isRequired,
     backgroundColor: PropTypes.string,
@@ -259,7 +258,7 @@ async function loadCollection(api, userLogin, collectionName){
   return collection;
 }  
 
-const CollectionPageLoader = ({api, userLogin, name, addProject, removeProject, ...props}) => (
+const CollectionPage = ({api, userLogin, name, addProject, removeProject, ...props}) => (
   <Layout api={api}>
     <DataLoader get={() => loadCollection(api, userLogin, name)}
       renderError={() => <NotFound name={name}/>}
@@ -267,7 +266,7 @@ const CollectionPageLoader = ({api, userLogin, name, addProject, removeProject, 
       {collection => (
         <CollectionEditor api={api} initialCollection={collection} >
           {(collection, funcs, userIsAuthor) =>(
-              <CollectionPage collection={collection} userLogin={userLogin} api={api} isAuthorized={userIsAuthor} addProject={addProject} removeProject={removeProject} {...funcs} {...props}/>
+              <CollectionPageContents collection={collection} userLogin={userLogin} api={api} isAuthorized={userIsAuthor} addProject={addProject} removeProject={removeProject} {...funcs} {...props}/>
                 )
           }
         </CollectionEditor>
@@ -276,10 +275,10 @@ const CollectionPageLoader = ({api, userLogin, name, addProject, removeProject, 
   </Layout>
 );
 
-CollectionPageLoader.propTypes = {
+CollectionPage.propTypes = {
   api: PropTypes.any.isRequired,
   addProject: PropTypes.func,
   removeProject: PropTypes.func,
 }
 
-export default CollectionPageLoader;
+export default CollectionPage;

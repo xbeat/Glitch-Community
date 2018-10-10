@@ -60,7 +60,7 @@ class CollectionEditor extends React.Component {
   
   // TO DO: async function
   async addProjectToCollection(project) {
-    // need to replace api request temporarily before returning updated project list
+    
     // await this.props.api.post(`collections/${this.state.id}/projects/${project.id}`);
     console.log(`attempting to add project ${project.domain}`);
     this.setState(({projects}) => ({
