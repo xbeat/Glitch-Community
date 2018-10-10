@@ -17,7 +17,7 @@ AddProjectMessage.propTypes = {
 };
 
 const notify = (addProjectToCollection, project, collectionName, url, notification, togglePopover) => {
-
+  console.log('notify');
   console.log(addProjectToCollection);
   // add project to collection via api
   addProjectToCollection(project);

@@ -66,6 +66,7 @@ class AddProjectToCollectionPop extends React.Component {
                   data.map(collection =>                      
                       (collection.id !== this.props.currentCollectionId && 
                         <li>     
+                         props: {this.props.toString()}
                            <CollectionResultItem 
                              addProjectToCollection={this.props.addProjectToCollection}
                              project={this.props.project}

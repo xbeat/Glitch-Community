@@ -16,7 +16,7 @@ const PopoverButton = ({onClick, text, emoji}) => (
 );
 
 // Project Options Content
-const ProjectOptionsContent = ({...props}) => {
+const ProjectOptionsContent = ({addToCollection, ...props}) => {
   function animate(event, className, func) {
     const projectContainer = event.target.closest('li');
     projectContainer.addEventListener('animationend', func, {once: true});
@@ -57,10 +57,10 @@ const ProjectOptionsContent = ({...props}) => {
         ? <section className="pop-over-actions">
             {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
             {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
-            {!!props.addProjectToCollection && <PopoverButton onClick={props.addProjectToCollection} text="Add to My Collection " emoji="framed_picture"/>}
+            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to My Collection " emoji="framed_picture"/>}
         </section>
         : <section className="pop-over-actions">
-            {!!props.addProjectToCollection && <PopoverButton onClick={props.addProjectToCollection} text="Add to My Collection " emoji="framed_picture"/>}
+            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to My Collection " emoji="framed_picture"/>}
         </section>
       }
 
@@ -99,8 +99,8 @@ const ProjectOptionsContent = ({...props}) => {
 const ProjectOptionsPop = (props) => {
   return(
     <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props}/>}>
-      { switchPopover => (
-        <ProjectOptionsContent {...props} />
+      { addToCollection => (
+        <ProjectOptionsContent {...props} addToCollection={addToCollection}/>
         )}
     </NestedPopover>
   );
