@@ -33,6 +33,7 @@ export const ProjectItem = ({project, categoryColor, projectOptions}) => {
 };
 
 ProjectItem.propTypes = {
+  api: PropTypes.any.isRequired,
   project: PropTypes.shape({
     description: PropTypes.string.isRequired,
     domain: PropTypes.string.isRequired,

@@ -141,14 +141,14 @@ const CollectionPageContents = ({
                   </div>
           
                   {(isAuthorized
-                    ? <ProjectsUL projects={projects} categoryColor={collection.coverColor} 
+                    ? <ProjectsUL projects={projects} categoryColor={collection.coverColor} api={api}
                     projectOptions={{
                       removeProjectFromCollection: {removeProjectFromCollection},
                       addProjectToCollection: {addProjectToCollection},
                     }} 
                     {...props}/>
                     
-                    : <ProjectsUL projects={projects} categoryColor={collection.coverColor} 
+                    : <ProjectsUL projects={projects} categoryColor={collection.coverColor} api={api}
                     projectOptions={{
                       addProjectToCollection: {addProjectToCollection}
                     }} 
@@ -259,18 +259,22 @@ async function loadCollection(api, userLogin, collectionName){
 
 const CollectionPage = ({api, userLogin, name, addProjectToCollection, removeProjectFromCollection, ...props}) => (
   <Layout api={api}>
-    <DataLoader get={() => loadCollection(api, userLogin, name)}
-      renderError={() => <NotFound name={name}/>}
-    >
-      {collection => (
-        <CollectionEditor api={api} initialCollection={collection} >
-          {(collection, funcs, userIsAuthor) =>(
-              <CollectionPageContents collection={collection} userLogin={userLogin} api={api} isAuthorized={userIsAuthor} addProjectToCollection={addProjectToCollection} removeProjectFromCollection={removeProjectFromCollection} {...funcs} {...props}/>
-                )
-          }
-        </CollectionEditor>
+    <CurrentUserConsumer>
+      {(currentUser) => (
+        <DataLoader get={() => loadCollection(api, userLogin, name)}
+          renderError={() => <NotFound name={name}/>}
+        >
+          {collection => (
+            <CollectionEditor api={api} initialCollection={collection} >
+              {(collection, funcs, userIsAuthor) =>(
+                  <CollectionPageContents collection={collection} userLogin={userLogin} api={api} isAuthorized={userIsAuthor} addProjectToCollection={addProjectToCollection} removeProjectFromCollection={removeProjectFromCollection} {...funcs} {...props}/>
+                    )
+              }
+            </CollectionEditor>
+          )}
+        </DataLoader>
       )}
-    </DataLoader>
+    </CurrentUserConsumer>
   </Layout>
 );
 

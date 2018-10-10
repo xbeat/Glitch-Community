@@ -43,6 +43,7 @@ export const ProjectsUL = ({projects, projectOptions, categoryColor, homepageCol
 };
 
 ProjectsUL.propTypes = {
+  api: PropTypes.any.isRequired,
   projects: PropTypes.array.isRequired,
   projectOptions: PropTypes.object.isRequired,
   categoryColor: PropTypes.string,

@@ -14,6 +14,8 @@ import Notifications from '../notifications.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
 
+import {DataLoader} from './includes/loader.jsx';
+
 {/* NOTE: Categories are just used to load dummy info - should get rid of in final implementation */}
 import categories from '../../curated/categories.js';
 
@@ -59,6 +61,21 @@ class AddProjectToCollection extends React.Component {
         {/* TO DO: Replace category with user's collections */}
         <section className="pop-over-actions results-list">
           <ul className="results">
+            <DataLoader get={() => this.props.api.get(`collections/?userId=${userId}`)}>
+              { ({data}) => 
+                <li>
+                <CollectionResultItem 
+                  projectName={this.props.project.domain}
+                  collectionName={categories[0].name} 
+                  description={categories[0].description} 
+                  id={categories[0].id.toString()} 
+                  avatarUrl={categories[0].avatarUrl} 
+                  url={categories[0].url} isActive={false} 
+                  togglePopover={this.props.togglePopover} 
+                  />
+                </li>
+              }
+            </DataLoader>
             <li>
               <CollectionResultItem 
                 projectName={this.props.project.domain}
@@ -67,39 +84,6 @@ class AddProjectToCollection extends React.Component {
                 id={categories[0].id.toString()} 
                 avatarUrl={categories[0].avatarUrl} 
                 url={categories[0].url} isActive={false} 
-                togglePopover={this.props.togglePopover} 
-                />
-            </li>
-            <li>
-              <CollectionResultItem 
-                projectName={this.props.project.domain}
-                collectionName={categories[1].name} 
-                description={categories[1].description} 
-                id={categories[1].id.toString()} 
-                avatarUrl={categories[1].avatarUrl} 
-                url={categories[1].url} isActive={false} 
-                togglePopover={this.props.togglePopover} 
-                />
-            </li>
-          <li>
-              <CollectionResultItem 
-                projectName={this.props.project.domain}
-                collectionName={categories[2].name} 
-                description={categories[2].description} 
-                id={categories[2].id.toString()} 
-                avatarUrl={categories[2].avatarUrl} 
-                url={categories[2].url} isActive={false} 
-                togglePopover={this.props.togglePopover} 
-                />
-            </li>
-          <li>
-              <CollectionResultItem 
-                projectName={this.props.project.domain}
-                collectionName={categories[3].name} 
-                description={categories[3].description} 
-                id={categories[3].id.toString()} 
-                avatarUrl={categories[3].avatarUrl} 
-                url={categories[3].url} isActive={false} 
                 togglePopover={this.props.togglePopover} 
                 />
             </li>
