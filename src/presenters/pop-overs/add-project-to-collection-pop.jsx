@@ -68,7 +68,7 @@ class AddProjectToCollection extends React.Component {
                         <li>     
                            <CollectionResultItem 
                              addProjectToCollection={this.props.addProjectToCollection}
-                             projectName={this.props.project.domain}
+                             project={this.props.project}
                              collectionName={collection.name}                         
                              description={collection.description} 
                              id={collection.id.toString()} 

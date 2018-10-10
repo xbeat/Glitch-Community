@@ -109,7 +109,7 @@ const ProjectOptionsPop = (props) => {
 ProjectOptionsPop.propTypes = {
   addProjectToCollection: PropTypes.func,
   api: PropTypes.any.isRequired,
-  currentCollectionId: PropTypes,
+  currentCollectionId: PropTypes.number,
   currentUser: PropTypes.object,
   project: PropTypes.shape({
     users: PropTypes.array.isRequired,
