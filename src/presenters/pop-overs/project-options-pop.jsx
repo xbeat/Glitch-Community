@@ -57,10 +57,10 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
         ? <section className="pop-over-actions">
             {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
             {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
-            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to My Collection " emoji="framed_picture"/>}
+            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} {...props} text="Add to My Collection " emoji="framed_picture"/>}
         </section>
         : <section className="pop-over-actions">
-            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} text="Add to My Collection " emoji="framed_picture"/>}
+            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} {...props} text="Add to My Collection " emoji="framed_picture"/>}
         </section>
       }
 
@@ -96,7 +96,7 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
 
 
 // Project Options Pop
-const ProjectOptionsPop = (props) => {
+const ProjectOptionsPop = ({...props}) => {
   return(
     <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props}/>}>
       { addToCollection => (
@@ -130,7 +130,7 @@ ProjectOptionsPop.defaultProps = {
 
 // Project Options Container
 // create as stateful react component
-export default function ProjectOptions({projectOptions={}, project, api}, props) {
+export default function ProjectOptions({projectOptions={}, project, api}, {...props}) {
   if(Object.keys(projectOptions).length === 0) {
     return null;
   }
@@ -153,7 +153,7 @@ export default function ProjectOptions({projectOptions={}, project, api}, props)
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <ProjectOptionsPop api={api} project={project} {...projectOptions} currentCollectionId={props.currentCollectionId} togglePopover={togglePopover} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+              { visible && <ProjectOptionsPop {...props} {...projectOptions} currentCollectionId={props.currentCollectionId} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
             </div>
           )}
         </CurrentUserConsumer>
