@@ -22,7 +22,7 @@ ProjectsList.propTypes = {
   projectOptions: PropTypes.object.isRequired,
 };
 
-export const ProjectsUL = ({projects, projectOptions, categoryColor, homepageCollection, collectionUrl, ...props}) => {
+export const ProjectsUL = ({projects, projectOptions, categoryColor, homepageCollection, collectionUrl, currentUser, ...props}) => {
   return (
     <React.Fragment>
       <ul className="projects-container">
@@ -44,6 +44,7 @@ export const ProjectsUL = ({projects, projectOptions, categoryColor, homepageCol
 
 ProjectsUL.propTypes = {
   api: PropTypes.any.isRequired,
+  currentUser: PropTypes.object,
   projects: PropTypes.array.isRequired,
   projectOptions: PropTypes.object.isRequired,
   categoryColor: PropTypes.string,

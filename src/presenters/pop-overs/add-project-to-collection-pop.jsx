@@ -61,32 +61,21 @@ class AddProjectToCollection extends React.Component {
         {/* TO DO: Replace category with user's collections */}
         <section className="pop-over-actions results-list">
           <ul className="results">
-            <DataLoader get={() => this.props.api.get(`collections/?userId=${userId}`)}>
+            <DataLoader get={() => this.props.api.get(`collections/?userId=${this.props.currentUser.id}`)}>
               { ({data}) => 
-                <li>
-                <CollectionResultItem 
-                  projectName={this.props.project.domain}
-                  collectionName={categories[0].name} 
-                  description={categories[0].description} 
-                  id={categories[0].id.toString()} 
-                  avatarUrl={categories[0].avatarUrl} 
-                  url={categories[0].url} isActive={false} 
-                  togglePopover={this.props.togglePopover} 
-                  />
-                </li>
-              }
+                  { data.map(collection =>                      li>
+                       CollectionResultItem 
+                         rojectName={this.props.project.domain}
+                         ollectionName={ccollection.name}                         escription={ccollectiondescription} 
+                         d={ccollectionid.toString()} 
+                         vatarUrl={ccollectionavatarUrl} 
+                         rl={ccollectionurl} isActive={false} 
+                         ogglePopover={this.props.togglePopover} 
+                         >
+                       /li>
+
+                   )}              }
             </DataLoader>
-            <li>
-              <CollectionResultItem 
-                projectName={this.props.project.domain}
-                collectionName={categories[0].name} 
-                description={categories[0].description} 
-                id={categories[0].id.toString()} 
-                avatarUrl={categories[0].avatarUrl} 
-                url={categories[0].url} isActive={false} 
-                togglePopover={this.props.togglePopover} 
-                />
-            </li>
           </ul>
         </section>
         <section className="pop-over-info">
@@ -110,6 +99,7 @@ AddProjectToCollection.propTypes = {
   api: PropTypes.func.isRequired,
   add: PropTypes.func.isRequired,
   collectionProjects: PropTypes.any.isRequired,
+  currentUser: PropTypes.object,
   togglePopover: PropTypes.array.isRequired,
   project: PropTypes.object.isRequired,
   fromProject: PropTypes.bool,

@@ -108,6 +108,7 @@ const ProjectOptionsPop = (props) => {
 
 ProjectOptionsPop.propTypes = {
   api: PropTypes.any.isRequired,
+  currentUser: PropTypes.object,
   project: PropTypes.shape({
     users: PropTypes.array.isRequired,
   }),

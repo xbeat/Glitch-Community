@@ -41,8 +41,9 @@ const hexToRgbA = (hex) => {
 };
 
 const CollectionPageContents = ({
-  collection, 
   api, 
+  collection, 
+  currentUser,
   isAuthorized, 
   updateName, 
   updateDescription, 
@@ -133,7 +134,7 @@ const CollectionPageContents = ({
                         addProjectToCollection={addProjectToCollection}
                         api={api}
                         collectionProjects={collection.projects}
-                        currentUserIsOwner={true}
+                        currentUserIsOwner={isAuthorized}
                       />
                       : null
                     )}
@@ -141,14 +142,14 @@ const CollectionPageContents = ({
                   </div>
           
                   {(isAuthorized
-                    ? <ProjectsUL projects={projects} categoryColor={collection.coverColor} api={api}
+                    ? <ProjectsUL projects={projects} categoryColor={collection.coverColor} api={api} currentUser={currentUser}
                     projectOptions={{
                       removeProjectFromCollection: {removeProjectFromCollection},
                       addProjectToCollection: {addProjectToCollection},
                     }} 
                     {...props}/>
                     
-                    : <ProjectsUL projects={projects} categoryColor={collection.coverColor} api={api}
+                    : <ProjectsUL projects={projects} categoryColor={collection.coverColor} api={api} currentUser={currentUser}
                     projectOptions={{
                       addProjectToCollection: {addProjectToCollection}
                     }} 
@@ -169,7 +170,7 @@ const CollectionPageContents = ({
                 ? <AddCollectionProject
                   api={api}
                   collectionProjects={null}
-                  currentUserIsOwner={true}
+                  currentUserIsOwner={isAuthorized}
                   myProjects= {[]}
                 />
                 : null
@@ -200,6 +201,7 @@ CollectionPageContents.propTypes = {
     projects: PropTypes.array.isRequired
   }).isRequired,
   children: PropTypes.node,
+  currentUser: PropTypes.object,
   isAuthorized: PropTypes.any.isRequired,  
   projectOptions: PropTypes.object,
   removeProjectFromCollection: PropTypes.func,
@@ -259,22 +261,23 @@ async function loadCollection(api, userLogin, collectionName){
 
 const CollectionPage = ({api, userLogin, name, addProjectToCollection, removeProjectFromCollection, ...props}) => (
   <Layout api={api}>
-    <CurrentUserConsumer>
-      {(currentUser) => (
         <DataLoader get={() => loadCollection(api, userLogin, name)}
           renderError={() => <NotFound name={name}/>}
         >
           {collection => (
-            <CollectionEditor api={api} initialCollection={collection} >
-              {(collection, funcs, userIsAuthor) =>(
-                  <CollectionPageContents collection={collection} userLogin={userLogin} api={api} isAuthorized={userIsAuthor} addProjectToCollection={addProjectToCollection} removeProjectFromCollection={removeProjectFromCollection} {...funcs} {...props}/>
-                    )
-              }
-            </CollectionEditor>
+            <CurrentUserConsumer>
+              {(currentUser) => (
+                <CollectionEditor api={api} initialCollection={collection} >
+                  {(collection, funcs, userIsAuthor) =>(
+                      <CollectionPageContents collection={collection} userLogin={userLogin} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} addProjectToCollection={addProjectToCollection} removeProjectFromCollection={removeProjectFromCollection} {...funcs} {...props}/>
+                        )
+                  }
+                </CollectionEditor>
+              )}
+            </CurrentUserConsumer>
           )}
         </DataLoader>
       )}
-    </CurrentUserConsumer>
   </Layout>
 );
 

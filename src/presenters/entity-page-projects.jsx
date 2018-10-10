@@ -63,8 +63,8 @@ EntityPageProjects.propTypes = {
   }).isRequired).isRequired,
   addPin: PropTypes.func.isRequired,
   removePin: PropTypes.func.isRequired,
-  addProject:oCollection PropTypes.func, /
- projectOptions: PropTypes.object.isRequired,
+  addProjectToCollection: PropTypes.func, 
+  projectOptions: PropTypes.object.isRequired,
 };
 
 const EntityPageProjectsContainer = ({api, projects, ...props}) => (
@@ -73,4 +73,4 @@ const EntityPageProjectsContainer = ({api, projects, ...props}) => (
   </ProjectsLoader>
 );
 
-export default EntityPageProjectsContainer;T
+export default EntityPageProjectsContainer;
