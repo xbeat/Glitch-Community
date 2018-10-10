@@ -11,7 +11,7 @@ import UserResultItem from '../includes/user-result-item.jsx';
 
 import Notifications from '../notifications.jsx';
 
-const ProjectSearchResults = ({projects, action}) => (
+const ProjectSearchResults = ({projects, action, projectName}) => (
   (projects.length > 0) ? (
     <ul className="results">
       {projects.map(project => (
@@ -25,7 +25,10 @@ const ProjectSearchResults = ({projects, action}) => (
       ))}
     </ul>
   ) : (
-    <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>
+    (projectName.length > 0) ? (
+      <p className="results-empty">{projectName} is already in this collection <span role="img" aria-label="">💫</span></p>
+      ): 
+    (<p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>)
   )
 );
 
@@ -34,6 +37,7 @@ ProjectSearchResults.propTypes = {
     id: PropTypes.number.isRequired,
   }).isRequired).isRequired,
   action: PropTypes.func.isRequired,
+  projectName: PropTypes.sting,
 };
 
 class AddCollectionProjectPop extends React.Component {
@@ -43,7 +47,8 @@ class AddCollectionProjectPop extends React.Component {
     this.state = {
       query: '', //The actual search text
       maybeRequest: null, //The active request promise
-      maybeResults: null, //Null means still waiting vs empty
+      maybeResults: null, //Null means still waiting vs empty,
+      projectName: '', // the project name if the search result is a Url
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -66,6 +71,7 @@ class AddCollectionProjectPop extends React.Component {
     this.setState({
       maybeRequest: null,
       maybeResults: null,
+      projectName: '',
     });
   }
   
@@ -102,13 +108,15 @@ class AddCollectionProjectPop extends React.Component {
     
     const {data} = await request;
     const results = data.map(project => ProjectModel(project).asProps());
-    
-    let nonCollectionResults = results.filter(project => !this.props.collectionProjects || !this.props.collectionProjects.includes(project));
-    console.log(nonCollectionResults);
+    let nonCollectionResults = null;
     if(searchByUrl){
-      // get only exact match by domain name
-      nonCollectionResults = nonCollectionResults.filter(project => project.domain === query);
+      nonCollectionResults = results.filter(project => (!this.props.collectionProjects || !this.props.collectionProjects.includes(project)) && project.domain == query);
+      this.setState({projectName: query});
+    }else{
+      nonCollectionResults = results.filter(project => !this.props.collectionProjects || !this.props.collectionProjects.includes(project));
     }
+
+    console.log(nonCollectionResults);
 
     this.setState(({ maybeRequest }) => {
     return (request === maybeRequest) ? {
@@ -147,7 +155,7 @@ class AddCollectionProjectPop extends React.Component {
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
           {!!this.state.maybeResults && 
-              <ProjectSearchResults projects={this.state.maybeResults} action={this.onClick} />
+              <ProjectSearchResults projects={this.state.maybeResults} action={this.onClick} projectName={this.projectName}/>
           }
         </section>}
       </dialog>
