@@ -143,7 +143,7 @@ const CollectionPageContents = ({
                   {(isAuthorized
                     ? <ProjectsUL projects={projects} categoryColor={collection.coverColor} 
                     projectOptions={{
-                      removeProjectFromCollection: {removeProject},
+                      removeProject: {removeProject},
                       addProject: {addProject},
                     }} 
                     {...props}/>
@@ -190,6 +190,8 @@ const CollectionPageContents = ({
 );
 
 CollectionPageContents.propTypes = {
+  addProject: PropTypes.func,
+  api: PropTypes.any.isRequired,
   collection: PropTypes.shape({
     avatarUrl: PropTypes.string.isRequired,
     backgroundColor: PropTypes.string,
@@ -197,9 +199,6 @@ CollectionPageContents.propTypes = {
     name: PropTypes.string.isRequired,
     projects: PropTypes.array.isRequired
   }).isRequired,
-  addProject: PropTypes.func,
-  addProject: PropTypes.func,
-  api: PropTypes.any.isRequired,
   children: PropTypes.node,
   isAuthorized: PropTypes.any.isRequired,  
   projectOptions: PropTypes.object,

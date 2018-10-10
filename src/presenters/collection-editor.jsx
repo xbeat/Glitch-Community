@@ -58,7 +58,6 @@ class CollectionEditor extends React.Component {
     });
   }
   
-  // TO DO: async function
   async addProject(project) {
     console.log(`in addProject in collection-editor`);
     await this.props.api.patch(`collections/${this.state.id}/add/${project.id}`);
@@ -68,12 +67,11 @@ class CollectionEditor extends React.Component {
     }));
   }
   
-  // TO DO: async function
-  async removeProject(id) {
-    await this.props.api.patch(`collections/${this.state.id}/remove/${id}`);
-    console.log(`attempting to remove project ${id} from collection ${this.state.id}`);
+  async removeProject(project) {
+    await this.props.api.patch(`collections/${this.state.id}/remove/${project.id}`);
+    console.log(`attempting to remove project ${project.id} from collection ${this.state.id}`);
     this.setState(({projects}) => ({
-      projects: projects.filter(p => p.id !== id),
+      projects: projects.filter(p => p.id !== project.id),
     }));
   }
 

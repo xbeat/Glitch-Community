@@ -17,8 +17,9 @@ export const ProjectsList = ({title, projects, placeholder, projectOptions}) => 
 
 ProjectsList.propTypes = {
   projects: PropTypes.array.isRequired,
-  title: PropTypes.node.isRequired,
+  title: PropTypes.node,
   placeholder: PropTypes.node,
+  projectOptions: PropTypes.object.isRequired,
 };
 
 export const ProjectsUL = ({projects, projectOptions, categoryColor, homepageCollection, collectionUrl, ...props}) => {
@@ -29,7 +30,7 @@ export const ProjectsUL = ({projects, projectOptions, categoryColor, homepageCol
           <ProjectItem key={project.id} {...{project, projectOptions, categoryColor}}></ProjectItem>
         ))}
         
-        {/* The link to view all projects for collections on the homepage  TO DO show actual count of projects*/}  
+        {/* The link to view all projects for collections on the homepage  TO DO show actual correct count of projects in categories*/}  
         {homepageCollection
           ? <a href={collectionUrl} className="collection-view-all">View all {projects.length} projects →</a>
           : null
@@ -43,6 +44,10 @@ export const ProjectsUL = ({projects, projectOptions, categoryColor, homepageCol
 
 ProjectsUL.propTypes = {
   projects: PropTypes.array.isRequired,
+  projectOptions: PropTypes.object.isRequired,
+  categoryColor: PropTypes.string,
+  homepageCollection: PropTypes.bool,
+  collectionUrl: PropTypes.string,
 };
 
 
