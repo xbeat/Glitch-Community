@@ -48,8 +48,8 @@ const CollectionResultItem = ({addProjectToCollection, api, project, collection,
 
   return (
     <Notifications>
-      {({createNotification}) => (
-        <button className={resultClass} onClick={() => addProject(addProjectToCollection, project, collection, createNotification, togglePopover)} data-project-id={project.id}>
+      {({createPersistentNotification}) => (
+        <button className={resultClass} onClick={() => addProject(addProjectToCollection, project, collection, createPersistentNotification, togglePopover)} data-project-id={project.id}>
           <img className="avatar" src={collection.avatarUrl} alt={`Project avatar for ${collection.name}`}/>
           <div className="results-info">
             <div className="result-name" title={collection.name}>{collection.name}</div>

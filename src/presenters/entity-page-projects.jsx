@@ -48,14 +48,16 @@ const EntityPageProjects = ({api, projects, pins, currentUser, isAuthorized, add
           projects={pinnedProjects} placeholder={pinnedEmpty}
           api={api}
           projectOptions={isAuthorized ? {removePin, ...projectOptions} 
-              : (currentUser ? {...projectOptions} : null)
+              : (currentUser ? {...projectOptions} : {})
           }
         />
       )}
       {!!recentProjects.length && (
         <ProjectsList title="Recent Projects" projects={recentProjects}
           api={api}
-          projectOptions={isAuthorized ? {addPin, ...projectOptions} : {...projectOptions}}
+          projectOptions={isAuthorized ? {addPin, ...projectOptions} 
+                          : (currentUser ? {...projectOptions} : {})
+          }
         />
       )}
     </React.Fragment>
