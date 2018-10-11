@@ -19,6 +19,8 @@ import AddProjectToCollection from '../includes/add-project-to-collection.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
 
+import {CurrentUserConsumer} from '../current-user.jsx';
+
 import Layout from '../layout.jsx';
 
 function trackRemix(id, domain) {
@@ -88,6 +90,7 @@ const ProjectPage = ({
     ...project // 'private' can't be used as a variable name
   },
   api,
+  currentUser,
   isAuthorized,
   updateDomain,
   updateDescription,
@@ -123,7 +126,7 @@ const ProjectPage = ({
     <section id="embed">
       <Embed domain={domain}/>
       <div className="buttons buttons-right">
-        <AddProjectToCollection className="button-small" project={project} fromProject={true}/>
+        {currentUser && <AddProjectToCollection className="button-small" api={api} project={project} fromProject={true}/>}
         <RemixButton className="button-small"
           name={domain} isMember={isAuthorized}
           onClick={() => trackRemix(id, domain)}
@@ -143,6 +146,7 @@ const ProjectPage = ({
 );
 ProjectPage.propTypes = {
   api: PropTypes.any.isRequired,
+  currentUser: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   project: PropTypes.object.isRequired,
 };
@@ -152,7 +156,7 @@ async function getProject(api, domain) {
   return data ? Project(data).update(data).asProps() : null;
 }
 
-const ProjectPageLoader = ({domain, api, ...props}) => (
+const ProjectPageLoader = ({domain, api, currentUser, ...props}) => (
   <DataLoader get={() => getProject(api, domain)} renderError={() => <NotFound name={domain}/>}>
     {project => project ? (
       <ProjectEditor api={api} initialProject={project}>
@@ -161,7 +165,7 @@ const ProjectPageLoader = ({domain, api, ...props}) => (
             <Helmet>
               <title>{project.domain}</title>
             </Helmet>
-            <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
+            <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} currentUser={currentUser} {...props}/>
           </React.Fragment>
         )}
       </ProjectEditor>
@@ -170,11 +174,16 @@ const ProjectPageLoader = ({domain, api, ...props}) => (
 );
 ProjectPageLoader.propTypes = {
   domain: PropTypes.string.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
 const ProjectPageContainer = ({api, name}) => (
   <Layout api={api}>
-    <ProjectPageLoader api={api} domain={name}/>
+    <CurrentUserConsumer>
+      {currentUser => (
+        <ProjectPageLoader api={api} domain={name} currentUser={currentUser}/>
+      )}
+    </CurrentUserConsumer>
   </Layout>
 );
 
