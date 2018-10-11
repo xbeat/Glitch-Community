@@ -34,7 +34,11 @@ const dateFromTime = (newTime) => {
   return time.date;
 };
 
-const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
+const getAnalytics = async ({id, api, projects}, fromDate, currentProjectDomain) => {
+  if (!projects.length) {
+    // Placeholder data
+    //return null;
+  }
   let path = `analytics/${id}/team?from=${fromDate}`;
   if (currentProjectDomain !== "All Projects") {
     path = `analytics/${id}/project/${currentProjectDomain}?from=${fromDate}`;
