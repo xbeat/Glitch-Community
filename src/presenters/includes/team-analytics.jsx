@@ -40,7 +40,8 @@ const getAnalytics = async ({id, api}, fromDate, currentProjectDomain) => {
     path = `analytics/${id}/project/${currentProjectDomain}?from=${fromDate}`;
   }
   try {
-    return await api.get(path);
+    const {data} = await api.get(path);
+    return data;
   } catch (error) {
     console.error('getAnalytics', error);
   }
@@ -80,7 +81,7 @@ class TeamAnalytics extends React.Component {
     this.setState({
       isGettingData: true,
     });
-    getAnalytics(this.props, this.state.fromDate, this.state.currentProjectDomain).then(({data}) => {
+    getAnalytics(this.props, this.state.fromDate, this.state.currentProjectDomain).then(data => {
       this.setState({
         isGettingData: false,
         analytics: data,
