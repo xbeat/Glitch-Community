@@ -27,7 +27,7 @@ const notify = (addProjectToCollection, project, collection, notification, toggl
   
   // show notification
   // TO DO - only show this if add project to collection completes successfully
-  const content = <AddProjectMessage projectName={project.name} collectionName={collection.name} url={collection.url}/>;
+  const content = <AddProjectMessage projectName={project.domain} collectionName={collection.name} url={collection.url}/>;
   notification(content, "notifySuccess");
 };
 
@@ -47,7 +47,7 @@ const CollectionResultItem = ({addProjectToCollection, api, project, collection,
 
   return (
     <Notifications>
-      {({createPersistentNotification}) => (
+      {({createNotification}) => (
         <button className={resultClass} onClick={() => notify(addProjectToCollection, project, collection, createNotification, togglePopover)} data-project-id={project.id}>
           <img className="avatar" src={collection.avatarUrl} alt={`Project avatar for ${collection.name}`}/>
           <div className="results-info">
