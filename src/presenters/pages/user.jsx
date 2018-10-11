@@ -106,6 +106,7 @@ const UserPage = ({
       api={api} 
       addPin={addPin} 
       removePin={removePin}
+      addProjectToCollection={addProjectToCollection}
       projectOptions={{
         leaveProject, 
         deleteProject,

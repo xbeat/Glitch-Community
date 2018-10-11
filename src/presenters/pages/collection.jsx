@@ -46,6 +46,7 @@ const CollectionPageContents = ({
   api, 
   collection, 
   currentUser,
+  deleteCollection,
   isAuthorized, 
   updateName, 
   updateDescription, 
@@ -115,7 +116,7 @@ const CollectionPageContents = ({
           )}
           
           {(isAuthorized
-            ? <button className={`button delete-collection button-tertiary`} >
+            ? <button className={`button delete-collection button-tertiary`} onClick={deleteCollection} >
               Delete Collection
             </button>
             : null
@@ -204,6 +205,7 @@ CollectionPageContents.propTypes = {
   }).isRequired,
   children: PropTypes.node,
   currentUser: PropTypes.object,
+  deleteCollection: PropTypes.func.isRequired,
   isAuthorized: PropTypes.any.isRequired,  
   projectOptions: PropTypes.object,
   removeProjectFromCollection: PropTypes.func,

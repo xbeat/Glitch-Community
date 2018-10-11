@@ -115,11 +115,11 @@ class UserEditor extends React.Component {
     }));
   }
   
-  async addProjectToCollection(id) {
-    // await this.props.api.post(`users/${this.state.id}/pinned-projects/${id}`);
-    // this.setState(({pins}) => ({
-    //   pins: [...pins, {projectId: id}],
-    // }));
+  async addProjectToCollection(project, collection) {
+    console.log(`in addProject in user-editor`);
+    console.log(`project.id ${project.id}`);
+    console.log(`collection.id ${collection.id}`);
+    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
   }
   
   async removeProjectFromCollection(id) {
@@ -144,7 +144,7 @@ class UserEditor extends React.Component {
       deleteProject: id => this.deleteProject(id).catch(handleError),
       undeleteProject: id => this.undeleteProject(id).catch(handleError),
       setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
-      addProjectToCollection: id => this.addProjectToCollection(id).catch(handleError),
+      addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleError),
       removeProjectFromCollection: id => this.removeProjectFromCollection(id).catch(handleError),
       deleteCollection: id => this.deleteCollection(id).catch(handleError),      
     };

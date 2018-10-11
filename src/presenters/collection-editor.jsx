@@ -79,12 +79,21 @@ class CollectionEditor extends React.Component {
       projects: projects.filter(p => p.id !== project.id),
     }));
   }
+  
+  async deleteCollection(){
+    console.log('in delete collection from collection-editor');
+    await this.props.api.delete(`/collections/${this.state.id}`);
+    this.setState(({collections}) => ({
+      collections: collections.filter(c => c.id !== this.state.id),
+    }));
+  }
 
   render() {
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
       addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(handleError),
       removeProjectFromCollection: project => this.removeProjectFromCollection(project).catch(handleError),
+      deleteCollection: id => this.deleteCollection().catch(handleError),
       updateName: name => this.updateFields({name}).catch(handleError),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       updateAvatar: avatarUrl => this.updateAvatar(avatarUrl),
