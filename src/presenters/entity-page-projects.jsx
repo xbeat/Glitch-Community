@@ -45,7 +45,8 @@ const EntityPageProjects = ({api, projects, pins, isAuthorized, addPin, removePi
         <ProjectsList title={pinnedTitle}
           projects={pinnedProjects} placeholder={pinnedEmpty}
           api={api}
-          projectOptions={isAuthorized ? {removePin, ...projectOptions} : {...projectOptions}}
+          projectOptions={isAuthorized ? {removePin, ...projectOptions} 
+              : {...projectOptions}}
         />
       )}
       {!!recentProjects.length && (
