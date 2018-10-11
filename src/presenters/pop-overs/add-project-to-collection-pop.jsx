@@ -65,7 +65,7 @@ class AddProjectToCollectionPop extends React.Component {
               { ({data}) => 
                   data.map(collection =>                      
                            // need to update to filter out any collections that contain that project
-                      (collection.id !== this.props.currentCollectionId && 
+                      (collection.id !== this.props.currentCollectionId &&
                         <li>     
                            <CollectionResultItem 
                              addProjectToCollection={this.props.addProjectToCollection}
