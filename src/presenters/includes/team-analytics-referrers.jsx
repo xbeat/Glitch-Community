@@ -13,7 +13,7 @@ const countTotals = (data, countProperty) => {
 
 const ReferrerPlaceholder = ({count}) => {
   if (count === 0) {
-    return <span>0</span>;
+    return <React.Fragment>none</React.Fragment>;
   }
   return null;
 };
