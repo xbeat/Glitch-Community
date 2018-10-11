@@ -23,9 +23,17 @@ class ProjectEditor extends React.Component {
     this.setState(changes);
   }
   
+  async addProjectToCollection(project, collection) {
+    console.log(`in addProject in project-editor`);
+    console.log(`project.id ${project.id}`);
+    console.log(`collection.id ${collection.id}`);
+    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
+  }
+  
   render() {
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
+      addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleError),
       updateDomain: domain => this.updateFields({domain}).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       updatePrivate: isPrivate => this.updateFields({private: isPrivate}).catch(handleError),
@@ -33,6 +41,7 @@ class ProjectEditor extends React.Component {
     return this.props.children(this.state, funcs, this.userIsMember());
   }
 }
+
 ProjectEditor.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,

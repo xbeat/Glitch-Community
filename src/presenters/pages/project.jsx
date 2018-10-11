@@ -89,6 +89,7 @@ const ProjectPage = ({
     description, domain, id, users, teams,
     ...project // 'private' can't be used as a variable name
   },
+  addProjectToCollection,
   api,
   currentUser,
   isAuthorized,
@@ -127,7 +128,7 @@ const ProjectPage = ({
       <Embed domain={domain}/>
       <div className="buttons buttons-right">
 
-        {currentUser && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true}/>}
+        {currentUser && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
         <RemixButton className="button-small"
           name={domain} isMember={isAuthorized}
           onClick={() => trackRemix(id, domain)}
