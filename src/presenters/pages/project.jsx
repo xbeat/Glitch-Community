@@ -85,10 +85,7 @@ ReadmeLoader.propTypes = {
 };
 
 const ProjectPage = ({
-  project: {
-    description, domain, id, users, teams,
-    ...project // 'private' can't be used as a variable name
-  },
+  project,
   addProjectToCollection,
   api,
   currentUser,
@@ -100,11 +97,11 @@ const ProjectPage = ({
   <main className="project-page">
     <section id="info">
       <InfoContainer>
-        <ProjectInfoContainer style={{backgroundImage: `url('${getAvatarUrl(id)}')`}}>
+        <ProjectInfoContainer style={{backgroundImage: `url('${getAvatarUrl(project.id)}')`}}>
           <h1>
             {(isAuthorized
-              ? <EditableField value={domain} update={domain => updateDomain(domain).then(() => syncPageToDomain(domain))} placeholder="Name your project"/>
-              : <React.Fragment>{domain} {project.private && <PrivateBadge/>}</React.Fragment>
+              ? <EditableField value={project.domain} update={domain => updateDomain(domain).then(() => syncPageToDomain(domain))} placeholder="Name your project"/>
+              : <React.Fragment>{project.domain} {project.private && <PrivateBadge/>}</React.Fragment>
             )}
           </h1>
           {(isAuthorized &&
@@ -112,37 +109,37 @@ const ProjectPage = ({
               <PrivateToggle isPrivate={project.private} isMember={isAuthorized} setPrivate={updatePrivate}/>
             </div>
           )}
-          <UsersList users={users} />
+          <UsersList users={project.users} />
           <AuthDescription
-            authorized={isAuthorized} description={description}
+            authorized={isAuthorized} description={project.description}
             update={updateDescription} placeholder="Tell us about your app"
           />
           <p className="buttons">
-            <ShowButton name={domain}/>
-            <EditButton name={domain} isMember={isAuthorized}/>
+            <ShowButton name={project.domain}/>
+            <EditButton name={project.domain} isMember={isAuthorized}/>
           </p>
         </ProjectInfoContainer>
       </InfoContainer>
     </section>
     <section id="embed">
-      <Embed domain={domain}/>
+      <Embed domain={project.domain}/>
       <div className="buttons buttons-right">
 
         {currentUser && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
         <RemixButton className="button-small"
-          name={domain} isMember={isAuthorized}
-          onClick={() => trackRemix(id, domain)}
+          name={project.domain} isMember={isAuthorized}
+          onClick={() => trackRemix(project.id, project.domain)}
         />
       </div>
     </section>
     <section id="readme">
-      <ReadmeLoader api={api} domain={domain}/>
+      <ReadmeLoader api={api} domain={project.domain}/>
     </section>
     <section id="related">
-      <RelatedProjects ignoreProjectId={id} {...{api, teams, users}}/>
+      <RelatedProjects ignoreProjectId={project.id} teams={project.teams} users={project.users} {...{api}}/>
     </section>
     <section id="feedback" className="buttons buttons-right">
-      <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
+      <ReportButton name={project.domain} id={project.id} className="button-small button-tertiary"/>
     </section>
   </main>
 );
