@@ -134,8 +134,8 @@ const CollectionPageContents = ({
                     {(isAuthorized 
                       ? <AddCollectionProject
                         addProjectToCollection={addProjectToCollection}
+                        collection={collection}
                         api={api}
-                        collectionProjects={collection.projects}
                         currentUserIsOwner={isAuthorized}
                       />
                       : null

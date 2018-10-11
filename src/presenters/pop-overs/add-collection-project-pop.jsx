@@ -11,14 +11,14 @@ import UserResultItem from '../includes/user-result-item.jsx';
 
 import Notifications from '../notifications.jsx';
 
-const ProjectSearchResults = ({projects, action, projectName}) => (
+const ProjectSearchResults = ({projects, collection, onClick, projectName}) => (
   (projects.length > 0) ? (
     <ul className="results">
       {projects.map(project => (
         <Notifications>
           {({createNotification}) => (
             <li key={project.id}>
-              <ProjectResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} action={() => action(project, createNotification)} />
+              <ProjectResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} collection={collection} action={() => onClick(project, collection, createNotification)} />
             </li>
           )}
         </Notifications>
@@ -33,6 +33,7 @@ const ProjectSearchResults = ({projects, action, projectName}) => (
 );
 
 ProjectSearchResults.propTypes = {
+  collection: PropTypes.object.isRequired,
   users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired).isRequired,
@@ -117,13 +118,13 @@ class AddCollectionProjectPop extends React.Component {
     const results = data.map(project => ProjectModel(project).asProps());
     console.log("results %O", results);
     
-    console.log("this.props.collectionProjects %O", this.props.collectionProjects);
+    console.log("this.props.collection.projects %O", this.props.collection.projects);
     let nonCollectionResults = null;
     if(searchByUrl){
       let projectByDomain = results.filter(project => project.domain == query);
       console.log("projectByDomain %O", projectByDomain);
       // get names of all collectionProjects
-      if(this.props.collectionProjects.find(project => project.domain == query)){
+      if(this.props.collection.projects.find(project => project.domain == query)){
         nonCollectionResults =[];
         this.setState({projectName: query});
         console.log(` set state to ${this.state.projectName} with query ${query}`);
@@ -131,11 +132,11 @@ class AddCollectionProjectPop extends React.Component {
         nonCollectionResults = projectByDomain;
       }      
     }else{
-      if(this.props.collectionProjects.find(project => project.domain == query)){
+      if(this.props.collection.projects.find(project => project.domain == query)){
         nonCollectionResults = [];
         this.setState({projectName: query});
       }else{
-        nonCollectionResults = results.filter(project => !this.props.collectionProjects || !this.props.collectionProjects.includes(project));
+        nonCollectionResults = results.filter(project => !this.props.collection.projects || !this.props.collection.projects.includes(project));
       }
     }
 
@@ -148,7 +149,7 @@ class AddCollectionProjectPop extends React.Component {
 
   }
   
-  onClick(project, createPersistentNotification) {
+  onClick(project, collection, createPersistentNotification) {
     this.props.togglePopover();
     console.log(`clicked ${project.domain}`);
     
@@ -174,7 +175,7 @@ class AddCollectionProjectPop extends React.Component {
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
           {!!this.state.maybeResults && 
-              <ProjectSearchResults projects={this.state.maybeResults} action={this.onClick} projectName={this.state.projectName}/>
+              <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName}/>
           }
         </section>}
       </dialog>
@@ -184,8 +185,8 @@ class AddCollectionProjectPop extends React.Component {
 
 AddCollectionProjectPop.propTypes = {
   api: PropTypes.func.isRequired,
+  collection: PropTypes.object.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
-  collectionProjects: PropTypes.any.isRequired,
   togglePopover: PropTypes.func.isRequired,
 };
 
