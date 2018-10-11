@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from "./project-item.jsx";
 
-export const ProjectsList = ({...props}) => (
+export const ProjectsList = ({api, ...props}) => (
   <article className="projects">
     <h2>{props.title}</h2>
 
@@ -23,12 +23,12 @@ ProjectsList.propTypes = {
   projectOptions: PropTypes.object.isRequired,
 };
 
-export const ProjectsUL = ({...props}) => {
+export const ProjectsUL = ({api, ...props}) => {
   return (
     <React.Fragment>
       <ul className="projects-container">
         { props.projects.map(project => (
-            <ProjectItem key={project.id} project={project} {...props}></ProjectItem>
+            <ProjectItem key={project.id} project={project} api={api} {...props}></ProjectItem>
         ))}
         
         {/* The link to view all projects for collections on the homepage  TO DO show actual correct count of projects in categories*/}  

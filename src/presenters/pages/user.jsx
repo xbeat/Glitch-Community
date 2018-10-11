@@ -109,7 +109,8 @@ const UserPage = ({
       addProjectToCollection = {addProjectToCollection}
       projectOptions={{
         leaveProject, 
-        deleteProject
+        deleteProject,
+        addProjectToCollection
       }}
     />
     {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
