@@ -15,9 +15,8 @@ const CreateTeamButton = ({showCreateTeam, userIsAnon}) => {
   if (userIsAnon) {
     return (
       <React.Fragment>
-        <button onClick={showCreateTeam} className="button button-small">Sign in</button>
         <p className="description action-description">
-          to create a team
+          <button onClick={showCreateTeam} className="button-unstyled link">Sign in</button> to create teams
         </p>
         <button className="button button-small has-emoji button-tertiary" disabled>
           Create Team <span className="emoji herb" />
