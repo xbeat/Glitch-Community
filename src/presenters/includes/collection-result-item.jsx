@@ -30,7 +30,15 @@ const notify = (addProjectToCollection, project, collection, notification, toggl
   notification(content, "notifySuccess");
 };
 
-const CollectionResultItem = ({addProjectToCollection, id, project, collection, isActive, togglePopover}) => {
+async function getCollectionUrl(api, userId, collectionUrl){
+  const {data} = await api.get(`users/${userId}`);
+  const username = data.login;
+  let path = `/@${username}/${collectionUrl}`;
+  // console.log(`path: ${path}`);
+  return path;
+}
+
+const CollectionResultItem = ({addProjectToCollection, api, project, collection, isActive, togglePopover}) => {
   var resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
@@ -39,12 +47,15 @@ const CollectionResultItem = ({addProjectToCollection, id, project, collection, 
   return (
     <Notifications>
       {({createNotification}) => (
-        <button className={resultClass} onClick={() => notify(addProjectToCollection, project, collection, createNotification, togglePopover)} data-project-id={id}>
+        <button className={resultClass} onClick={() => notify(addProjectToCollection, project, collection, createNotification, togglePopover)} data-project-id={project.id}>
           <img className="avatar" src={collection.avatarUrl} alt={`Project avatar for ${collection.name}`}/>
           <div className="results-info">
             <div className="result-name" title={collection.name}>{collection.name}</div>
             { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
           </div>
+          <DataLoader
+            get={() => getCollectionUrl(api, collection.userId, collection.url)}
+          >
             <a href={`/@${collection.user.login}/${collection.url}`} className="view-project-link" target="_blank">
               <button className="view-project button-small button-docs">
                 View →
@@ -57,6 +68,7 @@ const CollectionResultItem = ({addProjectToCollection, id, project, collection, 
 };
 
 CollectionResultItem.propTypes = {
+  api: PropTypes.func.isRequired,
   addProjectToCollection: PropTypes.func,
   collection: PropTypes.object.isRequired,
   isActive: PropTypes.bool,
