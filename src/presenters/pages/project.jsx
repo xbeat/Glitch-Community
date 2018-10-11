@@ -126,6 +126,7 @@ const ProjectPage = ({
     <section id="embed">
       <Embed domain={domain}/>
       <div className="buttons buttons-right">
+        <div>Project {project.domain}</div>
         {currentUser && <AddProjectToCollection className="button-small" api={api} project={project} fromProject={true}/>}
         <RemixButton className="button-small"
           name={domain} isMember={isAuthorized}
@@ -173,6 +174,7 @@ const ProjectPageLoader = ({domain, api, currentUser, ...props}) => (
   </DataLoader>
 );
 ProjectPageLoader.propTypes = {
+  api: PropTypes.func.isRequired,
   domain: PropTypes.string.isRequired,
   currentUser: PropTypes.object.isRequired,
 };
