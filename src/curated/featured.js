@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Sing Like A Piano',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fpiano-scribe.jpg?1538999010225",
-    link: 'https://glitch.com/~piano-scribe'
+    title: 'Find Electric Bikes Near You',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcabi-electric.jpg?1538999010036",
+    link: 'https://glitch.com/~the-cabi-electric'
   },{
-    title: 'Poetry From The Red Planet',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fmars-mars.jpg?1538999009783",
-    link: 'https://glitch.com/~mars-mars-mars'
+    title: 'Islands in the Stream',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fislands-division.jpg?1538999010351",
+    link: 'https://glitch.com/~islands-division'
   }, {
-    title: 'Voilà! The Magic of CSS Houdini',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhoudini.jpg?1538999010456",
-    link: 'https://glitch.com/~houdini'
+    title: 'Respond to Slash Commands in Slack',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fslack-slash-command.jpg?1538999009902",
+    link: 'https://glitch.com/~slack-slash-command'
   }  
 ];
