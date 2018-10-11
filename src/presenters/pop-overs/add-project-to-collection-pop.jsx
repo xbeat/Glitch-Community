@@ -53,7 +53,8 @@ class AddProjectToCollectionPop extends React.Component {
     return true
   }
   
-  async createNewCollection(api, collectionName){
+  async createNewCollection(api, collectionName, currentUser){
+    let collection = {};
     // create a new collection here
     try{
       let name = collectionName;
@@ -70,25 +71,32 @@ class AddProjectToCollectionPop extends React.Component {
           avatarUrl,
           coverColor,
         });
-        let collectionUrl = data.url;
+        collection = data;
       }
       
     }catch(error){
       this.setState({error: true});
     }
+    return collection;
   }
   
-  addProjectToNewCollection(){
+  async addProjectToCollection(api, project, collection){
+  }
+  
+  addProjectToNewCollection(project){
     // get text from input field
     const newCollectionName = this.state.query;
     console.log(`newCollectionName: ${newCollectionName}`);
     
     // create a new collection
-    
+    let newCollection = this.createNewCollection(this.props.api, newCollectionName, this.props.currentUser);
     
     // add the selected project to the collection
+    this.addProjectToCollection(this.props.api, project, newCollection);
     
     // redirect to that collection
+    this.setState({newCollectionUrl: `/@{this.props.currentUser.login}/{newCollection.url}`});
+    this.setState({done: true});
   }
   
   render() {
