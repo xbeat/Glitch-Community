@@ -229,13 +229,13 @@ class TeamAnalytics extends React.Component {
           }
         </section>
 
-        { this.props.projects.length > 0 &&
+        { this.props.projects.length > 0 ? (
           <section className="explanation">
             <p>
               Because Glitch doesn't inject code or cookies into your projects we don't collect the data required for unique app views. You can get uniques by adding Google Analytics to your project.
             </p>
           </section>
-        }
+        ) : <div className="placeholder-mask"></div> }
       </section>
     );
   }
