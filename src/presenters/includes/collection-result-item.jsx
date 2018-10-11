@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getAvatarUrl} from  '../../models/project';
-
+import Loader, {DataLoader} from './loader.jsx';
 import Notifications from '../notifications.jsx';
 
 const AddProjectMessage = ({projectName, collectionName, url}) => (
@@ -56,11 +55,14 @@ const CollectionResultItem = ({addProjectToCollection, api, project, collection,
           <DataLoader
             get={() => getCollectionUrl(api, collection.userId, collection.url)}
           >
-            <a href={`/@${collection.user.login}/${collection.url}`} className="view-project-link" target="_blank">
-              <button className="view-project button-small button-docs">
-                View →
-              </button>
-            </a>
+            {path => 
+              <a href={`${path}`} className="view-project-link" target="_blank">
+                <button className="view-project button-small button-docs">
+                  View →
+                </button>
+              </a>
+            }
+          </DataLoader>
         </button>
         )}
     </Notifications>
