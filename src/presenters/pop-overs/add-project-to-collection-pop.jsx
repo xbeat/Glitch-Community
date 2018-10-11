@@ -15,9 +15,9 @@ import UserResultItem from '../includes/user-result-item.jsx';
 import Notifications from '../notifications.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
+import {getLink,colors} from '../models/collection';
 
-{/* NOTE: Categories are just used to load dummy info - should get rid of in final implementation */}
-import categories from '../../curated/categories.js';
+import _ from 'lodash';
 
 class AddProjectToCollectionPop extends React.Component {
   constructor(props) {
@@ -46,6 +46,49 @@ class AddProjectToCollectionPop extends React.Component {
   
   onClick(collection) {
     this.props.togglePopover();    
+  }
+  
+  // TO DO: ensure that the user doesn't already have a collection with this name
+  validate(name){
+    return true
+  }
+  
+  async createNewCollection(api, collectionName){
+    // create a new collection here
+    try{
+      let name = collectionName;
+      let description = `A collection of projects that does ${collectionName} things`;
+      let url = _.kebabCase(name);
+      let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
+      let randomHex = Object.values(colors);
+      let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
+      if(this.validate(name)){
+        const {data} = await api.post('collections', {
+          name,
+          description,
+          url,
+          avatarUrl,
+          coverColor,
+        });
+        let collectionUrl = data.url;
+      }
+      
+    }catch(error){
+      this.setState({error: true});
+    }
+  }
+  
+  addProjectToNewCollection(){
+    // get text from input field
+    const newCollectionName = this.state.query;
+    console.log(`newCollectionName: ${newCollectionName}`);
+    
+    // create a new collection
+    
+    
+    // add the selected project to the collection
+    
+    // redirect to that collection
   }
   
   render() {
@@ -87,7 +130,7 @@ class AddProjectToCollectionPop extends React.Component {
             placeholder="New Collection Name"
           />
           {/* TO DO: Actually create a new collection here */}
-          <button className="create-collection button-small">
+          <button className="create-collection button-small" onClick={this.addProjectToNewCollection}>
               Create
           </button>
         </section>
