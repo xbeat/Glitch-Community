@@ -16,7 +16,7 @@ AddProjectMessage.propTypes = {
   collectionName: PropTypes.string.isRequired
 };
 
-const notify = (addProjectToCollection, project, collection, url, notification, togglePopover) => {
+const notify = (addProjectToCollection, project, collection, notification, togglePopover) => {
   console.log(`notify with project ${project.id} collection ${collection.id}`);
 
   // add project to collection via api
@@ -45,11 +45,11 @@ const CollectionResultItem = ({addProjectToCollection, id, project, collection, 
             <div className="result-name" title={collection.name}>{collection.name}</div>
             { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
           </div>
-          <a href={`/${collection.url}`} className="view-project-link" target="_blank">
-            <button className="view-project button-small button-docs">
-              View →
-            </button>
-          </a>
+            <a href={`/@${collection.user.login}/${collection.url}`} className="view-project-link" target="_blank">
+              <button className="view-project button-small button-docs">
+                View →
+              </button>
+            </a>
         </button>
         )}
     </Notifications>
