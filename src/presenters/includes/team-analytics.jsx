@@ -154,10 +154,12 @@ class TeamAnalytics extends React.Component {
             updateProjectDomain = {this.updateProjectDomain.bind(this)}
             currentProjectDomain = {this.state.currentProjectDomain}
             projects = {this.props.projects}
+            disabled={!this.props.projects.length}
           />
           <TeamAnalyticsTimePop 
             updateTimeFrame = {this.updateTimeFrame.bind(this)}
             currentTimeFrame = {this.state.currentTimeFrame}
+            disabled={!this.props.projects.length}
           />
         </section>
         
@@ -215,6 +217,7 @@ class TeamAnalytics extends React.Component {
             updateProjectDomain = {this.updateProjectDomain.bind(this)}
             currentProjectDomain = {this.state.currentProjectDomain}
             projects = {this.props.projects}
+            disabled={!this.props.projects.length}
           />
           { (this.state.currentProjectDomain === "All Projects") ?
             <p>
