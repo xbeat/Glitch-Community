@@ -87,7 +87,7 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
         </section>
       }
 
-      {props.currentUserIsOnProject && 
+      {(props.currentUserIsOnProject && !props.removeProjectFromCollection) && 
         <section className="pop-over-actions danger-zone last-section">
           {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
           {!!props.removeProject && props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProject(props.project)} text="Remove Project " emoji="thumbs_down"/>}
