@@ -16,7 +16,7 @@ AddProjectMessage.propTypes = {
   url: PropTypes.string.isRequired,
 };
 
-const addProject = (addProjectToCollection, project, collection, notification, togglePopover) => {
+const addProject = (addProjectToCollection, project, collection, collectionPath, notification, togglePopover) => {
 
   // add project to collection via api
   console.log(`add project ${project.domain} collection ${collection.name}`);
@@ -28,7 +28,7 @@ const addProject = (addProjectToCollection, project, collection, notification, t
   
   // show notification
   // TO DO - only show this if add project to collection completes successfully
-  const content = <AddProjectMessage projectName={project.domain} collectionName={collection.name} url={collection.url}/>;
+  const content = <AddProjectMessage projectName={project.domain} collectionName={collection.name} url={collectionPath}/>;
   notification(content, "notifySuccess");
 };
 
@@ -49,25 +49,23 @@ const CollectionResultItem = ({addProjectToCollection, api, project, collection,
   return (
     <Notifications>
       {({createPersistentNotification}) => (
-        <button className={resultClass} onClick={() => addProject(addProjectToCollection, project, collection, createPersistentNotification, togglePopover)} data-project-id={project.id}>
-          <img className="avatar" src={collection.avatarUrl} alt={`Project avatar for ${collection.name}`}/>
-          <div className="results-info">
-            <div className="result-name" title={collection.name}>{collection.name}</div>
-            { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
-          </div>
-          <DataLoader
-            get={() => getCollectionUrl(api, collection.userId, collection.url)}
-          >
-            {path => 
-              <a href={`${path}`} className="view-project-link" target="_blank">
-                <button className="view-project button-small button-docs">
-                  View →
-                </button>
-              </a>
-            }
-          </DataLoader>
-        </button>
-        )}
+        <DataLoader get={() => getCollectionUrl(api, collection.userId, collection.url)}>
+          {collectionPath => 
+            <button className={resultClass} onClick={() => addProject(addProjectToCollection, project, collection, collectionPath, createPersistentNotification, togglePopover)} data-project-id={project.id}>
+              <img className="avatar" src={collection.avatarUrl} alt={`Project avatar for ${collection.name}`}/>
+              <div className="results-info">
+                <div className="result-name" title={collection.name}>{collection.name}</div>
+                { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
+              </div>
+                  <a href={`${collectionPath}`} className="view-project-link" target="_blank">
+                    <button className="view-project button-small button-docs">
+                      View →
+                    </button>
+                  </a>
+            </button>
+        }
+       </DataLoader>
+      )}  
     </Notifications>
   );
 };
