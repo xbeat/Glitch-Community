@@ -144,20 +144,26 @@ const CollectionPageContents = ({
                 
                   </div>
           
-                  {(isAuthorized
-                    ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} categoryColor={collection.coverColor}
-                    projectOptions={{
-                      removeProjectFromCollection,
-                      addProjectToCollection,
-                    }} 
-                    {...props}/>
-                    
-                    : <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} categoryColor={collection.coverColor} 
-                    projectOptions={{
-                      addProjectToCollection
-                    }} 
-                    {...props}/>
-                  )}
+                  {(collection.projects.length > 0 ?
+                    (isAuthorized
+                      ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} categoryColor={collection.coverColor}
+                      projectOptions={{
+                        removeProjectFromCollection,
+                        addProjectToCollection,
+                      }} 
+                      {...props}/>
+
+                      : <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} categoryColor={collection.coverColor} 
+                      projectOptions={{
+                        addProjectToCollection
+                      }} 
+                      {...props}/>
+                    )
+                    :
+                    <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor}}>
+                        Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
+                      </div>
+                    )}
                 </div>
           
               </React.Fragment>
