@@ -16,8 +16,8 @@ AddProjectMessage.propTypes = {
   url: PropTypes.string.isRequired,
 };
 
-const notify = (addProjectToCollection, project, collection, notification, togglePopover) => {
-  console.log(`notify with project ${project.id} collection ${collection.id}`);
+const addProject = (addProjectToCollection, project, collection, notification, togglePopover) => {
+  console.log(`notify with project ${project.domain} collection ${collection.name}`);
 
   // add project to collection via api
   addProjectToCollection(project, collection);
@@ -48,7 +48,7 @@ const CollectionResultItem = ({addProjectToCollection, api, project, collection,
   return (
     <Notifications>
       {({createNotification}) => (
-        <button className={resultClass} onClick={() => notify(addProjectToCollection, project, collection, createNotification, togglePopover)} data-project-id={project.id}>
+        <button className={resultClass} onClick={() => addProject(addProjectToCollection, project, collection, createNotification, togglePopover)} data-project-id={project.id}>
           <img className="avatar" src={collection.avatarUrl} alt={`Project avatar for ${collection.name}`}/>
           <div className="results-info">
             <div className="result-name" title={collection.name}>{collection.name}</div>
