@@ -35,7 +35,6 @@ export const ProjectItem = ({api, project, categoryColor, ...props}) => {
 ProjectItem.propTypes = {
   addProjectToCollection: PropTypes.func,
   api: PropTypes.func.isRequired,
-  currentCollectionId: PropTypes.number,
   currentUser: PropTypes.object,
   project: PropTypes.shape({
     description: PropTypes.string.isRequired,

@@ -25,6 +25,7 @@ const notify = (addProjectToCollection, project, collection, notification, toggl
   togglePopover();
   
   // show notification
+  // TO DO - only show this if add project to collection completes successfully
   const content = <AddProjectMessage projectName={project.name} collectionName={collection.name} url={collection.url}/>;
   notification(content, "notifySuccess");
 };

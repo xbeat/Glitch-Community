@@ -117,7 +117,12 @@ const UserPage = ({
   </main>
 );
 UserPage.propTypes = {
+  clearCover: PropTypes.func.isRequired,
+  createPersistentNotification: PropTypes.func,
   isAuthorized: PropTypes.bool.isRequired,
+  leaveProject: PropTypes.func.isRequired,
+  uploadAvatar: PropTypes.func.isRequired,
+  uploadCover: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
     login: PropTypes.string,
@@ -130,11 +135,6 @@ UserPage.propTypes = {
     _cacheCover: PropTypes.number.isRequired,
     _deletedProjects: PropTypes.array.isRequired,
   }).isRequired,
-  uploadAvatar: PropTypes.func.isRequired,
-  uploadCover: PropTypes.func.isRequired,
-  clearCover: PropTypes.func.isRequired,
-  leaveProject: PropTypes.func.isRequired,
-  createPersistentNotification: PropTypes.func.isRequired,
 };
 
 const UserPageContainer = ({api, user}) => (

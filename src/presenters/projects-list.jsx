@@ -45,7 +45,6 @@ export const ProjectsUL = ({api, ...props}) => {
 ProjectsUL.propTypes = {
   addProjectToCollection: PropTypes.func,
   api: PropTypes.any.isRequired,
-  currentCollectionId: PropTypes.number,
   currentUser: PropTypes.object,
   projects: PropTypes.array.isRequired,
   projectOptions: PropTypes.object.isRequired,
