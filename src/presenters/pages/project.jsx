@@ -126,8 +126,8 @@ const ProjectPage = ({
     <section id="embed">
       <Embed domain={domain}/>
       <div className="buttons buttons-right">
-        <div>Project {project.domain}</div>
-        {currentUser && <AddProjectToCollection className="button-small" api={api} project={project} fromProject={true}/>}
+        <div>Hello Project {project.domain}</div>
+        {currentUser && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true}/>}
         <RemixButton className="button-small"
           name={domain} isMember={isAuthorized}
           onClick={() => trackRemix(id, domain)}
@@ -154,6 +154,7 @@ ProjectPage.propTypes = {
 
 async function getProject(api, domain) {
   const {data} = await api.get(`projects/${domain}`);
+  console.log("project %O", data);
   return data ? Project(data).update(data).asProps() : null;
 }
 

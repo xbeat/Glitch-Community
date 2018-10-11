@@ -64,8 +64,8 @@ class AddProjectToCollectionPop extends React.Component {
               { ({data}) => 
                   data.map(collection =>   
                       // filter out collections that already contain the selected project
-                      (collection.projects.length == collection.projects.filter(project => project.id !== this.props.project.id).length && 
-                        <li>     
+                      (collection.projects.length === collection.projects.filter(project => project.id !== this.props.project.id).length && 
+                        <li>
                            <CollectionResultItem 
                              addProjectToCollection={this.props.addProjectToCollection}
                              api={this.props.api}

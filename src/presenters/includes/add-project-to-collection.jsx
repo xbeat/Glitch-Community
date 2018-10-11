@@ -14,7 +14,7 @@ const AddProjectToCollection = ({project, ...props}) => {
               Add to Collection {' '}
             <span className="emoji framed-picture" role="presentation"></span>
           </button>
-          { visible && <AddProjectToCollectionPop {...props} togglePopover={togglePopover} projectName={project.name}/> }
+          { visible && <AddProjectToCollectionPop {...props} project={project} togglePopover={togglePopover}/> }
         </div>
       )}
     </PopoverContainer>
