@@ -55,10 +55,12 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
     <dialog className="pop-over project-options-pop">
       {props.currentUserIsOnProject 
         ? <React.Fragment>
-          <section className="pop-over-actions">
-            {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
-            {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
-          </section>
+          {(props.addPin && 
+            <section className="pop-over-actions">
+              {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
+              {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
+            </section>
+          )}
           <section className="pop-over-actions">
             {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} {...props} text="Add to My Collection " emoji="framed_picture"/>}
           </section>

@@ -58,7 +58,6 @@ class AddProjectToCollectionPop extends React.Component {
           : null
           )}
         
-        {/* TO DO: Replace category with user's collections */}
         <section className="pop-over-actions results-list">
           <ul className="results">
             <DataLoader get={() => this.props.api.get(`collections/?userId=${this.props.currentUser.id}`)}>
