@@ -16,7 +16,7 @@ const PopoverButton = ({onClick, text, emoji}) => (
 );
 
 // Project Options Content
-const ProjectOptionsContent = ({addToCollection, ...props}) => {
+const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
   function animate(event, className, func) {
     const projectContainer = event.target.closest('li');
     projectContainer.addEventListener('animationend', func, {once: true});
@@ -62,11 +62,11 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
             </section>
           )}
           <section className="pop-over-actions">
-            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} {...props} text="Add to My Collection " emoji="framed_picture"/>}
+            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to My Collection " emoji="framed_picture"/>}
           </section>
         </React.Fragment>
         : <section className="pop-over-actions">
-            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollection} {...props} text="Add to My Collection " emoji="framed_picture"/>}
+            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to My Collection " emoji="framed_picture"/>}
         </section>
       }
 
@@ -110,8 +110,8 @@ const ProjectOptionsContent = ({addToCollection, ...props}) => {
 const ProjectOptionsPop = ({...props}) => {
   return(
     <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
-      { addToCollection => (
-        <ProjectOptionsContent {...props} addToCollection={addToCollection}/>
+      { addToCollectionPopover => (
+        <ProjectOptionsContent {...props} addToCollectionPopover={addToCollectionPopover}/>
         )}
     </NestedPopover>
   );
