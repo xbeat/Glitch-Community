@@ -63,9 +63,9 @@ class AddProjectToCollectionPop extends React.Component {
           <ul className="results">
             <DataLoader get={() => this.props.api.get(`collections/?userId=${this.props.currentUser.id}`)}>
               { ({data}) => 
-                  data.map(collection =>                      
-                           // need to update to filter out any collections that contain that project
-                      (collection.id !== this.props.currentCollectionId &&
+                  data.map(collection =>   
+                      // filter out collections that already contain the selected project
+                      (collection.projects.length == collection.projects.filter(project => project.id !== this.props.project.id).length && 
                         <li>     
                            <CollectionResultItem 
                              addProjectToCollection={this.props.addProjectToCollection}
@@ -75,8 +75,8 @@ class AddProjectToCollectionPop extends React.Component {
                              togglePopover={this.props.togglePopover} 
                              />
                          </li>
+                         )
                      )
-                   )
                }
             </DataLoader>
           </ul>
