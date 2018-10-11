@@ -149,15 +149,15 @@ class AddCollectionProjectPop extends React.Component {
 
   }
   
-  onClick(project, collection, createPersistentNotification) {
+  onClick(project, collection, createNotification) {
     this.props.togglePopover();
     console.log(`clicked ${project.domain}`);
     
     // add project to page if successful
-    this.props.addProjectToCollection(project);
+    this.props.addProjectToCollection(project, collection);
     
     // show notification
-    createPersistentNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>, "notifySuccess")
+    createNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>, "notifySuccess")
   }
   
   render() {
