@@ -9,7 +9,7 @@ import ProjectsLoader from './projects-loader.jsx';
 
 const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-const EntityPageProjects = ({api, projects, pins, isAuthorized, addPin, removePin, addProject, projectOptions, reloadProject}) => {
+const EntityPageProjects = ({api, projects, pins, isAuthorized, addPin, removePin, addProjectToCollection, projectOptions, reloadProject}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const [pinnedProjects, recentProjects] = _.partition(projects, ({id}) => pinnedSet.has(id));
   
@@ -45,13 +45,13 @@ const EntityPageProjects = ({api, projects, pins, isAuthorized, addPin, removePi
         <ProjectsList title={pinnedTitle}
           projects={pinnedProjects} placeholder={pinnedEmpty}
           api={api}
-          projectOptions={isAuthorized ? {removePin, addProject, ...projectOptions} : {addProject}}
+          projectOptions={isAuthorized ? {removePin, addProjectToCollection, ...projectOptions} : {addProjectToCollection}}
         />
       )}
       {!!recentProjects.length && (
         <ProjectsList title="Recent Projects" projects={recentProjects}
           api={api}
-          projectOptions={isAuthorized ? {addPin, addProject, ...projectOptions} : {addProject}}
+          projectOptions={isAuthorized ? {addPin, addProjectToCollection, ...projectOptions} : {addProjectToCollection}}
         />
       )}
     </React.Fragment>

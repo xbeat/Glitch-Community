@@ -17,10 +17,11 @@ AddProjectMessage.propTypes = {
 };
 
 const addProject = (addProjectToCollection, project, collection, notification, togglePopover) => {
-  console.log(`notify with project ${project.domain} collection ${collection.name}`);
 
   // add project to collection via api
+  console.log(`add project ${project.domain} collection ${collection.name}`);
   addProjectToCollection(project, collection);
+  console.log('after add project');
   
   // toggle popover
   togglePopover();

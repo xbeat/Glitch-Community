@@ -3,7 +3,7 @@ import React from 'react';
 const {Provider, Consumer} = React.createContext();
 
 const Notification = ({children, className, remove}) => (
-  <aside className={`notification ${className}`} onMouseEnter={()=>console.log("enter")} onMouseLeave={()=>console.log("leave")} onAnimationEnd={remove}>
+  <aside className={`notification ${className}`} onAnimationEnd={remove}>
     {children}
   </aside>
 );
