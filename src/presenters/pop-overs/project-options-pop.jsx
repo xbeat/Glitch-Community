@@ -109,11 +109,11 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
 // Project Options Pop
 const ProjectOptionsPop = ({...props}) => {
   return(
-    <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
-      { addToCollectionPopover => (
-        <ProjectOptionsContent {...props} addToCollectionPopover={addToCollectionPopover}/>
-        )}
-    </NestedPopover>
+      <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
+        { addToCollectionPopover => (
+          <ProjectOptionsContent {...props} addToCollectionPopover={addToCollectionPopover}/>
+          )}
+      </NestedPopover>
   );
 };
 
@@ -155,6 +155,7 @@ export default function ProjectOptions({projectOptions={}, project, api, current
   }
 
   return (
+    (props.currentUser && 
     <PopoverContainer>
       {({togglePopover, visible}) => (
         <CurrentUserConsumer>
@@ -169,6 +170,7 @@ export default function ProjectOptions({projectOptions={}, project, api, current
         </CurrentUserConsumer>
       )}
     </PopoverContainer>
+     )
   );
 }
 
