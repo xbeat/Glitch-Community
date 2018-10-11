@@ -10,7 +10,7 @@ export const ProjectsList = ({api, ...props}) => (
       <div className="placeholder">{props.placeholder}</div>
     )}
 
-    <ProjectsUL {...props}></ProjectsUL>
+    <ProjectsUL api={api} {...props}></ProjectsUL>
 
   </article>
 );

@@ -72,7 +72,7 @@ EntityPageProjects.propTypes = {
 
 const EntityPageProjectsContainer = ({api, projects, ...props}) => (
   <ProjectsLoader api={api} projects={projects}>
-    {(projects, reloadProject) => <EntityPageProjects projects={projects} reloadProject={reloadProject} {...props}/>}
+    {(projects, reloadProject) => <EntityPageProjects api={api} projects={projects} reloadProject={reloadProject} {...props}/>}
   </ProjectsLoader>
 );
 
