@@ -155,21 +155,22 @@ export default function ProjectOptions({projectOptions={}, project, api, current
   }
 
   return (
-    (props.currentUser && 
-    <PopoverContainer>
-      {({togglePopover, visible}) => (
-        <CurrentUserConsumer>
-          {user => (
-            <div>
-              <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
-                <div className="down-arrow" />
-              </button>
-              { visible && <ProjectOptionsPop {...props} {...projectOptions} project={project} currentCollectionId={currentCollectionId} api={api} currentUser={user} togglePopover={togglePopover} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
-            </div>
-          )}
-        </CurrentUserConsumer>
-      )}
-    </PopoverContainer>
+    (props.currentUser ? 
+      <PopoverContainer>
+        {({togglePopover, visible}) => (
+          <CurrentUserConsumer>
+            {user => (
+              <div>
+                <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
+                  <div className="down-arrow" />
+                </button>
+                { visible && <ProjectOptionsPop {...props} {...projectOptions} project={project} currentCollectionId={currentCollectionId} api={api} currentUser={user} togglePopover={togglePopover} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+              </div>
+            )}
+          </CurrentUserConsumer>
+        )}
+      </PopoverContainer>
+     : null
      )
   );
 }
