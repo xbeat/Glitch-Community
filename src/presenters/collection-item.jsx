@@ -20,7 +20,7 @@ const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163
 const defaultUrl = "/favorites";
 const defaultName = "Favorites";
 
-const ProjectsPreview = ({projects, categoryColor, collectionUrl}) => {
+const ProjectsPreview = ({projects, categoryColor}) => {
   return (
     <React.Fragment>
       <div className="projects-preview" projects={projects}>
@@ -32,9 +32,7 @@ const ProjectsPreview = ({projects, categoryColor, collectionUrl}) => {
         )) }
       </div>
       <div className="collection-link">
-        <a href={collectionUrl}>
           View {projects.length} {(projects.length > 0 ? 'projects' : 'project')} →
-        </a>            
       </div>
     </React.Fragment>
   );
@@ -94,7 +92,7 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
                             collection.projects.length > 0
                               ?
                               <ProjectsLoader api={api} projects={collection.projects}>
-                                {projects => <ProjectsPreview projects={collection.projects} categoryColor={collection.color} collectionUrl={collection.url}/>}
+                                {projects => <ProjectsPreview projects={collection.projects} categoryColor={collection.color}/>}
                               </ProjectsLoader>
                              :
                              <div className="projects-preview empty">
