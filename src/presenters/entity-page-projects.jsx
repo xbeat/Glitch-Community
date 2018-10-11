@@ -5,11 +5,13 @@ import _ from 'lodash';
 import ProjectsList from './projects-list.jsx';
 import ProjectsLoader from './projects-loader.jsx';
 
+import {CurrentUserConsumer} from './current-user.jsx';
+
 /* globals Set */
 
 const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-const EntityPageProjects = ({api, projects, pins, isAuthorized, addPin, removePin, projectOptions, reloadProject}) => {
+const EntityPageProjects = ({api, projects, pins, currentUser, isAuthorized, addPin, removePin, projectOptions, reloadProject}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const [pinnedProjects, recentProjects] = _.partition(projects, ({id}) => pinnedSet.has(id));
   
@@ -46,7 +48,8 @@ const EntityPageProjects = ({api, projects, pins, isAuthorized, addPin, removePi
           projects={pinnedProjects} placeholder={pinnedEmpty}
           api={api}
           projectOptions={isAuthorized ? {removePin, ...projectOptions} 
-              : {...projectOptions}}
+              : (currentUser ? {...projectOptions} : null)
+          }
         />
       )}
       {!!recentProjects.length && (
@@ -60,6 +63,7 @@ const EntityPageProjects = ({api, projects, pins, isAuthorized, addPin, removePi
 };
 EntityPageProjects.propTypes = {
   api: PropTypes.func.isRequired,
+  currentUser: PropTypes.object,
   isAuthorized: PropTypes.bool.isRequired,
   projects: PropTypes.array.isRequired,
   pins: PropTypes.arrayOf(PropTypes.shape({
@@ -67,13 +71,17 @@ EntityPageProjects.propTypes = {
   }).isRequired).isRequired,
   addPin: PropTypes.func.isRequired,
   removePin: PropTypes.func.isRequired,
-  projectOptions: PropTypes.object.isRequired,
+  projectOptions: PropTypes.object,
 };
 
 const EntityPageProjectsContainer = ({api, projects, ...props}) => (
-  <ProjectsLoader api={api} projects={projects}>
-    {(projects, reloadProject) => <EntityPageProjects api={api} projects={projects} reloadProject={reloadProject} {...props}/>}
-  </ProjectsLoader>
+  <CurrentUserConsumer>
+    {currentUser => (
+      <ProjectsLoader api={api} projects={projects}>
+        {(projects, reloadProject) => <EntityPageProjects api={api} projects={projects} reloadProject={reloadProject} currentUser={currentUser} {...props}/>}
+      </ProjectsLoader>
+    )}
+  </CurrentUserConsumer>
 );
 
 export default EntityPageProjectsContainer;  

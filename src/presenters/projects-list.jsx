@@ -47,7 +47,7 @@ ProjectsUL.propTypes = {
   api: PropTypes.any.isRequired,
   currentUser: PropTypes.object,
   projects: PropTypes.array.isRequired,
-  projectOptions: PropTypes.object.isRequired,
+  projectOptions: PropTypes.object,
   categoryColor: PropTypes.string,
   homepageCollection: PropTypes.bool,
   collectionUrl: PropTypes.string,
