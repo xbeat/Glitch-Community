@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import _ from 'lodash';
 import {withRouter} from 'react-router-dom';
+import {CurrentUserConsumer} from '../current-user.jsx';
 import {getLink} from '../../models/team';
 import Loader from '../includes/loader.jsx';
 import {NestedPopoverTitle} from '../pop-overs/popover-nested.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
+import {SignInPop} from './sign-in-pop.jsx';
 
 const wordsApi = axios.create({
   baseURL: 'https://friendly-words.glitch.me/',
@@ -147,5 +149,19 @@ CreateTeamPopBase.propTypes = {
   api: PropTypes.func.isRequired,
 };
 
-export const CreateTeamPop = withRouter(CreateTeamPopBase);
-export default CreateTeamPop;
+const CreateTeamPop = withRouter(CreateTeamPopBase);
+
+const CreateTeamPopOrSignIn = ({api}) => (
+  <CurrentUserConsumer>
+    {user => (user && user.login ? (
+      <CreateTeamPop api={api}/>
+    ) : (
+      <SignInPop params="hash=create-team"
+        header={<NestedPopoverTitle>Sign In</NestedPopoverTitle>}
+        prompt={<p className="action-description">You'll need to sign in to create a team</p>}
+      />
+    ))}
+  </CurrentUserConsumer>
+);
+
+export default CreateTeamPopOrSignIn;
