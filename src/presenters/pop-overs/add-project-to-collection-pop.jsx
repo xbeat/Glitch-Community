@@ -15,7 +15,7 @@ import UserResultItem from '../includes/user-result-item.jsx';
 import Notifications from '../notifications.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
-import {getLink,colors} from '../models/collection';
+import {getLink,colors} from '../../models/collection';
 
 import _ from 'lodash';
 
@@ -35,6 +35,7 @@ class AddProjectToCollectionPop extends React.Component {
   handleChange(evt) {
     const query = evt.currentTarget.value.trim();
     this.setState({ query });
+    console.log(`${this.state.query}`);
   }
   
   clearSearch() {
