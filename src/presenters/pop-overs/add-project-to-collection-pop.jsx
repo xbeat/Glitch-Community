@@ -33,9 +33,8 @@ class AddProjectToCollectionPop extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
   
-  handleChange(evt) {
-    const query = evt.currentTarget.value;
-    this.setState({ query });
+  handleChange(newValue) {
+    this.setState({ query: newValue });
     console.log(`${this.state.query}`);
   }
   
@@ -142,12 +141,12 @@ class AddProjectToCollectionPop extends React.Component {
               update={this.handleChange}
               placeholder="New Collection Name"
             />
-            <p className="url-preview">
-              /@{this.props.currentUser.login}/{_.kebabCase(this.state.query)}
-            </p>
             <button type="submit" className="create-collection button-small">
                 Create
-            </button>            
+            </button>   
+            <p className="url-preview">
+              /@{this.props.currentUser.login}/{_.kebabCase(this.state.query)}
+            </p>         
           </form>         
         </section>
       </dialog>
