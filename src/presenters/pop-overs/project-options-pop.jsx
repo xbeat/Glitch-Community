@@ -53,7 +53,6 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
   
   return(
     <dialog className="pop-over project-options-pop">
-      <div>Test {props.currentUserIsOnProject}</div>
       {props.currentUserIsOnProject 
         ? <React.Fragment>
           {(props.addPin && 
@@ -69,7 +68,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
         : <section className="pop-over-actions">
             {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to My Collection " emoji="framed_picture"/>}
         </section>
-      }
+      } 
 
       {(props.joinTeamProject && props.leaveTeamProject) &&
         <section className="pop-over-actions collaborator-actions">
@@ -156,7 +155,6 @@ export default function ProjectOptions({projectOptions={}, project, api, current
   }
 
   return (
-    (props.currentUser ? 
       <PopoverContainer>
         {({togglePopover, visible}) => (
           <CurrentUserConsumer>
@@ -170,9 +168,7 @@ export default function ProjectOptions({projectOptions={}, project, api, current
             )}
           </CurrentUserConsumer>
         )}
-      </PopoverContainer>
-     : null
-     )
+      </PopoverContainer>     
   );
 }
 
