@@ -25,6 +25,8 @@ class AddProjectToCollectionPop extends React.Component {
     super(props);
     
     this.state = {
+      done: false,
+      error: false,
       query: '', //The actual search text
     };
     
@@ -71,6 +73,7 @@ class AddProjectToCollectionPop extends React.Component {
           avatarUrl,
           coverColor,
         });
+        console.log('created collection');
         collection = data;
       }
       
@@ -81,18 +84,23 @@ class AddProjectToCollectionPop extends React.Component {
   }
   
   async addProjectToCollection(api, project, collection){
+    try{
+      const {data} = await api.patch(`collections/${collection.id}/add/${project.id}`);
+      console.log('added project to collection');
+    }catch(error){
+      this.setState({error: true});
+    }
   }
   
-  addProjectToNewCollection(project){
+  addProjectToNewCollection(){
     // get text from input field
     const newCollectionName = this.state.query;
-    console.log(`newCollectionName: ${newCollectionName}`);
     
     // create a new collection
     let newCollection = this.createNewCollection(this.props.api, newCollectionName, this.props.currentUser);
     
     // add the selected project to the collection
-    this.addProjectToCollection(this.props.api, project, newCollection);
+    this.addProjectToCollection(this.props.api, this.props.project, newCollection);
     
     // redirect to that collection
     this.setState({newCollectionUrl: `/@{this.props.currentUser.login}/{newCollection.url}`});
@@ -101,6 +109,9 @@ class AddProjectToCollectionPop extends React.Component {
   
   render() {
     const placeholder = 'New Collection Name';
+    if(this.state.done){
+      return <Redirect to={this.state.newCollectionUrl}/>
+    }
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
         {( !this.props.fromProject ?
@@ -145,6 +156,7 @@ class AddProjectToCollectionPop extends React.Component {
                 Create
             </button>   
             <p className="url-preview">
+              {/* Handle anonymous users here? */}
               /@{this.props.currentUser.login}/{_.kebabCase(this.state.query || placeholder)}
             </p>         
           </form>         
