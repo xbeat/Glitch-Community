@@ -57,33 +57,6 @@ class AddProjectToCollectionPop extends React.Component {
     return true
   }
   
-  async createNewCollection(api, collectionName, currentUser){
-    let collection = {};
-    // create a new collection here
-    try{
-      let name = collectionName;
-      let description = `A collection of projects that does ${collectionName} things`;
-      let url = _.kebabCase(name);
-      let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
-      let randomHex = Object.values(colors);
-      let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
-      if(this.validate(name)){
-        const {data} = await api.post('collections', {
-          name,
-          description,
-          url,
-          avatarUrl,
-          coverColor,
-        });
-        console.log('created collection');
-        collection = data;
-      }
-      
-    }catch(error){
-      this.setState({error: true});
-    }
-    return collection;
-  }
   
   async addProjectToCollection(api, project, collection){
     try{
@@ -100,13 +73,40 @@ class AddProjectToCollectionPop extends React.Component {
     const newCollectionName = this.state.query;
     
     // create a new collection
+    let newCollection = {};
+    // create a new collection here
+    try{
+      let name = newCollectionName;
+      let description = `A collection of projects that does wondrous things`; // change default later
+      let url = _.kebabCase(newCollectionName);
+      let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
+      let randomHex = Object.values(colors);
+      let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
+      if(this.validate(name)){
+        const {data} = this.props.api.post('collections', {
+          name,
+          description,
+          url,
+          avatarUrl,
+          coverColor,
+        });
+        newCollection = data;
+        console.log("created collection %O", newCollection); 
+      }
+    }catch(error){
+      this.setState({error: true});
+    }
+   
+    return collection;
     let newCollection = this.createNewCollection(this.props.api, newCollectionName, this.props.currentUser);
     
     // add the selected project to the collection
     this.addProjectToCollection(this.props.api, this.props.project, newCollection);
     
     // redirect to that collection
-    this.setState({newCollectionUrl: `/@{this.props.currentUser.login}/{newCollection.url}`});
+    let newCollectionUrl = `/@{this.props.currentUser.login}/{newCollection.url}`;
+    console.log(`newCollectionUrl: ${newCollectionUrl}`);
+    this.setState({newCollectionUrl:  newCollectionUrl});
     this.setState({done: true});
   }
   
