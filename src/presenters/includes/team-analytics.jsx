@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 import _ from 'lodash';
+import sampleAnalytics from '../../curated/sample-analytics';
 
 import Loader from './loader.jsx';
 import AddTeamProject from './add-team-project.jsx';
@@ -36,8 +37,7 @@ const dateFromTime = (newTime) => {
 
 const getAnalytics = async ({id, api, projects}, fromDate, currentProjectDomain) => {
   if (!projects.length) {
-    // Placeholder data
-    //return null;
+    return sampleAnalytics;
   }
   let path = `analytics/${id}/team?from=${fromDate}`;
   if (currentProjectDomain !== "All Projects") {
