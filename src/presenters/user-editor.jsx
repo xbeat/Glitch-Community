@@ -110,9 +110,9 @@ class UserEditor extends React.Component {
   
   async deleteCollection(id){
     await this.props.api.delete(`/collections/${id}`);
-    this.setState(({collections}) => ({
-      collections: collections.filter(c => c.id !== id),
-    }));
+    // this.setState(({collections}) => ({
+    //   collections: collections.filter(c => c.id !== id),
+    // }));
   }
   
   async addProjectToCollection(project, collection) {
@@ -120,13 +120,6 @@ class UserEditor extends React.Component {
     console.log(`project.id ${project.id}`);
     console.log(`collection.id ${collection.id}`);
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
-  }
-  
-  async removeProjectFromCollection(id) {
-    // await this.props.api.post(`users/${this.state.id}/pinned-projects/${id}`);
-    // this.setState(({pins}) => ({
-    //   pins: [...pins, {projectId: id}],
-    // }));
   }
 
   render() {

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Redirect} from 'react-router-dom';
 import {debounce} from 'lodash';
 
 import ProjectModel from '../../models/project';
@@ -33,6 +34,7 @@ class AddProjectToCollectionPop extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   
   handleChange(newValue) {
@@ -92,7 +94,8 @@ class AddProjectToCollectionPop extends React.Component {
     }
   }
   
-  addProjectToNewCollection(){
+  handleSubmit(){
+    console.log('add project to new collection');
     // get text from input field
     const newCollectionName = this.state.query;
     
@@ -144,7 +147,7 @@ class AddProjectToCollectionPop extends React.Component {
           </ul>
         </section>
         <section className="pop-over-info">
-          <form onSubmit={this.addProjectToNewCollection}>
+          <form onSubmit={this.handleSubmit}>
             <PureEditableField
               id="collection-name"
               className="pop-over-input create-input"
