@@ -16,6 +16,7 @@ import Notifications from '../notifications.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
 import {getLink,colors} from '../../models/collection';
+import {PureEditableField} from '../includes/editable-field.jsx';
 
 import _ from 'lodash';
 
@@ -133,25 +134,21 @@ class AddProjectToCollectionPop extends React.Component {
           </ul>
         </section>
         <section className="pop-over-info">
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.addProjectToNewCollection}>
             <PureEditableField
+              id="collection-name"
               className="pop-over-input create-input"
-              />
-          </form>
-          <input id="collection-name"  
-            value={this.state.query} onChange={this.handleChange}
-            className="pop-over-input create-input"
-            placeholder="New Collection Name"
-          />
-          {/* TO DO: Actually create a new collection here */}
-          <button className="create-collection button-small" onClick={this.addProjectToNewCollection}>
-              Create
-          </button>
-          {/* TO DO: Auto-Kebab here */}
-          <p class="url-preview">
-            /@{this.props.currentUser.login}/{_.kebabCase(this.state.query)}
-          </p>
-          
+              value={this.state.query} 
+              update={this.handleChange}
+              placeholder="New Collection Name"
+            />
+            <p className="url-preview">
+              /@{this.props.currentUser.login}/{_.kebabCase(this.state.query)}
+            </p>
+            <button type="submit" className="create-collection button-small">
+                Create
+            </button>            
+          </form>         
         </section>
       </dialog>
     );
