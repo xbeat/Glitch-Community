@@ -33,7 +33,7 @@ class AddProjectToCollectionPop extends React.Component {
   }
   
   handleChange(evt) {
-    const query = evt.currentTarget.value.trim();
+    const query = evt.currentTarget.value;
     this.setState({ query });
     console.log(`${this.state.query}`);
   }
@@ -142,6 +142,8 @@ class AddProjectToCollectionPop extends React.Component {
           <button className="create-collection button-small" onClick={this.addProjectToNewCollection}>
               Create
           </button>
+          
+          {/* TO DO: Auto-Kebab here */}
         </section>
       </dialog>
     );
