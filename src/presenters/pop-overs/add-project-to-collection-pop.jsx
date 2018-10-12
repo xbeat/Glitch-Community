@@ -35,7 +35,6 @@ class AddProjectToCollectionPop extends React.Component {
   
   handleChange(newValue) {
     this.setState({ query: newValue });
-    console.log(`${this.state.query}`);
   }
   
   clearSearch() {
@@ -101,6 +100,7 @@ class AddProjectToCollectionPop extends React.Component {
   }
   
   render() {
+    const placeholder = 'New Collection Name';
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
         {( !this.props.fromProject ?
@@ -139,13 +139,13 @@ class AddProjectToCollectionPop extends React.Component {
               className="pop-over-input create-input"
               value={this.state.query} 
               update={this.handleChange}
-              placeholder="New Collection Name"
+              placeholder={placeholder}
             />
             <button type="submit" className="create-collection button-small">
                 Create
             </button>   
             <p className="url-preview">
-              /@{this.props.currentUser.login}/{_.kebabCase(this.state.query)}
+              /@{this.props.currentUser.login}/{_.kebabCase(this.state.query || placeholder)}
             </p>         
           </form>         
         </section>
