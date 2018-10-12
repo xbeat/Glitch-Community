@@ -133,6 +133,11 @@ class AddProjectToCollectionPop extends React.Component {
           </ul>
         </section>
         <section className="pop-over-info">
+          <form onSubmit={this.handleSubmit}>
+            <PureEditableField
+              className="pop-over-input create-input"
+              />
+          </form>
           <input id="collection-name"  
             value={this.state.query} onChange={this.handleChange}
             className="pop-over-input create-input"
@@ -142,8 +147,11 @@ class AddProjectToCollectionPop extends React.Component {
           <button className="create-collection button-small" onClick={this.addProjectToNewCollection}>
               Create
           </button>
-          
           {/* TO DO: Auto-Kebab here */}
+          <p class="url-preview">
+            /@{this.props.currentUser.login}/{_.kebabCase(this.state.query)}
+          </p>
+          
         </section>
       </dialog>
     );
