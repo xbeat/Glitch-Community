@@ -56,16 +56,7 @@ class AddProjectToCollectionPop extends React.Component {
   validate(name){
     return true
   }
-  
-  
-  async addProjectToCollection(api, project, collection){
-    try{
-      const {data} = await api.patch(`collections/${collection.id}/add/${project.id}`);
-      console.log('added project to collection');
-    }catch(error){
-      this.setState({error: true});
-    }
-  }
+
   
   handleSubmit(){
     console.log('add project to new collection');
@@ -82,32 +73,40 @@ class AddProjectToCollectionPop extends React.Component {
       let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
       let randomHex = Object.values(colors);
       let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
-      if(this.validate(name)){
-        const {data} = this.props.api.post('collections', {
+      if(this.validate(newCollectionName)){
+        this.props.api.post('collections', {
           name,
           description,
           url,
           avatarUrl,
           coverColor,
-        });
-        newCollection = data;
-        console.log("created collection %O", newCollection); 
+        }).then( 
+          data => {
+            newCollection = data;
+            console.log("created collection %O", newCollection); 
+            
+            try{
+              // add the selected project to the collection
+              this.props.api.patch(`collections/${newCollection.id}/add/${this.props.project.id}`)
+              .then(() => {
+                console.log('added project to collection');  
+                          
+                // redirect to that collection
+                let newCollectionUrl = `/@{this.props.currentUser.login}/{newCollection.url}`;
+                console.log(`newCollectionUrl: ${newCollectionUrl}`);
+                this.setState({newCollectionUrl:  newCollectionUrl});
+                this.setState({done: true});
+              });
+              
+            }catch(error){
+              this.setState({error: true});
+            }
+          }
+        );
       }
     }catch(error){
       this.setState({error: true});
     }
-   
-    return collection;
-    let newCollection = this.createNewCollection(this.props.api, newCollectionName, this.props.currentUser);
-    
-    // add the selected project to the collection
-    this.addProjectToCollection(this.props.api, this.props.project, newCollection);
-    
-    // redirect to that collection
-    let newCollectionUrl = `/@{this.props.currentUser.login}/{newCollection.url}`;
-    console.log(`newCollectionUrl: ${newCollectionUrl}`);
-    this.setState({newCollectionUrl:  newCollectionUrl});
-    this.setState({done: true});
   }
   
   render() {
