@@ -40,7 +40,6 @@ const ProjectsPreview = ({projects, categoryColor}) => {
 
 ProjectsPreview.propTypes = {
   projects: PropTypes.any.isRequired,
-  collectionUrl: PropTypes.string.isRequired,
 };
 
 async function getCollectionUrl(api, userId, collectionUrl){

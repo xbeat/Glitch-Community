@@ -58,14 +58,13 @@ class AddProjectToCollectionPop extends React.Component {
   }
 
   
-  handleSubmit(){
+  handleSubmit(event){
+    event.preventDefault();
     console.log('add project to new collection');
     // get text from input field
     const newCollectionName = this.state.query;
     
     // create a new collection
-    let newCollection = {};
-    // create a new collection here
     try{
       let name = newCollectionName;
       let description = `A collection of projects that does wondrous things`; // change default later
@@ -80,10 +79,9 @@ class AddProjectToCollectionPop extends React.Component {
           url,
           avatarUrl,
           coverColor,
-        }).then( 
-          data => {
-            newCollection = data;
-            console.log("created collection %O", newCollection); 
+        }).then(({data}) => {
+            console.log("created collection %O", data); 
+            let newCollection = data;
             
             try{
               // add the selected project to the collection
@@ -92,7 +90,7 @@ class AddProjectToCollectionPop extends React.Component {
                 console.log('added project to collection');  
                           
                 // redirect to that collection
-                let newCollectionUrl = `/@{this.props.currentUser.login}/{newCollection.url}`;
+                let newCollectionUrl = `/@${this.props.currentUser.login}/${newCollection.url}`;
                 console.log(`newCollectionUrl: ${newCollectionUrl}`);
                 this.setState({newCollectionUrl:  newCollectionUrl});
                 this.setState({done: true});

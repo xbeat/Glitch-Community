@@ -53,6 +53,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
   
   return(
     <dialog className="pop-over project-options-pop">
+      <div>Test {props.currentUserIsOnProject}</div>
       {props.currentUserIsOnProject 
         ? <React.Fragment>
           {(props.addPin && 
