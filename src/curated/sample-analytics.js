@@ -1,7 +1,8 @@
 // This is shown when a team has no projects
 // It should match the format of https://api.glitch.com/analytics/:id/team
-// The timestamps are negative because they are relative to the current time
-// See team-analytics.jsx for usage
+
+// When this data was retrieved
+export const sampleAnalyticsTime = 1539360209161;
 
 export default {
   buckets: [

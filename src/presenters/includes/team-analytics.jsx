@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 import _ from 'lodash';
-import sampleAnalytics from '../../curated/sample-analytics';
+import sampleAnalytics, {sampleAnalyticsTime} from '../../curated/sample-analytics';
 
 import Loader from './loader.jsx';
 import AddTeamProject from './add-team-project.jsx';
@@ -37,7 +37,12 @@ const dateFromTime = (newTime) => {
 
 const getAnalytics = async ({id, api, projects}, fromDate, currentProjectDomain) => {
   if (!projects.length) {
-    return sampleAnalytics;
+    // Update timestamps so they're relative to now
+    const data = _.cloneDeep(sampleAnalytics);
+    data.buckets.forEach(bucket => {
+      bucket['@timestamp'] += Date.now() - sampleAnalyticsTime;
+    });
+    return data;
   }
   let path = `analytics/${id}/team?from=${fromDate}`;
   if (currentProjectDomain !== "All Projects") {
