@@ -4,7 +4,7 @@
       "loose": true,
       "es2017": false,
     }],
-    "react",
+    "@babel/preset-react",
   ],
   "plugins": [
     "lodash",
