@@ -9,28 +9,6 @@ import Loader from './includes/loader.jsx';
 
 const imgWitch = 'https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2Fwitch-2.svg?1521578927355';
 
-const ZineItem = ({title, url, feature_image, primary_tag}) => (
-  <Link to={`/culture${url}`} className="zine-item">
-    {!!feature_image && <div className="mask-container">
-      <img className="mask" src={feature_image} alt=""/>
-    </div>}
-    <div className="zine-item-meta">
-      <h1 className="zine-item-title">{title}</h1>
-      {!!primary_tag && <p className="zine-item-tag">
-        {primary_tag.name}
-      </p>}
-    </div>
-  </Link>
-);
-ZineItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  feature_image: PropTypes.string,
-  primary_tag: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-  }),
-};
-
 class ZineItems extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +27,21 @@ class ZineItems extends React.Component {
     }
     return (
       <ul className="zine-items">
-        {this.state.posts.map(post => <li key={post.id}><ZineItem {...post}/></li>)}
+        {this.state.posts.map(({id, title, url, feature_image, primary_tag}) => (
+          <li key={id} className="zine-item">
+            <Link to={`/culture${url}`}>
+              {!!feature_image && <div className="mask-container">
+                <img className="mask" src={feature_image} alt=""/>
+              </div>}
+              <div className="zine-item-meta">
+                <h1 className="zine-item-title">{title}</h1>
+                {!!primary_tag && <p className="zine-item-tag">
+                  {primary_tag.name}
+                </p>}
+              </div>
+            </Link>
+          </li>
+        ))}
       </ul>
     );
   }
