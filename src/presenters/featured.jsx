@@ -10,6 +10,10 @@ const Witch = () => (
   <img className="witch" src={imgWitch} width="110px" height="82px" alt=""/>
 );
 
+const Embed = () => (
+    <span dangerouslySetInnerHTML={{__html: embedHtml}}/>
+);
+
 const FeaturedPanel = ({img, link, title}) => (
   <Link to={link} data-track="featured-project" data-track-label={title}>
     <div className="featured-container">
