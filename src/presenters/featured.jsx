@@ -6,13 +6,6 @@ import FeaturedItems from '../curated/featured';
 import Link from './includes/link.jsx';
 
 const imgWitch = 'https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2Fwitch-2.svg?1521578927355';
-const Witch = () => (
-  <img className="witch" src={imgWitch} width="110px" height="82px" alt=""/>
-);
-
-const Embed = () => (
-    <span dangerouslySetInnerHTML={{__html: embedHtml}}/>
-);
 
 const FeaturedPanel = ({img, link, title}) => (
   <Link to={link} data-track="featured-project" data-track-label={title}>
@@ -28,11 +21,22 @@ FeaturedPanel.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
+const ZineItem = ({url, }) => (
+  <Link to={url} className="zine-item">
+    {!!image && <div className="mask-container">
+      <img className="mask" src={image}/>
+    </div>}
+    <div className="zine-item-meta">
+      <h1 className="zine-item-title">{title}</h1>
+    </div>
+  </Link>
+);
+
 const Featured = ({embedHtml, featured}) => (
   <section className="featured featured-collections">
     <h2>Check These Out</h2>
     <div className="community-pick-embed-container">
-      <Witch/>
+      <img className="witch" src={imgWitch} width="110px" height="82px" alt=""/>
       <span dangerouslySetInnerHTML={{__html: embedHtml}}/>
     </div>
     <ul>
