@@ -1,5 +1,4 @@
 /// A locally cached minimal api wrapper
-/* globals Symbol */
 
 const axios = require("axios");
 const {Cache} = require("memory-cache");
@@ -14,19 +13,22 @@ const projectCache = new Cache();
 const teamCache = new Cache();
 const userCache = new Cache();
 
-async function getFromCacheOrApi(id, cache, api) {
-  let item = cache.get(id);
-  if (item === null) {
-    try {
-      item = (await api(id)) || NOT_FOUND;
-    } catch (error) {
-      // Technically anything other than a 404 is a 'real' error
-      // but for our usage we can just go on as if it doesn't exist
-      item = NOT_FOUND;
-    }
-    cache.put(id, item, CACHE_TIMEOUT);
+async function getFromCacheOrApi(id, cache, api, def=null) {
+  let promise = cache.get(id);
+  if (!promise) {
+    promise = async () => {
+      try {
+        return (await api(id)) || NOT_FOUND;
+      } catch (error) {
+        // Technically anything other than a 404 is a 'real' error
+        // but for our usage we can just go on as if it doesn't exist
+        return NOT_FOUND;
+      }
+    };
+    cache.put(id, promise, CACHE_TIMEOUT);
   }
-  return item !== NOT_FOUND ? item : null;
+  const value = await promise;
+  return value !== NOT_FOUND ? value : def;
 }
 
 const api = axios.create({
