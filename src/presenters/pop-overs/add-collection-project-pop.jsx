@@ -28,11 +28,12 @@ const ProjectSearchResults = ({projects, collection, onClick, projectName, omitt
       ))}
     </ul>
   ) : 
-    (projectName ? (
-      <p className="results-empty">{projectName} is already in this collection <span role="img" aria-label="">💫</span></p>
-      ): 
-      <p className="results-empty">nothing found <span role="img" aria-label="">💫 </span> ({ommittedProjectsCount} > 0 && (<span>{omittedProjectsCount} search results already found in collection</span>)}</p>
-   )           
+    (projectName 
+     ? <p className="results-empty">{projectName} is already in this collection <span role="img" aria-label="">💫</span></p>
+     : <p className="results-empty">nothing found <span role="img" aria-label="">💫</span><br/>
+       {omittedProjectsCount > 0 && <span>(Omitted {omittedProjectsCount} search results already found in collection)</span>}
+      </p>
+     )           
    )
 );
 
@@ -55,7 +56,7 @@ class AddCollectionProjectPop extends React.Component {
       maybeRequest: null, //The active request promise
       maybeResults: null, //Null means still waiting vs empty,
       projectName: '', // the project name if the search result is a Url
-      ommittedProjectCount: 0, // number of projects omitted from search
+      omittedProjectCount: 0, // number of projects omitted from search
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -115,6 +116,7 @@ class AddCollectionProjectPop extends React.Component {
     const {data} = await request;
     const results = data.map(project => ProjectModel(project).asProps()); 
     console.log("results %O", results);
+    let originalNumResults = results.length;
     
     console.log("this.props.collection.projects %O", this.props.collection.projects);
     
@@ -127,9 +129,7 @@ class AddCollectionProjectPop extends React.Component {
         this.setState({projectName: query});
       }else{
         // return results, filtering out any projects currently in collection
-        let originalNumResults = nonCollectionResults.length;
         nonCollectionResults = this.props.collection.projects.filter(project => project.domain == query);
-        this.setState({ommittedProjectsCount: originalNumResults - nonCollectionResults.length});
       }      
     }else{
       console.log('search by keyword');
@@ -139,6 +139,9 @@ class AddCollectionProjectPop extends React.Component {
       nonCollectionResults = results.filter( result => !collectionProjectIds.includes(result.id));
     }
     console.log("nonCollectionResults: %O", nonCollectionResults);
+    
+    this.setState({omittedProjectsCount: originalNumResults - nonCollectionResults.length});
+    console.log(`omittedProjectsCount: ${this.state.omittedProjectsCount}`);
 
     this.setState(({ maybeRequest }) => {
     return (request === maybeRequest) ? {
@@ -175,7 +178,7 @@ class AddCollectionProjectPop extends React.Component {
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
           {!!this.state.maybeResults && 
-              <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} ommittedProjectCount = {this.state.ommittedProjectCount}/>
+              <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} omittedProjectsCount={this.state.omittedProjectsCount}/>
           }
         </section>}
       </dialog>
