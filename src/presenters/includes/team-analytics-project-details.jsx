@@ -44,7 +44,7 @@ const ProjectDetails = ({projectDetails}) => {
           </tr>
           <tr>
             <td className="label">Last remixed</td>
-            <td>{moment(projectDetails.lastRemixedAt).fromNow()}</td>
+            <td>{projectDetails.lastRemixedAt ? moment(projectDetails.lastRemixedAt).fromNow() : "never"}</td>
           </tr>
           <tr>
             <td className="label">Total app views</td>
