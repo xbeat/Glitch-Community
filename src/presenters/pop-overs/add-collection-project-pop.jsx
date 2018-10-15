@@ -15,13 +15,15 @@ const ProjectSearchResults = ({projects, collection, onClick, projectName}) => (
   (projects.length > 0) ? (
     <ul className="results">
       {projects.map(project => (
-        <Notifications>
-          {({createNotification}) => (
-            <li key={project.id}>
-              <ProjectResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} collection={collection} action={() => onClick(project, collection, createNotification)} />
-            </li>
-          )}
-        </Notifications>
+        (!collection.projects.map( (project) => project.id).includes(project.id) &&
+          <Notifications>
+            {({createNotification}) => (
+              <li key={project.id}>
+                <ProjectResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} collection={collection} action={() => onClick(project, collection, createNotification)} />
+              </li>
+            )}
+          </Notifications>
+         )
       ))}
     </ul>
   ) : 

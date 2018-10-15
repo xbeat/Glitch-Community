@@ -171,6 +171,7 @@ const CollectionPageContents = ({
           </ProjectsLoader>
         
           : 
+          // no collection 
           <React.Fragment>
             <div className="collection-project-container-header">
               <h3>Projects</h3>
