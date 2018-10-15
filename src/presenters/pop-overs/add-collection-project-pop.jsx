@@ -1,3 +1,4 @@
+// add-collection-project-pop.jsx -> Add a project to a collection via the collection page
 import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
@@ -122,13 +123,13 @@ class AddCollectionProjectPop extends React.Component {
     
     let nonCollectionResults = null;
     if(searchByUrl){
+      // find all projects that have the same domain as the query
       let projectByDomain = results.filter(project => project.domain == query);
-      console.log("projectByDomain %O", projectByDomain);
-      // get names of all collectionProjects
+      
+      
       if(this.props.collection.projects.find(project => project.domain == query)){
         nonCollectionResults =[];
         this.setState({projectName: query});
-        console.log(` set state to ${this.state.projectName} with query ${query}`);
       }else{
         nonCollectionResults = projectByDomain;
       }      
