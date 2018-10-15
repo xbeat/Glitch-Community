@@ -10,7 +10,7 @@ export const ProjectsList = ({title, projects, placeholder, projectOptions}) => 
       <div className="placeholder">{placeholder}</div>
     )}
 
-    <ProjectsUL {...{projects, projectOptions}}></ProjectsUL>
+    <ExpandyProjects {...{projects, projectOptions}}></ExpandyProjects>
 
   </article>
 );
@@ -21,6 +21,35 @@ ProjectsList.propTypes = {
   placeholder: PropTypes.node,
 };
 
+class ExpandyProjects extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = { expanded: false };
+    this.handleClick = this.handleClick.bind(this);
+  }
+  
+  handleClick() {
+  }
+  
+  render() {
+    let projects = this.props.projects;
+    if(!this.state.expanded) {
+      projects = projects.projects.splice(0,12);
+    }
+    
+    let 
+    
+    return (
+      <ProjectsUL projects={projects} projectOptions={this.props.projectOptions}/>
+    );
+  }
+};
+
+ExpandyProjects.propTypes = {
+  projects: PropTypes.array.isRequired,
+  projectOptions: PropTypes.object.isRequired,
+};
 
 
 export const ProjectsUL = ({projects, projectOptions, categoryColor}) => {
