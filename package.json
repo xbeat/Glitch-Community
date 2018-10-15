@@ -1,4 +1,4 @@
-{
+no {
   "name": "glitch-community-site",
   "version": "0.0.1",
   "description": "Find cool projects and people using Glitch",
@@ -7,9 +7,9 @@
     "start": "nodemon ./server/server.js --watch server --watch views -L"
   },
   "dependencies": {
+    "@babel/core": "^7.1.2",
     "autoprefixer-stylus": "^0.14.0",
     "axios": "^0.18.0",
-    "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "babel-plugin-lodash": "^3.3.4",
