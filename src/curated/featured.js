@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Find Electric Bikes Near You',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcabi-electric.jpg?1538999010036",
-    link: 'https://glitch.com/~the-cabi-electric'
+    title: 'A Trip to the Blue Ridge Mountains',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fblue-ridge.png?1539601709907",
+    link: 'https://glitch.com/~blueridge'
   },{
-    title: 'Islands in the Stream',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fislands-division.jpg?1538999010351",
-    link: 'https://glitch.com/~islands-division'
+    title: 'Simple Programming 101',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flearning-turtle.png?1539601710009",
+    link: 'https://glitch.com/~learning-turtle'
   }, {
-    title: 'Respond to Slash Commands in Slack',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fslack-slash-command.jpg?1538999009902",
-    link: 'https://glitch.com/~slack-slash-command'
+    title: 'Colors of the Library of Congress',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Floc-colors.png?1539601710266",
+    link: 'https://glitch.com/~loc-colors'
   }  
 ];
