@@ -52,7 +52,9 @@ const CollectionResultItem = ({addProjectToCollection, api, project, collection,
         <DataLoader get={() => getCollectionUrl(api, collection.userId, collection.url)}>
           {collectionPath => 
             <button className={resultClass} onClick={() => addProject(addProjectToCollection, project, collection, collectionPath, createPersistentNotification, togglePopover)} data-project-id={project.id}>
-              <img className="avatar" src={collection.avatarUrl} alt={`Project avatar for ${collection.name}`}/>
+              <div className="avatar">
+                <img src={collection.avatarUrl} className="avatar" alt={`Project avatar for ${collection.name}`}/>
+              </div>
               <div className="results-info">
                 <div className="result-name" title={collection.name}>{collection.name}</div>
                 { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
