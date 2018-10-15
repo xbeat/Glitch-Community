@@ -36,11 +36,7 @@ const ProjectSearchResults = ({projects, collection, onClick, projectName}) => (
 
 ProjectSearchResults.propTypes = {
   collection: PropTypes.object.isRequired,
-  users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-  }).isRequired).isRequired,
-  action: PropTypes.func.isRequired,
-  projectName: PropTypes.sting,
+  projectName: PropTypes.string,
 };
 
 class AddCollectionProjectPop extends React.Component {
