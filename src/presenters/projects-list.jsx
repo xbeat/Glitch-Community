@@ -30,25 +30,39 @@ class ExpandyProjects extends React.Component {
   }
   
   handleClick() {
+    this.setState({expanded: true});
   }
   
   render() {
+    const maxProjects = this.props.maxCollapsedProjects;
+    const totalProjects = this.props.projects.length;
+    const hiddenProjects = totalProjects - maxProjects;
+    
     let projects = this.props.projects;
+    
+    let shouldShowButton = false;
     if(!this.state.expanded) {
-      projects = projects.projects.splice(0,12);
+      shouldShowButton = maxProjects <= totalProjects;
+      projects = projects.splice(0,maxProjects);
     }
     
-    let 
-    
     return (
-      <ProjectsUL projects={projects} projectOptions={this.props.projectOptions}/>
+      <React.Fragment>
+        <ProjectsUL projects={projects} projectOptions={this.props.projectOptions}/>
+        { shouldShowButton && <button onClick={this.handleClick}>Show {hiddenProjects} More</button>}
+      </React.Fragment>
     );
   }
-};
+}
 
 ExpandyProjects.propTypes = {
   projects: PropTypes.array.isRequired,
   projectOptions: PropTypes.object.isRequired,
+  maxCollapsedProjects: PropTypes.number,
+};
+
+ExpandyProjects.defaultProps = {
+  maxCollapsedProjects: 12,
 };
 
 
