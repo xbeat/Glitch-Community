@@ -13,8 +13,7 @@ import UserResultItem from '../includes/user-result-item.jsx';
 import Notifications from '../notifications.jsx';
 
 const ProjectSearchResults = ({projects, collection, onClick, projectName}) => (
-  (projects.length > 0 && 
-   JSON.stringify(collection.projects.map( (project) => project.id).sort()) !== JSON.stringify(projects.map ( (project) => project.id).sort()) ? (
+  (projects.length > 0 ? (
     <ul className="results">
       {projects.map(project => (
         (!collection.projects.map( (project) => project.id).includes(project.id) &&
@@ -42,14 +41,9 @@ ProjectSearchResults.propTypes = {
   projectName: PropTypes.string,
 };
 
-function isURL(str) {
-  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
-  '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-  '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-  '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-  return pattern.test(str);
+function isUrl(s) {
+   var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+   return regexp.test(s);
 }
 
 class AddCollectionProjectPop extends React.Component {
@@ -98,7 +92,7 @@ class AddCollectionProjectPop extends React.Component {
     let searchByUrl = false;
     let query = this.state.query;
     
-    if(isURL(query)){
+    if(isUrl(query)){
       searchByUrl = true;
       // get project domain
       if(query.includes("me") && !query.includes("~")){
@@ -121,22 +115,27 @@ class AddCollectionProjectPop extends React.Component {
     const results = data.map(project => ProjectModel(project).asProps()); 
     console.log("results %O", results);
     
-    // console.log("this.props.collection.projects %O", this.props.collection.projects);
+    console.log("this.props.collection.projects %O", this.props.collection.projects);
     
     let nonCollectionResults = null;
     if(searchByUrl){  
+      console.log('search by url');
       if(this.props.collection.projects.map( (project) => project.domain).includes(query)){
         // the domain already exists in the collection - return an empty array
         nonCollectionResults =[];
         this.setState({projectName: query});
       }else{
         // return results, filtering out any projects currently in collection
-        nonCollectionResults = this.props.collections.projects.filter(project => project.domain == query);
+        nonCollectionResults = this.props.collection.projects.filter(project => project.domain == query);
       }      
     }else{
+      console.log('search by keyword');
       // user is searching by project name or URL  - filter out any projects currently in the collection
-      nonCollectionResults = this.props.collection.projects.filter(project => results.map( (result) => result.id == project.id));
+      let collectionProjectIds = this.props.collection.projects.map( (project) => project.id);
+      console.log("collectionProjectIds: %O", collectionProjectIds);
+      nonCollectionResults = results.filter( result => !collectionProjectIds.includes(result.id));
     }
+    console.log("nonCollectionResults: %O", nonCollectionResults);
 
     this.setState(({ maybeRequest }) => {
     return (request === maybeRequest) ? {
