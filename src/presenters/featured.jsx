@@ -5,6 +5,7 @@ import axios from 'axios';
 import EmbedHtml from '../curated/embed';
 import FeaturedItems from '../curated/featured';
 import Link from './includes/link.jsx';
+import Loader from './includes/loader.jsx';
 
 const imgWitch = 'https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2Fwitch-2.svg?1521578927355';
 
@@ -31,14 +32,25 @@ ZineItem.propTypes = {
 };
 
 class ZineItems extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {posts: null};
+  }
   async componentDidMount() {
-    const params = 'client_id=ghost-frontend&client_secret=c9a97f14ced8&filter=featured:true';
-    const {data} = await axios.get(`https://culture-zine.glitch.me/culture/ghost/api/v0.1/posts/?${params}`);
+    const client = 'client_id=ghost-frontend&client_secret=c9a97f14ced8';
+    const params = 'filter=featured:true&limit=4&fields=id,title,url,feature_image,primary_tag';
+    const {data} = await axios.get(`https://culture-zine.glitch.me/culture/ghost/api/v0.1/posts/?${client}&${params}`);
+    this.setState(data);
   }
   render() {
     if (!this.state.posts) {
       return <Loader/>;
     }
+    return (
+      <ul>
+        {this.state.posts.map(post => <li key={post.id}><ZineItem {...post}/></li>)}
+      </ul>
+    );
   }
 }
 
@@ -70,6 +82,7 @@ const Featured = ({embedHtml, featured}) => (
         </li>
       ))}
     </ul>
+    <ZineItems/>
   </section>
 );
 Featured.propTypes = {
