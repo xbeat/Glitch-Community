@@ -1,4 +1,4 @@
-collection-avatar-size = 95px
+collection-avatar-size = 65px
 
 .collections
   clear: both
@@ -85,8 +85,6 @@ collection-avatar-size = 95px
   .collection
     margin-top: 6px
     font-size: 0.9rem
-    background-color: rgba(103,190,255,0.40)
-    border-bottom-color: rgba(103,190,255,0.40)
     border-radius: 5px
     width: 100%
     padding-bottom: 1.5rem
@@ -119,13 +117,18 @@ collection-avatar-size = 95px
       height: 140px
       padding: 12px
       overflow: hidden
+      .avatar
+        display: block
+        width: collection-avatar-size 
+        height: collection-avatar-size
+        background: rgba(255,255,255,0.8)
+        border-radius: 5px
+        padding: 10px
       
     .avatar
       border-radius: 5px
       margin-right: 7px
       vertical-align: top
-      width: collection-avatar-size
-      height: collection-avatar-size
       display: inline-block
       
     .collection-name-description

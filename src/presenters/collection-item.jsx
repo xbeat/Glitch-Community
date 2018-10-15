@@ -67,7 +67,7 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
            {path => (
               <a href={path}>
                 <div className={['collection']} 
-                  style={{backgroundColor: collection.backgroundColor, borderBottomColor:collection.backgroundColor}}>
+                  style={{backgroundColor: collection.coverColor, borderBottomColor:collection.coverColor}}>
                   <div className="collection-container">
                       <div className="collection-info">
                         <img className="avatar" src={collection.avatarUrl}/>
