@@ -37,6 +37,7 @@ class ZineItems extends React.Component {
     this.state = {posts: null};
   }
   async componentDidMount() {
+    this.setState({"posts":[{"id":"5bb66cc271231c026d77720c","title":"Make Time to Get Away","feature_image":"/culture/content/images/2018/10/make-time-to-get-away.jpg","url":"/this-week-on-glitch-week-40-2018/","primary_tag":null},{"id":"5bb66cc271231c026d77720b","title":"Transform!","feature_image":"/culture/content/images/2018/10/transform.jpg","url":"/this-week-on-glitch-week-39-2018/","primary_tag":null},{"id":"5bb66cc271231c026d77720a","title":"Doing It Yourself","feature_image":"/culture/content/images/2018/10/doing-it-yourself.jpg","url":"/this-week-on-glitch-week-38-2018/","primary_tag":null},{"id":"5bb66cc271231c026d777205","title":"Space and Time","feature_image":"/culture/content/images/2018/10/space-and-time.jpg","url":"/this-week-on-glitch-week-37-2018/","primary_tag":null}]});
     const client = 'client_id=ghost-frontend&client_secret=c9a97f14ced8';
     const params = 'filter=featured:true&limit=4&fields=id,title,url,feature_image,primary_tag';
     const {data} = await axios.get(`https://culture-zine.glitch.me/culture/ghost/api/v0.1/posts/?${client}&${params}`);
@@ -47,7 +48,7 @@ class ZineItems extends React.Component {
       return <Loader/>;
     }
     return (
-      <ul>
+      <ul className="zine-items">
         {this.state.posts.map(post => <li key={post.id}><ZineItem {...post}/></li>)}
       </ul>
     );
@@ -75,7 +76,7 @@ const Featured = ({embedHtml, featured}) => (
       <img className="witch" src={imgWitch} width="110px" height="82px" alt=""/>
       <span dangerouslySetInnerHTML={{__html: embedHtml}}/>
     </div>
-    <ul>
+    <ul className="featured-items">
       {featured.map(item => (
         <li key={item.link}>
           <FeaturedPanel {...item}/>
