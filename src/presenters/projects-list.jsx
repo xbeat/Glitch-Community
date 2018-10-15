@@ -21,6 +21,8 @@ ProjectsList.propTypes = {
   placeholder: PropTypes.node,
 };
 
+
+
 export const ProjectsUL = ({projects, projectOptions, categoryColor}) => {
   return (
     <ul className="projects-container">
