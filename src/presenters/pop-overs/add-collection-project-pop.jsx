@@ -137,6 +137,10 @@ class AddCollectionProjectPop extends React.Component {
       let collectionProjectIds = this.props.collection.projects.map( (project) => project.id);
       console.log("collectionProjectIds: %O", collectionProjectIds);
       nonCollectionResults = results.filter( result => !collectionProjectIds.includes(result.id));
+      
+      if(this.props.collection.projects.map( (project) => project.domain).includes(query) && nonCollectionResults.length == originalNumResults){
+        this.setState({projectName: query});
+      }
     }
     console.log("nonCollectionResults: %O", nonCollectionResults);
     
