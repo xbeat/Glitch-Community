@@ -42,6 +42,18 @@ ProjectSearchResults.propTypes = {
   projectName: PropTypes.string,
 };
 
+function validURL(str){
+ var pattern = new RegExp('^(https?:\/\/)?'+ '((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|'+ '((\d{1,3}\.){3}\d{1,3}))'+ ) address
+    '(\:\d+)?(\/[-a-z\d%_.~+]*)*'+ // port and path
+    '(\?[;&a-z\d%_.~+=-]*)?'+ // query string
+    '(\#[-a-z\d_]*)?$','i'); // fragment locater
+  if(!pattern.test(str)) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 class AddCollectionProjectPop extends React.Component {
   constructor(props) {
     super(props);
@@ -85,12 +97,10 @@ class AddCollectionProjectPop extends React.Component {
     
     // check if the query is a URL or a name of a project
     // Project URL pattern: https://glitch.com/~power-port, https://power-port.glitch.me/, https://community.glitch.me/
-    const httpsKeyword = "https://";
-    const glitchKeyword = "glitch.me";
     let searchByUrl = false;
     let query = this.state.query;
     
-    if(this.state.query.includes(httpsKeyword) && this.state.query.includes(glitchKeyword)){
+    if(validURL(query)){
       searchByUrl = true;
       // get project domain
       if(query.includes("me") && !query.includes("~")){
@@ -98,16 +108,10 @@ class AddCollectionProjectPop extends React.Component {
         query = query.substring(query.indexOf("//")+"//".length, query.indexOf("."));
       }else if(query.includes("~") && !query.includes(".me")){
         // https://glitch.com/~power-port
-        query = query.substring(query.indexOf("~")+1);
+        query = query.pathname.substring(query.indexOf("~")+1);
       }else if(query.includes(".me")){
         // https://community.glitch.me/
-        let https = "https://";
-        let http = "http://";
-        if(query.includes(https)){
-          query = query.substring(query.indexOf(https)+https.length, query.indexOf("."));
-        }else if(query.includes(http)){
-          query = query.substring(query.indexOf(http)+http.length, query.indexOf("."));
-        }
+        query = query.host.substring(0, query.indexOf("."));
       }
     }
     
