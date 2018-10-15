@@ -107,6 +107,15 @@ class AddProjectToCollectionPop extends React.Component {
     }
   }
   
+  getFilteredProjects(collectionProjects, searchResults){
+    let collectionProjectsIds = [];
+    collectionProjects.forEach(function(project){
+      collectionProjectsIds.push(project.id);
+    });
+    searchResults.
+    
+  }
+  
   render() {
     const placeholder = 'New Collection Name';
     if(this.state.done){
