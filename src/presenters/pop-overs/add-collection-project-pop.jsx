@@ -85,11 +85,10 @@ class AddCollectionProjectPop extends React.Component {
     // check if the query is a URL or a name of a project
     // Project URL pattern: https://glitch.com/~power-port, https://power-port.glitch.me/, https://community.glitch.me/
     const httpsKeyword = "https://";
-    const glitchKeyword = "glitch";
+    const glitchKeyword = "glitch.me";
     let searchByUrl = false;
     let query = this.state.query;
     
-    // TO DO - search results needs to match URL exactly, not search only by project name extracted from URL
     if(this.state.query.includes(httpsKeyword) && this.state.query.includes(glitchKeyword)){
       searchByUrl = true;
       // get project domain
@@ -110,6 +109,7 @@ class AddCollectionProjectPop extends React.Component {
         }
       }
     }
+    
     console.log(`query: ${query}`);
     const request = this.props.api.get(`projects/search?q=${query}`);
     this.setState({ maybeRequest: request });
@@ -119,6 +119,7 @@ class AddCollectionProjectPop extends React.Component {
     console.log("results %O", results);
     
     console.log("this.props.collection.projects %O", this.props.collection.projects);
+    
     let nonCollectionResults = null;
     if(searchByUrl){
       let projectByDomain = results.filter(project => project.domain == query);
