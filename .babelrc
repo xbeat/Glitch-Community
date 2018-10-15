@@ -8,6 +8,6 @@
   ],
   "plugins": [
     "lodash",
-    "syntax-dynamic-import",
+    "@babel/syntax-dynamic-import",
   ],
 }
