@@ -12,7 +12,7 @@ const imgWitch = 'https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2F
 const ZineItem = ({title, url, feature_image, primary_tag}) => (
   <Link to={`/culture${url}`} className="zine-item">
     {!!feature_image && <div className="mask-container">
-      <img className="mask" src={feature_image}/>
+      <img className="mask" src={feature_image} alt=""/>
     </div>}
     <div className="zine-item-meta">
       <h1 className="zine-item-title">{title}</h1>
