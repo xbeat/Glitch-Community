@@ -70,7 +70,9 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
                   style={{backgroundColor: collection.coverColor, borderBottomColor:collection.coverColor}}>
                   <div className="collection-container">
                       <div className="collection-info">
-                        <img className="avatar" src={collection.avatarUrl}/>
+                        <div className="avatar-container">
+                          <img className="avatar" src={collection.avatarUrl}/>
+                        </div>
                         <div className="collection-name-description">
                             <div className="button">
                               <span className="project-badge private-project-badge" aria-label="private"></span>
