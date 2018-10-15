@@ -12,7 +12,7 @@ import UserResultItem from '../includes/user-result-item.jsx';
 
 import Notifications from '../notifications.jsx';
 
-const ProjectSearchResults = ({projects, collection, onClick, projectName}) => (
+const ProjectSearchResults = ({projects, collection, onClick, projectName, omittedProjectsCount}) => (
   (projects.length > 0 ? (
     <ul className="results">
       {projects.map(project => (
@@ -31,9 +31,9 @@ const ProjectSearchResults = ({projects, collection, onClick, projectName}) => (
     (projectName ? (
       <p className="results-empty">{projectName} is already in this collection <span role="img" aria-label="">💫</span></p>
       ): 
-    (<p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>)
-    )
+      <p className="results-empty">nothing found <span role="img" aria-label="">💫 </span> ({ommittedProjectsCount} > 0 && (<span>{omittedProjectsCount} search results already found in collection</span>)}</p>
    )           
+   )
 );
 
 ProjectSearchResults.propTypes = {
@@ -55,6 +55,7 @@ class AddCollectionProjectPop extends React.Component {
       maybeRequest: null, //The active request promise
       maybeResults: null, //Null means still waiting vs empty,
       projectName: '', // the project name if the search result is a Url
+      ommittedProjectCount: 0, // number of projects omitted from search
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -126,7 +127,9 @@ class AddCollectionProjectPop extends React.Component {
         this.setState({projectName: query});
       }else{
         // return results, filtering out any projects currently in collection
+        let originalNumResults = nonCollectionResults.length;
         nonCollectionResults = this.props.collection.projects.filter(project => project.domain == query);
+        this.setState({ommittedProjectsCount: originalNumResults - nonCollectionResults.length});
       }      
     }else{
       console.log('search by keyword');
@@ -172,7 +175,7 @@ class AddCollectionProjectPop extends React.Component {
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
           {!!this.state.maybeResults && 
-              <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName}/>
+              <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} ommittedProjectCount = {this.state.ommittedProjectCount}/>
           }
         </section>}
       </dialog>
