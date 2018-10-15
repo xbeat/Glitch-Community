@@ -12,7 +12,8 @@ import UserResultItem from '../includes/user-result-item.jsx';
 import Notifications from '../notifications.jsx';
 
 const ProjectSearchResults = ({projects, collection, onClick, projectName}) => (
-  (projects.length > 0) ? (
+  (projects.length > 0 && 
+   JSON.stringify(collection.projects.map( (project) => project.id).sort()) !== JSON.stringify(projects.map ( (project) => project.id).sort()) ? (
     <ul className="results">
       {projects.map(project => (
         (!collection.projects.map( (project) => project.id).includes(project.id) &&
@@ -32,6 +33,7 @@ const ProjectSearchResults = ({projects, collection, onClick, projectName}) => (
       ): 
     (<p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>)
     )
+   )           
 );
 
 ProjectSearchResults.propTypes = {
@@ -116,7 +118,7 @@ class AddCollectionProjectPop extends React.Component {
     const results = data.map(project => ProjectModel(project).asProps());
     console.log("results %O", results);
     
-    console.log("this.props.collection.projects %O", this.props.collection.projects);
+    // console.log("this.props.collection.projects %O", this.props.collection.projects);
     
     let nonCollectionResults = null;
     if(searchByUrl){
