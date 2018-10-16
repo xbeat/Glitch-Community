@@ -21,6 +21,7 @@ ProjectsList.propTypes = {
   title: PropTypes.node,
   placeholder: PropTypes.node,
   projectOptions: PropTypes.object.isRequired,
+  projectCount: PropTypes.number,
 };
 
 export const ProjectsUL = ({api, ...props}) => {
@@ -31,9 +32,8 @@ export const ProjectsUL = ({api, ...props}) => {
             <ProjectItem key={project.id} project={project} api={api} {...props}></ProjectItem>
         ))}
         
-        {/* The link to view all projects for collections on the homepage  TO DO show actual correct count of projects in categories*/}  
         {props.homepageCollection
-          && <a href={props.collectionUrl} className="collection-view-all">View all {props.projects.length} projects →</a>
+          && <a href={props.collectionUrl} className="collection-view-all">View all {props.projectCount} projects →</a>
         }
         
       </ul>

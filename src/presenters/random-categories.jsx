@@ -27,7 +27,7 @@ const Category = ({category, projectCount}) => {
         </span>
         <p className="category-description">{category.description}</p>
       </header>
-      <ProjectsUL {...ulProps}/>
+      <ProjectsUL {...ulProps} projectCount={projectCount}/>
     </article>
   );
 };
@@ -54,10 +54,10 @@ class CategoryLoader extends React.Component {
   async loadCategoryProjectCount(){
     console.log('loadCategoryProjectCount');
     this.state.categories.map( ({id}) => {
-      console.log(`id: ${id}`);
       this.props.api.get(`categories/${id}`)
         .then( ({data}) => {
           this.state.categoriesProjectCount.push(data.projects.length); 
+          this.setState({categoriesProjectCount: this.state.categoriesProjectCount});
         });  
     });
   }
@@ -72,7 +72,6 @@ class CategoryLoader extends React.Component {
     console.log("sampledCategories %O", sampledCategories);
     const categories = sampledCategories.map(({projects, ...category}) => {
       const sampledProjects = projects;
-      console.log("projects %O", projects);
       return {
         projects: sampledProjects.map(project => ProjectModel(project).update(project).asProps()),
         ...category,
