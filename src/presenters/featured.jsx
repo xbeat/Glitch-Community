@@ -10,11 +10,11 @@ const imgWitch = 'https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2F
 const ZineItems = () => (
   /* global ZINE_POSTS */
   <ul className="zine-items">
-    {ZINE_POSTS.map(({id, title, url, feature_image, primary_tag}) => (
+    {ZINE_POSTS.map(({id, title, url, feature_image, primary_tag}, n) => (
       <li key={id} className="zine-item">
         <Link to={`/culture${url}`}>
           {!!feature_image && <div className="mask-container">
-            <img className="mask" src={feature_image} alt=""/>
+            <img className={`mask mask-${n+1}`} src={feature_image} alt=""/>
           </div>}
           <div className="zine-item-meta">
             <h1 className="zine-item-title">{title}</h1>
