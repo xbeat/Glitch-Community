@@ -1,8 +1,9 @@
 const express = require('express');
 const fs = require('fs');
+const util = require('util');
 const moment = require('moment-mini');
 
-const {getProject, getTeam, getUser} = require('./api');
+const {getProject, getTeam, getUser, getZine} = require('./api');
 const constants = require('./constants');
 
 module.exports = function(external) {
@@ -33,23 +34,23 @@ module.exports = function(external) {
     return next();
   });
 
+  const readFilePromise = util.promisify(fs.readFile);
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
-
   async function render(res, title, description, image=imageDefault) {
     let built = true;
     
+    const zine = await getZine() || [];
+    
     let scripts = {};
     try {
-      const promise = new Promise((res, rej) => fs.readFileSync('public/scripts.json', (err, data) => {
-      });
-      scripts = JSON.parse();
+      scripts = JSON.parse(await readFilePromise('public/scripts.json'));
     } catch (error) {
       console.error("Failed to load script manifest");
       built = false;
     }
     let styles = {};
     try {
-      styles = JSON.parse(fs.readFileSync('public/styles.json'));
+      styles = JSON.parse(await readFilePromise('public/styles.json'));
     } catch (error) {
       console.error("Failed to load style manifest");
       built = false;
@@ -65,6 +66,7 @@ module.exports = function(external) {
       styles: Object.values(styles),
       BUILD_COMPLETE: built,
       EXTERNAL_ROUTES: JSON.stringify(external),
+      ZINE_POSTS: JSON.stringify(zine),
       PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
       ENVIRONMENT: process.env.NODE_ENV || "dev",
       ...constants,
