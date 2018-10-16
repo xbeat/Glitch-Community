@@ -121,7 +121,9 @@ const CollectionPageContents = ({
                 {if(!window.confirm(`Are you sure you want to delete your collection?`)){
                     return;
                 }
-                deleteCollection}} >
+                deleteCollection;
+                 // return to profile page
+                }} >
               Delete Collection
             </button>
             : null
