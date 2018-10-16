@@ -13,23 +13,21 @@ const projectCache = new Cache();
 const teamCache = new Cache();
 const userCache = new Cache();
 
+async function getFromApiSafely(api, id) {
+  try {
+    return (await api(id)) || NOT_FOUND;
+  } catch (error) {
+    return NOT_FOUND;
+  }
+}
+
 async function getFromCacheOrApi(id, cache, api, def=null) {
   let promise = cache.get(id);
   if (!promise) {
-    console.log('get');
-    promise = new Promise(async resolve => {
-      try {
-        resolve((await api(id)) || NOT_FOUND);
-      } catch (error) {
-        // Technically anything other than a 404 is a 'real' error
-        // but for our usage we can just go on as if it doesn't exist
-        resolve(NOT_FOUND);
-      }
-    });
+    promise = getFromApiSafely(api, id);
     cache.put(id, promise, CACHE_TIMEOUT);
   }
   const value = await promise;
-  console.log('done');
   return value !== NOT_FOUND ? value : def;
 }
 
