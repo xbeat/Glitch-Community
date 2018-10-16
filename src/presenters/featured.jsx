@@ -12,19 +12,19 @@ class ZineItems extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: ZINE_POSTS,
-      masks: sampleSize([1, 2, 3, 4, 5], ZINE_
+      posts: ZINE_POSTS.slice(0, 4),
+      masks: sampleSize([1, 2, 3, 4, 5], 4),
     };
   }
   render() {
     /* global ZINE_POSTS */
     return (
       <ul className="zine-items">
-        {ZINE_POSTS.map(({id, title, url, feature_image, primary_tag}, n) => (
+        {this.state.posts.map(({id, title, url, feature_image, primary_tag}, n) => (
           <li key={id} className="zine-item">
             <Link to={`/culture${url}`}>
               {!!feature_image && <div className="mask-container">
-                <img className={`mask mask-${this.state.}`} src={feature_image} alt=""/>
+                <img className={`mask mask-${this.state.masks[n]}`} src={feature_image} alt=""/>
               </div>}
               <div className="zine-item-meta">
                 <h1 className="zine-item-title">{title}</h1>
