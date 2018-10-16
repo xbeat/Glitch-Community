@@ -6,29 +6,24 @@ const moment = require("moment-mini");
 
 const {API_URL} = require("./constants");
 
-const NOT_FOUND = Symbol();
 const CACHE_TIMEOUT = moment.duration(15, 'minutes').asMilliseconds()
 
 const projectCache = new Cache();
 const teamCache = new Cache();
 const userCache = new Cache();
 
-async function getFromApiSafely(api, id) {
-  try {
-    return (await api(id)) || NOT_FOUND;
-  } catch (error) {
-    return NOT_FOUND;
-  }
-}
-
 async function getFromCacheOrApi(id, cache, api, def=null) {
   let promise = cache.get(id);
   if (!promise) {
-    promise = getFromApiSafely(api, id);
+    promise = api(id);
     cache.put(id, promise, CACHE_TIMEOUT);
   }
-  const value = await promise;
-  return value !== NOT_FOUND ? value : def;
+  try {
+    const value = await promise;
+    return value || def;
+  } catch (error) {
+    return def;
+  }
 }
 
 const api = axios.create({
@@ -37,20 +32,32 @@ const api = axios.create({
 });
 
 async function getProjectFromApi(domain) {
-  const response = await api.get(`/projects/${domain}`);
-  return response.data;
+  try {
+    const response = await api.get(`/projects/${domain}`);
+    return response.data;
+  } catch (error) {
+    return null;
+  }
 }
 
 async function getTeamFromApi(url) {
-  const response = await api.get(`/teams/byUrl/${url}`);
-  return response.data;
+  try {
+    const response = await api.get(`/teams/byUrl/${url}`);
+    return response.data;
+  } catch (error) {
+    return null;
+  }
 }
 
 async function getUserFromApi(login) {
-  const {data} = await api.get(`/userId/byLogin/${login}`);
-  if (data === 'NOT FOUND') return null;
-  const response = await api.get(`/users/${data}`);
-  return response.data;
+  try {
+    const {data} = await api.get(`/userId/byLogin/${login}`);
+    if (data === 'NOT FOUND') return null;
+    const response = await api.get(`/users/${data}`);
+    return response.data;
+  } catch (error) {
+    return null;
+  }
 }
 
 module.exports = {
