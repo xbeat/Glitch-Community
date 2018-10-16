@@ -116,7 +116,12 @@ const CollectionPageContents = ({
           )}
           
           {(isAuthorized
-            ? <button className={`button delete-collection button-tertiary`} onClick={deleteCollection} >
+            ? <button className={`button delete-collection button-tertiary`} 
+                onClick={() => 
+                {if(!window.confirm(`Are you sure you want to delete your collection?`)){
+                    return;
+                }
+                deleteCollection}} >
               Delete Collection
             </button>
             : null

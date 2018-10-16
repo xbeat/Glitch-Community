@@ -81,8 +81,6 @@ class CollectionEditor extends React.Component {
   }
   
   async deleteCollection(){
-    console.log('in delete collection from collection-editor');
-    // confirmation
     await this.props.api.delete(`/collections/${this.state.id}`);
   }
 
