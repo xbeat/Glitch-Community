@@ -12,12 +12,11 @@ class ZineItems extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: ZINE_POSTS.slice(0, 4),
+      posts: window.ZINE_POSTS.slice(0, 4),
       masks: sampleSize([1, 2, 3, 4, 5], 4),
     };
   }
   render() {
-    /* global ZINE_POSTS */
     return (
       <ul className="zine-items">
         {this.state.posts.map(({id, title, url, feature_image, primary_tag}, n) => (
