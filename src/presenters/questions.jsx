@@ -41,8 +41,7 @@ class Questions extends React.Component {
     this.setState({loading: true});
     try {
       const {data} = await this.props.api.get('projects/questions');
-      const questions = data.filter(q => !!q.details && q.details !== 'null').slice(0, this.props.max).map(({details}) => {
-        const question = JSON.parse(details);
+      const questions = data.map(q => JSON.parse(q.details)).filter(q => !!q).slice(0, this.props.max).map(question => {
         const [colorInner, colorOuter] = randomColor({luminosity: 'light', count: 2});
         return {colorInner, colorOuter, ...question};
       });
