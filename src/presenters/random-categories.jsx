@@ -6,12 +6,13 @@ import ProjectModel from '../models/project';
 
 import {ProjectsUL} from './projects-list.jsx';
 
-const Category = ({category}) => {
+const Category = ({category, projectCount}) => {
   const ulProps = {
     projects: category.projects||[],
     categoryColor: category.color,
     homepageCollection: true,
-    collectionUrl: category.url
+    collectionUrl: category.url,
+    projectCount: projectCount,
   };
   return (
     <article className="projects" style={{backgroundColor: category.backgroundColor}}>
@@ -51,10 +52,14 @@ class CategoryLoader extends React.Component {
   }
   
   async loadCategoryProjectCount(){
+    console.log('loadCategoryProjectCount');
     this.state.categories.map( ({id}) => {
-      this.props.api.get(`categories/${id}`).then( ({data}) => this.props.categoriesProjectCount.push(data.projects.length) );  
+      console.log(`id: ${id}`);
+      this.props.api.get(`categories/${id}`)
+        .then( ({data}) => {
+          this.state.categoriesProjectCount.push(data.projects.length); 
+        });  
     });
-    console.log("this.state
   }
   
   async loadCategories() {
@@ -74,16 +79,16 @@ class CategoryLoader extends React.Component {
       };
     });
     this.setState({categories});
+    this.loadCategoryProjectCount();
   }
   
   componentDidMount() {
     this.loadCategories();
-    this.loadCategoryProjectCount();
   }
   
   render() {
-    return this.state.categories.map((category) => (
-      <Category key={category.id} category={category}/>
+    return this.state.categories.map((category, index) => (
+      <Category key={category.id} category={category} projectCount={this.state.categoriesProjectCount[index]}/>
     ));
   }
 }
