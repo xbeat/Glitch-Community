@@ -14,7 +14,7 @@ const ZineItems = () => (
       <li key={id} className="zine-item">
         <Link to={`/culture${url}`}>
           {!!feature_image && <div className="mask-container">
-            <img className="mask" src={`//culture-zine.glitch.me${feature_image}`} alt=""/>
+            <img className="mask" src={feature_image} alt=""/>
           </div>}
           <div className="zine-item-meta">
             <h1 className="zine-item-title">{title}</h1>
