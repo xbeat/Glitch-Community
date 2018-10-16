@@ -17,7 +17,7 @@ const Category = ({category}) => {
     <article className="projects" style={{backgroundColor: category.backgroundColor}}>
       <header className="category">
         <a className="category-name" href={category.url}>
-          <h2>{category.name} <span className="arrow">→</span></h2>
+          <h2>{category.name} </h2>
         </a>
         <span className="category-image-container">
           <a className="category-image" href={category.url}>
@@ -53,11 +53,11 @@ class CategoryLoader extends React.Component {
     // The API gives us a json blob with all of the categories, but only
     // the 'projects' field on 3 of them.  If the field is present,
     // then it's an array of projects.
-    const {data} = await this.props.api.get('categories/random?numCategories=3&projectsPerCategory=3');
+    const {data} = await this.props.api.get('categories/random?numCategories=3');
     const categoriesWithProjects = data.filter(category => !!category.projects);
     const sampledCategories = sampleSize(categoriesWithProjects, 3);
     const categories = sampledCategories.map(({projects, ...category}) => {
-      const sampledProjects = sampleSize(projects, 3);
+      const sampledProjects = projects;
       return {
         projects: sampledProjects.map(project => ProjectModel(project).update(project).asProps()),
         ...category,
