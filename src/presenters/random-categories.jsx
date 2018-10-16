@@ -46,11 +46,15 @@ class CategoryLoader extends React.Component {
     super(props);
     this.state = {
       categories: [],
+      categoriesProjectCount: []
     };
   }
   
-  async loadCategoryProjectCount(categoryId){
-    // const {data} = await this.props.api.get('categories/
+  async loadCategoryProjectCount(){
+    this.state.categories.map( ({id}) => {
+      this.props.api.get(`categories/${id}`).then( ({data}) => this.props.categoriesProjectCount.push(data.projects.length) );  
+    });
+    console.log("this.state
   }
   
   async loadCategories() {
@@ -74,6 +78,7 @@ class CategoryLoader extends React.Component {
   
   componentDidMount() {
     this.loadCategories();
+    this.loadCategoryProjectCount();
   }
   
   render() {
