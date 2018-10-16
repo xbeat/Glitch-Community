@@ -8,6 +8,7 @@ const {API_URL} = require("./constants");
 
 const CACHE_TIMEOUT = moment.duration(15, 'minutes').asMilliseconds()
 
+const generalCache = new Cache();
 const projectCache = new Cache();
 const teamCache = new Cache();
 const userCache = new Cache();
@@ -69,8 +70,16 @@ async function getUserFromApi(login) {
   }
 }
 
+async function getCultureZinePosts() {
+  const client = 'client_id=ghost-frontend&client_secret=c9a97f14ced8';
+  const params = 'filter=featured:true&limit=4&fields=id,title,url,feature_image,primary_tag&include=tags';
+  const response = await api.get(`https://culture-zine.glitch.me/culture/ghost/api/v0.1/posts/?${client}&${params}`);
+  return response.data.posts;
+}
+
 module.exports = {
   getProject: domain => getFromCacheOrApi(domain, projectCache, getProjectFromApi),
   getTeam: url => getFromCacheOrApi(url, teamCache, getTeamFromApi),
   getUser: login => getFromCacheOrApi(login, userCache, getUserFromApi),
+  getZine: () => getFromCacheOrApi('culture', generalCache, getCultureZinePosts),
 };

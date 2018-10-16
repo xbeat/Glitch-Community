@@ -35,12 +35,14 @@ module.exports = function(external) {
 
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
 
-  function render(res, title, description, image=imageDefault) {
+  async function render(res, title, description, image=imageDefault) {
     let built = true;
     
     let scripts = {};
     try {
-      scripts = JSON.parse(fs.readFileSync('public/scripts.json'));
+      const promise = new Promise((res, rej) => fs.readFileSync('public/scripts.json', (err, data) => {
+      });
+      scripts = JSON.parse();
     } catch (error) {
       console.error("Failed to load script manifest");
       built = false;
@@ -75,27 +77,30 @@ module.exports = function(external) {
     const {domain} = req.params;
     const project = await getProject(domain);
     if (!project) {
-      return render(res, domain, `We couldn't find ~${domain}`);
+      await render(res, domain, `We couldn't find ~${domain}`);
+      return;
     }
     const avatar = `${CDN_URL}/project-avatar/${project.id}.png`;
-    render(res, domain, project.description, avatar);
+    await render(res, domain, project.description, avatar);
   });
 
   app.get('/@:name', async (req, res) => {
     const {name} = req.params;
     const team = await getTeam(name);
     if (team) {
-      return render(res, team.name, team.description);
+      await render(res, team.name, team.description);
+      return;
     }
     const user = await getUser(name);
     if (user) {
-      return render(res, user.name || `@${user.login}`, user.description, user.avatarThumbnailUrl);
+      await render(res, user.name || `@${user.login}`, user.description, user.avatarThumbnailUrl);
+      return;
     }
-    return render(res, `@${name}`, `We couldn't find @${name}`);
+    await render(res, `@${name}`, `We couldn't find @${name}`);
   });
 
-  app.get('*', (req, res) => {
-    render(res,
+  app.get('*', async (req, res) => {
+    await render(res,
       "Glitch",
       "The friendly community where everyone can discover & create the best stuff on the web");
   });
