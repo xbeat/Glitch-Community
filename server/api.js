@@ -12,7 +12,7 @@ const projectCache = new Cache();
 const teamCache = new Cache();
 const userCache = new Cache();
 
-async function getFromCacheOrApi(id, cache, api, def=null) {
+async function getFromCacheOrApi(id, cache, api) {
   let promise = cache.get(id);
   if (!promise) {
     promise = api(id);
@@ -20,9 +20,9 @@ async function getFromCacheOrApi(id, cache, api, def=null) {
   }
   try {
     const value = await promise;
-    return value || def;
+    return value;
   } catch (error) {
-    return def;
+    return null;
   }
 }
 
@@ -36,7 +36,10 @@ async function getProjectFromApi(domain) {
     const response = await api.get(`/projects/${domain}`);
     return response.data;
   } catch (error) {
-    return null;
+    if (error.response && error.response.status === 404) {
+      return null;
+    }
+    throw error;
   }
 }
 
@@ -45,7 +48,10 @@ async function getTeamFromApi(url) {
     const response = await api.get(`/teams/byUrl/${url}`);
     return response.data;
   } catch (error) {
-    return null;
+    if (error.response && error.response.status === 404) {
+      return null;
+    }
+    throw error;
   }
 }
 
@@ -56,7 +62,10 @@ async function getUserFromApi(login) {
     const response = await api.get(`/users/${data}`);
     return response.data;
   } catch (error) {
-    return null;
+    if (error.response && error.response.status === 404) {
+      return null;
+    }
+    throw error;
   }
 }
 
