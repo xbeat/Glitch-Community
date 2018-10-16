@@ -12,7 +12,7 @@ import UserResultItem from '../includes/user-result-item.jsx';
 
 import Notifications from '../notifications.jsx';
 
-const ProjectSearchResults = ({projects, collection, onClick, projectName, omittedProjectsCount}) => (
+const ProjectSearchResults = ({projects, collection, onClick, projectName, excludedProjectsCount}) => (
   (projects.length > 0 ? (
     <ul className="results">
       {projects.map(project => (
@@ -31,7 +31,7 @@ const ProjectSearchResults = ({projects, collection, onClick, projectName, omitt
     (projectName 
      ? <p className="results-empty">{projectName} is already in this collection <span role="img" aria-label="">💫</span></p>
      : <p className="results-empty">nothing found <span role="img" aria-label="">💫</span><br/>
-       {omittedProjectsCount > 0 && <span>(Omitted {omittedProjectsCount} search results already found in collection)</span>}
+       {excludedProjectsCount > 0 && <span>(Excluded {excludedProjectsCount} search results already found in collection)</span>}
       </p>
      )           
    )
@@ -144,8 +144,8 @@ class AddCollectionProjectPop extends React.Component {
     }
     console.log("nonCollectionResults: %O", nonCollectionResults);
     
-    this.setState({omittedProjectsCount: originalNumResults - nonCollectionResults.length});
-    console.log(`omittedProjectsCount: ${this.state.omittedProjectsCount}`);
+    this.setState({excludedProjectsCount: originalNumResults - nonCollectionResults.length});
+    console.log(`excludedProjectsCount: ${this.state.excludedProjectsCount}`);
 
     this.setState(({ maybeRequest }) => {
     return (request === maybeRequest) ? {
@@ -182,7 +182,7 @@ class AddCollectionProjectPop extends React.Component {
         {!!this.state.query && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
           {!!this.state.maybeResults && 
-              <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} omittedProjectsCount={this.state.omittedProjectsCount}/>
+              <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} excludedProjectsCount={this.state.excludedProjectsCount}/>
           }
         </section>}
       </dialog>
