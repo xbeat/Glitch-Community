@@ -22,7 +22,6 @@ import PopoverContainer from '../pop-overs/popover-container.jsx';
 import AddCollectionProject from '../includes/add-collection-project.jsx';
 import AddCollectionAvatar from '../includes/add-collection-avatar.jsx';
 
-import EditCollectionName from '../includes/edit-collection-name.jsx';
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
 import {hexToRgbA, getContrastTextColor} from '../../models/collection.js'; 
@@ -78,7 +77,7 @@ const CollectionPageContents = ({
   currentUser,
   deleteCollection,
   isAuthorized, 
-  updateNameAndUrl, 
+  updateName, 
   updateDescription, 
   projectOptions, 
   uploadAvatar, 
@@ -100,14 +99,13 @@ const CollectionPageContents = ({
           <h1 className="collection-name">
             {(isAuthorized
               ? <EditableField
-                name={collection.name}
-                url={collection.url}
-                update={({name, url}) => updateNameAndUrl(name, url).then(() => syncPageToUrl(collection.user.login, url))}
-                owner={collection.user.login}
+                value={collection.name}
+                update={name => updateName(name).then(() => syncPageToUrl(collection.user.login, collection.url))}
                 placeholder="Name your collection"/> 
               : collection.name
             )}
           </h1>
+          <p>{getLink(collection.user.login, collection.url)}</p>
           <div className="collection-image-container">
             <img src={collection.avatarUrl} alt=""/>
           </div>
