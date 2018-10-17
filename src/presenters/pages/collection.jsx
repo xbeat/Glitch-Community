@@ -21,7 +21,7 @@ import AddCollectionAvatar from '../includes/add-collection-avatar.jsx';
 
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
-import {hexToRgbA, avatars} from '../../models/collection.js'; 
+import {hexToRgbA} from '../../models/collection.js'; 
 
 import {UserTile} from '../users-list.jsx';
 

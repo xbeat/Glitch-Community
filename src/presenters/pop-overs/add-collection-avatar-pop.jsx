@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
-import {avatars} from '../../models/collection.js'; 
+import {avatars, avatarsGreyscale} from '../../models/collection.js'; 
 
 class AddCollectionAvatarPop extends React.Component {
   constructor(props) {
@@ -26,8 +26,8 @@ class AddCollectionAvatarPop extends React.Component {
   onClick(type) {
     // console.log(`toggling popover for ${type}`);
     // change the avatar on the page
-    this.setState({avatar: avatars[type]});
-    this.update(avatars[type]);
+    this.setState({avatar: avatarsGreyscale[type]});
+    this.update(avatarsGreyscale[type]);
     
     // toggle the pop-over
     this.props.togglePopover();      
@@ -38,9 +38,9 @@ class AddCollectionAvatarPop extends React.Component {
     return (
       <dialog className="pop-over add-collection-avatar-pop wide-pop">
         <section className="pop-over-info">
-          { Object.keys(avatars).map( type => (
+          { Object.keys(avatarsGreyscale).map( type => (
             <button className="collection-avatar button-tertiary" onClick={() => this.onClick(type)}>
-              <img src={avatars[type]} alt={type}/>
+              <img src={avatarsGreyscale[type]} alt={type}/>
             </button>
           )) }
         </section>

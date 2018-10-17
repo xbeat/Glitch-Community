@@ -17,6 +17,15 @@ export const avatars = {
   music: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fmusic.svg?1502555440002",
 };
 
+export const avatarsGreyscale = {
+  computer: "https://cdn.hyperdev.com/us-east-1%3Acba180f4-ee65-4dfc-8dd5-f143280d3c10%2Fcomputer.svg",
+  game: "https://cdn.hyperdev.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Ftetris.svg",
+  robot: "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fbot.svg?1539798975196",
+  hardware: "https://cdn.gomix.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fhardware.svg",
+  art: "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fart.svg?1539798949311",
+  music: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fmusic.svg?1502555440002",
+};
+
 export const hexToRgbA = (hex) => {
   var c;
   if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
