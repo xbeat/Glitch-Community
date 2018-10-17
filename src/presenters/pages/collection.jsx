@@ -15,6 +15,7 @@ import Categories from '../categories.jsx';
 import NotFound from '../includes/not-found.jsx';
 
 import {AuthDescription} from '../includes/description-field.jsx';
+import EditableField from '../includes/editable-field.jsx';
 import CollectionEditor from '../collection-editor.jsx';
 
 import PopoverContainer from '../pop-overs/popover-container.jsx';
@@ -42,33 +43,33 @@ class DeleteCollectionBtn extends React.Component {
     this.state ={
       done: false,
     }
-  }
-    
-    render(){
-      if(this.state.done){
-        return <Redirect to=".."/>;
-      }else{
-        return (
-          <button className={`button delete-collection button-tertiary`} 
-            onClick={() => 
-              { 
-                console.log('clicked delete collection');
-                if(!window.confirm(`Are you sure you want to delete your collection?`)){
-                  return;
-                }
-                console.log('delete collection');
-                this.props.deleteCollection;
-                this.setState({done: true});
-            }} >
-          Delete Collection
-        </button>
-        );
-      }
+  } 
+  render(){
+    if(this.state.done){
+      return <Redirect to={`/@${this.props.currentUserLogin}`} />;
+    }else{
+      return (
+        <button className={`button delete-collection button-tertiary`} 
+          onClick={() => 
+            { 
+              console.log('clicked delete collection');
+              if(!window.confirm(`Are you sure you want to delete your collection?`)){
+                return;
+              }
+              console.log('delete collection');
+              this.props.deleteCollection();
+              this.setState({done: true});
+          }} >
+        Delete Collection
+      </button>
+      );
     }
   }
+}
 
 DeleteCollectionBtn.propTypes = {
   deleteCollection: PropTypes.func.isRequired,
+  currentUserLogin:PropTypes.string.isRequired,
 };
 
 const CollectionPageContents = ({
@@ -96,15 +97,17 @@ const CollectionPageContents = ({
       <article className="projects" style={{backgroundColor: hexToRgbA(collection.coverColor)}}>
         <header className="collection">
           <UserTile {...collection.user}/>
-          {(isAuthorized
-            ? <EditCollectionName
-              name={collection.name}
-              url={collection.url}
-              update={({name, url}) => updateNameAndUrl(name, url).then(() => syncPageToUrl(collection.user.login, url))}
-              owner={collection.user.login}
-              placeholder="Name your collection"/> 
-            : <h1 className="collection-name">{collection.name}</h1>
-          )}
+          <h1 className="collection-name">
+            {(isAuthorized
+              ? <EditableField
+                name={collection.name}
+                url={collection.url}
+                update={({name, url}) => updateNameAndUrl(name, url).then(() => syncPageToUrl(collection.user.login, url))}
+                owner={collection.user.login}
+                placeholder="Name your collection"/> 
+              : collection.name
+            )}
+          </h1>
           <div className="collection-image-container">
             <img src={collection.avatarUrl} alt=""/>
           </div>
@@ -140,7 +143,7 @@ const CollectionPageContents = ({
           )}
           
           {(isAuthorized
-            ? <DeleteCollectionBtn deleteCollection={deleteCollection}/>
+            ? <DeleteCollectionBtn deleteCollection={deleteCollection} currentUserLogin={userLogin}/>
             : null
           )}
           
