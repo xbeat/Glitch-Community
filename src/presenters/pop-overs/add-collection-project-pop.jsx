@@ -76,7 +76,7 @@ class AddCollectionProjectPop extends React.Component {
   }
   
   clearSearch() {
-    console.log('clear search');
+    // console.log('clear search');
     this.setState({
       maybeRequest: null,
       maybeResults: null,
@@ -109,16 +109,16 @@ class AddCollectionProjectPop extends React.Component {
       }
     }
     
-    console.log(`query: ${query}`);
+    // console.log(`query: ${query}`);
     const request = this.props.api.get(`projects/search?q=${query}`);
     this.setState({ maybeRequest: request });
     
     const {data} = await request;
     const results = data.map(project => ProjectModel(project).asProps()); 
-    console.log("results %O", results);
+    // console.log("results %O", results);
     let originalNumResults = results.length;
     
-    console.log("this.props.collection.projects %O", this.props.collection.projects);
+    // console.log("this.props.collection.projects %O", this.props.collection.projects);
     
     let nonCollectionResults = null;
     if(searchByUrl){  
@@ -132,17 +132,17 @@ class AddCollectionProjectPop extends React.Component {
         nonCollectionResults = this.props.collection.projects.filter(project => project.domain == query);
       }      
     }else{
-      console.log('search by keyword');
+      // console.log('search by keyword');
       // user is searching by project name or URL  - filter out any projects currently in the collection
       let collectionProjectIds = this.props.collection.projects.map( (project) => project.id);
-      console.log("collectionProjectIds: %O", collectionProjectIds);
+      // console.log("collectionProjectIds: %O", collectionProjectIds);
       nonCollectionResults = results.filter( result => !collectionProjectIds.includes(result.id));
       
       if(this.props.collection.projects.map( (project) => project.domain).includes(query) && nonCollectionResults.length == originalNumResults){
         this.setState({projectName: query});
       }
     }
-    console.log("nonCollectionResults: %O", nonCollectionResults);
+    // console.log("nonCollectionResults: %O", nonCollectionResults);
     
     this.setState({excludedProjectsCount: originalNumResults - nonCollectionResults.length});
     console.log(`excludedProjectsCount: ${this.state.excludedProjectsCount}`);
