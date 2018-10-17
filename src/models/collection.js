@@ -7,10 +7,6 @@ export const colors = {pink: "#FFA3BB", orange: "#FBA058", yellow: "#FCF3AF", gr
 export const avatars = {
   computer: "https://cdn.hyperdev.com/us-east-1%3Acba180f4-ee65-4dfc-8dd5-f143280d3c10%2Fcomputer.svg",
   tetris: "https://cdn.hyperdev.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Ftetris.svg",
-  shapes: "https://cdn.hyperdev.com/0a15009e-17ee-4915-bc29-5ba03bb09517%2Fshapes.svg",
-  education: "https://cdn.hyperdev.com/us-east-1%3Acba180f4-ee65-4dfc-8dd5-f143280d3c10%2Feducation.svg",
-  coffee: "https://cdn.hyperdev.com/0a15009e-17ee-4915-bc29-5ba03bb09517%2Fcoffee.svg",
-  diamond: "https://cdn.hyperdev.com/us-east-1%3Acba180f4-ee65-4dfc-8dd5-f143280d3c10%2Fdiamond.svg",
   robot: "https://cdn.hyperdev.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Frobot.svg",
   hardware: "https://cdn.gomix.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fhardware.svg",
   art: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fart.svg?1499357014248",
@@ -20,9 +16,9 @@ export const avatars = {
 export const avatarsGreyscale = {
   computer: "https://cdn.hyperdev.com/us-east-1%3Acba180f4-ee65-4dfc-8dd5-f143280d3c10%2Fcomputer.svg",
   game: "https://cdn.hyperdev.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Ftetris.svg",
-  robot: "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fbot.svg?1539798975196",
+  robot: "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fbot%20copy.svg?1539799361796",
   hardware: "https://cdn.gomix.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fhardware.svg",
-  art: "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fart.svg?1539798949311",
+  art: "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fart%20copy.svg?1539799343032",
   music: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fmusic.svg?1502555440002",
 };
 

@@ -20,8 +20,12 @@ export const CollectionsList = ({title, collections, placeholder, deleteCollecti
     )}
     
     {( isAuthorized 
-      ? <CreateCollectionButton api={api}/>   
-      : null      
+      ? 
+        ( collections.length > 0 
+           ? <CreateCollectionButton api={api}/>   
+           : <CreateFirstCollection api={api}/>
+        )
+      : null
     )}
 
     <CollectionsUL {...{collections, deleteCollection, api, isAuthorized}}></CollectionsUL>
@@ -41,6 +45,10 @@ CollectionsList.propTypes = {
 // TO DO: ensure that the user doesn't already have a collection with this name
 async function validate(name){
   return true
+}
+
+class CreateFirstCollection {
+  
 }
 
 class CreateCollectionButton extends React.Component{
