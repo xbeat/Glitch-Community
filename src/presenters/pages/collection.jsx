@@ -46,16 +46,19 @@ class DeleteCollectionBtn extends React.Component {
     
     render(){
       if(this.state.done){
-        return <Redirect to="/"/>;
+        return <Redirect to=".."/>;
       }else{
         return (
           <button className={`button delete-collection button-tertiary`} 
             onClick={() => 
-            {if(!window.confirm(`Are you sure you want to delete your collection?`)){
-                return;
-            }
-            deleteCollection;
-             // return to profile page
+              { 
+                console.log('clicked delete collection');
+                if(!window.confirm(`Are you sure you want to delete your collection?`)){
+                  return;
+                }
+                console.log('delete collection');
+                this.props.deleteCollection;
+                this.setState({done: true});
             }} >
           Delete Collection
         </button>
@@ -64,13 +67,17 @@ class DeleteCollectionBtn extends React.Component {
     }
   }
 
+DeleteCollectionBtn.propTypes = {
+  deleteCollection: PropTypes.func.isRequired,
+};
+
 const CollectionPageContents = ({
   api, 
   collection, 
   currentUser,
   deleteCollection,
   isAuthorized, 
-  updateName, 
+  updateNameAndUrl, 
   updateDescription, 
   projectOptions, 
   uploadAvatar, 
@@ -93,7 +100,7 @@ const CollectionPageContents = ({
             ? <EditCollectionName
               name={collection.name}
               url={collection.url}
-              update={name => updateName(name).then(() => syncPageToUrl(collection.user.login, collection.url))}
+              update={({name, url}) => updateNameAndUrl(name, url).then(() => syncPageToUrl(collection.user.login, url))}
               owner={collection.user.login}
               placeholder="Name your collection"/> 
             : <h1 className="collection-name">{collection.name}</h1>
@@ -133,17 +140,7 @@ const CollectionPageContents = ({
           )}
           
           {(isAuthorized
-            ? <DeleteCollectionBtn
-            <button className={`button delete-collection button-tertiary`} 
-                onClick={() => 
-                {if(!window.confirm(`Are you sure you want to delete your collection?`)){
-                    return;
-                }
-                deleteCollection;
-                 // return to profile page
-                }} >
-              Delete Collection
-            </button>
+            ? <DeleteCollectionBtn deleteCollection={deleteCollection}/>
             : null
           )}
           
