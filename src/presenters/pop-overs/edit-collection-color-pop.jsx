@@ -19,7 +19,6 @@ class EditCollectionColorPop extends React.Component {
     this.state = {
       query: '', //The hex value entered into search
       color: null,
-      initialColor: this.props.initialColor,
       maybeRequest: null,
       maybeResults: null
     };
@@ -67,7 +66,7 @@ class EditCollectionColorPop extends React.Component {
         <section className="pop-over-info">
           
           {Object.keys(colors).map((key => 
-            <button className="button-tertiary" key={key}
+            <button className={"button-tertiary " + ( (colors[key] == this.props.initialColor) ? "active" : "")} key={key}
               style={{backgroundColor: colors[key]}} 
               onClick={evt => {
                 console.log(`set color to ${colors[key]}`);
@@ -80,7 +79,11 @@ class EditCollectionColorPop extends React.Component {
           <hr/>
           
           <input id="color-picker" 
-            value={this.state.query} 
+            value={(this.state.query 
+                    ? this.state.query 
+                    : (Object.values(colors).includes(this.props.initialColor) 
+                            ? ""
+                            : this.props.initialColor))} 
             onChange={this.handleChange} 
             onKeyPress={this.keyPress}
             className="pop-over-input pop-over-search"
