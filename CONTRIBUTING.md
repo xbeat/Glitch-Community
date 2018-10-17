@@ -90,13 +90,13 @@ _(Don't have permission to push to github? You'll need to first [Fork](https://b
 
 In your local repository,
  ```
-   # Make sure we're on the right branch
+   # 1. Make sure we're on the right branch
    git checkout my-remix 
    
-  # Pull from Glitch into your local branch.
+  # 2. Pull from Glitch into your local branch.
    git pull my-remix master
    
-  # Update the PR in Github
+  # 3. Update the PR in Github
    git push origin my-remix
  ``` 
 
