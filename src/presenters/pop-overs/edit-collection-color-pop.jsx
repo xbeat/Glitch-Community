@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
-import {colors} from '../../models/collection.js';
+import {colors, getContrastTextColor} from '../../models/collection.js';
 
 const validHex = (hex) =>{
   var re = /[0-9A-Fa-f]{6}/g;
@@ -68,14 +68,11 @@ class EditCollectionColorPop extends React.Component {
     
     return (
       <dialog className="pop-over edit-collection-color-pop">
-        <section className="pop-over-info">
-          <div>{this.hasCustomColor()}</div>
-          
+        <section className="pop-over-info">          
           {Object.keys(colors).map((key => 
             <button className={"button-tertiary " + ( (colors[key] == this.props.initialColor) ? "active" : "")} key={key}
               style={{backgroundColor: colors[key]}} 
               onClick={evt => {
-                console.log(`set color to ${colors[key]}`);
                 this.setState({ color: colors[key] });
                 this.update(colors[key]);
               }}
@@ -84,7 +81,7 @@ class EditCollectionColorPop extends React.Component {
           
           <hr/>
           
-          <input id="color-picker" className={(this.hasCustomColor() ? "active" : "")}
+          <input id="color-picker"
             value={(this.state.query 
                     ? this.state.query 
                     : this.hasCustomColor() 
@@ -92,7 +89,7 @@ class EditCollectionColorPop extends React.Component {
                             : "")} 
             onChange={this.handleChange} 
             onKeyPress={this.keyPress}
-            className="pop-over-input pop-over-search"
+            className={"pop-over-input pop-over-search " + (this.hasCustomColor() ? "active" : "") }
             placeholder="Custom color hex"
           />
           

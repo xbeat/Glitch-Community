@@ -135,14 +135,14 @@ const CollectionPageContents = ({
           
                   {(collection.projects.length > 0 ?
                     (isAuthorized
-                      ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} categoryColor={collection.coverColor}
+                      ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor}
                       projectOptions={{
                         removeProjectFromCollection,
                         addProjectToCollection,
                       }} 
                       {...props}/>
 
-                      : <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} categoryColor={collection.coverColor} 
+                      : <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
                       projectOptions={{
                         addProjectToCollection
                       }} 

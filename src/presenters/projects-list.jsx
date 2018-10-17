@@ -48,7 +48,7 @@ ProjectsUL.propTypes = {
   currentUser: PropTypes.object,
   projects: PropTypes.array.isRequired,
   projectOptions: PropTypes.object,
-  categoryColor: PropTypes.string,
+  collectionColor: PropTypes.string,
   homepageCollection: PropTypes.bool,
   collectionUrl: PropTypes.string,
 };
