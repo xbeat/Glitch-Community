@@ -22,12 +22,12 @@ const Category = ({category, projectCount}) => {
         </a>
         <span className="category-image-container">
           <a className="category-image" href={category.url}>
-            <img  height="80px" width="120px" src={category.avatarUrl} alt={category.name} />
+            <img height="80px" width="120px" src={category.avatarUrl} alt={category.name} />
           </a>
         </span>
         <p className="category-description">{category.description}</p>
       </header>
-      <ProjectsUL {...ulProps} projectCount={projectCount}/>
+      <ProjectsUL {...ulProps} projectCount={projectCount} collectionColor={category.color}/>
     </article>
   );
 };

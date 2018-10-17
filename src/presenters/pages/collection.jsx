@@ -288,7 +288,7 @@ async function loadCollection(api, userLogin, collectionName){
   const collection = await getCollection(api, collectionId);
   // console.log(`${collection}`);
   
-  console.log("load collection %O", collection);
+  // console.log("load collection %O", collection);
   
   return collection;
 }  
