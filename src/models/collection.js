@@ -22,7 +22,7 @@ export const avatarsGreyscale = {
   music: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fmusic.svg?1502555440002",
 };
 
-function getContrastTextColor(hexcolor){
+export const getContrastTextColor = (hexcolor) =>{
     // remove #
     hexcolor = hexcolor.substring(hexcolor.indexOf("#") +1);
     var r = parseInt(hexcolor.substr(0,2),16);

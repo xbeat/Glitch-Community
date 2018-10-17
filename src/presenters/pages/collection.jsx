@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {Redirect} from 'react-router-dom';
+
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
 import ProjectModel from '../../models/project';
+import {getLink} from '../../models/collection';
 
 import Loader, {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
@@ -21,7 +24,7 @@ import AddCollectionAvatar from '../includes/add-collection-avatar.jsx';
 import EditCollectionName from '../includes/edit-collection-name.jsx';
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
-import {hexToRgbA} from '../../models/collection.js'; 
+import {hexToRgbA, getContrastTextColor} from '../../models/collection.js'; 
 
 import {UserTile} from '../users-list.jsx';
 
@@ -29,15 +32,37 @@ import {CurrentUserConsumer} from '../current-user.jsx';
 
 import _ from 'lodash';
 
-const CollectionNameField = ({name, update, ...props}) => (
-  <OptimisticValue value={name} update={update} resetOnError={false}>
-    {valueProps => <React.Fragment>
-      <h1 className="collection-name">
-        <PureEditableField {...props} {...valueProps}/>
-      </h1>
-    </React.Fragment>}
-  </OptimisticValue>
-);
+function syncPageToUrl(owner, url) {
+  history.replaceState(null, null, getLink(owner, url));
+}
+
+class DeleteCollectionBtn extends React.Component {
+  constructor(props){
+    super(props);
+    this.state ={
+      done: false,
+    }
+  }
+    
+    render(){
+      if(this.state.done){
+        return <Redirect to="/"/>;
+      }else{
+        return (
+          <button className={`button delete-collection button-tertiary`} 
+            onClick={() => 
+            {if(!window.confirm(`Are you sure you want to delete your collection?`)){
+                return;
+            }
+            deleteCollection;
+             // return to profile page
+            }} >
+          Delete Collection
+        </button>
+        );
+      }
+    }
+  }
 
 const CollectionPageContents = ({
   api, 
@@ -67,7 +92,9 @@ const CollectionPageContents = ({
           {(isAuthorized
             ? <EditCollectionName
               name={collection.name}
-              update={updateName}
+              url={collection.url}
+              update={name => updateName(name).then(() => syncPageToUrl(collection.user.login, collection.url))}
+              owner={collection.user.login}
               placeholder="Name your collection"/> 
             : <h1 className="collection-name">{collection.name}</h1>
           )}
@@ -106,7 +133,8 @@ const CollectionPageContents = ({
           )}
           
           {(isAuthorized
-            ? <button className={`button delete-collection button-tertiary`} 
+            ? <DeleteCollectionBtn
+            <button className={`button delete-collection button-tertiary`} 
                 onClick={() => 
                 {if(!window.confirm(`Are you sure you want to delete your collection?`)){
                     return;
@@ -157,7 +185,7 @@ const CollectionPageContents = ({
                       {...props}/>
                     )
                     :
-                    <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor}}>
+                    <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor, color: getContrastTextColor(collection.coverColor)}}>
                         Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
                       </div>
                     )}

@@ -12,7 +12,7 @@ export const EditCollectionName = ({name, url, update, owner, ...props}) => (
       <h1 className="collection-name">
         <PureEditableField {...props} {...valueProps}/>
       </h1>
-      <p>{getLink(</p>
+      <p>{getLink(owner, url)}</p>
     </React.Fragment>}
   </OptimisticValue>
 );

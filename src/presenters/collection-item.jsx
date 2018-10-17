@@ -23,7 +23,7 @@ const ProjectsPreview = ({projects, color}) => {
         { projects.slice(0,3).map(project => (
           <div className="project-container" style={{backgroundColor: color}}>
             <img className="avatar" src={getAvatarUrl(project.id)}/>
-            <div className="project-name">{project.domain}</div>
+            <div className="project-name" style={{color: getContrastTextColor(color)}}>{project.domain}</div>
           </div>
         )) }
       </div>
@@ -36,6 +36,7 @@ const ProjectsPreview = ({projects, color}) => {
 
 ProjectsPreview.propTypes = {
   projects: PropTypes.any.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 async function getCollectionUrl(api, userId, collectionUrl){
