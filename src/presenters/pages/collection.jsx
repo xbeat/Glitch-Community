@@ -56,13 +56,12 @@ const CollectionPageContents = ({
           <UserTile {...collection.user}/>
           <h1 className="collection-name">            
             {(isAuthorized 
-              ? <AuthDescription authorized={isAuthorized}
-                description={collection.name} 
+              ? <EditableField
+                value={collection.name} 
                 update={updateName} 
                 placeholder="Name your collection"/> 
-              : <React.Fragment>{collection.name} </React.Fragment>
+              : collection.name
             )}
-            
           </h1>
           <div className="collection-image-container">
             <img src={collection.avatarUrl} alt=""/>
@@ -87,15 +86,10 @@ const CollectionPageContents = ({
             : null
           )}
           
-          <p className="description">
-            {(isAuthorized
-              ? <AuthDescription
-                authorized={isAuthorized} description={collection.description}
-                update={updateDescription} placeholder="Tell us about your collection"
-                />
-              : <React.Fragment>{collection.description}</React.Fragment>
-            )}
-          </p>
+          <AuthDescription
+            authorized={isAuthorized} description={collection.description}
+            update={updateDescription} placeholder="Tell us about your collection"
+          />
           
           {(isAuthorized && <EditCollectionColor
             update={updateColor}
