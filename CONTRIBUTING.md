@@ -74,7 +74,7 @@ In your local repository,
   git checkout my-remix
 
   # 4. Push your branch to github
-  git push origin my-branch
+  git push origin my-remix
   
 ```
 
