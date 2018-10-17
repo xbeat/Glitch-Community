@@ -13,33 +13,19 @@ import {getAvatarUrl, getLink} from '../models/project.js';
 
 import UserModel from '../models/user'; 
 
-const colors = ["rgba(84,248,214,0.40)", "rgba(229,229,229,0.40)", "rgba(255,163,187,0.40)", "rgba(251,160,88,0.40)", "rgba(252,243,175,0.40)", "rgba(48,220,166,0.40)", 
-  "rgba(103,190,255,0.40)", "rgba(201,191,244,0.40)"];
-
-const hexToRgbA = (hex) => {
-  var c;
-  if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
-    c= hex.substring(1).split('');
-    if(c.length== 3){
-      c= [c[0], c[0], c[1], c[1], c[2], c[2]];
-    }
-    c= '0x'+c.join('');
-    return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.4)';
-  }
-  throw new Error('Bad Hex');
-};
+import {colors, hexToRgbA, avatars} from '../models/collection.js'; 
 
 
 // SOME DUMMY DEFAULT STUFF
 const defaultUrl = "/favorites";
 const defaultName = "Favorites";
 
-const ProjectsPreview = ({projects, categoryColor}) => {
+const ProjectsPreview = ({projects, color}) => {
   return (
     <React.Fragment>
       <div className="projects-preview" projects={projects}>
         { projects.slice(0,3).map(project => (
-          <div className="project-container">
+          <div className="project-container" style={{backgroundColor: color}}>
             <img className="avatar" src={getAvatarUrl(project.id)}/>
             <div className="project-name">{project.domain}</div>
           </div>
@@ -81,7 +67,7 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
            {path => (
               <a href={path}>
                 <div className={['collection']} 
-                  style={{backgroundColor: collection.coverColor, borderBottomColor:collection.coverColor}}>
+                  style={{backgroundColor: hexToRgbA(collection.coverColor), borderBottomColor: hexToRgbA(collection.coverColor)}}>
                   <div className="collection-container">
                       <div className="collection-info">
                         <div className="avatar-container">
@@ -107,7 +93,7 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
                             collection.projects.length > 0
                               ?
                               <ProjectsLoader api={api} projects={collection.projects}>
-                                {projects => <ProjectsPreview projects={collection.projects} categoryColor={collection.color}/>}
+                                {projects => <ProjectsPreview projects={collection.projects} color={collection.coverColor}/>}
                               </ProjectsLoader>
                              :
                              <div className="projects-preview empty">
