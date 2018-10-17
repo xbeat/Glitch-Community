@@ -47,8 +47,14 @@ async function validate(name){
   return true
 }
 
-class CreateFirstCollection {
-  
+const CreateFirstCollection = ({api}) =>{
+  return(
+    <div className="create-first-collection">
+      <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-empty.svg?1539800010738"/>
+      <p className="placeholder">Create collections to organize your favorite projects.</p>
+      <CreateCollectionButton api={api}/>  
+    </div>
+    );
 }
 
 class CreateCollectionButton extends React.Component{
