@@ -22,6 +22,17 @@ export const avatarsGreyscale = {
   music: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fmusic.svg?1502555440002",
 };
 
+function getContrastTextColor(hexcolor){
+    // remove #
+    hexcolor = hexcolor.substring(hexcolor.indexOf("#") +1);
+    var r = parseInt(hexcolor.substr(0,2),16);
+    var g = parseInt(hexcolor.substr(2,2),16);
+    var b = parseInt(hexcolor.substr(4,2),16);
+    var yiq = ((r*299)+(g*587)+(b*114))/1000;
+    return (yiq >= 128) ? 'black' : 'white';
+}
+
+
 export const hexToRgbA = (hex) => {
   var c;
   if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
@@ -32,7 +43,9 @@ export const hexToRgbA = (hex) => {
     c= '0x'+c.join('');
     return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.4)';
   }
-  throw new Error('Bad Hex');
+  return false;
+  console.log('bad hex');
+  // throw new Error('Bad Hex');
 };
 
 export default function Collection({users, projects}) {

@@ -13,7 +13,7 @@ import {getAvatarUrl, getLink} from '../models/project.js';
 
 import UserModel from '../models/user'; 
 
-import {colors, hexToRgbA, avatars} from '../models/collection.js'; 
+import {colors, hexToRgbA, avatars, getContrastTextColor} from '../models/collection.js'; 
 
 
 const ProjectsPreview = ({projects, color}) => {

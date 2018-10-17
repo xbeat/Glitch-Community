@@ -11,8 +11,6 @@ import ProjectsLoader from '../projects-loader.jsx';
 import Categories from '../categories.jsx';
 import NotFound from '../includes/not-found.jsx';
 
-import {OptimisticValue} from '../includes/field-helpers.jsx';
-import {PureEditableField} from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import CollectionEditor from '../collection-editor.jsx';
 
@@ -20,6 +18,7 @@ import PopoverContainer from '../pop-overs/popover-container.jsx';
 import AddCollectionProject from '../includes/add-collection-project.jsx';
 import AddCollectionAvatar from '../includes/add-collection-avatar.jsx';
 
+import EditCollectionName from '../includes/edit-collection-name.jsx';
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
 import {hexToRgbA} from '../../models/collection.js'; 
@@ -66,7 +65,7 @@ const CollectionPageContents = ({
         <header className="collection">
           <UserTile {...collection.user}/>
           {(isAuthorized
-            ? <CollectionNameField
+            ? <EditCollectionName
               name={collection.name}
               update={updateName}
               placeholder="Name your collection"/> 

@@ -41,6 +41,7 @@ class EditCollectionColorPop extends React.Component {
       }
     }else{
       document.getElementsByClassName("editable-field-error-message")[0].style.display = "inherit";
+      console.log("error here - not sure why it's returning the original value");
     }
   }
   
@@ -58,7 +59,7 @@ class EditCollectionColorPop extends React.Component {
   }
   
   hasCustomColor(){    
-    console.log('hasCustomColor: ' + this.state.query.trim() || !Object.values(colors).includes(this.props.initialColor));
+    // console.log('hasCustomColor: ' + this.state.query.trim() || !Object.values(colors).includes(this.props.initialColor));
     return (this.state.query.trim() || !Object.values(colors).includes(this.props.initialColor))
   }
   
@@ -73,6 +74,7 @@ class EditCollectionColorPop extends React.Component {
               style={{backgroundColor: colors[key]}} 
               onClick={evt => {
                 this.setState({ color: colors[key] });
+                this.setState({ query: "" });
                 this.update(colors[key]);
               }}
             />

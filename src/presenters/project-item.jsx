@@ -7,13 +7,7 @@ import {TruncatedMarkdown} from './includes/markdown.jsx';
 import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
-const getContrastTextColor = (hexcolor) => {
-    var r = parseInt(hexcolor.substr(0,2),16);
-    var g = parseInt(hexcolor.substr(2,2),16);
-    var b = parseInt(hexcolor.substr(4,2),16);
-    var yiq = ((r*299)+(g*587)+(b*114))/1000;
-    return (yiq >= 128) ? 'black' : 'white';
-}
+import {getContrastTextColor} from '../models/collection.js'; 
 
 export const ProjectItem = ({api, project, collectionColor, ...props}) => {
   return (
