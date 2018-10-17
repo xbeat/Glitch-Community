@@ -93,10 +93,10 @@ In your local repository,
    # 1. Make sure we're on the right branch
    git checkout my-remix 
    
-  # 2. Pull from Glitch into your local branch.
+   # 2. Pull from Glitch into your local branch.
    git pull my-remix master
    
-  # 3. Update the PR in Github
+   # 3. Update the PR in Github
    git push origin my-remix
  ``` 
 
