@@ -99,6 +99,7 @@ const CollectionPageContents = ({
           
           {(isAuthorized && <EditCollectionColor
             update={updateColor}
+            initialColor={collection.coverColor}
           />
           )}
           

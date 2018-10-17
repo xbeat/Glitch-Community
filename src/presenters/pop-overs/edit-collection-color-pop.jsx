@@ -19,6 +19,7 @@ class EditCollectionColorPop extends React.Component {
     this.state = {
       query: '', //The hex value entered into search
       color: null,
+      initialColor: this.props.initialColor,
       maybeRequest: null,
       maybeResults: null
     };
@@ -79,7 +80,9 @@ class EditCollectionColorPop extends React.Component {
           <hr/>
           
           <input id="color-picker" 
-            value={this.state.query} onChange={this.handleChange} onKeyPress={this.keyPress}
+            value={this.state.query} 
+            onChange={this.handleChange} 
+            onKeyPress={this.keyPress}
             className="pop-over-input pop-over-search"
             placeholder="Custom color hex"
           />
@@ -96,6 +99,7 @@ class EditCollectionColorPop extends React.Component {
 
 EditCollectionColorPop.propTypes = {
   updateColor: PropTypes.func.isRequired,
+  initialColor: PropTypes.string.isRequired,
 };
 
 export default EditCollectionColorPop;
