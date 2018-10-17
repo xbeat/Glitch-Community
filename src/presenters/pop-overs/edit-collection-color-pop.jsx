@@ -9,7 +9,6 @@ const validHex = (hex) =>{
     return true;
   }
   return false;
-  
 };
 
 class EditCollectionColorPop extends React.Component {

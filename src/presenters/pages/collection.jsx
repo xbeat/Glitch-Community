@@ -11,7 +11,8 @@ import ProjectsLoader from '../projects-loader.jsx';
 import Categories from '../categories.jsx';
 import NotFound from '../includes/not-found.jsx';
 
-import EditableField from '../includes/editable-field.jsx';
+import {OptimisticValue} from '../includes/field-helpers.jsx';
+import {PureEditableField} from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import CollectionEditor from '../collection-editor.jsx';
 
@@ -28,6 +29,16 @@ import {UserTile} from '../users-list.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
 import _ from 'lodash';
+
+const CollectionNameField = ({name, update, ...props}) => (
+  <OptimisticValue value={name} update={update} resetOnError={false}>
+    {valueProps => <React.Fragment>
+      <h1 className="collection-name">
+        <PureEditableField {...props} {...valueProps}/>
+      </h1>
+    </React.Fragment>}
+  </OptimisticValue>
+);
 
 const CollectionPageContents = ({
   api, 
@@ -54,15 +65,13 @@ const CollectionPageContents = ({
       <article className="projects" style={{backgroundColor: hexToRgbA(collection.coverColor)}}>
         <header className="collection">
           <UserTile {...collection.user}/>
-          <h1 className="collection-name">            
-            {(isAuthorized 
-              ? <EditableField
-                value={collection.name} 
-                update={updateName} 
-                placeholder="Name your collection"/> 
-              : collection.name
-            )}
-          </h1>
+          {(isAuthorized
+            ? <CollectionNameField
+              name={collection.name}
+              update={updateName}
+              placeholder="Name your collection"/> 
+            : <h1 className="collection-name">{collection.name}</h1>
+          )}
           <div className="collection-image-container">
             <img src={collection.avatarUrl} alt=""/>
           </div>
