@@ -58,12 +58,17 @@ class EditCollectionColorPop extends React.Component {
     this.props.togglePopover();
   }
   
+  hasCustomColor(){
+    return this.state.query.trim() || !Object.values(colors).includes(this.props.initialColor)
+  }
+  
   render() {
     const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
     
     return (
       <dialog className="pop-over edit-collection-color-pop">
         <section className="pop-over-info">
+          <div>{this.hasCustomColor()}</div>
           
           {Object.keys(colors).map((key => 
             <button className={"button-tertiary " + ( (colors[key] == this.props.initialColor) ? "active" : "")} key={key}
@@ -78,12 +83,12 @@ class EditCollectionColorPop extends React.Component {
           
           <hr/>
           
-          <input id="color-picker" 
+          <input id="color-picker" className={this.hasCustomColor() ? "active" : ""}
             value={(this.state.query 
                     ? this.state.query 
-                    : (Object.values(colors).includes(this.props.initialColor) 
+                    : this.hasCustomColor() 
                             ? ""
-                            : this.props.initialColor))} 
+                            : this.props.initialColor)} 
             onChange={this.handleChange} 
             onKeyPress={this.keyPress}
             className="pop-over-input pop-over-search"
