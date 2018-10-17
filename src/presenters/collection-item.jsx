@@ -54,8 +54,8 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
     <li>
       <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>
 
-      {(collection  
-        ? <DataLoader
+      {(collection  &&
+        <DataLoader
           get={() => getCollectionUrl(api, collection.userId, collection.url)}
           renderLoader={() => <Loader />}
           renderError={() => <div>Something went wrong. Try refreshing?</div>}
@@ -94,7 +94,7 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
                              :
                              <div className="projects-preview empty">
                                 {(isAuthorized
-                                  ? This collection is empty.  Add some projects to it! ☝️
+                                  ? <p>This collection is empty.  Add some projects to it! ☝️</p>
                                   : "No projects to see in this collection just yet."
                                 )}
                               </div>
