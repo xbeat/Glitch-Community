@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import CollectionItem from "./collection-item.jsx";
-import {getLink,colors} from '../models/collection';
+import {defaultAvatar, getLink,colors} from '../models/collection';
 
 import axios from 'axios';
 import _ from 'lodash';
@@ -74,11 +74,10 @@ class CreateCollectionButton extends React.Component{
       let url = _.kebabCase(name);
       
       // defaults
-      let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
+      let avatarUrl = defaultAvatar;
       // get a random color
       let randomHex = Object.values(colors);
       let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
-      console.log(`coverColor: ${coverColor}`);
       
       if(validate(name)){
         const {data} = await api.post('collections', {
