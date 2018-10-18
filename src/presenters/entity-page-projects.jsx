@@ -73,7 +73,7 @@ EntityPageProjects.propTypes = {
 const EntityPageProjectsContainer = ({api, projects, ...props}) => (
   <CurrentUserConsumer>
     {currentUser => (
-       <EntityPageProjects api={api} projects={projects} currentUser={currentUser} {...props}/>}
+       <EntityPageProjects api={api} projects={projects} currentUser={currentUser} {...props}/>
     )}
   </CurrentUserConsumer>
 );
