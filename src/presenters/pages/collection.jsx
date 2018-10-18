@@ -76,9 +76,17 @@ class Avatar extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      backgroundColor: ""
+      backgroundColor: this.props.backgroundColor
     }
     this.onChange = this.onChange.bind(this);
+  }
+  
+  componentWillReceiveProps(nextProps){
+    if(nextProps.backgroundColor){
+      this.setState({ backgroundColor: nextProps.backgroundColor});
+      document.getElementById('background').setAttribute('fill', this.state.backgroundColor);
+    }
+    
   }
   
   componentDidMount(){
@@ -133,7 +141,7 @@ const CollectionPageContents = ({
           </h1>
           <p className="collection-url">{getLink(collection.user.login, collection.url)}</p>
           <div className="collection-image-container">
-            <Avatar style={{backgroundColor: hexToRgbA(collection.coverColor)}}/>
+            <Avatar backgroundColor={collection.coverColor}/>
           </div>
           {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
           {(isAuthorized 
