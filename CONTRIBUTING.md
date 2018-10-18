@@ -164,7 +164,7 @@ Satisfied?  Deploy it.
 
 Run the _special command_ to swap ~community with ~community-staging.
 
-(there's a special endpoint for this, ask us about it and sit beside a team member the first time you use it.   It's the same thing as renaming the two projects, but it does this atomically and without downtime, which you can't do if you rename then manually.)
+(there's a special endpoint for this, ask us about it and sit beside a team member the first time you use it.   It's the same thing as renaming the two projects, but it does this atomically and without downtime, which you can't do if you rename them manually.)
 
 #### If You Need to Revert the Deploy
 
