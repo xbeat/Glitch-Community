@@ -1,14 +1,14 @@
 .zine-items
   display: flex
   flex-wrap: wrap
-  margin: -0.25%
+  margin: -5px
 
   .zine-item
     position: relative
-    width: 24.5%
-    margin: 0.25%
+    margin: 5px
+    width: calc(25% - 10px)
     @media(max-width: mediumViewport)
-      width: 49.5%
+      width: calc(50% - 10px)
     &:hover
       a
         text-decoration: none
