@@ -84,6 +84,10 @@ class AddCollectionProjectPop extends React.Component {
     });
   }
   
+  async loadRecentProjects(){
+    
+  }
+  
   async startSearch() {
     if (!this.state.query) {
       return this.clearSearch();
@@ -151,6 +155,7 @@ class AddCollectionProjectPop extends React.Component {
     return (request === maybeRequest) ? {
       maybeRequest: null,
       maybeResults: nonCollectionResults,
+      recentProjects: null,
       } : {};
     });
 
