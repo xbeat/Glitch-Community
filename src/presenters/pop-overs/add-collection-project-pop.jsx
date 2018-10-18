@@ -68,7 +68,7 @@ class AddCollectionProjectPop extends React.Component {
   
   componentDidMount(){
     // load user's recent projects to show in dropdown by default
-    // this.loadRecentProjects();
+    this.loadRecentProjects();
   }
   
   handleChange(evt) {
@@ -91,7 +91,7 @@ class AddCollectionProjectPop extends React.Component {
   } 
   
   async loadRecentProjects(){
-    console.log('load recent projects');
+    this.setState({ maybeResults: this.props.currentUser.projects.slice(0,3) });
     const request = this.props.api.get(`users/${this.props.currentUser.id}`);
     this.setState({ maybeRequest: request });
     const {data} = await request;
