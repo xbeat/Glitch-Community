@@ -78,23 +78,17 @@ class Avatar extends React.Component{
     this.state={
       backgroundColor: this.props.backgroundColor
     }
-    this.onChange = this.onChange.bind(this);
   }
   
   componentWillReceiveProps(nextProps){
     if(nextProps.backgroundColor){
       this.setState({ backgroundColor: nextProps.backgroundColor});
       document.getElementById('background').setAttribute('fill', this.state.backgroundColor);
-    }
-    
+    } 
   }
   
   componentDidMount(){
     console.log('component did mount of avatar');
-    document.getElementById('background').setAttribute('fill', this.state.backgroundColor);
-  }
-  
-  onChange(event){
     document.getElementById('background').setAttribute('fill', this.state.backgroundColor);
   }
   
@@ -143,9 +137,12 @@ const CollectionPageContents = ({
           <div className="collection-image-container">
             <Avatar backgroundColor={collection.coverColor}/>
           </div>
+          
           {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
+          {/*
           {(isAuthorized 
             ? <div className="upload-image-buttons">
+              
               
               <AddCollectionAvatar
                 api={api}
@@ -153,15 +150,15 @@ const CollectionPageContents = ({
                 update={updateAvatar}
               />
               
-              {/*
+              
                 <button className="button button-small button-tertiary" onClick={uploadAvatar}>
                   <span>Replace Avatar</span>  
                 </button>
-              */}
               
             </div>
             : null
           )}
+          */}
           
           <AuthDescription
             authorized={isAuthorized} description={collection.description}
