@@ -42,14 +42,14 @@ class ExpandyProjects extends React.Component {
     
     let shouldShowButton = false;
     if(!this.state.expanded) {
-      shouldShowButton = maxProjects <= totalProjects;
-      projects = projects.splice(0,maxProjects);
+      shouldShowButton = hiddenProjects > 0;
+      projects = projects.slice(0, maxProjects);
     }
     
     return (
       <React.Fragment>
         <ProjectsUL projects={projects} projectOptions={this.props.projectOptions}/>
-        { shouldShowButton && <button onClick={this.handleClick}>Show {hiddenProjects} More</button>}
+        { shouldShowButton && <button className="button-tertiary" onClick={this.handleClick}>Show {hiddenProjects} More</button>}
       </React.Fragment>
     );
   }
