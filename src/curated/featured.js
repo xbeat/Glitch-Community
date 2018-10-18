@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'A Trip to the Blue Ridge Mountains',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fblue-ridge.png?1539601709907",
-    link: 'https://glitch.com/~blueridge'
+    title: 'Flowers in Space',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Forbit.png?1539601710383",
+    link: 'https://glitch.com/~orbit'
   },{
-    title: 'Simple Programming 101',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flearning-turtle.png?1539601710009",
-    link: 'https://glitch.com/~learning-turtle'
+    title: 'Newspaper Business Simulator',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fnewspaper-business-simulator.png?1539601710653",
+    link: 'https://glitch.com/~newspaper-business-simulator'
   }, {
-    title: 'Colors of the Library of Congress',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Floc-colors.png?1539601710266",
-    link: 'https://glitch.com/~loc-colors'
+    title: 'Minimal Retro Album Covers',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fretro-album-covers.png?1539601710110",
+    link: 'https://glitch.com/~retro-album-covers'
   }  
 ];

@@ -35,5 +35,11 @@ module.exports = exports = {
     // Overrides of react/recommended:
     "react/no-unescaped-entities": ["error", {"forbid": [`"`, ">", "}"]}], // permit ' in jsx html,
     "react/prop-types": [OFF], // disabled so we can use composed prop-types
+  },
+  "settings": {
+    "react": {
+      "version": "16.5.2" // Should match package.json
+    }
   }
+  
 }
