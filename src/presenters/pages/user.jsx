@@ -13,6 +13,8 @@ import DeletedProjects from '../deleted-projects.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import EntityPageCollections from '../entity-page-collections.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
+import ProjectsLoader from '../projects-loader.jsx';
+import TeamsList from '../teams-list.jsx';
 
 import categories from '../../curated/categories.js';
 
@@ -59,6 +61,7 @@ const UserPage = ({
     hasCoverImage, coverColor,
     pins, projects, _deletedProjects,
     collections,
+    teams,
     _cacheCover,
   },
   api, isAuthorized,
@@ -79,15 +82,20 @@ const UserPage = ({
       <ProfileContainer
         avatarStyle={getAvatarStyle({avatarUrl, color})}
         coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
-        coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
-        avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null }
+        coverButtons={isAuthorized && !!login && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
+        avatarButtons={isAuthorized && !!login && <ImageButtons name="Avatar" uploadImage={uploadAvatar}/>}
       >
         <NameAndLogin
           {...{name, login, isAuthorized, updateName}}
           updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
         />
-        <Thanks count={thanksCount}/>
-        <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
+        {!!teams.length && (
+          <div className="users-information">
+            <TeamsList teams={teams}/>
+          </div>
+        )}
+        {!!thanksCount && <Thanks count={thanksCount}/>}
+        <AuthDescription authorized={isAuthorized && !!login} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
     </section>
     
@@ -144,7 +152,10 @@ const UserPageContainer = ({api, user}) => (
         <Helmet>
           <title>{user.name || (user.login ? `@${user.login}` : `User ${user.id}`)}</title>
         </Helmet>
-        <UserPage api={api} user={user} {...funcs} isAuthorized={isAuthorized}/>
+        
+        <ProjectsLoader api={api} projects={user.projects}>
+          {projects => <UserPage api={api} user={{...user, projects}} {...funcs} isAuthorized={isAuthorized}/>}
+        </ProjectsLoader>
       </React.Fragment>
     )}
   </UserEditor>

@@ -45,29 +45,41 @@
   .notifySuccess
     background-color: success
 
-  .notifyError
-    background-color: error
+.notifyPersistent
+  animation: none
 
-  .notifyUploading
-    assets-file-icon-active()
-    background-repeat: no-repeat
-    background-position: 8px 5px
-    padding-left: 28px
-    
-  .button-in-notification-container
-    pointer-events: auto
-    overflow: auto
-    margin-top: 5px
-    margin-bottom: 2px
-    :last-child
-      margin-right: 0
-    .button-in-notification
-      height: 27px
-      vertical-align: middle
-      margin-right: 5px
+.notifyError
+  background-color: error
+
+.notifySuccess
+  background-color: success
+
+.notifyUploading
+  assets-file-icon-active()
+  background-repeat: no-repeat
+  background-position: 8px 5px
+  padding-left: 28px
+
+.button-in-notification-container
+  pointer-events: auto
+  overflow: auto
+  margin-top: 5px
+  margin-bottom: 2px
+  :last-child
+    margin-right: 0
+  .button-in-notification
+    height: 27px
+    vertical-align: middle
+    margin-right: 5px
 
 @keyframes hideme
   0%
     opacity: 1
   100%
     opacity: 0
+
+.inline-notification
+  position: absolute
+  width: max-content
+  left: 2px
+  top: 25px

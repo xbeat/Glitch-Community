@@ -102,12 +102,12 @@ class TeamAnalyticsProjectPop extends React.Component {
   }
   
   render() {
-    const {updateProjectDomain, currentProjectDomain, projects} = this.props;
+    const {updateProjectDomain, currentProjectDomain, projects, disabled} = this.props;
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <div className="button-wrap">
-            <button className="button-small button-tertiary" onClick={togglePopover}>
+            <button className="button-small button-tertiary" onClick={togglePopover} disabled={disabled}>
               {currentProjectDomain}
             </button>
             {visible && 
@@ -130,6 +130,7 @@ class TeamAnalyticsProjectPop extends React.Component {
 TeamAnalyticsProjectPop.propTypes = {
   updateProjectDomain: PropTypes.func.isRequired,
   currentProjectDomain: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
 };
 
 export default TeamAnalyticsProjectPop;

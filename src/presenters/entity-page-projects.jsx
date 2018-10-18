@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import ProjectsList from './projects-list.jsx';
-import ProjectsLoader from './projects-loader.jsx';
 
 import {CurrentUserConsumer} from './current-user.jsx';
 
@@ -11,7 +10,7 @@ import {CurrentUserConsumer} from './current-user.jsx';
 
 const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
 
-const EntityPageProjects = ({api, projects, pins, currentUser, isAuthorized, addPin, removePin, projectOptions, reloadProject}) => {
+const EntityPageProjects = ({api, projects, pins, currentUser, isAuthorized, addPin, removePin, projectOptions}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const [pinnedProjects, recentProjects] = _.partition(projects, ({id}) => pinnedSet.has(id));
   
@@ -33,13 +32,6 @@ const EntityPageProjects = ({api, projects, pins, currentUser, isAuthorized, add
       </p>
     </React.Fragment>
   );
-  
-  projectOptions = _.mapValues(projectOptions, function(projectOption) {
-    return async (projectId, userId) => {
-      await projectOption(projectId, userId);
-      reloadProject(projectId);
-    };
-  });
 
   return (
     <React.Fragment>
@@ -81,9 +73,7 @@ EntityPageProjects.propTypes = {
 const EntityPageProjectsContainer = ({api, projects, ...props}) => (
   <CurrentUserConsumer>
     {currentUser => (
-      <ProjectsLoader api={api} projects={projects}>
-        {(projects, reloadProject) => <EntityPageProjects api={api} projects={projects} reloadProject={reloadProject} currentUser={currentUser} {...props}/>}
-      </ProjectsLoader>
+       <EntityPageProjects api={api} projects={projects} currentUser={currentUser} {...props}/>}
     )}
   </CurrentUserConsumer>
 );

@@ -1,56 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {UserLink} from './includes/link.jsx';
 import PopoverContainer from './pop-overs/popover-container.jsx';
-import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName, getLink} from '../models/user.js';
-
-function getStyle({color}) {
-  return {backgroundColor: color};
-}
-
-const GLITCH_TEAM_AVATAR = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267";
-
-// UserAvatar
-
-function addDefaultSrc(event) {
-  event.target.src = ANON_AVATAR_URL;
-}
-
-const UserAvatar = ({
-  alt, 
-  avatarUrl,
-}) => (
-  <img onError={addDefaultSrc} className="user-list-avatar" width="32px" height="32px" src={avatarUrl} alt={alt}/>
-);
-UserAvatar.propTypes = {
-  alt: PropTypes.string.isRequired,
-  avatarUrl: PropTypes.string.isRequired,
-};
-
-
-// StaticUserTile
-
-const StaticUserTile = (user) => (
-  <span className="user" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
-    <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
-  </span>
-);
-StaticUserTile.propTypes = {
-  id: PropTypes.number.isRequired,
-  login: PropTypes.string,
-  name: PropTypes.string,
-  avatarThumbnailUrl: PropTypes.string,
-  color: PropTypes.string.isRequired,
-};
+import {Avatar, UserAvatar} from './includes/avatar.jsx';
 
 
 // StaticUsersList
 
-export const StaticUsersList = ({users, extraClass="" }) => (
+export const StaticUsersList = ({users, extraClass=""}) => (
   <ul className={`users ${extraClass}`}>
     {users.map(user => (
       <li key={user.id}>
-        <StaticUserTile {...user} />
+        <span className="user">
+          <UserAvatar user={user}/>
+        </span>
       </li>
     ))}
   </ul>
@@ -83,7 +47,9 @@ export const PopulatedUsersList = ({users, extraClass="" }) => (
   <ul className={`users ${extraClass}`}>
     {users.map(user => (
       <li key={user.id}>
-        <UserTile {...user} />
+        <UserLink user={user} className="user">
+          <UserAvatar user={user} />
+        </UserLink>
       </li>
     ))}
   </ul>
@@ -94,13 +60,12 @@ PopulatedUsersList.propTypes = {
 };
 
 const GlitchTeamUsersList = ({extraClass=''}) => {
-  const name = 'Glitch Team';
-  const style = getStyle({color: "#74ecfc"});
+  const GLITCH_TEAM_AVATAR = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-team-avatar.svg?1489266029267";
   return (
     <ul className={`users ${extraClass}`}>
       <li>
-        <span className="user made-by-glitch" data-tooltip={name} data-tooltip-left="true" style={style}>
-          <UserAvatar avatarUrl={GLITCH_TEAM_AVATAR} alt={name}/>
+        <span className="user made-by-glitch">
+          <Avatar name="Glitch Team" src={GLITCH_TEAM_AVATAR} color="#74ecfc"/>
         </span>
       </li>
     </ul>
@@ -118,61 +83,41 @@ UsersList.propTypes = {
   glitchTeam: PropTypes.bool,
 };
 
-const adminStatusDisplay = (adminIds, user) => {
-  if (adminIds.includes(user.id)) {
-    return " (admin)";
-  } 
-  return "";
-};
-
 export default UsersList;
-
-const UserPopoverTile = ({children, adminIds, ...user}) => (
-  <PopoverContainer>
-    {({visible, togglePopover}) => (
-      <div className="button-wrap">
-        <button 
-          onClick={togglePopover} 
-          className="user button-unstyled" 
-          data-tooltip={getDisplayName(user) + adminStatusDisplay(adminIds, user)} 
-          data-tooltip-left="true" 
-          style={getStyle(user)}
-        >
-          <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
-        </button>
-        {!!visible && children(togglePopover)}
-      </div>
-    )}
-  </PopoverContainer>
-);
-
-UserPopoverTile.propTypes = {
-  id: PropTypes.number.isRequired,
-  login: PropTypes.string,
-  name: PropTypes.string,
-  avatarThumbnailUrl: PropTypes.string,
-  color: PropTypes.string.isRequired,
-  children: PropTypes.func.isRequired,
-  adminIds: PropTypes.array.isRequired,
-};
 
 
 // UserPopoversList
 
-export const UserPopoversList = ({...props}) => (
+const adminStatusDisplay = (adminIds, user) => {
+  if (adminIds.includes(user.id)) {
+    return " (admin)";
+  }
+  return "";
+};
+
+export const UserPopoversList = ({users, adminIds, children}) => (
   <ul className="users">
-    {props.users.map(user => (
+    {users.map(user => (
       <li key={user.id}>
-        <UserPopoverTile {...user} adminIds={props.adminIds}>
-          {(togglePopover) => props.children(user, togglePopover)}
-        </UserPopoverTile>
+        <PopoverContainer>
+          {({visible, togglePopover}) => (
+            <div className="button-wrap">
+              <button onClick={togglePopover} className="user button-unstyled">
+                <UserAvatar user={user} suffix={adminStatusDisplay(adminIds, user)}/>
+              </button>
+              {!!visible && children(user, togglePopover)}
+            </div>
+          )}
+        </PopoverContainer>
       </li>
     ))}
   </ul>
 );
 
 UserPopoversList.propTypes = {
-  users: PropTypes.array.isRequired,
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  })).isRequired,
   children: PropTypes.func.isRequired,
   adminIds: PropTypes.array,
 };

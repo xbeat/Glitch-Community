@@ -28,7 +28,7 @@ const timeFrames = [
   "Last 24 Hours",
 ];
 
-const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
+const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame, disabled}) => {
   const selectTimeFrame = (timeFrame, togglePopover) => {
     return () => {
       updateTimeFrame(timeFrame);
@@ -40,7 +40,7 @@ const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
     <PopoverContainer>
       {({visible, togglePopover}) => (
         <div className="button-wrap">
-          <button className="button-small button-tertiary button-select" onClick={togglePopover}>
+          <button className="button-small button-tertiary button-select" onClick={togglePopover} disabled={disabled}>
             <span>{currentTimeFrame}</span>
           </button>
           { visible && (
@@ -68,6 +68,7 @@ const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
 TeamAnalyticsTimePop.propTypes = {
   updateTimeFrame: PropTypes.func.isRequired,
   currentTimeFrame: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
 };
 
 export default TeamAnalyticsTimePop;

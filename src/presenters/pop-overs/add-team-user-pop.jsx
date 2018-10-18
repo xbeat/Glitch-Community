@@ -1,32 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
+import {parseOneAddress} from 'email-addresses';
 
 import UserModel from '../../models/user';
 
 import Loader from '../includes/loader.jsx';
-import UserResultItem from '../includes/user-result-item.jsx';
+import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
 
-const UserSearchResults = ({users, action}) => (
-  (users.length > 0) ? (
-    <ul className="results">
-      {users.map(user => (
-        <li key={user.id}>
-          <UserResultItem user={user} action={() => action(user)} />
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <p className="results-empty">nothing found <span role="img" aria-label="">💫</span></p>
-  )
-);
-
-UserSearchResults.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-  }).isRequired).isRequired,
-  action: PropTypes.func.isRequired,
-};
 
 class AddTeamUserPop extends React.Component {
   constructor(props) {
@@ -41,11 +22,10 @@ class AddTeamUserPop extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.startSearch = debounce(this.startSearch.bind(this), 300);
-    this.onClick = this.onClick.bind(this);
   }
   
   handleChange(evt) {
-    const query = evt.currentTarget.value.trim();
+    const query = evt.currentTarget.value.trimStart();
     this.setState({ query });
     if (query) {
       this.startSearch();
@@ -62,16 +42,17 @@ class AddTeamUserPop extends React.Component {
   }
   
   async startSearch() {
-    if (!this.state.query) {
+    const query = this.state.query.trim();
+    if (!query) {
       return this.clearSearch();
     }
     
-    const request = this.props.api.get(`users/search?q=${this.state.query}`);
+    const request = this.props.api.get(`users/search?q=${query}`);
     this.setState({ maybeRequest: request });
     
     const {data} = await request;
     const results = data.map(user => UserModel(user).asProps());
-    const nonMemberResults = results.filter(user => !this.props.members || !this.props.members.includes(user.id));
+    const nonMemberResults = results.filter(user => !this.props.members.includes(user.id));
     
     this.setState(({ maybeRequest }) => {
       return (request === maybeRequest) ? {
@@ -80,38 +61,85 @@ class AddTeamUserPop extends React.Component {
       } : {};
     });
   }
-  
-  onClick(user) {
-    this.props.togglePopover();
-    this.props.add(user);
-  }
-  
+    
   render() {
-    const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
+    const {inviteEmail, inviteUser, setWhitelistedDomain} = this.props;
+    const {maybeRequest, maybeResults, query} = this.state;
+    const isLoading = (!!maybeRequest || !maybeResults);
+    const results = [];
+    
+    const email = parseOneAddress(query);
+    let domain = null;
+    if (email) {
+      ({ //results.push({
+        key: 'invite-by-email',
+        item: <InviteByEmail email={email.address} onClick={() => inviteEmail(email.address)}/>,
+      });
+      domain = email.domain;
+    } else {
+      const fakeEmail = parseOneAddress(query.replace('@', 'test@'));
+      if (fakeEmail) {
+        domain = fakeEmail.domain;
+      }
+    }
+    if (domain) {
+      const prevDomain = this.props.whitelistedDomain;
+      if (setWhitelistedDomain && prevDomain !== domain) {
+        results.push({
+          key: 'whitelist-email-domain',
+          item: <WhitelistEmailDomain domain={domain} prevDomain={prevDomain} onClick={() => setWhitelistedDomain(domain)}/>,
+        });
+      }
+    }
+    
+    // now add the actual search results
+    if (maybeResults) {
+      results.push(...maybeResults.map(user => ({
+        key: user.id,
+        item: <UserResultItem user={user} action={() => inviteUser(user)} />
+      })));
+    }
+    
     return (
       <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">
-          <input id="team-user-search" 
+          <input id="team-user-search"
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
-            value={this.state.query} onChange={this.handleChange}
+            value={query} onChange={this.handleChange}
             className="pop-over-input search-input pop-over-search"
             placeholder="Search for a user or email"
           />
         </section>
-        {!!this.state.query && <section className="pop-over-actions last-section results-list">
-          {isLoading && <Loader />}
-          {!!this.state.maybeResults && <UserSearchResults users={this.state.maybeResults} action={this.onClick} />}
-        </section>}
+        {!!query && (
+          results.length ? (
+            <section className="pop-over-actions last-section results-list">
+              <ul className="results">
+                {results.map(({key, item}) => <li key={key}>{item}</li>)}
+              </ul>
+              {isLoading && <Loader />}
+            </section>
+          ) : (
+            <section className="pop-over-actions last-section">
+              {isLoading ? <Loader/> : <React.Fragment>nothing found <span role="img" aria-label="">💫</span></React.Fragment>}
+            </section>
+          )
+        )}
+        {!query && setWhitelistedDomain && (
+          <aside className="pop-over-info">
+            You can also whitelist with @example.com
+          </aside>
+        )}
       </dialog>
     );
   }
 }
-
 AddTeamUserPop.propTypes = {
   api: PropTypes.func.isRequired,
-  add: PropTypes.func.isRequired,
-  members: PropTypes.arrayOf(PropTypes.number.isRequired),
-  togglePopover: PropTypes.func.isRequired,
+  inviteEmail: PropTypes.func.isRequired,
+  inviteUser: PropTypes.func.isRequired,
+  members: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  setWhitelistedDomain: PropTypes.func,
+  whitelistedDomain: PropTypes.string,
 };
 
 export default AddTeamUserPop;

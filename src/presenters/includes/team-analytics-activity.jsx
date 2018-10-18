@@ -20,7 +20,6 @@ const createHistogram = (bins) => {
       if (!timestamp) {
         timestamp = data['@timestamp'];
       }
-      console.log(data.analytics);
       totalRemixes += data.analytics.remixes;
       totalAppViews += data.analytics.requests;
       // referrers.push(data.analytics.referrers)
@@ -75,6 +74,7 @@ const renderChart = (c3, analytics, currentTimeFrame) => {
   let columns = [];
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics, currentTimeFrame);
+    console.log(columns);
   }
   
   // eslint-disable-next-line no-unused-vars

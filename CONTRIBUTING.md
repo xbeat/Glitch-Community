@@ -74,13 +74,13 @@ In your local repository,
   git checkout my-remix
 
   # 4. Push your branch to github
-  git push origin my-branch
+  git push origin my-remix
   
 ```
 
 Now you can use the GitHub UI to turn your branch into a pull request. 
 
-It's good practice to share a link to your project in the PR and talk about teh functional changes you've made.  This allows the reviewers to easily visit your remix to test out your new behavior.
+It's good practice to share a link to your project in the PR and talk about the functional changes you've made.  This allows the reviewers to easily visit your remix to test out your new behavior.
 
 _(Don't have permission to push to github? You'll need to first [Fork](https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/) our [repository](https://github.com/FogCreek/Glitch-Community) and then [create a pull request from the fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) instead.)_
 
@@ -90,13 +90,13 @@ _(Don't have permission to push to github? You'll need to first [Fork](https://b
 
 In your local repository,
  ```
-   # Make sure we're on the right branch
+   # 1. Make sure we're on the right branch
    git checkout my-remix 
    
-  # Pull from Glitch into your local branch.
+   # 2. Pull from Glitch into your local branch.
    git pull my-remix master
    
-  # Update the PR in Github
+   # 3. Update the PR in Github
    git push origin my-remix
  ``` 
 

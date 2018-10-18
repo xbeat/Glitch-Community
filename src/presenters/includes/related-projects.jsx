@@ -4,21 +4,14 @@ import {sampleSize, difference} from 'lodash';
 
 import ProjectModel from '../../models/project';
 import {getProfileStyle as getTeamProfileStyle} from '../../models/team';
-import {getDisplayName, getLink as getUserLink, getProfileStyle as getUserProfileStyle} from '../../models/user';
+import {getDisplayName, getProfileStyle as getUserProfileStyle} from '../../models/user';
 
 import {DataLoader} from './loader.jsx';
 import {CoverContainer} from './profile.jsx';
+import {TeamLink, UserLink} from './link.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 
 const PROJECT_COUNT = 3;
-
-const RelatedProjectsHeader = ({name, url}) => (
-  <h2><a href={url}>More by {name} →</a></h2>
-);
-RelatedProjectsHeader.propTypes = {
-  name: PropTypes.node.isRequired,
-  url: PropTypes.string.isRequired,
-};
 
 const RelatedProjectsBody = ({projects, coverStyle}) => (
   projects.length ? (
@@ -70,17 +63,17 @@ class RelatedProjects extends React.Component {
     }
     return (
       <ul className="related-projects">
-        {teams.map(({id, name, url, ...team}) => (
-          <li key={id}>
-            <RelatedProjectsHeader name={name} url={`/@${url}`}/>
-            <DataLoader get={() => this.getProjects(id, getTeamPins, getTeam)}>
-              {projects => <RelatedProjectsBody projects={projects} coverStyle={getTeamProfileStyle({id, ...team})}/>}
+        {teams.map(team => (
+          <li key={team.id}>
+            <h2><TeamLink team={team}>More by {team.name} →</TeamLink></h2>
+            <DataLoader get={() => this.getProjects(team.id, getTeamPins, getTeam)}>
+              {projects => <RelatedProjectsBody projects={projects} coverStyle={getTeamProfileStyle(team)}/>}
             </DataLoader>
           </li>
         ))}
         {users.map(user => (
           <li key={user.id}>
-            <RelatedProjectsHeader name={getDisplayName(user)} url={getUserLink(user)}/>
+            <h2><UserLink user={user}>More by {getDisplayName(user)} →</UserLink></h2>
             <DataLoader get={() => this.getProjects(user.id, getUserPins, getUser)}>
               {projects => <RelatedProjectsBody projects={projects} coverStyle={getUserProfileStyle(user)}/>}
             </DataLoader>

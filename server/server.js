@@ -20,11 +20,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(compression());
 
-const proxy = require('./proxy');
-proxy(app);
+const redirects = require('./redirects');
+redirects(app);
 
-const router = require('./routes')();
-app.use('/', router);
+const proxy = require('./proxy');
+const proxied = proxy(app);
+
+const router = require('./routes');
+app.use('/', router(['/edit', ...proxied]));
 
 // Add an explicit no-cache to 404 responses
 // Since this is the last handler it will only be hit when all other handlers miss
@@ -34,6 +37,6 @@ app.use(function(req, res, next) {
 });
 
 // Listen on App port
-var listener = app.listen(process.env.PORT, () => {
+const listener = app.listen(process.env.PORT, () => {
   console.log(`Your app is listening on port ${listener.address().port}.`);
 });

@@ -49,7 +49,7 @@ export class UpgradeTeamPop extends React.Component {
           </button>
           {/* Temporary: remove this once billing is ready */}
           <p className="action-description">
-            Paid teams are coming soon. In the meantime, feel free to add as many projects as you want, they won't go away.
+            Paid teams are coming soon. In the meantime, feel free to add as many projects as you want — they won't go away.
           </p>
 
         </section>

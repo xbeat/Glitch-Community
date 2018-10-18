@@ -4,8 +4,8 @@ export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b1
 
 export default function Project({teams, users, ...project}) {
   const props = {
-    get teams() { return teams ? teams.map(team => Team(team).asProps()) : []; },
-    get users() { return users ? users.map(user => User(user).asProps()) : []; },
+    teams: teams ? teams.map(team => Team(team).asProps()) : [],
+    users: users ? users.map(user => User(user).asProps()) : [],
     ...project
   };
   return {

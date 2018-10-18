@@ -16,6 +16,7 @@ import {AuthDescription} from '../includes/description-field.jsx';
 import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-actions.jsx';
 import AddProjectToCollection from '../includes/add-project-to-collection.jsx';
+import TeamsList from '../teams-list.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
 
@@ -39,7 +40,7 @@ const PrivateTooltip = "Only members can view code";
 const PublicTooltip = "Visible to everyone";
 
 const PrivateBadge = () => (
-  <span className="private-project-badge" aria-label={PrivateTooltip} data-tooltip={PrivateTooltip}></span>
+  <span className="project-badge private-project-badge" aria-label={PrivateTooltip} data-tooltip={PrivateTooltip}></span>
 );
 
 const PrivateToggle = ({isPrivate, setPrivate}) => {
@@ -99,17 +100,17 @@ const ProjectPage = ({
       <InfoContainer>
         <ProjectInfoContainer style={{backgroundImage: `url('${getAvatarUrl(project.id)}')`}}>
           <h1>
-            {(isAuthorized
-              ? <EditableField value={project.domain} update={domain => updateDomain(domain).then(() => syncPageToDomain(domain))} placeholder="Name your project"/>
-              : <React.Fragment>{project.domain} {project.private && <PrivateBadge/>}</React.Fragment>
-            )}
+            {(isAuthorized ? (
+              <EditableField value={domain} placeholder="Name your project"
+                update={domain => updateDomain(domain).then(() => syncPageToDomain(domain))}
+                suffix={<PrivateToggle isPrivate={project.private} isMember={isAuthorized} setPrivate={updatePrivate}/>}
+              />
+            ) : <React.Fragment>{domain} {project.private && <PrivateBadge/>}</React.Fragment>)}
           </h1>
-          {(isAuthorized &&
-            <div>
-              <PrivateToggle isPrivate={project.private} isMember={isAuthorized} setPrivate={updatePrivate}/>
-            </div>
-          )}
-          <UsersList users={project.users} />
+          <div className="users-information">
+            <UsersList users={users} />
+            {!!teams.length && <TeamsList teams={teams}/>}
+          </div>
           <AuthDescription
             authorized={isAuthorized} description={project.description}
             update={updateDescription} placeholder="Tell us about your app"

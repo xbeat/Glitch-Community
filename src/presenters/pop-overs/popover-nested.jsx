@@ -7,7 +7,7 @@ export default class NestedPopover extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      alternateContentVisible: false,
+      alternateContentVisible: props.startAlternateVisible,
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -32,18 +32,20 @@ export default class NestedPopover extends React.Component {
 NestedPopover.propTypes = {
   children: PropTypes.func.isRequired,
   alternateContent: PropTypes.func.isRequired,
+  startAlternateVisible: PropTypes.bool,
+};
+NestedPopover.defaultProps = {
+  startAlternateVisible: false,
 };
 
 
 export const NestedPopoverTitle = ({children}) => (
   <Consumer>
     {toggle => (
-      <button className="button-unstyled clickable-label" onClick={toggle} aria-label="go back">
-        <section className="pop-over-info">
-          <div className="back icon"><div className="left-arrow icon" /></div>
-          &nbsp;
-          <div className="pop-title">{children}</div>
-        </section>
+      <button className="button-unstyled pop-over-section pop-over-info clickable-label" onClick={toggle} aria-label="go back">
+        <div className="back icon"><div className="left-arrow icon" /></div>
+        &nbsp;
+        <div className="pop-title">{children}</div>
       </button>
     )}
   </Consumer>

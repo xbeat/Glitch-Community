@@ -5,7 +5,7 @@ const moment = require('moment-mini');
 const {getProject, getTeam, getUser} = require('./api');
 const constants = require('./constants');
 
-module.exports = function() {
+module.exports = function(external) {
 
   const app = express.Router();
 
@@ -36,13 +36,33 @@ module.exports = function() {
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
 
   function render(res, title, description, image=imageDefault) {
-    const scripts = JSON.parse(fs.readFileSync('public/scripts.json'));
-    const styles = JSON.parse(fs.readFileSync('public/styles.json'));
+    let built = true;
+    
+    let scripts = {};
+    try {
+      scripts = JSON.parse(fs.readFileSync('public/scripts.json'));
+    } catch (error) {
+      console.error("Failed to load script manifest");
+      built = false;
+    }
+    let styles = {};
+    try {
+      styles = JSON.parse(fs.readFileSync('public/styles.json'));
+    } catch (error) {
+      console.error("Failed to load style manifest");
+      built = false;
+    }
+    
+    if (!built) {
+      console.error("The initial build probably isn't ready yet");
+    }
 
     res.render('index.ejs', {
       title, description, image,
       scripts: Object.values(scripts),
       styles: Object.values(styles),
+      BUILD_COMPLETE: built,
+      EXTERNAL_ROUTES: JSON.stringify(external),
       PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
       ENVIRONMENT: process.env.NODE_ENV || "dev",
       ...constants,
@@ -69,15 +89,15 @@ module.exports = function() {
     }
     const user = await getUser(name);
     if (user) {
-      return render(res, user.name, user.description, user.avatarThumbnailUrl);
+      return render(res, user.name || `@${user.login}`, user.description, user.avatarThumbnailUrl);
     }
     return render(res, `@${name}`, `We couldn't find @${name}`);
   });
 
   app.get('*', (req, res) => {
     render(res,
-      "Glitch - The Friendly, Creative Community",
-      "The friendly community where you’ll build the app of your dreams");
+      "Glitch",
+      "The friendly community where everyone can discover & create the best stuff on the web");
   });
 
   return app;

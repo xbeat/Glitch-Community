@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Gender Analyze Your Radio Station',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fradio-station-scraper.jpg?1535022650114",
-    link: 'https://glitch.com/~radio-station-scraper'
+    title: 'Flowers in Space',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Forbit.png?1539601710383",
+    link: 'https://glitch.com/~orbit'
   },{
-    title: 'Make Your Own Movie Poster',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmovieposters.jpg?1535368252714",
-    link: 'https://glitch.com/~movieposters'
+    title: 'Newspaper Business Simulator',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fnewspaper-business-simulator.png?1539601710653",
+    link: 'https://glitch.com/~newspaper-business-simulator'
   }, {
-    title: 'Reader View, Everywhere',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Freader-view.jpg?1535368251978",
-    link: 'https://glitch.com/~legend-football'
+    title: 'Minimal Retro Album Covers',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fretro-album-covers.png?1539601710110",
+    link: 'https://glitch.com/~retro-album-covers'
   }  
 ];

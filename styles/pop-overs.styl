@@ -1,3 +1,21 @@
+details.popover-container
+  display: inline-block
+  position: relative
+  > summary
+    list-style: none
+    cursor: pointer
+    &::-webkit-details-marker
+      display: none
+    &:not([data-tooltip])::before
+      display: none
+  &[open] > summary::after
+    display: none
+  &:not([open]) > :not(summary)
+    display: none
+  > .pop-over
+    top: 100%
+    left: 0
+    
 .pop-over
   text-align: left
   background-color: background-color
@@ -20,12 +38,10 @@
     color: primary
     font-weight: normal
     margin-bottom: 10px
-  section, >form
+  section, .pop-over-section, >form
     color: primary
-    padding: 12px
-    padding-top: 14px
-    padding-bottom: 14px
-  section
+    padding: 14px 12px
+  section, .pop-over-section
     &:first-child
       border-top-left-radius: 3px
       border-top-right-radius: 3px
@@ -33,25 +49,40 @@
       border-bottom: none
       border-bottom-left-radius: 3px
       border-bottom-right-radius: 3px
+  aside
+    color: text-on-secondary-background
+    font-size: 12px
+    text-align: center
+    padding: 10px 12px
 
   .results-list
     padding: 6px
     
   .clickable-label
-    cursor: pointer
+    width: 100%
+    display: flex
+    align-items: center
+    .back
+      background-color: transparent
+      vertical-align: middle
+      padding: 0px 4px 3px
+      opacity: 0.7
+      width: auto
     &:hover,
+    &:focus,
     &:active
       .back
         opacity: 1
         border-radius: 5px
         border: none
-    &:hover
+    &:hover,
+    &:focus
       .back
         background-color: secondary-background-hover
     &:active
       .back
         background-color: secondary-background-active
-    
+            
   .description-section
     margin: 0
     padding: 0
@@ -86,18 +117,17 @@
 
   .emoji
     display: inline-block
-  .button,button
+  .button, button
     display: inline-block
     margin-bottom: 12px
     margin-left: 0
     max-width: initial
+    &:last-child
+      margin: 0
   .button-small
     margin-bottom: 10px
   .button-link
     color: #000
-  .button-link:last-child
-    .button
-      margin: 0
   button:last-child
     margin-bottom: 0
   &.last-section
@@ -109,13 +139,18 @@
 .sign-in-pop
   width: 205px
   right: 0
-  top: 26px
+  top: 26px;
+  .action-description
+    margin-top: 0
 
 .user-options-pop
   right: 0
   top: 25px
-  width: 160px
-
+  width: 180px
+  .user-info
+    padding-bottom: 12px
+    padding-top: 12px
+  
 .create-team-pop
   right: 0
   top: 25px
@@ -255,7 +290,7 @@
     
 .add-team-user-pop
   left: 5px
-  top: 20px
+  top: 26px
   @media(max-width: mediumViewport)
     left: initial
     right: -100%
@@ -345,3 +380,27 @@
     min-width: 360px
     right: 0
     top: 27px
+    
+.team-user-remove-pop
+  .projects-list
+    label
+      display: flex
+      align-items: center
+      margin-bottom: 10px
+      cursor: pointer
+      user-select: none
+    input
+      width: auto
+      margin: 0
+      margin-right: 5px
+      cursor: pointer
+    .avatar
+      vertical-align: middle
+      margin-right: 5px
+    
+    // shrink avatars if there are more than 10 projects
+    label:nth-last-child(n+10) // every label at least ten from the end
+      &, & ~ label // will style itself and all following labels
+        .avatar
+          width: 20px
+          height: 20px
