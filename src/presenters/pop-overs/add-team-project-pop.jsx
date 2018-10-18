@@ -179,7 +179,7 @@ export class AddTeamProjectPop extends React.Component {
     const filteredProjects = this.state.filteredProjects;
 
     return (
-      <dialog className="pop-over add-team-project-pop">
+      <dialog className="pop-over add-team-project-pop wide-pop">
         <section className="pop-over-info">
           {/* Temporary: hidden for now pending having templates to use
           <div className="segmented-buttons">
