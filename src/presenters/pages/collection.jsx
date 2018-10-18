@@ -100,7 +100,7 @@ const CollectionPageContents = ({
             {(isAuthorized
               ? <EditableField
                 value={collection.name}
-                update={name => updateName(name).then(c => syncPageToUrl(c.user.login, c.url))}
+                update={name => updateName(name).then(c => syncPageToUrl(collection.user.login, c.url))}
                 placeholder="Name your collection"/> 
               : collection.name
             )}
