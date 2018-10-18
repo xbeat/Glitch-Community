@@ -82,13 +82,13 @@ class AddCollectionProjectPop extends React.Component {
       maybeResults: null,
       projectName: '',
     });
-  }
-  
+  } 
   async loadRecentProjects(){
+    console.log('load recent projects');
     const {data} = await this.props.api.get(`users/${this.props.currentUser.id}`);
-    console.log("data %O," {data});
-  }
-  
+    let userRecentProjects = data.projects.slice(0,3);
+    this.setState({maybeResults: userRecentProjects});
+  }  
   async startSearch() {
     if (!this.state.query) {
       return this.clearSearch();
@@ -175,6 +175,8 @@ class AddCollectionProjectPop extends React.Component {
   
   render() {
     const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
+    this.loadRecentProjects();
+    // load user's recent projects
     return (
       <dialog className="pop-over add-collection-project-pop wide-pop">
         <section className="pop-over-info">
@@ -201,7 +203,7 @@ AddCollectionProjectPop.propTypes = {
   collection: PropTypes.object.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
   togglePopover: PropTypes.func.isRequired,
-  currentUser: PropTypes.obj.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
 export default AddCollectionProjectPop;

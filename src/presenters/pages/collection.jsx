@@ -147,8 +147,8 @@ const CollectionPageContents = ({
           
         </header>
         
-        {collection
-          ? <ProjectsLoader api={api} projects={collection.projects}>
+        {collection &&
+           <ProjectsLoader api={api} projects={collection.projects}>
             {projects => 
               <React.Fragment>
                 <div className="collection-contents">
@@ -161,6 +161,7 @@ const CollectionPageContents = ({
                         collection={collection}
                         api={api}
                         currentUserIsOwner={isAuthorized}
+                        currentUser={currentUser}
                       />
                       : null
                     )}
@@ -192,29 +193,6 @@ const CollectionPageContents = ({
               </React.Fragment>
             }
           </ProjectsLoader>
-        
-          : 
-          // no collection 
-          <React.Fragment>
-            <div className="collection-project-container-header">
-              <h3>Projects</h3>
-                
-              {(isAuthorized 
-                ? <AddCollectionProject
-                  api={api}
-                  collectionProjects={null}
-                  currentUserIsOwner={isAuthorized}
-                  currentUser={currentUser}
-                />
-                : null
-              )}
-              <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor}}>
-                Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
-              </div>
-                
-            </div>
-          
-          </React.Fragment>
         }
         
       </article>
