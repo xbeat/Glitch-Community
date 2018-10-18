@@ -172,7 +172,7 @@ class AddCollectionProjectPop extends React.Component {
     return (
       <dialog className="pop-over add-collection-project-pop wide-pop">
         <section className="pop-over-info">
-          <input id="team-user-search" 
+          <input
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={this.state.query} onChange={this.handleChange}
             className="pop-over-input search-input pop-over-search"

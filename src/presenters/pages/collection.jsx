@@ -105,7 +105,7 @@ const CollectionPageContents = ({
               : collection.name
             )}
           </h1>
-          <p>{getLink(collection.user.login, collection.url)}</p>
+          <p className="collection-url">{getLink(collection.user.login, collection.url)}</p>
           <div className="collection-image-container">
             <img src={collection.avatarUrl} alt=""/>
           </div>
