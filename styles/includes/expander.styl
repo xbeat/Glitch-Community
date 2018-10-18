@@ -12,10 +12,14 @@
     display: flex
     flex-direction: row
     align-items: flex-end
-    background: linear-gradient(to bottom, transparent calc(100% - 25px), white)
+    background: linear-gradient(to bottom, transparent calc(100% - 121px), white)
   
   .expander-button
     position: initial
+    margin-bottom: 2px
+    box-shadow: 2px 2px 0 tertiary
+    &:hover
+      border-color: primary
     &::before
       position: absolute
       top: 0

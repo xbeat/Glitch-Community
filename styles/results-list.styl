@@ -15,6 +15,11 @@
       
     .result
       display: block
+<<<<<<< HEAD
+=======
+      width: 100%
+      position: relative
+>>>>>>> 4039f3896dd18262f1539ed17d8f1ebd318e2d8a
       text-decoration: none
       &:hover,
       &.hover,
@@ -50,12 +55,15 @@
     &.active
       border-radius: 3px
       color: background-color
-      .result-description
+      .result-description, p
         color: secondary-hover-on-color
       .result-name
         color: background-color
   .result-name
     display: inline-block
+    vertical-align: middle
+    max-width: calc(100% - 22px - 5px) // space for the avatar
+    line-height: 16px
     color: primary
   
   .result-description
@@ -66,6 +74,14 @@
     line-height: 18px
     padding-top: 5px
     margin-right: 75px;
+  
+  .thanks
+    .emoji
+      width: 14px
+      height: 14px
+    font-size: 12px
+    margin-top: 5px
+    margin-bottom: 0
 
   .avatar
     margin-right: 15px
@@ -74,7 +90,9 @@
     width: 35px
     height: auto
     border-radius: 3px
-    background-color: transparent
+  .whitelisted-domain
+    vertical-align: middle
+    margin-right: 5px
 
   .users
     user-size = 18px

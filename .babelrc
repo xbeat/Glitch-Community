@@ -4,10 +4,10 @@
       "loose": true,
       "es2017": false,
     }],
-    "react",
+    "@babel/preset-react",
   ],
   "plugins": [
     "lodash",
-    "syntax-dynamic-import",
+    "@babel/syntax-dynamic-import",
   ],
 }

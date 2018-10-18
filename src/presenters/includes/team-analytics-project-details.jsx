@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 
+import {ProjectLink} from './link.jsx';
 import Loader from './loader.jsx';
 import {FALLBACK_AVATAR_URL, getAvatarUrl} from '../../models/project.js';
 
@@ -10,7 +11,7 @@ const RECENT_REMIXES_COUNT = 100;
 const getProjectDetails = async ({id, api, currentProjectDomain}) => {
   let path = `analytics/${id}/project/${currentProjectDomain}/overview`;
   try {
-    return await api().get(path);
+    return await api.get(path);
   } catch (error) {
     console.error('getProjectDetails', error);
   }
@@ -20,18 +21,13 @@ const addFallbackSrc = (event) => {
   event.target.src = FALLBACK_AVATAR_URL;
 };
 
-const communityProjectUrl = (domain) => {
-  return `/~${domain}`;
-};
-
 const ProjectDetails = ({projectDetails}) => {
   let projectAvatar = getAvatarUrl(projectDetails.id);
-  let projectUrl = communityProjectUrl(projectDetails.domain);
   return (
     <article className="project-details">
-      <a href={projectUrl}>
+      <ProjectLink project={projectDetails}>
         <img className="avatar" src={projectAvatar} onError={addFallbackSrc} alt="project avatar" />
-      </a>
+      </ProjectLink>
       <table>
         <tbody>
           <tr>
@@ -48,7 +44,7 @@ const ProjectDetails = ({projectDetails}) => {
           </tr>
           <tr>
             <td className="label">Last remixed</td>
-            <td>{moment(projectDetails.lastRemixedAt).fromNow()}</td>
+            <td>{projectDetails.lastRemixedAt ? moment(projectDetails.lastRemixedAt).fromNow() : "never"}</td>
           </tr>
           <tr>
             <td className="label">Total app views</td>
@@ -70,9 +66,9 @@ const ProjectDetails = ({projectDetails}) => {
             <tr>
               <td className="label">Originally remixed from</td>
               <td>
-                <a href={communityProjectUrl(projectDetails.baseProject.domain)}>
+                <ProjectLink project={projectDetails.baseProject}>
                   <img alt="project avatar" className="avatar baseproject-avatar" src={getAvatarUrl(projectDetails.baseProject.id)} onError={addFallbackSrc} />
-                </a>
+                </ProjectLink>
                 {projectDetails.baseProject.domain}
               </td>
             </tr>
@@ -85,13 +81,12 @@ const ProjectDetails = ({projectDetails}) => {
 
 const ProjectRemixItem = ({remix}) => {
   let projectAvatar = getAvatarUrl(remix.id);
-  let projectUrl = communityProjectUrl(remix.domain);
   return (
-    <a href={projectUrl}>
+    <ProjectLink project={remix}>
       <span data-tooltip={remix.domain} data-tooltip-left="true">
         <img className="avatar" src={projectAvatar} alt={remix.domain} onError={addFallbackSrc} />
       </span>
-    </a>
+    </ProjectLink>
   );
 };
 
@@ -158,7 +153,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
 TeamAnalyticsProjectDetails.propTypes = {
   currentProjectDomain: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  api: PropTypes.func.isRequired,
+  api: PropTypes.any.isRequired,
 };
 
 export default TeamAnalyticsProjectDetails;

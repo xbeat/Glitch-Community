@@ -19,7 +19,7 @@ Wrapper.propTypes = {
 export default class PopoverContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { visible: false };
+    this.state = { visible: props.startOpen };
 
     this.set = this.set.bind(this);
     this.toggle = this.toggle.bind(this);
@@ -91,4 +91,8 @@ export default class PopoverContainer extends React.Component {
 PopoverContainer.propTypes = {
   children: PropTypes.func.isRequired,
   outer: PropTypes.func,
+  startOpen: PropTypes.bool,
+};
+PopoverContainer.defaultProps = {
+  startOpen: false,
 };

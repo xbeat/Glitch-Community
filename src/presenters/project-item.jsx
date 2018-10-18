@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getAvatarUrl, getLink} from '../models/project.js';
+import {getAvatarUrl} from '../models/project.js';
 
+import {ProjectLink} from './includes/link.jsx';
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
@@ -14,7 +15,7 @@ export const ProjectItem = ({api, project, collectionColor, ...props}) => {
     <li>
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
       <ProjectOptionsPop {...{project, api}} {...props}/>
-      <a href={getLink(project.domain)}>
+      <ProjectLink project={project}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
           style={{backgroundColor: collectionColor, borderBottomColor:collectionColor}}
           data-track="project" data-track-label={project.domain}>
@@ -29,7 +30,7 @@ export const ProjectItem = ({api, project, collectionColor, ...props}) => {
             <div className="overflow-mask" style={{backgroundColor: collectionColor}}></div>
           </div>
         </div>
-      </a>
+      </ProjectLink>
     </li>
   );
 };

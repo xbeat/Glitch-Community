@@ -46,7 +46,7 @@ It works just like the editor. Enjoy those hot new dreams.
     body: `
 Soon, we’ll provide Glitch to teams at work, so developers, designers and anyone with an idea can create real, full-power apps incredibly easily.
 
-But we’re counting on you to help us define what that offering will include. [Sign up](https://glitch.com/forteams) and let us know what you need from Glitch in the workplace, be the first to hear what’s coming to Glitch for Teams, and help inform its development.
+But we’re counting on you to help us define what that offering will include. [Sign up](https://glitch.com/teams) and let us know what you need from Glitch in the workplace, be the first to hear what’s coming to Glitch for Teams, and help inform its development.
 `,
   },
   {

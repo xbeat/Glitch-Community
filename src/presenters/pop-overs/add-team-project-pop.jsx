@@ -82,12 +82,12 @@ export class AddTeamProjectPop extends React.Component {
 
   async remixTemplate(projectId) {
     let remixTemplatePath = `projects/${projectId}/remix`;
-    return await this.props.api().post(remixTemplatePath);
+    return await this.props.api.post(remixTemplatePath);
   }
 
   async inviteUserToRemix(data) {
     let inviteUserPath = `projects/${data.inviteToken}/join`;
-    return await this.props.api().post(inviteUserPath);
+    return await this.props.api.post(inviteUserPath);
   }
 
   onClick(event, project) {
@@ -139,7 +139,7 @@ export class AddTeamProjectPop extends React.Component {
       '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
     ];
     let projectsPath = `projects/byIds?ids=${templateIds.join(',')}`;
-    this.props.api().get(projectsPath)
+    this.props.api.get(projectsPath)
       .then(({data}) => {
         let projects = this.normalizeTemplateProjects(data);
         this.setState({
@@ -241,7 +241,7 @@ AddTeamProjectPop.propTypes = {
   teamProjects: PropTypes.array.isRequired,
   addProject: PropTypes.func.isRequired,
   togglePopover: PropTypes.func.isRequired,
-  api: PropTypes.func.isRequired
+  api: PropTypes.any.isRequired
 };
 
 const AddTeamProjectPopContainer = (props) => (

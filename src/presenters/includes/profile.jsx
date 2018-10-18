@@ -9,7 +9,7 @@ export const ImageButtons = ({name, uploadImage, clearImage}) => {
     <div className="upload-image-buttons">
       { !!uploadImage && (
         <button className="button button-small button-tertiary" onClick={uploadImage}>
-          <span>Upload {name}</span>
+          Upload {name}
         </button>
       )}
       { !!clearImage && (

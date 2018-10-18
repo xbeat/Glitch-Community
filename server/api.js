@@ -19,7 +19,9 @@ async function getFromCacheOrApi(id, cache, api) {
   if (item === null) {
     try {
       item = (await api(id)) || NOT_FOUND;
-    } catch (e) {
+    } catch (error) {
+      // Technically anything other than a 404 is a 'real' error
+      // but for our usage we can just go on as if it doesn't exist
       item = NOT_FOUND;
     }
     cache.put(id, item, CACHE_TIMEOUT);
@@ -43,8 +45,10 @@ async function getTeamFromApi(url) {
 }
 
 async function getUserFromApi(login) {
-  const response = await api.get(`/users/byLogins?logins=${login}`);
-  return response.data.length ? response.data[0] : null;
+  const {data} = await api.get(`/userId/byLogin/${login}`);
+  if (data === 'NOT FOUND') return null;
+  const response = await api.get(`/users/${data}`);
+  return response.data;
 }
 
 module.exports = {

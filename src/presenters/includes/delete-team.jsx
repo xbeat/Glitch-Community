@@ -7,12 +7,12 @@ import PopoverContainer from '../pop-overs/popover-container.jsx';
 const DeleteTeam = ({...props}) => {
   
   return (
-    <section className="add-project-container">
+    <section>
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <div className="button-wrap">
             <button className="button button-small button-tertiary has-emoji opens-pop-over danger-zone" onClick={togglePopover}>
-              <span>Delete {props.teamName} </span>
+              Delete {props.teamName}&nbsp;
               <span className="emoji bomb" role="img" aria-label="" />
             </button>
             { visible && <DeleteTeamPop {...props} togglePopover={togglePopover} /> }
@@ -28,7 +28,7 @@ DeleteTeam.propTypes = {
   teamId: PropTypes.number.isRequired,
   teamName: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,
-  admins: PropTypes.func.isRequired,
+  teamAdmins: PropTypes.array.isRequired,
 };
 
 export default DeleteTeam;
