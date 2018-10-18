@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import SVGInline from "react-svg-inline"
 import {Redirect} from 'react-router-dom';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
 import ProjectModel from '../../models/project';
-import {getLink} from '../../models/collection';
+import {getLink, defaultAvatarSVG} from '../../models/collection';
 
 import Loader, {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
@@ -71,6 +72,12 @@ DeleteCollectionBtn.propTypes = {
   currentUserLogin:PropTypes.string.isRequired,
 };
 
+class Avatar extends React.Component{
+  constructor(props){
+    thi
+  }
+}
+
 const CollectionPageContents = ({
   api, 
   collection, 
@@ -107,7 +114,7 @@ const CollectionPageContents = ({
           </h1>
           <p className="collection-url">{getLink(collection.user.login, collection.url)}</p>
           <div className="collection-image-container">
-            <img src={collection.avatarUrl} alt=""/>
+            <SVGInline svg={defaultAvatarSVG}/>
           </div>
           {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
           {(isAuthorized 
