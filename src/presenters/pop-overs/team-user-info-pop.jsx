@@ -95,7 +95,7 @@ const TeamUserInfo = ({currentUser, showRemove, ...props}) => {
           updateUserPermissions={props.updateUserPermissions}
         />
       }
-      { canRemoveUser && <RemoveFromTeam onClick={showRemove} disabled={props.userIsTheOnlyMember}/> }
+      { canRemoveUser && !props.userIsTheOnlyMember && <RemoveFromTeam onClick={showRemove}/> }
     </dialog>
   );
 };
