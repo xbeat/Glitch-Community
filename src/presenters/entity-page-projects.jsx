@@ -49,7 +49,7 @@ const EntityPageProjects = ({api, projects, pins, currentUser, isAuthorized, add
           api={api}
           addProjectTocollection={projectOptions.addProjectToCollection}
           projectOptions={isAuthorized ? {removePin, ...projectOptions} 
-              : (currentUser ? {...projectOptions} : {})
+            : (currentUser ? {...projectOptions} : {})
           }
         />
       )}
@@ -58,7 +58,7 @@ const EntityPageProjects = ({api, projects, pins, currentUser, isAuthorized, add
           api={api}
           addProjectTocollection={projectOptions.addProjectToCollection}
           projectOptions={isAuthorized ? {addPin, ...projectOptions} 
-                          : (currentUser ? {...projectOptions} : {})
+            : (currentUser ? {...projectOptions} : {})
           }
         />
       )}

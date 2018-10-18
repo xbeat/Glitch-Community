@@ -40,9 +40,9 @@ const OverlaySelectCollection = ({children, domain}) => (
                       avatarUrl={categories[1].avatarUrl} 
                       url={categories[1].url} isActive={false} 
                       togglePopover={togglePopover} 
-                      />
+                    />
                   </li>
-                <li>
+                  <li>
                     <CollectionResultItem 
                       projectName={domain}
                       collectionName={categories[2].name} 
@@ -51,9 +51,9 @@ const OverlaySelectCollection = ({children, domain}) => (
                       avatarUrl={categories[2].avatarUrl} 
                       url={categories[2].url} isActive={false} 
                       togglePopover={togglePopover} 
-                      />
+                    />
                   </li>
-                <li>
+                  <li>
                     <CollectionResultItem 
                       projectName={domain}
                       collectionName={categories[3].name} 
@@ -62,7 +62,7 @@ const OverlaySelectCollection = ({children, domain}) => (
                       avatarUrl={categories[3].avatarUrl} 
                       url={categories[3].url} isActive={true} 
                       togglePopover={togglePopover} 
-                      />
+                    />
                   </li>
                 </ul>
               </section>

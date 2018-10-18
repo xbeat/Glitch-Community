@@ -29,7 +29,7 @@ export const ProjectsUL = ({api, ...props}) => {
     <React.Fragment>
       <ul className="projects-container">
         { props.projects.map(project => (
-            <ProjectItem key={project.id} project={project} api={api} {...props}></ProjectItem>
+          <ProjectItem key={project.id} project={project} api={api} {...props}></ProjectItem>
         ))}
         
         {props.homepageCollection

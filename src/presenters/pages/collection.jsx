@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SVGInline from "react-svg-inline"
+import SVGInline from "react-svg-inline";
 import {Redirect} from 'react-router-dom';
 
 import Helmet from 'react-helmet';
@@ -42,28 +42,28 @@ class DeleteCollectionBtn extends React.Component {
     super(props);
     this.state ={
       done: false,
-    }
+    };
   } 
   render(){
     if(this.state.done){
       return <Redirect to={`/@${this.props.currentUserLogin}`} />;
-    }else{
-      return (
-        <button className={`button delete-collection button-tertiary`} 
-          onClick={() => 
-            { 
-              console.log('clicked delete collection');
-              if(!window.confirm(`Are you sure you want to delete your collection?`)){
-                return;
-              }
-              console.log('delete collection');
-              this.props.deleteCollection();
-              this.setState({done: true});
-          }} >
+    }
+    return (
+      <button className={`button delete-collection button-tertiary`} 
+        onClick={() => 
+        { 
+          console.log('clicked delete collection');
+          if(!window.confirm(`Are you sure you want to delete your collection?`)){
+            return;
+          }
+          console.log('delete collection');
+          this.props.deleteCollection();
+          this.setState({done: true});
+        }} >
         Delete Collection
       </button>
-      );
-    }
+    );
+    
   }
 }
 
@@ -77,7 +77,7 @@ class Avatar extends React.Component{
     super(props);
     this.state={
       backgroundColor: this.props.backgroundColor
-    }
+    };
   }
   
   componentWillReceiveProps(nextProps){
@@ -95,7 +95,7 @@ class Avatar extends React.Component{
   render(){
     return(
       <SVGInline svg={defaultAvatarSVG}/>
-      );
+    );
   }
 }
 
@@ -116,7 +116,7 @@ const CollectionPageContents = ({
   userLogin,
   ...props}) => (
   
-    <React.Fragment>  
+  <React.Fragment>  
     <Helmet>
       <title>{collection.name}</title>
     </Helmet>
@@ -180,50 +180,50 @@ const CollectionPageContents = ({
         
         {collection &&
            <ProjectsLoader api={api} projects={collection.projects}>
-            {projects => 
-              <React.Fragment>
-                <div className="collection-contents">
-                  <div className="collection-project-container-header">
-                    <h3>Projects ({collection.projects.length})</h3>
+             {projects => 
+               <React.Fragment>
+                 <div className="collection-contents">
+                   <div className="collection-project-container-header">
+                     <h3>Projects ({collection.projects.length})</h3>
                 
-                    {(isAuthorized 
-                      ? <AddCollectionProject
-                        addProjectToCollection={addProjectToCollection}
-                        collection={collection}
-                        api={api}
-                        currentUserIsOwner={isAuthorized}
-                        currentUser={currentUser}
-                      />
-                      : null
-                    )}
+                     {(isAuthorized 
+                       ? <AddCollectionProject
+                         addProjectToCollection={addProjectToCollection}
+                         collection={collection}
+                         api={api}
+                         currentUserIsOwner={isAuthorized}
+                         currentUser={currentUser}
+                       />
+                       : null
+                     )}
                 
-                  </div>
+                   </div>
           
-                  {(collection.projects.length > 0 ?
-                    (isAuthorized
-                      ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor}
-                      projectOptions={{
-                        removeProjectFromCollection,
-                        addProjectToCollection,
-                      }} 
-                      {...props}/>
+                   {(collection.projects.length > 0 ?
+                     (isAuthorized
+                       ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor}
+                         projectOptions={{
+                           removeProjectFromCollection,
+                           addProjectToCollection,
+                         }} 
+                         {...props}/>
 
-                      : <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
-                      projectOptions={{
-                        addProjectToCollection
-                      }} 
-                      {...props}/>
-                    )
-                    :
-                    <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor, color: getContrastTextColor(collection.coverColor)}}>
+                       : <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
+                         projectOptions={{
+                           addProjectToCollection
+                         }} 
+                         {...props}/>
+                     )
+                     :
+                     <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor, color: getContrastTextColor(collection.coverColor)}}>
                         Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
-                      </div>
-                    )}
-                </div>
+                     </div>
+                   )}
+                 </div>
           
-              </React.Fragment>
-            }
-          </ProjectsLoader>
+               </React.Fragment>
+             }
+           </ProjectsLoader>
         }
         
       </article>
@@ -273,9 +273,9 @@ async function getCollectionId(api, userId, collectionName){
   });
   if(!collectionMatch){
     return null;
-  }else{
-    return collectionMatch.id; 
   }
+  return collectionMatch.id; 
+  
 }
 
 async function getCollection(api, collectionId){
@@ -304,21 +304,21 @@ async function loadCollection(api, userLogin, collectionName){
 
 const CollectionPage = ({api, userLogin, name, ...props}) => (
   <Layout api={api}>
-        <DataLoader get={() => loadCollection(api, userLogin, name)}
-          renderError={() => <NotFound name={name}/>}
-        >
-          {collection => (
-            <CurrentUserConsumer>
-              {(currentUser) => (
-                <CollectionEditor api={api} initialCollection={collection} >
-                  {(collection, funcs, userIsAuthor) =>(
-                      <CollectionPageContents collection={collection} userLogin={userLogin} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} {...funcs} {...props}/>
-                  )}
-                </CollectionEditor>
+    <DataLoader get={() => loadCollection(api, userLogin, name)}
+      renderError={() => <NotFound name={name}/>}
+    >
+      {collection => (
+        <CurrentUserConsumer>
+          {(currentUser) => (
+            <CollectionEditor api={api} initialCollection={collection} >
+              {(collection, funcs, userIsAuthor) =>(
+                <CollectionPageContents collection={collection} userLogin={userLogin} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} {...funcs} {...props}/>
               )}
-            </CurrentUserConsumer>
+            </CollectionEditor>
           )}
-        </DataLoader>
+        </CurrentUserConsumer>
+      )}
+    </DataLoader>
   </Layout>
 );
 

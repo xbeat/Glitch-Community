@@ -25,17 +25,17 @@ const ProjectSearchResults = ({projects, collection, onClick, projectName, exclu
               </li>
             )}
           </Notifications>
-         )
+        )
       ))}
     </ul>
   ) : 
     (projectName 
-     ? <p className="results-empty">{projectName} is already in this collection <span role="img" aria-label="">💫</span></p>
-     : <p className="results-empty">nothing found <span role="img" aria-label="">💫</span><br/>
-       {excludedProjectsCount > 0 && <span>(Excluded {excludedProjectsCount} search results already found in collection)</span>}
+      ? <p className="results-empty">{projectName} is already in this collection <span role="img" aria-label="">💫</span></p>
+      : <p className="results-empty">nothing found <span role="img" aria-label="">💫</span><br/>
+        {excludedProjectsCount > 0 && <span>(Excluded {excludedProjectsCount} search results already found in collection)</span>}
       </p>
-     )           
-   )
+    )           
+  )
 );
 
 ProjectSearchResults.propTypes = {
@@ -44,8 +44,8 @@ ProjectSearchResults.propTypes = {
 };
 
 function isUrl(s) {
-   var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-   return regexp.test(s);
+  var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+  return regexp.test(s);
 }
 
 class AddCollectionProjectPop extends React.Component {
@@ -156,10 +156,10 @@ class AddCollectionProjectPop extends React.Component {
     console.log(`excludedProjectsCount: ${this.state.excludedProjectsCount}`);
 
     this.setState(({ maybeRequest }) => {
-    return (request === maybeRequest) ? {
-      maybeRequest: null,
-      maybeResults: nonCollectionResults,
-      recentProjects: null,
+      return (request === maybeRequest) ? {
+        maybeRequest: null,
+        maybeResults: nonCollectionResults,
+        recentProjects: null,
       } : {};
     });
 
@@ -173,7 +173,7 @@ class AddCollectionProjectPop extends React.Component {
     this.props.addProjectToCollection(project, collection);
     
     // show notification
-    createNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>, "notifySuccess")
+    createNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>, "notifySuccess");
   }
   
   render() {
@@ -193,12 +193,12 @@ class AddCollectionProjectPop extends React.Component {
         {(!!this.state.query || this.state.maybeResults) && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
         
-            {!!this.state.maybeResults && 
+          {!!this.state.maybeResults && 
               <ProjectsLoader api={this.props.api} projects={this.state.maybeResults}>
                 {(projects, reloadProject) => <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} excludedProjectsCount={this.state.excludedProjectsCount}/>
                 }
               </ProjectsLoader>
-            }          
+          }          
         </section>}
       </dialog>
     );

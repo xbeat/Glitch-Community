@@ -35,7 +35,7 @@ const CollectionOptionsPop = (props) => {
       <section className="pop-over-actions danger-zone last-section">
         {props.deleteCollection && <PopoverButton onClick={animateThenDeleteCollection} text="Delete Collection " emoji="bomb"/>}
         
-        </section>
+      </section>
     </dialog>
   );
 };

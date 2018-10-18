@@ -66,7 +66,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
           </section>
         </React.Fragment>
         : <section className="pop-over-actions">
-            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to My Collection " emoji="framed_picture"/>}
+          {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to My Collection " emoji="framed_picture"/>}
         </section>
       } 
 
@@ -97,23 +97,23 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
       }
       {props.removeProjectFromCollection &&
       <section className="pop-over-actions danger-zone last-section">
-          {props.removeProjectFromCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project)} text="Remove from Collection" emoji="thumbs_down"/>}
+        {props.removeProjectFromCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project)} text="Remove from Collection" emoji="thumbs_down"/>}
       </section>
-        }
+      }
       
     </dialog>
-    ); 
-}
+  ); 
+};
 
 
 // Project Options Pop
 const ProjectOptionsPop = ({...props}) => {
   return(
-      <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
-        { addToCollectionPopover => (
-          <ProjectOptionsContent {...props} addToCollectionPopover={addToCollectionPopover}/>
-          )}
-      </NestedPopover>
+    <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
+      { addToCollectionPopover => (
+        <ProjectOptionsContent {...props} addToCollectionPopover={addToCollectionPopover}/>
+      )}
+    </NestedPopover>
   );
 };
 
@@ -155,20 +155,20 @@ export default function ProjectOptions({projectOptions={}, project, api, current
   }
 
   return (
-      <PopoverContainer>
-        {({togglePopover, visible}) => (
-          <CurrentUserConsumer>
-            {user => (
-              <div>
-                <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
-                  <div className="down-arrow" />
-                </button>
-                { visible && <ProjectOptionsPop {...props} {...projectOptions} project={project} currentCollectionId={currentCollectionId} api={api} currentUser={user} togglePopover={togglePopover} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
-              </div>
-            )}
-          </CurrentUserConsumer>
-        )}
-      </PopoverContainer>     
+    <PopoverContainer>
+      {({togglePopover, visible}) => (
+        <CurrentUserConsumer>
+          {user => (
+            <div>
+              <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
+                <div className="down-arrow" />
+              </button>
+              { visible && <ProjectOptionsPop {...props} {...projectOptions} project={project} currentCollectionId={currentCollectionId} api={api} currentUser={user} togglePopover={togglePopover} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+            </div>
+          )}
+        </CurrentUserConsumer>
+      )}
+    </PopoverContainer>     
   );
 }
 

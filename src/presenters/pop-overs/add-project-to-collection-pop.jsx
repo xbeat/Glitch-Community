@@ -54,7 +54,7 @@ class AddProjectToCollectionPop extends React.Component {
   
   // TO DO: ensure that the user doesn't already have a collection with this name
   validate(name){
-    return true
+    return true;
   }
 
   
@@ -80,12 +80,12 @@ class AddProjectToCollectionPop extends React.Component {
           avatarUrl,
           coverColor,
         }).then(({data}) => {
-            console.log("created collection %O", data); 
-            let newCollection = data;
+          console.log("created collection %O", data); 
+          let newCollection = data;
             
-            try{
-              // add the selected project to the collection
-              this.props.api.patch(`collections/${newCollection.id}/add/${this.props.project.id}`)
+          try{
+            // add the selected project to the collection
+            this.props.api.patch(`collections/${newCollection.id}/add/${this.props.project.id}`)
               .then(() => {
                 console.log('added project to collection');  
                           
@@ -96,10 +96,10 @@ class AddProjectToCollectionPop extends React.Component {
                 this.setState({done: true});
               });
               
-            }catch(error){
-              this.setState({error: true});
-            }
+          }catch(error){
+            this.setState({error: true});
           }
+        }
         );
       }
     }catch(error){
@@ -110,7 +110,7 @@ class AddProjectToCollectionPop extends React.Component {
   render() {
     const placeholder = 'New Collection Name';
     if(this.state.done){
-      return <Redirect to={this.state.newCollectionUrl}/>
+      return <Redirect to={this.state.newCollectionUrl}/>;
     }
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
@@ -119,27 +119,27 @@ class AddProjectToCollectionPop extends React.Component {
             <img src={getAvatarUrl(this.props.project.id)}/> Add {this.props.project.domain} to collection
           </NestedPopoverTitle>
           : null
-          )}
+        )}
         
         <section className="pop-over-actions results-list">
           <ul className="results">
             <DataLoader get={() => this.props.api.get(`collections/?userId=${this.props.currentUser.id}`)}>
               { ({data}) => 
-                  data.map(collection =>   
-                      // filter out collections that already contain the selected project
-                      (collection.projects.length === collection.projects.filter(project => project.id !== this.props.project.id).length && 
+                data.map(collection =>   
+                // filter out collections that already contain the selected project
+                  (collection.projects.length === collection.projects.filter(project => project.id !== this.props.project.id).length && 
                         <li>
-                           <CollectionResultItem 
-                             addProjectToCollection={this.props.addProjectToCollection}
-                             api={this.props.api}
-                             project={this.props.project}
-                             collection={collection}                         
-                             togglePopover={this.props.togglePopover} 
-                             />
-                         </li>
-                         )
-                     )
-               }
+                          <CollectionResultItem 
+                            addProjectToCollection={this.props.addProjectToCollection}
+                            api={this.props.api}
+                            project={this.props.project}
+                            collection={collection}                         
+                            togglePopover={this.props.togglePopover} 
+                          />
+                        </li>
+                  )
+                )
+              }
             </DataLoader>
           </ul>
         </section>

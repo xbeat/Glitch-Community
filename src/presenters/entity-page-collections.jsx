@@ -16,7 +16,7 @@ const EntityPageCollections = ({api, isAuthorized, userId, deleteCollection}) =>
           api={api} 
           isAuthorized={isAuthorized}
           deleteCollection={isAuthorized ? deleteCollection : null}
-          />
+        />
       }
     </DataLoader>    
   );

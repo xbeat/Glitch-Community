@@ -19,13 +19,8 @@ const ProjectResultItem = ({id, domain, description, users, action, isActive}) =
           { description.length > 0 && <div className="result-description">{description}</div> }
           { users.length > 0 && <UsersList users={users} /> }
         </div>
-        <a href={`/~${domain}`} className="view-project-link" target="_blank">
-          <button className="view-project button-small button-docs">
-            View →
-          </button>
-        </a>
       </button>
-      <a href={`/~${domain}`} className="view-project-link" target="_blank">
+      <a href={`/~${domain}`} className="view-result-link" target="_blank">
         <button className="view-project button-small button-docs">
           View →
         </button>

@@ -21,10 +21,10 @@ export const CollectionsList = ({title, collections, placeholder, deleteCollecti
     
     {( isAuthorized 
       ? 
-        ( collections.length > 0 
-           ? <CreateCollectionButton api={api}/>   
-           : <CreateFirstCollection api={api}/>
-        )
+      ( collections.length > 0 
+        ? <CreateCollectionButton api={api}/>   
+        : <CreateFirstCollection api={api}/>
+      )
       : null
     )}
 
@@ -44,7 +44,7 @@ CollectionsList.propTypes = {
 
 // TO DO: ensure that the user doesn't already have a collection with this name
 async function validate(name){
-  return true
+  return true;
 }
 
 const CreateFirstCollection = ({api}) =>{
@@ -54,8 +54,8 @@ const CreateFirstCollection = ({api}) =>{
       <p className="placeholder">Create collections to organize your favorite projects.</p><br/>
       <CreateCollectionButton api={api}/>  
     </div>
-    );
-}
+  );
+};
 
 class CreateCollectionButton extends React.Component{
   constructor(props){
@@ -64,7 +64,7 @@ class CreateCollectionButton extends React.Component{
       done: false,
       error: false,
       newCollectionUrl: "",
-    }
+    };
   }
   async createCollection(api){
     try{
@@ -108,19 +108,19 @@ class CreateCollectionButton extends React.Component{
   
   render(){
     if(this.state.done){
-      return <Redirect to={this.state.newCollectionUrl}/>
+      return <Redirect to={this.state.newCollectionUrl}/>;
     }
     return (
       <button className={`button create-collection`} onClick={() => this.createCollection(this.props.api)}>
           Create Collection
       </button>    
-    )
+    );
   }
 }
 
 CreateCollectionButton.propTypes = {
   api: PropTypes.any.isRequired,
-}  
+};  
 
 export const CollectionsUL = ({collections, deleteCollection, categoryColor, api, isAuthorized}) => {
   return (
