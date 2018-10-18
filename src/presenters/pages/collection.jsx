@@ -74,7 +74,26 @@ DeleteCollectionBtn.propTypes = {
 
 class Avatar extends React.Component{
   constructor(props){
-    thi
+    super(props);
+    this.state={
+      backgroundColor: ""
+    }
+    this.onChange = this.onChange.bind(this);
+  }
+  
+  componentDidMount(){
+    console.log('component did mount of avatar');
+    document.getElementById('background').setAttribute('fill', this.state.backgroundColor);
+  }
+  
+  onChange(event){
+    document.getElementById('background').setAttribute('fill', this.state.backgroundColor);
+  }
+  
+  render(){
+    return(
+      <SVGInline svg={defaultAvatarSVG}/>
+      );
   }
 }
 
@@ -114,7 +133,7 @@ const CollectionPageContents = ({
           </h1>
           <p className="collection-url">{getLink(collection.user.login, collection.url)}</p>
           <div className="collection-image-container">
-            <SVGInline svg={defaultAvatarSVG}/>
+            <Avatar style={{backgroundColor: hexToRgbA(collection.coverColor)}}/>
           </div>
           {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
           {(isAuthorized 
