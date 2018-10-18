@@ -62,7 +62,13 @@ class AddCollectionProjectPop extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.startSearch = debounce(this.startSearch.bind(this), 300);
+    this.loadRecentProjects = this.loadRecentProjects.bind(this);
     this.onClick = this.onClick.bind(this);
+  }
+  
+  componentDidMount(){
+    // load user's recent projects to show in dropdown by default
+    this.loadRecentProjects();
   }
   
   handleChange(evt) {
@@ -83,12 +89,17 @@ class AddCollectionProjectPop extends React.Component {
       projectName: '',
     });
   } 
+  
   async loadRecentProjects(){
     console.log('load recent projects');
-    const {data} = await this.props.api.get(`users/${this.props.currentUser.id}`);
+    const request = this.props.api.get(`users/${this.props.currentUser.id}`);
+    this.setState({ maybeRequest: request });
+    const {data} = await request;
     let userRecentProjects = data.projects.slice(0,3);
+    console.log("userRecentProjects %O", userRecentProjects);
     this.setState({maybeResults: userRecentProjects});
   }  
+  
   async startSearch() {
     if (!this.state.query) {
       return this.clearSearch();
@@ -174,9 +185,9 @@ class AddCollectionProjectPop extends React.Component {
   }
   
   render() {
-    const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
-    this.loadRecentProjects();
     // load user's recent projects
+    const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
+    console.log(`render with isLoading ${isLoading} and !!this.state.query `);
     return (
       <dialog className="pop-over add-collection-project-pop wide-pop">
         <section className="pop-over-info">
