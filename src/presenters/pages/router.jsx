@@ -37,7 +37,7 @@ const NotFoundPage = () => (
 class PageChangeHandlerBase extends React.Component {
   componentDidUpdate(prev) {
     if (this.props.location.key !== prev.location.key) {
-      window.scrollTo({left: 0, top: 0, behavior: 'instant'});
+      window.scrollTo(0, 0);
       this.props.reloadCurrentUser();
     }
   }
