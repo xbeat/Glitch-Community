@@ -18,9 +18,9 @@ const ProjectSearchResults = ({projects, collection, onClick, projectName, exclu
     <ul className="results">
       {projects.map(project => (
         (!collection.projects.map( (project) => project.id).includes(project.id) &&
-          <Notifications>
+          <Notifications key={project.id}>
             {({createNotification}) => (
-              <li key={project.id}>
+              <li>
                 <ProjectResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} collection={collection} action={() => onClick(project, collection, createNotification)} />
               </li>
             )}
