@@ -28,9 +28,9 @@ StaticUsersList.propTypes = {
 // UserTile
 
 export const UserTile = (user) => (
-  <a href={getLink(user)} className="user" data-tooltip={getDisplayName(user)} data-tooltip-left="true" style={getStyle(user)}>
-    <UserAvatar avatarUrl={getAvatarThumbnailUrl(user)} alt={getDisplayName(user)} />
-  </a>
+  <UserLink user={user} className="user">
+    <UserAvatar user={user} />
+  </UserLink>
 );
 UserTile.propTypes = {
   id: PropTypes.number.isRequired,
