@@ -9,8 +9,9 @@ import UserModel from '../../models/user';
 import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
+import ProjectsLoader from '../projects-loader.jsx';
 
-import Notifications from '../notifications.jsx';
+import Notifications from '../notifications.jsx';  
 
 const ProjectSearchResults = ({projects, collection, onClick, projectName, excludedProjectsCount}) => (
   (projects.length > 0 ? (
@@ -57,18 +58,19 @@ class AddCollectionProjectPop extends React.Component {
       maybeResults: null, //Null means still waiting vs empty,
       projectName: '', // the project name if the search result is a Url
       omittedProjectCount: 0, // number of projects omitted from search
+      showRecentProjects: true, // by default, show user's 4 most recent projects
     };
     
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.startSearch = debounce(this.startSearch.bind(this), 300);
-    this.loadRecentProjects = this.loadRecentProjects.bind(this);
     this.onClick = this.onClick.bind(this);
   }
   
   componentDidMount(){
     // load user's recent projects to show in dropdown by default
-    this.loadRecentProjects();
+    this.setState({ maybeResults: this.props.currentUser.projects.slice(0,4) });
+    console.log("maybeResults %O", this.state.maybeResults);
   }
   
   handleChange(evt) {
@@ -89,16 +91,6 @@ class AddCollectionProjectPop extends React.Component {
       projectName: '',
     });
   } 
-  
-  async loadRecentProjects(){
-    this.setState({ maybeResults: this.props.currentUser.projects.slice(0,3) });
-    const request = this.props.api.get(`users/${this.props.currentUser.id}`);
-    this.setState({ maybeRequest: request });
-    const {data} = await request;
-    let userRecentProjects = data.projects.slice(0,3);
-    console.log("userRecentProjects %O", userRecentProjects);
-    this.setState({maybeResults: userRecentProjects});
-  }  
   
   async startSearch() {
     if (!this.state.query) {
@@ -198,11 +190,15 @@ class AddCollectionProjectPop extends React.Component {
             placeholder="Search by project name or URL"
           />
         </section>
-        {(!!this.state.query) && <section className="pop-over-actions last-section results-list">
+        {(!!this.state.query || this.state.maybeResults) && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
-          {!!this.state.maybeResults && 
-              <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} excludedProjectsCount={this.state.excludedProjectsCount}/>
-          }
+        
+            {!!this.state.maybeResults && 
+              <ProjectsLoader api={this.props.api} projects={this.state.maybeResults}>
+                {(projects, reloadProject) => <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} excludedProjectsCount={this.state.excludedProjectsCount}/>
+                }
+              </ProjectsLoader>
+            }          
         </section>}
       </dialog>
     );
