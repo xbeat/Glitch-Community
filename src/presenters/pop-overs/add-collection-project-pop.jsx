@@ -85,7 +85,8 @@ class AddCollectionProjectPop extends React.Component {
   }
   
   async loadRecentProjects(){
-    
+    const {data} = await this.props.api.get(`users/${this.props.currentUser.id}`);
+    console.log("data %O," {data});
   }
   
   async startSearch() {
@@ -200,6 +201,7 @@ AddCollectionProjectPop.propTypes = {
   collection: PropTypes.object.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
   togglePopover: PropTypes.func.isRequired,
+  currentUser: PropTypes.obj.isRequired,
 };
 
 export default AddCollectionProjectPop;

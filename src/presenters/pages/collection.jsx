@@ -204,7 +204,7 @@ const CollectionPageContents = ({
                   api={api}
                   collectionProjects={null}
                   currentUserIsOwner={isAuthorized}
-                  myProjects= {[]}
+                  currentUser={currentUser}
                 />
                 : null
               )}
