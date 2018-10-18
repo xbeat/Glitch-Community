@@ -187,7 +187,7 @@ class AddCollectionProjectPop extends React.Component {
   render() {
     // load user's recent projects
     const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
-    console.log(`render with isLoading ${isLoading} and !!this.state.query `);
+    
     return (
       <dialog className="pop-over add-collection-project-pop wide-pop">
         <section className="pop-over-info">
@@ -198,7 +198,7 @@ class AddCollectionProjectPop extends React.Component {
             placeholder="Search by project name or URL"
           />
         </section>
-        {!!this.state.query && <section className="pop-over-actions last-section results-list">
+        {(!!this.state.query) && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
           {!!this.state.maybeResults && 
               <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} excludedProjectsCount={this.state.excludedProjectsCount}/>
