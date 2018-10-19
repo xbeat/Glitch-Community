@@ -16,7 +16,13 @@ import {CurrentUserConsumer} from '../current-user.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 
 
-const CategoryPageWrap = ({category, api, projectOptions, addProjectToCollection, ...props}) => (
+const CategoryPageWrap = ({
+  addProjectToCollection, 
+  api, 
+  category, 
+  currentUser,
+  projectOptions, 
+  ...props}) => (
   <React.Fragment>
     
     <Helmet>
@@ -46,12 +52,17 @@ const CategoryPageWrap = ({category, api, projectOptions, addProjectToCollection
                   <div className="collection-project-container-header">
                     <h3>Projects ({category.projects.length})</h3>
                   </div>
-          
-                  <ProjectsUL projects={projects} collectionColor={category.color} 
-                    projectOptions={{
-                      addProjectToCollection: {addProjectToCollection}
-                    }} 
-                    {...props}/>
+                  
+                  {(currentUser.login ? 
+                    <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color}
+                      projectOptions={{
+                        addProjectToCollection
+                      }} 
+                      {...props}/>
+                    :
+                    <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color}
+                      projectOptions={{}} {...props}/>
+                  )}
                 </div>
           
               </React.Fragment>
@@ -105,7 +116,7 @@ const CategoryPage = ({key, api, category, ...props}) => (
               {(currentUser) => (
                 <CollectionEditor api={api} initialCollection={category} >
                    {(category, funcs, userIsAuthor) =>(
-                      <CategoryPageWrap category={category} api={api} userIsAuthor={false} {...funcs} {...props}/>
+                      <CategoryPageWrap category={category} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props}/>
                 )}
             </CollectionEditor>
             )}
