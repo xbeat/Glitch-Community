@@ -84,12 +84,14 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
           {path => (
             <a href={path}>
               <div className={['collection']} 
-                id=
+                id={"collection-" + collection.id}
                 style={{backgroundColor: hexToRgbA(collection.coverColor), borderBottomColor: hexToRgbA(collection.coverColor)}}>
                 <div className="collection-container">
                   <div className="collection-info">
                     <div className="avatar-container">
-                      <Avatar backgroundColor={collection.coverColor}/>
+                      <div className="avatar">
+                        <Avatar backgroundColor={collection.coverColor}/>
+                      </div>
                     </div>
                     <div className="collection-name-description">
                       <div className="button">
