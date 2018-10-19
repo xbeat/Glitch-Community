@@ -217,9 +217,15 @@ const CollectionPageContents = ({
                          {...props}/>
                      )
                      :
-                     <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor, color: getContrastTextColor(collection.coverColor)}}>
-                        Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
-                     </div>
+                     (isAuthorized
+                      ?
+                       <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor, color: getContrastTextColor(collection.coverColor)}}>
+                          Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
+                       </div>
+                    :  <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor, color: getContrastTextColor(collection.coverColor)}}>
+                          No projects to see in this collection just yet.
+                       </div>
+                      )
                    )}
                  </div>
           
