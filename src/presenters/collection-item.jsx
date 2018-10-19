@@ -26,7 +26,9 @@ class Avatar extends React.Component{
   }
   componentDidMount(){
     // set background color in SVG
-    let svgBackgroundEl = document.querySelector('svg .background');
+    let collectionId = "#collection-" + this.props.collectionId;
+    let selector = collectionId + " svg .background";
+    let svgBackgroundEl = document.querySelector(selector);
     svgBackgroundEl.setAttribute('fill', this.state.backgroundColor);
   }
   render(){
@@ -34,6 +36,11 @@ class Avatar extends React.Component{
       <SVGInline svg={defaultAvatarSVG}/>
     );
   }
+}
+
+Avatar.propTypes = {
+  backgroundColor: PropTypes.string.isRequired,
+  collectionId: PropTypes.number.isRequired,
 }
 
 const ProjectsPreview = ({projects, color}) => {
@@ -90,7 +97,7 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
                   <div className="collection-info">
                     <div className="avatar-container">
                       <div className="avatar">
-                        <Avatar backgroundColor={collection.coverColor}/>
+                        <Avatar backgroundColor={collection.coverColor} collectionId={collection.id}/>
                       </div>
                     </div>
                     <div className="collection-name-description">
