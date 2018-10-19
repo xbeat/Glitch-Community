@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import SVGInline from "react-svg-inline";
 import {Redirect} from 'react-router-dom';
@@ -12,7 +13,6 @@ import {getLink, defaultAvatarSVG} from '../../models/collection';
 import Loader, {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
-import Categories from '../categories.jsx';
 import NotFound from '../includes/not-found.jsx';
 
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -30,8 +30,6 @@ import {hexToRgbA, getContrastTextColor} from '../../models/collection.js';
 import {UserTile} from '../users-list.jsx';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
-
-import _ from 'lodash';
 
 function syncPageToUrl(owner, url) {
   history.replaceState(null, null, getLink(owner, url));
@@ -126,10 +124,11 @@ const CollectionPageContents = ({
           <UserTile {...collection.user}/>
           <h1 className="collection-name">
             {(isAuthorized
-              ? <EditableField
-                value={collection.name}
-                update={name => updateName(name).then(c => syncPageToUrl(collection.user.login, c.url))}
-                placeholder="Name your collection"/> 
+              ? <AuthDescription
+                  authorized={isAuthorized} description={collection.name}
+                  update={name => updateName(name).then(c => syncPageToUrl(collection.user.login, c.url))}
+                  placeholder="Name your collection"
+                  />
               : collection.name
             )}
           </h1>
