@@ -14,7 +14,9 @@ export const ProjectItem = ({api, project, collectionColor, ...props}) => {
   return (
     <li>
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
+      
       <ProjectOptionsPop {...{project, api}} {...props}/>
+      
       <ProjectLink project={project}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
           style={{backgroundColor: collectionColor, borderBottomColor:collectionColor}}

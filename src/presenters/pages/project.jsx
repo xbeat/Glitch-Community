@@ -129,7 +129,7 @@ const ProjectPage = ({
       <Embed domain={domain}/>
       <div className="buttons buttons-right">
 
-        {currentUser && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
+        {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
         <RemixButton className="button-small"
           name={domain} isMember={isAuthorized}
           onClick={() => trackRemix(id, domain)}
