@@ -16,6 +16,7 @@ export const TeamUsers = (props) => (
     {(user, togglePopover) =>
       <TeamUserInfoPop
         userIsTeamAdmin={props.adminIds.includes(user.id)}
+        userIsTheOnlyMember={props.users.length === 1}
         user={user} togglePopover={togglePopover}
         {...props}
       />
