@@ -12,19 +12,14 @@ import Categories from '../categories.jsx';
 
 import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
-import CollectionEditor from '../collection-editor.jsx';
 
 import PopoverContainer from '../pop-overs/popover-container.jsx';
-import AddCollectionProject from '../includes/add-collection-project.jsx';
-import AddCollectionAvatar from '../includes/add-collection-avatar.jsx';
-
-import EditCollectionColor from '../includes/edit-collection-color.jsx';
 
 import {avatars, hexToRgbA} from '../../models/collection.js'; 
 
 import {CurrentUserConsumer} from '../current-user.jsx';
 
-class CollectionColorWrap extends React.Component { 
+class CategoryColorWrap extends React.Component { 
   constructor(props){
     super(props);
     
@@ -32,8 +27,6 @@ class CollectionColorWrap extends React.Component {
       color: this.props.backgroundColor,
       avatar: this.props.avatarUrl
     };
-    this.setColor = this.setColor.bind(this);
-    this.setAvatar = this.setAvatar.bind(this);
   }
   
   // static getDerivedStateFromProps(props, state) {
@@ -47,7 +40,6 @@ class CollectionColorWrap extends React.Component {
   //   }
   //   return null;
   // }
-  
  
   render(){
     return this.props.children(this.state.color, this.state.avatar);
@@ -77,28 +69,16 @@ const CategoryPageWrap = ({category, api, color, avatar, projectOptions, uploadA
           
         </header>
         
-        <ProjectsLoader api={api} projects={collection.projects}>
+        <ProjectsLoader api={api} projects={category.projects}>
             {projects => 
               <React.Fragment>
                 <div className="collection-contents">
                   <div className="collection-project-container-header">
-                    <h3>Projects ({collection.projects.length})</h3>
-                
-                    {(isAuthorized 
-                      ? <AddCollectionProject
-                        addProject={addProject}
-                        api={api}
-                        collectionProjects={collection.projects}
-                        currentUserIsOwner={true}
-                      />
-                      : null
-                    )}
-                
+                    <h3>Projects ({category.projects.length})</h3>
                   </div>
           
                   <ProjectsUL projects={projects} categoryColor={color} 
                     projectOptions={{
-                      removeProjectFromCollection: removeProject,
                       addProjectToCollection: {addProject}
                     }} 
                     {...props}/>
@@ -108,8 +88,6 @@ const CategoryPageWrap = ({category, api, color, avatar, projectOptions, uploadA
             }
           </ProjectsLoader>
         
-         
-        
       </article>
       
     </main>
@@ -118,28 +96,25 @@ const CategoryPageWrap = ({category, api, color, avatar, projectOptions, uploadA
 );
 
 CategoryPageWrap.propTypes = {
-  collection: PropTypes.shape({
+  category: PropTypes.shape({
     avatarUrl: PropTypes.string.isRequired,
     backgroundColor: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     projects: PropTypes.array.isRequired
   }).isRequired,
-  addProject: PropTypes.func.isRequired,
-  addProjectToCollection: PropTypes.func,
   api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
   isAuthorized: PropTypes.any.isRequired,  
   projectOptions: PropTypes.object.isRequired,
-  removeProject: PropTypes.func.isRequired,
-  uploadAvatar: PropTypes.func.isRequired,
+  addProject: PropTypes.func.isRequired,
 };
 
-const CollectionPageLoader = ({...props}) => (
+const CategoryPageLoader = ({...props}) => (
   <Loader/>
 );
 
-const CollectionPageError = ({...props}) => (
+const CategoryPageError = ({...props}) => (
   "Something went wrong. Try refreshing?"  
 );
 
@@ -148,44 +123,28 @@ async function loadCategory(api, id) {
   if(data){
     data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
   }
-  
-  // TO DO: put this in the collection creation
-  // set random name stuff
-  randomName();
   return data;
-}
+}  
 
-async function loadCollection(api, id){
-  console.log(`id: ${id}`);
-  const {data} = await api.get(`categories/${id}`);
-  if(data){
-    data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
-  }
-  return data;
-}
-  
-
-const CollectionPage = ({api, collection, user, name, addProject, removeProject, ...props}) => (
+const CategoryPage = ({api, category, user, name, ...props}) => (
   <Layout api={api}>
     <DataLoader
-      get={() => loadCollection(api, collection.id)}
-      renderLoader={() => <CollectionPageLoader collection={collection} api={api} {...props}/>}
-      renderError={() => <CollectionPageError collection={collection} api={api} {...props}/>}
+      get={() => loadCategory(api, category.id)}
+      renderLoader={() => <CategoryPageLoader category={category} api={api} {...props}/>}
+      renderError={() => <CategoryPageError category={category} api={api} {...props}/>}
     >
-      {collection => (
-        <CollectionColorWrap collection={collection}>
-          {(color, setColor, avatar, setAvatar) => <CategoryPageWrap collection={collection} setColor={setColor} color={color} setAvatar={setAvatar} avatar={avatar} api={api} isAuthorized={true} addProject={addProject} removeProject={removeProject} {...props}/>}
-        </CollectionColorWrap>
+      {category => (
+        <CategoryColorWrap category={category}>
+          {(color, avatar) => <CategoryPageWrap category={category} color={color} avatar={avatar} api={api} {...props}/>}
+        </CategoryColorWrap>
       )}
     </DataLoader>
   </Layout>
 );
 
-CollectionPage.propTypes = {
+CategoryPage.propTypes = {
   api: PropTypes.any.isRequired,
-  collection: PropTypes.object.isRequired,
-  addProject: PropTypes.func.isRequired,
-  removeProject: PropTypes.func.isRequired,
+  category: PropTypes.object.isRequired,
 };
 
-export default CollectionPage;
+export default CategoryPage;
