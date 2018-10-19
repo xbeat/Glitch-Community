@@ -68,9 +68,11 @@ class CreateCollectionButton extends React.Component{
   }
   async createCollection(api){
     try{
-      const {data} = await wordsApi.get('word-pairs');
+      const {data} = await wordsApi.get('collection-pairs');
       let name = data[0];
-      let description = `A collection of projects that does ${name.split("-")[0]} things`;
+      let predicate = name.split("-")[0];
+      let collectionSynonym = name.split("-")[1];
+      let description = `A ${collectionSynonym} of projects that does ${predicate} things`;
       let url = _.kebabCase(name);
       
       // defaults
