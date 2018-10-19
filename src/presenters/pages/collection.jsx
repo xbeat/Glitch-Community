@@ -80,20 +80,15 @@ class Avatar extends React.Component{
   
   componentWillReceiveProps(nextProps){
     if(nextProps.backgroundColor){
-      console.log(`next background color: ${nextProps.backgroundColor}`);
       this.setState({ backgroundColor: nextProps.backgroundColor});
       let svgBackgroundEl = document.querySelector('svg .background');
-      if(svgBackgroundEl !== null){
-        svgBackgroundEl.setAttribute('fill', this.state.backgroundColor);
-      }
+      svgBackgroundEl.setAttribute('fill', nextProps.backgroundColor);
     } 
   }
   
   componentDidMount(){
     let svgBackgroundEl = document.querySelector('svg .background');
-      if(svgBackgroundEl !== null){
-        svgBackgroundEl.setAttribute('fill', this.state.backgroundColor);
-      }
+    svgBackgroundEl.setAttribute('fill', this.state.backgroundColor);
   }
   
   render(){

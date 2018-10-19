@@ -6,6 +6,8 @@ import ProjectModel from '../models/project';
 import CollectionOptionsContainer from "./pop-overs/collection-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
+import SVGInline from "react-svg-inline";
+
 import Loader, {DataLoader} from './includes/loader.jsx';
 import ProjectsLoader from './projects-loader.jsx';
 
@@ -13,8 +15,26 @@ import {getAvatarUrl, getLink} from '../models/project.js';
 
 import UserModel from '../models/user'; 
 
-import {colors, hexToRgbA, avatars, getContrastTextColor} from '../models/collection.js'; 
+import {colors, hexToRgbA, avatars, getContrastTextColor, defaultAvatarSVG} from '../models/collection.js'; 
 
+class Avatar extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={
+      backgroundColor: this.props.backgroundColor
+    };
+  }
+  componentDidMount(){
+    // set background color in SVG
+    let svgBackgroundEl = document.querySelector('svg .background');
+    svgBackgroundEl.setAttribute('fill', this.state.backgroundColor);
+  }
+  render(){
+    return(
+      <SVGInline svg={defaultAvatarSVG}/>
+    );
+  }
+}
 
 const ProjectsPreview = ({projects, color}) => {
   return (
@@ -64,11 +84,12 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
           {path => (
             <a href={path}>
               <div className={['collection']} 
+                id=
                 style={{backgroundColor: hexToRgbA(collection.coverColor), borderBottomColor: hexToRgbA(collection.coverColor)}}>
                 <div className="collection-container">
                   <div className="collection-info">
                     <div className="avatar-container">
-                      <img className="avatar" src={collection.avatarUrl}/>
+                      <Avatar backgroundColor={collection.coverColor}/>
                     </div>
                     <div className="collection-name-description">
                       <div className="button">
