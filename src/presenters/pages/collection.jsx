@@ -210,12 +210,19 @@ const CollectionPageContents = ({
                          }} 
                          {...props}/>
 
-                       : <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
+                       : 
+                      (currentUser && currentUser.login 
+                       ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
                          projectOptions={{
                            addProjectToCollection
                          }} 
                          {...props}/>
+                       :
+                      <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
+                         projectOptions={{}} 
+                         {...props}/>
                      )
+                      )
                      :
                      (isAuthorized
                       ?
