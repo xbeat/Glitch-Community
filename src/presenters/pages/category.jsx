@@ -10,56 +10,29 @@ import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import Categories from '../categories.jsx';
 
+import CollectionEditor from '../collection-editor.jsx';
+
 import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 
-import {avatars, hexToRgbA} from '../../models/collection.js'; 
-
 import {CurrentUserConsumer} from '../current-user.jsx';
 
-class CategoryColorWrap extends React.Component { 
-  constructor(props){
-    super(props);
-    
-    this.state = {
-      color: this.props.backgroundColor,
-      avatar: this.props.avatarUrl
-    };
-  }
-  
-  // static getDerivedStateFromProps(props, state) {
-  //   // Any time the current user changes,
-  //   // Reset any parts of state that are tied to that user.
-  //   // In this simple example, that's just the email.
-  //   if (props.collection.color !== this.props.color) {
-  //     return {
-  //       color: props.collection.color
-  //     };
-  //   }
-  //   return null;
-  // }
- 
-  render(){
-    return this.props.children(this.state.color, this.state.avatar);
-  }
-}
-
-const CategoryPageWrap = ({category, api, color, avatar, projectOptions, uploadAvatar, ...props}) => (
+const CategoryPageWrap = ({category, api, projectOptions, addProjectToCollection, ...props}) => (
   <React.Fragment>
     
     <Helmet>
       <title>{category.name}</title>
     </Helmet>
     <main className="collection-page">
-      <article className="projects" style={{backgroundColor: hexToRgbA(color)}}>
+      <article className="projects" style={{backgroundColor: category.backgroundColor}}>
         <header className="collection">
           <h1 className="collection-name">
             <React.Fragment>{category.name} </React.Fragment>
           </h1>
           <div className="collection-image-container">
-            <img src={avatar} alt=""/>
+            <img src={category.avatarUrl} alt=""/>
           </div>
           
           <p className="description">
@@ -77,9 +50,9 @@ const CategoryPageWrap = ({category, api, color, avatar, projectOptions, uploadA
                     <h3>Projects ({category.projects.length})</h3>
                   </div>
           
-                  <ProjectsUL projects={projects} categoryColor={color} 
+                  <ProjectsUL projects={projects} collectionColor={category.color} 
                     projectOptions={{
-                      addProjectToCollection: {addProject}
+                      addProjectToCollection: {addProjectToCollection}
                     }} 
                     {...props}/>
                 </div>
@@ -126,7 +99,7 @@ async function loadCategory(api, id) {
   return data;
 }  
 
-const CategoryPage = ({api, category, user, name, ...props}) => (
+const CategoryPage = ({api, category, user, name, addProjectToCollection, ...props}) => (
   <Layout api={api}>
     <DataLoader
       get={() => loadCategory(api, category.id)}
@@ -134,9 +107,7 @@ const CategoryPage = ({api, category, user, name, ...props}) => (
       renderError={() => <CategoryPageError category={category} api={api} {...props}/>}
     >
       {category => (
-        <CategoryColorWrap category={category}>
-          {(color, avatar) => <CategoryPageWrap category={category} color={color} avatar={avatar} api={api} {...props}/>}
-        </CategoryColorWrap>
+        <CategoryPageWrap category={category} api={api} {...props}/>
       )}
     </DataLoader>
   </Layout>
@@ -145,6 +116,7 @@ const CategoryPage = ({api, category, user, name, ...props}) => (
 CategoryPage.propTypes = {
   api: PropTypes.any.isRequired,
   category: PropTypes.object.isRequired,
+  addProjectToCollection: PropTypes.func.isRequired,
 };
 
 export default CategoryPage;
