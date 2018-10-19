@@ -160,10 +160,12 @@ const CollectionPageContents = ({
           )}
           */}
           
-          <AuthDescription
-            authorized={isAuthorized} description={collection.description}
-            update={updateDescription} placeholder="Tell us about your collection"
-          />
+          <div className="collection-description">
+            <AuthDescription
+              authorized={isAuthorized} description={collection.description}
+              update={updateDescription} placeholder="Tell us about your collection"
+            />
+          </div>
           
           {(isAuthorized && <EditCollectionColor
             update={updateColor}
