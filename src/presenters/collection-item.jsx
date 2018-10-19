@@ -113,7 +113,7 @@ export const CollectionItem = ({collection, categoryColor, deleteCollection, api
 
                   <DataLoader
                     get={() => loadCollection(api, collection.id)}
-                    renderLoader={() => <Loader />}
+                    renderLoader={() => null}
                     renderError={() => <div>Something went wrong. Try refreshing?</div>}
                   >
                     {collection => (
