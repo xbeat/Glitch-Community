@@ -69,7 +69,7 @@ class AddCollectionProjectPop extends React.Component {
   
   componentDidMount(){
     // load user's recent projects to show in dropdown by default
-    this.setState({ maybeResults: this.props.currentUser.projects.slice(0,4) });
+    this.setState({ maybeResults: this.props.currentUser.projects.slice(0,6) });
     console.log("maybeResults %O", this.state.maybeResults);
   }
   
