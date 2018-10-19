@@ -11,13 +11,10 @@ import ProjectsLoader from '../projects-loader.jsx';
 import Categories from '../categories.jsx';
 
 import CollectionEditor from '../collection-editor.jsx';
-
-import EditableField from '../includes/editable-field.jsx';
-import {AuthDescription} from '../includes/description-field.jsx';
+import {CurrentUserConsumer} from '../current-user.jsx';
 
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 
-import {CurrentUserConsumer} from '../current-user.jsx';
 
 const CategoryPageWrap = ({category, api, projectOptions, addProjectToCollection, ...props}) => (
   <React.Fragment>
@@ -77,10 +74,7 @@ CategoryPageWrap.propTypes = {
     projects: PropTypes.array.isRequired
   }).isRequired,
   api: PropTypes.any.isRequired,
-  children: PropTypes.node.isRequired,
-  isAuthorized: PropTypes.any.isRequired,  
-  projectOptions: PropTypes.object.isRequired,
-  addProject: PropTypes.func.isRequired,
+  addProjectToCollection: PropTypes.func.isRequired,
 };
 
 const CategoryPageLoader = ({...props}) => (
@@ -99,7 +93,7 @@ async function loadCategory(api, id) {
   return data;
 }  
 
-const CategoryPage = ({api, category, user, name, addProjectToCollection, ...props}) => (
+const CategoryPage = ({key, api, category, ...props}) => (
   <Layout api={api}>
     <DataLoader
       get={() => loadCategory(api, category.id)}
@@ -107,7 +101,15 @@ const CategoryPage = ({api, category, user, name, addProjectToCollection, ...pro
       renderError={() => <CategoryPageError category={category} api={api} {...props}/>}
     >
       {category => (
-        <CategoryPageWrap category={category} api={api} {...props}/>
+          <CurrentUserConsumer>
+              {(currentUser) => (
+                <CollectionEditor api={api} initialCollection={category} >
+                   {(category, funcs, userIsAuthor) =>(
+                      <CategoryPageWrap category={category} api={api} userIsAuthor={false} {...funcs} {...props}/>
+                )}
+            </CollectionEditor>
+            )}
+        </CurrentUserConsumer>
       )}
     </DataLoader>
   </Layout>
@@ -116,7 +118,6 @@ const CategoryPage = ({api, category, user, name, addProjectToCollection, ...pro
 CategoryPage.propTypes = {
   api: PropTypes.any.isRequired,
   category: PropTypes.object.isRequired,
-  addProjectToCollection: PropTypes.func.isRequired,
 };
 
 export default CategoryPage;

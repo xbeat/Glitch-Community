@@ -23,6 +23,7 @@ class CollectionEditor extends React.Component {
   
   userIsAuthor(){
     if (!this.props.currentUser) return false;
+    if (!this.state.user) return false;
     const currentUserId = this.props.currentUser.id;
     return this.state.user.id === currentUserId;
   }
