@@ -16,14 +16,14 @@ export const avatars = {
 export const defaultAvatar = "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-avatar.svg?1539891965867";
 
 export const getContrastTextColor = (hexcolor) =>{
-    // remove #
-    hexcolor = hexcolor.substring(hexcolor.indexOf("#") +1);
-    var r = parseInt(hexcolor.substr(0,2),16);
-    var g = parseInt(hexcolor.substr(2,2),16);
-    var b = parseInt(hexcolor.substr(4,2),16);
-    var yiq = ((r*299)+(g*587)+(b*114))/1000;
-    return (yiq >= 128) ? 'black' : 'white';
-}
+  // remove #
+  hexcolor = hexcolor.substring(hexcolor.indexOf("#") +1);
+  var r = parseInt(hexcolor.substr(0,2),16);
+  var g = parseInt(hexcolor.substr(2,2),16);
+  var b = parseInt(hexcolor.substr(4,2),16);
+  var yiq = ((r*299)+(g*587)+(b*114))/1000;
+  return (yiq >= 128) ? 'black' : 'white';
+};
 
 
 export const hexToRgbA = (hex) => {
@@ -60,21 +60,6 @@ export function getAvatarUrl(id) {
 export function getLink(userName, url) {
   return `/@${userName}/${url}`;
 }
-
-// export function getShowUrl(domain) {
-//   return `//${domain}.glitch.me`;
-// }
-
-// export function getEditorUrl(domain, path, line, character) {
-//   if (path && !isNaN(line) && !isNaN(character)) {
-//     return `${EDITOR_URL}#!/${domain}?path=${path}:${line}:${character}`;
-//   }
-//   return `${EDITOR_URL}#!/${domain}`;
-// }
-
-// export function getRemixUrl(domain) {
-//   return `${EDITOR_URL}#!/remix/${domain}`;
-// }
 
 // Circular dependencies must go below module.exports
 // import Team from './team';

@@ -27,7 +27,8 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   // reload the corresponding collection on the user profile page
   console.log('attempt to update parent collection');
   let collectionSelector = "collection-" + collection.id;
-  document.getElementbyId(collectionSelector).forceUpdate();
+  
+  // document.getElementById(collectionSelector).forceUpdate();
   
   // show notification
   // TO DO - only show this if add project to collection completes successfully

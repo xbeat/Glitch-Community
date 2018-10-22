@@ -94,7 +94,7 @@ export default [
   },
 ];
 
-  {/*
+{/*
   {
     "id": 14,
     "name": "My Favorites",
