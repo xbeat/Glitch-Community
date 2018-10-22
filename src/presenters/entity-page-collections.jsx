@@ -12,7 +12,7 @@ const EntityPageCollections = ({api, isAuthorized, userId, deleteCollection}) =>
     <DataLoader get={() => api.get(`collections/?userId=${userId}`)}>
       { ({data}) => 
         <CollectionsList title="Collections" 
-          collections={data} 
+          collections={_.orderBy(data, ['updatedAt'], ['desc'])} 
           api={api} 
           isAuthorized={isAuthorized}
           deleteCollection={isAuthorized ? deleteCollection : null}
