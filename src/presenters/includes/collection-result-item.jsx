@@ -19,14 +19,15 @@ AddProjectMessage.propTypes = {
 const addProject = (addProjectToCollection, project, collection, collectionPath, notification, togglePopover) => {
 
   // add project to collection via api
-  console.log(`add project ${project.domain} collection ${collection.name}`);
   addProjectToCollection(project, collection);
-  console.log('after add project');
   
   // toggle popover
   togglePopover();
   
   // reload the corresponding collection on the user profile page
+  console.log('attempt to update parent collection');
+  let collectionSelector = "collection-" + collection.id;
+  document.getElementbyId(collectionSelector).forceUpdate();
   
   // show notification
   // TO DO - only show this if add project to collection completes successfully

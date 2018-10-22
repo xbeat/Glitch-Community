@@ -85,9 +85,14 @@ async function loadCollection(api, id){
 class CollectionItem extends React.Component{
   constructor(props){
     super(props);
-    this.state = {reload: false};
+    this.reload = this.reload.bind(this);
   }
-    render(){
+  
+  reload(){
+    this.forceUpdate();
+  }
+  
+  render(){
       const {collection, categoryColor, deleteCollection, api, isAuthorized} = this.props;
   return (
       <li>
