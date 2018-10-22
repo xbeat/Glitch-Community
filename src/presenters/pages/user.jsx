@@ -62,7 +62,7 @@ const UserPage = ({
     pins, projects, _deletedProjects,
     teams,
     _cacheCover,
-    collections,
+    _collections,
   },
   api, isAuthorized,
   updateDescription,
@@ -99,7 +99,7 @@ const UserPage = ({
     </section>
     
     <CollectionsList title="Collections" 
-      collections={collections} 
+      collections={_collections} 
       api={api} 
       isAuthorized={isAuthorized}
     />
@@ -139,7 +139,7 @@ UserPage.propTypes = {
     coverColor: PropTypes.string,
     _cacheCover: PropTypes.number.isRequired,
     _deletedProjects: PropTypes.array.isRequired,
-    collections: PropTypes.array.isRequired,
+    _collections: PropTypes.array.isRequired,
   }).isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
 };
