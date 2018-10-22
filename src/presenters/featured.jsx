@@ -17,24 +17,29 @@ class ZineItems extends React.Component {
     };
   }
   render() {
+    if (!this.state.posts.length) {
+      return null;
+    }
     return (
-      <ul className="zine-items">
-        {this.state.posts.map(({id, title, url, feature_image, primary_tag}, n) => (
-          <li key={id} className="zine-item">
-            <Link to={`/culture${url}`}>
-              {!!feature_image && <div className="mask-container">
-                <img className={`mask mask-${this.state.masks[n]}`} src={feature_image} alt=""/>
-              </div>}
-              <div className="zine-item-meta">
-                <h1 className="zine-item-title">{title}</h1>
-                {!!primary_tag && <p className="zine-item-tag">
-                  {primary_tag.name}
-                </p>}
-              </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <section>
+        <ul className="zine-items">
+          {this.state.posts.map(({id, title, url, feature_image, primary_tag}, n) => (
+            <li key={id} className="zine-item">
+              <Link to={`/culture${url}`}>
+                {!!feature_image && <div className="mask-container">
+                  <img className={`mask mask-${this.state.masks[n]}`} src={feature_image} alt=""/>
+                </div>}
+                <div className="zine-item-meta">
+                  <h1 className="zine-item-title">{title}</h1>
+                  {!!primary_tag && <p className="zine-item-tag">
+                    {primary_tag.name}
+                  </p>}
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
     );
   }
 }
@@ -71,9 +76,7 @@ const Featured = ({embedHtml, featured}) => (
       </ul>
     </section>
     
-    <section>
-      <ZineItems/>
-    </section>
+    <ZineItems/>
   </section>
 );
 Featured.propTypes = {
