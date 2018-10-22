@@ -110,6 +110,9 @@ class UserEditor extends React.Component {
     
   async addProjectToCollection(project, collection) {
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
+    this.setState(({augmentedCollections}) => ({
+        augmentedCollections: [...augmentedCollections, {id: collection.id, project: project}]
+    }));
   }
 
   render() {
@@ -128,7 +131,6 @@ class UserEditor extends React.Component {
       undeleteProject: id => this.undeleteProject(id).catch(handleError),
       setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
       addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleError),
-      removeProjectFromCollection: id => this.removeProjectFromCollection(id).catch(handleError),
     };
     return this.props.children(this.state, funcs, this.isCurrentUser());
   }
