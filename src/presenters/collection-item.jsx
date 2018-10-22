@@ -74,80 +74,6 @@ async function getCollectionUrl(api, userId, collectionUrl){
   return path;
 }
 
-
-export const CollectionItem = ({collection, categoryColor, deleteCollection, api, isAuthorized}) => {
-  let randomColor = colors[Math.floor(Math.random() * colors.length)];
-  
-  return (
-    <li>
-      <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>
-
-      {(collection  &&
-        <DataLoader
-          get={() => getCollectionUrl(api, collection.userId, collection.url)}
-          renderLoader={() => <Loader />}
-          renderError={() => <div>Something went wrong. Try refreshing?</div>}
-        >
-          {path => (
-            <a href={path}>
-              <div className={['collection']} 
-                id={"collection-" + collection.id}
-                style={{backgroundColor: hexToRgbA(collection.coverColor), borderBottomColor: hexToRgbA(collection.coverColor)}}>
-                <div className="collection-container">
-                  <div className="collection-info">
-                    <div className="avatar-container">
-                      <div className="avatar">
-                        <Avatar backgroundColor={collection.coverColor} collectionId={collection.id}/>
-                      </div>
-                    </div>
-                    <div className="collection-name-description">
-                      <div className="button">
-                        <span className="project-badge private-project-badge" aria-label="private"></span>
-                        <div className="project-name">{collection.name}</div>
-                      </div>
-                      <div className="description"><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
-                    </div>
-
-                    <div className="overflow-mask"></div>
-                  </div>
-
-                  <DataLoader
-                    get={() => loadCollection(api, collection.id)}
-                    renderLoader={() => null}
-                    renderError={() => <div>Something went wrong. Try refreshing?</div>}
-                  >
-                    {collection => (
-                      collection.projects.length > 0
-                        ?
-                        <ProjectsLoader api={api} projects={collection.projects}>
-                          {projects => <ProjectsPreview projects={collection.projects} color={collection.coverColor}/>}
-                        </ProjectsLoader>
-                        :
-                        <div className="projects-preview empty">
-                          {(isAuthorized
-                            ? <p>This collection is empty.  Add some projects to it! ☝️</p>
-                            : "No projects to see in this collection just yet."
-                          )}
-                        </div>
-                    )}
-                  </DataLoader>   
-                </div>
-              </div>
-            </a>             
-          )}
-        </DataLoader>
-      )}
-    </li>
-  );
-};
-
-CollectionItem.propTypes = {
-  api: PropTypes.func.isRequired,
-  categoryColor: PropTypes.string,
-  isAuthorized: PropTypes.bool.isRequired,
-  deleteCollection: PropTypes.func
-};
-
 async function loadCollection(api, id){
   const {data} = await api.get(`collections/${id}`);
   if(data){
@@ -155,5 +81,83 @@ async function loadCollection(api, id){
   }
   return data;
 }
+
+class CollectionItem extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {reload: false};
+  }
+    render(){
+      const {collection, categoryColor, deleteCollection, api, isAuthorized} = this.props;
+  return (
+      <li>
+        <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>
+
+        {(collection  &&
+          <DataLoader
+            get={() => getCollectionUrl(api, collection.userId, collection.url)}
+            renderLoader={() => <Loader />}
+            renderError={() => <div>Something went wrong. Try refreshing?</div>}
+          >
+            {path => (
+              <a href={path}>
+                <div className={['collection']} 
+                  id={"collection-" + collection.id}
+                  style={{backgroundColor: hexToRgbA(collection.coverColor), borderBottomColor: hexToRgbA(collection.coverColor)}}>
+                  <div className="collection-container">
+                    <div className="collection-info">
+                      <div className="avatar-container">
+                        <div className="avatar">
+                          <Avatar backgroundColor={collection.coverColor} collectionId={collection.id}/>
+                        </div>
+                      </div>
+                      <div className="collection-name-description">
+                        <div className="button">
+                          <span className="project-badge private-project-badge" aria-label="private"></span>
+                          <div className="project-name">{collection.name}</div>
+                        </div>
+                        <div className="description"><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
+                      </div>
+
+                      <div className="overflow-mask"></div>
+                    </div>
+
+                    <DataLoader
+                      get={() => loadCollection(api, collection.id)}
+                      renderLoader={() => null}
+                      renderError={() => <div>Something went wrong. Try refreshing?</div>}
+                    >
+                      {collection => (
+                        collection.projects.length > 0
+                          ?
+                          <ProjectsLoader api={api} projects={collection.projects}>
+                            {projects => <ProjectsPreview projects={collection.projects} color={collection.coverColor}/>}
+                          </ProjectsLoader>
+                          :
+                          <div className="projects-preview empty">
+                            {(isAuthorized
+                              ? <p>This collection is empty.  Add some projects to it! ☝️</p>
+                              : "No projects to see in this collection just yet."
+                            )}
+                          </div>
+                      )}
+                    </DataLoader>   
+                  </div>
+                </div>
+              </a>             
+            )}
+          </DataLoader>
+        )}
+      </li>
+    );
+    }
+}
+
+CollectionItem.propTypes = {
+  api: PropTypes.func.isRequired,
+  categoryColor: PropTypes.string,
+  isAuthorized: PropTypes.bool.isRequired,
+  deleteCollection: PropTypes.func
+};
 
 export default CollectionItem;

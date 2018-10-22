@@ -26,6 +26,8 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   // toggle popover
   togglePopover();
   
+  // reload the corresponding collection on the user profile page
+  
   // show notification
   // TO DO - only show this if add project to collection completes successfully
   const content = <AddProjectMessage projectName={project.domain} collectionName={collection.name} url={collectionPath}/>;

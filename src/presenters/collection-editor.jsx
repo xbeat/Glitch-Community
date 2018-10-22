@@ -62,12 +62,9 @@ class CollectionEditor extends React.Component {
   }
   
   async addProjectToCollection(project, collection) {
-    console.log(`in addProject in collection-editor`);
-    console.log(`project.id ${project.id}`);
-    console.log(`collection.id ${collection.id}`);
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
     if(collection.id == this.state.id){
-      console.log(`attempting to add project ${project.domain}`);
+      // add project to collection page
       this.setState(({projects}) => ({
         projects: [...projects, project],
       }));
