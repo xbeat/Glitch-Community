@@ -110,9 +110,10 @@ class UserEditor extends React.Component {
   
   async deleteCollection(id){
     await this.props.api.delete(`/collections/${id}`);
-    // this.setState(({collections}) => ({
-    //   collections: collections.filter(c => c.id !== id),
-    // }));
+    console.log('updated collections');
+    this.setState(({collections}) => ({
+      collections: collections.filter(c => c.id !== id),
+    }));
   }
   
   async addProjectToCollection(project, collection) {
