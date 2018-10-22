@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Flowers in Space',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Forbit.png?1539601710383",
-    link: 'https://glitch.com/~orbit'
+    title: 'Find the Hidden Treasure!',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fbeach-comber.jpg?1540206366137",
+    link: 'https://glitch.com/~beachcomber'
   },{
-    title: 'Newspaper Business Simulator',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fnewspaper-business-simulator.png?1539601710653",
-    link: 'https://glitch.com/~newspaper-business-simulator'
+    title: '3D Volumetric Video',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fvimeo-depth-player-playback.jpg?1540206366262",
+    link: 'https://glitch.com/~vimeo-depth-player-playback'
   }, {
-    title: 'Minimal Retro Album Covers',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fretro-album-covers.png?1539601710110",
-    link: 'https://glitch.com/~retro-album-covers'
+    title: 'Data Visualization of Gun Violence',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fgun-violence-visualization.jpg?1540206365577",
+    link: 'https://glitch.com/~gun-violence-visualization'
   }  
 ];
