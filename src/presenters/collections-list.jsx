@@ -125,6 +125,8 @@ CreateCollectionButton.propTypes = {
 };  
 
 export const CollectionsUL = ({collections, deleteCollection, categoryColor, api, isAuthorized}) => {
+  const orderedCollections = _.orderBy(collections, ['updatedAt'], ['desc'])
+  console.log("orderedCollections %O", orderedCollections);
   return (
     <ul className="collections-container">
       {/* FAVORITES COLLECTION CARD - note this currently references empty favorites category in categories.js

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 import ProjectsList from './projects-list.jsx';
 import CollectionsList from './collections-list.jsx';
@@ -12,7 +11,7 @@ const EntityPageCollections = ({api, isAuthorized, userId, deleteCollection}) =>
     <DataLoader get={() => api.get(`collections/?userId=${userId}`)}>
       { ({data}) => 
         <CollectionsList title="Collections" 
-          collections={_.orderBy(data, ['updatedAt'], ['desc'])} 
+          collections={data} 
           api={api} 
           isAuthorized={isAuthorized}
           deleteCollection={isAuthorized ? deleteCollection : null}
