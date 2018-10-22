@@ -125,15 +125,15 @@ CreateCollectionButton.propTypes = {
 };  
 
 export const CollectionsUL = ({collections, deleteCollection, categoryColor, api, isAuthorized}) => {
-  const orderedCollections = _.orderBy(collections, ['updatedAt'], ['desc'])
-  console.log("orderedCollections %O", orderedCollections);
+  // order by updatedAt date
+  const orderedCollections = _.orderBy(collections, collection => collection.updatedAt).reverse();
   return (
     <ul className="collections-container">
       {/* FAVORITES COLLECTION CARD - note this currently references empty favorites category in categories.js
         <CollectionItem key={null} collection={null} api={api} isAuthorized={isAuthorized}></CollectionItem>
       */}
       
-      { collections.map(collection => (
+      { orderedCollections.map(collection => (
         <CollectionItem key={collection.id} collection={collection} api={api} isAuthorized={isAuthorized} deleteCollection={deleteCollection}></CollectionItem>
       ))}
     </ul>
