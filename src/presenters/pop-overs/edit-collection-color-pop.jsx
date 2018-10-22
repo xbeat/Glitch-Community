@@ -30,17 +30,21 @@ class EditCollectionColorPop extends React.Component {
     
   handleChange(e) {
     const query = e.currentTarget.value.trim();
-    document.getElementsByClassName("editable-field-error-message")[0].style.display = "none";
+    const colorInput = document.getElementById('color-picker');
+    const errorMsg = document.getElementsByClassName("editable-field-error-message")[0];
+    errorMsg.style.display = "none";
     this.setState({ query });
     if (query && query.length <=7) {
       if(validHex(query)){
         this.setState({color: query});
         this.update(query);
       }else{
-        document.getElementsByClassName("editable-field-error-message")[0].style.display = "inherit";
+        errorMsg.style.display = "inherit";
       }
     }else{
-      document.getElementsByClassName("editable-field-error-message")[0].style.display = "inherit";
+      // user has cleared the input field
+      errorMsg.style.display = "inherit";
+      colorInput.value = '';
       console.log("error here - not sure why it's returning the original value");
     }
   }
@@ -59,7 +63,7 @@ class EditCollectionColorPop extends React.Component {
   }
   
   hasCustomColor(){    
-    // console.log('hasCustomColor: ' + this.state.query.trim() || !Object.values(colors).includes(this.props.initialColor));
+    console.log('hasCustomColor: ' + this.state.query.trim() || !Object.values(colors).includes(this.props.initialColor));
     return (this.state.query.trim() || !Object.values(colors).includes(this.props.initialColor));
   }
   
