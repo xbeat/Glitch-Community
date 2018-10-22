@@ -4,7 +4,7 @@ import {uniqueId} from 'lodash';
 
 import {OptimisticValue, FieldErrorIcon, FieldErrorMessage} from './field-helpers.jsx';
 
-export class PureEditableField extends React.Component {
+export class PureEditableWrappingField extends React.Component {
   constructor(props) {
     super(props);
     this.state = { id: uniqueId("editable-field-") };
@@ -19,7 +19,7 @@ export class PureEditableField extends React.Component {
   }
   
   onChange(evt) {
-    this.props.update(evt.target.value);
+    this.props.update(evt.target.value.replace(/\r?\n/g, ''));
   }
   
   render() {
@@ -39,51 +39,35 @@ export class PureEditableField extends React.Component {
     
     const maybeErrorMessage = !!this.props.error && <FieldErrorMessage error={this.props.error}/>;
     
-    const maybePrefix = !!this.props.prefix && (
-      <span className={"content-editable-affix " + classes}>{this.props.prefix}</span>
-    );
-    
-    const maybeSuffix = !!this.props.suffix && (
-      <span className={"content-editable-affix " + classes}>{this.props.suffix}</span>
-    );
-    
     return (
       <label htmlFor={inputProps.id}>
-        <span className="editable-field-flex">
-          {maybePrefix}
-          <input {...inputProps} ref={this.textInput} />
-          {maybeErrorIcon}
-          {maybeSuffix}
-        </span>
+        {maybeErrorIcon}
+        <textarea {...inputProps} ref={this.textInput} />
         {maybeErrorMessage}
       </label>
     );
   }
 }
-PureEditableField.propTypes = {
+PureEditableWrappingField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
-  prefix: PropTypes.node,
-  suffix: PropTypes.node,
   autoFocus: PropTypes.bool,
   error: PropTypes.string,
 };
 
-export const EditableField = ({value, update, ...props}) => (
+export const EditableWrappingField = ({value, update, ...props}) => (
   <OptimisticValue value={value} update={update} resetOnError={false}>
     {valueProps => (
-      <PureEditableField {...props} {...valueProps}/>
+      <PureEditableWrappingField {...props} {...valueProps}/>
     )}
   </OptimisticValue>
 );
-EditableField.propTypes = {
+EditableWrField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
-  prefix: PropTypes.node,
-  suffix: PropTypes.node,
   autoFocus: PropTypes.bool,
 };
 
-export default EditableField;
+export default EditableWrappingField;

@@ -70,7 +70,7 @@ export const FieldErrorIcon = () => (
   <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
 );
 
-export const FieldErrorMessage = (error) => (
+export const FieldErrorMessage = ({error}) => (
   <span className="editable-field-error-message">
     {error}
   </span>
