@@ -16,7 +16,7 @@ class EditCollectionColorPop extends React.Component {
     super(props);
     
     this.state = {
-      query: '', //The hex value entered into search
+      query: (this.hasCustomColor() ? this.props.initialColor : ""),
       color: null,
       maybeRequest: null,
       maybeResults: null
@@ -44,8 +44,6 @@ class EditCollectionColorPop extends React.Component {
     }else{
       // user has cleared the input field
       errorMsg.style.display = "inherit";
-      colorInput.value = '';
-      console.log("error here - not sure why it's returning the original value");
     }
   }
   
@@ -63,8 +61,7 @@ class EditCollectionColorPop extends React.Component {
   }
   
   hasCustomColor(){    
-    console.log('hasCustomColor: ' + this.state.query.trim() || !Object.values(colors).includes(this.props.initialColor));
-    return (this.state.query.trim() || !Object.values(colors).includes(this.props.initialColor));
+    return !Object.values(colors).includes(this.props.initialColor);
   }
   
   render() {
@@ -78,8 +75,11 @@ class EditCollectionColorPop extends React.Component {
               style={{backgroundColor: colors[key]}} 
               onClick={evt => {
                 this.setState({ color: colors[key] });
+                // clear any custom colors
                 this.setState({ query: "" });
+                document.getElementsByClassName("editable-field-error-message")[0].style.display = "none";
                 this.update(colors[key]);
+                
               }}
             />
           ))}
@@ -87,11 +87,7 @@ class EditCollectionColorPop extends React.Component {
           <hr/>
           
           <input id="color-picker"
-            value={(this.state.query 
-              ? this.state.query 
-              : this.hasCustomColor() 
-                ? this.props.initialColor
-                : "")} 
+            value={this.state.query} 
             onChange={this.handleChange} 
             onKeyPress={this.keyPress}
             className={"pop-over-input pop-over-search " + (this.hasCustomColor() ? "active" : "") }
