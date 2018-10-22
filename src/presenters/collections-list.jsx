@@ -21,7 +21,7 @@ class CollectionsList extends React.Component {
   }
   
   async deleteCollection(id) {
-    // await this.props.api.delete(`/collections/${id}`);
+    await this.props.api.delete(`/collections/${id}`);
     console.log('updated collections');
     
     this.setState( 

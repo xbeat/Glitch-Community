@@ -60,7 +60,6 @@ const UserPage = ({
     avatarUrl, color,
     hasCoverImage, coverColor,
     pins, projects, _deletedProjects,
-    collections,
     teams,
     _cacheCover,
   },
@@ -72,10 +71,10 @@ const UserPage = ({
   addPin, removePin,
   leaveProject,
   deleteProject, undeleteProject,
-  deleteCollection,
   setDeletedProjects,
+  collections,
   addProjectToCollection,
-  createPersistentNotification
+  createPersistentNotification,
 }) => (
   <main className="profile-page user-page">   
     <section>
@@ -98,13 +97,11 @@ const UserPage = ({
         <AuthDescription authorized={isAuthorized && !!login} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
     </section>
-        
-    <EntityPageCollections
-      collections={collections}
+    
+    <CollectionsList title="Collections" 
+      collections={collections} 
       api={api} 
       isAuthorized={isAuthorized}
-      userId={id} 
-      deleteCollection={deleteCollection}
     />
     
     <EntityPageProjects
@@ -143,6 +140,8 @@ UserPage.propTypes = {
     _cacheCover: PropTypes.number.isRequired,
     _deletedProjects: PropTypes.array.isRequired,
   }).isRequired,
+  collections: PropTypes.array.isRequired,
+  addProjectToCollection: PropTypes.func.isRequired,
 };
 
 const UserPageContainer = ({api, user}) => (

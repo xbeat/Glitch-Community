@@ -13,6 +13,7 @@ class UserEditor extends React.Component {
     this.state = {
       ...props.initialUser,
       _deletedProjects: [],
+      collections: [],
       _cacheCover: Date.now(),
     };
   }
@@ -110,9 +111,19 @@ class UserEditor extends React.Component {
     
   async addProjectToCollection(project, collection) {
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
-    this.setState(({collectionsToRefresh}) => ({
-        augmentedCollections: [...augmentedCollections, {id: collection.id, project: project}]
-    }));
+    // this.setState(({collectionsToRefresh}) => ({
+    //     augmentedCollections: [...augmentedCollections, {id: collection.id, project: project}]
+    // }));
+  }
+  
+  async loadCollections() {
+    const userId = this.props.userId;
+    await this.props.api.get(`collections/?userId=${userId}`;
+  }
+  
+  ComponentDidMount() {
+    //
+    api.get(`collections/?userId=${userId}`
   }
 
   render() {
