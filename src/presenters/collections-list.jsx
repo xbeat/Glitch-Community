@@ -13,21 +13,25 @@ const wordsApi = axios.create({
 
 
 class CollectionsList extends React.Component {
-  
-  constructor() {
-    this.deleteCollection = deleteCollection.bind(this);
+  constructor(props) {
+    super(props);
+    
+    this.state = {deletedCollectionIds: []};
+    this.deleteCollection = this.deleteCollection.bind(this);
   }
   
   async deleteCollection(id) {
     await this.props.api.delete(`/collections/${id}`);
     console.log('updated collections');
-    this.setState(({collections}) => ({
-      collections: collections.filter(c => c.id !== id),
-    }));
+    
+    debugger;
+    this.setState(({deletedCollectionIds}) => [...deletedCollectionIds, id]);
   }
   
   render() {
-    const {title, collections, placeholder, api, isAuthorized} = this.props;
+    const {title, placeholder, api, isAuthorized} = this.props;
+    
+    const collections = this.props.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
     
     return (
       <article className="collections">
@@ -46,7 +50,7 @@ class CollectionsList extends React.Component {
           : null
         )}
 
-        <CollectionsUL {...{collections, api, isAuthorized}}></CollectionsUL>
+        <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection}}></CollectionsUL>
 
       </article>
     );  
