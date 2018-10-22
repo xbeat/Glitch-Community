@@ -21,18 +21,20 @@ class CollectionsList extends React.Component {
   }
   
   async deleteCollection(id) {
-    await this.props.api.delete(`/collections/${id}`);
+    // await this.props.api.delete(`/collections/${id}`);
     console.log('updated collections');
     
-    debugger;
-    this.setState(({deletedCollectionIds}) => [...deletedCollectionIds, id]);
+    this.setState( 
+      ({deletedCollectionIds}) => ({
+        deletedCollectionIds: [...deletedCollectionIds, id]
+      })
+    );
   }
   
   render() {
     const {title, placeholder, api, isAuthorized} = this.props;
     
     const collections = this.props.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
-    
     return (
       <article className="collections">
         <h2>{title}</h2>
@@ -130,7 +132,7 @@ class CreateCollectionButton extends React.Component{
   
   render(){
     if(this.state.done){
-      return <Redirect to={this.state.newCollectionUrl}/>;
+      return <Redirect to={this.state.newCollectionUrl} push={true}/>;
     }
     return (
       <button className={`button create-collection`} onClick={() => this.createCollection(this.props.api)}>
