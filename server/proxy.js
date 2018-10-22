@@ -47,7 +47,7 @@ module.exports = function(app) {
 
   // Proxy the some parts of our site over to ghost blogs:
   proxyGhost('help', 'help-center.glitch.me');
-  proxyGhost('featured', 'featured.glitch.me');
+  proxyGhost('culture', 'culture-zine.glitch.me');
   proxyGhost('about', 'about-glitch.glitch.me');
   proxyGhost('legal', 'about-glitch.glitch.me', '/about');
   
