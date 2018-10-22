@@ -20,11 +20,12 @@ class CollectionsList extends React.Component {
     this.deleteCollection = this.deleteCollection.bind(this);
   }
   
-  componentWillReceiveProps(){
-    console.log('component will receive props');
-    this.forceUpdate();
+  componentWillReceiveProps(nextProps){
+    if(nextProps.collections){
+      console.log('received new collection info');
+      this.forceUpdate();      
+    } 
   }
-  
   async deleteCollection(id) {
     await this.props.api.delete(`/collections/${id}`);
     console.log('updated collections');

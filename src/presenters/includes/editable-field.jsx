@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {uniqueId} from 'lodash';
 
-import {OptimisticValue} from './field-helpers.jsx';
+import {OptimisticValue, FieldErrorIcon, FieldErrorMessage} from './field-helpers.jsx';
 
 export class PureEditableField extends React.Component {
   constructor(props) {
@@ -34,15 +34,9 @@ export class PureEditableField extends React.Component {
       autoFocus: this.props.autoFocus,
     };
     
-    const maybeErrorIcon = !!this.props.error && (
-      <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
-    );
+    const maybeErrorIcon = !!this.props.error && <FieldErrorIcon/>;
     
-    const maybeErrorMessage = !!this.props.error && (
-      <span className="editable-field-error-message">
-        {this.props.error}
-      </span>
-    );
+    const maybeErrorMessage = !!this.props.error && <FieldErrorMessage error={this.props.error}/>;
     
     const maybePrefix = !!this.props.prefix && (
       <span className={"content-editable-affix " + classes}>{this.props.prefix}</span>

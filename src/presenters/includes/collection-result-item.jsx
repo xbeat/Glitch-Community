@@ -22,13 +22,7 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   addProjectToCollection(project, collection);
   
   // toggle popover
-  togglePopover();
-  
-  // reload the corresponding collection on the user profile page
-  console.log('attempt to update parent collection');
-  let collectionSelector = "collection-" + collection.id;
-  
-  // document.getElementById(collectionSelector).forceUpdate();
+  togglePopover();  
   
   // show notification
   // TO DO - only show this if add project to collection completes successfully
