@@ -110,7 +110,7 @@ class UserEditor extends React.Component {
     
   async addProjectToCollection(project, collection) {
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
-    this.setState(({augmentedCollections}) => ({
+    this.setState(({collectionsToRefresh}) => ({
         augmentedCollections: [...augmentedCollections, {id: collection.id, project: project}]
     }));
   }

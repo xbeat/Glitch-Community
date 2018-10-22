@@ -85,11 +85,6 @@ async function loadCollection(api, id){
 class CollectionItem extends React.Component{
   constructor(props){
     super(props);
-    this.reload = this.reload.bind(this);
-  }
-  
-  reload(){
-    this.forceUpdate();
   }
   
   render(){
