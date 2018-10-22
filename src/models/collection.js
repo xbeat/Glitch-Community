@@ -2,7 +2,7 @@
 
 export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528812220123";
 
-export const colors = {pink: "#FFA3BB", orange: "#FBA058", yellow: "#FCF3AF", green:"#30DCA6", cyan: "#67BEFF", blue: "#70A4D8", purple: "#C9BFF4" };
+export const colors = {pink: "#ffd1c6", orange: "#FBA058", yellow: "#FCF3AF", green:"#30DCA6", cyan: "#67BEFF", blue: "#70A4D8", purple: "#C9BFF4" };
 
 export const avatars = {
   computer: "https://cdn.hyperdev.com/us-east-1%3Acba180f4-ee65-4dfc-8dd5-f143280d3c10%2Fcomputer.svg",
