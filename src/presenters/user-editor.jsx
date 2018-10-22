@@ -107,15 +107,7 @@ class UserEditor extends React.Component {
       _deletedProjects: _deletedProjects.filter(p => p.id !== id)
     }));
   }
-  
-  async deleteCollection(id){
-    await this.props.api.delete(`/collections/${id}`);
-    console.log('updated collections');
-    this.setState(({collections}) => ({
-      collections: collections.filter(c => c.id !== id),
-    }));
-  }
-  
+    
   async addProjectToCollection(project, collection) {
     console.log(`in addProject in user-editor`);
     console.log(`project.id ${project.id}`);
@@ -140,7 +132,6 @@ class UserEditor extends React.Component {
       setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
       addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleError),
       removeProjectFromCollection: id => this.removeProjectFromCollection(id).catch(handleError),
-      deleteCollection: id => this.deleteCollection(id).catch(handleError),      
     };
     return this.props.children(this.state, funcs, this.isCurrentUser());
   }

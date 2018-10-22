@@ -11,27 +11,47 @@ const wordsApi = axios.create({
   baseURL: 'https://friendly-words.glitch.me/',
 });
 
-export const CollectionsList = ({title, collections, placeholder, deleteCollection, api, isAuthorized}) => (
-  <article className="collections">
-    <h2>{title}</h2>
 
-    {!!(placeholder && !collections.length) && (
-      <div className="placeholder">{placeholder}</div>
-    )}
+class CollectionsList extends React.Component {
+  
+  constructor() {
+    this.deleteCollection = deleteCollection.bind(this);
+  }
+  
+  async deleteCollection(id) {
+    await this.props.api.delete(`/collections/${id}`);
+    console.log('updated collections');
+    this.setState(({collections}) => ({
+      collections: collections.filter(c => c.id !== id),
+    }));
+  }
+  
+  render() {
+    const {title, collections, placeholder, api, isAuthorized} = this.props;
     
-    {( isAuthorized 
-      ? 
-      ( collections.length > 0 
-        ? <CreateCollectionButton api={api}/>   
-        : <CreateFirstCollection api={api}/>
-      )
-      : null
-    )}
+    return (
+      <article className="collections">
+        <h2>{title}</h2>
 
-    <CollectionsUL {...{collections, deleteCollection, api, isAuthorized}}></CollectionsUL>
+        {!!(placeholder && !collections.length) && (
+          <div className="placeholder">{placeholder}</div>
+        )}
 
-  </article>
-);
+        {( isAuthorized 
+          ? 
+          ( collections.length > 0 
+            ? <CreateCollectionButton api={api}/>   
+            : <CreateFirstCollection api={api}/>
+          )
+          : null
+        )}
+
+        <CollectionsUL {...{collections, api, isAuthorized}}></CollectionsUL>
+
+      </article>
+    );  
+  }
+}
 
 CollectionsList.propTypes = {
   collections: PropTypes.array.isRequired,
@@ -39,7 +59,6 @@ CollectionsList.propTypes = {
   placeholder: PropTypes.node,
   api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  deleteCollection: PropTypes.func,
 };
 
 // TO DO: ensure that the user doesn't already have a collection with this name
@@ -94,11 +113,8 @@ class CreateCollectionButton extends React.Component{
        
         let userName = "";
         api.get(`users/${data.userId}`).then(({data}) => {
-          console.log(data);
           userName = data.login;
-          console.log(`userName: ${userName}`);
           let newCollectionUrl = getLink(userName, collectionUrl);
-          console.log(`newCollectionUrl: ${newCollectionUrl}`);
           this.setState({newCollectionUrl: newCollectionUrl});
           this.setState({done: true});
         });
