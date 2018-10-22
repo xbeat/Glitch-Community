@@ -11,7 +11,7 @@ import Thanks from '../includes/thanks.jsx';
 
 import DeletedProjects from '../deleted-projects.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
-import EntityPageCollections from '../entity-page-collections.jsx';
+import CollectionsList from '../collections-list.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import TeamsList from '../teams-list.jsx';
@@ -62,6 +62,7 @@ const UserPage = ({
     pins, projects, _deletedProjects,
     teams,
     _cacheCover,
+    collections,
   },
   api, isAuthorized,
   updateDescription,
@@ -72,7 +73,6 @@ const UserPage = ({
   leaveProject,
   deleteProject, undeleteProject,
   setDeletedProjects,
-  collections,
   addProjectToCollection,
   createPersistentNotification,
 }) => (
@@ -139,8 +139,8 @@ UserPage.propTypes = {
     coverColor: PropTypes.string,
     _cacheCover: PropTypes.number.isRequired,
     _deletedProjects: PropTypes.array.isRequired,
+    collections: PropTypes.array.isRequired,
   }).isRequired,
-  collections: PropTypes.array.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
 };
 

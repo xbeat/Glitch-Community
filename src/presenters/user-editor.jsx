@@ -111,19 +111,17 @@ class UserEditor extends React.Component {
     
   async addProjectToCollection(project, collection) {
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
-    // this.setState(({collectionsToRefresh}) => ({
-    //     augmentedCollections: [...augmentedCollections, {id: collection.id, project: project}]
-    // }));
+    this.loadCollections();
   }
   
   async loadCollections() {
-    const userId = this.props.userId;
-    await this.props.api.get(`collections/?userId=${userId}`;
+    const userId = this.state.id;
+    const {data} = await this.props.api.get(`collections/?userId=${userId}`);
+    this.setState({collections: data});
   }
   
-  ComponentDidMount() {
-    //
-    api.get(`collections/?userId=${userId}`
+  componentDidMount() {
+    this.loadCollections();
   }
 
   render() {
