@@ -60,14 +60,20 @@ const Featured = ({embedHtml, featured}) => (
       <img className="witch" src={imgWitch} width="110px" height="82px" alt=""/>
       <span dangerouslySetInnerHTML={{__html: embedHtml}}/>
     </div>
-    <ul className="featured-items">
-      {featured.map(item => (
-        <li key={item.link}>
-          <FeaturedPanel {...item}/>
-        </li>
-      ))}
-    </ul>
-    <ZineItems/>
+    
+    <section>
+      <ul className="featured-items">
+        {featured.map(item => (
+          <li key={item.link}>
+            <FeaturedPanel {...item}/>
+          </li>
+        ))}
+      </ul>
+    </section>
+    
+    <section>
+      <ZineItems/>
+    </section>
   </section>
 );
 Featured.propTypes = {
