@@ -1,25 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 import SVGInline from "react-svg-inline";
 import {Redirect} from 'react-router-dom';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
-import ProjectModel from '../../models/project';
 import {getLink, defaultAvatarSVG} from '../../models/collection';
 
-import Loader, {DataLoader} from '../includes/loader.jsx';
+import {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 
 import {AuthDescription} from '../includes/description-field.jsx';
-import EditableField from '../includes/editable-field.jsx';
 import CollectionEditor from '../collection-editor.jsx';
 
-import PopoverContainer from '../pop-overs/popover-container.jsx';
 import AddCollectionProject from '../includes/add-collection-project.jsx';
 import AddCollectionAvatar from '../includes/add-collection-avatar.jsx';
 

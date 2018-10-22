@@ -11,7 +11,6 @@ import Uploader from './includes/uploader.jsx';
 class CollectionEditor extends React.Component {
   constructor(props) {
     super(props);
-    let color = "#FFA3BB"; // default color
     
     this.state = {
       ...props.initialCollection

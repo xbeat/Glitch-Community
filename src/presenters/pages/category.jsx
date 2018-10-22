@@ -13,15 +13,12 @@ import Categories from '../categories.jsx';
 import CollectionEditor from '../collection-editor.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
-import PopoverContainer from '../pop-overs/popover-container.jsx';
-
 
 const CategoryPageWrap = ({
   addProjectToCollection, 
   api, 
   category, 
   currentUser,
-  projectOptions, 
   ...props}) => (
   <React.Fragment>
     
@@ -46,28 +43,28 @@ const CategoryPageWrap = ({
         </header>
         
         <ProjectsLoader api={api} projects={category.projects}>
-            {projects => 
-              <React.Fragment>
-                <div className="collection-contents">
-                  <div className="collection-project-container-header">
-                    <h3>Projects ({category.projects.length})</h3>
-                  </div>
-                  
-                  {(currentUser.login ? 
-                    <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color}
-                      projectOptions={{
-                        addProjectToCollection
-                      }} 
-                      {...props}/>
-                    :
-                    <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color}
-                      projectOptions={{}} {...props}/>
-                  )}
+          {projects => 
+            <React.Fragment>
+              <div className="collection-contents">
+                <div className="collection-project-container-header">
+                  <h3>Projects ({category.projects.length})</h3>
                 </div>
+                  
+                {(currentUser.login ? 
+                  <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color}
+                    projectOptions={{
+                      addProjectToCollection
+                    }} 
+                    {...props}/>
+                  :
+                  <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color}
+                    projectOptions={{}} {...props}/>
+                )}
+              </div>
           
-              </React.Fragment>
-            }
-          </ProjectsLoader>
+            </React.Fragment>
+          }
+        </ProjectsLoader>
         
       </article>
       
@@ -112,14 +109,14 @@ const CategoryPage = ({key, api, category, ...props}) => (
       renderError={() => <CategoryPageError category={category} api={api} {...props}/>}
     >
       {category => (
-          <CurrentUserConsumer>
-              {(currentUser) => (
-                <CollectionEditor api={api} initialCollection={category} >
-                   {(category, funcs, userIsAuthor) =>(
-                      <CategoryPageWrap category={category} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props}/>
-                )}
+        <CurrentUserConsumer>
+          {(currentUser) => (
+            <CollectionEditor api={api} initialCollection={category} >
+              {(category, funcs, userIsAuthor) =>(
+                <CategoryPageWrap category={category} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props}/>
+              )}
             </CollectionEditor>
-            )}
+          )}
         </CurrentUserConsumer>
       )}
     </DataLoader>
