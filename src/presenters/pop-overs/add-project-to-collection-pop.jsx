@@ -57,7 +57,6 @@ class AddProjectToCollectionPop extends React.Component {
     return true;
   }
 
-  
   handleSubmit(event){
     event.preventDefault();
     console.log('add project to new collection');
