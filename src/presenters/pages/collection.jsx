@@ -15,6 +15,7 @@ import NotFound from '../includes/not-found.jsx';
 
 import {AuthDescription} from '../includes/description-field.jsx';
 import CollectionEditor from '../collection-editor.jsx';
+import EditableWrappingField from '../includes/editable-wrapping-field.jsx';
 
 import AddCollectionProject from '../includes/add-collection-project.jsx';
 import AddCollectionAvatar from '../includes/add-collection-avatar.jsx';
@@ -121,10 +122,9 @@ const CollectionPageContents = ({
           <UserTile {...collection.user}/>
           <h1 className="collection-name">
             {(isAuthorized
-              ? <AuthDescription
-                  authorized={isAuthorized} description={collection.name}
+              ? <EditableWrappingField
+                  value={collection.name} placeholder="Name your collection"
                   update={name => updateName(name).then(c => syncPageToUrl(collection.user.login, c.url))}
-                  placeholder="Name your collection"
                   />
               : collection.name
             )}

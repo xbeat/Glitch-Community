@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import TextArea from 'react-textarea-autosize';
 import {uniqueId} from 'lodash';
 
 import {OptimisticValue, FieldErrorIcon, FieldErrorMessage} from './field-helpers.jsx';
@@ -41,8 +42,8 @@ export class PureEditableWrappingField extends React.Component {
     
     return (
       <label htmlFor={inputProps.id}>
+        <TextArea {...inputProps} ref={this.textInput} />
         {maybeErrorIcon}
-        <textarea {...inputProps} ref={this.textInput} />
         {maybeErrorMessage}
       </label>
     );
@@ -63,7 +64,7 @@ export const EditableWrappingField = ({value, update, ...props}) => (
     )}
   </OptimisticValue>
 );
-EditableWrField.propTypes = {
+EditableWrappingField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
