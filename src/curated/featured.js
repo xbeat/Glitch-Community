@@ -14,7 +14,7 @@ Example:
 export default [
   {
     title: 'Flowers in Space',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Forbit.png?1539601710383",
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fbeach-comber.jpg?1540206366137",
     link: 'https://glitch.com/~orbit'
   },{
     title: 'Newspaper Business Simulator',
