@@ -45,8 +45,8 @@ class CollectionsList extends React.Component {
   
   render() {
     const {title, placeholder, api, isAuthorized} = this.props;
-    
-    const collections = this.props.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
+    const collections = this.state.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
+    console.log("collections from render: %O", collections);
     return (
       <article className="collections">
         <h2>{title}</h2>
@@ -161,6 +161,7 @@ CreateCollectionButton.propTypes = {
 export const CollectionsUL = ({collections, deleteCollection, categoryColor, api, isAuthorized}) => {
   // order by updatedAt date
   const orderedCollections = _.orderBy(collections, collection => collection.updatedAt).reverse();
+  console.log("orderedCollections from CollectionsUL %O", orderedCollections);
   return (
     <ul className="collections-container">
       {/* FAVORITES COLLECTION CARD - note this currently references empty favorites category in categories.js

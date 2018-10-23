@@ -43,10 +43,13 @@ Avatar.propTypes = {
   collectionId: PropTypes.number.isRequired,
 }
 
-const ProjectsPreview = ({projects, color}) => {
+const ProjectsPreview = ({projects, color, collection}) => {
   // FOR DEBUGGING
-  // console.log("projects: %O", projects);
-  // console.log('');
+  if(collection.name == "narrowing-assortment"){
+    console.log("projects: %O", projects);
+    console.log('');
+  }
+  
   return (
     <React.Fragment>
       <div className="projects-preview" projects={projects}>
@@ -93,7 +96,10 @@ class CollectionItem extends React.Component{
   render(){
       const {collection, categoryColor, deleteCollection, api, isAuthorized} = this.props;
       // FOR DEBUGGING
-      // console.log(`collection: ${collection.name}`);
+    console.log(`collection: ${collection.name}`);
+    if(collection.name == "narrow-assortment"){
+      console.log("collections from CollectionItem render: %O", this.props.collection);
+    }
   return (
       <li>
         <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>
@@ -134,10 +140,7 @@ class CollectionItem extends React.Component{
                     >
                       {collection => (
                         collection.projects.length > 0
-                          ?
-                          <ProjectsLoader api={api} projects={collection.projects}>
-                            {projects => <ProjectsPreview projects={collection.projects} color={collection.coverColor}/>}
-                          </ProjectsLoader>
+                          ? <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection}/>
                           :
                           <div className="projects-preview empty">
                             {(isAuthorized
