@@ -53,7 +53,7 @@ class CollectionsList extends React.Component {
           <div className="placeholder">{placeholder}</div>
         )}
 
-        {( this.props.currentUser.login
+        {( isAuthorized 
           ? 
           ( collections.length > 0 
             ? <CreateCollectionButton api={api}/>   
