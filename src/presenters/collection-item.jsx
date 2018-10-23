@@ -44,11 +44,6 @@ Avatar.propTypes = {
 }
 
 const ProjectsPreview = ({projects, color, collection}) => {
-  // FOR DEBUGGING
-  if(collection.name == "narrowing-assortment"){
-    console.log("projects: %O", projects);
-    console.log('');
-  }
   
   return (
     <React.Fragment>
@@ -76,7 +71,6 @@ async function getCollectionUrl(api, userId, collectionUrl){
   const {data} = await api.get(`users/${userId}`);
   const username = data.login;
   let path = `/@${username}/${collectionUrl}`;
-  // console.log(`path: ${path}`);
   return path;
 }
 
@@ -95,11 +89,6 @@ class CollectionItem extends React.Component{
   
   render(){
       const {collection, categoryColor, deleteCollection, api, isAuthorized} = this.props;
-      // FOR DEBUGGING
-    console.log(`collection: ${collection.name}`);
-    if(collection.name == "narrow-assortment"){
-      console.log("collections from CollectionItem render: %O", this.props.collection);
-    }
   return (
       <li>
         <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>
@@ -133,23 +122,16 @@ class CollectionItem extends React.Component{
                       <div className="overflow-mask"></div>
                     </div>
 
-                    <DataLoader
-                      get={() => loadCollection(api, collection.id)}
-                      renderLoader={() => null}
-                      renderError={() => <div>Something went wrong. Try refreshing?</div>}
-                    >
-                      {collection => (
-                        collection.projects.length > 0
-                          ? <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection}/>
-                          :
-                          <div className="projects-preview empty">
-                            {(isAuthorized
-                              ? <p>This collection is empty.  Add some projects to it! ☝️</p>
-                              : "No projects to see in this collection just yet."
-                            )}
-                          </div>
-                      )}
-                    </DataLoader>   
+                    {(collection.projects.length > 0
+                      ? <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection}/>
+                      :
+                      <div className="projects-preview empty">
+                        {(isAuthorized
+                          ? <p>This collection is empty.  Add some projects to it! ☝️</p>
+                          : "No projects to see in this collection just yet."
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </a>             

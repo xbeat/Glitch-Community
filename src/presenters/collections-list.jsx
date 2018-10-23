@@ -25,16 +25,13 @@ class CollectionsList extends React.Component {
   
   componentWillReceiveProps(nextProps){
     if(nextProps.collections !== this.props.collections){
-      console.log('received new collection info');
-      console.log("updated collections: %O", nextProps.collections);
-      console.log("current collections: %O", this.props.collections);
       this.setState({collections: nextProps.collections});
       this.forceUpdate();      
     } 
   }
+  
   async deleteCollection(id) {
     await this.props.api.delete(`/collections/${id}`);
-    console.log('updated collections');
     
     this.setState( 
       ({deletedCollectionIds}) => ({
@@ -46,7 +43,6 @@ class CollectionsList extends React.Component {
   render() {
     const {title, placeholder, api, isAuthorized} = this.props;
     const collections = this.state.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
-    console.log("collections from render: %O", collections);
     return (
       <article className="collections">
         <h2>{title}</h2>
@@ -64,7 +60,7 @@ class CollectionsList extends React.Component {
           : null
         )}
 
-        <CollectionsUL {...{collections: this.state.collections, api, isAuthorized, deleteCollection: this.deleteCollection}}></CollectionsUL>
+        <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection}}></CollectionsUL>
 
       </article>
     );  
@@ -127,7 +123,6 @@ class CreateCollectionButton extends React.Component{
           coverColor,
         });
         let collectionUrl = data.url;
-        console.log(`collectionUrl: ${collectionUrl}`);
        
         let userName = "";
         api.get(`users/${data.userId}`).then(({data}) => {
@@ -161,7 +156,6 @@ CreateCollectionButton.propTypes = {
 export const CollectionsUL = ({collections, deleteCollection, categoryColor, api, isAuthorized}) => {
   // order by updatedAt date
   const orderedCollections = _.orderBy(collections, collection => collection.updatedAt).reverse();
-  console.log("orderedCollections from CollectionsUL %O", orderedCollections);
   return (
     <ul className="collections-container">
       {/* FAVORITES COLLECTION CARD - note this currently references empty favorites category in categories.js
