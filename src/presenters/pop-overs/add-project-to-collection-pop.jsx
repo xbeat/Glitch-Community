@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import {debounce} from 'lodash';
 
-import ProjectModel from '../../models/project';
-import Project, {getAvatarUrl} from '../../models/project';
-import UserModel from '../../models/user';
+import {getLink,colors} from '../../models/collection';
+import {getAvatarUrl} from '../../models/project';
 
 import Loader from '../includes/loader.jsx';
 
@@ -15,7 +14,6 @@ import UserResultItem from '../includes/user-result-item.jsx';
 import Notifications from '../notifications.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
-import {getLink,colors} from '../../models/collection';
 import {PureEditableField} from '../includes/editable-field.jsx';
 
 import _ from 'lodash';
@@ -26,13 +24,12 @@ class AddProjectToCollectionPop extends React.Component {
     
     this.state = {
       done: false,
-      error: false,
+      error: null, //
       query: '', //The actual search text
       maybeCollections: null, //null means still loading
     };
     
     this.handleChange = this.handleChange.bind(this);
-    this.onClick = this.onClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   
@@ -42,16 +39,7 @@ class AddProjectToCollectionPop extends React.Component {
   }
   
   handleChange(newValue) {
-    this.setState({ query: newValue });
-  }
-  
-  onClick(collection) {
-    this.props.togglePopover();    
-  }
-  
-  // TO DO: ensure that the user doesn't already have a collection with this name
-  validate(name){
-    return true;
+    this.setState({ query: newValue, error: null });
   }
 
   async handleSubmit(event){
@@ -66,34 +54,37 @@ class AddProjectToCollectionPop extends React.Component {
       let description = `A collection of projects that does wondrous things`; // change default later
       let url = _.kebabCase(newCollectionName);
       let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
-      let randomHex = Object.values(colors);
-      let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
-      if(this.validate(newCollectionName)){
-        const {data} = await this.props.api.post('collections', {
-          name,
-          description,
-          url,
-          avatarUrl,
-          coverColor,
-        });
-        
-        let newCollection = data;
-        
-        // add the selected project to the collection
-        await this.props.api.patch(`collections/${newCollection.id}/add/${this.props.project.id}`);               
-        // redirect to that collection
-        let newCollectionUrl = `/@${this.props.currentUser.login}/${newCollection.url}`;
-        this.setState({newCollectionUrl, done: true});
-      }
+      let coverColor = _.sample(Object.values(colors));
+      
+      const {data} = await this.props.api.post('collections', {
+        name,
+        description,
+        url,
+        avatarUrl,
+        coverColor,
+      });
+
+      let newCollection = data;
+
+      // add the selected project to the collection
+      await this.props.api.patch(`collections/${newCollection.id}/add/${this.props.project.id}`);         
+      
+      // redirect to that collection
+      const newCollectionUrl = getLink(this.props.currentUser.login, newCollection.url);
+      this.setState({newCollectionUrl, done: true});
     }catch(error){
-      this.setState({error: true});
+      if (error && error.response && error.response.data && error.response.data.message) {
+        this.setState({error: error.response.data.message});
+      } else {
+        window.Raven.captureException(error);
+      }
     }
   }
     
   render() {
     const placeholder = 'New Collection Name';
-    const {maybeCollections, query} = this.state;
-    let queryError = null;
+    const {error, maybeCollections, query} = this.state;
+    let queryError = this.state.error;
     if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === _.kebabCase(query))) {
       queryError = 'You already have a collection with this url';
     }
@@ -145,14 +136,14 @@ class AddProjectToCollectionPop extends React.Component {
               value={query} 
               update={this.handleChange}
               placeholder={placeholder}
-              error={queryError}
+              error={error || queryError}
             />
             <button type="submit" className="create-collection button-small" disabled={!!queryError}>
                 Create
             </button>   
             <p className="url-preview">
               {/* Handle anonymous users here? */}
-              /@{this.props.currentUser.login}/{_.kebabCase(query || placeholder)}
+              {getLink(this.props.currentUser.login, _.kebabCase(query || placeholder))}
             </p>         
           </form>         
         </section>
