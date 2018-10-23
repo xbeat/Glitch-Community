@@ -122,6 +122,8 @@ class AddProjectToCollectionPop extends React.Component {
               { ({data}) => 
                 _.orderBy(data, collection => collection.updatedAt).reverse().map(collection =>   
                 // filter out collections that already contain the selected project
+                (collection.projects.length > 0                                                                                  
+                  ?
                   (collection.projects.length === collection.projects.filter(project => project.id !== this.props.project.id).length && 
                         <li>
                           <CollectionResultItem 
@@ -133,6 +135,11 @@ class AddProjectToCollectionPop extends React.Component {
                           />
                         </li>
                   )
+                 :
+                 <li>Create a collection to organize your favorite projects
+                 </li>
+                 
+                 )
                 )
               }
             </DataLoader>
