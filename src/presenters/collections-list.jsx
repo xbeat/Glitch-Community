@@ -21,8 +21,10 @@ class CollectionsList extends React.Component {
   }
   
   componentWillReceiveProps(nextProps){
-    if(nextProps.collections){
+    if(nextProps.collections !== this.props.collections){
       console.log('received new collection info');
+      console.log("updated collections: %O", nextProps.collections);
+      console.log("current collections: %O", this.props.collections);
       this.forceUpdate();      
     } 
   }
