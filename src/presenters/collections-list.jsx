@@ -49,11 +49,11 @@ class CollectionsList extends React.Component {
       <article className="collections">
         <h2>{title}</h2>
 
-        {!!(placeholder && !collections.length) && (
+        {!!(placeholder) && (
           <div className="placeholder">{placeholder}</div>
         )}
 
-        {( isAuthorized 
+        {( this.props.currentUser.login
           ? 
           ( collections.length > 0 
             ? <CreateCollectionButton api={api}/>   
@@ -71,6 +71,7 @@ class CollectionsList extends React.Component {
 
 CollectionsList.propTypes = {
   collections: PropTypes.array.isRequired,
+  currentUser: PropTypes.object.isRequired,
   title: PropTypes.node.isRequired,
   placeholder: PropTypes.node,
   api: PropTypes.func.isRequired,
