@@ -6,6 +6,7 @@ module.exports = function(app) {
   redirect(app, '/react-starter-kit*', '/culture/react-starter-kit/');
   redirect(app, '/you-got-this/2*', '/culture/you-got-this-zine-2/');
   redirect(app, '/you-got-this*', '/culture/you-got-this-zine/');
+  redirect(app, '/function*', '/culture/function/');  
   
   redirectPath(app, '/featured*', '/culture/');
 }
