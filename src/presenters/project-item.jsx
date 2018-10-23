@@ -27,8 +27,13 @@ export const ProjectItem = ({api, project, collectionColor, ...props}) => {
               <span className="project-badge private-project-badge" aria-label="private"></span>
               <div className="project-name">{project.domain}</div>
             </div>
+            {( this.props.homepageCollection ?
             <div className="description" 
               style={{color: (collectionColor ? getContrastTextColor(collectionColor) : "black" )}}><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
+              :
+              <div className="description" 
+              style={{color: (collectionColor ? getContrastTextColor(collectionColor) : "black" )}}><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
+              )}
             <div className="overflow-mask" style={{backgroundColor: collectionColor}}></div>
           </div>
         </div>
