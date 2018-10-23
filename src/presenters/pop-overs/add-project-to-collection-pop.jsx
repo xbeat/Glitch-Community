@@ -148,39 +148,6 @@ class AddProjectToCollectionPop extends React.Component {
           }
         </DataLoader>
         
-        {/*
-                <DataLoader get={() => this.props.api.get(`collections/?userId=${this.props.currentUser.id}`)}>
-          { ({data}) => 
-            { data.length > 0 
-              ? 
-                <section className="pop-over-actions results-list">
-                  <ul className="results">
-                    {
-                      data.map(collection =>   
-                        // filter out collections that already contain the selected project
-                          (collection.projects.length === collection.projects.filter(project => project.id !== this.props.project.id).length && 
-                                <li>
-                                  <CollectionResultItem 
-                                    addProjectToCollection={this.props.addProjectToCollection}
-                                    api={this.props.api}
-                                    project={this.props.project}
-                                    collection={collection}                         
-                                    togglePopover={this.props.togglePopover} 
-                                  />
-                                </li>
-                          )
-                        )
-                      }
-                  </ul>
-                </section>
-              : 
-              null
-            }
-          }
-        </DataLoader>
-        
-        */}
-        
         <section className="pop-over-info">
           <form onSubmit={this.handleSubmit}>
             <PureEditableField
