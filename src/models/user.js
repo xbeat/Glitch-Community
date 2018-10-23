@@ -9,7 +9,7 @@ export default function User({projects, teams, ...user}) {
     teams: teams ? teams.map(team => Team(team).asProps()) : [],
     ...user
   };
-  return {
+  return { 
     update: user => User(user),
     asProps: () => props,
   };
