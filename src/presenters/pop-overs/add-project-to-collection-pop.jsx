@@ -32,7 +32,6 @@ class AddProjectToCollectionPop extends React.Component {
     };
     
     this.handleChange = this.handleChange.bind(this);
-    this.clearSearch = this.clearSearch.bind(this);
     this.onClick = this.onClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -46,13 +45,6 @@ class AddProjectToCollectionPop extends React.Component {
     this.setState({ query: newValue });
   }
   
-  clearSearch() {
-    this.setState({
-      maybeRequest: null,
-      maybeResults: null,
-    });
-  }
-  
   onClick(collection) {
     this.props.togglePopover();    
   }
@@ -62,7 +54,7 @@ class AddProjectToCollectionPop extends React.Component {
     return true;
   }
 
-  handleSubmit(event){
+  async handleSubmit(event){
     event.preventDefault();
     console.log('add project to new collection');
     // get text from input field
@@ -77,30 +69,21 @@ class AddProjectToCollectionPop extends React.Component {
       let randomHex = Object.values(colors);
       let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
       if(this.validate(newCollectionName)){
-        this.props.api.post('collections', {
+        const {data} = await this.props.api.post('collections', {
           name,
           description,
           url,
           avatarUrl,
           coverColor,
-        }).then(({data}) => {
-          let newCollection = data;
-            
-          try{
-            // add the selected project to the collection
-            this.props.api.patch(`collections/${newCollection.id}/add/${this.props.project.id}`)
-              .then(() => {                          
-                // redirect to that collection
-                let newCollectionUrl = `/@${this.props.currentUser.login}/${newCollection.url}`;
-                this.setState({newCollectionUrl:  newCollectionUrl});
-                this.setState({done: true});
-              });
-              
-          }catch(error){
-            this.setState({error: true});
-          }
-        }
-        );
+        });
+        
+        let newCollection = data;
+        
+        // add the selected project to the collection
+        await this.props.api.patch(`collections/${newCollection.id}/add/${this.props.project.id}`);               
+        // redirect to that collection
+        let newCollectionUrl = `/@${this.props.currentUser.login}/${newCollection.url}`;
+        this.setState({newCollectionUrl, done: true});
       }
     }catch(error){
       this.setState({error: true});
@@ -164,7 +147,7 @@ class AddProjectToCollectionPop extends React.Component {
               placeholder={placeholder}
               error={queryError}
             />
-            <button type="submit" className="create-collection button-small">
+            <button type="submit" className="create-collection button-small" disabled={!!queryError}>
                 Create
             </button>   
             <p className="url-preview">
