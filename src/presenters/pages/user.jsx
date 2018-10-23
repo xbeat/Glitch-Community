@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import {getAvatarStyle, getProfileStyle} from '../../models/user';
 
+import {CurrentUserConsumer} from '../current-user.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import UserEditor from '../user-editor.jsx';
@@ -65,6 +66,7 @@ const UserPage = ({
     _collections,
   },
   api, isAuthorized,
+  currentUser,
   updateDescription,
   updateName, updateLogin,
   uploadCover, clearCover,
@@ -102,6 +104,7 @@ const UserPage = ({
       collections={_collections} 
       api={api} 
       isAuthorized={isAuthorized}
+      currentUser={currentUser}
     />
     
     <EntityPageProjects
@@ -124,6 +127,7 @@ const UserPage = ({
 UserPage.propTypes = {
   clearCover: PropTypes.func.isRequired,
   createPersistentNotification: PropTypes.func,
+  currentUser: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   leaveProject: PropTypes.func.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
@@ -145,19 +149,23 @@ UserPage.propTypes = {
 };
 
 const UserPageContainer = ({api, user}) => (
-  <UserEditor api={api} initialUser={user}>
-    {(user, funcs, isAuthorized) => (
-      <React.Fragment>
-        <Helmet>
-          <title>{user.name || (user.login ? `@${user.login}` : `User ${user.id}`)}</title>
-        </Helmet>
-        
-        <ProjectsLoader api={api} projects={user.projects}>
-          {projects => <UserPage api={api} user={{...user, projects}} {...funcs} isAuthorized={isAuthorized}/>}
-        </ProjectsLoader>
-      </React.Fragment>
-    )}
-  </UserEditor>
+  <CurrentUserConsumer>
+    {(currentUser, fetched, {update}) => (
+      <UserEditor api={api} initialUser={user}>
+        {(user, funcs, isAuthorized) => (
+          <React.Fragment>
+            <Helmet>
+              <title>{user.name || (user.login ? `@${user.login}` : `User ${user.id}`)}</title>
+            </Helmet>
+
+            <ProjectsLoader api={api} projects={user.projects}>
+              {projects => <UserPage {...{api, isAuthorized, currentUser}} user={{...user, projects}} {...funcs} />}
+            </ProjectsLoader>
+          </React.Fragment>
+        )}
+      </UserEditor>
+      )}
+  </CurrentUserConsumer>
 );
 
 export default UserPageContainer;

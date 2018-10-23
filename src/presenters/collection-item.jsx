@@ -91,7 +91,8 @@ class CollectionItem extends React.Component{
       const {collection, categoryColor, deleteCollection, api, isAuthorized} = this.props;
   return (
       <li>
-        <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>
+      {(isAuthorized && 
+        <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>)}
 
         {(collection  &&
           <DataLoader
