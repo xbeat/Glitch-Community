@@ -112,7 +112,7 @@ class AddProjectToCollectionPop extends React.Component {
     const {maybeCollections, query} = this.state;
     let queryError = null;
     if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === _.kebabCase(query))) {
-      queryError = 'You already have a collection with that url';
+      queryError = 'You already have a collection with this url';
     }
     if(this.state.done){
       return <Redirect to={this.state.newCollectionUrl}/>;
