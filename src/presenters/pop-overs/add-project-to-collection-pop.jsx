@@ -24,7 +24,7 @@ class AddProjectToCollectionPop extends React.Component {
     
     this.state = {
       done: false,
-      error: null, //
+      error: null, //null or string
       query: '', //The actual search text
       maybeCollections: null, //null means still loading
     };
