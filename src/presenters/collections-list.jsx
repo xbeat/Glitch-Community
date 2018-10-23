@@ -49,7 +49,7 @@ class CollectionsList extends React.Component {
       <article className="collections">
         <h2>{title}</h2>
 
-        {!!(placeholder) && (
+        {!!(placeholder && !collections.length) && (
           <div className="placeholder">{placeholder}</div>
         )}
 

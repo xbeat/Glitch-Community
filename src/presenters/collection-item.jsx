@@ -49,7 +49,7 @@ const ProjectsPreview = ({projects, color, collection}) => {
     <React.Fragment>
       <div className="projects-preview" projects={projects}>
         { projects.slice(0,3).map(project => (
-          <div className="project-container" style={{backgroundColor: color}}>
+          <div className="project-container">
             <img className="avatar" src={getAvatarUrl(project.id)}/>
             <div className="project-name" style={{color: getContrastTextColor(color)}}>{project.domain}</div>
           </div>
