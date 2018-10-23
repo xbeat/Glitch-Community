@@ -8,7 +8,6 @@ import Project, {getAvatarUrl} from '../../models/project';
 import UserModel from '../../models/user';
 
 import Loader from '../includes/loader.jsx';
-import {DataLoader} from '../includes/loader.jsx';
 
 import CollectionResultItem from '../includes/collection-result-item.jsx';
 import UserResultItem from '../includes/user-result-item.jsx';
@@ -29,12 +28,18 @@ class AddProjectToCollectionPop extends React.Component {
       done: false,
       error: false,
       query: '', //The actual search text
+      maybeCollections: null, //null means still loading
     };
     
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.onClick = this.onClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  
+  async componentDidMount() {
+    const collections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
+    this.setState({maybeCollections: _.orderBy(collections.data, collection => collection.updatedAt).reverse()});
   }
   
   handleChange(newValue) {
@@ -104,6 +109,11 @@ class AddProjectToCollectionPop extends React.Component {
     
   render() {
     const placeholder = 'New Collection Name';
+    const {maybeCollections, query} = this.state;
+    let queryError = null;
+    if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === _.kebabCase(query))) {
+      queryError = 'You already have a collection with that url';
+    }
     if(this.state.done){
       return <Redirect to={this.state.newCollectionUrl}/>;
     }
@@ -116,53 +126,50 @@ class AddProjectToCollectionPop extends React.Component {
           : null
         )}
         
-         <DataLoader get={() => this.props.api.get(`collections/?userId=${this.props.currentUser.id}`)}>
-            { ({data}) => 
-              (data.length > 0
-               ?
-              <section className="pop-over-actions results-list">
-                  <ul className="results">
-                    {_.orderBy(data, collection => collection.updatedAt).reverse().map(collection =>   
-                    // filter out collections that already contain the selected project
-                      (collection.projects.length === collection.projects.filter(project => project.id !== this.props.project.id).length && 
-                      <li>
-                        <CollectionResultItem 
-                          addProjectToCollection={this.props.addProjectToCollection}
-                          api={this.props.api}
-                          project={this.props.project}
-                          collection={collection}                         
-                          togglePopover={this.props.togglePopover} 
-                        />
-                      </li>
-                      )
-                     )
-                   }
-                  </ul>
-              </section>
-            : <section className="pop-over-info">
-                 <p className="info-description">
-                   Organize your favorite projects in one place
-                 </p>
-              </section>
-            )
-          }
-        </DataLoader>
+        {maybeCollections ? (
+          maybeCollections.length ? (
+            <section className="pop-over-actions results-list">
+                <ul className="results">
+                  {maybeCollections.map(collection =>   
+                  // filter out collections that already contain the selected project
+                    (collection.projects.every(project => project.id !== this.props.project.id) && 
+                    <li key={collection.id}>
+                      <CollectionResultItem 
+                        addProjectToCollection={this.props.addProjectToCollection}
+                        api={this.props.api}
+                        project={this.props.project}
+                        collection={collection}                         
+                        togglePopover={this.props.togglePopover} 
+                      />
+                    </li>
+                    )
+                   )
+                 }
+                </ul>
+            </section>
+          ) : (<section className="pop-over-info">
+            <p className="info-description">
+              Organize your favorite projects in one place
+            </p>
+          </section>)
+        ) : <Loader/>}
         
         <section className="pop-over-info">
           <form onSubmit={this.handleSubmit}>
             <PureEditableField
               id="collection-name"
               className="pop-over-input create-input"
-              value={this.state.query} 
+              value={query} 
               update={this.handleChange}
               placeholder={placeholder}
+              error={queryError}
             />
             <button type="submit" className="create-collection button-small">
                 Create
             </button>   
             <p className="url-preview">
               {/* Handle anonymous users here? */}
-              /@{this.props.currentUser.login}/{_.kebabCase(this.state.query || placeholder)}
+              /@{this.props.currentUser.login}/{_.kebabCase(query || placeholder)}
             </p>         
           </form>         
         </section>
