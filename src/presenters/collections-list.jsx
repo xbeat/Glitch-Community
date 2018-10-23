@@ -28,7 +28,10 @@ class CollectionsList extends React.Component {
   componentWillReceiveProps(nextProps){
     if(nextProps.collections !== this.props.collections){
       this.setState({collections: nextProps.collections});
-      this.forceUpdate();      
+      if(this.props.collections.length > 0){
+        console.log('force restart');
+        this.forceUpdate();      
+      }
     } 
   }
   

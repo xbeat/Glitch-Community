@@ -120,7 +120,7 @@ class AddProjectToCollectionPop extends React.Component {
           <ul className="results">
             <DataLoader get={() => this.props.api.get(`collections/?userId=${this.props.currentUser.id}`)}>
               { ({data}) => 
-                data.map(collection =>   
+                _.orderBy(data, collection => collection.updatedAt).reverse().map(collection =>   
                 // filter out collections that already contain the selected project
                   (collection.projects.length === collection.projects.filter(project => project.id !== this.props.project.id).length && 
                         <li>
