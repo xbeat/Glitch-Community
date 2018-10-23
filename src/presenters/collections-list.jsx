@@ -16,7 +16,10 @@ class CollectionsList extends React.Component {
   constructor(props) {
     super(props);
     
-    this.state = {deletedCollectionIds: []};
+    this.state = {
+      deletedCollectionIds: [],
+      collections: this.props.collections,
+    };
     this.deleteCollection = this.deleteCollection.bind(this);
   }
   
@@ -25,6 +28,7 @@ class CollectionsList extends React.Component {
       console.log('received new collection info');
       console.log("updated collections: %O", nextProps.collections);
       console.log("current collections: %O", this.props.collections);
+      this.setState({collections: nextProps.collections});
       this.forceUpdate();      
     } 
   }
@@ -60,7 +64,7 @@ class CollectionsList extends React.Component {
           : null
         )}
 
-        <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection}}></CollectionsUL>
+        <CollectionsUL {...{collections: this.state.collections, api, isAuthorized, deleteCollection: this.deleteCollection}}></CollectionsUL>
 
       </article>
     );  

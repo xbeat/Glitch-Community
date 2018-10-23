@@ -44,6 +44,9 @@ Avatar.propTypes = {
 }
 
 const ProjectsPreview = ({projects, color}) => {
+  // FOR DEBUGGING
+  // console.log("projects: %O", projects);
+  // console.log('');
   return (
     <React.Fragment>
       <div className="projects-preview" projects={projects}>
@@ -89,6 +92,8 @@ class CollectionItem extends React.Component{
   
   render(){
       const {collection, categoryColor, deleteCollection, api, isAuthorized} = this.props;
+      // FOR DEBUGGING
+      // console.log(`collection: ${collection.name}`);
   return (
       <li>
         <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>
