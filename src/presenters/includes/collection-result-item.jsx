@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SVGInline from "react-svg-inline";
 
 import Loader, {DataLoader} from './loader.jsx';
 import Notifications from '../notifications.jsx';
+
+import {defaultAvatarSVG} from '../../models/collection.js'; 
 
 const AddProjectMessage = ({projectName, collectionName, url}) => (
   <React.Fragment>
@@ -38,6 +41,32 @@ async function getCollectionUrl(api, userId, collectionUrl){
   return path;
 }
 
+class Avatar extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={
+      backgroundColor: this.props.backgroundColor
+    };
+  }
+  componentDidMount(){
+    // set background color in SVG
+    let collectionId = "#avatar-collection-" + this.props.collectionId;
+    let selector = collectionId + " svg .background";
+    let svgBackgroundEl = document.querySelector(selector);
+    svgBackgroundEl.setAttribute('fill', this.state.backgroundColor);
+  }
+  render(){
+    return(
+      <SVGInline svg={defaultAvatarSVG} />
+    );
+  }
+}
+
+Avatar.propTypes = {
+  backgroundColor: PropTypes.string.isRequired,
+  collectionId: PropTypes.number.isRequired,
+}
+
 const CollectionResultItem = ({addProjectToCollection, api, project, collection, isActive, togglePopover}) => {
   var resultClass = "button-unstyled result result-collection";
   if(isActive) {
@@ -46,12 +75,12 @@ const CollectionResultItem = ({addProjectToCollection, api, project, collection,
 
   return (
     <Notifications>
-      {({createPersistentNotification}) => (
+      {({createNotification}) => (
         <DataLoader get={() => getCollectionUrl(api, collection.userId, collection.url)}>
           {collectionPath => 
-            <button className={resultClass} onClick={() => addProject(addProjectToCollection, project, collection, collectionPath, createPersistentNotification, togglePopover)} data-project-id={project.id}>
-              <div className="avatar">
-                <img src={collection.avatarUrl} className="avatar" alt={`Project avatar for ${collection.name}`}/>
+            <button className={resultClass} onClick={() => addProject(addProjectToCollection, project, collection, collectionPath, createNotification, togglePopover)} data-project-id={project.id}>
+              <div className="avatar" id={"avatar-collection-" + collection.id}>
+                  <Avatar backgroundColor={collection.coverColor} collectionId={collection.id} alt={`Project avatar for ${collection.name}`}/>
               </div>
               <div className="results-info">
                 <div className="result-name" title={collection.name}>{collection.name}</div>
