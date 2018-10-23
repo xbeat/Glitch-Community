@@ -19,7 +19,7 @@ export const ProjectItem = ({api, project, collectionColor, homepageCollection, 
       
       <ProjectLink project={project}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
-          style={{backgroundColor: collectionColor, borderBottomColor:collectionColor}}
+          style={(homepageCollection ? {backgroundColor: collectionColor, borderBottomColor:collectionColor} : null)}
           data-track="project" data-track-label={project.domain}>
           <div className="project-container">
             <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
@@ -36,7 +36,7 @@ export const ProjectItem = ({api, project, collectionColor, homepageCollection, 
               <div className="description" 
               style={{color: (collectionColor ? getContrastTextColor(collectionColor) : "black" )}}><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
               )}
-            <div className="overflow-mask" style={{backgroundColor: collectionColor}}></div>
+            <div className="overflow-mask" style={(homepageCollection ? {backgroundColor: collectionColor} : null)}></div>
           </div>
         </div>
       </ProjectLink>

@@ -117,7 +117,7 @@ const CollectionPageContents = ({
       <title>{collection.name}</title>
     </Helmet>
     <main className="collection-page">
-      <article className="projects" style={{backgroundColor: hexToRgbA(collection.coverColor)}}>
+      <article className="projects">
         <header className="collection">
           <UserTile {...collection.user}/>
           <h1 className="collection-name">
@@ -163,11 +163,13 @@ const CollectionPageContents = ({
             />
           </div>
           
+          {/*
           {(isAuthorized && <EditCollectionColor
             update={updateColor}
             initialColor={collection.coverColor}
           />
           )}
+          */}
           
           {(isAuthorized
             ? <DeleteCollectionBtn deleteCollection={deleteCollection} currentUserLogin={userLogin}/>

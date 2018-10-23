@@ -103,8 +103,7 @@ class CollectionItem extends React.Component{
             {path => (
               <a href={path}>
                 <div className={['collection']} 
-                  id={"collection-" + collection.id}
-                  style={{backgroundColor: hexToRgbA(collection.coverColor), borderBottomColor: hexToRgbA(collection.coverColor)}}>
+                  id={"collection-" + collection.id}>
                   <div className="collection-container">
                     <div className="collection-info">
                       <div className="avatar-container">
