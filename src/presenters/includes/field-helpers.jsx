@@ -55,7 +55,7 @@ export class OptimisticValue extends React.Component {
   }
 }
 OptimisticValue.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOf([PropTypes.string, PropTypes.object]).isRequired,
   update: PropTypes.func.isRequired,
   resetOnError: PropTypes.bool,
 };

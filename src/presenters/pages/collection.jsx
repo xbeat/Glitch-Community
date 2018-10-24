@@ -21,6 +21,7 @@ import AddCollectionProject from '../includes/add-collection-project.jsx';
 import AddCollectionAvatar from '../includes/add-collection-avatar.jsx';
 
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
+import EditCollectionNameAndUrl from '../includes/edit-collection-name-and-url.jsx';
 
 import {hexToRgbA, getContrastTextColor} from '../../models/collection.js'; 
 
@@ -100,8 +101,8 @@ const CollectionPageContents = ({
   collection, 
   currentUser,
   deleteCollection,
-  isAuthorized, 
-  updateName, 
+  isAuthorized,
+  updateNameAndUrl,
   updateDescription, 
   projectOptions, 
   uploadAvatar, 
@@ -117,19 +118,13 @@ const CollectionPageContents = ({
       <title>{collection.name}</title>
     </Helmet>
     <main className="collection-page">
-      <article className="projects">
+      <article className="projects" style={{backgroundColor: hexToRgbA(collection.coverColor)}}>
         <header className="collection">
           <UserTile {...collection.user}/>
-          <h1 className="collection-name">
-            {(isAuthorized
-              ? <EditableWrappingField
-                  value={collection.name} placeholder="Name your collection"
-                  update={name => updateName(name).then(c => syncPageToUrl(collection.user.login, c.url))}
-                  />
-              : collection.name
-            )}
-          </h1>
-          <p className="collection-url">{getLink(collection.user.login, collection.url)}</p>
+          <EditCollectionNameAndUrl isAuthorized={isAuthorized}
+            owner={collection.user.login} name={collection.name} url={collection.url}
+            update={data => updateNameAndUrl(data).then(() => syncPageToUrl(collection.user.login, data.url))}
+          />
           <div className="collection-image-container">
             <Avatar backgroundColor={collection.coverColor}/>
           </div>
@@ -224,7 +219,7 @@ const CollectionPageContents = ({
                      :
                      (isAuthorized
                       ?
-                       <div className="empty-collection-hint">
+                       <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor, color: getContrastTextColor(collection.coverColor)}}>
                           Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
                        </div>
                     :  <div className="empty-collection-hint" style={{backgroundColor: "rgba(255,255,255,0.8)", color: getContrastTextColor(collection.coverColor)}}>

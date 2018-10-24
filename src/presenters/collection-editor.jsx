@@ -90,7 +90,7 @@ class CollectionEditor extends React.Component {
       removeProjectFromCollection: project => this.removeProjectFromCollection(project).catch(handleError),
       deleteCollection: id => this.deleteCollection().catch(handleError),
       updateName: name => this.updateFields({name, url: kebabCase(name)}).catch(handleErrorForInput),
-      updateNameAndUrl: name => this.updateFields({name, url: kebabCase(name)}).catch(handleErrorForInput),
+      updateNameAndUrl: ({name, url}) => this.updateFields({name, url}).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       updateAvatar: avatarUrl => this.updateAvatar(avatarUrl),
       updateColor: color => this.updateColor(color),

@@ -3,23 +3,29 @@ import PropTypes from 'prop-types';
 import {kebabCase} from 'lodash';
 
 import {getLink} from '../../models/collection';
-import {EditableWrappingField} from './editable-wrapping-field.jsx';
+import {OptimisticValue, TrimmedValue} from './field-helpers.jsx';
+import {PureEditableWrappingField} from './editable-wrapping-field.jsx';
 
 export const EditCollectionNameAndUrl = ({owner, name, url, update, isAuthorized}) => {
   const placeholder = 'Name your collection';
   return (
-    <React.Fragment>
-      <h1 className="collection-name">
-        {(isAuthorized
-          ? <EditableWrappingField
-              value={name} placeholder="Name your collection"
-              update={name => update({name, url: kebabCase(name)})}
-              />
-          : name
-        )}
-      </h1>
-      <p className="collection-url">{getLink(owner, url)}</p>
-    </React.Fragment>
+    <OptimisticValue value={{name, url}} update={update} resetOnError={false}>
+      {({value: nameAndUrl, update, error}) => (
+        <TrimmedValue value={nameAndUrl.name} update={name => update({name, url: kebabCase(name)})}>
+          {({value: name, update}) => (
+            <React.Fragment>
+              <h1 className="collection-name">
+                {(isAuthorized
+                  ? <PureEditableWrappingField value={name} update={update} placeholder={placeholder} error={error}/>
+                  : name
+                )}
+              </h1>
+              <p className="collection-url">{getLink(owner, nameAndUrl.url)}</p>
+            </React.Fragment>
+          )}
+        </TrimmedValue>
+      )}
+    </OptimisticValue>
   );
 };
 EditCollectionNameAndUrl.propTypes = {
