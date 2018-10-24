@@ -113,7 +113,7 @@ class CollectionItem extends React.Component{
                       :
                       <div className="projects-preview empty">
                         {(isAuthorized
-                          ? <p>This collection is empty.  Add some projects to it! ☝️</p>
+                          ? <p>This collection is empty.  Add some projects to it! <span role="img" aria-label="">☝️</span></p>
                           : "No projects to see in this collection just yet."
                         )}
                       </div>

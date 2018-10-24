@@ -20,7 +20,7 @@ const ProjectResultItem = ({id, domain, description, users, action, isActive}) =
           { users.length > 0 && <StaticUsersList users={users} /> }
         </div>
       </button>
-      <a href={`/~${domain}`} className="view-result-link" target="_blank">
+      <a href={`/~${domain}`} className="view-result-link" target="_blank" rel="noopener noreferrer">
         <button className="view-project button-small button-docs">
           View →
         </button>

@@ -85,11 +85,11 @@ CategoryPageWrap.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
 };
 
-const CategoryPageLoader = ({...props}) => (
+const CategoryPageLoader = () => (
   <Loader/>
 );
 
-const CategoryPageError = ({...props}) => (
+const CategoryPageError = () => (
   "Something went wrong. Try refreshing?"  
 );
 
@@ -101,7 +101,7 @@ async function loadCategory(api, id) {
   return data;
 }  
 
-const CategoryPage = ({key, api, category, ...props}) => (
+const CategoryPage = ({api, category, ...props}) => (
   <Layout api={api}>
     <DataLoader
       get={() => loadCategory(api, category.id)}
@@ -112,7 +112,7 @@ const CategoryPage = ({key, api, category, ...props}) => (
         <CurrentUserConsumer>
           {(currentUser) => (
             <CollectionEditor api={api} initialCollection={category} >
-              {(category, funcs, userIsAuthor) =>(
+              {(category, funcs) =>(
                 <CategoryPageWrap category={category} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props}/>
               )}
             </CollectionEditor>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SVGInline from "react-svg-inline";
 
-import Loader, {DataLoader} from './loader.jsx';
+import {DataLoader} from './loader.jsx';
 import Notifications from '../notifications.jsx';
 
 import {defaultAvatarSVG} from '../../models/collection.js'; 
@@ -10,7 +10,7 @@ import {defaultAvatarSVG} from '../../models/collection.js';
 const AddProjectMessage = ({projectName, collectionName, url}) => (
   <React.Fragment>
     <p>Added <b><span className="project-name">{projectName}</span></b> to collection <b><span className="collection-name">{collectionName}</span></b></p>
-    <a href={url} target="_blank" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
+    <a href={url} target="_blank" rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
   </React.Fragment>
 );
 AddProjectMessage.propTypes = {
@@ -65,7 +65,7 @@ class Avatar extends React.Component{
 Avatar.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   collectionId: PropTypes.number.isRequired,
-};
+}
 
 const CollectionResultItem = ({addProjectToCollection, api, project, collection, isActive, togglePopover}) => {
   var resultClass = "button-unstyled result result-collection";
@@ -81,7 +81,7 @@ const CollectionResultItem = ({addProjectToCollection, api, project, collection,
             <div>
               <button className={resultClass} onClick={() => addProject(addProjectToCollection, project, collection, collectionPath, createNotification, togglePopover)} data-project-id={project.id}>
                 <div className="avatar" id={"avatar-collection-" + collection.id}>
-                  <Avatar backgroundColor={collection.coverColor} collectionId={collection.id} alt={`Project avatar for ${collection.name}`}/>
+                    <Avatar backgroundColor={collection.coverColor} collectionId={collection.id} alt={`Project avatar for ${collection.name}`}/>
                 </div>
                 <div className="results-info">
                   <div className="result-name" title={collection.name}>{collection.name}</div>
@@ -89,11 +89,11 @@ const CollectionResultItem = ({addProjectToCollection, api, project, collection,
                 </div>
               </button>
               <a href={`${collectionPath}`} className="view-result-link" target="_blank">
-                <button className="view-project button-small button-docs">
+                  <button className="view-project button-small button-docs">
                         View →
-                </button>
+                  </button>
               </a>
-            </div>
+          </div>
           }
         </DataLoader>
       )}  

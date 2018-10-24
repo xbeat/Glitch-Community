@@ -128,9 +128,9 @@ const CollectionPageContents = ({
             <Avatar backgroundColor={collection.coverColor}/>
           </div>
           
-          {/* TO DO: actually enable uploading avatar - see example of uploadAvatar in user-editor.jsx */}
-          {/*
-          {(isAuthorized 
+          
+          
+          {(if false (isAuthorized 
             ? <div className="upload-image-buttons">
               
               
@@ -140,15 +140,14 @@ const CollectionPageContents = ({
                 update={updateAvatar}
               />
               
-              
                 <button className="button button-small button-tertiary" onClick={uploadAvatar}>
                   <span>Replace Avatar</span>  
                 </button>
               
             </div>
             : null
-          )}
-          */}
+          ))}
+          
           
           <div className="collection-description">
             <AuthDescription
@@ -201,28 +200,28 @@ const CollectionPageContents = ({
                          {...props}/>
 
                        : 
-                       (currentUser && currentUser.login 
-                         ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
-                           projectOptions={{
-                             addProjectToCollection
-                           }} 
-                           {...props}/>
-                         :
-                         <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
-                           projectOptions={{}} 
-                           {...props}/>
-                       )
+                      (currentUser && currentUser.login 
+                       ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
+                         projectOptions={{
+                           addProjectToCollection
+                         }} 
+                         {...props}/>
+                       :
+                      <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
+                         projectOptions={{}} 
+                         {...props}/>
                      )
+                      )
                      :
                      (isAuthorized
-                       ?
+                      ?
                        <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor, color: getContrastTextColor(collection.coverColor)}}>
                           Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
                        </div>
-                       :  <div className="empty-collection-hint" style={{backgroundColor: "rgba(255,255,255,0.8)", color: getContrastTextColor(collection.coverColor)}}>
+                    :  <div className="empty-collection-hint" style={{backgroundColor: "rgba(255,255,255,0.8)", color: getContrastTextColor(collection.coverColor)}}>
                           No projects to see in this collection just yet.
                        </div>
-                     )
+                      )
                    )}
                  </div>
           

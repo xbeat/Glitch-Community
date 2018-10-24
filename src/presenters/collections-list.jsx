@@ -76,7 +76,7 @@ CollectionsList.propTypes = {
 const CreateFirstCollection = ({api}) =>{
   return(
     <div className="create-first-collection">
-      <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-empty.svg?1539800010738"/>
+      <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-empty.svg?1539800010738" alt="Create collection image"/>
       <p className="placeholder">Create collections to organize your favorite projects.</p><br/>
       <CreateCollectionButton api={api}/>  
     </div>
@@ -135,7 +135,7 @@ class CreateCollectionButton extends React.Component{
     if(this.state.done){
       return <Redirect to={this.state.newCollectionUrl} push={true}/>;
     }else if(this.state.loading){
-      return <Loader />;
+      return <Loader />
     }
     return (
       <div id="create-collection-container">
@@ -151,7 +151,7 @@ CreateCollectionButton.propTypes = {
   api: PropTypes.any.isRequired,
 };  
 
-export const CollectionsUL = ({collections, deleteCollection, categoryColor, api, isAuthorized}) => {
+export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized}) => {
   // order by updatedAt date
   const orderedCollections = _.orderBy(collections, collection => collection.updatedAt).reverse();
   return (
