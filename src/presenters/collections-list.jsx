@@ -94,53 +94,54 @@ class CreateCollectionButton extends React.Component{
     this.state={
       done: false,
       error: false,
+      loading: false,
       newCollectionUrl: "",
     };
   }
   async createCollection(api){
-    // replace button with a loader
-    document.getElementById("create-collection-container").innerHTML = <Loader />;
-    
-    // create collection
-//     try{
-//       let name = await getCollectionPair();
-//       let predicate = name.split("-")[0];
-//       let collectionSynonym = name.split("-")[1];
-//       let description = `A ${collectionSynonym} of projects that does ${predicate} things`;
-//       let url = _.kebabCase(name);
+    this.setState({loading: true});
+
+    try{
+      let name = await getCollectionPair();
+      let predicate = name.split("-")[0];
+      let collectionSynonym = name.split("-")[1];
+      let description = `A ${collectionSynonym} of projects that does ${predicate} things`;
+      let url = _.kebabCase(name);
       
-//       // defaults
-//       let avatarUrl = defaultAvatar;
-//       // get a random color
-//       let randomHex = Object.values(colors);
-//       let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
+      // defaults
+      let avatarUrl = defaultAvatar;
+      // get a random color
+      let randomHex = Object.values(colors);
+      let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
       
-//       if(validate(name)){
-//         const {data} = await api.post('collections', {
-//           name,
-//           description,
-//           url,
-//           avatarUrl,
-//           coverColor,
-//         });
-//         let collectionUrl = data.url;
+      if(validate(name)){
+        const {data} = await api.post('collections', {
+          name,
+          description,
+          url,
+          avatarUrl,
+          coverColor,
+        });
+        let collectionUrl = data.url;
        
-//         let userName = "";
-//         api.get(`users/${data.userId}`).then(({data}) => {
-//           userName = data.login;
-//           let newCollectionUrl = getLink(userName, collectionUrl);
-//           this.setState({newCollectionUrl: newCollectionUrl});
-//           this.setState({done: true});
-//         });
-//       } 
-//     }catch(error){
-//       this.setState({error: true});
-//     }
+        let userName = "";
+        api.get(`users/${data.userId}`).then(({data}) => {
+          userName = data.login;
+          let newCollectionUrl = getLink(userName, collectionUrl);
+          this.setState({newCollectionUrl: newCollectionUrl});
+          this.setState({done: true});
+        });
+      } 
+    }catch(error){
+      this.setState({error: true});
+    }
   }
   
   render(){
     if(this.state.done){
       return <Redirect to={this.state.newCollectionUrl} push={true}/>;
+    }else if(this.state.loading){
+      return <Loader />
     }
     return (
       <div id="create-collection-container">
