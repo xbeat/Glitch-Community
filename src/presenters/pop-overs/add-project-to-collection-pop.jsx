@@ -63,11 +63,12 @@ class AddProjectToCollectionPop extends React.Component {
     
     // create a new collection
     try{
-      let name = newCollectionName;
-      let description = `A ${collectionSynonym} of projects that does ${predicate} things`;
-      let url = _.kebabCase(newCollectionName);
-      let avatarUrl = defaultAvatar;
-      let coverColor = _.sample(Object.values(colors));
+      const name = newCollectionName;
+      const url = _.kebabCase(newCollectionName);
+      const collectionPair = this.state.collectionPair.split('-');
+      const description = `A ${collectionPair[1]} of projects that does ${collectionPair[0]} things`;
+      const avatarUrl = defaultAvatar;
+      const coverColor = _.sample(Object.values(colors));
       
       const {data} = await this.props.api.post('collections', {
         name,
@@ -77,7 +78,7 @@ class AddProjectToCollectionPop extends React.Component {
         coverColor,
       });
 
-      let newCollection = data;
+      const newCollection = data;
 
       // add the selected project to the collection
       await this.props.api.patch(`collections/${newCollection.id}/add/${this.props.project.id}`);         

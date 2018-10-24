@@ -4,6 +4,7 @@ import {Redirect} from 'react-router-dom';
 import CollectionItem from "./collection-item.jsx";
 import {defaultAvatar, getLink,colors} from '../models/collection';
 import {getCollectionPair} from '../models/words';
+import Loader from './includes/loader.jsx';
 
 
 import _ from 'lodash';
@@ -98,43 +99,43 @@ class CreateCollectionButton extends React.Component{
   }
   async createCollection(api){
     // replace button with a loader
-    document.getElementById("create-collection");
+    document.getElementById("create-collection-container").innerHTML = <Loader />;
     
     // create collection
-    try{
-      let name = await getCollectionPair();
-      let predicate = name.split("-")[0];
-      let collectionSynonym = name.split("-")[1];
-      let description = `A ${collectionSynonym} of projects that does ${predicate} things`;
-      let url = _.kebabCase(name);
+//     try{
+//       let name = await getCollectionPair();
+//       let predicate = name.split("-")[0];
+//       let collectionSynonym = name.split("-")[1];
+//       let description = `A ${collectionSynonym} of projects that does ${predicate} things`;
+//       let url = _.kebabCase(name);
       
-      // defaults
-      let avatarUrl = defaultAvatar;
-      // get a random color
-      let randomHex = Object.values(colors);
-      let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
+//       // defaults
+//       let avatarUrl = defaultAvatar;
+//       // get a random color
+//       let randomHex = Object.values(colors);
+//       let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
       
-      if(validate(name)){
-        const {data} = await api.post('collections', {
-          name,
-          description,
-          url,
-          avatarUrl,
-          coverColor,
-        });
-        let collectionUrl = data.url;
+//       if(validate(name)){
+//         const {data} = await api.post('collections', {
+//           name,
+//           description,
+//           url,
+//           avatarUrl,
+//           coverColor,
+//         });
+//         let collectionUrl = data.url;
        
-        let userName = "";
-        api.get(`users/${data.userId}`).then(({data}) => {
-          userName = data.login;
-          let newCollectionUrl = getLink(userName, collectionUrl);
-          this.setState({newCollectionUrl: newCollectionUrl});
-          this.setState({done: true});
-        });
-      } 
-    }catch(error){
-      this.setState({error: true});
-    }
+//         let userName = "";
+//         api.get(`users/${data.userId}`).then(({data}) => {
+//           userName = data.login;
+//           let newCollectionUrl = getLink(userName, collectionUrl);
+//           this.setState({newCollectionUrl: newCollectionUrl});
+//           this.setState({done: true});
+//         });
+//       } 
+//     }catch(error){
+//       this.setState({error: true});
+//     }
   }
   
   render(){
@@ -142,9 +143,11 @@ class CreateCollectionButton extends React.Component{
       return <Redirect to={this.state.newCollectionUrl} push={true}/>;
     }
     return (
-      <button className="button" id="create-collection" onClick={() => this.createCollection(this.props.api)}>
-          Create Collection
-      </button>    
+      <div id="create-collection-container">
+        <button className="button" id="create-collection" onClick={() => this.createCollection(this.props.api)}>
+            Create Collection
+        </button>    
+      </div>
     );
   }
 }
