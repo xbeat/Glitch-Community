@@ -42,10 +42,7 @@ export class OptimisticValue extends React.Component {
   }
   
   onChange(value) {
-    // note that we trim update, that means we won't reset value if there's whitespace at the end
-    // if we did it would clip off whitespace in the input and potentially trip up slow typers
-    // maybe we should add in awareness of input focus so the whitespace resets on blur?
-    this.update(value.trim());
+    this.update(value);
     this.setState({value});
   }
   
@@ -53,7 +50,7 @@ export class OptimisticValue extends React.Component {
     return this.props.children({
       value: this.state.value !== null ? this.state.value : this.props.value,
       error: this.state.error,
-      update: this.onChange,
+      update: this.update,
     });
   }
 }
@@ -64,6 +61,28 @@ OptimisticValue.propTypes = {
 };
 OptimisticValue.defaultProps = {
   resetOnError: true,
+};
+
+export class TrimmedValue extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: props.value};
+    this.update = this.update.bind(this);
+  }
+  update(value) {
+    this.props.update(value.trim());
+    this.setState({value});
+  }
+  render() {
+    return this.props.children({
+      value: this.state.value.trim() === this.props.value ? this.state.value : this.props.value,
+      update: this.update,
+    });
+  }
+}
+TrimmedValue.propTypes = {
+  value: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
 };
 
 export const FieldErrorIcon = () => (
