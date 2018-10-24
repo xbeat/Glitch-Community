@@ -18,7 +18,6 @@ export const avatars = {
 
 export const getContrastTextColor = (hexcolor) =>{
   // remove #
-  console.log(`hexcolor: ${hexcolor}`);
   hexcolor = hexcolor.substring(hexcolor.indexOf("#") +1);
 
   var r = parseInt(hexcolor.substr(0,2),16);
