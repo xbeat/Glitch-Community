@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {debounce} from 'lodash';
 
 import {avatars} from '../../models/collection.js'; 
 

@@ -17,8 +17,6 @@ import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import TeamsList from '../teams-list.jsx';
 
-import categories from '../../curated/categories.js';
-
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
 }
@@ -77,7 +75,6 @@ const UserPage = ({
   deleteProject, undeleteProject,
   setDeletedProjects,
   addProjectToCollection,
-  createPersistentNotification,
 }) => (
   <main className="profile-page user-page">   
     <section>
@@ -130,7 +127,6 @@ const UserPage = ({
 );
 UserPage.propTypes = {
   clearCover: PropTypes.func.isRequired,
-  createPersistentNotification: PropTypes.func,
   currentUser: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   leaveProject: PropTypes.func.isRequired,
@@ -154,7 +150,7 @@ UserPage.propTypes = {
 
 const UserPageContainer = ({api, user}) => (
   <CurrentUserConsumer>
-    {(currentUser, fetched, {update}) => (
+    {(currentUser) => (
       <UserEditor api={api} initialUser={user}>
         {(user, funcs, isAuthorized) => (
           <React.Fragment>
@@ -168,7 +164,7 @@ const UserPageContainer = ({api, user}) => (
           </React.Fragment>
         )}
       </UserEditor>
-    )}
+      )}
   </CurrentUserConsumer>
 );
 

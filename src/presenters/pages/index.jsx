@@ -7,16 +7,12 @@ import {getEditorUrl} from '../../models/project';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import Link from '../includes/link.jsx';
 
-import Categories from '../categories.jsx';
 import Collections from '../collections.jsx';
 import Featured from '../featured.jsx';
 import OverlayVideo from '../overlays/overlay-video.jsx';
 import Questions from '../questions.jsx';
 import RandomCategories from '../random-categories.jsx';
-import RandomCollections from '../random-collections.jsx';
 import RecentProjects from '../recent-projects.jsx';
-
-
 
 function loadScript(src) {
   const script = document.createElement('script');

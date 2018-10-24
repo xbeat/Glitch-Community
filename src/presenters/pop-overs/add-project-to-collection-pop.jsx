@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
-import {debounce} from 'lodash';
 
 import {getLink,colors, defaultAvatar} from '../../models/collection';
 import {getAvatarUrl} from '../../models/project';
@@ -10,9 +9,6 @@ import {getCollectionPair} from '../../models/words';
 import Loader from '../includes/loader.jsx';
 
 import CollectionResultItem from '../includes/collection-result-item.jsx';
-import UserResultItem from '../includes/user-result-item.jsx';
-
-import Notifications from '../notifications.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
@@ -109,7 +105,7 @@ class AddProjectToCollectionPop extends React.Component {
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
         {( !this.props.fromProject ?
           <NestedPopoverTitle>
-            <img src={getAvatarUrl(this.props.project.id)}/> Add {this.props.project.domain} to collection
+            <img src={getAvatarUrl(this.props.project.id)} alt={`Project avatar for ${this.props.project.domain}`}/> Add {this.props.project.domain} to collection
           </NestedPopoverTitle>
           : null
         )}
@@ -117,10 +113,10 @@ class AddProjectToCollectionPop extends React.Component {
         {maybeCollections ? (
           maybeCollections.length ? (
             <section className="pop-over-actions results-list">
-              <ul className="results">
-                {maybeCollections.map(collection =>   
+                <ul className="results">
+                  {maybeCollections.map(collection =>   
                   // filter out collections that already contain the selected project
-                  (collection.projects.every(project => project.id !== this.props.project.id) && 
+                    (collection.projects.every(project => project.id !== this.props.project.id) && 
                     <li key={collection.id}>
                       <CollectionResultItem 
                         addProjectToCollection={this.props.addProjectToCollection}
@@ -130,10 +126,10 @@ class AddProjectToCollectionPop extends React.Component {
                         togglePopover={this.props.togglePopover} 
                       />
                     </li>
-                  )
-                )
-                }
-              </ul>
+                    )
+                   )
+                 }
+                </ul>
             </section>
           ) : (<section className="pop-over-info">
             <p className="info-description">

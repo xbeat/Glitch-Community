@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
-import OverlaySelectCollection from '../overlays/overlay-select-collection.jsx';
-import NestedPopover from './popover-nested.jsx';
-
 const PopoverButton = ({onClick, text, emoji}) => (
   <button className="button-small has-emoji button-tertiary" onClick={onClick}>
     <span>{text} </span>

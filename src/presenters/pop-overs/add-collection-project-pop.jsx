@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
 import ProjectModel from '../../models/project';
-import UserModel from '../../models/user';
 
 import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
-import UserResultItem from '../includes/user-result-item.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 
 import Notifications from '../notifications.jsx';  
@@ -188,7 +186,7 @@ class AddCollectionProjectPop extends React.Component {
         
           {!!this.state.maybeResults && 
               <ProjectsLoader api={this.props.api} projects={this.state.maybeResults}>
-                {(projects, reloadProject) => <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} excludedProjectsCount={this.state.excludedProjectsCount}/>
+                {(projects) => <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} excludedProjectsCount={this.state.excludedProjectsCount}/>
                 }
               </ProjectsLoader>
           }          

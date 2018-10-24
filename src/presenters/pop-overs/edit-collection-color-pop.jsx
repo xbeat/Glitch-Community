@@ -29,7 +29,6 @@ class EditCollectionColorPop extends React.Component {
     
   handleChange(e) {
     const query = e.currentTarget.value.trim();
-    const colorInput = document.getElementById('color-picker');
     const errorMsg = document.getElementsByClassName("editable-field-error-message")[0];
     errorMsg.style.display = "none";
     this.setState({ query });

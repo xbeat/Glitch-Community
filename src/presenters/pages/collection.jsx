@@ -103,7 +103,6 @@ const CollectionPageContents = ({
   isAuthorized,
   updateNameAndUrl,
   updateDescription, 
-  projectOptions, 
   uploadAvatar, 
   addProjectToCollection, 
   removeProjectFromCollection,
@@ -130,7 +129,7 @@ const CollectionPageContents = ({
           
           
           
-          {(if false (isAuthorized 
+          {(false && isAuthorized) 
             ? <div className="upload-image-buttons">
               
               
@@ -146,7 +145,7 @@ const CollectionPageContents = ({
               
             </div>
             : null
-          ))}
+          }
           
           
           <div className="collection-description">
@@ -250,7 +249,6 @@ CollectionPageContents.propTypes = {
   currentUser: PropTypes.object,
   deleteCollection: PropTypes.func.isRequired,
   isAuthorized: PropTypes.any.isRequired,  
-  projectOptions: PropTypes.object,
   removeProjectFromCollection: PropTypes.func,
   uploadAvatar: PropTypes.func,
 };

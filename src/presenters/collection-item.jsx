@@ -10,7 +10,7 @@ import Loader, {DataLoader} from './includes/loader.jsx';
 
 import {getAvatarUrl} from '../models/project.js';
 
-import {hexToRgbA, defaultAvatarSVG} from '../models/collection.js'; 
+import {getContrastTextColor, hexToRgbA, defaultAvatarSVG} from '../models/collection.js'; 
 
 class Avatar extends React.Component{
   constructor(props){
@@ -102,7 +102,7 @@ class CollectionItem extends React.Component{
                           <span className="project-badge private-project-badge" aria-label="private"></span>
                           <div className="project-name">{collection.name}</div>
                         </div>
-                        <div className="description"><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
+                        <div className="description" style={{color: getContrastTextColor(collection.coverColor)}}x><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
                       </div>
 
                       <div className="overflow-mask"></div>
