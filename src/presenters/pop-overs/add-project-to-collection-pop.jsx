@@ -5,6 +5,7 @@ import {debounce} from 'lodash';
 
 import {getLink,colors, defaultAvatar} from '../../models/collection';
 import {getAvatarUrl} from '../../models/project';
+import {getCollectionPair
 
 import Loader from '../includes/loader.jsx';
 
@@ -36,6 +37,7 @@ class AddProjectToCollectionPop extends React.Component {
   async componentDidMount() {
     const collections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
     this.setState({maybeCollections: _.orderBy(collections.data, collection => collection.updatedAt).reverse()});
+    
   }
   
   handleChange(newValue) {

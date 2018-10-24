@@ -3,15 +3,10 @@ import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import CollectionItem from "./collection-item.jsx";
 import {defaultAvatar, getLink,colors} from '../models/collection';
+import {getCollectionPair} from '../models/words';
 
 
-
-import axios from 'axios';
 import _ from 'lodash';
-
-const wordsApi = axios.create({
-  baseURL: 'https://friendly-words.glitch.me/',
-});
 
 
 class CollectionsList extends React.Component {
@@ -103,8 +98,7 @@ class CreateCollectionButton extends React.Component{
   }
   async createCollection(api){
     try{
-      const {data} = await wordsApi.get('collection-pairs');
-      let name = data[0];
+      let name = await getCollectionPair();
       let predicate = name.split("-")[0];
       let collectionSynonym = name.split("-")[1];
       let description = `A ${collectionSynonym} of projects that does ${predicate} things`;

@@ -5,6 +5,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import {withRouter} from 'react-router-dom';
 import {CurrentUserConsumer} from '../current-user.jsx';
+import {getPredicates, getTeamPair} from '../../models/words';
 import {getLink} from '../../models/team';
 import Loader from '../includes/loader.jsx';
 import {NestedPopoverTitle} from '../pop-overs/popover-nested.jsx';
@@ -32,8 +33,8 @@ class CreateTeamPopBase extends React.Component {
   
   async componentDidMount() {
     try {
-      const {data} = await wordsApi.get('team-pairs');
-      this.setState(prevState => (!prevState.teamName ? {teamName: data[0]} : {}));
+      const teamName = await getTeamPair();
+      this.setState(prevState => (!prevState.teamName ? {teamName} : {}));
     } catch (error) {
       // If something goes wrong just leave the field empty
     }
@@ -75,8 +76,8 @@ class CreateTeamPopBase extends React.Component {
     try {
       let description = 'A team that makes things';
       try {
-        const {data} = await wordsApi.get('predicates');
-        description = `A ${data[0]} team that makes ${data[1]} things`;
+        const predicates = await getPredicates();
+        description = `A ${predicates[0]} team that makes ${predicates[1]} things`;
       } catch (error) {
         // Just use the plain description
       }
