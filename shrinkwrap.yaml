@@ -38,8 +38,8 @@ dependencies:
   quantize: 1.0.2
   randomcolor: 0.5.3
   raven: 2.6.4
-  react: 16.5.2
-  react-dom: 16.5.2
+  react: 16.6.0
+  react-dom: 16.6.0
   react-helmet: 5.2.0
   react-is: 16.5.2
   react-konami: 0.5.0
@@ -4594,17 +4594,17 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==
-  /react-dom/16.5.2:
+  /react-dom/16.6.0:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       prop-types: 15.6.2
-      schedule: 0.5.0
+      scheduler: 0.10.0
     dev: false
     peerDependencies:
       react: ^16.0.0
     resolution:
-      integrity: sha512-RC8LDw8feuZOHVgzEf7f+cxBr/DnKdqp56VU0lAs1f4UfKc4cU8wU4fTq/mgnvynLQo8OtlPC19NUFh/zjZPuA==
+      integrity: sha512-Stm2D9dXEUUAQdvpvhvFj/DEXwC2PAL/RwEMhoN4dvvD2ikTlJegEXf97xryg88VIAU22ZAP7n842l+9BTz6+w==
   /react-helmet/5.2.0:
     dependencies:
       deep-equal: 1.0.1
@@ -4707,6 +4707,17 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-FDCSVd3DjVTmbEAjUNX6FgfAmQ+ypJfHUsqUJOYNCBUp1h8lqmtC+0mXJ+JjsWx4KAVTkk1vKd1hLQPvEviSuw==
+  /react/16.6.0:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      prop-types: 15.6.2
+      scheduler: 0.10.0
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha512-zJPnx/jKtuOEXCbQ9BKaxDMxR0001/hzxXwYxG8septeyYGfsgAei6NgfbVgOhbY1WOP2o3VPs/E9HaN+9hV3Q==
   /readable-stream/2.3.6:
     dependencies:
       core-util-is: 1.0.2
@@ -4967,6 +4978,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-HUcJicG5Ou8xfR//c2rPT0lPIRR09vVvN81T9fqfVgBmhERUbDEQoYKjpBxbueJnCPpSu2ujXzOnRQt6x9o/jw==
+  /scheduler/0.10.0:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+    dev: false
+    resolution:
+      integrity: sha512-+TSTVTCBAA3h8Anei3haDc1IRwMeDmtI/y/o3iBe3Mjl2vwYF9DtPDt929HyRmV/e7au7CLu8sc4C4W0VOs29w==
   /schema-utils/0.4.7:
     dependencies:
       ajv: 6.5.4
@@ -5989,8 +6007,8 @@ specifiers:
   quantize: ^1.0.2
   randomcolor: ^0.5.3
   raven: ^2.6.4
-  react: ^16.5.2
-  react-dom: ^16.5.2
+  react: ^16.6.0
+  react-dom: ^16.6.0
   react-helmet: ^5.2.0
   react-is: ^16.5.2
   react-konami: ^0.5.0
