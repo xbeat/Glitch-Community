@@ -6,6 +6,9 @@ import {getLink} from '../../models/collection';
 import {OptimisticValue, TrimmedValue} from './field-helpers.jsx';
 import {PureEditableWrappingField} from './editable-wrapping-field.jsx';
 
+// This recreates EditableField but OptimisticValue tracks both the name and url
+// That way the url preview updates in real time as you type into the name field
+
 export const EditCollectionNameAndUrl = ({owner, name, url, update, isAuthorized}) => {
   const placeholder = 'Name your collection';
   return (

@@ -45,7 +45,6 @@ class CollectionEditor extends React.Component {
     // console.log('update collection fields');
     const {data} = await this.props.api.patch(`collections/${this.state.id}`, changes);
     this.setState(data);
-    return data;
   }
 
   async uploadAvatar(blob) {
@@ -89,7 +88,6 @@ class CollectionEditor extends React.Component {
       addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(handleError),
       removeProjectFromCollection: project => this.removeProjectFromCollection(project).catch(handleError),
       deleteCollection: id => this.deleteCollection().catch(handleError),
-      updateName: name => this.updateFields({name, url: kebabCase(name)}).catch(handleErrorForInput),
       updateNameAndUrl: ({name, url}) => this.updateFields({name, url}).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       updateAvatar: avatarUrl => this.updateAvatar(avatarUrl),

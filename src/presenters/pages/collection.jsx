@@ -15,7 +15,6 @@ import NotFound from '../includes/not-found.jsx';
 
 import {AuthDescription} from '../includes/description-field.jsx';
 import CollectionEditor from '../collection-editor.jsx';
-import EditableWrappingField from '../includes/editable-wrapping-field.jsx';
 
 import AddCollectionProject from '../includes/add-collection-project.jsx';
 import AddCollectionAvatar from '../includes/add-collection-avatar.jsx';
@@ -158,13 +157,11 @@ const CollectionPageContents = ({
             />
           </div>
           
-          {/*
           {(isAuthorized && <EditCollectionColor
             update={updateColor}
             initialColor={collection.coverColor}
           />
           )}
-          */}
           
           {(isAuthorized
             ? <DeleteCollectionBtn deleteCollection={deleteCollection} currentUserLogin={userLogin}/>
