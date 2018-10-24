@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
 import {uniqueId} from 'lodash';
 
-import {OptimisticValue, FieldErrorMessage} from './field-helpers.jsx';
+import {OptimisticValue, TrimmedValue, FieldErrorMessage} from './field-helpers.jsx';
 
 export class PureEditableWrappingField extends React.Component {
   constructor(props) {
@@ -54,8 +54,12 @@ PureEditableWrappingField.propTypes = {
 
 export const EditableWrappingField = ({value, update, ...props}) => (
   <OptimisticValue value={value} update={update} resetOnError={false}>
-    {valueProps => (
-      <PureEditableWrappingField {...props} {...valueProps}/>
+    {({value, update, error}) => (
+      <TrimmedValue value={value} update={update}>
+        {valueProps => (
+          <PureEditableWrappingField {...props} {...valueProps} error={error}/>
+        )}
+      </TrimmedValue>
     )}
   </OptimisticValue>
 );

@@ -36,7 +36,7 @@ class Avatar extends React.Component{
 Avatar.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   collectionId: PropTypes.number.isRequired,
-}
+};
 
 const ProjectsPreview = ({projects}) => {
   
@@ -51,7 +51,7 @@ const ProjectsPreview = ({projects}) => {
         )) }
       </ul>
       <div className="collection-link">
-          View {projects.length} {(projects.length > 0 ? 'projects' : 'project')} →
+        View {projects.length} {(projects.length > 0 ? 'projects' : 'project')} →
       </div>
     </React.Fragment>
   );
@@ -126,7 +126,7 @@ class CollectionItem extends React.Component{
         )}
       </li>
     );
-    }
+  }
 }
 
 CollectionItem.propTypes = {

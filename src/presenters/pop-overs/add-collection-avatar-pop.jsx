@@ -38,7 +38,7 @@ class AddCollectionAvatarPop extends React.Component {
       <dialog className="pop-over add-collection-avatar-pop wide-pop">
         <section className="pop-over-info">
           { Object.keys(avatars).map( type => (
-            <button className="collection-avatar button-tertiary" onClick={() => this.onClick(type)}>
+            <button key={type} className="collection-avatar button-tertiary" onClick={() => this.onClick(type)}>
               <img src={avatars[type]} alt={type}/>
             </button>
           )) }
