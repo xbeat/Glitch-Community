@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import axios from 'axios';
 import _ from 'lodash';
 import {withRouter} from 'react-router-dom';
 import {CurrentUserConsumer} from '../current-user.jsx';
@@ -11,10 +10,6 @@ import Loader from '../includes/loader.jsx';
 import {NestedPopoverTitle} from '../pop-overs/popover-nested.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
 import {SignInPop} from './sign-in-pop.jsx';
-
-const wordsApi = axios.create({
-  baseURL: 'https://friendly-words.glitch.me/',
-});
 
 // Create Team 🌿
 

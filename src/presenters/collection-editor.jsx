@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {kebabCase} from 'lodash';
 import * as assets from '../utils/assets';
 
 import {CurrentUserConsumer} from './current-user.jsx';
@@ -87,7 +86,7 @@ class CollectionEditor extends React.Component {
     const funcs = {
       addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(handleError),
       removeProjectFromCollection: project => this.removeProjectFromCollection(project).catch(handleError),
-      deleteCollection: id => this.deleteCollection().catch(handleError),
+      deleteCollection: () => this.deleteCollection().catch(handleError),
       updateNameAndUrl: ({name, url}) => this.updateFields({name, url}).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({description}).catch(handleError),
       updateAvatar: avatarUrl => this.updateAvatar(avatarUrl),

@@ -73,11 +73,6 @@ CollectionsList.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
 };
 
-// TO DO: ensure that the user doesn't already have a collection with this name
-async function validate(name){
-  return true;
-}
-
 const CreateFirstCollection = ({api}) =>{
   return(
     <div className="create-first-collection">
@@ -114,26 +109,25 @@ class CreateCollectionButton extends React.Component{
       let randomHex = Object.values(colors);
       let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
       
-      if(validate(name)){
-        const {data} = await api.post('collections', {
-          name,
-          description,
-          url,
-          avatarUrl,
-          coverColor,
-        });
-        let collectionUrl = data.url;
-       
-        let userName = "";
-        api.get(`users/${data.userId}`).then(({data}) => {
-          userName = data.login;
-          let newCollectionUrl = getLink(userName, collectionUrl);
-          this.setState({newCollectionUrl: newCollectionUrl});
-          this.setState({done: true});
-        });
-      } 
+      const {data} = await api.post('collections', {
+        name,
+        description,
+        url,
+        avatarUrl,
+        coverColor,
+      });
+      let collectionUrl = data.url;
+
+      let userName = "";
+      api.get(`users/${data.userId}`).then(({data}) => {
+        userName = data.login;
+        let newCollectionUrl = getLink(userName, collectionUrl);
+        this.setState({newCollectionUrl: newCollectionUrl});
+        this.setState({done: true});
+      });
     }catch(error){
       this.setState({error: true});
+      // need to show some sort of error message here?
     }
   }
   
