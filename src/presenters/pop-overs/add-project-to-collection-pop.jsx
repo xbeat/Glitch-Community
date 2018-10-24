@@ -113,10 +113,10 @@ class AddProjectToCollectionPop extends React.Component {
         {maybeCollections ? (
           maybeCollections.length ? (
             <section className="pop-over-actions results-list">
-                <ul className="results">
-                  {maybeCollections.map(collection =>   
+              <ul className="results">
+                {maybeCollections.map(collection =>   
                   // filter out collections that already contain the selected project
-                    (collection.projects.every(project => project.id !== this.props.project.id) && 
+                  (collection.projects.every(project => project.id !== this.props.project.id) && 
                     <li key={collection.id}>
                       <CollectionResultItem 
                         addProjectToCollection={this.props.addProjectToCollection}
@@ -126,10 +126,10 @@ class AddProjectToCollectionPop extends React.Component {
                         togglePopover={this.props.togglePopover} 
                       />
                     </li>
-                    )
-                   )
-                 }
-                </ul>
+                  )
+                )
+                }
+              </ul>
             </section>
           ) : (<section className="pop-over-info">
             <p className="info-description">

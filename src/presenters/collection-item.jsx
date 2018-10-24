@@ -42,14 +42,14 @@ const ProjectsPreview = ({projects}) => {
   
   return (
     <React.Fragment>
-      <div className="projects-preview" projects={projects}>
+      <ul className="projects-preview" projects={projects}>
         { projects.slice(0,3).map(project => (
-          <div className="project-container">
+          <li key={project.id} className="project-container">
             <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
             <div className="project-name">{project.domain}</div>
-          </div>
+          </li>
         )) }
-      </div>
+      </ul>
       <div className="collection-link">
           View {projects.length} {(projects.length > 0 ? 'projects' : 'project')} →
       </div>

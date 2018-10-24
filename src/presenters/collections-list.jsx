@@ -135,7 +135,7 @@ class CreateCollectionButton extends React.Component{
     if(this.state.done){
       return <Redirect to={this.state.newCollectionUrl} push={true}/>;
     }else if(this.state.loading){
-      return <Loader />
+      return <Loader />;
     }
     return (
       <div id="create-collection-container">

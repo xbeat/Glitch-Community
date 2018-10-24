@@ -62,22 +62,19 @@ class EditCollectionColorPop extends React.Component {
     return !Object.values(colors).includes(this.props.initialColor);
   }
   
-  render() {
-    const isLoading = (!!this.state.maybeRequest || !this.state.maybeResults);
-    
+  render() {    
     return (
       <dialog className="pop-over edit-collection-color-pop">
         <section className="pop-over-info">          
           {Object.keys(colors).map((key => 
             <button className={"button-tertiary " + ( (colors[key] == this.props.initialColor) ? "active" : "")} key={key}
               style={{backgroundColor: colors[key]}} 
-              onClick={evt => {
+              onClick={() => {
                 this.setState({ color: colors[key] });
                 // clear any custom colors
                 this.setState({ query: "" });
                 document.getElementsByClassName("editable-field-error-message")[0].style.display = "none";
                 this.update(colors[key]);
-                
               }}
             />
           ))}
