@@ -14,7 +14,7 @@ const AddProjectMessage = ({projectName, collectionName, url}) => (
   </React.Fragment>
 );
 AddProjectMessage.propTypes = {
-  projectName: PropTypes.string.isRequired,
+  projectName: PropTypes.string,
   collectionName: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
 };

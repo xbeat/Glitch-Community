@@ -234,7 +234,6 @@ details.popover-container
     left: initial
     left: 0
 .add-project-to-collection-pop
-  top: 25px
   .pop-over-info
     img
       width: 15px
@@ -258,8 +257,9 @@ details.popover-container
   .pop-over-actions
     max-height: 300px
   li
-    border-bottom: 1px solid secondary-background-active 
-
+    &:last-child
+      .result-collection
+        border-bottom: none
 .add-collection-avatar-pop  
   min-width: 330px !important
   
