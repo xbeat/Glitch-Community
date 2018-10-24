@@ -66,12 +66,17 @@ OptimisticValue.defaultProps = {
   resetOnError: true,
 };
 
-export const FieldErrorMessage = ({error}) => (
+export const FieldErrorIcon = () => (
+  <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
+);
+
+export const FieldErrorMessage = ({error, hideIcon}) => (
   <span className="editable-field-error-message">
-    <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
+    {!hideIcon && <FieldErrorIcon/>}
     {error}
   </span>
 );
 FieldErrorMessage.propTypes = {
   error: PropTypes.node.isRequired,
+  hideIcon: PropTypes.bool,
 };
