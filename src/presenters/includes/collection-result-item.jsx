@@ -65,7 +65,7 @@ class Avatar extends React.Component{
 Avatar.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   collectionId: PropTypes.number.isRequired,
-}
+};
 
 const CollectionResultItem = ({addProjectToCollection, api, project, collection, isActive, togglePopover}) => {
   var resultClass = "button-unstyled result result-collection";
@@ -80,7 +80,7 @@ const CollectionResultItem = ({addProjectToCollection, api, project, collection,
           {collectionPath => 
             <button className={resultClass} onClick={() => addProject(addProjectToCollection, project, collection, collectionPath, createNotification, togglePopover)} data-project-id={project.id}>
               <div className="avatar" id={"avatar-collection-" + collection.id}>
-                  <Avatar backgroundColor={collection.coverColor} collectionId={collection.id} alt={`Project avatar for ${collection.name}`}/>
+                <Avatar backgroundColor={collection.coverColor} collectionId={collection.id} alt={`Project avatar for ${collection.name}`}/>
               </div>
               <div className="results-info">
                 <div className="result-name" title={collection.name}>{collection.name}</div>

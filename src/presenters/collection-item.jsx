@@ -41,7 +41,7 @@ class Avatar extends React.Component{
 Avatar.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   collectionId: PropTypes.number.isRequired,
-}
+};
 
 const ProjectsPreview = ({projects, color, collection}) => {
   
@@ -88,10 +88,10 @@ class CollectionItem extends React.Component{
   }
   
   render(){
-      const {collection, categoryColor, deleteCollection, api, isAuthorized} = this.props;
-  return (
+    const {collection, categoryColor, deleteCollection, api, isAuthorized} = this.props;
+    return (
       <li>
-      {(isAuthorized && 
+        {(isAuthorized && 
         <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>)}
 
         {(collection  &&
@@ -140,7 +140,7 @@ class CollectionItem extends React.Component{
         )}
       </li>
     );
-    }
+  }
 }
 
 CollectionItem.propTypes = {
