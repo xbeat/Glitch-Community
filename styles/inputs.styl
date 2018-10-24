@@ -92,19 +92,21 @@ input
   display: flex
   .content-editable
     min-width: 0
-  
-.editable-field-error-icon
-  position: absolute
-  right: 0px
  
 .editable-field-error-message
   width: 100%
   color: error-text
   background-color: error
   display: block
+  position: relative
   padding: 3px 6px
   border-radius: 5px
   border-top-left-radius: 0
   border-top-right-radius: 0
   font-weight: 600
   font-size: 0.8rem
+  .editable-field-error-icon
+    position: absolute
+    right: 0px
+    bottom: 100%
+    font-size: 22px

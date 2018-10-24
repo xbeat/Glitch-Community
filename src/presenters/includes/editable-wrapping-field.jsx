@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
 import {uniqueId} from 'lodash';
 
-import {OptimisticValue, FieldErrorIcon, FieldErrorMessage} from './field-helpers.jsx';
+import {OptimisticValue, FieldErrorMessage} from './field-helpers.jsx';
 
 export class PureEditableWrappingField extends React.Component {
   constructor(props) {
@@ -36,15 +36,10 @@ export class PureEditableWrappingField extends React.Component {
       autoFocus: this.props.autoFocus,
     };
     
-    const maybeErrorIcon = !!this.props.error && <FieldErrorIcon/>;
-    
-    const maybeErrorMessage = !!this.props.error && <FieldErrorMessage error={this.props.error}/>;
-    
     return (
       <label htmlFor={inputProps.id}>
         <TextArea {...inputProps} ref={this.textInput} />
-        {maybeErrorIcon}
-        {maybeErrorMessage}
+        {!!this.props.error && <FieldErrorMessage error={this.props.error}/>}
       </label>
     );
   }
