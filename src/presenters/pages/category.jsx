@@ -51,13 +51,13 @@ const CategoryPageWrap = ({
                 </div>
                   
                 {(currentUser.login ? 
-                  <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color}
+                  <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color} category={true}
                     projectOptions={{
                       addProjectToCollection
                     }} 
                     {...props}/>
                   :
-                  <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color}
+                  <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color} category={true}
                     projectOptions={{}} {...props}/>
                 )}
               </div>

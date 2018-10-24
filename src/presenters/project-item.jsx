@@ -34,7 +34,8 @@ export const ProjectItem = ({api, project, collectionColor, homepageCollection, 
                 </div>
               :
               <div className="description" 
-               style={{color: (collectionColor ? getContrastTextColor(collectionColor) : "black" )}}><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
+               style={{color: (props.category ? "black" : (collectionColor ? getContrastTextColor(collectionColor) : "black" ) )}}>
+                <TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
               )}
             <div className="overflow-mask" style={{backgroundColor: collectionColor}}></div>
           </div>
@@ -47,6 +48,7 @@ export const ProjectItem = ({api, project, collectionColor, homepageCollection, 
 ProjectItem.propTypes = {
   addProjectToCollection: PropTypes.func,
   api: PropTypes.func,
+  category: PropTypes.bool,
   currentUser: PropTypes.object,
   project: PropTypes.shape({
     description: PropTypes.string.isRequired,
