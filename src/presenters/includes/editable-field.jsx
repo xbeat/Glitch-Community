@@ -51,8 +51,10 @@ export class PureEditableField extends React.Component {
       <label htmlFor={inputProps.id}>
         <span className="editable-field-flex">
           {maybePrefix}
-          <input {...inputProps} ref={this.textInput} />
-          {maybeErrorIcon}
+          <span className="editable-field-input">
+            <input {...inputProps} ref={this.textInput} />
+            {maybeErrorIcon}
+          </span>
           {maybeSuffix}
         </span>
         {maybeErrorMessage}
