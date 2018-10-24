@@ -224,7 +224,7 @@ const CollectionPageContents = ({
                      :
                      (isAuthorized
                       ?
-                       <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor, color: getContrastTextColor(collection.coverColor)}}>
+                       <div className="empty-collection-hint">
                           Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
                        </div>
                     :  <div className="empty-collection-hint" style={{backgroundColor: "rgba(255,255,255,0.8)", color: getContrastTextColor(collection.coverColor)}}>
