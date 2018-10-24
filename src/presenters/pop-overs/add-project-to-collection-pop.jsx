@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import {debounce} from 'lodash';
 
-import {getLink,colors} from '../../models/collection';
+import {getLink,colors, defaultAvatar} from '../../models/collection';
 import {getAvatarUrl} from '../../models/project';
 
 import Loader from '../includes/loader.jsx';
@@ -53,7 +53,7 @@ class AddProjectToCollectionPop extends React.Component {
       let name = newCollectionName;
       let description = `A collection of projects that does wondrous things`; // change default later
       let url = _.kebabCase(newCollectionName);
-      let avatarUrl = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230"; // default fish
+      let avatarUrl = defaultAvatar;
       let coverColor = _.sample(Object.values(colors));
       
       const {data} = await this.props.api.post('collections', {
