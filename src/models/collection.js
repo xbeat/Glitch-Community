@@ -15,15 +15,15 @@ export const avatars = {
   music: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fmusic.svg?1502555440002",
 };
 
-
-
 export const getContrastTextColor = (hexcolor) =>{
   // remove #
+  console.log(`hexcolor: ${hexcolor}`);
   hexcolor = hexcolor.substring(hexcolor.indexOf("#") +1);
   var r = parseInt(hexcolor.substr(0,2),16);
   var g = parseInt(hexcolor.substr(2,2),16);
   var b = parseInt(hexcolor.substr(4,2),16);
   var yiq = ((r*299)+(g*587)+(b*114))/1000;
+  console.log(`yiq: ${yiq}`);
   return (yiq >= 128) ? 'black' : 'white';
 };
 
