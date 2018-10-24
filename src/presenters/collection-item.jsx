@@ -2,20 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
-import ProjectModel from '../models/project';
 import CollectionOptionsContainer from "./pop-overs/collection-options-pop.jsx";
-import UsersList from "./users-list.jsx";
 
 import SVGInline from "react-svg-inline";
 
 import Loader, {DataLoader} from './includes/loader.jsx';
-import ProjectsLoader from './projects-loader.jsx';
 
-import {getAvatarUrl, getLink} from '../models/project.js';
+import {getAvatarUrl} from '../models/project.js';
 
-import UserModel from '../models/user'; 
-
-import {colors, hexToRgbA, avatars, getContrastTextColor, defaultAvatarSVG} from '../models/collection.js'; 
+import {hexToRgbA, defaultAvatarSVG} from '../models/collection.js'; 
 
 class Avatar extends React.Component{
   constructor(props){
@@ -41,16 +36,16 @@ class Avatar extends React.Component{
 Avatar.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   collectionId: PropTypes.number.isRequired,
-};
+}
 
-const ProjectsPreview = ({projects, color, collection}) => {
+const ProjectsPreview = ({projects}) => {
   
   return (
     <React.Fragment>
       <div className="projects-preview" projects={projects}>
         { projects.slice(0,3).map(project => (
           <div className="project-container">
-            <img className="avatar" src={getAvatarUrl(project.id)}/>
+            <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
             <div className="project-name">{project.domain}</div>
           </div>
         )) }
@@ -64,7 +59,6 @@ const ProjectsPreview = ({projects, color, collection}) => {
 
 ProjectsPreview.propTypes = {
   projects: PropTypes.any.isRequired,
-  color: PropTypes.string.isRequired,
 };
 
 async function getCollectionUrl(api, userId, collectionUrl){
@@ -74,24 +68,16 @@ async function getCollectionUrl(api, userId, collectionUrl){
   return path;
 }
 
-async function loadCollection(api, id){
-  const {data} = await api.get(`collections/${id}`);
-  if(data){
-    data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
-  }
-  return data;
-}
-
 class CollectionItem extends React.Component{
   constructor(props){
     super(props);
   }
   
   render(){
-    const {collection, categoryColor, deleteCollection, api, isAuthorized} = this.props;
-    return (
+      const {collection, deleteCollection, api, isAuthorized} = this.props;
+  return (
       <li>
-        {(isAuthorized && 
+      {(isAuthorized && 
         <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>)}
 
         {(collection  &&
@@ -140,12 +126,11 @@ class CollectionItem extends React.Component{
         )}
       </li>
     );
-  }
+    }
 }
 
 CollectionItem.propTypes = {
   api: PropTypes.func.isRequired,
-  categoryColor: PropTypes.string,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func
 };

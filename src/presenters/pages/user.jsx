@@ -168,7 +168,7 @@ const UserPageContainer = ({api, user}) => (
           </React.Fragment>
         )}
       </UserEditor>
-      )}
+    )}
   </CurrentUserConsumer>
 );
 

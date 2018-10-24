@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
-import OverlaySelectCollection from '../overlays/overlay-select-collection.jsx';
 import NestedPopover from './popover-nested.jsx';
 
 import AddProjectToCollectionPop from '../pop-overs/add-project-to-collection-pop.jsx';
@@ -124,7 +123,6 @@ ProjectOptionsPop.propTypes = {
     users: PropTypes.array.isRequired,
   }),
   togglePopover: PropTypes.func.isRequired,
-  currentUser: PropTypes.object.isRequired,
   addPin: PropTypes.func,
   removePin: PropTypes.func,
   deleteProject: PropTypes.func,

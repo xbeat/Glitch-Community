@@ -115,7 +115,7 @@ const CollectionEditorContainer = ({api, children, initialCollection}) => (
       <Uploader>
         {uploadFuncs => (
           <CurrentUserConsumer>
-            {(currentUser, fetched, {update}) => (
+            {(currentUser) => (
               <CollectionEditor {...{api, currentUser, initialCollection}} {...uploadFuncs} {...errorFuncs}>
                 {children}
               </CollectionEditor>

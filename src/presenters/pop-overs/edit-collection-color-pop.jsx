@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {debounce} from 'lodash';
-import {colors, getContrastTextColor} from '../../models/collection.js';
+import {colors} from '../../models/collection.js';
 
 const validHex = (hex) =>{
   var re = /[0-9A-Fa-f]{6}/g;
