@@ -24,9 +24,6 @@ class ProjectEditor extends React.Component {
   }
   
   async addProjectToCollection(project, collection) {
-    console.log(`in addProject in project-editor`);
-    console.log(`project.id ${project.id}`);
-    console.log(`collection.id ${collection.id}`);
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
   }
   

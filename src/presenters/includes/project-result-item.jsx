@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getAvatarUrl} from  '../../models/project';
-import UsersList from '../users-list.jsx';
+import {StaticUsersList} from '../users-list.jsx';
 
 const ProjectResultItem = ({id, domain, description, users, action, isActive}) => {
   var resultClass = "button-unstyled result result-project";
@@ -17,7 +17,7 @@ const ProjectResultItem = ({id, domain, description, users, action, isActive}) =
         <div className="results-info">
           <div className="result-name" title={domain}>{domain}</div>
           { description.length > 0 && <div className="result-description">{description}</div> }
-          { users.length > 0 && <UsersList users={users} /> }
+          { users.length > 0 && <StaticUsersList users={users} /> }
         </div>
       </button>
       <a href={`/~${domain}`} className="view-result-link" target="_blank">

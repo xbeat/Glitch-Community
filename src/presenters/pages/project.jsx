@@ -87,7 +87,7 @@ ReadmeLoader.propTypes = {
 
 const ProjectPage = ({
   project: {
-    description, domain, id, users, teams,
+    description, domain, users, teams,
     ...project // 'private' can't be used as a variable name
   },
   addProjectToCollection,
@@ -101,7 +101,7 @@ const ProjectPage = ({
   <main className="project-page">
     <section id="info">
       <InfoContainer>
-        <ProjectInfoContainer style={{backgroundImage: `url('${getAvatarUrl(id)}')`}}>
+        <ProjectInfoContainer style={{backgroundImage: `url('${getAvatarUrl(project.id)}')`}}>
           <h1>
             {(isAuthorized ? (
               <EditableField value={domain} placeholder="Name your project"
@@ -132,7 +132,7 @@ const ProjectPage = ({
         {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
         <RemixButton className="button-small"
           name={domain} isMember={isAuthorized}
-          onClick={() => trackRemix(id, domain)}
+          onClick={() => trackRemix(project.id, domain)}
         />
       </div>
     </section>
@@ -140,10 +140,10 @@ const ProjectPage = ({
       <ReadmeLoader api={api} domain={domain}/>
     </section>
     <section id="related">
-      <RelatedProjects ignoreProjectId={id} {...{api, teams, users}}/>
+      <RelatedProjects ignoreProjectId={project.id} {...{api, teams, users}}/>
     </section>
     <section id="feedback" className="buttons buttons-right">
-      <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
+      <ReportButton name={domain} id={project.id} className="button-small button-tertiary"/>
     </section>
   </main>
 );
