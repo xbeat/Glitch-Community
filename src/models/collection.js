@@ -2,7 +2,7 @@
 
 export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528812220123";
 
-export const colors = {red: "#EF6F6C", orange: "#FFCC6D", yellow: "#F3FF8A", green:"#7DE2D1", cyan: "#45C1F7", purple: "#B19AFF" };
+export const colors = {red: "#EF6F6C", orange: "#FFCC6D", yellow: "#FFFE80", green:"#7DE2D1", cyan: "#45C1F7", purple: "#B19AFF" };
 
 export const defaultAvatar = "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-avatar.svg?1540389405633";
 
@@ -36,7 +36,7 @@ export const hexToRgbA = (hex) => {
       c= [c[0], c[0], c[1], c[1], c[2], c[2]];
     }
     c= '0x'+c.join('');
-    return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.35)';
+    return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.5)';
   }
   return false;
   // throw new Error('Bad Hex');
