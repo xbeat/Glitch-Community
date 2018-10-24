@@ -15,6 +15,7 @@ class UserEditor extends React.Component {
       _deletedProjects: [],
       _collections: [],
       _cacheCover: Date.now(),
+      loadedCollections: false,
     };
   }
 
@@ -117,7 +118,7 @@ class UserEditor extends React.Component {
   async loadCollections() {
     const userId = this.state.id;
     const {data} = await this.props.api.get(`collections/?userId=${userId}`);
-    this.setState({_collections: data});
+    this.setState({_collections: data, loadedCollections: true});
   }
   
   componentDidMount() {

@@ -201,28 +201,28 @@ const CollectionPageContents = ({
                          {...props}/>
 
                        : 
-                       (currentUser && currentUser.login 
-                         ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
-                           projectOptions={{
-                             addProjectToCollection
-                           }} 
-                           {...props}/>
-                         :
-                         <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
-                           projectOptions={{}} 
-                           {...props}/>
-                       )
+                      (currentUser && currentUser.login 
+                       ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
+                         projectOptions={{
+                           addProjectToCollection
+                         }} 
+                         {...props}/>
+                       :
+                      <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
+                         projectOptions={{}} 
+                         {...props}/>
                      )
+                      )
                      :
                      (isAuthorized
-                       ?
+                      ?
                        <div className="empty-collection-hint" style={{backgroundColor: collection.coverColor, color: getContrastTextColor(collection.coverColor)}}>
                           Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
                        </div>
-                       :  <div className="empty-collection-hint" style={{backgroundColor: "rgba(255,255,255,0.8)", color: getContrastTextColor(collection.coverColor)}}>
+                    :  <div className="empty-collection-hint" style={{backgroundColor: "rgba(255,255,255,0.8)", color: getContrastTextColor(collection.coverColor)}}>
                           No projects to see in this collection just yet.
                        </div>
-                     )
+                      )
                    )}
                  </div>
           
@@ -292,17 +292,12 @@ async function loadCollection(api, userLogin, collectionName){
   
   // get userId by login name
   const userId = await getUserIdByLogin(api,userLogin);
-  // console.log(`userId: ${userId}`);
   
   // get collection id
   const collectionId = await getCollectionId(api, userId, collectionName);
-  // console.log(`collectionId: ${collectionId}`);
   
   // get collection
   const collection = await getCollection(api, collectionId);
-  // console.log(`${collection}`);
-  
-  // console.log("load collection %O", collection);
   
   return collection;
 }  

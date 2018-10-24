@@ -5,7 +5,7 @@ import {debounce} from 'lodash';
 
 import {getLink,colors, defaultAvatar} from '../../models/collection';
 import {getAvatarUrl} from '../../models/project';
-import {getCollectionPair
+import {getCollectionPair} from '../../models/words';
 
 import Loader from '../includes/loader.jsx';
 
@@ -27,6 +27,7 @@ class AddProjectToCollectionPop extends React.Component {
       working: false,
       error: null, //null or string
       query: '', //The actual search text
+      collectionPair: 'wondrous-collection',
       maybeCollections: null, //null means still loading
     };
     
@@ -34,10 +35,19 @@ class AddProjectToCollectionPop extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   
-  async componentDidMount() {
+  async loadCollections() {
     const collections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
     this.setState({maybeCollections: _.orderBy(collections.data, collection => collection.updatedAt).reverse()});
-    
+  }
+  
+  async componentDidMount() {
+    this.loadCollections();
+    try {
+      const collectionPair = await getCollectionPair();
+      this.setState(prev => ({query: prev.query || collectionPair, collectionPair}));
+    } catch (error) {
+      // it's ok rocky. you go when you feel like it
+    }
   }
   
   handleChange(newValue) {
@@ -54,7 +64,7 @@ class AddProjectToCollectionPop extends React.Component {
     // create a new collection
     try{
       let name = newCollectionName;
-      let description = `A collection of projects that does wondrous things`; // change default later
+      let description = `A ${collectionSynonym} of projects that does ${predicate} things`;
       let url = _.kebabCase(newCollectionName);
       let avatarUrl = defaultAvatar;
       let coverColor = _.sample(Object.values(colors));

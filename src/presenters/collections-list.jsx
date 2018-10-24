@@ -97,6 +97,10 @@ class CreateCollectionButton extends React.Component{
     };
   }
   async createCollection(api){
+    // replace button with a loader
+    document.getElementById("create-collection");
+    
+    // create collection
     try{
       let name = await getCollectionPair();
       let predicate = name.split("-")[0];
@@ -138,7 +142,7 @@ class CreateCollectionButton extends React.Component{
       return <Redirect to={this.state.newCollectionUrl} push={true}/>;
     }
     return (
-      <button className={`button create-collection`} onClick={() => this.createCollection(this.props.api)}>
+      <button className="button" id="create-collection" onClick={() => this.createCollection(this.props.api)}>
           Create Collection
       </button>    
     );

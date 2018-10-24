@@ -64,6 +64,7 @@ const UserPage = ({
     teams,
     _cacheCover,
     _collections,
+    loadedCollections,
   },
   api, isAuthorized,
   currentUser,
@@ -100,12 +101,15 @@ const UserPage = ({
       </ProfileContainer>
     </section>
     
-    <CollectionsList title="Collections" 
-      collections={_collections} 
-      api={api} 
-      isAuthorized={isAuthorized}
-      currentUser={currentUser}
-    />
+    {(loadedCollections && 
+    
+      <CollectionsList title="Collections" 
+        collections={_collections} 
+        api={api} 
+        isAuthorized={isAuthorized}
+        currentUser={currentUser}
+      />
+    )}
     
     <EntityPageProjects
       projects={projects} 
@@ -164,7 +168,7 @@ const UserPageContainer = ({api, user}) => (
           </React.Fragment>
         )}
       </UserEditor>
-    )}
+      )}
   </CurrentUserConsumer>
 );
 
