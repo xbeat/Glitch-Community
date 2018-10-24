@@ -23,7 +23,7 @@ class AddProjectToCollectionPop extends React.Component {
     super(props);
     
     this.state = {
-      done: false,
+      working: false,
       error: null, //null or string
       query: '', //The actual search text
       maybeCollections: null, //null means still loading
@@ -45,6 +45,7 @@ class AddProjectToCollectionPop extends React.Component {
   async handleSubmit(event){
     event.preventDefault();
     console.log('add project to new collection');
+    this.setState({working: true});
     // get text from input field
     const newCollectionName = this.state.query;
     
@@ -71,7 +72,7 @@ class AddProjectToCollectionPop extends React.Component {
       
       // redirect to that collection
       const newCollectionUrl = getLink(this.props.currentUser.login, newCollection.url);
-      this.setState({newCollectionUrl, done: true});
+      this.setState({newCollectionUrl});
     }catch(error){
       if (error && error.response && error.response.data && error.response.data.message) {
         this.setState({error: error.response.data.message});
@@ -88,7 +89,7 @@ class AddProjectToCollectionPop extends React.Component {
     if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === _.kebabCase(query))) {
       queryError = 'You already have a collection with this url';
     }
-    if(this.state.done){
+    if(this.state.newCollectionUrl){
       return <Redirect to={this.state.newCollectionUrl}/>;
     }
     return (
@@ -103,10 +104,10 @@ class AddProjectToCollectionPop extends React.Component {
         {maybeCollections ? (
           maybeCollections.length ? (
             <section className="pop-over-actions results-list">
-              <ul className="results">
-                {maybeCollections.map(collection =>   
+                <ul className="results">
+                  {maybeCollections.map(collection =>   
                   // filter out collections that already contain the selected project
-                  (collection.projects.every(project => project.id !== this.props.project.id) && 
+                    (collection.projects.every(project => project.id !== this.props.project.id) && 
                     <li key={collection.id}>
                       <CollectionResultItem 
                         addProjectToCollection={this.props.addProjectToCollection}
@@ -116,10 +117,10 @@ class AddProjectToCollectionPop extends React.Component {
                         togglePopover={this.props.togglePopover} 
                       />
                     </li>
-                  )
-                )
-                }
-              </ul>
+                    )
+                   )
+                 }
+                </ul>
             </section>
           ) : (<section className="pop-over-info">
             <p className="info-description">
@@ -138,9 +139,11 @@ class AddProjectToCollectionPop extends React.Component {
               placeholder={placeholder}
               error={error || queryError}
             />
-            <button type="submit" className="create-collection button-small" disabled={!!queryError}>
+            {!this.state.working ? (
+              <button type="submit" className="create-collection button-small" disabled={!!queryError}>
                 Create
-            </button>   
+              </button>
+            ) : <Loader/>}
             <p className="url-preview">
               {/* Handle anonymous users here? */}
               {getLink(this.props.currentUser.login, _.kebabCase(query || placeholder))}
