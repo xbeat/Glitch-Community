@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {uniqueId} from 'lodash';
 
-import {OptimisticValue, FieldErrorIcon, FieldErrorMessage} from './field-helpers.jsx';
+import {OptimisticValue, TrimmedValue, FieldErrorIcon, FieldErrorMessage} from './field-helpers.jsx';
 
 export class PureEditableField extends React.Component {
   constructor(props) {
@@ -74,8 +74,12 @@ PureEditableField.propTypes = {
 
 export const EditableField = ({value, update, ...props}) => (
   <OptimisticValue value={value} update={update} resetOnError={false}>
-    {valueProps => (
-      <PureEditableField {...props} {...valueProps}/>
+    {({value, update, error}) => (
+      <TrimmedValue value={value} update={update}>
+        {valueProps => (
+          <PureEditableField {...props} {...valueProps} error={error}/>
+        )}
+      </TrimmedValue>
     )}
   </OptimisticValue>
 );

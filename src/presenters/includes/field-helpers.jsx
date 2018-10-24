@@ -50,7 +50,7 @@ export class OptimisticValue extends React.Component {
     return this.props.children({
       value: this.state.value !== null ? this.state.value : this.props.value,
       error: this.state.error,
-      update: this.update,
+      update: this.onChange,
     });
   }
 }
