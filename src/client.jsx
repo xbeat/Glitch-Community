@@ -13,19 +13,17 @@ import {Notifications} from './presenters/notifications.jsx';
 import Router from './presenters/pages/router.jsx';
 
 const App = () => (
-  <React.StrictMode>
-    <BrowserRouter>
-      <Notifications>
-        <UserPrefsProvider>
-          <DevTogglesProvider>
-            <CurrentUserProvider>
-              {api => <Router api={api}/>}
-            </CurrentUserProvider>
-          </DevTogglesProvider>
-        </UserPrefsProvider>
-      </Notifications>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <Notifications>
+      <UserPrefsProvider>
+        <DevTogglesProvider>
+          <CurrentUserProvider>
+            {api => <Router api={api}/>}
+          </CurrentUserProvider>
+        </DevTogglesProvider>
+      </UserPrefsProvider>
+    </Notifications>
+  </BrowserRouter>
 );
 
 // Here's a bunch of browser support tests
