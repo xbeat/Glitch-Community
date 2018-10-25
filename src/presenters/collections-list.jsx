@@ -41,25 +41,23 @@ class CollectionsList extends React.Component {
     const {title, placeholder, api, isAuthorized, currentUser} = this.props;
     const collections = this.state.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
     return (
-      <article className="collections">
-        <h2>{title}</h2>
+      (currentUser.login && 
+        <article className="collections">
+          <h2>{title}</h2>
 
-        {!!(currentUser.login && placeholder && !collections.length) && (
-          <div className="placeholder">{placeholder}</div>
-        )}
+          {( isAuthorized 
+            ? 
+            ( collections.length > 0 
+              ? <CreateCollectionButton api={api}/>   
+              : <CreateFirstCollection api={api}/>
+            )
+            : null
+          )}
 
-        {( isAuthorized 
-          ? 
-          ( collections.length > 0 
-            ? <CreateCollectionButton api={api}/>   
-            : <CreateFirstCollection api={api}/>
-          )
-          : null
-        )}
+          <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection}}></CollectionsUL>
 
-        <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection}}></CollectionsUL>
-
-      </article>
+        </article>
+       );
     );  
   }
 }
