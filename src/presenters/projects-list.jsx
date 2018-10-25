@@ -57,7 +57,7 @@ class ExpandyProjects extends React.Component {
 
 ExpandyProjects.propTypes = {
   projects: PropTypes.array.isRequired,
-  projectOptions: PropTypes.object.isRequired,
+  projectOptions: PropTypes.object,
   maxCollapsedProjects: PropTypes.number,
 };
 
