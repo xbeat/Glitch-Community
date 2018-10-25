@@ -46,7 +46,6 @@ export const ProjectItem = ({api, project, collectionColor, homepageCollection, 
 };
 
 ProjectItem.propTypes = {
-  addProjectToCollection: PropTypes.func,
   api: PropTypes.func,
   category: PropTypes.bool,
   currentUser: PropTypes.object,

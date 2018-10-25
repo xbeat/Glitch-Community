@@ -4,39 +4,13 @@ import PropTypes from 'prop-types';
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import CollectionOptionsContainer from "./pop-overs/collection-options-pop.jsx";
 
-import SVGInline from "react-svg-inline";
+import CollectionAvatar from './includes/collection-avatar.jsx';
 
 import Loader, {DataLoader} from './includes/loader.jsx';
 
 import {getAvatarUrl} from '../models/project.js';
 
-import {getContrastTextColor, hexToRgbA, defaultAvatarSVG} from '../models/collection.js'; 
-
-class Avatar extends React.Component{
-  constructor(props){
-    super(props);
-    this.state={
-      backgroundColor: this.props.backgroundColor
-    };
-  }
-  componentDidMount(){
-    // set background color in SVG
-    let collectionId = "#collection-" + this.props.collectionId;
-    let selector = collectionId + " svg .background";
-    let svgBackgroundEl = document.querySelector(selector);
-    svgBackgroundEl.setAttribute('fill', this.state.backgroundColor);
-  }
-  render(){
-    return(
-      <SVGInline svg={defaultAvatarSVG}/>
-    );
-  }
-}
-
-Avatar.propTypes = {
-  backgroundColor: PropTypes.string.isRequired,
-  collectionId: PropTypes.number.isRequired,
-};
+import {getContrastTextColor, hexToRgbA, defaultAvatarSVG} from '../models/collection.js';
 
 const ProjectsPreview = ({projects}) => {
   
@@ -95,7 +69,7 @@ class CollectionItem extends React.Component{
                     <div className="collection-info" style={{backgroundColor: hexToRgbA(collection.coverColor)}}> 
                       <div className="avatar-container">
                         <div className="avatar">
-                          <Avatar backgroundColor={collection.coverColor} collectionId={collection.id}/>
+                          <CollectionAvatar backgroundColor={collection.coverColor} collectionId={collection.id}/>
                         </div>
                       </div>
                       <div className="collection-name-description">

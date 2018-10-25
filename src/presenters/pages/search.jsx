@@ -52,8 +52,7 @@ const ProjectResults = ({addProjectToCollection, api, projects, currentUser}) =>
   projects ? (
     currentUser.login ? 
       <ProjectsList title="Projects" projects={projects}
-        api={api}
-        addProjectToCollection={addProjectToCollection}
+        api={api}  
         projectOptions={{addProjectToCollection}}/>
       : 
       <ProjectsList title="Projects" projects={projects}/>

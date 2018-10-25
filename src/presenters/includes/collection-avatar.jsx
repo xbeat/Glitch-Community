@@ -11,9 +11,8 @@ export default class CollectionAvatar extends React.Component {
   }
   
   syncColor() {
-    const svgBackgroundEl = this.ref.current;//.querySelector('.background');
-    console.log(svgBackgroundEl);
-    //svgBackgroundEl.setAttribute('fill', this.props.backgroundColor);
+    const svgBackgroundEl = this.ref.current.querySelector('.background');
+    svgBackgroundEl.setAttribute('fill', this.props.backgroundColor);
   }
   
   componentDidMount() {
@@ -25,7 +24,7 @@ export default class CollectionAvatar extends React.Component {
   }
   
   render() {
-    return <SVGInline svg={defaultAvatarSVG} ref={this.ref}/>;
+    return <span ref={this.ref}><SVGInline svg={defaultAvatarSVG}/></span>;
   }
 }
 

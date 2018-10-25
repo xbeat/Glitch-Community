@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SVGInline from "react-svg-inline";
 import {Redirect} from 'react-router-dom';
 
 import Helmet from 'react-helmet';
@@ -67,24 +66,6 @@ DeleteCollectionBtn.propTypes = {
   deleteCollection: PropTypes.func.isRequired,
   currentUserLogin:PropTypes.string.isRequired,
 };
-
-class Avatar extends React.Component{
-  componentDidUpdate(){
-    let svgBackgroundEl = document.querySelector('svg .background');
-    svgBackgroundEl.setAttribute('fill', this.props.backgroundColor);
-  }
-  
-  componentDidMount(){
-    let svgBackgroundEl = document.querySelector('svg .background');
-    svgBackgroundEl.setAttribute('fill', this.props.backgroundColor);
-  }
-  
-  render(){
-    return(
-      <SVGInline svg={defaultAvatarSVG}/>
-    );
-  }
-}
 
 const CollectionPageContents = ({
   api, 
@@ -178,7 +159,7 @@ const CollectionPageContents = ({
           
                    {(collection.projects.length > 0 ?
                      (isAuthorized
-                       ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor}
+                       ? <ProjectsUL {...{projects, currentUser, api}} collectionColor={collection.coverColor}
                          projectOptions={{
                            removeProjectFromCollection,
                            addProjectToCollection,
@@ -187,13 +168,13 @@ const CollectionPageContents = ({
 
                        : 
                        (currentUser && currentUser.login 
-                         ? <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
+                         ? <ProjectsUL {...{projects, currentUser, api}} collectionColor={collection.coverColor} 
                            projectOptions={{
                              addProjectToCollection
                            }} 
                            {...props}/>
                          :
-                         <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} api={api} collectionColor={collection.coverColor} 
+                         <ProjectsUL {...{projects, currentUser, api}} collectionColor={collection.coverColor} 
                            projectOptions={{}} 
                            {...props}/>
                        )
