@@ -10,7 +10,7 @@ export const ProjectsList = ({title, projects, placeholder, projectOptions}) => 
       <div className="placeholder">{placeholder}</div>
     )}
 
-    <ProjectsUL {...{projects, projectOptions}}></ProjectsUL>
+    <ExpandyProjects {...{projects, projectOptions}}></ExpandyProjects>
 
   </article>
 );
@@ -20,6 +20,51 @@ ProjectsList.propTypes = {
   title: PropTypes.node.isRequired,
   placeholder: PropTypes.node,
 };
+
+class ExpandyProjects extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = { expanded: false };
+    this.handleClick = this.handleClick.bind(this);
+  }
+  
+  handleClick() {
+    this.setState({expanded: true});
+  }
+  
+  render() {
+    const maxProjects = this.props.maxCollapsedProjects;
+    const totalProjects = this.props.projects.length;
+    const hiddenProjects = totalProjects - maxProjects;
+    
+    let projects = this.props.projects;
+    
+    let shouldShowButton = false;
+    if(!this.state.expanded) {
+      shouldShowButton = hiddenProjects > 0;
+      projects = projects.slice(0, maxProjects);
+    }
+    
+    return (
+      <React.Fragment>
+        <ProjectsUL projects={projects} projectOptions={this.props.projectOptions}/>
+        { shouldShowButton && <button className="button-tertiary" onClick={this.handleClick}>Show {hiddenProjects} More</button>}
+      </React.Fragment>
+    );
+  }
+}
+
+ExpandyProjects.propTypes = {
+  projects: PropTypes.array.isRequired,
+  projectOptions: PropTypes.object,
+  maxCollapsedProjects: PropTypes.number,
+};
+
+ExpandyProjects.defaultProps = {
+  maxCollapsedProjects: 12,
+};
+
 
 export const ProjectsUL = ({projects, projectOptions, categoryColor}) => {
   return (
