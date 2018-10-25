@@ -51,12 +51,12 @@ const UserResults = ({users}) => (
 const ProjectResults = ({addProjectToCollection, api, projects, currentUser}) => (
   projects ? (
     currentUser.login ? 
-    <ProjectsList title="Projects" projects={projects}
-      api={api}
-      addProjectToCollection={addProjectToCollection}
-      projectOptions={{addProjectToCollection}}/>
-    : 
-    <ProjectsList title="Projects" projects={projects}/>
+      <ProjectsList title="Projects" projects={projects}
+        api={api}
+        addProjectToCollection={addProjectToCollection}
+        projectOptions={{addProjectToCollection}}/>
+      : 
+      <ProjectsList title="Projects" projects={projects}/>
   ) : (
     <article>
       <h2>Projects</h2>

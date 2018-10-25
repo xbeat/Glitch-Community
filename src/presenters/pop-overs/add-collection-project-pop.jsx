@@ -29,7 +29,8 @@ const ProjectSearchResults = ({projects, collection, onClick, projectName, exclu
   ) : 
     (projectName 
       ? <p className="results-empty">{projectName} is already in this collection <span role="img" aria-label="">💫</span></p>
-      : <p className="results-empty">nothing found <span role="img" aria-label="">💫</span><br/>
+      : <p className="results-empty">
+        nothing found <span role="img" aria-label="">💫</span><br/>
         {excludedProjectsCount > 0 && <span>(Excluded {excludedProjectsCount} search results already found in collection)</span>}
       </p>
     )           
@@ -67,7 +68,8 @@ class AddCollectionProjectPop extends React.Component {
   
   componentDidMount(){
     // load user's recent projects to show in dropdown by default
-    this.setState({ maybeResults: this.props.currentUser.projects.slice(0,6) });
+    let MAX_PROJECTS = 20;
+    this.setState({ maybeResults: this.props.currentUser.projects.slice(0,MAX_PROJECTS) });
     console.log("maybeResults %O", this.state.maybeResults);
   }
   

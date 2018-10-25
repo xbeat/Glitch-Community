@@ -122,6 +122,7 @@ const UserPage = ({
         addProjectToCollection
       }}
     />
+    
     {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
   </main>
 );

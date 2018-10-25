@@ -1,4 +1,4 @@
-/* global CDN_URL EDITOR_URL*/
+/* global CDN_URL */
 
 export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528812220123";
 

@@ -76,7 +76,7 @@ CollectionsList.propTypes = {
 const CreateFirstCollection = ({api}) =>{
   return(
     <div className="create-first-collection">
-      <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-empty.svg?1539800010738" alt="Create collection image"/>
+      <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-empty.svg?1539800010738" alt=""/>
       <p className="placeholder">Create collections to organize your favorite projects.</p><br/>
       <CreateCollectionButton api={api}/>  
     </div>
