@@ -69,9 +69,7 @@ class CollectionEditor extends React.Component {
   }
   
   async removeProjectFromCollection(project) {
-    console.log(`in removeProjectFromCollection in collection-editor`);
     await this.props.api.patch(`collections/${this.state.id}/remove/${project.id}`);
-    console.log(`attempting to remove project ${project.id} from collection ${this.state.id}`);
     this.setState(({projects}) => ({
       projects: projects.filter(p => p.id !== project.id),
     }));

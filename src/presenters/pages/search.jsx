@@ -65,10 +65,6 @@ const ProjectResults = ({api, projects, currentUser}) => (
   )
 );
 
-async function addProjectToCollection(project, collection) {
-    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
-}
-
 
 const MAX_RESULTS = 20;
 const showResults = (results) => !results || !!results.length;
@@ -107,6 +103,10 @@ class SearchResults extends React.Component {
     });
   }
   
+  async addProjectToCollection(project, collection) {
+    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
+  }
+  
   componentDidMount() {
     const {handleError} = this.props;
     this.searchTeams().catch(handleError);
@@ -121,7 +121,7 @@ class SearchResults extends React.Component {
       <main className="search-results">
         {showResults(teams) && <TeamResults teams={teams}/>}
         {showResults(users) && <UserResults users={users}/>}
-        {showResults(projects) && <ProjectResults projects={projects} currentUser={this.props.currentUser} api={this.props.api}/>}
+        {showResults(projects) && <ProjectResults projects={projects} currentUser={this.props.currentUser} api={this.props.api} />}
         {noResults && <NotFound name="any results"/>}
       </main>
     );
