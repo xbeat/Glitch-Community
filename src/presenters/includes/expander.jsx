@@ -6,6 +6,7 @@ export default class Expander extends React.Component {
     super(props);
     this.state = {
       expanded: false,
+      scrollHeight: Infinity,
       maxHeight: props.height,
     };
     this.ref = React.createRef();
@@ -16,8 +17,8 @@ export default class Expander extends React.Component {
     const maxHeight = this.props.height + 60;
     if (this.ref.current.scrollHeight <= maxHeight) {
       this.setState({
-        expanded: true,
-        maxHeight: undefined,
+        //expanded: true,
+        //maxHeight: undefined,
       });
     }
   }
@@ -36,7 +37,13 @@ export default class Expander extends React.Component {
   }
   
   render() {
-    const {expanded, maxHeight} = this.state;
+    const {expanded, scrollHeight, maxHeight} = this.state;
+    let showMask = !!maxHeight;
+    let showButton = !expanded;
+    if (!expanded && scrollHeight < this.props.height + 60) {
+      showMask = false;
+      showButton = false;
+    }
     return (
       <div
         className="expander" style={{maxHeight}}
@@ -44,9 +51,9 @@ export default class Expander extends React.Component {
         ref={this.ref}
       >
         {this.props.children}
-        {!!maxHeight && (
+        {showMask && (
           <div className="expander-mask">
-            {!expanded && (
+            {showButton && (
               <button
                 onClick={this.expand.bind(this)}
                 className="expander-button button-small button-tertiary"
