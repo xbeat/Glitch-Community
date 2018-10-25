@@ -9,7 +9,6 @@ import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
-import {addProjectToCollection} from "../user-editor.jsx';
 
 import ErrorHandlers from '../error-handlers.jsx';
 import Categories from '../categories.jsx';
@@ -49,10 +48,12 @@ const UserResults = ({users}) => (
   </article>
 );
 
-const ProjectResults = ({projects, currentUser}) => (
+const ProjectResults = ({api, projects, currentUser}) => (
   projects ? (
     currentUser.login ? 
     <ProjectsList title="Projects" projects={projects}
+      api={api}
+      addProjectToCollection={addProjectToCollection}
       projectOptions={{addProjectToCollection}}/>
     : 
     <ProjectsList title="Projects" projects={projects}/>
@@ -63,6 +64,10 @@ const ProjectResults = ({projects, currentUser}) => (
     </article>
   )
 );
+
+async function addProjectToCollection(api, project, collection) {
+    await api.patch(`collections/${collection.id}/add/${project.id}`);
+}
 
 
 const MAX_RESULTS = 20;
@@ -116,7 +121,7 @@ class SearchResults extends React.Component {
       <main className="search-results">
         {showResults(teams) && <TeamResults teams={teams}/>}
         {showResults(users) && <UserResults users={users}/>}
-        {showResults(projects) && <ProjectResults projects={projects} currentUser={this.props.currentUser}/>}
+        {showResults(projects) && <ProjectResults projects={projects} currentUser={this.props.currentUser} api={this.props.api}/>}
         {noResults && <NotFound name="any results"/>}
       </main>
     );
