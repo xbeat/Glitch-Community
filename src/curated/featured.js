@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Find the Hidden Treasure!',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fbeach-comber.jpg?1540206366137",
-    link: 'https://glitch.com/~beachcomber'
+    title: 'Boxes in Boxes in Boxes',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frecursion-boxes.jpg?1540206365900",
+    link: 'https://glitch.com/~recursion-boxes'
   },{
-    title: '3D Volumetric Video',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fvimeo-depth-player-playback.jpg?1540206366262",
-    link: 'https://glitch.com/~vimeo-depth-player-playback'
+    title: 'Mondrian On Demand',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsturdy-punch.jpg?1540206365787",
+    link: 'https://glitch.com/~sturdy-punch'
   }, {
-    title: 'Data Visualization of Gun Violence',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fgun-violence-visualization.jpg?1540206365577",
-    link: 'https://glitch.com/~gun-violence-visualization'
+    title: 'The Next Great Food Sensation?',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffood-hype.jpg?1540206366423",
+    link: 'https://glitch.com/~food-hype'
   }  
 ];
