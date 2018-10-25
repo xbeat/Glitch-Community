@@ -48,7 +48,8 @@ const UserResults = ({users}) => (
 
 const ProjectResults = ({projects}) => (
   projects ? (
-    <ProjectsList title="Projects" projects={projects}/>
+    <ProjectsList title="Projects" projects={projects}
+      projectOptions={{addProjectToCollection}}/>
   ) : (
     <article>
       <h2>Projects</h2>
