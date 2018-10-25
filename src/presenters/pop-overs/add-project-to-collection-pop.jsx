@@ -40,7 +40,6 @@ class AddProjectToCollectionPop extends React.Component {
     this.loadCollections();
     try {
       const collectionPair = await getCollectionPair();
-      await new Promise(res => setTimeout(res, 1000));
       this.setState(prev => ({query: prev.query || collectionPair, collectionPair}));
     } catch (error) {
       // it's ok rocky. you go when you feel like it
@@ -140,6 +139,7 @@ class AddProjectToCollectionPop extends React.Component {
         ) : <Loader/>}
         
         <section className="pop-over-info">
+          <div className="pop-title collection-title">Add to a new collection</div>
           <form onSubmit={this.handleSubmit}>
             <PureEditableField
               id="collection-name"
