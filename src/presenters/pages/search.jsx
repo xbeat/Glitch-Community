@@ -65,8 +65,8 @@ const ProjectResults = ({api, projects, currentUser}) => (
   )
 );
 
-async function addProjectToCollection(api, project, collection) {
-    await api.patch(`collections/${collection.id}/add/${project.id}`);
+async function addProjectToCollection(project, collection) {
+    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
 }
 
 
