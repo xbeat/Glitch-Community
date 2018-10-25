@@ -14,11 +14,11 @@ Example:
 export default [
   {
     title: 'Boxes in Boxes in Boxes',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frecursion-boxes.jpg?1540206365900",
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frecursion-boxes.jpg?1540471881284",
     link: 'https://glitch.com/~recursion-boxes'
   },{
     title: 'Mondrian On Demand',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsturdy-punch.jpg?1540206365787",
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F2_1.jpg?1540471662473",
     link: 'https://glitch.com/~sturdy-punch'
   }, {
     title: 'The Next Great Food Sensation?',
