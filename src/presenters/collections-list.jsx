@@ -38,13 +38,13 @@ class CollectionsList extends React.Component {
   }
   
   render() {
-    const {title, placeholder, api, isAuthorized} = this.props;
+    const {title, placeholder, api, isAuthorized, currentUser} = this.props;
     const collections = this.state.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
     return (
       <article className="collections">
         <h2>{title}</h2>
 
-        {!!(placeholder && !collections.length) && (
+        {!!(currentUser.login && placeholder && !collections.length) && (
           <div className="placeholder">{placeholder}</div>
         )}
 
