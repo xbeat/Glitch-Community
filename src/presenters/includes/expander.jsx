@@ -16,7 +16,8 @@ export default class Expander extends React.Component {
     this.setState({scrollHeight: this.ref.current.scrollHeight});
   }
   
-  componentDidUpdate() {
+  onLoad(event) {
+    console.log(event);
     if (this.ref.current.scrollHeight !== this.state.scrollHeight) {
       this.setState({scrollHeight: this.ref.current.scrollHeight});
     }
@@ -41,7 +42,7 @@ export default class Expander extends React.Component {
       <div
         className="expander" style={{maxHeight}}
         onTransitionEnd={(expanded && !!maxHeight) ? this.onExpandEnd.bind(this) : null}
-        onLoadCapture={this.componentDidUpdate.bind(this)}
+        onLoadCapture={this.onLoad.bind(this)}
         ref={this.ref}
       >
         {this.props.children}
