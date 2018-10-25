@@ -48,7 +48,7 @@ const EntityPageProjects = ({api, projects, pins, currentUser, isAuthorized, add
       {!!recentProjects.length && (
         <ProjectsList title="Recent Projects" projects={recentProjects}
           api={api}
-          addProjectTocollection={currentUser.login ? projectOptions.addProjectToCollection : {}}
+          addProjectToCollection={currentUser.login ? projectOptions.addProjectToCollection : {}}
           projectOptions={isAuthorized ? {addPin, ...projectOptions} 
             : (currentUser.login ? {...projectOptions} : {})
           }

@@ -8,6 +8,9 @@ import ProjectModel from '../../models/project';
 import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
 
+import {CurrentUserConsumer} from '../current-user.jsx';
+import {addProjectToCollection} from "../user-editor.jsx';
+
 import ErrorHandlers from '../error-handlers.jsx';
 import Categories from '../categories.jsx';
 import Loader from '../includes/loader.jsx';
@@ -46,10 +49,13 @@ const UserResults = ({users}) => (
   </article>
 );
 
-const ProjectResults = ({projects}) => (
+const ProjectResults = ({projects, currentUser}) => (
   projects ? (
+    currentUser.login ? 
     <ProjectsList title="Projects" projects={projects}
       projectOptions={{addProjectToCollection}}/>
+    : 
+    <ProjectsList title="Projects" projects={projects}/>
   ) : (
     <article>
       <h2>Projects</h2>
@@ -110,7 +116,7 @@ class SearchResults extends React.Component {
       <main className="search-results">
         {showResults(teams) && <TeamResults teams={teams}/>}
         {showResults(users) && <UserResults users={users}/>}
-        {showResults(projects) && <ProjectResults projects={projects}/>}
+        {showResults(projects) && <ProjectResults projects={projects} currentUser={this.props.currentUser}/>}
         {noResults && <NotFound name="any results"/>}
       </main>
     );
@@ -119,6 +125,7 @@ class SearchResults extends React.Component {
 SearchResults.propTypes = {
   api: PropTypes.any.isRequired,
   query: PropTypes.string.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
 const SearchPage = ({api, query}) => (
@@ -129,7 +136,11 @@ const SearchPage = ({api, query}) => (
     {query ? (
       <ErrorHandlers>
         {errorFuncs => (
-          <SearchResults {...errorFuncs} api={api} query={query}/>
+          <CurrentUserConsumer>
+            {(currentUser) => (
+              <SearchResults {...errorFuncs} api={api} query={query} currentUser={currentUser}/>
+            )}
+          </CurrentUserConsumer>
         )}
       </ErrorHandlers>
     ) : <NotFound name="anything"/>}
