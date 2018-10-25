@@ -29,6 +29,9 @@ export const getContrastTextColor = (hexcolor) =>{
 
 
 export const hexToRgbA = (hex) => {
+  if(hex.indexOf("#") < 0) {
+    hex = "#" + hex;
+  }
   var c;
   if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
     c= hex.substring(1).split('');

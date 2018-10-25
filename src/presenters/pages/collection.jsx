@@ -68,24 +68,14 @@ DeleteCollectionBtn.propTypes = {
 };
 
 class Avatar extends React.Component{
-  constructor(props){
-    super(props);
-    this.state={
-      backgroundColor: this.props.backgroundColor
-    };
-  }
-  
-  componentWillReceiveProps(nextProps){
-    if(nextProps.backgroundColor){
-      this.setState({ backgroundColor: nextProps.backgroundColor});
-      let svgBackgroundEl = document.querySelector('svg .background');
-      svgBackgroundEl.setAttribute('fill', nextProps.backgroundColor);
-    } 
+  componentDidUpdate(){
+    let svgBackgroundEl = document.querySelector('svg .background');
+    svgBackgroundEl.setAttribute('fill', this.props.backgroundColor);
   }
   
   componentDidMount(){
     let svgBackgroundEl = document.querySelector('svg .background');
-    svgBackgroundEl.setAttribute('fill', this.state.backgroundColor);
+    svgBackgroundEl.setAttribute('fill', this.props.backgroundColor);
   }
   
   render(){
@@ -131,18 +121,14 @@ const CollectionPageContents = ({
           
           {(false && isAuthorized) 
             ? <div className="upload-image-buttons">
-              
-              
               <AddCollectionAvatar
                 api={api}
                 collectionID = {collection.id}
                 update={updateAvatar}
               />
-              
               <button className="button button-small button-tertiary" onClick={uploadAvatar}>
                 <span>Replace Avatar</span>  
               </button>
-              
             </div>
             : null
           }
