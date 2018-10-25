@@ -19,11 +19,11 @@ AddProjectMessage.propTypes = {
   url: PropTypes.string.isRequired,
 };
 
-async function addProjectToCollection(api, projectId, collectionId){
-  await api.patch(`collections/${collectionId}/add/${projectId}`);
-}
+// async function addProjectToCollection(api, projectId, collectionId){
+//   await api.patch(`collections/${collectionId}/add/${projectId}`);
+// }
 
-const addProject = (addProjectToCollection, api, project, collection, collectionPath, notification, togglePopover) => {
+const addProject = (addProjectToCollection, project, collection, collectionPath, notification, togglePopover) => {
 
   // add project to collection via api
   addProjectToCollection(project, collection);
@@ -83,7 +83,7 @@ const CollectionResultItem = ({addProjectToCollection, api, project, collection,
         <DataLoader get={() => getCollectionUrl(api, collection.userId, collection.url)}>
           {collectionPath => 
             <div>
-              <button className={resultClass} onClick={() => addProject(addProjectToCollection, api, project, collection, collectionPath, createNotification, togglePopover)} data-project-id={project.id}>
+              <button className={resultClass} onClick={() => addProject(addProjectToCollection, project, collection, collectionPath, createNotification, togglePopover)} data-project-id={project.id}>
                 <div className="avatar" id={"avatar-collection-" + collection.id}>
                   <Avatar backgroundColor={collection.coverColor} collectionId={collection.id} alt={`Project avatar for ${collection.name}`}/>
                 </div>

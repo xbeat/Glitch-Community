@@ -48,7 +48,7 @@ const UserResults = ({users}) => (
   </article>
 );
 
-const ProjectResults = ({api, projects, currentUser}) => (
+const ProjectResults = ({addProjectToCollection, api, projects, currentUser}) => (
   projects ? (
     currentUser.login ? 
     <ProjectsList title="Projects" projects={projects}
@@ -77,6 +77,7 @@ class SearchResults extends React.Component {
       users: null,
       projects: null,
     };
+    this.addProjectToCollection = this.addProjectToCollection.bind(this);
   }
   
   async searchTeams() {
@@ -121,7 +122,7 @@ class SearchResults extends React.Component {
       <main className="search-results">
         {showResults(teams) && <TeamResults teams={teams}/>}
         {showResults(users) && <UserResults users={users}/>}
-        {showResults(projects) && <ProjectResults projects={projects} currentUser={this.props.currentUser} api={this.props.api} />}
+        {showResults(projects) && <ProjectResults projects={projects} currentUser={this.props.currentUser} api={this.props.api} addProjectToCollection={this.addProjectToCollection}/>}
         {noResults && <NotFound name="any results"/>}
       </main>
     );
