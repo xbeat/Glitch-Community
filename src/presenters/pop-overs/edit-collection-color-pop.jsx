@@ -28,12 +28,15 @@ class EditCollectionColorPop extends React.Component {
   }
     
   handleChange(e) {
-    const query = e.currentTarget.value.trim();
+    let query = e.currentTarget.value.trim();
     const errorMsg = document.getElementsByClassName("editable-field-error-message")[0];
     errorMsg.style.display = "none";
     this.setState({ query });
     if (query && query.length <=7) {
       if(validHex(query)){
+        if(query[0] !== "#"){
+          query = "#" + query;
+        }
         this.setState({color: query});
         this.update(query);
       }else{

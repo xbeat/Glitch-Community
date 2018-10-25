@@ -24,6 +24,7 @@ import EditCollectionNameAndUrl from '../includes/edit-collection-name-and-url.j
 
 import {hexToRgbA, getContrastTextColor} from '../../models/collection.js'; 
 
+import CollectionAvatar from '../includes/collection-avatar.jsx';
 import {UserTile} from '../users-list.jsx';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
@@ -114,7 +115,7 @@ const CollectionPageContents = ({
             update={data => updateNameAndUrl(data).then(() => syncPageToUrl(collection.user.login, data.url))}
           />
           <div className="collection-image-container">
-            <Avatar backgroundColor={collection.coverColor}/>
+            <CollectionAvatar backgroundColor={collection.coverColor}/>
           </div>
           
           
@@ -127,7 +128,7 @@ const CollectionPageContents = ({
                 update={updateAvatar}
               />
               <button className="button button-small button-tertiary" onClick={uploadAvatar}>
-                <span>Replace Avatar</span>  
+                Replace Avatar
               </button>
             </div>
             : null
