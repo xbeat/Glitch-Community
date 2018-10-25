@@ -57,6 +57,11 @@ class TeamPage extends React.Component {
     super(props);
     this.state = {};
     this.teamAdmins = this.teamAdmins.bind(this);
+    this.addProjectToCollection = this.addProjectToCollection.bind(this);
+  }
+  
+  async addProjectToCollection(project, collection) {
+    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
   }
 
   projectLimitIsReached() {
@@ -161,7 +166,9 @@ class TeamPage extends React.Component {
           isAuthorized={this.props.currentUserIsOnTeam}
           addPin={this.props.addPin}
           removePin={this.props.removePin}
+          addProjectToCollection={this.props.addProjectToCollection}
           projectOptions={{
+            addProjectToCollection: this.props.addProjectToCollection,
             removeProjectFromTeam: this.props.removeProject,
             joinTeamProject: this.props.joinTeamProject,
             leaveTeamProject: this.props.leaveTeamProject,
