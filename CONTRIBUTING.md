@@ -108,7 +108,7 @@ _Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes.
 
 ### Deployment
 
-Only employees of Fog Creek will be able to do this step, and here it is! 
+Only employees of Glitch will be able to do this step, and here it is! 
 
 You should perform these steps immediately after clicking the "Merge pull request" button on your PR in Github. 
 
