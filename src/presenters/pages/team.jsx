@@ -15,7 +15,8 @@ import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
 import DeleteTeam from '../includes/delete-team.jsx';
 import {AddTeamUser, TeamUsers, WhitelistedDomain, JoinTeam} from '../includes/team-users.jsx';
-import EntityPageProjects from '../entity-page-projects.jsx';
+import EntityPagePinnedProjects from '../entity-page-pinned-projects.jsx';
+import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
@@ -160,7 +161,23 @@ class TeamPage extends React.Component {
             users={this.props.team.users}
           />
         }
-        <EntityPageProjects
+        <EntityPagePinnedProjects
+          projects={this.props.team.projects}
+          pins={this.props.team.teamPins}
+          isAuthorized={this.props.currentUserIsOnTeam}
+          addPin={this.props.addPin}
+          removePin={this.props.removePin}
+          addProjectToCollection={this.addProjectToCollection}
+          projectOptions={{
+            addProjectToCollection: this.addProjectToCollection,
+            removeProjectFromTeam: this.props.removeProject,
+            joinTeamProject: this.props.joinTeamProject,
+            leaveTeamProject: this.props.leaveTeamProject,
+          }}
+          api={this.props.api}
+        />
+
+        <EntityPageRecentProjects
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}

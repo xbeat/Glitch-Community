@@ -11,7 +11,8 @@ import UserEditor from '../user-editor.jsx';
 import Thanks from '../includes/thanks.jsx';
 
 import DeletedProjects from '../deleted-projects.jsx';
-import EntityPageProjects from '../entity-page-projects.jsx';
+import EntityPagePinnedProjects from '../entity-page-pinned-projects.jsx';
+import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import CollectionsList from '../collections-list.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
@@ -98,8 +99,20 @@ const UserPage = ({
       </ProfileContainer>
     </section>
     
-    {(loadedCollections && 
+    <EntityPagePinnedProjects
+      projects={projects} 
+      pins={pins} 
+      isAuthorized={isAuthorized}
+      api={api} 
+      removePin={removePin}
+      projectOptions={{
+        leaveProject, 
+        deleteProject,
+        addProjectToCollection
+      }}
+    />
     
+    {(loadedCollections && 
       <CollectionsList title="Collections" 
         collections={_collections} 
         api={api} 
@@ -107,14 +120,13 @@ const UserPage = ({
         currentUser={currentUser}
       />
     )}
-    
-    <EntityPageProjects
+
+    <EntityPageRecentProjects
       projects={projects} 
       pins={pins} 
       isAuthorized={isAuthorized}
       api={api} 
       addPin={addPin} 
-      removePin={removePin}
       projectOptions={{
         leaveProject, 
         deleteProject,

@@ -45,15 +45,6 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
           }
         />
       )}
-      {!!recentProjects.length && (
-        <ProjectsList title="Recent Projects" projects={recentProjects}
-          api={api}
-          addProjectToCollection={currentUser.login ? projectOptions.addProjectToCollection : {}}
-          projectOptions={isAuthorized ? {addPin, ...projectOptions} 
-            : (currentUser.login ? {...projectOptions} : {})
-          }
-        />
-      )}
     </React.Fragment>
   );
 };

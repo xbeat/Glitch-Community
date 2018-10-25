@@ -13,38 +13,9 @@ const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst
 const EntityPageProjects = ({api, projects, pins, currentUser, isAuthorized, addPin, removePin, projectOptions}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const [pinnedProjects, recentProjects] = _.partition(projects, ({id}) => pinnedSet.has(id));
-  
-  const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
-  
-  const pinnedTitle = (
-    <React.Fragment>
-      Pinned Projects
-      <span className="emoji pushpin emoji-in-title"></span>
-    </React.Fragment>
-  );
-  
-  const pinnedEmpty = (
-    <React.Fragment>
-      <img className="psst" src={psst} alt="psst"></img>
-      <p>
-        Pin your projects to show them off
-        <span className="emoji pushpin"></span>
-      </p>
-    </React.Fragment>
-  );
 
   return (
     <React.Fragment>
-      {!!pinnedVisible && (
-        <ProjectsList title={pinnedTitle}
-          projects={pinnedProjects} placeholder={pinnedEmpty}
-          api={api}
-          addProjectTocollection={currentUser.login ? projectOptions.addProjectToCollection :  {}}
-          projectOptions={isAuthorized ? {removePin, ...projectOptions} 
-            : (currentUser.login ? {...projectOptions} : {})
-          }
-        />
-      )}
       {!!recentProjects.length && (
         <ProjectsList title="Recent Projects" projects={recentProjects}
           api={api}
