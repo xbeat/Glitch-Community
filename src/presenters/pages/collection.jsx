@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
-import {getLink, defaultAvatarSVG} from '../../models/collection';
+import {getLink, hexToRgbA, getContrastTextColor} from '../../models/collection';
 
 import {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
@@ -20,8 +20,6 @@ import AddCollectionAvatar from '../includes/add-collection-avatar.jsx';
 
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 import EditCollectionNameAndUrl from '../includes/edit-collection-name-and-url.jsx';
-
-import {hexToRgbA, getContrastTextColor} from '../../models/collection.js'; 
 
 import CollectionAvatar from '../includes/collection-avatar.jsx';
 import {UserTile} from '../users-list.jsx';
