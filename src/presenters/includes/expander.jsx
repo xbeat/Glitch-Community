@@ -13,13 +13,12 @@ export default class Expander extends React.Component {
   }
   
   componentDidMount() {
-    // If the area is only slightly too big don't bother cutting it off
-    const maxHeight = this.props.height + 60;
-    if (this.ref.current.scrollHeight <= maxHeight) {
-      this.setState({
-        //expanded: true,
-        //maxHeight: undefined,
-      });
+    this.setState({scrollHeight: this.ref.current.scrollHeight});
+  }
+  
+  componentDidUpdate() {
+    if (this.ref.current.scrollHeight !== this.state.scrollHeight) {
+      this.setState({scrollHeight: this.ref.current.scrollHeight});
     }
   }
   
@@ -38,22 +37,17 @@ export default class Expander extends React.Component {
   
   render() {
     const {expanded, scrollHeight, maxHeight} = this.state;
-    let showMask = !!maxHeight;
-    let showButton = !expanded;
-    if (!expanded && scrollHeight < this.props.height + 60) {
-      showMask = false;
-      showButton = false;
-    }
     return (
       <div
         className="expander" style={{maxHeight}}
         onTransitionEnd={(expanded && !!maxHeight) ? this.onExpandEnd.bind(this) : null}
+        onLoadCapture={this.componentDidUpdate.bind(this)}
         ref={this.ref}
       >
         {this.props.children}
-        {showMask && (
+        {!!maxHeight && scrollHeight > maxHeight && (
           <div className="expander-mask">
-            {showButton && (
+            {!expanded && scrollHeight > maxHeight && (
               <button
                 onClick={this.expand.bind(this)}
                 className="expander-button button-small button-tertiary"
