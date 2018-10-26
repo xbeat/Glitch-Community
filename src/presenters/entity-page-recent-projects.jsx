@@ -8,8 +8,6 @@ import {CurrentUserConsumer} from './current-user.jsx';
 
 /* globals Set */
 
-const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst.svg?1500486136908";
-
 const EntityPageProjects = ({api, projects, pins, currentUser, isAuthorized, addPin, projectOptions}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const [pinnedProjects, recentProjects] = _.partition(projects, ({id}) => pinnedSet.has(id));

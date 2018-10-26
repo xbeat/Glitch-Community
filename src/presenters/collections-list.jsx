@@ -38,7 +38,7 @@ class CollectionsList extends React.Component {
   }
   
   render() {
-    const {title, placeholder, api, isAuthorized, currentUser} = this.props;
+    const {title, api, isAuthorized, currentUser} = this.props;
     const collections = this.state.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
     return (
       (currentUser.login && 
@@ -54,7 +54,7 @@ class CollectionsList extends React.Component {
             : null
           )}
 
-          <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection, userId: this.props.userId}}></CollectionsUL>
+          <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection, userLogin: this.props.userLogin}}></CollectionsUL>
 
         </article>
        )
@@ -66,10 +66,9 @@ CollectionsList.propTypes = {
   collections: PropTypes.array.isRequired,
   currentUser: PropTypes.object.isRequired,
   title: PropTypes.node.isRequired,
-  placeholder: PropTypes.node,
   api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  userId: PropTypes.number.isRequired,
+  userLogin: PropTypes.number.isRequired,
 };
 
 const CreateFirstCollection = ({api}) =>{
@@ -118,7 +117,7 @@ class CreateCollectionButton extends React.Component{
       let collectionUrl = data.url;
 
       let userName = "";
-      api.get(`users/${data.userId}`).then(({data}) => {
+      api.get(`users/${data.userLogin}`).then(({data}) => {
         userName = data.login;
         let newCollectionUrl = getLink(userName, collectionUrl);
         this.setState({newCollectionUrl: newCollectionUrl});
@@ -150,7 +149,7 @@ CreateCollectionButton.propTypes = {
   api: PropTypes.any.isRequired,
 };  
 
-export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized, userId}) => {
+export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized, userLogin}) => {
   // order by updatedAt date
   const orderedCollections = _.orderBy(collections, collection => collection.updatedAt).reverse();
   return (
@@ -160,7 +159,7 @@ export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized,
       */}
       
       { orderedCollections.map(collection => (
-        <CollectionItem key={collection.id} collection={collection} api={api} isAuthorized={isAuthorized} deleteCollection={deleteCollection}></CollectionItem>
+        <CollectionItem key={collection.id} {...{collection, api, isAuthorized, deleteCollection, userLogin}}></CollectionItem>
       ))}
     </ul>
   );
@@ -171,7 +170,7 @@ CollectionsUL.propTypes = {
   collections: PropTypes.array.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
-  userId: PropTypes.number.isRequired,
+  userLogin: PropTypes.number.isRequired,
 };
 
 

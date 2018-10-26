@@ -6,11 +6,9 @@ import CollectionOptionsContainer from "./pop-overs/collection-options-pop.jsx";
 
 import CollectionAvatar from './includes/collection-avatar.jsx';
 
-import Loader, {DataLoader} from './includes/loader.jsx';
-
 import {getAvatarUrl} from '../models/project.js';
 
-import {getContrastTextColor, hexToRgbA, defaultAvatarSVG} from '../models/collection.js';
+import {hexToRgbA} from '../models/collection.js';
 
 const ProjectsPreview = ({projects}) => {
   
@@ -36,69 +34,54 @@ ProjectsPreview.propTypes = {
   projects: PropTypes.any.isRequired,
 };
 
-async function getCollectionUrl(api, userId, collectionUrl){
-  const {data} = await api.get(`users/${userId}`);
-  const username = data.login;
-  let path = `/@${username}/${collectionUrl}`;
-  return path;
-}
-
 class CollectionItem extends React.Component{
   constructor(props){
     super(props);
   }
   
   render(){
-    const {collection, deleteCollection, api, isAuthorized} = this.props;
+    const {collection, deleteCollection, isAuthorized, userLogin} = this.props;
     return (
       <li>
         {isAuthorized && (
           <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection}></CollectionOptionsContainer>
         )}
 
-        {(collection  &&
-          <DataLoader
-            get={() => getCollectionUrl(api, collection.userId, collection.url)}
-            renderLoader={() => <Loader />}
-            renderError={() => <div>Something went wrong. Try refreshing?</div>}
-          >
-            {path => (
-              <a href={path}>
-                <div className={['collection']} 
-                  id={"collection-" + collection.id}>
-                  <div className="collection-container">
-                    <div className="collection-info" style={{backgroundColor: hexToRgbA(collection.coverColor)}}> 
-                      <div className="avatar-container">
-                        <div className="avatar">
-                          <CollectionAvatar backgroundColor={collection.coverColor} collectionId={collection.id}/>
-                        </div>
-                      </div>
-                      <div className="collection-name-description">
-                        <div className="button">
-                          <span className="project-badge private-project-badge" aria-label="private"></span>
-                          <div className="project-name">{collection.name}</div>
-                        </div>
-                        <div className="description"><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
-                      </div>
-
-                      <div className="overflow-mask"></div>
+        {(collection &&
+          <a href={`/@${userLogin}/${collection.url}`}>
+            <div className={['collection']} 
+              id={"collection-" + collection.id}>
+              <div className="collection-container">
+                <div className="collection-info" style={{backgroundColor: hexToRgbA(collection.coverColor)}}> 
+                  <div className="avatar-container">
+                    <div className="avatar">
+                      <CollectionAvatar backgroundColor={collection.coverColor} collectionId={collection.id}/>
                     </div>
+                  </div>
+                  <div className="collection-name-description">
+                    <div className="button">
+                      <span className="project-badge private-project-badge" aria-label="private"></span>
+                      <div className="project-name">{collection.name}</div>
+                    </div>
+                    <div className="description"><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
+                  </div>
 
-                    {(collection.projects.length > 0
-                      ? <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection}/>
-                      :
-                      <div className="projects-preview empty">
-                        {(isAuthorized
-                          ? <p>This collection is empty.  Add some projects to it! <span role="img" aria-label="">☝️</span></p>
-                          : "No projects to see in this collection just yet."
-                        )}
-                      </div>
+                  <div className="overflow-mask"></div>
+                </div>
+
+                {(collection.projects.length > 0
+                  ? <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection}/>
+                  :
+                  <div className="projects-preview empty">
+                    {(isAuthorized
+                      ? <p>This collection is empty.  Add some projects to it! <span role="img" aria-label="">☝️</span></p>
+                      : "No projects to see in this collection just yet."
                     )}
                   </div>
-                </div>
-              </a>             
-            )}
-          </DataLoader>
+                )}
+              </div>
+            </div>
+          </a>             
         )}
       </li>
     );
@@ -106,9 +89,9 @@ class CollectionItem extends React.Component{
 }
 
 CollectionItem.propTypes = {
-  api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  deleteCollection: PropTypes.func
+  deleteCollection: PropTypes.func,
+  userLogin: PropTypes.number.isRequired,
 };
 
 export default CollectionItem;
