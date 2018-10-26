@@ -99,7 +99,6 @@ class AddTeamUserPop extends React.Component {
         item: <UserResultItem user={user} action={() => inviteUser(user)} />
       })));
     }
-    
     return (
       <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">
@@ -110,20 +109,7 @@ class AddTeamUserPop extends React.Component {
             placeholder="Search for a user or email"
           />
         </section>
-        {!!query && (
-          results.length ? (
-            <section className="pop-over-actions last-section results-list">
-              <ul className="results">
-                {results.map(({key, item}) => <li key={key}>{item}</li>)}
-              </ul>
-              {isLoading && <Loader />}
-            </section>
-          ) : (
-            <section className="pop-over-actions last-section">
-              {isLoading ? <Loader/> : <React.Fragment>nothing found <span role="img" aria-label="">💫</span></React.Fragment>}
-            </section>
-          )
-        )}
+        {!!query && <Results isLoading={isLoading} results={results}/> }
         {!query && setWhitelistedDomain && (
           <aside className="pop-over-info">
             You can also whitelist with @example.com
@@ -141,5 +127,34 @@ AddTeamUserPop.propTypes = {
   setWhitelistedDomain: PropTypes.func,
   whitelistedDomain: PropTypes.string,
 };
+
+const Results = ({results, isLoading}) => {
+  if(isLoading) {
+    return (
+      <Loader />
+    );
+  }
+  
+  if(results.length === 0) {
+    return (
+      <section className="pop-over-actions last-section">
+        Nothing found <span role="img" aria-label="">💫</span>
+      </section>
+    );
+  }
+  
+  return (
+      <section className="pop-over-actions last-section results-list">
+        <ul className="results">
+          {results.map(({key, item}) => <li key={key}>{item}</li>)}
+        </ul>
+      </section>
+  );
+}
+
+Results.propTypes = {
+  results: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+}
 
 export default AddTeamUserPop;
