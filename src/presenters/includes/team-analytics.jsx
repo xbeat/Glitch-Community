@@ -245,7 +245,6 @@ TeamAnalytics.propTypes = {
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   addProject: PropTypes.func.isRequired,
   myProjects: PropTypes.array.isRequired,
-  projectLimitIsReached: PropTypes.bool.isRequired,
 };
 
 export default TeamAnalytics;
