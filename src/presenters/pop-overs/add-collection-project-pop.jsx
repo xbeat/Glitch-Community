@@ -70,7 +70,6 @@ class AddCollectionProjectPop extends React.Component {
     // load user's recent projects to show in dropdown by default
     let MAX_PROJECTS = 20;
     this.setState({ maybeResults: this.props.currentUser.projects.slice(0,MAX_PROJECTS) });
-    console.log("maybeResults %O", this.state.maybeResults);
   }
   
   handleChange(evt) {
@@ -84,7 +83,6 @@ class AddCollectionProjectPop extends React.Component {
   }
   
   clearSearch() {
-    // console.log('clear search');
     this.setState({
       maybeRequest: null,
       maybeResults: null,
@@ -126,7 +124,6 @@ class AddCollectionProjectPop extends React.Component {
     
     let nonCollectionResults = null;
     if(searchByUrl){  
-      console.log('search by url');
       if(this.props.collection.projects.map( (project) => project.domain).includes(query)){
         // the domain already exists in the collection - return an empty array
         nonCollectionResults =[];
@@ -146,7 +143,6 @@ class AddCollectionProjectPop extends React.Component {
     }
     
     this.setState({excludedProjectsCount: originalNumResults - nonCollectionResults.length});
-    console.log(`excludedProjectsCount: ${this.state.excludedProjectsCount}`);
 
     this.setState(({ maybeRequest }) => {
       return (request === maybeRequest) ? {
@@ -160,7 +156,6 @@ class AddCollectionProjectPop extends React.Component {
   
   onClick(project, collection, createNotification) {
     this.props.togglePopover();
-    console.log(`clicked ${project.domain}`);
     
     // add project to page if successful
     this.props.addProjectToCollection(project, collection);
