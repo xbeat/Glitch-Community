@@ -183,7 +183,7 @@ class AddCollectionProjectPop extends React.Component {
         
           {!!this.state.maybeResults && 
               <ProjectsLoader api={this.props.api} projects={this.state.maybeResults}>
-                {(projects) => <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} excludedProjectsCount={this.state.excludedProjectsCount}/>
+                {() => <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} excludedProjectsCount={this.state.excludedProjectsCount}/>
                 }
               </ProjectsLoader>
           }          
