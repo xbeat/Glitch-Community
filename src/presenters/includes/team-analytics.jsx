@@ -158,19 +158,19 @@ class TeamAnalytics extends React.Component {
     return (
       <section className="team-analytics">
         <h2>Analytics</h2>
-        <section className="controls">
-          <TeamAnalyticsProjectPop
-            updateProjectDomain = {this.updateProjectDomain.bind(this)}
-            currentProjectDomain = {this.state.currentProjectDomain}
-            projects = {this.props.projects}
-            disabled={!this.props.projects.length}
-          />
-          <TeamAnalyticsTimePop 
-            updateTimeFrame = {this.updateTimeFrame.bind(this)}
-            currentTimeFrame = {this.state.currentTimeFrame}
-            disabled={!this.props.projects.length}
-          />
-        </section>
+        { !!this.props.projects.length && (
+          <section className="controls">
+            <TeamAnalyticsProjectPop
+              updateProjectDomain = {this.updateProjectDomain.bind(this)}
+              currentProjectDomain = {this.state.currentProjectDomain}
+              projects = {this.props.projects}
+            />
+            <TeamAnalyticsTimePop 
+              updateTimeFrame = {this.updateTimeFrame.bind(this)}
+              currentTimeFrame = {this.state.currentTimeFrame}
+            />
+          </section>
+        )}
         
         <section className="summary">
           {this.state.isGettingData ? <Loader /> :
@@ -183,7 +183,7 @@ class TeamAnalytics extends React.Component {
 
         { (this.props.projects.length === 0) && !this.state.isGettingData && (
           <aside className="inline-banners add-project-to-analytics-banner">
-            <div className="description">Add Projects to see who's viewing and remixing</div>
+            <div className="description">Add projects to see who's viewing and remixing</div>
           </aside>
         )}
 
