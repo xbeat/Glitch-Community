@@ -18,9 +18,10 @@ const ProjectsPreview = ({projects}) => {
     <React.Fragment>
       <ul className="projects-preview" projects={projects}>
         { projects.slice(0,3).map(project => (
-          <li key={project.id} className="project-container">
+          <li key={project.id} className={"project-container " + (project.private ? "private" : null)}>
             <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
             <div className="project-name">{project.domain}</div>
+            <div className="project-badge private-project-badge" aria-label="private"></div>
           </li>
         )) }
       </ul>
