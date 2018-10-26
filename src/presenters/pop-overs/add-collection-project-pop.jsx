@@ -31,7 +31,7 @@ const ProjectSearchResults = ({projects, collection, onClick, projectName, exclu
       ? <p className="results-empty">{projectName} is already in this collection <span role="img" aria-label="">💫</span></p>
       : <p className="results-empty">
         nothing found <span role="img" aria-label="">💫</span><br/>
-        {excludedProjectsCount > 0 && <span>(Excluded {excludedProjectsCount} search results already found in collection)</span>}
+        {excludedProjectsCount > 0 && <span>(Excluded {excludedProjectsCount} search {(excludedProjectsCount > 1 ? "results" : "result")} already found in collection)</span>}
       </p>
     )           
   )

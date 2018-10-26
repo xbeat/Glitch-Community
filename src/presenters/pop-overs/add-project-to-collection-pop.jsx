@@ -52,7 +52,6 @@ class AddProjectToCollectionPop extends React.Component {
 
   async handleSubmit(event){
     event.preventDefault();
-    console.log('add project to new collection');
     this.setState({working: true});
     // get text from input field
     const newCollectionName = this.state.query;
