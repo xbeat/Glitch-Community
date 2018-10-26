@@ -36,7 +36,9 @@ class LoginPage extends React.Component {
       }
       const deets = {provider, error: errorData};
       console.error("OAuth login error.", deets);
-      Raven.captureMessage("Oauth login error", {extra: deets});
+      if(window.Raven) {
+        Raven.captureMessage("Oauth login error", {extra: deets});
+      }
     }
   }
   

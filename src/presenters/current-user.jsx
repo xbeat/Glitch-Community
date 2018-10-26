@@ -40,7 +40,9 @@ function identifyUser(user) {
     }
   } catch (error) {
     console.error(error);
-    Raven.captureException(error);
+    if(window.Raven) {
+      Raven.captureException(error);
+    }
   }
 }
 
@@ -130,10 +132,12 @@ class CurrentUserManager extends React.Component {
         const newSharedUser = await this.getSharedUser();
         this.props.setSharedUser(newSharedUser);
         console.warn('Fixed shared cachedUser from', sharedUser, 'to', newSharedUser);
-        Raven.captureMessage('Invalid cachedUser', {extra: {
-          from: sharedUser || null,
-          to: newSharedUser || null,
-        }});
+        if(window.Raven) {
+          Raven.captureMessage('Invalid cachedUser', {extra: {
+            from: sharedUser || null,
+            to: newSharedUser || null,
+          }});
+        }
       } else {
         this.props.setCachedUser(newCachedUser);
         this.setState({fetched: true});
