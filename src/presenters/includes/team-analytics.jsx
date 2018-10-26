@@ -5,7 +5,6 @@ import _ from 'lodash';
 import sampleAnalytics, {sampleAnalyticsTime} from '../../curated/sample-analytics';
 
 import Loader from './loader.jsx';
-import AddTeamProject from './add-team-project.jsx';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop.jsx';
 import TeamAnalyticsProjectPop from '../pop-overs/team-analytics-project-pop.jsx';
 
@@ -185,11 +184,6 @@ class TeamAnalytics extends React.Component {
         { (this.props.projects.length === 0) && !this.state.isGettingData && (
           <aside className="inline-banners add-project-to-analytics-banner">
             <div className="description">Add Projects to see who's viewing and remixing</div>
-            <AddTeamProject
-              {...this.props}
-              extraButtonClass = "button-small"
-              teamProjects = {this.props.projects}
-            />
           </aside>
         )}
 
