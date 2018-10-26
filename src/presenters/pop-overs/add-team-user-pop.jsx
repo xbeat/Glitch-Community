@@ -8,6 +8,7 @@ import UserModel from '../../models/user';
 import Loader from '../includes/loader.jsx';
 import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
 
+cosnt rankSearchResults
 
 class AddTeamUserPop extends React.Component {
   constructor(props) {
@@ -53,11 +54,12 @@ class AddTeamUserPop extends React.Component {
     const {data} = await request;
     const results = data.map(user => UserModel(user).asProps());
     const nonMemberResults = results.filter(user => !this.props.members.includes(user.id));
+    const rankedResults = rankSearchResults(nonMemberResults);
     
     this.setState(({ maybeRequest }) => {
       return (request === maybeRequest) ? {
         maybeRequest: null,
-        maybeResults: nonMemberResults.slice(0, 5),
+        maybeResults: rankedResults,
       } : {};
     });
   }
@@ -131,10 +133,12 @@ AddTeamUserPop.propTypes = {
 const Results = ({results, isLoading}) => {
   if(isLoading) {
     return (
-      <Loader />
+      <section className="pop-over-actions last-section">
+        <Loader />
+      </section>
     );
   }
-  
+
   if(results.length === 0) {
     return (
       <section className="pop-over-actions last-section">
@@ -142,13 +146,13 @@ const Results = ({results, isLoading}) => {
       </section>
     );
   }
-  
+
   return (
-      <section className="pop-over-actions last-section results-list">
-        <ul className="results">
-          {results.map(({key, item}) => <li key={key}>{item}</li>)}
-        </ul>
-      </section>
+    <section className="pop-over-actions last-section results-list">
+      <ul className="results">
+        {results.map(({key, item}) => <li key={key}>{item}</li>)}
+      </ul>
+    </section>
   );
 }
 
