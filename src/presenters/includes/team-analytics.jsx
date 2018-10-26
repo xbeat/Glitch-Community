@@ -45,7 +45,7 @@ const getAnalytics = async ({id, api, projects}, fromDate, currentProjectDomain)
     return data;
   }
   let path = `analytics/${id}/team?from=${fromDate}`;
-  if (currentProjectDomain !== "All Projects") {
+  if (currentProjectDomain) {
     path = `analytics/${id}/project/${currentProjectDomain}?from=${fromDate}`;
   }
   try {
@@ -62,7 +62,7 @@ class TeamAnalytics extends React.Component {
     this.state = {
       currentTimeFrame: 'Last 2 Weeks',
       fromDate: moment().subtract(2, 'weeks').valueOf(),
-      currentProjectDomain: 'All Projects',
+      currentProjectDomain: '', // empty string means all projects
       analytics: {},
       c3: {},
       isGettingData: true,
@@ -147,7 +147,7 @@ class TeamAnalytics extends React.Component {
     ) {
       this.updateAnalytics();
       this.setState({
-        currentProjectDomain: 'All Projects'
+        currentProjectDomain: ''
       });
     }
   }
@@ -221,26 +221,28 @@ class TeamAnalytics extends React.Component {
           }
         </section>
         
-        <section className="project-details">
-          <h3>Project Details</h3>
-          <TeamAnalyticsProjectPop
-            updateProjectDomain = {this.updateProjectDomain.bind(this)}
-            currentProjectDomain = {this.state.currentProjectDomain}
-            projects = {this.props.projects}
-            disabled={!this.props.projects.length}
-          />
-          { (this.state.currentProjectDomain === "All Projects") ?
-            <p>
-              <span className="up-arrow">↑ </span>
-              Select a project for details and the latest remixes</p>
-            :
-            <TeamAnalyticsProjectDetails
+        {this.state.currentProjectDomain && (
+          <section className="project-details">
+            <h3>Project Details</h3>
+            <TeamAnalyticsProjectPop
+              updateProjectDomain = {this.updateProjectDomain.bind(this)}
               currentProjectDomain = {this.state.currentProjectDomain}
-              id = {this.props.id}
-              api = {this.props.api}
+              projects = {this.props.projects}
+              disabled={!this.props.projects.length}
             />
-          }
-        </section>
+            { !this.state.currentProjectDomain ?
+              <p>
+                <span className="up-arrow">↑ </span>
+                Select a project for details and the latest remixes</p>
+              :
+              <TeamAnalyticsProjectDetails
+                currentProjectDomain = {this.state.currentProjectDomain}
+                id = {this.props.id}
+                api = {this.props.api}
+              />
+            }
+          </section>
+        )}
 
         <section className="explanation">
           <p>

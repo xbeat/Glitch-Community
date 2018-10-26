@@ -108,7 +108,7 @@ class TeamAnalyticsProjectPop extends React.Component {
         {({visible, togglePopover}) => (
           <div className="button-wrap">
             <button className="button-small button-tertiary" onClick={togglePopover} disabled={disabled}>
-              Filter: {currentProjectDomain}
+              {currentProjectDomain ? `Filter: ${currentProjectDomain}` : 'All Projects'}
             </button>
             {visible && 
               <PopOver 
