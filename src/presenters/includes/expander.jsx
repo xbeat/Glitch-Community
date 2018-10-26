@@ -42,16 +42,16 @@ export default class Expander extends React.Component {
   render() {
     const {expanding, expanded, scrollHeight} = this.state;
     const maxHeight = expanding ? scrollHeight : this.props.height;
+    const style = !expanded ? {maxHeight} : null;
     return (
       <div
-        className="expander" style={!expanded ? {maxHeight} : null}
-        onTransitionEnd={(expanding && !expanded) ? this.onExpandEnd.bind(this) : null}
-        ref={this.ref}
+        ref={this.ref} className="expander" style={style}
+        onTransitionEnd={this.onExpandEnd.bind(this)}
       >
         {this.props.children}
         {!expanded && scrollHeight > maxHeight && (
           <div className="expander-mask">
-            {!expanding && scrollHeight > maxHeight && (
+            {!expanding && (
               <button
                 onClick={this.expand.bind(this)}
                 className="expander-button button-small button-tertiary"
