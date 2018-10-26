@@ -5,6 +5,7 @@ export default class Expander extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      expanding: false,
       expanded: false,
       scrollHeight: Infinity,
     };
@@ -21,34 +22,36 @@ export default class Expander extends React.Component {
   }
   
   updateHeight() {
-    if (this.ref.current.scrollHeight !== this.state.scrollHeight) {
-      this.setState({scrollHeight: this.ref.current.scrollHeight});
+    const scrollHeight = this.ref.current.scrollHeight
+    if (scrollHeight !== this.state.scrollHeight) {
+      this.setState({scrollHeight});
     }
   }
   
   expand() {
     this.updateHeight();
-    this.setState({expanded: true});
+    this.setState({expanding: true});
   }
   
   onExpandEnd(evt) {
     if (evt.propertyName === 'max-height') {
-      this.setState({maxHeight: undefined});
+      this.setState({expanded: true});
     }
   }
   
   render() {
-    const {expanded, scrollHeight, maxHeight} = this.state;
+    const {expanding, expanded, scrollHeight} = this.state;
+    const maxHeight = expanding ? scrollHeight : this.props.height;
     return (
       <div
-        className="expander" style={{maxHeight}}
-        onTransitionEnd={(expanded && !!maxHeight) ? this.onExpandEnd.bind(this) : null}
+        className="expander" style={!expanded ? {maxHeight} : null}
+        onTransitionEnd={(expanding && !expanded) ? this.onExpandEnd.bind(this) : null}
         ref={this.ref}
       >
         {this.props.children}
-        {!!maxHeight && scrollHeight > maxHeight && (
+        {!expanded && scrollHeight > maxHeight && (
           <div className="expander-mask">
-            {!expanded && scrollHeight > maxHeight && (
+            {!expanding && scrollHeight > maxHeight && (
               <button
                 onClick={this.expand.bind(this)}
                 className="expander-button button-small button-tertiary"
