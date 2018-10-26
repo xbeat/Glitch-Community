@@ -9,7 +9,6 @@ import Loader from '../includes/loader.jsx';
 import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
 
 const rankSearchResults = (results, query) => {
-  console.log(results);
   // For each results, we're going to assign point values to it based on
   // our result quality heuristics.
   // Then, we'll sort the result set by those heuristics.
@@ -24,7 +23,7 @@ const rankSearchResults = (results, query) => {
     let points = 0;
 
     const login = result.login || "";
-    const lowerLogin = long.toLowerCase();
+    const lowerLogin = login.toLowerCase();
     const name = result.name || "";
     const lowerName = name.toLowerCase();
 
@@ -42,20 +41,24 @@ const rankSearchResults = (results, query) => {
       }
     }
     
-    // One point for matching either of login or name.
+    // Points for matching either of login or name.
     // Bonus if StartsWith.
-    [lowerLogin, lowerQuery].forEach((lowerField) => {
+    [lowerLogin, lowerName].forEach((lowerField) => {
        if(lowerField.includes(lowerQuery)){
-      points += 10;
-      
-      if(lowerField.startsWith(lowerQuery)) {
-        points += 5;
+        points += 10;
+
+        if(lowerField.startsWith(lowerQuery)) {
+          points += 5;
+        }
       }
-    }
-  
+    });
+      
+    result.points = points;
   });
 
-  return results;
+  console.log(results);
+  // Sort results from highest to lowest poitn values:
+  return results.sort((a, b) => { return b.points - a.points });
 };
 
 class AddTeamUserPop extends React.Component {
