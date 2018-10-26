@@ -57,7 +57,7 @@ class CollectionsList extends React.Component {
           <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection}}></CollectionsUL>
 
         </article>
-       );
+       )
     );  
   }
 }
