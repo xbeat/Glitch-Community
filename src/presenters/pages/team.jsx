@@ -72,7 +72,7 @@ class TeamPage extends React.Component {
     return (
       <main className="profile-page team-page">
         <section>
-          <a href="/teams/" className="beta">Glitch Teams are in Beta</a>
+          <div className="beta">Teams Beta, <a href="/teams/" target="_blank" >Learn More</a></div>
           <ProfileContainer
             avatarStyle={getAvatarStyle({...this.props.team, cache: this.props.team._cacheAvatar})}
             coverStyle={getProfileStyle({...this.props.team, cache: this.props.team._cacheCover})}
