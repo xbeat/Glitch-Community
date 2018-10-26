@@ -7,27 +7,28 @@ export default class Expander extends React.Component {
     this.state = {
       expanded: false,
       scrollHeight: Infinity,
-      maxHeight: props.height,
     };
     this.ref = React.createRef();
   }
   
   componentDidMount() {
-    this.setState({scrollHeight: this.ref.current.scrollHeight});
+    this.updateHeight();
+    this.ref.current.addEventListener('load', this.updateHeight.bind(this), {capture: true});
   }
   
-  onLoad(event) {
-    console.log(event);
+  componentDidUpdate() {
+    this.updateHeight();
+  }
+  
+  updateHeight() {
     if (this.ref.current.scrollHeight !== this.state.scrollHeight) {
       this.setState({scrollHeight: this.ref.current.scrollHeight});
     }
   }
   
   expand() {
-    this.setState({
-      expanded: true,
-      maxHeight: this.ref.current.scrollHeight,
-    });
+    this.updateHeight();
+    this.setState({expanded: true});
   }
   
   onExpandEnd(evt) {
@@ -42,7 +43,6 @@ export default class Expander extends React.Component {
       <div
         className="expander" style={{maxHeight}}
         onTransitionEnd={(expanded && !!maxHeight) ? this.onExpandEnd.bind(this) : null}
-        onLoadCapture={this.onLoad.bind(this)}
         ref={this.ref}
       >
         {this.props.children}
