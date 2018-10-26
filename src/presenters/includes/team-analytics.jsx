@@ -218,12 +218,6 @@ class TeamAnalytics extends React.Component {
         {this.state.currentProjectDomain && (
           <section className="project-details">
             <h3>Project Details</h3>
-            <TeamAnalyticsProjectPop
-              updateProjectDomain = {this.updateProjectDomain.bind(this)}
-              currentProjectDomain = {this.state.currentProjectDomain}
-              projects = {this.props.projects}
-              disabled={!this.props.projects.length}
-            />
             { !this.state.currentProjectDomain ?
               <p>
                 <span className="up-arrow">↑ </span>
