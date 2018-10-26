@@ -19,8 +19,39 @@ const rankSearchResults = (results, query) => {
   login: "judeallred"
   name: "Jude Allred"
   */
+  const lowerQuery = query.toLowerCase();
   results.forEach((result) => {
-    const login = result.login.toLower
+    let points = 0;
+
+    const login = result.login || "";
+    const lowerLogin = long.toLowerCase();
+    const name = result.name || "";
+    const lowerName = name.toLowerCase();
+
+    
+    //Big point items -- exact matches:
+    if(lowerLogin === lowerQuery) {
+      points += 9000; // exact match on login name :over nine thousand!:
+    }
+    
+    if(lowerName === lowerQuery) {
+      points += 50; // Exact match on name, case insensitive.
+      
+      if(name === query) {
+        points += 10; // Bonus case-sensitive match
+      }
+    }
+    
+    // One point for matching either of login or name.
+    // Bonus if StartsWith.
+    [lowerLogin, lowerQuery].forEach((lowerField) => {
+       if(lowerField.includes(lowerQuery)){
+      points += 10;
+      
+      if(lowerField.startsWith(lowerQuery)) {
+        points += 5;
+      }
+    }
   
   });
 
