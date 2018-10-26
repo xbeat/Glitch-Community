@@ -8,7 +8,24 @@ import UserModel from '../../models/user';
 import Loader from '../includes/loader.jsx';
 import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
 
-cosnt rankSearchResults
+const rankSearchResults = (results, query) => {
+  console.log(results);
+  // For each results, we're going to assign point values to it based on
+  // our result quality heuristics.
+  // Then, we'll sort the result set by those heuristics.
+  
+  //example result:
+  /*
+  login: "judeallred"
+  name: "Jude Allred"
+  */
+  results.forEach((result) => {
+    const login = result.login.toLower
+  
+  });
+
+  return results;
+};
 
 class AddTeamUserPop extends React.Component {
   constructor(props) {
@@ -54,7 +71,7 @@ class AddTeamUserPop extends React.Component {
     const {data} = await request;
     const results = data.map(user => UserModel(user).asProps());
     const nonMemberResults = results.filter(user => !this.props.members.includes(user.id));
-    const rankedResults = rankSearchResults(nonMemberResults);
+    const rankedResults = rankSearchResults(nonMemberResults, query);
     
     this.setState(({ maybeRequest }) => {
       return (request === maybeRequest) ? {
