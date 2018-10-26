@@ -92,7 +92,8 @@ collection-avatar-size = 55px
     position: relative
     transition: 0.1s all
     overflow: visible
-    background-color: #e5e5e5
+    // background-color: #e5e5e5
+    background-color: #f9f9f9
     &:hover
       .button
         background-color: secondary-background
@@ -181,6 +182,7 @@ collection-avatar-size = 55px
         margin: 0px 10px 5px
         border-radius: 5px
         background-color: input-border
+        background-color: #e5e5e5
         .avatar
           width: 25px
           height: 25px
@@ -189,9 +191,12 @@ collection-avatar-size = 55px
           margin-left: 5px
         .private-project-badge
           display: none
-      &.private
-        .private-project-badge
-          display: inline
+          background-image: url("https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fprivate.svg?1496253541539")
+          float: right
+        &.private
+          background-color: private
+          .private-project-badge
+            display: inline-block
     .projects-preview.empty
       height: 100%
       padding: 10px
