@@ -44,7 +44,7 @@ const rankSearchResults = (results, query) => {
     // Points for matching either of login or name.
     // Bonus if StartsWith.
     [lowerLogin, lowerName].forEach((lowerField) => {
-       if(lowerField.includes(lowerQuery)){
+       if(lowerField.includes(lowerQuery)) {
         points += 10;
 
         if(lowerField.startsWith(lowerQuery)) {

@@ -218,17 +218,11 @@ class TeamAnalytics extends React.Component {
         {this.state.currentProjectDomain && (
           <section className="project-details">
             <h3>Project Details</h3>
-            { !this.state.currentProjectDomain ?
-              <p>
-                <span className="up-arrow">↑ </span>
-                Select a project for details and the latest remixes</p>
-              :
-              <TeamAnalyticsProjectDetails
-                currentProjectDomain = {this.state.currentProjectDomain}
-                id = {this.props.id}
-                api = {this.props.api}
-              />
-            }
+            <TeamAnalyticsProjectDetails
+              currentProjectDomain = {this.state.currentProjectDomain}
+              id = {this.props.id}
+              api = {this.props.api}
+            />
           </section>
         )}
 
