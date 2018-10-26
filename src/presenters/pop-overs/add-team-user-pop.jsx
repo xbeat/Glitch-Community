@@ -44,7 +44,7 @@ const rankSearchResults = (results, query) => {
     // Points for matching either of login or name.
     // Bonus if StartsWith.
     [lowerLogin, lowerName].forEach((lowerField) => {
-       if(lowerField.includes(lowerQuery)) {
+      if(lowerField.includes(lowerQuery)) {
         points += 10;
 
         if(lowerField.startsWith(lowerQuery)) {
@@ -58,7 +58,7 @@ const rankSearchResults = (results, query) => {
 
   console.log(results);
   // Sort results from highest to lowest poitn values:
-  return results.sort((a, b) => { return b.points - a.points });
+  return results.sort((a, b) => { return b.points - a.points; });
 };
 
 class AddTeamUserPop extends React.Component {
@@ -205,11 +205,11 @@ const Results = ({results, isLoading}) => {
       </ul>
     </section>
   );
-}
+};
 
 Results.propTypes = {
   results: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
-}
+};
 
 export default AddTeamUserPop;
