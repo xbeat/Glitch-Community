@@ -54,7 +54,7 @@ class CollectionsList extends React.Component {
             : null
           )}
 
-          <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection}}></CollectionsUL>
+          <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection, userId: this.props.userId}}></CollectionsUL>
 
         </article>
        )
@@ -69,6 +69,7 @@ CollectionsList.propTypes = {
   placeholder: PropTypes.node,
   api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
+  userId: PropTypes.number.isRequired,
 };
 
 const CreateFirstCollection = ({api}) =>{
@@ -149,7 +150,7 @@ CreateCollectionButton.propTypes = {
   api: PropTypes.any.isRequired,
 };  
 
-export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized}) => {
+export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized, userId}) => {
   // order by updatedAt date
   const orderedCollections = _.orderBy(collections, collection => collection.updatedAt).reverse();
   return (
@@ -170,6 +171,7 @@ CollectionsUL.propTypes = {
   collections: PropTypes.array.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
+  userId: PropTypes.number.isRequired,
 };
 
 

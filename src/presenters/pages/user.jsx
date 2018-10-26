@@ -118,6 +118,7 @@ const UserPage = ({
         api={api} 
         isAuthorized={isAuthorized}
         currentUser={currentUser}
+        userId={id}
       />
     )}
 
