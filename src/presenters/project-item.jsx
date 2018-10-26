@@ -34,7 +34,7 @@ export const ProjectItem = ({api, project, collectionColor, homepageCollection, 
               </div>
               :
               <div className="description" 
-                style={{color: (props.category ? "black" : (collectionColor ? getContrastTextColor(collectionColor) : "black" ) )}}>
+                style={project.private ? {} : {color: (props.category ? "black" : (collectionColor ? getContrastTextColor(collectionColor) : "black" ) )}}>
                 <TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
             )}
             <div className="overflow-mask" style={project.private ? {} : {backgroundColor: collectionColor}}></div>
