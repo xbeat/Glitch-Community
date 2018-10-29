@@ -41,7 +41,7 @@ class CollectionsList extends React.Component {
     const {title, api, isAuthorized, currentUser} = this.props;
     const collections = this.state.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
     return (
-      ((currentUser.login || currentUser.login !== this.props.userLogin) && 
+      ((currentUser.login || currentUser.login !== this.props.userLogin) && collections.length > 0 && 
         <article className="collections">
           <h2>{title}</h2>
 
@@ -57,7 +57,7 @@ class CollectionsList extends React.Component {
           <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection, userLogin: this.props.userLogin}}></CollectionsUL>
 
         </article>
-      )
+       )
     );  
   }
 }
