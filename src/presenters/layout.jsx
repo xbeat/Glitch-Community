@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 
 import Header from './header.jsx';
 import Footer from './footer.jsx';
+import ErrorBoundary 
 import Konami from './includes/konami.jsx';
 
 
