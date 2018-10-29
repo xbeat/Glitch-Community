@@ -1,8 +1,9 @@
-/* globals API_URL Raven */
+/* globals API_URL */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import * as Sentry from '@sentry/browser';
 
 import UserModel from '../models/user';
 import LocalStorage from './includes/local-storage.jsx';
@@ -28,21 +29,17 @@ function identifyUser(user) {
         created_at: user.createdAt,
       });
     }
-    if (window.Raven) {
-      if (user) {
-        Raven.setUserContext({
+    if (user) {
+      Sentry.configureScope((scope) => {
+        scope.setUser({
           id: user.id,
           login: user.login,
         });
-      } else {
-        Raven.setUserContext();
-      }
+      });
     }
   } catch (error) {
     console.error(error);
-    if(window.Raven) {
-      Raven.captureException(error);
-    }
+    Sentry.captureException(error);
   }
 }
 
@@ -132,12 +129,10 @@ class CurrentUserManager extends React.Component {
         const newSharedUser = await this.getSharedUser();
         this.props.setSharedUser(newSharedUser);
         console.warn('Fixed shared cachedUser from', sharedUser, 'to', newSharedUser);
-        if(window.Raven) {
-          Raven.captureMessage('Invalid cachedUser', {extra: {
-            from: sharedUser || null,
-            to: newSharedUser || null,
-          }});
-        }
+        Sentry.captureMessage('Invalid cachedUser', {extra: {
+          from: sharedUser || null,
+          to: newSharedUser || null,
+        }});
       } else {
         this.props.setCachedUser(newCachedUser);
         this.setState({fetched: true});

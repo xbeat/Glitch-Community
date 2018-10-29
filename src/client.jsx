@@ -10,7 +10,7 @@ import App from './app.jsx';
 try {
   Sentry.init({
     dsn: 'https://029cb06346934232bbc4ea4f4c16f1b7@sentry.io/1247156',
-    environment: window.ENVIRONMENT,
+    environment: ENVIRONMENT,
     beforeSend(event) {
       if (event.user) {
         // Don't send user's email address

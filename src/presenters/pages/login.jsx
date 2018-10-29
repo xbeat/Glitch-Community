@@ -1,7 +1,8 @@
-/* globals APP_URL analytics Raven */
+/* globals APP_URL analytics */
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as Sentry from '@sentry/browser';
 
 import {Redirect} from 'react-router-dom';
 import {CurrentUserConsumer} from '../current-user.jsx';
@@ -36,9 +37,7 @@ class LoginPage extends React.Component {
       }
       const deets = {provider, error: errorData};
       console.error("OAuth login error.", deets);
-      if(window.Raven) {
-        Raven.captureMessage("Oauth login error", {extra: deets});
-      }
+      Sentry.captureMessage("Oauth login error", {extra: deets});
     }
   }
   
