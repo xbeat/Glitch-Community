@@ -48,6 +48,7 @@ export default class Expander extends React.Component {
   
   render() {
     const {startedExpanding, doneExpanding, scrollHeight} = this.state;
+    const aboveLimit = scrollHeight > this.props.height + this.props.buffer;
     const maxHeight = startedExpanding ? scrollHeight : this.props.height;
     const style = !doneExpanding ? {maxHeight} : null;
     return (
@@ -56,7 +57,7 @@ export default class Expander extends React.Component {
         onTransitionEnd={this.onExpandEnd.bind(this)}
       >
         {this.props.children}
-        {!doneExpanding && scrollHeight > this.props.height && (
+        {!doneExpanding && aboveLimit && (
           <div className="expander-mask">
             {!startedExpanding && (
               <button
@@ -76,4 +77,9 @@ export default class Expander extends React.Component {
 Expander.propTypes = {
   children: PropTypes.node.isRequired,
   height: PropTypes.number.isRequired,
+  buffer: PropTypes.number.isRequired,
+};
+
+Expander.defaultProps = {
+  buffer: 50,
 };
