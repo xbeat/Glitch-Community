@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Boxes in Boxes in Boxes',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frecursion-boxes.jpg?1540471881284",
-    link: 'https://glitch.com/~recursion-boxes'
+    title: 'Air Drumming FTW!',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FDrumbridge.jpg?1540809570061",
+    link: 'https://glitch.com/~drumbridge'
   },{
-    title: 'Mondrian On Demand',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F2_1.jpg?1540471662473",
-    link: 'https://glitch.com/~sturdy-punch'
+    title: 'Deploy to Firebase',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-firebase-homepage.jpg?1540809750078",
+    link: 'https://glitch.com/edit/#!/firebase-basic-webpage?path=README.md:1:0'
   }, {
-    title: 'The Next Great Food Sensation?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffood-hype.jpg?1540206366423",
-    link: 'https://glitch.com/~food-hype'
+    title: 'Microbit Bluetooth Starters',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FMicrobit-ble.jpg?1540809622942",
+    link: 'https://microbit-ble.glitch.me/'
   }  
 ];
