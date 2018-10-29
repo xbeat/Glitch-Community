@@ -10,11 +10,18 @@ export default class Expander extends React.Component {
       scrollHeight: Infinity,
     };
     this.ref = React.createRef();
+    this.updateHeight = this.updateHeight.bind(this);
   }
   
   componentDidMount() {
     this.updateHeight();
-    this.ref.current.addEventListener('load', this.updateHeight.bind(this), {capture: true});
+    this.ref.current.addEventListener('load', this.updateHeight, {capture: true});
+    window.addEventListener('resize', this.updateHeight, {passive: true});
+  }
+  
+  componentWillUnmount() {
+    this.ref.current.removeEventListener('load', this.updateHeight, {capture: true});
+    window.removeEventListener('resize', this.updateHeight, {passive: true});
   }
   
   componentDidUpdate() {
