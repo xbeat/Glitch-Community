@@ -126,7 +126,7 @@ class CreateCollectionButton extends React.Component{
     }catch(error){
       if(error && error.response && error.response.data && error.response.data.message){
         this.setState({error: error.response.data.message});
-        // MAYBE HANDLE ERROR HERE?
+        // MAYBE HANDLE ERROR HERE - a notification?
       }
     }
   }
