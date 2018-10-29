@@ -1,7 +1,6 @@
 /* globals EDITOR_URL, ENVIRONMENT, PROJECT_DOMAIN */
 import './polyfills.js';
 import * as Sentry from '@sentry/browser';
-
 // First things first -- let's bring our error collection online:
 try {
   Sentry.init({
@@ -9,24 +8,28 @@ try {
     environment: ENVIRONMENT,
     beforeSend(event) {
       const json = JSON.stringify(event);
-      const scrubbedJSON = json.replace(/\"persistentToken\":\"[^\"]+\"/g, `"persistentToken":"****"`);
+      const scrubbedJSON = json.replace(/"persistentToken":"[^"]+"/g, `"persistentToken":"****"`);
       const scrubbedEvent = JSON.parse(scrubbedJSON);
 
       return scrubbedEvent;
     },
   });
-
+  
   Sentry.configureScope((scope) => {
     scope.setTag("bootstrap", "true");
     scope.setTag("PROJECT_DOMAIN", PROJECT_DOMAIN);
   });
+  
+  // Expose for use on the developer console:
+  window.Sentry = Sentry;
 } catch (error) {
   console.warn("Error bringing Sentry online", error);
 }
-
 import React from 'react';
 import {render} from 'react-dom';
 import App from './app.jsx';
+
+
 
 // Here's a bunch of browser support tests
 // If any of them don't work we can't run in this browser
