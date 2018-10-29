@@ -84,5 +84,5 @@ Expander.propTypes = {
 };
 
 Expander.defaultProps = {
-  minSlide: 100,
+  minSlide: 50,
 };
