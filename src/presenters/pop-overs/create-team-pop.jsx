@@ -44,19 +44,30 @@ class CreateTeamPopBase extends React.Component {
     const name = this.state.teamName;
     if (name) {
       const url = _.kebabCase(name);
-      
-      const userReq = this.props.api.get(`userId/byLogin/${url}`).catch(error => {
-        
-      });
-      const teamReq = this.props.api.get(`teams/byUrl/${url}`);
-      const [user, team] = await Promise.all([userReq, teamReq]);
-      
       let error = null;
-      if (user.data !== 'NOT FOUND') {
-        error = 'Name in use, try another';
-      } else if (team.data) {
-        error = 'Team already exists, try another';
+      
+      try {
+        const {data} = await this.props.api.get(`userId/byLogin/${url}`);
+        if (data !== 'NOT FOUND') {
+          error = 'Name in use, try another';
+        }
+      } catch (error) {
+        if (!(error.response && error.response.status === 404)) {
+          throw error;
+        }
       }
+      
+      try {
+        const {data} = await this.props.api.get(`teams/byUrl/${url}`);
+        if (data) {
+          error = 'Team already exists, try another';
+        }
+      } catch (error) {
+        if (!(error.response && error.response.status === 404)) {
+          throw error;
+        }
+      }
+      
       if (error) {
         this.setState(({teamName}) => (name === teamName) ? {error} : {});
       }
