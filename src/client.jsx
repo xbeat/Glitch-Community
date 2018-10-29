@@ -1,5 +1,6 @@
 /* globals EDITOR_URL */
 import './polyfills.js';
+import * as Sentry from '@sentry/browser';
 
 import React from 'react';
 import {render} from 'react-dom';
@@ -44,7 +45,34 @@ func(async arg => await arg, Promise.resolve()); // Can we do async/await?
 window.bootstrap = () => {
   if (location.hash.startsWith("#!/")) {
     window.location.replace(EDITOR_URL + window.location.hash);
-  } else {
+    return;
+  }
+  
+  Sentry.init({ dsn: 'https://029cb06346934232bbc4ea4f4c16f1b7@sentry.io/1247156' });
+  
+  else {
+        <script src="https://cdn.ravenjs.com/3.26.2/raven.min.js" crossorigin="anonymous"></script>
+    <script>
+      
+      if(window.Raven) {
+        Raven.config('https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508', {
+          environment: '<%= ENVIRONMENT %>',
+          serverName: '<%= PROJECT_DOMAIN %>',
+          sanitizeKeys: ['persistentToken'],
+          tags: {bootstrap: true},
+        }).install();
+      }
+      
+        if(window.Raven) {
+          Raven.setTagsContext();
+          // Invoke bootstrap() within Raven.context so that it captures all errors.
+          Raven.context(window.bootstrap);
+        } else {
+          // No Raven? That's ok, start the site anyway.
+          window.bootstrap();
+        }
+    </script>
+    
     const dom = document.createElement('div');
     document.body.appendChild(dom);
     render(<App/>, dom);

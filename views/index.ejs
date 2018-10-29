@@ -63,30 +63,12 @@
       </div>
     </div>
 
-    <script src="https://cdn.ravenjs.com/3.26.2/raven.min.js" crossorigin="anonymous"></script>
-    <script>
-      if(window.Raven) {
-        Raven.config('https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508', {
-          environment: '<%= ENVIRONMENT %>',
-          serverName: '<%= PROJECT_DOMAIN %>',
-          sanitizeKeys: ['persistentToken'],
-          tags: {bootstrap: true},
-        }).install();
-      }
-    </script>
     <% for (let i = 0; i < scripts.length; ++i) { %>
     <script src="<%= scripts[i] %>"></script>
     <% } %>
     <script>
       if (window.bootstrap) {
-        if(window.Raven) {
-          Raven.setTagsContext();
-          // Invoke bootstrap() within Raven.context so that it captures all errors.
-          Raven.context(window.bootstrap);
-        } else {
-          // No Raven? That's ok, start the site anyway.
-          window.bootstrap();
-        }
+        window.bootstrap();
       } else {
         console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
         document.getElementById('fallback').removeAttribute('style');
