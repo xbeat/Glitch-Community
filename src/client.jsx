@@ -48,7 +48,15 @@ window.bootstrap = () => {
     return;
   }
   
-  Sentry.init({ dsn: 'https://029cb06346934232bbc4ea4f4c16f1b7@sentry.io/1247156' });
+  Sentry.init({
+    dsn: 'https://029cb06346934232bbc4ea4f4c16f1b7@sentry.io/1247156',
+    environment: window.ENVIRONMENT,
+    serverName: window.PROJECT_DOMAIN,
+  });
+  
+  Sentry.configureScope((scope) => {
+    scope.setUser({tags: {bootstrap: true}});
+  });
   
   else {
         <script src="https://cdn.ravenjs.com/3.26.2/raven.min.js" crossorigin="anonymous"></script>
