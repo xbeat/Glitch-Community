@@ -45,7 +45,9 @@ class CreateTeamPopBase extends React.Component {
     if (name) {
       const url = _.kebabCase(name);
       
-      const userReq = this.props.api.get(`userId/byLogin/${url}`);
+      const userReq = this.props.api.get(`userId/byLogin/${url}`).catch(error => {
+        
+      });
       const teamReq = this.props.api.get(`teams/byUrl/${url}`);
       const [user, team] = await Promise.all([userReq, teamReq]);
       
