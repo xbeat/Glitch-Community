@@ -124,8 +124,11 @@ class CreateCollectionButton extends React.Component{
         this.setState({done: true});
       });
     }catch(error){
-      this.setState({error: true});
-      // need to show some sort of error message here?
+      if(error && error.response && error.response.data && error.response.data.message){
+        this.setState({error: error.response.data.message});
+      }
+      
+      
     }
   }
   
