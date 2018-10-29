@@ -15,7 +15,6 @@ function truncateQuestion(question) {
 }
 
 function truncateTag(tag) {
-      throw new Error('asdf');
   const max = 15;
   return tag.substring(0, max);
 }
