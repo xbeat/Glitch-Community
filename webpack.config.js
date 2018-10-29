@@ -69,7 +69,7 @@ module.exports = () => {
         new TerserPlugin({terserOptions: {safari10: true}}),
       ],
     },
-    //devtool: 'source-map',
+    devtool: 'source-map',
     module: {
       rules: [
         {
