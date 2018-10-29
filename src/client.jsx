@@ -11,6 +11,7 @@ try {
   Sentry.init({
     dsn: 'https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508',
     environment: ENVIRONMENT,
+    server_name: PROJECT_DOMAIN,
     beforeSend(event) {
       if (event.user) {
         // Don't send user's email address

@@ -11,6 +11,7 @@ import LocalStorage from './includes/local-storage.jsx';
 const {Provider, Consumer} = React.createContext();
 
 Sentry.captureMessage("I am alive.");
+window.Sentry = Sentry;
 
 function identifyUser(user) {
   if (user) {
