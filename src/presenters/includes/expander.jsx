@@ -30,7 +30,6 @@ export default class Expander extends React.Component {
   
   updateHeight() {
     const scrollHeight = this.ref.current.scrollHeight;
-    console.log(scrollHeight);
     if (scrollHeight !== this.state.scrollHeight) {
       this.setState({scrollHeight});
     }
@@ -53,7 +52,6 @@ export default class Expander extends React.Component {
     const limitHeight = aboveLimit ? this.props.height - this.props.minSlide : this.props.height;
     const maxHeight = startedExpanding ? scrollHeight : limitHeight;
     const style = !doneExpanding ? {maxHeight} : null;
-    console.log(aboveLimit, limitHeight, maxHeight, style);
     return (
       <div
         ref={this.ref} className="expander" style={style}
