@@ -13,10 +13,9 @@ try {
     environment: ENVIRONMENT,
     beforeSend(event) {
       console.log("beforesend", event);
-      if(event.breadcrumbs) {
-        for(let crumb of event.breadcrumbs) {
-          
-        }
+      let json = JSON.stringify(event);
+      if(json.includes("persistentToken")) {
+                
       }
       return event;
     },
