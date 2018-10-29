@@ -1,6 +1,11 @@
 /* globals EDITOR_URL, ENVIRONMENT, PROJECT_DOMAIN */
 import './polyfills.js';
 import * as Sentry from '@sentry/browser';
+import React from 'react';
+import {render} from 'react-dom';
+import App from './app.jsx';
+
+
 // First things first -- let's bring our error collection online:
 try {
   Sentry.init({
@@ -25,10 +30,6 @@ try {
 } catch (error) {
   console.warn("Error bringing Sentry online", error);
 }
-import React from 'react';
-import {render} from 'react-dom';
-import App from './app.jsx';
-
 
 
 // Here's a bunch of browser support tests

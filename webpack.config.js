@@ -32,7 +32,6 @@ module.exports = () => {
   return {
     mode,
     watchOptions: {
-      //aggregateTimeout: 1000, // Wait this amount of milliseconds before triggering build
       ignored: /node_modules/, // Don't watch node_modules.
     },
     entry: {
