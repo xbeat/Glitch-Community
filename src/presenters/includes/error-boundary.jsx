@@ -17,15 +17,15 @@ export default class ErrorBoundary extends React.Component {
   render() {
     const {children, fallback} = this.props;
     const {error} = this.state;
-    return error ? fallback(error) : children;
+    return error ? fallback : children;
   }
 }
 
 ErrorBoundary.propTypes = {
   children: PropTypes.node.isRequired,
-  fallback: PropTypes.func.isRequired,
+  fallback: PropTypes.node,
 };
 
 ErrorBoundary.defaultProps = {
-  fallback: () => 'Something went wrong, try refreshing?',
+  fallback: 'Something went wrong, try refreshing?',
 };
