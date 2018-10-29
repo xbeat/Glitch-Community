@@ -21,10 +21,8 @@ try {
   });
 
   Sentry.configureScope((scope) => {
-    scope.setUser({tags: {
-      bootstrap: true,
-      PROJECT_DOMAIN,
-    }});
+    scope.setTag("bootstrap", "true");
+    scope.setTag("PROJECT_DOMAIN", PROJECT_DOMAIN);
   });
 } catch (error) {
   console.warn("Error bringing Sentry online", error);
