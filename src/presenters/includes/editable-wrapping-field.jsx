@@ -38,7 +38,7 @@ export class PureEditableWrappingField extends React.Component {
     
     return (
       <label htmlFor={inputProps.id}>
-        <TextArea id={inputProps.id} {...inputProps} ref={this.textInput} />
+        <TextArea {...inputProps} ref={this.textInput} />
         {!!this.props.error && <FieldErrorMessage error={this.props.error}/>}
       </label>
     );

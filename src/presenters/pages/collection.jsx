@@ -17,7 +17,7 @@ import CollectionEditor from '../collection-editor.jsx';
 
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 import EditCollectionNameAndUrl from '../includes/edit-collection-name-and-url.jsx';
-import AddCollectionProject from '../includes/add-collection-project.jsx'
+import AddCollectionProject from '../includes/add-collection-project.jsx';
 
 import CollectionAvatar from '../includes/collection-avatar.jsx';
 import {UserTile} from '../users-list.jsx';
@@ -121,7 +121,8 @@ const CollectionPageContents = ({
                    <div className="collection-project-container-header">
                      <h3>Projects ({collection.projects.length})</h3>
                 
-                     {!!isAuthorized && (<AddCollectionProject
+                     {!!isAuthorized && (
+                       <AddCollectionProject
                          addProjectToCollection={addProjectToCollection}
                          collection={collection}
                          api={api}

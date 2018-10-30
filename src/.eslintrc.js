@@ -32,6 +32,8 @@ module.exports = exports = {
     "semi": ["error", "always"],
     "no-debugger": WARN,
     
+    "jsx-a11y/label-has-for": [OFF],
+    
     // Overrides of react/recommended:
     "react/no-unescaped-entities": ["error", {"forbid": [`"`, ">", "}"]}], // permit ' in jsx html,
     "react/prop-types": [OFF], // disabled so we can use composed prop-types

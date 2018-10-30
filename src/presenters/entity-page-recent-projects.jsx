@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-
 import ProjectsList from './projects-list.jsx';
 
 import {CurrentUserConsumer} from './current-user.jsx';
@@ -10,7 +8,7 @@ import {CurrentUserConsumer} from './current-user.jsx';
 
 const EntityPageProjects = ({api, projects, pins, currentUser, isAuthorized, addPin, projectOptions}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
-  const [pinnedProjects, recentProjects] = _.partition(projects, ({id}) => pinnedSet.has(id));
+  const recentProjects = projects.filter(({id}) => !pinnedSet.has(id));
 
   return (
     <React.Fragment>
