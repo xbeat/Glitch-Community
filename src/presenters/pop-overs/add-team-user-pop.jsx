@@ -8,10 +8,8 @@ import UserModel from '../../models/user';
 import Loader from '../includes/loader.jsx';
 import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
 
-const rankSearchResults = (results, query) => {
-  // For each results, we're going to assign point values to it based on
-  // our result quality heuristics.
-  // Then, we'll sort the result set by those heuristics.
+const rankSearchResult = (result, query) => {
+  // Assigned a point value to the search result so that we can better order the resut list.
   
   //example result:
   /*
@@ -19,46 +17,40 @@ const rankSearchResults = (results, query) => {
   name: "Jude Allred"
   */
   const lowerQuery = query.toLowerCase();
-  results.forEach((result) => {
-    let points = 0;
+  let points = 0;
 
-    const login = result.login || "";
-    const lowerLogin = login.toLowerCase();
-    const name = result.name || "";
-    const lowerName = name.toLowerCase();
+  const login = result.login || "";
+  const lowerLogin = login.toLowerCase();
+  const name = result.name || "";
+  const lowerName = name.toLowerCase();
 
-    
-    //Big point items -- exact matches:
-    if(lowerLogin === lowerQuery) {
-      points += 9000; // exact match on login name :over nine thousand!:
+
+  //Big point items -- exact matches:
+  if(lowerLogin === lowerQuery) {
+    points += 9000; // exact match on login name :over nine thousand!:
+  }
+
+  if(lowerName === lowerQuery) {
+    points += 50; // Exact match on name, case insensitive.
+
+    if(name === query) {
+      points += 10; // Bonus case-sensitive match
     }
-    
-    if(lowerName === lowerQuery) {
-      points += 50; // Exact match on name, case insensitive.
-      
-      if(name === query) {
-        points += 10; // Bonus case-sensitive match
+  }
+
+  // Points for matching either of login or name.
+  // Bonus if startsWith.
+  [lowerLogin, lowerName].forEach((lowerField) => {
+    if(lowerField.includes(lowerQuery)) {
+      points += 10;
+
+      if(lowerField.startsWith(lowerQuery)) {
+        points += 5;
       }
     }
-    
-    // Points for matching either of login or name.
-    // Bonus if StartsWith.
-    [lowerLogin, lowerName].forEach((lowerField) => {
-      if(lowerField.includes(lowerQuery)) {
-        points += 10;
-
-        if(lowerField.startsWith(lowerQuery)) {
-          points += 5;
-        }
-      }
-    });
-      
-    result.points = points;
   });
 
-  console.log(results);
-  // Sort results from highest to lowest poitn values:
-  return results.sort((a, b) => { return b.points - a.points; });
+  return points;
 };
 
 class AddTeamUserPop extends React.Component {
@@ -105,7 +97,7 @@ class AddTeamUserPop extends React.Component {
     const {data} = await request;
     const results = data.map(user => UserModel(user).asProps());
     const nonMemberResults = results.filter(user => !this.props.members.includes(user.id));
-    const rankedResults = rankSearchResults(nonMemberResults, query);
+    const rankedResults = nonMemberResults.sort((a, b) => rankSearchResult(b, query) - rankSearchResult(a, query));
     
     this.setState(({ maybeRequest }) => {
       return (request === maybeRequest) ? {

@@ -21,12 +21,12 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, pr
   
   return (
     <React.Fragment>
-      {(!!pinnedVisible && pinnedProjects.length) ? (
+      {!!pinnedVisible && !!pinnedProjects.length && (
         <ProjectsList title={pinnedTitle}
           projects={pinnedProjects} 
           projectOptions={isAuthorized ? {removePin, ...projectOptions} : {}}
         />
-      ) : null}
+      )}
       {!!recentProjects.length && (
         <ProjectsList title="Recent Projects" projects={recentProjects}
           projectOptions={isAuthorized ? {addPin, ...projectOptions} : {}}
