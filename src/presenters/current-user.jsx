@@ -36,6 +36,13 @@ function identifyUser(user) {
           login: user.login,
         });
       });
+    } else {
+      configureScope((scope) => {
+        scope.setUser({
+          id: null,
+          login: null,
+        });
+      });
     }
   } catch (error) {
     console.error(error);
