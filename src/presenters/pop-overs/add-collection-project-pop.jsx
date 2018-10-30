@@ -11,31 +11,61 @@ import ProjectsLoader from '../projects-loader.jsx';
 
 import Notifications from '../notifications.jsx';  
 
-const ProjectSearchResults = ({projects, collection, onClick, projectName, excludedProjectsCount}) => (
-  (projects.length > 0 ? (
-    <ul className="results">
-      {projects.map(project => (
-        (!collection.projects.map( (project) => project.id).includes(project.id) &&
-          <Notifications key={project.id}>
-            {({createNotification}) => (
-              <li>
-                <ProjectResultItem domain={project.domain} description={project.description} users={project.users} id={project.id} isActive={false} collection={collection} action={() => onClick(project, collection, createNotification)} />
-              </li>
-            )}
-          </Notifications>
-        )
-      ))}
-    </ul>
-  ) : 
-    (projectName 
-      ? <p className="results-empty">{projectName} is already in this collection <span role="img" aria-label="">💫</span></p>
-      : <p className="results-empty">
-        nothing found <span role="img" aria-label="">💫</span><br/>
-        {excludedProjectsCount > 0 && <span>(Excluded {excludedProjectsCount} search {(excludedProjectsCount > 1 ? "results" : "result")} already found in collection)</span>}
-      </p>
-    )           
-  )
+const ProjectResultsUL = ({projects, collection, onClick}) => (
+  <ul className="results">
+    {projects.map(project => (
+      (!collection.projects.map( (project) => project.id).includes(project.id) &&
+        <Notifications key={project.id}>
+          {({createNotification}) => (
+            <li>
+              <ProjectResultItem
+                domain={project.domain}
+                description={project.description}
+                users={project.users}
+                id={project.id}
+                isActive={false}
+                collection={collection}
+                action={() => onClick(project, collection, createNotification)}
+              />
+            </li>
+          )}
+        </Notifications>
+      )
+    ))}
+  </ul>
 );
+ProjectResultsUL.propTypes = {
+  projects: PropTypes.array.isRequired,
+  collection: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+}
+
+const ProjectSearchResults = ({projects, collection, onClick, projectName, excludedProjectsCount}) => {
+  if(projects.length > 0) {
+    return (
+      <ProjectResultsUL {...{projects, collection, onClick}}/>
+    );
+  }
+  
+  if(projectName) {
+    return (
+      <p className="results-empty">
+        {projectName} is already in this collection
+        <span role="img" aria-label="">💫</span>
+      </p>
+    );
+  }
+
+  return (
+    <p className="results-empty">
+      nothing found 
+      <span role="img" aria-label="">💫</span><br/>
+      {excludedProjectsCount > 0 && (
+        <span>(Excluded {excludedProjectsCount} search {(excludedProjectsCount > 1 ? "results" : "result")} already found in collection)</span>
+      )}
+    </p>
+  );
+};
 
 ProjectSearchResults.propTypes = {
   collection: PropTypes.object.isRequired,
