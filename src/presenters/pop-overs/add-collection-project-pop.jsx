@@ -133,6 +133,7 @@ class AddCollectionProjectPop extends React.Component {
     // Project URL pattern: https://add-to-alexa.glitch.me/, https://glitch.com/~add-to-alexa
     let searchByUrl = false;
     let query = this.state.query;
+    let excludedResults = false;
     
     if(isUrl(query)){
       searchByUrl = true;
@@ -143,29 +144,33 @@ class AddCollectionProjectPop extends React.Component {
         query = queryUrl.href.substring(queryUrl.href.indexOf("//")+"//".length, queryUrl.href.indexOf("."));
       } else{
         // https://glitch.com/~add-to-alexa
-        query = queryUrl.pathname.substring(queryUrl.pathname.indexOf("~")+2);
+        query = queryUrl.pathname.substring(queryUrl.pathname.indexOf("~")+1);
       }
     }
     
     console.log(`query: ${query}`);
+    console.log("collection projects %O", this.props.collection.projects);
     
-    //https://glitch.com/~wry-bush
+    // https://glitch.com/~wry-bush
     const request = this.props.api.get(`projects/search?q=${query}`);
     this.setState({ maybeRequest: request });
     
     const {data} = await request;
     const results = data.map(project => ProjectModel(project).asProps()); 
     let originalNumResults = results.length;
+    console.log(`originalNumResults: ${originalNumResults}`);
     
     let nonCollectionResults = null;
     if(searchByUrl){  
       if(this.props.collection.projects.map( (project) => project.domain).includes(query)){
+        console.log('project already exists in collection');
         // the domain already exists in the collection - return an empty array
         nonCollectionResults =[];
         this.setState({projectName: query});
       }else{
         // return results, filtering out any projects currently in collection
-        nonCollectionResults = this.props.collection.projects.filter(project => project.domain == query);
+        nonCollectionResults = this.props.collection.projects.filter(project => project.domain != query);
+        console.log("nonCollectionResults: %O", nonCollectionResults);
       }      
     }else{
       // user is searching by project name or URL  - filter out any projects currently in the collection
@@ -177,7 +182,9 @@ class AddCollectionProjectPop extends React.Component {
       }
     }
     
-    this.setState({excludedProjectsCount: originalNumResults - nonCollectionResults.length});
+    if(originalNumResults - nonCollectionResults.length > 0){
+      this.setState({excludedProjectsCount: originalNumResults - nonCollectionResults.length});
+    }    
 
     this.setState(({ maybeRequest }) => {
       return (request === maybeRequest) ? {
