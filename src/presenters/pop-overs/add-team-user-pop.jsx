@@ -58,7 +58,7 @@ class AddTeamUserPop extends React.Component {
     this.state = {
       query: '', //The actual search text
       maybeRequest: null, //The active request promise
-      maybeResults: null, //Null means still waiting vs empty -- [jude: i suggest the 'maybe' convention for nullable fields with meaning.  'maybeResults'] --greg: i like it
+      maybeResults: null, //Null means still waiting vs empty
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -149,7 +149,7 @@ class AddTeamUserPop extends React.Component {
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={query} onChange={this.handleChange}
             className="pop-over-input search-input pop-over-search"
-            placeholder="Search for a user or email"
+            placeholder="Search for a user"
           />
         </section>
         {!!query && <Results isLoading={isLoading} results={results}/> }
