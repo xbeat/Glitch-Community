@@ -15,17 +15,10 @@ class CollectionsList extends React.Component {
     
     this.state = {
       deletedCollectionIds: [],
-      collections: this.props.collections,
     };
     this.deleteCollection = this.deleteCollection.bind(this);
   }
-  
-  componentWillReceiveProps(nextProps){
-    if(nextProps.collections !== this.props.collections){
-      this.setState({collections: nextProps.collections});
-    } 
-  }
-  
+     
   async deleteCollection(id) {
     await this.props.api.delete(`/collections/${id}`);
     
@@ -38,7 +31,7 @@ class CollectionsList extends React.Component {
   
   render() {
     const {title, api, isAuthorized, currentUser, userLogin} = this.props;
-    const collections = this.state.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
+    const collections = this.props.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
     return (
       ((currentUser.login || currentUser.login !== userLogin) && collections.length > 0 && 
         <article className="collections">

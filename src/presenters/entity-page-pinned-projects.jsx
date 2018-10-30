@@ -11,7 +11,7 @@ const psst = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fpsst
 
 const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorized, removePin, projectOptions}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
-  const pinnedProjects = projects.filter( ({id}) => !pinnedSet.has(id));
+  const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id));
   
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
   

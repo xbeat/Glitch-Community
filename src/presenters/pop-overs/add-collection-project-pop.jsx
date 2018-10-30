@@ -120,6 +120,8 @@ class AddCollectionProjectPop extends React.Component {
       }
     }
     
+    console.log(`search query: ${query}`);
+    
     const request = this.props.api.get(`projects/search?q=${query}`);
     this.setState({ maybeRequest: request });
     
