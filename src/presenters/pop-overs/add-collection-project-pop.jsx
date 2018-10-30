@@ -130,7 +130,7 @@ class AddCollectionProjectPop extends React.Component {
     }
     
     // check if the query is a URL or a name of a project
-    // Project URL pattern: https://glitch.com/~add-to-alexa, https://power-port.glitch.me/, https://community.glitch.me/
+    // Project URL pattern: https://add-to-alexa.glitch.me/, https://glitch.com/~add-to-alexa
     let searchByUrl = false;
     let query = this.state.query;
     
@@ -139,17 +139,17 @@ class AddCollectionProjectPop extends React.Component {
       // get project domain
       let queryUrl = new URL(query);
       if(queryUrl.href.includes("me") && !queryUrl.href.includes("~")){
-        // https://glitch.com/~add-to-alexa
+        // https://add-to-alexa.glitch.me/
         query = queryUrl.href.substring(queryUrl.href.indexOf("//")+"//".length, queryUrl.href.indexOf("."));
-      } else if(queryUrl.href.includes("~") && !queryUrl.href.includes(".me")){
-        // https://glitch.com/~power-port
-        query = queryUrl.pathname.substring(queryUrl.href.indexOf("~")+1);
-      } else if(queryUrl.href.includes(".me")){
-        // https://community.glitch.me/
-        query = queryUrl.host.substring(0, query.indexOf("."));
+      } else{
+        // https://glitch.com/~add-to-alexa
+        query = queryUrl.pathname.substring(queryUrl.pathname.indexOf("~")+2);
       }
     }
     
+    console.log(`query: ${query}`);
+    
+    //https://glitch.com/~wry-bush
     const request = this.props.api.get(`projects/search?q=${query}`);
     this.setState({ maybeRequest: request });
     
@@ -218,7 +218,12 @@ class AddCollectionProjectPop extends React.Component {
         
           {!!this.state.maybeResults && 
               <ProjectsLoader api={this.props.api} projects={this.state.maybeResults}>
-                {() => <ProjectSearchResults projects={this.state.maybeResults} onClick={this.onClick} collection={this.props.collection} projectName={this.state.projectName} excludedProjectsCount={this.state.excludedProjectsCount}/>
+                {() => <ProjectSearchResults
+                         projects={this.state.maybeResults}
+                         onClick={this.onClick}
+                         collection={this.props.collection}
+                         projectName={this.state.projectName}
+                         excludedProjectsCount={this.state.excludedProjectsCount}/>
                 }
               </ProjectsLoader>
           }          
