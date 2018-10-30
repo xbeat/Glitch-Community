@@ -8,9 +8,7 @@ import UserModel from '../../models/user';
 import Loader from '../includes/loader.jsx';
 import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
 
-const rankSearchResult = (result, query) => {
-  // Assigned a point value to the search result so that we can better order the resut list.
-  
+const rankSearchResult = (result, query) => { 
   //example result:
   /*
   login: "judeallred"
