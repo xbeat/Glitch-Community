@@ -9,6 +9,7 @@
 //
 
 import * as Sentry from '@sentry/browser';
+export * from '@sentry/browser';
 
 try {
   Sentry.init({
@@ -33,4 +34,3 @@ try {
   console.warn("Error initializing Sentry", error);
 }
 
-export default Sentry;
