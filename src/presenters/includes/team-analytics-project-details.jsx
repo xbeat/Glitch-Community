@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 
+import {ProjectAvatar} from './avatar.jsx';
 import {ProjectLink} from './link.jsx';
 import Loader from './loader.jsx';
 import {FALLBACK_AVATAR_URL, getAvatarUrl} from '../../models/project.js';
@@ -22,11 +23,10 @@ const addFallbackSrc = (event) => {
 };
 
 const ProjectDetails = ({projectDetails}) => {
-  let projectAvatar = getAvatarUrl(projectDetails.id);
   return (
     <article className="project-details">
       <ProjectLink project={projectDetails}>
-        <img className="avatar" src={projectAvatar} onError={addFallbackSrc} alt="project avatar" />
+        <ProjectAvatar project={projectDetails}/>
       </ProjectLink>
       <table>
         <tbody>
@@ -80,12 +80,9 @@ const ProjectDetails = ({projectDetails}) => {
 };
 
 const ProjectRemixItem = ({remix}) => {
-  let projectAvatar = getAvatarUrl(remix.id);
   return (
     <ProjectLink project={remix}>
-      <span data-tooltip={remix.domain} data-tooltip-left="true">
-        <img className="avatar" src={projectAvatar} alt={remix.domain} onError={addFallbackSrc} />
-      </span>
+      <ProjectAvatar project={remix}/>
     </ProjectLink>
   );
 };

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName} from '../../models/user.js';
-import {DEFAULT_TEAM_AVATAR, getAvatarUrl as getTeamAvatarUrl} from '../../models/team.js';
+import {FALLBACK_AVATAR_URL, getAvatarUrl as getProjectAvatarUrl} from '../../models/project';
+import {DEFAULT_TEAM_AVATAR, getAvatarUrl as getTeamAvatarUrl} from '../../models/team';
+import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName} from '../../models/user';
 
 // UserAvatar
 
@@ -19,6 +20,16 @@ Avatar.propTypes = {
   src: PropTypes.string.isRequired,
   srcFallback: PropTypes.string,
   color: PropTypes.string,
+};
+
+export const ProjectAvatar = ({project}) => (
+  <Avatar name={project.domain} src={getProjectAvatarUrl(project.id)} srcFallback={FALLBACK_AVATAR_URL}/>
+);
+ProjectAvatar.propTypes = {
+  project: PropTypes.shape({
+    domain: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export const TeamAvatar = ({team}) => (
