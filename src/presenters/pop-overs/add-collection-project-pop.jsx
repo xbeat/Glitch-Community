@@ -126,17 +126,19 @@ class AddCollectionProjectPop extends React.Component {
   async startSearch() {
     if (!this.state.query) {
       return this.clearSearch();
+    }else{
+      // reset the results
+      this.setState({maybeResults: null});
     }
     
-    // check if the query is a URL or a name of a project
-    // Project URL pattern: https://add-to-alexa.glitch.me/, https://glitch.com/~add-to-alexa
     let searchByUrl = false;
     let query = this.state.query;
     let collectionProjectIds = this.props.collection.projects.map((project) => project.id);
     
     if(isUrl(query)){
       searchByUrl = true;
-      // get project domain
+      // check if the query is a URL or a name of a project
+      // Project URL pattern: https://add-to-alexa.glitch.me/, https://glitch.com/~add-to-alexa
       let queryUrl = new URL(query);
       if(queryUrl.href.includes("me") && !queryUrl.href.includes("~")){
         // https://add-to-alexa.glitch.me/
@@ -147,23 +149,21 @@ class AddCollectionProjectPop extends React.Component {
       }
     }
     
-    console.log(`query: ${query}`);
-    console.log("collection projects %O", this.props.collection.projects);
-    
-    // https://glitch.com/~wry-bush
     const request = this.props.api.get(`projects/search?q=${query}`);
     this.setState({ maybeRequest: request });
     
     const {data} = await request;
     const results = data.map(project => ProjectModel(project).asProps()); 
     let originalNumResults = results.length;
-    // console.log(`originalNumResults: ${originalNumResults}`);
+    
+    console.log(`query: ${query}`);
+    console.log("results: %O", results);
     
     let nonCollectionResults = [];
     if(searchByUrl){  
+      console.log('filtering by url');
       // get the single result that matches the URL exactly - check with https://community.glitch.me/
       nonCollectionResults = results.filter(result => result.domain == query);
-      
       
       // check if the project is already in the collection
       if(nonCollectionResults.length > 0 && collectionProjectIds.includes(nonCollectionResults[0].id)){
@@ -171,7 +171,8 @@ class AddCollectionProjectPop extends React.Component {
         this.setState({projectName: query});
       }  
     }else{
-      // user is searching by project name or URL  - filter out any projects currently in the collection
+      console.log('filtering by name');
+      // user is searching by project name  - filter out any projects currently in the collection
       nonCollectionResults = results.filter( result => !collectionProjectIds.includes(result.id));
       
       if(this.props.collection.projects.map( (project) => project.domain).includes(query) && nonCollectionResults.length == originalNumResults){
