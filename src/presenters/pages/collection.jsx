@@ -15,11 +15,9 @@ import NotFound from '../includes/not-found.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import CollectionEditor from '../collection-editor.jsx';
 
-import AddCollectionProject from '../includes/add-collection-project.jsx';
-import AddCollectionAvatar from '../includes/add-collection-avatar.jsx';
-
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 import EditCollectionNameAndUrl from '../includes/edit-collection-name-and-url.jsx';
+import AddCollectionProject from '../includes/add-collection-project.jsx'
 
 import CollectionAvatar from '../includes/collection-avatar.jsx';
 import {UserTile} from '../users-list.jsx';
@@ -73,11 +71,9 @@ const CollectionPageContents = ({
   isAuthorized,
   updateNameAndUrl,
   updateDescription, 
-  uploadAvatar, 
   addProjectToCollection, 
   removeProjectFromCollection,
   updateColor,
-  updateAvatar,
   userLogin,
   ...props}) => (
   
@@ -96,23 +92,6 @@ const CollectionPageContents = ({
           <div className="collection-image-container">
             <CollectionAvatar backgroundColor={collection.coverColor}/>
           </div>
-          
-          
-          
-          {(false && isAuthorized) 
-            ? <div className="upload-image-buttons">
-              <AddCollectionAvatar
-                api={api}
-                collectionID = {collection.id}
-                update={updateAvatar}
-              />
-              <button className="button button-small button-tertiary" onClick={uploadAvatar}>
-                Replace Avatar
-              </button>
-            </div>
-            : null
-          }
-          
           
           <div className="collection-description">
             <AuthDescription
@@ -134,7 +113,7 @@ const CollectionPageContents = ({
           
         </header>
         
-        {collection &&
+        {!!collection &&
            <ProjectsLoader api={api} projects={collection.projects}>
              {projects => 
                <React.Fragment>
@@ -142,15 +121,13 @@ const CollectionPageContents = ({
                    <div className="collection-project-container-header">
                      <h3>Projects ({collection.projects.length})</h3>
                 
-                     {(isAuthorized 
-                       ? <AddCollectionProject
+                     {!!isAuthorized && (<AddCollectionProject
                          addProjectToCollection={addProjectToCollection}
                          collection={collection}
                          api={api}
                          currentUserIsOwner={isAuthorized}
                          currentUser={currentUser}
                        />
-                       : null
                      )}
                 
                    </div>

@@ -116,8 +116,8 @@ class AddCollectionProjectPop extends React.Component {
         query = query.pathname.substring(query.href.indexOf("~")+1);
       }else if(query.href.includes(".me")){
         // https://community.glitch.me/
-        query = query.host.substring(0, query.href.indexOf("."));
- olle     }
+        query = query.host.substring(0, query.indexOf("."));
+      }
     }
     
     const request = this.props.api.get(`projects/search?q=${query}`);
@@ -206,4 +206,4 @@ AddCollectionProjectPop.propTypes = {
   currentUser: PropTypes.object.isRequired,
 };
 
-export default AddCollectionProjectPop;c
+export default AddCollectionProjectPop;
