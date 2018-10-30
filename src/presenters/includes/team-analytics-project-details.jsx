@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 
-import {ProjectAvatar} from './avatar.jsx';
 import {ProjectLink} from './link.jsx';
 import Loader from './loader.jsx';
 import {FALLBACK_AVATAR_URL, getAvatarUrl} from '../../models/project.js';
@@ -22,11 +21,24 @@ const addFallbackSrc = (event) => {
   event.target.src = FALLBACK_AVATAR_URL;
 };
 
+const ProjectAvatar = ({project, className}) => (
+  <img src={getAvatarUrl(project.id)} className={className}
+    alt={project.domain} onError={addFallbackSrc}
+  />
+);
+ProjectAvatar.propTypes = {
+  project: PropTypes.shape({
+    domain: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
 const ProjectDetails = ({projectDetails}) => {
+  let projectAvatar = getAvatarUrl(projectDetails.id);
   return (
     <article className="project-details">
       <ProjectLink project={projectDetails}>
-        <ProjectAvatar project={projectDetails}/>
+        <img className="avatar" src={projectAvatar} onError={addFallbackSrc} alt="project avatar" />
       </ProjectLink>
       <table>
         <tbody>
@@ -80,9 +92,12 @@ const ProjectDetails = ({projectDetails}) => {
 };
 
 const ProjectRemixItem = ({remix}) => {
+  let projectAvatar = getAvatarUrl(remix.id);
   return (
     <ProjectLink project={remix}>
-      <ProjectAvatar project={remix}/>
+      <span data-tooltip={remix.domain} data-tooltip-left="true">
+        <img className="avatar" src={projectAvatar} alt={remix.domain} onError={addFallbackSrc} />
+      </span>
     </ProjectLink>
   );
 };

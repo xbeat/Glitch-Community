@@ -7,11 +7,12 @@ import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName} from '../../mode
 
 // UserAvatar
 
-export const Avatar = ({name, src, color, srcFallback}) => (
+export const Avatar = ({name, src, color, srcFallback, ...props}) => (
   <div data-tooltip={name} data-tooltip-left="true">
     <img width="32px" height="32px" src={src} alt={name}
       style={color ? {backgroundColor: color} : null}
       onError={srcFallback ? (event => event.target.src = srcFallback) : null}
+      {...props}
     />
   </div>
 );
@@ -20,16 +21,6 @@ Avatar.propTypes = {
   src: PropTypes.string.isRequired,
   srcFallback: PropTypes.string,
   color: PropTypes.string,
-};
-
-export const ProjectAvatar = ({project}) => (
-  <Avatar name={project.domain} src={getProjectAvatarUrl(project.id)} srcFallback={FALLBACK_AVATAR_URL}/>
-);
-ProjectAvatar.propTypes = {
-  project: PropTypes.shape({
-    domain: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export const TeamAvatar = ({team}) => (
