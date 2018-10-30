@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {FALLBACK_AVATAR_URL, getAvatarUrl as getProjectAvatarUrl} from '../../models/project';
 import {DEFAULT_TEAM_AVATAR, getAvatarUrl as getTeamAvatarUrl} from '../../models/team';
 import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName} from '../../models/user';
 
