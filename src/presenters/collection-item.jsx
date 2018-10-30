@@ -91,7 +91,7 @@ class CollectionItem extends React.Component{
 CollectionItem.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
-  userLogin: PropTypes.number.isRequired,
+  userLogin: PropTypes.string.isRequired,
 };
 
 export default CollectionItem;

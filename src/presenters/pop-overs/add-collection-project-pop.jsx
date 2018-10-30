@@ -111,13 +111,13 @@ class AddCollectionProjectPop extends React.Component {
       if(query.href.includes("me") && !query.href.includes("~")){
         // https://power-port.glitch.me/
         query = query.href.substring(query.href.indexOf("//")+"//".length, query.href.indexOf("."));
-      }else if(query.includes("~") && !query.includes(".me")){
+      }else if(query.href.includes("~") && !query.href.includes(".me")){
         // https://glitch.com/~power-port
-        query = query.pathname.substring(query.indexOf("~")+1);
-      }else if(query.includes(".me")){
+        query = query.pathname.substring(query.href.indexOf("~")+1);
+      }else if(query.href.includes(".me")){
         // https://community.glitch.me/
-        query = query.host.substring(0, query.indexOf("."));
-      }
+        query = query.host.substring(0, query.href.indexOf("."));
+ olle     }
     }
     
     const request = this.props.api.get(`projects/search?q=${query}`);
@@ -206,4 +206,4 @@ AddCollectionProjectPop.propTypes = {
   currentUser: PropTypes.object.isRequired,
 };
 
-export default AddCollectionProjectPop;
+export default AddCollectionProjectPop;c
