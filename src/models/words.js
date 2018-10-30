@@ -11,6 +11,7 @@ const getData = async (name) => {
 
 export const getPredicates = () => getData('predicates');
 export const getObjects = () => getData('objects');
+export const getCollectionPairs = () => getData('collection-pairs');
 
 const getFirst = async (name) => {
   const data = await getData(name);
