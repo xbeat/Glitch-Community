@@ -14,7 +14,7 @@ const AddCollectionAvatar = ({update, ...props}) => {
               Replace Avatar
           </button>
           { visible && <AddCollectionAvatarPop {...props} togglePopover={togglePopover} updateAvatar={update} /> }
-        </div>
+        </div> 
       )}
     </PopoverContainer>
   );

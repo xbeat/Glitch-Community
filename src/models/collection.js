@@ -1,9 +1,7 @@
 /* global CDN_URL */
 
 export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528812220123";
-
 export const colors = {red: "#EF6F6C", orange: "#FFCC6D", green:"#7DE2D1", cyan: "#45C1F7", navy: "#2E66B3", purple: "#B19AFF" };
-
 export const defaultAvatar = "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-avatar.svg?1540389405633";
 
 export const avatars = {
@@ -20,29 +18,27 @@ export const avatars = {
 export const getContrastTextColor = (hex) =>{
   if(hex){
     hex = hex.substring(1);
-    var r = parseInt(hex.substr(0,2),16);
-    var g = parseInt(hex.substr(2,2),16);
-    var b = parseInt(hex.substr(4,2),16);
-    var yiq = ((r*299)+(g*587)+(b*114))/1000;
+    const r = parseInt(hex.substr(0,2),16);
+    const g = parseInt(hex.substr(2,2),16);
+    const b = parseInt(hex.substr(4,2),16);
+    const yiq = ((r*299)+(g*587)+(b*114))/1000;
     return (yiq >= 128) ? 'black' : 'white';
   }
   
   return 'black';
 };
 
-
+// from https://stackoverflow.com/a/21648508/1720985
 export const hexToRgbA = (hex) => {
-  var c;
   if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
-    c= hex.substring(1).split('');
+    let c = hex.substring(1).split('');
     if(c.length== 3){
-      c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+      c = [c[0], c[0], c[1], c[1], c[2], c[2]];
     }
-    c= '0x'+c.join('');
+    c = '0x'+c.join('');
     return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0.5)';
   }
   return false;
-  // throw new Error('Bad Hex');
 };
 
 export default function Collection({users, projects}) {
