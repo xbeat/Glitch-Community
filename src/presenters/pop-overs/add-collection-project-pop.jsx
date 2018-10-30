@@ -38,7 +38,7 @@ ProjectResultsUL.propTypes = {
   projects: PropTypes.array.isRequired,
   collection: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
-}
+};
 
 const ProjectSearchResults = ({projects, collection, onClick, projectName, excludedProjectsCount}) => {
   if(projects.length > 0) {
@@ -70,6 +70,7 @@ const ProjectSearchResults = ({projects, collection, onClick, projectName, exclu
 ProjectSearchResults.propTypes = {
   collection: PropTypes.object.isRequired,
   projectName: PropTypes.string,
+  excludedProjectsCount: PropTypes.number,
 };
 
 function isUrl(s) {
@@ -90,8 +91,7 @@ class AddCollectionProjectPop extends React.Component {
       maybeRequest: null, //The active request promise
       maybeResults: null, //Null means still waiting vs empty,
       projectName: '', // the project name if the search result is a Url
-      omittedProjectCount: 0, // number of projects omitted from search
-      showRecentProjects: true, // by default, show user's 4 most recent projects
+      excludedProjectsCount: 0, // number of projects omitted from search
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -130,7 +130,7 @@ class AddCollectionProjectPop extends React.Component {
     }
     
     // check if the query is a URL or a name of a project
-    // Project URL pattern: https://glitch.com/~power-port, https://power-port.glitch.me/, https://community.glitch.me/
+    // Project URL pattern: https://glitch.com/~add-to-alexa, https://power-port.glitch.me/, https://community.glitch.me/
     let searchByUrl = false;
     let query = this.state.query;
     
@@ -139,18 +139,16 @@ class AddCollectionProjectPop extends React.Component {
       // get project domain
       let queryUrl = new URL(query);
       if(queryUrl.href.includes("me") && !queryUrl.href.includes("~")){
-        // https://power-port.glitch.me/
+        // https://glitch.com/~add-to-alexa
         query = queryUrl.href.substring(queryUrl.href.indexOf("//")+"//".length, queryUrl.href.indexOf("."));
-      }else if(queryUrl.href.includes("~") && !queryUrl.href.includes(".me")){
+      } else if(queryUrl.href.includes("~") && !queryUrl.href.includes(".me")){
         // https://glitch.com/~power-port
-        query = query.pathname.substring(queryUrl.href.indexOf("~")+1);
-      }else if(queryUrl.href.includes(".me")){
+        query = queryUrl.pathname.substring(queryUrl.href.indexOf("~")+1);
+      } else if(queryUrl.href.includes(".me")){
         // https://community.glitch.me/
-        query = query.host.substring(0, query.indexOf("."));
+        query = queryUrl.host.substring(0, query.indexOf("."));
       }
     }
-    
-    console.log(`search query: ${query}`);
     
     const request = this.props.api.get(`projects/search?q=${query}`);
     this.setState({ maybeRequest: request });
