@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import ProjectModel from '../../models/project';
-// import Loader from '../includes/loader.jsx';
 
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
@@ -93,26 +92,7 @@ export class AddTeamProjectPop extends React.Component {
   onClick(event, project) {
     event.preventDefault();
     this.props.togglePopover();
-    // temp: this code used by adding team templates
-
-    // if (this.state.source === 'templates') {
-    // this.setState({
-    //   notifyTemplateIsRemixing: true
-    // });
-    //   this.remixTemplate(projectId)
-    //     .then(({data}) => {
-    //       console.log ('yolooo' , data);
-    //       this.inviteUserToRemix(data)
-    //         .then(({data}) => {
-    //           console.log ('🚒', data);
-    //           // patch? avatar?
-    //           this.props.addProject(data.id);
-    //         });
-    //     });
-    // } else {
-    // have to be a member before this will work
     this.props.addProject(project);
-    // }
   }
 
   sourceIsTemplates() {
@@ -155,10 +135,6 @@ export class AddTeamProjectPop extends React.Component {
       this.updateFilter("");
       this.filterInput.current.focus();
     }
-    if (prevState.notifyTemplateIsRemixing !== this.state.notifyTemplateIsRemixing) {
-      console.log('📟 time to toggle the `is remixing` notification to', this.state.notifyTemplateIsRemixing);
-      // notify.createPersistentNotification(<p>remixing projectName to newname</p>, 'notifyRemixing')
-    }
   }
 
   componentDidMount() {
@@ -168,9 +144,7 @@ export class AddTeamProjectPop extends React.Component {
   }
   
   filterInputIsBlank() {
-    console.log(this.filterInput.current.value);
     if (this.filterInput.current.value.length === 0) {
-      console.log ('sdf');
       return true;
     }
   } 
@@ -181,25 +155,6 @@ export class AddTeamProjectPop extends React.Component {
     return (
       <dialog className="pop-over add-team-project-pop">
         <section className="pop-over-info">
-          {/* Temporary: hidden for now pending having templates to use
-          <div className="segmented-buttons">
-            <button
-              className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsTemplates()}`}
-              onClick={this.sourceIsTemplates.bind(this)}
-              data-source="templates"
-            >
-              Templates
-            </button>
-            <button
-              className={`button-small button-tertiary button-on-secondary ${this.activeIfSourceIsMyProjects()}`}
-              onClick={this.sourceIsMyProjects.bind(this)}
-              data-source="my-projects"
-            >
-              My Projects
-            </button>
-          </div>
-          */}
-
           <input
             ref={this.filterInput}
             onChange={(event) => {this.updateFilter(event.target.value);}}
@@ -210,13 +165,6 @@ export class AddTeamProjectPop extends React.Component {
         </section>
 
         <section className="pop-over-actions results-list" data-source='templates'>
-          {/* Temporary: hidden for now pending having templates to use
-
-          { (this.state.loadingTemplates) &&
-            <Loader />
-          }
-          */}
-
           <ul className="results">
             { filteredProjects.map((project) => (
               <li key={project.id}>

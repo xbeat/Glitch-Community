@@ -85,7 +85,6 @@ class TeamAnalytics extends React.Component {
   }
 
   updateAnalytics() {
-    console.log ('updateAnalytics');
     this.setState({
       isGettingData: true,
     });
