@@ -10,7 +10,6 @@
 
 import * as Sentry from '@sentry/browser';
 
-// First things first -- let's bring our error collection online:
 try {
   Sentry.init({
     dsn: 'https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508',
@@ -31,9 +30,7 @@ try {
   // Expose for use on the developer console:
   window.Sentry = Sentry;
 } catch (error) {
-  console.warn("Error bringing Sentry online", error);
+  console.warn("Error initializing Sentry", error);
 }
 
-// If the initialization failed, Sentry JS shoud still function,
-// it'll just no-op.
 export default Sentry;

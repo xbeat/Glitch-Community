@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import * as Sentry from '@sentry/browser';
+import {configureScope, captureException, captureMessage} from '../utils/sentry';
 
 import UserModel from '../models/user';
 import LocalStorage from './includes/local-storage.jsx';
@@ -30,7 +30,7 @@ function identifyUser(user) {
       });
     }
     if (user) {
-      Sentry.configureScope((scope) => {
+      configureScope((scope) => {
         scope.setUser({
           id: user.id,
           login: user.login,
@@ -39,7 +39,7 @@ function identifyUser(user) {
     }
   } catch (error) {
     console.error(error);
-    Sentry.captureException(error);
+    captureException(error);
   }
 }
 
@@ -129,7 +129,7 @@ class CurrentUserManager extends React.Component {
         const newSharedUser = await this.getSharedUser();
         this.props.setSharedUser(newSharedUser);
         console.warn('Fixed shared cachedUser from', sharedUser, 'to', newSharedUser);
-        Sentry.captureMessage('Invalid cachedUser', {extra: {
+        captureMessage('Invalid cachedUser', {extra: {
           from: sharedUser || null,
           to: newSharedUser || null,
         }});
