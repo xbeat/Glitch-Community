@@ -107,14 +107,14 @@ class AddCollectionProjectPop extends React.Component {
     if(isUrl(query)){
       searchByUrl = true;
       // get project domain
-      query = new URL(query);
-      if(query.href.includes("me") && !query.href.includes("~")){
+      let queryUrl = new URL(query);
+      if(queryUrl.href.includes("me") && !queryUrl.href.includes("~")){
         // https://power-port.glitch.me/
-        query = query.href.substring(query.href.indexOf("//")+"//".length, query.href.indexOf("."));
-      }else if(query.href.includes("~") && !query.href.includes(".me")){
+        query = queryUrl.href.substring(queryUrl.href.indexOf("//")+"//".length, queryUrl.href.indexOf("."));
+      }else if(queryUrl.href.includes("~") && !queryUrl.href.includes(".me")){
         // https://glitch.com/~power-port
-        query = query.pathname.substring(query.href.indexOf("~")+1);
-      }else if(query.href.includes(".me")){
+        query = query.pathname.substring(queryUrl.href.indexOf("~")+1);
+      }else if(queryUrl.href.includes(".me")){
         // https://community.glitch.me/
         query = query.host.substring(0, query.indexOf("."));
       }

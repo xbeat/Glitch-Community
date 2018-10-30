@@ -16,13 +16,13 @@ export const avatars = {
 };
 
 
-export const getContrastTextColor = (hexcolor) =>{
-  // remove #
-  if(hexcolor){
-    hexcolor = hexcolor.substring(hexcolor.indexOf("#") +1);
-    var r = parseInt(hexcolor.substr(0,2),16);
-    var g = parseInt(hexcolor.substr(2,2),16);
-    var b = parseInt(hexcolor.substr(4,2),16);
+// from http://dannyruchtie.com/color-contrast-calculator-with-yiq/
+export const getContrastTextColor = (hex) =>{
+  if(hex){
+    hex = hex.substring(1);
+    var r = parseInt(hex.substr(0,2),16);
+    var g = parseInt(hex.substr(2,2),16);
+    var b = parseInt(hex.substr(4,2),16);
     var yiq = ((r*299)+(g*587)+(b*114))/1000;
     return (yiq >= 128) ? 'black' : 'white';
   }
