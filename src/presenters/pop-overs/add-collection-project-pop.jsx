@@ -14,7 +14,6 @@ import Notifications from '../notifications.jsx';
 const ProjectResultsUL = ({projects, collection, onClick}) => (
   <ul className="results">
     {projects.map(project => (
-      (!collection.projects.map( (project) => project.id).includes(project.id) &&
         <Notifications key={project.id}>
           {({createNotification}) => (
             <li>
@@ -30,7 +29,6 @@ const ProjectResultsUL = ({projects, collection, onClick}) => (
             </li>
           )}
         </Notifications>
-      )
     ))}
   </ul>
 );
@@ -121,6 +119,7 @@ class AddCollectionProjectPop extends React.Component {
       maybeRequest: null,
       maybeResults: null,
       projectName: '',
+      excludedProjectsCount: 0,
     });
   } 
   
@@ -133,7 +132,6 @@ class AddCollectionProjectPop extends React.Component {
     // Project URL pattern: https://add-to-alexa.glitch.me/, https://glitch.com/~add-to-alexa
     let searchByUrl = false;
     let query = this.state.query;
-    let excludedResults = false;
     
     if(isUrl(query)){
       searchByUrl = true;
@@ -160,17 +158,19 @@ class AddCollectionProjectPop extends React.Component {
     let originalNumResults = results.length;
     console.log(`originalNumResults: ${originalNumResults}`);
     
-    let nonCollectionResults = null;
+    let nonCollectionResults = [];
     if(searchByUrl){  
       if(this.props.collection.projects.map( (project) => project.domain).includes(query)){
         console.log('project already exists in collection');
         // the domain already exists in the collection - return an empty array
-        nonCollectionResults =[];
         this.setState({projectName: query});
       }else{
         // return results, filtering out any projects currently in collection
         nonCollectionResults = this.props.collection.projects.filter(project => project.domain != query);
-        console.log("nonCollectionResults: %O", nonCollectionResults);
+        if(originalNumResults > 1 && nonCollectionResults < originalNumResults){
+          this.state.excludedProjectsCount = originalNumResults - nonCollectionResults;
+          console.log(`excluded ${this.state.excludedProjectsCount} projects`);
+        }
       }      
     }else{
       // user is searching by project name or URL  - filter out any projects currently in the collection
@@ -181,10 +181,6 @@ class AddCollectionProjectPop extends React.Component {
         this.setState({projectName: query});
       }
     }
-    
-    if(originalNumResults - nonCollectionResults.length > 0){
-      this.setState({excludedProjectsCount: originalNumResults - nonCollectionResults.length});
-    }    
 
     this.setState(({ maybeRequest }) => {
       return (request === maybeRequest) ? {
