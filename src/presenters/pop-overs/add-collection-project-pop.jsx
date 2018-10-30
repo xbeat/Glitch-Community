@@ -43,8 +43,12 @@ ProjectSearchResults.propTypes = {
 };
 
 function isUrl(s) {
-  var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-  return regexp.test(s);
+  try {
+    new URL(s);
+    return true;
+  } catch (_) {
+    return false;  
+  }
 }
 
 class AddCollectionProjectPop extends React.Component {
@@ -103,9 +107,10 @@ class AddCollectionProjectPop extends React.Component {
     if(isUrl(query)){
       searchByUrl = true;
       // get project domain
-      if(query.includes("me") && !query.includes("~")){
+      query = new URL(query);
+      if(query.href.includes("me") && !query.href.includes("~")){
         // https://power-port.glitch.me/
-        query = query.substring(query.indexOf("//")+"//".length, query.indexOf("."));
+        query = query.href.substring(query.href.indexOf("//")+"//".length, query.href.indexOf("."));
       }else if(query.includes("~") && !query.includes(".me")){
         // https://glitch.com/~power-port
         query = query.pathname.substring(query.indexOf("~")+1);
