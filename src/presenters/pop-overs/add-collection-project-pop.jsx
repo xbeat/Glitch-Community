@@ -161,11 +161,15 @@ class AddCollectionProjectPop extends React.Component {
     
     let nonCollectionResults = [];
     if(searchByUrl){  
-      nonCollectionResults = results.filter(result => !collectionProjectIds.includes(result.id));
-      if(nonCollectionResults.length == 0){
-         // the project is already in the collection
-         this.setState({projectName: query});
-      }   
+      // get the single result that matches the URL exactly - check with https://community.glitch.me/
+      nonCollectionResults = results.filter(result => result.domain == query);
+      
+      
+      // check if the project is already in the collection
+      if(nonCollectionResults.length > 0 && collectionProjectIds.includes(nonCollectionResults[0].id)){
+        nonCollectionResults = [];
+        this.setState({projectName: query});
+      }  
     }else{
       // user is searching by project name or URL  - filter out any projects currently in the collection
       nonCollectionResults = results.filter( result => !collectionProjectIds.includes(result.id));
