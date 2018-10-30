@@ -32,7 +32,7 @@ module.exports = () => {
   return {
     mode,
     watchOptions: {
-      ignored: /node_modules/, // Don't watch node_modules.
+      ignored: /node_modules/,
     },
     entry: {
       "client-bundle": `${SRC}/client.jsx`,

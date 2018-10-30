@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Sentry from '@sentry/browser';
+import {captureMessage} from '../../utils/sentry';
 
 import {Redirect} from 'react-router-dom';
 import {CurrentUserConsumer} from '../current-user.jsx';
@@ -37,7 +37,7 @@ class LoginPage extends React.Component {
       }
       const deets = {provider, error: errorData};
       console.error("OAuth login error.", deets);
-      Sentry.captureMessage("Oauth login error", {extra: deets});
+      captureMessage("Oauth login error", {extra: deets});
     }
   }
   
