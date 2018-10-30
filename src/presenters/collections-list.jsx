@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import CollectionItem from "./collection-item.jsx";
 import {defaultAvatar, getLink,colors} from '../models/collection';
-import {getPredicates, getCollectionPair} from '../models/words';
+import {getCollections, getPredicate} from '../models/words';
 import Loader from './includes/loader.jsx';
 
-
-import _ from 'lodash';
+import {kebabCase, orderBy} from 'lodash';
 
 
 class CollectionsList extends React.Component {
@@ -38,18 +37,18 @@ class CollectionsList extends React.Component {
   }
   
   render() {
-    const {title, api, isAuthorized, currentUser} = this.props;
+    const {title, api, isAuthorized, currentUser, userLogin} = this.props;
     const collections = this.state.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
     return (
-      ((currentUser.login || currentUser.login !== this.props.userLogin) && collections.length > 0 && 
+      ((currentUser.login || currentUser.login !== userLogin) && collections.length > 0 && 
         <article className="collections">
           <h2>{title}</h2>
 
           {( isAuthorized 
             ? 
             ( collections.length > 0 
-              ? <CreateCollectionButton api={api}/>   
-              : <CreateFirstCollection api={api}/>
+              ? <CreateCollectionButton {...{api, currentUser}}/>   
+              : <CreateFirstCollection {...{api}} />
             )
             : null
           )}
@@ -57,7 +56,7 @@ class CollectionsList extends React.Component {
           <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection, userLogin: this.props.userLogin}}></CollectionsUL>
 
         </article>
-       )
+      )
     );  
   }
 }
@@ -68,15 +67,15 @@ CollectionsList.propTypes = {
   title: PropTypes.node.isRequired,
   api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  userLogin: PropTypes.number.isRequired,
+  userLogin: PropTypes.string.isRequired,
 };
 
-const CreateFirstCollection = ({api}) =>{
+const CreateFirstCollection = ({api, currentUser}) =>{
   return(
     <div className="create-first-collection">
       <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-empty.svg?1539800010738" alt=""/>
       <p className="placeholder">Create collections to organize your favorite projects.</p><br/>
-      <CreateCollectionButton api={api}/>  
+      <CreateCollectionButton {...{api, currentUser}}/>  
     </div>
   );
 };
@@ -85,61 +84,88 @@ class CreateCollectionButton extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      done: false,
+      shouldRedirect: false,
       error: false,
       loading: false,
       newCollectionUrl: "",
     };
+    this.createCollection = this.createCollection.bind(this);
   }
-  async createCollection(api){
+  
+  async postCollection(api, collectionSynonym, predicate, userLogin){
+    const name = [predicate, collectionSynonym].join('-');
+    const description = `A ${collectionSynonym} of projects that does ${predicate} things`;
+    const url = kebabCase(name);
+    
+    // defaults
+    const avatarUrl = defaultAvatar;
+    
+    // get a random color
+    const collectionColors = Object.values(colors);
+    const coverColor = collectionColors[Math.floor(Math.random()*collectionColors.length)];    
+
+    const {data} = await api.post('collections', {
+      name,
+      description,
+      url,
+      avatarUrl,
+      coverColor,
+    });
+    
+    if(data && data.url){
+      let newCollectionUrl = getLink(userLogin, data.url);
+      this.setState({newCollectionUrl: newCollectionUrl});
+      this.setState({shouldRedirect: true});
+      return true;
+    }
+    return false;
+  }
+  
+  async generateNames(userLogin) {
+    let collectionSynonyms = ["mix","bricolage","playlist","assortment","potpourri","melange","album","collection","variety","compilation"];
+    let predicate = userLogin;
+
+    try {
+      // get collection names
+      collectionSynonyms = await getCollections();
+      predicate = await getPredicate();
+    } catch(error) {
+      // If there's a failure, we'll stick with our defaults.
+    }
+    
+    return [collectionSynonyms, predicate];
+  }
+  
+  async createCollection(api, userLogin){
     this.setState({loading: true});
-
-    try{
-      let name = await getCollectionPair();
-      let predicate = await getPredicates()[0];
-      let collectionSynonym = name.split("-")[1];
-      let description = `A ${collectionSynonym} of projects that does ${predicate} things`;
-      let url = _.kebabCase(name);
-      
-      // defaults
-      let avatarUrl = defaultAvatar;
-      // get a random color
-      let randomHex = Object.values(colors);
-      let coverColor = randomHex[Math.floor(Math.random()*randomHex.length)];
-      
-      const {data} = await api.post('collections', {
-        name,
-        description,
-        url,
-        avatarUrl,
-        coverColor,
-      });
-      let collectionUrl = data.url;
-
-      let userName = "";
-      api.get(`users/${data.userLogin}`).then(({data}) => {
-        userName = data.login;
-        let newCollectionUrl = getLink(userName, collectionUrl);
-        this.setState({newCollectionUrl: newCollectionUrl});
-        this.setState({done: true});
-      });
-    }catch(error){
-      if(error && error.response && error.response.data && error.response.data.message){
-        this.setState({error: error.response.data.message});
-        // MAYBE HANDLE ERROR HERE - a notification?
+    
+    const [collectionSynonymns, predicate] = await this.generateNames(userLogin);
+    let creationSuccess = false;
+    for(let synonym of collectionSynonymns){
+      try{
+        creationSuccess = await this.postCollection(api, synonym, predicate, userLogin);
+        if(creationSuccess) {
+          break;
+        }
+      } catch(error){
+        // Try again.
       }
+    }
+    if(!creationSuccess) {
+      this.setState({error: "Unable to create collection :-("});
     }
   }
   
   render(){
-    if(this.state.done){
+    if(this.state.shouldRedirect){
       return <Redirect to={this.state.newCollectionUrl} push={true}/>;
-    }else if(this.state.loading){
+    }
+    if(this.state.loading){
       return <Loader />;
     }
     return (
       <div id="create-collection-container">
-        <button className="button" id="create-collection" onClick={() => this.createCollection(this.props.api)}>
+        <button className="button" id="create-collection" onClick={() => this.createCollection(this.props.api, this.props.currentUser.login)}>
             Create Collection
         </button>    
       </div>
@@ -149,11 +175,12 @@ class CreateCollectionButton extends React.Component{
 
 CreateCollectionButton.propTypes = {
   api: PropTypes.any.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };  
 
 export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized, userLogin}) => {
   // order by updatedAt date
-  const orderedCollections = _.orderBy(collections, collection => collection.updatedAt).reverse();
+  const orderedCollections = orderBy(collections, collection => collection.updatedAt).reverse();
   return (
     <ul className="collections-container">
       {/* FAVORITES COLLECTION CARD - note this currently references empty favorites category in categories.js
@@ -172,7 +199,7 @@ CollectionsUL.propTypes = {
   collections: PropTypes.array.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
-  userLogin: PropTypes.number.isRequired,
+  userLogin: PropTypes.string.isRequired,
 };
 
 
