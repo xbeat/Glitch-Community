@@ -59,13 +59,13 @@ class CollectionEditor extends React.Component {
   }
   
   async addProjectToCollection(project, collection) {
-    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
     if(collection.id == this.state.id){
       // add project to collection page
       this.setState(({projects}) => ({
         projects: [...projects, project],
       }));
     }
+    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
   }
   
   async removeProjectFromCollection(project) {
