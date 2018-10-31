@@ -62,7 +62,7 @@ export class Notifications extends React.Component {
     };
     const {notifications} = this.state;
     return (
-      <React.Fragment>
+      <>
         <Provider value={funcs}>
           {this.props.children}
         </Provider>
@@ -75,7 +75,7 @@ export class Notifications extends React.Component {
             ))}
           </div>
         )}
-      </React.Fragment>
+      </>
     );
   }
 }

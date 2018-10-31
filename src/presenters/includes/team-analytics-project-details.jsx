@@ -125,11 +125,11 @@ class TeamAnalyticsProjectDetails extends React.Component {
     
   render() {
     return (
-      <React.Fragment>
+      <>
         { (this.state.isGettingData) &&
           <Loader />
         ||
-          <React.Fragment>
+          <>
             <ProjectDetails 
               projectDetails = {this.state.projectDetails}
             />
@@ -143,9 +143,9 @@ class TeamAnalyticsProjectDetails extends React.Component {
                 remix = {remix}
               />
             ))}
-          </React.Fragment>
+          </>
         }
-      </React.Fragment>
+      </>
     );
   }
 }

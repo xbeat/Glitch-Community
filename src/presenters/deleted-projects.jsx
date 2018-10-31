@@ -87,10 +87,10 @@ export default class DeletedProjects extends React.Component {
       return 'nothing found';
     }
     return (
-      <React.Fragment>
+      <>
         <DeletedProjectsList {...this.props}/>
         <button className="button button-tertiary" onClick={this.clickHide}>Hide Deleted Projects</button>
-      </React.Fragment>
+      </>
     );
   }
   
