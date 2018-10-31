@@ -152,11 +152,7 @@ class AddProjectToCollectionPop extends React.Component {
               <button type="submit" className="create-collection button-small" disabled={!!queryError}>
                 Create
               </button>
-            ) : <Loader/>}
-            <p className="url-preview">
-              {/* Handle anonymous users here? */}
-              {getLink(this.props.currentUser.login, _.kebabCase(query || placeholder))}
-            </p>         
+            ) : <Loader/>}       
           </form>         
         </section>
       </dialog>

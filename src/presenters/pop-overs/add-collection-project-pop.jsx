@@ -156,12 +156,9 @@ class AddCollectionProjectPop extends React.Component {
     const results = data.map(project => ProjectModel(project).asProps()); 
     let originalNumResults = results.length;
     
-    console.log(`query: ${query}`);
-    console.log("results: %O", results);
     
     let nonCollectionResults = [];
     if(searchByUrl){  
-      console.log('filtering by url');
       // get the single result that matches the URL exactly - check with https://community.glitch.me/
       nonCollectionResults = results.filter(result => result.domain == query);
       
@@ -171,7 +168,6 @@ class AddCollectionProjectPop extends React.Component {
         this.setState({projectName: query});
       }  
     }else{
-      console.log('filtering by name');
       // user is searching by project name  - filter out any projects currently in the collection
       nonCollectionResults = results.filter( result => !collectionProjectIds.includes(result.id));
       
@@ -186,8 +182,6 @@ class AddCollectionProjectPop extends React.Component {
         
       }
     }
-    
-    console.log("nonCollectionResults %O", nonCollectionResults);
 
     this.setState(({ maybeRequest }) => {
       return (request === maybeRequest) ? {
