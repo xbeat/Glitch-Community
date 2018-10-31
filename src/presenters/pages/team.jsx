@@ -19,11 +19,6 @@ import EntityPageProjects from '../entity-page-projects.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
-import TeamUpgradeInfoBanner from '../includes/team-upgrade-info-banner.jsx';
-import TeamProjectLimitReachedBanner from '../includes/team-project-limit-reached-banner.jsx';
-
-const FREE_TEAM_PROJECTS_LIMIT = 5;
-const ADD_PROJECT_PALS = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Fadd-projects-pals.svg?1533137032374";
 
 function syncPageToUrl(url) {
   history.replaceState(null, null, getLink({url}));
@@ -59,13 +54,6 @@ class TeamPage extends React.Component {
     this.teamAdmins = this.teamAdmins.bind(this);
   }
 
-  projectLimitIsReached() {
-    if (this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects && (this.props.team.projects.length >= FREE_TEAM_PROJECTS_LIMIT)) {
-      return true;
-    }
-    return false;
-  }
-
   teamAdmins() {
     return this.props.team.users.filter(user => {
       return this.props.team.adminIds.includes(user.id);
@@ -84,6 +72,9 @@ class TeamPage extends React.Component {
     return (
       <main className="profile-page team-page">
         <section>
+          { this.props.currentUserIsOnTeam && (
+            <div className="beta">Teams Beta, <a href="/teams/" target="_blank" >Learn More</a></div>
+          )}
           <ProfileContainer
             avatarStyle={getAvatarStyle({...this.props.team, cache: this.props.team._cacheAvatar})}
             coverStyle={getProfileStyle({...this.props.team, cache: this.props.team._cacheCover})}
@@ -144,17 +135,8 @@ class TeamPage extends React.Component {
         <AddTeamProject
           {...this.props}
           teamProjects={this.props.team.projects}
-          projectLimitIsReached={this.projectLimitIsReached()}
           api={this.props.api}
         />
-        { this.projectLimitIsReached() &&
-          <TeamProjectLimitReachedBanner
-            teamName={this.props.team.name}
-            teamId={this.props.team.id}
-            currentUserId={this.props.currentUser.id}
-            users={this.props.team.users}
-          />
-        }
         <EntityPageProjects
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
@@ -172,15 +154,9 @@ class TeamPage extends React.Component {
         { (this.props.team.projects.length === 0 && this.props.currentUserIsOnTeam) &&
           <aside className="inline-banners add-project-to-empty-team-banner">
             <div className="description-container">
-              <img className="project-pals" src={ADD_PROJECT_PALS} alt="" />
-              <div className="description">Add projects to build your team</div>
+              <img className="project-pals" src="https://cdn.glitch.com/02ae6077-549b-429d-85bc-682e0e3ced5c%2Fcollaborate.svg?1540583258925" alt="" />
+              <div className="description">Add projects to share them with your team</div>
             </div>
-            <AddTeamProject
-              {...this.props}
-              extraButtonClass = "button-small"
-              teamProjects = {this.props.team.projects}
-              api={this.props.api}
-            />
           </aside>
         }
 
@@ -192,21 +168,9 @@ class TeamPage extends React.Component {
             projects={this.props.team.projects}
             addProject={this.props.addProject}
             myProjects={this.props.currentUser ? this.props.currentUser.projects : []}
-            projectLimitIsReached={this.projectLimitIsReached()}
-          />
-        }
-        { (this.props.currentUserIsOnTeam && !this.props.teamHasUnlimitedProjects) &&
-          <TeamUpgradeInfoBanner
-            projectsCount={this.props.team.projects.length}
-            limit={FREE_TEAM_PROJECTS_LIMIT}
-            teamName={this.props.team.name}
-            teamId={this.props.team.id}
-            users={this.props.team.users}
-            currentUserId={this.props.currentUser.id}
           />
         }
 
-        {/* billing info section goes here */}
         <DevToggles>
           {toggles => (toggles.includes('delete-teams') && this.props.currentUserIsTeamAdmin && (
             <DeleteTeam api={() => this.props.api}
@@ -258,7 +222,6 @@ TeamPage.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
   removePin: PropTypes.func.isRequired,
   removeProject: PropTypes.func.isRequired,
-  teamHasUnlimitedProjects: PropTypes.bool.isRequired,
   updateName: PropTypes.func.isRequired,
   updateUrl: PropTypes.func.isRequired,
   updateDescription: PropTypes.func.isRequired,

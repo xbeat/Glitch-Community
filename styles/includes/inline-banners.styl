@@ -11,59 +11,11 @@
   .add-project-container
     margin-bottom: 0
     margin-top: 1rem
-
-  &.team-upgrade-banner
-    margin-top: 2rem
-    margin-bottom: 1rem
-    .progress
-      width: 100%
-      border-color: secondary
-      background-color: primary-background
-      margin-top: 12px
-      margin-bottom: 12px
-      height: 9px
-      border-radius: 3px
-      
-      .progress-value
-        background-color: secondary
-        border-radius: 3px
-        position: relative
-        height: 9px
-        min-width: 6%
-        &.projects-left-error
-          background-color: warning
-        
-      .projects-left
-        position: absolute
-        color: primary-background
-        border-radius: 5px
-        background-color: tertiary
-        padding: 3px 5px
-        padding-bottom: 1px
-        right: 0
-        top: -8px;
-        &.projects-left-error
-          background-color: error
-  
+ 
   &.add-project-to-analytics-banner
     position: absolute
     z-index: 1
   
-  &.team-project-limit-reached-banner
-    background-color: warning-background
-    border-bottom-color: warning-background
-    &:after
-      top: -13px
-      left: 8.5px
-      border: solid transparent
-      content: " "
-      height: 0
-      width: 0
-      position: absolute
-      pointer-events: none
-      border-bottom-color: inherit
-      border-width: 7px
-
   &.add-project-to-empty-team-banner
     background-color: cta
     .description-container

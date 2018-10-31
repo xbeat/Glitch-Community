@@ -8,6 +8,48 @@ import UserModel from '../../models/user';
 import Loader from '../includes/loader.jsx';
 import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
 
+const rankSearchResult = (result, query) => { 
+  //example result:
+  /*
+  login: "judeallred"
+  name: "Jude Allred"
+  */
+  const lowerQuery = query.toLowerCase();
+  let points = 0;
+
+  const login = result.login || "";
+  const lowerLogin = login.toLowerCase();
+  const name = result.name || "";
+  const lowerName = name.toLowerCase();
+
+
+  //Big point items -- exact matches:
+  if(lowerLogin === lowerQuery) {
+    points += 9000; // exact match on login name :over nine thousand!:
+  }
+
+  if(lowerName === lowerQuery) {
+    points += 50; // Exact match on name, case insensitive.
+
+    if(name === query) {
+      points += 10; // Bonus case-sensitive match
+    }
+  }
+
+  // Points for matching either of login or name.
+  // Bonus if startsWith.
+  [lowerLogin, lowerName].forEach((lowerField) => {
+    if(lowerField.includes(lowerQuery)) {
+      points += 10;
+
+      if(lowerField.startsWith(lowerQuery)) {
+        points += 5;
+      }
+    }
+  });
+
+  return points;
+};
 
 class AddTeamUserPop extends React.Component {
   constructor(props) {
@@ -16,7 +58,7 @@ class AddTeamUserPop extends React.Component {
     this.state = {
       query: '', //The actual search text
       maybeRequest: null, //The active request promise
-      maybeResults: null, //Null means still waiting vs empty -- [jude: i suggest the 'maybe' convention for nullable fields with meaning.  'maybeResults'] --greg: i like it
+      maybeResults: null, //Null means still waiting vs empty
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -53,11 +95,12 @@ class AddTeamUserPop extends React.Component {
     const {data} = await request;
     const results = data.map(user => UserModel(user).asProps());
     const nonMemberResults = results.filter(user => !this.props.members.includes(user.id));
+    const rankedResults = nonMemberResults.sort((a, b) => rankSearchResult(b, query) - rankSearchResult(a, query));
     
     this.setState(({ maybeRequest }) => {
       return (request === maybeRequest) ? {
         maybeRequest: null,
-        maybeResults: nonMemberResults.slice(0, 5),
+        maybeResults: rankedResults,
       } : {};
     });
   }
@@ -99,7 +142,6 @@ class AddTeamUserPop extends React.Component {
         item: <UserResultItem user={user} action={() => inviteUser(user)} />
       })));
     }
-    
     return (
       <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">
@@ -107,23 +149,10 @@ class AddTeamUserPop extends React.Component {
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             value={query} onChange={this.handleChange}
             className="pop-over-input search-input pop-over-search"
-            placeholder="Search for a user or email"
+            placeholder="Search for a user"
           />
         </section>
-        {!!query && (
-          results.length ? (
-            <section className="pop-over-actions last-section results-list">
-              <ul className="results">
-                {results.map(({key, item}) => <li key={key}>{item}</li>)}
-              </ul>
-              {isLoading && <Loader />}
-            </section>
-          ) : (
-            <section className="pop-over-actions last-section">
-              {isLoading ? <Loader/> : <React.Fragment>nothing found <span role="img" aria-label="">💫</span></React.Fragment>}
-            </section>
-          )
-        )}
+        {!!query && <Results isLoading={isLoading} results={results}/> }
         {!query && setWhitelistedDomain && (
           <aside className="pop-over-info">
             You can also whitelist with @example.com
@@ -140,6 +169,37 @@ AddTeamUserPop.propTypes = {
   members: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   setWhitelistedDomain: PropTypes.func,
   whitelistedDomain: PropTypes.string,
+};
+
+const Results = ({results, isLoading}) => {
+  if(isLoading) {
+    return (
+      <section className="pop-over-actions last-section">
+        <Loader />
+      </section>
+    );
+  }
+
+  if(results.length === 0) {
+    return (
+      <section className="pop-over-actions last-section">
+        Nothing found <span role="img" aria-label="">💫</span>
+      </section>
+    );
+  }
+
+  return (
+    <section className="pop-over-actions last-section results-list">
+      <ul className="results">
+        {results.map(({key, item}) => <li key={key}>{item}</li>)}
+      </ul>
+    </section>
+  );
+};
+
+Results.propTypes = {
+  results: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default AddTeamUserPop;
