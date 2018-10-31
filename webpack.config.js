@@ -59,7 +59,6 @@ module.exports = () => {
         new TerserPlugin({terserOptions: {safari10: true}}),
       ],
     },
-    devtool: 'source-map',
     module: {
       rules: [
         {
@@ -103,9 +102,7 @@ module.exports = () => {
         },
       ],
     },
-    watchOptions: {
-      //ignored: /node_modules/,
-    },
+    devtool: false,
     plugins: [
       new LodashModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
