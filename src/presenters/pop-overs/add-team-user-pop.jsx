@@ -121,7 +121,7 @@ class AddTeamUserPop extends React.Component {
       domain = email.domain;
     } else {
       const fakeEmail = parseOneAddress(query.replace('@', 'test@'));
-      if (fakeEmail) {
+      if (fakeEmail && fakeEmail.domain.includes('.')) {
         domain = fakeEmail.domain;
       }
     }

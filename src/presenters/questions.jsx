@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import randomColor from 'randomcolor';
 import {sample} from 'lodash';
 
+import ErrorBoundary from './includes/error-boundary.jsx';
 import Link from './includes/link.jsx';
 import QuestionItem from './question-item.jsx';
 
@@ -69,13 +70,15 @@ class Questions extends React.Component {
         </h2>
         <article className="projects">
           {questions.length ? (
-            <ul className="projects-container">
-              {questions.map(question => (
-                <li key={question.questionId}>
-                  <QuestionItem {...question}/>
-                </li>
-              ))}
-            </ul>
+            <ErrorBoundary>
+              <ul className="projects-container">
+                {questions.map(question => (
+                  <li key={question.questionId}>
+                    <QuestionItem {...question}/>
+                  </li>
+                ))}
+              </ul>
+            </ErrorBoundary>
           ) : (
             <React.Fragment>
               {kaomoji} Looks like nobody is asking for help right now.{' '}
