@@ -15,10 +15,10 @@ export default class Konami extends React.Component {
   
   render() {  
     return (
-      <React.Fragment>
+      <>
         <ReactKonami easterEgg={()=>this.setState({active: true})}/>
         { !!this.state.active && this.props.children }
-      </React.Fragment>
+      </>
     );
   }
 }
