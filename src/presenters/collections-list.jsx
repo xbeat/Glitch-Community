@@ -33,23 +33,25 @@ class CollectionsList extends React.Component {
     const {title, api, isAuthorized, currentUser, userLogin} = this.props;
     const collections = this.props.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
     return (
-      ((currentUser.login || currentUser.login !== userLogin) && 
-        <article className="collections">
-          <h2>{title}</h2>
-
-          {( isAuthorized 
-            ? 
-            ( collections.length > 0 
-              ? <CreateCollectionButton {...{api, currentUser}}/>   
-              : <CreateFirstCollection {...{api}} />
-            )
-            : null
-          )}
-
-          <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection, userLogin: this.props.userLogin}}></CollectionsUL>
-
-        </article>
-      )
+     <React.Fragment>
+        {(collections.length > 0
+        ? 
+            <article className="collections">
+                <h2>{title}</h2>
+              {(isAuthorized && <CreateCollectionButton {...{api, currentUser}}/>)}
+            
+              <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection, userLogin: this.props.userLogin}}/>
+            </article>
+        : 
+             <article className="collections">
+              <h2>{title}</h2>
+               {(isAuthorized && <CreateFirstCollection {...{api, currentUser}}/>)}
+                <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection, userLogin: this.props.userLogin}}/>
+              </article>
+          
+        )}
+     </React.Fragment>
+  
     );  
   }
 }
