@@ -6,12 +6,6 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const AutoprefixerStylus = require("autoprefixer-stylus");
 
-class OutputOnBuildStart {
-  apply(compiler) {
-    compiler.hooks.watchRun.tap("OutputWatchStart", () => console.log('Files changed, rebuilding...'));
-  }
-}
-
 
 const PUBLIC = path.resolve(__dirname, 'public');
 const SRC = path.resolve(__dirname, 'src');
@@ -109,9 +103,11 @@ module.exports = () => {
         },
       ],
     },
+    watchOptions: {
+      //ignored: /node_modules/,
+    },
     plugins: [
-      new OutputOnBuildStart,
-      new LodashModuleReplacementPlugin,
+      new LodashModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
       new ManifestPlugin({
         fileName: "scripts.json",
