@@ -175,8 +175,15 @@ class AddCollectionProjectPop extends React.Component {
       // user is searching by project name  - filter out any projects currently in the collection
       nonCollectionResults = results.filter( result => !collectionProjectIds.includes(result.id));
       
-      if(this.props.collection.projects.map( (project) => project.domain).includes(query) && nonCollectionResults.length == originalNumResults){
-        this.setState({projectName: query});
+      if(nonCollectionResults.length !== originalNumResults){
+        if(originalNumResults == 1){
+          // the single search result is already in the collection
+          this.setState({projectName: query});
+        }else{
+          // multiple projects have been excluded from the search results
+          this.setState({excludedProjectsCount: originalNumResults});
+        }
+        
       }
     }
     
