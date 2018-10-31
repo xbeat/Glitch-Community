@@ -182,7 +182,7 @@ class TeamAnalytics extends React.Component {
 
         { (this.props.projects.length === 0) && !this.state.isGettingData && (
           <aside className="inline-banners add-project-to-analytics-banner">
-            <div className="description">Add projects to see who's viewing and remixing</div>
+            Add projects to see their stats
           </aside>
         )}
 
