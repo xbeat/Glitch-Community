@@ -78,7 +78,10 @@ module.exports = () => {
           test: /\.jsx?/,
           include: SRC,
           exclude: /node_modules/,
-          loader : 'babel-loader'
+          loader : 'babel-loader',
+          options: {
+            cacheDirectory: '/tmp/babel',
+          },
         },
         {
           test: /\.styl$/,
