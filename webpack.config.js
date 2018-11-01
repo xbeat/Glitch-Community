@@ -58,7 +58,6 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    symlinks: true,
   },
   module: {
     rules: [
@@ -122,6 +121,7 @@ module.exports = {
       filename: "[name].css?[contenthash]"
     }),
   ],
+  cache: true,
   watchOptions: {
     ignored: /node_modules/,
   },
