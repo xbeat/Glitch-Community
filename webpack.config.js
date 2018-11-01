@@ -10,7 +10,6 @@ const AutoprefixerStylus = require("autoprefixer-stylus");
 const PUBLIC = path.resolve(__dirname, 'public');
 const SRC = path.resolve(__dirname, 'src');
 const STYLES = path.resolve(__dirname, 'styles');
-const BASE = path.resolve(__dirname, '.');
 const STYLE_BUNDLE_NAME = 'styles';
 
 
