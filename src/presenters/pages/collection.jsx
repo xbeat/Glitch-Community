@@ -159,10 +159,10 @@ const CollectionPageContents = ({
                      (isAuthorized
                        ?
                        <div className="empty-collection-hint">
-                        <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt=""/>
-                          Click <b>Add Project</b> to search for projects to add to your collection.<br/><br/>You can add any project, created by any user.
+                          <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt=""/>
+                          You can add any project, created by any user.
                        </div>
-                       :  <div className="empty-collection-hint" style={{backgroundColor: "rgba(255,255,255,0.8)"}}>
+                       :  <div className="empty-collection-hint">
                           No projects to see in this collection just yet.
                        </div>
                      )
