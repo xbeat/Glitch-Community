@@ -7,7 +7,7 @@ eslint --config server/.eslintrc.server.js webpack.config.js
 echo "Starting webpack watcher"
 
 while true; do
-  pnpx webpack --watch
+  webpack --watch
   
   echo "Webpack crashed; Restarting webpack --watch"
 done
