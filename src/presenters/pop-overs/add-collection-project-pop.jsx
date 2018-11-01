@@ -232,7 +232,8 @@ class AddCollectionProjectPop extends React.Component {
                          onClick={this.onClick}
                          collection={this.props.collection}
                          projectName={this.state.projectName}
-                         excludedProjectsCount={this.state.excludedProjectsCount}/>
+                         excludedProjectsCount={this.state.excludedProjectsCount}
+                         />
                 }
               </ProjectsLoader>
           }          
