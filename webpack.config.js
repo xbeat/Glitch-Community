@@ -60,7 +60,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   module: {
-    rules: [
+    rules: [/*
       {
         enforce: "pre",
         test: /\.jsx?$/,
@@ -73,7 +73,7 @@ module.exports = {
           emitWarning: true,
           failOnError: false,
         }
-      },
+      },*/
       {
         test: /\.jsx?/,
         include: SRC,
