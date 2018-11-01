@@ -26,7 +26,7 @@ module.exports = () => {
   return {
     mode,
     entry: {
-      "client-bundle": `${SRC}/client.jsx`,
+      "client": `${SRC}/client.jsx`,
       [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
     },
     output: {
@@ -45,7 +45,7 @@ module.exports = () => {
             minSize: 0,
           },
           react: {
-            name: 'react-bundle',
+            name: 'react',
             test: /[\\/]node_modules[\\/]react[-\\/]/,
           },
           modules: {
@@ -56,7 +56,7 @@ module.exports = () => {
         },
       },
       minimizer: [
-        new TerserPlugin({terserOptions: {safari10: true}}),
+        //new TerserPlugin({terserOptions: {safari10: true}}),
       ],
     },
     module: {
