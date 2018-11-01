@@ -77,7 +77,7 @@ class TeamUserRemovePopBase extends React.Component {
       projects = <Loader/>;
     } else if (this.state.userTeamProjects.length > 0) {
       projects = (
-        <React.Fragment>
+        <>
           <p className="action-description">
             Also remove them from these projects
           </p>
@@ -100,7 +100,7 @@ class TeamUserRemovePopBase extends React.Component {
               {allProjectsSelected ? 'Unselect All' : 'Select All'}
             </button>
           )}
-        </React.Fragment>
+        </>
       );
     }
     

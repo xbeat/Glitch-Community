@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Boxes in Boxes in Boxes',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Frecursion-boxes.jpg?1540471881284",
-    link: 'https://glitch.com/~recursion-boxes'
+    title: 'Your Moment of Zen',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FYourMomentofZen.jpg?1541072010180",
+    link: 'https://your-moment-of-zen.glitch.me/'
   },{
-    title: 'Mondrian On Demand',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F2_1.jpg?1540471662473",
-    link: 'https://glitch.com/~sturdy-punch'
+    title: 'Create Keynotes with Reveal.js',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FReveal-Glitch.gif?1541072010311",
+    link: 'https://glitch.com/~reveal-glitch'
   }, {
-    title: 'The Next Great Food Sensation?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffood-hype.jpg?1540206366423",
-    link: 'https://glitch.com/~food-hype'
+    title: 'Defend The Galaxy',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FInvadersFromSpace.jpg?1541072010062",
+    link: 'https://invaders-from-space.glitch.me'
   }  
 ];

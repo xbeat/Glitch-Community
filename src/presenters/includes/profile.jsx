@@ -34,7 +34,7 @@ export const ProjectInfoContainer = ({
   children,
   buttons,
 }) => (
-  <React.Fragment>
+  <>
     <div className="avatar-container">
       <div className="user-avatar" style={style} />
       {buttons}
@@ -42,7 +42,7 @@ export const ProjectInfoContainer = ({
     <div className="profile-information">
       {children}
     </div>
-  </React.Fragment>
+  </>
 );
 ProjectInfoContainer.propTypes = {
   style: PropTypes.object.isRequired,
