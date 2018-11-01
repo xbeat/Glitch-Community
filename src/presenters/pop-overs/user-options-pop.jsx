@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DevToggles from '../includes/dev-toggles.jsx';
 import {getAvatarUrl as getTeamAvatarUrl} from '../../models/team';
 import {getAvatarThumbnailUrl as getUserAvatarUrl} from '../../models/user';
 import {Link, TeamLink, UserLink} from '../includes/link.jsx';
@@ -41,21 +40,15 @@ CreateTeamButton.propTypes = {
 
 const TeamList = ({teams, showCreateTeam, userIsAnon}) => {
   return (
-    <DevToggles>
-      {toggles => (!!teams.length || toggles.includes('add-teams')) && (
-        <section className="pop-over-actions">
-          {toggles.includes('add-teams') && (
-            <CreateTeamButton showCreateTeam={showCreateTeam} userIsAnon={userIsAnon} />
-          )}
-          {teams.map(team => (
-            <TeamLink key={team.id} team={team} className="button button-small has-emoji button-tertiary">
-              {team.name}&nbsp;
-              <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
-            </TeamLink>
-          ))}
-        </section>
-      )}
-    </DevToggles>
+    <section className="pop-over-actions">
+      <CreateTeamButton showCreateTeam={showCreateTeam} userIsAnon={userIsAnon} />
+      {teams.map(team => (
+        <TeamLink key={team.id} team={team} className="button button-small has-emoji button-tertiary">
+          {team.name}&nbsp;
+          <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
+        </TeamLink>
+      ))}
+    </section>
   );
 };
 

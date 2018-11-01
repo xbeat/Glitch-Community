@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import {CurrentUserConsumer} from '../current-user.jsx';
-import DevToggles from '../includes/dev-toggles.jsx';
 import TeamEditor from '../team-editor.jsx';
 import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -171,16 +170,14 @@ class TeamPage extends React.Component {
           />
         }
 
-        <DevToggles>
-          {toggles => (toggles.includes('delete-teams') && this.props.currentUserIsTeamAdmin && (
-            <DeleteTeam api={() => this.props.api}
-              teamId={this.props.team.id}
-              teamName={this.props.team.name}
-              teamAdmins={this.teamAdmins()}
-              users={this.props.team.users}
-            />
-          ))}
-        </DevToggles>
+        {this.props.currentUserIsTeamAdmin && (
+          <DeleteTeam api={() => this.props.api}
+            teamId={this.props.team.id}
+            teamName={this.props.team.name}
+            teamAdmins={this.teamAdmins()}
+            users={this.props.team.users}
+          />
+        )}
 
         { !this.props.currentUserIsOnTeam &&
           <TeamMarketing />

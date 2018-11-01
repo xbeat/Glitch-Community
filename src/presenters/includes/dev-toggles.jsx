@@ -15,8 +15,8 @@ const {Provider, Consumer} = React.createContext();
 // We can only have three.
 // Users can enable them with the /secret page.
 const toggleData = [
-  {name: "add-teams", description: "The create team option in he user pop"},
-  {name: "delete-teams", description: "The delete team button on team pages"},
+  {name: "add-teams", description: "This isn't used any more!"},
+  {name: "delete-teams", description: "I have served my purpose and can be removed"},
   {name: "team-billing", description: "can you pay for teams?."},
 ].splice(0,3); // <-- Yeah really, only 3.  If you need more, clean up one first.
 
