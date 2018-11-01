@@ -81,6 +81,7 @@ export class AddTeamUser extends React.Component {
     super(props);
     this.state = {
       invitee: '',
+      alreadyInvited: [],
     };
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
@@ -102,6 +103,7 @@ export class AddTeamUser extends React.Component {
     togglePopover();
     this.setState({
       invitee: email,
+      alreadyInvited: alreadyInvited.push(),
     });
     await this.props.inviteEmail(email);
   }
