@@ -31,9 +31,6 @@ module.exports = {
     path: PUBLIC,
     publicPath: '/',
   },
-  watchOptions: {
-    ignored: /node_modules/,
-  },
   optimization: {
     splitChunks: {
       chunks: 'initial',
@@ -58,6 +55,10 @@ module.exports = {
     minimizer: [
       new TerserPlugin({terserOptions: {safari10: true}}),
     ],
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+    symlinks: true,
   },
   module: {
     rules: [
@@ -121,4 +122,7 @@ module.exports = {
       filename: "[name].css?[contenthash]"
     }),
   ],
+  watchOptions: {
+    ignored: /node_modules/,
+  },
 };
