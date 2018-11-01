@@ -45,7 +45,12 @@ class CollectionsList extends React.Component {
         : 
              <article className="collections">
               <h2>{title}</h2>
-               {(isAuthorized && <CreateFirstCollection {...{api, currentUser}}/>)}
+               {(isAuthorized && 
+                 <>
+                   <CreateCollectionButton {...{api, currentUser}}/>
+                   <CreateFirstCollection {...{api, currentUser}}/>
+                 </>
+                )}
                 <CollectionsUL {...{collections, api, isAuthorized, deleteCollection: this.deleteCollection, userLogin: this.props.userLogin}}/>
               </article>
           
@@ -68,9 +73,8 @@ CollectionsList.propTypes = {
 const CreateFirstCollection = ({api, currentUser}) =>{
   return(
     <div className="create-first-collection">
-      <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-empty.svg?1539800010738" alt=""/>
+      <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt=""/>
       <p className="placeholder">Create collections to organize your favorite projects.</p><br/>
-      <CreateCollectionButton {...{api, currentUser}}/>  
     </div>
   );
 };
