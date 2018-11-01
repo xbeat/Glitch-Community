@@ -73,7 +73,6 @@
     "node",
     "glitch",
     "express",
-    "jadelet",
     "react"
   ],
   "sideEffects": [

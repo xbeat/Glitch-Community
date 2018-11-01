@@ -121,7 +121,6 @@ module.exports = {
       filename: "[name].css?[contenthash]"
     }),
   ],
-  cache: true,
   watchOptions: {
     ignored: /node_modules/,
   },
