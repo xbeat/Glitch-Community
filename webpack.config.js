@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const AutoprefixerStylus = require("autoprefixer-stylus");
 
@@ -62,7 +62,7 @@ module.exports = () => {
         },
       },
       minimizer: [
-        new UglifyJsPlugin({uglifyOptions: {safari10: true}}),
+        new TerserPlugin({terserOptions: {safari10: true}}),
       ],
     },
     devtool: 'source-map',

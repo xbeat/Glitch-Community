@@ -14,9 +14,9 @@ const ADMIN_ACCESS_LEVEL = 30;
 
 // Remove from Team 👋
 
-const RemoveFromTeam = ({onClick}) => (
+const RemoveFromTeam = (props) => (
   <section className="pop-over-actions danger-zone">
-    <button className="button-small has-emoji button-tertiary button-on-secondary-background" onClick={onClick}>
+    <button className="button-small has-emoji button-tertiary button-on-secondary-background" {...props}>
       Remove from Team <span className="emoji wave" role="img" aria-label=""/>
     </button>
   </section>
@@ -95,7 +95,7 @@ const TeamUserInfo = ({currentUser, showRemove, ...props}) => {
           updateUserPermissions={props.updateUserPermissions}
         />
       }
-      { canRemoveUser && <RemoveFromTeam onClick={showRemove}/> }
+      { canRemoveUser && !props.userIsTheOnlyMember && <RemoveFromTeam onClick={showRemove}/> }
     </dialog>
   );
 };
@@ -123,11 +123,12 @@ TeamUserInfoAndRemovePop.propTypes = {
     color: PropTypes.string,
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
+  currentUserIsTeamAdmin: PropTypes.bool.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
+  userIsTheOnlyMember: PropTypes.bool.isRequired,
   api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
-  currentUserIsTeamAdmin: PropTypes.bool.isRequired,
   updateUserPermissions: PropTypes.func.isRequired,
   team: PropTypes.shape({
     projects: PropTypes.array.isRequired,

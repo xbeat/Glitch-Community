@@ -1,5 +1,4 @@
 /// A locally cached minimal api wrapper
-/* globals Symbol */
 
 const axios = require("axios");
 const {Cache} = require("memory-cache");
@@ -7,24 +6,25 @@ const moment = require("moment-mini");
 
 const {API_URL} = require("./constants");
 
-const NOT_FOUND = Symbol();
 const CACHE_TIMEOUT = moment.duration(15, 'minutes').asMilliseconds()
 
+const generalCache = new Cache();
 const projectCache = new Cache();
 const teamCache = new Cache();
 const userCache = new Cache();
 
 async function getFromCacheOrApi(id, cache, api) {
-  let item = cache.get(id);
-  if (item === null) {
-    try {
-      item = (await api(id)) || NOT_FOUND;
-    } catch (e) {
-      item = NOT_FOUND;
-    }
-    cache.put(id, item, CACHE_TIMEOUT);
+  let promise = cache.get(id);
+  if (!promise) {
+    promise = api(id);
+    cache.put(id, promise, CACHE_TIMEOUT);
   }
-  return item !== NOT_FOUND ? item : null;
+  try {
+    const value = await promise;
+    return value;
+  } catch (error) {
+    return null;
+  }
 }
 
 const api = axios.create({
@@ -33,24 +33,54 @@ const api = axios.create({
 });
 
 async function getProjectFromApi(domain) {
-  const response = await api.get(`/projects/${domain}`);
-  return response.data;
+  try {
+    const response = await api.get(`/projects/${domain}`);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return null;
+    }
+    throw error;
+  }
 }
 
 async function getTeamFromApi(url) {
-  const response = await api.get(`/teams/byUrl/${url}`);
-  return response.data;
+  try {
+    const response = await api.get(`/teams/byUrl/${url}`);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return null;
+    }
+    throw error;
+  }
 }
 
 async function getUserFromApi(login) {
-  const {data} = await api.get(`/userId/byLogin/${login}`);
-  if (data === 'NOT FOUND') return null;
-  const response = await api.get(`/users/${data}`);
-  return response.data;
+  try {
+    const {data} = await api.get(`/userId/byLogin/${login}`);
+    if (data === 'NOT FOUND') return null;
+    const response = await api.get(`/users/${data}`);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return null;
+    }
+    throw error;
+  }
+}
+
+async function getCultureZinePosts() {
+  console.log('Fetching culture zine posts');
+  const client = 'client_id=ghost-frontend&client_secret=c9a97f14ced8';
+  const params = 'filter=featured:true&limit=4&fields=id,title,url,feature_image,primary_tag&include=tags';
+  const response = await api.get(`https://culture-zine.glitch.me/culture/ghost/api/v0.1/posts/?${client}&${params}`);
+  return response.data.posts;
 }
 
 module.exports = {
   getProject: domain => getFromCacheOrApi(domain, projectCache, getProjectFromApi),
   getTeam: url => getFromCacheOrApi(url, teamCache, getTeamFromApi),
   getUser: login => getFromCacheOrApi(login, userCache, getUserFromApi),
+  getZine: () => getFromCacheOrApi('culture', generalCache, getCultureZinePosts),
 };

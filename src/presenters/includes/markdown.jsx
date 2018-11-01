@@ -22,29 +22,22 @@ RawHTML.propTypes = {
   children: PropTypes.string.isRequired,
 };
 
-class Markdown extends React.PureComponent {
-  render() {
-    const {children} = this.props;
-    const rendered = md.render(children || '');
-    return <RawHTML>{rendered}</RawHTML>;
-  }
-}
+export const Markdown = React.memo(({children}) => {
+  const rendered = md.render(children || '');
+  return <RawHTML>{rendered}</RawHTML>;
+});
 Markdown.propTypes = {
   children: PropTypes.string.isRequired,
 };
 
-class TruncatedMarkdown extends React.PureComponent {
-  render () {
-    const {children, length} = this.props;
-    const rendered = md.render(children || '');
-    const truncated = truncate(rendered, length, {ellipsis: '…'});
-    return <RawHTML>{truncated}</RawHTML>;
-  }
-}
+export const TruncatedMarkdown = React.memo(({children, length}) => {
+  const rendered = md.render(children || '');
+  const truncated = truncate(rendered, length, {ellipsis: '…'});
+  return <RawHTML>{truncated}</RawHTML>;
+});
 TruncatedMarkdown.propTypes = {
   children: PropTypes.string.isRequired,
   length: PropTypes.number.isRequired,
 };
 
-export { Markdown, TruncatedMarkdown };
 export default Markdown;

@@ -5,51 +5,65 @@ export default class Expander extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: false,
-      maxHeight: props.height,
+      startedExpanding: false,
+      doneExpanding: false,
+      scrollHeight: Infinity,
     };
     this.ref = React.createRef();
+    this.updateHeight = this.updateHeight.bind(this);
   }
   
   componentDidMount() {
-    // If the area is only slightly too big don't bother cutting it off
-    const maxHeight = this.props.height + 60;
-    if (this.ref.current.scrollHeight <= maxHeight) {
-      this.setState({
-        expanded: true,
-        maxHeight: undefined,
-      });
+    this.updateHeight();
+    this.ref.current.addEventListener('load', this.updateHeight, {capture: true});
+    window.addEventListener('resize', this.updateHeight, {passive: true});
+  }
+  
+  componentWillUnmount() {
+    this.ref.current.removeEventListener('load', this.updateHeight, {capture: true});
+    window.removeEventListener('resize', this.updateHeight, {passive: true});
+  }
+  
+  componentDidUpdate() {
+    this.updateHeight();
+  }
+  
+  updateHeight() {
+    const scrollHeight = this.ref.current.scrollHeight;
+    if (scrollHeight !== this.state.scrollHeight) {
+      this.setState({scrollHeight});
     }
   }
   
   expand() {
-    this.setState({
-      expanded: true,
-      maxHeight: this.ref.current.scrollHeight,
-    });
+    this.updateHeight();
+    this.setState({startedExpanding: true});
   }
   
   onExpandEnd(evt) {
     if (evt.propertyName === 'max-height') {
-      this.setState({maxHeight: undefined});
+      this.setState({doneExpanding: true});
     }
   }
   
   render() {
-    const {expanded, maxHeight} = this.state;
+    const {startedExpanding, doneExpanding, scrollHeight} = this.state;
+    const aboveLimit = scrollHeight > this.props.height;
+    const limitHeight = aboveLimit ? this.props.height - this.props.minSlide : this.props.height;
+    const maxHeight = startedExpanding ? scrollHeight : limitHeight;
+    const style = !doneExpanding ? {maxHeight} : null;
     return (
       <div
-        className="expander" style={{maxHeight}}
-        onTransitionEnd={(expanded && !!maxHeight) ? this.onExpandEnd.bind(this) : null}
-        ref={this.ref}
+        ref={this.ref} className="expander" style={style}
+        onTransitionEnd={startedExpanding ? this.onExpandEnd.bind(this) : null}
       >
         {this.props.children}
-        {!!maxHeight && (
+        {!doneExpanding && aboveLimit && (
           <div className="expander-mask">
-            {!expanded && (
+            {!startedExpanding && (
               <button
                 onClick={this.expand.bind(this)}
-                className="expander-button button button-small button-tertiary"
+                className="expander-button button-small button-tertiary"
               >
                 Show More
               </button>
@@ -64,4 +78,9 @@ export default class Expander extends React.Component {
 Expander.propTypes = {
   children: PropTypes.node.isRequired,
   height: PropTypes.number.isRequired,
+  minSlide: PropTypes.number.isRequired,
+};
+
+Expander.defaultProps = {
+  minSlide: 50,
 };

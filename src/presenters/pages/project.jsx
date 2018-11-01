@@ -15,6 +15,7 @@ import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-actions.jsx';
+import TeamsList from '../teams-list.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
 
@@ -68,12 +69,12 @@ Embed.propTypes = {
 
 const ReadmeError = (error) => (
   (error && error.response && error.response.status === 404)
-    ? <React.Fragment>This project would be even better with a <code>README.md</code></React.Fragment>
-    : <React.Fragment>We couldn't load the readme. Try refreshing?</React.Fragment>
+    ? <>This project would be even better with a <code>README.md</code></>
+    : <>We couldn't load the readme. Try refreshing?</>
 );
 const ReadmeLoader = ({api, domain}) => (
   <DataLoader get={() => api.get(`projects/${domain}/readme`)} renderError={ReadmeError}>
-    {({data}) => <Expander height={200}><Markdown>{data}</Markdown></Expander>}
+    {({data}) => <Expander height={250}><Markdown>{data}</Markdown></Expander>}
   </DataLoader>
 );
 ReadmeLoader.propTypes = {
@@ -102,9 +103,12 @@ const ProjectPage = ({
                 update={domain => updateDomain(domain).then(() => syncPageToDomain(domain))}
                 suffix={<PrivateToggle isPrivate={project.private} isMember={isAuthorized} setPrivate={updatePrivate}/>}
               />
-            ) : <React.Fragment>{domain} {project.private && <PrivateBadge/>}</React.Fragment>)}
+            ) : <>{domain} {project.private && <PrivateBadge/>}</>)}
           </h1>
-          <UsersList users={users} />
+          <div className="users-information">
+            <UsersList users={users} />
+            {!!teams.length && <TeamsList teams={teams}/>}
+          </div>
           <AuthDescription
             authorized={isAuthorized} description={description}
             update={updateDescription} placeholder="Tell us about your app"
@@ -152,12 +156,12 @@ const ProjectPageLoader = ({domain, api, ...props}) => (
     {project => project ? (
       <ProjectEditor api={api} initialProject={project}>
         {(project, funcs, userIsMember) => (
-          <React.Fragment>
+          <>
             <Helmet>
               <title>{project.domain}</title>
             </Helmet>
             <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
-          </React.Fragment>
+          </>
         )}
       </ProjectEditor>
     ) : <NotFound name={domain}/>}

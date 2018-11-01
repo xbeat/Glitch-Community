@@ -13,6 +13,7 @@ import DeletedProjects from '../deleted-projects.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
+import TeamsList from '../teams-list.jsx';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
@@ -28,18 +29,18 @@ const NameAndLogin = ({name, login, isAuthorized, updateName, updateLogin}) => {
       return <h1 className="login">@{login}</h1>;
     }
     return (
-      <React.Fragment>
+      <>
         <h1 className="username">{name}</h1>
         <h2 className="login">@{login}</h2>
-      </React.Fragment>
+      </>
     );
   }
 
   return (
-    <React.Fragment>
+    <>
       <h1 className="username"><EditableField value={name||""} update={updateName} placeholder="What's your name?"/></h1>
       <h2 className="login"><EditableField value={login} update={updateLogin} prefix="@" placeholder='Nickname?'/></h2>
-    </React.Fragment>
+    </>
   );
 };
 NameAndLogin.propTypes = {
@@ -56,6 +57,7 @@ const UserPage = ({
     avatarUrl, color,
     hasCoverImage, coverColor,
     pins, projects, _deletedProjects,
+    teams,
     _cacheCover,
   },
   api, isAuthorized,
@@ -73,15 +75,20 @@ const UserPage = ({
       <ProfileContainer
         avatarStyle={getAvatarStyle({avatarUrl, color})}
         coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
-        coverButtons={isAuthorized && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
-        avatarButtons={isAuthorized ? <ImageButtons name="Avatar" uploadImage={uploadAvatar}/> : null }
+        coverButtons={isAuthorized && !!login && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
+        avatarButtons={isAuthorized && !!login && <ImageButtons name="Avatar" uploadImage={uploadAvatar}/>}
       >
         <NameAndLogin
           {...{name, login, isAuthorized, updateName}}
           updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
         />
-        <Thanks count={thanksCount}/>
-        <AuthDescription authorized={isAuthorized} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
+        {!!teams.length && (
+          <div className="users-information">
+            <TeamsList teams={teams}/>
+          </div>
+        )}
+        {!!thanksCount && <Thanks count={thanksCount}/>}
+        <AuthDescription authorized={isAuthorized && !!login} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
     </section>
     <EntityPageProjects
@@ -122,7 +129,7 @@ UserPage.propTypes = {
 const UserPageContainer = ({api, user}) => (
   <UserEditor api={api} initialUser={user}>
     {(user, funcs, isAuthorized) => (
-      <React.Fragment>
+      <>
         <Helmet>
           <title>{user.name || (user.login ? `@${user.login}` : `User ${user.id}`)}</title>
         </Helmet>
@@ -130,7 +137,7 @@ const UserPageContainer = ({api, user}) => (
         <ProjectsLoader api={api} projects={user.projects}>
           {projects => <UserPage api={api} user={{...user, projects}} {...funcs} isAuthorized={isAuthorized}/>}
         </ProjectsLoader>
-      </React.Fragment>
+      </>
     )}
   </UserEditor>
 );

@@ -78,13 +78,13 @@ export class WhitelistedDomainIcon extends React.Component {
 //temp
 export const AdminOnlyBadge = ({...props}) => {
   return (
-    <React.Fragment>
+    <>
       { (props.currentUserIsTeamAdmin === false) && 
         <div className="status-badge">
           <span className="status admin">Admin</span>
         </div> 
       }
-    </React.Fragment>
+    </>
   );
 };
 

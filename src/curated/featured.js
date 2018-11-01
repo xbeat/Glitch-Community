@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Make Your Own Planet',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fplanetgenerator.jpg?1538392449068",
-    link: 'https://glitch.com/~planet-generator'
+    title: 'Air Drumming FTW!',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FDrumbridge.jpg?1540809570061",
+    link: 'https://glitch.com/~drumbridge'
   },{
-    title: 'Should You Do That Project?',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fshould-i-do-it.jpg?1538392879435",
-    link: 'https://glitch.com/~shouldidoit'
+    title: 'Deploy to Firebase',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-firebase-homepage.jpg?1540810252060",
+    link: 'https://glitch.com/edit/#!/firebase-basic-webpage?path=README.md:1:0'
   }, {
-    title: 'Custom Collections on Spotify',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcollections-spotify.jpg?1538392448572",
-    link: 'https://glitch.com/~collections'
+    title: 'Shazam for Album Covers',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FRecordPlayer.jpg?1540832912802",
+    link: 'https://glitch.com/~record-player'
   }  
 ];

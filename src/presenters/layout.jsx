@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 
 import Header from './header.jsx';
 import Footer from './footer.jsx';
+import ErrorBoundary from './includes/error-boundary.jsx';
 import Konami from './includes/konami.jsx';
 
 
@@ -14,11 +15,15 @@ const Layout = ({children, api, searchQuery}) => (
       <title>Glitch</title>
     </Helmet>
     <Header api={api} searchQuery={searchQuery}/>
-    {children}
+    <ErrorBoundary>
+      {children}
+    </ErrorBoundary>
     <Footer/>
-    <Konami>
-      <Redirect to="/secret" push={true}/>
-    </Konami>
+    <ErrorBoundary fallback={null}>
+      <Konami>
+        <Redirect to="/secret" push={true}/>
+      </Konami>
+    </ErrorBoundary>
   </div>
 );
 Layout.propTypes = {

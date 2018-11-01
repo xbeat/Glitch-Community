@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import randomColor from 'randomcolor';
 import {sample} from 'lodash';
 
+import ErrorBoundary from './includes/error-boundary.jsx';
 import Link from './includes/link.jsx';
 import QuestionItem from './question-item.jsx';
 
@@ -41,8 +42,7 @@ class Questions extends React.Component {
     this.setState({loading: true});
     try {
       const {data} = await this.props.api.get('projects/questions');
-      const questions = data.slice(0, this.props.max).map(({details}) => {
-        const question = JSON.parse(details);
+      const questions = data.map(q => JSON.parse(q.details)).filter(q => !!q).slice(0, this.props.max).map(question => {
         const [colorInner, colorOuter] = randomColor({luminosity: 'light', count: 2});
         return {colorInner, colorOuter, ...question};
       });
@@ -70,18 +70,20 @@ class Questions extends React.Component {
         </h2>
         <article className="projects">
           {questions.length ? (
-            <ul className="projects-container">
-              {questions.map(question => (
-                <li key={question.questionId}>
-                  <QuestionItem {...question}/>
-                </li>
-              ))}
-            </ul>
+            <ErrorBoundary>
+              <ul className="projects-container">
+                {questions.map(question => (
+                  <li key={question.questionId}>
+                    <QuestionItem {...question}/>
+                  </li>
+                ))}
+              </ul>
+            </ErrorBoundary>
           ) : (
-            <React.Fragment>
+            <>
               {kaomoji} Looks like nobody is asking for help right now.{' '}
               <Link className="general-link" to="/help/how-can-i-get-help-with-code-in-my-project/">Learn about helping</Link>
-            </React.Fragment>
+            </>
           )}
         </article>
       </section>

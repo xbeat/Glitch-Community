@@ -11,43 +11,48 @@ import Layout from '../layout.jsx';
 import TeamPage from './team.jsx';
 import UserPage from './user.jsx';
 
+const getOrNull = async(api, route) => {
+  try {
+    const {data} = await api.get(route);
+    return data;
+  } catch (error) {
+    if (error && error.response && error.response.status === 404) {
+      return null;
+    }
+    throw error;
+  }
+};
+
 const getUserById = async (api, id) => {
-  const {data} = await api.get(`users/${id}`);
-  return UserModel(data).asProps();
+  const user = await getOrNull(api, `/users/${id}`);
+  return user && UserModel(user).asProps();
 };
 
 const getUser = async (api, name) => {
-  const {data} = await api.get(`userId/byLogin/${name}`);
-  if (data === "NOT FOUND") {
+  const id = await getOrNull(api, `/userId/byLogin/${name}`);
+  if (id === "NOT FOUND") {
     return null;
   }
-  return getUserById(api, data);
+  return await getUserById(api, id);
 };
 
-const parseTeamAdminIds = (data) => {
-  if (!data) {
-    return data;
-  }
+const parseTeam = (team) => {
   const ADMIN_ACCESS_LEVEL = 30;
-  let adminIds = data.users.filter(user => {
+  const adminIds = team.users.filter(user => {
     return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
   });
-  data.adminIds = adminIds.map(user => {
-    return user.id;
-  });
-  return data;
+  team.adminIds = adminIds.map(user => user.id);
+  return TeamModel(team).asProps();
 };
 
 const getTeamById = async (api, id) => {
-  let {data} = await api.get(`teams/${id}`);
-  data = parseTeamAdminIds(data);
-  return data && TeamModel(data).asProps();
+  const team = await getOrNull(api, `/teams/${id}`);
+  return team && parseTeam(team);
 };
 
-const getTeam = async(api, name) => {
-  let {data} = await api.get(`teams/byUrl/${name}`);
-  data = parseTeamAdminIds(data);
-  return data && TeamModel(data).asProps();
+const getTeam = async (api, name) => {
+  const team = await getOrNull(api, `/teams/byUrl/${name}`);
+  return team && parseTeam(team);
 };
 
 const TeamPageLoader = ({api, id, name, ...props}) => (

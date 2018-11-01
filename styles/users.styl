@@ -12,21 +12,17 @@
     clip-path: polygon(-100% 0%, 100% 0%, 100% 100%, 200% 100%, 200% 200%, -100% 200%)
   > li
     display: inline-grid
-    &:first-child .user
+    &:first-child img
       border-top-left-radius: 5px
       border-bottom-left-radius: 5px
-    &:last-child .user
+    &:last-child img
       border-top-right-radius: 5px
       border-bottom-right-radius: 5px
   
   .user
     border-radius: 0
-
-  .user-list-avatar
-    display: block
-    width: 32px
-    height: 32px
-    border-radius: inherit
+    img
+      vertical-align: middle
 
   .made-by-glitch
     border-radius: 5px
@@ -37,6 +33,10 @@
   margin-left: 6px
   font-size: 14px
   margin-bottom: 10px;
+
+.users-information .users
+  display: inline
+  margin-right: 5px
 
 .whitelisted-domain
   display: inline-block

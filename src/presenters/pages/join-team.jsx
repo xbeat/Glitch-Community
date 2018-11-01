@@ -19,7 +19,9 @@ class JoinTeamPageBase extends React.Component {
     try {
       var {data: team} = await this.props.api.get(`/teams/byUrl/${this.props.teamUrl}`);
     } catch (error) {
-      Raven.captureException(error);
+      if (error && !(error.response && error.response.status === 404)) {
+        Raven.captureException(error);
+      }
     }
     if (!team) {
       // Either the api is down or the team doesn't exist

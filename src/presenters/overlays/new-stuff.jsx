@@ -71,7 +71,7 @@ class NewStuff extends React.Component {
     const dogVisible = isSignedIn && showNewStuff && (newStuffReadId < latestId);
     const show = () => this.showNewStuff(setVisible);
     return (
-      <React.Fragment>
+      <>
         {children(show)}
         {dogVisible && (
           <div className="new-stuff-footer">
@@ -81,7 +81,7 @@ class NewStuff extends React.Component {
           </div>
         )}
         {visible && <div className="overlay-background" role="presentation"></div>}
-      </React.Fragment>
+      </>
     );
   }
   

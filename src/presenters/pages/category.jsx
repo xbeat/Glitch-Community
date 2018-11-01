@@ -11,7 +11,7 @@ import ProjectsLoader from '../projects-loader.jsx';
 import Categories from '../categories.jsx';
 
 const CategoryPageWrap = ({category, children}) => (
-  <React.Fragment>
+  <>
     <Helmet>
       <title>{category.name}</title>
     </Helmet>
@@ -28,7 +28,7 @@ const CategoryPageWrap = ({category, children}) => (
       </article>
     </main>
     <Categories/>
-  </React.Fragment>
+  </>
 );
 CategoryPageWrap.propTypes = {
   category: PropTypes.shape({

@@ -5,10 +5,10 @@ import {uploadAsset, uploadAssetSizes} from '../../utils/assets';
 import Notifications from '../notifications.jsx';
 
 const NotifyUploading = ({progress}) => (
-  <React.Fragment>
+  <>
     Uploading asset
     <progress className="notify-progress" value={progress}></progress>
-  </React.Fragment>
+  </>
 );
 const NotifyError = () => 'File upload failed. Try again in a few minutes?';
 
@@ -35,6 +35,7 @@ async function uploadWrapper(notifications, upload) {
     throw e;
   } finally {
     removeNotification();
+    notifications.createNotification('Image uploaded!');
   }
   return result;
 }

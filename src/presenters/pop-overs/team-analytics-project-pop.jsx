@@ -6,9 +6,9 @@ import PopoverContainer from './popover-container.jsx';
 
 const AllProjectsItem = ({currentProjectDomain, action}) => {
   const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
-  var resultsClass = "button-unstyled result ";
-  if (currentProjectDomain === "All Projects") {
-    resultsClass += "active";
+  let resultsClass = "button-unstyled result";
+  if (!currentProjectDomain) {
+    resultsClass += " active";
   }
   return (
     <button className={resultsClass} onClick={action}>
@@ -31,9 +31,9 @@ const isActive = (currentProjectDomain, project) => {
 };
 
 const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomain, currentProjectDomain}) => {
-  const onClick = (project) => {
+  const onClick = (domain) => {
     togglePopover();
-    updateProjectDomain(project.domain);
+    updateProjectDomain(domain);
     setFilter("");
   };
   
@@ -58,14 +58,14 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomai
           <li className="button-unstyled">
             <AllProjectsItem 
               currentProjectDomain = {currentProjectDomain}
-              action = {() => {onClick({domain: "All Projects"});}}
+              action = {() => onClick('')}
             />
           </li>
           { filteredProjects.map((project) => (
             <li key={project.id} className="button-unstyled">
               <ProjectResultItem 
                 {...project} 
-                action = {() => { onClick(project); }} 
+                action = {() => onClick(project.domain)} 
                 isActive = {isActive(currentProjectDomain, project)}
               />
             </li>
@@ -108,7 +108,7 @@ class TeamAnalyticsProjectPop extends React.Component {
         {({visible, togglePopover}) => (
           <div className="button-wrap">
             <button className="button-small button-tertiary" onClick={togglePopover}>
-              {currentProjectDomain}
+              Filter: {currentProjectDomain || 'All Projects'}
             </button>
             {visible && 
               <PopOver 

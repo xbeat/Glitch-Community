@@ -26,18 +26,18 @@ const parse = (search, name) => {
 };
 
 const NotFoundPage = () => (
-  <React.Fragment>
+  <>
     <ErrorPage title="Page Not Found" description="Maybe a typo? Or perhaps it's moved?"/>
     <Helmet>
       <title>👻 Page not found</title> {/* eslint-disable-line */}
     </Helmet>
-  </React.Fragment>
+  </>
 );
 
 class PageChangeHandlerBase extends React.Component {
   componentDidUpdate(prev) {
     if (this.props.location.key !== prev.location.key) {
-      window.scrollTo({left: 0, top: 0, behavior: 'instant'});
+      window.scrollTo(0, 0);
       this.props.reloadCurrentUser();
     }
   }
@@ -52,14 +52,14 @@ const PageChangeHandler = withRouter(({location}) => (
 ));
 
 const Router = ({api}) => (
-  <React.Fragment>
+  <>
     <PageChangeHandler/>
     <Switch>
       <Route path="/" exact render={({location}) => <IndexPage key={location.key} api={api}/>}/>
       <Route path="/index.html" exact strict render={({location}) => <IndexPage key={location.key} api={api}/>}/>
 
-      <Route path="/login/facebook" exact render={({location}) => <FacebookLoginPage key={location.key} api={api} code={parse(location.search, 'code')}/>}/>
-      <Route path="/login/github" exact render={({location}) => <GitHubLoginPage key={location.key} api={api} code={parse(location.search, 'code')}/>}/>
+      <Route path="/login/facebook" exact render={({location}) => <FacebookLoginPage key={location.key} api={api} code={parse(location.search, 'code')} hash={parse(location.search, 'hash')}/>}/>
+      <Route path="/login/github" exact render={({location}) => <GitHubLoginPage key={location.key} api={api} code={parse(location.search, 'code')} hash={parse(location.search, 'hash')}/>}/>
       
       <Route path="/join/@:teamUrl/:joinToken" exact render={({match}) => <JoinTeamPage key={location.key} api={api} {...match.params}/>}/>
 
@@ -85,7 +85,7 @@ const Router = ({api}) => (
 
       <Route render={({location}) => <NotFoundPage key={location.key}/>}/>
     </Switch>
-  </React.Fragment>
+  </>
 );
 Router.propTypes = {
   api: PropTypes.any.isRequired,
