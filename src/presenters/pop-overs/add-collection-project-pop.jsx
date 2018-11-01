@@ -92,6 +92,7 @@ class AddCollectionProjectPop extends React.Component {
       excludedProjectsCount: 0, // number of projects omitted from search
     };
     
+    this.loadRecentProjects = this.loadRecentProjects.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.startSearch = debounce(this.startSearch.bind(this), 300);
@@ -100,7 +101,11 @@ class AddCollectionProjectPop extends React.Component {
   
   componentDidMount(){
     // load user's recent projects to show in dropdown by default
-    let MAX_PROJECTS = 20;
+    this.loadRecentProjects();
+  }
+  
+  loadRecentProjects(){
+    const MAX_PROJECTS = 20;
     this.setState({ maybeResults: this.props.currentUser.projects.slice(0,MAX_PROJECTS) });
   }
   
@@ -117,10 +122,10 @@ class AddCollectionProjectPop extends React.Component {
   clearSearch() {
     this.setState({
       maybeRequest: null,
-      maybeResults: null,
       projectName: '',
       excludedProjectsCount: 0,
     });
+    this.loadRecentProjects();
   } 
   
   async startSearch() {
