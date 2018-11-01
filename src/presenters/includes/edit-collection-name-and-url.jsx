@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {kebabCase} from 'lodash';
 
-import {getLink} from '../../models/collection';
 import {OptimisticValue, TrimmedValue} from './field-helpers.jsx';
 import {PureEditableWrappingField} from './editable-wrapping-field.jsx';
 
@@ -23,7 +22,6 @@ export const EditCollectionNameAndUrl = ({owner, name, url, update, isAuthorized
                   : name
                 )}
               </h1>
-              <p className="collection-url">{getLink(owner, nameAndUrl.url)}</p>
             </React.Fragment>
           )}
         </TrimmedValue>
