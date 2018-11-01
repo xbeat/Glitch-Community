@@ -102,7 +102,7 @@ module.exports = () => {
         },
       ],
     },
-    devtool: 'source-map',
+    devtool: false,
     plugins: [
       new LodashModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
