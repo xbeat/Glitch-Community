@@ -64,7 +64,6 @@ module.exports = {
       {
         enforce: "pre",
         test: /\.jsx?$/,
-        exclude: [/templates/, /cache/],
         include: SRC,
         loader: "eslint-loader",
         options: {
@@ -78,11 +77,11 @@ module.exports = {
       {
         test: /\.jsx?/,
         include: SRC,
-        exclude: /node_modules/,
         loader : 'babel-loader',
       },
       {
         test: /\.styl$/,
+        include: /styles/,
         use: [
           MiniCssExtractPlugin.loader,
           {
