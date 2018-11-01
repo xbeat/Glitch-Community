@@ -96,7 +96,7 @@ export class AddTeamUser extends React.Component {
     console.log(getAvatarThumbnailUrl(user));
     this.setState({
       invitee: getDisplayName(user),
-      //alreadyInvited: alreadyInvited.push(getAvatarThumbnailUrl(user)),
+      //alreadyInvited: alreadyInvited.push(user),
     });
     await this.props.inviteUser(user);
   }
@@ -122,6 +122,7 @@ export class AddTeamUser extends React.Component {
         {({visible, togglePopover}) => (
           <span className="add-user-container">
             <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
+            <UsersList users={this.state.alreadyInvited}/>
             {!!this.state.invitee &&
               <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeNotifyInvited}>
                 Invited {this.state.invitee}
