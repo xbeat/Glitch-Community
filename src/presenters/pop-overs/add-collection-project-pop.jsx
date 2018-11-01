@@ -101,7 +101,9 @@ class AddCollectionProjectPop extends React.Component {
   
   componentDidMount(){
     // load user's recent projects to show in dropdown by default
-    this.loadRecentProjects();
+    if(this.props.currentUser.projects.length > 0){
+      this.loadRecentProjects();
+    }
   }
   
   loadRecentProjects(){

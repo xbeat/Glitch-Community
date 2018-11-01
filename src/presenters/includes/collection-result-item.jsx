@@ -12,15 +12,12 @@ const AddProjectMessage = ({projectName, collectionName, url}) => (
     <a href={url} target="_blank" rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
   </React.Fragment>
 );
+
 AddProjectMessage.propTypes = {
   projectName: PropTypes.string,
   collectionName: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
 };
-
-// async function addProjectToCollection(api, projectId, collectionId){
-//   await api.patch(`collections/${collectionId}/add/${projectId}`);
-// }
 
 const addProject = (addProjectToCollection, project, collection, collectionPath, notification, togglePopover) => {
 
@@ -36,11 +33,12 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   notification(content, "notifySuccess");
 };
 
+// NOTE: CAN WE PASS CURRENT USER INSTEAD OF DOING AN API REQUEST TO GET THE USER LOGIN HERE?
 async function getCollectionUrl(api, userId, collectionUrl){
   const {data} = await api.get(`users/${userId}`);
   const username = data.login;
   let path = `/@${username}/${collectionUrl}`;
-  // console.log(`path: ${path}`);
+
   return path;
 }
 
