@@ -66,11 +66,11 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
           )}
           
           <section className="pop-over-actions">
-            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to My Collection " emoji="framed_picture"/>}
+            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to Collection " emoji="framed_picture"/>}
           </section>
         </React.Fragment>
         : <section className="pop-over-actions">
-          {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to My Collection " emoji="framed_picture"/>}
+          {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to Collection " emoji="framed_picture"/>}
         </section>
       } 
 
