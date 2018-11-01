@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Air Drumming FTW!',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FDrumbridge.jpg?1540809570061",
-    link: 'https://glitch.com/~drumbridge'
+    title: 'Your Moment of Zen',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FYourMomentofZen.jpg?1541072010180",
+    link: 'https://your-moment-of-zen.glitch.me/'
   },{
-    title: 'Deploy to Firebase',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-firebase-homepage.jpg?1540810252060",
-    link: 'https://glitch.com/edit/#!/firebase-basic-webpage?path=README.md:1:0'
+    title: 'Create Keynotes with Reveal.js',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FReveal-Glitch.gif?1541072010311",
+    link: 'https://glitch.com/~reveal-glitch'
   }, {
-    title: 'Shazam for Album Covers',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FRecordPlayer.jpg?1540832912802",
-    link: 'https://glitch.com/~record-player'
+    title: 'Defend The Galaxy',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FInvadersFromSpace.jpg?1541072010062",
+    link: 'https://invaders-from-space.glitch.me'
   }  
 ];
