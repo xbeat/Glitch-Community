@@ -1,5 +1,5 @@
 const path = require('path');
-const {NoEmitOnErrorsPlugin} = require('webpack');
+const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -104,7 +104,7 @@ module.exports = () => {
     devtool: 'source-map',
     plugins: [
       new LodashModuleReplacementPlugin(),
-      new NoEmitOnErrorsPlugin(),
+      new webpack.NoEmitOnErrorsPlugin(),
       new ManifestPlugin({
         fileName: "scripts.json",
         filter: ({isInitial, name}) => (
