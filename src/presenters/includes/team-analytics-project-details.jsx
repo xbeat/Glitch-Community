@@ -136,7 +136,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
     
   render() {
     if(this.state.isGettingData) {
-      return <Loader/>
+      return <Loader/>;
     }
     
     return (
