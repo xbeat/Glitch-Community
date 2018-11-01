@@ -95,6 +95,7 @@ export class AddTeamUser extends React.Component {
     togglePopover();
     this.setState({
       invitee: getDisplayName(user),
+      alreadyInvited: alreadyInvited.push(),
     });
     await this.props.inviteUser(user);
   }
@@ -103,7 +104,6 @@ export class AddTeamUser extends React.Component {
     togglePopover();
     this.setState({
       invitee: email,
-      alreadyInvited: alreadyInvited.push(),
     });
     await this.props.inviteEmail(email);
   }
