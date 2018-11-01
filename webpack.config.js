@@ -56,7 +56,7 @@ module.exports = () => {
         },
       },
       minimizer: [
-        //new TerserPlugin({terserOptions: {safari10: true}}),
+        new TerserPlugin({terserOptions: {safari10: true}}),
       ],
     },
     module: {
@@ -102,7 +102,7 @@ module.exports = () => {
         },
       ],
     },
-    devtool: false,
+    devtool: 'source-map',
     plugins: [
       new LodashModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
