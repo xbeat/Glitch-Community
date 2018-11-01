@@ -122,11 +122,13 @@ export class AddTeamUser extends React.Component {
         {({visible, togglePopover}) => (
           <span className="add-user-container">
             <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
-            <UsersList users={this.state.alreadyInvited}/>
             {!!this.state.invitee &&
+              <React.Fragment>
               <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeNotifyInvited}>
                 Invited {this.state.invitee}
               </div>
+              <UsersList users={this.state.alreadyInvited}/>
+              </React.Fragment>
             }
             {visible && 
               <AddTeamUserPop 
