@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getDisplayName} from '../../models/user';
+import {getDisplayName, getAvatarThumbnailUrl} from '../../models/user';
 import {WhitelistedDomainIcon} from './team-elements.jsx';
 import AddTeamUserPop from '../pop-overs/add-team-user-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 import TeamUserInfoPop from '../pop-overs/team-user-info-pop.jsx';
-import {UserPopoversList} from '../users-list.jsx';
+import {UsersList, UserPopoversList} from '../users-list.jsx';
 
 
 // Team Users list (in profile container)
@@ -93,9 +93,10 @@ export class AddTeamUser extends React.Component {
   
   async inviteUser(togglePopover, user) {
     togglePopover();
+    console.log(getAvatarThumbnailUrl(user));
     this.setState({
       invitee: getDisplayName(user),
-      alreadyInvited: alreadyInvited.push(),
+      //alreadyInvited: alreadyInvited.push(getAvatarThumbnailUrl(user)),
     });
     await this.props.inviteUser(user);
   }
