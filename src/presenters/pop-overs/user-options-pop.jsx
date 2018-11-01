@@ -14,14 +14,14 @@ import CreateTeamPop from './create-team-pop.jsx';
 const CreateTeamButton = ({showCreateTeam, userIsAnon}) => {
   if (userIsAnon) {
     return (
-      <React.Fragment>
+      <>
         <p className="description action-description">
           <button onClick={showCreateTeam} className="button-unstyled link">Sign in</button> to create teams
         </p>
         <button className="button button-small has-emoji button-tertiary" disabled>
           Create Team <span className="emoji herb" />
         </button>
-      </React.Fragment>
+      </>
     );
   }
   return (

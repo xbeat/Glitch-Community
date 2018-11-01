@@ -80,10 +80,10 @@ class Questions extends React.Component {
               </ul>
             </ErrorBoundary>
           ) : (
-            <React.Fragment>
+            <>
               {kaomoji} Looks like nobody is asking for help right now.{' '}
               <Link className="general-link" to="/help/how-can-i-get-help-with-code-in-my-project/">Learn about helping</Link>
-            </React.Fragment>
+            </>
           )}
         </article>
       </section>

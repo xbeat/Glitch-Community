@@ -25,7 +25,7 @@ function syncPageToUrl(url) {
 }
 
 const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
-  <React.Fragment>
+  <>
     <h1>
       <EditableField
         value={team.name}
@@ -42,7 +42,7 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
         prefix="@"
       />
     </p>
-  </React.Fragment>
+  </>
 );
 
 // Team Page
@@ -93,10 +93,10 @@ class TeamPage extends React.Component {
             {this.props.currentUserIsTeamAdmin ? (
               <TeamNameUrlFields team={this.props.team} updateName={this.props.updateName} updateUrl={this.props.updateUrl}/>
             ) : (
-              <React.Fragment>
+              <>
                 <h1>{this.props.team.name} {this.props.team.isVerified && <VerifiedBadge/>}</h1>
                 <p className="team-url">@{this.props.team.url}</p>
-              </React.Fragment>
+              </>
             )}
             <div className="users-information">
               <TeamUsers 
@@ -282,7 +282,7 @@ const TeamPageEditor = ({api, initialTeam, children}) => (
 const TeamPageContainer = ({api, team, ...props}) => (
   <TeamPageEditor api={api} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
-      <React.Fragment>
+      <>
         <Helmet>
           <title>{team.name}</title>
         </Helmet>
@@ -297,7 +297,7 @@ const TeamPageContainer = ({api, team, ...props}) => (
         </CurrentUserConsumer>
 
         <TeamNameConflict team={team}/>
-      </React.Fragment>
+      </>
     )}
   </TeamPageEditor>
 );

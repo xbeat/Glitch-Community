@@ -47,10 +47,10 @@ class ExpandyProjects extends React.Component {
     }
     
     return (
-      <React.Fragment>
+      <>
         <ProjectsUL projects={projects} projectOptions={this.props.projectOptions}/>
         { shouldShowButton && <button className="button-tertiary" onClick={this.handleClick}>Show {hiddenProjects} More</button>}
-      </React.Fragment>
+      </>
     );
   }
 }
