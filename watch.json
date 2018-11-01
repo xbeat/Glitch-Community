@@ -6,16 +6,12 @@
     ]
   },
   "restart": {
-    "exclude": [
-      "^server/",
-      "^src/",
-      "^test/"
-    ],
+    "exclude": [],
     "include": [
       "^sh/",
       "\\.json",
       "^webpack\\.config\\.js$",
-      "^src/\\.eslintrc\\.js$"
+      "\\.eslintrc\\.js$"
     ]
   },
   "throttle": 100
