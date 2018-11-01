@@ -6,7 +6,8 @@ import {WhitelistedDomainIcon} from './team-elements.jsx';
 import AddTeamUserPop from '../pop-overs/add-team-user-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 import TeamUserInfoPop from '../pop-overs/team-user-info-pop.jsx';
-import {UsersList, UserPopoversList} from '../users-list.jsx';
+import UsersList from '../users-list.jsx';
+import {UserPopoversList} from '../users-list.jsx';
 
 
 // Team Users list (in profile container)
@@ -124,10 +125,10 @@ export class AddTeamUser extends React.Component {
             <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
             {!!this.state.invitee &&
               <React.Fragment>
-              <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeNotifyInvited}>
-                Invited {this.state.invitee}
-              </div>
-              <UsersList users={this.state.alreadyInvited}/>
+                <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeNotifyInvited}>
+                  Invited {this.state.invitee}
+                </div>
+                <UsersList users={this.state.already}/>
               </React.Fragment>
             }
             {visible && 
