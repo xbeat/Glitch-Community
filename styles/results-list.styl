@@ -28,6 +28,16 @@
     .result-project, .result-collection
       display: flex
       width: 100%
+      [data-tooltip]::before
+        display: none
+      [data-tooltip]::after
+        display: none
+      .user:hover
+        [data-tooltip]::before
+          display: inline-block
+        [data-tooltip]::after
+          display: inline-block
+        
     .view-result-link
       position: absolute
       right: 1em
