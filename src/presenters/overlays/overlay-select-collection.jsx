@@ -7,7 +7,7 @@ import categories from '../../curated/categories.js';
 import CollectionResultItem from '../includes/collection-result-item.jsx';
 
 const OverlaySelectCollection = ({children, domain}) => (
-  <React.Fragment>
+  <>
     <PopoverContainer>
       {({visible, setVisible, togglePopover}) => (
         <details onToggle={evt => setVisible(evt.target.open)} open={visible} className="overlay-container">
@@ -83,7 +83,7 @@ const OverlaySelectCollection = ({children, domain}) => (
         </details>
       )}
     </PopoverContainer>
-  </React.Fragment>
+  </>
 );
 OverlaySelectCollection.propTypes = {
   children: PropTypes.node.isRequired,

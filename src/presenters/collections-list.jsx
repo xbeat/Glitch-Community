@@ -58,14 +58,12 @@ CollectionsList.propTypes = {
   userLogin: PropTypes.string.isRequired,
 };
 
-const CreateFirstCollection = ({api, currentUser}) =>{
-  return(
-    <div className="create-first-collection">
-      <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt=""/>
-      <p className="placeholder">Create collections to organize your favorite projects.</p><br/>
-    </div>
-  );
-};
+const CreateFirstCollection = () => (
+  <div className="create-first-collection">
+    <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt=""/>
+    <p className="placeholder">Create collections to organize your favorite projects.</p><br/>
+  </div>
+);
 
 class CreateCollectionButton extends React.Component{
   constructor(props){

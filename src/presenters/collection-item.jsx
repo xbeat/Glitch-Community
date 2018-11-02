@@ -13,7 +13,7 @@ import {getContrastTextColor, hexToRgbA} from '../models/collection.js';
 const ProjectsPreview = ({projects}) => {
   
   return (
-    <React.Fragment>
+    <>
       <ul className="projects-preview" projects={projects}>
         { projects.slice(0,3).map(project => (
           <li key={project.id} className={"project-container " + (project.private ? "private" : null)}>
@@ -26,7 +26,7 @@ const ProjectsPreview = ({projects}) => {
       <div className="collection-link">
         View {projects.length} {(projects.length > 0 ? 'projects' : 'project')} →
       </div>
-    </React.Fragment>
+    </>
   );
 };
 
@@ -63,7 +63,7 @@ class CollectionItem extends React.Component{
                       <span className="project-badge private-project-badge" aria-label="private"></span>
                       <div className="project-name">{collection.name}</div>
                     </div>
-                    <div className="description"><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
+                    <div className="description" style={{color: getContrastTextColor(collection.coverColor)}}><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
                   </div>
 
                   <div className="overflow-mask"></div>

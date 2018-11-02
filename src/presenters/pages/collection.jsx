@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
-import {getLink, hexToRgbA, getContrastTextColor} from '../../models/collection';
+import {getLink, hexToRgbA} from '../../models/collection';
 
 import {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
@@ -77,7 +77,7 @@ const CollectionPageContents = ({
   userLogin,
   ...props}) => (
   
-  <React.Fragment>  
+  <>  
     <Helmet>
       <title>{collection.name}</title>
     </Helmet>
@@ -174,7 +174,7 @@ const CollectionPageContents = ({
       </article>
       
     </main>
-  </React.Fragment>
+  </>
 );
 
 CollectionPageContents.propTypes = {

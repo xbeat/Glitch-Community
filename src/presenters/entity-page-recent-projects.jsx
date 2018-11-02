@@ -11,7 +11,7 @@ const EntityPageProjects = ({api, projects, pins, currentUser, isAuthorized, add
   const recentProjects = projects.filter(({id}) => !pinnedSet.has(id));
 
   return (
-    <React.Fragment>
+    <>
       {!!recentProjects.length && (
         <ProjectsList title="Recent Projects" projects={recentProjects}
           api={api}
@@ -21,7 +21,7 @@ const EntityPageProjects = ({api, projects, pins, currentUser, isAuthorized, add
           }
         />
       )}
-    </React.Fragment>
+    </>
   );
 };
 EntityPageProjects.propTypes = {
