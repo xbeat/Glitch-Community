@@ -2,7 +2,7 @@ const OFF = 0;
 const WARN = 1;
 const ERROR = 2;
 
-module.exports = exports = {
+module.exports = {
   extends: "eslint:recommended",
   env: {
       'es6': true,        // We are writing ES6 code
