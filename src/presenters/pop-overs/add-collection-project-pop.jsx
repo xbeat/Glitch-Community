@@ -134,14 +134,14 @@ class AddCollectionProjectPop extends React.Component {
   async startSearch() {
     if (!this.state.query) {
       return this.clearSearch();
-    }else{
-      // reset the results
-      this.setState({maybeResults: null});
     }
+    
+    // reset the results
+    this.setState({maybeResults: null});
     
     let searchByUrl = false;
     let query = this.state.query;
-    let collectionProjectIds = this.props.collection.projects.map((project) => project.id);
+    const collectionProjectIds = this.props.collection.projects.map((project) => project.id);
     
     if(isUrl(query)){
       searchByUrl = true;
@@ -175,19 +175,18 @@ class AddCollectionProjectPop extends React.Component {
         nonCollectionResults = [];
         this.setState({projectName: query});
       }  
-    }else{
+    } else {
       // user is searching by project name  - filter out any projects currently in the collection
       nonCollectionResults = results.filter( result => !collectionProjectIds.includes(result.id));
       
       if(nonCollectionResults.length !== originalNumResults){
-        if(originalNumResults == 1){
+        if(originalNumResults === 1){
           // the single search result is already in the collection
           this.setState({projectName: query});
-        }else{
+        } else {
           // multiple projects have been excluded from the search results
           this.setState({excludedProjectsCount: originalNumResults});
         }
-        
       }
     }
 
