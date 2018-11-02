@@ -94,10 +94,10 @@ export class AddTeamUser extends React.Component {
   
   async inviteUser(togglePopover, user) {
     togglePopover();
-    this.setState({
+    this.setState((state) => ({
       invitee: getDisplayName(user),
       alreadyInvited: [...this.state.alreadyInvited, user],
-    });
+    }));
     await this.props.inviteUser(user);
   }
   
@@ -127,7 +127,7 @@ export class AddTeamUser extends React.Component {
                 Invited {this.state.invitee}
               </div>
             }
-            {!!this.state.alreadyInvited && 
+            {!!this.state.alreadyInvited.length && 
               <UsersList users={this.state.alreadyInvited}/>
             }
             {visible && 
