@@ -81,7 +81,7 @@ module.exports = {
       },
       {
         test: /\.styl$/,
-        include: /styles/,
+        include: STYLES,
         use: [
           MiniCssExtractPlugin.loader,
           {
