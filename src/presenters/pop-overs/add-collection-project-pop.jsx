@@ -41,8 +41,8 @@ ProjectResultsUL.propTypes = {
 
 const ProjectSearchResults = ({projects, collection, onClick, projectName, excludedProjectsCount}) => {
   if(projects.length > 0) {
-     const collectionProjectIds = this.props.collection.projects.map((project) => project.id);
-     projects = projects.filter( result => !collectionProjectIds.includes(result.id));
+     const collectionProjectIds = collection.projects.map((project) => project.id);
+     projects = projects.filter( (project) => !collectionProjectIds.includes(project.id));
     
     return (
       <ProjectResultsUL {...{projects, collection, onClick}}/>

@@ -112,7 +112,7 @@ const UserPage = ({
       }}
     />
     
-    {(loadedCollections && 
+    {(loadedCollections && !!login &&
       <CollectionsList title="Collections" 
         collections={_collections} 
         api={api} 
