@@ -10,12 +10,7 @@ export const ProjectsList = ({api, ...props}) => (
       <div className="placeholder">{props.placeholder}</div>
     )}
 
-<<<<<<< HEAD
-    <ProjectsUL api={api} {...props}></ProjectsUL>
-=======
-    <ExpandyProjects {...{projects, projectOptions}}></ExpandyProjects>
->>>>>>> 35e836243266b5299bf71937240a47dcdd2b0970
-
+    <ExpandyProjects api={api} {...props}></ExpandyProjects>
   </article>
 );
 

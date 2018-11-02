@@ -172,13 +172,8 @@ const ProjectPageLoader = ({domain, api, currentUser, ...props}) => (
             <Helmet>
               <title>{project.domain}</title>
             </Helmet>
-<<<<<<< HEAD
             <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} currentUser={currentUser} {...props}/>
-          </React.Fragment>
-=======
-            <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
           </>
->>>>>>> 35e836243266b5299bf71937240a47dcdd2b0970
         )}
       </ProjectEditor>
     ) : <NotFound name={domain}/>}

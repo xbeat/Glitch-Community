@@ -162,12 +162,11 @@ UserPage.propTypes = {
 };
 
 const UserPageContainer = ({api, user}) => (
-<<<<<<< HEAD
   <CurrentUserConsumer>
     {(currentUser) => (
       <UserEditor api={api} initialUser={user}>
         {(user, funcs, isAuthorized) => (
-          <React.Fragment>
+          <>
             <Helmet>
               <title>{user.name || (user.login ? `@${user.login}` : `User ${user.id}`)}</title>
             </Helmet>
@@ -175,22 +174,9 @@ const UserPageContainer = ({api, user}) => (
             <ProjectsLoader api={api} projects={user.projects}>
               {projects => <UserPage {...{api, isAuthorized, currentUser}} user={{...user, projects}} {...funcs} />}
             </ProjectsLoader>
-          </React.Fragment>
+          </>
         )}
       </UserEditor>
-=======
-  <UserEditor api={api} initialUser={user}>
-    {(user, funcs, isAuthorized) => (
-      <>
-        <Helmet>
-          <title>{user.name || (user.login ? `@${user.login}` : `User ${user.id}`)}</title>
-        </Helmet>
-        
-        <ProjectsLoader api={api} projects={user.projects}>
-          {projects => <UserPage api={api} user={{...user, projects}} {...funcs} isAuthorized={isAuthorized}/>}
-        </ProjectsLoader>
-      </>
->>>>>>> 35e836243266b5299bf71937240a47dcdd2b0970
     )}
   </CurrentUserConsumer>
 );

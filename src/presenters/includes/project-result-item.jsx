@@ -14,7 +14,6 @@ const ProjectResultItem = ({id, domain, description, users, action, isActive, is
   }
 
   return (
-<<<<<<< HEAD
     <div>
       <button className={resultClass} onClick={action} data-project-id={id}>
         <img className="avatar" src={getAvatarUrl(id)} alt={`Project avatar for ${domain}`}/>
@@ -30,15 +29,6 @@ const ProjectResultItem = ({id, domain, description, users, action, isActive, is
         </button>
       </a>
     </div>
-=======
-    <button className={resultClass} onClick={action}>
-      <img className="avatar" src={getAvatarUrl(id)} alt={`Project avatar for ${domain}`}/>
-      <div className="result-name" title={domain}>{domain}</div>
-      
-      { description.length > 0 && <div className="result-description">{description}</div> }
-      { users.length > 0 && <StaticUsersList users={users} /> }
-    </button>
->>>>>>> 35e836243266b5299bf71937240a47dcdd2b0970
   );
 };
 

@@ -142,15 +142,6 @@ class TeamPage extends React.Component {
           teamProjects={this.props.team.projects}
           api={this.props.api}
         />
-<<<<<<< HEAD
-        { this.projectLimitIsReached() &&
-          <TeamProjectLimitReachedBanner
-            teamName={this.props.team.name}
-            teamId={this.props.team.id}
-            currentUserId={this.props.currentUser.id}
-            users={this.props.team.users}
-          />
-        }
         <EntityPagePinnedProjects
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
@@ -168,9 +159,6 @@ class TeamPage extends React.Component {
         />
 
         <EntityPageRecentProjects
-=======
-        <EntityPageProjects
->>>>>>> 35e836243266b5299bf71937240a47dcdd2b0970
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}

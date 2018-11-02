@@ -10,7 +10,6 @@ import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import Categories from '../categories.jsx';
 
-<<<<<<< HEAD
 import CollectionEditor from '../collection-editor.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
@@ -21,12 +20,7 @@ const CategoryPageWrap = ({
   category, 
   currentUser,
   ...props}) => (
-  <React.Fragment>
-    
-=======
-const CategoryPageWrap = ({category, children}) => (
   <>
->>>>>>> 35e836243266b5299bf71937240a47dcdd2b0970
     <Helmet>
       <title>{category.name}</title>
     </Helmet>
@@ -34,7 +28,7 @@ const CategoryPageWrap = ({category, children}) => (
       <article className="projects" style={{backgroundColor: category.backgroundColor}}>
         <header className="collection">
           <h1 className="collection-name">
-            <React.Fragment>{category.name} </React.Fragment>
+            {category.name}
           </h1>
           <div className="collection-image-container">
             <img src={category.avatarUrl} alt=""/>
@@ -48,26 +42,23 @@ const CategoryPageWrap = ({category, children}) => (
         </header>
         
         <ProjectsLoader api={api} projects={category.projects}>
-          {projects => 
-            <React.Fragment>
-              <div className="collection-contents">
-                <div className="collection-project-container-header">
-                  <h3>Projects ({category.projects.length})</h3>
-                </div>
-                  
-                {(currentUser.login ? 
-                  <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color} category={true}
-                    projectOptions={{
-                      addProjectToCollection
-                    }} 
-                    {...props}/>
-                  :
-                  <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color} category={true}
-                    projectOptions={{}} {...props}/>
-                )}
+          {projects =>
+            <div className="collection-contents">
+              <div className="collection-project-container-header">
+                <h3>Projects ({category.projects.length})</h3>
               </div>
-          
-            </React.Fragment>
+
+              {(currentUser.login ? 
+                <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color} category={true}
+                  projectOptions={{
+                    addProjectToCollection
+                  }} 
+                  {...props}/>
+                :
+                <ProjectsUL {...{projects, currentUser, api, addProjectToCollection}} collectionColor={category.color} category={true}
+                  projectOptions={{}} {...props}/>
+              )}
+            </div>
           }
         </ProjectsLoader>
         
