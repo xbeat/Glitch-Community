@@ -20,13 +20,12 @@ class CollectionsList extends React.Component {
   }
      
   async deleteCollection(id) {
-    await this.props.api.delete(`/collections/${id}`);
-    
     this.setState( 
       ({deletedCollectionIds}) => ({
         deletedCollectionIds: [...deletedCollectionIds, id]
       })
     );
+    await this.props.api.delete(`/collections/${id}`);
   }
   
   render() {
@@ -40,13 +39,14 @@ class CollectionsList extends React.Component {
         {isAuthorized && 
           <>
             <CreateCollectionButton {...{api, currentUser}}/>
-            {collections.length && <CreateFirstCollection {...{api, currentUser}}/>}
+            {!collections.length && <CreateFirstCollection {...{api, currentUser}}/>}
           </>
         }
-
+        
         <CollectionsUL {...{collections, api, isAuthorized, deleteCollection, userLogin}}/>
       </article>
     );
+  }
 }
 
 CollectionsList.propTypes = {
