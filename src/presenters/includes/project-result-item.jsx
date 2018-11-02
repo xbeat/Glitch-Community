@@ -9,6 +9,7 @@ const ProjectResultItem = ({id, domain, description, users, action, isActive}) =
   if(isActive) {
     resultClass += " active";
   }
+  if(p
 
   return (
     <div>
