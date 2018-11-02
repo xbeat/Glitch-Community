@@ -173,7 +173,7 @@ export class AddTeamProjectPop extends React.Component {
                   {...project}
                   title={project.domain}
                   isPrivate={project.private}
-                  />
+                />
               </li>
             ))}
           </ul>

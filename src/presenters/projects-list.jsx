@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from "./project-item.jsx";
 
-export const ProjectsList = ({api, ...props}) => (
+export const ProjectsList = ({title, placeholder, ...props}) => (
   <article className="projects">
-    <h2>{props.title}</h2>
+    <h2>{title}</h2>
 
-    {!!(props.placeholder && !props.projects.length) && (
-      <div className="placeholder">{props.placeholder}</div>
+    {!!(placeholder && !props.projects.length) && (
+      <div className="placeholder">{placeholder}</div>
     )}
 
-    <ExpandyProjects api={api} {...props}></ExpandyProjects>
+    <ExpandyProjects {...props}></ExpandyProjects>
   </article>
 );
 
@@ -23,9 +23,6 @@ ProjectsList.propTypes = {
   projectCount: PropTypes.number,
 };
 
-<<<<<<< HEAD
-export const ProjectsUL = ({api, ...props}) => {
-=======
 class ExpandyProjects extends React.Component {
   constructor(props) {
     super(props);
@@ -43,7 +40,7 @@ class ExpandyProjects extends React.Component {
     const totalProjects = this.props.projects.length;
     const hiddenProjects = totalProjects - maxProjects;
     
-    let projects = this.props.projects;
+    let {projects, ...props} = this.props;
     
     let shouldShowButton = false;
     if(!this.state.expanded) {
@@ -53,7 +50,7 @@ class ExpandyProjects extends React.Component {
     
     return (
       <>
-        <ProjectsUL projects={projects} projectOptions={this.props.projectOptions}/>
+        <ProjectsUL projects={projects} {...props}/>
         { shouldShowButton && <button className="button-tertiary" onClick={this.handleClick}>Show {hiddenProjects} More</button>}
       </>
     );
@@ -71,36 +68,25 @@ ExpandyProjects.defaultProps = {
 };
 
 
-export const ProjectsUL = ({projects, projectOptions, categoryColor}) => {
->>>>>>> 35e836243266b5299bf71937240a47dcdd2b0970
+export const ProjectsUL = ({projectCount, collectionUrl, ...props}) => {
   return (
-    <React.Fragment>
-      <ul className="projects-container">
-        
-        
-        { props.projects.map(project => (
-          <ProjectItem key={project.id} {...{project, api}} homepageCollection={props.homepageCollection} {...props}></ProjectItem>
-        ))}
-        
-        {props.homepageCollection
-          && <a href={props.collectionUrl} className="collection-view-all">View all {props.projectCount} projects →</a>
-        }
-        
-      </ul>
+    <ul className="projects-container">
+      { props.projects.map(project => (
+        <ProjectItem key={project.id} {...{project}} {...props}></ProjectItem>
+      ))}
 
-    </React.Fragment>
+      {props.homepageCollection &&
+        <a href={collectionUrl} className="collection-view-all">View all {projectCount} projects →</a>
+      }
+    </ul>
   );
 };
 
 ProjectsUL.propTypes = {
-  api: PropTypes.any,
-  category: PropTypes.bool,
-  currentUser: PropTypes.object,
   projects: PropTypes.array.isRequired,
-  projectOptions: PropTypes.object,
-  collectionColor: PropTypes.string,
   homepageCollection: PropTypes.bool,
   collectionUrl: PropTypes.string,
+  projectCount: PropTypes.number.isRequired,
 };
 
 
