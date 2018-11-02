@@ -113,7 +113,7 @@ const CollectionPageContents = ({
         {!!collection &&
            <ProjectsLoader api={api} projects={collection.projects}>
              {projects => 
-               <React.Fragment>
+               <>
                  <div className="collection-contents">
                    <div className="collection-project-container-header">
                      <h3>Projects ({collection.projects.length})</h3>
@@ -166,7 +166,7 @@ const CollectionPageContents = ({
                    )}
                  </div>
           
-               </React.Fragment>
+               </>
              }
            </ProjectsLoader>
         }
