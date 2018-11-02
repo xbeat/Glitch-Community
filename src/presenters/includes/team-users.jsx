@@ -96,7 +96,7 @@ export class AddTeamUser extends React.Component {
     togglePopover();
     this.setState((state) => ({
       invitee: getDisplayName(user),
-      alreadyInvited: [...state, user],
+      alreadyInvited: [...state.alreadyInvited, user],
     }));
     await this.props.inviteUser(user);
   }
