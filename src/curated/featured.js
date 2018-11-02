@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Flowers in Space',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Forbit.png?1539601710383",
-    link: 'https://glitch.com/~orbit'
+    title: 'Your Moment of Zen',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FYourMomentofZen.jpg?1541072010180",
+    link: 'https://your-moment-of-zen.glitch.me/'
   },{
-    title: 'Newspaper Business Simulator',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fnewspaper-business-simulator.png?1539601710653",
-    link: 'https://glitch.com/~newspaper-business-simulator'
+    title: 'Create Keynotes with Reveal.js',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FReveal-Glitch.gif?1541072010311",
+    link: 'https://glitch.com/~reveal-glitch'
   }, {
-    title: 'Minimal Retro Album Covers',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fretro-album-covers.png?1539601710110",
-    link: 'https://glitch.com/~retro-album-covers'
+    title: 'Defend The Galaxy',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FInvadersFromSpace.jpg?1541072010062",
+    link: 'https://invaders-from-space.glitch.me'
   }  
 ];

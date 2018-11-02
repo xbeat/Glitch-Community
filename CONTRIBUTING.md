@@ -108,7 +108,7 @@ _Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes.
 
 ### Deployment
 
-Only employees of Fog Creek will be able to do this step, and here it is! 
+Only employees of Glitch will be able to do this step, and here it is! 
 
 You should perform these steps immediately after clicking the "Merge pull request" button on your PR in Github. 
 
@@ -164,7 +164,7 @@ Satisfied?  Deploy it.
 
 Run the _special command_ to swap ~community with ~community-staging.
 
-(there's a special endpoint for this, ask us about it and sit beside a team member the first time you use it.   It's the same thing as renaming the two projects, but it does this atomically and without downtime, which you can't do if you rename then manually.)
+(there's a special endpoint for this, ask us about it and sit beside a team member the first time you use it.   It's the same thing as renaming the two projects, but it does this atomically and without downtime, which you can't do if you rename them manually.)
 
 #### If You Need to Revert the Deploy
 

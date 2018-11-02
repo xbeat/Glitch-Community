@@ -6,10 +6,10 @@ import Link from './link.jsx';
 import Notifications from '../notifications.jsx';
 
 const NameConflictWarning = ({id}) => (
-  <React.Fragment>
+  <>
     <p>This team has your name. You should update your info to remain unique ❄</p>
     <Link className="button button-small button-tertiary button-in-notification-container" to={`/user/${id}`}>Your Profile</Link>
-  </React.Fragment>
+  </>
 );
 NameConflictWarning.propTypes = {
   id: PropTypes.number.isRequired,

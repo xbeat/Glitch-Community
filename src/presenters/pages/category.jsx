@@ -10,6 +10,7 @@ import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import Categories from '../categories.jsx';
 
+<<<<<<< HEAD
 import CollectionEditor from '../collection-editor.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
@@ -22,6 +23,10 @@ const CategoryPageWrap = ({
   ...props}) => (
   <React.Fragment>
     
+=======
+const CategoryPageWrap = ({category, children}) => (
+  <>
+>>>>>>> 35e836243266b5299bf71937240a47dcdd2b0970
     <Helmet>
       <title>{category.name}</title>
     </Helmet>
@@ -70,7 +75,7 @@ const CategoryPageWrap = ({
       
     </main>
     <Categories/>
-  </React.Fragment>
+  </>
 );
 
 CategoryPageWrap.propTypes = {

@@ -16,6 +16,7 @@ export const TeamUsers = (props) => (
     {(user, togglePopover) =>
       <TeamUserInfoPop
         userIsTeamAdmin={props.adminIds.includes(user.id)}
+        userIsTheOnlyMember={props.users.length === 1}
         user={user} togglePopover={togglePopover}
         {...props}
       />
@@ -91,18 +92,18 @@ export class AddTeamUser extends React.Component {
   
   async inviteUser(togglePopover, user) {
     togglePopover();
-    await this.props.inviteUser(user);
     this.setState({
       invitee: getDisplayName(user),
     });
+    await this.props.inviteUser(user);
   }
   
   async inviteEmail(togglePopover, email) {
     togglePopover();
-    await this.props.inviteEmail(email);
     this.setState({
       invitee: email,
     });
+    await this.props.inviteEmail(email);
   }
 
   removeNotifyInvited() {

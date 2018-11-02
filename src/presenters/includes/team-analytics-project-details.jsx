@@ -21,12 +21,24 @@ const addFallbackSrc = (event) => {
   event.target.src = FALLBACK_AVATAR_URL;
 };
 
+const ProjectAvatar = ({project, className=''}) => (
+  <img src={getAvatarUrl(project.id)} className={`avatar ${className}`}
+    alt={project.domain} onError={addFallbackSrc}
+  />
+);
+ProjectAvatar.propTypes = {
+  project: PropTypes.shape({
+    domain: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+  className: PropTypes.string,
+};
+
 const ProjectDetails = ({projectDetails}) => {
-  let projectAvatar = getAvatarUrl(projectDetails.id);
   return (
     <article className="project-details">
       <ProjectLink project={projectDetails}>
-        <img className="avatar" src={projectAvatar} onError={addFallbackSrc} alt="project avatar" />
+        <ProjectAvatar project={projectDetails}/>
       </ProjectLink>
       <table>
         <tbody>
@@ -67,9 +79,9 @@ const ProjectDetails = ({projectDetails}) => {
               <td className="label">Originally remixed from</td>
               <td>
                 <ProjectLink project={projectDetails.baseProject}>
-                  <img alt="project avatar" className="avatar baseproject-avatar" src={getAvatarUrl(projectDetails.baseProject.id)} onError={addFallbackSrc} />
+                  <ProjectAvatar project={projectDetails.baseProject} className="baseproject-avatar"/>
+                  {projectDetails.baseProject.domain}
                 </ProjectLink>
-                {projectDetails.baseProject.domain}
               </td>
             </tr>
           }
@@ -80,11 +92,10 @@ const ProjectDetails = ({projectDetails}) => {
 };
 
 const ProjectRemixItem = ({remix}) => {
-  let projectAvatar = getAvatarUrl(remix.id);
   return (
     <ProjectLink project={remix}>
       <span data-tooltip={remix.domain} data-tooltip-left="true">
-        <img className="avatar" src={projectAvatar} alt={remix.domain} onError={addFallbackSrc} />
+        <ProjectAvatar project={remix}/>
       </span>
     </ProjectLink>
   );
@@ -124,28 +135,28 @@ class TeamAnalyticsProjectDetails extends React.Component {
   }
     
   render() {
+    if(this.state.isGettingData) {
+      return <Loader/>;
+    }
+    
     return (
-      <React.Fragment>
-        { (this.state.isGettingData) &&
-          <Loader />
-        ||
-          <React.Fragment>
-            <ProjectDetails 
-              projectDetails = {this.state.projectDetails}
+      <>
+        <ProjectDetails 
+          projectDetails = {this.state.projectDetails}
+        />
+        <article className="project-remixes">
+          <h4>Latest Remixes</h4>
+          { (this.state.projectRemixes.length === 0) &&
+            <p>No remixes yet (／_^)／ ●</p>
+          }
+          { this.state.projectRemixes.map(remix => (
+            <ProjectRemixItem
+              key = {remix.id}
+              remix = {remix}
             />
-            <h4>Latest Remixes</h4>
-            { (this.state.projectRemixes.length === 0) &&
-              <p>No remixes yet (／_^)／ ●</p>
-            }
-            { this.state.projectRemixes.map(remix => (
-              <ProjectRemixItem
-                key = {remix.id}
-                remix = {remix}
-              />
-            ))}
-          </React.Fragment>
-        }
-      </React.Fragment>
+          ))}
+        </article>
+      </>
     );
   }
 }

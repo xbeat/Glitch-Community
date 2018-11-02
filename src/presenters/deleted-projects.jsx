@@ -57,6 +57,14 @@ export default class DeletedProjects extends React.Component {
       loaded: false,
     };
     this.clickShow = this.clickShow.bind(this);
+    this.clickHide = this.clickHide.bind(this);
+  }
+  
+  clickHide() {
+    this.setState({
+      shown: false,
+      loaded: false,
+    });
   }
   
   async clickShow() {
@@ -78,7 +86,12 @@ export default class DeletedProjects extends React.Component {
     } else if (!this.props.deletedProjects.length) {
       return 'nothing found';
     }
-    return <DeletedProjectsList {...this.props}/>;
+    return (
+      <>
+        <DeletedProjectsList {...this.props}/>
+        <button className="button button-tertiary" onClick={this.clickHide}>Hide Deleted Projects</button>
+      </>
+    );
   }
   
   render() {

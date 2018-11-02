@@ -9,8 +9,17 @@
     border-radius: 5px;
     margin-top: 0
     display: inline-block
-  
+    
   ul
+    padding: 0
+    margin-top: 0.5rem
+    margin-bottom: 0
+    
+  li
+    list-style-type: none
+    display: inline-block
+  
+  .featured-items
     padding: 0
     margin-top: 0.5rem
     margin-bottom: 0
@@ -20,32 +29,28 @@
       flex-wrap: nowrap
       -webkit-overflow-scrolling: touch
 
-  li
-    list-style-type: none
-    margin-right: 10px
-    display: inline-block
-    min-width: 220px
-    text-shadow: black 0 0 4px
-    &:last-child
-      margin-right: 0
+    > li
+      margin-right: 10px
+      min-width: 220px
+      text-shadow: black 0 0 4px
+      &:last-child
+        margin-right: 0
 
-    -webkit-overflow-scrolling: touch
-
-  .featured
-    margin-right: 10px
-    background-color: section-line
-    display: block
-    width: 100%
-    max-width: 375px
-    height: auto
-    border-radius: 5px
-    @media (max-width: largeViewport)
-      max-width: 425px
-    &:last-child
-      margin-right: 0
+      -webkit-overflow-scrolling: touch
 
   .badge
     margin-left: 5px
+        
+  .community-pick-embed-container
+    position: relative
+    .witch
+      position:absolute
+      z-index: -1
+      right: 0px
+      top: -72px
+      
+    .glitch-embed-wrap
+      //max-height: 500px !important //override the Embed's configurable height.
   
   .featured-container
     position: relative
@@ -66,14 +71,16 @@
         font-size: 0.75rem
         padding: 10px
         padding-bottom: 2px
-        
-  .community-pick-embed-container
-    position: relative
-    .witch
-      position:absolute
-      z-index: -1
-      right: 0px
-      top: -72px
-      
-    .glitch-embed-wrap
-      //max-height: 500px !important //override the Embed's configurable height.
+
+    .featured
+      margin-right: 10px
+      background-color: section-line
+      display: block
+      width: 100%
+      max-width: 375px
+      height: auto
+      border-radius: 5px
+      @media (max-width: largeViewport)
+        max-width: 425px
+      &:last-child
+        margin-right: 0

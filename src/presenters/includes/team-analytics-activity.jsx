@@ -74,7 +74,6 @@ const renderChart = (c3, analytics, currentTimeFrame) => {
   let columns = [];
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics, currentTimeFrame);
-    console.log(columns);
   }
   
   // eslint-disable-next-line no-unused-vars
