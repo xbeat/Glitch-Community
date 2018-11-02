@@ -121,14 +121,14 @@ export class AddTeamUser extends React.Component {
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <span className="add-user-container">
+            {!!this.state.alreadyInvited.length && 
+              <UsersList users={this.state.alreadyInvited}/>
+            }
             <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
             {!!this.state.invitee &&
               <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeNotifyInvited}>
                 Invited {this.state.invitee}
               </div>
-            }
-            {!!this.state.alreadyInvited.length && 
-              <UsersList users={this.state.alreadyInvited}/>
             }
             {visible && 
               <AddTeamUserPop 
