@@ -17,10 +17,8 @@ export const ProjectsList = ({title, placeholder, ...props}) => (
 ProjectsList.propTypes = {
   api: PropTypes.any,
   projects: PropTypes.array.isRequired,
-  title: PropTypes.node,
+  title: PropTypes.node.isRequired,
   placeholder: PropTypes.node,
-  projectOptions: PropTypes.object.isRequired,
-  projectCount: PropTypes.number,
 };
 
 class ExpandyProjects extends React.Component {
@@ -59,7 +57,6 @@ class ExpandyProjects extends React.Component {
 
 ExpandyProjects.propTypes = {
   projects: PropTypes.array.isRequired,
-  projectOptions: PropTypes.object,
   maxCollapsedProjects: PropTypes.number,
 };
 
@@ -86,7 +83,7 @@ ProjectsUL.propTypes = {
   projects: PropTypes.array.isRequired,
   homepageCollection: PropTypes.bool,
   collectionUrl: PropTypes.string,
-  projectCount: PropTypes.number.isRequired,
+  projectCount: PropTypes.number,
 };
 
 

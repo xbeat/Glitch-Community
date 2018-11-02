@@ -15,14 +15,12 @@ export const EditCollectionNameAndUrl = ({owner, name, url, update, isAuthorized
       {({value: nameAndUrl, update, error}) => (
         <TrimmedValue value={nameAndUrl.name} update={name => update({name, url: kebabCase(name)})}>
           {({value: name, update}) => (
-            <React.Fragment>
               <h1 className="collection-name">
                 {(isAuthorized
                   ? <PureEditableWrappingField value={name} update={update} placeholder={placeholder} error={error}/>
                   : name
                 )}
               </h1>
-            </React.Fragment>
           )}
         </TrimmedValue>
       )}

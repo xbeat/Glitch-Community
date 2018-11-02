@@ -106,10 +106,7 @@ const CollectionPageContents = ({
           />
           )}
           
-          {(isAuthorized
-            ? <DeleteCollectionBtn deleteCollection={deleteCollection} currentUserLogin={userLogin}/>
-            : null
-          )}
+          {isAuthorized && <DeleteCollectionBtn deleteCollection={deleteCollection} currentUserLogin={userLogin}/>}
           
         </header>
         
@@ -159,11 +156,11 @@ const CollectionPageContents = ({
                      (isAuthorized
                        ?
                        <div className="empty-collection-hint">
-                          <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt=""/>
-                          You can add any project, created by any user.
+                         <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt=""/>
+                         You can add any project, created by any user.
                        </div>
                        :  <div className="empty-collection-hint">
-                          No projects to see in this collection just yet.
+                         No projects to see in this collection just yet.
                        </div>
                      )
                    )}

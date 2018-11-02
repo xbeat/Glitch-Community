@@ -14,22 +14,22 @@ import Notifications from '../notifications.jsx';
 const ProjectResultsUL = ({projects, collection, onClick}) => (
   <ul className="results">
     {projects.map(project => (
-        <Notifications key={project.id}>
-          {({createNotification}) => (
-            <li>
-              <ProjectResultItem
-                domain={project.domain}
-                description={project.description}
-                users={project.users}
-                id={project.id}
-                isActive={false}
-                collection={collection}
-                action={() => onClick(project, collection, createNotification)}
-                isPrivate={project.private}
-              />
-            </li>
-          )}
-        </Notifications>
+      <Notifications key={project.id}>
+        {({createNotification}) => (
+          <li>
+            <ProjectResultItem
+              domain={project.domain}
+              description={project.description}
+              users={project.users}
+              id={project.id}
+              isActive={false}
+              collection={collection}
+              action={() => onClick(project, collection, createNotification)}
+              isPrivate={project.private}
+            />
+          </li>
+        )}
+      </Notifications>
     ))}
   </ul>
 );
@@ -41,8 +41,8 @@ ProjectResultsUL.propTypes = {
 
 const ProjectSearchResults = ({projects, collection, onClick, projectName, excludedProjectsCount}) => {
   if(projects.length > 0) {
-     const collectionProjectIds = collection.projects.map((project) => project.id);
-     projects = projects.filter( (project) => !collectionProjectIds.includes(project.id));
+    const collectionProjectIds = collection.projects.map((project) => project.id);
+    projects = projects.filter( (project) => !collectionProjectIds.includes(project.id));
     
     return (
       <ProjectResultsUL {...{projects, collection, onClick}}/>
@@ -231,16 +231,15 @@ class AddCollectionProjectPop extends React.Component {
           {isLoading && <Loader />}
         
           {!!this.state.maybeResults && 
-              <ProjectsLoader api={this.props.api} projects={this.state.maybeResults}>
-                {() => <ProjectSearchResults
-                         projects={this.state.maybeResults}
-                         onClick={this.onClick}
-                         collection={this.props.collection}
-                         projectName={this.state.projectName}
-                         excludedProjectsCount={this.state.excludedProjectsCount}
-                         />
-                }
-              </ProjectsLoader>
+            <ProjectsLoader api={this.props.api} projects={this.state.maybeResults}>
+              {() => <ProjectSearchResults
+                projects={this.state.maybeResults}
+                onClick={this.onClick}
+                collection={this.props.collection}
+                projectName={this.state.projectName}
+                excludedProjectsCount={this.state.excludedProjectsCount}
+              />}
+            </ProjectsLoader>
           }          
         </section>}
       </dialog>

@@ -8,7 +8,7 @@ import CollectionAvatar from './includes/collection-avatar.jsx';
 
 import {getAvatarUrl} from '../models/project.js';
 
-import {hexToRgbA} from '../models/collection.js';
+import {getContrastTextColor, hexToRgbA} from '../models/collection.js';
 
 const ProjectsPreview = ({projects}) => {
   
