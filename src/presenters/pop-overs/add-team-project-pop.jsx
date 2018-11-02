@@ -223,7 +223,9 @@ export class AddTeamProjectPop extends React.Component {
                 <ProjectResultItem
                   action={(event) => this.onClick(event, project)}
                   {...project}
-                  title={project.domain}/>
+                  title={project.domain}
+                  isPrivate={project.private}
+                  />
               </li>
             ))}
           </ul>

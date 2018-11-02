@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import {getAvatarUrl} from  '../../models/project';
 import {StaticUsersList} from '../users-list.jsx';
 
-const ProjectResultItem = ({id, domain, description, users, action, isActive}) => {
+const ProjectResultItem = ({id, domain, description, users, action, isActive, isPrivate}) => {
   var resultClass = "button-unstyled result result-project";
   if(isActive) {
     resultClass += " active";
   }
-  if(p
+  if(isPrivate){
+    resultClass += " private";
+  }
 
   return (
     <div>
@@ -36,7 +38,8 @@ ProjectResultItem.propTypes = {
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,
-  isActive: PropTypes.bool
+  isActive: PropTypes.bool,
+  isPrivate: PropTypes.bool,
 };
 
 export default ProjectResultItem;

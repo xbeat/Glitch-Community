@@ -25,6 +25,7 @@ const ProjectResultsUL = ({projects, collection, onClick}) => (
                 isActive={false}
                 collection={collection}
                 action={() => onClick(project, collection, createNotification)}
+                isPrivate={project.private}
               />
             </li>
           )}
