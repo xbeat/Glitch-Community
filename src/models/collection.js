@@ -1,7 +1,6 @@
 /* global CDN_URL */
 
 export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-avatar.svg?1541449590339";
-export const colors = {red: "#EF6F6C", orange: "#FFCC6D", green:"#7DE2D1", cyan: "#45C1F7", navy: "#2E66B3", purple: "#B19AFF" };
 export const defaultAvatar = "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-avatar.svg?1540389405633";
 
 export const avatars = {

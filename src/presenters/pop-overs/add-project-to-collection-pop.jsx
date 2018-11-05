@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
+import randomColor from 'randomcolor';
 
-import {getLink,colors, defaultAvatar} from '../../models/collection';
+import {getLink, defaultAvatar} from '../../models/collection';
 import {getAvatarUrl} from '../../models/project';
 import {getCollectionPair} from '../../models/words';
 
@@ -63,7 +64,7 @@ class AddProjectToCollectionPop extends React.Component {
       const collectionPair = this.state.collectionPair.split('-');
       const description = `A ${collectionPair[1]} of projects that does ${collectionPair[0]} things`;
       const avatarUrl = defaultAvatar;
-      const coverColor = _.sample(Object.values(colors));
+      const coverColor = randomColor({luminosity: 'light'});
       
       const {data} = await this.props.api.post('collections', {
         name,

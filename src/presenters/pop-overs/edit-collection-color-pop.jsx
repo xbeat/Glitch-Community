@@ -63,10 +63,10 @@ class EditCollectionColorPop extends React.Component {
   }
   
   getRandomColor(){
-     let newCoverColor = randomColor({luminosity: 'light'});
-     this.setState({ color: newCoverColor});
-     this.setState({ query: newCoverColor});
-     this.update(newCoverColor);
+    let newCoverColor = randomColor({luminosity: 'light'});
+    this.setState({ color: newCoverColor});
+    this.setState({ query: newCoverColor});
+    this.update(newCoverColor);
   }
   
   render() {    
@@ -90,7 +90,7 @@ class EditCollectionColorPop extends React.Component {
           
           <hr/>
           
-          <button className="randomColorBtn button-tertiary" onClick={this.getRandomColor}>Get Random Color</button>
+          <button className="randomColorBtn button-tertiary" onClick={this.getRandomColor}>Random Color</button>
           
         </section>
       </dialog>
