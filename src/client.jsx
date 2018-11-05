@@ -18,6 +18,7 @@ const [b, ...bRest] = y; // Can we use array destructuring?
 const str = `${b}23`; // Can we use formatted strings?
 const func = (f, ...args) => f(...args); // Can we define arrow functions?
 func(async arg => await arg, Promise.resolve()); // Can we do async/await?
+new URLSearchParams(); // Do we have URLSearchParams? 
 /* eslint-enable no-unused-vars */
 
 

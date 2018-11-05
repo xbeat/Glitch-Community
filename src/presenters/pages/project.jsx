@@ -60,7 +60,10 @@ PrivateToggle.propTypes = {
 
 const Embed = ({domain}) => (
   <div className="glitch-embed-wrap">
-    <iframe title="embed" src={`https://glitch.com/embed/#!/embed/${domain}?path=README.md&previewSize=100`}></iframe>
+    <iframe title="embed"
+      src={`https://glitch.com/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
+      allow="geolocation; microphone; camera; midi; encrypted-media"
+    ></iframe>
   </div>
 );
 Embed.propTypes = {
