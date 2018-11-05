@@ -103,9 +103,10 @@ export class AddTeamUser extends React.Component {
   
   async inviteEmail(togglePopover, email) {
     togglePopover();
-    this.setState({
+    this.setState((state) => ({
       invitee: email,
-    });
+      alreadyInvited: [...state.alreadyInvited, email],
+    }));
     await this.props.inviteEmail(email);
   }
 
