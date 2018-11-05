@@ -77,7 +77,7 @@ module.exports = {
       {
         test: /\.jsx?/,
         include: SRC,
-        loader : 'babel-loader',
+        loader: 'babel-loader',
       },
       {
         test: /\.styl$/,
@@ -93,7 +93,7 @@ module.exports = {
           {
             loader: 'stylus-loader',
             options: {
-              compress: true, // Compress CSS as part of the stylus build
+              compress: mode === 'production', // Compress CSS as part of the stylus build
               use: [AutoprefixerStylus()],
             },
           },
