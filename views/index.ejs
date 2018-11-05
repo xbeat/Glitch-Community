@@ -37,15 +37,17 @@
   </head>
   <body> 
     <script>
-      var APP_URL = '<%= APP_URL %>';
       var API_URL = '<%= API_URL %>';
-      var EDITOR_URL = '<%= EDITOR_URL %>';
-      var CDN_URL = '<%= CDN_URL %>';
-      var GITHUB_CLIENT_ID = '<%= GITHUB_CLIENT_ID %>';
-      var FACEBOOK_CLIENT_ID = '<%= FACEBOOK_CLIENT_ID %>';
-      var EXTERNAL_ROUTES = <%- EXTERNAL_ROUTES %>;
-      var ZINE_POSTS = <%- ZINE_POSTS %>;
+      var APP_URL = '<%= APP_URL %>';
       var BUILD_COMPLETE = <%- BUILD_COMPLETE %>;
+      var CDN_URL = '<%= CDN_URL %>';
+      var EDITOR_URL = '<%= EDITOR_URL %>';
+      var ENVIRONMENT = '<%= ENVIRONMENT %>';
+      var EXTERNAL_ROUTES = <%- EXTERNAL_ROUTES %>;
+      var FACEBOOK_CLIENT_ID = '<%= FACEBOOK_CLIENT_ID %>';
+      var GITHUB_CLIENT_ID = '<%= GITHUB_CLIENT_ID %>';
+      var PROJECT_DOMAIN = '<%= PROJECT_DOMAIN %>';
+      var ZINE_POSTS = <%- ZINE_POSTS %>;
     </script>
 
     <div id="fallback" style="display: none">
@@ -63,22 +65,12 @@
       </div>
     </div>
 
-    <script src="https://cdn.ravenjs.com/3.26.2/raven.min.js" crossorigin="anonymous"></script>
-    <script>
-      Raven.config('https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508', {
-        environment: '<%= ENVIRONMENT %>',
-        serverName: '<%= PROJECT_DOMAIN %>',
-        sanitizeKeys: ['persistentToken'],
-        tags: {bootstrap: true},
-      }).install();
-    </script>
     <% for (let i = 0; i < scripts.length; ++i) { %>
     <script src="<%= scripts[i] %>"></script>
     <% } %>
     <script>
       if (window.bootstrap) {
-        Raven.setTagsContext();
-        Raven.context(window.bootstrap);
+        window.bootstrap();
       } else {
         console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
         document.getElementById('fallback').removeAttribute('style');

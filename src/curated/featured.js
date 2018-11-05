@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Air Drumming FTW!',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FDrumbridge.jpg?1540809570061",
-    link: 'https://glitch.com/~drumbridge'
+    title: 'Venn Diagrams Gone Wild',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F4_spontaneous-venning.png?1541419749124",
+    link: 'https://glitch.com/~spontaneous-venning/'
   },{
     title: 'Deploy to Firebase',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-firebase-homepage.jpg?1540810252060",
     link: 'https://glitch.com/edit/#!/firebase-basic-webpage?path=README.md:1:0'
   }, {
-    title: 'Shazam for Album Covers',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FRecordPlayer.jpg?1540832912802",
-    link: 'https://glitch.com/~record-player'
+    title: 'Trippy Generative Art Demos',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F3_inconvergent-sandbox.png?1541419748493",
+    link: 'https://glitch.com/~inconvergent-sandbox'
   }  
 ];

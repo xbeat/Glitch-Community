@@ -60,7 +60,10 @@ PrivateToggle.propTypes = {
 
 const Embed = ({domain}) => (
   <div className="glitch-embed-wrap">
-    <iframe title="embed" src={`https://glitch.com/embed/#!/embed/${domain}?path=README.md&previewSize=100`}></iframe>
+    <iframe title="embed"
+      src={`https://glitch.com/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
+      allow="geolocation; microphone; camera; midi; encrypted-media"
+    ></iframe>
   </div>
 );
 Embed.propTypes = {
@@ -69,8 +72,8 @@ Embed.propTypes = {
 
 const ReadmeError = (error) => (
   (error && error.response && error.response.status === 404)
-    ? <React.Fragment>This project would be even better with a <code>README.md</code></React.Fragment>
-    : <React.Fragment>We couldn't load the readme. Try refreshing?</React.Fragment>
+    ? <>This project would be even better with a <code>README.md</code></>
+    : <>We couldn't load the readme. Try refreshing?</>
 );
 const ReadmeLoader = ({api, domain}) => (
   <DataLoader get={() => api.get(`projects/${domain}/readme`)} renderError={ReadmeError}>
@@ -103,7 +106,7 @@ const ProjectPage = ({
                 update={domain => updateDomain(domain).then(() => syncPageToDomain(domain))}
                 suffix={<PrivateToggle isPrivate={project.private} isMember={isAuthorized} setPrivate={updatePrivate}/>}
               />
-            ) : <React.Fragment>{domain} {project.private && <PrivateBadge/>}</React.Fragment>)}
+            ) : <>{domain} {project.private && <PrivateBadge/>}</>)}
           </h1>
           <div className="users-information">
             <UsersList users={users} />
@@ -156,12 +159,12 @@ const ProjectPageLoader = ({domain, api, ...props}) => (
     {project => project ? (
       <ProjectEditor api={api} initialProject={project}>
         {(project, funcs, userIsMember) => (
-          <React.Fragment>
+          <>
             <Helmet>
               <title>{project.domain}</title>
             </Helmet>
             <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
-          </React.Fragment>
+          </>
         )}
       </ProjectEditor>
     ) : <NotFound name={domain}/>}

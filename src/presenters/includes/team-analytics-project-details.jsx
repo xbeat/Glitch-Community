@@ -135,30 +135,28 @@ class TeamAnalyticsProjectDetails extends React.Component {
   }
     
   render() {
+    if(this.state.isGettingData) {
+      return <Loader/>;
+    }
+    
     return (
-      <React.Fragment>
-        { (this.state.isGettingData) &&
-          <Loader />
-        ||
-          <React.Fragment>
-            <ProjectDetails 
-              projectDetails = {this.state.projectDetails}
+      <>
+        <ProjectDetails 
+          projectDetails = {this.state.projectDetails}
+        />
+        <article className="project-remixes">
+          <h4>Latest Remixes</h4>
+          { (this.state.projectRemixes.length === 0) &&
+            <p>No remixes yet (／_^)／ ●</p>
+          }
+          { this.state.projectRemixes.map(remix => (
+            <ProjectRemixItem
+              key = {remix.id}
+              remix = {remix}
             />
-            <article className="project-remixes">
-              <h4>Latest Remixes</h4>
-              { (this.state.projectRemixes.length === 0) &&
-                <p>No remixes yet (／_^)／ ●</p>
-              }
-              { this.state.projectRemixes.map(remix => (
-                <ProjectRemixItem
-                  key = {remix.id}
-                  remix = {remix}
-                />
-              ))}
-            </article>
-          </React.Fragment>
-        }
-      </React.Fragment>
+          ))}
+        </article>
+      </>
     );
   }
 }

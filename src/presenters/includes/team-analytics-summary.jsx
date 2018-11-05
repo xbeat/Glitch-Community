@@ -18,7 +18,7 @@ class TeamAnalyticsSummary extends React.Component {
   
   render() {
     return (
-      <React.Fragment>
+      <>
         <span className="summary-item" onClick={() => {this.toggleGraph('Total-App-Views');}} onKeyPress={() => {this.toggleGraph('App-Views');}} role="button" tabIndex={0}>
           <span className="total app-views">
             {this.props.totalAppViews.toLocaleString('en')}
@@ -34,7 +34,7 @@ class TeamAnalyticsSummary extends React.Component {
           </span>{' '}
           <Pluralize className="summary-label" singular="Remix" plural="Remixes" count={this.props.totalRemixes} showCount={false} />
         </span>
-      </React.Fragment>
+      </>
     );
   }
 }

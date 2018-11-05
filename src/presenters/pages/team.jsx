@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import {CurrentUserConsumer} from '../current-user.jsx';
-import DevToggles from '../includes/dev-toggles.jsx';
 import TeamEditor from '../team-editor.jsx';
 import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -25,7 +24,7 @@ function syncPageToUrl(url) {
 }
 
 const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
-  <React.Fragment>
+  <>
     <h1>
       <EditableField
         value={team.name}
@@ -42,7 +41,7 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
         prefix="@"
       />
     </p>
-  </React.Fragment>
+  </>
 );
 
 // Team Page
@@ -93,10 +92,10 @@ class TeamPage extends React.Component {
             {this.props.currentUserIsTeamAdmin ? (
               <TeamNameUrlFields team={this.props.team} updateName={this.props.updateName} updateUrl={this.props.updateUrl}/>
             ) : (
-              <React.Fragment>
+              <>
                 <h1>{this.props.team.name} {this.props.team.isVerified && <VerifiedBadge/>}</h1>
                 <p className="team-url">@{this.props.team.url}</p>
-              </React.Fragment>
+              </>
             )}
             <div className="users-information">
               <TeamUsers 
@@ -171,16 +170,14 @@ class TeamPage extends React.Component {
           />
         }
 
-        <DevToggles>
-          {toggles => (toggles.includes('delete-teams') && this.props.currentUserIsTeamAdmin && (
-            <DeleteTeam api={() => this.props.api}
-              teamId={this.props.team.id}
-              teamName={this.props.team.name}
-              teamAdmins={this.teamAdmins()}
-              users={this.props.team.users}
-            />
-          ))}
-        </DevToggles>
+        {this.props.currentUserIsTeamAdmin && (
+          <DeleteTeam api={() => this.props.api}
+            teamId={this.props.team.id}
+            teamName={this.props.team.name}
+            teamAdmins={this.teamAdmins()}
+            users={this.props.team.users}
+          />
+        )}
 
         { !this.props.currentUserIsOnTeam &&
           <TeamMarketing />
@@ -282,7 +279,7 @@ const TeamPageEditor = ({api, initialTeam, children}) => (
 const TeamPageContainer = ({api, team, ...props}) => (
   <TeamPageEditor api={api} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
-      <React.Fragment>
+      <>
         <Helmet>
           <title>{team.name}</title>
         </Helmet>
@@ -297,7 +294,7 @@ const TeamPageContainer = ({api, team, ...props}) => (
         </CurrentUserConsumer>
 
         <TeamNameConflict team={team}/>
-      </React.Fragment>
+      </>
     )}
   </TeamPageEditor>
 );

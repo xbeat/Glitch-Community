@@ -13,14 +13,14 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, pr
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
   
   const pinnedTitle = (
-    <React.Fragment>
+    <>
       Pinned Projects
       <span className="emoji pushpin emoji-in-title"></span>
-    </React.Fragment>
+    </>
   );
   
   return (
-    <React.Fragment>
+    <>
       {!!pinnedVisible && !!pinnedProjects.length && (
         <ProjectsList title={pinnedTitle}
           projects={pinnedProjects} 
@@ -32,7 +32,7 @@ const EntityPageProjects = ({projects, pins, isAuthorized, addPin, removePin, pr
           projectOptions={isAuthorized ? {addPin, ...projectOptions} : {}}
         />
       )}
-    </React.Fragment>
+    </>
   );
 };
 EntityPageProjects.propTypes = {
