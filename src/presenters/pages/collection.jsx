@@ -82,16 +82,18 @@ const CollectionPageContents = ({
       <title>{collection.name}</title>
     </Helmet>
     <main className="collection-page">
-      <article className="projects" style={{backgroundColor: hexToRgbA(collection.coverColor)}}>
-        <header className="collection">
-          <UserTile {...collection.user}/>
+      <article className="projects">
+        <header className="collection" style={{backgroundColor: collection.coverColor}}>
+          <div className="collection-image-container">
+            <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)}/>
+          </div>
+          
           <EditCollectionNameAndUrl isAuthorized={isAuthorized}
             owner={collection.user.login} name={collection.name} url={collection.url}
             update={data => updateNameAndUrl(data).then(() => syncPageToUrl(collection.user.login, data.url))}
           />
-          <div className="collection-image-container">
-            <CollectionAvatar backgroundColor={collection.coverColor}/>
-          </div>
+          
+          <UserTile {...collection.user}/>
           
           <div className="collection-description">
             <AuthDescription
@@ -105,8 +107,6 @@ const CollectionPageContents = ({
             initialColor={collection.coverColor}
           />
           )}
-          
-          {isAuthorized && <DeleteCollectionBtn deleteCollection={deleteCollection} currentUserLogin={userLogin}/>}
           
         </header>
         
@@ -174,6 +174,7 @@ const CollectionPageContents = ({
       </article>
       
     </main>
+   {isAuthorized && <DeleteCollectionBtn deleteCollection={deleteCollection} currentUserLogin={userLogin}/>}
   </>
 );
 
