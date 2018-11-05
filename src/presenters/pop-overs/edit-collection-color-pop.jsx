@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {colors} from '../../models/collection.js';
+import randomColor from 'randomcolor';
 
 const validHex = (hex) =>{
   var re = /[0-9A-Fa-f]{6}/g;
@@ -15,7 +15,7 @@ class EditCollectionColorPop extends React.Component {
     super(props);
     
     this.state = {
-      query: (this.hasCustomColor() ? this.props.initialColor : ""),
+      query: this.props.initialColor,
       color: null,
       maybeRequest: null,
       maybeResults: null
@@ -25,6 +25,7 @@ class EditCollectionColorPop extends React.Component {
     this.handleChange = this.handleChange.bind(this); // for when user enters in custom hex
     this.keyPress = this.keyPress.bind(this); // handles enter key for custom hex
     this.update = this.props.updateColor;
+    this.getRandomColor = this.get;
   }
     
   handleChange(e) {
@@ -61,40 +62,32 @@ class EditCollectionColorPop extends React.Component {
     this.props.togglePopover();
   }
   
-  hasCustomColor(){    
-    return !Object.values(colors).includes(this.props.initialColor);
+  getRandomColor(){
+     let newCoverColor = randomColor({luminosity: 'light'});
+     this.setState({ color: newCoverColor});
+     this.update(newCoverColor);
   }
   
   render() {    
     return (
       <dialog className="pop-over edit-collection-color-pop">
         <section className="pop-over-info">          
-          {Object.keys(colors).map((key => 
-            <button className={"button-tertiary " + ( (colors[key] == this.props.initialColor) ? "active" : "")} key={key}
-              style={{backgroundColor: colors[key]}} 
-              onClick={() => {
-                this.setState({ color: colors[key] });
-                // clear any custom colors
-                this.setState({ query: "" });
-                document.getElementsByClassName("editable-field-error-message")[0].style.display = "none";
-                this.update(colors[key]);
-              }}
-            />
-          ))}
-          
-          <hr/>
+         
+          <div className="button-tertiary " style={{backgroundColor: this.state.color}}/>
           
           <input id="color-picker"
             value={this.state.query} 
             onChange={this.handleChange} 
             onKeyPress={this.keyPress}
-            className={"pop-over-input pop-over-search " + (this.hasCustomColor() ? "active" : "") }
+            className={"pop-over-input pop-over-search"}
             placeholder="Custom color hex"
           />
           
           <div className="editable-field-error-message">
             Invalid Hex!
           </div>
+          
+          <button className="randomColorBtn button-tertiary" onClick={this.getRandomColor()}>Get Random Color</button>
           
         </section>
       </dialog>
