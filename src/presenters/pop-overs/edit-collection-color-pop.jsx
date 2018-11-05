@@ -85,14 +85,14 @@ class EditCollectionColorPop extends React.Component {
           />
           
           <div className="editable-field-error-message">
-            Invalid Hex!
+            Invalid Hex
           </div>
-          
-          <hr/>
-          
-          <button className="randomColorBtn button-tertiary" onClick={this.getRandomColor}>Random Color</button>
-          
         </section>
+          
+        <section className="pop-over-info">  
+          <button className="randomColorBtn button-tertiary" onClick={this.getRandomColor}>Random <span className="emoji bouquet">💐</span></button>
+        </section>
+        
       </dialog>
     );
   }
