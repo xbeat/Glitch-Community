@@ -40,11 +40,11 @@ module.exports = {
           name: 'curated',
           test: /[\\/]src[\\/]curated[\\/]/,
           minSize: 0,
-        },
+        },/*
         react: {
           name: 'react',
           test: /[\\/]node_modules[\\/]react[-\\/]/,
-        },
+        },*/
         modules: {
           name: 'dependencies',
           test: /[\\/]node_modules[\\/]/,
