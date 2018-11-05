@@ -16,7 +16,7 @@ class EditCollectionColorPop extends React.Component {
     
     this.state = {
       query: this.props.initialColor,
-      color: null,
+      color: this.props.initialColor,
       maybeRequest: null,
       maybeResults: null
     };
@@ -24,8 +24,8 @@ class EditCollectionColorPop extends React.Component {
     this.onClick = this.onClick.bind(this);
     this.handleChange = this.handleChange.bind(this); // for when user enters in custom hex
     this.keyPress = this.keyPress.bind(this); // handles enter key for custom hex
+    this.getRandomColor = this.getRandomColor.bind(this); // gets random color
     this.update = this.props.updateColor;
-    this.getRandomColor = this.get;
   }
     
   handleChange(e) {
@@ -65,6 +65,7 @@ class EditCollectionColorPop extends React.Component {
   getRandomColor(){
      let newCoverColor = randomColor({luminosity: 'light'});
      this.setState({ color: newCoverColor});
+     this.setState({ query: newCoverColor});
      this.update(newCoverColor);
   }
   
@@ -73,7 +74,7 @@ class EditCollectionColorPop extends React.Component {
       <dialog className="pop-over edit-collection-color-pop">
         <section className="pop-over-info">          
          
-          <div className="button-tertiary " style={{backgroundColor: this.state.color}}/>
+          <button className="color-preview-btn button-tertiary" style={{backgroundColor: this.state.color}}/>
           
           <input id="color-picker"
             value={this.state.query} 
@@ -87,7 +88,9 @@ class EditCollectionColorPop extends React.Component {
             Invalid Hex!
           </div>
           
-          <button className="randomColorBtn button-tertiary" onClick={this.getRandomColor()}>Get Random Color</button>
+          <hr/>
+          
+          <button className="randomColorBtn button-tertiary" onClick={this.getRandomColor}>Get Random Color</button>
           
         </section>
       </dialog>
