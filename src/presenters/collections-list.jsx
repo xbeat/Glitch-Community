@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import CollectionItem from "./collection-item.jsx";
-import {defaultAvatar, getLink,colors} from '../models/collection';
+import {defaultAvatar, getLink} from '../models/collection';
 import {getCollections, getPredicate} from '../models/words';
 import Loader from './includes/loader.jsx';
+
+import randomColor from 'randomcolor';
 
 import {kebabCase, orderBy} from 'lodash';
 
@@ -86,8 +88,7 @@ class CreateCollectionButton extends React.Component{
     const avatarUrl = defaultAvatar;
     
     // get a random color
-    const collectionColors = Object.values(colors);
-    const coverColor = collectionColors[Math.floor(Math.random()*collectionColors.length)];    
+    const coverColor = randomColor({luminosity: 'light'});
 
     const {data} = await api.post('collections', {
       name,

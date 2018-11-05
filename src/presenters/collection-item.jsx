@@ -52,10 +52,10 @@ class CollectionItem extends React.Component{
             <div className={['collection']} 
               id={"collection-" + collection.id}>
               <div className="collection-container">
-                <div className="collection-info" style={{backgroundColor: hexToRgbA(collection.coverColor)}}> 
+                <div className="collection-info" style={{backgroundColor: collection.coverColor}}> 
                   <div className="avatar-container">
                     <div className="avatar">
-                      <CollectionAvatar backgroundColor={collection.coverColor} collectionId={collection.id}/>
+                      <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)} collectionId={collection.id}/>
                     </div>
                   </div>
                   <div className="collection-name-description">
