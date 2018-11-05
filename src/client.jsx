@@ -1,9 +1,12 @@
 /* globals EDITOR_URL */
+
+// Import Sentry early to help it initialize.
+import {configureScope} from './utils/sentry';
+
 import './polyfills.js';
 import React from 'react';
 import {render} from 'react-dom';
 import App from './app.jsx';
-import {configureScope} from './utils/sentry';
 
 // Here's a bunch of browser support tests
 // If any of them don't work we can't run in this browser
@@ -27,6 +30,10 @@ window.bootstrap = () => {
     return;
   }
   
+  // Mark that bootstrapping has occurred,
+  // ..and more importantly, use this as an excuse
+  // to call into Sentry so that its initialization
+  // happens early in our JS bundle.
   configureScope((scope) => {
     scope.setTag("bootstrap", "true");
   });
