@@ -31,6 +31,9 @@ module.exports = () => {
 
   return {
     mode,
+    watchOptions: {
+      ignored: /node_modules/,
+    },
     entry: {
       "client-bundle": `${SRC}/client.jsx`,
       [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,

@@ -2,6 +2,7 @@ dependencies:
   '@babel/core': 7.1.2
   '@babel/plugin-syntax-dynamic-import': 7.0.0
   '@babel/preset-react': 7.0.0
+  '@sentry/browser': 4.2.3
   autoprefixer-stylus: 0.14.0
   axios: 0.18.0
   babel-eslint: 10.0.1
@@ -377,6 +378,59 @@ packages:
     dev: false
     resolution:
       integrity: sha512-RpPOVfK+yatXyn8n4PB1NW6k9qjinrXrRR8ugBN8fD6hCy5RXI6PSbVqpOJBO9oSaY7Nom4ohj35feb0UR9hSA==
+  /@sentry/browser/4.2.3:
+    dependencies:
+      '@sentry/core': 4.2.3
+      '@sentry/types': 4.2.3
+      '@sentry/utils': 4.2.3
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-XvuIc1aclz4zuP2LamDuSy62/gl1mmNxzF+Ni5L8mcghBDq0urnOdkblVQgzqGoH8mc2QfjEctGa5djWxg3Bpg==
+  /@sentry/core/4.2.3:
+    dependencies:
+      '@sentry/hub': 4.2.3
+      '@sentry/minimal': 4.2.3
+      '@sentry/types': 4.2.3
+      '@sentry/utils': 4.2.3
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-xo5rvksftnaEdnKbdokyfuqgMnuqw1DFp0lDboIFHlEBcQde/AdThEgLujJWmbVNI3Cg7g8/HvP65f7QBjKfOw==
+  /@sentry/hub/4.2.3:
+    dependencies:
+      '@sentry/types': 4.2.3
+      '@sentry/utils': 4.2.3
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-7Jc/wz3vybYm1RX2wk/4zAQS8fo3uxvXYBkRfpm3OmnGgTlwDEmJwtegeGWFqufxLl85brZ19V1KAdulmO206A==
+  /@sentry/minimal/4.2.3:
+    dependencies:
+      '@sentry/hub': 4.2.3
+      '@sentry/types': 4.2.3
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-Hus7LUeJDGsYpT2RTe6bUjG7mHG9uQoyDmW6pYUMN2dhD+cP5cPoTIXO4yxokwgAeDa+GH2/UXoASWc4s2eA2w==
+  /@sentry/types/4.2.3:
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-Z7laXlLtLSEXcKzgcD2caWPMTM8sAvR86rssYM5uYb3azC5PO0aAvuhjokkdv1+Ke1Bg7lkaNZamiCSyaH/9xg==
+  /@sentry/utils/4.2.3:
+    dependencies:
+      '@sentry/types': 4.2.3
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-D6+M1081wCwGp8adWV3KFOxrxFmVyjMJ45x6/TnYvXdgDyc+t28oil21FHeKhwjld9eMqgQ5Tf1OOvos1MNBQg==
   /@webassemblyjs/ast/1.7.10:
     dependencies:
       '@webassemblyjs/helper-module-context': 1.7.10
@@ -6052,6 +6106,7 @@ specifiers:
   '@babel/core': ^7.1.2
   '@babel/plugin-syntax-dynamic-import': ^7.0.0
   '@babel/preset-react': ^7.0.0
+  '@sentry/browser': ^4.2.3
   autoprefixer-stylus: ^0.14.0
   axios: ^0.18.0
   babel-eslint: ^10.0.1
