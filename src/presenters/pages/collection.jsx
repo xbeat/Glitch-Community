@@ -157,7 +157,7 @@ const CollectionPageContents = ({
                        ?
                        <div className="empty-collection-hint">
                          <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt=""/>
-                         <p>You can add any project, created by any user.</p>
+                         <p>You can add any project, created by any user</p>
                        </div>
                        :  <div className="empty-collection-hint">
                          No projects to see in this collection just yet.

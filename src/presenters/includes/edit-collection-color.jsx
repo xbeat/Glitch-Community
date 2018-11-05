@@ -8,7 +8,7 @@ const EditCollectionColor = ({update, initialColor, ...props}) => {
   return (
     <PopoverContainer>
       {({visible, togglePopover}) => (
-        <div className="button-wrap">
+        <div className="button-wrap edit-collection-color-btn">
           <button className={`button add-project opens-pop-over`} onClick={togglePopover}>
                 Color
           </button>
