@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-/* global Raven */
+import {captureException} from '../../utils/sentry';
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -10,7 +10,7 @@ export default class ErrorBoundary extends React.Component {
   
   componentDidCatch(error) {
     console.error(error);
-    Raven.captureException(error);
+    captureException(error);
     this.setState({error});
   }
   
