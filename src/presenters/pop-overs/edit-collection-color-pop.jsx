@@ -90,7 +90,7 @@ class EditCollectionColorPop extends React.Component {
         </section>
           
         <section className="pop-over-info">  
-          <button className="randomColorBtn button-tertiary" onClick={this.getRandomColor}>Random <span className="emoji bouquet">💐</span></button>
+          <button className="random-color-btn button-tertiary" onClick={this.getRandomColor}>Random <span className="emoji bouquet"></span></button>
         </section>
         
       </dialog>
