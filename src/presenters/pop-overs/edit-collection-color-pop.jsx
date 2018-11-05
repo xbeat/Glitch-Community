@@ -74,7 +74,7 @@ class EditCollectionColorPop extends React.Component {
       <dialog className="pop-over edit-collection-color-pop">
         <section className="pop-over-info">          
          
-          <button className="color-preview-btn button-tertiary" style={{backgroundColor: this.state.color}}/>
+          <button className="button button-tertiary color-preview-btn" style={{backgroundColor: this.state.color}}/>
           
           <input id="color-picker"
             value={this.state.query} 
