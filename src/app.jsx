@@ -7,7 +7,7 @@ import {UserPrefsProvider} from './presenters/includes/user-prefs.jsx';
 import {DevTogglesProvider} from './presenters/includes/dev-toggles.jsx';
 import {Notifications} from './presenters/notifications.jsx';
 
-import Router from './presenters/pages/router.jsx';
+import Router from './presenters/pages/router';
 
 const App = () => (
   <ErrorBoundary fallback="Something went very wrong, try refreshing?">
