@@ -7,7 +7,7 @@ eslint --config server/.eslintrc.server.js webpack.config.js
 echo "Starting webpack watcher"
 
 while true; do
-  env NODE_OPTIONS="--max-old-space-size=192" webpack --watch --info-verbosity verbose
+  env NODE_OPTIONS="--max-old-space-size=256" webpack --watch --info-verbosity verbose
   
   echo "Webpack crashed; Restarting webpack --watch"
 done
