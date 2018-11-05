@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
-import {getLink, hexToRgbA} from '../../models/collection';
+import {getContrastTextColor, getLink, hexToRgbA} from '../../models/collection';
 
 import {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
@@ -83,7 +83,7 @@ const CollectionPageContents = ({
     </Helmet>
     <main className="collection-page">
       <article className="projects">
-        <header className="collection" style={{backgroundColor: collection.coverColor}}>
+        <header className={"collection " + (getContrastTextColor(collection.coverColor) == "white" ? "dark" : "")} style={{backgroundColor: collection.coverColor}}>
           <div className="collection-image-container">
             <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)}/>
           </div>
@@ -132,7 +132,7 @@ const CollectionPageContents = ({
           
                    {(collection.projects.length > 0 ?
                      (isAuthorized
-                       ? <ProjectsUL {...{projects, currentUser, api}} collectionColor={collection.coverColor}
+                       ? <ProjectsUL {...{projects, currentUser, api}}
                          projectOptions={{
                            removeProjectFromCollection,
                            addProjectToCollection,
@@ -141,13 +141,13 @@ const CollectionPageContents = ({
 
                        : 
                        (currentUser && currentUser.login 
-                         ? <ProjectsUL {...{projects, currentUser, api}} collectionColor={collection.coverColor} 
+                         ? <ProjectsUL {...{projects, currentUser, api}} 
                            projectOptions={{
                              addProjectToCollection
                            }} 
                            {...props}/>
                          :
-                         <ProjectsUL {...{projects, currentUser, api}} collectionColor={collection.coverColor} 
+                         <ProjectsUL {...{projects, currentUser, api}} 
                            projectOptions={{}} 
                            {...props}/>
                        )

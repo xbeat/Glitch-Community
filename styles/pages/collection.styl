@@ -11,22 +11,26 @@
       max-height: 100%
   header.collection
     display: table
-    background: rgba(255,255,255,0.8)
-    border-radius: 4px
     padding: 15px
-    padding-bottom: 16px
     margin: 0px 30px 30px 0px
     width: 24%
+    border-top-left-radius: 5px
     @media(max-width: mediumViewport)
       width: 100%
       margin: 0
+      border-top-right-radius: 5px
     @media(max-width: largeViewport)
       width: 100%
       margin: 0
+      border-top-right-radius: 5px
     a
       background-color: transparent !important
     .user
       margin: 12px 0px
+    &.dark
+      color: white
+      .collection-name textarea
+        color: white
   .collection-name
     margin-bottom: 0px
     .description 
@@ -61,6 +65,8 @@
     background-color: rgba(229, 229, 229, 0.4)
     width: 100%
     margin-right: initial
+    padding: 0px
+    
     .category
       img
         padding-bottom: 0.5rem
