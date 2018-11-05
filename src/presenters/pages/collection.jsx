@@ -82,8 +82,8 @@ const CollectionPageContents = ({
       <title>{collection.name}</title>
     </Helmet>
     <main className="collection-page">
-      <article className="projects">
-        <header className={"collection " + (getContrastTextColor(collection.coverColor) == "white" ? "dark" : "")} style={{backgroundColor: collection.coverColor}}>
+      <article className="projects" style={{backgroundColor: collection.coverColor}}>
+        <header className={"collection " + (getContrastTextColor(collection.coverColor) == "white" ? "dark" : "")}>
           <div className="collection-image-container">
             <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)}/>
           </div>
