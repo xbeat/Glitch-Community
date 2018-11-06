@@ -44,17 +44,17 @@ const TeamList = ({teams, showCreateTeam, userIsAnon}) => {
   const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
   
   return (
-      <section className="pop-over-actions">
-        { orderedTeams.map(team => (
-          <div className="button-wrap">
-            <TeamLink key={team.id} team={team} className="button button-small has-emoji button-tertiary">
-              {team.name}&nbsp;
-              <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
-            </TeamLink>
-          </div>
-          ))}
-        <CreateTeamButton showCreateTeam={showCreateTeam} userIsAnon={userIsAnon} />
-        </section>
+    <section className="pop-over-actions">
+      { orderedTeams.map(team => (
+        <div className="button-wrap" key={team.id}>
+          <TeamLink key={team.id} team={team} className="button button-small has-emoji button-tertiary">
+            {team.name}&nbsp;
+            <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
+          </TeamLink>
+        </div>
+      ))}
+      <CreateTeamButton showCreateTeam={showCreateTeam} userIsAnon={userIsAnon} />
+    </section>
   );
 };
 
