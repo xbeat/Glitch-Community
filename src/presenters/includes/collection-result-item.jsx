@@ -34,7 +34,7 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
 };
 
 const CollectionResultItem = ({addProjectToCollection, api, project, collection, currentUserLogin, isActive, togglePopover}) => {
-  var resultClass = "button-unstyled result result-collection";
+  let resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
   }
