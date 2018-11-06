@@ -44,7 +44,6 @@ const TeamList = ({teams, showCreateTeam, userIsAnon}) => {
   const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
   
   return (
-    <>
       <section className="pop-over-actions">
         { orderedTeams.map(team => (
           <div className="button-wrap">
@@ -56,7 +55,6 @@ const TeamList = ({teams, showCreateTeam, userIsAnon}) => {
           ))}
         <CreateTeamButton showCreateTeam={showCreateTeam} userIsAnon={userIsAnon} />
         </section>
-    </>
   );
 };
 
