@@ -24,8 +24,12 @@ class Stars extends React.Component {
     this.interval = null;
   }
   
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     const {width, height} = this.state;
+    if(width === prevState.width && height === prevState.height) {
+      return;
+    }
+    
     const initialStars = Math.round((width * height) / 15000);
     let additionalStars = Math.round((width * height) / 3500);
     const context = this.canvas.current.getContext('2d');
