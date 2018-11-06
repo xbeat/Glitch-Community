@@ -27,7 +27,7 @@ StaticUsersList.propTypes = {
 
 // PopulatedUsersList
 
-export const PopulatedUsersList = ({users, extraClass="", teams=[] }) => (
+export const PopulatedUsersList = ({users, extraClass="" }) => (
   <ul className={`users ${extraClass}`}>
     {users.map(user => (
       <li key={user.id}>
@@ -41,7 +41,6 @@ export const PopulatedUsersList = ({users, extraClass="", teams=[] }) => (
 PopulatedUsersList.propTypes = {
   users: PropTypes.array.isRequired,
   extraClass: PropTypes.string,
-  teams: PropTypes.array,
 };
 
 const GlitchTeamUsersList = ({extraClass=''}) => {
