@@ -27,18 +27,17 @@ class Stars extends React.Component {
   componentDidUpdate() {
     const {width, height} = this.state;
     const initialStars = Math.round((width * height) / 15000);
-    const additionalStars = Math.round((width * height) / 3500);
+    let additionalStars = Math.round((width * height) / 3500);
     const context = this.canvas.current.getContext('2d');
     
     for (let i = 0; i < initialStars; ++i) {
       drawStar(this.canvas.current, context, 'white');
     }
     
-    let remainingStars = additionalStars;
     window.clearInterval(this.interval);
     this.interval = window.setInterval(() => {
       drawStar(this.canvas.current, context, '#CB82C0');
-      if ( --remainingStars <= 0) {
+      if ( --additionalStars <= 0) {
         window.clearInterval(this.interval);
       }
     }, 100);
