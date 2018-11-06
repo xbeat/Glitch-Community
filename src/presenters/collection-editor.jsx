@@ -41,7 +41,6 @@ class CollectionEditor extends React.Component {
   }
 
   async updateFields(changes) {
-    // console.log('update collection fields');
     const {data} = await this.props.api.patch(`collections/${this.state.id}`, changes);
     this.setState(data);
   }

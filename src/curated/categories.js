@@ -93,15 +93,3 @@ export default [
     "backgroundColor": "rgba(162, 193, 255, 0.5)",
   },
 ];
-
-{/*
-  {
-    "id": 14,
-    "name": "My Favorites",
-    "url": "favorites",
-    "avatarUrl": "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg?1489265199230",
-    "color": "#a3c4fd",
-    "description": "A collection of my favorite projects",
-    "backgroundColor": "rgba(162, 193, 255, 0.5)",
-  },
-  */}

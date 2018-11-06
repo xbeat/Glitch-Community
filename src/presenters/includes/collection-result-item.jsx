@@ -33,26 +33,17 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   notification(content, "notifySuccess");
 };
 
-// NOTE: CAN WE PASS CURRENT USER INSTEAD OF DOING AN API REQUEST TO GET THE USER LOGIN HERE?
-async function getCollectionUrl(api, userId, collectionUrl){
-  const {data} = await api.get(`users/${userId}`);
-  const username = data.login;
-  let path = `/@${username}/${collectionUrl}`;
-
-  return path;
-}
-
-const CollectionResultItem = ({addProjectToCollection, api, project, collection, isActive, togglePopover}) => {
+const CollectionResultItem = ({addProjectToCollection, api, project, collection, currentUser, isActive, togglePopover}) => {
   var resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
   }
+  const collectionPath = `/@${currentUser.login}/${collection.url}`;
 
   return (
+    
     <Notifications>
-      {({createNotification}) => (
-        <DataLoader get={() => getCollectionUrl(api, collection.userId, collection.url)}>
-          {collectionPath => 
+      {({createNotification}) => ( 
             <div>
               <button className={resultClass} onClick={() => addProject(addProjectToCollection, project, collection, collectionPath, createNotification, togglePopover)} data-project-id={project.id}>
                 <div className="avatar" id={"avatar-collection-" + collection.id}>
@@ -69,8 +60,6 @@ const CollectionResultItem = ({addProjectToCollection, api, project, collection,
                 </button>
               </a>
             </div>
-          }
-        </DataLoader>
       )}  
     </Notifications>
   );
@@ -80,6 +69,7 @@ CollectionResultItem.propTypes = {
   api: PropTypes.func.isRequired,
   addProjectToCollection: PropTypes.func,
   collection: PropTypes.object.isRequired,
+  currentUserLogin: PropTypes.string.isRequired,
   isActive: PropTypes.bool,
   project: PropTypes.object.isRequired,
   togglePopover: PropTypes.func.isRequired,
