@@ -60,7 +60,7 @@ const Router = ({api}) => (
 
       <Route path="/login/facebook" exact render={({location}) => <FacebookLoginPage key={location.key} api={api} code={parse(location.search, 'code')} hash={parse(location.search, 'hash')}/>}/>
       <Route path="/login/github" exact render={({location}) => <GitHubLoginPage key={location.key} api={api} code={parse(location.search, 'code')} hash={parse(location.search, 'hash')}/>}/>
-      <Route path="/login/email/:token" exact render={({location, match}) => <EmailTokenLoginPage key={location.key} api={api} token={match.params.token} hash={parse(location.search, 'hash')}/>}/>
+      <Route path="/login/email" exact render={({location}) => <EmailTokenLoginPage key={location.key} api={api} token={parse(location.search, 'token')} hash={parse(location.search, 'hash')}/>}/>
       
       <Route path="/join/@:teamUrl/:joinToken" exact render={({match}) => <JoinTeamPage key={location.key} api={api} {...match.params}/>}/>
 
