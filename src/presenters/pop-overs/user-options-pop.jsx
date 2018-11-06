@@ -19,14 +19,14 @@ const CreateTeamButton = ({showCreateTeam, userIsAnon}) => {
         <p className="description action-description">
           <button onClick={showCreateTeam} className="button-unstyled link">Sign in</button> to create teams
         </p>
-        <button className="button button-small has-emoji button-tertiary button-tertiary" disabled>
+        <button className="button button-small has-emoji button-tertiary button-cta-secondary" disabled>
           Create Team <span className="emoji herb" />
         </button>
       </>
     );
   }
   return (
-    <button onClick={showCreateTeam} className="button button-small has-emoji button-tertiary">
+    <button onClick={showCreateTeam} className="button button-small has-emoji button-cta-secondary">
       Create Team <span className="emoji herb" />
     </button>
   );
@@ -41,18 +41,19 @@ CreateTeamButton.propTypes = {
 // Team List
 
 const TeamList = ({teams, showCreateTeam, userIsAnon}) => {
+  const orderedTeams = orderBy(teams, team => team.name);
   return (
     <>
       <section className="pop-over-actions">
-        {orderBy(teams, team => team.name).map(team => (
+        { orderedTeams.map(team => (
+          <div className="button-wrap">
             <TeamLink key={team.id} team={team} className="button button-small has-emoji button-tertiary">
               {team.name}&nbsp;
               <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
             </TeamLink>
+          </div>
           ))}
-        </section>
-        <section className="pop-over-actions">
-          <CreateTeamButton showCreateTeam={showCreateTeam} userIsAnon={userIsAnon} />
+        <CreateTeamButton showCreateTeam={showCreateTeam} userIsAnon={userIsAnon} />
         </section>
     </>
   );
