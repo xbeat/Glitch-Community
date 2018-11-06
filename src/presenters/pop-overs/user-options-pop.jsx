@@ -41,7 +41,8 @@ CreateTeamButton.propTypes = {
 // Team List
 
 const TeamList = ({teams, showCreateTeam, userIsAnon}) => {
-  const orderedTeams = orderBy(teams, team => team.name);
+  const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
+  
   return (
     <>
       <section className="pop-over-actions">
