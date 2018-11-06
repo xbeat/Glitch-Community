@@ -5,13 +5,9 @@ import {getAvatarUrl} from  '../../models/project';
 import {StaticUsersList} from '../users-list.jsx';
 
 const ProjectResultItem = ({id, domain, description, users, action, isActive, isPrivate}) => {
-  var resultClass = "button-unstyled result result-project";
-  if(isActive) {
-    resultClass += " active";
-  }
-  if(isPrivate){
-    resultClass += " private";
-  }
+  const activeClass = isActive ? "active" : "";
+  const privateClass = isPrivate ? "private" : "";
+  const resultClass = `button-unstyled result result-project ${activeClass} ${privateClass}`;
 
   return (
     <div>

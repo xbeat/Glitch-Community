@@ -9,9 +9,9 @@ import CollectionAvatar from './collection-avatar.jsx';
 const AddProjectMessage = ({projectName, collectionName, url}) => (
   <>
     <p>Added <b><span className="project-name">{projectName}</span></b> to collection <b><span className="collection-name">{collectionName}</span></b></p>
-    <a href={url} target="_blank" rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
-  </>
-);
+    <a href={url} rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
+ 
+  </>);
 
 AddProjectMessage.propTypes = {
   projectName: PropTypes.string,
@@ -33,12 +33,12 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   notification(content, "notifySuccess");
 };
 
-const CollectionResultItem = ({addProjectToCollection, api, project, collection, currentUser, isActive, togglePopover}) => {
+const CollectionResultItem = ({addProjectToCollection, api, project, collection, currentUserLogin, isActive, togglePopover}) => {
   var resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
   }
-  const collectionPath = `/@${currentUser.login}/${collection.url}`;
+  const collectionPath = `/@${currentUserLogin}/${collection.url}`;
 
   return (
     
@@ -76,4 +76,3 @@ CollectionResultItem.propTypes = {
 };
 
 export default CollectionResultItem;
-

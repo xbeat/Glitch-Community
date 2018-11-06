@@ -9,14 +9,7 @@ export class PureEditableWrappingField extends React.Component {
   constructor(props) {
     super(props);
     this.state = { id: uniqueId("editable-field-") };
-    this.textInput = React.createRef();
     this.onChange = this.onChange.bind(this);
-  }
-  
-  componentDidMount() {
-    if (this.props.autoFocus) {
-      this.textInput.current.select();
-    }
   }
   
   onChange(evt) {
@@ -38,7 +31,7 @@ export class PureEditableWrappingField extends React.Component {
     
     return (
       <label htmlFor={inputProps.id}>
-        <TextArea {...inputProps} ref={this.textInput} />
+        <TextArea {...inputProps}/>
         {!!this.props.error && <FieldErrorMessage error={this.props.error}/>}
       </label>
     );
