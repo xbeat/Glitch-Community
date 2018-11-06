@@ -11,7 +11,7 @@ import UsersList from "./users-list.jsx";
 export const ProjectItem = ({project, categoryColor, projectOptions}) => {
   return (
     <li>
-      <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
+      <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams}/>
       <ProjectOptionsContainer project={project} projectOptions={projectOptions}></ProjectOptionsContainer>
 
       <ProjectLink project={project}>
@@ -42,6 +42,7 @@ ProjectItem.propTypes = {
     private: PropTypes.bool.isRequired,
     showAsGlitchTeam: PropTypes.bool.isRequired,
     users: PropTypes.array.isRequired,
+    teams: PropTypes.array,
   }).isRequired,
   categoryColor: PropTypes.string,
   projectOptions: PropTypes.object,

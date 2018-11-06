@@ -28,7 +28,7 @@ StaticUsersList.propTypes = {
 // PopulatedUsersList
 
 const PopulatedUsersList = ({users, extraClass="", teams=[] }) => {
-  if(!!users.length) {
+  if(users.length) {
     return (
       <ul className={`users ${extraClass}`}>
         {users.map(user => (
