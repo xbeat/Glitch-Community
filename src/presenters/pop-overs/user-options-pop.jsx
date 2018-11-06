@@ -8,6 +8,8 @@ import PopoverContainer from './popover-container.jsx';
 import NestedPopover from './popover-nested.jsx';
 import CreateTeamPop from './create-team-pop.jsx';
 
+import {orderBy} from 'lodash';
+
 // Create Team button
 
 const CreateTeamButton = ({showCreateTeam, userIsAnon}) => {
@@ -17,7 +19,7 @@ const CreateTeamButton = ({showCreateTeam, userIsAnon}) => {
         <p className="description action-description">
           <button onClick={showCreateTeam} className="button-unstyled link">Sign in</button> to create teams
         </p>
-        <button className="button button-small has-emoji button-tertiary" disabled>
+        <button className="button button-small has-emoji button-tertiary button-tertiary" disabled>
           Create Team <span className="emoji herb" />
         </button>
       </>
@@ -40,15 +42,19 @@ CreateTeamButton.propTypes = {
 
 const TeamList = ({teams, showCreateTeam, userIsAnon}) => {
   return (
-    <section className="pop-over-actions">
-      <CreateTeamButton showCreateTeam={showCreateTeam} userIsAnon={userIsAnon} />
-      {teams.map(team => (
-        <TeamLink key={team.id} team={team} className="button button-small has-emoji button-tertiary">
-          {team.name}&nbsp;
-          <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
-        </TeamLink>
-      ))}
-    </section>
+    <>
+      <section className="pop-over-actions">
+        {orderBy(teams, team => team.name).map(team => (
+            <TeamLink key={team.id} team={team} className="button button-small has-emoji button-tertiary">
+              {team.name}&nbsp;
+              <img className="emoji avatar" src={getTeamAvatarUrl({...team, size:'small'})} alt="" width="16px" height="16px"/>
+            </TeamLink>
+          ))}
+        </section>
+        <section className="pop-over-actions">
+          <CreateTeamButton showCreateTeam={showCreateTeam} userIsAnon={userIsAnon} />
+        </section>
+    </>
   );
 };
 
