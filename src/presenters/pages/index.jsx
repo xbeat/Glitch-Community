@@ -7,7 +7,7 @@ import {getEditorUrl} from '../../models/project';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import Link from '../includes/link.jsx';
 
-import Collections from '../collections.jsx';
+import Categories from '../categories.jsx';
 import Featured from '../featured.jsx';
 import OverlayVideo from '../overlays/overlay-video.jsx';
 import Questions from '../questions.jsx';
@@ -77,7 +77,7 @@ const IndexPage = ({api, user}) => (
     {!!(user && user.projects.length) && <RecentProjects api={api}/>}
     <Featured/>
     <RandomCategories api={api}/>
-    <Collections/>
+    <Categories/>
     {!(user && user.login) && <WhatIsGlitch/>}
     <MadeInGlitch/>
   </main>
