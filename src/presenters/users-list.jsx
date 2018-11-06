@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {UserLink, TeamLink} from './includes/link.jsx';
 import PopoverContainer from './pop-overs/popover-container.jsx';
-import {Avatar, UserAvatar} from './includes/avatar.jsx';
+import {Avatar, UserAvatar, TeamAvatar} from './includes/avatar.jsx';
 
 
 // StaticUsersList
@@ -28,7 +28,7 @@ StaticUsersList.propTypes = {
 // PopulatedUsersList
 
 const PopulatedUsersList = ({users, extraClass="", teams=[] }) => {
-  if(users.length) {
+  if(!!users.length) {
     return (
       <ul className={`users ${extraClass}`}>
         {users.map(user => (
@@ -46,7 +46,7 @@ const PopulatedUsersList = ({users, extraClass="", teams=[] }) => {
       {teams.map(team => (
         <li key={team.id}>
           <TeamLink team={team} className="team">
-            <UserAvatar team={team} />
+            <TeamAvatar team={team} />
           </TeamLink>
         </li>
       ))}
