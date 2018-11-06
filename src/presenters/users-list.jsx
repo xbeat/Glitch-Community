@@ -29,13 +29,15 @@ StaticUsersList.propTypes = {
 
 export const PopulatedUsersList = ({users, extraClass="", teams=[] }) => (
   <ul className={`users ${extraClass}`}>
-    {users.map(user => (
-      <li key={user.id}>
-        <UserLink user={user} className="user">
-          <UserAvatar user={user} />
-        </UserLink>
-      </li>
-    ))}
+    users.length && (
+      {users.map(user => (
+        <li key={user.id}>
+          <UserLink user={user} className="user">
+            <UserAvatar user={user} />
+          </UserLink>
+        </li>
+      ))}
+      )
   </ul>
 );
 PopulatedUsersList.propTypes = {
@@ -57,11 +59,11 @@ const GlitchTeamUsersList = ({extraClass=''}) => {
   );
 };
 
-const UsersList = ({glitchTeam=false, users, extraClass}) => {
+const UsersList = ({glitchTeam=false, users, extraClass, teams}) => {
   if(glitchTeam) {
     return <GlitchTeamUsersList extraClass={extraClass}/>;
   }
-  return <PopulatedUsersList users={users} extraClass={extraClass}/>;
+  return <PopulatedUsersList users={users} extraClass={extraClass} teams={teams}/>;
 };
 
 UsersList.propTypes = {
