@@ -37,7 +37,7 @@ export const PopulatedUsersList = ({users, extraClass="", teams=[] }) => (
           </UserLink>
         </li>
       ))}
-      )
+    )
   </ul>
 );
 PopulatedUsersList.propTypes = {
