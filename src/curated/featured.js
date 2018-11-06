@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Your Moment of Zen',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FYourMomentofZen.jpg?1541072010180",
-    link: 'https://your-moment-of-zen.glitch.me/'
+    title: 'Venn Diagrams Gone Wild',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F4_spontaneous-venning.png?1541419749124",
+    link: 'https://glitch.com/~spontaneous-venning/'
   },{
-    title: 'Create Keynotes with Reveal.js',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FReveal-Glitch.gif?1541072010311",
-    link: 'https://glitch.com/~reveal-glitch'
+    title: 'Deploy to Firebase',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-firebase-homepage.jpg?1540810252060",
+    link: 'https://glitch.com/edit/#!/firebase-basic-webpage?path=README.md:1:0'
   }, {
-    title: 'Defend The Galaxy',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FInvadersFromSpace.jpg?1541072010062",
-    link: 'https://invaders-from-space.glitch.me'
+    title: 'Trippy Generative Art Demos',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F3_inconvergent-sandbox.png?1541419748493",
+    link: 'https://glitch.com/~inconvergent-sandbox'
   }  
 ];

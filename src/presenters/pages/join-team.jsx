@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-/* global Raven */
+import {captureMessage, captureException} from '../../utils/sentry';
 
 import {Redirect} from 'react-router-dom';
 import {getLink} from '../../models/team';
@@ -20,7 +20,7 @@ class JoinTeamPageBase extends React.Component {
       var {data: team} = await this.props.api.get(`/teams/byUrl/${this.props.teamUrl}`);
     } catch (error) {
       if (error && !(error.response && error.response.status === 404)) {
-        Raven.captureException(error);
+        captureException(error);
       }
     }
     if (!team) {
@@ -38,7 +38,7 @@ class JoinTeamPageBase extends React.Component {
       // The team is real but the token didn't work
       // Maybe it's been used already or expired?
       console.log('Team invite error', error && error.response && error.response.data);
-      Raven.captureMessage('Team invite error', {extra: {error}});
+      captureMessage('Team invite error', {extra: {error}});
       this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
     }
     await this.props.reloadCurrentUser();

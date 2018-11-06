@@ -6,6 +6,7 @@ import {WhitelistedDomainIcon} from './team-elements.jsx';
 import AddTeamUserPop from '../pop-overs/add-team-user-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 import TeamUserInfoPop from '../pop-overs/team-user-info-pop.jsx';
+import UsersList from '../users-list.jsx';
 import {UserPopoversList} from '../users-list.jsx';
 
 
@@ -81,6 +82,7 @@ export class AddTeamUser extends React.Component {
     super(props);
     this.state = {
       invitee: '',
+      alreadyInvited: [],
     };
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
@@ -92,9 +94,10 @@ export class AddTeamUser extends React.Component {
   
   async inviteUser(togglePopover, user) {
     togglePopover();
-    this.setState({
+    this.setState((state) => ({
       invitee: getDisplayName(user),
-    });
+      alreadyInvited: [...state.alreadyInvited, user],
+    }));
     await this.props.inviteUser(user);
   }
   
@@ -118,6 +121,9 @@ export class AddTeamUser extends React.Component {
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <span className="add-user-container">
+            {!!this.state.alreadyInvited.length && 
+              <UsersList users={this.state.alreadyInvited}/>
+            }
             <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
             {!!this.state.invitee &&
               <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeNotifyInvited}>
