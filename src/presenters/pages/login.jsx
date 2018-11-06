@@ -79,3 +79,8 @@ export const GitHubLoginPage = ({code, ...props}) => {
   const url = `/auth/github/${code}`;
   return <LoginPageContainer {...props} provider="GitHub" url={url}/>;
 };
+
+export const EmailTokenLoginPage = ({token, ...props}) => {
+  const url = `/auth/email/${token}`;
+  return <LoginPageContainer {...props} provider="email" url={url}/>;
+};
