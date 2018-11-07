@@ -2,15 +2,15 @@ const OFF = 0;
 const WARN = 1;
 const ERROR = 2;
 
-module.exports = exports = {
+module.exports = {
   "extends": [
     "eslint:recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:react/recommended",
   ],
   env: {
-      'es6': true,        // We are writing ES6 code
-      'browser': true,    // for the browser
+    'es6': true,        // We are writing ES6 code
+    'browser': true,    // for the browser
   },
   "parser": "babel-eslint",
   "parserOptions": {
@@ -20,9 +20,6 @@ module.exports = exports = {
   "plugins": [
     "jsx-a11y", // https://www.npmjs.com/package/eslint-plugin-jsx-a11y
   ],
-  "globals": {
-    "$": true,
-  },
   "rules": {
     // Overrides/additions to eslint:recommended:
     "no-console": OFF,
@@ -40,7 +37,7 @@ module.exports = exports = {
   },
   "settings": {
     "react": {
-      "version": "16.5.2" // Should match package.json
+      "version": "16.6.0" // Should match package.json
     }
   }
 }

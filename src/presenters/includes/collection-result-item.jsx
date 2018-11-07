@@ -9,7 +9,6 @@ const AddProjectMessage = ({projectName, collectionName, url}) => (
   <>
     <p>Added <b><span className="project-name">{projectName}</span></b> to collection <b><span className="collection-name">{collectionName}</span></b></p>
     <a href={url} rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
- 
   </>);
 
 AddProjectMessage.propTypes = {
@@ -20,16 +19,20 @@ AddProjectMessage.propTypes = {
 
 const addProject = (addProjectToCollection, project, collection, collectionPath, notification, togglePopover) => {
 
-  // add project to collection via api
-  addProjectToCollection(project, collection);
-  
-  // toggle popover
-  togglePopover();  
-  
-  // show notification
-  // TO DO - only show this if add project to collection completes successfully
-  const content = <AddProjectMessage projectName={project.domain} collectionName={collection.name} url={collectionPath}/>;
-  notification(content, "notifySuccess");
+  try{
+    // add project to collection via api
+    addProjectToCollection(project, collection);
+
+    // toggle popover
+    togglePopover();  
+
+    // show notification
+    const content = <AddProjectMessage projectName={project.domain} collectionName={collection.name} url={collectionPath}/>;
+    notification(content, "notifySuccess");
+  }catch(error){
+    const content = <p>Er <b><span className="project-name">{projectName}</span></b> to collection <b><span className="collection-name">{collectionName}</span></b></p>
+    notification(content, "notifySuccess");
+  }
 };
 
 const CollectionResultItem = ({addProjectToCollection, project, collection, currentUserLogin, isActive, togglePopover}) => {

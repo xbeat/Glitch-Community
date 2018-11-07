@@ -109,7 +109,7 @@ class CreateCollectionButton extends React.Component{
   
   async generateNames(userLogin) {
     let collectionSynonyms = ["mix","bricolage","playlist","assortment","potpourri","melange","album","collection","variety","compilation"];
-    let predicate = userLogin;
+    let predicate = "radical";
 
     try {
       // get collection names

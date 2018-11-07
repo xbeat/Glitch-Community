@@ -1,6 +1,5 @@
 const express = require("express");
 const compression = require("compression");
-require("../webpack.config.js"); // So that webpack lints itself
 
 // https://docs.sentry.io/clients/node/
 const Raven = require("raven");
