@@ -137,7 +137,7 @@ class AddTeamUserPop extends React.Component {
   render() {
     const {inviteEmail, inviteUser, setWhitelistedDomain} = this.props;
     const {maybeRequest, maybeResults, query} = this.state;
-    const isLoading = (!!maybeRequest || !maybeResults);
+    let isLoading = !!maybeRequest;
     const results = [];
     
     const email = parseOneAddress(query);
@@ -156,6 +156,8 @@ class AddTeamUserPop extends React.Component {
           key: 'whitelist-email-domain',
           item: <WhitelistEmailDomain domain={domain} prevDomain={prevDomain} onClick={() => setWhitelistedDomain(domain)}/>,
         });
+      } else if (this.state.validDomains[domain] === null) {
+        isLoading = true;
       }
     }
     
@@ -166,6 +168,7 @@ class AddTeamUserPop extends React.Component {
         item: <UserResultItem user={user} action={() => inviteUser(user)} />
       })));
     }
+    
     return (
       <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">
