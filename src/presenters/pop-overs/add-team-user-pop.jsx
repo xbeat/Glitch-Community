@@ -12,7 +12,9 @@ import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/u
 const getDomain = (query) => {
   const email = parseOneAddress(query.replace('@', 'test@'));
   if (email && email.domain.includes('.')) {
-    return email.doma
+    return email.domain;
+  }
+  return null;
 };
 
 const rankSearchResult = (result, query) => { 
@@ -72,6 +74,7 @@ class AddTeamUserPop extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.startSearch = debounce(this.startSearch.bind(this), 300);
+    this.validateDomain = debounce(this.validateDomain.bind(this), 500);
   }
   
   handleChange(evt) {
@@ -115,13 +118,11 @@ class AddTeamUserPop extends React.Component {
   }
   
   async validateDomain() {
-    const query = this.state.query;
-    const parsed = parseOneAddress(query.replace('@', 'test@'));
-    if (!parsed || this.state.validDomains[parsed.domain] !== undefined) {
+    const domain = getDomain(this.state.query);
+    if (!domain || this.state.validDomains[domain] !== undefined) {
       return;
     }
     
-    const {domain} = parsed;
     this.setState(prevState => ({
       validDomains: {...prevState.validDomains, [domain]: null}
     }));
@@ -147,11 +148,10 @@ class AddTeamUserPop extends React.Component {
       });
     }
     
-    const domainEmail = parseOneAddress(query.replace('@', 'test@'));
-    if (setWhitelistedDomain && domainEmail) {
-      const {domain} = domainEmail;
+    if (setWhitelistedDomain) {
+      const domain = getDomain(query);
       const prevDomain = this.props.whitelistedDomain;
-      if (prevDomain !== domain && domain.includes('.') && this.state.validDomains[domain]) {
+      if (domain && prevDomain !== domain && this.state.validDomains[domain]) {
         results.push({
           key: 'whitelist-email-domain',
           item: <WhitelistEmailDomain domain={domain} prevDomain={prevDomain} onClick={() => setWhitelistedDomain(domain)}/>,
@@ -196,28 +196,32 @@ AddTeamUserPop.propTypes = {
 };
 
 const Results = ({results, isLoading}) => {
-  if(isLoading) {
-    return (
-      <section className="pop-over-actions last-section">
-        <Loader />
-      </section>
-    );
-  }
-
   if(results.length === 0) {
-    return (
-      <section className="pop-over-actions last-section">
-        Nothing found <span role="img" aria-label="">💫</span>
-      </section>
-    );
+    if (isLoading) {
+      return (
+        <section className="pop-over-actions last-section">
+          <Loader />
+        </section>
+      );
+    } else {
+      return (
+        <section className="pop-over-actions last-section">
+          Nothing found <span role="img" aria-label="">💫</span>
+        </section>
+      );
+    }
   }
 
   return (
+    <>
     <section className="pop-over-actions last-section results-list">
       <ul className="results">
         {results.map(({key, item}) => <li key={key}>{item}</li>)}
       </ul>
     </section>
+    {isLoading && <Loader />
+      </section>}
+    </>
   );
 };
 
