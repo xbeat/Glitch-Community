@@ -73,16 +73,14 @@ class AddTeamUserPop extends React.Component {
     
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
-    this.startSearch = debounce(this.startSearch.bind(this), 300);
-    this.validateDomain = debounce(this.validateDomain.bind(this), 300);
+    this.debouncedSearch = debounce(this.debouncedSearch.bind(this), 300);
   }
   
   handleChange(evt) {
     const query = evt.currentTarget.value.trimStart();
     this.setState({ query });
     if (query) {
-      this.startSearch();
-      this.validateDomain();
+      this.debouncedSearch();
     } else {
       this.clearSearch();
     }
@@ -95,12 +93,17 @@ class AddTeamUserPop extends React.Component {
     });
   }
   
-  async startSearch() {
+  debouncedSearch() {
     const query = this.state.query.trim();
     if (!query) {
-      return this.clearSearch();
+      this.clearSearch();
+      return;
     }
-    
+    this.startSearch(query);
+    this.validateDomain(query);
+  }
+  
+  async startSearch(query) {
     const request = this.props.api.get(`users/search?q=${query}`);
     this.setState({ maybeRequest: request });
     
@@ -117,8 +120,8 @@ class AddTeamUserPop extends React.Component {
     });
   }
   
-  async validateDomain() {
-    const domain = getDomain(this.state.query);
+  async validateDomain(query) {
+    const domain = getDomain(query);
     if (!domain || this.state.validDomains[domain] !== undefined) {
       return;
     }
@@ -137,7 +140,7 @@ class AddTeamUserPop extends React.Component {
   render() {
     const {inviteEmail, inviteUser, setWhitelistedDomain} = this.props;
     const {maybeRequest, maybeResults, query} = this.state;
-    let isLoading = !!maybeRequest;
+    const isLoading = !!maybeRequest || !maybeResults;
     const results = [];
     
     const email = parseOneAddress(query);
@@ -156,8 +159,6 @@ class AddTeamUserPop extends React.Component {
           key: 'whitelist-email-domain',
           item: <WhitelistEmailDomain domain={domain} prevDomain={prevDomain} onClick={() => setWhitelistedDomain(domain)}/>,
         });
-      } else if (this.state.validDomains[domain] === null) {
-        isLoading = true;
       }
     }
     
