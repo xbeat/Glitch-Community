@@ -120,7 +120,6 @@ class AddProjectToCollectionPop extends React.Component {
                     <li key={collection.id}>
                       <CollectionResultItem 
                         addProjectToCollection={this.props.addProjectToCollection}
-                        api={this.props.api}
                         currentUserLogin={this.props.currentUser.login}
                         project={this.props.project}
                         collection={collection}                         

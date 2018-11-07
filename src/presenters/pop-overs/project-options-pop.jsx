@@ -64,15 +64,13 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
               {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
             </section>
           )}
-          
-          <section className="pop-over-actions">
-            {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to Collection " emoji="framed_picture"/>}
-          </section>
         </>
-        : <section className="pop-over-actions">
-          {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to Collection " emoji="framed_picture"/>}
-        </section>
+        : null
       } 
+      
+      <section className="pop-over-actions">
+        {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to Collection " emoji="framed_picture"/>}
+      </section>
 
       {(props.joinTeamProject && props.leaveTeamProject) &&
         <section className="pop-over-actions collaborator-actions">

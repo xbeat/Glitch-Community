@@ -153,7 +153,7 @@ class AddCollectionProjectPop extends React.Component {
       let queryUrl = new URL(query);
       if(queryUrl.href.includes("me") && !queryUrl.href.includes("~")){
         // https://add-to-alexa.glitch.me/
-        query = queryUrl.hostname.substring(0, queryUrl.hostname.indexOf('.'))
+        query = queryUrl.hostname.substring(0, queryUrl.hostname.indexOf('.'));
       } else{
         // https://glitch.com/~add-to-alexa
         query = queryUrl.pathname.substring(queryUrl.pathname.indexOf("~")+1);
@@ -165,11 +165,14 @@ class AddCollectionProjectPop extends React.Component {
       request = this.props.api.get(`projects/search?q=${query}`);
       this.setState({ maybeRequest: request });
     }else{
-      request = this.props.api.get(`projects/${request}`);
+      request = this.props.api.get(`projects/${query}`);
       this.setState({ maybeRequest: request });
     }
-    const {data} = await request;
-    console.log("data %O", data);
+    let {data} = await request;
+    
+    if(searchByUrl){
+      data = [data];
+    }
     
     const results = data.map(project => ProjectModel(project).asProps()); 
     
