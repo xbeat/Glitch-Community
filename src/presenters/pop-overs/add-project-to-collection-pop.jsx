@@ -87,7 +87,7 @@ class AddProjectToCollectionPop extends React.Component {
       if (error && error.response && error.response.data && error.response.data.message) {
         this.setState({error: error.response.data.message});
       } else {
-        window.Raven.captureException(error);
+        captureException(error);
       }
     }
   }
