@@ -9,6 +9,12 @@ import UserModel from '../../models/user';
 import Loader from '../includes/loader.jsx';
 import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
 
+const getDomain = (query) => {
+  const email = parseOneAddress(query.replace('@', 'test@'));
+  if (email && email.domain.includes('.')) {
+    return email.doma
+};
+
 const rankSearchResult = (result, query) => { 
   //example result:
   /*
@@ -110,9 +116,12 @@ class AddTeamUserPop extends React.Component {
   
   async validateDomain() {
     const query = this.state.query;
-    const {domain} = parseOneAddress(query.replace('@', 'test@'));
-    if (this.state.validDomains[domain] !== undefined) return;
+    const parsed = parseOneAddress(query.replace('@', 'test@'));
+    if (!parsed || this.state.validDomains[parsed.domain] !== undefined) {
+      return;
+    }
     
+    const {domain} = parsed;
     this.setState(prevState => ({
       validDomains: {...prevState.validDomains, [domain]: null}
     }));
@@ -131,22 +140,18 @@ class AddTeamUserPop extends React.Component {
     const results = [];
     
     const email = parseOneAddress(query);
-    let domain = null;
     if (email) {
       ({ //results.push({
         key: 'invite-by-email',
         item: <InviteByEmail email={email.address} onClick={() => inviteEmail(email.address)}/>,
       });
-      domain = email.domain;
-    } else {
-      const fakeEmail = parseOneAddress(query.replace('@', 'test@'));
-      if (fakeEmail && fakeEmail.domain.includes('.')) {
-        domain = fakeEmail.domain;
-      }
     }
-    if (domain) {
+    
+    const domainEmail = parseOneAddress(query.replace('@', 'test@'));
+    if (setWhitelistedDomain && domainEmail) {
+      const {domain} = domainEmail;
       const prevDomain = this.props.whitelistedDomain;
-      if (setWhitelistedDomain && prevDomain !== domain) {
+      if (prevDomain !== domain && domain.includes('.') && this.state.validDomains[domain]) {
         results.push({
           key: 'whitelist-email-domain',
           item: <WhitelistEmailDomain domain={domain} prevDomain={prevDomain} onClick={() => setWhitelistedDomain(domain)}/>,
