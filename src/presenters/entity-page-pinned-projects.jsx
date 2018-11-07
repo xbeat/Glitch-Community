@@ -25,7 +25,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
       {!!pinnedVisible && !!pinnedProjects.length && (
         <ProjectsList title={pinnedTitle}
           projects={pinnedProjects}
-          api={api}addProjectTocollection={currentUser.login ? projectOptions.addProjectToCollection :  {}}
+          api={api} 
           projectOptions={isAuthorized ? {removePin, ...projectOptions} 
             : (currentUser.login ? {...projectOptions} : {})
           }
