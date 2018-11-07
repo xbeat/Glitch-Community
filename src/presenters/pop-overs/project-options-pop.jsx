@@ -52,7 +52,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
   
   return(
     <dialog className="pop-over project-options-pop">
-      {props.currentUserIsOnProject 
+      {props.currentUserIsOnProject || (props.removePin || props.addPin)
         ? <>
           {(props.addPin && 
             <section className="pop-over-actions">
