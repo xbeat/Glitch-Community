@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import {debounce} from 'lodash';
 import {parseOneAddress} from 'email-addresses';
 
@@ -59,6 +60,7 @@ class AddTeamUserPop extends React.Component {
       query: '', //The actual search text
       maybeRequest: null, //The active request promise
       maybeResults: null, //Null means still waiting vs empty
+      validDomains: {}, //Track the 
     };
     
     this.handleChange = this.handleChange.bind(this);
