@@ -205,22 +205,10 @@ async function getUserIdByLogin(api, userLogin){
 }
 
 async function getCollectionId(api, userId, collectionName){
-  let collectionMatch = null;
   // parse through user's collections to find collection that matches the name of the collection
   const {data} = await api.get(`collections?userId=${userId}`);
-  
-  data.forEach(function loop(el, i){
-    if(loop.stop){return;}
-    if(el.url === collectionName){
-      collectionMatch = data[i];
-      loop.stop = true;
-    }
-  });
-  if(!collectionMatch){
-    return null;
-  }
-  return collectionMatch.id; 
-  
+  const collectionMatch = data.find(c => c.url == collectionName);
+  return collectionMatch.id;  
 }
 
 async function getCollection(api, collectionId){
