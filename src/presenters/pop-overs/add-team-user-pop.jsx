@@ -74,7 +74,7 @@ class AddTeamUserPop extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.startSearch = debounce(this.startSearch.bind(this), 300);
-    this.validateDomain = debounce(this.validateDomain.bind(this), 500);
+    this.validateDomain = debounce(this.validateDomain.bind(this), 300);
   }
   
   handleChange(evt) {
@@ -196,32 +196,28 @@ AddTeamUserPop.propTypes = {
 };
 
 const Results = ({results, isLoading}) => {
+  if(isLoading) {
+    return (
+      <section className="pop-over-actions last-section">
+        <Loader />
+      </section>
+    );
+  }
+
   if(results.length === 0) {
-    if (isLoading) {
-      return (
-        <section className="pop-over-actions last-section">
-          <Loader />
-        </section>
-      );
-    } else {
-      return (
-        <section className="pop-over-actions last-section">
-          Nothing found <span role="img" aria-label="">💫</span>
-        </section>
-      );
-    }
+    return (
+      <section className="pop-over-actions last-section">
+        Nothing found <span role="img" aria-label="">💫</span>
+      </section>
+    );
   }
 
   return (
-    <>
     <section className="pop-over-actions last-section results-list">
       <ul className="results">
         {results.map(({key, item}) => <li key={key}>{item}</li>)}
       </ul>
     </section>
-    {isLoading && <Loader />
-      </section>}
-    </>
   );
 };
 
