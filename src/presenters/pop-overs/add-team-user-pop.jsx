@@ -60,7 +60,7 @@ class AddTeamUserPop extends React.Component {
       query: '', //The actual search text
       maybeRequest: null, //The active request promise
       maybeResults: null, //Null means still waiting vs empty
-      validDomains: {}, //Track the 
+      validDomains: {}, //Null means loading that domain
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -73,6 +73,7 @@ class AddTeamUserPop extends React.Component {
     this.setState({ query });
     if (query) {
       this.startSearch();
+      this.validateDomain();
     } else {
       this.clearSearch();
     }
@@ -105,6 +106,22 @@ class AddTeamUserPop extends React.Component {
         maybeResults: rankedResults,
       } : {};
     });
+  }
+  
+  async validateDomain() {
+    const query = this.state.query;
+    const {domain} = parseOneAddress(query.replace('@', 'test@'));
+    if (this.state.validDomains[domain] !== undefined) return;
+    
+    this.setState(prevState => ({
+      validDomains: {...prevState.validDomains, [domain]: null}
+    }));
+    
+    const {data} = await axios.get(`https://freemail.glitch.me/${domain}`);
+    
+    this.setState(prevState => ({
+      validDomains: {...prevState.validDomains, [domain]: !data.free}
+    }));
   }
     
   render() {
