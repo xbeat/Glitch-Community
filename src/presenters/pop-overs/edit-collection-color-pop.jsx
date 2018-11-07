@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import randomColor from 'randomcolor';
 
+import {throttle} from 'lodash';
+
 const validHex = (hex) =>{
   var re = /[0-9A-Fa-f]{6}/g;
   if(re.test(hex)){
@@ -25,6 +27,7 @@ class EditCollectionColorPop extends React.Component {
     this.handleChange = this.handleChange.bind(this); // for when user enters in custom hex
     this.keyPress = this.keyPress.bind(this); // handles enter key for custom hex
     this.getRandomColor = this.getRandomColor.bind(this); // gets random color
+    this.changeColor = throttle(this.changeColor.bind(this), 250); // get update from system color picker
     this.update = this.props.updateColor;
   }
     
@@ -69,12 +72,21 @@ class EditCollectionColorPop extends React.Component {
     this.update(newCoverColor);
   }
   
+  changeColor(color){
+    // upate the UI manually to prevent lag
+    document.getElementById("color-picker").value = color;
+    document.getElementById("color-picker").style.backgroundColor = color;
+    this.setState({ color: color });
+    this.setState({ query: color});    
+    this.update(color);
+  }
+  
   render() {    
     return (
       <dialog className="pop-over edit-collection-color-pop">
         <section className="pop-over-info">          
-         
-          <button className="button button-tertiary color-preview-btn" style={{backgroundColor: this.state.color}}/>
+                  
+          <input className="color-picker" type="color" value={this.state.color} onChange={(e) => this.changeColor(e.target.value)} style={{backgroundColor: this.state.color}} id="color-picker"></input>
           
           <input id="color-picker"
             value={this.state.query} 
