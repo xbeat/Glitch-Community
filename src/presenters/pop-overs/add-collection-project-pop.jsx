@@ -153,7 +153,7 @@ class AddCollectionProjectPop extends React.Component {
       let queryUrl = new URL(query);
       if(queryUrl.href.includes("me") && !queryUrl.href.includes("~")){
         // https://add-to-alexa.glitch.me/
-        query = queryUrl.hostname.substring(0, queryUrl.hostname.indexOf('.'))
+        query = queryUrl.hostname.substring(0, queryUrl.hostname.indexOf('.'));
       } else{
         // https://glitch.com/~add-to-alexa
         query = queryUrl.pathname.substring(queryUrl.pathname.indexOf("~")+1);

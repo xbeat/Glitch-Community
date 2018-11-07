@@ -30,8 +30,8 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
     const content = <AddProjectMessage projectName={project.domain} collectionName={collection.name} url={collectionPath}/>;
     notification(content, "notifySuccess");
   }catch(error){
-    const content = <p>Er <b><span className="project-name">{projectName}</span></b> to collection <b><span className="collection-name">{collectionName}</span></b></p>
-    notification(content, "notifySuccess");
+    const content = <p>Something went wrong. Try refreshing and adding the project again.</p>;
+    notification(content, "notifyError");
   }
 };
 
