@@ -281,27 +281,28 @@ details.popover-container
   top: 27px
   left: 0px
   width: 154px
-  .color-preview-btn
-    height: 25px
-    margin: 0
-    cursor: default
-    &:focus
-      outline: none
-      cursor: default
-    &:active
-      outline: none
-      cursor: default
+  .pop-over-info
+    display: flex
   button
     margin-right: 2px
     margin-bottom: 2px
   button.active
     border-color: black
-  .color-preview-btn:hover
-    cursor: default
-  #color-picker
+  .color-picker
+    width: 24px
+    height: 22px
+    padding: 0px    
+    border: 1px solid input-border
+    &:hover
+      border: 1px solid secondary
+      cursor: pointer
+  input[type="color"]::-webkit-color-swatch 
+    border: none
+  #color-picker-hex
     width: 71%;
     margin-left: 5px;
-  #color-picker.active
+    height: 22px
+  #color-picker-hex.active
     border-color: black
   .editable-field-error-message
     width: 70%
