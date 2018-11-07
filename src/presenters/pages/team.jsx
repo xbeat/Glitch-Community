@@ -146,9 +146,7 @@ class TeamPage extends React.Component {
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
-          addPin={this.props.addPin}
           removePin={this.props.removePin}
-          addProjectToCollection={this.addProjectToCollection}
           projectOptions={{
             addProjectToCollection: this.addProjectToCollection,
             removeProjectFromTeam: this.props.removeProject,
@@ -162,9 +160,7 @@ class TeamPage extends React.Component {
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
-          addPin={this.props.addPin}
-          removePin={this.props.removePin}
-          addProjectToCollection={this.addProjectToCollection}
+          addPin={this.props.addPin}tToCollection={this.addProjectToCollection}
           projectOptions={{
             addProjectToCollection: this.addProjectToCollection,
             removeProjectFromTeam: this.props.removeProject,
@@ -299,7 +295,6 @@ const TeamPageEditor = ({api, initialTeam, children}) => (
     )}
   </TeamEditor>
 );
-
 const TeamPageContainer = ({api, team, ...props}) => (
   <TeamPageEditor api={api} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
@@ -307,7 +302,6 @@ const TeamPageContainer = ({api, team, ...props}) => (
         <Helmet>
           <title>{team.name}</title>
         </Helmet>
-
         <CurrentUserConsumer>
           {currentUser => (
             <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
@@ -316,11 +310,9 @@ const TeamPageContainer = ({api, team, ...props}) => (
             />
           )}
         </CurrentUserConsumer>
-
         <TeamNameConflict team={team}/>
       </>
     )}
   </TeamPageEditor>
 );
-
 export default TeamPageContainer;
