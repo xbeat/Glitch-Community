@@ -88,17 +88,20 @@ class EditCollectionColorPop extends React.Component {
                   
           <input className="color-picker" type="color" value={this.state.color} onChange={(e) => this.changeColor(e.target.value)} style={{backgroundColor: this.state.color}} id="color-picker"></input>
           
-          <input id="color-picker-hex"
-            value={this.state.query} 
-            onChange={this.handleChange} 
-            onKeyPress={this.keyPress}
-            className={"pop-over-input pop-over-search"}
-            placeholder="Custom color hex"
-          />
-          
-          <div className="editable-field-error-message">
-            Invalid Hex
+          <div class="custom-color-input">
+            <input id="color-picker-hex"
+              value={this.state.query} 
+              onChange={this.handleChange} 
+              onKeyPress={this.keyPress}
+              className={"pop-over-input pop-over-search"}
+              placeholder="Custom color hex"
+            />
+
+            <div className="editable-field-error-message">
+              Invalid Hex
+            </div>
           </div>
+          
         </section>
           
         <section className="pop-over-info">  

@@ -291,6 +291,20 @@ details.popover-container
     margin-bottom: 2px
   button.active
     border-color: black
+  .custom-color-input
+    width: 82%
+    #color-picker-hex
+      width: 90%;
+      margin-left: 5px;
+      height: 23px
+    #color-picker-hex.active
+      border-color: black
+    .editable-field-error-message
+      width: 90%
+      display: none
+      float: right
+      margin-right: 5px
+      margin-top: -3px
   .color-picker
     width: 24px
     height: 22px
@@ -300,19 +314,7 @@ details.popover-container
       border: 1px solid secondary
       cursor: pointer
   input[type="color"]::-webkit-color-swatch 
-    border: none
-  #color-picker-hex
-    width: 71%;
-    margin-left: 5px;
-    height: 22px
-  #color-picker-hex.active
-    border-color: black
-  .editable-field-error-message
-    width: 70%
-    display: none
-    float: right
-    margin-right: 5px
-    margin-top: -3px
+    border: none    
   button.custom-color
     margin-left: 2px
   .pop-over-action
