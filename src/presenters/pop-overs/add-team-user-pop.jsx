@@ -202,12 +202,4 @@ Results.propTypes = {
   isLoading: PropTypes.bool.isRequired,
 };
 
-<DevToggles>
-    {(enabledToggles) => (
-      <div> I could sure go for some:
-        { enabledToggles.includes("fishsticks") && <FishSticks/> }
-      </div>
-    )}
-  </DevToggles>
-
 export default AddTeamUserPop;
