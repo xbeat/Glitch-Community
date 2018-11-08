@@ -223,4 +223,4 @@ const AddTeamUserPopWithDevToggles = ({props}) => (
   </DevToggles>
 );
 
-export default AddTeamUserPopWithDevToggles;
+export default AddTeamUserPop;
