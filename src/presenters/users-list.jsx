@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {UserLink} from './includes/link.jsx';
+import {UserLink, TeamLink} from './includes/link.jsx';
 import PopoverContainer from './pop-overs/popover-container.jsx';
-import {Avatar, UserAvatar} from './includes/avatar.jsx';
+import {Avatar, UserAvatar, TeamAvatar} from './includes/avatar.jsx';
 
 
 // StaticUsersList
@@ -27,20 +27,36 @@ StaticUsersList.propTypes = {
 
 // PopulatedUsersList
 
-export const PopulatedUsersList = ({users, extraClass="" }) => (
-  <ul className={`users ${extraClass}`}>
-    {users.map(user => (
-      <li key={user.id}>
-        <UserLink user={user} className="user">
-          <UserAvatar user={user} />
-        </UserLink>
-      </li>
-    ))}
-  </ul>
-);
+const PopulatedUsersList = ({users, extraClass="", teams=[] }) => {
+  if(users.length) {
+    return (
+      <ul className={`users ${extraClass}`}>
+        {users.map(user => (
+          <li key={user.id}>
+            <UserLink user={user} className="user">
+              <UserAvatar user={user} />
+            </UserLink>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  return (
+    <ul className={`users ${extraClass}`}>
+      {teams.map(team => (
+        <li key={team.id}>
+          <TeamLink team={team} className="team">
+            <TeamAvatar team={team} />
+          </TeamLink>
+        </li>
+      ))}
+    </ul>
+  );
+};
 PopulatedUsersList.propTypes = {
   users: PropTypes.array.isRequired,
   extraClass: PropTypes.string,
+  teams: PropTypes.array,
 };
 
 const GlitchTeamUsersList = ({extraClass=''}) => {
@@ -56,11 +72,11 @@ const GlitchTeamUsersList = ({extraClass=''}) => {
   );
 };
 
-const UsersList = ({glitchTeam=false, users, extraClass}) => {
+const UsersList = ({glitchTeam=false, users, extraClass, teams}) => {
   if(glitchTeam) {
     return <GlitchTeamUsersList extraClass={extraClass}/>;
   }
-  return <PopulatedUsersList users={users} extraClass={extraClass}/>;
+  return <PopulatedUsersList users={users} extraClass={extraClass} teams={teams}/>;
 };
 
 UsersList.propTypes = {
