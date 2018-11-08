@@ -28,24 +28,24 @@ const SignInPopButton = (props) => (
 );
 
 const jankyEmailPrompt = async (api) => {
-  const email = window.prompt("[testing dialog]\n\nWhat's your email address?");
+  const email = window.prompt("We'll send you a login link.\n\nWhat's your email address?");
   if(!email) {
     // blank or cancelled.
     return;
   }
 
   try {
-    const {data} = await api.post('/email/sendLoginEmail', {emailAddress:email})
+    await api.post('/email/sendLoginEmail', {emailAddress:email});
     alert("Please check your email at " + email);
   } catch (error) {
     console.error(error);
     alert("Something went wrong; email not sent.");
   }
-}
+};
 
 const EmailSignInButton = ({api}) => (
   <button className="button-small button-link has-emoji" onClick={() => jankyEmailPrompt(api)}>
-    Sign in with Email 📧
+    Sign in with Email <span aria-label="" role="img">📧</span>
   </button>
 );
 
