@@ -119,7 +119,7 @@ class AddTeamUserPop extends React.Component {
           key: 'invite-by-email',
           item: <InviteByEmail email={email.address} onClick={() => inviteEmail(email.address)}/>,
         });
-      };
+      }
       domain = email.domain;
     } else {
       const fakeEmail = parseOneAddress(query.replace('@', 'test@'));
@@ -204,16 +204,6 @@ Results.propTypes = {
   results: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
 };
-
-/*
-<DevToggles>
-    {(enabledToggles) => (
-      <div> I could sure go for some:
-        { enabledToggles.includes("fishsticks") && <FishSticks/> }
-      </div>
-    )}
-</DevToggles>
-*/
 
 const AddTeamUserPopWithDevToggles = (props) => (
   <DevToggles>
