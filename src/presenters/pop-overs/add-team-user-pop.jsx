@@ -4,9 +4,9 @@ import {debounce} from 'lodash';
 import {parseOneAddress} from 'email-addresses';
 
 import UserModel from '../../models/user';
-
-import Loader from '../includes/loader.jsx';
-import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
+import DevToggles from '../includes/dev-toggles';
+import Loader from '../includes/loader';
+import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item';
 
 const rankSearchResult = (result, query) => { 
   //example result:
@@ -114,10 +114,12 @@ class AddTeamUserPop extends React.Component {
     const email = parseOneAddress(query);
     let domain = null;
     if (email) {
-      results.push({
-        key: 'invite-by-email',
-        item: <InviteByEmail email={email.address} onClick={() => inviteEmail(email.address)}/>,
-      });
+      if(this.props.enabledToggles.includes("Email Invites")) {
+        results.push({
+          key: 'invite-by-email',
+          item: <InviteByEmail email={email.address} onClick={() => inviteEmail(email.address)}/>,
+        });
+      };
       domain = email.domain;
     } else {
       const fakeEmail = parseOneAddress(query.replace('@', 'test@'));
@@ -169,6 +171,7 @@ AddTeamUserPop.propTypes = {
   members: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   setWhitelistedDomain: PropTypes.func,
   whitelistedDomain: PropTypes.string,
+  enabledToggles: PropTypes.array.isRequired,
 };
 
 const Results = ({results, isLoading}) => {
@@ -202,4 +205,22 @@ Results.propTypes = {
   isLoading: PropTypes.bool.isRequired,
 };
 
-export default AddTeamUserPop;
+/*
+<DevToggles>
+    {(enabledToggles) => (
+      <div> I could sure go for some:
+        { enabledToggles.includes("fishsticks") && <FishSticks/> }
+      </div>
+    )}
+</DevToggles>
+*/
+
+const AddTeamUserPopWithDevToggles = ({props}) => (
+  <DevToggles>
+    {(enabledToggles) => (
+      <AddTeamUserPop {...props} enabledToggles={enabledToggles}/>
+    )}
+  </DevToggles>
+);
+
+export default AddTeamUserPopWithDevToggles;
