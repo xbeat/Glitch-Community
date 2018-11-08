@@ -88,7 +88,7 @@ class EditCollectionColorPop extends React.Component {
                   
           <input className="color-picker" type="color" value={this.state.color} onChange={(e) => this.changeColor(e.target.value)} style={{backgroundColor: this.state.color}} id="color-picker"></input>
           
-          <div class="custom-color-input">
+          <div className="custom-color-input">
             <input id="color-picker-hex"
               value={this.state.query} 
               onChange={this.handleChange} 
