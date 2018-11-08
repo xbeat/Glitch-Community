@@ -68,10 +68,11 @@ class TeamPage extends React.Component {
   }
 
   render() {
+    const isLoggedIn = this.props.currentUser && this.props.currentUser.login;
     return (
       <main className="profile-page team-page">
         <section>
-          { !!this.props.currentUser.login && (
+          { !!isLoggedIn && (
             <div className="beta">
               <img src="https://cdn.glitch.com/0c3ba0da-dac8-4904-bb5e-e1c7acc378a2%2Fbeta-flag.svg?1541448893958" alt=""></img>
               <div>
