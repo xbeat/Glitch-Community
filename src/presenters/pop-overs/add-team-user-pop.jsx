@@ -114,7 +114,7 @@ class AddTeamUserPop extends React.Component {
     const email = parseOneAddress(query);
     let domain = null;
     if (email) {
-      ({ //results.push({
+      results.push({
         key: 'invite-by-email',
         item: <InviteByEmail email={email.address} onClick={() => inviteEmail(email.address)}/>,
       });
