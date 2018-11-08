@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from '../includes/link.jsx';
-import PopoverContainer from './popover-container.jsx';
+import Link from '../includes/link';
+import PopoverContainer from './popover-container';
+import {DevToggles} from '../includes/dev-toggles';
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
 function githubAuthLink(data) {
@@ -26,6 +27,20 @@ const SignInPopButton = (props) => (
   </Link>
 );
 
+const jankyEmailPrompt = () => {
+  const email = window.prompt("[testing dialog]\n\nWhat's your email address?");
+  
+}
+
+const EmailSignInButton = () => {
+  <DevToggles>
+    {(enabledToggles) => (
+      enabledToggles.includes("Email Login") && <EmailSignInButton/>
+    )}
+  </DevToggles>
+  <button onClick={jankyEmailPrompt} >Sign in with Email 📧</button>
+}
+
 export const SignInPop = ({header, prompt, params}) => (
   <div className="pop-over sign-in-pop">
     {header}
@@ -33,6 +48,7 @@ export const SignInPop = ({header, prompt, params}) => (
       {prompt}
       <SignInPopButton href={facebookAuthLink(params)} company="Facebook" emoji="facebook"/>
       <SignInPopButton href={githubAuthLink(params)} company="GitHub" emoji="octocat"/>
+      <EmailSignInButton/>
     </section>
   </div>
 );

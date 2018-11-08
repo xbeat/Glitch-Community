@@ -215,7 +215,7 @@ Results.propTypes = {
 </DevToggles>
 */
 
-const AddTeamUserPopWithDevToggles = ({props}) => (
+const AddTeamUserPopWithDevToggles = (props) => (
   <DevToggles>
     {(enabledToggles) => (
       <AddTeamUserPop {...props} enabledToggles={enabledToggles}/>
@@ -223,4 +223,4 @@ const AddTeamUserPopWithDevToggles = ({props}) => (
   </DevToggles>
 );
 
-export default AddTeamUserPop;
+export default AddTeamUserPopWithDevToggles;
