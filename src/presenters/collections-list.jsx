@@ -31,17 +31,17 @@ class CollectionsList extends React.Component {
   }
   
   render() {
-    const {title, api, isAuthorized, currentUser, userLogin} = this.props;
+    const {title, api, isAuthorized, maybeCurrentUser, userLogin} = this.props;
     const deleteCollection = this.deleteCollection;
     const collections = this.props.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
         
     return (
       <article className="collections">
         <h2>{title}</h2>
-        {isAuthorized && 
+        {isAuthorized && !!maybeCurrentUser &&
           <>
-            <CreateCollectionButton {...{api, currentUser}}/>
-            {!collections.length && <CreateFirstCollection {...{api, currentUser}}/>}
+            <CreateCollectionButton {...{api, currentUser: maybeCurrentUser}}/>
+            {!collections.length && <CreateFirstCollection {...{api, urrentUser: maybeCurrentUser}}/>}
           </>
         }
         
@@ -53,7 +53,7 @@ class CollectionsList extends React.Component {
 
 CollectionsList.propTypes = {
   collections: PropTypes.array.isRequired,
-  currentUser: PropTypes.object.isRequired,
+  maybeCurrentUser: PropTypes.object,
   title: PropTypes.node.isRequired,
   api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,

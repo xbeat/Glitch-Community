@@ -66,7 +66,7 @@ const UserPage = ({
     loadedCollections,
   },
   api, isAuthorized,
-  currentUser,
+  maybeCurrentUser,
   updateDescription,
   updateName, updateLogin,
   uploadCover, clearCover,
@@ -117,7 +117,7 @@ const UserPage = ({
         collections={_collections} 
         api={api} 
         isAuthorized={isAuthorized}
-        currentUser={currentUser}
+        maybeCurrentUser={maybeCurrentUser}
         userLogin={login}
       />
     )}
@@ -140,7 +140,7 @@ const UserPage = ({
 );
 UserPage.propTypes = {
   clearCover: PropTypes.func.isRequired,
-  currentUser: PropTypes.object,
+  maybeCurrentUser: PropTypes.object,
   isAuthorized: PropTypes.bool.isRequired,
   leaveProject: PropTypes.func.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
@@ -161,13 +161,9 @@ UserPage.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
 };
 
-UserPage.defaultProps = {
-  currentUser: {}
-}
-
 const UserPageContainer = ({api, user}) => (
   <CurrentUserConsumer>
-    {(currentUser) => (
+    {(maybeCurrentUser) => (
       <UserEditor api={api} initialUser={user}>
         {(user, funcs, isAuthorized) => (
           <>
@@ -176,7 +172,7 @@ const UserPageContainer = ({api, user}) => (
             </Helmet>
 
             <ProjectsLoader api={api} projects={user.projects}>
-              {projects => <UserPage {...{api, isAuthorized, currentUser}} user={{...user, projects}} {...funcs} />}
+              {projects => <UserPage {...{api, isAuthorized, maybeCurrentUser}} user={{...user, projects}} {...funcs} />}
             </ProjectsLoader>
           </>
         )}

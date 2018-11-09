@@ -27,7 +27,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
           projects={pinnedProjects}
           api={api} 
           projectOptions={isAuthorized ? {removePin, ...projectOptions} 
-            : (currentUser.login ? {...projectOptions} : {})
+            : (currentUser && currentUser.login ? {...projectOptions} : {})
           }
         />
       )}
