@@ -53,7 +53,6 @@ class CategoryLoader extends React.Component {
   }
   
   async loadCategoryProjectCount(){
-    console.log('loadCategoryProjectCount');
     this.state.categories.map( ({id}) => {
       this.props.api.get(`categories/${id}`)
         .then( ({data}) => {

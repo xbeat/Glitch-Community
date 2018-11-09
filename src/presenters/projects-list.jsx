@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from "./project-item.jsx";
+import Link from './includes/link';
 
 export const ProjectsList = ({title, placeholder, ...props}) => (
   <article className="projects">
@@ -73,7 +74,7 @@ export const ProjectsUL = ({projectCount, collectionUrl, ...props}) => {
       ))}
 
       {props.homepageCollection &&
-        <a href={collectionUrl} className="collection-view-all">View all {projectCount} projects →</a>
+        <Link to={collectionUrl} className="collection-view-all">View all {projectCount} projects →</Link>
       }
     </ul>
   );
