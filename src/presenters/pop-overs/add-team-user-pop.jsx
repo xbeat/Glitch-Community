@@ -131,7 +131,7 @@ class AddTeamUserPop extends React.Component {
       validDomains: {...prevState.validDomains, [domain]: null}
     }));
     
-    let valid = true; // If we can't reach freemail then assume the domain is fine
+    let valid = !['gmail.com', 'yahoo.com'].includes(domain); // Used if we can't reach freemail
     
     try {
       const {data} = await axios.get(`https://freemail.glitch.me/${domain}`);
