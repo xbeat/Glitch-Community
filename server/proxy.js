@@ -50,7 +50,6 @@ module.exports = function(app) {
   proxyGhost('culture', 'culture-zine.glitch.me');
   proxyGhost('about', 'about-glitch.glitch.me');
   proxyGhost('legal', 'about-glitch.glitch.me', '/about');
-  proxyGhost('careers', 'about-glitch.glitch.me', '/about');
   
   // Pages hosted by 'about.glitch.me':
   [
