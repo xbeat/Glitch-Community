@@ -140,7 +140,7 @@ const UserPage = ({
 );
 UserPage.propTypes = {
   clearCover: PropTypes.func.isRequired,
-  currentUser: PropTypes.object.isRequired,
+  currentUser: PropTypes.object,
   isAuthorized: PropTypes.bool.isRequired,
   leaveProject: PropTypes.func.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
@@ -160,6 +160,10 @@ UserPage.propTypes = {
   }).isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
 };
+
+UserPage.defaultProps = {
+  currentUser: {}
+}
 
 const UserPageContainer = ({api, user}) => (
   <CurrentUserConsumer>
