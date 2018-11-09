@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import {debounce} from 'lodash';
 import {parseOneAddress} from 'email-addresses';
+import {captureException} from '../../utils/sentry';
 
 import UserModel from '../../models/user';
 
@@ -12,7 +13,7 @@ import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/u
 const getDomain = (query) => {
   const email = parseOneAddress(query.replace('@', 'test@'));
   if (email && email.domain.includes('.')) {
-    return email.domain;
+    return email.domain.toLowerCase();
   }
   return null;
 };
@@ -130,10 +131,17 @@ class AddTeamUserPop extends React.Component {
       validDomains: {...prevState.validDomains, [domain]: null}
     }));
     
-    const {data} = await axios.get(`https://freemail.glitch.me/${domain}`);
+    let valid = true; // If we can't reach freemail then assume the domain is fine
+    
+    try {
+      const {data} = await axios.get(`https://freemail.glitch.me/${domain}`);
+      valid = !data.free;
+    } catch (error) {
+      captureException(error);
+    }
     
     this.setState(prevState => ({
-      validDomains: {...prevState.validDomains, [domain]: !data.free}
+      validDomains: {...prevState.validDomains, [domain]: valid}
     }));
   }
     
