@@ -188,10 +188,8 @@ ProjectPageLoader.propTypes = {
 const ProjectPageContainer = ({api, name}) => (
   <Layout api={api}>
     <CurrentUserConsumer>
-      {maybeCurrentUser => maybeCurrentUser ? (
-        <ProjectPageLoader api={api} domain={name} currentUser={maybeCurrentUser}/>
-        ) : (
-        <Loader/>
+      {currentUser => (
+        currentUser ? <ProjectPageLoader api={api} domain={name} currentUser={currentUser}/> : <Loader/>
       )}
     </CurrentUserConsumer>
   </Layout>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Loader = () => (
+export const Loader = () => (
   <div className="loader">
     <div className="moon"></div>
     <div className="earth"></div>
