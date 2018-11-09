@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import CollectionOptionsContainer from "./pop-overs/collection-options-pop.jsx";
-
+import Link from './includes/link';
 import CollectionAvatar from './includes/collection-avatar.jsx';
 
 import {getAvatarUrl} from '../models/project.js';
@@ -48,7 +48,7 @@ class CollectionItem extends React.Component{
         )}
 
         {(collection &&
-          <a href={`/@${userLogin}/${collection.url}`}>
+          <Link to={`/@${userLogin}/${collection.url}`}>
             <div className={['collection']} 
               id={"collection-" + collection.id}>
               <div className="collection-container">
@@ -81,7 +81,7 @@ class CollectionItem extends React.Component{
                 )}
               </div>
             </div>
-          </a>             
+          </Link>             
         )}
       </li>
     );
