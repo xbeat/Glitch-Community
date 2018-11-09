@@ -153,7 +153,7 @@ export class AddTeamProjectPop extends React.Component {
     const filteredProjects = this.state.filteredProjects;
 
     return (
-      <dialog className="pop-over add-team-project-pop">
+      <dialog className="pop-over add-team-project-pop wide-pop">
         <section className="pop-over-info">
           <input
             ref={this.filterInput}
@@ -171,7 +171,9 @@ export class AddTeamProjectPop extends React.Component {
                 <ProjectResultItem
                   action={(event) => this.onClick(event, project)}
                   {...project}
-                  title={project.domain}/>
+                  title={project.domain}
+                  isPrivate={project.private}
+                />
               </li>
             ))}
           </ul>

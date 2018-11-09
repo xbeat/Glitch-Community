@@ -25,6 +25,22 @@ StaticUsersList.propTypes = {
 };
 
 
+// UserTile
+
+export const UserTile = (user) => (
+  <UserLink user={user} className="user">
+    <UserAvatar user={user} />
+  </UserLink>
+);
+UserTile.propTypes = {
+  id: PropTypes.number.isRequired,
+  login: PropTypes.string,
+  name: PropTypes.string,
+  avatarThumbnailUrl: PropTypes.string,
+  color: PropTypes.string.isRequired,
+};
+
+
 // PopulatedUsersList
 
 const PopulatedUsersList = ({users, extraClass="", teams=[] }) => {
