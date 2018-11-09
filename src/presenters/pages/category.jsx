@@ -107,11 +107,15 @@ const CategoryPage = ({api, category, ...props}) => (
       {category => (
         <CurrentUserConsumer>
           {(currentUser) => (
-            <CollectionEditor api={api} initialCollection={category} >
-              {(category, funcs) =>(
-                <CategoryPageWrap category={category} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props}/>
-              )}
-            </CollectionEditor>
+            currentUser ? (
+              <CollectionEditor api={api} initialCollection={category} >
+                {(category, funcs) =>(
+                  <CategoryPageWrap category={category} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props}/>
+                )}
+              </CollectionEditor>
+            ) : (
+              <Loader/>
+            )
           )}
         </CurrentUserConsumer>
       )}
