@@ -143,7 +143,7 @@ const SearchPage = ({api, query}) => (
         {errorFuncs => (
           <CurrentUserConsumer>
             {(currentUser) => (
-              <SearchResults {...errorFuncs} api={api} query={query} currentUser={currentUser}/>
+              currentUser && <SearchResults {...errorFuncs} api={api} query={query} currentUser={currentUser}/>
             )}
           </CurrentUserConsumer>
         )}
