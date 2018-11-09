@@ -25,7 +25,7 @@ const getOrNull = async(api, route) => {
 
 const getUserById = async (api, id) => {
   const user = await getOrNull(api, `/users/${id}`);
-  return user && UserModel(user).asProps();
+  return user && UserModel(user);
 };
 
 const getUser = async (api, name) => {
@@ -42,7 +42,7 @@ const parseTeam = (team) => {
     return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
   });
   team.adminIds = adminIds.map(user => user.id);
-  return TeamModel(team).asProps();
+  return TeamModel(team);
 };
 
 const getTeamById = async (api, id) => {

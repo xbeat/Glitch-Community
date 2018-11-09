@@ -109,7 +109,7 @@ class AddTeamUserPop extends React.Component {
     this.setState({ maybeRequest: request });
     
     const {data} = await request;
-    const results = data.map(user => UserModel(user).asProps());
+    const results = data.map(user => UserModel(user));
     const nonMemberResults = results.filter(user => !this.props.members.includes(user.id));
     const rankedResults = nonMemberResults.sort((a, b) => rankSearchResult(b, query) - rankSearchResult(a, query));
     

@@ -30,14 +30,10 @@ export const hexToRgbA = (hex) => {
   return false;
 };
 
-export default function Collection({users, projects}) {
-  const props = {
-    // get teams() { return teams ? teams.map(team => Team(team).asProps()) : []; },
-    get users() { return users ? users.map(user => User(user).asProps()) : []; },
-    get projects() {return projects ? projects.map(project => Project(project).asProps()) : []; }
-  };
+export default function Collection({projects, ...collection}) {
   return {
-    asProps: () => props,
+    get projects() {return projects ? projects.map(project => Project(project)) : []; },
+    ...collection
   };
 }
 
@@ -50,8 +46,6 @@ export function getLink(userName, url) {
 }
 
 // Circular dependencies must go below module.exports
-// import Team from './team';
-import User from './user';
 // eventually want to handle whether the collection belongs to a team or a user
 
 import Project from './project';

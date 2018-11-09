@@ -4,14 +4,11 @@ const cacheBuster = Math.floor(Math.random() * 1000);
 export const DEFAULT_TEAM_AVATAR = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-team-avatar.svg?1503510366819";
 
 export default function Team({projects, users, ...team}) {
-  const props = {
-    users: users ? users.map(user => User(user).asProps()) : [],
-    projects: projects ? projects.map(project => Project(project).asProps()) : [],
+  return {
+    users: users ? users.map(user => User(user)) : [],
+    projects: projects ? projects.map(project => Project(project)) : [],
     features: [], //shim until the api returns something real
     ...team
-  };
-  return {
-    asProps: () => props,
   };
 }
 

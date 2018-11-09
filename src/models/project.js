@@ -3,13 +3,10 @@
 export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528812220123";
 
 export default function Project({teams, users, ...project}) {
-  const props = {
-    teams: teams ? teams.map(team => Team(team).asProps()) : [],
-    users: users ? users.map(user => User(user).asProps()) : [],
-    ...project
-  };
   return {
-    asProps: () => props,
+    teams: teams ? teams.map(team => Team(team)) : [],
+    users: users ? users.map(user => User(user)) : [],
+    ...project
   };
 }
 

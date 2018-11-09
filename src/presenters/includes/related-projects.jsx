@@ -46,7 +46,7 @@ class RelatedProjects extends React.Component {
 
     if (ids.length) {
       const {data} = await this.props.api.get(`projects/byIds?ids=${ids.join(',')}`);
-      return data.map(d => ProjectModel(d).asProps());
+      return data.map(d => ProjectModel(d));
     }
     return [];
   }

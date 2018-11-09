@@ -177,7 +177,7 @@ class CurrentUserManager extends React.Component {
     const currentUser = cachedUser || sharedUser;
     return children({
       api: this.api(),
-      currentUser: currentUser ? UserModel(currentUser).asProps() : null,
+      currentUser: currentUser ? UserModel(currentUser) : null,
       fetched: !!cachedUser && this.state.fetched,
       reload: () => this.load(),
       login: user => setSharedUser(user),

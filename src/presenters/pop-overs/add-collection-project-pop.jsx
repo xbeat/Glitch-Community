@@ -174,7 +174,7 @@ class AddCollectionProjectPop extends React.Component {
       data = [data];
     }
     
-    const results = data.map(project => ProjectModel(project).asProps()); 
+    const results = data.map(project => ProjectModel(project)); 
     
     let originalNumResults = results.length;
     

@@ -25,7 +25,7 @@ export class AddTeamProjectPop extends React.Component {
   normalizeTemplateProjects(data) {
     let projects = data.map(project => {
       project.users = [];
-      return ProjectModel(project).asProps();
+      return ProjectModel(project);
     });
     return projects;
   }
