@@ -9,7 +9,6 @@ export default function Project({teams, users, ...project}) {
     ...project
   };
   return {
-    update: data => Project(data),
     asProps: () => props,
   };
 }

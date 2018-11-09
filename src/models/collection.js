@@ -37,7 +37,6 @@ export default function Collection({users, projects}) {
     get projects() {return projects ? projects.map(project => Project(project).asProps()) : []; }
   };
   return {
-    update: data => Collection(data),
     asProps: () => props,
   };
 }

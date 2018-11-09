@@ -48,7 +48,7 @@ class NewProjectPopButton extends React.Component {
       '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
     ];
     const {data} = await this.props.api.get(`projects/byIds?ids=${projectIds.join(',')}`);
-    const projects = data.map(project => ProjectModel(project).update(project).asProps());
+    const projects = data.map(project => ProjectModel(project).asProps());
     this.setState({projects});
   }
   

@@ -92,7 +92,7 @@ const CategoryPageError = () => (
 async function loadCategory(api, id) {
   const {data} = await api.get(`categories/${id}`);
   if(data){
-    data.projects = data.projects.map(project => ProjectModel(project).update(project).asProps());
+    data.projects = data.projects.map(project => ProjectModel(project).asProps());
   }
   return data;
 }  

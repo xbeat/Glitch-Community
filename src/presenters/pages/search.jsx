@@ -83,7 +83,7 @@ class SearchResults extends React.Component {
     const {api, query} = this.props;
     const {data} = await api.get(`teams/search?q=${query}`);
     this.setState({
-      teams: data.slice(0, MAX_RESULTS).map(team => TeamModel(team).update(team).asProps()),
+      teams: data.slice(0, MAX_RESULTS).map(team => TeamModel(team).asProps()),
     });
   }
   
@@ -91,7 +91,7 @@ class SearchResults extends React.Component {
     const {api, query} = this.props;
     const {data} = await api.get(`users/search?q=${query}`);
     this.setState({
-      users: data.slice(0, MAX_RESULTS).map(user => UserModel(user).update(user).asProps()),
+      users: data.slice(0, MAX_RESULTS).map(user => UserModel(user).asProps()),
     });
   }
   
@@ -99,7 +99,7 @@ class SearchResults extends React.Component {
     const {api, query} = this.props;
     const {data} = await api.get(`projects/search?q=${query}`);
     this.setState({
-      projects: data.filter(project => !project.notSafeForKids).slice(0, MAX_RESULTS).map(project => ProjectModel(project).update(project).asProps()),
+      projects: data.filter(project => !project.notSafeForKids).slice(0, MAX_RESULTS).map(project => ProjectModel(project).asProps()),
     });
   }
   

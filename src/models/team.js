@@ -11,7 +11,6 @@ export default function Team({projects, users, ...team}) {
     ...team
   };
   return {
-    update: team => Team(team),
     asProps: () => props,
   };
 }

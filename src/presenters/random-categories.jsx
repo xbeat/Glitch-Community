@@ -72,7 +72,7 @@ class CategoryLoader extends React.Component {
     const categories = sampledCategories.map(({projects, ...category}) => {
       const sampledProjects = projects;
       return {
-        projects: sampledProjects.map(project => ProjectModel(project).update(project).asProps()),
+        projects: sampledProjects.map(project => ProjectModel(project).asProps()),
         ...category,
       };
     });
