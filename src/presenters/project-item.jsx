@@ -13,10 +13,8 @@ import {getContrastTextColor} from '../models/collection.js';
 export const ProjectItem = ({api, project, collectionColor, homepageCollection, ...props}) => {
   return (
     <li>
-      <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line"/>
-      
+      <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams}/>      
       <ProjectOptionsPop {...{project, api}} {...props}/>
-      
       <ProjectLink project={project}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
           style={project.private ? {} : {backgroundColor: collectionColor, borderBottomColor:collectionColor}}
@@ -56,6 +54,7 @@ ProjectItem.propTypes = {
     private: PropTypes.bool.isRequired,
     showAsGlitchTeam: PropTypes.bool.isRequired,
     users: PropTypes.array.isRequired,
+    teams: PropTypes.array,
   }).isRequired,
   collectionColor: PropTypes.string,
   homepageCollection: PropTypes.bool,

@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Venn Diagrams Gone Wild',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F4_spontaneous-venning.png?1541419749124",
-    link: 'https://glitch.com/~spontaneous-venning/'
+    title: 'Measure Your Team\'s Stress Level',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F1_capacimeter.png?1541419748917",
+    link: 'https://capacimeter.glitch.me/'
   },{
-    title: 'Deploy to Firebase',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch-firebase-homepage.jpg?1540810252060",
-    link: 'https://glitch.com/edit/#!/firebase-basic-webpage?path=README.md:1:0'
-  }, {
-    title: 'Trippy Generative Art Demos',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F3_inconvergent-sandbox.png?1541419748493",
-    link: 'https://glitch.com/~inconvergent-sandbox'
+    title: 'Make Your Own Drum Machine',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F2_drum-machine.png?1541419748683",
+    link: 'https://glitch.com/~drum-machine/'
+  },{
+    title: 'Generate Your Own Quilt',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F6_quilt-generator.png?1541419749609",
+    link: 'https://glitch.com/~quilt-generator'
   }  
 ];
