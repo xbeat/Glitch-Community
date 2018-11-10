@@ -75,7 +75,7 @@ class TeamAnalytics extends React.Component {
     let totalAppViews = 0;
     let totalRemixes = 0;
     this.state.analytics.buckets.forEach(bucket => {
-      totalAppViews += bucket.analytics.requests;
+      totalAppViews += bucket.analytics.visits;
       totalRemixes += bucket.analytics.remixes;
     });
     this.setState({
