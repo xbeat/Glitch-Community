@@ -44,6 +44,7 @@
         var EDITOR_URL = '<%= CONSTANTS.development.EDITOR_URL %>';
         var FACEBOOK_CLIENT_ID = '<%= CONSTANTS.development.FACEBOOK_CLIENT_ID %>';
         var GITHUB_CLIENT_ID = '<%= CONSTANTS.development.GITHUB_CLIENT_ID %>';
+        var PROJECTS_DOMAIN = '<%= CONSTANTS.development.PROJECTS_DOMAIN %>';
       } else if (document.location.hostname.indexOf('staging.glitch.com') >= 0) {
         var API_URL = '<%= CONSTANTS.staging.API_URL %>';
         var APP_URL = '<%= CONSTANTS.staging.APP_URL %>';
@@ -51,6 +52,7 @@
         var EDITOR_URL = '<%= CONSTANTS.staging.EDITOR_URL %>';
         var FACEBOOK_CLIENT_ID = '<%= CONSTANTS.staging.FACEBOOK_CLIENT_ID %>';
         var GITHUB_CLIENT_ID = '<%= CONSTANTS.staging.GITHUB_CLIENT_ID %>';
+        var PROJECTS_DOMAIN = '<%= CONSTANTS.staging.PROJECTS_DOMAIN %>';
       } else {
         var API_URL = '<%= CONSTANTS.production.API_URL %>';
         var APP_URL = '<%= CONSTANTS.production.APP_URL %>';
@@ -58,6 +60,7 @@
         var EDITOR_URL = '<%= CONSTANTS.production.EDITOR_URL %>';
         var FACEBOOK_CLIENT_ID = '<%= CONSTANTS.production.FACEBOOK_CLIENT_ID %>';
         var GITHUB_CLIENT_ID = '<%= CONSTANTS.production.GITHUB_CLIENT_ID %>';
+        var PROJECTS_DOMAIN = '<%= CONSTANTS.production.PROJECTS_DOMAIN %>';
       }
       var ENVIRONMENT = '<%= ENVIRONMENT %>';
       var EXTERNAL_ROUTES = <%- EXTERNAL_ROUTES %>;

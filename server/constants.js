@@ -8,6 +8,7 @@ module.exports = {
     CDN_URL: 'https://cdn.glitch.com',
     GITHUB_CLIENT_ID: "b4cb743ed07e20abf0b2",
     FACEBOOK_CLIENT_ID: "660180164153542",
+    PROJECTS_DOMAIN: 'glitch.me',
   },
   staging: {
     APP_URL: 'https://staging.glitch.com',
@@ -16,6 +17,7 @@ module.exports = {
     CDN_URL: 'https://cdn.staging.glitch.com',
     GITHUB_CLIENT_ID: "65efbd87382354ca25e7",
     FACEBOOK_CLIENT_ID: "1858825521057112",
+    PROJECTS_DOMAIN: 'staging.glitch.me',
   },
   development: {
     APP_URL: 'https://glitch.development',
@@ -24,5 +26,6 @@ module.exports = {
     CDN_URL: 'https://s3.amazonaws.com/hyperdev-development',
     GITHUB_CLIENT_ID: "5d4f1392f69bcdf73d9f",
     FACEBOOK_CLIENT_ID: "1121393391305429",
+    PROJECTS_DOMAIN: 'glitch.development',
   },
 }

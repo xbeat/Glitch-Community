@@ -13,8 +13,8 @@ const NewProjectPop = ({projects}) => (
     <section className="pop-over-actions results-list">
       <div className="results">
         {projects.length ? projects.map((project) => (
-          <Link key={project.id} to={getRemixUrl(project.domain, 'https://glitch.com/edit/')}>
-            <ProjectResultItem {...project} users={[]} action={()=>{
+          <Link key={project.id} to={getRemixUrl(project.domain)}>
+            <ProjectResultItem {...project} cdnUrl="https://cdn.glitch.com" users={[]} action={()=>{
               /* global analytics */
               analytics.track("New Project Clicked", {
                 baseDomain: project.domain,
