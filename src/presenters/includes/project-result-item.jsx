@@ -16,7 +16,7 @@ const ProjectResultItem = ({id, domain, description, users, action, isActive, is
         <div className="results-info">
           <div className="result-name" title={domain}>{domain}</div>
           { description.length > 0 && <div className="result-description">{description}</div> }
-          { users.length > 0 && <StaticUsersList users={users} /> }
+          { !!users && users.length > 0 && <StaticUsersList users={users} /> }
         </div>
       </button>
       <a href={`/~${domain}`} className="view-result-link" target="_blank" rel="noopener noreferrer">
@@ -33,7 +33,7 @@ ProjectResultItem.propTypes = {
   domain: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  users: PropTypes.array.isRequired,
+  users: PropTypes.array,
   isActive: PropTypes.bool,
   isPrivate: PropTypes.bool,
 };
