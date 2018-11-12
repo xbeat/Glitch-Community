@@ -64,7 +64,7 @@ const ProjectDetails = ({projectDetails}) => {
           </tr>
           <tr>
             <td className="label">Total code views</td>
-            <td>{projectDetails.numUniqueEditorVisits}</td>
+            <td>{projectDetails.numEditorVisits}</td>
           </tr>
           <tr>
             <td className="label">Total direct remixes</td>
