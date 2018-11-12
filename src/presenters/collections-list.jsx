@@ -44,8 +44,8 @@ class CollectionsList extends React.Component {
             {!collections.length && <CreateFirstCollection {...{api, currentUser: maybeCurrentUser}}/>}
           </>
         }
-        {collections.length && (
-          <CollectionsUL {...{collections, api, isAuthorized, deleteCollection, userLogin}}/>)
+        {!!collections.length && 
+          <CollectionsUL {...{collections, api, isAuthorized, deleteCollection, userLogin}}/>
         }
       </article>
     );
