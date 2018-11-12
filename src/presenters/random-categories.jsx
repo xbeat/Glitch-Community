@@ -66,14 +66,7 @@ class CategoryLoader extends React.Component {
     // then it's an array of projects.
     const {data} = await this.props.api.get('categories/random?numCategories=3');
     const categoriesWithProjects = data.filter(category => !!category.projects);
-    const sampledCategories = sampleSize(categoriesWithProjects, 3);
-    const categories = sampledCategories.map(({projects, ...category}) => {
-      const sampledProjects = projects;
-      return {
-        projects: sampledProjects,
-        ...category,
-      };
-    });
+    const categories = sampleSize(categoriesWithProjects, 3);
     this.setState({categories});
     this.loadCategoryProjectCount();
   }
