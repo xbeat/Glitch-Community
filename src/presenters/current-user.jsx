@@ -49,6 +49,14 @@ function identifyUser(user) {
   }
 }
 
+function cleanUser({projects, teams, ...user}) {
+  return {
+    projects: projects || [],
+    teams: teams || [],
+    ...user,
+  };
+}
+
 // Test if two user objects reference the same person
 function usersMatch(a, b) {
   if (a && b && a.id === b.id && a.persistentToken === b.persistentToken) {
@@ -176,7 +184,7 @@ class CurrentUserManager extends React.Component {
     const currentUser = cachedUser || sharedUser;
     return children({
       api: this.api(),
-      currentUser: currentUser,
+      currentUser: currentUser ? cleanUser(currentUser) : null,
       fetched: !!cachedUser && this.state.fetched,
       reload: () => this.load(),
       login: user => setSharedUser(user),
