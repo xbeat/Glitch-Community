@@ -51,7 +51,7 @@ const ProjectDetails = ({projectDetails}) => {
             <td>{moment(projectDetails.lastAccess).fromNow()}</td>
           </tr>
           <tr>
-            <td className="label">Last code view</td>
+            <td className="label">Last edited</td>
             <td>{moment(projectDetails.lastEditedAt).fromNow()}</td>
           </tr>
           <tr>
