@@ -37,7 +37,9 @@ class CollectionsList extends React.Component {
         
     return (
       <article className="collections">
-        <h2>{title}</h2>
+        {(isAuthorized && !!maybeCurrentUser || !!collections.length) &&
+          <h2>{title}</h2>
+        }
         {isAuthorized && !!maybeCurrentUser &&
           <>
             <CreateCollectionButton {...{api, currentUser: maybeCurrentUser}}/>
