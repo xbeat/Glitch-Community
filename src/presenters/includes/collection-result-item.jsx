@@ -56,10 +56,8 @@ const CollectionResultItem = ({addProjectToCollection, project, collection, curr
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
             </div>
           </button>
-          <a href={`${collectionPath}`} className="view-result-link" target="_blank" rel="noopener noreferrer">
-            <button className="view-project button-small button-docs">
-                  View →
-            </button>
+          <a href={`${collectionPath}`} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">
+            View →
           </a>
         </div>
       )}  
