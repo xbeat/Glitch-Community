@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
-import ProjectModel from '../../models/project';
 
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
@@ -25,7 +24,7 @@ export class AddTeamProjectPop extends React.Component {
   normalizeTemplateProjects(data) {
     let projects = data.map(project => {
       project.users = [];
-      return ProjectModel(project);
+      return project;
     });
     return projects;
   }

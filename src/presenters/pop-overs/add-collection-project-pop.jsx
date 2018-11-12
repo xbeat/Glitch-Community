@@ -3,8 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {debounce} from 'lodash';
 
-import ProjectModel from '../../models/project';
-
 import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
@@ -174,7 +172,7 @@ class AddCollectionProjectPop extends React.Component {
       data = [data];
     }
     
-    const results = data.map(project => ProjectModel(project)); 
+    const results = data; 
     
     let originalNumResults = results.length;
     

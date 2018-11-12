@@ -3,13 +3,6 @@ const cacheBuster = Math.floor(Math.random() * 1000);
 
 export const DEFAULT_TEAM_AVATAR = "https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fdefault-team-avatar.svg?1503510366819";
 
-export default function Team({...team}) {
-  return {
-    features: [], //shim until the api returns something real
-    ...team
-  };
-}
-
 export const getLink = ({url}) => {
   return `/@${url}`;
 };

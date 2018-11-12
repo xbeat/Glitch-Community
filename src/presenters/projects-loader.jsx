@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {chunk} from 'lodash';
 
-import ProjectModel from '../models/project';
-
 import {CurrentUserConsumer, normalizeProjects} from './current-user.jsx';
 
 function listToObject(list, val) {
@@ -26,8 +24,7 @@ class ProjectsLoader extends React.Component {
   async loadProjects(...ids) {
     if (!ids.length) return;
     const {data} = await this.props.api.get(`projects/byIds?ids=${ids.join(',')}`);
-    const projects = data.map(d => ProjectModel(d));
-    this.setState(keyByVal(projects, 'id'));
+    this.setState(keyByVal(data, 'id'));
   }
   
   ensureProjects(projects) {

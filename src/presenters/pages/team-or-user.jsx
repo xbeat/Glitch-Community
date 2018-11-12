@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TeamModel from '../../models/team';
-import UserModel from '../../models/user';
-
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 
@@ -25,7 +22,7 @@ const getOrNull = async(api, route) => {
 
 const getUserById = async (api, id) => {
   const user = await getOrNull(api, `/users/${id}`);
-  return user && UserModel(user);
+  return user;
 };
 
 const getUser = async (api, name) => {
@@ -42,7 +39,7 @@ const parseTeam = (team) => {
     return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
   });
   team.adminIds = adminIds.map(user => user.id);
-  return TeamModel(team);
+  return team;
 };
 
 const getTeamById = async (api, id) => {

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
-import ProjectModel from '../../models/project';
 
 import Loader, {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
@@ -91,9 +90,6 @@ const CategoryPageError = () => (
 
 async function loadCategory(api, id) {
   const {data} = await api.get(`categories/${id}`);
-  if(data){
-    data.projects = data.projects.map(project => ProjectModel(project));
-  }
   return data;
 }  
 

@@ -2,12 +2,6 @@
 
 export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528812220123";
 
-export default function Project({...project}) {
-  return {
-    ...project
-  };
-}
-
 export function getAvatarUrl(id) {
   return `${CDN_URL}/project-avatar/${id}.png`;
 }

@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {sampleSize} from 'lodash';
 
-import ProjectModel from '../models/project';
-
 import Link from './includes/link.jsx';
 import {ProjectsUL} from './projects-list.jsx';
 
@@ -72,7 +70,7 @@ class CategoryLoader extends React.Component {
     const categories = sampledCategories.map(({projects, ...category}) => {
       const sampledProjects = projects;
       return {
-        projects: sampledProjects.map(project => ProjectModel(project)),
+        projects: sampledProjects,
         ...category,
       };
     });

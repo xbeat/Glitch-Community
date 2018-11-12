@@ -4,10 +4,6 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
 
-import ProjectModel from '../../models/project';
-import TeamModel from '../../models/team';
-import UserModel from '../../models/user';
-
 import {CurrentUserConsumer} from '../current-user.jsx';
 
 import ErrorHandlers from '../error-handlers.jsx';
@@ -83,7 +79,7 @@ class SearchResults extends React.Component {
     const {api, query} = this.props;
     const {data} = await api.get(`teams/search?q=${query}`);
     this.setState({
-      teams: data.slice(0, MAX_RESULTS).map(team => TeamModel(team)),
+      teams: data.slice(0, MAX_RESULTS),
     });
   }
   
@@ -91,7 +87,7 @@ class SearchResults extends React.Component {
     const {api, query} = this.props;
     const {data} = await api.get(`users/search?q=${query}`);
     this.setState({
-      users: data.slice(0, MAX_RESULTS).map(user => UserModel(user)),
+      users: data.slice(0, MAX_RESULTS),
     });
   }
   
@@ -99,7 +95,7 @@ class SearchResults extends React.Component {
     const {api, query} = this.props;
     const {data} = await api.get(`projects/search?q=${query}`);
     this.setState({
-      projects: data.filter(project => !project.notSafeForKids).slice(0, MAX_RESULTS).map(project => ProjectModel(project)),
+      projects: data.filter(project => !project.notSafeForKids).slice(0, MAX_RESULTS),
     });
   }
   
