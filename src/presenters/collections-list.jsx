@@ -35,19 +35,20 @@ class CollectionsList extends React.Component {
     const deleteCollection = this.deleteCollection;
     const collections = this.props.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
     const hasCollections = !!collections.length;
+    const canMakeCollections = isAuthorized && !!maybeCurrentUser;
         
     return (
       <article className="collections">
-        {(isAuthorized && !!maybeCurrentUser || !!collections.length) &&
+        {(canMakeCollections || hasCollections) &&
           <h2>{title}</h2>
         }
-        {isAuthorized && !!maybeCurrentUser &&
+        {canMakeCollections &&
           <>
             <CreateCollectionButton {...{api, currentUser: maybeCurrentUser}}/>
             {!collections.length && <CreateFirstCollection {...{api, currentUser: maybeCurrentUser}}/>}
           </>
         }
-        {!!collections.length && 
+        {hasCollections && 
           <CollectionsUL {...{collections, api, isAuthorized, deleteCollection, userLogin}}/>
         }
       </article>
