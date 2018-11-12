@@ -47,11 +47,11 @@ const ProjectDetails = ({projectDetails}) => {
             <td>{moment(projectDetails.createdAt).fromNow()}</td>
           </tr>
           <tr>
-            <td className="label">Last code view</td>
+            <td className="label">Last app view</td>
             <td>{moment(projectDetails.lastAccess).fromNow()}</td>
           </tr>
           <tr>
-            <td className="label">Last edited</td>
+            <td className="label">Last code view</td>
             <td>{moment(projectDetails.lastEditedAt).fromNow()}</td>
           </tr>
           <tr>
