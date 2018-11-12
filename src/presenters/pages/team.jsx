@@ -226,7 +226,6 @@ TeamPage.propTypes = {
     backgroundColor: PropTypes.string.isRequired,
     coverColor: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    features: PropTypes.array.isRequired,
     hasAvatarImage: PropTypes.bool.isRequired,
     hasCoverImage: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired,
