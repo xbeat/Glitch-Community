@@ -46,7 +46,7 @@ class CollectionsList extends React.Component {
         {canMakeCollections &&
           <>
             <CreateCollectionButton {...{api, currentUser: maybeCurrentUser}}/>
-            {!collections.length && <CreateFirstCollection {...{api, currentUser: maybeCurrentUser}}/>}
+            {!hasCollections && <CreateFirstCollection {...{api, currentUser: maybeCurrentUser}}/>}
           </>
         }
         <CollectionsUL {...{collections, api, isAuthorized, deleteCollection, userLogin}}/>
