@@ -2,10 +2,8 @@
 
 export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/c53fd895-ee00-4295-b111-7e024967a033%2Ffallback-project-avatar.svg?1528812220123";
 
-export default function Project({teams, users, ...project}) {
+export default function Project({...project}) {
   return {
-    teams: teams ? teams.map(team => Team(team)) : [],
-    users: users ? users.map(user => User(user)) : [],
     ...project
   };
 }
@@ -32,7 +30,3 @@ export function getEditorUrl(domain, path, line, character) {
 export function getRemixUrl(domain) {
   return `${EDITOR_URL}#!/remix/${domain}`;
 }
-
-// Circular dependencies must go below module.exports
-import Team from './team';
-import User from './user';

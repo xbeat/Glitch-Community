@@ -3,10 +3,8 @@ const cacheBuster = Math.floor(Math.random() * 1000);
 
 export const ANON_AVATAR_URL = "https://cdn.glitch.com/f6949da2-781d-4fd5-81e6-1fdd56350165%2Fanon-user-on-project-avatar.svg?1488556279399";
 
-export default function User({projects, teams, ...user}) {
+export default function User({...user}) {
   return {
-    projects: projects ? projects.map(project => Project(project)) : [],
-    teams: teams ? teams.map(team => Team(team)) : [],
     ...user
   };
 }
@@ -56,7 +54,3 @@ export function getProfileStyle({id, hasCoverImage, coverColor, cache=cacheBuste
     backgroundImage: `url('${hasCoverImage ? customImage : defaultImage}')`,
   };
 }
-
-// Circular dependencies must go below module.exports
-import Project from './project';
-import Team from './team';
