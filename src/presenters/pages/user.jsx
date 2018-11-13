@@ -84,16 +84,12 @@ const UserPage = ({
         coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
         coverButtons={isAuthorized && !!login && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
         avatarButtons={isAuthorized && !!login && <ImageButtons name="Avatar" uploadImage={uploadAvatar}/>}
+        teams={teams} 
       >
         <NameAndLogin
           {...{name, login, isAuthorized, updateName}}
           updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
         />
-        {!!teams.length && (
-          <div className="teams-information"> 
-            <TeamsList teams={teams}/>
-          </div>
-        )}
         {!!thanksCount && <Thanks count={thanksCount}/>}
         <AuthDescription authorized={isAuthorized && !!login} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
