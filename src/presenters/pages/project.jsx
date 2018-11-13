@@ -1,4 +1,4 @@
-/* global analytics */
+/* global analytics APP_URL */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -64,7 +64,7 @@ PrivateToggle.propTypes = {
 const Embed = ({domain}) => (
   <div className="glitch-embed-wrap">
     <iframe title="embed"
-      src={`https://glitch.com/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
+      src={`${APP_URL}/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
       allow="geolocation; microphone; camera; midi; encrypted-media"
     ></iframe>
   </div>

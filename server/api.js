@@ -4,7 +4,7 @@ const axios = require("axios");
 const {Cache} = require("memory-cache");
 const moment = require("moment-mini");
 
-const {API_URL} = require("./constants");
+const {API_URL} = require("./constants").current;
 
 const CACHE_TIMEOUT = moment.duration(15, 'minutes').asMilliseconds()
 
