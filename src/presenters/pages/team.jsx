@@ -74,7 +74,6 @@ class TeamPage extends React.Component {
   }
 
   render() {
-    const isLoggedIn = this.props.currentUser && this.props.currentUser.login;
     return (
       <main className="profile-page team-page">
         <section>
