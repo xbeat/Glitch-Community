@@ -50,6 +50,7 @@ const TeamAnalyticsReferrers = ({analytics, totalRemixes, totalAppViews}) => {
   const remixReferrers = filterReferrers(analytics.remixReferrers);
   const totalDirectAppViews = totalAppViews - countTotals(appViewReferrers, 'requests');
   const totalDirectRemixes = totalRemixes - countTotals(remixReferrers, 'remixes');
+  debugger;
   return (
     <div className="referrers-content">
       <article className="referrers-column app-views">
