@@ -26,9 +26,17 @@
         background-color: general-link
         a
           color: background-color
+    .result-user
+      .avatar
+        float: left
+      .result-info
+        width: 68%
+        float: left
     .result-project, .result-collection
       display: flex
       width: 100%
+      .avatar
+        border-radius: 3px
       [data-tooltip]::before
         display: none
       [data-tooltip]::after
@@ -100,7 +108,7 @@
     vertical-align: middle
     width: 35px
     height: 35px
-    border-radius: 3px
+    border-radius: 50%
     svg
       width: 100%
       height: auto

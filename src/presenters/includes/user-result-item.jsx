@@ -15,11 +15,13 @@ const UserResultItem = ({user, action}) => {
   };
 
   return (
-    <button onClick={handleClick} className="button-unstyled result">
+    <button onClick={handleClick} className="button-unstyled result result-user">
       <img className="avatar" src={getAvatarThumbnailUrl(user)} alt=""/>
-      <div className="result-name" title={name}>{name}</div>
-      {!!user.name && <div className="result-description">@{login}</div>}
-      {thanksCount > 0 && <ThanksShort count={thanksCount} />}
+      <div className="result-info">
+        <div className="result-name" title={name}>{name}</div>
+        {!!user.name && <div className="result-description">@{login}</div>}
+        {thanksCount > 0 && <ThanksShort count={thanksCount} />}
+      </div>
     </button>
   );
 };
