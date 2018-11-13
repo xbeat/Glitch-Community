@@ -31,6 +31,12 @@ const ReferrerItem = ({count, total, description}) => {
   );
 };
 
+ReferrerItem.propTypes = {
+  count: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  description: PropTypes.string.isRequired,
+};
+
 const filterReferrers = (referrers) => {
   let filteredReferrers = referrers.filter(referrer =>
     !referrer.self

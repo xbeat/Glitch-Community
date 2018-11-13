@@ -9,91 +9,91 @@ export default {
     {
       "@timestamp": 1538280001000,
       "analytics": {
-        "requests": 44497,
+        "visits": 44497,
         "remixes": 0
       }
     },
     {
       "@timestamp": 1538366401000,
       "analytics": {
-        "requests": 52185,
+        "visits": 52185,
         "remixes": 4
       }
     },
     {
       "@timestamp": 1538452801000,
       "analytics": {
-        "requests": 54217,
+        "visits": 54217,
         "remixes": 0
       }
     },
     {
       "@timestamp": 1538539201000,
       "analytics": {
-        "requests": 56978,
+        "visits": 56978,
         "remixes": 4
       }
     },
     {
       "@timestamp": 1538625601000,
       "analytics": {
-        "requests": 56922,
+        "visits": 56922,
         "remixes": 8
       }
     },
     {
       "@timestamp": 1538712001000,
       "analytics": {
-        "requests": 52475,
+        "visits": 52475,
         "remixes": 12
       }
     },
     {
       "@timestamp": 1538798401000,
       "analytics": {
-        "requests": 47812,
+        "visits": 47812,
         "remixes": 2
       }
     },
     {
       "@timestamp": 1538884801000,
       "analytics": {
-        "requests": 45075,
+        "visits": 45075,
         "remixes": 4
       }
     },
     {
       "@timestamp": 1538971201000,
       "analytics": {
-        "requests": 49986,
+        "visits": 49986,
         "remixes": 5
       }
     },
     {
       "@timestamp": 1539057601000,
       "analytics": {
-        "requests": 52958,
+        "visits": 52958,
         "remixes": 2
       }
     },
     {
       "@timestamp": 1539144001000,
       "analytics": {
-        "requests": 51098,
+        "visits": 51098,
         "remixes": 4
       }
     },
     {
       "@timestamp": 1539230401000,
       "analytics": {
-        "requests": 51437,
+        "visits": 51437,
         "remixes": 2
       }
     },
     {
       "@timestamp": 1539316801000,
       "analytics": {
-        "requests": 22920,
+        "visits": 22920,
         "remixes": 0
       }
     }
@@ -101,11 +101,11 @@ export default {
   referrers: [
     {
       domain: 'glitch.com',
-      requests: 265013,
+      visits: 265013,
     },
     {
       domain: 'www.google.com',
-      requests: 8510,
+      visits: 8510,
     },
   ],
   remixReferrers: [
