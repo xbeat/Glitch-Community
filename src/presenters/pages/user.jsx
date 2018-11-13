@@ -16,7 +16,6 @@ import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import CollectionsList from '../collections-list.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
-import TeamsList from '../teams-list.jsx';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);

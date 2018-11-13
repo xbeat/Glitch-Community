@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import TeamsList from '../teams-list.jsx';
 
 // Image Buttons
 
