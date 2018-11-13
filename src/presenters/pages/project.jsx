@@ -1,4 +1,4 @@
-/* global analytics */
+/* global analytics APP_URL */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Project, {getAvatarUrl} from '../../models/project';
 
-import {DataLoader} from '../includes/loader.jsx';
+import {Loader, DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
 import ProjectEditor from '../project-editor.jsx';
@@ -15,9 +15,12 @@ import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-actions.jsx';
+import AddProjectToCollection from '../includes/add-project-to-collection.jsx';
 import TeamsList from '../teams-list.jsx';
 import UsersList from '../users-list.jsx';
 import RelatedProjects from '../includes/related-projects.jsx';
+
+import {CurrentUserConsumer} from '../current-user.jsx';
 
 import Layout from '../layout.jsx';
 
@@ -61,7 +64,7 @@ PrivateToggle.propTypes = {
 const Embed = ({domain}) => (
   <div className="glitch-embed-wrap">
     <iframe title="embed"
-      src={`https://glitch.com/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
+      src={`${APP_URL}/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
       allow="geolocation; microphone; camera; midi; encrypted-media"
     ></iframe>
   </div>
@@ -87,10 +90,12 @@ ReadmeLoader.propTypes = {
 
 const ProjectPage = ({
   project: {
-    description, domain, id, users, teams,
+    description, domain, users, teams,
     ...project // 'private' can't be used as a variable name
   },
+  addProjectToCollection,
   api,
+  currentUser,
   isAuthorized,
   updateDomain,
   updateDescription,
@@ -99,7 +104,7 @@ const ProjectPage = ({
   <main className="project-page">
     <section id="info">
       <InfoContainer>
-        <ProjectInfoContainer style={{backgroundImage: `url('${getAvatarUrl(id)}')`}}>
+        <ProjectInfoContainer style={{backgroundImage: `url('${getAvatarUrl(project.id)}')`}}>
           <h1>
             {(isAuthorized ? (
               <EditableField value={domain} placeholder="Name your project"
@@ -126,9 +131,11 @@ const ProjectPage = ({
     <section id="embed">
       <Embed domain={domain}/>
       <div className="buttons buttons-right">
+
+        {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
         <RemixButton className="button-small"
           name={domain} isMember={isAuthorized}
-          onClick={() => trackRemix(id, domain)}
+          onClick={() => trackRemix(project.id, domain)}
         />
       </div>
     </section>
@@ -136,25 +143,27 @@ const ProjectPage = ({
       <ReadmeLoader api={api} domain={domain}/>
     </section>
     <section id="related">
-      <RelatedProjects ignoreProjectId={id} {...{api, teams, users}}/>
+      <RelatedProjects ignoreProjectId={project.id} {...{api, teams, users}}/>
     </section>
     <section id="feedback" className="buttons buttons-right">
-      <ReportButton name={domain} id={id} className="button-small button-tertiary"/>
+      <ReportButton name={domain} id={project.id} className="button-small button-tertiary"/>
     </section>
   </main>
 );
 ProjectPage.propTypes = {
   api: PropTypes.any.isRequired,
+  currentUser: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   project: PropTypes.object.isRequired,
 };
 
 async function getProject(api, domain) {
   const {data} = await api.get(`projects/${domain}`);
+  console.log("project %O", data);
   return data ? Project(data).update(data).asProps() : null;
 }
 
-const ProjectPageLoader = ({domain, api, ...props}) => (
+const ProjectPageLoader = ({domain, api, currentUser, ...props}) => (
   <DataLoader get={() => getProject(api, domain)} renderError={() => <NotFound name={domain}/>}>
     {project => project ? (
       <ProjectEditor api={api} initialProject={project}>
@@ -163,7 +172,7 @@ const ProjectPageLoader = ({domain, api, ...props}) => (
             <Helmet>
               <title>{project.domain}</title>
             </Helmet>
-            <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} {...props}/>
+            <ProjectPage api={api} project={project} {...funcs} isAuthorized={userIsMember} currentUser={currentUser} {...props}/>
           </>
         )}
       </ProjectEditor>
@@ -171,12 +180,18 @@ const ProjectPageLoader = ({domain, api, ...props}) => (
   </DataLoader>
 );
 ProjectPageLoader.propTypes = {
+  api: PropTypes.func.isRequired,
   domain: PropTypes.string.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
 const ProjectPageContainer = ({api, name}) => (
   <Layout api={api}>
-    <ProjectPageLoader api={api} domain={name}/>
+    <CurrentUserConsumer>
+      {currentUser => (
+        currentUser ? <ProjectPageLoader api={api} domain={name} currentUser={currentUser}/> : <Loader/>
+      )}
+    </CurrentUserConsumer>
   </Layout>
 );
 

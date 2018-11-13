@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
+import NestedPopover from './popover-nested.jsx';
+
+import AddProjectToCollectionPop from '../pop-overs/add-project-to-collection-pop.jsx';
+
 const PopoverButton = ({onClick, text, emoji}) => (
   <button className="button-small has-emoji button-tertiary" onClick={onClick}>
     <span>{text} </span>
@@ -10,10 +14,8 @@ const PopoverButton = ({onClick, text, emoji}) => (
   </button>
 );
 
-
-// Project Options Pop
-
-const ProjectOptionsPop = ({...props}) => {
+// Project Options Content
+const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
   function animate(event, className, func) {
     const projectContainer = event.target.closest('li');
     projectContainer.addEventListener('animationend', func, {once: true});
@@ -35,7 +37,6 @@ const ProjectOptionsPop = ({...props}) => {
   function joinTeamProject() {
     props.joinTeamProject(props.project.id, props.currentUser);
   }
-  
     
   function animateThenAddPin(event) {
     animate(event, 'slide-up', () => props.addPin(props.project.id));
@@ -49,12 +50,26 @@ const ProjectOptionsPop = ({...props}) => {
     animate(event, 'slide-down', () => props.deleteProject(props.project.id));
   }
   
-
-  return (
+  return(
     <dialog className="pop-over project-options-pop">
+      {props.currentUserIsOnProject || (props.removePin || props.addPin)
+        ? <>
+          {(props.addPin && 
+            <section className="pop-over-actions">
+              {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
+            </section>
+          )}
+          {(props.removePin && 
+            <section className="pop-over-actions">
+              {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
+            </section>
+          )}
+        </>
+        : null
+      } 
+      
       <section className="pop-over-actions">
-        {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
-        {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
+        {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to Collection " emoji="framed_picture"/>}
       </section>
 
       {(props.joinTeamProject && props.leaveTeamProject) &&
@@ -74,20 +89,43 @@ const ProjectOptionsPop = ({...props}) => {
         </section>
       }
 
+      {(props.currentUserIsOnProject && !props.removeProjectFromCollection) && 
+        <section className="pop-over-actions danger-zone last-section">
+          {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
+          {!!props.removeProject && props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProject(props.project)} text="Remove Project " emoji="thumbs_down"/>}
+
+          {props.currentUserIsOnProject && !props.removeProjectFromCollection && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
+        </section>
+      }
+      {props.removeProjectFromCollection &&
       <section className="pop-over-actions danger-zone last-section">
-        {!!props.removeProjectFromTeam && <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down"/>}
-        {!!props.deleteProject && <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb"/>}
+        {props.removeProjectFromCollection && <PopoverButton onClick={() => props.removeProjectFromCollection(props.project)} text="Remove from Collection" emoji="thumbs_down"/>}
       </section>
+      }
+      
     </dialog>
+  ); 
+};
+
+
+// Project Options Pop
+const ProjectOptionsPop = ({...props}) => {
+  return(
+    <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
+      { addToCollectionPopover => (
+        <ProjectOptionsContent {...props} addToCollectionPopover={addToCollectionPopover}/>
+      )}
+    </NestedPopover>
   );
 };
 
 ProjectOptionsPop.propTypes = {
+  api: PropTypes.any,
+  currentUser: PropTypes.object,
   project: PropTypes.shape({
     users: PropTypes.array.isRequired,
   }),
   togglePopover: PropTypes.func.isRequired,
-  currentUser: PropTypes.object.isRequired,
   addPin: PropTypes.func,
   removePin: PropTypes.func,
   deleteProject: PropTypes.func,
@@ -101,10 +139,9 @@ ProjectOptionsPop.defaultProps = {
   currentUserIsOnProject: false
 };
 
-
 // Project Options Container
-
-export default function ProjectOptions({projectOptions={}, project}) {
+// create as stateful react component
+export default function ProjectOptions({projectOptions={}, project, api, currentCollectionId}, {...props}) {
   if(Object.keys(projectOptions).length === 0) {
     return null;
   }
@@ -127,15 +164,18 @@ export default function ProjectOptions({projectOptions={}, project}) {
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <ProjectOptionsPop project={project} {...projectOptions} togglePopover={togglePopover} currentUser={user} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+              { visible && <ProjectOptionsPop {...props} {...projectOptions} project={project} currentCollectionId={currentCollectionId} api={api} currentUser={user} togglePopover={togglePopover} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
             </div>
           )}
         </CurrentUserConsumer>
       )}
-    </PopoverContainer>
+    </PopoverContainer>     
   );
 }
 
 ProjectOptions.propTypes = {
+  api: PropTypes.func,
+  currentCollectionId: PropTypes.number,
   project: PropTypes.object.isRequired,
 };
+

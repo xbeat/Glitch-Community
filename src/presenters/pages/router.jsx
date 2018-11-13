@@ -17,6 +17,7 @@ import ProjectPage from './project.jsx';
 import {TeamPage, UserPage, TeamOrUserPage} from './team-or-user.jsx';
 import SearchPage from './search.jsx';
 import CategoryPage from './category.jsx';
+import CollectionPage from './collection.jsx';
 import ErrorPage from './error.jsx';
 import SecretPage from './secret.jsx';
 
@@ -69,6 +70,8 @@ const Router = ({api}) => (
       <Route path="/~:name" exact render={({location, match}) => <ProjectPage key={location.key} api={api} name={match.params.name}/>}/>
 
       <Route path="/@:name" exact render={({location, match}) => <TeamOrUserPage key={location.key} api={api} name={match.params.name}/>}/>
+
+      <Route path="/@:user/:name" exact render={({location, match}) => <CollectionPage key={location.key} api={api} userLogin={match.params.user} name={match.params.name}/>}/>
 
       <Route path="/user/:id(\d+)" exact render={({location, match}) => <UserPage key={location.key} api={api} id={parseInt(match.params.id, 10)} name={`user ${match.params.id}`}/>}/>
 

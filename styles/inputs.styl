@@ -16,11 +16,9 @@ input
   &:focus
     box-shadow: 0px 0px 3px 0px input-border-focused
 
-.search-input, .replace-input
+.search-input, .replace-input, .create-input
   border-color: input-border
-  // margin-left: 3%
   max-width: 600px
-  // height: 25px
   border-radius: 3px
   border-style: solid
   border-width: 1px
@@ -29,11 +27,13 @@ input
   transition: all .1s
   background-color: primary-background
   vertical-align: middle
-  background-image: url(search)
   background-repeat: no-repeat
   background-position: right 5px center
   &:focus
     box-shadow: 0px 0px 3px 0px input-border-focused
+
+.search-input, .replace-input
+  background-image: url(search)
 
 .pop-over-input
   position: relative
@@ -47,7 +47,7 @@ input
   width: 100%
   color: primary
 
-.pop-over-search
+.pop-over-search, .create-input
   width: 100%
   margin-left: 0
   background-color: primary-background
@@ -58,6 +58,10 @@ input
   // padding-bottom: initial
   border: 1px solid input-border
 
+.create-input
+  width: 79%
+  margin-right: 10px
+  
 .content-editable
   padding-left: 0
   font-family: monospace
@@ -82,13 +86,14 @@ input
 .content-editable-affix
     padding: $input-padding
     width: auto
-    
-.editable-field-flex
-  position:relative
-  display: flex
-  .content-editable
-    min-width: 0
   
+.editable-field-flex
+  display: flex
+  .editable-field-input
+    position: relative
+    min-width: 0
+    width: 100%
+
 .editable-field-error-icon
   position: absolute
   right: 0px
@@ -98,9 +103,13 @@ input
   color: error-text
   background-color: error
   display: block
+  position: relative
   padding: 3px 6px
   border-radius: 5px
   border-top-left-radius: 0
   border-top-right-radius: 0
   font-weight: 600
   font-size: 0.8rem
+  .editable-field-error-icon
+    bottom: 100%
+    font-size: 22px

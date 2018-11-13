@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from "./project-item.jsx";
+import Link from './includes/link';
 
-export const ProjectsList = ({title, projects, placeholder, projectOptions}) => (
+export const ProjectsList = ({title, placeholder, ...props}) => (
   <article className="projects">
     <h2>{title}</h2>
 
-    {!!(placeholder && !projects.length) && (
+    {!!(placeholder && !props.projects.length) && (
       <div className="placeholder">{placeholder}</div>
     )}
 
-    <ExpandyProjects {...{projects, projectOptions}}></ExpandyProjects>
-
+    <ExpandyProjects {...props}></ExpandyProjects>
   </article>
 );
 
 ProjectsList.propTypes = {
+  api: PropTypes.any,
   projects: PropTypes.array.isRequired,
   title: PropTypes.node.isRequired,
   placeholder: PropTypes.node,
@@ -38,7 +39,7 @@ class ExpandyProjects extends React.Component {
     const totalProjects = this.props.projects.length;
     const hiddenProjects = totalProjects - maxProjects;
     
-    let projects = this.props.projects;
+    let {projects, ...props} = this.props;
     
     let shouldShowButton = false;
     if(!this.state.expanded) {
@@ -48,7 +49,7 @@ class ExpandyProjects extends React.Component {
     
     return (
       <>
-        <ProjectsUL projects={projects} projectOptions={this.props.projectOptions}/>
+        <ProjectsUL projects={projects} {...props}/>
         { shouldShowButton && <button className="button-tertiary" onClick={this.handleClick}>Show {hiddenProjects} More</button>}
       </>
     );
@@ -57,7 +58,6 @@ class ExpandyProjects extends React.Component {
 
 ExpandyProjects.propTypes = {
   projects: PropTypes.array.isRequired,
-  projectOptions: PropTypes.object,
   maxCollapsedProjects: PropTypes.number,
 };
 
@@ -66,18 +66,25 @@ ExpandyProjects.defaultProps = {
 };
 
 
-export const ProjectsUL = ({projects, projectOptions, categoryColor}) => {
+export const ProjectsUL = ({projectCount, collectionUrl, ...props}) => {
   return (
     <ul className="projects-container">
-      { projects.map(project => (
-        <ProjectItem key={project.id} {...{project, projectOptions, categoryColor}}></ProjectItem>
+      { props.projects.map(project => (
+        <ProjectItem key={project.id} {...{project}} {...props}></ProjectItem>
       ))}
+
+      {props.homepageCollection &&
+        <Link to={collectionUrl} className="collection-view-all">View all {projectCount} projects →</Link>
+      }
     </ul>
   );
 };
 
 ProjectsUL.propTypes = {
   projects: PropTypes.array.isRequired,
+  homepageCollection: PropTypes.bool,
+  collectionUrl: PropTypes.string,
+  projectCount: PropTypes.number,
 };
 
 

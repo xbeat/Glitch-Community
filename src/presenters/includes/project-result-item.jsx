@@ -4,20 +4,27 @@ import PropTypes from 'prop-types';
 import {getAvatarUrl} from  '../../models/project';
 import {StaticUsersList} from '../users-list.jsx';
 
-const ProjectResultItem = ({id, domain, description, users, action, isActive}) => {
-  var resultClass = "button-unstyled result ";
-  if(isActive) {
-    resultClass += " active";
-  }
+const ProjectResultItem = ({id, domain, description, users, action, isActive, isPrivate, cdnUrl}) => {
+  const activeClass = isActive ? "active" : "";
+  const privateClass = isPrivate ? "private" : "";
+  const resultClass = `button-unstyled result result-project ${activeClass} ${privateClass}`;
 
   return (
-    <button className={resultClass} onClick={action}>
-      <img className="avatar" src={getAvatarUrl(id)} alt={`Project avatar for ${domain}`}/>
-      <div className="result-name" title={domain}>{domain}</div>
-      
-      { description.length > 0 && <div className="result-description">{description}</div> }
-      { users.length > 0 && <StaticUsersList users={users} /> }
-    </button>
+    <div>
+      <button className={resultClass} onClick={action} data-project-id={id}>
+        <img className="avatar" src={getAvatarUrl(id, cdnUrl)} alt={`Project avatar for ${domain}`}/>
+        <div className="results-info">
+          <div className="result-name" title={domain}>{domain}</div>
+          { description.length > 0 && <div className="result-description">{description}</div> }
+          { users.length > 0 && <StaticUsersList users={users} /> }
+        </div>
+      </button>
+      <a href={`/~${domain}`} className="view-result-link" target="_blank" rel="noopener noreferrer">
+        <button className="view-project button-small button-docs">
+          View →
+        </button>
+      </a>
+    </div>
   );
 };
 
@@ -27,7 +34,9 @@ ProjectResultItem.propTypes = {
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,
-  isActive: PropTypes.bool
+  isActive: PropTypes.bool,
+  isPrivate: PropTypes.bool,
 };
 
 export default ProjectResultItem;
+

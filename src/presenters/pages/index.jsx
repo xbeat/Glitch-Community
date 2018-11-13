@@ -14,8 +14,6 @@ import Questions from '../questions.jsx';
 import RandomCategories from '../random-categories.jsx';
 import RecentProjects from '../recent-projects.jsx';
 
-
-
 function loadScript(src) {
   const script = document.createElement('script');
   script.src = src;

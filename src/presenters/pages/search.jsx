@@ -8,6 +8,8 @@ import ProjectModel from '../../models/project';
 import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
 
+import {CurrentUserConsumer} from '../current-user.jsx';
+
 import ErrorHandlers from '../error-handlers.jsx';
 import Categories from '../categories.jsx';
 import Loader from '../includes/loader.jsx';
@@ -46,9 +48,14 @@ const UserResults = ({users}) => (
   </article>
 );
 
-const ProjectResults = ({projects}) => (
+const ProjectResults = ({addProjectToCollection, api, projects, currentUser}) => (
   projects ? (
-    <ProjectsList title="Projects" projects={projects}/>
+    currentUser.login ? 
+      <ProjectsList title="Projects" projects={projects}
+        api={api}  
+        projectOptions={{addProjectToCollection}}/>
+      : 
+      <ProjectsList title="Projects" projects={projects}/>
   ) : (
     <article>
       <h2>Projects</h2>
@@ -69,6 +76,7 @@ class SearchResults extends React.Component {
       users: null,
       projects: null,
     };
+    this.addProjectToCollection = this.addProjectToCollection.bind(this);
   }
   
   async searchTeams() {
@@ -95,6 +103,10 @@ class SearchResults extends React.Component {
     });
   }
   
+  async addProjectToCollection(project, collection) {
+    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
+  }
+  
   componentDidMount() {
     const {handleError} = this.props;
     this.searchTeams().catch(handleError);
@@ -109,7 +121,7 @@ class SearchResults extends React.Component {
       <main className="search-results">
         {showResults(teams) && <TeamResults teams={teams}/>}
         {showResults(users) && <UserResults users={users}/>}
-        {showResults(projects) && <ProjectResults projects={projects}/>}
+        {showResults(projects) && <ProjectResults projects={projects} currentUser={this.props.currentUser} api={this.props.api} addProjectToCollection={this.addProjectToCollection}/>}
         {noResults && <NotFound name="any results"/>}
       </main>
     );
@@ -118,6 +130,7 @@ class SearchResults extends React.Component {
 SearchResults.propTypes = {
   api: PropTypes.any.isRequired,
   query: PropTypes.string.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
 const SearchPage = ({api, query}) => (
@@ -128,7 +141,11 @@ const SearchPage = ({api, query}) => (
     {query ? (
       <ErrorHandlers>
         {errorFuncs => (
-          <SearchResults {...errorFuncs} api={api} query={query}/>
+          <CurrentUserConsumer>
+            {(currentUser) => (
+              currentUser && <SearchResults {...errorFuncs} api={api} query={query} currentUser={currentUser}/>
+            )}
+          </CurrentUserConsumer>
         )}
       </ErrorHandlers>
     ) : <NotFound name="anything"/>}

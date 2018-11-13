@@ -1,12 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import {debounce} from 'lodash';
 import {parseOneAddress} from 'email-addresses';
+import {captureException} from '../../utils/sentry';
 
 import UserModel from '../../models/user';
 import DevToggles from '../includes/dev-toggles';
 import Loader from '../includes/loader';
 import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item';
+
+const getDomain = (query) => {
+  const email = parseOneAddress(query.replace('@', 'test@'));
+  if (email && email.domain.includes('.')) {
+    return email.domain.toLowerCase();
+  }
+  return null;
+};
 
 const rankSearchResult = (result, query) => { 
   //example result:
@@ -59,18 +69,19 @@ class AddTeamUserPop extends React.Component {
       query: '', //The actual search text
       maybeRequest: null, //The active request promise
       maybeResults: null, //Null means still waiting vs empty
+      validDomains: {}, //Null means loading that domain
     };
     
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
-    this.startSearch = debounce(this.startSearch.bind(this), 300);
+    this.debouncedSearch = debounce(this.debouncedSearch.bind(this), 300);
   }
   
   handleChange(evt) {
     const query = evt.currentTarget.value.trimStart();
     this.setState({ query });
     if (query) {
-      this.startSearch();
+      this.debouncedSearch();
     } else {
       this.clearSearch();
     }
@@ -83,12 +94,17 @@ class AddTeamUserPop extends React.Component {
     });
   }
   
-  async startSearch() {
+  debouncedSearch() {
     const query = this.state.query.trim();
     if (!query) {
-      return this.clearSearch();
+      this.clearSearch();
+      return;
     }
-    
+    this.startSearch(query);
+    this.validateDomain(query);
+  }
+  
+  async startSearch(query) {
     const request = this.props.api.get(`users/search?q=${query}`);
     this.setState({ maybeRequest: request });
     
@@ -104,32 +120,49 @@ class AddTeamUserPop extends React.Component {
       } : {};
     });
   }
+  
+  async validateDomain(query) {
+    const domain = getDomain(query);
+    if (!domain || this.state.validDomains[domain] !== undefined) {
+      return;
+    }
+    
+    this.setState(prevState => ({
+      validDomains: {...prevState.validDomains, [domain]: null}
+    }));
+    
+    let valid = !['gmail.com', 'yahoo.com'].includes(domain); // Used if we can't reach freemail
+    
+    try {
+      const {data} = await axios.get(`https://freemail.glitch.me/${domain}`);
+      valid = !data.free;
+    } catch (error) {
+      captureException(error);
+    }
+    
+    this.setState(prevState => ({
+      validDomains: {...prevState.validDomains, [domain]: valid}
+    }));
+  }
     
   render() {
     const {inviteEmail, inviteUser, setWhitelistedDomain} = this.props;
     const {maybeRequest, maybeResults, query} = this.state;
-    const isLoading = (!!maybeRequest || !maybeResults);
+    const isLoading = !!maybeRequest || !maybeResults;
     const results = [];
     
     const email = parseOneAddress(query);
-    let domain = null;
-    if (email) {
-      if(this.props.enabledToggles.includes("Email Invites")) {
-        results.push({
-          key: 'invite-by-email',
-          item: <InviteByEmail email={email.address} onClick={() => inviteEmail(email.address)}/>,
-        });
-      }
-      domain = email.domain;
-    } else {
-      const fakeEmail = parseOneAddress(query.replace('@', 'test@'));
-      if (fakeEmail && fakeEmail.domain.includes('.')) {
-        domain = fakeEmail.domain;
-      }
+    if (email && this.props.enabledToggles.includes("Email Invites")) {
+      results.push({
+        key: 'invite-by-email',
+        item: <InviteByEmail email={email.address} onClick={() => inviteEmail(email.address)}/>,
+      });
     }
-    if (domain) {
+    
+    if (setWhitelistedDomain) {
+      const domain = getDomain(query);
       const prevDomain = this.props.whitelistedDomain;
-      if (setWhitelistedDomain && prevDomain !== domain) {
+      if (domain && prevDomain !== domain && this.state.validDomains[domain]) {
         results.push({
           key: 'whitelist-email-domain',
           item: <WhitelistEmailDomain domain={domain} prevDomain={prevDomain} onClick={() => setWhitelistedDomain(domain)}/>,
@@ -144,6 +177,7 @@ class AddTeamUserPop extends React.Component {
         item: <UserResultItem user={user} action={() => inviteUser(user)} />
       })));
     }
+    
     return (
       <dialog className="pop-over add-team-user-pop">
         <section className="pop-over-info">

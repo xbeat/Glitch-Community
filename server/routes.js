@@ -69,11 +69,11 @@ module.exports = function(external) {
       ZINE_POSTS: JSON.stringify(zine),
       PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
       ENVIRONMENT: process.env.NODE_ENV || "dev",
-      ...constants,
+      CONSTANTS: constants,
     });
   }
 
-  const {CDN_URL} = constants;
+  const {CDN_URL} = constants.current;
 
   app.get('/~:domain', async (req, res) => {
     const {domain} = req.params;

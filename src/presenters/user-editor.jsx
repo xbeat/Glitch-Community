@@ -13,7 +13,9 @@ class UserEditor extends React.Component {
     this.state = {
       ...props.initialUser,
       _deletedProjects: [],
+      _collections: [],
       _cacheCover: Date.now(),
+      loadedCollections: false,
     };
   }
 
@@ -107,6 +109,21 @@ class UserEditor extends React.Component {
       _deletedProjects: _deletedProjects.filter(p => p.id !== id)
     }));
   }
+    
+  async addProjectToCollection(project, collection) {
+    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
+    this.loadCollections();
+  }
+  
+  async loadCollections() {
+    const userId = this.state.id;
+    const {data} = await this.props.api.get(`collections/?userId=${userId}`);
+    this.setState({_collections: data, loadedCollections: true});
+  }
+  
+  componentDidMount() {
+    this.loadCollections();
+  }
 
   render() {
     const {handleError, handleErrorForInput} = this.props;
@@ -123,6 +140,7 @@ class UserEditor extends React.Component {
       deleteProject: id => this.deleteProject(id).catch(handleError),
       undeleteProject: id => this.undeleteProject(id).catch(handleError),
       setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
+      addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleError),
     };
     return this.props.children(this.state, funcs, this.isCurrentUser());
   }

@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {uniqueId} from 'lodash';
 
-import {OptimisticValue} from './field-helpers.jsx';
+import {OptimisticValue, TrimmedValue, FieldErrorIcon, FieldErrorMessage} from './field-helpers.jsx';
 
 export class PureEditableField extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { id: uniqueId("editable-field-") };
     this.textInput = React.createRef();
     this.onChange = this.onChange.bind(this);
   }
@@ -24,25 +25,19 @@ export class PureEditableField extends React.Component {
   render() {
     const classes = ["content-editable", this.props.error ? "error" : ""].join(" ");
     const inputProps = {
+      id: this.state.id,
       className: classes,
       value: this.props.value,
       onChange: this.onChange,
       spellCheck: false,
       autoComplete: "off",
       placeholder: this.props.placeholder,
-      id: uniqueId("editable-field-"),
       autoFocus: this.props.autoFocus,
     };
     
-    const maybeErrorIcon = !!this.props.error && (
-      <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
-    );
+    const maybeErrorIcon = !!this.props.error && <FieldErrorIcon/>;
     
-    const maybeErrorMessage = !!this.props.error && (
-      <span className="editable-field-error-message">
-        {this.props.error}
-      </span>
-    );
+    const maybeErrorMessage = !!this.props.error && <FieldErrorMessage error={this.props.error} hideIcon={true}/>;
     
     const maybePrefix = !!this.props.prefix && (
       <span className={"content-editable-affix " + classes}>{this.props.prefix}</span>
@@ -56,8 +51,10 @@ export class PureEditableField extends React.Component {
       <label htmlFor={inputProps.id}>
         <span className="editable-field-flex">
           {maybePrefix}
-          <input {...inputProps} ref={this.textInput} />
-          {maybeErrorIcon}
+          <span className="editable-field-input">
+            <input {...inputProps} ref={this.textInput} />
+            {maybeErrorIcon}
+          </span>
           {maybeSuffix}
         </span>
         {maybeErrorMessage}
@@ -77,8 +74,12 @@ PureEditableField.propTypes = {
 
 export const EditableField = ({value, update, ...props}) => (
   <OptimisticValue value={value} update={update} resetOnError={false}>
-    {valueProps => (
-      <PureEditableField {...props} {...valueProps}/>
+    {({value, update, error}) => (
+      <TrimmedValue value={value} update={update}>
+        {valueProps => (
+          <PureEditableField {...props} {...valueProps} error={error}/>
+        )}
+      </TrimmedValue>
     )}
   </OptimisticValue>
 );

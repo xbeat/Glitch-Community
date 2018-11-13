@@ -5,28 +5,37 @@ import {getAvatarUrl} from '../models/project.js';
 
 import {ProjectLink} from './includes/link.jsx';
 import {TruncatedMarkdown} from './includes/markdown.jsx';
-import ProjectOptionsContainer from "./pop-overs/project-options-pop.jsx";
+import ProjectOptionsPop from "./pop-overs/project-options-pop.jsx";
 import UsersList from "./users-list.jsx";
 
-export const ProjectItem = ({project, categoryColor, projectOptions}) => {
+import {getContrastTextColor} from '../models/collection.js'; 
+
+export const ProjectItem = ({api, project, collectionColor, homepageCollection, ...props}) => {
   return (
     <li>
-      <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams}/>
-      <ProjectOptionsContainer project={project} projectOptions={projectOptions}></ProjectOptionsContainer>
-
+      <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams}/>      
+      <ProjectOptionsPop {...{project, api}} {...props}/>
       <ProjectLink project={project}>
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
-          style={{backgroundColor: categoryColor, borderBottomColor:categoryColor}}
-          data-track="project" data-track-label={project.domain}
-        >
+          style={project.private ? {} : {backgroundColor: collectionColor, borderBottomColor:collectionColor}}
+          data-track="project" data-track-label={project.domain}>
           <div className="project-container">
             <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
             <div className="button">
               <span className="project-badge private-project-badge" aria-label="private"></span>
               <div className="project-name">{project.domain}</div>
             </div>
-            <div className="description"><TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
-            <div className="overflow-mask" style={{backgroundColor: categoryColor}}></div>
+            {( homepageCollection 
+              ?
+              <div className="description">
+                <TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown>
+              </div>
+              :
+              <div className="description" 
+                style={project.private ? {} : {color: (props.category ? "black" : (collectionColor ? getContrastTextColor(collectionColor) : "black" ) )}}>
+                <TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
+            )}
+            <div className="overflow-mask" style={project.private ? {} : {backgroundColor: collectionColor}}></div>
           </div>
         </div>
       </ProjectLink>
@@ -35,6 +44,9 @@ export const ProjectItem = ({project, categoryColor, projectOptions}) => {
 };
 
 ProjectItem.propTypes = {
+  api: PropTypes.func,
+  category: PropTypes.bool,
+  currentUser: PropTypes.object,
   project: PropTypes.shape({
     description: PropTypes.string.isRequired,
     domain: PropTypes.string.isRequired,
@@ -44,7 +56,8 @@ ProjectItem.propTypes = {
     users: PropTypes.array.isRequired,
     teams: PropTypes.array,
   }).isRequired,
-  categoryColor: PropTypes.string,
+  collectionColor: PropTypes.string,
+  homepageCollection: PropTypes.bool,
   projectOptions: PropTypes.object,
 };
 

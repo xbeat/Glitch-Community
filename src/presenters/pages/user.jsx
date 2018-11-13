@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import {getAvatarStyle, getProfileStyle} from '../../models/user';
 
+import {CurrentUserConsumer} from '../current-user.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import UserEditor from '../user-editor.jsx';
 import Thanks from '../includes/thanks.jsx';
 
 import DeletedProjects from '../deleted-projects.jsx';
-import EntityPageProjects from '../entity-page-projects.jsx';
+import EntityPagePinnedProjects from '../entity-page-pinned-projects.jsx';
+import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
+import CollectionsList from '../collections-list.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import TeamsList from '../teams-list.jsx';
@@ -59,8 +62,11 @@ const UserPage = ({
     pins, projects, _deletedProjects,
     teams,
     _cacheCover,
+    _collections,
+    loadedCollections,
   },
   api, isAuthorized,
+  maybeCurrentUser,
   updateDescription,
   updateName, updateLogin,
   uploadCover, clearCover,
@@ -69,8 +75,9 @@ const UserPage = ({
   leaveProject,
   deleteProject, undeleteProject,
   setDeletedProjects,
+  addProjectToCollection,
 }) => (
-  <main className="profile-page user-page">
+  <main className="profile-page user-page">   
     <section>
       <ProfileContainer
         avatarStyle={getAvatarStyle({avatarUrl, color})}
@@ -91,23 +98,53 @@ const UserPage = ({
         <AuthDescription authorized={isAuthorized && !!login} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
     </section>
-    <EntityPageProjects
+    
+    <EntityPagePinnedProjects
+      projects={projects} 
+      pins={pins} 
+      isAuthorized={isAuthorized}
+      api={api} 
+      removePin={removePin}
+      projectOptions={{
+        leaveProject, 
+        deleteProject,
+        addProjectToCollection
+      }}
+    />
+    
+    {(loadedCollections && !!login &&
+      <CollectionsList title="Collections" 
+        collections={_collections} 
+        api={api} 
+        isAuthorized={isAuthorized}
+        maybeCurrentUser={maybeCurrentUser}
+        userLogin={login}
+      />
+    )}
+
+    <EntityPageRecentProjects
       projects={projects} 
       pins={pins} 
       isAuthorized={isAuthorized}
       api={api} 
       addPin={addPin} 
-      removePin={removePin}
       projectOptions={{
         leaveProject, 
-        deleteProject
+        deleteProject,
+        addProjectToCollection
       }}
     />
+    
     {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
   </main>
 );
 UserPage.propTypes = {
+  clearCover: PropTypes.func.isRequired,
+  maybeCurrentUser: PropTypes.object,
   isAuthorized: PropTypes.bool.isRequired,
+  leaveProject: PropTypes.func.isRequired,
+  uploadAvatar: PropTypes.func.isRequired,
+  uploadCover: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
     login: PropTypes.string,
@@ -119,27 +156,29 @@ UserPage.propTypes = {
     coverColor: PropTypes.string,
     _cacheCover: PropTypes.number.isRequired,
     _deletedProjects: PropTypes.array.isRequired,
+    _collections: PropTypes.array.isRequired,
   }).isRequired,
-  uploadAvatar: PropTypes.func.isRequired,
-  uploadCover: PropTypes.func.isRequired,
-  clearCover: PropTypes.func.isRequired,
-  leaveProject: PropTypes.func.isRequired,
+  addProjectToCollection: PropTypes.func.isRequired,
 };
 
 const UserPageContainer = ({api, user}) => (
-  <UserEditor api={api} initialUser={user}>
-    {(user, funcs, isAuthorized) => (
-      <>
-        <Helmet>
-          <title>{user.name || (user.login ? `@${user.login}` : `User ${user.id}`)}</title>
-        </Helmet>
-        
-        <ProjectsLoader api={api} projects={user.projects}>
-          {projects => <UserPage api={api} user={{...user, projects}} {...funcs} isAuthorized={isAuthorized}/>}
-        </ProjectsLoader>
-      </>
+  <CurrentUserConsumer>
+    {(maybeCurrentUser) => (
+      <UserEditor api={api} initialUser={user}>
+        {(user, funcs, isAuthorized) => (
+          <>
+            <Helmet>
+              <title>{user.name || (user.login ? `@${user.login}` : `User ${user.id}`)}</title>
+            </Helmet>
+
+            <ProjectsLoader api={api} projects={user.projects}>
+              {projects => <UserPage {...{api, isAuthorized, maybeCurrentUser}} user={{...user, projects}} {...funcs} />}
+            </ProjectsLoader>
+          </>
+        )}
+      </UserEditor>
     )}
-  </UserEditor>
+  </CurrentUserConsumer>
 );
 
 export default UserPageContainer;

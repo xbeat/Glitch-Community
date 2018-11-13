@@ -14,7 +14,8 @@ import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
 import DeleteTeam from '../includes/delete-team.jsx';
 import {AddTeamUser, TeamUsers, WhitelistedDomain, JoinTeam} from '../includes/team-users.jsx';
-import EntityPageProjects from '../entity-page-projects.jsx';
+import EntityPagePinnedProjects from '../entity-page-pinned-projects.jsx';
+import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
@@ -51,6 +52,11 @@ class TeamPage extends React.Component {
     super(props);
     this.state = {};
     this.teamAdmins = this.teamAdmins.bind(this);
+    this.addProjectToCollection = this.addProjectToCollection.bind(this);
+  }
+  
+  async addProjectToCollection(project, collection) {
+    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
   }
 
   teamAdmins() {
@@ -143,13 +149,27 @@ class TeamPage extends React.Component {
           teamProjects={this.props.team.projects}
           api={this.props.api}
         />
-        <EntityPageProjects
+        <EntityPagePinnedProjects
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
-          addPin={this.props.addPin}
           removePin={this.props.removePin}
           projectOptions={{
+            addProjectToCollection: this.addProjectToCollection,
+            removeProjectFromTeam: this.props.removeProject,
+            joinTeamProject: this.props.joinTeamProject,
+            leaveTeamProject: this.props.leaveTeamProject,
+          }}
+          api={this.props.api}
+        />
+
+        <EntityPageRecentProjects
+          projects={this.props.team.projects}
+          pins={this.props.team.teamPins}
+          isAuthorized={this.props.currentUserIsOnTeam}
+          addPin={this.props.addPin}tToCollection={this.addProjectToCollection}
+          projectOptions={{
+            addProjectToCollection: this.addProjectToCollection,
             removeProjectFromTeam: this.props.removeProject,
             joinTeamProject: this.props.joinTeamProject,
             leaveTeamProject: this.props.leaveTeamProject,
@@ -282,7 +302,6 @@ const TeamPageEditor = ({api, initialTeam, children}) => (
     )}
   </TeamEditor>
 );
-
 const TeamPageContainer = ({api, team, ...props}) => (
   <TeamPageEditor api={api} initialTeam={team}>
     {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
@@ -290,7 +309,6 @@ const TeamPageContainer = ({api, team, ...props}) => (
         <Helmet>
           <title>{team.name}</title>
         </Helmet>
-
         <CurrentUserConsumer>
           {currentUser => (
             <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
@@ -299,11 +317,9 @@ const TeamPageContainer = ({api, team, ...props}) => (
             />
           )}
         </CurrentUserConsumer>
-
         <TeamNameConflict team={team}/>
       </>
     )}
   </TeamPageEditor>
 );
-
 export default TeamPageContainer;
