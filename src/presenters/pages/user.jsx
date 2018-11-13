@@ -90,7 +90,7 @@ const UserPage = ({
           updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
         />
         {!!teams.length && (
-          <div className="teams-information">
+          <div className="teams-information"> 
             <TeamsList teams={teams}/>
           </div>
         )}
