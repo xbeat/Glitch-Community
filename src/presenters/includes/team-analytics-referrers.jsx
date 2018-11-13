@@ -54,7 +54,6 @@ class TeamAnalyticsReferrers extends React.PureComponent {
     const remixReferrers = filterReferrers(analytics.remixReferrers);
     const totalDirectAppViews = totalAppViews - countTotals(appViewReferrers, 'requests');
     const totalDirectRemixes = totalRemixes - countTotals(remixReferrers, 'remixes');
-    console.log("reworking analytics...");
     return (
       <div className="referrers-content">
         <article className="referrers-column app-views">
