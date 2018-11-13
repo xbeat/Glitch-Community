@@ -4,9 +4,7 @@ const axios = require("axios");
 const {Cache} = require("memory-cache");
 const moment = require("moment-mini");
 
-// in the backend, just switch between staging and production
-const env = process.env.RUNNING_ON === "staging" ? "staging" : "production";
-const {API_URL} = require("./constants")[env];
+const {API_URL} = require("./constants").current;
 
 const CACHE_TIMEOUT = moment.duration(15, 'minutes').asMilliseconds()
 

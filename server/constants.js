@@ -1,6 +1,6 @@
 // Define a bunch of variables split by environment
 
-module.exports = {
+const envs = {
   production: {
     APP_URL: 'https://glitch.com',
     API_URL: 'https://api.glitch.com/',
@@ -28,4 +28,12 @@ module.exports = {
     FACEBOOK_CLIENT_ID: "1121393391305429",
     PROJECTS_DOMAIN: 'glitch.development',
   },
+}
+
+// in the backend, just switch between staging and production
+const currentEnv = process.env.RUNNING_ON === "staging" ? "staging" : "production";
+envs.current = envs[currentEnv];
+
+module.exports = {
+  ...envs,
 }

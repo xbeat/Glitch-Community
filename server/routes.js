@@ -73,8 +73,7 @@ module.exports = function(external) {
     });
   }
 
-  const env = process.env.RUNNING_ON === "staging" ? "staging" : "production";
-  const {CDN_URL} = constants[env];
+  const {CDN_URL} = constants.current;
 
   app.get('/~:domain', async (req, res) => {
     const {domain} = req.params;
