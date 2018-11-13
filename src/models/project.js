@@ -14,8 +14,7 @@ export default function Project({teams, users, ...project}) {
   };
 }
 
-export function getAvatarUrl(id, cdnUrl) {
-  cdnUrl = cdnUrl || CDN_URL;
+export function getAvatarUrl(id, cdnUrl=CDN_URL) {
   return `${cdnUrl}/project-avatar/${id}.png`;
 }
 
@@ -23,21 +22,18 @@ export function getLink(domain) {
   return `/~${domain}`;
 }
 
-export function getShowUrl(domain, projectsDomain) {
-  projectsDomain = projectsDomain || PROJECTS_DOMAIN;
+export function getShowUrl(domain, projectsDomain=PROJECTS_DOMAIN) {
   return `//${domain}.${projectsDomain}`;
 }
 
-export function getEditorUrl(domain, path, line, character, editorUrl) {
-  editorUrl = editorUrl || EDITOR_URL;
+export function getEditorUrl(domain, path, line, character, editorUrl=EDITOR_URL) {
   if (path && !isNaN(line) && !isNaN(character)) {
     return `${editorUrl}#!/${domain}?path=${path}:${line}:${character}`;
   }
   return `${editorUrl}#!/${domain}`;
 }
 
-export function getRemixUrl(domain, editorUrl) {
-  editorUrl = editorUrl || EDITOR_URL;
+export function getRemixUrl(domain, editorUrl=EDITOR_URL) {
   return `${editorUrl}#!/remix/${domain}`;
 }
 
