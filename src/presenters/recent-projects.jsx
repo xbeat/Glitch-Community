@@ -11,7 +11,7 @@ import ProjectsLoader from './projects-loader.jsx';
 import {ProjectsUL} from './projects-list.jsx';
 import SignInPop from './pop-overs/sign-in-pop.jsx';
 
-const RecentProjectsContainer = ({children, user}) => (
+const RecentProjectsContainer = ({children, user, api}) => (
   <section className="profile recent-projects">
     <h2><UserLink user={user}>Your Projects →</UserLink></h2>
     <CoverContainer style={getProfileStyle(user)}>
@@ -20,7 +20,7 @@ const RecentProjectsContainer = ({children, user}) => (
           <UserLink user={user}>
             <div className={`user-avatar ${!user.login ? 'anon-user-avatar' : ''}`} style={getAvatarStyle(user)} alt=""></div>
           </UserLink>
-          {!user.login && <div className="anon-user-sign-up"><SignInPop/></div>}
+          {!user.login && <div className="anon-user-sign-up"><SignInPop api={api}/></div>}
         </div>
       </div>
       <article className="projects">
@@ -44,7 +44,7 @@ RecentProjectsContainer.propTypes = {
 const RecentProjects = ({api}) => (
   <CurrentUserConsumer>
     {(user, fetched) => (
-      <RecentProjectsContainer user={user}>
+      <RecentProjectsContainer user={user} api={api}>
         {fetched ? (
           <ProjectsLoader api={api} projects={user.projects.slice(0,3)}>
             {projects => <ProjectsUL projects={projects}/>}

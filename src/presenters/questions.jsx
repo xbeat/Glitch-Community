@@ -7,6 +7,7 @@ import {sample} from 'lodash';
 import ErrorBoundary from './includes/error-boundary.jsx';
 import Link from './includes/link.jsx';
 import QuestionItem from './question-item.jsx';
+import {captureException} from '../utils/sentry';
 
 const kaomojis = [
   '八(＾□＾*)',
@@ -52,6 +53,7 @@ class Questions extends React.Component {
       });
     } catch (error) {
       console.error(error);
+      captureException(error);
     }
     this.setState({loading: false});
   }
