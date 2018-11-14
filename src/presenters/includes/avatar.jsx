@@ -22,7 +22,7 @@ Avatar.propTypes = {
 };
 
 export const TeamAvatar = ({team}) => (
-  <Avatar name={team.name} src={getTeamAvatarUrl({...team, size:'small'})} srcFallback={DEFAULT_TEAM_AVATAR}/>
+  <Avatar name={team.name} src={getTeamAvatarUrl({...team, size:'small'})} srcFallback={DEFAULT_TEAM_AVATAR} type="team"/>
 );
 TeamAvatar.propTypes = {
   team: PropTypes.shape({
