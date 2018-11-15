@@ -9,6 +9,25 @@ import LocalStorage from './includes/local-storage.jsx';
 
 const {Provider, Consumer} = React.createContext();
 
+// Default values for all of the user fields we need you to have
+// We always generate a 'real' anon user, but use this until we do
+const defaultUser = {
+  id: -1,
+  avatarUrl: null,
+  avatarThumbnailUrl: null,
+  login: null,
+  name: null,
+  color: '#aaa',
+  description: '',
+  hasCoverImage: false,
+  coverColor: null,
+  teams: [],
+  emails: [],
+  collections: [],
+  features: [],
+  projects: [],
+};
+
 function identifyUser(user) {
   if (user) {
     console.log("👀 current user is", user);
@@ -47,14 +66,6 @@ function identifyUser(user) {
     console.error(error);
     captureException(error);
   }
-}
-
-function cleanUser({projects, teams, ...user}) {
-  return {
-    projects: projects || [],
-    teams: teams || [],
-    ...user,
-  };
 }
 
 // Test if two user objects reference the same person
@@ -181,10 +192,9 @@ class CurrentUserManager extends React.Component {
   
   render() {
     const {children, sharedUser, cachedUser, setSharedUser, setCachedUser} = this.props;
-    const currentUser = cachedUser || sharedUser;
     return children({
       api: this.api(),
-      currentUser: currentUser ? cleanUser(currentUser) : null,
+      currentUser: {...defaultUser, ...sharedUser, ...cachedUser},
       fetched: !!cachedUser && this.state.fetched,
       reload: () => this.load(),
       login: user => setSharedUser(user),
