@@ -101,19 +101,15 @@ const CategoryPage = ({api, category, ...props}) => (
       renderError={() => <CategoryPageError category={category} api={api} {...props}/>}
     >
       {category => (
-        <CurrentUserConsumer>
-          {(currentUser) => (
-            currentUser ? (
-              <CollectionEditor api={api} initialCollection={category} >
-                {(category, funcs) =>(
-                  <CategoryPageWrap category={category} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props}/>
-                )}
-              </CollectionEditor>
-            ) : (
-              <Loader/>
-            )
+        <CollectionEditor api={api} initialCollection={category} >
+          {(category, funcs) => (
+            <CurrentUserConsumer>
+              {(currentUser) => (
+                <CategoryPageWrap category={category} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props}/>
+              )}
+            </CurrentUserConsumer>
           )}
-        </CurrentUserConsumer>
+        </CollectionEditor>
       )}
     </DataLoader>
   </Layout>

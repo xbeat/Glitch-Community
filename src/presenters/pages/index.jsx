@@ -73,12 +73,12 @@ const IndexPage = ({api, user}) => (
       <Link to="https://glitch.com">Glitch</Link>{' '}
       is the friendly community where everyone can discover & create the best stuff on the web
     </h1>
-    {!!(user && user.login) && <Questions api={api}/>}
-    {!!(user && user.projects.length) && <RecentProjects api={api}/>}
+    {!!user.login && <Questions api={api}/>}
+    {!!user.projects.length && <RecentProjects api={api}/>}
     <Featured/>
     <RandomCategories api={api}/>
     <Categories/>
-    {!(user && user.login) && <WhatIsGlitch/>}
+    {!user.login && <WhatIsGlitch/>}
     <MadeInGlitch/>
   </main>
 );
