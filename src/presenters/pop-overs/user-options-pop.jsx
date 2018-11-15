@@ -92,6 +92,7 @@ Are you sure you want to sign out?`)) {
         return;
       }
     }
+    togglePopover();
     /* global analytics */
     analytics.track("Logout");
     analytics.reset();
@@ -125,7 +126,7 @@ Are you sure you want to sign out?`)) {
         </button>
         <Link to="https://support.glitch.com" className="button button-small has-emoji button-tertiary button-on-secondary-background">
           Support <span className="emoji ambulance"></span>
-        </Link>        
+        </Link>
         <button onClick={clickSignout} className="button-small has-emoji button-tertiary button-on-secondary-background">
           Sign Out <span className="emoji balloon"></span>
         </button>
@@ -167,7 +168,7 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
         <PopoverContainer startOpen={createTeamOpen}>
           {({togglePopover, visible}) => (
             <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
-              <button className="user" onClick={togglePopover}>
+              <button className="user" onClick={togglePopover} disabled={!props.user.id}>
                 <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
                 <span className="down-arrow icon"/>
               </button>

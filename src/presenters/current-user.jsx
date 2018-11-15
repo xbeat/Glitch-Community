@@ -12,11 +12,11 @@ const {Provider, Consumer} = React.createContext();
 // Default values for all of the user fields we need you to have
 // We always generate a 'real' anon user, but use this until we do
 const defaultUser = {
-  id: -1,
+  id: 0,
   login: null,
   name: null,
   description: '',
-  color: '#ccc',
+  color: '#aaa',
   avatarUrl: null,
   avatarThumbnailUrl: null,
   hasCoverImage: false,
