@@ -9,11 +9,12 @@ const ProjectResultItem = ({id, domain, description, users, action, isActive, is
   const activeClass = isActive ? "active" : "";
   const privateClass = isPrivate ? "private" : "";
   const resultClass = `button-unstyled result result-project ${activeClass} ${privateClass}`;
+  const srcFallback = FALLBACK_AVATAR_URL;
 
   return (
     <div>
       <button className={resultClass} onClick={action} data-project-id={id}>
-        <img className="avatar" src={getAvatarUrl(id, cdnUrl)} alt={`Project avatar for ${domain}`} onError={(e) => {e.target.src = FALLBACK_AVATAR_URL;}}/>
+        <img className="avatar" src={getAvatarUrl(id, cdnUrl)} alt={`Project avatar for ${domain}`} onError={srcFallback ? (event => event.target.src = srcFallback) : null}/>
         <div className="results-info">
           <div className="result-name" title={domain}>{domain}</div>
           { description.length > 0 && <div className="result-description">{description}</div> }
