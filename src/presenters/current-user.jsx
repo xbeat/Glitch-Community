@@ -3,9 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {configureScope, captureException, captureMessage} from '../utils/sentry';
 
-import UserModel from '../models/user';
+import {configureScope, captureException, captureMessage} from '../utils/sentry';
 import LocalStorage from './includes/local-storage.jsx';
 
 const {Provider, Consumer} = React.createContext();
@@ -48,6 +47,14 @@ function identifyUser(user) {
     console.error(error);
     captureException(error);
   }
+}
+
+function cleanUser({projects, teams, ...user}) {
+  return {
+    projects: projects || [],
+    teams: teams || [],
+    ...user,
+  };
 }
 
 // Test if two user objects reference the same person
@@ -177,7 +184,7 @@ class CurrentUserManager extends React.Component {
     const currentUser = cachedUser || sharedUser;
     return children({
       api: this.api(),
-      currentUser: currentUser ? UserModel(currentUser).asProps() : null,
+      currentUser: currentUser ? cleanUser(currentUser) : null,
       fetched: !!cachedUser && this.state.fetched,
       reload: () => this.load(),
       login: user => setSharedUser(user),

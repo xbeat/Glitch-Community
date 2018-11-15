@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {ProjectLink} from './link';
 import {getAvatarUrl} from  '../../models/project';
 import {StaticUsersList} from '../users-list.jsx';
 
-const ProjectResultItem = ({id, domain, description, users, action, isActive, isPrivate, cdnUrl}) => {
+const ProjectResultItem = ({action, isActive, isPrivate, cdnUrl, ...project}) => {
   const activeClass = isActive ? "active" : "";
   const privateClass = isPrivate ? "private" : "";
   const resultClass = `button-unstyled result result-project ${activeClass} ${privateClass}`;
+  const {id, domain, description, users} = project;
 
   return (
     <div>
@@ -16,14 +18,12 @@ const ProjectResultItem = ({id, domain, description, users, action, isActive, is
         <div className="results-info">
           <div className="result-name" title={domain}>{domain}</div>
           { description.length > 0 && <div className="result-description">{description}</div> }
-          { users.length > 0 && <StaticUsersList users={users} /> }
+          { !!users && users.length > 0 && <StaticUsersList users={users} /> }
         </div>
       </button>
-      <a href={`/~${domain}`} className="view-result-link" target="_blank" rel="noopener noreferrer">
-        <button className="view-project button-small button-docs">
-          View →
-        </button>
-      </a>
+      <ProjectLink project={project} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">
+        View →
+      </ProjectLink>
     </div>
   );
 };
@@ -33,10 +33,9 @@ ProjectResultItem.propTypes = {
   domain: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  users: PropTypes.array.isRequired,
+  users: PropTypes.array,
   isActive: PropTypes.bool,
   isPrivate: PropTypes.bool,
 };
 
 export default ProjectResultItem;
-

@@ -177,17 +177,6 @@ class TeamEditor extends React.Component {
     return false;
   }
 
-  // TODO temp feature switch name // features will eventually return an object instead
-  teamHasUnlimitedProjects() {
-    let features = this.props.initialTeam.features;
-    return features.includes('unlimited projects');
-  }
-
-  teamHasBillingExposed() {
-    let features = this.props.initialTeam.features;
-    return features.includes('billing exposed');
-  }
-
   render() {
     const {handleError, handleErrorForInput} = this.props;
     const funcs = {
@@ -206,8 +195,6 @@ class TeamEditor extends React.Component {
       addPin: id => this.addPin(id).catch(handleError),
       removePin: id => this.removePin(id).catch(handleError),
       updateWhitelistedDomain: whitelistedDomain => this.updateFields({whitelistedDomain}).catch(handleError),
-      teamHasUnlimitedProjects: this.teamHasUnlimitedProjects(),
-      teamHasBillingExposed: this.teamHasBillingExposed(),
       updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),
       joinTeamProject: projectId => this.joinTeamProject(projectId).catch(handleError),
       leaveTeamProject: projectId => this.leaveTeamProject(projectId).catch(handleError),
