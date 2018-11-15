@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import {getAvatarUrl} from '../../models/project';
 
-import {Loader, DataLoader} from '../includes/loader.jsx';
+import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
 import ProjectEditor from '../project-editor.jsx';
