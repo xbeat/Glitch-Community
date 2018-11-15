@@ -20,7 +20,7 @@ Avatar.propTypes = {
   src: PropTypes.string.isRequired,
   srcFallback: PropTypes.string,
   color: PropTypes.string,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
 };
 
 export const TeamAvatar = ({team}) => (
