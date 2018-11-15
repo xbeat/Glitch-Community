@@ -6,7 +6,7 @@ import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
 
-import ProjectModel, {getRemixUrl} from '../../models/project';
+import {getRemixUrl} from '../../models/project';
 
 const NewProjectPop = ({projects}) => (
   <div className="pop-over new-project-pop">
@@ -56,8 +56,7 @@ class NewProjectPopButton extends React.Component {
         },
       },
     );
-    const projects = data.map(project => ProjectModel(project).update(project).asProps());
-    this.setState({projects});
+    this.setState({projects: data});
   }
   
   componentDidMount() {

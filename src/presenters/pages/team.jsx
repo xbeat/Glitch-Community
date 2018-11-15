@@ -7,6 +7,7 @@ import TeamEditor from '../team-editor.jsx';
 import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
+import ErrorBoundary from '../includes/error-boundary';
 
 import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -141,11 +142,14 @@ class TeamPage extends React.Component {
           </ProfileContainer>
         </section>
 
-        <AddTeamProject
-          {...this.props}
-          teamProjects={this.props.team.projects}
-          api={this.props.api}
-        />
+        <ErrorBoundary>
+          <AddTeamProject
+            {...this.props}
+            teamProjects={this.props.team.projects}
+            api={this.props.api}
+          />
+        </ErrorBoundary>
+        
         <EntityPagePinnedProjects
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
@@ -183,7 +187,7 @@ class TeamPage extends React.Component {
           </aside>
         }
 
-        { this.props.currentUserIsOnTeam &&
+        { this.props.currentUserIsOnTeam && <ErrorBoundary>
           <TeamAnalytics
             api={this.props.api}
             id={this.props.team.id}
@@ -192,7 +196,7 @@ class TeamPage extends React.Component {
             addProject={this.props.addProject}
             myProjects={this.props.currentUser ? this.props.currentUser.projects : []}
           />
-        }
+        </ErrorBoundary>}
 
         {this.props.currentUserIsTeamAdmin && (
           <DeleteTeam api={() => this.props.api}
@@ -219,7 +223,6 @@ TeamPage.propTypes = {
     backgroundColor: PropTypes.string.isRequired,
     coverColor: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    features: PropTypes.array.isRequired,
     hasAvatarImage: PropTypes.bool.isRequired,
     hasCoverImage: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired,
