@@ -36,8 +36,8 @@ class LoginPage extends React.Component {
         this.setState({errorMessage: errorData.message});
       }
       const deets = {provider, error: errorData};
-      console.error("OAuth login error.", deets);
-      captureMessage("Oauth login error", {extra: deets});
+      console.error("Login error.", deets);
+      captureMessage("Login error", {extra: deets});
     }
   }
   
@@ -50,7 +50,7 @@ class LoginPage extends React.Component {
       return <Redirect to={this.props.hash ? `/#${this.props.hash}` : '/'}/>;
     } else if (this.state.error) {
       const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
-      return <ErrorPage title="OAuth Login Problem" description={this.state.errorMessage || genericDescription}/>;
+      return <ErrorPage title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
     }
     return <div className="content"></div>;
   }
@@ -78,4 +78,9 @@ export const FacebookLoginPage = ({code, ...props}) => {
 export const GitHubLoginPage = ({code, ...props}) => {
   const url = `/auth/github/${code}`;
   return <LoginPageContainer {...props} provider="GitHub" url={url}/>;
+};
+
+export const EmailTokenLoginPage = ({token, ...props}) => {
+  const url = `/auth/email/${token}`;
+  return <LoginPageContainer {...props} provider="Email" url={url}/>;
 };

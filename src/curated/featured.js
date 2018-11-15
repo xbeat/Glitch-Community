@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Measure Your Team\'s Stress Level',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F1_capacimeter.png?1541419748917",
-    link: 'https://capacimeter.glitch.me/'
+    title: 'Convert Your Voice to MIDI',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fpiano-scribe.jpg?1538999010225",
+    link: 'https://glitch.com/~piano-scribe/'
   },{
-    title: 'Make Your Own Drum Machine',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F2_drum-machine.png?1541419748683",
-    link: 'https://glitch.com/~drum-machine/'
+    title: 'Play with Sierpinski Triangles',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ftriangle.png?1542025532417",
+    link: 'https://glitch.com/~sierpinski-p5/'
   },{
-    title: 'Generate Your Own Quilt',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F6_quilt-generator.png?1541419749609",
-    link: 'https://glitch.com/~quilt-generator'
+    title: 'Record Audio or Video in Your Browser',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F5_coherent-closet.png?1541419749445",
+    link: 'https://glitch.com/~facebox'
   }  
 ];

@@ -5,8 +5,9 @@ import {debounce} from 'lodash';
 import {parseOneAddress} from 'email-addresses';
 import {captureException} from '../../utils/sentry';
 
-import Loader from '../includes/loader.jsx';
-import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item.jsx';
+import DevToggles from '../includes/dev-toggles';
+import Loader from '../includes/loader';
+import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item';
 
 const getDomain = (query) => {
   const email = parseOneAddress(query.replace('@', 'test@'));
@@ -149,8 +150,8 @@ class AddTeamUserPop extends React.Component {
     const results = [];
     
     const email = parseOneAddress(query);
-    if (email) {
-      ({ //results.push({
+    if (email && this.props.enabledToggles.includes("Email Invites")) {
+      results.push({
         key: 'invite-by-email',
         item: <InviteByEmail email={email.address} onClick={() => inviteEmail(email.address)}/>,
       });
@@ -202,6 +203,7 @@ AddTeamUserPop.propTypes = {
   members: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   setWhitelistedDomain: PropTypes.func,
   whitelistedDomain: PropTypes.string,
+  enabledToggles: PropTypes.array.isRequired,
 };
 
 const Results = ({results, isLoading}) => {
@@ -235,4 +237,12 @@ Results.propTypes = {
   isLoading: PropTypes.bool.isRequired,
 };
 
-export default AddTeamUserPop;
+const AddTeamUserPopWithDevToggles = (props) => (
+  <DevToggles>
+    {(enabledToggles) => (
+      <AddTeamUserPop {...props} enabledToggles={enabledToggles}/>
+    )}
+  </DevToggles>
+);
+
+export default AddTeamUserPopWithDevToggles;

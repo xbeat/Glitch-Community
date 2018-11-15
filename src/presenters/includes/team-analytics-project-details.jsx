@@ -47,7 +47,7 @@ const ProjectDetails = ({projectDetails}) => {
             <td>{moment(projectDetails.createdAt).fromNow()}</td>
           </tr>
           <tr>
-            <td className="label">Last code view</td>
+            <td className="label">Last viewed</td>
             <td>{moment(projectDetails.lastAccess).fromNow()}</td>
           </tr>
           <tr>
@@ -64,7 +64,7 @@ const ProjectDetails = ({projectDetails}) => {
           </tr>
           <tr>
             <td className="label">Total code views</td>
-            <td>{projectDetails.numUniqueEditorVisits}</td>
+            <td>{projectDetails.numEditorVisits}</td>
           </tr>
           <tr>
             <td className="label">Total direct remixes</td>

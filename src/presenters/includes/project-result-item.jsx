@@ -5,7 +5,7 @@ import {ProjectLink} from './link';
 import {getAvatarUrl} from  '../../models/project';
 import {StaticUsersList} from '../users-list.jsx';
 
-const ProjectResultItem = ({action, isActive, isPrivate, ...project}) => {
+const ProjectResultItem = ({action, isActive, isPrivate, cdnUrl, ...project}) => {
   const activeClass = isActive ? "active" : "";
   const privateClass = isPrivate ? "private" : "";
   const resultClass = `button-unstyled result result-project ${activeClass} ${privateClass}`;
@@ -14,7 +14,7 @@ const ProjectResultItem = ({action, isActive, isPrivate, ...project}) => {
   return (
     <div>
       <button className={resultClass} onClick={action} data-project-id={id}>
-        <img className="avatar" src={getAvatarUrl(id)} alt={`Project avatar for ${domain}`}/>
+        <img className="avatar" src={getAvatarUrl(id, cdnUrl)} alt={`Project avatar for ${domain}`}/>
         <div className="results-info">
           <div className="result-name" title={domain}>{domain}</div>
           { description.length > 0 && <div className="result-description">{description}</div> }

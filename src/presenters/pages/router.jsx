@@ -10,7 +10,7 @@ import rootTeams from '../../curated/teams';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
 import IndexPage from './index.jsx';
-import {FacebookLoginPage, GitHubLoginPage} from './login.jsx';
+import {FacebookLoginPage, GitHubLoginPage, EmailTokenLoginPage} from './login.jsx';
 import JoinTeamPage from './join-team.jsx';
 import QuestionsPage from './questions.jsx';
 import ProjectPage from './project.jsx';
@@ -61,6 +61,7 @@ const Router = ({api}) => (
 
       <Route path="/login/facebook" exact render={({location}) => <FacebookLoginPage key={location.key} api={api} code={parse(location.search, 'code')} hash={parse(location.search, 'hash')}/>}/>
       <Route path="/login/github" exact render={({location}) => <GitHubLoginPage key={location.key} api={api} code={parse(location.search, 'code')} hash={parse(location.search, 'hash')}/>}/>
+      <Route path="/login/email" exact render={({location}) => <EmailTokenLoginPage key={location.key} api={api} token={parse(location.search, 'token')} hash={parse(location.search, 'hash')}/>}/>
       
       <Route path="/join/@:teamUrl/:joinToken" exact render={({match}) => <JoinTeamPage key={location.key} api={api} {...match.params}/>}/>
 

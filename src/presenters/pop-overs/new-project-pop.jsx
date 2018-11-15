@@ -14,7 +14,7 @@ const NewProjectPop = ({projects}) => (
       <div className="results">
         {projects.length ? projects.map((project) => (
           <Link key={project.id} to={getRemixUrl(project.domain)}>
-            <ProjectResultItem {...project} users={[]} action={()=>{
+            <ProjectResultItem {...project} cdnUrl="https://cdn.glitch.com" users={[]} action={()=>{
               /* global analytics */
               analytics.track("New Project Clicked", {
                 baseDomain: project.domain,
@@ -47,7 +47,15 @@ class NewProjectPopButton extends React.Component {
       'cb519589-591c-474f-8986-a513f22dbf88', // 'hello-sqlite'
       '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
     ];
-    const {data} = await this.props.api.get(`projects/byIds?ids=${projectIds.join(',')}`);
+    // always request against the production API, with no token
+    const {data} = await this.props.api.get(
+      `https://api.glitch.com/projects/byIds?ids=${projectIds.join(',')}`,
+      {
+        headers: {
+          Authorization: ''
+        },
+      },
+    );
     this.setState({projects: data});
   }
   

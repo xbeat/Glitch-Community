@@ -15,8 +15,8 @@ const {Provider, Consumer} = React.createContext();
 // We can only have three.
 // Users can enable them with the /secret page.
 const toggleData = [
-  {name: "Magic Beans", description: "I'm a placeholder for a future toggle"},
-  {name: "Unlimited Emojis", description: "I'm a placeholder for a future toggle"},
+  {name: "Email Invites", description: "Enables invite-by-email behavior on the team page."},
+  {name: "Email Login", description: "Enables the login-by-email UI"},
   {name: "Peace of Mind", description: "I'm a placeholder for a future toggle"},
 ].splice(0,3); // <-- Yeah really, only 3.  If you need more, clean up one first.
 
