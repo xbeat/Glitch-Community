@@ -5,7 +5,7 @@ import {TeamLink} from './includes/link.jsx';
 import {TeamAvatar} from './includes/avatar.jsx';
 
 export const TeamsList = ({teams}) => (
-  <ul className="users">
+  <ul className="users teams-information">
     {teams.map(team => (
       <li key={team.id}>
         <TeamLink team={team} className="user" data-tooltip={team.name} data-tooltip-left="true">
