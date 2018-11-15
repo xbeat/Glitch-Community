@@ -14,7 +14,7 @@ const ProjectResultItem = ({id, domain, description, users, action, isActive, is
   return (
     <div>
       <button className={resultClass} onClick={action} data-project-id={id}>
-        <img className="avatar" src={getAvatarUrl(id, cdnUrl)} alt={`Project avatar for ${domain}`} onError={srcFallback ? (event => event.target.src = srcFallback) : null}/>
+        <img className="avatar" src={getAvatarUrl(id, cdnUrl)} alt={`Project avatar for ${domain}`} onError={event => event.target.src = srcFallback}/>
         <div className="results-info">
           <div className="result-name" title={domain}>{domain}</div>
           { description.length > 0 && <div className="result-description">{description}</div> }
