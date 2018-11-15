@@ -13,19 +13,19 @@ const {Provider, Consumer} = React.createContext();
 // We always generate a 'real' anon user, but use this until we do
 const defaultUser = {
   id: -1,
-  avatarUrl: null,
-  avatarThumbnailUrl: null,
   login: null,
   name: null,
-  color: '#aaa',
   description: '',
+  color: '#ccc',
+  avatarUrl: null,
+  avatarThumbnailUrl: null,
   hasCoverImage: false,
   coverColor: null,
-  teams: [],
   emails: [],
-  collections: [],
   features: [],
   projects: [],
+  teams: [],
+  collections: [],
 };
 
 function identifyUser(user) {
@@ -205,8 +205,8 @@ class CurrentUserManager extends React.Component {
 }
 CurrentUserManager.propTypes = {
   sharedUser: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    persistentToken: PropTypes.string.isRequired,
+    id: PropTypes.number,
+    persistentToken: PropTypes.string,
   }),
   cachedUser: PropTypes.object,
   setSharedUser: PropTypes.func.isRequired,
