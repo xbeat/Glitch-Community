@@ -42,7 +42,6 @@ app.use('/', router(['/edit', ...proxied]));
 // Since this is the last handler it will only be hit when all other handlers miss
 app.use(function(req, res, next) {
   res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-  throw new Error('help me i am but a test');
   return next();
 });
 
@@ -50,3 +49,4 @@ app.use(function(req, res, next) {
 const listener = app.listen(process.env.PORT, () => {
   console.log(`Your app is listening on port ${listener.address().port}.`);
 });
+  throw new Error('help me i am but a test');
