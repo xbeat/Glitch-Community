@@ -24,7 +24,7 @@ export const VerifiedBadge = () => {
   const tooltip = 'Verified to be supportive, helpful people';
   return (
     <span data-tooltip={tooltip}>
-      <img className="verified" src={image} alt={tooltip}/>
+      <img className="verified" src={image} alt="✓"/>
     </span>
   );
 };

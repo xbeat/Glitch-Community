@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {sampleSize} from 'lodash';
 
-import ProjectModel from '../models/project';
-
 import Link from './includes/link.jsx';
 import {ProjectsUL} from './projects-list.jsx';
 
@@ -68,14 +66,7 @@ class CategoryLoader extends React.Component {
     // then it's an array of projects.
     const {data} = await this.props.api.get('categories/random?numCategories=3');
     const categoriesWithProjects = data.filter(category => !!category.projects);
-    const sampledCategories = sampleSize(categoriesWithProjects, 3);
-    const categories = sampledCategories.map(({projects, ...category}) => {
-      const sampledProjects = projects;
-      return {
-        projects: sampledProjects.map(project => ProjectModel(project).update(project).asProps()),
-        ...category,
-      };
-    });
+    const categories = sampleSize(categoriesWithProjects, 3);
     this.setState({categories});
     this.loadCategoryProjectCount();
   }

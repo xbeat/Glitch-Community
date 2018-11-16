@@ -29,7 +29,7 @@ class WhatIsGlitch extends React.Component {
   
   render() {
     const free = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffree.svg?1499350845981";
-    const play = "https://cdn.hyperdev.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fplay.svg";
+    const play = "https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fplay.svg";
     const whatsGlitchWide = "https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fwhats-glitch-wide.svg?1499885209761";
     const whatsGlitchNarrow = "https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fwhats-glitch-narrow.svg?1499884900667";
     const whatsGlitchAlt = "Create a node app, or remix one. It updates as you type. Code with Friends!";
@@ -73,12 +73,12 @@ const IndexPage = ({api, user}) => (
       <Link to="https://glitch.com">Glitch</Link>{' '}
       is the friendly community where everyone can discover & create the best stuff on the web
     </h1>
-    {!!(user && user.login) && <Questions api={api}/>}
-    {!!(user && user.projects.length) && <RecentProjects api={api}/>}
+    {!!user.login && <Questions api={api}/>}
+    {!!user.projects.length && <RecentProjects api={api}/>}
     <Featured/>
     <RandomCategories api={api}/>
     <Categories/>
-    {!(user && user.login) && <WhatIsGlitch/>}
+    {!user.login && <WhatIsGlitch/>}
     <MadeInGlitch/>
   </main>
 );

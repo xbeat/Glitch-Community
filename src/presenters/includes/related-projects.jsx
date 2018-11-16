@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {sampleSize, difference} from 'lodash';
 
-import ProjectModel from '../../models/project';
 import {getProfileStyle as getTeamProfileStyle} from '../../models/team';
 import {getDisplayName, getProfileStyle as getUserProfileStyle} from '../../models/user';
 
@@ -46,7 +45,7 @@ class RelatedProjects extends React.Component {
 
     if (ids.length) {
       const {data} = await this.props.api.get(`projects/byIds?ids=${ids.join(',')}`);
-      return data.map(d => ProjectModel(d).update(d).asProps());
+      return data;
     }
     return [];
   }

@@ -3,12 +3,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import {configureScope, captureException, captureMessage} from '../utils/sentry';
 
-import UserModel from '../models/user';
+import {configureScope, captureException, captureMessage} from '../utils/sentry';
 import LocalStorage from './includes/local-storage.jsx';
 
 const {Provider, Consumer} = React.createContext();
+
+// Default values for all of the user fields we need you to have
+// We always generate a 'real' anon user, but use this until we do
+const defaultUser = {
+  id: 0,
+  login: null,
+  name: null,
+  description: '',
+  color: '#aaa',
+  avatarUrl: null,
+  avatarThumbnailUrl: null,
+  hasCoverImage: false,
+  coverColor: null,
+  emails: [],
+  features: [],
+  projects: [],
+  teams: [],
+  collections: [],
+};
 
 function identifyUser(user) {
   if (user) {
@@ -174,10 +192,9 @@ class CurrentUserManager extends React.Component {
   
   render() {
     const {children, sharedUser, cachedUser, setSharedUser, setCachedUser} = this.props;
-    const currentUser = cachedUser || sharedUser;
     return children({
       api: this.api(),
-      currentUser: currentUser ? UserModel(currentUser).asProps() : null,
+      currentUser: {...defaultUser, ...sharedUser, ...cachedUser},
       fetched: !!cachedUser && this.state.fetched,
       reload: () => this.load(),
       login: user => setSharedUser(user),
@@ -188,8 +205,8 @@ class CurrentUserManager extends React.Component {
 }
 CurrentUserManager.propTypes = {
   sharedUser: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    persistentToken: PropTypes.string.isRequired,
+    id: PropTypes.number,
+    persistentToken: PropTypes.string,
   }),
   cachedUser: PropTypes.object,
   setSharedUser: PropTypes.func.isRequired,

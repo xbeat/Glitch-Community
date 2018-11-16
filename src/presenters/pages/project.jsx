@@ -4,9 +4,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
-import Project, {getAvatarUrl} from '../../models/project';
+import {getAvatarUrl} from '../../models/project';
 
-import {Loader, DataLoader} from '../includes/loader.jsx';
+import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
 import ProjectEditor from '../project-editor.jsx';
@@ -159,8 +159,8 @@ ProjectPage.propTypes = {
 
 async function getProject(api, domain) {
   const {data} = await api.get(`projects/${domain}`);
-  console.log("project %O", data);
-  return data ? Project(data).update(data).asProps() : null;
+  console.log("project", data);
+  return data;
 }
 
 const ProjectPageLoader = ({domain, api, currentUser, ...props}) => (
@@ -188,9 +188,7 @@ ProjectPageLoader.propTypes = {
 const ProjectPageContainer = ({api, name}) => (
   <Layout api={api}>
     <CurrentUserConsumer>
-      {currentUser => (
-        currentUser ? <ProjectPageLoader api={api} domain={name} currentUser={currentUser}/> : <Loader/>
-      )}
+      {currentUser => <ProjectPageLoader api={api} domain={name} currentUser={currentUser}/>}
     </CurrentUserConsumer>
   </Layout>
 );

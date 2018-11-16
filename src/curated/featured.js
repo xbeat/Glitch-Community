@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Convert Your Voice to MIDI',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fpiano-scribe.jpg?1538999010225",
-    link: 'https://glitch.com/~piano-scribe/'
+    title: 'How Long Has That Framework Existed?',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhow-long.png?1542025531992",
+    link: 'https://glitch.com/~howoldisit/'
   },{
-    title: 'Play with Sierpinski Triangles',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ftriangle.png?1542025532417",
-    link: 'https://glitch.com/~sierpinski-p5/'
+    title: 'Play Duck Hunt... Hands-Free',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fduck.png?1542284001903",
+    link: 'https://glitch.com/~duckhunt-handsfree/'
   },{
-    title: 'Record Audio or Video in Your Browser',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F5_coherent-closet.png?1541419749445",
-    link: 'https://glitch.com/~facebox'
+    title: 'Chess, But Harder?',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fchess.png?1542025532138",
+    link: 'https://glitch.com/~chess-but-harder'
   }  
 ];

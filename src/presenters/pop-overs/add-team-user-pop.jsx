@@ -5,7 +5,6 @@ import {debounce} from 'lodash';
 import {parseOneAddress} from 'email-addresses';
 import {captureException} from '../../utils/sentry';
 
-import UserModel from '../../models/user';
 import DevToggles from '../includes/dev-toggles';
 import Loader from '../includes/loader';
 import UserResultItem, {InviteByEmail, WhitelistEmailDomain} from '../includes/user-result-item';
@@ -109,8 +108,7 @@ class AddTeamUserPop extends React.Component {
     this.setState({ maybeRequest: request });
     
     const {data} = await request;
-    const results = data.map(user => UserModel(user).asProps());
-    const nonMemberResults = results.filter(user => !this.props.members.includes(user.id));
+    const nonMemberResults = data.filter(user => !this.props.members.includes(user.id));
     const rankedResults = nonMemberResults.sort((a, b) => rankSearchResult(b, query) - rankSearchResult(a, query));
     
     this.setState(({ maybeRequest }) => {
