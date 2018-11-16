@@ -1,17 +1,29 @@
 const express = require("express");
 const compression = require("compression");
 
-// https://docs.sentry.io/clients/node/
-const Raven = require("raven");
-Raven.config('https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508', {
-  name: process.env.PROJECT_DOMAIN,
-  extra: {
-    project_domain: process.env.PROJECT_DOMAIN,
-    node_env: process.env.NODE_ENV,
-  },
-}).install();
+// https://docs.sentry.io/error-reporting/quickstart/?platform=node
+const Sentry = require("@sentry/node");
+
+try {
+  Sentry.init({
+    dsn: 'https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508',
+    environment: process.env.NODE_ENV || 'dev',
+    beforeSend(event) {
+      const json = JSON.stringify(event);
+      const scrubbedJSON = json.replace(/"persistentToken":"[^"]+"/g, `"persistentToken":"****"`);
+      return JSON.parse(scrubbedJSON);
+    },
+  });
+  Sentry.configureScope(scope => {
+    scope.setTag("PROJECT_DOMAIN", process.env.PROJECT_DOMAIN);
+  });
+} catch (error) {
+  console.error('Failed to initialize Sentry!', error);
+}
 
 const app = express();
+
+app.use(Sentry.Handlers.requestHandler());
 
 // Accept JSON as req.body
 const bodyParser = require("body-parser");
@@ -34,6 +46,8 @@ app.use(function(req, res, next) {
   res.header("Cache-Control", "no-cache, no-store, must-revalidate");
   return next();
 });
+
+app.use(Sentry.Handlers.errorHandler());
 
 // Listen on App port
 const listener = app.listen(process.env.PORT, () => {

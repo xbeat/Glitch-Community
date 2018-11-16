@@ -59,7 +59,7 @@ module.exports = function(external) {
     if (!built) {
       console.error("The initial build probably isn't ready yet");
     }
-
+    
     res.render('index.ejs', {
       title, description, image,
       scripts: Object.values(scripts),
