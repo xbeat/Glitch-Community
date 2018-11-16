@@ -2,7 +2,7 @@ dependencies:
   '@babel/core': 7.1.2
   '@babel/plugin-syntax-dynamic-import': 7.0.0
   '@babel/preset-react': 7.0.0
-  '@sentry/browser': 4.2.3
+  '@sentry/browser': 4.3.2
   '@sentry/node': 4.3.2
   autoprefixer-stylus: 0.14.0
   axios: 0.18.0
@@ -379,27 +379,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-RpPOVfK+yatXyn8n4PB1NW6k9qjinrXrRR8ugBN8fD6hCy5RXI6PSbVqpOJBO9oSaY7Nom4ohj35feb0UR9hSA==
-  /@sentry/browser/4.2.3:
+  /@sentry/browser/4.3.2:
     dependencies:
-      '@sentry/core': 4.2.3
-      '@sentry/types': 4.2.3
-      '@sentry/utils': 4.2.3
+      '@sentry/core': 4.3.2
+      '@sentry/types': 4.3.2
+      '@sentry/utils': 4.3.2
     dev: false
     engines:
       node: '>=6'
     resolution:
-      integrity: sha512-XvuIc1aclz4zuP2LamDuSy62/gl1mmNxzF+Ni5L8mcghBDq0urnOdkblVQgzqGoH8mc2QfjEctGa5djWxg3Bpg==
-  /@sentry/core/4.2.3:
-    dependencies:
-      '@sentry/hub': 4.2.3
-      '@sentry/minimal': 4.2.3
-      '@sentry/types': 4.2.3
-      '@sentry/utils': 4.2.3
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-xo5rvksftnaEdnKbdokyfuqgMnuqw1DFp0lDboIFHlEBcQde/AdThEgLujJWmbVNI3Cg7g8/HvP65f7QBjKfOw==
+      integrity: sha512-FdswVr7C9481/iUJVUAtzrAXu4g5qxVFQJ9UD7L9FmIUz55PBN2Ds0nY5UAqmW23hUJxXBXpjtCsX29qLn7UkA==
   /@sentry/core/4.3.2:
     dependencies:
       '@sentry/hub': 4.3.2
@@ -411,15 +400,6 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-KO9MimN9ZvpRfrRyunhyGAil6KoIuV7bmfP8OfP/bfqno9MSfeIDEO3x8X2LV/YdxnDv+M2ReydUWTdTZyUIbQ==
-  /@sentry/hub/4.2.3:
-    dependencies:
-      '@sentry/types': 4.2.3
-      '@sentry/utils': 4.2.3
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-7Jc/wz3vybYm1RX2wk/4zAQS8fo3uxvXYBkRfpm3OmnGgTlwDEmJwtegeGWFqufxLl85brZ19V1KAdulmO206A==
   /@sentry/hub/4.3.2:
     dependencies:
       '@sentry/types': 4.3.2
@@ -429,15 +409,6 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-mcTtzoGnCeYKhMMTK/3eweF7zU+3yYrweQqKu3gW/8pB5k32DP7pxsugFn5ERnNdPf9Fr6PRzYH0pL3F9uA64w==
-  /@sentry/minimal/4.2.3:
-    dependencies:
-      '@sentry/hub': 4.2.3
-      '@sentry/types': 4.2.3
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-Hus7LUeJDGsYpT2RTe6bUjG7mHG9uQoyDmW6pYUMN2dhD+cP5cPoTIXO4yxokwgAeDa+GH2/UXoASWc4s2eA2w==
   /@sentry/minimal/4.3.2:
     dependencies:
       '@sentry/hub': 4.3.2
@@ -462,26 +433,12 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-EmgFS/RQevO3/OCOm+btmKW2udX+rPbV0CcAg5232KpX7mtfZFOchzeOQWloqIqTOVGH70Q6EiwxgT8O7X+vMA==
-  /@sentry/types/4.2.3:
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-Z7laXlLtLSEXcKzgcD2caWPMTM8sAvR86rssYM5uYb3azC5PO0aAvuhjokkdv1+Ke1Bg7lkaNZamiCSyaH/9xg==
   /@sentry/types/4.3.2:
     dev: false
     engines:
       node: '>=6'
     resolution:
       integrity: sha512-m6VkvL2KUJLBr4O8rEmkP5ywactd61iL8GEj6KbRa7nTrKp28ELWEYWhJfaTBxNdFZT2pQ3Wbpo9KmJyVnrn8A==
-  /@sentry/utils/4.2.3:
-    dependencies:
-      '@sentry/types': 4.2.3
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-D6+M1081wCwGp8adWV3KFOxrxFmVyjMJ45x6/TnYvXdgDyc+t28oil21FHeKhwjld9eMqgQ5Tf1OOvos1MNBQg==
   /@sentry/utils/4.3.2:
     dependencies:
       '@sentry/types': 4.3.2
@@ -6188,7 +6145,7 @@ specifiers:
   '@babel/core': ^7.1.2
   '@babel/plugin-syntax-dynamic-import': ^7.0.0
   '@babel/preset-react': ^7.0.0
-  '@sentry/browser': ^4.2.3
+  '@sentry/browser': ^4.3.0
   '@sentry/node': ^4.3.0
   autoprefixer-stylus: ^0.14.0
   axios: ^0.18.0
