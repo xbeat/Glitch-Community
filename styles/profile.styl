@@ -31,6 +31,8 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
   
   .upload-image-buttons
     position: initial
+    width: 100%
+    text-align: center
     button
       margin: 0
 
@@ -49,6 +51,11 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
   .sparkling_heart
     width: 18px
     height: 18px
+
+.users-information
+  .users
+    li
+      margin-right: -7px
 
 .user-avatar
   position: relative
@@ -72,6 +79,10 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
       overflow: visible
       margin-bottom: 15px
       width: 100%
+      .users
+        >li
+          &:first-child img
+            border-radius: 50%
 
     .project-options
       display: block
@@ -93,10 +104,12 @@ anonAvatar = "https://cdn.gomix.com/01a72eba-647e-4abf-abe6-89b02e388a7f%2Fanon-
     margin-right: 4%
     @media(max-width: 800px)
       display:none
-  
-  .user-avatar
-    height: 0
-    padding-bottom: 100%
+      
+  .user-avatar-container
+    .user-avatar
+      height: 0
+      padding-bottom: 100%
+      border-radius: 50%
   
   .projects
     display: inline-block

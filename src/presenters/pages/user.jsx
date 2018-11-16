@@ -16,7 +16,6 @@ import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import CollectionsList from '../collections-list.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
-import TeamsList from '../teams-list.jsx';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
@@ -84,16 +83,12 @@ const UserPage = ({
         coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
         coverButtons={isAuthorized && !!login && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
         avatarButtons={isAuthorized && !!login && <ImageButtons name="Avatar" uploadImage={uploadAvatar}/>}
+        teams={teams} 
       >
         <NameAndLogin
           {...{name, login, isAuthorized, updateName}}
           updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
         />
-        {!!teams.length && (
-          <div className="users-information">
-            <TeamsList teams={teams}/>
-          </div>
-        )}
         {!!thanksCount && <Thanks count={thanksCount}/>}
         <AuthDescription authorized={isAuthorized && !!login} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>

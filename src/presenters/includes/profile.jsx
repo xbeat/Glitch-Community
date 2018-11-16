@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import TeamsList from '../teams-list.jsx';
 
 // Image Buttons
 
@@ -88,7 +88,7 @@ CoverContainer.defaultProps = {
 export const ProfileContainer = ({
   avatarStyle, avatarButtons,
   coverStyle, coverButtons,
-  children,
+  children, teams
 }) => (
   <CoverContainer style={coverStyle} buttons={coverButtons}>
     <InfoContainer>
@@ -100,6 +100,11 @@ export const ProfileContainer = ({
         {children}
       </div>
     </InfoContainer>
+    {!!teams && !!teams.length && (
+      <div className="teams-information"> 
+        <TeamsList teams={teams}/>
+      </div>
+    )}
   </CoverContainer>
 );
  
