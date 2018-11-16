@@ -78,8 +78,6 @@ module.exports = function(external) {
   app.get('/~:domain', async (req, res) => {
     const {domain} = req.params;
     const project = await getProject(domain);
-
-  throw new Error('help me i am but a test');
     if (!project) {
       await render(res, domain, `We couldn't find ~${domain}`);
       return;
