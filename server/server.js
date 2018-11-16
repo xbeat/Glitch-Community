@@ -23,6 +23,8 @@ try {
 
 const app = express();
 
+app.use(Sentry.Handlers.requestHandler());
+
 // Accept JSON as req.body
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -45,8 +47,9 @@ app.use(function(req, res, next) {
   return next();
 });
 
+app.use(Sentry.Handlers.errorHandler());
+
 // Listen on App port
 const listener = app.listen(process.env.PORT, () => {
   console.log(`Your app is listening on port ${listener.address().port}.`);
 });
-  throw new Error('help me i am but a test');
