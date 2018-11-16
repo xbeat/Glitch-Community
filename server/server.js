@@ -1,18 +1,25 @@
 const express = require("express");
 const compression = require("compression");
 
-// https://docs.sentry.io/clients/node/
+// https://docs.sentry.io/error-reporting/quickstart/?platform=node
 const Sentry = require("@sentry/node");
-Raven.config({
-  dsn: 'https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508',
-  name: process.env.PROJECT_DOMAIN,
-  extra: {
-    project_domain: process.env.PROJECT_DOMAIN,
-    node_env: process.env.NODE_ENV,
-  },
-}).install();
-Sentry.configureScope(scope => {
-});
+
+try {
+  Sentry.init({
+    dsn: 'https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508',
+    environment: process.env.NODE_ENV || 'dev',
+    beforeSend(event) {
+      const json = JSON.stringify(event);
+      const scrubbedJSON = json.replace(/"persistentToken":"[^"]+"/g, `"persistentToken":"****"`);
+      return JSON.parse(scrubbedJSON);
+    },
+  });
+  Sentry.configureScope(scope => {
+    scope.setTag("PROJECT_DOMAIN", process.env.PROJECT_DOMAIN);
+  });
+} catch (error) {
+  console.error('Failed to initialize Sentry!', error);
+}
 
 const app = express();
 
@@ -35,6 +42,7 @@ app.use('/', router(['/edit', ...proxied]));
 // Since this is the last handler it will only be hit when all other handlers miss
 app.use(function(req, res, next) {
   res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+  throw new Error('help me i am but a test');
   return next();
 });
 
