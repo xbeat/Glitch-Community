@@ -39,8 +39,6 @@
     background-color: black
 
 #fallback
-  .content
-    max-height: 100vh
   #fallback-img
     padding: calc(20%) 0
     margin: 0 auto
@@ -53,13 +51,12 @@
 
 @media(min-width: 700px)
   #fallback
-    // #fallback-img
-    //   position: absolute
-    //   top: 30%
-    //   margin: 0
-    //   padding: 0 0 0 50px
-    // .error-msg
-    //   width: 30%;
-    //   bottom: 40%;
-    //   left: 50%;
-    //   position: absolute;
+    #fallback-img
+      padding: 0
+      float: left
+      margin-top: 19%
+      margin-right: 10%
+    .error-msg
+      float: left
+      margin-top: 30%
+      max-width: 42%
