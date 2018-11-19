@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from 'react-router-dom';
 import Link from '../includes/link';
 import PopoverContainer from './popover-container';
 import {DevToggles} from '../includes/dev-toggles';
@@ -22,7 +23,7 @@ function facebookAuthLink(data) {
 }
 
 const SignInPopButton = (props) => (
-  <Link className="button button-small button-link has-emoji" to={props.href}>
+  <Link className="button button-small button-link has-emoji" to={props.href} onClick={props.onClick}>
     Sign in with {props.company} <span className={`emoji ${props.emoji}`}></span>
   </Link>
 );
@@ -53,27 +54,40 @@ EmailSignInButton.propTypes = {
   api: PropTypes.func.isRequired,
 };
 
-export const SignInPop = ({header, prompt, params, api}) => (
-  <div className="pop-over sign-in-pop">
-    {header}
-    <section className="pop-over-actions last-section">
-      {prompt}
-      <SignInPopButton href={facebookAuthLink(params)} company="Facebook" emoji="facebook"/>
-      <SignInPopButton href={githubAuthLink(params)} company="GitHub" emoji="octocat"/>
-      <DevToggles>
-        {(enabledToggles) => (
-          enabledToggles.includes("Email Login") && <EmailSignInButton api={api}/>
-        )}
-      </DevToggles>
-    </section>
-  </div>
+export const SignInPop = ({header, prompt, params, api, location}) => (
+  <LocalStorage name="destinationAfterAuth">
+    {(destination, setDestination) => {
+      function onClick() {
+        setDestination({
+        });
+      }
+      return (
+        <div className="pop-over sign-in-pop">
+          {header}
+          <section className="pop-over-actions last-section">
+            {prompt}
+            <SignInPopButton href={facebookAuthLink(params)} company="Facebook" emoji="facebook" onClick={onClick}/>
+            <SignInPopButton href={githubAuthLink(params)} company="GitHub" emoji="octocat" onClick={onClick}/>
+            <DevToggles>
+              {(enabledToggles) => (
+                enabledToggles.includes("Email Login") && <EmailSignInButton api={api}/>
+              )}
+            </DevToggles>
+          </section>
+        </div>
+      );
+    }}
+  </LocalStorage>
 );
 SignInPop.propTypes = {
   header: PropTypes.node,
   prompt: PropTypes.node,
   params: PropTypes.string,
   api: PropTypes.func.isRequired,
+  location: PropTypes.object,
 };
+
+const SignInPopWithRouter = withRouter(SignInPop);
 
 export default function SignInPopContainer(props) {
   return (
@@ -81,7 +95,7 @@ export default function SignInPopContainer(props) {
       {({togglePopover, visible}) => (
         <div className="button-wrap">
           <button className="button button-small" onClick={togglePopover}>Sign in</button>
-          {visible && <SignInPop {...props}/>}
+          {visible && <SignInPopWithRouter {...props}/>}
         </div>
       )}
     </PopoverContainer>
