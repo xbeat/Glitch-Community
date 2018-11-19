@@ -190,6 +190,7 @@ class TeamPage extends React.Component {
         }
     
         
+        {/* TEAM COLLECTIONS */}
         { this.props.currentUserIsOnTeam &&
           <section>
             <article className="collections">
@@ -198,6 +199,12 @@ class TeamPage extends React.Component {
                   Use collections to organize projects
                 </aside>
               </h2>
+              
+              <CreateCollectionButton 
+                api={this.props.api}
+                currentUser={this.props.currentUser}
+              />
+              
               <SampleTeamCollections/>
             </article>
           </section>
