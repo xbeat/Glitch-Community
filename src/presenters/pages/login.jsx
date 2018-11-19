@@ -22,34 +22,36 @@ class LoginPage extends React.Component {
   
   async componentDidMount() {
     const {api, provider, url, destination} = this.props;
-      console.log('destination', destination);
     this.props.setDestination(undefined);
-      console.log('destination', destination);
+    
     try {
       const {data} = await api.post(url);
       if (data.id <= 0) {
         throw new Error(`Bad user id (${data.id}) after ${provider} login`);
       }
+      
       console.log("LOGGED IN", data);
       this.props.setUser(data);
-      console.log('destination', destination);
+      
       if (destination && destination.expires > new Date().toISOString()) {
-        console.log('ding');
         this.setState({redirect: destination.to});
       }
+      
       this.setState({done: true});
       analytics.track("Signed In", {provider});
+      
     } catch (error) {
       this.setState({error: true});
+      
       const errorData = error && error.response && error.response.data;
       if (errorData && errorData.message) {
         this.setState({errorMessage: errorData.message});
       }
+      
       const deets = {provider, error: errorData};
       console.error("Login error.", deets);
       captureMessage("Login error", {extra: deets});
     }
-    this.props.setDestination(undefined);
   }
   
   render() {
@@ -76,7 +78,7 @@ LoginPage.propTypes = {
 
 const LoginPageContainer = (props) => (
   <LocalStorage name="destinationAfterAuth" default={undefined}>
-    {(destination, setDestination) => (
+    {(destination, setDestination, loaded) => (loaded &&
       <CurrentUserConsumer>
         {(currentUser, fetched, {login}) => <LoginPage setUser={login} destination={destination} setDestination={setDestination} {...props}/>}
       </CurrentUserConsumer>
