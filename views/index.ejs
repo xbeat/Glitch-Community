@@ -63,20 +63,23 @@
     <div id="fallback" style="display: none">
       <div class="content">
         <header>
-          <img class="logo" src="https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg" alt="Glitch">
+          <a href="/">
+            <img class="logo" src="https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg" alt="Glitch">
+          </a>
         </header>
         <main>
-          <img id="fallback-img" style="display: none" src="https://cdn.glitch.com/dbd73211-c667-4832-9229-c27f4cb66f5c%2Fmagikarp-illust.svg?1542650156890"/>
-          <div id="fallback-noscript" style="display: none">
-            <h3>Your browser does not support the latest Javascript features</h3>
-            <p>Try updating your browser to use Glitch.</p>
+          <img id="fallback-img" style="display: none !important" src="https://cdn.glitch.com/dbd73211-c667-4832-9229-c27f4cb66f5c%2Fmagikarp-illust.svg?1542650156890"/>
+          <div id="fallback-noscript" style="display: none !important">
+            <h1>Your browser does not support Javascript</h1>
+            <p>Try using Glitch in a different browser.</p>
           </div>
           <div id="fallback-yesscript" style="display: none">
-            <h3>Your browser does not support the latest Javascript features</h3>
+            <h1>Your browser does not support the latest Javascript features</h1>
             <p>Try updating your browser to use Glitch.</p>
           </div>
           <div id="fallback-notbuilt" style="display: none">
-            <h3>The site isn&apos;t quite ready yet, try refreshing in a few moments</h3>
+            <h1>The site isn&apos;t quite ready yet</h1>
+            <p>Try refreshing in a few moments.</p>
           </div>
         </main>
       </div>
