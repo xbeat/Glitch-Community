@@ -13,15 +13,15 @@ class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      to: { pathname: '/' },
       done: false,
+      redirect: { pathname: '/' },
       error: false,
       errorMessage: null,
     };
   }
   
-  async authenticate() {
-    const {api, provider, url} = this.props;
+  async componentDidMount() {
+    const {api, provider, url, destination} = this.props;
     try {
       const {data} = await api.post(url);
       if (data.id <= 0) {
@@ -29,6 +29,9 @@ class LoginPage extends React.Component {
       }
       console.log("LOGGED IN", data);
       this.props.setUser(data);
+      if (destination && destination.expires > new Date().toISOString()) {
+        this.setState({redirect: destination.to});
+      }
       this.setState({done: true});
       analytics.track("Signed In", {provider});
     } catch (error) {
@@ -41,17 +44,12 @@ class LoginPage extends React.Component {
       console.error("Login error.", deets);
       captureMessage("Login error", {extra: deets});
     }
-  }
-  
-  componentDidMount() {
-    this.authenticate();
+    this.props.setDestination(undefined);
   }
   
   render() {
     if (this.state.done) {
-      const {destination} = this.props;
-      const to = destination && (destination.expires > this.state.date) ? destination.to : { pathname: '/' };
-      return <Redirect to={to}/>;
+      return <Redirect to={this.state.redirect}/>;
     } else if (this.state.error) {
       const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
       return <ErrorPage title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
