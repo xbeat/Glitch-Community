@@ -39,6 +39,8 @@
     background-color: black
 
 #fallback
+  .content
+    max-height: 100vh
   #fallback-img
     padding: calc(20%) 0
     margin: 0 auto
@@ -48,3 +50,7 @@
     border-radius: 10px
     *
       margin: 20px
+
+@media(min-width: 700px)
+  #fallback > *
+    background: pink
