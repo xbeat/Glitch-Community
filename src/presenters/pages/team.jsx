@@ -200,11 +200,6 @@ class TeamPage extends React.Component {
                 </aside>
               </h2>
               
-              <CreateCollectionButton 
-                api={this.props.api}
-                currentUser={this.props.currentUser}
-              />
-              
               <SampleTeamCollections/>
             </article>
           </section>
