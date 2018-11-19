@@ -63,7 +63,7 @@ LoginPage.propTypes = {
   provider: PropTypes.string.isRequired,
   setUser: PropTypes.func.isRequired,
   destination: PropTypes.shape({
-    expires: PropTypes.number.isRequired,
+    expires: PropTypes.string.isRequired,
     to: PropTypes.object.isRequired,
   }),
   hash: PropTypes.string,
