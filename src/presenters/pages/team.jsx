@@ -9,6 +9,8 @@ import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ErrorBoundary from '../includes/error-boundary';
 
+import SampleTeamCollections from '../../curated/sample-team-collections.jsx';
+
 import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
 import NameConflictWarning from '../includes/name-conflict.jsx';
@@ -189,13 +191,16 @@ class TeamPage extends React.Component {
     
         
         { this.props.currentUserIsOnTeam &&
-          <h2>Collections
-            <aside className="inline-banners team-page">
-              Use collections to organize projects
-            </aside>
-          </h2>
-          
-          
+          <section>
+            <article className="collections">
+              <h2>Collections
+                <aside className="inline-banners team-page">
+                  Use collections to organize projects
+                </aside>
+              </h2>
+              <SampleTeamCollections/>
+            </article>
+          </section>
         }
 
         { this.props.currentUserIsOnTeam && <ErrorBoundary>
