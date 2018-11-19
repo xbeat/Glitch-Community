@@ -13,6 +13,7 @@ class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      to: { pathname: '/' },
       done: false,
       error: false,
       errorMessage: null,
@@ -48,7 +49,9 @@ class LoginPage extends React.Component {
   
   render() {
     if (this.state.done) {
-      return <Redirect to={this.props.hash ? `/#${this.props.hash}` : '/'}/>;
+      const {destination} = this.props;
+      const to = destination && (destination.expires > this.state.date) ? destination.to : { pathname: '/' };
+      return <Redirect to={to}/>;
     } else if (this.state.error) {
       const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
       return <ErrorPage title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
@@ -61,12 +64,15 @@ LoginPage.propTypes = {
   url: PropTypes.string.isRequired,
   provider: PropTypes.string.isRequired,
   setUser: PropTypes.func.isRequired,
-  
+  destination: PropTypes.shape({
+    expires: PropTypes.number.isRequired,
+    to: PropTypes.object.isRequired,
+  }),
   hash: PropTypes.string,
 };
 
 const LoginPageContainer = (props) => (
-  <LocalStorage name="destinationAfterAuth" default={{to: {pathname: '/'}}}>
+  <LocalStorage name="destinationAfterAuth" default={undefined}>
     {(destination, setDestination) => (
       <CurrentUserConsumer>
         {(currentUser, fetched, {login}) => <LoginPage setUser={login} destination={destination} setDestination={setDestination} {...props}/>}
