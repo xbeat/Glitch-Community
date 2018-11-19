@@ -33,7 +33,7 @@
     <% for (let i = 0; i < styles.length; ++i) { %>
     <link rel="stylesheet" type="text/css" href="<%= styles[i] %>">
     <% } %>
-    <noscript><style>#fallback, #fallback-noscript, #fallback-img { display: initial !important; }</style></noscript>
+    <noscript><style>#fallback, #fallback-noscript, #fallback-img { display: block !important; }</style></noscript>
   </head>
   <body>
     <script>
@@ -73,11 +73,11 @@
             <h1>Your browser does not support Javascript</h1>
             <p>Try using Glitch in a different browser.</p>
           </div>
-          <div id="fallback-yesscript" style="display: none">
+          <div class="error-msg" id="fallback-yesscript" style="display: none">
             <h1>Your browser does not support the latest Javascript features</h1>
             <p>Try updating your browser to use Glitch.</p>
           </div>
-          <div id="fallback-notbuilt" style="display: none">
+          <div class="error-msg" id="fallback-notbuilt" style="display: none">
             <h1>The site isn&apos;t quite ready yet</h1>
             <p>Try refreshing in a few moments.</p>
           </div>
