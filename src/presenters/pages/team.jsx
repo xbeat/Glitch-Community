@@ -186,6 +186,7 @@ class TeamPage extends React.Component {
             </div>
           </aside>
         }
+        
 
         { this.props.currentUserIsOnTeam && <ErrorBoundary>
           <TeamAnalytics

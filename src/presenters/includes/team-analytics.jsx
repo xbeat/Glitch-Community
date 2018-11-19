@@ -156,7 +156,16 @@ class TeamAnalytics extends React.Component {
     }
     return (
       <section className="team-analytics">
-        <h2>Analytics</h2>
+        <h2>
+          Analytics
+          { (this.props.projects.length === 0) && !this.state.isGettingData && (
+            <aside className="inline-banners add-project-to-analytics-banner">
+              Add projects to see their stats
+            </aside>
+        )}
+        </h2>
+
+        
         { !!this.props.projects.length && (
           <section className="controls">
             <TeamAnalyticsProjectPop
@@ -179,13 +188,7 @@ class TeamAnalytics extends React.Component {
             />
           }
         </section>
-
-        { (this.props.projects.length === 0) && !this.state.isGettingData && (
-          <aside className="inline-banners add-project-to-analytics-banner">
-            Add projects to see their stats
-          </aside>
-        )}
-
+        
         <section className="activity">
           <figure id="chart" className="c3"/>
           { (this.state.isGettingData || this.state.isGettingC3) && 
