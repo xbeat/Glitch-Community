@@ -22,6 +22,9 @@ class LoginPage extends React.Component {
   
   async componentDidMount() {
     const {api, provider, url, destination} = this.props;
+      console.log('destination', destination);
+    this.props.setDestination(undefined);
+      console.log('destination', destination);
     try {
       const {data} = await api.post(url);
       if (data.id <= 0) {
@@ -29,7 +32,9 @@ class LoginPage extends React.Component {
       }
       console.log("LOGGED IN", data);
       this.props.setUser(data);
+      console.log('destination', destination);
       if (destination && destination.expires > new Date().toISOString()) {
+        console.log('ding');
         this.setState({redirect: destination.to});
       }
       this.setState({done: true});
