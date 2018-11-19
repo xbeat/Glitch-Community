@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import {captureMessage} from '../../utils/sentry';
 
 import {Redirect} from 'react-router-dom';
-import {CurrentUserConsumer} from '../current-user.jsx';
-import ErrorPage from './error.jsx';
+import LocalStorage from '../includes/local-storage';
+import {CurrentUserConsumer} from '../current-user';
+import ErrorPage from './error';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -60,13 +61,18 @@ LoginPage.propTypes = {
   url: PropTypes.string.isRequired,
   provider: PropTypes.string.isRequired,
   setUser: PropTypes.func.isRequired,
+  
   hash: PropTypes.string,
 };
 
 const LoginPageContainer = (props) => (
-  <CurrentUserConsumer>
-    {(currentUser, fetched, {login}) => <LoginPage setUser={login} {...props}/>}
-  </CurrentUserConsumer>
+  <LocalStorage name="destinationAfterAuth" default={{to: {pathname: '/'}}}>
+    {(destination, setDestination) => (
+      <CurrentUserConsumer>
+        {(currentUser, fetched, {login}) => <LoginPage setUser={login} destination={destination} setDestination={setDestination} {...props}/>}
+      </CurrentUserConsumer>
+    )}
+  </LocalStorage>
 );
 
 export const FacebookLoginPage = ({code, ...props}) => {
