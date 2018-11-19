@@ -186,7 +186,17 @@ class TeamPage extends React.Component {
             </div>
           </aside>
         }
+    
         
+        
+        { (this.props.team.collections.length === 0 && this.props.currentUserIsOnTeam) &&
+          <>
+            <h2>Collections</h2>
+            <aside className="inline-banners add-collection-to-team-banner">
+              Use collections to organize projects
+            </aside>
+          </>
+        }
 
         { this.props.currentUserIsOnTeam && <ErrorBoundary>
           <TeamAnalytics
