@@ -33,7 +33,7 @@
     <% for (let i = 0; i < styles.length; ++i) { %>
     <link rel="stylesheet" type="text/css" href="<%= styles[i] %>">
     <% } %>
-    <noscript><style>#fallback, #fallback-noscript { display: initial !important; }</style></noscript>
+    <noscript><style>#fallback, #fallback-noscript, #fallback-img { display: initial !important; }</style></noscript>
   </head>
   <body>
     <script>
@@ -66,11 +66,12 @@
           <img class="logo" src="https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg" alt="Glitch">
         </header>
         <main>
-          <img src="https://cdn.glitch.com/dbd73211-c667-4832-9229-c27f4cb66f5c%2Fmagikarp-illust.svg?1542650156890"/>
-          <div id="fallback-noscript" style="display: none">To use Glitch, please enable JavaScript
-            
+          <img id="fallback-img" style="display: none" src="https://cdn.glitch.com/dbd73211-c667-4832-9229-c27f4cb66f5c%2Fmagikarp-illust.svg?1542650156890"/>
+          <div id="fallback-noscript" style="display: none">
+            <h3>Your browser does not support the latest Javascript features</h3>
+            <p>Try updating your browser to use Glitch.</p>
           </div>
-          <p id="fallback-yesscript" style="display: none">To use Glitch, you&apos;ll need a browser with support for more recent JavaScript features</p>
+          <div id="fallback-yesscript" style="display: none">To use Glitch, you&apos;ll need a browser with support for more recent JavaScript features</p>
           <p id="fallback-notbuilt" style="display: none">The site isn&apos;t quite ready yet, try refreshing in a few moments</p>
         </main>
       </div>
@@ -87,8 +88,10 @@
         document.getElementById('fallback').removeAttribute('style');
         if (BUILD_COMPLETE) {
           document.getElementById('fallback-yesscript').removeAttribute('style');
+          document.getElementById('fallback-img').removeAttribute('style');
         } else {
           document.getElementById('fallback-notbuilt').removeAttribute('style');
+          document.getElementById('fallback-img').removeAttribute('style');
         }
       }
     </script>
