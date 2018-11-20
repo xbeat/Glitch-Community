@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
+
 import Link from '../includes/link';
+import LocalStorage from '../includes/local-storage';
 import PopoverContainer from './popover-container';
 import {DevToggles} from '../includes/dev-toggles';
+
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
 function githubAuthLink(data) {
@@ -57,10 +60,13 @@ EmailSignInButton.propTypes = {
 export const SignInPop = ({header, prompt, params, api, location}) => (
   <LocalStorage name="destinationAfterAuth">
     {(destination, setDestination) => {
-      function onClick() {
-        setDestination({
-        });
-      }
+      const onClick = () => setDestination({
+        expires: new Date('2018-11-28'),
+        to: {
+          pathname: location.pathname,
+          search: location.search,
+        },
+      });
       return (
         <div className="pop-over sign-in-pop">
           {header}
