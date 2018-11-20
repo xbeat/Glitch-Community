@@ -87,15 +87,14 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
     }}
   </LocalStorage>
 );
-SignInPop.propTypes = {
-  header: PropTypes.node,
-  prompt: PropTypes.node,
-  api: PropTypes.func.isRequired,
-  location: PropTypes.object.isRequired,
-  hash: PropTypes.string,
-};
 
 export const SignInPop = withRouter(SignInPopWithoutRouter);
+SignInPop.propTypes = {
+  api: PropTypes.func.isRequired,
+  header: PropTypes.node,
+  prompt: PropTypes.node,
+  hash: PropTypes.string,
+};
 
 export default function SignInPopContainer(props) {
   return (
