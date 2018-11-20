@@ -21,6 +21,8 @@ import CollectionPage from './collection.jsx';
 import ErrorPage from './error.jsx';
 import SecretPage from './secret.jsx';
 
+/* global EXTERNAL_ROUTES */
+
 const parse = (search, name) => {
   const params = new URLSearchParams(search);
   return params.get(name);
@@ -34,6 +36,15 @@ const NotFoundPage = () => (
     </Helmet>
   </>
 );
+
+class ExternalPageReloader extends React.Component {
+  componentDidMount() {
+    window.location.reload();
+  }
+  render() {
+    return null;
+  }
+}
 
 class PageChangeHandlerBase extends React.Component {
   componentDidUpdate(prev) {
@@ -86,6 +97,10 @@ const Router = ({api}) => (
       ))}
 
       <Route path="/secret" exact render={({location}) => <SecretPage key={location.key}/>}></Route>
+    
+      {EXTERNAL_ROUTES.map(route => (
+        <Route key={route} path={route} render={({location}) => <ExternalPageReloader key={location.key}/>}/>
+      ))}
 
       <Route render={({location}) => <NotFoundPage key={location.key}/>}/>
     </Switch>
