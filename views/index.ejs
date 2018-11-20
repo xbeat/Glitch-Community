@@ -70,12 +70,12 @@
         <main>
           <img id="fallback-img" style="display: none" src="https://cdn.glitch.com/dbd73211-c667-4832-9229-c27f4cb66f5c%2Fmagikarp-illust.svg?1542746418939"/>
           <div class="error-msg" id="fallback-noscript" style="display: none">
-            <h1>Your browser does not support Javascript</h1>
-            <p>Try using Glitch in a different browser.</p>
+            <h1>The web browser that you're using does not support Javascript</h1>
+            <p>Since Glitch requires Javascript to run, please try using Glitch in a different web browser.</p>
           </div>
           <div class="error-msg" id="fallback-yesscript" style="display: none">
-            <h1>Your browser does not support the latest Javascript features</h1>
-            <p>Try updating your browser to use Glitch.</p>
+            <h1>The web browser you're using is missing some important Javascript features</h1>
+            <p>To use Glitch, please try applying your latest system updates, or try us with a different web browser.</p>
           </div>
           <div class="error-msg" id="fallback-notbuilt" style="display: none">
             <h1>The site isn&apos;t quite ready yet</h1>
@@ -94,12 +94,11 @@
       } else {
         console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
         document.getElementById('fallback').removeAttribute('style');
+        document.getElementById('fallback-img').removeAttribute('style');
         if (BUILD_COMPLETE) {
           document.getElementById('fallback-yesscript').removeAttribute('style');
-          document.getElementById('fallback-img').removeAttribute('style');
         } else {
           document.getElementById('fallback-notbuilt').removeAttribute('style');
-          document.getElementById('fallback-img').removeAttribute('style');
         }
       }
     </script>
