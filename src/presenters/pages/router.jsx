@@ -107,8 +107,6 @@ const Router = ({api}) => (
 
       <Route path="/secret" exact render={({location}) => <SecretPage key={location.key}/>}></Route>
 
-      {/* Separate out /edit so we don't get an endless redirect */}
-      <Route path="/edit" render={({location}) => <EditPage key={location.key}/>}/>
       {EXTERNAL_ROUTES.map(route => (
         <Route key={route} path={route} render={({location}) => <ExternalPageReloader key={location.key}/>}/>
       ))}
