@@ -37,6 +37,15 @@ const NotFoundPage = () => (
   </>
 );
 
+const EditPage = () => (
+  <>
+    <ErrorPage title="Editor Not Found" description="Not a typo, but maybe it's moved?"/>
+    <Helmet>
+      <title>👻 Page not found</title> {/* eslint-disable-line */}
+    </Helmet>
+  </>
+);
+
 class ExternalPageReloader extends React.Component {
   componentDidMount() {
     window.location.reload();
@@ -98,6 +107,7 @@ const Router = ({api}) => (
 
       <Route path="/secret" exact render={({location}) => <SecretPage key={location.key}/>}></Route>
     
+      <Route path="/edit" render={({location}) => <EditPage key={location.key}/>}/>
       {EXTERNAL_ROUTES.map(route => (
         <Route key={route} path={route} render={({location}) => <ExternalPageReloader key={location.key}/>}/>
       ))}
