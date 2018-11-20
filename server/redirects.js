@@ -10,6 +10,8 @@ module.exports = function(app) {
   redirect(app, '/careers*', '/about/careers/');
   
   redirectPath(app, '/featured*', '/culture/');
+  
+  redirectPath(app, '/edit*', '//glitch.com/edit');
 }
 
 function redirect(app, route, target) {
