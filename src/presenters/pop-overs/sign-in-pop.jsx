@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
+import moment from 'moment-mini';
 
 import Link from '../includes/link';
 import LocalStorage from '../includes/local-storage';
@@ -61,7 +62,7 @@ export const SignInPop = ({header, prompt, params, api, location}) => (
   <LocalStorage name="destinationAfterAuth">
     {(destination, setDestination) => {
       const onClick = () => setDestination({
-        expires: new Date('2018-11-28'),
+        expires: moment().add(10, 'minutes').toISOString(),
         to: {
           pathname: location.pathname,
           search: location.search,
