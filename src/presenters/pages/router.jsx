@@ -37,15 +37,6 @@ const NotFoundPage = () => (
   </>
 );
 
-const EditPage = () => (
-  <>
-    <ErrorPage title="Editor Not Found" description="Not a typo, but are you on a remix?"/>
-    <Helmet>
-      <title>👻 Page not found</title> {/* eslint-disable-line */}
-    </Helmet>
-  </>
-);
-
 class ExternalPageReloader extends React.Component {
   componentDidMount() {
     window.location.reload();
