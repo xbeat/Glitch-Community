@@ -10,19 +10,19 @@ import {DevToggles} from '../includes/dev-toggles';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
-function githubAuthLink(data) {
+function githubAuthLink() {
   const params = new URLSearchParams();
   params.append('client_id', GITHUB_CLIENT_ID);
   params.append('scope', 'user:email');
-  params.append('redirect_uri', `${APP_URL}/login/github?${data || ''}`);
+  params.append('redirect_uri', `${APP_URL}/login/github`);
   return `https://github.com/login/oauth/authorize?${params}`;
 }
 
-function facebookAuthLink(data) {
+function facebookAuthLink() {
   const params = new URLSearchParams();
   params.append('client_id', FACEBOOK_CLIENT_ID);
   params.append('scope', 'email');
-  params.append('redirect_uri', `${APP_URL}/login/facebook?${data || ''}`);
+  params.append('redirect_uri', `${APP_URL}/login/facebook`);
   return `https://www.facebook.com/v2.9/dialog/oauth?${params}`;
 }
 
@@ -58,7 +58,7 @@ EmailSignInButton.propTypes = {
   api: PropTypes.func.isRequired,
 };
 
-export const SignInPop = ({header, prompt, params, api, location}) => (
+const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
   <LocalStorage name="destinationAfterAuth">
     {(destination, setDestination) => {
       const onClick = () => setDestination({
@@ -66,6 +66,7 @@ export const SignInPop = ({header, prompt, params, api, location}) => (
         to: {
           pathname: location.pathname,
           search: location.search,
+          hash: hash,
         },
       });
       return (
@@ -73,8 +74,8 @@ export const SignInPop = ({header, prompt, params, api, location}) => (
           {header}
           <section className="pop-over-actions last-section">
             {prompt}
-            <SignInPopButton href={facebookAuthLink(params)} company="Facebook" emoji="facebook" onClick={onClick}/>
-            <SignInPopButton href={githubAuthLink(params)} company="GitHub" emoji="octocat" onClick={onClick}/>
+            <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
+            <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
             <DevToggles>
               {(enabledToggles) => (
                 enabledToggles.includes("Email Login") && <EmailSignInButton api={api}/>
@@ -89,12 +90,12 @@ export const SignInPop = ({header, prompt, params, api, location}) => (
 SignInPop.propTypes = {
   header: PropTypes.node,
   prompt: PropTypes.node,
-  params: PropTypes.string,
   api: PropTypes.func.isRequired,
-  location: PropTypes.object,
+  location: PropTypes.object.isRequired,
+  hash: PropTypes.string,
 };
 
-const SignInPopWithRouter = withRouter(SignInPop);
+export const SignInPop = withRouter(SignInPopWithoutRouter);
 
 export default function SignInPopContainer(props) {
   return (
@@ -102,7 +103,7 @@ export default function SignInPopContainer(props) {
       {({togglePopover, visible}) => (
         <div className="button-wrap">
           <button className="button button-small" onClick={togglePopover}>Sign in</button>
-          {visible && <SignInPopWithRouter {...props}/>}
+          {visible && <SignInPop {...props}/>}
         </div>
       )}
     </PopoverContainer>
