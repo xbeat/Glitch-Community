@@ -39,7 +39,7 @@ const NotFoundPage = () => (
 
 const EditPage = () => (
   <>
-    <ErrorPage title="Editor Not Found" description="Not a typo, but maybe it's moved?"/>
+    <ErrorPage title="Editor Not Found" description="Not a typo, but are you on a remix?"/>
     <Helmet>
       <title>👻 Page not found</title> {/* eslint-disable-line */}
     </Helmet>
@@ -106,7 +106,8 @@ const Router = ({api}) => (
       ))}
 
       <Route path="/secret" exact render={({location}) => <SecretPage key={location.key}/>}></Route>
-    
+
+      {/* Separate out /edit so we don't get an endless redirect */}
       <Route path="/edit" render={({location}) => <EditPage key={location.key}/>}/>
       {EXTERNAL_ROUTES.map(route => (
         <Route key={route} path={route} render={({location}) => <ExternalPageReloader key={location.key}/>}/>
