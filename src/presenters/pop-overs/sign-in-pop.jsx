@@ -48,8 +48,8 @@ const jankyEmailPrompt = async (api) => {
   }
 };
 
-const EmailSignInButton = ({api}) => (
-  <button className="button-small button-link has-emoji" onClick={() => jankyEmailPrompt(api)}>
+const EmailSignInButton = ({api, onClick}) => (
+  <button className="button-small button-link has-emoji" onClick={() => { onClick(); jankyEmailPrompt(api); }}>
     Sign in with Email <span aria-label="" role="img">📧</span>
   </button>
 );
@@ -78,7 +78,7 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
             <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
             <DevToggles>
               {(enabledToggles) => (
-                enabledToggles.includes("Email Login") && <EmailSignInButton api={api}/>
+                enabledToggles.includes("Email Login") && <EmailSignInButton api={api} onClick={onClick}/>
               )}
             </DevToggles>
           </section>
