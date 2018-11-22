@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Heads or Tails?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_Artowrk_0004_Layer2.jpg?1542629384120",
-    link: 'https://glitch.com/~flip-coin/'
+    title: 'Screenreader practice',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FGlitch_Artowrk_0002_Layer4.jpg?1542884566800",
+    link: 'https://screenreader-practice.glitch.me/'
   },{
-    title: 'To N-Finity and Beyond',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_Artowrk_0003_Layer3.jpg?1542629383734",
-    link: 'https://glitch.com/~n-finity/'
+    title: 'XOR-inspired A/V art',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FGlitch_Artowrk_0001_Layer5.jpg?1542884566493",
+    link: 'https://xor2.glitch.me/'
   },{
-    title: 'Spider-Man vs. Green Goblin',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_Artowrk_0005_Layer1.jpg?1542629384602",
-    link: 'https://glitch.com/~spider-fly'
+    title: 'Who was your first follow?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FGlitch_Artowrk_0000_Layer6.jpg?1542884566619",
+    link: 'https://first-follow.glitch.me/'
   }  
 ];
