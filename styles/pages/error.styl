@@ -1,3 +1,7 @@
+// This file will eventually power error.jsx, which can be reused across our error pages.
+// for now, we're in transition to a new error page design, so this file is in three parts:
+
+//part one, the deprecated error page:
 .error-page
   color: white
   font-family: menlo
@@ -38,8 +42,12 @@
     z-index: -1
     background-color: black
 
+// part two, the seeds of the new error page.
+// Things will converge on these styles:
+    
 .error-page-container
   display: flex
+  align-items: center
   justify-content: center
   .error-image
     display: none
@@ -51,12 +59,19 @@
       margin: 20px
 
 @media(min-width: 700px)
-  .error-image
-    display: block
+  .error-page-container
+    padding-top: 10em;
+    padding-bottom: 10em;
+    .error-msg
+    .error-image
+      display: block
+      margin-right: 3em;
 
       
 // styles for index.ejs:
 // To be consolidated with the above styles, once all error pages are in.
+// There will always be a little special sauce here, since these styles have to work
+// in a no-react environment.
 #fallback
   #fallback-img
     padding: calc(20%) 0
