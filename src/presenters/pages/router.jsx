@@ -18,22 +18,13 @@ import {TeamPage, UserPage, TeamOrUserPage} from './team-or-user.jsx';
 import SearchPage from './search.jsx';
 import CategoryPage from './category.jsx';
 import CollectionPage from './collection.jsx';
-import ErrorPage from './error.jsx';
+import NotFoundPage from './not-found.jsx';
 import SecretPage from './secret.jsx';
 
 const parse = (search, name) => {
   const params = new URLSearchParams(search);
   return params.get(name);
 };
-
-const NotFoundPage = () => (
-  <>
-    <ErrorPage title="Page Not Found" description="Maybe a typo? Or perhaps it's moved?"/>
-    <Helmet>
-      <title>👻 Page not found</title> {/* eslint-disable-line */}
-    </Helmet>
-  </>
-);
 
 class PageChangeHandlerBase extends React.Component {
   componentDidUpdate(prev) {
