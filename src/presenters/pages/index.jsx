@@ -55,9 +55,23 @@ class WhatIsGlitch extends React.Component {
           
           <div className="callouts">
             <div className="discover">
-              <img src="https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fcollaborate-illustration.svg?1543270676514
+              <img className="badge" src={discover}>
+              </img>
+              <div className="window">
+                <div className="title">
+                  Explore 
+                  <div className="dot"></div>
+                  <div className="dot"></div>
+                  <div className="dot"></div>
+                </div>
+                <div className="description">
+                  Discover over a million free apps built by our community
+                </div>
+              </div>
             </div>
           </div>
+          
+          {/*
           <div>
             And it's <img className="free" src={free} alt="free"/>.{' '}
             <OverlayVideo>
@@ -67,6 +81,8 @@ class WhatIsGlitch extends React.Component {
               </div>
             </OverlayVideo>
           </div>
+          */}
+          
         </span>
       </section>
     );
