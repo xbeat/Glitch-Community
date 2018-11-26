@@ -49,13 +49,6 @@ class CategoryLoader extends React.Component {
     };
   }
   
-  loadCategoryProjectCount(){
-    this.state.categories.forEach(async ({id}) => {
-      const {data} = await this.props.api.get(`categories/${id}`);
-      this.setState(({categoriesPro{categoriesProjectCount: this.state.categoriesProjectCount}});
-    });
-  }
-  
   async loadCategories() {
     // The API gives us a json blob with all of the categories, but only
     // the 'projects' field on 3 of them.  If the field is present,
@@ -64,7 +57,13 @@ class CategoryLoader extends React.Component {
     const categoriesWithProjects = data.filter(category => !!category.projects);
     const categories = sampleSize(categoriesWithProjects, 3);
     this.setState({categories});
-    this.loadCategoryProjectCount();
+    // Now load each category to see how many projects it has
+    this.state.categories.forEach(async ({id}) => {
+      const {data} = await this.props.api.get(`categories/${id}`);
+      this.setState(prevState => ({
+        categoriesProjectCount: {...prevState.categoriesProjectCount, [id]: data.projects.length},
+      }));
+    });
   }
   
   componentDidMount() {
@@ -72,7 +71,7 @@ class CategoryLoader extends React.Component {
   }
   
   render() {
-    return this.state.categories.map((category, index) => (
+    return this.state.categories.map(category => (
       <Category key={category.id} category={category} projectCount={this.state.categoriesProjectCount[category.id]}/>
     ));
   }
