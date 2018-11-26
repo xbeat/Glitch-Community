@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Screenreader practice',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FGlitch_Artowrk_0002_Layer4.jpg?1542884566800",
-    link: 'https://screenreader-practice.glitch.me/'
+    title: 'Conway\'s Webcam of Life',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fconways-webcam_GLITCH.png?1543234498768",
+    link: 'https://glitch.com/~conways-webcam'
   },{
-    title: 'XOR-inspired A/V art',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FGlitch_Artowrk_0001_Layer5.jpg?1542884566493",
-    link: 'https://xor2.glitch.me/'
+    title: 'Make a Simple Poll',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpoller_GLITCH.png?1543234498656",
+    link: 'https://poller.glitch.me/'
   },{
-    title: 'Who was your first follow?',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FGlitch_Artowrk_0000_Layer6.jpg?1542884566619",
-    link: 'https://first-follow.glitch.me/'
+    title: 'But First, Let Me Take A Selfie',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmouse-photobooth_GLITCH.png?1543234498859",
+    link: 'https://mouse-photobooth.glitch.me/'
   }  
 ];
