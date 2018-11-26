@@ -38,8 +38,8 @@
     z-index: -1
     background-color: black
 
-#fallback
-  #fallback-img
+.error-page-container
+  .error-image
     padding: calc(20%) 0
     margin: 0 auto
   .error-msg 
@@ -50,14 +50,14 @@
       margin: 20px
 
 @media(min-width: 700px)
-  #fallback
+  .error-page-container
     main
       width: 700px
       position: absolute
       top: 40%
       left: 50%
       transform: translate(-50%, -40%)
-    #fallback-img
+    .error-image
       padding: 0
       float: left
       margin-right: 40px
@@ -65,3 +65,5 @@
       float: left
       width: 350px
       margin-top: 65px
+
+      
