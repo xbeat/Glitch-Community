@@ -77,7 +77,7 @@ const Router = ({api}) => (
 
       <Route path="/secret" exact render={({location}) => <SecretPage key={location.key}/>}></Route>
 
-      <Route render={({location}) => <NotFoundPage key={location.key}/>}/>
+      <Route render={({location}) => <NotFoundPage api={api} key={location.key}/>}/>
     </Switch>
   </>
 );

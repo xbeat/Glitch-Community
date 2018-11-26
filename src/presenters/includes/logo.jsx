@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment-mini';
 
-class Logo extends React.PureComponent {
+export default class Logo extends React.PureComponent {
   
   constructor(props) {
     super(props);
