@@ -39,7 +39,26 @@
     background-color: black
 
 .error-page-container
+  display: flex
+  justify-content: center
   .error-image
+    display: none
+  .error-msg 
+    background: secondary-background 
+    border: 3px solid black
+    border-radius: 10px
+    *
+      margin: 20px
+
+@media(min-width: 700px)
+  .error-image
+    display: block
+
+      
+// styles for index.ejs:
+// To be consolidated with the above styles, once all error pages are in.
+#fallback
+  #fallback-img
     padding: calc(20%) 0
     margin: 0 auto
   .error-msg 
@@ -50,14 +69,14 @@
       margin: 20px
 
 @media(min-width: 700px)
-  .error-page-container
+  #fallback
     main
       width: 700px
       position: absolute
       top: 40%
       left: 50%
       transform: translate(-50%, -40%)
-    .error-image
+    #fallback-img
       padding: 0
       float: left
       margin-right: 40px
@@ -65,5 +84,3 @@
       float: left
       width: 350px
       margin-top: 65px
-
-      
