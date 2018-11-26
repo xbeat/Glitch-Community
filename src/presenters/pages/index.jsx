@@ -54,15 +54,15 @@ class WhatIsGlitch extends React.Component {
           </figure>
           
           <div className="callouts">
-            <div className="discover">
+            <div className="callout discover">
               <img className="badge" src={discover}>
               </img>
               <div className="window">
                 <div className="title">
                   Explore 
-                  <div className="dot"></div>
-                  <div className="dot"></div>
-                  <div className="dot"></div>
+                  <div className="dot green"></div>
+                  <div className="dot yellow"></div>
+                  <div className="dot red"></div>
                 </div>
                 <div className="description">
                   Discover over a million free apps built by our community

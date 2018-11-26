@@ -5,6 +5,7 @@
     position: relative
     width: 45%
     height: 350px
+    float: left
     img
       height: 100%
     h1
@@ -12,6 +13,47 @@
       top: 51px
       right: 24px
       color: white
+  .callouts
+    width: 45%
+    float: right
+    display: inline
+    .callout
+      position: relative
+      img
+        position: absolute
+      .window
+        position: absolute
+        top: 95px
+        left: 63px
+        width: 300px
+        .title
+          margin: 0
+          background: #B8AFFF
+          padding: 10px 15px
+          border: 2px solid black
+          border-top-right-radius: 5px
+          border-top-left-radius: 5px
+          font-weight: bold
+          .dot
+            width: 15px
+            height: 15px
+            border-radius: 10px
+            border: 2px solid black
+            float: right
+            margin: 0px 1px
+            &.green
+              background: #05D458
+            &.yellow
+              background: #FCF3B0
+            &.red
+              background: #FF5F5F
+        .description
+          padding: 10px 15px
+          border-left: 2px solid black
+          border-bottom: 2px solid black
+          border-right: 2px solid black
+          border-bottom-left-radius: 5px
+          border-bottom-right-radius: 5px
 
   .free
     width: 55px
