@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Heads or Tails?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_Artowrk_0004_Layer2.jpg?1542629384120",
-    link: 'https://glitch.com/~flip-coin/'
+    title: 'Conway\'s Webcam of Life',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fconways-webcam_GLITCH.png?1543234498768",
+    link: 'https://glitch.com/~conways-webcam'
   },{
-    title: 'To N-Finity and Beyond',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_Artowrk_0003_Layer3.jpg?1542629383734",
-    link: 'https://glitch.com/~n-finity/'
+    title: 'Make a Simple Poll',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpoller_GLITCH.png?1543234498656",
+    link: 'https://poller.glitch.me/'
   },{
-    title: 'Spider-Man vs. Green Goblin',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_Artowrk_0005_Layer1.jpg?1542629384602",
-    link: 'https://glitch.com/~spider-fly'
+    title: 'But First, Let Me Take A Selfie',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmouse-photobooth_GLITCH.png?1543234498859",
+    link: 'https://mouse-photobooth.glitch.me/'
   }  
 ];
