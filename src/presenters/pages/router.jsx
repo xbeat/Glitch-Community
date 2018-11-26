@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {Route, Switch, withRouter} from 'react-router-dom';
-import Helmet from 'react-helmet';
 
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
@@ -18,7 +17,7 @@ import {TeamPage, UserPage, TeamOrUserPage} from './team-or-user.jsx';
 import SearchPage from './search.jsx';
 import CategoryPage from './category.jsx';
 import CollectionPage from './collection.jsx';
-import NotFoundPage from './not-found.jsx';
+import NotFoundPage from './404.jsx';
 import SecretPage from './secret.jsx';
 
 const parse = (search, name) => {
