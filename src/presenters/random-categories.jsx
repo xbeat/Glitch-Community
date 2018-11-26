@@ -11,7 +11,6 @@ const Category = ({category, projectCount}) => {
     categoryColor: category.color,
     homepageCollection: true,
     collectionUrl: category.url,
-    projectCount: projectCount,
   };
   return (
     <article className="projects" style={{backgroundColor: category.backgroundColor}}>
@@ -46,17 +45,14 @@ class CategoryLoader extends React.Component {
     super(props);
     this.state = {
       categories: [],
-      categoriesProjectCount: []
+      categoriesProjectCount: {},
     };
   }
   
-  async loadCategoryProjectCount(){
-    this.state.categories.map( ({id}) => {
-      this.props.api.get(`categories/${id}`)
-        .then( ({data}) => {
-          this.state.categoriesProjectCount.push(data.projects.length); 
-          this.setState({categoriesProjectCount: this.state.categoriesProjectCount});
-        });  
+  loadCategoryProjectCount(){
+    this.state.categories.forEach(async ({id}) => {
+      const {data} = await this.props.api.get(`categories/${id}`);
+      this.setState(({categoriesPro{categoriesProjectCount: this.state.categoriesProjectCount}});
     });
   }
   
@@ -77,7 +73,7 @@ class CategoryLoader extends React.Component {
   
   render() {
     return this.state.categories.map((category, index) => (
-      <Category key={category.id} category={category} projectCount={this.state.categoriesProjectCount[index]}/>
+      <Category key={category.id} category={category} projectCount={this.state.categoriesProjectCount[category.id]}/>
     ));
   }
 }
