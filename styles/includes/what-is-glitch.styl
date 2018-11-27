@@ -106,11 +106,21 @@
         top: 250px
         left: 55%
     .callouts
+      float: right
       .callout
         .window
           .title
             z-index: 1
-          
+
+@media (max-width: hugeViewport)
+  .what-is-glitch
+    .callouts
+      margin-right: 2vw
+      display: flex
+      flex-direction: column
+      .callout
+        
+  
 @media (max-width: largeViewport)
   .what-is-glitch
     height: 850px
@@ -137,10 +147,8 @@
 @media(max-width: mediumViewport)
   .what-is-glitch
     figure
-      margin-top: 0px
+      margin-top: 1em
       width: 90%
-      height: 46vh
-      max-height: 495px
       .kiki
         &.small
           display: none
@@ -149,10 +157,12 @@
       .overlay-container
         margin: 1em 1em 0em 0em
     .callouts
+      float: left
       .callout
         display: flex
         flex-direction: row-reverse
         .window
+          margin: 1em 1em 0em 0em
           .title
             z-index: -1
 
@@ -163,9 +173,15 @@
       width: 90%
       height: 46vh
       max-height: 495px
+      .kiki
+        &.small
+          display: block
+        &.large 
+          display: none
       .overlay-container
         margin: 1em 1em 0em 0em
     .callouts
+      float: left
       .callout
         display: flex
         flex-direction: row-reverse
@@ -181,10 +197,14 @@
       height: 365px
       .kiki
         &.small
+          display: block
           width: 100%
+        &.large
+          display: none
       .overlay-container
         margin: 1em 0
     .callouts
+      float: left
       .callout
         display: flex
         flex-direction: row-reverse
