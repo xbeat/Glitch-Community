@@ -162,7 +162,7 @@ class TeamAnalytics extends React.Component {
             <aside className="inline-banners team-page">
               Add projects to see their stats
             </aside>
-        )}
+          )}
         </h2>
 
         

@@ -56,6 +56,6 @@ const SampleCollections = () => (
     </ul>
     <div className="placeholder-mask"></div>
   </>
-)
+);
 
 export default SampleCollections;
