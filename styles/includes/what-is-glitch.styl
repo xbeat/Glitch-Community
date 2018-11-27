@@ -114,12 +114,25 @@
 
 @media (max-width: hugeViewport)
   .what-is-glitch
+    figure
+      width: 45%
+      margin-top: 0
+      .kiki
+        &.small
+          width: 93%
     .callouts
       margin-right: 2vw
       display: flex
       flex-direction: column
       .callout
-        
+        display: flex
+        flex-direction: row-reverse
+        margin: 1em 0
+        .badge
+          position: initial
+          margin-left: 10px
+        .window
+          position: initial
   
 @media (max-width: largeViewport)
   .what-is-glitch
@@ -169,10 +182,10 @@
 @media(max-width: mediumSmallViewport)
   .what-is-glitch
     figure
-      margin-top: 0px
-      width: 90%
-      height: 46vh
+      margin: 0
+      width: 100%
       max-height: 495px
+      height: 43vh
       .kiki
         &.small
           display: block
