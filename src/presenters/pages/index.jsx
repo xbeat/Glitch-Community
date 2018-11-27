@@ -23,11 +23,11 @@ function loadScript(src) {
 
 
 const Dots = () => (
-  <>
+  <div className="dots">
     <div className="dot green"></div>
     <div className="dot yellow"></div>
     <div className="dot red"></div>
-  </>
+  </div>
 );
 
   
