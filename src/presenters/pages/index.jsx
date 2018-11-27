@@ -93,7 +93,6 @@ class WhatIsGlitch extends React.Component {
               </div>
             </div>
             
-            {/*
             <div className="callout collaborate">
               <img className="badge" src={collaborate}>
               </img>
@@ -107,7 +106,6 @@ class WhatIsGlitch extends React.Component {
                 </div>
               </div>
             </div>
-            */}
             
           </div>
           
