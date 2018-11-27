@@ -3,18 +3,18 @@
   margin-top: 0
   figure
     position: relative
-    width: 45%
+    width: 40%
     height: 350px
     margin-top: 55px
     float: left
     .kiki
-      height: 100%
       &.large
         display: none
     .overlay-container
       position: absolute
       top: 250px
-      left: 310px
+      left: 220px
+      min-width: 145px
     .video
       cursor: pointer
       .play-button
@@ -87,21 +87,25 @@
           border-bottom-left-radius: 5px
           border-bottom-right-radius: 5px
 
-@media (min-width: largeViewport)
+@media (min-width: hugeViewport)
   .what-is-glitch
-    
-    .kiki
+    figure
+      .kiki
         &.small
-          display: block
-          height: auto
-        &.large
           display: none
+        &.large
+          display: block
           
 @media (max-width: largeViewport)
   .what-is-glitch
     height: 850px
     figure
       width: 100%
+      .kiki
+        &.small
+          display: block
+        &.large
+          display: none
     .callouts
       width: 96%
       margin-right: 0px
@@ -109,7 +113,7 @@
         .badge
           position: initial
           float: right
-          margin-right: 18px
+          margin-right: 10%
         .window
           position: initial
           width: 70%
@@ -120,6 +124,7 @@
     figure
       margin-top: 0px
       width: 365px
+      
       .overlay-container
         top: 280px
         left: 190px
