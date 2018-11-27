@@ -20,6 +20,16 @@ function loadScript(src) {
   script.async = true;
   document.head.appendChild(script);
 }
+
+
+const Dots = () => (
+  <>
+    <div className="dot green"></div>
+    <div className="dot yellow"></div>
+    <div className="dot red"></div>
+  </>
+);
+
   
 class WhatIsGlitch extends React.Component {
   componentDidMount() {
@@ -54,21 +64,51 @@ class WhatIsGlitch extends React.Component {
           </figure>
           
           <div className="callouts">
+            
             <div className="callout discover">
               <img className="badge" src={discover}>
               </img>
               <div className="window">
                 <div className="title">
                   Explore 
-                  <div className="dot green"></div>
-                  <div className="dot yellow"></div>
-                  <div className="dot red"></div>
+                  <Dots/>
                 </div>
                 <div className="description">
                   Discover over a million free apps built by our community
                 </div>
               </div>
             </div>
+            
+            <div className="callout remix">
+              <img className="badge" src={remix}>
+              </img>
+              <div className="window">
+                <div className="title">
+                  Remix
+                  <Dots/>
+                </div>
+                <div className="description">
+                  Remix anything you find and edit it to make it your own
+                </div>
+              </div>
+            </div>
+            
+            {/*
+            <div className="callout collaborate">
+              <img className="badge" src={collaborate}>
+              </img>
+              <div className="window">
+                <div className="title">
+                  Collaborate
+                  <Dots/>
+                </div>
+                <div className="description">
+                  Invite your whole team to build projects together
+                </div>
+              </div>
+            </div>
+            */}
+            
           </div>
           
           {/*

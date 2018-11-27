@@ -19,6 +19,15 @@
     display: inline
     .callout
       position: relative
+      &.discover
+        .title
+          background: #B8AFFF
+      &.remix
+        .title
+          background: #FFAABF
+      &.collaborate
+        .title
+          background: #FCF3B0
       img
         position: absolute
       .window
@@ -28,9 +37,8 @@
         width: 300px
         .title
           margin: 0
-          background: #B8AFFF
           padding: 10px 15px
-          border: 2px solid black
+          border: 3px solid black
           border-top-right-radius: 5px
           border-top-left-radius: 5px
           font-weight: 600
@@ -38,7 +46,7 @@
             width: 15px
             height: 15px
             border-radius: 10px
-            border: 2px solid black
+            border: 3px solid black
             float: right
             margin: 0px 1px
             &.green
@@ -47,11 +55,12 @@
               background: #FCF3B0
             &.red
               background: #FF5F5F
+            
         .description
-          padding: 10px 15px
-          border-left: 2px solid black
-          border-bottom: 2px solid black
-          border-right: 2px solid black
+          padding: 15px
+          border-left: 3px solid black
+          border-bottom: 3px solid black
+          border-right: 3px solid black
           border-bottom-left-radius: 5px
           border-bottom-right-radius: 5px
 
