@@ -1,5 +1,6 @@
 .what-is-glitch
   height: 470px
+  margin-top: 0
   figure
     position: relative
     width: 45%
@@ -8,7 +9,7 @@
     float: left
     .kiki
       height: 100%
-      &.small
+      &.large
         display: none
     .overlay-container
       position: absolute
@@ -86,6 +87,16 @@
           border-bottom-left-radius: 5px
           border-bottom-right-radius: 5px
 
+@media (min-width: largeViewport)
+  .what-is-glitch
+    
+    .kiki
+        &.small
+          display: block
+          height: auto
+        &.large
+          display: none
+          
 @media (max-width: largeViewport)
   .what-is-glitch
     height: 850px
@@ -109,12 +120,6 @@
     figure
       margin-top: 0px
       width: 365px
-      .kiki
-        &.small
-          display: block
-          height: auto
-        &.large
-          display: none
       .overlay-container
         top: 280px
         left: 190px
@@ -126,7 +131,11 @@
       height: 365px
       .kiki
         &.small
-          width: 90%
+          width: 87%
       .overlay-container
         top: 345px
         left: 0px
+    .callouts
+      .callout
+        .badge
+          margin-top: 17px
