@@ -90,10 +90,7 @@
   .what-is-glitch
     height: 850px
     figure
-      width: 88%
-      .kiki
-        right: auto
-        left: 260px
+      width: 100%
     .callouts
       width: 96%
       margin-right: 0px
@@ -110,8 +107,14 @@
 @media(max-width: mediumViewport)
   .what-is-glitch
     figure
+      height: 395px
       .kiki
         &.small
           display: block
+          width: 67%
+          height: auto
         &.large
           display: none
+      .overlay-container
+        top: 280px
+        left: 190px
