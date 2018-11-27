@@ -58,6 +58,13 @@ class WhatIsGlitch extends React.Component {
               <span>where you'll build the</span><br/>
               <span style={{color: "#9FD6FF"}}>app of your dreams</span><br/>
             </h1>
+            
+            <OverlayVideo>
+              <div className="button video">
+                <img className="play-button" src={play} alt="play"/>
+                <span>How it works</span>
+              </div>
+            </OverlayVideo>
           </figure>
           
           <div className="callouts">
@@ -104,15 +111,6 @@ class WhatIsGlitch extends React.Component {
               </div>
             </div>
             
-          </div>
-          
-          <div>
-            <OverlayVideo>
-              <div className="button video">
-                <img className="play-button" src={play} alt="play"/>
-                <span>How it works</span>
-              </div>
-            </OverlayVideo>
           </div>
               
         </span>
