@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
+import DevToggles from '../includes/dev-toggles';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import TeamEditor from '../team-editor.jsx';
 import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
@@ -152,6 +153,15 @@ class TeamPage extends React.Component {
           />
         </ErrorBoundary>
         
+        { (this.props.team.projects.length === 0 && this.props.currentUserIsOnTeam) &&
+          <aside className="inline-banners add-project-to-empty-team-banner">
+            <div className="description-container">
+              <img className="project-pals" src="https://cdn.glitch.com/02ae6077-549b-429d-85bc-682e0e3ced5c%2Fcollaborate.svg?1540583258925" alt="" />
+              <div className="description">Add projects to share them with your team</div>
+            </div>
+          </aside>
+        }
+        
         <EntityPagePinnedProjects
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
@@ -165,7 +175,24 @@ class TeamPage extends React.Component {
           }}
           api={this.props.api}
         />
+        
+        {/* TEAM COLLECTIONS */}
+        <DevToggles>
+          {enabledToggles => ( enabledToggles.includes('Team Collections') && this.props.currentUserIsOnTeam &&
+            <section>
+              <article className="collections">
+                <h2>Collections
+                  <aside className="inline-banners team-page">
+                    Use collections to organize projects
+                  </aside>
+                </h2>
 
+                <SampleTeamCollections/>
+              </article>
+            </section>
+          )}
+        </DevToggles>
+        
         <EntityPageRecentProjects
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
@@ -179,32 +206,7 @@ class TeamPage extends React.Component {
           }}
           api={this.props.api}
         />
-
-        { (this.props.team.projects.length === 0 && this.props.currentUserIsOnTeam) &&
-          <aside className="inline-banners add-project-to-empty-team-banner">
-            <div className="description-container">
-              <img className="project-pals" src="https://cdn.glitch.com/02ae6077-549b-429d-85bc-682e0e3ced5c%2Fcollaborate.svg?1540583258925" alt="" />
-              <div className="description">Add projects to share them with your team</div>
-            </div>
-          </aside>
-        }
-    
         
-        {/* TEAM COLLECTIONS */}
-        { this.props.currentUserIsOnTeam &&
-          <section>
-            <article className="collections">
-              <h2>Collections
-                <aside className="inline-banners team-page">
-                  Use collections to organize projects
-                </aside>
-              </h2>
-              
-              <SampleTeamCollections/>
-            </article>
-          </section>
-        }
-
         { this.props.currentUserIsOnTeam && <ErrorBoundary>
           <TeamAnalytics
             api={this.props.api}
