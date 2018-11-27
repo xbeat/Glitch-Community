@@ -46,9 +46,10 @@ const getAnalytics = async ({id, api, projects}, fromDate, currentProjectDomain)
 class TeamAnalytics extends React.Component {
   constructor(props) {
     super(props);
+    const currentTimeFrame = 'Last 2 Weeks';
     this.state = {
-      currentTimeFrame: 'Last 2 Weeks',
-      fromDate: moment().subtract(2, 'weeks').valueOf(),
+      currentTimeFrame,
+      fromDate: dateFromTime(currentTimeFrame),
       currentProjectDomain: '', // empty string means all projects
       analytics: {},
       c3: {},
