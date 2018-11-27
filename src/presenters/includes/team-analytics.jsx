@@ -24,8 +24,8 @@ const dateFromTime = (newTime) => {
 
 const getAnalytics = async ({id, api, projects}, fromDate, currentProjectDomain) => {
   if (!projects.length) {
-    // Update timestamps so they're relative to now
     const data = _.cloneDeep(sampleAnalytics);
+    // Update timestamps so they're relative to now
     data.buckets.forEach(bucket => {
       bucket['@timestamp'] += Date.now() - sampleAnalyticsTime;
     });
