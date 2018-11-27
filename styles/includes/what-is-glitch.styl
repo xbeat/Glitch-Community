@@ -6,13 +6,10 @@
     height: 350px
     margin-top: 55px
     float: left
-    img
+    .kiki
       height: 100%
-    h1
-      position: absolute
-      top: 51px
-      right: 24px
-      color: white
+      &.small
+        display: none
     .overlay-container
       position: absolute
       top: 250px
@@ -113,4 +110,8 @@
 @media(max-width: mediumViewport)
   .what-is-glitch
     figure
-      width: 100%
+      .kiki
+        &.small
+          display: block
+        &.large
+          display: none

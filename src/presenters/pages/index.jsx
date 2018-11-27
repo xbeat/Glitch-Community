@@ -38,7 +38,8 @@ class WhatIsGlitch extends React.Component {
   }
   
   render() {
-    const kiki = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-illustration.svg?1543270677099"
+    const kikiLarge = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-large.svg?1543342714817";
+    const kikiSmall = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-small.svg?1543342714969";
     const discover = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fdiscover-illustration.svg?1543271788169";
     const remix = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fremix-illustration.svg?1543270676664";
     const collaborate = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fcollaborate-illustration.svg?1543270676514";
@@ -51,13 +52,8 @@ class WhatIsGlitch extends React.Component {
       <section className="what-is-glitch">
         <span>
           <figure title="Glitch">
-            <img className="kiki" src={kiki} alt={whatsGlitchAlt}/>
-            <h1>
-              <span>Glitch is the</span><br/>
-              <span style={{color: "#69E4CA"}}>friendly community</span><br/>
-              <span>where you'll build the</span><br/>
-              <span style={{color: "#9FD6FF"}}>app of your dreams</span><br/>
-            </h1>
+            <img className="kiki large" src={kikiLarge} alt={whatsGlitchAlt}/>
+            <img className="kiki small" src={kikiSmall} alt={whatsGlitchAlt}/>
             
             <OverlayVideo>
               <div className="button video">
