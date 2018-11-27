@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'How Long Has That Framework Existed?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fhow-long.png?1542025531992",
-    link: 'https://glitch.com/~howoldisit/'
+    title: 'Conway\'s Webcam of Life',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fconways-webcam_GLITCH.png?1543234498768",
+    link: 'https://glitch.com/~conways-webcam'
   },{
-    title: 'Play Duck Hunt... Hands-Free',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fduck.png?1542284001903",
-    link: 'https://glitch.com/~duckhunt-handsfree/'
+    title: 'Make a Simple Poll',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpoller_GLITCH.png?1543234498656",
+    link: 'https://poller.glitch.me/'
   },{
-    title: 'Chess, But Harder?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fchess.png?1542025532138",
-    link: 'https://glitch.com/~chess-but-harder'
+    title: 'But First, Let Me Take A Selfie',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmouse-photobooth_GLITCH.png?1543234498859",
+    link: 'https://mouse-photobooth.glitch.me/'
   }  
 ];
