@@ -14,24 +14,12 @@ import TeamAnalyticsReferrers from '../includes/team-analytics-referrers.jsx';
 import TeamAnalyticsProjectDetails from '../includes/team-analytics-project-details.jsx';
 
 const dateFromTime = (newTime) => {
-  const timeMap = [
-    {
-      time: "Last 4 Weeks",
-      date: moment().subtract(4, 'weeks').valueOf(),
-    },
-    {
-      time: "Last 2 Weeks",
-      date: moment().subtract(2, 'weeks').valueOf(),
-    },
-    {
-      time: "Last 24 Hours",
-      date: moment().subtract(24, 'hours').valueOf(),
-    },
-  ];
-  let time = _.find(timeMap, (object) => {
-    return object.time === newTime;
-  });
-  return time.date;
+  const timeMap = {
+    "Last 4 Weeks": moment().subtract(4, 'weeks').valueOf(),
+    "Last 2 Weeks": moment().subtract(2, 'weeks').valueOf(),
+    "Last 24 Hours": moment().subtract(24, 'hours').valueOf(),
+  };
+  return timeMap[newTime];
 };
 
 const getAnalytics = async ({id, api, projects}, fromDate, currentProjectDomain) => {
