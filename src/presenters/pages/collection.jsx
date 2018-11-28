@@ -247,7 +247,7 @@ async function loadCollection(api, ownerName, collectionName){
   if (team) {
     collection.team = team;
   }
-  console.log(collection);
+  
   return collection;
 }  
 
