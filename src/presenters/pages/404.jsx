@@ -12,7 +12,7 @@ const NotFoundPage = ({api}) => (
       <title>👻 Page not found</title> {/* eslint-disable-line */}
     </Helmet>
     <main className="error-page-container">
-      <img className="error-image" src={telescopeImageUrl} alt="" width="218" height="397" />
+      <img className="error-image" src={telescopeImageUrl} alt="" width="318px" height="297px" />
       <div className="error-msg">
         <h1>Page Not Found</h1>
         <p>Maybe a typo, or perhaps it's moved?</p>
