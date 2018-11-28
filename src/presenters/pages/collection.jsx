@@ -199,6 +199,18 @@ CollectionPageContents.propTypes = {
   uploadAvatar: PropTypes.func,
 };
 
+const getOrNull = async(api, route) => {
+  try {
+    const {data} = await api.get(route);
+    return data;
+  } catch (error) {
+    if (error && error.response && error.response.status === 404) {
+      return null;
+    }
+    throw error;
+  }
+};
+
 async function getUserIdByLogin(api, userLogin){
   const {data} = await api.get(`userid/byLogin/${userLogin}`);
   if(data === "NOT FOUND"){
@@ -207,30 +219,27 @@ async function getUserIdByLogin(api, userLogin){
   return data;
 }
 
-async function getCollectionId(api, userId, collectionName){
-  // parse through user's collections to find collection that matches the name of the collection
-  const {data} = await api.get(`collections?userId=${userId}`);
-  const collectionMatch = data.find(c => c.url == collectionName);
-  return collectionMatch.id;  
-}
-
-async function getCollection(api, collectionId){
-  const {data} = await api.get(`collections/${collectionId}`);
-  return data;
-}
-
 async function loadCollection(api, ownerName, collectionName){
+  let collections = [];
   
   // get userId by login name
   const userId = await getUserIdByLogin(api, ownerName);
+  if (userId) {
+    // parse through user's collections to find collection that matches the name of the collection
+    const {data} = await api.get(`collections?userId=${userId}`);
+    collections = data;
+  } else {
+    
+    // get team by url
+    const team = await getOrNull(api, `teams/byUrl/${ownerName}`);
+    if (team) {
+      const {data} = await api.get(`collections?teamId=${team.id}`);
+      collections = data;
+    }
+  }
   
-  // get collection id
-  const collectionId = await getCollectionId(api, userId, collectionName);
-  
-  // get collection
-  const collection = await getCollection(api, collectionId);
-  
-  return collection;
+  const collection = collections.find(c => c.url == collectionName);
+  return collection && collection.id;  
 }  
 
 const CollectionPage = ({api, ownerName, name, ...props}) => (
