@@ -40,11 +40,10 @@ class WhatIsGlitch extends React.Component {
   render() {
     const kikiLarge = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-large.svg?1543431809636";
     const kikiSmall = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-small.svg?1543431809839";
-    const discover = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fexplore-illustration.svg?1543440900540";
-    const remix = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fremix-illustration.svg?1543440869624";
-    const collaborate = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fcollaborate-illustration.svg?1543440869153";
+    const discover = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fexplore-illustration.svg?1543442352754";
+    const remix = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fremix-illustration.svg?1543442353173";
+    const collaborate = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fcollaborate-illustration.svg?1543442353588";
     
-    const free = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffree.svg?1499350845981";
     const play = "https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fplay.svg";
     const whatsGlitchAlt = "Glitch is the friendly community for building the app of your dreams";
     
@@ -66,7 +65,7 @@ class WhatIsGlitch extends React.Component {
           <div className="callouts">
             
             <div className="callout discover">
-              <img className="badge" src={discover}>
+              <img className="badge" src={discover} alt="discover">
               </img>
               <div className="window">
                 <div className="title">
@@ -80,7 +79,7 @@ class WhatIsGlitch extends React.Component {
             </div>
             
             <div className="callout remix">
-              <img className="badge" src={remix}>
+              <img className="badge" src={remix} alt="remix">
               </img>
               <div className="window">
                 <div className="title">
@@ -94,7 +93,7 @@ class WhatIsGlitch extends React.Component {
             </div>
             
             <div className="callout collaborate">
-              <img className="badge" src={collaborate}>
+              <img className="badge" src={collaborate} alt="collaborate">
               </img>
               <div className="window">
                 <div className="title">

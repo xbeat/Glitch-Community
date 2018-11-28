@@ -22,10 +22,10 @@
         height: 17px
         
   .callouts
-    width: 43%
+    width: 41%
     float: right
     display: inline
-    margin-right: 50px
+    margin-right: 65px
     .callout
       position: relative
       &.discover
@@ -34,12 +34,9 @@
         .window
           top: 90px
           left: 50px
-          border-color: #DED9FF
         .badge
           top: 25px
           right: 60px
-        .description
-          border-color: #B8AFFF
       &.remix
         .title
           background: #9FD6FF
@@ -49,20 +46,14 @@
         .window
           top: 195px
           right: 25px
-          border-color: #9FD6FF
-        .description
-          border-color: #9FD6FF
       &.collaborate
         .title
-          background: #FFAABF
+          background: #FCF3B0
         .badge
           top: 360px
           right: 100px
         .window
           top: 300px
-          border-color: #FFAABF
-        .description
-          border-color: #FFAABF
       .badge
         position: absolute
         z-index: 1
@@ -73,7 +64,7 @@
           position: relative
           margin: 0
           padding: 10px 15px
-          border-width: 2px
+          border: 2px solid black
           border-top-right-radius: 5px
           border-top-left-radius: 5px
           font-weight: 700
@@ -96,12 +87,11 @@
                 background: #FF5F5F
             
         .description
+          background: white
           padding: 15px 15px 25px
-          border-left-width: 2px 
-          border-bottom-width: 2px 
-          border-right-width: 2px 
-          border-style: solid
-          border-top: none
+          border-left: 2px solid black
+          border-bottom: 2px solid black
+          border-right: 2px solid black
           border-bottom-left-radius: 5px
           border-bottom-right-radius: 5px
 
@@ -176,6 +166,7 @@
           position: initial
           float: right
           margin-left: -20px
+          margin-top: 2.5%
         .window
           position: initial
           width: 100%
@@ -268,9 +259,3 @@
             margin-left: -20px
           .description
             padding: 15px 25px 25px 15px
-          
-// smallViewport = 414px
-// mediumSmallViewport = 592px
-// mediumViewport = 670px
-// largeViewport = 900px
-// hugeViewport = 1080px
