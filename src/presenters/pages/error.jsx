@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {Helmet} from 'react-helmet';
+import Layout from '../layout';
 
 const logo = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcarp.svg";
 
@@ -94,3 +95,29 @@ ErrorPage.propTypes = {
 };
 
 export default ErrorPage;
+
+
+
+const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
+
+const NotFoundPage = ({api}) => (
+  <Layout api={api}>
+    <Helmet>
+      <title>👻 Page not found</title> {/* eslint-disable-line */}
+    </Helmet>
+    <main className="error-page-container">
+      <img className="error-image" src={telescopeImageUrl} alt="" width="318px" height="297px" />
+      <div className="error-msg">
+        <h1>Page Not Found</h1>
+        <p>Maybe a typo, or perhaps it's moved?</p>
+        <a className="button button-link" href="/">Back to Glitch</a>
+      </div>
+    </main>
+  </Layout>
+);
+
+NotFoundPage.propTypes = {
+  api: PropTypes.func.isRequired,
+};
+
+export default NotFoundPage;
