@@ -32,7 +32,7 @@
           background: #B8AFFF
         .window
           top: 85px
-          left: 63px
+          left: 50px
       &.remix
         .title
           background: #FFAABF
@@ -46,8 +46,8 @@
         .title
           background: #FCF3B0
         .badge
-          top: 375px
-          right: 95px
+          top: 360px
+          right: 100px
         .window
           top: 300px
       .badge
@@ -138,23 +138,29 @@
   .what-is-glitch
     height: 850px
     figure
-      width: 100%
+      width: 95%
+      height: 435px
       .kiki
         &.small
-          display: block
-        &.large
           display: none
+        &.large
+          display: block
+          width: 95%
+      .overlay-container
+        position: absolute
+        top: 70%
+        left: 55%
     .callouts
       width: 96%
       margin-right: 0px
       .callout
+        margin: 1em 0em 0em
         .badge
           position: initial
           float: right
         .window
           position: initial
-          width: 70%
-          margin: 1em
+          width: 100%
 
 
 @media(max-width: mediumViewport)
