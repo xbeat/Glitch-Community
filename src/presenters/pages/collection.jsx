@@ -20,7 +20,8 @@ import EditCollectionNameAndUrl from '../includes/edit-collection-name-and-url.j
 import AddCollectionProject from '../includes/add-collection-project.jsx';
 
 import CollectionAvatar from '../includes/collection-avatar.jsx';
-import {UserTile} from '../users-list.jsx';
+import {TeamTile} from '../teams-list';
+import {UserTile} from '../users-list';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
 
@@ -92,11 +93,12 @@ const CollectionPageContents = ({
           </div>
           
           <EditCollectionNameAndUrl isAuthorized={isAuthorized}
-            owner={collection.user.login} name={collection.name} url={collection.url}
+            name={collection.name} url={collection.url}
             update={data => updateNameAndUrl(data).then(() => syncPageToUrl(collection, data.url))}
           />
           
-          <UserTile {...collection.user}/>
+          {collection.team && <TeamTile team={collection.team}/>}
+          {collection.user && <UserTile {...collection.user}/>}
           
           <div className="collection-description">
             <AuthDescription
@@ -238,16 +240,15 @@ async function loadCollection(api, ownerName, collectionName){
     }
   }
   
+  // pick out the correct collection, then load the full data
   const collection = collections.find(c => c.url == collectionName);
-  return collection && collection.id;  
+  return collection && getOrNull(api, `collections/${collection.id}`);
 }  
 
 const CollectionPage = ({api, ownerName, name, ...props}) => (
   <Layout api={api}>
-    <DataLoader get={() => loadCollection(api, ownerName, name)}
-      renderError={() => <NotFound name={name}/>}
-    >
-      {collection => (
+    <DataLoader get={() => loadCollection(api, ownerName, name)}>
+      {collection => collection ? (
         <CurrentUserConsumer>
           {(currentUser) => (
             <CollectionEditor api={api} initialCollection={collection} >
@@ -257,7 +258,7 @@ const CollectionPage = ({api, ownerName, name, ...props}) => (
             </CollectionEditor>
           )}
         </CurrentUserConsumer>
-      )}
+      ) : <NotFound name={name}/>}
     </DataLoader>
   </Layout>
 );
