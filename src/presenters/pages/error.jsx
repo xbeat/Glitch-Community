@@ -121,3 +121,28 @@ NotFoundPage.propTypes = {
 };
 
 export default NotFoundPage;
+
+
+const emailUrl = 'https://cdn.glitch.com/26ac422d-705d-42be-b9cb-1fbdfe7e5a63%2Ferror-mailer.svg?1543429767321';
+
+const EmailErrorPage = ({api}) => (
+  <Layout api={api}>
+    <Helmet>
+      <title>✉️ Email Login Problem</title> {/* eslint-disable-line */}
+    </Helmet>
+    <main className="error-page-container">
+      <img className="error-image" src={emailUrl} alt="" width="318px" height="297px" />
+      <div className="error-msg">
+        <h1>Page Not Found</h1>
+        <p>Maybe a typo, or perhaps it's moved?</p>
+        <a className="button button-link" href="/">Back to Glitch</a>
+      </div>
+    </main>
+  </Layout>
+);
+
+NotFoundPage.propTypes = {
+  api: PropTypes.func.isRequired,
+};
+
+export default NotFoundPage;
