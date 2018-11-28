@@ -34,8 +34,18 @@ export function getAvatarUrl(id) {
   return `${CDN_URL}/collection-avatar/${id}.png`;
 }
 
-export function getLink(userName, url) {
-  return `/@${userName}/${url}`;
+export function getLinkRaw(owner, url) {
+  return `/@${owner}/${url}`;
+}
+
+export function getLink(collection, fallbackOwner) {
+  if (collection.team) {
+    return getLinkRaw(collection.team.url, collection.url);
+  }
+  if (collection.user) {
+    return getLinkRaw(collection.user.login, collection.url);
+  }
+  return getLinkRaw(fallbackOwner, collection.url);
 }
 
 // Circular dependencies must go below module.exports
