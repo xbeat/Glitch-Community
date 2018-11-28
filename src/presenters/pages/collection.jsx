@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
-import {getContrastTextColor, getLink, hexToRgbA} from '../../models/collection';
+import {getContrastTextColor, getLink, getOwnerLink, hexToRgbA} from '../../models/collection';
 
 import {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
@@ -37,7 +37,7 @@ class DeleteCollectionBtn extends React.Component {
   } 
   render(){
     if(this.state.done){
-      return <Redirect to={`/@${this.props.currentUserLogin}`} />;
+      return <Redirect to={getOwnerLink(this.props.collection)} />;
     }
     return (
       <button className={`button delete-collection button-tertiary`} 
@@ -59,8 +59,8 @@ class DeleteCollectionBtn extends React.Component {
 }
 
 DeleteCollectionBtn.propTypes = {
+  collection: PropTypes.object.isRequired,
   deleteCollection: PropTypes.func.isRequired,
-  currentUserLogin:PropTypes.string.isRequired,
 };
 
 const CollectionPageContents = ({
