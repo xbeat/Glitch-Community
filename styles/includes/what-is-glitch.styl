@@ -31,14 +31,16 @@
         .title
           background: #B8AFFF
         .window
-          top: 85px
+          top: 25px
           left: 50px
+        .badge
+          left: 170px
       &.remix
         .title
           background: #9FD6FF
         .badge
-          top: 101px
-          right: -15px
+          top: 200px
+          right: -65px
         .window
           top: 195px
           right: 25px
@@ -52,6 +54,7 @@
           top: 300px
       .badge
         position: absolute
+        z-index: 1
       .window
         position: absolute
         width: 300px
@@ -108,11 +111,7 @@
         top: 250px
         left: 55%
     .callouts
-      float: right
-      .callout
-        .window
-          .title
-            z-index: 1
+      float: right        
 
 // 1080px
 // Callouts located on right of page; small kiki visible
@@ -134,7 +133,7 @@
         margin: 1em 0
         .badge
           position: initial
-          margin-left: 10px
+          margin-left: -20px
         .window
           position: initial
 
@@ -165,7 +164,6 @@
           position: initial
           float: right
           margin-left: -20px
-          z-index: 1
         .window
           position: initial
           width: 100%
