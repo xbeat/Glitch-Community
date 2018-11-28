@@ -164,6 +164,8 @@
         .badge
           position: initial
           float: right
+          margin-left: -20px
+          z-index: 1
         .window
           position: initial
           width: 100%
@@ -192,7 +194,10 @@
         .window
           margin: 1em 0em 0em 0em
           .title
-            z-index: -1
+            z-index: 0
+          .badge
+            margin-top: 5% 
+            margin-left: -20px
 
 // 592px
 // Callouts should be stacked, large kiki visible
@@ -218,7 +223,10 @@
         margin: 1em 0 0
         .window
           .title
-            z-index: -1
+            z-index: -0
+          .badge
+            margin-top: 5% 
+            margin-left: -20px
         
 
 // 414px
@@ -244,7 +252,10 @@
         flex-direction: row-reverse
         .window
           .title
-            z-index: -1
+            z-index: 0
+          .badge
+            margin-top: 5% 
+            margin-left: -20px
           
 // smallViewport = 414px
 // mediumSmallViewport = 592px
