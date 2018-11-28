@@ -176,6 +176,20 @@ class TeamPage extends React.Component {
           api={this.props.api}
         />
         
+        <EntityPageRecentProjects
+          projects={this.props.team.projects}
+          pins={this.props.team.teamPins}
+          isAuthorized={this.props.currentUserIsOnTeam}
+          addPin={this.props.addPin}
+          projectOptions={{
+            addProjectToCollection: this.addProjectToCollection,
+            removeProjectFromTeam: this.props.removeProject,
+            joinTeamProject: this.props.joinTeamProject,
+            leaveTeamProject: this.props.leaveTeamProject,
+          }}
+          api={this.props.api}
+        />
+        
         {/* TEAM COLLECTIONS */}
         <DevToggles>
           {enabledToggles => ( enabledToggles.includes('Team Collections') && this.props.currentUserIsOnTeam &&
@@ -192,20 +206,6 @@ class TeamPage extends React.Component {
             </section>
           )}
         </DevToggles>
-        
-        <EntityPageRecentProjects
-          projects={this.props.team.projects}
-          pins={this.props.team.teamPins}
-          isAuthorized={this.props.currentUserIsOnTeam}
-          addPin={this.props.addPin}
-          projectOptions={{
-            addProjectToCollection: this.addProjectToCollection,
-            removeProjectFromTeam: this.props.removeProject,
-            joinTeamProject: this.props.joinTeamProject,
-            leaveTeamProject: this.props.leaveTeamProject,
-          }}
-          api={this.props.api}
-        />
         
         { this.props.currentUserIsOnTeam && <ErrorBoundary>
           <TeamAnalytics
