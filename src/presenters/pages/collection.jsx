@@ -59,7 +59,11 @@ class DeleteCollectionBtn extends React.Component {
 }
 
 DeleteCollectionBtn.propTypes = {
-  collection: PropTypes.object.isRequired,
+  collection: PropTypes.shape({
+    team: PropTypes.object,
+    user: PropTypes.object,
+    url: PropTypes.string.isRequired,
+  }).isRequired,
   deleteCollection: PropTypes.func.isRequired,
 };
 
@@ -74,7 +78,6 @@ const CollectionPageContents = ({
   addProjectToCollection, 
   removeProjectFromCollection,
   updateColor,
-  userLogin,
   ...props}) => (
   
   <>  
@@ -174,7 +177,7 @@ const CollectionPageContents = ({
       </article>
       
     </main>
-   {isAuthorized && <DeleteCollectionBtn deleteCollection={deleteCollection} currentUserLogin={userLogin}/>}
+   {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection}/>}
   </>
 );
 
@@ -240,7 +243,7 @@ const CollectionPage = ({api, userLogin, name, ...props}) => (
           {(currentUser) => (
             <CollectionEditor api={api} initialCollection={collection} >
               {(collection, funcs, userIsAuthor) =>(
-                <CollectionPageContents collection={collection} userLogin={userLogin} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} {...funcs} {...props}/>
+                <CollectionPageContents collection={collection} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} {...funcs} {...props}/>
               )}
             </CollectionEditor>
           )}
