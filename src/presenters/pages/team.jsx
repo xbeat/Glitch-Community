@@ -11,6 +11,7 @@ import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ErrorBoundary from '../includes/error-boundary';
 
 import SampleTeamCollections from '../../curated/sample-team-collections.jsx';
+import {CreateCollectionButton} from '../collections-list';
 
 import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -200,6 +201,8 @@ class TeamPage extends React.Component {
                     Use collections to organize projects
                   </aside>
                 </h2>
+                
+                <CreateCollectionButton api={this.props.api} currentUser={this.props.currentUser} team={this.props.team}/>
 
                 <SampleTeamCollections/>
               </article>

@@ -219,10 +219,10 @@ async function getCollection(api, collectionId){
   return data;
 }
 
-async function loadCollection(api, userLogin, collectionName){
+async function loadCollection(api, ownerName, collectionName){
   
   // get userId by login name
-  const userId = await getUserIdByLogin(api,userLogin);
+  const userId = await getUserIdByLogin(api, ownerName);
   
   // get collection id
   const collectionId = await getCollectionId(api, userId, collectionName);
@@ -233,9 +233,9 @@ async function loadCollection(api, userLogin, collectionName){
   return collection;
 }  
 
-const CollectionPage = ({api, userLogin, name, ...props}) => (
+const CollectionPage = ({api, ownerName, name, ...props}) => (
   <Layout api={api}>
-    <DataLoader get={() => loadCollection(api, userLogin, name)}
+    <DataLoader get={() => loadCollection(api, ownerName, name)}
       renderError={() => <NotFound name={name}/>}
     >
       {collection => (

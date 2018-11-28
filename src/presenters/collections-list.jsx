@@ -71,7 +71,7 @@ const CreateFirstCollection = () => (
   </div>
 );
 
-class CreateCollectionButton extends React.Component{
+export class CreateCollectionButton extends React.Component{
   constructor(props){
     super(props);
     this.state={
