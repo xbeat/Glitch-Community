@@ -114,7 +114,11 @@ Only employees of Glitch will be able to do this step, and here it is!
 
 You should perform these steps immediately after clicking the "Merge pull request" button on your PR in Github. 
 
-As you go through these steps, be present in our team Slack room and communicate as you start and finish the deploy.
+#### Announce the Deployment
+
+Be present in our #community chat room and say that you're starting a deploy and what you're deploying.
+
+Keep a passive eye on the chat room while you work, in case anyone needs to talk to you about it while you've got it in flight.
 
 #### Merge in Live Changes
 
@@ -175,6 +179,10 @@ Repeat the _special command_ to swap ~community with ~community-staging.
 Thereby putting things back the way they were. Now you have time to fix it and try again. 
 
 After you revert, check on if any live changes were made to the site after you deployed and before you reverted. (Are the curated items the same on both ~community and ~community-staging?).  If so, port the curated updates to the reverted page so that the edits are preserved.
+
+#### Announce Completion
+
+Good job :-) Pop back over to #community and tell the room that you're all done.
 
 #### Making Live Edits
 
