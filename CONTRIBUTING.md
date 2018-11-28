@@ -47,9 +47,11 @@ Ok cool, these next steps are what we'd do internally and you're welcome to foll
 
 _(Do this once per computer to create a local repository)_
 
+_Remember to [set up Git SSH](https://help.github.com/articles/connecting-to-github-with-ssh/) or the [Windows Client](https://desktop.github.com/) to get your auth in order._
+
   ```
   # 1. On your local machine, clone our git repository from Github: 
-  git clone https://github.com/FogCreek/Glitch-Community
+  git clone git@github.com:FogCreek/Glitch-Community.git
 
   # 2. Inside of your new repo, add a remote endpoint for our live site:
   cd Glitch-Community

@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -14,7 +13,7 @@ const STYLE_BUNDLE_NAME = 'styles';
 
 
 let mode = 'development';
-if(process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   mode = 'production';
 }
 
@@ -31,6 +30,7 @@ module.exports = {
     path: PUBLIC,
     publicPath: '/',
   },
+  devtool: 'source-map',
   optimization: {
     splitChunks: {
       chunks: 'initial',
@@ -53,8 +53,9 @@ module.exports = {
       },
     },
     minimizer: [
-      new TerserPlugin({terserOptions: {safari10: true}}),
+      new TerserPlugin({terserOptions: {safari10: true}, sourceMap: true}),
     ],
+    noEmitOnErrors: true,
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -101,10 +102,8 @@ module.exports = {
       },
     ],
   },
-  devtool: 'source-map',
   plugins: [
     new LodashModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new ManifestPlugin({
       fileName: "scripts.json",
       filter: ({isInitial, name}) => (

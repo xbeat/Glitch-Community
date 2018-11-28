@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {Route, Switch, withRouter} from 'react-router-dom';
-import Helmet from 'react-helmet';
 
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
@@ -18,7 +17,7 @@ import {TeamPage, UserPage, TeamOrUserPage} from './team-or-user.jsx';
 import SearchPage from './search.jsx';
 import CategoryPage from './category.jsx';
 import CollectionPage from './collection.jsx';
-import ErrorPage from './error.jsx';
+import NotFoundPage from './404.jsx';
 import SecretPage from './secret.jsx';
 
 /* global EXTERNAL_ROUTES */
@@ -27,15 +26,6 @@ const parse = (search, name) => {
   const params = new URLSearchParams(search);
   return params.get(name);
 };
-
-const NotFoundPage = () => (
-  <>
-    <ErrorPage title="Page Not Found" description="Maybe a typo? Or perhaps it's moved?"/>
-    <Helmet>
-      <title>👻 Page not found</title> {/* eslint-disable-line */}
-    </Helmet>
-  </>
-);
 
 class ExternalPageReloader extends React.Component {
   componentDidMount() {
@@ -102,7 +92,7 @@ const Router = ({api}) => (
         <Route key={route} path={route} render={({location}) => <ExternalPageReloader key={location.key}/>}/>
       ))}
 
-      <Route render={({location}) => <NotFoundPage key={location.key}/>}/>
+      <Route render={({location}) => <NotFoundPage api={api} key={location.key}/>}/>
     </Switch>
   </>
 );

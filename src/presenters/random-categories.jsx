@@ -11,7 +11,6 @@ const Category = ({category, projectCount}) => {
     categoryColor: category.color,
     homepageCollection: true,
     collectionUrl: category.url,
-    projectCount: projectCount,
   };
   return (
     <article className="projects" style={{backgroundColor: category.backgroundColor}}>
@@ -46,21 +45,11 @@ class CategoryLoader extends React.Component {
     super(props);
     this.state = {
       categories: [],
-      categoriesProjectCount: []
+      categoriesProjectCount: {},
     };
   }
   
-  async loadCategoryProjectCount(){
-    this.state.categories.map( ({id}) => {
-      this.props.api.get(`categories/${id}`)
-        .then( ({data}) => {
-          this.state.categoriesProjectCount.push(data.projects.length); 
-          this.setState({categoriesProjectCount: this.state.categoriesProjectCount});
-        });  
-    });
-  }
-  
-  async loadCategories() {
+  async componentDidMount() {
     // The API gives us a json blob with all of the categories, but only
     // the 'projects' field on 3 of them.  If the field is present,
     // then it's an array of projects.
@@ -68,16 +57,18 @@ class CategoryLoader extends React.Component {
     const categoriesWithProjects = data.filter(category => !!category.projects);
     const categories = sampleSize(categoriesWithProjects, 3);
     this.setState({categories});
-    this.loadCategoryProjectCount();
-  }
-  
-  componentDidMount() {
-    this.loadCategories();
+    // Now load each category to see how many projects it has
+    categories.forEach(async ({id}) => {
+      const {data} = await this.props.api.get(`categories/${id}`);
+      this.setState(prevState => ({
+        categoriesProjectCount: {...prevState.categoriesProjectCount, [id]: data.projects.length},
+      }));
+    });
   }
   
   render() {
-    return this.state.categories.map((category, index) => (
-      <Category key={category.id} category={category} projectCount={this.state.categoriesProjectCount[index]}/>
+    return this.state.categories.map(category => (
+      <Category key={category.id} category={category} projectCount={this.state.categoriesProjectCount[category.id]}/>
     ));
   }
 }
