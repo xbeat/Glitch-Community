@@ -24,8 +24,8 @@ import {UserTile} from '../users-list.jsx';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
 
-function syncPageToUrl(owner, url) {
-  history.replaceState(null, null, getLink(owner, url));
+function syncPageToUrl(collection, url) {
+  history.replaceState(null, null, getLink({...collection, url}));
 }
 
 class DeleteCollectionBtn extends React.Component {
@@ -90,7 +90,7 @@ const CollectionPageContents = ({
           
           <EditCollectionNameAndUrl isAuthorized={isAuthorized}
             owner={collection.user.login} name={collection.name} url={collection.url}
-            update={data => updateNameAndUrl(data).then(() => syncPageToUrl(collection.user.login, data.url))}
+            update={data => updateNameAndUrl(data).then(() => syncPageToUrl(collection, data.url))}
           />
           
           <UserTile {...collection.user}/>

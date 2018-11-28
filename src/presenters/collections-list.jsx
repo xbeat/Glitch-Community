@@ -107,8 +107,12 @@ class CreateCollectionButton extends React.Component{
     });
     
     if(data && data.url){
-      console.log(data);
-      const newCollectionUrl = getLink(this.props.currentUser.login, data.url);
+      if (this.props.team) {
+        data.team = this.props.team;
+      } else {
+        data.user = this.props.currentUser;
+      }
+      const newCollectionUrl = getLink(data);
       this.setState({newCollectionUrl, shouldRedirect: true});
       return true;
     }
