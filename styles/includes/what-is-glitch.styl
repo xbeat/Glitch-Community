@@ -90,6 +90,8 @@
           border-bottom-left-radius: 5px
           border-bottom-right-radius: 5px
 
+// > 1080px
+// Calklouts located on right, irregularly stacked; large kiki visible
 @media (min-width: hugeViewport)
   .what-is-glitch
     figure
@@ -112,6 +114,8 @@
           .title
             z-index: 1
 
+// 1080px
+// Callouts located on right of page; small kiki visible
 @media (max-width: hugeViewport)
   .what-is-glitch
     figure
@@ -133,13 +137,15 @@
           margin-left: 10px
         .window
           position: initial
-  
+
+// 900px
+// Callouts located on right of page, stacked; small kiki visible
 @media (max-width: largeViewport)
   .what-is-glitch
     height: 850px
     figure
       width: 95%
-      height: 435px
+      height: 50vw
       .kiki
         &.small
           display: none
@@ -162,7 +168,8 @@
           position: initial
           width: 100%
 
-
+// 670px
+// Callouts should be stacked, large kiki visible
 @media(max-width: mediumViewport)
   .what-is-glitch
     figure
@@ -177,6 +184,7 @@
         margin: 1em 1em 0em 0em
     .callouts
       float: left
+      margin-bottom: 2em
       .callout
         display: flex
         flex-direction: row-reverse
@@ -186,13 +194,14 @@
           .title
             z-index: -1
 
+// 592px
+// Callouts should be stacked, large kiki visible
 @media(max-width: mediumSmallViewport)
   .what-is-glitch
     figure
       margin: 0
       width: 100%
-      max-height: 495px
-      height: 43vh
+      height: 82vw
       .kiki
         &.small
           display: block
@@ -202,6 +211,7 @@
         margin: 1em 0em 0em 0em
     .callouts
       float: left
+      margin-bottom: 2em
       .callout
         display: flex
         flex-direction: row-reverse
@@ -210,7 +220,9 @@
           .title
             z-index: -1
         
-        
+
+// 414px
+// Callouts should be stacked, small kiki visible
 @media(max-width: smallViewport)
   .what-is-glitch
     figure
@@ -226,6 +238,7 @@
         margin: 1em 0
     .callouts
       float: left
+      margin-bottom: 2em
       .callout
         display: flex
         flex-direction: row-reverse
