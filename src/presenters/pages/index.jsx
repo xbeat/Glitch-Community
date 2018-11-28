@@ -40,9 +40,9 @@ class WhatIsGlitch extends React.Component {
   render() {
     const kikiLarge = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-large.svg?1543431809636";
     const kikiSmall = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-small.svg?1543431809839";
-    const discover = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fdiscover-illustration.svg?1543432240516";
-    const remix = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fremix-illustration.svg?1543432194690";
-    const collaborate = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fcollaborate-illustration.svg?1543432203634";
+    const discover = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fexplore-illustration.svg?1543440900540";
+    const remix = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fremix-illustration.svg?1543440869624";
+    const collaborate = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fcollaborate-illustration.svg?1543440869153";
     
     const free = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffree.svg?1499350845981";
     const play = "https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fplay.svg";
@@ -128,15 +128,8 @@ const IndexPage = ({api, user}) => (
   <main>
     {!user.login && <WhatIsGlitch/>}
     
-    {user.login && 
-      <h1 className="headline">
-        <Link to="https://glitch.com">Glitch</Link>{' '}
-        is the friendly community where everyone can discover & create the best stuff on the web
-      </h1>
-    }
-    
-    {!!user.login && <Questions api={api}/>}
     {!!user.projects.length && <RecentProjects api={api}/>}
+    {!!user.login && <Questions api={api}/>}
     <Featured/>
     <RandomCategories api={api}/>
     <Categories/>
