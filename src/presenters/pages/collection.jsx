@@ -107,11 +107,10 @@ const CollectionPageContents = ({
             />
           </div>
           
-          {(isAuthorized && <EditCollectionColor
+          {isAuthorized && <EditCollectionColor
             update={updateColor}
             initialColor={collection.coverColor}
-          />
-          )}
+          />}
           
         </header>
         

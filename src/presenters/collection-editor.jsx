@@ -20,7 +20,8 @@ class CollectionEditor extends React.Component {
       return this.state.user.id === currentUserId;
     }
     if (this.state.team) {
-      return false;
+      const collectionTeamId = this.state.team.id;
+      return this.props.currentUser.teams.some(team => team.id === collectionTeamId);
     }
     return false;
   }
