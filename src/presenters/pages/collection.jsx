@@ -223,25 +223,32 @@ async function getUserIdByLogin(api, userLogin){
 async function loadCollection(api, ownerName, collectionName){
   let collections = [];
   
-  // get userId by login name
-  const userId = await getUserIdByLogin(api, ownerName);
-  if (userId) {
-    // parse through user's collections to find collection that matches the name of the collection
-    const {data} = await api.get(`collections?userId=${userId}`);
+  // get team by url
+  const team = await getOrNull(api, `teams/byUrl/${ownerName}`);
+  if (team) {
+    const {data} = await api.get(`collections?teamId=${team.id}`);
     collections = data;
   } else {
     
-    // get team by url
-    const team = await getOrNull(api, `teams/byUrl/${ownerName}`);
-    if (team) {
-      const {data} = await api.get(`collections?teamId=${team.id}`);
+    // get userId by login name
+    const userId = await getUserIdByLogin(api, ownerName);
+    if (userId) {
+      const {data} = await api.get(`collections?userId=${userId}`);
       collections = data;
     }
   }
   
   // pick out the correct collection, then load the full data
-  const collection = collections.find(c => c.url == collectionName);
-  return collection && getOrNull(api, `collections/${collection.id}`);
+  const collectionMatch = collections.find(c => c.url == collectionName);
+  const collection = collectionMatch && await getOrNull(api, `collections/${collectionMatch.id}`);
+  if (!collection) return null;
+  
+  // inject the full team so we get their projects and members
+  if (team) {
+    collection.team = team;
+  }
+  console.log(collection);
+  return collection;
 }  
 
 const CollectionPage = ({api, ownerName, name, ...props}) => (
