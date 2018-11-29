@@ -127,7 +127,7 @@ const IndexPage = ({api, user}) => (
     
     {!!user.projects.length && <RecentProjects api={api}/>}
     {!!user.login && <Questions api={api}/>}
-    <Featured isAuthorized={!!user.login}/>
+    <Featured isAuthorized={!user.login}/>
     <RandomCategories api={api}/>
     <Categories/>
     <MadeInGlitch/>
