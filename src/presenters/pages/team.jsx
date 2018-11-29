@@ -5,10 +5,12 @@ import Helmet from 'react-helmet';
 import DevToggles from '../includes/dev-toggles';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import TeamEditor from '../team-editor.jsx';
+import {getLink as getCollectionLink} from '../../models/collection';
 import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ErrorBoundary from '../includes/error-boundary';
+import {Link} from '../includes/link';
 
 import SampleTeamCollections from '../../curated/sample-team-collections.jsx';
 import {CreateCollectionButton} from '../collections-list';
@@ -204,7 +206,13 @@ class TeamPage extends React.Component {
                 
                 <CreateCollectionButton api={this.props.api} currentUser={this.props.currentUser} team={this.props.team}/>
 
-                <SampleTeamCollections/>
+                {this.props.team.collections.length ? (
+                  <ul>
+                    {this.props.team.collections.map(collection => (
+                      <li key={collection.id}><Link to={getCollectionLink({...collection, team: this.props.team})}>{collection.name}</Link></li>
+                    ))}
+                  </ul>
+                ) : <SampleTeamCollections/>}
               </article>
             </section>
           )}
