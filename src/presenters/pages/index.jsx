@@ -41,11 +41,13 @@ class WhatIsGlitch extends React.Component {
     const kikiLarge = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-large.svg?1543431809636";
     const kikiSmall = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-small.svg?1543431809839";
     
-   
-    
     const discoverNB = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fexplore-illustration-nb.svg?1543507543509";
     const remixNB = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fremix-illustration-nb.svg?1543507543345";
     const collaborateNB = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fcollaborate-illustration-nb.svg?1543507543165";
+    
+    const discoverPastel = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fexplore-illustration.svg?1543508598659";
+    const remixPastel = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fremix-illustration.svg?1543508529783";
+    const collaboratePastel = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fcollaborate-illustration.svg?1543508686482";
     
     const play = "https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fplay.svg";
     const whatsGlitchAlt = "Glitch is the friendly community for building the app of your dreams";
@@ -68,12 +70,11 @@ class WhatIsGlitch extends React.Component {
           <div className="callouts">
             
             <div className="callout discover">
-              <img className="badge" src={discoverNB} alt="discover">
+              <img className="badge" src={discoverPastel} alt="discover">
               </img>
               <div className="window">
                 <div className="title">
-                  Explore 
-                  <Dots/>
+                  Explore Apps
                 </div>
                 <div className="description">
                   Discover over a million free apps built by our community
@@ -82,26 +83,24 @@ class WhatIsGlitch extends React.Component {
             </div>
             
             <div className="callout remix">
-              <img className="badge" src={remixNB} alt="remix">
+              <img className="badge" src={remixPastel} alt="remix">
               </img>
               <div className="window">
                 <div className="title">
-                  Remix
-                  <Dots/>
+                  Remix Anything
                 </div>
                 <div className="description">
-                  Remix anything you find and edit it to make it your own
+                  Edit any project and make it your own
                 </div>
               </div>
             </div>
             
             <div className="callout collaborate">
-              <img className="badge" src={collaborateNB} alt="collaborate">
+              <img className="badge" src={collaboratePastel} alt="collaborate">
               </img>
               <div className="window">
                 <div className="title">
-                  Collaborate
-                  <Dots/>
+                  Build with your team
                 </div>
                 <div className="description">
                   Invite your whole team to build projects together
