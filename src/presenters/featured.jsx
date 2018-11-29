@@ -56,10 +56,11 @@ FeaturedPanel.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-const Featured = ({embedHtml, featured}) => (
+const Featured = ({embedHtml, featured, userLogin}) => (
   <section className="featured featured-collections">
     <h2>Check These Out</h2>
     <div className="community-pick-embed-container">
+      { userLogin &&  <img className="witch" src={imgWitch} width="110px" height="82px" alt=""/> }
       <span dangerouslySetInnerHTML={{__html: embedHtml}}/>
     </div>
     
@@ -79,6 +80,7 @@ const Featured = ({embedHtml, featured}) => (
 Featured.propTypes = {
   embedHtml: PropTypes.string.isRequired,
   featured: PropTypes.array.isRequired,
+  userLogin: PropTypes.boolean
 };
 
 const FeaturedContainer = () => (

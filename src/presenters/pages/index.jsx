@@ -41,10 +41,6 @@ class WhatIsGlitch extends React.Component {
     const kikiLarge = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-large.svg?1543431809636";
     const kikiSmall = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-small.svg?1543431809839";
     
-    const discoverNB = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fexplore-illustration-nb.svg?1543507543509";
-    const remixNB = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fremix-illustration-nb.svg?1543507543345";
-    const collaborateNB = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fcollaborate-illustration-nb.svg?1543507543165";
-    
     const discoverPastel = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fexplore-illustration.svg?1543508598659";
     const remixPastel = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fremix-illustration.svg?1543508529783";
     const collaboratePastel = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fcollaborate-illustration.svg?1543508686482";
@@ -131,7 +127,7 @@ const IndexPage = ({api, user}) => (
     
     {!!user.projects.length && <RecentProjects api={api}/>}
     {!!user.login && <Questions api={api}/>}
-    <Featured/>
+    <Featured loggedIn={user.login}/>
     <RandomCategories api={api}/>
     <Categories/>
     <MadeInGlitch/>
