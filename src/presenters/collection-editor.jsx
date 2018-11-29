@@ -78,17 +78,17 @@ CollectionEditor.propTypes = {
 const CollectionEditorContainer = ({api, children, initialCollection}) => (
   <ErrorHandlers>
     {errorFuncs => (
-      <CurrentUserConsumer>
-        {(currentUser) => (
-          <DevToggles>
-            {enabledToggles => (
+      <DevToggles>
+        {enabledToggles => (
+          <CurrentUserConsumer>
+            {(currentUser) => (
               <CollectionEditor {...{api, currentUser, initialCollection}} {...errorFuncs} teamsEnabled={enabledToggles.includes('Team Collections')}>
                 {children}
               </CollectionEditor>
             )}
-          </DevToggles>
+          </CurrentUserConsumer>
         )}
-      </CurrentUserConsumer>
+      </DevToggles>
     )}
   </ErrorHandlers>
 );
