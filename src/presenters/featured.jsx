@@ -85,8 +85,12 @@ Featured.propTypes = {
   isAuthorized: PropTypes.bool,
 };
 
-const FeaturedContainer = () => (
-  <Featured embedHtml={EmbedHtml} featured={FeaturedItems}/>
+const FeaturedContainer = ({isAuthorized}) => (
+  <Featured embedHtml={EmbedHtml} featured={FeaturedItems} isAuthorized={isAuthorized}/>
 );
+
+FeaturedContainer.propTypes = {
+  isAuthorized: PropTypes.bool,
+};
 
 export default FeaturedContainer;

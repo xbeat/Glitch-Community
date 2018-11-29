@@ -20,16 +20,6 @@ function loadScript(src) {
   script.async = true;
   document.head.appendChild(script);
 }
-
-
-const Dots = () => (
-  <div className="dots">
-    <div className="dot green"></div>
-    <div className="dot yellow"></div>
-    <div className="dot red"></div>
-  </div>
-);
-
   
 class WhatIsGlitch extends React.Component {
   componentDidMount() {
@@ -127,7 +117,7 @@ const IndexPage = ({api, user}) => (
     
     {!!user.projects.length && <RecentProjects api={api}/>}
     {!!user.login && <Questions api={api}/>}
-    <Featured isAuthorized={!user.login}/>
+    <Featured isAuthorized={!!user.login}/>
     <RandomCategories api={api}/>
     <Categories/>
     <MadeInGlitch/>
