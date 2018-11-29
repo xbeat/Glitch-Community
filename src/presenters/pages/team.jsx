@@ -156,15 +156,6 @@ class TeamPage extends React.Component {
           />
         </ErrorBoundary>
         
-        { (this.props.team.projects.length === 0 && this.props.currentUserIsOnTeam) &&
-          <aside className="inline-banners add-project-to-empty-team-banner">
-            <div className="description-container">
-              <img className="project-pals" src="https://cdn.glitch.com/02ae6077-549b-429d-85bc-682e0e3ced5c%2Fcollaborate.svg?1540583258925" alt="" />
-              <div className="description">Add projects to share them with your team</div>
-            </div>
-          </aside>
-        }
-        
         <EntityPagePinnedProjects
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
@@ -192,6 +183,15 @@ class TeamPage extends React.Component {
           }}
           api={this.props.api}
         />
+        
+        { (this.props.team.projects.length === 0 && this.props.currentUserIsOnTeam) &&
+          <aside className="inline-banners add-project-to-empty-team-banner">
+            <div className="description-container">
+              <img className="project-pals" src="https://cdn.glitch.com/02ae6077-549b-429d-85bc-682e0e3ced5c%2Fcollaborate.svg?1540583258925" alt="" />
+              <div className="description">Add projects to share them with your team</div>
+            </div>
+          </aside>
+        }
         
         {/* TEAM COLLECTIONS */}
         <DevToggles>
