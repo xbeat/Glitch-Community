@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Make Your Own Magic Eye Image',
+    title: 'Make Your Own Magic Eye Art',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmagic-eye_GLITCH.png?1543234498314",
-    link: 'https://glitch.com/~conways-webcam'
+    link: 'https://glitch.com/~magic-eye'
   },{
-    title: 'Make a Simple Poll',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpoller_GLITCH.png?1543234498656",
-    link: 'https://poller.glitch.me/'
+    title: 'The Library of Time',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Flibrary-of-time_GLITCH.png?1543234498419",
+    link: 'https://glitch.com/~library-of-time'
   },{
-    title: 'But First, Let Me Take A Selfie',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmouse-photobooth_GLITCH.png?1543234498859",
-    link: 'https://mouse-photobooth.glitch.me/'
+    title: 'Compose Music with Magenta.js',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fhello-magenta_GLITCHa.png?1543234498185",
+    link: 'https://glitch.com/~hello-magenta'
   }  
 ];
