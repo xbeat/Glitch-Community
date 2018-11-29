@@ -13,8 +13,8 @@ Example:
 
 export default [
   {
-    title: 'Conway\'s Webcam of Life',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fconways-webcam_GLITCH.png?1543234498768",
+    title: 'Make Your Own Magic Eye Image',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmagic-eye_GLITCH.png?1543234498314",
     link: 'https://glitch.com/~conways-webcam'
   },{
     title: 'Make a Simple Poll',
