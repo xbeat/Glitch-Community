@@ -6,6 +6,8 @@ import EmbedHtml from '../curated/embed';
 import FeaturedItems from '../curated/featured';
 import Link from './includes/link.jsx';
 
+const imgWitch = 'https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2Fwitch-2.svg?1521578927355';
+
 class ZineItems extends React.Component {
   constructor(props) {
     super(props);
@@ -56,11 +58,11 @@ FeaturedPanel.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-const Featured = ({embedHtml, featured, userLogin}) => (
+const Featured = ({embedHtml, featured, isAuthorized}) => (
   <section className="featured featured-collections">
     <h2>Check These Out</h2>
     <div className="community-pick-embed-container">
-      { userLogin &&  <img className="witch" src={imgWitch} width="110px" height="82px" alt=""/> }
+      { isAuthorized &&  <img className="witch" src={imgWitch} width="110px" height="82px" alt=""/> }
       <span dangerouslySetInnerHTML={{__html: embedHtml}}/>
     </div>
     
@@ -80,7 +82,7 @@ const Featured = ({embedHtml, featured, userLogin}) => (
 Featured.propTypes = {
   embedHtml: PropTypes.string.isRequired,
   featured: PropTypes.array.isRequired,
-  userLogin: PropTypes.boolean
+  isAuthorized: PropTypes.boolean,
 };
 
 const FeaturedContainer = () => (
