@@ -28,12 +28,12 @@ class WhatIsGlitch extends React.Component {
   }
   
   render() {
-    const kikiLarge = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-large.svg?1543590459346";
-    const kikiSmall = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-small.svg?1543590459567";
+    const witchLarge = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-witch-large.svg?1543601336652";
+    const witchSmall = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-witch-small.svg?1543601337021";
     
-    const discoverPastel = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fexplore-illustration.svg?1543508598659";
-    const remixPastel = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fremix-illustration.svg?1543508529783";
-    const collaboratePastel = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fcollaborate-illustration.svg?1543508686482";
+    const discover = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fexplore-illustration.svg?1543508598659";
+    const remix = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fremix-illustration.svg?1543508529783";
+    const collaborate = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fcollaborate-illustration.svg?1543508686482";
     
     const play = "https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fplay.svg";
     const whatsGlitchAlt = "Glitch is the friendly community for building the app of your dreams";
@@ -42,8 +42,8 @@ class WhatIsGlitch extends React.Component {
       <section className="what-is-glitch">
         <span>
           <figure title="Glitch">
-            <img className="kiki large" src={kikiLarge} alt={whatsGlitchAlt}/>
-            <img className="kiki small" src={kikiSmall} alt={whatsGlitchAlt}/>
+            <img className="witch large" src={witchLarge} alt={whatsGlitchAlt}/>
+            <img className="witch small" src={witchSmall} alt={whatsGlitchAlt}/>
             
             <OverlayVideo>
               <div className="button video">
@@ -56,7 +56,7 @@ class WhatIsGlitch extends React.Component {
           <div className="callouts">
             
             <div className="callout discover">
-              <img className="badge" src={discoverPastel} alt="discover">
+              <img className="badge" src={discover} alt="discover">
               </img>
               <div className="window">
                 <div className="title">
@@ -69,7 +69,7 @@ class WhatIsGlitch extends React.Component {
             </div>
             
             <div className="callout remix">
-              <img className="badge" src={remixPastel} alt="remix">
+              <img className="badge" src={remix} alt="remix">
               </img>
               <div className="window">
                 <div className="title">
@@ -82,7 +82,7 @@ class WhatIsGlitch extends React.Component {
             </div>
             
             <div className="callout collaborate">
-              <img className="badge" src={collaboratePastel} alt="collaborate">
+              <img className="badge" src={collaborate} alt="collaborate">
               </img>
               <div className="window">
                 <div className="title">
