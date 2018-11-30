@@ -63,7 +63,7 @@ class WhatIsGlitch extends React.Component {
                   Explore Apps
                 </div>
                 <div className="description">
-                  Discover over a million free apps built by our community
+                  Discover over a million free apps built by people like you
                 </div>
               </div>
             </div>
@@ -76,7 +76,7 @@ class WhatIsGlitch extends React.Component {
                   Remix Anything
                 </div>
                 <div className="description">
-                  Edit any project and make it your own
+                  Edit any project and have your own app running instantly
                 </div>
               </div>
             </div>
@@ -89,7 +89,7 @@ class WhatIsGlitch extends React.Component {
                   Build with your team
                 </div>
                 <div className="description">
-                  Invite your whole team to build projects together
+                  Invite everyone to create together
                 </div>
               </div>
             </div>
