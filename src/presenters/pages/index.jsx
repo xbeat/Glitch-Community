@@ -28,8 +28,8 @@ class WhatIsGlitch extends React.Component {
   }
   
   render() {
-    const kikiLarge = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-large.svg?1543431809636";
-    const kikiSmall = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-small.svg?1543431809839";
+    const kikiLarge = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-large.svg?1543590459346";
+    const kikiSmall = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fglitch-kiki-small.svg?1543590459567";
     
     const discoverPastel = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fexplore-illustration.svg?1543508598659";
     const remixPastel = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fremix-illustration.svg?1543508529783";
