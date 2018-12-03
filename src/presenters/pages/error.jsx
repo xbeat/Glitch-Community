@@ -27,10 +27,6 @@ ErrorPage.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-
-
-
-
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
 
 export const NotFoundPage = ({api}) => (
@@ -53,20 +49,18 @@ NotFoundPage.propTypes = {
   api: PropTypes.func.isRequired,
 };
 
+const emailImageUrl = 'https://cdn.glitch.com/26ac422d-705d-42be-b9cb-1fbdfe7e5a63%2Ferror-mailer.svg?1543429767321';
 
-
-const emailUrl = 'https://cdn.glitch.com/26ac422d-705d-42be-b9cb-1fbdfe7e5a63%2Ferror-mailer.svg?1543429767321';
-
-export const EmailErrorPage = ({api}) => (
+export const EmailErrorPage = ({api, title, description}) => (
   <Layout api={api}>
     <Helmet>
       <title>✉️ Email Login Problem</title> {/* eslint-disable-line */}
     </Helmet>
     <main className="error-page-container">
-      <img className="error-image" src={emailUrl} alt="" width="318px" height="297px" />
+      <img className="error-image email-error-image" src={emailImageUrl} alt="" width="318px" height="297px" />
       <div className="error-msg">
-        <h1>Page Not Found</h1>
-        <p>Maybe a typo, or perhaps it's moved?</p>
+        <h1>{title}</h1>
+        <p>{description}</p>
         <a className="button button-link" href="/">Back to Glitch</a>
       </div>
     </main>
