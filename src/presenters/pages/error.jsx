@@ -6,7 +6,7 @@ import Layout from '../layout';
 
 const logo = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcarp.svg";
 
-const ErrorPage = ({title, description}) => (
+const ErrorPage = ({title, description}) => ( 
   <div className="content error-page">
     <Helmet>
       <title>{title}</title>
