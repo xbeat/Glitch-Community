@@ -41,20 +41,19 @@ class WhatIsGlitch extends React.Component {
     return (
       <section className="what-is-glitch">
         <span>
-          <figure title="Glitch">
+          <figure>
             <img className="witch large" src={witchLarge} alt={whatsGlitchAlt}/>
             <img className="witch small" src={witchSmall} alt={whatsGlitchAlt}/>
             
             <OverlayVideo>
               <div className="button video">
-                <img className="play-button" src={play} alt="play"/>
+                <img className="play-button" src={play} alt="How it works"/>
                 <span>How it works</span>
               </div>
             </OverlayVideo>
           </figure>
           
           <div className="callouts">
-            
             <div className="callout discover">
               <img className="badge" src={discover} alt="discover">
               </img>
