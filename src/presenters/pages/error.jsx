@@ -4,29 +4,6 @@ import PropTypes from 'prop-types';
 import {Helmet} from 'react-helmet';
 import Layout from '../layout';
 
-const logo = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fcarp.svg";
-
-const ErrorPage = ({title, description}) => ( 
-  <div className="content error-page">
-    <Helmet>
-      <title>{title}</title>
-    </Helmet>
-    <div className="container">
-      <h1>{title}</h1>
-      <h2>{description}</h2>
-      <div className="actions">
-        <a href="/"> {/* This is not a Link so it does a full reload */}
-          <img src={logo} width="80px" height="66px" alt="Glitch"/>
-        </a>
-      </div>
-    </div>
-  </div>
-);
-ErrorPage.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-};
-
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
 
 export const NotFoundPage = ({api}) => (
