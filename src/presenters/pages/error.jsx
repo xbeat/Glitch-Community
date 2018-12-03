@@ -27,13 +27,13 @@ ErrorPage.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-export default ErrorPage;
+
 
 
 
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
 
-const NotFoundPage = ({api}) => (
+export const NotFoundPage = ({api}) => (
   <Layout api={api}>
     <Helmet>
       <title>👻 Page not found</title> {/* eslint-disable-line */}
@@ -53,12 +53,11 @@ NotFoundPage.propTypes = {
   api: PropTypes.func.isRequired,
 };
 
-export default NotFoundPage;
 
 
 const emailUrl = 'https://cdn.glitch.com/26ac422d-705d-42be-b9cb-1fbdfe7e5a63%2Ferror-mailer.svg?1543429767321';
 
-const EmailErrorPage = ({api}) => (
+export const EmailErrorPage = ({api}) => (
   <Layout api={api}>
     <Helmet>
       <title>✉️ Email Login Problem</title> {/* eslint-disable-line */}
@@ -74,8 +73,6 @@ const EmailErrorPage = ({api}) => (
   </Layout>
 );
 
-NotFoundPage.propTypes = {
+EmailErrorPage.propTypes = {
   api: PropTypes.func.isRequired,
 };
-
-export default NotFoundPage;

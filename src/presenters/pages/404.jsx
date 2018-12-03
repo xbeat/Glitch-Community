@@ -26,4 +26,3 @@ NotFoundPage.propTypes = {
   api: PropTypes.func.isRequired,
 };
 
-export default NotFoundPage;

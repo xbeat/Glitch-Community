@@ -17,7 +17,7 @@ import {TeamPage, UserPage, TeamOrUserPage} from './team-or-user.jsx';
 import SearchPage from './search.jsx';
 import CategoryPage from './category.jsx';
 import CollectionPage from './collection.jsx';
-import NotFoundPage from './404.jsx';
+import {NotFoundPage} from './error.jsx';
 import SecretPage from './secret.jsx';
 
 const parse = (search, name) => {
