@@ -31,7 +31,7 @@ const emailImageUrl = 'https://cdn.glitch.com/26ac422d-705d-42be-b9cb-1fbdfe7e5a
 export const EmailErrorPage = ({api, title, description}) => (
   <Layout api={api}>
     <Helmet>
-      <title>✉️ Email Login Problem</title> {/* eslint-disable-line */}
+      <title>✉️ {title}</title> {/* eslint-disable-line */}
     </Helmet>
     <main className="error-page-container">
       <img className="error-image email-error-image" src={emailImageUrl} alt="" width="470px"/>
