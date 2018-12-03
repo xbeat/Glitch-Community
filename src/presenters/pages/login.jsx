@@ -50,7 +50,7 @@ class LoginPage extends React.Component {
       return <Redirect to={this.props.hash ? `/#${this.props.hash}` : '/'}/>;
     } else if (this.state.error) {
       const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
-      return <EmailErrorPage title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
+      return <EmailErrorPage api={api} title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
     }
     return <div className="content"></div>;
   }

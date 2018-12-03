@@ -34,7 +34,7 @@ export const EmailErrorPage = ({api, title, description}) => (
       <title>✉️ Email Login Problem</title> {/* eslint-disable-line */}
     </Helmet>
     <main className="error-page-container">
-      <img className="error-image email-error-image" src={emailImageUrl} alt="" width="318px" height="297px" />
+      <img className="error-image email-error-image" src={emailImageUrl} alt="" width="470px"/>
       <div className="error-msg">
         <h1>{title}</h1>
         <p>{description}</p>
@@ -46,4 +46,6 @@ export const EmailErrorPage = ({api, title, description}) => (
 
 EmailErrorPage.propTypes = {
   api: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
 };
