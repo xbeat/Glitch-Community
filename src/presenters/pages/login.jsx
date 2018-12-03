@@ -6,7 +6,7 @@ import {captureMessage} from '../../utils/sentry';
 
 import {Redirect} from 'react-router-dom';
 import {CurrentUserConsumer} from '../current-user.jsx';
-import ErrorPage from './error.jsx';
+import {ErrorPage} from './error.jsx';
 
 class LoginPage extends React.Component {
   constructor(props) {
