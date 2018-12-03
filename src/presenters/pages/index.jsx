@@ -20,6 +20,22 @@ function loadScript(src) {
   script.async = true;
   document.head.appendChild(script);
 }
+
+const Callout = ({classes, imgUrl, title, description}) => (
+  <div className={"callout " + classes}>
+    <img className="badge" src={imgUrl} alt={title}></img>  
+    <div className="window">
+      <div className="title">{title}</div>
+      <div className="description">{description}</div>
+    </div>
+  </div>
+);
+Callout.propTypes = {
+  classes: PropTypes.string,
+  imgUrl: PropTypes.string,
+  title: PropTypes.string,
+  description: PropTypes.string,
+};
   
 class WhatIsGlitch extends React.Component {
   componentDidMount() {
@@ -36,7 +52,7 @@ class WhatIsGlitch extends React.Component {
     const collaborate = "https://cdn.glitch.com/a67e7e84-c063-4c8e-a7fc-f4c7ab86186f%2Fcollaborate-illustration.svg?1543508686482";
     
     const play = "https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fplay.svg";
-    const whatsGlitchAlt = "Glitch is the friendly community for building the app of your dreams";
+    const whatsGlitchAlt = "Glitch is the friendly community where you'll find the app of your dreams";
     
     return (
       <section className="what-is-glitch">
@@ -54,46 +70,9 @@ class WhatIsGlitch extends React.Component {
           </figure>
           
           <div className="callouts">
-            <div className="callout discover">
-              <img className="badge" src={discover} alt="discover">
-              </img>
-              <div className="window">
-                <div className="title">
-                  Explore Apps
-                </div>
-                <div className="description">
-                  Discover over a million free apps built by people like you
-                </div>
-              </div>
-            </div>
-            
-            <div className="callout remix">
-              <img className="badge" src={remix} alt="remix">
-              </img>
-              <div className="window">
-                <div className="title">
-                  Remix Anything
-                </div>
-                <div className="description">
-                  Edit any project and have your own app running instantly
-                </div>
-              </div>
-            </div>
-            
-            <div className="callout collaborate">
-              <img className="badge" src={collaborate} alt="collaborate">
-              </img>
-              <div className="window">
-                <div className="title">
-                  Build with your team
-                </div>
-                <div className="description">
-                  Invite everyone to create together
-                </div>
-              </div>
-            </div>
-            
-          </div>
+            <Callout classes="discover" imgUrl={discover} title="Explore Apps" description="Discover over a million free apps built by people like you"/>
+            <Callout classes="remix" imgUrl={remix} title="Remix Anything" description="Edit any project and have your own app running instantly"/>
+            <Callout classes="collaborate" imgUrl={collaborate} title="Build with Your Team" description="Invite everyone to create together"/>          </div>
               
         </span>
       </section>
