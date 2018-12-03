@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Make Your Own Magic Eye Art',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmagic-eye_GLITCH.png?1543234498314",
-    link: 'https://glitch.com/~magic-eye'
+    title: 'Vera Molnár in Audio Form',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_hearing-vera-molnar.png?1543839845270",
+    link: 'https://glitch.com/~hearing-vera-molnar'
   },{
-    title: 'The Library of Time',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Flibrary-of-time_GLITCH.png?1543234498419",
-    link: 'https://glitch.com/~library-of-time'
+    title: 'Handsfree.js Starter Kit',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_handsfree-starter.png?1543839845139",
+    link: 'https://glitch.com/~handsfree-starter'
   },{
-    title: 'Compose Music with Magenta.js',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fhello-magenta_GLITCHa.png?1543234498185",
-    link: 'https://glitch.com/~hello-magenta'
+    title: 'Generate Circle Chord Patterns',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_chord-machine.png?1543839845017",
+    link: 'https://glitch.com/~chordmachine'
   }  
 ];
