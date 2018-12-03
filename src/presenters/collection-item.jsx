@@ -8,7 +8,7 @@ import CollectionAvatar from './includes/collection-avatar.jsx';
 
 import {getAvatarUrl} from '../models/project.js';
 
-import {getContrastTextColor, hexToRgbA} from '../models/collection.js';
+import {getContrastTextColor, getLink, hexToRgbA} from '../models/collection.js';
 
 const ProjectsPreview = ({projects}) => {
   
@@ -48,7 +48,7 @@ class CollectionItem extends React.Component{
         )}
 
         {(collection &&
-          <Link to={`/@${userLogin}/${collection.url}`}>
+          <Link to={getLink(collection)}>
             <div className="collection"
               id={"collection-" + collection.id}>
               <div className="collection-container">
