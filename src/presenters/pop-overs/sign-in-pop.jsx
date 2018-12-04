@@ -32,22 +32,6 @@ const SignInPopButton = (props) => (
   </Link>
 );
 
-const jankyEmailPrompt = async (api) => {
-  const email = window.prompt("We'll send you a login link.\n\nWhat's your email address?");
-  if(!email) {
-    // blank or cancelled.
-    return;
-  }
-
-  try {
-    await api.post('/email/sendLoginEmail', {emailAddress:email});
-    alert("Please check your email at " + email);
-  } catch (error) {
-    console.error(error);
-    alert("Something went wrong; email not sent.");
-  }
-};
-
 class EmailHandler extends React.Component {
   constructor(props) {
     super(props);
@@ -62,10 +46,10 @@ class EmailHandler extends React.Component {
     this.setState({email: e.target.value});
   }
   
-  async onSubmit(e, api) {
+  async onSubmit(e) {
     e.preventDefault();
     try {
-      await api.post('/email/sendLoginEmail', {emailAddress:this.state.email});
+      await this.props.api.post('/email/sendLoginEmail', {emailAddress:this.state.email});
       alert("Please check your email at " + this.state.email);
     } catch (error) {
       console.error(error);
