@@ -48,6 +48,15 @@ const jankyEmailPrompt = async (api) => {
   }
 };
 
+class EmailHandler extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: ''
+    };
+  }
+}
+
 const EmailSignInButton = ({api, onClick}) => (
   <button style={{marginTop: 10}} className="button-small button-link has-emoji" onClick={() => { onClick(); jankyEmailPrompt(api); }}>
     Email Sign In <span aria-label="" role="img">📧</span>
@@ -83,7 +92,7 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
               <section className="pop-over-actions last-section">
                 Sign in with email
                 <form>
-                  <input className="pop-over-input" type="email" placeholder="new@user.com"></input>
+                  <input value={this.state.input} className="pop-over-input" type="email" placeholder="new@user.com"></input>
                   <EmailSignInButton api={api} onClick={onClick}/>
                 </form>
               </section>
