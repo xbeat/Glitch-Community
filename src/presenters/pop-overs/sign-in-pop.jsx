@@ -54,13 +54,23 @@ class EmailHandler extends React.Component {
     this.state = {
       email: ''
     };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
   
-  onSubmit(e) {
-    e.preventDefault();
-    console.log(e.target.value);
+  onChange(e) {
     this.setState({email: e.target.value});
-    console.log(this.state.email);
+  }
+  
+  async onSubmit(e, api) {
+    e.preventDefault();
+    try {
+      await api.post('/email/sendLoginEmail', {emailAddress:this.state.email});
+      alert("Please check your email at " + this.state.email);
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong; email not sent.");
+    }
   }
   
   render() {
@@ -68,7 +78,7 @@ class EmailHandler extends React.Component {
       <section className="pop-over-actions last-section">
         Sign in with email
         <form onSubmit={(e) => this.onSubmit(e)}>
-          <input className="pop-over-input" type="email" placeholder="new@user.com"></input>
+          <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
           <EmailSignInButton/>
         </form>
       </section>
@@ -103,7 +113,7 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
           </section>
           <DevToggles>
             {(enabledToggles) => (
-              enabledToggles.includes("Email Login") && <EmailHandler/>
+              enabledToggles.includes("Email Login") && <EmailHandler api={api} />
             )}
           </DevToggles>
         </div>
