@@ -78,7 +78,15 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
             <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
             <DevToggles>
               {(enabledToggles) => (
-                enabledToggles.includes("Email Login") && <EmailSignInButton api={api} onClick={onClick}/>
+                enabledToggles.includes("Email Login") && 
+                <>
+                  <hr/>
+                  <div>
+                    Sign in with email
+                    <input type="email"></input>
+                  </div>
+                  <EmailSignInButton api={api} onClick={onClick}/>
+                </>
               )}
             </DevToggles>
           </section>
