@@ -51,24 +51,29 @@ const jankyEmailPrompt = async (api) => {
 class EmailHandler extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      email: ''
+    };
+  }
+  
+  onSubmit(e) {
+    e.preventDefault();
+    console.log(e.target.value);
+    this.setState({email: e.target.value});
+    console.log(this.state.email);
   }
   
   render() {
     return (
       <section className="pop-over-actions last-section">
         Sign in with email
-        <form>
+        <form onSubmit={(e) => this.onSubmit(e)}>
           <input className="pop-over-input" type="email" placeholder="new@user.com"></input>
           <EmailSignInButton/>
         </form>
       </section>
     );
   }
-  
-
-  // console.log(api);
-  // console.log(this.inputNode.value);
 }
 
 const EmailSignInButton = () => (
