@@ -22,7 +22,7 @@
     "c3": "^0.6.10",
     "compression": "^1.7.3",
     "css-loader": "^1.0.1",
-    "d3-array": "^1.2.4",
+    "d3-array": "^2.0.2",
     "details-element-polyfill": "^2.0.4",
     "ejs": "^2.6.1",
     "email-addresses": "^3.0.3",
