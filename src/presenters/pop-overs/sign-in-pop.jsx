@@ -49,7 +49,7 @@ const jankyEmailPrompt = async (api) => {
 };
 
 const EmailSignInButton = ({api, onClick}) => (
-  <button className="button-small button-link has-emoji" onClick={() => { onClick(); jankyEmailPrompt(api); }}>
+  <button style={{marginTop: 10}} className="button-small button-link has-emoji" onClick={() => { onClick(); jankyEmailPrompt(api); }}>
     Email Sign In <span aria-label="" role="img">📧</span>
   </button>
 );
