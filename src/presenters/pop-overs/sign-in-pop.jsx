@@ -50,7 +50,7 @@ const jankyEmailPrompt = async (api) => {
 
 const EmailSignInButton = ({api, onClick}) => (
   <button className="button-small button-link has-emoji" onClick={() => { onClick(); jankyEmailPrompt(api); }}>
-    Sign in with Email <span aria-label="" role="img">📧</span>
+    Email Sign In <span aria-label="" role="img">📧</span>
   </button>
 );
 
@@ -72,24 +72,23 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
       return (
         <div className="pop-over sign-in-pop">
           {header}
-          <section className="pop-over-actions last-section">
+          <section className="pop-over-actions first-section">
             {prompt}
             <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
             <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
-            <DevToggles>
-              {(enabledToggles) => (
-                enabledToggles.includes("Email Login") && 
-                <>
-                  <hr/>
-                  <div>
-                    Sign in with email
-                    <input type="email"></input>
-                  </div>
-                  <EmailSignInButton api={api} onClick={onClick}/>
-                </>
-              )}
-            </DevToggles>
           </section>
+          <DevToggles>
+            {(enabledToggles) => (
+              enabledToggles.includes("Email Login") && 
+              <section className="pop-over-actions last-section">
+                <div>
+                  Sign in with email
+                  <input type="email"></input>
+                </div>
+                <EmailSignInButton api={api} onClick={onClick}/>
+              </section>
+            )}
+          </DevToggles>
         </div>
       );
     }}
