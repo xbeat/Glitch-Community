@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {CurrentUserConsumer} from '../current-user.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 
-export default class AddTeamProjectPop extends React.Component {
+export class AddTeamProjectPop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -191,3 +192,11 @@ AddTeamProjectPop.propTypes = {
   togglePopover: PropTypes.func.isRequired,
   api: PropTypes.any.isRequired
 };
+
+const AddTeamProjectPopContainer = (props) => (
+  <CurrentUserConsumer>
+    {currentUser => <AddTeamProjectPop myProjects={currentUser.projects} {...props}/>}
+  </CurrentUserConsumer>
+);
+
+export default AddTeamProjectPopContainer;
