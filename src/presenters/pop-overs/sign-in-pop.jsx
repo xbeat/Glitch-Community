@@ -81,11 +81,11 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
             {(enabledToggles) => (
               enabledToggles.includes("Email Login") && 
               <section className="pop-over-actions last-section">
-                <div>
-                  Sign in with email
+                Sign in with email
+                <form>
                   <input className="pop-over-input" type="email" placeholder="new@user.com"></input>
-                </div>
-                <EmailSignInButton api={api} onClick={onClick}/>
+                  <EmailSignInButton api={api} onClick={onClick}/>
+                </form>
               </section>
             )}
           </DevToggles>
