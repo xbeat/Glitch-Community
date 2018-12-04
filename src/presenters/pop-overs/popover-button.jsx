@@ -1,3 +1,5 @@
+import React from 'react';
+
 const PopoverButton = ({onClick, text, emoji}) => (
   <button className="button-small has-emoji button-tertiary" onClick={onClick}>
     <span>{text} </span>
