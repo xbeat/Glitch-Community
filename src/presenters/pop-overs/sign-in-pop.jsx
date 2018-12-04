@@ -48,19 +48,17 @@ const jankyEmailPrompt = async (api) => {
   }
 };
 
-const EmailHandler = async (e) => {
+const EmailHandler = async (e, {api}) => {
+  e.preventDefault();
+  console.log(api);
   console.log(this.inputNode.value);
 };
 
-const EmailSignInButton = ({api, onClick}) => (
-  <button style={{marginTop: 10}} className="button-small button-link has-emoji" onClick={() => { onClick(); jankyEmailPrompt(api); }}>
+const EmailSignInButton = () => (
+  <button style={{marginTop: 10}} className="button-small button-link has-emoji" >
     Email Sign In <span aria-label="" role="img">📧</span>
   </button>
 );
-
-EmailSignInButton.propTypes = {
-  api: PropTypes.func.isRequired,
-};
 
 const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
   <LocalStorage name="destinationAfterAuth">
@@ -86,9 +84,9 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
               enabledToggles.includes("Email Login") && 
               <section className="pop-over-actions last-section">
                 Sign in with email
-                <form onSubmit={EmailHandler}>
+                <form onSubmit={EmailHandler} api={api}>
                   <input className="pop-over-input" type="email" placeholder="new@user.com"></input>
-                  <EmailSignInButton api={api} />
+                  <EmailSignInButton/>
                 </form>
               </section>
             )}
