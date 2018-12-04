@@ -192,11 +192,3 @@ AddTeamProjectPop.propTypes = {
   togglePopover: PropTypes.func.isRequired,
   api: PropTypes.any.isRequired
 };
-
-const AddTeamProjectPopContainer = (props) => (
-  <CurrentUserConsumer>
-    {currentUser => <AddTeamProjectPop myProjects={currentUser.projects} {...props}/>}
-  </CurrentUserConsumer>
-);
-
-export default AddTeamProjectPopContainer;
