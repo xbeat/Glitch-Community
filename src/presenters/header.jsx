@@ -3,52 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {Redirect} from 'react-router-dom';
-import moment from 'moment-mini';
-import Link from './includes/link.jsx';
+import Link from './includes/link';
+import Logo from './includes/logo';
 
-import UserOptionsPop from "./pop-overs/user-options-pop.jsx";
-import SignInPop from "./pop-overs/sign-in-pop.jsx";
-import NewProjectPop from "./pop-overs/new-project-pop.jsx";
-import NewStuffContainer from './overlays/new-stuff.jsx';
-import {CurrentUserConsumer} from './current-user.jsx';
+import UserOptionsPop from "./pop-overs/user-options-pop";
+import SignInPop from "./pop-overs/sign-in-pop";
+import NewProjectPop from "./pop-overs/new-project-pop";
+import NewStuffContainer from './overlays/new-stuff';
+import {CurrentUserConsumer} from './current-user';
 
-class Logo extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hour: (new Date()).getHours(),
-    };
-  }
-  
-  componentDidMount() {
-    this.interval = window.setInterval(() => {
-      this.setState({
-        hour: (new Date()).getHours(),
-      });
-    }, moment.duration(5, 'minutes').asMilliseconds());
-  }
-
-  componentWillUnmount() {
-    window.clearInterval(this.interval);
-  }
-
-  render() {
-    const {hour} = this.state;
-    
-    const LOGO_DAY = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg";
-    const LOGO_SUNSET = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-sunset.svg";
-    const LOGO_NIGHT = "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-night.svg";
-
-    let logo = LOGO_DAY;
-    if ((hour >= 16) && (hour <= 18)) {
-      logo = LOGO_SUNSET;
-    } else if ((hour > 18) || (hour <= 8)) {
-      logo = LOGO_NIGHT;
-    }
-
-    return <img className="logo" src={logo} alt="Glitch" />;
-  }
-}
 
 const ResumeCoding = () => (
   <Link className="button button-small button-cta" to={EDITOR_URL} data-track="resume coding">
