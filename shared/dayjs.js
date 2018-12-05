@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+const dayjs = require('dayjs');
+const relativeTime = require('dayjs/plugin/relativeTime');
 
 dayjs.extend(relativeTime);
 
@@ -10,4 +10,4 @@ dayjs.extend((option, dayjsClass, dayjsFactory) => {
   };
 });
 
-export default dayjs;
+module.exports = dayjs;
