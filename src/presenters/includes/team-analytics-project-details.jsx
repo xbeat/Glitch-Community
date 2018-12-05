@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import dayjs from '../../../shared/dayjs';
+import dayjs from 'dayjs';
 
 import {ProjectLink} from './link.jsx';
 import Loader from './loader.jsx';

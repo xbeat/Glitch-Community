@@ -3,4 +3,4 @@ module.exports = function convertPlugin(option, dayjsClass, dayjsFactory) {
     const now = dayjsFactory();
     return now.add(amount, from).diff(now, to);
   };
-}
+};

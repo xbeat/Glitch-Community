@@ -1,5 +1,5 @@
 import React from 'react';
-import dayjs from '../../../shared/dayjs';
+import dayjs from 'dayjs';
 
 export default class Logo extends React.PureComponent {
   
