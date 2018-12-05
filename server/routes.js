@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const util = require('util');
-const dayjs = require('dayjs');
+const {convertTime} = require('../shared/dayjs');
 
 const {getProject, getTeam, getUser, getZine} = require('./api');
 const constants = require('./constants');
@@ -20,7 +20,7 @@ module.exports = function(external) {
   // Caching - js and CSS files have a hash in their name, so they last a long time
   ['/*.js', '/*.css'].forEach((path) => (
     app.use(path, (request, response, next) => {
-      const s = dayjs().add(1, 'month').diff(dayjs(), 'second');
+      const s = convertTime(1, 'month', 'seconds');
       response.header('Cache-Control', `public, max-age=${s}`);
       return next();
     })

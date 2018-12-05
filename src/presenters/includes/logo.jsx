@@ -1,5 +1,5 @@
 import React from 'react';
-import dayjs from 'dayjs';
+import {convertTime} from '../../../shared/dayjs';
 
 export default class Logo extends React.PureComponent {
   
@@ -15,7 +15,7 @@ export default class Logo extends React.PureComponent {
       this.setState({
         hour: (new Date()).getHours(),
       });
-    }, dayjs().add(5, 'minutes').diff(dayjs(), 'ms'));
+    }, convertTime(5, 'minutes', 'ms'));
   }
 
   componentWillUnmount() {
