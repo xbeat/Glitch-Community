@@ -68,14 +68,17 @@ class EmailHandler extends React.Component {
             <EmailSignInButton/>
           </form>
         }
-        {this.state.done &&
-          <div className="notifySuccess">Almost Done</div>
-        }
         {(this.state.done && !this.state.error) &&
-          <div>Please click the confirmation link sent to {this.state.email}.</div>
+          <>
+            <div className="notifySuccess">Almost Done</div>
+            <div>Please click the confirmation link sent to {this.state.email}.</div>
+          </>
         }
         {(this.state.done && this.state.error) &&
-          <div>Something went wrong, email not sent.</div>
+          <>
+            <div className="notifyError">Error</div>
+            <div>Something went wrong, email not sent.</div>
+          </>
         }
         
       </section>
