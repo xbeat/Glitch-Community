@@ -13,71 +13,26 @@ export class ReportAbusePop extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
 
-  onClick(event, project) {
+  onClick(event, report) {
     event.preventDefault();
     this.props.togglePopover();
-    this.props.addProject(project);
-  }
-
-  sourceIsTemplates() {
-    this.setState({
-      source: 'templates',
-      filterPlaceholder: 'Filter templates',
-    });
-  }
-
-  sourceIsMyProjects() {
-    this.setState({
-      source: 'my-projects',
-      filterPlaceholder: 'Filter projects',
-    });
-  }
-
-  getTemplateProjects() {
-    this.setState({
-      loadingTemplates: true,
-    });
-    const templateIds = [
-      '9cd48134-1624-48f5-beaf-6c1b68bd9217', // 'timelink'
-      '712cc905-bfcb-454e-a47a-c729ab63c455', // 'poller'
-      '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
-    ];
-    let projectsPath = `projects/byIds?ids=${templateIds.join(',')}`;
-    this.props.api.get(projectsPath)
-      .then(({data}) => {
-        let projects = this.normalizeTemplateProjects(data);
-        this.setState({
-          templateProjects: projects,
-          loadingTemplates: false,
-        });
-        this.updateFilter('');
-      });
+    this.props.reportAbuse(report);
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.source !== this.state.source) {
-      this.updateFilter("");
-      this.filterInput.current.focus();
+      // this.filterInput.current.focus();
+      // do I need this?
     }
   }
 
   componentDidMount() {
-    this.getTemplateProjects();
-    this.filterInput.current.focus();
-    this.updateFilter("");
+    // this.filterInput.current.focus();
   }
-  
-  filterInputIsBlank() {
-    if (this.filterInput.current.value.length === 0) {
-      return true;
-    }
-  } 
 
-  render() {
-    const filteredProjects = this.state.filteredProjects;
-
+  render() { 
     return (
-      <dialog className="pop-over add-team-project-pop wide-pop">
+      <dialog className="pop-over wide-pop">
         <section className="pop-over-info">
           <input
             ref={this.filterInput}
