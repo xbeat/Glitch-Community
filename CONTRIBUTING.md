@@ -47,9 +47,11 @@ Ok cool, these next steps are what we'd do internally and you're welcome to foll
 
 _(Do this once per computer to create a local repository)_
 
+_Remember to [set up Git SSH](https://help.github.com/articles/connecting-to-github-with-ssh/) or the [Windows Client](https://desktop.github.com/) to get your auth in order._
+
   ```
   # 1. On your local machine, clone our git repository from Github: 
-  git clone https://github.com/FogCreek/Glitch-Community
+  git clone git@github.com:FogCreek/Glitch-Community.git
 
   # 2. Inside of your new repo, add a remote endpoint for our live site:
   cd Glitch-Community
@@ -112,7 +114,11 @@ Only employees of Glitch will be able to do this step, and here it is!
 
 You should perform these steps immediately after clicking the "Merge pull request" button on your PR in Github. 
 
-As you go through these steps, be present in our team Slack room and communicate as you start and finish the deploy.
+#### Announce the Deployment
+
+Be present in our #community chat room and say that you're starting a deploy and what you're deploying.
+
+Keep a passive eye on the chat room while you work, in case anyone needs to talk to you about it while you've got it in flight.
 
 #### Merge in Live Changes
 
@@ -156,6 +162,8 @@ Go to [https://glitch.com/~community-staging](https://glitch.com/~community-stag
 
 Now open up the logs and wait for the build to finish, then test your stuff.
 
+_**protip**: while you wait for the build to complete, use this time to put together a little test plan for yourself.  What are the things you should double-check before your changes go live?_
+
 In particular test anything that you merged with.  Make sure there's no console errors, etc.  If you find a problem, stop here and go back to the PR phase to fix it up.
 
 Satisfied?  Deploy it.
@@ -166,7 +174,7 @@ Run the _special command_ to swap ~community with ~community-staging.
 
 (there's a special endpoint for this, ask us about it and sit beside a team member the first time you use it.   It's the same thing as renaming the two projects, but it does this atomically and without downtime, which you can't do if you rename them manually.)
 
-#### If You Need to Revert the Deploy
+##### If You Need to Revert the Deploy
 
 Repeat the _special command_ to swap ~community with ~community-staging.
 
@@ -174,8 +182,22 @@ Thereby putting things back the way they were. Now you have time to fix it and t
 
 After you revert, check on if any live changes were made to the site after you deployed and before you reverted. (Are the curated items the same on both ~community and ~community-staging?).  If so, port the curated updates to the reverted page so that the edits are preserved.
 
-#### Making Live Edits
+#### Verify the Deployment
+
+Take a glance at glitch.com and see that your changes are live.
+(There's a 5 minute cloudfront cache, so you can view community.glitch.me if you need to get around that, or otherwise go to an uncached glitch.com URL to bypass it.)
+
+This is also a fun time to grab a screenshot and share what you've shipped, if you like.
+
+#### Announce Completion
+
+Good job :-) Pop back over to #community and tell the room that you're all done.
+
+--------------------
+
+
+**Making Live Edits**
 
  _Can I just edit ~community directly, since it’s Glitch we’re dealing with here?_
   
-Sure thing. All standard caveats and cautions apply.  This is appropriate for updating the curated content, fixing typos, and one-line bug fixes. Our build scripts don't update the live site until the build is healthy and your changes are complete.
+Sure thing. All standard caveats and cautions apply.  This is appropriate for updating the curated content, fixing typos, editing .md files, and one-line bug fixes. Our build scripts don't update the live site until the build is healthy and your changes are complete.

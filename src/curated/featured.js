@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Conway\'s Webcam of Life',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fconways-webcam_GLITCH.png?1543234498768",
-    link: 'https://glitch.com/~conways-webcam'
+    title: 'Vera Molnár in Audio Form',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_hearing-vera-molnar.png?1543839845270",
+    link: 'https://glitch.com/~hearing-vera-molnar'
   },{
-    title: 'Make a Simple Poll',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpoller_GLITCH.png?1543234498656",
-    link: 'https://poller.glitch.me/'
+    title: 'Handsfree.js Starter Kit',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_handsfree-starter.png?1543839845139",
+    link: 'https://glitch.com/~handsfree-starter'
   },{
-    title: 'But First, Let Me Take A Selfie',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmouse-photobooth_GLITCH.png?1543234498859",
-    link: 'https://mouse-photobooth.glitch.me/'
+    title: 'Generate Circle Chord Patterns',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_chord-machine.png?1543839845017",
+    link: 'https://glitch.com/~chordmachine'
   }  
 ];
