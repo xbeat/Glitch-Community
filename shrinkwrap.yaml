@@ -35,7 +35,6 @@ dependencies:
   markdown-it-sanitizer: 0.4.3
   memory-cache: 0.2.0
   mini-css-extract-plugin: 0.4.5
-  moment-mini: 2.22.1
   nodemon: 1.18.7
   prop-types: 15.6.2
   quantize: 1.0.2
@@ -3966,10 +3965,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
-  /moment-mini/2.22.1:
-    dev: false
-    resolution:
-      integrity: sha512-OUCkHOz7ehtNMYuZjNciXUfwTuz8vmF1MTbAy59ebf+ZBYZO5/tZKuChVWCX+uDo+4idJBpGltNfV8st+HwsGw==
   /move-concurrently/1.0.1:
     dependencies:
       aproba: 1.2.0
@@ -6137,7 +6132,6 @@ specifiers:
   markdown-it-sanitizer: ^0.4.3
   memory-cache: ^0.2.0
   mini-css-extract-plugin: ^0.4.5
-  moment-mini: ^2.22.1
   nodemon: ^1.18.7
   prop-types: ^15.6.2
   quantize: ^1.0.2
