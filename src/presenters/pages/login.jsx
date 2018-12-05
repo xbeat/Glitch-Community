@@ -5,49 +5,58 @@ import PropTypes from 'prop-types';
 import {captureMessage} from '../../utils/sentry';
 
 import {Redirect} from 'react-router-dom';
-import {CurrentUserConsumer} from '../current-user.jsx';
-import {EmailErrorPage} from './error.jsx';
+import LocalStorage from '../includes/local-storage';
+import {CurrentUserConsumer} from '../current-user';
+import {EmailErrorPage} from './error';
 
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       done: false,
+      redirect: { pathname: '/' },
       error: false,
       errorMessage: null,
     };
   }
   
-  async authenticate() {
-    const {api, provider, url} = this.props;
+  async componentDidMount() {
+    const {api, provider, url, destination} = this.props;
+    this.props.setDestination(undefined);
+    
     try {
       const {data} = await api.post(url);
       if (data.id <= 0) {
         throw new Error(`Bad user id (${data.id}) after ${provider} login`);
       }
+      
       console.log("LOGGED IN", data);
       this.props.setUser(data);
+      
+      if (destination && destination.expires > new Date().toISOString()) {
+        this.setState({redirect: destination.to});
+      }
+      
       this.setState({done: true});
       analytics.track("Signed In", {provider});
+      
     } catch (error) {
       this.setState({error: true});
+      
       const errorData = error && error.response && error.response.data;
       if (errorData && errorData.message) {
         this.setState({errorMessage: errorData.message});
       }
+      
       const deets = {provider, error: errorData};
       console.error("Login error.", deets);
       captureMessage("Login error", {extra: deets});
     }
   }
   
-  componentDidMount() {
-    this.authenticate();
-  }
-  
   render() {
     if (this.state.done) {
-      return <Redirect to={this.props.hash ? `/#${this.props.hash}` : '/'}/>;
+      return <Redirect to={this.state.redirect}/>;
     } else if (this.state.error) {
       const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
       return <EmailErrorPage api={this.props.api} title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
@@ -60,13 +69,21 @@ LoginPage.propTypes = {
   url: PropTypes.string.isRequired,
   provider: PropTypes.string.isRequired,
   setUser: PropTypes.func.isRequired,
+  destination: PropTypes.shape({
+    expires: PropTypes.string.isRequired,
+    to: PropTypes.object.isRequired,
+  }),
   hash: PropTypes.string,
 };
 
 const LoginPageContainer = (props) => (
-  <CurrentUserConsumer>
-    {(currentUser, fetched, {login}) => <LoginPage setUser={login} {...props}/>}
-  </CurrentUserConsumer>
+  <LocalStorage name="destinationAfterAuth" default={undefined}>
+    {(destination, setDestination, loaded) => (loaded &&
+      <CurrentUserConsumer>
+        {(currentUser, fetched, {login}) => <LoginPage setUser={login} destination={destination} setDestination={setDestination} {...props}/>}
+      </CurrentUserConsumer>
+    )}
+  </LocalStorage>
 );
 
 export const FacebookLoginPage = ({code, ...props}) => {
