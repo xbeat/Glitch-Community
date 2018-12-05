@@ -12,6 +12,7 @@ export class AddTeamProjectPop extends React.Component {
       filteredProjects: [],
       source: 'my-projects', // my-projects, templates
       filterPlaceholder: 'Filter my projects',
+      filterValue: undefined,
       loadingTemplates: false,
       notifyTemplateIsRemixing: false,
     };
@@ -30,6 +31,9 @@ export class AddTeamProjectPop extends React.Component {
   }
 
   updateFilter(query) {
+    this.setState({
+        filterValue: query
+      });
     let projects = [];
     if (this.state.source === 'templates') {
       projects = this.state.templateProjects;
@@ -38,7 +42,7 @@ export class AddTeamProjectPop extends React.Component {
     }
     let filteredProjects = this.filterProjects(query, projects, this.props.teamProjects);
     this.setState({
-      filteredProjects: filteredProjects
+      filteredProjects: filteredProjects,
     });
   }
 
@@ -158,7 +162,8 @@ export class AddTeamProjectPop extends React.Component {
             ref={this.filterInput}
             onChange={(event) => {this.updateFilter(event.target.value);}}
             id="team-project-search" className="pop-over-input search-input pop-over-search"
-            placeholder= {this.state.filterPlaceholder}
+            value={this.state.filterValue}
+            placeholder={this.state.filterPlaceholder}
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>
