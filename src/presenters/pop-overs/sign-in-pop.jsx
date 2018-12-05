@@ -38,7 +38,8 @@ class EmailHandler extends React.Component {
     super(props);
     this.state = {
       email: '',
-      done: false
+      done: false,
+      error: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -46,6 +47,9 @@ class EmailHandler extends React.Component {
   
   onChange(e) {
     this.setState({email: e.target.value});
+    if (e.target.value != '') {
+      e.target.removeAttribute('disabled');
+    }
   }
   
   async onSubmit(e) {
@@ -89,7 +93,7 @@ class EmailHandler extends React.Component {
 }
 
 const EmailSignInButton = (onClick) => (
-  <button style={{marginTop: 10}} className="button-small button-link has-emoji" onClick={onClick}>
+  <button style={{marginTop: 10}} className="button-small button-link has-emoji">
     Email Sign In <span aria-label="" role="img">📧</span>
   </button>
 );
