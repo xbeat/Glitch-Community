@@ -49,7 +49,7 @@ class CollectionItem extends React.Component{
 
         {(collection &&
           <Link to={`/@${userLogin}/${collection.url}`}>
-            <div className={['collection']} 
+            <div className="collection"
               id={"collection-" + collection.id}>
               <div className="collection-container">
                 <div className="collection-info" style={{backgroundColor: collection.coverColor}}> 

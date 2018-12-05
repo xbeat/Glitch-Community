@@ -71,7 +71,7 @@ const CreateFirstCollection = () => (
   </div>
 );
 
-class CreateCollectionButton extends React.Component{
+export class CreateCollectionButton extends React.Component{
   constructor(props){
     super(props);
     this.state={
@@ -83,7 +83,7 @@ class CreateCollectionButton extends React.Component{
     this.createCollection = this.createCollection.bind(this);
   }
   
-  async postCollection(api, collectionSynonym, predicate, userLogin){
+  async postCollection(collectionSynonym, predicate){
     const name = [predicate, collectionSynonym].join('-');
     const description = `A ${collectionSynonym} of projects that does ${predicate} things`;
     const url = kebabCase(name);
@@ -93,19 +93,27 @@ class CreateCollectionButton extends React.Component{
     
     // get a random color
     const coverColor = randomColor({luminosity: 'light'});
+    
+    // set the team id if there is one
+    const teamId = this.props.team ? this.props.team.id : undefined;
 
-    const {data} = await api.post('collections', {
+    const {data} = await this.props.api.post('collections', {
       name,
       description,
       url,
       avatarUrl,
       coverColor,
+      teamId,
     });
     
     if(data && data.url){
-      let newCollectionUrl = getLink(userLogin, data.url);
-      this.setState({newCollectionUrl: newCollectionUrl});
-      this.setState({shouldRedirect: true});
+      if (this.props.team) {
+        data.team = this.props.team;
+      } else {
+        data.user = this.props.currentUser;
+      }
+      const newCollectionUrl = getLink(data);
+      this.setState({newCollectionUrl, shouldRedirect: true});
       return true;
     }
     return false;
@@ -126,14 +134,14 @@ class CreateCollectionButton extends React.Component{
     return [collectionSynonyms, predicate];
   }
   
-  async createCollection(api, userLogin){
+  async createCollection(){
     this.setState({loading: true});
     
-    const [collectionSynonymns, predicate] = await this.generateNames(userLogin);
+    const [collectionSynonymns, predicate] = await this.generateNames();
     let creationSuccess = false;
     for(let synonym of collectionSynonymns){
       try{
-        creationSuccess = await this.postCollection(api, synonym, predicate, userLogin);
+        creationSuccess = await this.postCollection(synonym, predicate);
         if(creationSuccess) {
           break;
         }
@@ -159,7 +167,7 @@ class CreateCollectionButton extends React.Component{
     }
     return (
       <div id="create-collection-container">
-        <button className="button" id="create-collection" onClick={() => this.createCollection(this.props.api, this.props.currentUser.login)}>
+        <button className="button" id="create-collection" onClick={() => this.createCollection()}>
             Create Collection
         </button>    
       </div>
@@ -170,6 +178,7 @@ class CreateCollectionButton extends React.Component{
 CreateCollectionButton.propTypes = {
   api: PropTypes.any.isRequired,
   currentUser: PropTypes.object.isRequired,
+  team: PropTypes.object,
 };  
 
 export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized, userLogin}) => {
