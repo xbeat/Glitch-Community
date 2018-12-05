@@ -109,7 +109,8 @@ const UserPage = ({
     </section>
 
     <section id="embed">
-      <Embed domain={projects.first.domain}/>
+      <h2>Featured Project</h2>
+      <Embed domain={projects[0].domain}/>
     </section>
     
     <EntityPagePinnedProjects
