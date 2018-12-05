@@ -15,6 +15,7 @@ dependencies:
   compression: 1.7.3
   css-loader: 1.0.1
   d3-array: 2.0.2
+  dayjs: 1.7.7
   details-element-polyfill: 2.0.4
   ejs: 2.6.1
   email-addresses: 3.0.3
@@ -1879,6 +1880,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
+  /dayjs/1.7.7:
+    dev: false
+    resolution:
+      integrity: sha512-Qlkiu0NNDpYwhk0syK4ImvAl/5YnsEMkvC2O123INviGeOA3Q8s5VyVkZzmN5SC7Wv9bb1+rfwO+uSqtHB4UWw==
   /debug/2.6.9:
     dependencies:
       ms: 2.0.0
@@ -6112,6 +6117,7 @@ specifiers:
   compression: ^1.7.3
   css-loader: ^1.0.1
   d3-array: ^2.0.2
+  dayjs: ^1.7.7
   details-element-polyfill: ^2.0.4
   ejs: ^2.6.1
   email-addresses: ^3.0.3

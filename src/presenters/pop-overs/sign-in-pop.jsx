@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
-import moment from 'moment-mini';
+import dayjs from 'dayjs';
 
 import Link from '../includes/link';
 import LocalStorage from '../includes/local-storage';
@@ -62,7 +62,7 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
   <LocalStorage name="destinationAfterAuth">
     {(destination, setDestination) => {
       const onClick = () => setDestination({
-        expires: moment().add(10, 'minutes').toISOString(),
+        expires: dayjs().add(10, 'minutes').toISOString(),
         to: {
           pathname: location.pathname,
           search: location.search,
