@@ -33,16 +33,7 @@ export class ReportAbusePop extends React.Component {
 
         <section className="pop-over-actions results-list" data-source='templates'>
           <ul className="results">
-            { filteredProjects.map((project) => (
-              <li key={project.id}>
-                <ProjectResultItem
-                  action={(event) => this.onClick(event, project)}
-                  {...project}
-                  title={project.domain}
-                  isPrivate={project.private}
-                />
-              </li>
-            ))}
+            
           </ul>
           { (this.state.filteredProjects.length === 0 && this.filterInputIsBlank) &&
              <p className="action-description no-projects-description">Create or Join projects to add them to the team</p>
