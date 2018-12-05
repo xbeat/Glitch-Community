@@ -12,24 +12,18 @@ const PopoverButton = ({onClick, text, emoji}) => (
   </button>
 );
 
-// Project Options Content
-const ProjectOptionsContent = ({...props}) => {
+// Featured Project Options Content
+const FeaturedProjectOptionsContent = ({...props}) => {
     
   return(
     <dialog className="pop-over project-options-pop">
-      {!props.currentUserIsOnProject ? null
-       :
-        <>
-          <section className="pop-over-actions">
-            <PopoverButton onClick="" text="Unfeature"/>
-          </section>
-          <section className="pop-over-actions">
-            <PopoverButton onClick="" text="Edit Default View"/>
-            <PopoverButton onClick="" text="Edit Height"/>
-          </section>
-        </>
-      }
-      
+      <section className="pop-over-actions">
+        <PopoverButton onClick="" text="Unfeature"/>
+      </section>
+      <section className="pop-over-actions">
+        <PopoverButton onClick="" text="Edit Default View"/>
+        <PopoverButton onClick="" text="Edit Height"/>
+      </section>
     </dialog>
   ); 
 };
@@ -38,7 +32,7 @@ const ProjectOptionsContent = ({...props}) => {
 // Project Options Pop
 const FeaturedProjectOptionsPop = ({...props}) => {
   return(
-    <ProjectOptionsContent {...props}/>
+    <FeaturedProjectOptionsContent {...props}/>
   );
 };
 
