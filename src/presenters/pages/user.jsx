@@ -1,3 +1,5 @@
+/* global analytics APP_URL */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -53,6 +55,18 @@ NameAndLogin.propTypes = {
   updateLogin: PropTypes.func,
 };
 
+const Embed = ({domain}) => (
+  <div className="glitch-embed-wrap">
+    <iframe title="embed"
+      src={`${APP_URL}/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
+      allow="geolocation; microphone; camera; midi; encrypted-media"
+    ></iframe>
+  </div>
+);
+Embed.propTypes = {
+  domain: PropTypes.string.isRequired,
+};
+
 const UserPage = ({
   user: { //has science gone too far?
     id, login, name, description, thanksCount,
@@ -92,6 +106,10 @@ const UserPage = ({
         {!!thanksCount && <Thanks count={thanksCount}/>}
         <AuthDescription authorized={isAuthorized && !!login} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
+    </section>
+
+    <section id="embed">
+      <Embed domain={projects.first.domain}/>
     </section>
     
     <EntityPagePinnedProjects
