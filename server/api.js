@@ -2,7 +2,7 @@
 
 const axios = require("axios");
 const {Cache} = require("memory-cache");
-const dayjs = require("../shared/dayjs");
+const dayjs = require("dayjs");
 
 const {API_URL} = require("./constants").current;
 

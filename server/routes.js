@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const util = require('util');
-const dayjs = require('../shared/dayjs');
+const dayjs = require('dayjs');
 
 const {getProject, getTeam, getUser, getZine} = require('./api');
 const constants = require('./constants');
