@@ -110,8 +110,7 @@ const UserPage = ({
       </ProfileContainer>
     </section>
 
-    <section id="embed">
-      <FeaturedProjectOptionsPop/>
+    <section id="embed">      
       <h2>Featured Project<span className="emoji glowing-star emoji-in-title"></span></h2>
       <Embed domain={projects[0].domain}/>
     </section>
