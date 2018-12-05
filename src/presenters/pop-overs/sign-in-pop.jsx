@@ -36,7 +36,9 @@ class EmailHandler extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: ''
+      email: '',
+      submitted: false,
+      error: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -48,6 +50,7 @@ class EmailHandler extends React.Component {
   
   async onSubmit(e) {
     e.preventDefault();
+    this.setState({done: true});
     try {
       await this.props.api.post('/email/sendLoginEmail', {emailAddress:this.state.email});
       alert("Please check your email at " + this.state.email);
@@ -60,11 +63,16 @@ class EmailHandler extends React.Component {
   render() {
     return (
       <section className="pop-over-actions last-section">
-        <form onSubmit={(e) => this.onSubmit(e)}>
-          Sign in with email
-          <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
-          <EmailSignInButton/>
-        </form>
+        {!this.state.done &&
+          <form onSubmit={(e) => this.onSubmit(e)}>
+            Sign in with email
+            <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
+            <EmailSignInButton/>
+          </form>
+        }
+        {this.state.done &&
+          <div>Almost Done</div>
+        }
       </section>
     );
   }
