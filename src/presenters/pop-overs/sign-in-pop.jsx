@@ -43,13 +43,12 @@ class EmailHandler extends React.Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    
   }
   
   onChange(e) {
     this.setState({email: e.target.value});
-    if (e.target.value != '') {
-      e.target.removeAttribute('disabled');
-    }
+
   }
   
   async onSubmit(e) {
@@ -65,13 +64,14 @@ class EmailHandler extends React.Component {
   }
   
   render() {
+    const isEnabled = this.state.email != '';
     return (
       <section className="pop-over-actions last-section">
         {!this.state.done &&
           <form onSubmit={(e) => this.onSubmit(e)}>
             Sign in with email
             <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
-            <EmailSignInButton onClick={() => { this.props.onClick(); }}/>
+            <EmailSignInButton onClick={() => { this.props.onClick(); }} isEnabled={isEnabled}/>
           </form>
         }
         {(this.state.done && !this.state.error) &&
@@ -92,8 +92,8 @@ class EmailHandler extends React.Component {
   }
 }
 
-const EmailSignInButton = (onClick) => (
-  <button style={{marginTop: 10}} className="button-small button-link has-emoji">
+const EmailSignInButton = (onClick, isEnabled) => (
+  <button style={{marginTop: 10}} className="button-small button-link has-emoji" disabled={!isEnabled}>
     Email Sign In <span aria-label="" role="img">📧</span>
   </button>
 );
