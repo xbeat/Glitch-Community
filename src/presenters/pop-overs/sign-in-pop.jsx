@@ -53,12 +53,8 @@ class EmailHandler extends React.Component {
     try {
       await this.props.api.post('/email/sendLoginEmail', {emailAddress:this.state.email});
       this.setState({error: false});
-      alert("Please check your email at " + this.state.email);
     } catch (error) {
       this.setState({error: true});
-      console.error(error);
-      console.log(error);
-      alert("Something went wrong; email not sent.");
     }
   }
   
@@ -73,10 +69,10 @@ class EmailHandler extends React.Component {
           </form>
         }
         {this.state.done &&
-          <div>Almost Done</div>
+          <div className="notifySuccess">Almost Done</div>
         }
         {(this.state.done && !this.state.error) &&
-          <div>Please click the confirmation link sent to `this.state.email`.</div>
+          <div>Please click the confirmation link sent to {this.state.email}.</div>
         }
         {(this.state.done && this.state.error) &&
           <div>Something went wrong, email not sent.</div>
