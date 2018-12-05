@@ -5,8 +5,6 @@ import {CurrentUserConsumer} from '../current-user.jsx';
 
 import NestedPopover from './popover-nested.jsx';
 
-import AddProjectToCollectionPop from '../pop-overs/add-project-to-collection-pop.jsx';
-
 const PopoverButton = ({onClick, text, emoji}) => (
   <button className="button-small has-emoji button-tertiary" onClick={onClick}>
     <span>{text} </span>
@@ -115,7 +113,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
 
 
 // Project Options Pop
-const ProjectOptionsPop = ({...props}) => {
+const FeaturedProjectOptionsPop = ({...props}) => {
   return(
     <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
       { addToCollectionPopover => (
@@ -125,7 +123,7 @@ const ProjectOptionsPop = ({...props}) => {
   );
 };
 
-ProjectOptionsPop.propTypes = {
+FeaturedProjectOptionsPop.propTypes = {
   api: PropTypes.any,
   currentUser: PropTypes.object,
   project: PropTypes.shape({
@@ -141,13 +139,13 @@ ProjectOptionsPop.propTypes = {
   leaveTeamProject: PropTypes.func,
   currentUserIsOnProject: PropTypes.bool.isRequired,
 };
-ProjectOptionsPop.defaultProps = {
+FeaturedProjectOptionsPop.defaultProps = {
   currentUserIsOnProject: false
 };
 
 // Project Options Container
 // create as stateful react component
-export default function ProjectOptions({projectOptions={}, project, api, currentCollectionId}, {...props}) {
+export default function FeaturedProjectOptions({projectOptions={}, project, api, currentCollectionId}, {...props}) {
   if(Object.keys(projectOptions).length === 0) {
     return null;
   }
@@ -170,7 +168,7 @@ export default function ProjectOptions({projectOptions={}, project, api, current
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <ProjectOptionsPop {...props} {...projectOptions} project={project} currentCollectionId={currentCollectionId} api={api} currentUser={user} togglePopover={togglePopover} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+              { visible && <FeaturedProjectOptionsPop {...props} {...projectOptions} project={project} api={api} currentUser={user} togglePopover={togglePopover} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
             </div>
           )}
         </CurrentUserConsumer>
@@ -179,7 +177,7 @@ export default function ProjectOptions({projectOptions={}, project, api, current
   );
 }
 
-ProjectOptions.propTypes = {
+FeaturedProjectOptions.propTypes = {
   api: PropTypes.func,
   currentCollectionId: PropTypes.number,
   project: PropTypes.object.isRequired,

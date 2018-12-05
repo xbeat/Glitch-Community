@@ -19,6 +19,8 @@ import CollectionsList from '../collections-list.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 
+import FeaturedProjectOptionsPop from "./pop-overs/featured-project-options-pop.jsx";
+
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
 }
@@ -109,6 +111,7 @@ const UserPage = ({
     </section>
 
     <section id="embed">
+      <FeaturedProjectOptionsPop />
       <h2>Featured Project<span class="emoji glowing-star emoji-in-title"></span></h2>
       <Embed domain={projects[0].domain}/>
     </section>
