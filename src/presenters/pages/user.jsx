@@ -58,12 +58,15 @@ NameAndLogin.propTypes = {
 };
 
 const Embed = ({domain}) => (
-  <div className="glitch-embed-wrap">
-    <iframe title="embed"
-      src={`${APP_URL}/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
-      allow="geolocation; microphone; camera; midi; encrypted-media"
-    ></iframe>
-  </div>
+  <>
+    <div className="glitch-embed-wrap">
+      <iframe title="embed"
+        src={`${APP_URL}/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
+        allow="geolocation; microphone; camera; midi; encrypted-media"
+      ></iframe>
+    </div>
+    <p style={{color: "#636363", marginBottom: 1+"em"}}>You can tweak the way your embed looks by editing this project and going to <b>Share > Embed Project</b> </p>
+  </>
 );
 Embed.propTypes = {
   domain: PropTypes.string.isRequired,
