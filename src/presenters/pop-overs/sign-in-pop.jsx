@@ -60,8 +60,8 @@ class EmailHandler extends React.Component {
   render() {
     return (
       <section className="pop-over-actions last-section">
-        Sign in with email
         <form onSubmit={(e) => this.onSubmit(e)}>
+          Sign in with email
           <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
           <EmailSignInButton/>
         </form>
