@@ -1,10 +1,13 @@
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-export * from 'dayjs';
+dayjs.extend(relativeTime);
+
+dayjs.extend((option, dayjsClass, dayjsFactory) => {
+  dayjsFactory.convert = (amount, from, to) => {
+    const now = dayjsFactory();
+    return now.add(amount, from).diff(now, to);
+  };
+});
 
 export default dayjs;
-
-export function convertTime(amount, from, to) {
-  const now = dayjs();
-  return now.add(amount, from).diff(now, to);
-}
