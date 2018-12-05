@@ -37,8 +37,7 @@ class EmailHandler extends React.Component {
     super(props);
     this.state = {
       email: '',
-      submitted: false,
-      error: false
+      submitted: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -53,9 +52,12 @@ class EmailHandler extends React.Component {
     this.setState({done: true});
     try {
       await this.props.api.post('/email/sendLoginEmail', {emailAddress:this.state.email});
+      this.setState({error: false});
       alert("Please check your email at " + this.state.email);
     } catch (error) {
+      this.setState({error: true});
       console.error(error);
+      console.log(error);
       alert("Something went wrong; email not sent.");
     }
   }
@@ -73,6 +75,13 @@ class EmailHandler extends React.Component {
         {this.state.done &&
           <div>Almost Done</div>
         }
+        {(this.state.done && !this.state.error) &&
+          <div>Please click the confirmation link sent to `this.state.email`.</div>
+        }
+        {(this.state.done && this.state.error) &&
+          <div>Something went wrong, email not sent.</div>
+        }
+        
       </section>
     );
   }
