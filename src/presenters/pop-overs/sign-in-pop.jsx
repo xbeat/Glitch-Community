@@ -7,6 +7,7 @@ import Link from '../includes/link';
 import LocalStorage from '../includes/local-storage';
 import PopoverContainer from './popover-container';
 import {DevToggles} from '../includes/dev-toggles';
+import {captureException} from '../../utils.sentry';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
@@ -54,6 +55,7 @@ class EmailHandler extends React.Component {
       await this.props.api.post('/email/sendLoginEmail', {emailAddress:this.state.email});
       this.setState({error: false});
     } catch (error) {
+      captureException(error);
       this.setState({error: true});
     }
   }
