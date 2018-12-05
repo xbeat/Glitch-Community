@@ -19,25 +19,13 @@ export class ReportAbusePop extends React.Component {
     this.props.reportAbuse(report);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.source !== this.state.source) {
-      // this.filterInput.current.focus();
-      // do I need this?
-    }
-  }
-
-  componentDidMount() {
-    // this.filterInput.current.focus();
-  }
 
   render() { 
     return (
       <dialog className="pop-over wide-pop">
         <section className="pop-over-info">
           <input
-            ref={this.filterInput}
-            onChange={(event) => {this.updateFilter(event.target.value);}}
-            id="team-project-search" className="pop-over-input search-input pop-over-search"
+            id="team-project-search" className="pop-over-input"
             placeholder= {this.state.filterPlaceholder}
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
