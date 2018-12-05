@@ -64,11 +64,11 @@ class EmailHandler extends React.Component {
   }
   
   render() {
-    const isEnabled = this.state.email != '';
+    const isEnabled = this.state.email.length > 0;
     return (
       <section className="pop-over-actions last-section">
         {!this.state.done &&
-          <form onSubmit={(e) => this.onSubmit(e)}>
+          <form onSubmit={(e) => this.onSubmit(e)} style={{marginBottom: 0}}>
             Sign in with email
             <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
             <EmailSignInButton onClick={() => { this.props.onClick(); }} isEnabled={isEnabled}/>
@@ -93,7 +93,7 @@ class EmailHandler extends React.Component {
 }
 
 const EmailSignInButton = (onClick, isEnabled) => (
-  <button style={{marginTop: 10}} className="button-small button-link has-emoji" disabled={!isEnabled}>
+  <button style={{marginTop: 10, marginBottom: 0}} className="button-small button-link has-emoji" disabled={!isEnabled} onClick={() => {onClick();}}>
     Email Sign In <span aria-label="" role="img">📧</span>
   </button>
 );
