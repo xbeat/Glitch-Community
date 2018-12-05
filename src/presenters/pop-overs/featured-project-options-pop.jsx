@@ -19,10 +19,6 @@ const FeaturedProjectOptionsPop = ({...props}) => {
       <section className="pop-over-actions">
         <PopoverButton onClick="" text="Unfeature"/>
       </section>
-      <section className="pop-over-actions">
-        <PopoverButton onClick="" text="Edit Default View"/>
-        <PopoverButton onClick="" text="Edit Height"/>
-      </section>
     </dialog>
   );
 };

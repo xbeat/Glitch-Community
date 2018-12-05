@@ -57,16 +57,20 @@ NameAndLogin.propTypes = {
   updateLogin: PropTypes.func,
 };
 
-const Embed = ({domain}) => (
+const Embed = ({domain, isAuthorized}) => (
   <>
+    <FeaturedProjectOptionsPop/>
     <div className="glitch-embed-wrap">
       <iframe title="embed"
         src={`${APP_URL}/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
         allow="geolocation; microphone; camera; midi; encrypted-media"
       ></iframe>
     </div>
-    <p style={{color: "#636363", marginBottom: 1+"em"}}>You can tweak the way your embed looks by editing this project and going to <b>Share > Embed Project</b> </p>
+  {isAuthorized && 
+    <p style={{color: "#636363", marginBottom: 1+"em", fontSize: "small"}}>You can tweak the way your embed looks by editing this project and going to <b>Share > Embed Project</b> <button className="button-small button-tertiary" style={{marginLeft:5+"px"}}>hide</button></p>
+  }
   </>
+   
 );
 Embed.propTypes = {
   domain: PropTypes.string.isRequired,
@@ -114,8 +118,7 @@ const UserPage = ({
     </section>
 
     <section id="embed">      
-      <h2>Featured Project<span className="emoji glowing-star emoji-in-title"></span></h2>
-      <Embed domain={projects[0].domain}/>
+      <Embed domain={projects[0].domain} isAuthorized={isAuthorized}/>
     </section>
     
     <EntityPagePinnedProjects
