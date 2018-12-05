@@ -71,7 +71,9 @@ class EmailHandler extends React.Component {
           <form onSubmit={(e) => this.onSubmit(e)} style={{marginBottom: 0}}>
             Sign in with email
             <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
-            <EmailSignInButton onClick={() => { this.props.onClick(); }} isEnabled={isEnabled}/>
+            <button style={{marginTop: 10, marginBottom: 0}} className="button-small button-link has-emoji" disabled={!isEnabled} onClick={() => {this.props.onClick();}}>
+              Email Sign In <span className="emoji email emoji-in-title"></span>
+            </button>
           </form>
         }
         {(this.state.done && !this.state.error) &&
@@ -91,12 +93,6 @@ class EmailHandler extends React.Component {
     );
   }
 }
-
-const EmailSignInButton = (onClick, isEnabled) => (
-  <button style={{marginTop: 10, marginBottom: 0}} className="button-small button-link has-emoji" disabled={!isEnabled} onClick={() => {onClick();}}>
-    Email Sign In <span aria-label="" role="img">📧</span>
-  </button>
-);
 
 const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
   <LocalStorage name="destinationAfterAuth">
