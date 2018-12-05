@@ -7,7 +7,7 @@ import Link from '../includes/link';
 import LocalStorage from '../includes/local-storage';
 import PopoverContainer from './popover-container';
 import {DevToggles} from '../includes/dev-toggles';
-import {captureException} from '../../utils.sentry';
+import {captureException} from '../../utils/sentry';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
@@ -38,7 +38,7 @@ class EmailHandler extends React.Component {
     super(props);
     this.state = {
       email: '',
-      submitted: false
+      done: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -88,8 +88,8 @@ class EmailHandler extends React.Component {
   }
 }
 
-const EmailSignInButton = () => (
-  <button style={{marginTop: 10}} className="button-small button-link has-emoji" >
+const EmailSignInButton = (onClick) => (
+  <button style={{marginTop: 10}} className="button-small button-link has-emoji" onClick={() => { onClick(); }}>
     Email Sign In <span aria-label="" role="img">📧</span>
   </button>
 );
@@ -115,7 +115,7 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
           </section>
           <DevToggles>
             {(enabledToggles) => (
-              enabledToggles.includes("Email Login") && <EmailHandler api={api} />
+              enabledToggles.includes("Email Login") && <EmailHandler api={api} onClick={onClick}/>
             )}
           </DevToggles>
         </div>
