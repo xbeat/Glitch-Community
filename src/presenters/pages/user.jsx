@@ -74,9 +74,15 @@ class Embed extends React.Component {
     this.state = {
       domain: this.props.domain
     }
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(newDomain){
+    this.setState({ domain: newDomain });
   }
 }
 
+{/*
 const Embed = ({domain, isAuthorized}) => (
   <>
     <FeaturedProjectOptionsPop/>
@@ -86,12 +92,12 @@ const Embed = ({domain, isAuthorized}) => (
         allow="geolocation; microphone; camera; midi; encrypted-media"
       ></iframe>
     </div>
-  </>
-   
+  </>   
 );
 Embed.propTypes = {
   domain: PropTypes.string.isRequired,
 };
+*/}
 
 const UserPage = ({
   user: { //has science gone too far?
