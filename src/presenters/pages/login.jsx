@@ -7,7 +7,7 @@ import {captureMessage} from '../../utils/sentry';
 import {Redirect} from 'react-router-dom';
 import LocalStorage from '../includes/local-storage';
 import {CurrentUserConsumer} from '../current-user';
-import ErrorPage from './error';
+import {EmailErrorPage} from './error';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -59,7 +59,7 @@ class LoginPage extends React.Component {
       return <Redirect to={this.state.redirect}/>;
     } else if (this.state.error) {
       const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
-      return <ErrorPage title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
+      return <EmailErrorPage api={this.props.api} title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
     }
     return <div className="content"></div>;
   }

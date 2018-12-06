@@ -169,7 +169,7 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
           {({togglePopover, visible}) => (
             <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
               <button className="user" onClick={togglePopover} disabled={!props.user.id}>
-                <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
+                <img className="user-avatar" src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
                 <span className="down-arrow icon"/>
               </button>
               {visible && (
