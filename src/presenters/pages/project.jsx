@@ -147,7 +147,7 @@ const ProjectPage = ({
       <RelatedProjects ignoreProjectId={project.id} {...{api, teams, users}}/>
     </section>
     <section id="feedback" className="buttons buttons-right">
-      <ReportButton name={domain} id={project.id} className="button-small button-tertiary"/>
+      <ReportButton projectName={domain} projectId={project.id}/>
     </section>
   </main>
 );
