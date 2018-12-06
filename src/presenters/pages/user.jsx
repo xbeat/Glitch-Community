@@ -126,7 +126,7 @@ const UserPage = ({
     </section>
 
     <section id="embed">      
-      <h2></h2>
+      <h2>Featured Project<span class="emoji glowing-star emoji-in-title"></span></h2>
       <Embed domain={projects[0].domain} isAuthorized={isAuthorized}/>
       
       {isAuthorized &&
