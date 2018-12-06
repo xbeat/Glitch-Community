@@ -11,7 +11,7 @@ import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ErrorBoundary from '../includes/error-boundary';
 
-import SampleTeamCollections from '../../curated/sample-team-collections.jsx';
+//import SampleTeamCollections from '../../curated/sample-team-collections.jsx';
 import CollectionsList from '../collections-list';
 
 import EditableField from '../includes/editable-field.jsx';
@@ -26,8 +26,8 @@ import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 
-function syncPageToUrl(url) {
-  history.replaceState(null, null, getLink({url}));
+function syncPageToUrl(team) {
+  history.replaceState(null, null, getLink(team));
 }
 
 const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
@@ -43,7 +43,7 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
     <p className="team-url">
       <EditableField
         value={team.url}
-        update={url => updateUrl(url).then(() => syncPageToUrl(url))}
+        update={url => updateUrl(url).then(() => syncPageToUrl({...team, url}))}
         placeholder="Short url?"
         prefix="@"
       />
