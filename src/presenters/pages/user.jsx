@@ -119,6 +119,14 @@ const UserPage = ({
 
     <section id="embed">      
       <Embed domain={projects[0].domain} isAuthorized={isAuthorized}/>
+       <div className="buttons buttons-right">
+
+        {isAuthorized && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={projects[0].domain} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
+        <RemixButton className="button-small"
+          name={domain} isMember={isAuthorized}
+          onClick={() => trackRemix(project.id, domain)}
+        />
+      </div>
     </section>
     
     <EntityPagePinnedProjects
