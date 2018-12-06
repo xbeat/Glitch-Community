@@ -68,6 +68,15 @@ NameAndLogin.propTypes = {
   updateLogin: PropTypes.func,
 };
 
+class Embed extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      domain: this.props.domain
+    }
+  }
+}
+
 const Embed = ({domain, isAuthorized}) => (
   <>
     <FeaturedProjectOptionsPop/>
