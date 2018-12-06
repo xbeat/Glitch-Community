@@ -12,6 +12,7 @@ import EditableField from '../includes/editable-field.jsx';
 import UserEditor from '../user-editor.jsx';
 import Thanks from '../includes/thanks.jsx';
 
+import {EditButton, RemixButton, ReportButton} from '../includes/project-actions.jsx';
 import DeletedProjects from '../deleted-projects.jsx';
 import EntityPagePinnedProjects from '../entity-page-pinned-projects.jsx';
 import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
@@ -24,6 +25,15 @@ import FeaturedProjectOptionsPop from "../pop-overs/featured-project-options-pop
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
 }
+
+function trackRemix(id, domain) {
+  analytics.track("Click Remix", {
+    origin: "project page",
+    baseProjectId: id,
+    baseDomain: domain,
+  });
+}
+
 
 const NameAndLogin = ({name, login, isAuthorized, updateName, updateLogin}) => {
   if(!login) {
@@ -121,10 +131,10 @@ const UserPage = ({
       <Embed domain={projects[0].domain} isAuthorized={isAuthorized}/>
        <div className="buttons buttons-right">
 
-        {isAuthorized && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={projects[0].domain} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
+        {isAuthorized && <AddProjectToCollection className="button-small" api={api} currentUser={maybeCurrentUser} project={projects[0].domain} fromProject={false} addProjectToCollection={addProjectToCollection}/>}
         <RemixButton className="button-small"
-          name={domain} isMember={isAuthorized}
-          onClick={() => trackRemix(project.id, domain)}
+          name={projects[0].domain} isMember={isAuthorized}
+          onClick={() => trackRemix(projects[0].id, projects[0].domain)}
         />
       </div>
     </section>
