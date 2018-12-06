@@ -67,38 +67,6 @@ NameAndLogin.propTypes = {
   updateLogin: PropTypes.func,
 };
 
-class Embed extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      domain: this.props.domain
-    }
-    this.setDomain = this.setDomain.bind(this);
-  }
-  
-  setDomain(newDomain){
-    this.setState({ domain: newDomain });
-    console.log(`setting newDomain ${newDomain}`);
-  }
-  
-  render(){
-    return(
-      <>
-        <FeaturedProjectOptionsPop/>
-        <div className="glitch-embed-wrap">
-          <iframe title="embed"
-            src={`${APP_URL}/embed/#!/embed/${this.state.domain}?path=README.md&previewSize=100`}
-            allow="geolocation; microphone; camera; midi; encrypted-media"
-          ></iframe>
-        </div>
-      </>
-      );
-  }
-}
-Embed.propTypes = {
-  domain: PropTypes.string,
-};
-
 const UserPage = ({
   user: { //has science gone too far?
     id, login, name, description, thanksCount,
@@ -145,8 +113,13 @@ const UserPage = ({
     <section id="embed">      
       <h2>Featured Project<span className="emoji glowing-star emoji-in-title"></span></h2>
       
-      <Embed domain={featuredProjectDomain} isAuthorized={isAuthorized}/>
-      {isAuthorized && <FeaturedProjectOptionsPop/>}
+        <FeaturedProjectOptionsPop/>
+        <div className="glitch-embed-wrap">
+          <iframe title="embed"
+            src={`${APP_URL}/embed/#!/embed/${featuredProjectDomain}?path=README.md&previewSize=100`}
+            allow="geolocation; microphone; camera; midi; encrypted-media"
+          ></iframe>
+        </div>
       
       {isAuthorized &&
         <div className="buttons buttons-left">

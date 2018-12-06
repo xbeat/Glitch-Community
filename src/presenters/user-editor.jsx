@@ -123,7 +123,7 @@ class UserEditor extends React.Component {
   }
   
   featureProject(domain){
-    this.setState({ featuredProject: domain});
+    this.setState({ featuredProjectDomain: domain});
   }
   
   
