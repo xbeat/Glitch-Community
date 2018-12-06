@@ -77,9 +77,6 @@ const Embed = ({domain, isAuthorized}) => (
         allow="geolocation; microphone; camera; midi; encrypted-media"
       ></iframe>
     </div>
-  {isAuthorized && 
-    <p style={{color: "#636363", marginBottom: 1+"em", fontSize: "small"}}>You can tweak the way your embed looks by editing this project and going to <b>Share > Embed Project</b> <button className="button-small button-tertiary" style={{marginLeft:5+"px"}}>hide</button></p>
-  }
   </>
    
 );
@@ -130,7 +127,20 @@ const UserPage = ({
 
     <section id="embed">      
       <Embed domain={projects[0].domain} isAuthorized={isAuthorized}/>
-       <div className="buttons buttons-right">
+      
+      {isAuthorized &&
+        <div className="buttons buttons-left">
+          <EditButton className="button-small" name={projects[0].domain} isMember={isAuthorized}/>
+        </div>
+      }
+      
+      {isAuthorized && 
+        <p className="hint">
+        Tweak the way this embed looks by editing the project and going to <b>Share > Embed Project</b> <button className="button-small button-tertiary" style={{marginLeft:5+"px"}}>hide</button>
+      </p>
+      }
+      
+      <div className="buttons buttons-right">
 
         {isAuthorized && <AddProjectToCollection className="button-small" api={api} currentUser={maybeCurrentUser} project={projects[0].domain} fromProject={false} addProjectToCollection={addProjectToCollection}/>}
         <RemixButton className="button-small"
