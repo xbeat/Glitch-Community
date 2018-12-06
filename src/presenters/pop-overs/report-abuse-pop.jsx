@@ -32,7 +32,7 @@ export class ReportAbusePop extends React.Component {
           />
         </section>
         <section>
-          <p>Reported by {this.props.currentUser}</p>
+          <p>Reported by {this.props.currentUser.login}</p>
         </section>
       </dialog>
     );
