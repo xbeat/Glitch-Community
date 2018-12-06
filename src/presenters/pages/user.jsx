@@ -108,7 +108,7 @@ const UserPage = ({
     _cacheCover,
     _collections,
     loadedCollections,
-    initialFeaturedProject,
+    featuredProjectDomain,
   },
   api, isAuthorized,
   maybeCurrentUser,
@@ -143,7 +143,7 @@ const UserPage = ({
 
     <section id="embed">      
       <h2>Featured Project<span class="emoji glowing-star emoji-in-title"></span></h2>
-      <Embed domain={initialFeaturedProject} isAuthorized={isAuthorized}/>
+      <Embed domain={featuredProjectDomain} isAuthorized={isAuthorized}/>
       
       {isAuthorized &&
         <div className="buttons buttons-left">
@@ -200,7 +200,7 @@ const UserPage = ({
         leaveProject, 
         deleteProject,
         addProjectToCollection,
-          featureProject
+        featureProject
       }}
     />
     
@@ -234,7 +234,7 @@ UserPage.propTypes = {
 const UserPageContainer = ({api, user}) => (
   <CurrentUserConsumer>
     {(maybeCurrentUser) => (
-      <UserEditor api={api} initialUser={user} initialFeaturedProjectDomain={user.projects[0].domain}>
+      <UserEditor api={api} initialUser={user} featuredProjectDomain={user.projects[0].domain}>
         {(user, funcs, isAuthorized) => (
           <>
             <Helmet>
@@ -242,7 +242,7 @@ const UserPageContainer = ({api, user}) => (
             </Helmet>
 
             <ProjectsLoader api={api} projects={user.projects}>
-              {projects => <UserPage {...{api, isAuthorized, maybeCurrentUser}} user={{...user, projects}} {...funcs} />}
+              {projects => <UserPage {...{api, isAuthorized, maybeCurrentUser}} user={{...user, projects}} {...funcs}/>}
             </ProjectsLoader>
           </>
         )}

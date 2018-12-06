@@ -16,7 +16,7 @@ class UserEditor extends React.Component {
       _collections: [],
       _cacheCover: Date.now(),
       loadedCollections: false,
-      initialFeaturedProjectDomain: null,
+      featuredProjectDomain: props.initialUser.projects[0].domain,
     };
   }
 
@@ -162,19 +162,19 @@ UserEditor.propTypes = {
   initialUser: PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired,
-  initialFeaturedProjectDomain: PropTypes.string,
+  featuredProjectDomain: PropTypes.string,
   uploadAsset: PropTypes.func.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
-const UserEditorContainer = ({api, children, initialUser, initialFeaturedProjectDomain}) => (
+const UserEditorContainer = ({api, children, initialUser, featuredProjectDomain}) => (
   <ErrorHandlers>
     {errorFuncs => (
       <Uploader>
         {uploadFuncs => (
           <CurrentUserConsumer>
             {(currentUser, fetched, {update}) => (
-              <UserEditor {...{api, currentUser, initialUser, initialFeaturedProjectDomain}} updateCurrentUser={update} {...uploadFuncs} {...errorFuncs}>
+              <UserEditor {...{api, currentUser, initialUser, featuredProjectDomain}} updateCurrentUser={update} {...uploadFuncs} {...errorFuncs}>
                 {children}
               </UserEditor>
             )}
@@ -188,7 +188,7 @@ UserEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   initialUser: PropTypes.object.isRequired,
-  initialFeaturedProjectDomain: PropTypes.string,
+  featuredProjectDomain: PropTypes.string,
 };
 
-export default UserEditorContainer;
+export default UserEditorContainer;t
