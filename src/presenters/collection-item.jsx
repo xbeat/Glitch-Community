@@ -40,7 +40,7 @@ class CollectionItem extends React.Component{
   }
   
   render(){
-    const {collection, deleteCollection, isAuthorized, userLogin} = this.props;
+    const {collection, deleteCollection, isAuthorized} = this.props;
     return (
       <li>
         {isAuthorized && (
@@ -91,7 +91,6 @@ class CollectionItem extends React.Component{
 CollectionItem.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
-  userLogin: PropTypes.string.isRequired,
 };
 
 export default CollectionItem;

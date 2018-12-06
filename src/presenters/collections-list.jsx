@@ -31,7 +31,7 @@ class CollectionsList extends React.Component {
   }
   
   render() {
-    const {title, api, isAuthorized, maybeCurrentUser, userLogin} = this.props;
+    const {title, api, isAuthorized, maybeCurrentUser} = this.props;
     const deleteCollection = this.deleteCollection;
     const collections = this.props.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
     const hasCollections = !!collections.length;
@@ -49,7 +49,7 @@ class CollectionsList extends React.Component {
             {!hasCollections && <CreateFirstCollection {...{api, currentUser: maybeCurrentUser}}/>}
           </>
         }
-        <CollectionsUL {...{collections, api, isAuthorized, deleteCollection, userLogin}}/>
+        <CollectionsUL {...{collections, api, isAuthorized, deleteCollection}}/>
       </article>
     );
   }
@@ -61,7 +61,6 @@ CollectionsList.propTypes = {
   title: PropTypes.node.isRequired,
   api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  userLogin: PropTypes.string.isRequired,
 };
 
 const CreateFirstCollection = () => (
@@ -181,7 +180,7 @@ CreateCollectionButton.propTypes = {
   team: PropTypes.object,
 };  
 
-export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized, userLogin}) => {
+export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized}) => {
   // order by updatedAt date
   const orderedCollections = orderBy(collections, collection => collection.updatedAt).reverse();
   return (
@@ -191,7 +190,7 @@ export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized,
       */}
       
       { orderedCollections.map(collection => (
-        <CollectionItem key={collection.id} {...{collection, api, isAuthorized, deleteCollection, userLogin}}></CollectionItem>
+        <CollectionItem key={collection.id} {...{collection, api, isAuthorized, deleteCollection}}></CollectionItem>
       ))}
     </ul>
   );
@@ -202,7 +201,6 @@ CollectionsUL.propTypes = {
   collections: PropTypes.array.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
-  userLogin: PropTypes.string.isRequired,
 };
 
 
