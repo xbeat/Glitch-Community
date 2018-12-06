@@ -22,7 +22,7 @@ export class ReportAbusePop extends React.Component {
     return (
       <dialog className="pop-over wide-pop">
         <section className="pop-over-info">
-          <h1 className='pop-title'>Report Abuse</h1>
+          <h1 className='pop-title hello'>Report Abuse</h1>
         </section>
         <section>
           <p>This project doesn't belong on Glitch because...</p>
