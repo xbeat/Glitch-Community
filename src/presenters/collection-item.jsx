@@ -48,7 +48,7 @@ class CollectionItem extends React.Component{
         )}
 
         {(collection &&
-          <Link to={getLink(collection)}>
+          <Link to={getLink(collection)} className="button-area">
             <div className="collection"
               id={"collection-" + collection.id}>
               <div className="collection-container">
