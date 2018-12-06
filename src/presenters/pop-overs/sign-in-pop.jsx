@@ -75,6 +75,35 @@ const ProjectOptionsPop = ({...props}) => {
     </NestedPopover>
   );
 };
+
+
+export default class NestedPopover extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      alternateContentVisible: props.startAlternateVisible,
+    };
+    this.toggle = this.toggle.bind(this);
+  }
+  
+  toggle() {
+    this.setState(prevState => ({alternateContentVisible: !prevState.alternateContentVisible}));
+  }
+  
+  render() {
+    // Only use the provider on the sub menu
+    // Nested consumers want the back button, not the open menu
+    if (this.state.alternateContentVisible) {
+      return (
+        <Provider value={this.toggle}>
+          {this.props.alternateContent(this.toggle)}
+        </Provider>
+      );
+    }
+    return this.props.children(this.toggle);
+  }
+}
+
   */
   
   render() {
