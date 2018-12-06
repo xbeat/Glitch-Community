@@ -130,19 +130,18 @@ const UserPage = ({
       
       {isAuthorized &&
         <div className="buttons buttons-left">
-          <EditButton className="button-small" name={projects[0].domain} isMember={isAuthorized}/>
+          <EditButton className="button-small button-edit" name={projects[0].domain} isMember={isAuthorized}/>
         </div>
       }
       
+      {/* <button className="button-small button-tertiary" style={{marginLeft:5+"px"}}>hide</button> */}
       {isAuthorized && 
-        <p className="hint">
-        Tweak the way this embed looks by editing the project and going to <b>Share > Embed Project</b> <button className="button-small button-tertiary" style={{marginLeft:5+"px"}}>hide</button>
-      </p>
+        <p className="hint">Tweak the way this embed looks by editing the project and going to <b>Share > Embed Project</b></p>
       }
       
       <div className="buttons buttons-right">
 
-        {isAuthorized && <AddProjectToCollection className="button-small" api={api} currentUser={maybeCurrentUser} project={projects[0].domain} fromProject={false} addProjectToCollection={addProjectToCollection}/>}
+        {maybeCurrentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={maybeCurrentUser} project={projects[0]} fromProject={false} addProjectToCollection={addProjectToCollection}/>}
         <RemixButton className="button-small"
           name={projects[0].domain} isMember={isAuthorized}
           onClick={() => trackRemix(projects[0].id, projects[0].domain)}
