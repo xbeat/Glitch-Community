@@ -199,7 +199,7 @@ class TeamPage extends React.Component {
               <DevToggles>
                 {enabledToggles => (
                   <CollectionsList
-                    title={<>Collections {this.props.currentUserIsOnTeam && (
+                    title={<>Collections {!data.length && this.props.currentUserIsOnTeam && (
                       <aside className="inline-banners team-page">
                         Use collections to organize projects
                       </aside>
