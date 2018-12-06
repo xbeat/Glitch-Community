@@ -80,24 +80,24 @@ class Embed extends React.Component {
   handleChange(newDomain){
     this.setState({ domain: newDomain });
   }
+  
+  render(){
+    return(
+      <>
+        <FeaturedProjectOptionsPop/>
+        <div className="glitch-embed-wrap">
+          <iframe title="embed"
+            src={`${APP_URL}/embed/#!/embed/${this.state.domain}?path=README.md&previewSize=100`}
+            allow="geolocation; microphone; camera; midi; encrypted-media"
+          ></iframe>
+        </div>
+      </>
+      );
+  }
 }
-
-{/*
-const Embed = ({domain, isAuthorized}) => (
-  <>
-    <FeaturedProjectOptionsPop/>
-    <div className="glitch-embed-wrap">
-      <iframe title="embed"
-        src={`${APP_URL}/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
-        allow="geolocation; microphone; camera; midi; encrypted-media"
-      ></iframe>
-    </div>
-  </>   
-);
 Embed.propTypes = {
-  domain: PropTypes.string.isRequired,
+  domain: PropTypes.string,
 };
-*/}
 
 const UserPage = ({
   user: { //has science gone too far?
