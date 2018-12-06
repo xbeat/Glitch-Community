@@ -20,13 +20,19 @@ export class ReportAbusePop extends React.Component {
 
   render() {
     return (
-      <dialog className="pop-over wide-pop">
-        <section className="pop-over-info">
+      <dialog id='report-abuse-pop' className="pop-over wide-pop">
+        <section className="shaded">
+          <h1>Report Abuse</h1>
+        </section>
+        <section>
           <p>This project doesn't belong on Glitch because...</p>
-          <input
+          <textarea
             className="pop-over-input"
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
+        </section>
+        <section>
+          <p>Reported by {this.props.currentUser}</p>
         </section>
       </dialog>
     );
