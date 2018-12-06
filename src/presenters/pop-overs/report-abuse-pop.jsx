@@ -24,7 +24,7 @@ export class ReportAbusePop extends React.Component {
         <section className="pop-over-info">
           <h1 className='pop-title hello'>Report Abuse</h1>
         </section>
-        <section>
+        <section className='pop-over-actions'>
           <p>This project doesn't belong on Glitch because...</p>
           <textarea
             className="pop-over-input"
