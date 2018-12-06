@@ -73,11 +73,12 @@ class Embed extends React.Component {
     this.state = {
       domain: this.props.domain
     }
-    this.handleChange = this.handleChange.bind(this);
+    this.setDomain = this.setDomain.bind(this);
   }
   
-  handleChange(newDomain){
+  setDomain(newDomain){
     this.setState({ domain: newDomain });
+    console.log(`setting newDomain ${newDomain}`);
   }
   
   render(){
@@ -144,17 +145,8 @@ const UserPage = ({
     <section id="embed">      
       <h2>Featured Project<span className="emoji glowing-star emoji-in-title"></span></h2>
       
-      {/*
-        <Embed domain={featuredProjectDomain} isAuthorized={isAuthorized}/>
-        {isAuthorized && <FeaturedProjectOptionsPop/>}
-      */}
-      
-      <div className="glitch-embed-wrap">
-        <iframe title="embed"
-          src={`${APP_URL}/embed/#!/embed/${featuredProjectDomain}?path=README.md&previewSize=100`}
-          allow="geolocation; microphone; camera; midi; encrypted-media"
-        ></iframe>
-      </div>
+      <Embed domain={featuredProjectDomain} isAuthorized={isAuthorized}/>
+      {isAuthorized && <FeaturedProjectOptionsPop/>}
       
       {isAuthorized &&
         <div className="buttons buttons-left">
