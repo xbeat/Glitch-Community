@@ -80,7 +80,7 @@ const ProjectOptionsPop = ({...props}) => {
   render() {
     const isEnabled = this.state.email.length > 0;
     return (
-      <NestedPopover>
+      <section className="pop-over-actions last-section">
         {!this.state.done &&
           <form onSubmit={(e) => this.onSubmit(e)} style={{marginBottom: 0}}>
             Sign in with email
@@ -103,7 +103,7 @@ const ProjectOptionsPop = ({...props}) => {
           </>
         }
         
-      </NestedPopover>
+      </section>
     );
   }
 }
