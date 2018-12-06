@@ -192,16 +192,18 @@ class TeamPage extends React.Component {
           </aside>
         }
         
-        <aside className="inline-banners team-page">
-          Use collections to organize projects
-        </aside>
         {/* TEAM COLLECTIONS */}
         <DevToggles>
           {enabledToggles => ( enabledToggles.includes('Team Collections') &&
             <ErrorBoundary>
               <DataLoader get={() => this.props.api.get(`collections?teamId=${this.props.team.id}`)}>
                 {({data}) => (
-                  <CollectionsList title="Collections"
+                  <CollectionsList title={<>
+                      Collections {this.props.currentUserIsOnTeam && (
+                        <aside className="inline-banners team-page">
+                          Use collections to organize projects
+                        </aside>}
+                    </>}
                     collections={data.map(collection => ({...collection, team: this.props.team}))}
                     api={this.props.api} isAuthorized={this.props.currentUserIsOnTeam}
                     maybeCurrentUser={this.props.currentUser} maybeTeam={this.props.team}
