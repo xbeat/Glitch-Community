@@ -126,6 +126,7 @@ const UserPage = ({
     </section>
 
     <section id="embed">      
+      <h2></h2>
       <Embed domain={projects[0].domain} isAuthorized={isAuthorized}/>
       
       {isAuthorized &&
