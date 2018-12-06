@@ -1,4 +1,13 @@
 .user-page, .team-page
+  .projects-container > li, .collections-container > li
+    // Permit a 2-column layout on the user-page
+    // in between mediumViewport and largeViewport
+    @media (max-width: largeViewport)
+      width: 48%
+
+    @media (max-width: mediumViewport)
+      width: 100%
+      
   .projects, .collections
     
     .slide-up
@@ -8,6 +17,7 @@
     .slide-down
       animation: slideDown 0.1s ease-out
       animation-fill-mode: forwards
+  
 
 .user-page
   .profile-info
@@ -38,6 +48,7 @@
     .project-options
       display: block
 
+      
 .team-page
   section
     position: relative
