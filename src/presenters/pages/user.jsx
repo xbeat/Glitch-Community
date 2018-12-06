@@ -20,6 +20,7 @@ import CollectionsList from '../collections-list.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 
+import AddProjectToCollection from '../includes/add-project-to-collection.jsx';
 import FeaturedProjectOptionsPop from "../pop-overs/featured-project-options-pop.jsx";
 
 function syncPageToLogin(login) {
