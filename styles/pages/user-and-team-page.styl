@@ -36,6 +36,9 @@
       animation-fill-mode: forwards
 
 .team-page
+  section
+    position: relative
+    
   .team-url
     color: text-on-secondary-background
     font-weight: 600
@@ -74,7 +77,16 @@
   .join-team-button
     vertical-align: top
     margin-top: 3px
-    
+  
+  .collections
+    padding: 0
+    margin-bottom: 1.5rem
+    overflow: visible
+    display: inline-block   
+    .collection:hover
+      .button
+        box-shadow: none
+        background-color: white    
     
   .beta
     display: inline-flex
@@ -103,3 +115,12 @@
   .beta:hover 
     p
       text-decoration: underline
+  
+  .placeholder-mask
+    position: absolute
+    top: 25px
+    left: 0
+    right: 0
+    bottom: 0
+    background: linear-gradient(to bottom, rgba(255,255,255,0.2), white)
+    pointer-events: none

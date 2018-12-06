@@ -2,12 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
+import DevToggles from '../includes/dev-toggles';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import TeamEditor from '../team-editor.jsx';
+import {getLink as getCollectionLink} from '../../models/collection';
 import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ErrorBoundary from '../includes/error-boundary';
+import {Link} from '../includes/link';
+
+import SampleTeamCollections from '../../curated/sample-team-collections.jsx';
+import {CreateCollectionButton} from '../collections-list';
 
 import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -163,12 +169,12 @@ class TeamPage extends React.Component {
           }}
           api={this.props.api}
         />
-
+        
         <EntityPageRecentProjects
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
-          addPin={this.props.addPin}tToCollection={this.addProjectToCollection}
+          addPin={this.props.addPin}
           projectOptions={{
             addProjectToCollection: this.addProjectToCollection,
             removeProjectFromTeam: this.props.removeProject,
@@ -177,7 +183,7 @@ class TeamPage extends React.Component {
           }}
           api={this.props.api}
         />
-
+        
         { (this.props.team.projects.length === 0 && this.props.currentUserIsOnTeam) &&
           <aside className="inline-banners add-project-to-empty-team-banner">
             <div className="description-container">
@@ -186,7 +192,32 @@ class TeamPage extends React.Component {
             </div>
           </aside>
         }
+        
+        {/* TEAM COLLECTIONS */}
+        <DevToggles>
+          {enabledToggles => ( enabledToggles.includes('Team Collections') && this.props.currentUserIsOnTeam &&
+            <section>
+              <article className="collections">
+                <h2>Collections
+                  <aside className="inline-banners team-page">
+                    Use collections to organize projects
+                  </aside>
+                </h2>
+                
+                <CreateCollectionButton api={this.props.api} currentUser={this.props.currentUser} team={this.props.team}/>
 
+                {this.props.team.collections.length ? (
+                  <ul>
+                    {this.props.team.collections.map(collection => (
+                      <li key={collection.id}><Link to={getCollectionLink({...collection, team: this.props.team})}>{collection.name}</Link></li>
+                    ))}
+                  </ul>
+                ) : <SampleTeamCollections/>}
+              </article>
+            </section>
+          )}
+        </DevToggles>
+        
         { this.props.currentUserIsOnTeam && <ErrorBoundary>
           <TeamAnalytics
             api={this.props.api}
