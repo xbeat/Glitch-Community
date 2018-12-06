@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Vera Molnár in Audio Form',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_hearing-vera-molnar.png?1543839845270",
-    link: 'https://glitch.com/~hearing-vera-molnar'
+    title: 'Display 3D and AR Content on the Web',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_model-viewer.png?1543839844608",
+    link: 'https://glitch.com/~model-viewer'
   },{
-    title: 'Handsfree.js Starter Kit',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_handsfree-starter.png?1543839845139",
-    link: 'https://glitch.com/~handsfree-starter'
+    title: 'Learn Material Theming With Dogs',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_adopt-a-pup.png?1543839844765",
+    link: 'https://glitch.com/~adopt-a-pup'
   },{
-    title: 'Generate Circle Chord Patterns',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_chord-machine.png?1543839845017",
-    link: 'https://glitch.com/~chordmachine'
+    title: 'Counting Down in 3, 2, 1...',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_simple-countdown.png?1543839844460",
+    link: 'https://glitch.com/~simple-countdown'
   }  
 ];
