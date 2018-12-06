@@ -141,7 +141,7 @@ const UserPage = ({
       
       <div className="buttons buttons-right">
 
-        {maybeCurrentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={maybeCurrentUser} project={projects[0]} fromProject={false} addProjectToCollection={addProjectToCollection}/>}
+        {maybeCurrentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={maybeCurrentUser} project={projects[0]} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
         <RemixButton className="button-small"
           name={projects[0].domain} isMember={isAuthorized}
           onClick={() => trackRemix(projects[0].id, projects[0].domain)}
