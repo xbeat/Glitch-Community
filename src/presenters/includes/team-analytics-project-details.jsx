@@ -35,6 +35,9 @@ ProjectAvatar.propTypes = {
 };
 
 const ProjectDetails = ({projectDetails}) => {
+  // This uses dayjs().fromNow() a bunch of times
+  // That requires the relativeTime plugin
+  // Which is added to dayjs elsewhere
   return (
     <article className="project-details">
       <ProjectLink project={projectDetails}>
