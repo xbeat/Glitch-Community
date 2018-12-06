@@ -50,11 +50,15 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
     animate(event, 'slide-down', () => props.deleteProject(props.project.id));
   }
   
+  function featureProject(){
+    animate(event, 'slide-down', () => props.featureProject(props.project.doamin));
+  }
+  
   return(
     <dialog className="pop-over project-options-pop">
       {props.currentUserIsOnProject &&
         <section className="pop-over-actions">
-          <PopoverButton onClick="" text="Feature" emoji="glowing-star"/>
+          <PopoverButton onClick={featureProject} text="Feature" emoji="glowing-star"/>
         </section>
       }
       

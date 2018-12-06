@@ -14,10 +14,15 @@ const PopoverButton = ({onClick, text, emoji}) => (
 
 // Project Options Pop
 const FeaturedProjectOptionsPop = ({...props}) => {
+
+  function unfeatureProject(){
+    props.unfeatureProject(props.project.domain);
+  }
+  
   return(
     <dialog className="pop-over project-options-pop">
       <section className="pop-over-actions">
-        <PopoverButton onClick="" text="Unfeature"/>
+        <PopoverButton onClick={unfeatureProject} text="Unfeature"/>
       </section>
     </dialog>
   );

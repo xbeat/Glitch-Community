@@ -35,7 +35,6 @@ function trackRemix(id, domain) {
   });
 }
 
-
 const NameAndLogin = ({name, login, isAuthorized, updateName, updateLogin}) => {
   if(!login) {
     return <h1 className="login">Anonymous</h1>;
