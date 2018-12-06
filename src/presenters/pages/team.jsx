@@ -5,15 +5,13 @@ import Helmet from 'react-helmet';
 import DevToggles from '../includes/dev-toggles';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import TeamEditor from '../team-editor.jsx';
-import {getLink as getCollectionLink} from '../../models/collection';
 import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ErrorBoundary from '../includes/error-boundary';
-import {Link} from '../includes/link';
 
 import SampleTeamCollections from '../../curated/sample-team-collections.jsx';
-import {CreateCollectionButton} from '../collections-list';
+import {CreateCollectionButton, CollectionsList} from '../collections-list';
 
 import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -195,24 +193,26 @@ class TeamPage extends React.Component {
         
         {/* TEAM COLLECTIONS */}
         <DevToggles>
-          {enabledToggles => ( enabledToggles.includes('Team Collections') && this.props.currentUserIsOnTeam &&
+          {enabledToggles => ( enabledToggles.includes('Team Collections') &&
+            <DataLoader get={() => api.get(`collections?teamId=${this.props.team.id}`)}>
+              {({data}) => (
+                                  <CollectionsList/>
+              )}
+            </DataLoader>
             <section>
-              <article className="collections">
-                <h2>Collections
                   <aside className="inline-banners team-page">
                     Use collections to organize projects
                   </aside>
+              <article className="collections">
+                <h2>Collections
                 </h2>
                 
                 <CreateCollectionButton api={this.props.api} currentUser={this.props.currentUser} team={this.props.team}/>
 
-                {this.props.team.collections.length ? (
-                  <ul>
-                    {this.props.team.collections.map(collection => (
-                      <li key={collection.id}><Link to={getCollectionLink({...collection, team: this.props.team})}>{collection.name}</Link></li>
-                    ))}
-                  </ul>
-                ) : <SampleTeamCollections/>}
+                  {({data}) => this.props.team.collections.length ? (
+                    <CollectionsUL collections={this.props.team.collections.map(collection => ({...collection, team: this.props.team}))}/>
+                  ) : <SampleTeamCollections/>}
+                </DataLoader>
               </article>
             </section>
           )}

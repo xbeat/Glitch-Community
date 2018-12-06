@@ -22,9 +22,6 @@ const getOrNull = async(api, route) => {
 
 const getUserById = async (api, id) => {
   const user = await getOrNull(api, `/users/${id}`);
-  user.collections.forEach(collection => {
-    collection.user = user;
-  });
   return user;
 };
 
@@ -42,9 +39,6 @@ const parseTeam = (team) => {
     return user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL;
   });
   team.adminIds = adminIds.map(user => user.id);
-  team.collections.forEach(collection => {
-    collection.team = team;
-  });
   return team;
 };
 

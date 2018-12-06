@@ -31,7 +31,7 @@ class CollectionsList extends React.Component {
   }
   
   render() {
-    const {title, api, isAuthorized, maybeCurrentUser} = this.props;
+    const {title, api, isAuthorized, maybeCurrentUser, maybeTeam} = this.props;
     const deleteCollection = this.deleteCollection;
     const collections = this.props.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
     const hasCollections = !!collections.length;
@@ -45,7 +45,7 @@ class CollectionsList extends React.Component {
         <h2>{title}</h2>
         {canMakeCollections &&
           <>
-            <CreateCollectionButton {...{api, currentUser: maybeCurrentUser}}/>
+            <CreateCollectionButton {...{api, currentUser: maybeCurrentUser, team: maybeTeam}}/>
             {!hasCollections && <CreateFirstCollection {...{api, currentUser: maybeCurrentUser}}/>}
           </>
         }
@@ -58,6 +58,7 @@ class CollectionsList extends React.Component {
 CollectionsList.propTypes = {
   collections: PropTypes.array.isRequired,
   maybeCurrentUser: PropTypes.object,
+  maybeTeam: PropTypes.object,
   title: PropTypes.node.isRequired,
   api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,

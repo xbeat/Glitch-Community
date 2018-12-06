@@ -109,11 +109,10 @@ const UserPage = ({
     
     {(loadedCollections && !!login &&
       <CollectionsList title="Collections" 
-        collections={_collections} 
+        collections={_collections.map(collection => ({...collection, user: {id, login}}))} 
         api={api} 
         isAuthorized={isAuthorized}
         maybeCurrentUser={maybeCurrentUser}
-        userLogin={login}
       />
     )}
 
