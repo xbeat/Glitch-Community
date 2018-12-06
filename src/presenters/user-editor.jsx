@@ -16,6 +16,7 @@ class UserEditor extends React.Component {
       _collections: [],
       _cacheCover: Date.now(),
       loadedCollections: false,
+      initialFeaturedProjectDomain: null,
     };
   }
 
@@ -121,6 +122,11 @@ class UserEditor extends React.Component {
     this.setState({_collections: data, loadedCollections: true});
   }
   
+  featureProject(domain){
+    this.setState({ featuredProject: domain});
+  }
+  
+  
   componentDidMount() {
     this.loadCollections();
   }
@@ -141,6 +147,7 @@ class UserEditor extends React.Component {
       undeleteProject: id => this.undeleteProject(id).catch(handleError),
       setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
       addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleError),
+      featureProject: (domain) => this.featureProject(domain)
     };
     return this.props.children(this.state, funcs, this.isCurrentUser());
   }
@@ -155,18 +162,19 @@ UserEditor.propTypes = {
   initialUser: PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired,
+  initialFeaturedProjectDomain: PropTypes.string,
   uploadAsset: PropTypes.func.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
-const UserEditorContainer = ({api, children, initialUser}) => (
+const UserEditorContainer = ({api, children, initialUser, initialFeaturedProjectDomain}) => (
   <ErrorHandlers>
     {errorFuncs => (
       <Uploader>
         {uploadFuncs => (
           <CurrentUserConsumer>
             {(currentUser, fetched, {update}) => (
-              <UserEditor {...{api, currentUser, initialUser}} updateCurrentUser={update} {...uploadFuncs} {...errorFuncs}>
+              <UserEditor {...{api, currentUser, initialUser, initialFeaturedProjectDomain}} updateCurrentUser={update} {...uploadFuncs} {...errorFuncs}>
                 {children}
               </UserEditor>
             )}
@@ -180,6 +188,7 @@ UserEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   initialUser: PropTypes.object.isRequired,
+  initialFeaturedProjectDomain: PropTypes.string,
 };
 
 export default UserEditorContainer;
