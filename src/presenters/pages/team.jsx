@@ -12,7 +12,7 @@ import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ErrorBoundary from '../includes/error-boundary';
 
 import SampleTeamCollections from '../../curated/sample-team-collections.jsx';
-import {CollectionsList} from '../collections-list';
+import CollectionsList from '../collections-list';
 
 import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -201,7 +201,7 @@ class TeamPage extends React.Component {
             <ErrorBoundary>
               <DataLoader get={() => this.props.api.get(`collections?teamId=${this.props.team.id}`)}>
                 {({data}) => (
-                  <CollectionsList
+                  <CollectionsList title="Collections"
                     collections={data.map(collection => ({...collection, team: this.props.team}))}
                     api={this.props.api} isAuthorized={this.props.currentUserIsOnTeam}
                     maybeCurrentUser={this.props.currentUser} maybeTeam={this.props.team}
