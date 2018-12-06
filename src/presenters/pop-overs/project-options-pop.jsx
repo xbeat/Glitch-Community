@@ -51,7 +51,8 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
   }
   
   function featureProject(){
-    animate(event, 'slide-down', () => props.featureProject(props.project.doamin));
+    console.log(`featuring project ${props.project.domain}`);
+    animate(event, 'slide-down', () => props.featureProject(props.project.domain));
   }
   
   return(

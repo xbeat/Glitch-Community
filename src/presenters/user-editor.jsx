@@ -191,4 +191,4 @@ UserEditorContainer.propTypes = {
   featuredProjectDomain: PropTypes.string,
 };
 
-export default UserEditorContainer;t
+export default UserEditorContainer;

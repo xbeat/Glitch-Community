@@ -142,8 +142,19 @@ const UserPage = ({
     </section>
 
     <section id="embed">      
-      <h2>Featured Project<span class="emoji glowing-star emoji-in-title"></span></h2>
-      <Embed domain={featuredProjectDomain} isAuthorized={isAuthorized}/>
+      <h2>Featured Project<span className="emoji glowing-star emoji-in-title"></span></h2>
+      
+      {/*
+        <Embed domain={featuredProjectDomain} isAuthorized={isAuthorized}/>
+        {isAuthorized && <FeaturedProjectOptionsPop/>}
+      */}
+      
+      <div className="glitch-embed-wrap">
+        <iframe title="embed"
+          src={`${APP_URL}/embed/#!/embed/${featuredProjectDomain}?path=README.md&previewSize=100`}
+          allow="geolocation; microphone; camera; midi; encrypted-media"
+        ></iframe>
+      </div>
       
       {isAuthorized &&
         <div className="buttons buttons-left">
