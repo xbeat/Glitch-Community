@@ -20,9 +20,9 @@ export class ReportAbusePop extends React.Component {
 
   render() {
     return (
-      <dialog id='report-abuse-pop' className="pop-over wide-pop">
-        <section className="shaded">
-          <h1>Report Abuse</h1>
+      <dialog className="pop-over wide-pop">
+        <section className="pop-over-info">
+          <h1 className='pop-title'>Report Abuse</h1>
         </section>
         <section>
           <p>This project doesn't belong on Glitch because...</p>
