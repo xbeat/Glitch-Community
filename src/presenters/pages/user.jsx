@@ -108,6 +108,7 @@ const UserPage = ({
     _cacheCover,
     _collections,
     loadedCollections,
+    initialFeaturedProject,
   },
   api, isAuthorized,
   maybeCurrentUser,
@@ -142,7 +143,7 @@ const UserPage = ({
 
     <section id="embed">      
       <h2>Featured Project<span class="emoji glowing-star emoji-in-title"></span></h2>
-      <Embed domain={projects[0].domain} isAuthorized={isAuthorized}/>
+      <Embed domain={initialFeaturedProject} isAuthorized={isAuthorized}/>
       
       {isAuthorized &&
         <div className="buttons buttons-left">
@@ -233,7 +234,7 @@ UserPage.propTypes = {
 const UserPageContainer = ({api, user}) => (
   <CurrentUserConsumer>
     {(maybeCurrentUser) => (
-      <UserEditor api={api} initialUser={user}>
+      <UserEditor api={api} initialUser={user} initialFeaturedProjectDomain={user.projects[0].domain}>
         {(user, funcs, isAuthorized) => (
           <>
             <Helmet>
