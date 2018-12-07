@@ -132,7 +132,9 @@ const UserPage = ({
       
       }
       
-      {/* <button className="button-small button-tertiary" style={{marginLeft:5+"px"}}>hide</button> */}
+      {/* Might want to allow users to hide this message once they've seen it once
+        <button className="button-small button-tertiary" style={{marginLeft:5+"px"}}>hide</button> 
+      */}
       {isAuthorized && 
         <p className="hint">Tweak the way this embed looks by editing the project and going to <b>Share > Embed Project</b></p>
       }
@@ -140,9 +142,12 @@ const UserPage = ({
       <div className="buttons buttons-right">
 
         {maybeCurrentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={maybeCurrentUser} project={projects[0]} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
+        
+        {/* Can add to track remix later 
+          onClick={() => trackRemix(projects[0].id, projects[0].domain)}
+        */}
         <RemixButton className="button-small"
           name={projects[0].domain} isMember={isAuthorized}
-          onClick={() => trackRemix(projects[0].id, projects[0].domain)}
         />
       </div>
     </section>
