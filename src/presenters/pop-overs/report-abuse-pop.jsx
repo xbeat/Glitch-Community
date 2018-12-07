@@ -12,6 +12,7 @@ export class ReportAbusePop extends React.Component {
       inputValue: ""
     };
     this.submitReport = this.submitReport.bind(this);
+    this.onChange = this.onChange.bind(this);
     
     // this.onClick = this.onClick.bind(this);
   }
@@ -28,13 +29,20 @@ export class ReportAbusePop extends React.Component {
       });
 */
   
-  submitReport() {
+  async submitReport() {
     try {
- //     const {data} = await axios.post('https://support-poster.glitch.me/post', {category: 18, raw: this.state.inputValue, title: });
+      const {data} = await axios.post('https://support-poster.glitch.me/post', {category: 18, raw: this.state.inputValue, title: this.props.projectName});
+      console.log(data);
       //valid = !data.free;
     } catch (error) {
       // captureException(error);
     }
+  }
+  
+  onChange(event) {
+    this.setState({
+      inputValue: event.target.value
+    });
   }
 
   render() {
@@ -49,6 +57,7 @@ export class ReportAbusePop extends React.Component {
           <textarea
             className="pop-over-input"
             value={this.state.inputValue}
+            onChange={this.onChange}
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>
