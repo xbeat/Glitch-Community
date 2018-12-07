@@ -1,5 +1,3 @@
-/* global analytics */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -72,7 +70,9 @@ class NewStuff extends React.Component {
     const {children, isSignedIn, showNewStuff, newStuffReadId} = this.props;
     const dogVisible = isSignedIn && showNewStuff && (newStuffReadId < latestId);
     const show = () => {
-      analytics.track("Pupdate");
+      if(window.analytics) {
+        window.analytics.track("Pupdate");
+      }
       this.showNewStuff(setVisible);
     };
     return (
