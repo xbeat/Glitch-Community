@@ -29,11 +29,22 @@ export class ReportAbusePop extends React.Component {
       });
 */
   
+  padTo(content, length) {
+    while (content.length < length) {
+      content += "_";
+    }
+    return content;
+  }
+  
+  
   async submitReport() {
     try {
-      const {data} = await axios.post('https://support-poster.glitch.me/post', {category: 18, raw: this.state.inputValue + '01234567890123456789', title: this.props.projectName + '01234567890123456789'});
+      const {data} = await axios.post('https://support-poster.glitch.me/post', {
+        category: 18,
+        raw: this.padTo(this.state.inputValue, 21), 
+        title: `Abuse Report for ${this.props.projectName}`
+      });
       console.log(data);
-      //valid = !data.free;
     } catch (error) {
       // captureException(error);
     }
