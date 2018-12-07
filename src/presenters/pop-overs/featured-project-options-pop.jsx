@@ -15,15 +15,9 @@ const PopoverButton = ({onClick, text, emoji}) => (
 // Project Options Pop
 const FeaturedProjectOptionsPop = ({...props}) => {
   
-  function animate(event, className, func) {
-    const projectContainer = event.target.closest('li');
-    projectContainer.addEventListener('animationend', func, {once: true});
-    projectContainer.classList.add(className);
-    props.togglePopover();
-  }
-
   function unfeatureProject(){
-    const featureContainer = event.target.closest(
+    const featuredContainer = document.getElementById('embed');
+    featuredContainer.classList.add('slide-down');
   }
   
   return(
@@ -48,30 +42,18 @@ FeaturedProjectOptionsPop.defaultProps = {
 // Project Options Container
 // create as stateful react component
 export default function FeaturedProjectOptions({projectOptions={}, project, api}, {...props}) {
-  if(Object.keys(projectOptions).length === 0) {
-    return null;
-  }
-
-  function currentUserIsOnProject(user) {
-    let projectUsers = project.users.map(projectUser => {
-      return projectUser.id;
-    });
-    if (projectUsers.includes(user.id)) {
-      return true;
-    }
-  }
 
   return (
     <PopoverContainer>
       {({togglePopover, visible}) => (
         <CurrentUserConsumer>
           {user => (
-            <div>
+            <>
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <FeaturedProjectOptionsPop {...props} {...projectOptions} project={project} api={api} currentUser={user} togglePopover={togglePopover} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
-            </div>
+              { visible && <FeaturedProjectOptionsPop {...props} {...projectOptions} project={project} api={api} currentUser={user} togglePopover={togglePopover}/> }
+            </>
           )}
         </CurrentUserConsumer>
       )}
