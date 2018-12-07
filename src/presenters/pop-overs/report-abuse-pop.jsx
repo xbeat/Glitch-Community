@@ -31,7 +31,7 @@ export class ReportAbusePop extends React.Component {
   
   async submitReport() {
     try {
-      const {data} = await axios.post('https://support-poster.glitch.me/post', {category: 18, raw: this.state.inputValue, title: this.props.projectName});
+      const {data} = await axios.post('https://support-poster.glitch.me/post', {category: 18, raw: this.state.inputValue + '01234567890123456789', title: this.props.projectName + '01234567890123456789'});
       console.log(data);
       //valid = !data.free;
     } catch (error) {
