@@ -8,8 +8,11 @@ import { CurrentUserConsumer } from "../current-user.jsx";
 export class ReportAbusePop extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      inputValue: ""
+    };
     this.submitReport = this.submitReport.bind(this);
+    
     // this.onClick = this.onClick.bind(this);
   }
   /*
@@ -19,12 +22,18 @@ export class ReportAbusePop extends React.Component {
   }
 */
   
+  /*
+  this.setState({
+        inputValue: newValue
+      });
+*/
+  
   submitReport() {
     try {
-      const {data} = await axios.get(`https://freemail.glitch.me/${domain}`);
-      valid = !data.free;
+ //     const {data} = await axios.post('https://support-poster.glitch.me/post', {category: 18, raw: this.state.inputValue, title: });
+      //valid = !data.free;
     } catch (error) {
-      captureException(error);
+      // captureException(error);
     }
   }
 
@@ -39,6 +48,7 @@ export class ReportAbusePop extends React.Component {
           <hr />
           <textarea
             className="pop-over-input"
+            value={this.state.inputValue}
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>
