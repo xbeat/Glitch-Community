@@ -114,9 +114,7 @@ export default class NestedPopover extends React.Component {
           <form onSubmit={(e) => this.onSubmit(e)} style={{marginBottom: 0}}>
             Sign in with email
             <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
-            <button style={{marginTop: 10, marginBottom: 0}} className="button-small button-link has-emoji" disabled={!isEnabled} onClick={() => {this.props.onClick();}}>
-              Email Sign In <span className="emoji email emoji-in-title"></span>
-            </button>
+            <button className="button-small button-link has-emoji" disabled={!isEnabled}>Send Link</button>
           </form>
         }
         {(this.state.done && !this.state.error) &&
@@ -163,7 +161,7 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
             <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
             <DevToggles>
               {(enabledToggles) => (
-                enabledToggles.includes("Email Login") && <EmailSignInButton onClick={onClick}/>
+                enabledToggles.includes("Email Login") && <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
               )}
             </DevToggles>
           </section>
@@ -187,7 +185,10 @@ export default function SignInPopContainer(props) {
       {({togglePopover, visible}) => (
         <div className="button-wrap">
           <button className="button button-small" onClick={togglePopover}>Sign in</button>
-          {visible && <SignInPop {...props}/>}
+          {visible && (
+            <NestedPopover alternateContent={() => <CreateTeamPop {...props}/>} startAlternateVisible={createTeamOpen}>
+              {showEmailLogin => <SignInPop {...props} {...{togglePopover, showEmailLogin}}/>}
+            </NestedPopover>)}
         </div>
       )}
     </PopoverContainer>
