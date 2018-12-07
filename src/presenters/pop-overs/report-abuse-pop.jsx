@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PopoverContainer from "./popover-container.jsx";
+import axios from "axios";
 
 import { CurrentUserConsumer } from "../current-user.jsx";
 
@@ -8,7 +9,7 @@ export class ReportAbusePop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-
+    this.submitReport = this.submitReport.bind(this);
     // this.onClick = this.onClick.bind(this);
   }
   /*
@@ -17,6 +18,15 @@ export class ReportAbusePop extends React.Component {
     this.props.togglePopover();
   }
 */
+  
+  submitReport() {
+    try {
+      const {data} = await axios.get(`https://freemail.glitch.me/${domain}`);
+      valid = !data.free;
+    } catch (error) {
+      captureException(error);
+    }
+  }
 
   render() {
     return (
@@ -36,7 +46,7 @@ export class ReportAbusePop extends React.Component {
           <p className='info-description right'>from <strong>{this.props.currentUser.login}</strong></p>
         </section>
         <section>
-          <button className="button">Submit Report 📧</button>
+          <button className="button" onClick={this.submitReport}>Submit Report 📧</button>
         </section>
       </dialog>
     );
