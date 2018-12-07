@@ -186,7 +186,7 @@ export default function SignInPopContainer(props) {
         <div className="button-wrap">
           <button className="button button-small" onClick={togglePopover}>Sign in</button>
           {visible && (
-            <NestedPopover alternateContent={() => <CreateTeamPop {...props}/>} startAlternateVisible={createTeamOpen}>
+            <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
               {showEmailLogin => <SignInPop {...props} {...{togglePopover, showEmailLogin}}/>}
             </NestedPopover>)}
         </div>
