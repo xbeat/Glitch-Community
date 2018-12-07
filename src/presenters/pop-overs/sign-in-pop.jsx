@@ -68,30 +68,32 @@ class EmailHandler extends React.Component {
   render() {
     const isEnabled = this.state.email.length > 0;
     return (
-      <section className="pop-over-actions last-section">
+      <dialog className="pop-over sign-in-pop">
         <NestedPopoverTitle>
           Email Signin <span className="emoji email" />
         </NestedPopoverTitle>
-        {!this.state.done &&
-          <form onSubmit={(e) => this.onSubmit(e)} style={{marginBottom: 0}}>
-            Sign in with email
-            <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
-            <button className="button-small button-link has-emoji" disabled={!isEnabled}>Send Link</button>
-          </form>
-        }
-        {(this.state.done && !this.state.error) &&
-          <>
-            <div className="notification notifySuccess">Almost Done</div>
-            <div>Please click the confirmation link sent to {this.state.email}.</div>
-          </>
-        }
-        {(this.state.done && this.state.error) &&
-          <>
-            <div className="notification notifyError">Error</div>
-            <div>Something went wrong, email not sent.</div>
-          </>
-        }       
-      </section>
+        <section className="pop-over-actions first-section">
+          {!this.state.done &&
+            <form onSubmit={(e) => this.onSubmit(e)} style={{marginBottom: 0}}>
+              Sign in with email
+              <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
+              <button style={{marginTop: 10}} className="button-small button-link" disabled={!isEnabled}>Send Link</button>
+            </form>
+          }
+          {(this.state.done && !this.state.error) &&
+            <>
+              <div className="notification notifySuccess">Almost Done</div>
+              <div>Please click the confirmation link sent to {this.state.email}.</div>
+            </>
+          }
+          {(this.state.done && this.state.error) &&
+            <>
+              <div className="notification notifyError">Error</div>
+              <div>Something went wrong, email not sent.</div>
+            </>
+          }       
+        </section>
+      </dialog>
     );
   }
 }
