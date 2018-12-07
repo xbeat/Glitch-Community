@@ -22,7 +22,7 @@ export class ReportAbusePop extends React.Component {
     return (
       <dialog className="pop-over wide-pop">
         <section className="pop-over-info">
-          <h1 className='pop-title hello'>Report Abuse</h1>
+          <h1 className='pop-title'>Report Abuse</h1>
         </section>
         <section className='pop-over-actions'>
           <p>This project doesn't belong on Glitch because...</p>
@@ -31,8 +31,8 @@ export class ReportAbusePop extends React.Component {
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>
-        <section className="popover-secondary-background">
-          <p>Reported by {this.props.currentUser.login}</p>
+        <section className="pop-over-info">
+          <p className='pop-over-description'>Reported by {this.props.currentUser.login}</p>
         </section>
         <section>
           <button className="button">Submit Report 📧</button>
