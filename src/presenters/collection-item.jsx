@@ -88,6 +88,7 @@ class CollectionItem extends React.Component{
 }
 
 CollectionItem.propTypes = {
+  collection: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
 };
