@@ -16,20 +16,15 @@ const PopoverButton = ({onClick, text, emoji}) => (
 const FeaturedProjectOptionsPop = ({...props}) => {
   
   function unfeatureProject(){
-    console.log('unfeature');
     const featuredContainer = document.getElementById('embed');
     featuredContainer.classList.add('slide-down');
     // should update content on page accordingly
   }
   
-  function hello(){
-    console.log('hello');
-  }
-  
   return(
     <dialog className="pop-over project-options-pop">
       <section className="pop-over-actions">
-        <PopoverButton onClick={hello} text="Unfeature" emoji="arrow-down"/>
+        <PopoverButton onClick={unfeatureProject} text="Unfeature" emoji="arrow-down"/>
       </section>
     </dialog>
   );
@@ -54,12 +49,12 @@ export default function FeaturedProjectOptions({projectOptions={}, project, api}
       {({togglePopover, visible}) => (
         <CurrentUserConsumer>
           {user => (
-            <>
+            <div>
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
               { visible && <FeaturedProjectOptionsPop {...props} {...projectOptions} project={project} api={api} currentUser={user} togglePopover={togglePopover}/> }
-            </>
+            </div>
           )}
         </CurrentUserConsumer>
       )}
