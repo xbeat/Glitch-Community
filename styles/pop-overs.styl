@@ -15,7 +15,11 @@ details.popover-container
   > .pop-over
     top: 100%
     left: 0
-    
+
+.popover-secondary-background
+  background-color: secondary-background
+  border-bottom: 1px solid secondary
+  
 .pop-over
   text-align: left
   background-color: background-color
@@ -96,8 +100,7 @@ details.popover-container
 
   .pop-over-info
     margin: 0
-    background-color: secondary-background
-    border-bottom: 1px solid secondary
+    @extends .popover-secondary-background
     h1.pop-title 
       margin-top: 0
       margin-bottom: 0
@@ -199,9 +202,8 @@ details.popover-container
   
 .team-user-info-pop, .user-options-pop
   section:first-child
-    border-bottom: 1px solid secondary
+    @extends .popover-secondary-background
     border-radius: 0
-    background-color: #f5f5f5
     
   .pop-over-actions
     .user-info

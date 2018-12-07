@@ -31,8 +31,11 @@ export class ReportAbusePop extends React.Component {
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>
-        <section>
+        <section className="popover-secondary-background">
           <p>Reported by {this.props.currentUser.login}</p>
+        </section>
+        <section>
+          <button className="button">Submit Report 📧</button>
         </section>
       </dialog>
     );
