@@ -9,6 +9,7 @@ import PopoverContainer from './popover-container';
 import {DevToggles} from '../includes/dev-toggles';
 import {captureException} from '../../utils/sentry';
 import NestedPopover from './popover-nested.jsx';
+import {NestedPopoverTitle} from './popover-nested.jsx';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
@@ -68,6 +69,9 @@ class EmailHandler extends React.Component {
     const isEnabled = this.state.email.length > 0;
     return (
       <section className="pop-over-actions last-section">
+        <NestedPopoverTitle>
+          Email Signin <span className="emoji email" />
+        </NestedPopoverTitle>
         {!this.state.done &&
           <form onSubmit={(e) => this.onSubmit(e)} style={{marginBottom: 0}}>
             Sign in with email
