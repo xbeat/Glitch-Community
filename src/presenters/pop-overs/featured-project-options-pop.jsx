@@ -14,9 +14,16 @@ const PopoverButton = ({onClick, text, emoji}) => (
 
 // Project Options Pop
 const FeaturedProjectOptionsPop = ({...props}) => {
+  
+  function animate(event, className, func) {
+    const projectContainer = event.target.closest('li');
+    projectContainer.addEventListener('animationend', func, {once: true});
+    projectContainer.classList.add(className);
+    props.togglePopover();
+  }
 
   function unfeatureProject(){
-    props.unfeatureProject(props.project.domain);
+    const featureContainer = event.target.closest(
   }
   
   return(
@@ -74,6 +81,6 @@ export default function FeaturedProjectOptions({projectOptions={}, project, api}
 
 FeaturedProjectOptions.propTypes = {
   api: PropTypes.func,
-  project: PropTypes.object.isRequired,
+  project: PropTypes.object,
 };
 

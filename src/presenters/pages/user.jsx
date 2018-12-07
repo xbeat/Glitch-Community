@@ -113,7 +113,7 @@ const UserPage = ({
     <section id="embed">      
       <h2>Featured Project<span className="emoji glowing-star emoji-in-title"></span></h2>
       
-        <FeaturedProjectOptionsPop/>
+        <FeaturedProjectOptionsPop />
         <div className="glitch-embed-wrap">
           <iframe title="embed"
             src={`${APP_URL}/embed/#!/embed/${featuredProjectDomain}?path=README.md&previewSize=100`}
