@@ -26,13 +26,14 @@ export class ReportAbusePop extends React.Component {
         </section>
         <section className='pop-over-actions'>
           <p>This project doesn't belong on Glitch because...</p>
+          <hr />
           <textarea
             className="pop-over-input"
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>
         <section className="pop-over-info">
-          <p className='info-description'>Reported by {this.props.currentUser.login}</p>
+          <p className='info-description right'>from <strong>{this.props.currentUser.login}</strong></p>
         </section>
         <section>
           <button className="button">Submit Report 📧</button>
