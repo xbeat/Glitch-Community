@@ -13,11 +13,11 @@ Example:
 
 export default [
   {
-    title: 'Display 3D and AR Content on the Web',
+    title: 'Display 3D and AR Content',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_model-viewer.png?1543839844608",
     link: 'https://glitch.com/~model-viewer'
   },{
-    title: 'Learn Material Theming With Dogs',
+    title: 'Learn Material Theming',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_adopt-a-pup.png?1543839844765",
     link: 'https://glitch.com/~adopt-a-pup'
   },{
