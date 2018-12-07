@@ -16,14 +16,20 @@ const PopoverButton = ({onClick, text, emoji}) => (
 const FeaturedProjectOptionsPop = ({...props}) => {
   
   function unfeatureProject(){
+    console.log('unfeature');
     const featuredContainer = document.getElementById('embed');
     featuredContainer.classList.add('slide-down');
+    // should update content on page accordingly
+  }
+  
+  function hello(){
+    console.log('hello')
   }
   
   return(
     <dialog className="pop-over project-options-pop">
       <section className="pop-over-actions">
-        <PopoverButton onClick={unfeatureProject} text="Unfeature"/>
+        <PopoverButton onClick={hello} text="Unfeature" emoji="arrow-down"/>
       </section>
     </dialog>
   );
