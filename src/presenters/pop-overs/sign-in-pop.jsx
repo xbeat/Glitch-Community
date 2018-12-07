@@ -137,6 +137,12 @@ export default class NestedPopover extends React.Component {
   }
 }
 
+const EmailSignInButton = (props) => (
+  <button className="button button-small button-link has-emoji" onClick={() => {props.onClick();}}>
+    Email Sign In <span className="emoji email emoji-in-title"></span>
+  </button>
+);
+
 const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
   <LocalStorage name="destinationAfterAuth">
     {(destination, setDestination) => {
@@ -155,12 +161,12 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
             {prompt}
             <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
             <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
+            <DevToggles>
+              {(enabledToggles) => (
+                enabledToggles.includes("Email Login") && <EmailSignInButton onClick={onClick}/>
+              )}
+            </DevToggles>
           </section>
-          <DevToggles>
-            {(enabledToggles) => (
-              enabledToggles.includes("Email Login") && <EmailHandler api={api} onClick={onClick}/>
-            )}
-          </DevToggles>
         </div>
       );
     }}
