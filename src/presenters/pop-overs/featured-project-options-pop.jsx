@@ -23,7 +23,7 @@ const FeaturedProjectOptionsPop = ({...props}) => {
   }
   
   function hello(){
-    console.log('hello')
+    console.log('hello');
   }
   
   return(

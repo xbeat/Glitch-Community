@@ -113,18 +113,23 @@ const UserPage = ({
     <section id="embed">      
       <h2>Featured Project<span className="emoji glowing-star emoji-in-title"></span></h2>
       
-        {isAuthorized && <FeaturedProjectOptionsPop />}
-        <div className="glitch-embed-wrap">
-          <iframe title="embed"
-            src={`${APP_URL}/embed/#!/embed/${featuredProjectDomain}?path=README.md&previewSize=100`}
-            allow="geolocation; microphone; camera; midi; encrypted-media"
-          ></iframe>
+      {isAuthorized && <FeaturedProjectOptionsPop />}
+      <div className="glitch-embed-wrap">
+        <iframe title="embed"
+          src={`${APP_URL}/embed/#!/embed/${featuredProjectDomain}?path=README.md&previewSize=100`}
+          allow="geolocation; microphone; camera; midi; encrypted-media"
+        ></iframe>
+      </div>
+      
+      {isAuthorized ?
+        <div className="buttons buttons-left">
+          <EditButton className="button-small button-edit" name={featuredProjectDomain} isMember={isAuthorized}/>
+        </div>
+        :
+        <div className="buttons buttons-left">
+          <ReportButton className="button-small" name={featuredProjectDomain} id={featuredProjectDomain}/>
         </div>
       
-      {isAuthorized &&
-        <div className="buttons buttons-left">
-          <EditButton className="button-small button-edit" name={projects[0].domain} isMember={isAuthorized}/>
-        </div>
       }
       
       {/* <button className="button-small button-tertiary" style={{marginLeft:5+"px"}}>hide</button> */}
