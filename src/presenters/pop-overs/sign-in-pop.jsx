@@ -100,7 +100,7 @@ class EmailHandler extends React.Component {
 
 const EmailSignInButton = (props) => (
   <button className="button button-small button-link has-emoji" onClick={() => {props.onClick();}}>
-    Email Sign In <span className="emoji email"></span>
+    Sign in with Email <span className="emoji email"></span>
   </button>
 );
 
