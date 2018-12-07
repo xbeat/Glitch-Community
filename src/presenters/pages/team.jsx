@@ -194,7 +194,10 @@ class TeamPage extends React.Component {
         
         {/* TEAM COLLECTIONS */}
         <ErrorBoundary>
-          <DataLoader get={() => this.props.api.get(`collections?teamId=${this.props.team.id}`)}>
+          <DataLoader
+            get={() => this.props.api.get(`collections?teamId=${this.props.team.id}`)}
+            renderLoader={() => null} //Don't show anything until we're done loading
+          >
             {({data}) => (
               <DevToggles>
                 {enabledToggles => (
