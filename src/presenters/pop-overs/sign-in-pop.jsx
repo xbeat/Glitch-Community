@@ -63,49 +63,7 @@ class EmailHandler extends React.Component {
       this.setState({error: true});
     }
   }
-  
-  /*
-  // Project Options Pop
-const ProjectOptionsPop = ({...props}) => {
-  return(
-    <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
-      { addToCollectionPopover => (
-        <ProjectOptionsContent {...props} addToCollectionPopover={addToCollectionPopover}/>
-      )}
-    </NestedPopover>
-  );
-};
-
-
-export default class NestedPopover extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      alternateContentVisible: props.startAlternateVisible,
-    };
-    this.toggle = this.toggle.bind(this);
-  }
-  
-  toggle() {
-    this.setState(prevState => ({alternateContentVisible: !prevState.alternateContentVisible}));
-  }
-  
-  render() {
-    // Only use the provider on the sub menu
-    // Nested consumers want the back button, not the open menu
-    if (this.state.alternateContentVisible) {
-      return (
-        <Provider value={this.toggle}>
-          {this.props.alternateContent(this.toggle)}
-        </Provider>
-      );
-    }
-    return this.props.children(this.toggle);
-  }
-}
-
-  */
-  
+   
   render() {
     const isEnabled = this.state.email.length > 0;
     return (
@@ -128,8 +86,7 @@ export default class NestedPopover extends React.Component {
             <div className="notification notifyError">Error</div>
             <div>Something went wrong, email not sent.</div>
           </>
-        }
-        
+        }       
       </section>
     );
   }
@@ -137,7 +94,7 @@ export default class NestedPopover extends React.Component {
 
 const EmailSignInButton = (props) => (
   <button className="button button-small button-link has-emoji" onClick={() => {props.onClick();}}>
-    Email Sign In <span className="emoji email emoji-in-title"></span>
+    Email Sign In <span className="emoji email"></span>
   </button>
 );
 
