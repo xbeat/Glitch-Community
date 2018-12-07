@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Link as RouterLink } from 'react-router-dom';
 
+import { getLink as getCollectionLink } from '../../models/collection';
 import { getLink as getProjectLink } from '../../models/project';
 import { getLink as getTeamLink } from '../../models/team';
 import { getLink as getUserLink } from '../../models/user';
@@ -33,6 +34,13 @@ export const Link = ({to, children, ...props}) => {
 Link.propTypes = {
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   children: PropTypes.node.isRequired,
+};
+
+export const CollectionLink = ({collection, children, ...props}) => (
+  <Link to={getCollectionLink(collection)} {...props}>{children}</Link>
+);
+CollectionLink.propTypes = {
+  collection: PropTypes.object.isRequired,
 };
 
 export const ProjectLink = ({project, children, ...props}) => (
