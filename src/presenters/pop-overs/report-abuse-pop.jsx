@@ -32,7 +32,7 @@ export class ReportAbusePop extends React.Component {
           />
         </section>
         <section className="pop-over-info">
-          <p className='pop-over-description'>Reported by {this.props.currentUser.login}</p>
+          <p className='info-description'>Reported by {this.props.currentUser.login}</p>
         </section>
         <section>
           <button className="button">Submit Report 📧</button>
