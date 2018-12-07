@@ -98,7 +98,7 @@ const EmailSignInButton = (props) => (
   </button>
 );
 
-const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
+const SignInPopWithoutRouter = ({header, prompt, api, location, hash, showEmailLogin}) => (
   <LocalStorage name="destinationAfterAuth">
     {(destination, setDestination) => {
       const onClick = () => setDestination({
