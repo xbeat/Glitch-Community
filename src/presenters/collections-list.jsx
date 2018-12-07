@@ -45,7 +45,7 @@ class CollectionsList extends React.Component {
         <h2>{title}</h2>
         {canMakeCollections &&
           <>
-            <CreateCollectionButton {...{api, currentUser: maybeCurrentUser, team: maybeTeam}}/>
+            <CreateCollectionButton {...{api, currentUser: maybeCurrentUser, maybeTeam}}/>
             {!hasCollections && <CreateFirstCollection {...{api, currentUser: maybeCurrentUser}}/>}
           </>
         }
@@ -95,7 +95,7 @@ export class CreateCollectionButton extends React.Component{
     const coverColor = randomColor({luminosity: 'light'});
     
     // set the team id if there is one
-    const teamId = this.props.team ? this.props.team.id : undefined;
+    const teamId = this.props.maybeTeam ? this.props.maybeTeam.id : undefined;
 
     const {data} = await this.props.api.post('collections', {
       name,
@@ -107,8 +107,8 @@ export class CreateCollectionButton extends React.Component{
     });
     
     if(data && data.url){
-      if (this.props.team) {
-        data.team = this.props.team;
+      if (this.props.maybeTeam) {
+        data.team = this.props.maybeTeam;
       } else {
         data.user = this.props.currentUser;
       }
@@ -178,7 +178,7 @@ export class CreateCollectionButton extends React.Component{
 CreateCollectionButton.propTypes = {
   api: PropTypes.any.isRequired,
   currentUser: PropTypes.object.isRequired,
-  team: PropTypes.object,
+  maybeTeam: PropTypes.object,
 };  
 
 export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized}) => {
