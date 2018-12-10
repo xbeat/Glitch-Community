@@ -40,28 +40,40 @@ export const CollectionLink = ({collection, children, ...props}) => (
   <Link to={getCollectionLink(collection)} {...props}>{children}</Link>
 );
 CollectionLink.propTypes = {
-  collection: PropTypes.object.isRequired,
+  collection: PropTypes.oneOfType([
+    PropTypes.shape({
+      team: PropTypes.object.isRequired,
+    }),
+    PropTypes.shape({
+      user: PropTypes.string.isRequired,
 };
 
 export const ProjectLink = ({project, children, ...props}) => (
   <Link to={getProjectLink(project.domain)} {...props}>{children}</Link>
 );
 ProjectLink.propTypes = {
-  project: PropTypes.object.isRequired,
+  project: PropTypes.shape({
+    domain: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export const TeamLink = ({team, children, ...props}) => (
   <Link to={getTeamLink(team)} {...props}>{children}</Link>
 );
 TeamLink.propTypes = {
-  team: PropTypes.object.isRequired,
+  team: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export const UserLink = ({user, children, ...props}) => (
   <Link to={getUserLink(user)} {...props}>{children}</Link>
 );
 UserLink.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    login: PropTypes.string,
+  }).isRequired,
 };
 
 export default Link;
