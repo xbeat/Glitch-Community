@@ -9,7 +9,8 @@ export class ReportAbusePop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: ""
+      inputValue: '',
+      email: '',
     };
     this.submitReport = this.submitReport.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -25,10 +26,19 @@ export class ReportAbusePop extends React.Component {
   
   formatRaw() {
     const submitter = this.props.currentUser.login ? this.props.currentUser.login : 'anonymous';
+    let email;
+    if (this.state.email) {
+      email = this.state.email;
+    } else {
+      const emailObj = Array.isArray(this.props.currentUser.emails) && this.props.currentUser.emails.find((email) => email.primary);
+      email = emailObj && emailObj.email;
+    }
+    
     return `- Project Name: ${this.props.projectName},
             - Project Id: ${this.props.projectId},
             - Submitted by: ${submitter}
-            - Contact: ${
+            - Contact: ${email}
+            - Message: ${this.state.inputValue}`;
   }
   
   async submitReport() {
@@ -41,6 +51,7 @@ export class ReportAbusePop extends React.Component {
       console.log(data);
     } catch (error) {
       // captureException(error);
+      console.log(error);
     }
   }
   
@@ -79,7 +90,8 @@ export class ReportAbusePop extends React.Component {
 
 ReportAbusePop.propTypes = {
   projectName: PropTypes.string.isRequired,
-  projectId: PropTypes.string.isRequired
+  projectId: PropTypes.string.isRequired,
+  currentUser: PropTypes.object,
 };
 
 const ReportAbusePopContainer = props => (
