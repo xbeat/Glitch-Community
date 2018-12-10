@@ -8,8 +8,7 @@ import LocalStorage from '../includes/local-storage';
 import PopoverContainer from './popover-container';
 import {DevToggles} from '../includes/dev-toggles';
 import {captureException} from '../../utils/sentry';
-import NestedPopover from './popover-nested.jsx';
-import {NestedPopoverTitle} from './popover-nested.jsx';
+import {NestedPopover, NestedPopoverTitle} from './popover-nested.jsx';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
@@ -74,7 +73,7 @@ class EmailHandler extends React.Component {
         </NestedPopoverTitle>
         <section className="pop-over-actions first-section">
           {!this.state.done &&
-            <form onSubmit={(e) => this.onSubmit(e)} style={{marginBottom: 0}}>
+            <form onSubmit={this.onSubmit} style={{marginBottom: 0}}>
               Sign in with email
               <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
               <button style={{marginTop: 10}} className="button-small button-link" disabled={!isEnabled}>Send Link</button>
