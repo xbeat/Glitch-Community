@@ -9,13 +9,15 @@ export class ReportAbusePop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: '',
+      reasonValue: '',
+      emailValue: '',
       email: '',
     };
     this.submitReport = this.submitReport.bind(this);
-    this.onChange = this.onChange.bind(this);
+    this.reasonOnChange = this.reasonOnChange.bind(this);
     this.formatRaw = this.formatRaw.bind(this);
     this.getUserInfoSection = this.getUserInfoSection.bind(this);
+    this.emailOnChange = this.emailOnChange.bind(this);
   }
   
   padTo(content, length) {
@@ -45,7 +47,7 @@ export class ReportAbusePop extends React.Component {
     const secondHalf = `
 - Contact: ${email}
 
-- Message: ${this.state.inputValue}`;
+- Message: ${this.state.reasonValue}`;
     return `${firstHalf}
 
 ${submitterPart}
@@ -66,20 +68,28 @@ ${secondHalf}`;
     }
   }
   
-  onChange(event) {
+  reasonOnChange(event) {
     this.setState({
-      inputValue: event.target.value
+      reasonValue: event.target.value
     });
+  }
+  
+  emailOnChange(event) {
+   this.setState({
+     emailValue: event.target.value
+   });
   }
   
   getUserInfoSection() {
     if (this.props.currentUser) {
-      return <p className='info-description right'>from <strong>{this.props.currentUser.login}</strong></p>;
+      return <section className="pop-over-info">
+        <p className='info-description right'>from <strong>{this.props.currentUser.login}</strong></p>
+      </section>;
     }
-    return <>
-      <input
-    <>;
-    
+    return <section className="pop-over-info">
+      <label for="email">Your email (required)</label>
+      <input name="email" className="pop-over-input" value={this.state.email} onChange={this.emailOnChange} />
+    <section>;
   }
 
   render() {
@@ -93,14 +103,12 @@ ${secondHalf}`;
           <hr />
           <textarea
             className="pop-over-input"
-            value={this.state.inputValue}
-            onChange={this.onChange}
+            value={this.state.reasonValue}
+            onChange={this.reasonOnChange}
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>
-        <section className="pop-over-info">
           {this.getUserInfoSection()}
-        </section>
         <section>
           <button className="button" onClick={this.submitReport}>Submit Report 📧</button>
         </section>
