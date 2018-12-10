@@ -13,21 +13,8 @@ export class ReportAbusePop extends React.Component {
     };
     this.submitReport = this.submitReport.bind(this);
     this.onChange = this.onChange.bind(this);
-    
-    // this.onClick = this.onClick.bind(this);
+    this.formatRaw = this.formatRaw.bind(this);
   }
-  /*
-  onClick(event, report) {
-    event.preventDefault();
-    this.props.togglePopover();
-  }
-*/
-  
-  /*
-  this.setState({
-        inputValue: newValue
-      });
-*/
   
   padTo(content, length) {
     while (content.length < length) {
@@ -36,13 +23,20 @@ export class ReportAbusePop extends React.Component {
     return content;
   }
   
+  formatRaw() {
+    const submitter = this.props.currentUser.login ? this.props.currentUser.login : 'anonymous';
+    return `- Project Name: ${this.props.projectName},
+            - Project Id: ${this.props.projectId},
+            - Submitted by: ${submitter}
+            - Contact: ${
+  }
   
   async submitReport() {
     try {
+      const submitter = this.props.currentUser.login ? this.props.currentUser.login : 'anonymous';
       const {data} = await axios.post('https://support-poster.glitch.me/post', {
-        category: 18,
         raw: this.padTo(this.state.inputValue, 21), 
-        title: `Abuse Report for ${this.props.projectName}`
+        title: `Abuse Report for ${this.props.projectName} from ${submitter}`,
       });
       console.log(data);
     } catch (error) {
