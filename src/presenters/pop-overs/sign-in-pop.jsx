@@ -59,7 +59,6 @@ class EmailHandler extends React.Component {
       await this.props.api.post('/email/sendLoginEmail', {emailAddress:this.state.email});
       this.setState({error: false});
     } catch (error) {
-      console.log(error);
       captureException(error);
       this.setState({error: true});
     }
@@ -117,7 +116,7 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
           hash: hash,
         },
       });
-      const api = api, location, hash};
+      const props = {header, prompt, api, location, hash};
       return (
         <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
           {showEmailLogin => 
