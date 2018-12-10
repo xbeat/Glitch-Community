@@ -48,7 +48,7 @@ export class ReportAbusePop extends React.Component {
     return `${firstHalf}
 
 ${submitterPart}
-$secondHalf}
+${secondHalf}`;
   }
   
   async submitReport() {
