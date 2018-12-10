@@ -134,7 +134,7 @@ ${secondHalf}`;
           />
         </section>
         {this.getUserInfoSection()}
-        <section>
+        <section className="pop-over-actions">
           <button className="button" onClick={this.submitReport}>
             Submit Report 📧
           </button>
