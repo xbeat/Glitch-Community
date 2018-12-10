@@ -33,11 +33,15 @@ export class ReportAbusePop extends React.Component {
       const emailObj = Array.isArray(this.props.currentUser.emails) && this.props.currentUser.emails.find((email) => email.primary);
       email = emailObj && emailObj.email;
     }
-    
-    return `- Project Name: ${this.props.projectName},
+    const glitchLink = `https://glitch.com/~${this.props.projectName}`;
+    return `- Project Name: [${glitchLink}](${glitchLink}),
+
             - Project Id: ${this.props.projectId},
-            - Submitted by: ${submitter}
+
+            - Submitted by: [${submitter}](https://glitch.com/@${submitter})
+
             - Contact: ${email}
+
             - Message: ${this.state.inputValue}`;
   }
   
@@ -45,7 +49,7 @@ export class ReportAbusePop extends React.Component {
     try {
       const submitter = this.props.currentUser.login ? this.props.currentUser.login : 'anonymous';
       const {data} = await axios.post('https://support-poster.glitch.me/post', {
-        raw: this.padTo(this.state.inputValue, 21), 
+        raw: this.formatRaw(), 
         title: `Abuse Report for ${this.props.projectName} from ${submitter}`,
       });
       console.log(data);
