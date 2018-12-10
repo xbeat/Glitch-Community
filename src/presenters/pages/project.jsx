@@ -131,7 +131,7 @@ const ProjectPage = ({
     </section>
     <section id="embed">
       <Embed domain={domain}/>
-        <ReportButton projectName={domain} projectId={project.id}/>
+        <ReportButton projectName={domain} projectId={project.id} containerClass='buttons buttons-left' />
       <div className="buttons buttons-right">
 
         {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}

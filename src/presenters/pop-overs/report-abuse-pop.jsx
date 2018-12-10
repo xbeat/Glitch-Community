@@ -159,12 +159,11 @@ const ReportAbusePopContainer = props => (
 const ReportAbusePopButton = props => (
   <PopoverContainer>
     {({ visible, togglePopover }) => (
-      <div className="button-wrap">
+      <div className={'button-wrap ' + props.containerClass}>
         <button
           className="button-small button-tertiary"
           data-track=""
           onClick={togglePopover}
-          className={
         >
           Report Abuse
         </button>
