@@ -34,15 +34,16 @@ export class ReportAbusePop extends React.Component {
       email = emailObj && emailObj.email;
     }
     const glitchLink = `https://glitch.com/~${this.props.projectName}`;
-    return `- Project Name: [${glitchLink}](${glitchLink}),
+    return `
+- Project Name: [${glitchLink}](${glitchLink}),
 
-            - Project Id: ${this.props.projectId},
+- Project Id: ${this.props.projectId},
 
-            - Submitted by: [${submitter}](https://glitch.com/@${submitter})
+- Submitted by: [${submitter}](https://glitch.com/@${submitter})
 
-            - Contact: ${email}
+- Contact: ${email}
 
-            - Message: ${this.state.inputValue}`;
+- Message: ${this.state.inputValue}`;
   }
   
   async submitReport() {
