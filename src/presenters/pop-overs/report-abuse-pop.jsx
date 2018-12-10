@@ -9,9 +9,9 @@ export class ReportAbusePop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reasonValue: '',
-      emailValue: '',
-      email: '',
+      reasonValue: "",
+      emailValue: "",
+      email: ""
     };
     this.submitReport = this.submitReport.bind(this);
     this.reasonOnChange = this.reasonOnChange.bind(this);
@@ -19,21 +19,25 @@ export class ReportAbusePop extends React.Component {
     this.getUserInfoSection = this.getUserInfoSection.bind(this);
     this.emailOnChange = this.emailOnChange.bind(this);
   }
-  
+
   padTo(content, length) {
     while (content.length < length) {
       content += "_";
     }
     return content;
   }
-  
+
   formatRaw() {
-    const submitter = this.props.currentUser.login ? this.props.currentUser.login : 'anonymous';
+    const submitter = this.props.currentUser.login
+      ? this.props.currentUser.login
+      : "anonymous";
     let email;
     if (this.state.email) {
       email = this.state.email;
     } else {
-      const emailObj = Array.isArray(this.props.currentUser.emails) && this.props.currentUser.emails.find((email) => email.primary);
+      const emailObj =
+        Array.isArray(this.props.currentUser.emails) &&
+        this.props.currentUser.emails.find(email => email.primary);
       email = emailObj && emailObj.email;
     }
     const glitchLink = `https://glitch.com/~${this.props.projectName}`;
@@ -43,7 +47,10 @@ export class ReportAbusePop extends React.Component {
 - Project Id: ${this.props.projectId},
 
 `;
-    const submitterPart = submitter != 'anonymous' ? `- Submitted by: [${submitter}](https://glitch.com/@${submitter})` : '';
+    const submitterPart =
+      submitter != "anonymous"
+        ? `- Submitted by: [${submitter}](https://glitch.com/@${submitter})`
+        : "";
     const secondHalf = `
 - Contact: ${email}
 
@@ -53,52 +60,70 @@ export class ReportAbusePop extends React.Component {
 ${submitterPart}
 ${secondHalf}`;
   }
-  
+
   async submitReport() {
     try {
-      const submitter = this.props.currentUser.login ? this.props.currentUser.login : 'anonymous';
-      const {data} = await axios.post('https://support-poster.glitch.me/post', {
-        raw: this.formatRaw(), 
-        title: `Abuse Report for ${this.props.projectName} from ${submitter}`,
-      });
+      const submitter = this.props.currentUser.login
+        ? this.props.currentUser.login
+        : "anonymous";
+      const { data } = await axios.post(
+        "https://support-poster.glitch.me/post",
+        {
+          raw: this.formatRaw(),
+          title: `Abuse Report for ${this.props.projectName} from ${submitter}`
+        }
+      );
       console.log(data);
     } catch (error) {
       // captureException(error);
       console.log(error);
     }
   }
-  
+
   reasonOnChange(event) {
     this.setState({
       reasonValue: event.target.value
     });
   }
-  
+
   emailOnChange(event) {
-   this.setState({
-     emailValue: event.target.value
-   });
+    this.setState({
+      emailValue: event.target.value
+    });
   }
-    
+
   getUserInfoSection() {
     if (this.props.currentUser.login) {
-      return (<section className="pop-over-info">
-        <p className='info-description right'>from <strong>{this.props.currentUser.login}</strong></p>
-      </section>);
+      return (
+        <section className="pop-over-info">
+          <p className="info-description right">
+            from <strong>{this.props.currentUser.login}</strong>
+          </p>
+        </section>
+      );
     }
-    return (<section className="pop-over-info">
-      <label htmlFor="email">Your email (required)</label>
-      <input name="email" className="pop-over-input" value={this.state.email} onChange={this.emailOnChange} />
-      </section>);
-  };
-      
+    return (
+      <section className="pop-over-info">
+        <label className="label" htmlFor="email">
+          Your email (required)
+        </label>
+        <input
+          name="email"
+          className="pop-over-input"
+          value={this.state.email}
+          onChange={this.emailOnChange}
+        />
+      </section>
+    );
+  }
+
   render() {
     return (
       <dialog className="pop-over wide-pop">
         <section className="pop-over-info">
-          <h1 className='pop-title'>Report Abuse</h1>
+          <h1 className="pop-title">Report Abuse</h1>
         </section>
-        <section className='pop-over-actions'>
+        <section className="pop-over-actions">
           <p>This project doesn't belong on Glitch because...</p>
           <hr />
           <textarea
@@ -108,22 +133,21 @@ ${secondHalf}`;
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
           />
         </section>
-          {this.getUserInfoSection()}
+        {this.getUserInfoSection()}
         <section>
-          <button className="button" onClick={this.submitReport}>Submit Report 📧</button>
+          <button className="button" onClick={this.submitReport}>
+            Submit Report 📧
+          </button>
         </section>
       </dialog>
     );
   }
-
-      
 }
 
-      
 ReportAbusePop.propTypes = {
   projectName: PropTypes.string.isRequired,
   projectId: PropTypes.string.isRequired,
-  currentUser: PropTypes.object,
+  currentUser: PropTypes.object
 };
 
 const ReportAbusePopContainer = props => (
