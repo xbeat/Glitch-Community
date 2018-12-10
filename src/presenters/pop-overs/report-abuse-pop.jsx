@@ -79,19 +79,19 @@ ${secondHalf}`;
      emailValue: event.target.value
    });
   }
-  
+    
   getUserInfoSection() {
-    if (this.props.currentUser) {
-      return <section className="pop-over-info">
+    if (this.props.currentUser.login) {
+      return (<section className="pop-over-info">
         <p className='info-description right'>from <strong>{this.props.currentUser.login}</strong></p>
-      </section>;
+      </section>);
     }
-    return <section className="pop-over-info">
-      <label for="email">Your email (required)</label>
+    return (<section className="pop-over-info">
+      <label htmlFor="email">Your email (required)</label>
       <input name="email" className="pop-over-input" value={this.state.email} onChange={this.emailOnChange} />
-    <section>;
-  }
-
+      </section>);
+  };
+      
   render() {
     return (
       <dialog className="pop-over wide-pop">
@@ -115,8 +115,11 @@ ${secondHalf}`;
       </dialog>
     );
   }
+
+      
 }
 
+      
 ReportAbusePop.propTypes = {
   projectName: PropTypes.string.isRequired,
   projectId: PropTypes.string.isRequired,
