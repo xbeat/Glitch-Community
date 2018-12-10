@@ -69,12 +69,11 @@ class EmailHandler extends React.Component {
     return (
       <dialog className="pop-over sign-in-pop">
         <NestedPopoverTitle>
-          Email Signin <span className="emoji email" />
+          Email Sign in <span className="emoji email" />
         </NestedPopoverTitle>
         <section className="pop-over-actions first-section">
           {!this.state.done &&
             <form onSubmit={this.onSubmit} style={{marginBottom: 0}}>
-              Sign in with email
               <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
               <button style={{marginTop: 10}} className="button-small button-link" disabled={!isEnabled}>Send Link</button>
             </form>
@@ -97,11 +96,14 @@ class EmailHandler extends React.Component {
   }
 }
 
-const EmailSignInButton = (props) => (
-  <button className="button button-small button-link has-emoji" onClick={() => {props.onClick();}}>
+const EmailSignInButton = ({onClick}) => (
+  <button className="button button-small button-link has-emoji" onClick={() => {onClick();}}>
     Sign in with Email <span className="emoji email"></span>
   </button>
 );
+EmailSignInButton.propTypes = {
+  onClick: PropTypes.func.isRequired
+};
 
 const SignInPopWithoutRouter = ({header, prompt, api, location, hash, showEmailLogin}) => (
   <LocalStorage name="destinationAfterAuth">
