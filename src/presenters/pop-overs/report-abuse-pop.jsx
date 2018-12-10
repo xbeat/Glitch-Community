@@ -164,6 +164,7 @@ const ReportAbusePopButton = props => (
           className="button-small button-tertiary"
           data-track=""
           onClick={togglePopover}
+          className={
         >
           Report Abuse
         </button>
