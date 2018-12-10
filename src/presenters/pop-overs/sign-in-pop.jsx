@@ -105,7 +105,7 @@ EmailSignInButton.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
+const SignInPopWithoutRouter = (props) => (
   <LocalStorage name="destinationAfterAuth">
     {(destination, setDestination) => {
       const onClick = () => setDestination({
@@ -116,7 +116,7 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
           hash: hash,
         },
       });
-      const props = {header, prompt, api, location, hash};
+      const {header, prompt, api, location, hash} = props;
       return (
         <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
           {showEmailLogin => 
