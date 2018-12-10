@@ -117,19 +117,23 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash, showEmailL
         },
       });
       return (
-        <div className="pop-over sign-in-pop">
-          {header}
-          <section className="pop-over-actions first-section">
-            {prompt}
-            <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
-            <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
-            <DevToggles>
-              {(enabledToggles) => (
-                enabledToggles.includes("Email Login") && <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
-              )}
-            </DevToggles>
-          </section>
-        </div>
+        <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
+              {showEmailLogin => <SignInPop {...props} {...{togglePopover, showEmailLogin}}/>}
+            
+          <div className="pop-over sign-in-pop">
+            {header}
+            <section className="pop-over-actions first-section">
+              {prompt}
+              <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
+              <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
+              <DevToggles>
+                {(enabledToggles) => (
+                  enabledToggles.includes("Email Login") && <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
+                )}
+              </DevToggles>
+            </section>
+          </div>
+        </NestedPopover>
       );
     }}
   </LocalStorage>
