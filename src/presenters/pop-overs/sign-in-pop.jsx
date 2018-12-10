@@ -59,6 +59,7 @@ class EmailHandler extends React.Component {
       await this.props.api.post('/email/sendLoginEmail', {emailAddress:this.state.email});
       this.setState({error: false});
     } catch (error) {
+      console.log(error);
       captureException(error);
       this.setState({error: true});
     }
@@ -105,7 +106,7 @@ EmailSignInButton.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-const SignInPopWithoutRouter = ({header, prompt, api, location, hash, showEmailLogin}) => (
+const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
   <LocalStorage name="destinationAfterAuth">
     {(destination, setDestination) => {
       const onClick = () => setDestination({
@@ -116,23 +117,24 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash, showEmailL
           hash: hash,
         },
       });
+      const api = api, location, hash};
       return (
         <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
-              {showEmailLogin => <SignInPop {...props} {...{togglePopover, showEmailLogin}}/>}
-            
-          <div className="pop-over sign-in-pop">
-            {header}
-            <section className="pop-over-actions first-section">
-              {prompt}
-              <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
-              <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
-              <DevToggles>
-                {(enabledToggles) => (
-                  enabledToggles.includes("Email Login") && <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
-                )}
-              </DevToggles>
-            </section>
-          </div>
+          {showEmailLogin => 
+            <div className="pop-over sign-in-pop">
+              {header}
+              <section className="pop-over-actions first-section">
+                {prompt}
+                <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
+                <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
+                <DevToggles>
+                  {(enabledToggles) => (
+                    enabledToggles.includes("Email Login") && <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
+                  )}
+                </DevToggles>
+              </section>
+            </div>
+          }
         </NestedPopover>
       );
     }}
@@ -154,9 +156,7 @@ export default function SignInPopContainer(props) {
         <div className="button-wrap">
           <button className="button button-small" onClick={togglePopover}>Sign In</button>
           {visible && (
-            <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
-              {showEmailLogin => <SignInPop {...props} {...{togglePopover, showEmailLogin}}/>}
-            </NestedPopover>)}
+            <SignInPop {...props} {...{togglePopover}}/>)}
         </div>
       )}
     </PopoverContainer>
