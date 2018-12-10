@@ -69,7 +69,7 @@ class EmailHandler extends React.Component {
     return (
       <dialog className="pop-over sign-in-pop">
         <NestedPopoverTitle>
-          Email Sign in <span className="emoji email" />
+          Email Sign In <span className="emoji email" />
         </NestedPopoverTitle>
         <section className="pop-over-actions first-section">
           {!this.state.done &&
@@ -148,7 +148,7 @@ export default function SignInPopContainer(props) {
     <PopoverContainer>
       {({togglePopover, visible}) => (
         <div className="button-wrap">
-          <button className="button button-small" onClick={togglePopover}>Sign in</button>
+          <button className="button button-small" onClick={togglePopover}>Sign In</button>
           {visible && (
             <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
               {showEmailLogin => <SignInPop {...props} {...{togglePopover, showEmailLogin}}/>}
