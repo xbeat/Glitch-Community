@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
-import NestedPopover from './popover-nested.jsx';
+import {NestedPopover} from './popover-nested.jsx';
 
 import AddProjectToCollectionPop from '../pop-overs/add-project-to-collection-pop.jsx';
 

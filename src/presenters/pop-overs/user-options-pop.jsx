@@ -5,7 +5,7 @@ import {getAvatarUrl as getTeamAvatarUrl} from '../../models/team';
 import {getAvatarThumbnailUrl as getUserAvatarUrl} from '../../models/user';
 import {Link, TeamLink, UserLink} from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
-import NestedPopover from './popover-nested.jsx';
+import {NestedPopover} from './popover-nested.jsx';
 import CreateTeamPop from './create-team-pop.jsx';
 
 import {orderBy} from 'lodash';
