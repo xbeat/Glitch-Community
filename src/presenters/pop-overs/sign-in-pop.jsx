@@ -7,6 +7,7 @@ import Link from '../includes/link';
 import LocalStorage from '../includes/local-storage';
 import PopoverContainer from './popover-container';
 import {DevToggles} from '../includes/dev-toggles';
+import {captureException} from '../../utils/sentry';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
@@ -32,31 +33,66 @@ const SignInPopButton = (props) => (
   </Link>
 );
 
-const jankyEmailPrompt = async (api) => {
-  const email = window.prompt("We'll send you a login link.\n\nWhat's your email address?");
-  if(!email) {
-    // blank or cancelled.
-    return;
+class EmailHandler extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      done: false,
+      error: false
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    
   }
+  
+  onChange(e) {
+    this.setState({email: e.target.value});
 
-  try {
-    await api.post('/email/sendLoginEmail', {emailAddress:email});
-    alert("Please check your email at " + email);
-  } catch (error) {
-    console.error(error);
-    alert("Something went wrong; email not sent.");
   }
-};
-
-const EmailSignInButton = ({api, onClick}) => (
-  <button className="button-small button-link has-emoji" onClick={() => { onClick(); jankyEmailPrompt(api); }}>
-    Sign in with Email <span aria-label="" role="img">📧</span>
-  </button>
-);
-
-EmailSignInButton.propTypes = {
-  api: PropTypes.func.isRequired,
-};
+  
+  async onSubmit(e) {
+    e.preventDefault();
+    this.setState({done: true});
+    try {
+      await this.props.api.post('/email/sendLoginEmail', {emailAddress:this.state.email});
+      this.setState({error: false});
+    } catch (error) {
+      captureException(error);
+      this.setState({error: true});
+    }
+  }
+  
+  render() {
+    const isEnabled = this.state.email.length > 0;
+    return (
+      <section className="pop-over-actions last-section">
+        {!this.state.done &&
+          <form onSubmit={(e) => this.onSubmit(e)} style={{marginBottom: 0}}>
+            Sign in with email
+            <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
+            <button style={{marginTop: 10, marginBottom: 0}} className="button-small button-link has-emoji" disabled={!isEnabled} onClick={() => {this.props.onClick();}}>
+              Email Sign In <span className="emoji email emoji-in-title"></span>
+            </button>
+          </form>
+        }
+        {(this.state.done && !this.state.error) &&
+          <>
+            <div className="notification notifySuccess">Almost Done</div>
+            <div>Please click the confirmation link sent to {this.state.email}.</div>
+          </>
+        }
+        {(this.state.done && this.state.error) &&
+          <>
+            <div className="notification notifyError">Error</div>
+            <div>Something went wrong, email not sent.</div>
+          </>
+        }
+        
+      </section>
+    );
+  }
+}
 
 const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
   <LocalStorage name="destinationAfterAuth">
@@ -72,16 +108,16 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
       return (
         <div className="pop-over sign-in-pop">
           {header}
-          <section className="pop-over-actions last-section">
+          <section className="pop-over-actions first-section">
             {prompt}
             <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
             <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
-            <DevToggles>
-              {(enabledToggles) => (
-                enabledToggles.includes("Email Login") && <EmailSignInButton api={api} onClick={onClick}/>
-              )}
-            </DevToggles>
           </section>
+          <DevToggles>
+            {(enabledToggles) => (
+              enabledToggles.includes("Email Login") && <EmailHandler api={api} onClick={onClick}/>
+            )}
+          </DevToggles>
         </div>
       );
     }}
