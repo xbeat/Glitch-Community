@@ -6,7 +6,6 @@ import moment from 'moment-mini';
 import Link from '../includes/link';
 import LocalStorage from '../includes/local-storage';
 import PopoverContainer from './popover-container';
-import {DevToggles} from '../includes/dev-toggles';
 import {captureException} from '../../utils/sentry';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
@@ -113,11 +112,7 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
             <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
             <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
           </section>
-          <DevToggles>
-            {(enabledToggles) => (
-              enabledToggles.includes("Email Login") && <EmailHandler api={api} onClick={onClick}/>
-            )}
-          </DevToggles>
+          <EmailHandler api={api} onClick={onClick}/>
         </div>
       );
     }}
