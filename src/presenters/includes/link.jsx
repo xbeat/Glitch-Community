@@ -42,10 +42,19 @@ export const CollectionLink = ({collection, children, ...props}) => (
 CollectionLink.propTypes = {
   collection: PropTypes.oneOfType([
     PropTypes.shape({
-      team: PropTypes.object.isRequired,
+      team: PropTypes.PropTypes.shape({
+        url: PropTypes.string.isRequired,
+      }).isRequired,
+      url: PropTypes.string.isRequired,
     }),
     PropTypes.shape({
-      user: PropTypes.string.isRequired,
+      user: PropTypes.PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        login: PropTypes.string,
+      }).isRequired,
+      url: PropTypes.string.isRequired,
+    }),
+  ]).isRequired,
 };
 
 export const ProjectLink = ({project, children, ...props}) => (
