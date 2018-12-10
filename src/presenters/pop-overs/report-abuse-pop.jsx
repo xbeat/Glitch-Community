@@ -15,6 +15,7 @@ export class ReportAbusePop extends React.Component {
     this.submitReport = this.submitReport.bind(this);
     this.onChange = this.onChange.bind(this);
     this.formatRaw = this.formatRaw.bind(this);
+    this.getUserInfoSection = this.getUserInfoSection.bind(this);
   }
   
   padTo(content, length) {
@@ -70,6 +71,16 @@ ${secondHalf}`;
       inputValue: event.target.value
     });
   }
+  
+  getUserInfoSection() {
+    if (this.props.currentUser) {
+      return <p className='info-description right'>from <strong>{this.props.currentUser.login}</strong></p>;
+    }
+    return <>
+      <input
+    <>;
+    
+  }
 
   render() {
     return (
@@ -88,7 +99,7 @@ ${secondHalf}`;
           />
         </section>
         <section className="pop-over-info">
-          <p className='info-description right'>from <strong>{this.props.currentUser.login}</strong></p>
+          {this.getUserInfoSection()}
         </section>
         <section>
           <button className="button" onClick={this.submitReport}>Submit Report 📧</button>
