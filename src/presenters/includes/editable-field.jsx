@@ -33,6 +33,7 @@ export class PureEditableField extends React.Component {
       autoComplete: "off",
       placeholder: this.props.placeholder,
       autoFocus: this.props.autoFocus,
+      onBlur: this.props.blur,
     };
     
     const maybeErrorIcon = !!this.props.error && <FieldErrorIcon/>;

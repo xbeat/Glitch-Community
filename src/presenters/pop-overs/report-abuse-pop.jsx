@@ -86,7 +86,9 @@ ${secondHalf}`;
   validateEmail() {
     if (this.state.email === '') {
       this.setState({emailError: 'Email is required'}); 
+      return;
     }
+    this.setState({emailError: ''}); 
   }
 
   reasonOnChange(event) {
@@ -117,10 +119,11 @@ ${secondHalf}`;
         <PureEditableField
           value={this.state.email}
           update={this.emailOnChange}
+          blur={() => this.debouncedValidateEmail()}
           placeholder=''
           error={this.state.emailError}
           prefix='Your email (required)'
-          />
+        />
       </section>
     );
   }
