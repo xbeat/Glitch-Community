@@ -10,7 +10,6 @@ export class ReportAbusePop extends React.Component {
     super(props);
     this.state = {
       reasonValue: "",
-      emailValue: "",
       email: ""
     };
     this.submitReport = this.submitReport.bind(this);
@@ -88,7 +87,7 @@ ${secondHalf}`;
 
   emailOnChange(event) {
     this.setState({
-      emailValue: event.target.value
+      email: event.target.value
     });
   }
 
