@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PopoverContainer from "./popover-container.jsx";
-import {PureEditableField} from '../includes/editable-field.jsx';
+import { PureEditableField, PureEditableTextArea } from '../includes/editable-field.jsx';
 import _ from 'lodash';
 import axios from "axios";
 
@@ -129,19 +129,23 @@ ${secondHalf}`;
   }
 
   render() {
+    const reasonLabel = <>
+      <p>This project doesn't belong on Glitch because...</p>
+      <hr />
+    </>;
     return (
       <dialog className="pop-over wide-pop top-right">
         <section className="pop-over-info">
           <h1 className="pop-title">Report Abuse</h1>
         </section>
         <section className="pop-over-actions">
-          <p>This project doesn't belong on Glitch because...</p>
-          <hr />
-          <textarea
-            className="pop-over-input tall"
+          <PureEditableTextArea
             value={this.state.reasonValue}
-            onChange={this.reasonOnChange}
+            update={this.reasonOnChange}
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+            placeholder=''
+            error={this.state.reasonError}
+            prefix={reasonLabel} 
           />
         </section>
         {this.getUserInfoSection()}

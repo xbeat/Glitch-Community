@@ -79,13 +79,13 @@ PureEditableFieldHolder.propTypes = {
 
 export const PureEditableTextArea = (props) => (
   <PureEditableFieldHolder {...props}>
-    {(inputProps, inputRef) => {
+    {(inputProps, inputRef) => (
       <textarea {...inputProps} ref={inputRef} />  
-    }}
+    )}
   </PureEditableFieldHolder>
   );
 
-PureEditableField.propTypes = {
+PureEditableTextArea.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
@@ -98,9 +98,9 @@ PureEditableField.propTypes = {
 
 export const PureEditableField = (props) => (
   <PureEditableFieldHolder {...props}>
-    {(inputProps, inputRef) => {
+    {(inputProps, inputRef) => (
       <input {...inputProps} ref={inputRef} />  
-    }}
+    )}
   </PureEditableFieldHolder>
   );
 
