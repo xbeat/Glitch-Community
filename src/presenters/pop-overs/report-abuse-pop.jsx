@@ -18,6 +18,7 @@ export class ReportAbusePop extends React.Component {
     this.formatRaw = this.formatRaw.bind(this);
     this.getUserInfoSection = this.getUserInfoSection.bind(this);
     this.emailOnChange = this.emailOnChange.bind(this);
+    this.debouncedValidate = _.debounce(this.validate.bind(this), 200);
   }
 
   padTo(content, length) {
@@ -79,6 +80,11 @@ ${secondHalf}`;
       console.log(error);
     }
   }
+  
+  validate() {
+    if (this.state.email != 
+           this.setState(({teamName}) => (name === teamName) ? {error} : {}); 
+  }
 
   reasonOnChange(event) {
     this.setState({
@@ -86,9 +92,9 @@ ${secondHalf}`;
     });
   }
 
-  emailOnChange(event) {
+  emailOnChange(value) {
     this.setState({
-      email: event.target.value
+      email: value
     });
   }
 
