@@ -58,8 +58,6 @@ const UserPage = ({
   user: { //has science gone too far?
     _deletedProjects,
     _cacheCover,
-    _collections,
-    loadedCollections,
     ...user
   },
   api, isAuthorized,
@@ -106,15 +104,23 @@ const UserPage = ({
     />
     
     {!!user.login && (
-      <DataLoader get={() => api.get(`collections?userId=${user.id}`)}>
+      <DataLoader get={() => api.get(`collections?userId=${user.id}`)}
+        renderLoader={() => (
+          <CollectionsList title="Collections" 
+            collections={user.collections.map(collection => ({...collection, user}))} 
+            api={api} isAuthorized={isAuthorized}
+            maybeCurrentUser={maybeCurrentUser}
+          />
+        )}
+      >
         {({data}) => (
+          <CollectionsList title="Collections" 
+            collections={data.map(collection => ({...collection, user}))} 
+            api={api} isAuthorized={isAuthorized}
+            maybeCurrentUser={maybeCurrentUser}
+          />
+        )}
       </DataLoader>
-      <CollectionsList title="Collections" 
-        collections={_collections.map(collection => ({...collection, user}))} 
-        api={api} 
-        isAuthorized={isAuthorized}
-        maybeCurrentUser={maybeCurrentUser}
-      />
     )}
 
     <EntityPageRecentProjects
@@ -151,7 +157,6 @@ UserPage.propTypes = {
     coverColor: PropTypes.string,
     _cacheCover: PropTypes.number.isRequired,
     _deletedProjects: PropTypes.array.isRequired,
-    _collections: PropTypes.array.isRequired,
   }).isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
 };
