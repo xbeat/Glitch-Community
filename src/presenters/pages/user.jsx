@@ -105,7 +105,10 @@ const UserPage = ({
       }}
     />
     
-    {(loadedCollections && !!user.login &&
+    {!!user.login && (
+      <DataLoader get={() => api.get(`collections?userId=${user.id}`)}>
+        {({data}) => (
+      </DataLoader>
       <CollectionsList title="Collections" 
         collections={_collections.map(collection => ({...collection, user}))} 
         api={api} 
