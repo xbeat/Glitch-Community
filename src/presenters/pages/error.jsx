@@ -49,3 +49,27 @@ EmailErrorPage.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
 };
+
+const oauthImageUrl = 'https://cdn.glitch.com/8ae9b195-ef39-406b-aee0-764888d15665%2Foauth-key.svg?1544466885907';
+
+export const OauthErrorPage = ({api, title, description}) => (
+  <Layout api={api}>
+    <Helmet>
+      <title>🔑 {title}</title> {/* eslint-disable-line */}
+    </Helmet>
+    <main className="error-page-container">
+      <img className="error-image" src={oauthImageUrl} alt="" width="370px"/>
+      <div className="error-msg">
+        <h1>{title}</h1>
+        <p>{description}</p>
+        <a className="button button-link" href="/">Back to Glitch</a>
+      </div>
+    </main>
+  </Layout>
+);
+
+OauthErrorPage.propTypes = {
+  api: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+};
