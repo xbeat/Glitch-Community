@@ -129,6 +129,8 @@ details.popover-container
     .pop-over-input
        background-color: white
        border: 1px solid #ccc
+       &.tall
+         min-height: 100px
             
 
   .pop-over-actions
@@ -137,6 +139,8 @@ details.popover-container
     position: relative
     .action-description
       line-height: 17px
+    p 
+      margin: 0
 
   .emoji
     display: inline-block
@@ -442,6 +446,9 @@ details.popover-container
     right: 0
     top: 27px
     display: inline-block
+    &.top-right
+      top: -305px
+      left: 5px
     @media (max-width: smallViewport)
       min-width: 320px
     

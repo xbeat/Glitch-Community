@@ -119,7 +119,7 @@ ${secondHalf}`;
 
   render() {
     return (
-      <dialog className="pop-over wide-pop">
+      <dialog className="pop-over wide-pop top-right">
         <section className="pop-over-info">
           <h1 className="pop-title">Report Abuse</h1>
         </section>
@@ -127,7 +127,7 @@ ${secondHalf}`;
           <p>This project doesn't belong on Glitch because...</p>
           <hr />
           <textarea
-            className="pop-over-input"
+            className="pop-over-input tall"
             value={this.state.reasonValue}
             onChange={this.reasonOnChange}
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
@@ -159,7 +159,7 @@ const ReportAbusePopContainer = props => (
 const ReportAbusePopButton = props => (
   <PopoverContainer>
     {({ visible, togglePopover }) => (
-      <div className={'button-wrap ' + props.containerClass}>
+      <div className='button-wrap'>
         <button
           className="button-small button-tertiary"
           data-track=""
