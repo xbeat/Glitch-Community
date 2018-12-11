@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PopoverContainer from "./popover-container.jsx";
+import {PureEditableField} from '../includes/editable-field.jsx';
 import axios from "axios";
 
 import { CurrentUserConsumer } from "../current-user.jsx";
@@ -103,15 +104,13 @@ ${secondHalf}`;
     }
     return (
       <section className="pop-over-info">
-        <label className="label" htmlFor="email">
-          Your email (required)
-        </label>
-        <input
-          name="email"
-          className="pop-over-input"
+        <PureEditableField
           value={this.state.email}
-          onChange={this.emailOnChange}
-        />
+          update={this.emailOnChange}
+          placeholder=''
+          error=''
+          prefix='Your email (required)'
+          />
       </section>
     );
   }
