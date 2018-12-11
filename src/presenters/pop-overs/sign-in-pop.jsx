@@ -7,6 +7,7 @@ import Link from '../includes/link';
 import LocalStorage from '../includes/local-storage';
 import PopoverContainer from './popover-container';
 import {captureException} from '../../utils/sentry';
+import {NestedPopover, NestedPopoverTitle} from './popover-nested.jsx';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
 
@@ -61,39 +62,49 @@ class EmailHandler extends React.Component {
       this.setState({error: true});
     }
   }
-  
+   
   render() {
     const isEnabled = this.state.email.length > 0;
     return (
-      <section className="pop-over-actions last-section">
-        {!this.state.done &&
-          <form onSubmit={(e) => this.onSubmit(e)} style={{marginBottom: 0}}>
-            Sign in with email
-            <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
-            <button style={{marginTop: 10, marginBottom: 0}} className="button-small button-link has-emoji" disabled={!isEnabled} onClick={() => {this.props.onClick();}}>
-              Email Sign In <span className="emoji email emoji-in-title"></span>
-            </button>
-          </form>
-        }
-        {(this.state.done && !this.state.error) &&
-          <>
-            <div className="notification notifySuccess">Almost Done</div>
-            <div>Please click the confirmation link sent to {this.state.email}.</div>
-          </>
-        }
-        {(this.state.done && this.state.error) &&
-          <>
-            <div className="notification notifyError">Error</div>
-            <div>Something went wrong, email not sent.</div>
-          </>
-        }
-        
-      </section>
+      <dialog className="pop-over sign-in-pop">
+        <NestedPopoverTitle>
+          Email Sign In <span className="emoji email" />
+        </NestedPopoverTitle>
+        <section className="pop-over-actions first-section">
+          {!this.state.done &&
+            <form onSubmit={this.onSubmit} style={{marginBottom: 0}}>
+              <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
+              <button style={{marginTop: 10}} className="button-small button-link" disabled={!isEnabled}>Send Link</button>
+            </form>
+          }
+          {(this.state.done && !this.state.error) &&
+            <>
+              <div className="notification notifySuccess">Almost Done</div>
+              <div>Please click the confirmation link sent to {this.state.email}.</div>
+            </>
+          }
+          {(this.state.done && this.state.error) &&
+            <>
+              <div className="notification notifyError">Error</div>
+              <div>Something went wrong, email not sent.</div>
+            </>
+          }       
+        </section>
+      </dialog>
     );
   }
 }
 
-const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
+const EmailSignInButton = ({onClick}) => (
+  <button className="button button-small button-link has-emoji" onClick={() => {onClick();}}>
+    Sign in with Email <span className="emoji email"></span>
+  </button>
+);
+EmailSignInButton.propTypes = {
+  onClick: PropTypes.func.isRequired
+};
+
+const SignInPopWithoutRouter = (props) => (
   <LocalStorage name="destinationAfterAuth">
     {(destination, setDestination) => {
       const onClick = () => setDestination({
@@ -104,16 +115,25 @@ const SignInPopWithoutRouter = ({header, prompt, api, location, hash}) => (
           hash: hash,
         },
       });
+      const {header, prompt, api, location, hash} = props;
       return (
-        <div className="pop-over sign-in-pop">
-          {header}
-          <section className="pop-over-actions first-section">
-            {prompt}
-            <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
-            <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
-          </section>
-          <EmailHandler api={api} onClick={onClick}/>
-        </div>
+        <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
+          {showEmailLogin => 
+            <div className="pop-over sign-in-pop">
+              {header}
+              <section className="pop-over-actions first-section">
+                {prompt}
+                <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
+                <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
+                <DevToggles>
+                  {(enabledToggles) => (
+                    enabledToggles.includes("Email Login") && <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
+                  )}
+                </DevToggles>
+              </section>
+            </div>
+          }
+        </NestedPopover>
       );
     }}
   </LocalStorage>
@@ -132,8 +152,9 @@ export default function SignInPopContainer(props) {
     <PopoverContainer>
       {({togglePopover, visible}) => (
         <div className="button-wrap">
-          <button className="button button-small" onClick={togglePopover}>Sign in</button>
-          {visible && <SignInPop {...props}/>}
+          <button className="button button-small" onClick={togglePopover}>Sign In</button>
+          {visible && (
+            <SignInPop {...props} {...{togglePopover}}/>)}
         </div>
       )}
     </PopoverContainer>
