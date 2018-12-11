@@ -85,12 +85,17 @@ ${secondHalf}`;
     }
   }
   
-  validateEmail() {
-    if (this.state.email === '') {
-      this.setState({emailError: 'Email is required'}); 
+  validateNotEmpty(stateField, errorField, fieldDescription) {
+    if (this.state[stateField] === '') {
+      this.setState({errorField: 'Email is required'}); 
       return;
     }
     this.setState({emailError: ''}); 
+    
+  }
+  
+  validateEmail() {
+
   }
   
   validateReason() {
