@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PopoverContainer from "./popover-container.jsx";
 import {PureEditableField} from '../includes/editable-field.jsx';
+import _ from 'lodash';
 import axios from "axios";
 
 import { CurrentUserConsumer } from "../current-user.jsx";
@@ -10,15 +11,16 @@ export class ReportAbusePop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reasonValue: "",
-      email: ""
+      reasonValue: '',
+      email: '',
+      emailError: '',
     };
     this.submitReport = this.submitReport.bind(this);
     this.reasonOnChange = this.reasonOnChange.bind(this);
     this.formatRaw = this.formatRaw.bind(this);
     this.getUserInfoSection = this.getUserInfoSection.bind(this);
     this.emailOnChange = this.emailOnChange.bind(this);
-    this.debouncedValidate = _.debounce(this.validate.bind(this), 200);
+    this.debouncedValidateEmail = _.debounce(this.validateEmail.bind(this), 200);
   }
 
   padTo(content, length) {
@@ -81,9 +83,10 @@ ${secondHalf}`;
     }
   }
   
-  validate() {
-    if (this.state.email != 
-           this.setState(({teamName}) => (name === teamName) ? {error} : {}); 
+  validateEmail() {
+    if (this.state.email === '') {
+      this.setState({emailError: 'Email is required'}); 
+    }
   }
 
   reasonOnChange(event) {
@@ -96,6 +99,7 @@ ${secondHalf}`;
     this.setState({
       email: value
     });
+    this.debouncedValidateEmail();
   }
 
   getUserInfoSection() {
@@ -114,7 +118,7 @@ ${secondHalf}`;
           value={this.state.email}
           update={this.emailOnChange}
           placeholder=''
-          error=''
+          error={this.state.emailError}
           prefix='Your email (required)'
           />
       </section>
