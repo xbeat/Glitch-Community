@@ -11,7 +11,7 @@ export class ReportAbusePop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reasonValue: '',
+      reason: '',
       email: '',
       emailError: '',
       reasonError: '',
@@ -21,8 +21,9 @@ export class ReportAbusePop extends React.Component {
     this.formatRaw = this.formatRaw.bind(this);
     this.getUserInfoSection = this.getUserInfoSection.bind(this);
     this.emailOnChange = this.emailOnChange.bind(this);
-    this.debouncedValidateEmail = _.debounce(this.validateEmail.bind(this), 200);
-    this.debouncedValidateReason = _.debounce(this.validateReason.bind(this), 200);
+    this.validateNotEmpty = this.validateNotEmpty.bind(this);
+    this.debouncedValidateEmail = _.debounce(() => this.validateNotEmpty('email', 'emailError', 'Email'), 200);
+    this.debouncedValidateReason = _.debounce(() => this.validateNotEmpty('reason', 'reasonError', 'A description of the issue'), 200);
   }
 
   padTo(content, length) {
@@ -59,7 +60,7 @@ export class ReportAbusePop extends React.Component {
     const secondHalf = `
 - Contact: ${email}
 
-- Message: ${this.state.reasonValue}`;
+- Message: ${this.state.reason}`;
     return `${firstHalf}
 
 ${submitterPart}
@@ -87,28 +88,15 @@ ${secondHalf}`;
   
   validateNotEmpty(stateField, errorField, fieldDescription) {
     if (this.state[stateField] === '') {
-      this.setState({errorField: 'Email is required'}); 
+      this.setState({[errorField]: `${fieldDescription} is required`}); 
       return;
     }
-    this.setState({emailError: ''}); 
-    
+    this.setState({[errorField]: ''}); 
   }
   
-  validateEmail() {
-
-  }
-  
-  validateReason() {
-    if (this.state.reasonValue === '') {
-      this.setState({reasonError: 'A description of the issue is required'}); 
-      return;
-    }
-    this.setState({reasonError: ''}); 
-  }
-
   reasonOnChange(value) {
     this.setState({
-      reasonValue: value
+      reason: value
     });
     this.debouncedValidateReason();
   }
@@ -156,7 +144,7 @@ ${secondHalf}`;
         </section>
         <section className="pop-over-actions">
           <PureEditableTextArea
-            value={this.state.reasonValue}
+            value={this.state.reason}
             update={this.reasonOnChange}
             blur={() => this.debouncedValidateReason()}
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
