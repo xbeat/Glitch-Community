@@ -125,11 +125,7 @@ const SignInPopWithoutRouter = (props) => (
                 {prompt}
                 <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
                 <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
-                <DevToggles>
-                  {(enabledToggles) => (
-                    enabledToggles.includes("Email Login") && <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
-                  )}
-                </DevToggles>
+                <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
               </section>
             </div>
           }
