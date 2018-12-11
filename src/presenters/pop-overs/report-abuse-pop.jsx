@@ -153,7 +153,7 @@ ${secondHalf}`;
           <PureEditableTextArea
             value={this.state.reasonValue}
             update={this.reasonOnChange}
-            blur={this.validate
+            blur={() => this.debouncedValidateReason()}
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             placeholder=''
             error={this.state.reasonError}
