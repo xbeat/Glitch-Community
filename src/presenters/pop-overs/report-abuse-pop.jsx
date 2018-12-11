@@ -14,6 +14,7 @@ export class ReportAbusePop extends React.Component {
       reasonValue: '',
       email: '',
       emailError: '',
+      reasonError: '',
     };
     this.submitReport = this.submitReport.bind(this);
     this.reasonOnChange = this.reasonOnChange.bind(this);
@@ -21,6 +22,7 @@ export class ReportAbusePop extends React.Component {
     this.getUserInfoSection = this.getUserInfoSection.bind(this);
     this.emailOnChange = this.emailOnChange.bind(this);
     this.debouncedValidateEmail = _.debounce(this.validateEmail.bind(this), 200);
+    this.debouncedValidateReason = _.debounce(this.validateReason.bind(this), 200);
   }
 
   padTo(content, length) {
@@ -90,11 +92,20 @@ ${secondHalf}`;
     }
     this.setState({emailError: ''}); 
   }
+  
+  validateReason() {
+    if (this.state.reasonValue === '') {
+      this.setState({reasonError: 'A description of the issue is required'}); 
+      return;
+    }
+    this.setState({reasonError: ''}); 
+  }
 
-  reasonOnChange(event) {
+  reasonOnChange(value) {
     this.setState({
-      reasonValue: event.target.value
+      reasonValue: value
     });
+    this.debouncedValidateReason();
   }
 
   emailOnChange(value) {
@@ -142,6 +153,7 @@ ${secondHalf}`;
           <PureEditableTextArea
             value={this.state.reasonValue}
             update={this.reasonOnChange}
+            blur={this.validate
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             placeholder=''
             error={this.state.reasonError}

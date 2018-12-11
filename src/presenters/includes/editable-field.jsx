@@ -69,7 +69,7 @@ PureEditableFieldHolder.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired, // ideally an <input> or <textarea>
+  children: PropTypes.func.isRequired, // function that takes inputProps and inputRef as parameters and returns a node
   blur: PropTypes.func,
   prefix: PropTypes.node,
   suffix: PropTypes.node,
