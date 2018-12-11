@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Display 3D and AR Content on the Web',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_model-viewer.png?1543839844608",
-    link: 'https://glitch.com/~model-viewer'
+    title: 'Share Your Year-End Favorites',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FYear_End_List-01.jpg?1544442922711",
+    link: 'https://glitch.com/~year-end-list'
   },{
-    title: 'Learn Material Theming With Dogs',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_adopt-a-pup.png?1543839844765",
-    link: 'https://glitch.com/~adopt-a-pup'
+    title: 'Squish Those Cartoon Cheeks',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FDarwin_Face-01.jpg?1544442921591",
+    link: 'https://glitch.com/~darwin-face'
   },{
-    title: 'Counting Down in 3, 2, 1...',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_simple-countdown.png?1543839844460",
-    link: 'https://glitch.com/~simple-countdown'
+    title: 'Find Your Next Random Obsession',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FRandom_Obsession-01.jpg?1544442921753",
+    link: 'https://glitch.com/~randomobsession'
   }  
 ];

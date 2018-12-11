@@ -6,7 +6,6 @@ import moment from 'moment-mini';
 import Link from '../includes/link';
 import LocalStorage from '../includes/local-storage';
 import PopoverContainer from './popover-container';
-import {DevToggles} from '../includes/dev-toggles';
 import {captureException} from '../../utils/sentry';
 import {NestedPopover, NestedPopoverTitle} from './popover-nested.jsx';
 
