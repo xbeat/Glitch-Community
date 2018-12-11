@@ -131,8 +131,9 @@ const ProjectPage = ({
     </section>
     <section id="embed">
       <Embed domain={domain}/>
-        <ReportButton projectName={domain} projectId={project.id} containerClass='buttons buttons-left' />
-      <div className="buttons buttons-right">
+      <div className='buttons'>
+        <ReportButton projectName={domain} projectId={project.id} />
+        <div>
 
         {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
         
@@ -141,6 +142,7 @@ const ProjectPage = ({
           onClick={() => trackRemix(project.id, domain)}
         />
       </div>
+        </div>
     </section>
     <section id="readme">
       <ReadmeLoader api={api} domain={domain}/>
