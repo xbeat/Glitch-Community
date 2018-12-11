@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Pluralize from 'react-pluralize';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import CollectionOptionsContainer from "./pop-overs/collection-options-pop.jsx";
 import { CollectionLink } from './includes/link';
+import Loader from './includes/loader';
 import CollectionAvatar from './includes/collection-avatar.jsx';
 
 import {getAvatarUrl} from '../models/project.js';
 
-import {getContrastTextColor, hexToRgbA} from '../models/collection.js';
+import {getContrastTextColor, hexToRgbA} from '../models/collection';
 
 const ProjectsPreview = ({projects}) => {
   
@@ -24,7 +26,7 @@ const ProjectsPreview = ({projects}) => {
         )) }
       </ul>
       <div className="collection-link">
-        View {projects.length} {(projects.length > 0 ? 'projects' : 'project')} →
+        View <Pluralize count={projects.length} singular="project"/> →
       </div>
     </>
   );
@@ -68,7 +70,7 @@ class CollectionItem extends React.Component{
                   <div className="overflow-mask"></div>
                 </div>
 
-                {(collection.projects.length > 0
+                {collection.projects ? (collection.projects.length > 0
                   ? <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection}/>
                   :
                   <div className="projects-preview empty">
@@ -77,7 +79,7 @@ class CollectionItem extends React.Component{
                       : <p>No projects to see in this collection just yet.</p>
                     )}
                   </div>
-                )}
+                ) : <Loader/>}
               </div>
             </div>
           </CollectionLink>             
