@@ -4,8 +4,9 @@ import {uniqueId} from 'lodash';
 
 import {OptimisticValue, TrimmedValue, FieldErrorIcon, FieldErrorMessage} from './field-helpers.jsx';
 
-export class PureEditableField extends React.Component {
-  constructor(props) {
+
+class PureEditableFieldHolder extends React.Component {
+   constructor(props) {
     super(props);
     this.state = { id: uniqueId("editable-field-") };
     this.textInput = React.createRef();
@@ -53,7 +54,7 @@ export class PureEditableField extends React.Component {
         <span className="editable-field-flex">
           {maybePrefix}
           <span className="editable-field-input">
-            <input {...inputProps} ref={this.textInput} />
+            {this.props.children(inputProps, this.textInput)}
             {maybeErrorIcon}
           </span>
           {maybeSuffix}
@@ -63,6 +64,46 @@ export class PureEditableField extends React.Component {
     );
   }
 }
+
+PureEditableFieldHolder.propTypes = {
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired, // ideally an <input> or <textarea>
+  blur: PropTypes.func,
+  prefix: PropTypes.node,
+  suffix: PropTypes.node,
+  autoFocus: PropTypes.bool,
+  error: PropTypes.string,
+};
+
+export const PureEditableTextArea = (props) => (
+  <PureEditableFieldHolder {...props}>
+    {(inputProps, inputRef) => {
+      <textarea {...inputProps} ref={inputRef} />  
+    }}
+  </PureEditableFieldHolder>
+  );
+
+PureEditableField.propTypes = {
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
+  blur: PropTypes.func,
+  prefix: PropTypes.node,
+  suffix: PropTypes.node,
+  autoFocus: PropTypes.bool,
+  error: PropTypes.string,
+};
+
+export const PureEditableField = (props) => (
+  <PureEditableFieldHolder {...props}>
+    {(inputProps, inputRef) => {
+      <input {...inputProps} ref={inputRef} />  
+    }}
+  </PureEditableFieldHolder>
+  );
+
 PureEditableField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
