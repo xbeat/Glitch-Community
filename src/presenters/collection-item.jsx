@@ -16,9 +16,9 @@ const ProjectsPreview = ({projects}) => {
   
   return (
     <>
-      <ul className="projects-preview" projects={projects}>
+      <ul className="projects-preview">
         { projects.slice(0,3).map(project => (
-          <li key={project.id} className={"project-container " + (project.private ? "private" : null)}>
+          <li key={project.id} className={"project-container " + (project.private ? "private" : '')}>
             <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
             <div className="project-name">{project.domain}</div>
             <div className="project-badge private-project-badge" aria-label="private"></div>
@@ -79,7 +79,7 @@ class CollectionItem extends React.Component{
                       : <p>No projects to see in this collection just yet.</p>
                     )}
                   </div>
-                ) : <Loader/>}
+                ) : <div className="collection-link"><Loader/></div>}
               </div>
             </div>
           </CollectionLink>             

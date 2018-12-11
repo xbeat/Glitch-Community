@@ -51,6 +51,23 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
   </>
 );
 
+const TeamPageCollections = ({collections, team, api, currentUser, currentUserIsOnTeam}) => (
+  <DevToggles>
+    {enabledToggles => (
+      <CollectionsList
+        title={<>Collections {!collections.length && currentUserIsOnTeam && (
+          <aside className="inline-banners team-page">
+            Use collections to organize projects
+          </aside>
+        )}</>}
+        collections={collections.map(collection => ({...collection, team: team}))}
+        api={api} maybeCurrentUser={currentUser} maybeTeam={team}
+        isAuthorized={currentUserIsOnTeam && enabledToggles.includes('Team Collections')}
+      />
+    )}
+  </DevToggles>
+);
+
 // Team Page
 
 class TeamPage extends React.Component {
@@ -196,24 +213,9 @@ class TeamPage extends React.Component {
         <ErrorBoundary>
           <DataLoader
             get={() => this.props.api.get(`collections?teamId=${this.props.team.id}`)}
-            renderLoader={() => null} //Don't show anything until we're done loading
+            renderLoader={() => <TeamPageCollections {...this.props} collections={this.props.team.collections}/>}
           >
-            {({data}) => (
-              <DevToggles>
-                {enabledToggles => (
-                  <CollectionsList
-                    title={<>Collections {!data.length && this.props.currentUserIsOnTeam && (
-                      <aside className="inline-banners team-page">
-                        Use collections to organize projects
-                      </aside>
-                    )}</>}
-                    collections={data.map(collection => ({...collection, team: this.props.team}))}
-                    api={this.props.api} maybeCurrentUser={this.props.currentUser} maybeTeam={this.props.team}
-                    isAuthorized={this.props.currentUserIsOnTeam && enabledToggles.includes('Team Collections')}
-                  />
-                )}
-              </DevToggles>
-            )}
+            {({data}) => <TeamPageCollections {...this.props} collections={data}/>}
           </DataLoader>
         </ErrorBoundary>
         
