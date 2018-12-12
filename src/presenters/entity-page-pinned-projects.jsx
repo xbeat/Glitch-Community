@@ -69,7 +69,7 @@ const FeaturedPinnedProject = ({api, isAuthorized, currentUser, featuredProjectD
 
 const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorized, removePin, projectOptions, featuredProjectDomain, addProjectToCollection}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
-  const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id));
+  const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id)).slice(1);
   
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
   
