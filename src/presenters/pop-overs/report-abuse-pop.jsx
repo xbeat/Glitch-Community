@@ -27,13 +27,6 @@ export class ReportAbusePop extends React.Component {
     this.debouncedValidateReason = _.debounce(() => this.validateNotEmpty('reason', 'reasonError', 'A description of the issue'), 200);
   }
 
-  padTo(content, length) {
-    while (content.length < length) {
-      content += "_";
-    }
-    return content;
-  }
-
   formatRaw() {
     const submitter = this.props.currentUser.login
       ? this.props.currentUser.login
