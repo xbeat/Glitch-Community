@@ -99,7 +99,7 @@ PureEditableTextArea.propTypes = {
 export const PureEditableField = (props) => (
   <PureEditableFieldHolder {...props}>
     {(inputProps, inputRef) => (
-      <input {...inputProps} ref={inputRef} />  
+      <input {...inputProps} ref={inputRef} type='email' />  
     )}
   </PureEditableFieldHolder>
   );
