@@ -62,25 +62,17 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
     <dialog className="pop-over project-options-pop">
       {props.currentUserIsOnProject &&
         <section className="pop-over-actions">
-          <PopoverButton onClick={featureProject} text="Feature" emoji="glowing-star"/>
+            {props.addPin && 
+              <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>
+            }
+            {props.removePin && 
+              <>
+                <PopoverButton onClick={featureProject} text="Feature" emoji="glowing-star"/>
+                <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>
+              </>
+            }
         </section>
       }
-      
-      {props.currentUserIsOnProject || (props.removePin || props.addPin)
-        ? <>
-          {(props.addPin && 
-            <section className="pop-over-actions">
-              {!!props.addPin && <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>}
-            </section>
-          )}
-          {(props.removePin && 
-            <section className="pop-over-actions">
-              {!!props.removePin && <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>}
-            </section>
-          )}
-        </>
-        : null
-      } 
       
       <section className="pop-over-actions">
         {!!props.addProjectToCollection && <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to Collection " emoji="framed_picture"/>}
