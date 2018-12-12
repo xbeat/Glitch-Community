@@ -27,13 +27,23 @@ module.exports = function(external) {
   ));
   
   const webpack = require('webpack');
-  const webpackMiddleware = require('webpack-dev-middleware');
   const webpackConfig = require('../webpack.config.js');
   const compiler = webpack(webpackConfig);
-  app.use(webpackMiddleware(compiler, {
-    stats: { chunks: false, maxModules: 5 },
-    writeToDisk: true,
-  }));
+  if (process.env.NODE_ENV === 'production') {
+    compiler.watch({}, (error, stats) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(stats.toString({chunks: false}));
+      }
+    });
+  } else {
+    const webpackMiddleware = require('webpack-dev-middleware');
+    app.use(webpackMiddleware(compiler, {
+      stats: { chunks: false, maxModules: 5 },
+      writeToDisk: true,
+    }));
+  }
 
   app.use(express.static('public', { index: false }));
 
