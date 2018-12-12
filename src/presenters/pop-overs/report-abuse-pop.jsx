@@ -69,6 +69,13 @@ ${secondHalf}`;
 
   async submitReport() {
     try {
+      
+      this.validateNotEmpty('email', 'emailError', 'Email');
+      this.validateNotEmpty('reason', 'reasonError', 'A description of the issue');
+      if (this.state.emailError != '' || this.state.reasonError != '') {
+        
+      }
+      
       const submitter = this.props.currentUser.login
         ? this.props.currentUser.login
         : "anonymous";
