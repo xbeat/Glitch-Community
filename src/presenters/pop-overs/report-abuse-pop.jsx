@@ -134,6 +134,7 @@ ${secondHalf}`;
           placeholder=''
           error={this.state.emailError}
           prefix='Your email (required)'
+          inputType='email'
         />
       </section>
     );

@@ -35,6 +35,7 @@ class PureEditableFieldHolder extends React.Component {
       placeholder: this.props.placeholder,
       autoFocus: this.props.autoFocus,
       onBlur: this.props.blur,
+      type: this.props.inputType,
     };
     
     const maybeErrorIcon = !!this.props.error && <FieldErrorIcon/>;
@@ -94,12 +95,13 @@ PureEditableTextArea.propTypes = {
   suffix: PropTypes.node,
   autoFocus: PropTypes.bool,
   error: PropTypes.string,
+  inputType: PropTypes.string,
 };
 
 export const PureEditableField = (props) => (
   <PureEditableFieldHolder {...props}>
     {(inputProps, inputRef) => (
-      <input {...inputProps} ref={inputRef} type='email' />  
+      <input {...inputProps} ref={inputRef} />  
     )}
   </PureEditableFieldHolder>
   );
@@ -113,6 +115,7 @@ PureEditableField.propTypes = {
   suffix: PropTypes.node,
   autoFocus: PropTypes.bool,
   error: PropTypes.string,
+  inputType: PropTypes.string,
 };
 
 export const EditableField = ({value, update, ...props}) => (
