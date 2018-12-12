@@ -15,7 +15,8 @@ dependencies:
   compression: 1.7.3
   css-loader: 1.0.1
   d3-array: 2.0.2
-  details-element-polyfill: 2.0.4
+  dayjs: 1.7.7
+  details-element-polyfill: 2.2.0
   ejs: 2.6.1
   email-addresses: 3.0.3
   eslint: 5.9.0
@@ -34,7 +35,6 @@ dependencies:
   markdown-it-sanitizer: 0.4.3
   memory-cache: 0.2.0
   mini-css-extract-plugin: 0.4.5
-  moment-mini: 2.22.1
   nodemon: 1.18.7
   prop-types: 15.6.2
   quantize: 1.0.2
@@ -1879,6 +1879,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
+  /dayjs/1.7.7:
+    dev: false
+    resolution:
+      integrity: sha512-Qlkiu0NNDpYwhk0syK4ImvAl/5YnsEMkvC2O123INviGeOA3Q8s5VyVkZzmN5SC7Wv9bb1+rfwO+uSqtHB4UWw==
   /debug/2.6.9:
     dependencies:
       ms: 2.0.0
@@ -1981,10 +1985,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
-  /details-element-polyfill/2.0.4:
+  /details-element-polyfill/2.2.0:
     dev: false
     resolution:
-      integrity: sha512-xYrljAI1bvqihJJyK9zgb3tK1KqGJcHF6A2JrrZlS5MbVX3ccZxAdoaV1osUnRYUnlmmlmK9XdgdZgiEKJz5KQ==
+      integrity: sha512-Sjg+A4q3Mrn2JKQu58zsreuHqAb4M0qe4eK5ZQAIBuch9i8nx6MlKWCxx0z8s59MMen9I4WXavzW5z+BnkIC0A==
   /diffie-hellman/5.0.3:
     dependencies:
       bn.js: 4.11.8
@@ -3961,10 +3965,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
-  /moment-mini/2.22.1:
-    dev: false
-    resolution:
-      integrity: sha512-OUCkHOz7ehtNMYuZjNciXUfwTuz8vmF1MTbAy59ebf+ZBYZO5/tZKuChVWCX+uDo+4idJBpGltNfV8st+HwsGw==
   /move-concurrently/1.0.1:
     dependencies:
       aproba: 1.2.0
@@ -6112,7 +6112,8 @@ specifiers:
   compression: ^1.7.3
   css-loader: ^1.0.1
   d3-array: ^2.0.2
-  details-element-polyfill: ^2.0.4
+  dayjs: ^1.7.7
+  details-element-polyfill: ^2.2.0
   ejs: ^2.6.1
   email-addresses: ^3.0.3
   eslint: ^5.9.0
@@ -6131,7 +6132,6 @@ specifiers:
   markdown-it-sanitizer: ^0.4.3
   memory-cache: ^0.2.0
   mini-css-extract-plugin: ^0.4.5
-  moment-mini: ^2.22.1
   nodemon: ^1.18.7
   prop-types: ^15.6.2
   quantize: ^1.0.2

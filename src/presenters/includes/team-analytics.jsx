@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment-mini';
+import dayjs from 'dayjs';
 import _ from 'lodash';
 import sampleAnalytics, {sampleAnalyticsTime} from '../../curated/sample-analytics';
 
@@ -15,9 +15,9 @@ import TeamAnalyticsProjectDetails from '../includes/team-analytics-project-deta
 
 const dateFromTime = (newTime) => {
   const timeMap = {
-    "Last 4 Weeks": moment().subtract(4, 'weeks').valueOf(),
-    "Last 2 Weeks": moment().subtract(2, 'weeks').valueOf(),
-    "Last 24 Hours": moment().subtract(24, 'hours').valueOf(),
+    "Last 4 Weeks": dayjs().subtract(4, 'weeks').valueOf(),
+    "Last 2 Weeks": dayjs().subtract(2, 'weeks').valueOf(),
+    "Last 24 Hours": dayjs().subtract(24, 'hours').valueOf(),
   };
   return timeMap[newTime];
 };
