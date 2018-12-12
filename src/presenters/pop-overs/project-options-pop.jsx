@@ -62,15 +62,15 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
     <dialog className="pop-over project-options-pop">
       {props.currentUserIsOnProject &&
         <section className="pop-over-actions">
-            {props.addPin && 
+          {props.addPin && 
               <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>
-            }
-            {props.removePin && 
+          }
+          {props.removePin && 
               <>
                 <PopoverButton onClick={featureProject} text="Feature" emoji="glowing-star"/>
                 <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>
               </>
-            }
+          }
         </section>
       }
       
