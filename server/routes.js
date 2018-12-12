@@ -25,6 +25,17 @@ module.exports = function(external) {
       return next();
     })
   ));
+  
+  const webpack = require('webpack');
+  const webpackConfig = require('../webpack.config.js');
+  const compiler = webpack(webpackConfig);
+  compiler.watch({}, (error, stats) => {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log('Build complete');
+    }
+  });
 
   app.use(express.static('public', { index: false }));
 
