@@ -27,18 +27,12 @@ module.exports = function(external) {
   ));
   
   const webpack = require('webpack');
+  const webpackMiddleware = require('webpack-dev-middleware');
   const webpackConfig = require('../webpack.config.js');
   const compiler = webpack(webpackConfig);
-  compiler.watch({}, (error, stats) => {
-    if (error) {
-      console.error(error);
-    } else {
-      console.log(stats.toString({
-        chunks: false,
-        maxModules: 5,
-      }));
-    }
-  });
+  app.use(webpackMiddleware(compiler, {
+    stats: { chunks: false, maxModules: 5 },
+  }));
 
   app.use(express.static('public', { index: false }));
 

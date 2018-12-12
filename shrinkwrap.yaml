@@ -55,6 +55,7 @@ dependencies:
   url-join: 4.0.0
   webpack: 4.27.0
   webpack-cli: 3.1.2
+  webpack-dev-middleware: 3.4.0
   webpack-manifest-plugin: 2.0.4
 packages:
   /@babel/code-frame/7.0.0:
@@ -752,6 +753,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-w2rsy6VjuJzrVW82kPCx2eNUf38=
+  /ansi-colors/3.2.3:
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-LEHHyuhlPY3TmuUYMh2oz89lTShfvgbmzaBcxve9t/9Wuy7Dwf4yoAKcND7KFT1HAQfqZ12qtc+DUrBMeKF9nw==
   /ansi-escapes/3.1.0:
     dev: false
     engines:
@@ -3888,6 +3895,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-KI1+qOZu5DcW6wayYHSzR/tXKCDC5Om4s1z2QJjDULzLcmf3DvzS7oluY4HCTrc+9FiKmWUgeNLg7W3uIQvxtQ==
+  /mime/2.4.0:
+    dev: false
+    engines:
+      node: '>=4.0.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-ikBcWwyqXQSHKtciCcctu9YfPbFYZ4+gbHEmE0Q8jzcTYQg5dHCr3g2wwAZjPoJfQVXZq6KXAjpXOTf5/cjT7w==
   /mimic-fn/1.2.0:
     dev: false
     engines:
@@ -5868,6 +5882,11 @@ packages:
       node: '>= 0.4.0'
     resolution:
       integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
+  /uuid/3.3.2:
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
   /v8-compile-cache/2.0.2:
     dev: false
     resolution:
@@ -5928,6 +5947,28 @@ packages:
       webpack: ^4.x.x
     resolution:
       integrity: sha512-Cnqo7CeqeSvC6PTdts+dywNi5CRlIPbLx1AoUPK2T6vC1YAugMG3IOoO9DmEscd+Dghw7uRlnzV1KwOe5IrtgQ==
+  /webpack-dev-middleware/3.4.0:
+    dependencies:
+      memory-fs: 0.4.1
+      mime: 2.4.0
+      range-parser: 1.2.0
+      webpack-log: 2.0.0
+    dev: false
+    engines:
+      node: '>= 6'
+    peerDependencies:
+      webpack: ^4.0.0
+    resolution:
+      integrity: sha512-Q9Iyc0X9dP9bAsYskAVJ/hmIZZQwf/3Sy4xCAZgL5cUkjZmUZLt4l5HpbST/Pdgjn3u6pE7u5OdGd1apgzRujA==
+  /webpack-log/2.0.0:
+    dependencies:
+      ansi-colors: 3.2.3
+      uuid: 3.3.2
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-cX8G2vR/85UYG59FgkoMamwHUIkSSlV3bBMRsbxVXVUk2j6NleCKjQ/WE9eYg9WY4w25O9w8wKP4rzNZFmUcUg==
   /webpack-manifest-plugin/2.0.4:
     dependencies:
       fs-extra: 7.0.0
@@ -6152,4 +6193,5 @@ specifiers:
   url-join: ^4.0.0
   webpack: ^4.27.0
   webpack-cli: ^3.1.2
+  webpack-dev-middleware: ^3.4.0
   webpack-manifest-plugin: ^2.0.4
