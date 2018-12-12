@@ -156,7 +156,7 @@ ${secondHalf}`;
         {this.getUserInfoSection()}
         <section className="pop-over-actions">
           <button className="button" onClick={this.submitReport}>
-            Submit Report 📧
+            Submit Report <span role="img" aria-label="">📧</span>
           </button>
         </section>
       </dialog>
