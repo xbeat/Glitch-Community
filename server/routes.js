@@ -32,6 +32,7 @@ module.exports = function(external) {
   const compiler = webpack(webpackConfig);
   app.use(webpackMiddleware(compiler, {
     stats: { chunks: false, maxModules: 5 },
+    writeToDisk: true,
   }));
 
   app.use(express.static('public', { index: false }));
