@@ -61,9 +61,8 @@ class LoginPage extends React.Component {
       const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
       if (this.props.provider === "Email") {
         return <EmailErrorPage api={this.props.api} title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
-      } else {
-        return <OauthErrorPage api={this.props.api} title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
       }
+      return <OauthErrorPage api={this.props.api} title={`${this.props.provider} Login Problem`} description={this.state.errorMessage || genericDescription}/>;
     }
     return <div className="content"></div>;
   }
