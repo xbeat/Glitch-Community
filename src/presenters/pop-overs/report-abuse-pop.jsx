@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PopoverContainer from "./popover-container.jsx";
 import { PureEditableField, PureEditableTextArea } from '../includes/editable-field.jsx';
+import {parseOneAddress} from 'email-addresses';
 import _ from 'lodash';
 import axios from "axios";
 
