@@ -1,5 +1,3 @@
-/* global analytics APP_URL */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -12,7 +10,6 @@ import EditableField from '../includes/editable-field.jsx';
 import UserEditor from '../user-editor.jsx';
 import Thanks from '../includes/thanks.jsx';
 
-import {EditButton, RemixButton, ReportButton} from '../includes/project-actions.jsx';
 import DeletedProjects from '../deleted-projects.jsx';
 import EntityPagePinnedProjects from '../entity-page-pinned-projects.jsx';
 import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
@@ -22,14 +19,6 @@ import ProjectsLoader from '../projects-loader.jsx';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, `/@${login}`);
-}
-
-function trackRemix(id, domain) {
-  analytics.track("Click Remix", {
-    origin: "project page",
-    baseProjectId: id,
-    baseDomain: domain,
-  });
 }
 
 const NameAndLogin = ({name, login, isAuthorized, updateName, updateLogin}) => {
