@@ -33,7 +33,10 @@ module.exports = function(external) {
     if (error) {
       console.error(error);
     } else {
-      console.log('Build complete');
+      console.log(stats.toString({
+        chunks: false,
+        maxModules: 5,
+      }));
     }
   });
 
