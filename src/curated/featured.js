@@ -14,15 +14,15 @@ Example:
 export default [
   {
     title: 'Share Your Year-End Favorites',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FYear_End_List-01.jpg?1544442922711",
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FAbstract_Disco-01.jpg?1544442923044",
     link: 'https://glitch.com/~year-end-list'
   },{
     title: 'Squish Those Cartoon Cheeks',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FDarwin_Face-01.jpg?1544442921591",
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FHandsfree-01.jpg?1544442922593",
     link: 'https://glitch.com/~darwin-face'
   },{
     title: 'Find Your Next Random Obsession',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FRandom_Obsession-01.jpg?1544442921753",
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FRandom_Note-01.jpg?1544442923184",
     link: 'https://glitch.com/~randomobsession'
   }  
 ];
