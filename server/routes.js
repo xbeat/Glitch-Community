@@ -39,10 +39,20 @@ module.exports = function(external) {
     });
   } else {
     const webpackMiddleware = require('webpack-dev-middleware');
-    app.use(webpackMiddleware(compiler, {
+    const middleware = webpackMiddleware(compiler, {
       stats: { chunks: false, maxModules: 5 },
       writeToDisk: true,
-    }));
+    });
+    let ready = false;
+    middleware.waitUntilValid(() => {
+      ready = true;
+    });
+    app.use(function(request, response, next) {
+      if (ready) {
+        return middleware(request, response, next);
+      }
+      next();
+    });
   }
 
   app.use(express.static('public', { index: false }));
