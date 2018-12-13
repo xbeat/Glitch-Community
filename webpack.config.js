@@ -26,7 +26,7 @@ module.exports = {
     [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
   },
   output: {
-    filename: '[name].js?[chunkhash]',
+    filename: mode === 'production' ? '[name].js?[chunkhash]' : '[name].js',
     path: PUBLIC,
     publicPath: '/',
   },
