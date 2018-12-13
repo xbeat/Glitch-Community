@@ -116,7 +116,7 @@ module.exports = {
       filter: ({isInitial, name}) => isInitial && name.endsWith('.css'),
     }),
     new MiniCssExtractPlugin({
-      filename: "[name].css?[contenthash]"
+      filename: mode === 'production' ? '[name].css?[contenthash]' : '[name].css'
     }),
   ],
   watchOptions: {
