@@ -87,16 +87,19 @@ ${secondHalf}`;
   }
   
   validateNotEmpty(stateField, errorField, fieldDescription) {
+    let errorObj;
     if (this.state[stateField] === '') {
-      this.setState({[errorField]: `${fieldDescription} is required`}); 
-      return;
+      errorObj = {[errorField]: `${fieldDescription} is required`};
+    } else {
+      errorObj = {[errorField]: ''};
     }
-    this.setState({[errorField]: ''}); 
+    this.setState(errorObj);
+    return errorObj;
   }
   
   validateEmail() {
-    this.validateNotEmpty('email', 'emailError', 'Email');
-    if (this.state.emailError != '') {
+    const errors = this.validateNotEmpty('email', 'emailError', 'Email');
+    if (errors.emailError != '') {
      return; 
     }
     
