@@ -1,9 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PopoverContainer from "./popover-container.jsx";
-import { PureEditableField, PureEditableTextArea } from '../includes/editable-field.jsx';
-import {parseOneAddress} from 'email-addresses';
-import _ from 'lodash';
+import {
+  PureEditableField,
+  PureEditableTextArea
+} from "../includes/editable-field.jsx";
+import { parseOneAddress } from "email-addresses";
+import _ from "lodash";
 import axios from "axios";
 
 import { CurrentUserConsumer } from "../current-user.jsx";
@@ -12,10 +15,10 @@ export class ReportAbusePop extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reason: '',
-      email: '',
-      emailError: '',
-      reasonError: '',
+      reason: "",
+      email: "",
+      emailError: "",
+      reasonError: ""
     };
     this.submitReport = this.submitReport.bind(this);
     this.reasonOnChange = this.reasonOnChange.bind(this);
@@ -24,8 +27,19 @@ export class ReportAbusePop extends React.Component {
     this.emailOnChange = this.emailOnChange.bind(this);
     this.validateNotEmpty = this.validateNotEmpty.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
+    this.renderForm = this.renderForm.bind(this);
+    this.renderSuccess = this.renderSuccess.bind(this);
+    
     this.debouncedValidateEmail = _.debounce(() => this.validateEmail(), 200);
-    this.debouncedValidateReason = _.debounce(() => this.validateNotEmpty('reason', 'reasonError', 'A description of the issue'), 200);
+    this.debouncedValidateReason = _.debounce(
+      () =>
+        this.validateNotEmpty(
+          "reason",
+          "reasonError",
+          "A description of the issue"
+        ),
+      200
+    );
   }
 
   formatRaw() {
@@ -64,11 +78,15 @@ ${secondHalf}`;
   async submitReport() {
     try {
       const emailErrors = this.validateEmail();
-      const reasonErrors = this.validateNotEmpty('reason', 'reasonError', 'A description of the issue');
-      if (emailErrors.emailError != '' || reasonErrors.reasonError != '') {
+      const reasonErrors = this.validateNotEmpty(
+        "reason",
+        "reasonError",
+        "A description of the issue"
+      );
+      if (emailErrors.emailError != "" || reasonErrors.reasonError != "") {
         return;
       }
-      
+
       const submitter = this.props.currentUser.login
         ? this.props.currentUser.login
         : "anonymous";
@@ -80,39 +98,40 @@ ${secondHalf}`;
         }
       );
       console.log(data);
+      this.setState({ submit_success: true });
     } catch (error) {
       // captureException(error);
       console.log(error);
     }
   }
-  
+
   validateNotEmpty(stateField, errorField, fieldDescription) {
     let errorObj;
-    if (this.state[stateField] === '') {
-      errorObj = {[errorField]: `${fieldDescription} is required`};
+    if (this.state[stateField] === "") {
+      errorObj = { [errorField]: `${fieldDescription} is required` };
     } else {
-      errorObj = {[errorField]: ''};
+      errorObj = { [errorField]: "" };
     }
     this.setState(errorObj);
     return errorObj;
   }
-  
+
   validateEmail() {
-    let errors = this.validateNotEmpty('email', 'emailError', 'Email');
-    if (errors.emailError != '') {
-     return errors; 
+    let errors = this.validateNotEmpty("email", "emailError", "Email");
+    if (errors.emailError != "") {
+      return errors;
     }
-    
+
     const email = parseOneAddress(this.state.email);
     if (!email) {
-      errors = { emailError: 'Please enter a valid email' }
+      errors = { emailError: "Please enter a valid email" };
     } else {
-     errors =  { emailError: '' }
+      errors = { emailError: "" };
     }
     this.setState(errors);
     return errors;
   }
-  
+
   reasonOnChange(value) {
     this.setState({
       reason: value
@@ -143,22 +162,25 @@ ${secondHalf}`;
           value={this.state.email}
           update={this.emailOnChange}
           blur={() => this.debouncedValidateEmail()}
-          placeholder=''
+          placeholder=""
           error={this.state.emailError}
-          prefix='Your email (required)'
-          inputType='email'
+          prefix="Your email (required)"
+          inputType="email"
         />
       </section>
     );
   }
 
-  render() {
-    const reasonLabel = <>
-      <p>This project doesn't belong on Glitch because...</p>
-      <hr />
-    </>;
+  renderForm() {
+    const reasonLabel = (
+      <>
+        <p>This project doesn't belong on Glitch because...</p>
+        <hr />
+      </>
+    );
+
     return (
-      <dialog className="pop-over wide-pop top-right">
+      <>
         <section className="pop-over-info">
           <h1 className="pop-title">Report Abuse</h1>
         </section>
@@ -168,17 +190,44 @@ ${secondHalf}`;
             update={this.reasonOnChange}
             blur={() => this.debouncedValidateReason()}
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
-            placeholder=''
+            placeholder=""
             error={this.state.reasonError}
-            prefix={reasonLabel} 
+            prefix={reasonLabel}
           />
         </section>
         {this.getUserInfoSection()}
         <section className="pop-over-actions">
           <button className="button" onClick={this.submitReport}>
-            Submit Report <span role="img" aria-label="">📧</span>
+            Submit Report{" "}
+            <span role="img" aria-label="">📧</span>
           </button>
         </section>
+      </>
+    );
+  }
+
+  renderSuccess() {
+    return (
+      <>
+        <section className="pop-over-info">
+          <h1 className="pop-title">Report Sent <span role="img" aria-label="">📧</span></h1>
+        </section>
+        <section className="pop-over-info">
+          <p className="pop-description">Thanks for helping to keep Glitch a safe, friendly community! <span role="img" aria-label="">🏞</span></p>
+        </section>
+      </>
+    );
+  }
+
+  render() {
+    return (
+      <dialog className="pop-over wide-pop top-right">
+        {!this.state.submitSuccess &&
+          !this.state.submitFailed &&
+          this.renderForm()}
+        {this.state.submitSuccess &&
+          !this.state.submitFailed &&
+          this.renderSuccess()}
       </dialog>
     );
   }
@@ -199,7 +248,7 @@ const ReportAbusePopContainer = props => (
 const ReportAbusePopButton = props => (
   <PopoverContainer>
     {({ visible, togglePopover }) => (
-      <div className='button-wrap'>
+      <div className="button-wrap">
         <button
           className="button-small button-tertiary"
           data-track=""
