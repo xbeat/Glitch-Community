@@ -24,7 +24,7 @@ export class ReportAbusePop extends React.Component {
     this.emailOnChange = this.emailOnChange.bind(this);
     this.validateNotEmpty = this.validateNotEmpty.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
-    this.debouncedValidateEmail = _.debounce(() => this.validateNotEmpty('email', 'emailError', 'Email'), 200);
+    this.debouncedValidateEmail = _.debounce(() => this.validateEmail(), 200);
     this.debouncedValidateReason = _.debounce(() => this.validateNotEmpty('reason', 'reasonError', 'A description of the issue'), 200);
   }
 
