@@ -65,7 +65,7 @@ export class ReportAbusePop extends React.Component {
     const submitterPart =
       submitter != "anonymous"
         ? `- Submitted by: [${submitter}](https://glitch.com/@${submitter})`
-        : "Submitted by: anonymous";
+        : "- Submitted by: anonymous";
     const secondHalf = `
 - Contact: ${email}
 
@@ -98,7 +98,7 @@ ${secondHalf}`;
         }
       );
       console.log(data);
-      this.setState({ submit_success: true });
+      this.setState({ submitSuccess: true });
     } catch (error) {
       // captureException(error);
       console.log(error);
