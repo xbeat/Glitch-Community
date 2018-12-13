@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
-import {getAvatarStyle, getProfileStyle} from '../../models/user';
+import {getAvatarStyle, getLink, getProfileStyle} from '../../models/user';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
@@ -18,7 +18,7 @@ import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 
 function syncPageToLogin(login) {
-  history.replaceState(null, null, `/@${login}`);
+  history.replaceState(null, null, getLink({login}));
 }
 
 const NameAndLogin = ({name, login, isAuthorized, updateName, updateLogin}) => {
@@ -109,11 +109,10 @@ const UserPage = ({
     
     {(loadedCollections && !!login &&
       <CollectionsList title="Collections" 
-        collections={_collections} 
+        collections={_collections.map(collection => ({...collection, user: {id, login}}))} 
         api={api} 
         isAuthorized={isAuthorized}
         maybeCurrentUser={maybeCurrentUser}
-        userLogin={login}
       />
     )}
 

@@ -31,7 +31,7 @@ class CollectionsList extends React.Component {
   }
   
   render() {
-    const {title, api, isAuthorized, maybeCurrentUser, userLogin} = this.props;
+    const {title, api, isAuthorized, maybeCurrentUser, maybeTeam} = this.props;
     const deleteCollection = this.deleteCollection;
     const collections = this.props.collections.filter(({id}) => !this.state.deletedCollectionIds.includes(id));
     const hasCollections = !!collections.length;
@@ -45,11 +45,11 @@ class CollectionsList extends React.Component {
         <h2>{title}</h2>
         {canMakeCollections &&
           <>
-            <CreateCollectionButton {...{api, currentUser: maybeCurrentUser}}/>
+            <CreateCollectionButton {...{api, currentUser: maybeCurrentUser, maybeTeam}}/>
             {!hasCollections && <CreateFirstCollection {...{api, currentUser: maybeCurrentUser}}/>}
           </>
         }
-        <CollectionsUL {...{collections, api, isAuthorized, deleteCollection, userLogin}}/>
+        <CollectionsUL {...{collections, api, isAuthorized, deleteCollection}}/>
       </article>
     );
   }
@@ -58,10 +58,10 @@ class CollectionsList extends React.Component {
 CollectionsList.propTypes = {
   collections: PropTypes.array.isRequired,
   maybeCurrentUser: PropTypes.object,
+  maybeTeam: PropTypes.object,
   title: PropTypes.node.isRequired,
   api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  userLogin: PropTypes.string.isRequired,
 };
 
 const CreateFirstCollection = () => (
@@ -95,7 +95,7 @@ export class CreateCollectionButton extends React.Component{
     const coverColor = randomColor({luminosity: 'light'});
     
     // set the team id if there is one
-    const teamId = this.props.team ? this.props.team.id : undefined;
+    const teamId = this.props.maybeTeam ? this.props.maybeTeam.id : undefined;
 
     const {data} = await this.props.api.post('collections', {
       name,
@@ -107,8 +107,8 @@ export class CreateCollectionButton extends React.Component{
     });
     
     if(data && data.url){
-      if (this.props.team) {
-        data.team = this.props.team;
+      if (this.props.maybeTeam) {
+        data.team = this.props.maybeTeam;
       } else {
         data.user = this.props.currentUser;
       }
@@ -178,10 +178,10 @@ export class CreateCollectionButton extends React.Component{
 CreateCollectionButton.propTypes = {
   api: PropTypes.any.isRequired,
   currentUser: PropTypes.object.isRequired,
-  team: PropTypes.object,
+  maybeTeam: PropTypes.object,
 };  
 
-export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized, userLogin}) => {
+export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized}) => {
   // order by updatedAt date
   const orderedCollections = orderBy(collections, collection => collection.updatedAt).reverse();
   return (
@@ -191,7 +191,7 @@ export const CollectionsUL = ({collections, deleteCollection, api, isAuthorized,
       */}
       
       { orderedCollections.map(collection => (
-        <CollectionItem key={collection.id} {...{collection, api, isAuthorized, deleteCollection, userLogin}}></CollectionItem>
+        <CollectionItem key={collection.id} {...{collection, api, isAuthorized, deleteCollection}}></CollectionItem>
       ))}
     </ul>
   );
@@ -202,7 +202,6 @@ CollectionsUL.propTypes = {
   collections: PropTypes.array.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
-  userLogin: PropTypes.string.isRequired,
 };
 
 

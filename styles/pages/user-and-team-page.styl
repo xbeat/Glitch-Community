@@ -1,3 +1,31 @@
+.user-page, .team-page
+  .projects-container > li, .collections-container > li
+    // Permit a 2-column layout on the user-page
+    // in between mediumViewport and largeViewport
+    @media (max-width: largeViewport)
+      width: 48%
+
+    @media (max-width: mediumViewport)
+      width: 100%
+      
+  .projects, .collections
+    padding: 0
+    margin-bottom: 1.5rem
+    overflow: visible
+    display: inline-block
+
+    .project-options
+      display: block
+    
+    .slide-up
+      animation: slideUp 0.1s ease-out
+      animation-fill-mode: forwards
+
+    .slide-down
+      animation: slideDown 0.1s ease-out
+      animation-fill-mode: forwards
+  
+
 .user-page
   .profile-info
     border-radius: 0px
@@ -17,24 +45,8 @@
       margin: 0.5em 0
       > li
         margin-right: 7px
-  
-  .projects, .collections
-    padding: 0
-    margin-bottom: 1.5rem
-    overflow: visible
-    display: inline-block
-
-    .project-options, .collection-options
-      display: block
-
-    .slide-up
-      animation: slideUp 0.1s ease-out
-      animation-fill-mode: forwards
-
-    .slide-down
-      animation: slideDown 0.1s ease-out
-      animation-fill-mode: forwards
-
+        
+      
 .team-page
   section
     position: relative
@@ -77,16 +89,6 @@
   .join-team-button
     vertical-align: top
     margin-top: 3px
-  
-  .collections
-    padding: 0
-    margin-bottom: 1.5rem
-    overflow: visible
-    display: inline-block   
-    .collection:hover
-      .button
-        box-shadow: none
-        background-color: white    
     
   .beta
     display: inline-flex

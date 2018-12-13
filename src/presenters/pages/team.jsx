@@ -3,17 +3,16 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import DevToggles from '../includes/dev-toggles';
-import {CurrentUserConsumer} from '../current-user.jsx';
+import {CurrentUserConsumer} from '../current-user';
+import {DataLoader} from '../includes/loader';
 import TeamEditor from '../team-editor.jsx';
-import {getLink as getCollectionLink} from '../../models/collection';
 import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ErrorBoundary from '../includes/error-boundary';
-import {Link} from '../includes/link';
 
-import SampleTeamCollections from '../../curated/sample-team-collections.jsx';
-import {CreateCollectionButton} from '../collections-list';
+//import SampleTeamCollections from '../../curated/sample-team-collections.jsx';
+import CollectionsList from '../collections-list';
 
 import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -27,8 +26,8 @@ import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 
-function syncPageToUrl(url) {
-  history.replaceState(null, null, getLink({url}));
+function syncPageToUrl(team) {
+  history.replaceState(null, null, getLink(team));
 }
 
 const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
@@ -44,7 +43,7 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
     <p className="team-url">
       <EditableField
         value={team.url}
-        update={url => updateUrl(url).then(() => syncPageToUrl(url))}
+        update={url => updateUrl(url).then(() => syncPageToUrl({...team, url}))}
         placeholder="Short url?"
         prefix="@"
       />
@@ -194,29 +193,29 @@ class TeamPage extends React.Component {
         }
         
         {/* TEAM COLLECTIONS */}
-        <DevToggles>
-          {enabledToggles => ( enabledToggles.includes('Team Collections') && this.props.currentUserIsOnTeam &&
-            <section>
-              <article className="collections">
-                <h2>Collections
-                  <aside className="inline-banners team-page">
-                    Use collections to organize projects
-                  </aside>
-                </h2>
-                
-                <CreateCollectionButton api={this.props.api} currentUser={this.props.currentUser} team={this.props.team}/>
-
-                {this.props.team.collections.length ? (
-                  <ul>
-                    {this.props.team.collections.map(collection => (
-                      <li key={collection.id}><Link to={getCollectionLink({...collection, team: this.props.team})}>{collection.name}</Link></li>
-                    ))}
-                  </ul>
-                ) : <SampleTeamCollections/>}
-              </article>
-            </section>
-          )}
-        </DevToggles>
+        <ErrorBoundary>
+          <DataLoader
+            get={() => this.props.api.get(`collections?teamId=${this.props.team.id}`)}
+            renderLoader={() => null} //Don't show anything until we're done loading
+          >
+            {({data}) => (
+              <DevToggles>
+                {enabledToggles => (
+                  <CollectionsList
+                    title={<>Collections {!data.length && this.props.currentUserIsOnTeam && (
+                      <aside className="inline-banners team-page">
+                        Use collections to organize projects
+                      </aside>
+                    )}</>}
+                    collections={data.map(collection => ({...collection, team: this.props.team}))}
+                    api={this.props.api} maybeCurrentUser={this.props.currentUser} maybeTeam={this.props.team}
+                    isAuthorized={this.props.currentUserIsOnTeam && enabledToggles.includes('Team Collections')}
+                  />
+                )}
+              </DevToggles>
+            )}
+          </DataLoader>
+        </ErrorBoundary>
         
         { this.props.currentUserIsOnTeam && <ErrorBoundary>
           <TeamAnalytics

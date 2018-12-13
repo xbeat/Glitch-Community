@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import CollectionOptionsContainer from "./pop-overs/collection-options-pop.jsx";
-import Link from './includes/link';
+import { CollectionLink } from './includes/link';
 import CollectionAvatar from './includes/collection-avatar.jsx';
 
 import {getAvatarUrl} from '../models/project.js';
@@ -40,7 +40,7 @@ class CollectionItem extends React.Component{
   }
   
   render(){
-    const {collection, deleteCollection, isAuthorized, userLogin} = this.props;
+    const {collection, deleteCollection, isAuthorized} = this.props;
     return (
       <li>
         {isAuthorized && (
@@ -48,9 +48,8 @@ class CollectionItem extends React.Component{
         )}
 
         {(collection &&
-          <Link to={`/@${userLogin}/${collection.url}`}>
-            <div className="collection"
-              id={"collection-" + collection.id}>
+          <CollectionLink collection={collection} className="button-area">
+            <div className="collection" id={"collection-" + collection.id}>
               <div className="collection-container">
                 <div className="collection-info" style={{backgroundColor: collection.coverColor}}> 
                   <div className="avatar-container">
@@ -81,7 +80,7 @@ class CollectionItem extends React.Component{
                 )}
               </div>
             </div>
-          </Link>             
+          </CollectionLink>             
         )}
       </li>
     );
@@ -89,9 +88,9 @@ class CollectionItem extends React.Component{
 }
 
 CollectionItem.propTypes = {
+  collection: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
-  userLogin: PropTypes.string.isRequired,
 };
 
 export default CollectionItem;
