@@ -63,9 +63,9 @@ ${secondHalf}`;
 
   async submitReport() {
     try {
-      this.validateEmail();
-      this.validateNotEmpty('reason', 'reasonError', 'A description of the issue');
-      if (this.state.emailError != '' || this.state.reasonError != '') {
+      const emailErrors = this.validateEmail();
+      const reasonErrors = this.validateNotEmpty('reason', 'reasonError', 'A description of the issue');
+      if (emailErrors.emailError != '' || reasonErrors.reasonError != '') {
         return;
       }
       
@@ -98,15 +98,19 @@ ${secondHalf}`;
   }
   
   validateEmail() {
-    const errors = this.validateNotEmpty('email', 'emailError', 'Email');
+    let errors = this.validateNotEmpty('email', 'emailError', 'Email');
     if (errors.emailError != '') {
-     return; 
+     return errors; 
     }
     
     const email = parseOneAddress(this.state.email);
     if (!email) {
-      this.setState({ emailError: 'Please enter a valid email' });
+      errors = { emailError: 'Please enter a valid email' }
+    } else {
+     errors =  { emailError: '' }
     }
+    this.setState(errors);
+    return errors;
   }
   
   reasonOnChange(value) {
