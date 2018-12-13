@@ -41,7 +41,7 @@ module.exports = function(external) {
     const webpackMiddleware = require('webpack-dev-middleware');
     const middleware = webpackMiddleware(compiler, {
       stats: { chunks: false, maxModules: 5 },
-      writeToDisk: true,
+      writeToDisk: false,
     });
     let ready = false;
     middleware.waitUntilValid(() => {
@@ -51,7 +51,7 @@ module.exports = function(external) {
       if (ready) {
         return middleware(request, response, next);
       }
-      next();
+      return next();
     });
   }
 
