@@ -51,13 +51,12 @@ export class ReportAbusePop extends React.Component {
     const submitterPart =
       submitter != "anonymous"
         ? `- Submitted by: [${submitter}](https://glitch.com/@${submitter})`
-        : "";
+        : "Submitted by: anonymous";
     const secondHalf = `
 - Contact: ${email}
 
 - Message: ${this.state.reason}`;
     return `${firstHalf}
-
 ${submitterPart}
 ${secondHalf}`;
   }
