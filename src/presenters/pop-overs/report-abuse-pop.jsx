@@ -23,6 +23,7 @@ export class ReportAbusePop extends React.Component {
     this.getUserInfoSection = this.getUserInfoSection.bind(this);
     this.emailOnChange = this.emailOnChange.bind(this);
     this.validateNotEmpty = this.validateNotEmpty.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
     this.debouncedValidateEmail = _.debounce(() => this.validateNotEmpty('email', 'emailError', 'Email'), 200);
     this.debouncedValidateReason = _.debounce(() => this.validateNotEmpty('reason', 'reasonError', 'A description of the issue'), 200);
   }
@@ -63,11 +64,10 @@ ${secondHalf}`;
 
   async submitReport() {
     try {
-      
-      this.validateNotEmpty('email', 'emailError', 'Email');
+      this.validateEmail();
       this.validateNotEmpty('reason', 'reasonError', 'A description of the issue');
       if (this.state.emailError != '' || this.state.reasonError != '') {
-        
+        return;
       }
       
       const submitter = this.props.currentUser.login
@@ -93,6 +93,18 @@ ${secondHalf}`;
       return;
     }
     this.setState({[errorField]: ''}); 
+  }
+  
+  validateEmail() {
+    this.validateNotEmpty('email', 'emailError', 'Email');
+    if (this.state.emailError != '') {
+     return; 
+    }
+    
+    const email = parseOneAddress(this.state.email);
+    if (!email) {
+      this.setState({ emailError: 'Please enter a valid email' });
+    }
   }
   
   reasonOnChange(value) {
