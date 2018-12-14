@@ -15,6 +15,7 @@ import EntityPagePinnedProjects from '../entity-page-pinned-projects.jsx';
 import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import CollectionsList from '../collections-list.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
+import {DataLoader} from '../includes/loader';
 import ProjectsLoader from '../projects-loader.jsx';
 
 function syncPageToLogin(login) {
@@ -55,14 +56,9 @@ NameAndLogin.propTypes = {
 
 const UserPage = ({
   user: { //has science gone too far?
-    id, login, name, description, thanksCount,
-    avatarUrl, color,
-    hasCoverImage, coverColor,
-    pins, projects, _deletedProjects,
-    teams,
+    _deletedProjects,
     _cacheCover,
-    _collections,
-    loadedCollections,
+    ...user
   },
   api, isAuthorized,
   maybeCurrentUser,
@@ -79,24 +75,24 @@ const UserPage = ({
   <main className="profile-page user-page">   
     <section>
       <ProfileContainer
-        avatarStyle={getAvatarStyle({avatarUrl, color})}
-        coverStyle={getProfileStyle({id, hasCoverImage, coverColor, cache: _cacheCover})}
-        coverButtons={isAuthorized && !!login && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={hasCoverImage ? clearCover : null}/>}
-        avatarButtons={isAuthorized && !!login && <ImageButtons name="Avatar" uploadImage={uploadAvatar}/>}
-        teams={teams} 
+        avatarStyle={getAvatarStyle(user)}
+        coverStyle={getProfileStyle({...user, cache: _cacheCover})}
+        coverButtons={isAuthorized && !!user.login && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={user.hasCoverImage ? clearCover : null}/>}
+        avatarButtons={isAuthorized && !!user.login && <ImageButtons name="Avatar" uploadImage={uploadAvatar}/>}
+        teams={user.teams} 
       >
         <NameAndLogin
-          {...{name, login, isAuthorized, updateName}}
+          name={user.name} login={user.login} {...{isAuthorized, updateName}}
           updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
         />
-        {!!thanksCount && <Thanks count={thanksCount}/>}
-        <AuthDescription authorized={isAuthorized && !!login} description={description} update={updateDescription} placeholder="Tell us about yourself"/>
+        {!!user.thanksCount && <Thanks count={user.thanksCount}/>}
+        <AuthDescription authorized={isAuthorized && !!user.login} description={user.description} update={updateDescription} placeholder="Tell us about yourself"/>
       </ProfileContainer>
     </section>
     
     <EntityPagePinnedProjects
-      projects={projects} 
-      pins={pins} 
+      projects={user.projects} 
+      pins={user.pins} 
       isAuthorized={isAuthorized}
       api={api} 
       removePin={removePin}
@@ -107,18 +103,29 @@ const UserPage = ({
       }}
     />
     
-    {(loadedCollections && !!login &&
-      <CollectionsList title="Collections" 
-        collections={_collections.map(collection => ({...collection, user: {id, login}}))} 
-        api={api} 
-        isAuthorized={isAuthorized}
-        maybeCurrentUser={maybeCurrentUser}
-      />
+    {!!user.login && (
+      <DataLoader get={() => api.get(`collections?userId=${user.id}`)}
+        renderLoader={() => (
+          <CollectionsList title="Collections" 
+            collections={user.collections.map(collection => ({...collection, user}))} 
+            api={api} isAuthorized={isAuthorized}
+            maybeCurrentUser={maybeCurrentUser}
+          />
+        )}
+      >
+        {({data}) => (
+          <CollectionsList title="Collections" 
+            collections={data.map(collection => ({...collection, user}))} 
+            api={api} isAuthorized={isAuthorized}
+            maybeCurrentUser={maybeCurrentUser}
+          />
+        )}
+      </DataLoader>
     )}
 
     <EntityPageRecentProjects
-      projects={projects} 
-      pins={pins} 
+      projects={user.projects} 
+      pins={user.pins} 
       isAuthorized={isAuthorized}
       api={api} 
       addPin={addPin} 
@@ -150,7 +157,6 @@ UserPage.propTypes = {
     coverColor: PropTypes.string,
     _cacheCover: PropTypes.number.isRequired,
     _deletedProjects: PropTypes.array.isRequired,
-    _collections: PropTypes.array.isRequired,
   }).isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
 };
