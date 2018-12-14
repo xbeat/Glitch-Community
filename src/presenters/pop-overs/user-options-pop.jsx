@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {getAvatarUrl as getTeamAvatarUrl} from '../../models/team';
 import {getAvatarThumbnailUrl as getUserAvatarUrl} from '../../models/user';
+import {AnalyticsTracker} from '../analytics';
 import {Link, TeamLink, UserLink} from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
 import {NestedPopover} from './popover-nested.jsx';
@@ -26,9 +27,13 @@ const CreateTeamButton = ({showCreateTeam, userIsAnon}) => {
     );
   }
   return (
-    <button onClick={showCreateTeam} className="button button-small has-emoji">
-      Create Team <span className="emoji herb" />
-    </button>
+    <AnalyticsTracker>
+      {track => (
+        <button onClick={() => { showCreateTeam(); track('Create Team Menu'); }} className="button button-small has-emoji">
+          Create Team <span className="emoji herb" />
+        </button>
+      )}
+    </AnalyticsTracker>
   );
 };
 

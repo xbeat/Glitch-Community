@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import _ from 'lodash';
 import {withRouter} from 'react-router-dom';
+import {AnalyticsTracker} from '../analytics';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import {getPredicates, getTeamPair} from '../../models/words';
 import {getLink} from '../../models/team';

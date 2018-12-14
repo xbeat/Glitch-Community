@@ -21,7 +21,7 @@ AnalyticsContext.propTypes = {
 
 export const AnalyticsTracker = ({children}) => (
   <Consumer>
-    {inheritedProperties => children((name, properties) => {
+    {inheritedProperties => children((name, properties={}) => {
       if (window.analytics) {
         analytics.track(name, {...inheritedProperties, ...properties});
       }

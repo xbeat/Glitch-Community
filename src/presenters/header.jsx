@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {Redirect} from 'react-router-dom';
+import {AnalyticsTracker} from './analytics';
 import Link from './includes/link';
 import Logo from './includes/logo';
 
