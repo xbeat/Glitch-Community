@@ -1,3 +1,5 @@
+/* global analytics */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -17,4 +19,17 @@ AnalyticsContext.propTypes = {
   properties: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
-export const AnalyticsEvent => ({children, 
+export const AnalyticsTracker = ({children}) => (
+  <Consumer>
+    {inheritedProperties => children((name, properties) => {
+      if (window.analytics) {
+        analytics.track(name, {...inheritedProperties, ...properties});
+      }
+    })}
+  </Consumer>
+);
+AnalyticsTracker.propTypes = {
+  children: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  properties: PropTypes.objectOf(PropTypes.string).isRequired,
+};
