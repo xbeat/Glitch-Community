@@ -15,9 +15,13 @@ import {CurrentUserConsumer} from './current-user';
 
 
 const ResumeCoding = () => (
-  <Link className="button button-small button-cta" to={EDITOR_URL} data-track="resume coding">
-    Resume Coding
-  </Link>
+  <AnalyticsTracker>
+    {track => (
+      <Link className="button button-small button-cta" to={EDITOR_URL} onClick={() => track("resume coding")}>
+        Resume Coding
+      </Link>
+    )}
+  </AnalyticsTracker>
 );
 
 class SearchForm extends React.Component {
