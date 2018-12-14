@@ -17,7 +17,7 @@ import {CurrentUserConsumer} from './current-user';
 const ResumeCoding = () => (
   <AnalyticsTracker>
     {track => (
-      <Link className="button button-small button-cta" to={EDITOR_URL} onClick={() => track("resume coding")}>
+      <Link className="button button-small button-cta" to={EDITOR_URL} onClick={() => track("Resume Coding")}>
         Resume Coding
       </Link>
     )}
