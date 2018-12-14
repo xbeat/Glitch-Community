@@ -459,9 +459,11 @@ details.popover-container
     top: 27px
     display: inline-block
     &.top-right
-      transform: translateY(-109%);
-      transform-origin: bottom left;
-      left: 5px
+      top: initial
+      left: 50%
+      right: initial
+      bottom: calc(100% + 16px)
+      transform: translate(-50%, 20px)
     @media (max-width: smallViewport)
       min-width: 320px
     
