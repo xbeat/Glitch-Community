@@ -4,6 +4,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const AutoprefixerStylus = require("autoprefixer-stylus");
+const StatsPlugin = require('stats-webpack-plugin');
 
 
 const PUBLIC = path.resolve(__dirname, 'public');
@@ -118,6 +119,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: mode === 'production' ? '[name].css?[contenthash]' : '[name].css'
     }),
+    new StatsPlugin('stats.json'),
   ],
   watchOptions: {
     ignored: /node_modules/,

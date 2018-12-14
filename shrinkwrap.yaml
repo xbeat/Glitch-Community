@@ -49,11 +49,12 @@ dependencies:
   react-router-dom: 4.3.1
   react-svg-inline: 2.1.1
   react-textarea-autosize: 7.1.0
+  stats-webpack-plugin: 0.7.0
   stylus: 0.54.5
   stylus-loader: 3.0.2
   terser-webpack-plugin: 1.1.0
   url-join: 4.0.0
-  webpack: 4.27.0
+  webpack: 4.27.1
   webpack-cli: 3.1.2
   webpack-dev-middleware: 3.4.0
   webpack-manifest-plugin: 2.0.4
@@ -5369,6 +5370,14 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-YICcOcv/VTNyJv1eC1IPNB8ftcY=
+  /stats-webpack-plugin/0.7.0:
+    dependencies:
+      lodash: 4.17.11
+    dev: false
+    peerDependencies:
+      webpack: '>=1.0.0'
+    resolution:
+      integrity: sha512-NT0YGhwuQ0EOX+uPhhUcI6/+1Sq/pMzNuSCBVT4GbFl/ac6I/JZefBcjlECNfAb1t3GOx5dEj1Z7x0cAxeeVLQ==
   /statuses/1.4.0:
     dev: false
     engines:
@@ -5988,7 +5997,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-OiVgSrbGu7NEnEvQJJgdSFPl2qWKkWq5lHMhgiToIiN9w34EBnjYzSYs+VbL5KoYiLNtFFa7BZIKxRED3I32pA==
-  /webpack/4.27.0:
+  /webpack/4.27.1:
     dependencies:
       '@webassemblyjs/ast': 1.7.11
       '@webassemblyjs/helper-module-context': 1.7.11
@@ -6019,7 +6028,7 @@ packages:
       node: '>=6.11.5'
     hasBin: true
     resolution:
-      integrity: sha512-y77EQNIlsB9fUGgpLv/ZzmH+Yd9DgyIF9omX9RFavR5ZFM6HxFm6sqkbBXYxpjbKej9K6hD+Y8qEVg2rWdI2gg==
+      integrity: sha512-WArHiLvHrlfyRM8i7f+2SFbr/XbQ0bXqTkPF8JpHOzub5482Y3wx7rEO8stuLGOKOgZJcqcisLhD7LrM/+fVMw==
   /whatwg-fetch/3.0.0:
     dev: false
     resolution:
@@ -6187,11 +6196,12 @@ specifiers:
   react-router-dom: ^4.3.1
   react-svg-inline: ^2.1.1
   react-textarea-autosize: ^7.1.0
+  stats-webpack-plugin: ^0.7.0
   stylus: ^0.54.5
   stylus-loader: ^3.0.2
   terser-webpack-plugin: ^1.1.0
   url-join: ^4.0.0
-  webpack: ^4.27.0
+  webpack: ^4.27.1
   webpack-cli: ^3.1.2
   webpack-dev-middleware: ^3.4.0
   webpack-manifest-plugin: ^2.0.4
