@@ -15,7 +15,7 @@ function webpackExpressMiddleware() {
   middleware.waitUntilValid(() => {
     ready = true;
   });
-  return function middleware(request, response, next) {
+  return function(request, response, next) {
     if (ready) {
       return middleware(request, response, next);
     }
