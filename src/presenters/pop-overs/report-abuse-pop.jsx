@@ -91,9 +91,6 @@ ${secondHalf}`;
         return;
       }
 
-      const submitter = this.props.currentUser.login
-        ? this.props.currentUser.login
-        : "anonymous";
       const { data } = await axios.post(
         "https://support-poster.glitch.me/post",
         {
@@ -220,7 +217,7 @@ ${secondHalf}`;
           <h1 className="pop-title">{heading}</h1>
         </section>
         <section className="pop-over-info">
-          <p className="pop-description">{body}</p>
+          {body}
         </section>
       </>
     );
@@ -234,12 +231,12 @@ ${secondHalf}`;
           📧
         </span>
       </>,
-      <>
+      <p className="pop-description">
         Thanks for helping to keep Glitch a safe, friendly community!{" "}
         <span role="img" aria-label="">
           🏞
         </span>
-      </>
+      </p>
     );
   }
 
@@ -251,9 +248,10 @@ ${secondHalf}`;
           🤒
         </span>
       </>,
-      <>Please email your report to support@glitch.com.
-      Here's some text to include:
-      <pre>{this.formatRaw()}</pre></>
+      <>
+      <p className="pop-description">Please email your report to support@glitch.com.
+        Here's some text to include:</p>
+      <pre style={{ whiteSpace: 'pre-line'}}>{this.formatRaw()}</pre></>
     );
   }
 
