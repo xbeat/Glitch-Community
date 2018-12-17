@@ -253,7 +253,7 @@ ${secondHalf}`;
       </>,
       <>Please email your report to support@glitch.com.
       Here's some text to include:
-      <span>{this.formatRaw()}</span></>
+      <pre>{this.formatRaw()}</pre></>
     );
   }
 
