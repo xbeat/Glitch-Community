@@ -14,7 +14,7 @@ Example:
 export default [
   {
     title: 'Icons At The Disco',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FAbstract_Disco-01.jpg?1544442923044",
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F1_2.jpg?1545054763363",
     link: 'https://glitch.com/~abstract-disco'
   },{
     title: 'Navigate YouTube Handsfree',
