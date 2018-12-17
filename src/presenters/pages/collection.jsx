@@ -7,6 +7,7 @@ import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
 import {getContrastTextColor, getLink, getOwnerLink, hexToRgbA} from '../../models/collection';
 
+import {AnalyticsContext} from '../analytics';
 import {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
@@ -253,19 +254,21 @@ async function loadCollection(api, ownerName, collectionName){
 
 const CollectionPage = ({api, ownerName, name, ...props}) => (
   <Layout api={api}>
-    <DataLoader get={() => loadCollection(api, ownerName, name)}>
-      {collection => collection ? (
-        <CurrentUserConsumer>
-          {(currentUser) => (
-            <CollectionEditor api={api} initialCollection={collection} >
-              {(collection, funcs, userIsAuthor) =>(
-                <CollectionPageContents collection={collection} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} {...funcs} {...props}/>
-              )}
-            </CollectionEditor>
-          )}
-        </CurrentUserConsumer>
-      ) : <NotFound name={name}/>}
-    </DataLoader>
+    <AnalyticsContext properties={{origin: 'collection'}}>
+      <DataLoader get={() => loadCollection(api, ownerName, name)}>
+        {collection => collection ? (
+          <CurrentUserConsumer>
+            {(currentUser) => (
+              <CollectionEditor api={api} initialCollection={collection} >
+                {(collection, funcs, userIsAuthor) =>(
+                  <CollectionPageContents collection={collection} api={api} currentUser={currentUser} isAuthorized={userIsAuthor} {...funcs} {...props}/>
+                )}
+              </CollectionEditor>
+            )}
+          </CurrentUserConsumer>
+        ) : <NotFound name={name}/>}
+      </DataLoader>
+    </AnalyticsContext>
   </Layout>
 );
 

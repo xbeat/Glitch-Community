@@ -336,7 +336,7 @@ const TeamPageEditor = ({api, initialTeam, children}) => (
   </TeamEditor>
 );
 const TeamPageContainer = ({api, team, ...props}) => (
-  <AnalyticsContext properties={{origin: 'team page'}}>
+  <AnalyticsContext properties={{origin: 'team'}}>
     <TeamPageEditor api={api} initialTeam={team}>
       {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
         <>

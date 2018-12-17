@@ -163,7 +163,7 @@ UserPage.propTypes = {
 };
 
 const UserPageContainer = ({api, user}) => (
-  <AnalyticsContext properties={{origin: 'user page'}}>
+  <AnalyticsContext properties={{origin: 'user'}}>
     <UserEditor api={api} initialUser={user}>
       {(user, funcs, isAuthorized) => (
         <>

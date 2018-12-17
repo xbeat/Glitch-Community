@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {AnalyticsTracker} from '../analytics';
 import Loader from '../includes/loader.jsx';
 import NotificationsConsumer from '../notifications.jsx';
 import {NestedPopoverTitle} from './popover-nested.jsx';
@@ -119,9 +120,13 @@ class TeamUserRemovePopBase extends React.Component {
         </section>
         
         <section className="pop-over-actions danger-zone">
-          <button className="button-small has-emoji" onClick={this.removeUser}>
-            Remove <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
-          </button>
+          <AnalyticsTracker>
+            {track => (
+              <button className="button-small has-emoji" onClick={() => { this.removeUser(); track('Remove User from Team'); }}>
+                Remove <img className="emoji avatar" src={getAvatarThumbnailUrl(this.props.user)} alt={this.props.user.login} style={userAvatarStyle}/>
+              </button>
+            )}
+          </AnalyticsTracker>
         </section>
       </dialog>
     );
