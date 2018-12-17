@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Link from '../includes/link.jsx';
 import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
-import PopoverContainer from './popover-container.jsx';
 
 import {getRemixUrl} from '../../models/project';
 
