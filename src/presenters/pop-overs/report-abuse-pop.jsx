@@ -98,7 +98,7 @@ ${secondHalf}`;
         "https://support-poster.glitch.me/post",
         {
           raw: this.formatRaw(),
-          title: `Abuse Report for ${this.props.projectName} from ${submitter}`
+          title: `Abuse Report for ${this.props.projectName}`
         }
       );
       console.log(data);
