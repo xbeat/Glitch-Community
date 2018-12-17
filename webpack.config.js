@@ -55,6 +55,9 @@ module.exports = {
     },
     minimizer: [
       new TerserPlugin({terserOptions: {safari10: true}, sourceMap: true}),
+    new MiniCssExtractPlugin({
+      filename: mode === 'production' ? '[name].css?[contenthash]' : '[name].css'
+    }),
     ],
     noEmitOnErrors: true,
   },
@@ -115,9 +118,6 @@ module.exports = {
     new ManifestPlugin({
       fileName: "styles.json",
       filter: ({isInitial, name}) => isInitial && name.endsWith('.css'),
-    }),
-    new MiniCssExtractPlugin({
-      filename: mode === 'production' ? '[name].css?[contenthash]' : '[name].css'
     }),
     new StatsPlugin('stats.json'),
   ],
