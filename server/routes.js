@@ -78,9 +78,9 @@ module.exports = function(external) {
         if (chunk.initial) {
           chunk.files.forEach(file => {
             if (file.endsWith('.js') && !chunk.names.includes('styles')) {
-              scripts.push(file + '?' + chunk.hash);
+              scripts.push(`/${file}?{chunk.hash}`);
             } else if (file.endsWith('.css')) {
-              styles.push(file + '?' + chunk.hash);
+              styles.push(`/${file}?{chunk.hash}`);
             }
           });
         }

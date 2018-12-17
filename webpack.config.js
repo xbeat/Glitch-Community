@@ -55,7 +55,6 @@ module.exports = {
     },
     minimizer: [
       new TerserPlugin({terserOptions: {safari10: true}, sourceMap: true}),
-      new MiniCssExtractPlugin({filename: '[name].css'}),
     ],
     noEmitOnErrors: true,
   },
@@ -117,6 +116,7 @@ module.exports = {
       fileName: "styles.json",
       filter: ({isInitial, name}) => isInitial && name.endsWith('.css'),
     }),
+    new MiniCssExtractPlugin({filename: '[name].css'}),
     new StatsPlugin('stats.json'),
   ],
   watchOptions: {
