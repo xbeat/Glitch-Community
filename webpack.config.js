@@ -1,5 +1,4 @@
 const path = require('path');
-const ManifestPlugin = require('webpack-manifest-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -105,17 +104,6 @@ module.exports = {
   },
   plugins: [
     new LodashModuleReplacementPlugin(),
-    new ManifestPlugin({
-      fileName: "scripts.json",
-      filter: ({isInitial, name}) => (
-        isInitial && name.endsWith('.js') &&
-          name !== `${STYLE_BUNDLE_NAME}.js` // omit the no-op CSS bundle .js file
-        ),
-    }),
-    new ManifestPlugin({
-      fileName: "styles.json",
-      filter: ({isInitial, name}) => isInitial && name.endsWith('.css'),
-    }),
     new MiniCssExtractPlugin({filename: '[name].css'}),
     new StatsPlugin('stats.json', {children: false, chunkModules: false, modules: false}),
   ],

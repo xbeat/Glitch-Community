@@ -26,10 +26,7 @@ module.exports = function(external) {
     })
   ));
   
-  const webpack = require('webpack');
-  const webpackConfig = require('../webpack.config.js');
-  const compiler = webpack(webpackConfig);
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     compiler.watch({}, (error, stats) => {
       if (error) {
         console.error(error);
@@ -38,6 +35,9 @@ module.exports = function(external) {
       }
     });
   } else {
+  const webpack = require('webpack');
+  const webpackConfig = require('../webpack.config.js');
+  const compiler = webpack(webpackConfig);
     const webpackMiddleware = require('webpack-dev-middleware');
     const middleware = webpackMiddleware(compiler, {
       writeToDisk: true,
