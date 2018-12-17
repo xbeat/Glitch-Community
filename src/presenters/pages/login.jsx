@@ -12,21 +12,23 @@ import {EmailErrorPage, OauthErrorPage} from './error';
 // The Editor may embed /login/* endpoints in an iframe in order to share code.
 // NotifyParent allows the editor to receive messages from this page.
 // We use this to pass on auth success/failure messages.
-function notifyParent(message) {
+function notifyParent(message={}) {
   if(window.parent === window.top) {
+    console.log("NO PARENT");
     return;
   }
-  
-  if(!message) {
-    return;
-  }
-  
+  console.log("PARENT!");
+
   // Specifically target our same origin;
-  // we're only communicating between the editor and its corresponding ~community site
-  // in the same environment.
-  const sameOriginAsMe = window.origin;
+  // we're only communicating between the editor and its corresponding ~community site,
+  // not across other environments.
+  const sameOrigin = window.origin;
   
-  window.parent.postMessage(message, sameOriginAsMe) 
+  // Add 'LoginMessage' to all messages of this type so that the Editor
+  // can filter for them specifically.
+  message.type = "LoginMessage";
+  
+  window.parent.postMessage(message, sameOrigin);
 }
 
 class LoginPage extends React.Component {
@@ -59,7 +61,7 @@ class LoginPage extends React.Component {
       
       this.setState({done: true});
       analytics.track("Signed In", {provider});
-      
+      notifyParent({success: true, details: {provider}});
     } catch (error) {
       this.setState({error: true});
       
@@ -68,9 +70,10 @@ class LoginPage extends React.Component {
         this.setState({errorMessage: errorData.message});
       }
       
-      const deets = {provider, error: errorData};
-      console.error("Login error.", deets);
-      captureMessage("Login error", {extra: deets});
+      const details = {provider, error: errorData};
+      console.error("Login error.", details);
+      captureMessage("Login error", {extra: details});
+      notifyParent({success: false, details});
     }
   }
   
