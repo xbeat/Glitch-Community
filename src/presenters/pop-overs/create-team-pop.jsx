@@ -83,7 +83,6 @@ class CreateTeamPopBase extends React.Component {
     event.preventDefault();
     this.setState({ isLoading: true });
     try {
-      this.props.track('Create Team Submitted');
       let description = 'A team that makes things';
       try {
         const predicates = await getPredicates();
@@ -110,6 +109,7 @@ class CreateTeamPopBase extends React.Component {
         error: message || 'Something went wrong',
       });
     }
+    this.props.track('Create Team Submitted');
   }
   
   render() {

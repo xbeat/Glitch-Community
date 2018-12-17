@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import {getAvatarStyle, getLink, getProfileStyle} from '../../models/user';
 
+import {AnalyticsContext} from '../analytics';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import EditableField from '../includes/editable-field.jsx';
@@ -162,23 +163,25 @@ UserPage.propTypes = {
 };
 
 const UserPageContainer = ({api, user}) => (
-  <CurrentUserConsumer>
-    {(maybeCurrentUser) => (
-      <UserEditor api={api} initialUser={user}>
-        {(user, funcs, isAuthorized) => (
-          <>
-            <Helmet>
-              <title>{user.name || (user.login ? `@${user.login}` : `User ${user.id}`)}</title>
-            </Helmet>
+  <AnalyticsContext properties={{origin: 'user page'}}>
+    <UserEditor api={api} initialUser={user}>
+      {(user, funcs, isAuthorized) => (
+        <>
+          <Helmet>
+            <title>{user.name || (user.login ? `@${user.login}` : `User ${user.id}`)}</title>
+          </Helmet>
 
-            <ProjectsLoader api={api} projects={user.projects}>
-              {projects => <UserPage {...{api, isAuthorized, maybeCurrentUser}} user={{...user, projects}} {...funcs} />}
-            </ProjectsLoader>
-          </>
-        )}
-      </UserEditor>
-    )}
-  </CurrentUserConsumer>
+          <CurrentUserConsumer>
+            {(maybeCurrentUser) => (
+              <ProjectsLoader api={api} projects={user.projects}>
+                {projects => <UserPage {...{api, isAuthorized, maybeCurrentUser}} user={{...user, projects}} {...funcs} />}
+              </ProjectsLoader>
+            )}
+          </CurrentUserConsumer>
+        </>
+      )}
+    </UserEditor>
+  </AnalyticsContext>
 );
 
 export default UserPageContainer;

@@ -27,6 +27,7 @@ export const AnalyticsTracker = ({children}) => (
       try {
         analytics.track(name, {...inheritedProperties, ...properties});
       } catch (error) {
+        captureException(error);
       }
     })}
   </Consumer>
