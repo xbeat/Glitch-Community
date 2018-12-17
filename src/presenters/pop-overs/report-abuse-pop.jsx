@@ -18,7 +18,8 @@ export class ReportAbusePop extends React.Component {
       reason: "",
       email: "",
       emailError: "",
-      reasonError: ""
+      reasonError: "",
+      submitted: false
     };
     this.submitReport = this.submitReport.bind(this);
     this.reasonOnChange = this.reasonOnChange.bind(this);
@@ -31,7 +32,8 @@ export class ReportAbusePop extends React.Component {
     this.renderSuccess = this.renderSuccess.bind(this);
     this.renderFailure = this.renderFailure.bind(this);
     this.renderSent = this.renderSent.bind(this);
-    
+    this.pickFormBody = this.pickFormBody.bind(this);
+
     this.debouncedValidateEmail = _.debounce(() => this.validateEmail(), 200);
     this.debouncedValidateReason = _.debounce(
       () =>
@@ -100,10 +102,11 @@ ${secondHalf}`;
         }
       );
       console.log(data);
-      this.setState({ submitSuccess: true });
+      this.setState({ submitted: true, submitSuccess: true });
     } catch (error) {
       // captureException(error);
       console.log(error);
+      this.setState({ submitted: true, submitSuccess: false });
     }
   }
 
@@ -201,13 +204,15 @@ ${secondHalf}`;
         <section className="pop-over-actions">
           <button className="button" onClick={this.submitReport}>
             Submit Report{" "}
-            <span role="img" aria-label="">📧</span>
+            <span role="img" aria-label="">
+              📧
+            </span>
           </button>
         </section>
       </>
     );
   }
-  
+
   renderSent(heading, body) {
     return (
       <>
@@ -218,28 +223,52 @@ ${secondHalf}`;
           <p className="pop-description">{body}</p>
         </section>
       </>
-    ); 
+    );
   }
 
   renderSuccess() {
-    return this.renderSent(<>Report Sent <span role="img" aria-label="">📧</span></>, 
-                           <>Thanks for helping to keep Glitch a safe, friendly community! <span role="img" aria-label="">🏞</span></>);
+    return this.renderSent(
+      <>
+        Report Sent{" "}
+        <span role="img" aria-label="">
+          📧
+        </span>
+      </>,
+      <>
+        Thanks for helping to keep Glitch a safe, friendly community!{" "}
+        <span role="img" aria-label="">
+          🏞
+        </span>
+      </>
+    );
   }
-  
+
   renderFailure() {
-    return this.renderSent(<>Failed to Send <span role="img" aria-label="">🤒</span></>,
-                           <>Please email your link to 
+    return this.renderSent(
+      <>
+        Failed to Send{" "}
+        <span role="img" aria-label="">
+          🤒
+        </span>
+      </>,
+      <>Please email your report to support@glitch.com.</>
+    );
+  }
+
+  pickFormBody() {
+    if (this.state.submitted) {
+      if (!this.state.submitSuccess) {
+        return this.renderFailure();
+      }
+      return this.renderSuccess();
+    }
+    return this.renderForm();
   }
 
   render() {
     return (
       <dialog className="pop-over wide-pop top-right">
-        {!this.state.submitSuccess &&
-          !this.state.submitFailed &&
-          this.renderForm()}
-        {this.state.submitSuccess &&
-          !this.state.submitFailed &&
-          this.renderSuccess()}
+        {this.pickFormBody()}
       </dialog>
     );
   }
