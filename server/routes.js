@@ -27,7 +27,7 @@ module.exports = function(external) {
     })
   ));
   
-  initWebpack(app, process.env.NODE_ENV);
+  initWebpack(app);
 
   app.use(express.static('public', { index: false }));
 

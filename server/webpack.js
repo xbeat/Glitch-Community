@@ -1,6 +1,6 @@
 function webpackBackgroundProcess() {
   const {spawn} = require('child_process');
-  return spawn('webpack', ['--watch']);
+  spawn('webpack', ['--watch'], {stdio: 'inherit'});
 }
 
 function webpackExpressMiddleware() {
@@ -23,8 +23,8 @@ function webpackExpressMiddleware() {
   }
 }
 
-module.exports = function(app, env) {
-  if (env === 'production') {
+module.exports = function(app) {
+  if (process.env.NODE_ENV === 'production') {
     webpackBackgroundProcess();
   } else {
     app.use(webpackExpressMiddleware());
