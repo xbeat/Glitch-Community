@@ -13,7 +13,7 @@ import {EmailErrorPage, OauthErrorPage} from './error';
 // NotifyParent allows the editor to receive messages from this page.
 // We use this to pass on auth success/failure messages.
 function notifyParent(message={}) {
-  if(window.parent === window.top) {
+  if(window.parent === window) {
     console.log("NO PARENT");
     return;
   }
