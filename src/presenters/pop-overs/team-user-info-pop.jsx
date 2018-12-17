@@ -34,11 +34,11 @@ const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
       </p>
       <AnalyticsTracker>
         {track => userIsTeamAdmin ? (
-          <button className="button-small button-tertiary has-emoji" onClick={() => { updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL); track('Make an Admin'); }}>
+          <button className="button-small button-tertiary has-emoji" onClick={() => { updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL); track('Remove Admin Status'); }}>
             Remove Admin Status <span className="emoji fast-down" />
           </button>
         ) : (
-          <button className="button-small button-tertiary has-emoji" onClick={() => { updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL); track('Remove Admin Status'); }}>
+          <button className="button-small button-tertiary has-emoji" onClick={() => { updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL); track('Make an Admin'); }}>
             Make an Admin <span className="emoji fast-up" />
           </button>
         )}
