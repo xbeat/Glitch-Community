@@ -166,9 +166,9 @@ const CreateTeamPop = withRouter(CreateTeamPopBase);
 const CreateTeamPopOrSignIn = ({api}) => (
   <CurrentUserConsumer>
     {user => (user && user.login ? (
-      <AnalyticsTracking>
+      <AnalyticsTracker>
         {track => <CreateTeamPop api={api} track={track}/>}
-      </AnalyticsTracking>
+      </AnalyticsTracker>
     ) : (
       <SignInPop api={api} hash="create-team"
         header={<NestedPopoverTitle>Sign In</NestedPopoverTitle>}
