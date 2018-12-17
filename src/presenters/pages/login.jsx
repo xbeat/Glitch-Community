@@ -9,6 +9,26 @@ import LocalStorage from '../includes/local-storage';
 import {CurrentUserConsumer} from '../current-user';
 import {EmailErrorPage, OauthErrorPage} from './error';
 
+// The Editor may embed /login/* endpoints in an iframe in order to share code.
+// NotifyParent allows the editor to receive messages from this page.
+// We use this to pass on auth success/failure messages.
+function notifyParent(message) {
+  if(window.parent === window.top) {
+    return;
+  }
+  
+  if(!message) {
+    return;
+  }
+  
+  // Specifically target our same origin;
+  // we're only communicating between the editor and its corresponding ~community site
+  // in the same environment.
+  const sameOriginAsMe = window.origin;
+  
+  window.parent.postMessage(message, sameOriginAsMe) 
+}
+
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
