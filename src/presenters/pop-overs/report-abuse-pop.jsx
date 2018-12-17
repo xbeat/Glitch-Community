@@ -29,6 +29,8 @@ export class ReportAbusePop extends React.Component {
     this.validateEmail = this.validateEmail.bind(this);
     this.renderForm = this.renderForm.bind(this);
     this.renderSuccess = this.renderSuccess.bind(this);
+    this.renderFailure = this.renderFailure.bind(this);
+    this.renderSent = this.renderSent.bind(this);
     
     this.debouncedValidateEmail = _.debounce(() => this.validateEmail(), 200);
     this.debouncedValidateReason = _.debounce(
@@ -205,18 +207,28 @@ ${secondHalf}`;
       </>
     );
   }
-
-  renderSuccess() {
+  
+  renderSent(heading, body) {
     return (
       <>
         <section className="pop-over-info">
-          <h1 className="pop-title">Report Sent <span role="img" aria-label="">📧</span></h1>
+          <h1 className="pop-title">{heading}</h1>
         </section>
         <section className="pop-over-info">
-          <p className="pop-description">Thanks for helping to keep Glitch a safe, friendly community! <span role="img" aria-label="">🏞</span></p>
+          <p className="pop-description">{body}</p>
         </section>
       </>
-    );
+    ); 
+  }
+
+  renderSuccess() {
+    return this.renderSent(<>Report Sent <span role="img" aria-label="">📧</span></>, 
+                           <>Thanks for helping to keep Glitch a safe, friendly community! <span role="img" aria-label="">🏞</span></>);
+  }
+  
+  renderFailure() {
+    return this.renderSent(<>Failed to Send <span role="img" aria-label="">🤒</span></>,
+                           <>Please email your link to 
   }
 
   render() {
