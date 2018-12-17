@@ -83,6 +83,7 @@ class CreateTeamPopBase extends React.Component {
     event.preventDefault();
     this.setState({ isLoading: true });
     try {
+      this.props.track('Create Team Submitted');
       let description = 'A team that makes things';
       try {
         const predicates = await getPredicates();
@@ -157,6 +158,7 @@ class CreateTeamPopBase extends React.Component {
 
 CreateTeamPopBase.propTypes = {
   api: PropTypes.func.isRequired,
+  track: PropTypes.func.isRequired,
 };
 
 const CreateTeamPop = withRouter(CreateTeamPopBase);
@@ -164,7 +166,9 @@ const CreateTeamPop = withRouter(CreateTeamPopBase);
 const CreateTeamPopOrSignIn = ({api}) => (
   <CurrentUserConsumer>
     {user => (user && user.login ? (
-      <CreateTeamPop api={api}/>
+      <AnalyticsTracking>
+        {track => <CreateTeamPop api={api} track={track}/>}
+      </AnalyticsTracking>
     ) : (
       <SignInPop api={api} hash="create-team"
         header={<NestedPopoverTitle>Sign In</NestedPopoverTitle>}

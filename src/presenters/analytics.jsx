@@ -3,6 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {captureException} from '../utils/sentry';
+
 const {Provider, Consumer} = React.createContext({});
 
 export const AnalyticsContext = ({children, properties}) => (
@@ -22,8 +24,9 @@ AnalyticsContext.propTypes = {
 export const AnalyticsTracker = ({children}) => (
   <Consumer>
     {inheritedProperties => children((name, properties={}) => {
-      if (window.analytics) {
+      try {
         analytics.track(name, {...inheritedProperties, ...properties});
+      } catch (error) {
       }
     })}
   </Consumer>
