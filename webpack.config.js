@@ -27,7 +27,7 @@ module.exports = {
     [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
   },
   output: {
-    filename: mode === 'production' ? '[name].js?[chunkhash]' : '[name].js',
+    filename: '[name].js',
     path: PUBLIC,
     publicPath: '/',
   },
@@ -55,9 +55,7 @@ module.exports = {
     },
     minimizer: [
       new TerserPlugin({terserOptions: {safari10: true}, sourceMap: true}),
-    new MiniCssExtractPlugin({
-      filename: mode === 'production' ? '[name].css?[contenthash]' : '[name].css'
-    }),
+      new MiniCssExtractPlugin({filename: '[name].css'}),
     ],
     noEmitOnErrors: true,
   },
