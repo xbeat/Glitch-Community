@@ -4,6 +4,7 @@ const util = require('util');
 const moment = require('moment-mini');
 
 const {getProject, getTeam, getUser, getZine} = require('./api');
+const initWebpack = require('./webpack');
 const constants = require('./constants');
 
 module.exports = function(external) {
@@ -26,25 +27,7 @@ module.exports = function(external) {
     })
   ));
   
-  if (process.env.NODE_ENV !== 'production') {
-    const webpack = require('webpack');
-    const webpackConfig = require('../webpack.config.js');
-    const compiler = webpack(webpackConfig);
-    const webpackMiddleware = require('webpack-dev-middleware');
-    const middleware = webpackMiddleware(compiler, {
-      writeToDisk: true,
-    });
-    let ready = false;
-    middleware.waitUntilValid(() => {
-      ready = true;
-    });
-    app.use(function(request, response, next) {
-      if (ready) {
-        return middleware(request, response, next);
-      }
-      return next();
-    });
-  }
+  initWebpack(app, process.env.NODE_ENV);
 
   app.use(express.static('public', { index: false }));
 
