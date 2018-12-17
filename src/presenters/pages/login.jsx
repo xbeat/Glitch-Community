@@ -14,10 +14,8 @@ import {EmailErrorPage, OauthErrorPage} from './error';
 // We use this to pass on auth success/failure messages.
 function notifyParent(message={}) {
   if(window.parent === window) {
-    console.log("NO PARENT");
     return;
   }
-  console.log("PARENT!");
 
   // Specifically target our same origin;
   // we're only communicating between the editor and its corresponding ~community site,
