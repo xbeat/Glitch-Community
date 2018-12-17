@@ -117,7 +117,7 @@ module.exports = {
       filter: ({isInitial, name}) => isInitial && name.endsWith('.css'),
     }),
     new MiniCssExtractPlugin({filename: '[name].css'}),
-    new StatsPlugin('stats.json'),
+    new StatsPlugin('stats.json', {children: false, chunkModules: false, modules: false}),
   ],
   watchOptions: {
     ignored: /node_modules/,
