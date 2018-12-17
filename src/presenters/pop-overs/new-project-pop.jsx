@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Link from '../includes/link.jsx';
 import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
-
+import PopoverWithButton from './popover-with-button';
 import {getRemixUrl} from '../../models/project';
 
 const NewProjectPop = ({projects}) => (
@@ -63,16 +63,12 @@ class NewProjectPopButton extends React.Component {
   }
   
   render() {
-    return (
-      <PopoverContainer>
-        {({visible, togglePopover}) => (
-          <div className="button-wrap">
-            <button className="button-small" data-track="open new-project pop" onClick={togglePopover}>New Project</button>
-            {visible && <NewProjectPop projects={this.state.projects}/>}
-          </div>
-        )}
-      </PopoverContainer>
-    );
+    return (<PopoverWithButton 
+              buttonClass='button'
+              buttonText='New Project'
+              dataTrack="open new-project pop">
+      <NewProjectPop projects={this.state.projects}/>
+    </PopoverWithButton>);
   }
 }
 NewProjectPopButton.propTypes = {

@@ -5,7 +5,7 @@ import moment from 'moment-mini';
 
 import Link from '../includes/link';
 import LocalStorage from '../includes/local-storage';
-import PopoverContainer from './popover-container';
+import PopoverWithButton from './popover-with-button';
 import {DevToggles} from '../includes/dev-toggles';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
@@ -97,14 +97,7 @@ SignInPop.propTypes = {
 };
 
 export default function SignInPopContainer(props) {
-  return (
-    <PopoverContainer>
-      {({togglePopover, visible}) => (
-        <div className="button-wrap">
-          <button className="button button-small" onClick={togglePopover}>Sign in</button>
-          {visible && <SignInPop {...props}/>}
-        </div>
-      )}
-    </PopoverContainer>
-  );
+  return <PopoverWithButton buttonClass='button' buttonText='Sign in'>
+      <SignInPop {...props}/>
+    </PopoverWithButton>;
 }

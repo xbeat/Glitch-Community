@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PopoverContainer from "./popover-container.jsx";
+import PopoverWithButton from './popover-with-button';
 import {
   PureEditableField,
   PureEditableTextArea
