@@ -287,25 +287,12 @@ const ReportAbusePopContainer = props => (
 );
 
 const ReportAbusePopButton = props => (
-  <PopoverContainer>
-    {({ visible, togglePopover }) => (
-      <div className="button-wrap">
-        <button
-          className="button-small button-tertiary"
-          onClick={togglePopover}
-        >
-          Report Abuse
-        </button>
-        {visible && (
-          <ReportAbusePopContainer
+  <PopoverWithButton buttonClass='button-tertiary' buttonText='Report Abuse'>
+      <ReportAbusePopContainer
             projectName={props.projectName}
             projectId={props.projectId}
-          />
-        )}
-      </div>
-    )}
-  </PopoverContainer>
-);
+      />
+    </PopoverWithButton>);
 
 ReportAbusePopButton.propTypes = {
   projectName: PropTypes.string.isRequired,

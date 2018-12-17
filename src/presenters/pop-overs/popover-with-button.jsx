@@ -18,7 +18,7 @@ const PopoverWithButton = (props) => {
 PopoverWithButton.propTypes = {
   buttonClass: PropTypes.string,
   dataTrack: PropTypes.string,
-  buttonText: PropTypes.string.isRequired,
+  buttonText: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired, // should be the stuff to show in a popover
 };
 
