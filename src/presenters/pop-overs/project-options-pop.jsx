@@ -156,8 +156,8 @@ export default function ProjectOptions({projectOptions={}, project, api, current
 
   return (
     <PopoverWithButton buttonClass='project-options button-borderless opens-pop-over'
-      buttonText={<div className="down-arrow" aria-label='options' />} 
-      buttonClass="collection-options button-borderless opens-pop-over" >
+      buttonText={<div className="down-arrow" aria-label='options' />}
+    >
       <CurrentUserConsumer>
           {user => <ProjectOptionsPop {...props} 
                      {...projectOptions} 
