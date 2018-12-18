@@ -255,7 +255,7 @@ ${secondHalf}`;
       <>
       <p className="pop-description">But you can still send us your message! Just copy the details below and email us at <b>support@glitch.com</b> and we'll respond right away.
         Here's some text to include:</p>
-      <textarea value={this.formatRaw()} /></>
+      <textarea className="content-editable" value={this.formatRaw()} /></>
     );
   }
 
