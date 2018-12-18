@@ -253,7 +253,8 @@ ${secondHalf}`;
         </span>
       </>,
       <>
-      <p className="pop-description">But you can still send us your message! Just copy the details below and email us at <b>support@glitch.com</b> and we'll respond right away.
+        <p className="info-description">But you can still send us your message! Just copy the details below and email us at <b>support@glitch.com</b> and we'll respond right away.
+        <br />
         Here's some text to include:</p>
       <textarea className="content-editable" value={this.formatRaw()} /></>
     );
