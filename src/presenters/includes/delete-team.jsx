@@ -6,21 +6,15 @@ import PopoverWithButton from '../pop-overs/popover-with-button';
 
 
 const DeleteTeam = ({...props}) => (
-    <section>
-    <PopoverWithButton buttonClass="button-tertiary" buttonText="Report Abuse">
-      <PopoverContainer>
-        {({visible, togglePopover}) => (
-          <div className="button-wrap">
-            <button className="button button-small button-tertiary has-emoji opens-pop-over danger-zone" onClick={togglePopover}>
-              Delete {props.teamName}&nbsp;
-              <span className="emoji bomb" role="img" aria-label="" />
-            </button>
-            { visible && <DeleteTeamPop {...props} togglePopover={togglePopover} /> }
-          </div>
-        )}
-      </PopoverContainer>
-    </section>
-  );
+  <section>
+    <PopoverWithButton buttonClass="button button-small button-tertiary has-emoji opens-pop-over danger-zone"
+      buttonText={<>Delete {props.teamName}&nbsp;<span className="emoji bomb" role="img" aria-label="" /></>}
+      passToggleToPop
+    >
+      <DeleteTeamPop {...props} />
+    </PopoverWithButton>
+  </section>
+);
 
 DeleteTeam.propTypes = {
   api: PropTypes.func.isRequired,
