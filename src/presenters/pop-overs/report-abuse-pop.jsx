@@ -287,7 +287,7 @@ const ReportAbusePopContainer = props => (
 );
 
 const ReportAbusePopButton = props => (
-  <PopoverWithButton buttonClass='button-tertiary' buttonText='Report Abuse'>
+  <PopoverWithButton buttonClass="button-tertiary" buttonText="Report Abuse">
       <ReportAbusePopContainer
             projectName={props.projectName}
             projectId={props.projectId}

@@ -37,31 +37,24 @@ const TeamAnalyticsTimePop = (({updateTimeFrame, currentTimeFrame}) => {
   };
 
   return (
-    <PopoverContainer>
-      {({visible, togglePopover}) => (
-        <div className="button-wrap">
-          <button className="button-small button-tertiary button-select" onClick={togglePopover}>
-            <span>{currentTimeFrame}</span>
-          </button>
-          { visible && (
-            <dialog className="pop-over analytics-time-pop">
-              <section className="pop-over-actions last-section results-list">
-                <div className="results">
-                  { timeFrames.map(timeFrame => (
-                    <TimeFrameItem 
-                      key={timeFrame}
-                      selectTimeFrame={selectTimeFrame(timeFrame, togglePopover)}
-                      isActive={currentTimeFrame === timeFrame} 
-                      timeFrame={timeFrame}
-                    />
-                  ))}
-                </div>
-              </section>
-            </dialog>
-          )}
-        </div>
-      )}
-    </PopoverContainer>
+      <PopoverWithButton buttonClass="button-small button-tertiary button-select"
+        buttonText={<span>{currentTimeFrame}</span>}
+      >
+      <dialog className="pop-over analytics-time-pop">
+        <section className="pop-over-actions last-section results-list">
+          <div className="results">
+            { timeFrames.map(timeFrame => (
+              <TimeFrameItem 
+                key={timeFrame}
+                selectTimeFrame={selectTimeFrame(timeFrame, togglePopover)}
+                isActive={currentTimeFrame === timeFrame} 
+                timeFrame={timeFrame}
+              />
+            ))}
+          </div>
+        </section>
+      </dialog>
+    </PopoverWithButton>
   );
 });
 
