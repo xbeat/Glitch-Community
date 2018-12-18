@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Icons At The Disco',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FAbstract_Disco-01.jpg?1544442923044",
-    link: 'https://glitch.com/~abstract-disco'
+    title: 'Play Piano Like a Virtuoso',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F1_2.jpg?1545054763363",
+    link: 'https://glitch.com/~piano-genie'
   },{
-    title: 'Navigate YouTube Handsfree',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FHandsfree-01.jpg?1544442922593",
-    link: 'https://glitch.com/~handsfree-youtube'
+    title: 'Chinese Ideograms and Radicals',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F2_2.jpg?1545054763728",
+    link: 'https://glitch.com/~chinese-radical-vis'
   },{
-    title: 'Re-Discover Your Evernote Notes',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FRandom_Note-01.jpg?1544442923184",
-    link: 'https://glitch.com/~evernote-random'
+    title: 'Make Your Own Code Walkthroughs',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F3_1.jpg?1545054763940",
+    link: 'https://glitch.com/~walkthrough'
   }  
 ];
