@@ -28,7 +28,7 @@ class EditableDescriptionImpl extends React.Component {
   
   render() {
     const {description, placeholder} = this.props;
-    return (this.state.focused
+    return (true // this.state.focused
       ?
       <TextArea
         className="description content-editable"
@@ -87,7 +87,7 @@ export const AuthDescription = ({authorized, description, placeholder, update}) 
       description={description} 
       update={update} 
       placeholder={placeholder} 
-    /> 
+    />
     :
     <StaticDescription description={description}/>
 );
