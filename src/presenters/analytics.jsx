@@ -36,14 +36,32 @@ AnalyticsTracker.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-export class AnalyticsTrackExternalLink extends React.Component {
+class AnalyticsTrackExternalLinkWithoutContext extends React.Component {
   constructor(props) {
-    
+    super(props);
+    this.ref = React.createRef();
+  }
+  componentDidMount() {
+    try {
+      analytics.trackLink(this.ref.current, () => this.props.name, () => this.props.properties);
+    } catch (error) {
+      captureException(error);
+    }
+  }
   render() {
-    const {children, properties, to, name, ...props} = this.props;
-    return <a href={to} {...props}>{children}</a>;
+    const {children, to, ...props} = this.props;
+    return <a href={to} {...props} ref={this.ref}>{children}</a>;
   }
 }
+const AnalyticsTrackExternalLink = ({children, name, properties, to}) => (
+  <Consumer>
+    {inheritedProperties => (
+      <AnalyticsTrackExternalLinkWithoutContext to={to} name={name} properties={{...inheritedProperties, ...properties}}>
+        {children}
+      </AnalyticsTrackExternalLinkWithoutContext>
+    )}
+  </Consumer>
+);
 AnalyticsTrackExternalLink.propTypes = {
   children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
