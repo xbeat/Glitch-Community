@@ -37,7 +37,7 @@ details.popover-container
   width: 255px
   padding: 0
   textarea
-    resize: vertical
+    resize: none
   button
     margin-left: 0
   p
@@ -121,8 +121,8 @@ details.popover-container
       line-height: 17px
       &.right
         text-align: right
-      textarea: 
-        min-height: 150px
+    .tall-text
+      min-height: 150px
     .label
      font-weight: bold
      font-size: 12px
@@ -131,6 +131,9 @@ details.popover-container
     input.content-editable, textarea.content-editable
        background-color: white
        border: 1px solid #ccc
+       padding: 4px 6px
+       border-radius: 3px
+       margin-bottom: 5px
      .editable-field-flex
        flex-direction: column
     .content-editable-affix
