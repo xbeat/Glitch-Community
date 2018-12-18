@@ -9,7 +9,7 @@ const PopoverWithButton = props => {
         let childrenToPass = props.children;
         if (props.passTogglePopoverToPop) {
           const updatedChildren = React.Children.map(
-            this.props.children,
+            props.children,
             child => {
               return React.cloneElement(child, { togglePopover });
             }

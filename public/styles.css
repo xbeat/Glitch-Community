@@ -993,20 +993,17 @@ input:focus {
   display: inline-block;
   vertical-align: bottom;
 }
-.collections > .button-wrap,
 .collections .category {
   padding-bottom: 0;
   margin-top: 0;
   margin-right: 3%;
 }
 @media (max-width: 800px) {
-  .collections > .button-wrap,
   .collections .category {
     float: none;
     width: initial;
     width: 100%;
   }
-  .collections > .button-wrap .category-description,
   .collections .category .category-description {
     max-width: initial;
   }
@@ -1035,6 +1032,10 @@ input:focus {
   padding: 0;
   list-style-type: none;
   overflow: hidden;
+}
+.collections .collections-container .button-wrap {
+  display: block;
+  position: inherit;
 }
 .collections .collections-container > li {
   float: left;
@@ -4549,4 +4550,4 @@ a.collection-view-all:hover {
 }
 
 
-/*# sourceMappingURL=styles.css.map?548edcba4103562bd34e*/
+/*# sourceMappingURL=styles.css.map?852112c9a20fe97522fd*/
