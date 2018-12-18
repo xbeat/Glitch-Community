@@ -15,9 +15,11 @@ import {CurrentUserConsumer} from './current-user';
 
 
 const ResumeCoding = () => (
-  <AnalyticsTrackLink name="Resume Coding clicked" className="button button-small button-cta" to={EDITOR_URL}>
+  <AnalyticsTrackClick name="Resume Coding clicked">
+    <Link className="button button-small button-cta" to={EDITOR_URL}>
       Resume Coding
-  </AnalyticsTrackLink>
+    </Link>
+  </AnalyticsTrackClick>
 );
 
 class SearchForm extends React.Component {

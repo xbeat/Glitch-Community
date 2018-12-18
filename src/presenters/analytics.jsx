@@ -51,14 +51,14 @@ class AnalyticsTrackExternalLinkWithoutContext extends React.Component {
     }
   }
   render() {
-    const {children, to, ...props} = this.props;
+    const {children, name, properties, to, ...props} = this.props;
     return <Link to={to} {...props} ref={this.ref}>{children}</Link>;
   }
 }
-const AnalyticsTrackExternalLink = ({children, name, properties, to}) => (
+export const AnalyticsTrackExternalLink = ({children, name, properties, to, ...props}) => (
   <Consumer>
     {inheritedProperties => (
-      <AnalyticsTrackExternalLinkWithoutContext to={to} name={name} properties={{...inheritedProperties, ...properties}}>
+      <AnalyticsTrackExternalLinkWithoutContext to={to} name={name} properties={{...inheritedProperties, ...properties}} {...props}>
         {children}
       </AnalyticsTrackExternalLinkWithoutContext>
     )}
