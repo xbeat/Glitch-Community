@@ -144,7 +144,7 @@ const SearchPage = ({api, query}) => (
           </CurrentUserConsumer>
         )}
       </ErrorHandlers>
-    ) : <NotFound name="anything"/>}
+    ) : <NotFound name="anything" fromSearch={true}/>}
     <Categories/>
   </Layout>
 );
