@@ -176,7 +176,7 @@ const ProjectPageLoader = ({domain, api, currentUser, ...props}) => (
           </>
         )}
       </ProjectEditor>
-    ) : <NotFound name={domain}/>}
+    ) : <NotFound name={domain} fromSearch={false}/>}
   </DataLoader>
 );
 ProjectPageLoader.propTypes = {
