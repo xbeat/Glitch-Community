@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {Redirect} from 'react-router-dom';
-import {AnalyticsTrackClick} from './analytics';
+import {AnalyticsTrackLink} from './analytics';
 import Link from './includes/link';
 import Logo from './includes/logo';
 
@@ -15,11 +15,9 @@ import {CurrentUserConsumer} from './current-user';
 
 
 const ResumeCoding = () => (
-  <AnalyticsTrackClick name="Resume Coding clicked">
-    <Link className="button button-small button-cta" to={EDITOR_URL}>
+  <AnalyticsTrackLink name="Resume Coding clicked" className="button button-small button-cta" to={EDITOR_URL}>
       Resume Coding
-    </Link>
-  </AnalyticsTrackClick>
+  </AnalyticsTrackLink>
 );
 
 class SearchForm extends React.Component {
