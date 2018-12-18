@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PopoverContainer from './popover-container.jsx';
+import PopoverWithButton from "../pop-overs/popover-with-button";
 import {CurrentUserConsumer} from '../current-user.jsx';
 
 import NestedPopover from './popover-nested.jsx';
@@ -156,15 +156,26 @@ export default function ProjectOptions({projectOptions={}, project, api, current
   }
 
   return (
+        <PopoverWithButton buttonClass='project-options button-borderless opens-pop-over'
+      buttonText={<div className="down-arrow" aria-label='options' />} 
+      buttonClass="collection-options button-borderless opens-pop-over" >
+      <CurrentUserConsumer>
+          {user => <ProjectOptionsPop {...props} 
+                     {...projectOptions} project={project} currentCollectionId={currentCollectionId} api={api} currentUser={user} togglePopover={togglePopover} currentUserIsOnProject={currentUserIsOnProject(user)}/>}
+      </CurrentUserConsumer>
+    </PopoverWithButton>);
+    
+    
+    
     <PopoverContainer>
       {({togglePopover, visible}) => (
         <CurrentUserConsumer>
           {user => (
             <div>
-              <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
+              <button className="" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <ProjectOptionsPop {...props} {...projectOptions} project={project} currentCollectionId={currentCollectionId} api={api} currentUser={user} togglePopover={togglePopover} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
+              { visible &&  }
             </div>
           )}
         </CurrentUserConsumer>
