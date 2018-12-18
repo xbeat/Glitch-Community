@@ -1,18 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PopoverWithButton from "../pop-overs/popover-with-button";
+import PopoverButton from './popover-button';
 import { CurrentUserConsumer } from "../current-user.jsx";
 
 import NestedPopover from "./popover-nested.jsx";
 
 import AddProjectToCollectionPop from "../pop-overs/add-project-to-collection-pop.jsx";
-
-const PopoverButton = ({ onClick, text, emoji }) => (
-  <button className="button-small has-emoji button-tertiary" onClick={onClick}>
-    <span>{text} </span>
-    <span className={`emoji ${emoji}`} />
-  </button>
-);
 
 // Project Options Content
 const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {

@@ -1,14 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverWithButton from './popover-with-button';
+import PopoverButton from './popover-button';
 import {CurrentUserConsumer} from '../current-user.jsx';
-
-const PopoverButton = ({onClick, text, emoji}) => (
-  <button className="button-small has-emoji button-tertiary" onClick={onClick}>
-    <span>{text} </span>
-    <span className={`emoji ${emoji}`}></span>
-  </button>
-);
 
 // Collection Options Pop
 const CollectionOptionsPop = (props) => {
