@@ -37,3 +37,10 @@ AnalyticsTracker.propTypes = {
   name: PropTypes.string.isRequired,
   properties: PropTypes.objectOf(PropTypes.string).isRequired,
 };
+
+export const AnalyticsOnClick = ({children, name, properties}) => (
+  <AnalyticsTracker>
+    {track => React.Children.map(child => {
+      function onClick(eve
+  </AnalyticsTracker>
+);
