@@ -20,7 +20,6 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
     const projectContainer = event.target.closest('li');
     projectContainer.addEventListener('animationend', func, {once: true});
     projectContainer.classList.add(className);
-    props.togglePopover();
   }
   
   function leaveProject(event) {
@@ -156,7 +155,8 @@ export default function ProjectOptions({projectOptions={}, project, api, current
 
   return (
     <PopoverWithButton buttonClass='project-options button-borderless opens-pop-over'
-      buttonText={<div className="down-arrow" aria-label='options' />}
+      buttonText={<div className="down-arrow" aria-label='options' 
+      passToggleToPop />}
     >
       <CurrentUserConsumer>
           {user => <ProjectOptionsPop {...props} 
