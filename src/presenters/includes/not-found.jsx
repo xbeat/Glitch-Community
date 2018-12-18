@@ -11,9 +11,9 @@ const NotFound = ({name, fromSearch}) => (
       <img className="compass" src={compass}/>
       <img className="needle" src={needle}/>
     </div>  
-    
-    {!!fromSearch && 
-      (<button>Take me Home</button>)
+    <br/>
+    {!fromSearch && 
+      (<button>Take me Home 🏠</button>)
     } 
     
   </section>
@@ -21,11 +21,8 @@ const NotFound = ({name, fromSearch}) => (
 
 NotFound.propTypes = {
   name: PropTypes.string.isRequired,
-  fromSearch: PropTypes.boolean,
+  fromSearch: PropTypes.bool,
 };
-NotFound.defaultProps = {
-  fromSearch: false
-}
 
 
 export default NotFound;
