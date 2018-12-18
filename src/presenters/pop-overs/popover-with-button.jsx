@@ -26,6 +26,7 @@ PopoverWithButton.propTypes = {
   dataTrack: PropTypes.string,
   buttonText: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired // should be the stuff to show in a popover
+  passToggleToPop: PropTypes.bool,
 };
 
 PopoverWithButton.defaultProps = {
