@@ -1,7 +1,8 @@
 function webpackBackgroundProcess() {
   // Launch webpack in a separate process because it blocks a bit
   const {spawn} = require('child_process');
-  spawn('webpack', ['--watch'], {stdio: 'inherit'});
+  const env = {...process.env, NODE_OPTIONS: "--max-old-space-size=384"};
+  spawn('webpack', ['--watch'], {env, stdio: 'inherit'});
 }
 
 function webpackExpressMiddleware() {
