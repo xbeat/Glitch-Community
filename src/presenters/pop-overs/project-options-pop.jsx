@@ -125,7 +125,6 @@ ProjectOptionsPop.propTypes = {
   project: PropTypes.shape({
     users: PropTypes.array.isRequired,
   }),
-  togglePopover: PropTypes.func.isRequired,
   addPin: PropTypes.func,
   removePin: PropTypes.func,
   deleteProject: PropTypes.func,
@@ -156,32 +155,19 @@ export default function ProjectOptions({projectOptions={}, project, api, current
   }
 
   return (
-        <PopoverWithButton buttonClass='project-options button-borderless opens-pop-over'
+    <PopoverWithButton buttonClass='project-options button-borderless opens-pop-over'
       buttonText={<div className="down-arrow" aria-label='options' />} 
       buttonClass="collection-options button-borderless opens-pop-over" >
       <CurrentUserConsumer>
           {user => <ProjectOptionsPop {...props} 
-                     {...projectOptions} project={project} currentCollectionId={currentCollectionId} api={api} currentUser={user} togglePopover={togglePopover} currentUserIsOnProject={currentUserIsOnProject(user)}/>}
+                     {...projectOptions} 
+                     project={project} 
+                     currentCollectionId={currentCollectionId} 
+                     api={api} currentUser={user} 
+                     currentUserIsOnProject={currentUserIsOnProject(user)}
+                   />}
       </CurrentUserConsumer>
     </PopoverWithButton>);
-    
-    
-    
-    <PopoverContainer>
-      {({togglePopover, visible}) => (
-        <CurrentUserConsumer>
-          {user => (
-            <div>
-              <button className="" onClick={togglePopover}> 
-                <div className="down-arrow" />
-              </button>
-              { visible &&  }
-            </div>
-          )}
-        </CurrentUserConsumer>
-      )}
-    </PopoverContainer>     
-  );
 }
 
 ProjectOptions.propTypes = {
@@ -189,4 +175,3 @@ ProjectOptions.propTypes = {
   currentCollectionId: PropTypes.number,
   project: PropTypes.object.isRequired,
 };
-
