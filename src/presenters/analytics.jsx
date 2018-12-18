@@ -36,6 +36,12 @@ AnalyticsTracker.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
+export class AnalyticsTrackLink extends React.Component {
+  render() {
+    return this.props.children;
+  }
+}
+
 export const AnalyticsTrackClick = ({children, name, properties}) => (
   <AnalyticsTracker>
     {track => React.Children.map(children, child => {
