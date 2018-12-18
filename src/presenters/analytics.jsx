@@ -34,13 +34,23 @@ export const AnalyticsTracker = ({children}) => (
 );
 AnalyticsTracker.propTypes = {
   children: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  properties: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
-export const AnalyticsOnClick = ({children, name, properties}) => (
+export const AnalyticsTrackClick = ({children, name, properties}) => (
   <AnalyticsTracker>
-    {track => React.Children.map(child => {
-      function onClick(eve
+    {track => React.Children.map(children, child => {
+      function onClick(event) {
+        track(name, properties);
+        if (child.onClick) {
+          return child.onClick(event);
+        }
+      }
+      return React.cloneElement(child, {onClick});
+    })}
   </AnalyticsTracker>
 );
+AnalyticsTrackClick.propTypes = {
+  children: PropTypes.node.isRequired,
+  name: PropTypes.string.isRequired,
+  properties: PropTypes.objectOf(PropTypes.string),
+};
