@@ -115,7 +115,7 @@ class TeamAnalyticsProjectPop extends React.Component {
           currentProjectDomain={currentProjectDomain}
           setFilter={this.setFilter}
           filter={this.state.filter}
-          togglePopover={() => { }} {
+          togglePopover={() => {}} /* placeholder - will get passed by passToggleToPop */
         />
       </PopoverWithButton>
     );

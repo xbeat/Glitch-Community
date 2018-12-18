@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import DeleteTeamPop from '../pop-overs/delete-team-pop.jsx';
-import PopoverContainer from '../pop-overs/popover-container.jsx';
+import PopoverWithButton from '../pop-overs/popover-with-button';
 
-const DeleteTeam = ({...props}) => {
-  
-  return (
+
+const DeleteTeam = ({...props}) => (
     <section>
+    <PopoverWithButton buttonClass="button-tertiary" buttonText="Report Abuse">
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <div className="button-wrap">
@@ -21,7 +21,6 @@ const DeleteTeam = ({...props}) => {
       </PopoverContainer>
     </section>
   );
-};
 
 DeleteTeam.propTypes = {
   api: PropTypes.func.isRequired,

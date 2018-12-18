@@ -53,6 +53,12 @@ const TeamAnalyticsTimePop = props => {
   );
 };
 
+TeamAnalyticsTimePop.propTypes = {
+  updateTimeFrame: PropTypes.func.isRequired,
+  currentTimeFrame: PropTypes.string.isRequired,
+  togglePopover: PropTypes.func,
+}
+
 const TeamAnalyticsTimePopButton = ({ updateTimeFrame, currentTimeFrame }) => {
   return (
     <PopoverWithButton
