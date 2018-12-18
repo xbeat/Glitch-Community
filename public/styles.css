@@ -993,17 +993,20 @@ input:focus {
   display: inline-block;
   vertical-align: bottom;
 }
+.collections > .button-wrap,
 .collections .category {
   padding-bottom: 0;
   margin-top: 0;
   margin-right: 3%;
 }
 @media (max-width: 800px) {
+  .collections > .button-wrap,
   .collections .category {
     float: none;
     width: initial;
     width: 100%;
   }
+  .collections > .button-wrap .category-description,
   .collections .category .category-description {
     max-width: initial;
   }
@@ -4546,4 +4549,4 @@ a.collection-view-all:hover {
 }
 
 
-/*# sourceMappingURL=styles.css.map?e207880d4a65176f6331*/
+/*# sourceMappingURL=styles.css.map?548edcba4103562bd34e*/
