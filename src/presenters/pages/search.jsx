@@ -118,7 +118,7 @@ class SearchResults extends React.Component {
         {showResults(teams) && <TeamResults teams={teams}/>}
         {showResults(users) && <UserResults users={users}/>}
         {showResults(projects) && <ProjectResults projects={projects} currentUser={this.props.currentUser} api={this.props.api} addProjectToCollection={this.addProjectToCollection}/>}
-        {noResults && <NotFound name="any results" fromSearch={true}/>}
+        {noResults && <NotFound name="any results"/>}
       </main>
     );
   }
@@ -144,7 +144,7 @@ const SearchPage = ({api, query}) => (
           </CurrentUserConsumer>
         )}
       </ErrorHandlers>
-    ) : <NotFound name="anything" fromSearch={true}/>}
+    ) : <NotFound name="anything"/>}
     <Categories/>
   </Layout>
 );

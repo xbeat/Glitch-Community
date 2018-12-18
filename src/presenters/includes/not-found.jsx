@@ -11,17 +11,12 @@ const NotFound = ({name, fromSearch}) => (
       <img className="compass" src={compass}/>
       <img className="needle" src={needle}/>
     </div>  
-    <br/>
-    {!fromSearch && 
-      (<button>Take me Home 🏠</button>)
-    } 
     
   </section>
 );
 
 NotFound.propTypes = {
-  name: PropTypes.string.isRequired,
-  fromSearch: PropTypes.bool,
+  name: PropTypes.string.isRequired
 };
 
 
