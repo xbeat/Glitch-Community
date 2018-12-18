@@ -36,11 +36,20 @@ AnalyticsTracker.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-export class AnalyticsTrackLink extends React.Component {
+export class AnalyticsTrackExternalLink extends React.Component {
+  constructor(props) {
+    
   render() {
-    return this.props.children;
+    const {children, properties, to, name, ...props} = this.props;
+    return <a href={to} {...props}>{children}</a>;
   }
 }
+AnalyticsTrackExternalLink.propTypes = {
+  children: PropTypes.node.isRequired,
+  name: PropTypes.string.isRequired,
+  properties: PropTypes.objectOf(PropTypes.string),
+  to: PropTypes.string.isRequired,
+};
 
 export const AnalyticsTrackClick = ({children, name, properties}) => (
   <AnalyticsTracker>
