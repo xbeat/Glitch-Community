@@ -1,8 +1,9 @@
+
 import React from "react";
 import PropTypes from "prop-types";
 
 import EditCollectionColorPop from "../pop-overs/edit-collection-color-pop.jsx";
-import PopoverContainer from "../pop-overs/popover-container.jsx";
+import PopoverWithButton from '../pop-overs/popover-with-button';
 
 class EditCollectionColor extends React.Component {
   constructor(props) {
@@ -21,26 +22,18 @@ class EditCollectionColor extends React.Component {
   render() {
     const { update, initialColor, ...props } = this.props;
     return (
-      <PopoverContainer>
-        {({ visible, togglePopover }) => (
-          <div className="button-wrap edit-collection-color-btn">
-            <button
-              className={`button add-project opens-pop-over`}
-              onClick={togglePopover}
-            >
-              Color
-            </button>
-            {visible && (
-              <EditCollectionColorPop
-                {...props}
-                togglePopover={togglePopover}
-                updateColor={update}
-                initialColor={initialColor}
-              />
-            )}
-          </div>
-        )}
-      </PopoverContainer>
+      // wrapper class edit-collection-color-btn
+      <PopoverWithButton
+        buttonText="Color"
+        buttonClass="button opens-pop-over"
+        passToggleToPop
+      >
+        <EditCollectionColorPop
+          {...props}
+          updateColor={update}
+          initialColor={initialColor}
+        />
+      </PopoverWithButton>
     );
   }
 }
