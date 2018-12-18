@@ -159,13 +159,17 @@ export default function ProjectOptions({projectOptions={}, project, api, current
       passToggleToPop
     >
       <CurrentUserConsumer>
-          {user => <ProjectOptionsPop {...props} 
+          {(user, fetched, consumerProps) => {
+          
+          // todo figure out how to pass in togglePopover!!!
+          return <ProjectOptionsPop {...consumerProps} 
+                     {...props}
                      {...projectOptions} 
                      project={project} 
                      currentCollectionId={currentCollectionId} 
                      api={api} currentUser={user} 
                      currentUserIsOnProject={currentUserIsOnProject(user)}
-                   />}
+                   />}}
       </CurrentUserConsumer>
     </PopoverWithButton>);
 }

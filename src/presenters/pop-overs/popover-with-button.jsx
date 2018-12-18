@@ -8,8 +8,10 @@ const PopoverWithButton = props => {
       {({ visible, togglePopover }) => {
         let childrenToShow = props.children;
         if (props.passToggleToPop) {
-          childrenToShow = React.Children.map(props.children, child =>
-            React.cloneElement(child, { togglePopover: togglePopover })
+          childrenToShow = React.Children.map(props.children, child => {
+                                              console.log(child);
+           return React.cloneElement(child, { togglePopover: togglePopover })
+          }
           );
         }
         return (
