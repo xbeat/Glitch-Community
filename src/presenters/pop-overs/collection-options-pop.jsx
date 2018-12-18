@@ -18,7 +18,6 @@ const CollectionOptionsPop = (props) => {
     const collectionContainer = event.target.closest('li');
     collectionContainer.addEventListener('animationend', func, {once: true});
     collectionContainer.classList.add(className);
-    props.togglePopover();
   }
 
   function animateThenDeleteCollection(event) {
@@ -38,7 +37,6 @@ const CollectionOptionsPop = (props) => {
 };
 
 CollectionOptionsPop.propTypes = {
-  togglePopover: PropTypes.func.isRequired,
   deleteCollection: PropTypes.func,
 };
   
@@ -50,9 +48,8 @@ export default function CollectionOptions({deleteCollection, collection}) {
 
   return (
     <PopoverWithButton buttonClass='button'
-      buttonText={<div className="down-arrow"/>} 
-      buttonClass="collection-options button-borderless opens-pop-over"
-      passTogglePopoverToPop={true}>
+      buttonText={<div className="down-arrow" aria-label='options' />} 
+      buttonClass="collection-options button-borderless opens-pop-over" >
       <CurrentUserConsumer>
           {user => <CollectionOptionsPop collection={collection} 
                      deleteCollection={deleteCollection} 
