@@ -41,6 +41,15 @@ class PageChangeHandlerBase extends React.Component {
     if (this.props.location.key !== prev.location.key) {
       window.scrollTo(0, 0);
       this.props.reloadCurrentUser();
+      
+      try {
+        const analytics = window.analytics;
+        if (analytics) {
+          analytics.page();
+        }
+      } catch (ex) {
+        console.error("Error tracking page transition.", ex);
+      }
     }
   }
   render() {
