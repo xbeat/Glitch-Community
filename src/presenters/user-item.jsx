@@ -22,7 +22,7 @@ export default function UserItem({user}) {
             {!!user.name && <h3 className="name">{user.name}</h3>}
             <div className="button">@{user.login}</div>
             {user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
-            {!!user.description && <p className="description"><TruncatedMarkdown length={88}>{user.description}</TruncatedMarkdown></p>}
+            {!!user.description && <p className="description"><TruncatedMarkdown length={96}>{user.description}</TruncatedMarkdown></p>}
           </div>
         </div>
       </div>
