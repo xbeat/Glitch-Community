@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
+import PopoverWithButton from './popover-with-button';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
 const PopoverButton = ({onClick, text, emoji}) => (
@@ -49,6 +50,17 @@ export default function CollectionOptions({deleteCollection, collection}) {
   }
 
   return (
+    
+    <PopoverWithButton buttonClass='button' buttonText='Sign in' >
+      <CurrentUserConsumer>
+          {user => <CollectionOptionsPop collection={collection} 
+                     deleteCollection={deleteCollection} 
+                     togglePopover={togglePopover} 
+                     currentUser={user}/>}
+      </CurrentUserConsumer>
+    </PopoverWithButton>;
+    
+    
     <PopoverContainer>
       {({togglePopover, visible}) => (
         <CurrentUserConsumer>
@@ -57,7 +69,7 @@ export default function CollectionOptions({deleteCollection, collection}) {
               <button className="collection-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <CollectionOptionsPop collection={collection} deleteCollection={deleteCollection} togglePopover={togglePopover} currentUser={user}/> }
+              { visible &&  }
             </div>
           )}
         </CurrentUserConsumer>
@@ -68,6 +80,6 @@ export default function CollectionOptions({deleteCollection, collection}) {
 
 CollectionOptions.propTypes = {
   collection: PropTypes.object.isRequired,
-  deleteCollection: PropTypes.func
+  deleteCollection: PropTypes.func,
 };
 
