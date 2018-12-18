@@ -119,6 +119,10 @@ ${secondHalf}`;
   }
 
   validateEmail() {
+    if (this.props.currentUser.login) {
+      return;
+    }
+    
     let errors = this.validateNotEmpty("email", "emailError", "Email");
     if (errors.emailError != "") {
       return errors;
@@ -249,9 +253,9 @@ ${secondHalf}`;
         </span>
       </>,
       <>
-      <p className="pop-description">Please email your report to support@glitch.com.
+      <p className="pop-description">But you can still send us your message! Just copy the details below and email us at <b>support@glitch.com</b> and we'll respond right away.
         Here's some text to include:</p>
-      <pre style={{ whiteSpace: 'pre-line'}}>{this.formatRaw()}</pre></>
+      <textarea value={this.formatRaw()} /></>
     );
   }
 

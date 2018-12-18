@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import AddProjectToCollectionPop from '../pop-overs/add-project-to-collection-pop.jsx';
-import PopoverWithButton from './popover-with-button';
+import PopoverWithButton from '../pop-overs/popover-with-button';
 
 const AddProjectToCollection = ({project, ...props}) => {
   
@@ -11,7 +11,7 @@ const AddProjectToCollection = ({project, ...props}) => {
       buttonText={<>Add to Collection {' '}<span className="emoji framed-picture" role="presentation"></span></>}
       passToggleToPop
     >
-      <AddProjectToCollectionPop {...props} project={project} />
+      <AddProjectToCollectionPop {...props} project={project} togglePopover={() => {}} />
     </PopoverWithButton>
   );
 };
