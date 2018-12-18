@@ -15,7 +15,8 @@ const AddCollectionProject = ({currentUserIsOwner, ...props}) => {
       buttonText="Add Project"
       passToggleToPop
     >
-      <AddCollectionProjectPop {...props} />
+      {/* togglePopover is a placeholder here - the real value will be passed by PopoverWithButton */ }
+      <AddCollectionProjectPop {...props} togglePopover={() => {}} />
     </PopoverWithButton>
   );
 };
