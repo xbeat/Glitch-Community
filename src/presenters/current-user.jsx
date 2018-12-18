@@ -234,11 +234,12 @@ CurrentUserProvider.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-export const CurrentUserConsumer = ({children, props}) => (
+export const CurrentUserConsumer = (props) => {
+  return (
   <Consumer>
-    {({currentUser, fetched, props, ...funcs}) => children(currentUser, fetched, funcs, props)}
+    {({currentUser, fetched, ...funcs}) => props.children(currentUser, fetched, funcs, props)}
   </Consumer>
-);
+)};
 CurrentUserConsumer.propTypes = {
   children: PropTypes.func.isRequired,
 };
