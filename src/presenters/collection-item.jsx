@@ -64,7 +64,7 @@ class CollectionItem extends React.Component{
                       <span className="project-badge private-project-badge" aria-label="private"></span>
                       <div className="project-name">{collection.name}</div>
                     </div>
-                    <div className="description" style={{color: getContrastTextColor(collection.coverColor)}}><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
+                    <div className="description" style={{color: getContrastTextColor(collection.coverColor)}}><TruncatedMarkdown length={88}>{collection.description}</TruncatedMarkdown></div>
                   </div>
 
                   <div className="overflow-mask"></div>
