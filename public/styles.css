@@ -1053,7 +1053,7 @@ input:focus {
   margin: 0;
 }
 .collections .collection {
-  margin-top: 6px;
+  margin-top: 30px;
   font-size: 0.9rem;
   border-radius: 5px;
   width: 100%;
@@ -4546,4 +4546,4 @@ a.collection-view-all:hover {
 }
 
 
-/*# sourceMappingURL=styles.css.map?5c3f2d8282a71a6dd008*/
+/*# sourceMappingURL=styles.css.map?e207880d4a65176f6331*/

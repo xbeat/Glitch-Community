@@ -50,32 +50,15 @@ export default function CollectionOptions({deleteCollection, collection}) {
   }
 
   return (
-    
-    <PopoverWithButton buttonClass='button' buttonText='Sign in' >
+    <PopoverWithButton buttonClass='button'
+      buttonText={<div className="down-arrow"/>} 
+      buttonClass="collection-options button-borderless opens-pop-over">
       <CurrentUserConsumer>
           {user => <CollectionOptionsPop collection={collection} 
                      deleteCollection={deleteCollection} 
-                     togglePopover={togglePopover} 
                      currentUser={user}/>}
       </CurrentUserConsumer>
-    </PopoverWithButton>;
-    
-    
-    <PopoverContainer>
-      {({togglePopover, visible}) => (
-        <CurrentUserConsumer>
-          {user => (
-            <div className="collection-pop-over">
-              <button className="collection-options button-borderless opens-pop-over" onClick={togglePopover}> 
-                <div className="down-arrow" />
-              </button>
-              { visible &&  }
-            </div>
-          )}
-        </CurrentUserConsumer>
-      )}
-    </PopoverContainer>
-  );
+    </PopoverWithButton>);
 }
 
 CollectionOptions.propTypes = {
