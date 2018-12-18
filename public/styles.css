@@ -4265,6 +4265,9 @@ button
 }
 .collection-page .edit-collection-color-btn {
   margin-top: 25px;
+  font-size: 14px;
+  padding: 6px 12px;
+  padding-top: initial;
 }
 .collection-page .collection-url {
   font-family: Menlo, Consolas, Monaco, "Lucida Console", Monospace;
@@ -4550,4 +4553,4 @@ a.collection-view-all:hover {
 }
 
 
-/*# sourceMappingURL=styles.css.map?852112c9a20fe97522fd*/
+/*# sourceMappingURL=styles.css.map?7455dc833e51eae96b44*/

@@ -25,7 +25,7 @@ class EditCollectionColor extends React.Component {
       // wrapper class edit-collection-color-btn
       <PopoverWithButton
         buttonText="Color"
-        buttonClass="button opens-pop-over"
+        buttonClass="edit-collection-color-btn"
         passToggleToPop
       >
         <EditCollectionColorPop
