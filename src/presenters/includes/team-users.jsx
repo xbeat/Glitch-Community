@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getDisplayName} from '../../models/user';
-import {AnalyticsTracker} from '../analytics';
+import {TrackClick} from '../analytics';
 import {WhitelistedDomainIcon} from './team-elements.jsx';
 import AddTeamUserPop from '../pop-overs/add-team-user-pop.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
@@ -125,11 +125,9 @@ export class AddTeamUser extends React.Component {
             {!!this.state.alreadyInvited.length && 
               <UsersList users={this.state.alreadyInvited}/>
             }
-            <AnalyticsTracker>
-              {track =>
-                <button onClick={() => { togglePopover(); track('Add Team User'); }} className="button button-small button-tertiary add-user">Add</button>
-              }
-            </AnalyticsTracker>
+            <TrackClick name="Add to Team clicked">
+              <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
+            </TrackClick>
             {!!this.state.invitee &&
               <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeNotifyInvited}>
                 Invited {this.state.invitee}

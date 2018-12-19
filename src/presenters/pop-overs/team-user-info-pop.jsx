@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {getAvatarThumbnailUrl} from '../../models/user';
 
-import {AnalyticsTracker} from '../analytics';
+import {TrackClick} from '../analytics';
 import {NestedPopover} from './popover-nested.jsx';
 import {UserLink} from '../includes/link.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -32,17 +32,19 @@ const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
       <p className="action-description">
         Admins can update team info, billing, and remove users
       </p>
-      <AnalyticsTracker>
-        {track => userIsTeamAdmin ? (
-          <button className="button-small button-tertiary has-emoji" onClick={() => { updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL); track('Remove Admin Status'); }}>
+      {userIsTeamAdmin ? (
+        <TrackClick name="Remove Admin Status clicked">
+          <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)}>
             Remove Admin Status <span className="emoji fast-down" />
           </button>
-        ) : (
-          <button className="button-small button-tertiary has-emoji" onClick={() => { updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL); track('Make an Admin'); }}>
+        </TrackClick>
+      ) : (
+        <TrackClick name="Make an Admin clicked">
+          <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)}>
             Make an Admin <span className="emoji fast-up" />
           </button>
-        )}
-      </AnalyticsTracker>
+        </TrackClick>
+      )}
     </section>
   );
 };
