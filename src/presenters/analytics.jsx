@@ -4,7 +4,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {captureException} from '../utils/sentry';
-import {Link} from './includes/link';
 
 const {Provider, Consumer} = React.createContext({});
 
@@ -44,17 +43,14 @@ class TrackedExternalLinkWithoutContext extends React.Component {
   }
   componentDidMount() {
     try {
-      if (this.ref.current instanceof HTMLAnchorElement) {
-        analytics.trackLink(this.ref.current, () => this.props.name, () => this.props.properties);
-      } else {
-        throw new Error('
+      analytics.trackLink(this.ref.current, () => this.props.name, () => this.props.properties);
     } catch (error) {
       captureException(error);
     }
   }
   render() {
     const {children, name, properties, to, ...props} = this.props;
-    return <Link to={to} {...props} ref={this.ref}>{children}</Link>;
+    return <a href={to} {...props} ref={this.ref}>{children}</a>;
   }
 }
 export const TrackedExternalLink = ({children, name, properties, to, ...props}) => (

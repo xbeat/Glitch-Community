@@ -29,7 +29,7 @@ export const Link = React.forwardRef(({to, children, ...props}, ref) => {
     };
   }
   
-  return <RouterLink to={to} {...props} ref={ref}>{children}</RouterLink>;
+  return <RouterLink to={to} {...props} innerRef={ref}>{children}</RouterLink>;
 });
 Link.propTypes = {
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
