@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import _ from 'lodash';
 import {withRouter} from 'react-router-dom';
-import {AnalyticsTracker} from '../analytics';
+import {TrackClick} from '../analytics';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import {getPredicates, getTeamPair} from '../../models/words';
 import {getLink} from '../../models/team';
@@ -109,7 +109,6 @@ class CreateTeamPopBase extends React.Component {
         error: message || 'Something went wrong',
       });
     }
-    this.props.track('Create Team Submitted');
   }
   
   render() {
@@ -139,9 +138,11 @@ class CreateTeamPopBase extends React.Component {
             </p>
           
             {this.state.isLoading ? <Loader /> : (
-              <button type="submit" className="button-small has-emoji">
-                Create Team <span className="emoji thumbs_up" />
-              </button>
+              <TrackClick name="Create Team submitted">
+                <button type="submit" className="button-small has-emoji">
+                  Create Team <span className="emoji thumbs_up" />
+                </button>
+              </TrackClick>
             )}
           </form>
 
@@ -158,7 +159,6 @@ class CreateTeamPopBase extends React.Component {
 
 CreateTeamPopBase.propTypes = {
   api: PropTypes.func.isRequired,
-  track: PropTypes.func.isRequired,
 };
 
 const CreateTeamPop = withRouter(CreateTeamPopBase);
@@ -166,9 +166,7 @@ const CreateTeamPop = withRouter(CreateTeamPopBase);
 const CreateTeamPopOrSignIn = ({api}) => (
   <CurrentUserConsumer>
     {user => (user && user.login ? (
-      <AnalyticsTracker>
-        {track => <CreateTeamPop api={api} track={track}/>}
-      </AnalyticsTracker>
+      <CreateTeamPop api={api}/>
     ) : (
       <SignInPop api={api} hash="create-team"
         header={<NestedPopoverTitle>Sign In</NestedPopoverTitle>}

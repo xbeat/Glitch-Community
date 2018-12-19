@@ -74,8 +74,8 @@ export const TrackClick = ({children, name, properties}) => (
     {track => React.Children.map(children, child => {
       function onClick(event) {
         track(name, properties);
-        if (child.onClick) {
-          return child.onClick(event);
+        if (child.props.onClick) {
+          return child.props.onClick(event);
         }
       }
       return React.cloneElement(child, {onClick});
