@@ -8,6 +8,7 @@ import {
 import { parseOneAddress } from "email-addresses";
 import _ from "lodash";
 import axios from "axios";
+import {captureException} from '../../utils/sentry';
 
 import { CurrentUserConsumer } from "../current-user.jsx";
 
@@ -101,8 +102,7 @@ ${secondHalf}`;
       console.log(data);
       this.setState({ submitted: true, submitSuccess: true });
     } catch (error) {
-      // captureException(error);
-      console.log(error);
+      captureException(error);
       this.setState({ submitted: true, submitSuccess: false });
     }
   }
