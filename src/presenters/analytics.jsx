@@ -37,15 +37,17 @@ AnalyticsTracker.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-class AnalyticsTrackExternalLinkWithoutContext extends React.Component {
+class TrackedExternalLinkWithoutContext extends React.Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
   }
   componentDidMount() {
     try {
-      console.log(this.ref.current);
-      //analytics.trackLink(this.ref.current, () => this.props.name, () => this.props.properties);
+      if (this.ref.current instanceof HTMLAnchorElement) {
+        analytics.trackLink(this.ref.current, () => this.props.name, () => this.props.properties);
+      } else {
+        throw new Error('
     } catch (error) {
       captureException(error);
     }
@@ -55,23 +57,23 @@ class AnalyticsTrackExternalLinkWithoutContext extends React.Component {
     return <Link to={to} {...props} ref={this.ref}>{children}</Link>;
   }
 }
-export const AnalyticsTrackExternalLink = ({children, name, properties, to, ...props}) => (
+export const TrackedExternalLink = ({children, name, properties, to, ...props}) => (
   <Consumer>
     {inheritedProperties => (
-      <AnalyticsTrackExternalLinkWithoutContext to={to} name={name} properties={{...inheritedProperties, ...properties}} {...props}>
+      <TrackedExternalLinkWithoutContext to={to} name={name} properties={{...inheritedProperties, ...properties}} {...props}>
         {children}
-      </AnalyticsTrackExternalLinkWithoutContext>
+      </TrackedExternalLinkWithoutContext>
     )}
   </Consumer>
 );
-AnalyticsTrackExternalLink.propTypes = {
+TrackedExternalLink.propTypes = {
   children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   properties: PropTypes.objectOf(PropTypes.string),
   to: PropTypes.string.isRequired,
 };
 
-export const AnalyticsTrackClick = ({children, name, properties}) => (
+export const TrackClick = ({children, name, properties}) => (
   <AnalyticsTracker>
     {track => React.Children.map(children, child => {
       function onClick(event) {
@@ -84,7 +86,7 @@ export const AnalyticsTrackClick = ({children, name, properties}) => (
     })}
   </AnalyticsTracker>
 );
-AnalyticsTrackClick.propTypes = {
+TrackClick.propTypes = {
   children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   properties: PropTypes.objectOf(PropTypes.string),
