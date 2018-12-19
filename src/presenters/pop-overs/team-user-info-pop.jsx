@@ -17,9 +17,11 @@ const ADMIN_ACCESS_LEVEL = 30;
 
 const RemoveFromTeam = (props) => (
   <section className="pop-over-actions danger-zone">
-    <button className="button-small has-emoji button-tertiary button-on-secondary-background" {...props}>
-      Remove from Team <span className="emoji wave" role="img" aria-label=""/>
-    </button>
+    <TrackClick name="Remove from Team clicked">
+      <button className="button-small has-emoji button-tertiary button-on-secondary-background" {...props}>
+        Remove from Team <span className="emoji wave" role="img" aria-label=""/>
+      </button>
+    </TrackClick>
   </section>
 );
 
