@@ -10,7 +10,7 @@ const {Provider, Consumer} = React.createContext({});
 
 const resolveProperties = (properties, inheritedProperties) => {
   if (isFunction(properties)) {
-    return {...inheritedProperties, ...properties(inheritedProperties)};
+    return properties(inheritedProperties);
   }
   return {...inheritedProperties, ...properties};
 };

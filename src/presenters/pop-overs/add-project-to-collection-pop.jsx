@@ -154,7 +154,7 @@ class AddProjectToCollectionPop extends React.Component {
               error={error || queryError}
             />
             {!this.state.working ? (
-              <TrackClick name="Create Collection clicked" properties={inherited => ({origin: `${inherited.origin} project`})}>
+              <TrackClick name="Create Collection clicked" properties={inherited => ({...inherited, origin: `${inherited.origin} project`})}>
                 <button type="submit" className="create-collection button-small" disabled={!!queryError}>
                   Create
                 </button>
