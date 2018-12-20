@@ -4,6 +4,7 @@ import {Redirect} from 'react-router-dom';
 import randomColor from 'randomcolor';
 import {captureException} from '../../utils/sentry';
 
+import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';
 import {getAvatarUrl} from '../../models/project';
 import {getCollectionPair} from '../../models/words';
@@ -119,6 +120,8 @@ class AddProjectToCollectionPop extends React.Component {
                   // filter out collections that already contain the selected project
                   (collection.projects.every(project => project.id !== this.props.project.id) && 
                     <li key={collection.id}>
+                     <TrackClick>
+                     </TrackClick>
                       <CollectionResultItem 
                         addProjectToCollection={this.props.addProjectToCollection}
                         currentUserLogin={this.props.currentUser.login}
