@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 import {isFunction, omit} from 'lodash';
 import {captureException} from '../utils/sentry';
 
-const {Provider, Consumer} = React.createContext({});
+const Context = React.createContext({properties: {}, context: {}});
 
-const resolveProperties = (properties, inheritedProperties) => {
+const resolveProperties = (properties={}, inheritedProperties) => {
   if (isFunction(properties)) {
     return properties(inheritedProperties);
   }
@@ -16,14 +16,17 @@ const resolveProperties = (properties, inheritedProperties) => {
 };
 
 // stick this in the tree to add a property value to any tracking calls within it
-export const AnalyticsContext = ({children, properties}) => (
-  <Consumer>
-    {inheritedProperties => (
-      <Provider value={resolveProperties(properties, inheritedProperties)}>
+export const AnalyticsContext = ({children, properties, context}) => (
+  <Context.Consumer>
+    {inherited => (
+      <Context.Provider value={{
+        properties: resolveProperties(properties, inherited.properties),
+        context: resolveProperties(context, inherited.context),
+      }}>
         {children}
-      </Provider>
+      </Context.Provider>
     )}
-  </Consumer>
+  </Context.Consumer>
 );
 AnalyticsContext.propTypes = {
   children: PropTypes.node.isRequired,
@@ -31,19 +34,23 @@ AnalyticsContext.propTypes = {
     PropTypes.objectOf(PropTypes.string),
     PropTypes.func,
   ]).isRequired,
+  context: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.string),
+    PropTypes.func,
+  ]).isRequired,
 };
 
 // this gives you a generic track function that pulls in inherited properties
 export const AnalyticsTracker = ({children}) => (
-  <Consumer>
-    {inheritedProperties => children((name, properties={}) => {
+  <Context.Consumer>
+    {inherited => children((name, properties, context) => {
       try {
-        analytics.track(name, resolveProperties(properties, inheritedProperties));
+        analytics.track(name, resolveProperties(properties, inherited.properties), resolveProperties(context, inherited.context));
       } catch (error) {
         captureException(error);
       }
     })}
-  </Consumer>
+  </Context.Consumer>
 );
 AnalyticsTracker.propTypes = {
   children: PropTypes.func.isRequired,
@@ -94,13 +101,13 @@ class TrackedExternalLinkWithoutContext extends React.Component {
   }
 }
 export const TrackedExternalLink = ({children, name, properties, to, ...props}) => (
-  <Consumer>
-    {inheritedProperties => (
-      <TrackedExternalLinkWithoutContext to={to} name={name} properties={resolveProperties(properties, inheritedProperties)} {...props}>
+  <Context.Consumer>
+    {inherited => (
+      <TrackedExternalLinkWithoutContext to={to} name={name} properties={resolveProperties(properties, inherited.properties)} {...props}>
         {children}
       </TrackedExternalLinkWithoutContext>
     )}
-  </Consumer>
+  </Context.Consumer>
 );
 TrackedExternalLink.propTypes = {
   children: PropTypes.node.isRequired,
