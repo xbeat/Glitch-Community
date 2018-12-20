@@ -8,8 +8,8 @@ const NotFound = ({name}) => (
   <section>
     <p>We didn't find {name}</p>
     <div className="error-image">
-      <img className="compass" src={compass} alt="no-result"/>
-      <img className="needle" src={needle} alt="no-result"/>
+      <img className="compass" src={compass} alt=""/>
+      <img className="needle" src={needle} alt=""/>
     </div>  
     
   </section>
