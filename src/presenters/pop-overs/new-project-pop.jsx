@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {TrackClick} from '../analytics';
 import Link from '../includes/link.jsx';
 import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
@@ -16,12 +17,12 @@ const NewProjectPop = ({projects}) => (
       <div className="results">
         {projects.length ? projects.map((project) => (
           <Link key={project.id} to={getRemixUrl(project.domain)}>
-            <ProjectResultItem {...project} cdnUrl="https://cdn.glitch.com" users={[]} action={()=>{
-              analytics.track("New Project Clicked", {
-                baseDomain: project.domain,
-                origin: "community new project pop",
-              });
-            }} />
+            <TrackClick name="New Project Clicked" properties={{
+              baseDomain: project.domain,
+              origin: "community new project pop",
+            }}>
+              <ProjectResultItem {...project} cdnUrl="https://cdn.glitch.com" users={[]}/>
+            </TrackClick>
           </Link>
         )) : <Loader/>}
       </div>
