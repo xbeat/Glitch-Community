@@ -72,10 +72,10 @@ TrackedExternalLink.propTypes = {
 export const TrackClick = ({children, name, properties}) => (
   <AnalyticsTracker>
     {track => React.Children.map(children, child => {
-      function onClick(event) {
+      function onClick(...args) {
         track(name, properties);
         if (child.props.onClick) {
-          return child.props.onClick(event);
+          return child.props.onClick(...args);
         }
       }
       return React.cloneElement(child, {onClick});

@@ -120,15 +120,15 @@ class AddProjectToCollectionPop extends React.Component {
                   // filter out collections that already contain the selected project
                   (collection.projects.every(project => project.id !== this.props.project.id) && 
                     <li key={collection.id}>
-                     <TrackClick>
-                     </TrackClick>
-                      <CollectionResultItem 
-                        addProjectToCollection={this.props.addProjectToCollection}
-                        currentUserLogin={this.props.currentUser.login}
-                        project={this.props.project}
-                        collection={collection}                         
-                        togglePopover={this.props.togglePopover} 
-                      />
+                      <TrackClick name="Project Added to Collection">
+                        <CollectionResultItem 
+                          addProjectToCollection={this.props.addProjectToCollection}
+                          currentUserLogin={this.props.currentUser.login}
+                          project={this.props.project}
+                          collection={collection}                         
+                          togglePopover={this.props.togglePopover} 
+                        />
+                      </TrackClick>
                     </li>
                   )
                 )
