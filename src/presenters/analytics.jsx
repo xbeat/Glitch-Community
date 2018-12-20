@@ -49,8 +49,33 @@ AnalyticsTracker.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
+// this is the equivalent of doing <AnalyticsTracker>{track => <asdf onClick={() => track('asdf')}/></AnalyticsTracker>
+// this won't work for links that do a full page load, because the request will get cancelled by the nav
+// use the TrackedExternalLink for that, because it will stall the page for a moment and let the request finish
+export const TrackClick = ({children, name, properties}) => (
+  <AnalyticsTracker>
+    {track => React.Children.map(children, child => {
+      function onClick(...args) {
+        track(name, properties);
+        if (child.props.onClick) {
+          return child.props.onClick(...args);
+        }
+      }
+      return React.cloneElement(child, {onClick});
+    })}
+  </AnalyticsTracker>
+);
+TrackClick.propTypes = {
+  children: PropTypes.node.isRequired,
+  name: PropTypes.string.isRequired,
+  properties: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.string),
+    PropTypes.func,
+  ]),
+};
+
 // this pulls in segment's trackLink, which stalls the page load until the analytics request is done
-// it forces a full page load at the end
+// it forces a full page load at the end, so don't use it for links within the community site
 class TrackedExternalLinkWithoutContext extends React.Component {
   constructor(props) {
     super(props);
@@ -85,28 +110,4 @@ TrackedExternalLink.propTypes = {
     PropTypes.func,
   ]),
   to: PropTypes.string.isRequired,
-};
-
-// fyi this won't work for links that do a full page load, because the request will get cancelled by the nav
-// use the TrackedExternalLink for that, because it will stall the page for a moment and let the request finish
-export const TrackClick = ({children, name, properties}) => (
-  <AnalyticsTracker>
-    {track => React.Children.map(children, child => {
-      function onClick(...args) {
-        track(name, properties);
-        if (child.props.onClick) {
-          return child.props.onClick(...args);
-        }
-      }
-      return React.cloneElement(child, {onClick});
-    })}
-  </AnalyticsTracker>
-);
-TrackClick.propTypes = {
-  children: PropTypes.node.isRequired,
-  name: PropTypes.string.isRequired,
-  properties: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.string),
-    PropTypes.func,
-  ]),
 };
