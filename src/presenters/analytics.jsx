@@ -3,14 +3,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {isFunction} from 'lodash';
 import {captureException} from '../utils/sentry';
 
 const {Provider, Consumer} = React.createContext({});
 
+const resolveProperties = (properties, inheritedProperties) => {
+  if (isFunction(properties)) {
+    return {...inheritedProperties, ...properties(inheritedProperties)};
+  }
+  return {...inheritedProperties, ...properties};
+};
+
 export const AnalyticsContext = ({children, properties}) => (
   <Consumer>
     {inheritedProperties => (
-      <Provider value={{...inheritedProperties, ...properties}}>
+      <Provider value={resolveProperties(properties, inheritedProperties)}>
         {children}
       </Provider>
     )}
@@ -25,7 +33,7 @@ export const AnalyticsTracker = ({children}) => (
   <Consumer>
     {inheritedProperties => children((name, properties={}) => {
       try {
-        analytics.track(name, {...inheritedProperties, ...properties});
+        analytics.track(name, resolveProperties(properties, inheritedProperties));
       } catch (error) {
         captureException(error);
       }
@@ -56,7 +64,7 @@ class TrackedExternalLinkWithoutContext extends React.Component {
 export const TrackedExternalLink = ({children, name, properties, to, ...props}) => (
   <Consumer>
     {inheritedProperties => (
-      <TrackedExternalLinkWithoutContext to={to} name={name} properties={{...inheritedProperties, ...properties}} {...props}>
+      <TrackedExternalLinkWithoutContext to={to} name={name} properties={resolveProperties(properties, inheritedProperties)} {...props}>
         {children}
       </TrackedExternalLinkWithoutContext>
     )}
@@ -69,7 +77,8 @@ TrackedExternalLink.propTypes = {
   to: PropTypes.string.isRequired,
 };
 
-// fyi this won't work for links that will do a full page load, because the req
+// fyi this won't work for links that do a full page load, because the request will get cancelled by the nav
+// use the TrackedExternalLink for that, because it will stall the page for a moment and let the request finish
 export const TrackClick = ({children, name, properties}) => (
   <AnalyticsTracker>
     {track => React.Children.map(children, child => {
