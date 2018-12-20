@@ -80,7 +80,7 @@ class EmailHandler extends React.Component {
           {(this.state.done && !this.state.error) &&
             <>
               <div className="notification notifySuccess">Almost Done</div>
-              <div style={{wordBreak: 'break-word'}}>Please click the confirmation link sent to {this.state.email}.</div>
+              <div>Please click the confirmation link sent to {this.state.email}.</div>
             </>
           }
           {(this.state.done && this.state.error) &&
