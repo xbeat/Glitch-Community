@@ -33,6 +33,7 @@ AnalyticsContext.propTypes = {
   ]).isRequired,
 };
 
+// this gives you a generic track function that pulls in inherited properties
 export const AnalyticsTracker = ({children}) => (
   <Consumer>
     {inheritedProperties => children((name, properties={}) => {
@@ -48,6 +49,8 @@ AnalyticsTracker.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
+// this pulls in segment's trackLink, which stalls the page load until the analytics request is done
+// it forces a full page load at the end
 class TrackedExternalLinkWithoutContext extends React.Component {
   constructor(props) {
     super(props);
