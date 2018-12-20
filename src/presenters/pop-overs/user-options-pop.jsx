@@ -97,7 +97,6 @@ Are you sure you want to sign out?`)) {
     }
     togglePopover();
     /* global analytics */
-    analytics.track("Logout");
     analytics.reset();
     signOut();
   };
@@ -130,9 +129,11 @@ Are you sure you want to sign out?`)) {
         <Link to="https://support.glitch.com" className="button button-small has-emoji button-tertiary button-on-secondary-background">
           Support <span className="emoji ambulance"></span>
         </Link>
-        <button onClick={clickSignout} className="button-small has-emoji button-tertiary button-on-secondary-background">
-          Sign Out <span className="emoji balloon"></span>
-        </button>
+        <TrackClick name="Logout">
+          <button onClick={clickSignout} className="button-small has-emoji button-tertiary button-on-secondary-background">
+            Sign Out <span className="emoji balloon"></span>
+          </button>
+        </TrackClick>
       </section>
     </dialog>
   );

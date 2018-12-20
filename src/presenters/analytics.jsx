@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {isFunction} from 'lodash';
+import {isFunction, omit} from 'lodash';
 import {captureException} from '../utils/sentry';
 
 const {Provider, Consumer} = React.createContext({});
@@ -15,6 +15,7 @@ const resolveProperties = (properties, inheritedProperties) => {
   return {...inheritedProperties, ...properties};
 };
 
+// stick this in the tree to add a property value to any tracking calls within it
 export const AnalyticsContext = ({children, properties}) => (
   <Consumer>
     {inheritedProperties => (
@@ -60,8 +61,8 @@ class TrackedExternalLinkWithoutContext extends React.Component {
     }
   }
   render() {
-    const {children, name, properties, to, ...props} = this.props;
-    return <a href={to} {...props} ref={this.ref}>{children}</a>;
+    const {children, to, ...props} = this.props;
+    return <a href={to} {...omit(props, ['name', 'properties'])} ref={this.ref}>{children}</a>;
   }
 }
 export const TrackedExternalLink = ({children, name, properties, to, ...props}) => (
