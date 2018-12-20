@@ -254,9 +254,9 @@ async function loadCollection(api, ownerName, collectionName){
 
 const CollectionPage = ({api, ownerName, name, ...props}) => (
   <Layout api={api}>
-    <AnalyticsContext properties={{origin: 'collection'}}>
-      <DataLoader get={() => loadCollection(api, ownerName, name)}>
-        {collection => collection ? (
+    <DataLoader get={() => loadCollection(api, ownerName, name)}>
+      {collection => collection ? (
+        <AnalyticsContext properties={{origin: 'collection'}} context={{groupId: collection.team ? collection.team.id : 0}}>
           <CurrentUserConsumer>
             {(currentUser) => (
               <CollectionEditor api={api} initialCollection={collection} >
@@ -266,9 +266,9 @@ const CollectionPage = ({api, ownerName, name, ...props}) => (
               </CollectionEditor>
             )}
           </CurrentUserConsumer>
-        ) : <NotFound name={name}/>}
-      </DataLoader>
-    </AnalyticsContext>
+        </AnalyticsContext>
+      ) : <NotFound name={name}/>}
+    </DataLoader>
   </Layout>
 );
 

@@ -31,13 +31,13 @@ export const AnalyticsContext = ({children, properties, context}) => (
 AnalyticsContext.propTypes = {
   children: PropTypes.node.isRequired,
   properties: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.string),
+    PropTypes.object,
     PropTypes.func,
-  ]).isRequired,
+  ]),
   context: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.string),
+    PropTypes.object,
     PropTypes.func,
-  ]).isRequired,
+  ]),
 };
 
 // this gives you a generic track function that pulls in inherited properties
@@ -59,11 +59,11 @@ AnalyticsTracker.propTypes = {
 // this is the equivalent of doing <AnalyticsTracker>{track => <asdf onClick={() => track('asdf')}/></AnalyticsTracker>
 // this won't work for links that do a full page load, because the request will get cancelled by the nav
 // use the TrackedExternalLink for that, because it will stall the page for a moment and let the request finish
-export const TrackClick = ({children, name, properties}) => (
+export const TrackClick = ({children, name, properties, context}) => (
   <AnalyticsTracker>
     {track => React.Children.map(children, child => {
       function onClick(...args) {
-        track(name, properties);
+        track(name, properties, context);
         if (child.props.onClick) {
           return child.props.onClick(...args);
         }
@@ -76,7 +76,11 @@ TrackClick.propTypes = {
   children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   properties: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.string),
+    PropTypes.object,
+    PropTypes.func,
+  ]),
+  context: PropTypes.oneOfType([
+    PropTypes.object,
     PropTypes.func,
   ]),
 };
@@ -113,7 +117,7 @@ TrackedExternalLink.propTypes = {
   children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   properties: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.string),
+    PropTypes.object,
     PropTypes.func,
   ]),
   to: PropTypes.string.isRequired,
