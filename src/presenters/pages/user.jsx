@@ -16,7 +16,6 @@ import EntityPagePinnedProjects from '../entity-page-pinned-projects.jsx';
 import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import CollectionsList from '../collections-list.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
-import {DataLoader} from '../includes/loader';
 import ProjectsLoader from '../projects-loader.jsx';
 
 function syncPageToLogin(login) {
@@ -105,23 +104,11 @@ const UserPage = ({
     />
     
     {!!user.login && (
-      <DataLoader get={() => api.get(`collections?userId=${user.id}`)}
-        renderLoader={() => (
-          <CollectionsList title="Collections" 
-            collections={user.collections.map(collection => ({...collection, user}))} 
-            api={api} isAuthorized={isAuthorized}
-            maybeCurrentUser={maybeCurrentUser}
-          />
-        )}
-      >
-        {({data}) => (
-          <CollectionsList title="Collections" 
-            collections={data.map(collection => ({...collection, user}))} 
-            api={api} isAuthorized={isAuthorized}
-            maybeCurrentUser={maybeCurrentUser}
-          />
-        )}
-      </DataLoader>
+      <CollectionsList title="Collections" 
+        collections={user.collections.map(collection => ({...collection, user}))} 
+        api={api} isAuthorized={isAuthorized}
+        maybeCurrentUser={maybeCurrentUser}
+      />
     )}
 
     <EntityPageRecentProjects
