@@ -26,7 +26,10 @@ export const AnalyticsContext = ({children, properties}) => (
 );
 AnalyticsContext.propTypes = {
   children: PropTypes.node.isRequired,
-  properties: PropTypes.objectOf(PropTypes.string).isRequired,
+  properties: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.string),
+    PropTypes.func,
+  ]).isRequired,
 };
 
 export const AnalyticsTracker = ({children}) => (
@@ -73,7 +76,10 @@ export const TrackedExternalLink = ({children, name, properties, to, ...props}) 
 TrackedExternalLink.propTypes = {
   children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
-  properties: PropTypes.objectOf(PropTypes.string),
+  properties: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.string),
+    PropTypes.func,
+  ]),
   to: PropTypes.string.isRequired,
 };
 
@@ -95,5 +101,8 @@ export const TrackClick = ({children, name, properties}) => (
 TrackClick.propTypes = {
   children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
-  properties: PropTypes.objectOf(PropTypes.string),
+  properties: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.string),
+    PropTypes.func,
+  ]),
 };
