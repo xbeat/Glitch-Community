@@ -69,6 +69,7 @@ TrackedExternalLink.propTypes = {
   to: PropTypes.string.isRequired,
 };
 
+// fyi this won't work for links that will do a full page load, because the req
 export const TrackClick = ({children, name, properties}) => (
   <AnalyticsTracker>
     {track => React.Children.map(children, child => {

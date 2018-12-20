@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
+import {TrackClick} from './analytics';
 import CollectionItem from "./collection-item.jsx";
 import {defaultAvatar, getLink} from '../models/collection';
 import {getCollections, getPredicate} from '../models/words';
@@ -167,9 +168,11 @@ export class CreateCollectionButton extends React.Component{
     }
     return (
       <div id="create-collection-container">
-        <button className="button" id="create-collection" onClick={() => this.createCollection()}>
+        <TrackClick name="Create Collection clicked">
+          <button className="button" id="create-collection" onClick={() => this.createCollection()}>
             Create Collection
-        </button>    
+          </button>
+        </TrackClick>
       </div>
     );
   }

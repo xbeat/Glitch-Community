@@ -1,10 +1,7 @@
-/* global analytics */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {TrackClick} from '../analytics';
-import Link from '../includes/link.jsx';
+import {TrackedExternalLink} from '../analytics';
 import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
 import PopoverContainer from './popover-container.jsx';
@@ -16,14 +13,14 @@ const NewProjectPop = ({projects}) => (
     <section className="pop-over-actions results-list">
       <div className="results">
         {projects.length ? projects.map((project) => (
-          <Link key={project.id} to={getRemixUrl(project.domain)}>
-            <TrackClick name="New Project Clicked" properties={{
+          <TrackedExternalLink key={project.id} to={getRemixUrl(project.domain)}
+            name="New Project Clicked" properties={{
               baseDomain: project.domain,
               origin: "community new project pop",
-            }}>
-              <ProjectResultItem {...project} cdnUrl="https://cdn.glitch.com" users={[]}/>
-            </TrackClick>
-          </Link>
+            }}
+          >
+            <ProjectResultItem {...project} cdnUrl="https://cdn.glitch.com" users={[]} onClick={() => {}}/>
+          </TrackedExternalLink>
         )) : <Loader/>}
       </div>
     </section>
