@@ -122,7 +122,7 @@ class AddProjectToCollectionPop extends React.Component {
                     <li key={collection.id}>
                       <TrackClick name="Project Added to Collection">
                         <CollectionResultItem 
-                          addProjectToCollection={this.props.addProjectToCollection}
+                          onClick={this.props.addProjectToCollection}
                           currentUserLogin={this.props.currentUser.login}
                           project={this.props.project}
                           collection={collection}                         
