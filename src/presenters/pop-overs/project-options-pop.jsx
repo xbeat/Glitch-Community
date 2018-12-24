@@ -24,7 +24,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
   }
   
   function leaveProject(event) {
-    const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${props.project.name}?`;
+    const prompt = `Once you leave this project, you'll lose access to it unless someone else invites you back. \n\n Are sure you want to leave ${props.project.domain}?`;
     if (window.confirm(prompt)) {
       props.leaveProject(props.project.id, event);
     }
