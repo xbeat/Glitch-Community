@@ -87,7 +87,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
         </section>
       }
       
-      {(props.leaveProject && props.project.users.length > 1) &&
+      {(props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject) &&
         <section className="pop-over-actions collaborator-actions">
           <TrackClick name="Leave Project clicked">
             <PopoverButton onClick={leaveProject} text="Leave Project " emoji="wave"/>
