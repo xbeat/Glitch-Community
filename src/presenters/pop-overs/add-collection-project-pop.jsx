@@ -16,7 +16,7 @@ const ProjectResultsUL = ({projects, collection, onClick}) => (
       <Notifications key={project.id}>
         {({createNotification}) => (
           <li>
-            <TrackClick name="Project Added to Collection" properties={{origin: 'Add Project collection'}}>
+            <TrackClick name="Project Added to Collection" properties={{origin: 'Add Project collection'}} context={{groupId: collection.team ? collection.team.id : 0}}>
               <ProjectResultItem
                 domain={project.domain}
                 description={project.description}
