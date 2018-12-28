@@ -6,7 +6,13 @@
       //  are aware of them before touching anything.
       
       var user = JSON.parse(window.localStorage.cachedUser);
-      user.persistentToken);
+      console.log("user token", user.persistentToken);
+      const url = "https://api.glitch.development/projects/aquamarine-soda/appAuthToken?authorization=" + user.persistentToken;
+      fetch(url, {
+          method : "POST",
+      }).then(function(response) {
+        console.log(response);
+      });
     </script>
   </body>
 </html>
