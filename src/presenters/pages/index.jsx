@@ -111,7 +111,7 @@ IndexPage.propTypes = {
 
 const IndexPageContainer = ({api}) => (
   <Layout api={api}>
-    <AnalyticsContext properties={{origin: 'index'}}>
+    <AnalyticsContext properties={{origin: 'index'}} context={{groupId:0}}>
       <CurrentUserConsumer>
         {user => <IndexPage api={api} user={user}/>}
       </CurrentUserConsumer>
