@@ -8,6 +8,8 @@ module.exports = function(app) {
   redirect(app, '/you-got-this*', '/culture/you-got-this-zine/');
   redirect(app, '/function*', '/culture/function/');
   redirect(app, '/careers*', '/about/careers/');
+  redirect(app, '/mythbustersjr*', '/culture/mythbusters-jr/');
+  redirect(app, '/mythbusters*', '/culture/mythbusters-jr/');
   
   redirectPath(app, '/featured*', '/culture/');
 }
