@@ -14,6 +14,7 @@
         return response.json();
       }).then(function(json) {
         console.log(json.token);
+        window.parent.postMessage(json.token, "https://aquamarine-soda.glitch.development");
       });
     </script>
   </body>
