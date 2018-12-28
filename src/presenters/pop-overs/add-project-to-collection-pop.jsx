@@ -1,4 +1,4 @@
-// add-project--pop.jsx -> Add a project to a collection via the collection page
+// add-project-to-collection-pop.jsx -> Add a project to a collection via a project item's menu
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
