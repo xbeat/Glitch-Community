@@ -45,11 +45,9 @@ class DeleteCollectionBtn extends React.Component {
       <button className={`button delete-collection button-tertiary`} 
         onClick={() => 
         { 
-          console.log('clicked delete collection');
           if(!window.confirm(`Are you sure you want to delete your collection?`)){
             return;
           }
-          console.log('delete collection');
           this.props.deleteCollection();
           this.setState({done: true});
         }} >
