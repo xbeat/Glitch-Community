@@ -188,7 +188,8 @@ ProjectPageLoader.propTypes = {
 
 const ProjectPageContainer = ({api, name}) => (
   <Layout api={api}>
-    <AnalyticsContext properties={{origin: 'project'}}>
+    {console.log('projectpagecontainer', api)}
+    <AnalyticsContext properties={{origin: 'project'}} context={{groupId: 0}}>
       <CurrentUserConsumer>
         {currentUser => <ProjectPageLoader api={api} domain={name} currentUser={currentUser}/>}
       </CurrentUserConsumer>
