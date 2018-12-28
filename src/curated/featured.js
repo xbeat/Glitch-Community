@@ -17,12 +17,12 @@ export default [
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F5_coherent-closet.png?1541419749445",
     link: 'https://glitch.com/~facebox'
   },{
-    title: 'Bling-bling!',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcrystal-generator.jpg?1538392448859",
+    title: 'The Wikipedia Game',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fwiki-game.jpg?1537183217930",
     link: 'https://wikipedia-game.glitch.me/'
   },{
-    title: 'Cool Quilts to Stay Warm',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F6_quilt-generator.png?1541419749609",
-    link: 'https://quilt-generator.glitch.me/'
+    title: 'Like Shazam for your face',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FRecordPlayer.jpg?1540832912802",
+    link: 'https://record-player.glitch.me'
   }  
 ];
