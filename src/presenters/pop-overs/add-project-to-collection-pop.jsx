@@ -1,3 +1,4 @@
+// add-project-to-collection-pop.jsx -> Add a project to a collection via a project item's menu
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
@@ -120,7 +121,7 @@ class AddProjectToCollectionPop extends React.Component {
                   // filter out collections that already contain the selected project
                   (collection.projects.every(project => project.id !== this.props.project.id) && 
                     <li key={collection.id}>
-                      <TrackClick name="Project Added to Collection">
+                      <TrackClick name="Project Added to Collection" context={{groupId: collection.team ? collection.team.id : 0}}>
                         <CollectionResultItem 
                           onClick={this.props.addProjectToCollection}
                           currentUserLogin={this.props.currentUser.login}
