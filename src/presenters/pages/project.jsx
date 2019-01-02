@@ -15,7 +15,8 @@ import Expander from '../includes/expander.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
-import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-actions.jsx';
+import {ShowButton, EditButton, RemixButton} from '../includes/project-actions.jsx';
+import ReportButton from '../pop-overs/report-abuse-pop.jsx';
 import AddProjectToCollection from '../includes/add-project-to-collection.jsx';
 import TeamsList from '../teams-list.jsx';
 import UsersList from '../users-list.jsx';
@@ -131,13 +132,15 @@ const ProjectPage = ({
     </section>
     <section id="embed">
       <Embed domain={domain}/>
-      <div className="buttons buttons-right">
-
-        {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
-        <RemixButton className="button-small"
-          name={domain} isMember={isAuthorized}
-          onClick={() => trackRemix(project.id, domain)}
-        />
+      <div className="buttons space-between">
+        <ReportButton projectName={domain} projectId={project.id} />
+        <div>
+          {currentUser.login && <AddProjectToCollection className="button-small margin" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
+          <RemixButton className="button-small margin"
+            name={domain} isMember={isAuthorized}
+            onClick={() => trackRemix(project.id, domain)}
+          />
+        </div>
       </div>
     </section>
     <section id="readme">
@@ -145,9 +148,6 @@ const ProjectPage = ({
     </section>
     <section id="related">
       <RelatedProjects ignoreProjectId={project.id} {...{api, teams, users}}/>
-    </section>
-    <section id="feedback" className="buttons buttons-right">
-      <ReportButton name={domain} id={project.id} className="button-small button-tertiary"/>
     </section>
   </main>
 );

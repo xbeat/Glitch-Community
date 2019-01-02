@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {TrackClick} from '../analytics';
-import PopoverContainer from './popover-container';
+import PopoverWithButton from './popover-with-button';
 import {NestedPopover} from './popover-nested';
 import {CurrentUserConsumer} from '../current-user';
 
@@ -166,26 +166,34 @@ export default function ProjectOptions({projectOptions={}, project, api, current
   }
 
   return (
-    <PopoverContainer>
-      {({togglePopover, visible}) => (
-        <CurrentUserConsumer>
-          {user => (
-            <div>
-              <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
-                <div className="down-arrow" />
-              </button>
-              { visible && <ProjectOptionsPop {...props} {...projectOptions} project={project} currentCollectionId={currentCollectionId} api={api} currentUser={user} togglePopover={togglePopover} currentUserIsOnProject={currentUserIsOnProject(user)}/> }
-            </div>
-          )}
-        </CurrentUserConsumer>
-      )}
-    </PopoverContainer>     
+    <PopoverWithButton
+      buttonClass="project-options button-borderless opens-pop-over button-small"
+      buttonText={<div className="down-arrow" aria-label="options" />}
+      containerClass="project-options-pop-btn"
+      passToggleToPop
+    >
+      <CurrentUserConsumer>
+        {(user, fetched, funcs, consumerProps) => {
+          return (
+            <ProjectOptionsPop
+              {...consumerProps}
+              {...props}
+              {...projectOptions}
+              project={project}
+              currentCollectionId={currentCollectionId}
+              api={api}
+              currentUser={user}
+              currentUserIsOnProject={currentUserIsOnProject(user)}
+            />
+          );
+        }}
+      </CurrentUserConsumer>
+    </PopoverWithButton>
   );
 }
 
 ProjectOptions.propTypes = {
   api: PropTypes.func,
   currentCollectionId: PropTypes.number,
-  project: PropTypes.object.isRequired,
+  project: PropTypes.object.isRequired
 };
-

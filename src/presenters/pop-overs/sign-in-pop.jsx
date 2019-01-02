@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 
 import Link from '../includes/link';
 import LocalStorage from '../includes/local-storage';
-import PopoverContainer from './popover-container';
+import PopoverWithButton from './popover-with-button';
 import {captureException} from '../../utils/sentry';
 import {NestedPopover, NestedPopoverTitle} from './popover-nested.jsx';
 
@@ -144,15 +144,7 @@ SignInPop.propTypes = {
 };
 
 export default function SignInPopContainer(props) {
-  return (
-    <PopoverContainer>
-      {({togglePopover, visible}) => (
-        <div className="button-wrap">
-          <button className="button button-small" onClick={togglePopover}>Sign In</button>
-          {visible && (
-            <SignInPop {...props} {...{togglePopover}}/>)}
-        </div>
-      )}
-    </PopoverContainer>
-  );
+  return <PopoverWithButton buttonClass='button button-small' buttonText='Sign in' passToggleToPop>
+    <SignInPop {...props}/>
+  </PopoverWithButton>;
 }

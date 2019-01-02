@@ -172,7 +172,7 @@ AddProjectToCollectionPop.propTypes = {
   addProjectToCollection: PropTypes.func,
   api: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
-  togglePopover: PropTypes.func.isRequired,
+  togglePopover: PropTypes.func, // required but added dynamically
   project: PropTypes.object.isRequired,
   fromProject: PropTypes.bool,
 };

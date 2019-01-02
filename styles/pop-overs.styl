@@ -15,7 +15,11 @@ details.popover-container
   > .pop-over
     top: 100%
     left: 0
-    
+
+popover-secondary-background()
+  background-color: secondary-background
+  border-bottom: 1px solid secondary
+  
 .pop-over
   text-align: left
   background-color: background-color
@@ -32,6 +36,8 @@ details.popover-container
   z-index: 10
   width: 255px
   padding: 0
+  textarea
+    resize: none
   button
     margin-left: 0
   p
@@ -49,18 +55,21 @@ details.popover-container
       border-bottom: none
       border-bottom-left-radius: 3px
       border-bottom-right-radius: 3px
-    div
-      word-break: break-word
   aside
     color: text-on-secondary-background
     font-size: 12px
     text-align: center
     padding: 10px 12px
-    
+  .content-editable
+    padding-left: 5px
+    &.traditional
+      border: 1px solid #b8b8b8
+      padding: 4px 6px
+      border-radius: 3px
 
   .results-list
     padding: 6px
-    
+  
   .clickable-label
     width: 100%
     display: flex
@@ -97,8 +106,10 @@ details.popover-container
 
   .pop-over-info
     margin: 0
-    background-color: secondary-background
-    border-bottom: 1px solid secondary
+    popover-secondary-background()
+    h1.pop-title 
+      margin-top: 0
+      margin-bottom: 0
     .pop-title
       max-width: 300px
       font-size: 14px
@@ -113,7 +124,28 @@ details.popover-container
     .info-description
       margin-top: 0
       margin-bottom: 0
-      line-height: 17px
+      line-height: 19px
+      &.right
+        text-align: right
+    .tall-text
+      min-height: 150px
+    .label
+     font-weight: bold
+     font-size: 12px
+     margin-bottom: 10px
+     display: block
+    input.content-editable, textarea.content-editable
+      background-color: white
+      border: 1px solid #ccc
+      padding: 4px 6px
+      border-radius: 3px
+      .editable-field-flex
+        flex-direction: column
+    .content-editable-affix
+      font-weight: bold
+      font-size: 12px
+      border-bottom: none
+      font-family: inherit
 
   .pop-over-actions
     margin: 0
@@ -121,6 +153,11 @@ details.popover-container
     position: relative
     .action-description
       line-height: 17px
+    p.tight-line 
+      margin: 0
+    textarea
+      min-height: 100px
+      margin-bottom: -5px
 
   .emoji
     display: inline-block
@@ -139,6 +176,11 @@ details.popover-container
     margin-bottom: 0
   &.last-section
     border-bottom: none
+  .editable-field-flex
+   flex-direction: column
+  .content-editable-affix
+    border-bottom: none
+    font-family: inherit
 
   .danger-zone
     background-color: warning-background
@@ -149,12 +191,20 @@ details.popover-container
   top: 26px;
   .action-description
     margin-top: 0
+
+.sign-in-pop, .report-abuse-pop
   .notification
     display: inline-block
     padding: 3px 5px
     border-radius: 5px
     margin-bottom: 5px
     color: white
+    
+.report-abuse-pop
+  input ~ .editable-field-error-icon
+    top: 3px
+  .editable-field-error-icon
+    padding-right: 2px
 
 .user-options-pop
   right: 0
@@ -184,8 +234,6 @@ details.popover-container
     margin-left: 0
   .editable-field-error-icon
     top: 6px
-  .content-editable
-    padding-left: 5px
 
 .project-options-pop, .collection-options-pop
   right: 0
@@ -203,9 +251,8 @@ details.popover-container
   
 .team-user-info-pop, .user-options-pop
   section:first-child
-    border-bottom: 1px solid secondary
+    popover-secondary-background()
     border-radius: 0
-    background-color: #f5f5f5
     
   .pop-over-actions
     .user-info
@@ -263,12 +310,6 @@ details.popover-container
       width: 78%
       float: left
       margin-right: 10px;
-    input
-      background-color: white
-      border: 1px solid #ccc
-      padding: 4px 6px
-      border-radius: 3px
-      margin-bottom: 5px
     .create-collection
       margin: 0
     .url-preview
@@ -433,6 +474,12 @@ details.popover-container
     right: 0
     top: 27px
     display: inline-block
+    &.top-right
+      top: initial
+      left: 0px
+      right: initial
+      bottom: calc(100% + 28px)
+      transform: translate(0, 28px)
     @media (max-width: smallViewport)
       min-width: 320px
     

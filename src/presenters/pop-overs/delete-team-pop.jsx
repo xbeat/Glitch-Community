@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
-//import UsersList from "../users-list.jsx";
+//import UsersList from '../users-list.jsx';
 import Loader from '../includes/loader.jsx';
 import NotificationsConsumer from '../notifications.jsx';
 
@@ -80,7 +80,7 @@ DeleteTeamPop.propTypes = {
   teamName: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,
   teamAdmins: PropTypes.array.isRequired,
-  togglePopover: PropTypes.func.isRequired,
+  togglePopover: PropTypes.func, // required but added dynamically
 };
 
 export default DeleteTeamPop;
