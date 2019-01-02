@@ -21,7 +21,7 @@ export default [
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FLivingwhileblack_1.png?1537791215940",
     link: 'https://livingwhileblack.glitch.me/'
   },{
-    title: 'Make Your Own Magic Eye Drawings',
+    title: 'Make Your Own Magic Eye',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmagic-eye_GLITCH.png?1543234498314",
     link: 'https://magic-eye.glitch.me'
   }  
