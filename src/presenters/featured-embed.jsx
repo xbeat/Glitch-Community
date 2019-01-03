@@ -21,9 +21,9 @@ const FeaturedEmbed = ({feature}) => (
             Learn More
           </Link>
         </div>
-      </div>
-      <div className="embed">
+        <div className="embed">
          <span dangerouslySetInnerHTML={{__html: feature.embed}}/>
+      </div>
       </div>
   </div>
   );
