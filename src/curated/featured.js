@@ -21,7 +21,7 @@ export default [
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FYourMomentofZen.jpg?1541072010180",
     link: 'https://your-moment-of-zen.glitch.me/'
   },{
-    title: 'Make Your Own Magic Eye',
+    title: 'Playing Piano With Your Voice',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fpiano-scribe.jpg?1538999010225",
     link: 'https://piano-scribe.glitch.me/'
   }  
