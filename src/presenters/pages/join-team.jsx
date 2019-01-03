@@ -32,7 +32,7 @@ class JoinTeamPageBase extends React.Component {
     }
     try {
       // Suppress the authorization header to prevent user merging
-      await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`, {}, { headers: { Authorization: '' } });
+      var {data: user} = await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`);
       this.props.createNotification('Invitation accepted');
     } catch (error) {
       // The team is real but the token didn't work
@@ -41,7 +41,7 @@ class JoinTeamPageBase extends React.Component {
       captureMessage('Team invite error', {extra: {error}});
       this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
     }
-    await this.props.reloadCurrentUser();
+    await this.props.replaceCurrentUser(user);
     this.setState({redirect: getLink(team)});
   }
   
@@ -58,14 +58,14 @@ JoinTeamPageBase.propTypes = {
   joinToken: PropTypes.string.isRequired,
   createErrorNotification: PropTypes.func.isRequired,
   createNotification: PropTypes.func.isRequired,
-  reloadCurrentUser: PropTypes.func.isRequired,
+  replaceCurrentUser: PropTypes.func.isRequired,
 };
 
 export const JoinTeamPage = (props) => (
   <CurrentUserConsumer>
-    {(currentUser, fetched, {reload}) => (
+    {(currentUser, fetched, {login}) => (
       <NotificationsConsumer>
-        {notify => <JoinTeamPageBase {...notify} {...props} reloadCurrentUser={reload}/>}
+        {notify => <JoinTeamPageBase {...notify} {...props} replaceCurrentUser={login}/>}
       </NotificationsConsumer>
     )}
   </CurrentUserConsumer>
