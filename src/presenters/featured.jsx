@@ -14,7 +14,7 @@ class ZineItems extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: window.ZINE_POSTS.slice(0, 4),
+      posts: window.ZINE_POSTS.slice(0, 4), 
       masks: sampleSize([1, 2, 3, 4, 5], 4),
     };
   }
@@ -46,10 +46,10 @@ class ZineItems extends React.Component {
   }
 }
 
-const FeaturedEmbed = (feature) => (
+const FeaturedEmbed = ({feature}) => (
   <Link to={feature.link}>
     <div className="mask-container">
-      <img className='mask' src={feature.img} alt=""/>
+      <img className='mask mask-4' src={feature.img} alt=""/>
       <h1>{feature.title}</h1>
       <p>{feature.body}</p>
     </div>
@@ -75,7 +75,10 @@ const Featured = ({embedHtml, featured, isAuthorized}) => (
     <h2>Check These Out</h2>
     <div className="community-pick-embed-container">
       { isAuthorized && <img className="witch" src={imgWitch} width="110px" height="82px" alt=""/> }
-      <span dangerouslySetInnerHTML={{__html: embedHtml}}/>
+      {/*
+        <span dangerouslySetInnerHTML={{__html: embedHtml}}/>
+      */}
+      <FeaturedEmbed feature={FeaturedEmbedObject[0]}/>
     </div>
     
     <section>

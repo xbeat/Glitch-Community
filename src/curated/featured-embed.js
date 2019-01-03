@@ -23,6 +23,12 @@ var embed = `
 </div>
 `;
 
+var body = `Follow along with Mythbusters Jr. on SCIENCE by remixing your own Glitch apps inspied by each episode.
+
+Episode 1:
+
+Can you make a viable, life-saving parachute out of duct tape?`;
+
 
 export default [
   {
@@ -30,10 +36,6 @@ export default [
     img: "https://feature-zine-item.glitch.me/culture/content/images/2018/12/Screen-Shot-2018-12-21-at-10.06.41.png",
     link: 'https://feature-zine-item.glitch.me/culture/duct-tape-parachute/',
     embed: embed,
-    body: `Follow along with Mythbusters Jr. on SCIENCE by remixing your own Glitch apps inspied by each episode.
-
-Episode 1:
-
-Can you make a viable, life-saving parachute out of duct tape?`;
+    body: body,
   },
 ];
