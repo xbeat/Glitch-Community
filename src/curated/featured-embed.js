@@ -34,9 +34,10 @@ export default [
   {
     feature_image: "/culture/content/images/2018/12/Screen-Shot-2018-12-21-at-10.06.41.png",
     id: "5c1781e9ee6abd01fa9c4b2a",
-    title: "Episode 1: Duct Tape Special",
+    title: "Mythbusters Jr.",
     url: "/duct-tape-parachute/",
     embed: embed,
     body: body,
+    color: '#D0F1FF',
   },
 ];

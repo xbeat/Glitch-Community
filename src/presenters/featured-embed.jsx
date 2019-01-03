@@ -11,16 +11,16 @@ const FeaturedEmbed = ({feature}) => (
       <div className="mask-container">
         <img className='mask mask-4' src={feature.feature_image} alt=""/>
       </div>
-      <div className="content">
+      <div className="content" style={{backgroundColor: feature.color}}>
         <div className="description">
           <Link to={`culture${feature.url}`}>
             <h1>{feature.title}</h1>
           </Link>
-          <p>{feature.body}</p>
+          <p dangerouslySetInnerHTML={{__html: feature.body}}/>
         </div>
-        <div className="embed">
-          <span dangerouslySetInnerHTML={{__html: feature.embed}}/>
-        </div>
+      </div>
+      <div className="embed">
+         <span dangerouslySetInnerHTML={{__html: feature.embed}}/>
       </div>
   </div>
   );
