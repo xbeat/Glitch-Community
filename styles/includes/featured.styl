@@ -1,6 +1,7 @@
 //smallViewport = 414px
 //mediumViewport = 670px
 //largeViewport = 900px
+// hugeViewport = 1080px
 
 .featured-collections
 
@@ -88,9 +89,11 @@
         
 // stuff for featured embed
 .featured-embed
-  padding-top: 2em
-  h1
+  a
     color: black
+    font-weight: bold
+  .learn-more
+    font-size: smaller
   .mask-container
     width: 450px
     .mask-4
@@ -102,16 +105,21 @@
       -webkit-mask-repeat: no-repeat
       -webkit-mask-position: center
   .content
-    padding: 12px 20px
+    padding: 115px 20px 20px 20px
     box-shadow: 4px 4px #c3c3c3
     border-radius: 5px
     margin-top: -125px
     padding-top: 125px
     .description
       width: 35%
+      @media (max-width: hugeViewport)
+        width: 45%
+      @media(max-width: largeViewport)
   .embed
     float: right
     width: 55%
-    margin-top: -430px
+    margin-top: -450px
     margin-right: 35px
     margin-bottom: 2em
+    @media (max-width: hugeViewport)
+      width: 45%

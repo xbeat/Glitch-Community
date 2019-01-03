@@ -23,11 +23,10 @@ var embed = `
 </div>
 `;
 
-var body = `Follow along with Mythbusters Jr. on SCIENCE by remixing your own Glitch apps inspied by each episode.
-
-Episode 1:
-
-Can you make a viable, life-saving parachute out of duct tape?`;
+var body = `<p>Follow along with Mythbusters Jr. on SCIENCE by remixing your own Glitch apps inspied by each episode.</p>
+<p><b>Episode 1:</b></p>
+<p>Can you make a viable, life-saving parachute out of duct tape?</p>
+`;
 
 
 export default [
