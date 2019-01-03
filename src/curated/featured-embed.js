@@ -32,9 +32,10 @@ Can you make a viable, life-saving parachute out of duct tape?`;
 
 export default [
   {
-    title: 'Mythbusters Jr.',
-    img: "https://feature-zine-item.glitch.me/culture/content/images/2018/12/Screen-Shot-2018-12-21-at-10.06.41.png",
-    link: 'https://feature-zine-item.glitch.me/culture/duct-tape-parachute/',
+    feature_image: "/culture/content/images/2018/12/Screen-Shot-2018-12-21-at-10.06.41.png",
+    id: "5c1781e9ee6abd01fa9c4b2a",
+    title: "Episode 1: Duct Tape Special",
+    url: "/duct-tape-parachute/",
     embed: embed,
     body: body,
   },

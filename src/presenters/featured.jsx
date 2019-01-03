@@ -8,6 +8,8 @@ import FeaturedEmbedObject from '../curated/featured-embed';
 
 import Link from './includes/link.jsx';
 
+import FeaturedEmbed from './featured-embed.jsx';
+
 const imgWitch = 'https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2Fwitch-2.svg?1521578927355';
 
 class ZineItems extends React.Component {
@@ -45,16 +47,6 @@ class ZineItems extends React.Component {
     );
   }
 }
-
-const FeaturedEmbed = ({feature}) => (
-  <Link to={feature.link}>
-    <div className="mask-container">
-      <img className='mask mask-4' src={feature.img} alt=""/>
-      <h1>{feature.title}</h1>
-      <p>{feature.body}</p>
-    </div>
-  </Link>
-  );
 
 const FeaturedPanel = ({img, link, title}) => (
   <Link to={link} data-track="featured-project" data-track-label={title}>
