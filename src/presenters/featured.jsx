@@ -85,6 +85,9 @@ Featured.propTypes = {
   isAuthorized: PropTypes.bool,
 };
 
+
+
+
 const FeaturedContainer = ({isAuthorized}) => (
   <Featured embedHtml={EmbedHtml} featured={FeaturedItems} isAuthorized={isAuthorized}/>
 );
