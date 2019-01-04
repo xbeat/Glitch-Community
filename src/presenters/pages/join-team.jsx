@@ -42,9 +42,7 @@ class JoinTeamPageBase extends React.Component {
       console.log('Team invite error', data);
       captureMessage('Team invite error', {extra: {error}});
       if (data.status === 401 && data.message === 'Token is for another user') {
-        this.props.createErrorNotification('Invite is for someone else, make sure you sign in as the right user');
-      } else if (data.status === 401) {
-        this.props.createErrorNotification('Invite expired, try asking your teammate to resend the invite');
+        this.props.createErrorNotification('Invite is for someone else, are in as the right user?');
       } else {
         this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
       }
