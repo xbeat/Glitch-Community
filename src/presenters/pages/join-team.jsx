@@ -38,10 +38,12 @@ class JoinTeamPageBase extends React.Component {
     } catch (error) {
       // The team is real but the token didn't work
       // Maybe it's been used already or expired?
-      console.log('Team invite error', error && error.response && error.response.data);
+      const data = error && error.response && error.response.data;
+      console.log('Team invite error', data);
       captureMessage('Team invite error', {extra: {error}});
-      if (error && error.response && error.response.code === 401) {
-        if (error.response.data
+      if (data.status === 401 && data.message === 'Token is for another user') {
+        this.props.createErrorNotification('Invite is for someone else, make sure you sign in as the right user');
+      } else if (data.status === 401) {
         this.props.createErrorNotification('Invite expired, try asking your teammate to resend the invite');
       } else {
         this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
