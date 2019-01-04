@@ -5,11 +5,12 @@ import Link from './includes/link.jsx';
 
 const FeaturedEmbed = ({feature}) => (
     <div className="featured-embed">
-      <Link to={`culture${feature.url}`}>
-        <div className="mask-container">
+      <div className="mask-container">
+        <Link to={`culture${feature.url}`}>
           <img className='mask mask-4' src={feature.feature_image} alt=""/>
-        </div>
-      </Link>
+        </Link>
+      </div>
+      
       <div className="content" style={{backgroundColor: feature.color}}>
         <div className="description">
           <Link to={`culture${feature.url}`}>
@@ -17,7 +18,7 @@ const FeaturedEmbed = ({feature}) => (
           </Link>
           <p dangerouslySetInnerHTML={{__html: feature.body}}/>
           <Link to={`culture${feature.url}`} className="learn-more">
-            Learn More
+            Learn More →
           </Link>
         </div>
         <div className="embed">
