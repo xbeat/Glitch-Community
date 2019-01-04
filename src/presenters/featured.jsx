@@ -62,6 +62,7 @@ FeaturedPanel.propTypes = {
 
 const Featured = ({featured}) => (
   <section className="featured featured-collections">
+    <h2>Check These Out</h2>
     <div className="community-pick-embed-container">
       <FeaturedEmbed feature={FeaturedEmbedObject[0]}/>
     </div>
