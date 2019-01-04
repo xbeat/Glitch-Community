@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {sampleSize} from 'lodash';
 
-import EmbedHtml from '../curated/embed';
+// import EmbedHtml from '../curated/embed';
 import FeaturedItems from '../curated/featured';
 import FeaturedEmbedObject from '../curated/featured-embed';
 
@@ -60,7 +60,7 @@ FeaturedPanel.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-const Featured = ({featured, isAuthorized}) => (
+const Featured = ({featured}) => (
   <section className="featured featured-collections">
     <div className="community-pick-embed-container">
       <FeaturedEmbed feature={FeaturedEmbedObject[0]}/>
@@ -82,7 +82,6 @@ const Featured = ({featured, isAuthorized}) => (
 Featured.propTypes = {
   embedHtml: PropTypes.string.isRequired,
   featured: PropTypes.array.isRequired,
-  isAuthorized: PropTypes.bool,
 };
 
 

@@ -17,7 +17,7 @@ var body = `<p>Follow along with Mythbusters Jr. by remixing your own Glitch app
 
 export default [
   {
-    feature_image: "https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2FMythbustersJR_TWITTER_adjustedv2.png?1545387248841",
+    image: "https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2FMythbustersJR_TWITTER_adjustedv2.png?1545387248841",
     mask: "mask-4",
     title: "Mythbusters Jr.",
     url: "/duct-tape-parachute/",

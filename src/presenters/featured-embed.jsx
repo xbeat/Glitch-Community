@@ -4,29 +4,29 @@ import PropTypes from 'prop-types';
 import Link from './includes/link.jsx';
 
 const FeaturedEmbed = ({feature}) => (
-    <div className="featured-embed">
-      <div className="mask-container">
+  <div className="featured-embed">
+    <div className="mask-container">
+      <Link to={`culture${feature.url}`}>
+        <img className={'mask ' + feature.mask} src={feature.image} alt=""/>
+      </Link>
+    </div>
+      
+    <div className="content" style={{backgroundColor: feature.color}}>
+      <div className="description">
         <Link to={`culture${feature.url}`}>
-          <img className={'mask ' + feature.mask} src={feature.feature_image} alt=""/>
+          <h1>{feature.title}</h1>
+        </Link>
+        <p dangerouslySetInnerHTML={{__html: feature.body}}/>
+        <Link to={`culture${feature.url}`} className="learn-more">
+            Learn More →
         </Link>
       </div>
-      
-      <div className="content" style={{backgroundColor: feature.color}}>
-        <div className="description">
-          <Link to={`culture${feature.url}`}>
-            <h1>{feature.title}</h1>
-          </Link>
-          <p dangerouslySetInnerHTML={{__html: feature.body}}/>
-          <Link to={`culture${feature.url}`} className="learn-more">
-            Learn More →
-          </Link>
-        </div>
-        <div className="embed">
-         <span dangerouslySetInnerHTML={{__html: feature.embed}}/>
+      <div className="embed">
+        <span dangerouslySetInnerHTML={{__html: feature.embed}}/>
       </div>
-      </div>
+    </div>
   </div>
-  );
+);
 
 FeaturedEmbed.propTypes = {
   url: PropTypes.string.isRequired,
@@ -34,6 +34,6 @@ FeaturedEmbed.propTypes = {
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   embed: PropTypes.string.isRequired,
-}
+};
 
 export default FeaturedEmbed;
