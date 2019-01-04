@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 
 import Link from './includes/link.jsx';
 
-
-
-
 const FeaturedEmbed = ({feature}) => (
     <div className="featured-embed">
       <Link to={`culture${feature.url}`}>
