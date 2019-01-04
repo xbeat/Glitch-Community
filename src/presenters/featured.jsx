@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {sampleSize} from 'lodash';
 
-// import EmbedHtml from '../curated/embed';
 import FeaturedItems from '../curated/featured';
 import FeaturedEmbedObject from '../curated/featured-embed';
 
@@ -63,7 +62,7 @@ FeaturedPanel.propTypes = {
 const Featured = ({featured}) => (
   <section className="featured featured-collections">
     <div className="community-pick-embed-container">
-      <FeaturedEmbed feature={FeaturedEmbedObject[0]}/>
+      <FeaturedEmbed feature={FeaturedEmbedObject}/>
     </div>
     
     <section>
