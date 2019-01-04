@@ -7,7 +7,7 @@ const FeaturedEmbed = ({feature}) => (
     <div className="featured-embed">
       <div className="mask-container">
         <Link to={`culture${feature.url}`}>
-          <img className='mask mask-4' src={feature.feature_image} alt=""/>
+          <img className={'mask ' + feature.mask} src={feature.feature_image} alt=""/>
         </Link>
       </div>
       

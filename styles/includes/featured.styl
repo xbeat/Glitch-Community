@@ -104,14 +104,24 @@
     @media (max-width: smallViewport)
       margin: 0 auto
       width: 100%
-    .mask-4
-      mask-image: url("https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2Fmask-4.svg")
+    .mask
       width: 100%
       height: 100%
       object-fit: cover
-      -webkit-mask-size: contain
-      -webkit-mask-repeat: no-repeat
-      -webkit-mask-position: center
+      mask-size: contain
+      mask-repeat: no-repeat
+      mask-position: center
+      mask-type: luminance
+    .mask-1
+      mask-image: url("https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2Fmask-1.svg")
+    .mask-2
+      mask-image: url("https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2Fmask-2.svg")
+    .mask-3
+      mask-image: url("https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2Fmask-3.svg")
+    .mask-4
+      mask-image: url("https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2Fmask-4.svg")
+    .mask-5
+      mask-image: url("https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2Fmask-5.svg")      
   .content
     padding: 115px 20px 20px 20px
     box-shadow: 4px 4px #c3c3c3
@@ -124,6 +134,7 @@
         width: 45%
       @media (max-width: mediumViewport)
         width: 100%
+        margin: 0 auto
   .embed
     float: right
     width: 55%
@@ -139,8 +150,3 @@
       width: 100%
       float: none
       margin: 1em 0
-
-//smallViewport = 414px
-//mediumViewport = 670px
-//largeViewport = 900px
-// hugeViewport = 1080px
