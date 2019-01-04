@@ -40,7 +40,12 @@ class JoinTeamPageBase extends React.Component {
       // Maybe it's been used already or expired?
       console.log('Team invite error', error && error.response && error.response.data);
       captureMessage('Team invite error', {extra: {error}});
-      this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
+      if (error && error.response && error.response.code === 401) {
+        if (error.response.data
+        this.props.createErrorNotification('Invite expired, try asking your teammate to resend the invite');
+      } else {
+        this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
+      }
     }
     this.setState({redirect: getLink(team)});
   }
