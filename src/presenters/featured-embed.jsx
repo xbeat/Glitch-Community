@@ -8,9 +8,11 @@ import Link from './includes/link.jsx';
 
 const FeaturedEmbed = ({feature}) => (
     <div className="featured-embed">
-      <div className="mask-container">
-        <img className='mask mask-4' src={feature.feature_image} alt=""/>
-      </div>
+      <Link to={`culture${feature.url}`}>
+        <div className="mask-container">
+          <img className='mask mask-4' src={feature.feature_image} alt=""/>
+        </div>
+      </Link>
       <div className="content" style={{backgroundColor: feature.color}}>
         <div className="description">
           <Link to={`culture${feature.url}`}>

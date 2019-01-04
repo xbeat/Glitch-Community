@@ -31,7 +31,7 @@ var body = `<p>Follow along with Mythbusters Jr. on SCIENCE by remixing your own
 
 export default [
   {
-    feature_image: "/culture/content/images/2018/12/Screen-Shot-2018-12-21-at-10.06.41.png",
+    feature_image: "https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2FMythbustersJR_TWITTER_adjustedv2.png?1545387248841",
     id: "5c1781e9ee6abd01fa9c4b2a",
     title: "Mythbusters Jr.",
     url: "/duct-tape-parachute/",
