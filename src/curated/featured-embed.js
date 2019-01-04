@@ -1,3 +1,4 @@
+import React from 'react';
 var embed = `
 <!-- Copy and Paste Me -->
 <div class="glitch-embed-wrap" style="height: 420px; width: 100%;">
@@ -10,10 +11,12 @@ var embed = `
 </div>
 `;
 
-var body = `<p>Follow along with Mythbusters Jr. by remixing your own Glitch apps inspired by each episode.</p>
-<p><b>Episode 1:</b></p>
-<p>Can you make a viable, life-saving parachute out of duct tape?</p>
-`;
+var body = 
+  <>
+    <p>Follow along with Mythbusters Jr. by remixing your own Glitch apps inspired by each episode.</p>
+    <p><b>Episode 1:</b></p>
+    <p>Can you make a viable, life-saving parachute out of duct tape?</p>
+  </>;
 
 export default 
   {
