@@ -18,7 +18,7 @@ const FeaturedEmbed = ({feature}) => (
         </Link>
         <p dangerouslySetInnerHTML={{__html: feature.body}}/>
         <Link to={`culture${feature.url}`} className="learn-more">
-            Learn More →
+          <button className="button-small">Learn More →</button>
         </Link>
       </div>
       <div className="embed">
