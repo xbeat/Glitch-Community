@@ -10,7 +10,7 @@ var embed = `
 </div>
 `;
 
-var body = `<p>Follow along with Mythbusters Jr. by remixing your own Glitch apps inspired by each episode.</p>
+var body = `<p>Follow along with MythBusters Jr. by remixing your own Glitch apps inspired by each episode.</p>
 <p><b>Episode 1:</b></p>
 <p>Can you make a viable, life-saving parachute out of duct tape?</p>
 `;
@@ -18,7 +18,7 @@ var body = `<p>Follow along with Mythbusters Jr. by remixing your own Glitch app
 export default {
   "image": "https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2FMythbustersJR_TWITTER_adjustedv2.png?1545387248841",
   "mask": "mask-4",
-  "title": "Mythbusters Jr.",
+  "title": "MythBusters Jr.",
   "url": "/duct-tape-parachute/",
   "embed": embed,
   "body": body,
