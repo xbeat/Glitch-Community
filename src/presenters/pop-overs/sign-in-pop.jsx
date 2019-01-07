@@ -59,10 +59,7 @@ class EmailHandler extends React.Component {
       this.setState({error: false});
     } catch (error) {
       captureException(error);
-      console.log(error.response);
-      this.setState({
-        error: true,
-      });
+      this.setState({error: true});
     }
   }
    
