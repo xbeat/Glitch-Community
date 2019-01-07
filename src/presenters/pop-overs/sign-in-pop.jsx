@@ -95,6 +95,69 @@ class EmailHandler extends React.Component {
   }
 }
 
+class SignInCodeHandler extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      code: '',
+      done: false,
+      error: false
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    
+  }
+  
+  onChange(e) {
+    this.setState({code: e.target.value});
+
+  }
+  
+  async onSubmit(e) {
+    e.preventDefault();
+    this.setState({done: true});
+    try {
+      await this.props.api.post('/email/sendLoginEmail', {signInCode:this.state.code});
+      this.setState({error: false});
+    } catch (error) {
+      captureException(error);
+      this.setState({error: true});
+    }
+  }
+   
+  render() {
+    const isEnabled = this.state.code.length > 0;
+    return (
+      <dialog className="pop-over sign-in-pop">
+        <NestedPopoverTitle>
+          Use a sign in code
+        </NestedPopoverTitle>
+        <section className="pop-over-actions first-section">
+          {!this.state.done &&
+            <form onSubmit={this.onSubmit} style={{marginBottom: 0}}>
+              Paste your temporary sign in code below
+              <input value={this.state.code} onChange={this.onChange} className="pop-over-input" type="text" placeholder="cute-unique-cosmos"></input>
+              <button style={{marginTop: 10}} className="button-small button-link" disabled={!isEnabled}>Sign In</button>
+            </form>
+          }
+          {(this.state.done && !this.state.error) &&
+            <>
+              <div className="notification notifySuccess">Almost Done</div>
+              <div>Please click the confirmation link sent to {this.state.email}.</div>
+            </>
+          }
+          {(this.state.done && this.state.error) &&
+            <>
+              <div className="notification notifyError">Error</div>
+              <div>Something went wrong, email not sent.</div>
+            </>
+          }       
+        </section>
+      </dialog>
+    );
+  }
+}
+
 const EmailSignInButton = ({onClick}) => (
   <button className="button button-small button-link has-emoji" onClick={() => {onClick();}}>
     Sign in with Email <span className="emoji email"></span>
