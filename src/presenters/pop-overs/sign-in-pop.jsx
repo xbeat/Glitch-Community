@@ -40,7 +40,6 @@ class EmailHandler extends React.Component {
       email: '',
       done: false,
       error: false,
-      errorIsRateLimit: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -63,14 +62,12 @@ class EmailHandler extends React.Component {
       console.log(error.response);
       this.setState({
         error: true,
-        errorIsRateLimit: error && error.response && error.response.status === 429,
       });
     }
   }
    
   render() {
     const isEnabled = this.state.email.length > 0;
-    const errorMessage = this.state.errorIsRateLimit ? '
     return (
       <dialog className="pop-over sign-in-pop">
         <NestedPopoverTitle>
