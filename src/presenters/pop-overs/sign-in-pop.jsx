@@ -117,7 +117,7 @@ class SignInCodeHandler extends React.Component {
     e.preventDefault();
     this.setState({done: true});
     try {
-      await this.props.api.post('/email/sendLoginEmail', {signInCode:this.state.code}); //update for api change
+      await this.props.api.post('/auth/email/' + this.state.code, {signInCode:this.state.code}); //update for proper api usage
       this.setState({error: false});
     } catch (error) {
       captureException(error);
@@ -152,9 +152,9 @@ class SignInCodeHandler extends React.Component {
             </>
           }       
         </section>
-        <section className="pop-over-actions last-section pop-over-info">
+        {/* <section className="pop-over-actions last-section pop-over-info">
           <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
-        </section>
+        </section> */}
       </dialog>
     );
   }
