@@ -127,6 +127,9 @@ const SignInPopWithoutRouter = (props) => (
                 <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
                 <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
               </section>
+              <section className="pop-over-actions last-section">
+                test
+              </section>
             </div>
           }
         </NestedPopover>
