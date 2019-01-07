@@ -20,14 +20,13 @@
       //  are aware of them before touching anything.
       
       const user = JSON.parse(window.localStorage.cachedUser);
-      const url = "https://api.glitch.development/projects/aquamarine-soda/appAuthToken?authorization=" + user.persistentToken;
+      const url = `${API_URL}projects/${domain}/appAuthToken?authorization=${user.persistentToken}`;
       fetch(url, {
           method : "POST",
       }).then(function(response) {
         return response.json();
       }).then(function(json) {
-        console.log(json.token);
-        window.parent.postMessage(json.token, "https://aquamarine-soda.glitch.development");
+        window.parent.postMessage(json.token, `https://${domain}.${PROJECTS_DOMAIN}`;
       });
     </script>
   </body>
