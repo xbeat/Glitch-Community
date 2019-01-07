@@ -117,7 +117,7 @@ class SignInCodeHandler extends React.Component {
     e.preventDefault();
     this.setState({done: true});
     try {
-      await this.props.api.post('/email/sendLoginEmail', {signInCode:this.state.code});
+      await this.props.api.post('/email/sendLoginEmail', {signInCode:this.state.code}); //update for api change
       this.setState({error: false});
     } catch (error) {
       captureException(error);
@@ -142,16 +142,18 @@ class SignInCodeHandler extends React.Component {
           }
           {(this.state.done && !this.state.error) &&
             <>
-              <div className="notification notifySuccess">Almost Done</div>
-              <div>Please click the confirmation link sent to {this.state.email}.</div>
+              <div className="notification notifySuccess">Success!</div>
             </>
           }
           {(this.state.done && this.state.error) &&
             <>
               <div className="notification notifyError">Error</div>
-              <div>Something went wrong, email not sent.</div>
+              <div>Code not found or already used. Try signing in with email.</div>
             </>
           }       
+        </section>
+        <section className="pop-over-actions last-section pop-over-info">
+          <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
         </section>
       </dialog>
     );
