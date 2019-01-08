@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import {AnalyticsContext} from '../analytics';
-import DevToggles from '../includes/dev-toggles';
 import {CurrentUserConsumer} from '../current-user';
 import {DataLoader} from '../includes/loader';
 import TeamEditor from '../team-editor.jsx';
