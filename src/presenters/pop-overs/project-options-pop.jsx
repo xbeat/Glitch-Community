@@ -67,7 +67,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
           }
           {props.removePin && 
               <>
-                <PopoverButton onClick={featureProject} text="Feature" emoji="glowing-star"/>
+                <PopoverButton onClick={featureProject} text="Feature" emoji="arrow-up"/>
                 <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>
               </>
           }
