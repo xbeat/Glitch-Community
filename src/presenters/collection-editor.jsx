@@ -19,7 +19,7 @@ class CollectionEditor extends React.Component {
     if (this.state.user) {
       return this.state.user.id === currentUserId;
     }
-    if (this.state.team && this.props.teamsEnabled) {
+    if (this.state.team) {
       return this.state.team.users.some(user => user.id === currentUserId);
     }
     return false;
