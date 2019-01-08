@@ -2,7 +2,7 @@
   <body>
     <script>
       const CONSTANTS = <%- JSON.stringify(CONSTANTS) %>;
-      const _env;
+      let _env;
       if (document.location.hostname.indexOf('glitch.development') >= 0) {
         _env = "development";
       } else if (document.location.hostname.indexOf('staging.glitch.com') >= 0) {
@@ -26,7 +26,7 @@
       }).then(function(response) {
         return response.json();
       }).then(function(json) {
-        window.parent.postMessage(json.token, `https://${domain}.${PROJECTS_DOMAIN}`;
+        window.parent.postMessage(json.token, `https://${domain}.${PROJECTS_DOMAIN}`);
       });
     </script>
   </body>
