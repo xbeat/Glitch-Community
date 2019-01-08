@@ -53,20 +53,16 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
 );
 
 const TeamPageCollections = ({collections, team, api, currentUser, currentUserIsOnTeam}) => (
-  <DevToggles>
-    {enabledToggles => (
-      <CollectionsList
-        title={<>Collections {!collections.length && currentUserIsOnTeam && (
-          <aside className="inline-banners team-page">
-            Use collections to organize projects
-          </aside>
-        )}</>}
-        collections={collections.map(collection => ({...collection, team: team}))}
-        api={api} maybeCurrentUser={currentUser} maybeTeam={team}
-        isAuthorized={currentUserIsOnTeam && enabledToggles.includes('Team Collections')}
-      />
-    )}
-  </DevToggles>
+  <CollectionsList
+    title={<>Collections {!collections.length && currentUserIsOnTeam && (
+      <aside className="inline-banners team-page">
+        Use collections to organize projects
+      </aside>
+    )}</>}
+    collections={collections.map(collection => ({...collection, team: team}))}
+    api={api} maybeCurrentUser={currentUser} maybeTeam={team}
+    isAuthorized={currentUserIsOnTeam}
+  />
 );
 
 // Team Page
