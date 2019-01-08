@@ -41,6 +41,8 @@ Now, in your devtools, it'll be just like Raven.js doesn't exist -- line numbers
 
 ### What differences are there between my remix and the main site?
 
+Other than not being able to login with oauth, your remix should support every page on the site. The community site runs in production mode, which you can enable by setting 
+
 
 ### How do I add a question to the FAQ?
 
