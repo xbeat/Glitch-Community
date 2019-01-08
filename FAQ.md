@@ -39,9 +39,9 @@ Now select 'BlackBoxing' on the left, and blackbox `@sentry`:
 Now, in your devtools, it'll be just like Raven.js doesn't exist -- line numbers and exceptions will flow straight through, but it'll stay functional behind the scenes.
 
 
-### What differences are there between my remix and the main site?
+### Is any configuration required to get my remix running?
 
-Other than not being able to login with oauth, your remix should support every page on the site. The community site runs in production mode, which you can enable by setting 
+Nope! Though you can set your remix to run in production mode by setting `NODE_ENV=production` in the `.env` file. Doing so will improve performance a bit, but webpack will take a lot longer.
 
 
 ### How do I add a question to the FAQ?
