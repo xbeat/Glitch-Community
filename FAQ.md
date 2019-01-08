@@ -22,9 +22,9 @@ Depending on what browser you're using, there might be a finnicky spacing issue 
 window.localStorage.cachedUser = JSON.stringify(`[Paste JSON Here]`)
 ```
 
-### What is Raven.js and how do I get my real line numbers back?
+### What is Sentry and how do I get my real line numbers back?
 
-We use Raven.js to capture our exceptions and log messages to help us spot bugs in the wild.
+We use Sentry to capture our exceptions and log messages to help us spot bugs in the wild.
 
 Because it's a wrapper, you might lose access to the line numbers you were looking for in your js console. Raven [may one day fix this](https://github.com/getsentry/sentry-javascript/issues/1003), but in the meantime you can fix it with [BlackBoxing](https://developer.chrome.com/devtools/docs/blackboxing)
 
