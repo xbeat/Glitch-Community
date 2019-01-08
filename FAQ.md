@@ -39,6 +39,9 @@ Now select 'BlackBoxing' on the left, and blackbox `@sentry`:
 Now, in your devtools, it'll be just like Raven.js doesn't exist -- line numbers and exceptions will flow straight through, but it'll stay functional behind the scenes.
 
 
+### What differences are there between my remix and the main site?
+
+
 ### How do I add a question to the FAQ?
 
 I'd suggest remixing the site and adding the question.  Feel free to take a stab at the answer, if you like.  See CONTRIBUTING.md for how to contribute :-)
