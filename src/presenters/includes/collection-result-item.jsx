@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {DataLoader} from '../includes/loader.jsx';
+import {getUserById} from '../pages/team-or-user';
 import Notifications from '../notifications.jsx';
 
 import CollectionAvatar from './collection-avatar.jsx';
-import {getUserById} from '../pages/team-or-user';
 import {StaticUsersList} from '../users-list.jsx';
 
 const AddProjectMessage = ({projectName, collectionName, url}) => (
