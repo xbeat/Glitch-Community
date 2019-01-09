@@ -53,11 +53,7 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
 
 const TeamPageCollections = ({collections, team, api, currentUser, currentUserIsOnTeam}) => (
   <CollectionsList
-    title={<>Collections {!collections.length && currentUserIsOnTeam && (
-      <aside className="inline-banners team-page">
-        Use collections to organize projects
-      </aside>
-    )}</>}
+    title="Collections"
     collections={collections.map(collection => ({...collection, team: team}))}
     api={api} maybeCurrentUser={currentUser} maybeTeam={team}
     isAuthorized={currentUserIsOnTeam}
