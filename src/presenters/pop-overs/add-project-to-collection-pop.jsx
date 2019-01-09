@@ -1,22 +1,18 @@
 // add-project-to-collection-pop.jsx -> Add a project to a collection via a project item's menu
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Redirect} from 'react-router-dom';
-import randomColor from 'randomcolor';
-import {captureException} from '../../utils/sentry';
 import {NestedPopover} from './popover-nested';
 
 import {TrackClick} from '../analytics';
-import {getLink, defaultAvatar} from '../../models/collection';
 import {getAvatarUrl} from '../../models/project';
-import {getCollectionPair} from '../../models/words';
 
 import Loader from '../includes/loader.jsx';
 
 import CollectionResultItem from '../includes/collection-result-item.jsx';
 
+import {CreateNewCollectionPop} from './create-new-collection-pop.jsx';
+
 import {NestedPopoverTitle} from './popover-nested.jsx';
-import {PureEditableField} from '../includes/editable-field.jsx';
 
 import _ from 'lodash';
 
@@ -27,8 +23,6 @@ class AddProjectToCollectionPopContents extends React.Component {
     
     this.state = {
       working: false,
-      error: null, //null or string
-      query: '', //The actual search text
       maybeCollections: null, //null means still loading
     };
   }
@@ -44,7 +38,7 @@ class AddProjectToCollectionPopContents extends React.Component {
   }
   
   render() {
-    const {error, maybeCollections, query} = this.state;
+    const {maybeCollections} = this.state;
     
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
@@ -93,7 +87,7 @@ class AddProjectToCollectionPopContents extends React.Component {
         ) : <Loader/>}
         
         <section className="pop-over-actions">
-          <button className="create-new-collection button-small" onClick={createNewCollectionPopover} >Add to a new collection</button>       
+          <button className="create-new-collection button-small" onClick={this.props.createNewCollectionPopover} >Add to a new collection</button>       
         </section>
       </dialog>
     );
@@ -114,7 +108,7 @@ const AddProjectToCollectionPop = ({...props}) => {
   return(
     <NestedPopover alternateContent={() => <CreateNewCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
       { createNewCollectionPopover => (
-        <AddProjectToCollectionPopContents {...props} />
+        <AddProjectToCollectionPopContents {...props} createNewCollectionPopover={createNewCollectionPopover}/>
       )}
     </NestedPopover>
     )

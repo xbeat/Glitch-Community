@@ -4,16 +4,11 @@ import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import randomColor from 'randomcolor';
 import {captureException} from '../../utils/sentry';
-import {NestedPopover} from './popover-nested';
 
 import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';
-import {getAvatarUrl} from '../../models/project';
-import {getCollectionPair} from '../../models/words';
 
 import Loader from '../includes/loader.jsx';
-
-import CollectionResultItem from '../includes/collection-result-item.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
@@ -93,6 +88,9 @@ class CreateNewCollectionPop extends React.Component {
     }
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
+        <NestedPopoverTitle>
+          Add {this.props.project.domain} to a new collection
+        </NestedPopoverTitle>
         <section className="pop-over-actions">
           <div className="pop-title collection-title">Add to a new collection</div>
           <form onSubmit={this.handleSubmit}>
@@ -124,6 +122,5 @@ CreateNewCollectionPop.propTypes = {
   project: PropTypes.object.isRequired,
   fromProject: PropTypes.bool,
 };
-
 
 export default CreateNewCollectionPop;
