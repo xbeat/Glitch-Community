@@ -10,7 +10,7 @@ import Loader from '../includes/loader.jsx';
 
 import CollectionResultItem from '../includes/collection-result-item.jsx';
 
-import {CreateNewCollectionPop} from './create-new-collection-pop.jsx';
+import CreateNewCollectionPop from './create-new-collection-pop.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
 
@@ -87,7 +87,7 @@ class AddProjectToCollectionPopContents extends React.Component {
         ) : <Loader/>}
         
         <section className="pop-over-actions">
-          <button className="create-new-collection button-small" onClick={this.props.createNewCollectionPopover} >Add to a new collection</button>       
+          <button className="create-new-collection button-small" onClick={this.props.createCollectionPopover} >Add to a new collection</button>       
         </section>
       </dialog>
     );
@@ -107,8 +107,8 @@ AddProjectToCollectionPopContents.propTypes = {
 const AddProjectToCollectionPop = ({...props}) => {
   return(
     <NestedPopover alternateContent={() => <CreateNewCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
-      { createNewCollectionPopover => (
-        <AddProjectToCollectionPopContents {...props} createNewCollectionPopover={createNewCollectionPopover}/>
+      { createCollectionPopover => (
+        <AddProjectToCollectionPopContents {...props} createCollectionPopover={createCollectionPopover}/>
       )}
     </NestedPopover>
     )
