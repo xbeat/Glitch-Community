@@ -215,7 +215,7 @@ class AddCollectionProjectPop extends React.Component {
     const ownProjects = this.props.collection.team ? this.props.collection.team.projects : this.props.currentUser.projects;
     const results = this.state.query ? this.state.maybeResults : ownProjects.slice(0,20);
     
-    const showResults = !!(this.state.query || results.length);
+    const showResults = !!(this.state.query || (results && results.length));
     const isLoading = !!(this.state.maybeRequest || !results);
     
     return (
