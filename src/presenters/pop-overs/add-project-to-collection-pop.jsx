@@ -113,6 +113,12 @@ class AddProjectToCollectionPop extends React.Component {
           : null
         )}
         
+        {(maybeCollections && maybeCollections.length > 3) && (
+          <section className="pop-over-info">
+            <input id="collection-filter" class="pop-over-input search-input pop-over-search" placeholder="Filter collections"/>
+          </section>
+        )}
+        
         {maybeCollections ? (
           maybeCollections.length ? (
             <section className="pop-over-actions results-list">
