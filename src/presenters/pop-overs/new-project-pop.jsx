@@ -13,7 +13,7 @@ const NewProjectPop = ({projects}) => (
     <section className="pop-over-actions results-list">
       <div className="results">
         {projects.length ? projects.map((project) => (
-          <TrackedExternalLink className="result-wrapper" key={project.id} to={getRemixUrl(project.domain)}
+          <TrackedExternalLink key={project.id} to={getRemixUrl(project.domain)}
             name="New Project Clicked" properties={{
               baseDomain: project.domain,
               origin: "community new project pop",
