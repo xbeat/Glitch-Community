@@ -10,8 +10,6 @@ import {getLink, defaultAvatar} from '../../models/collection';
 import {getAvatarUrl} from '../../models/project';
 import {getCollectionPair} from '../../models/words';
 
-import {getUserById} from '../pages/team-or-user';
-
 import Loader from '../includes/loader.jsx';
 
 import CollectionResultItem from '../includes/collection-result-item.jsx';
@@ -137,7 +135,7 @@ class AddProjectToCollectionPop extends React.Component {
                           project={this.props.project}
                           collection={collection}                         
                           togglePopover={this.props.togglePopover} 
-                          collectionUser={() => getUserById(this.props.api, collection.userId)}
+                          api={this.props.api}
                         />
                       </TrackClick>
                     </li>
