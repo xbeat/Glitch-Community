@@ -61,8 +61,7 @@ const ProjectSearchResults = ({projects, collection, onClick, projectName, exclu
 
   return (
     <p className="results-empty">
-      nothing found 
-      <span role="img" aria-label="">💫</span><br/>
+      nothing found <span role="img" aria-label="">💫</span><br/>
       {excludedProjectsCount > 0 && (
         <span>(Excluded {excludedProjectsCount} search {(excludedProjectsCount > 1 ? "results" : "result")} already found in collection)</span>
       )}
