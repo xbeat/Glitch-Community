@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import randomColor from 'randomcolor';
 import {captureException} from '../../utils/sentry';
+import {NestedPopover} from './popover-nested';
 
 import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';
@@ -19,7 +20,8 @@ import {PureEditableField} from '../includes/editable-field.jsx';
 
 import _ from 'lodash';
 
-class AddProjectToCollectionPop extends React.Component {
+
+class AddProjectToCollectionPopContents extends React.Component {
   constructor(props) {
     super(props);
     
@@ -151,32 +153,15 @@ class AddProjectToCollectionPop extends React.Component {
           </section>)
         ) : <Loader/>}
         
-        <section className="pop-over-info">
-          <div className="pop-title collection-title">Add to a new collection</div>
-          <form onSubmit={this.handleSubmit}>
-            <PureEditableField
-              id="collection-name"
-              className="pop-over-input create-input"
-              value={query} 
-              update={this.handleChange}
-              placeholder={placeholder}
-              error={error || queryError}
-            />
-            {!this.state.working ? (
-              <TrackClick name="Create Collection clicked" properties={inherited => ({...inherited, origin: `${inherited.origin} project`})}>
-                <button type="submit" className="create-collection button-small" disabled={!!queryError}>
-                  Create
-                </button>
-              </TrackClick>
-            ) : <Loader/>}       
-          </form>         
+        <section className="pop-over-actions">
+          <button className="create-new-collection button-small">Add to a new collection</button>       
         </section>
       </dialog>
     );
   }
 }
 
-AddProjectToCollectionPop.propTypes = {
+AddProjectToCollectionPopContents.propTypes = {
   addProjectToCollection: PropTypes.func,
   api: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
@@ -184,5 +169,15 @@ AddProjectToCollectionPop.propTypes = {
   project: PropTypes.object.isRequired,
   fromProject: PropTypes.bool,
 };
+
+
+const addProjectToCollectionPop = ({...props}) => {
+  return(
+    <NestedPopover alternateContent={() => <CreateNewCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
+      { createNewCollectionPopover => (
+        < {...props} addToCollectionPopover={addToCollectionPopover}/>
+      )}
+    </NestedPopover>
+}
 
 export default AddProjectToCollectionPop;

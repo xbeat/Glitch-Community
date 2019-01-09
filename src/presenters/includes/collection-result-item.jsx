@@ -57,6 +57,8 @@ const CollectionResultItem = ({api, onClick, project, collection, collectionUser
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
+              {/* TO DO: Add user avatar in row */}
+              
               {/*
                 <StaticUsersList users={() => getUserById(api, collection.userId)} />
                 */
