@@ -9,6 +9,7 @@ import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';
 import {getAvatarUrl} from '../../models/project';
 import {getCollectionPair} from '../../models/words';
+import {getUserById} from '../
 
 import Loader from '../includes/loader.jsx';
 
