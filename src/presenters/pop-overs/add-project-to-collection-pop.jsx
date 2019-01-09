@@ -9,7 +9,7 @@ import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';
 import {getAvatarUrl} from '../../models/project';
 import {getCollectionPair} from '../../models/words';
-import {getUserById} from '../
+import {getUserById} from '../pages/team-or-user';
 
 import Loader from '../includes/loader.jsx';
 
@@ -39,6 +39,10 @@ class AddProjectToCollectionPop extends React.Component {
   async loadCollections() {
     const collections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
     this.setState({maybeCollections: _.orderBy(collections.data, collection => collection.updatedAt).reverse()});
+  }
+  
+  async getCollectionUserAvatar(userId){
+    const collectionUser = await this.props.api.get(`/users/${
   }
   
   async componentDidMount() {
@@ -135,6 +139,7 @@ class AddProjectToCollectionPop extends React.Component {
                           project={this.props.project}
                           collection={collection}                         
                           togglePopover={this.props.togglePopover} 
+                          collectionUserAvatar={null}
                         />
                       </TrackClick>
                     </li>

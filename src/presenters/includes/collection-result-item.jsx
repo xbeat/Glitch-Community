@@ -6,6 +6,7 @@ import Notifications from '../notifications.jsx';
 import CollectionAvatar from './collection-avatar.jsx';
 import {StaticUsersList} from '../users-list.jsx';
 
+
 const AddProjectMessage = ({projectName, collectionName, url}) => (
   <>
     <p>Added <b><span className="project-name">{projectName}</span></b> to collection <b><span className="collection-name">{collectionName}</span></b></p>
@@ -55,7 +56,6 @@ const CollectionResultItem = ({onClick, project, collection, currentUserLogin, i
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
-              
             </div>
           </button>
           <a href={collectionPath} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">
