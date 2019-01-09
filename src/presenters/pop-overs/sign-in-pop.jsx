@@ -117,8 +117,9 @@ class SignInCodeHandler extends React.Component {
     e.preventDefault();
     this.setState({done: true});
     try {
-      await this.props.api.post('/login/email/', {token: this.state.code}); //update for proper api usage
-      //         {(currentUser, fetched, {login}) => <LoginPage setUser={login} destination={destination} setDestination={setDestination} {...props}/>}
+      await this.props.api.post('/login/email/?token=' + this.state.code); //update for proper api usage
+      destination={destination}; 
+      setDestination={setDestination};
       this.setState({error: false});
     } catch (error) {
       captureException(error);
