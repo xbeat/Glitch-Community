@@ -117,7 +117,8 @@ class SignInCodeHandler extends React.Component {
     e.preventDefault();
     this.setState({done: true});
     try {
-      await this.props.api.post('/auth/email/' + this.state.code); //update for proper api usage
+      await this.props.api.post('/login/email/', {token: this.state.code}); //update for proper api usage
+      //         {(currentUser, fetched, {login}) => <LoginPage setUser={login} destination={destination} setDestination={setDestination} {...props}/>}
       this.setState({error: false});
     } catch (error) {
       captureException(error);
@@ -183,23 +184,22 @@ const SignInPopWithoutRouter = (props) => (
           {showEmailLogin =>
             <NestedPopover alternateContent={() => <SignInCodeHandler {...props}/>} startAlternateVisible={false}>
               {showCodeLogin =>
-            <div className="pop-over sign-in-pop">
-              {header}
-              <section className="pop-over-actions first-section">
-                {prompt}
-                <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
-                <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
-                <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
-              </section>
-              
-                
+                <div className="pop-over sign-in-pop">
+                  {header}
+                  <section className="pop-over-actions first-section">
+                    {prompt}
+                    <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
+                    <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
+                    <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
+                  </section>
                   <section className="pop-over-actions last-section pop-over-info">
                     <button className="button-small button-tertiary button-on-secondary-background"  onClick={() => { onClick(); showCodeLogin(api); }}>
                       <span>Use a sign in code</span>
                     </button>
                   </section>
-
-            </div>
+                </div>
+              }
+            </NestedPopover>
           }
         </NestedPopover>
       );
