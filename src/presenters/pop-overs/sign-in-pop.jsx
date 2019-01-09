@@ -118,6 +118,8 @@ class SignInCodeHandler extends React.Component {
     this.setState({done: true});
     try {
       await this.props.api.post('/login/email/?token=' + this.state.code); //update for proper api usage
+      this.props.setUser = data;
+      
 /* const LoginPageContainer = (props) => (
   <LocalStorage name="destinationAfterAuth" default={undefined}>
     {(destination, setDestination, loaded) => (loaded &&
