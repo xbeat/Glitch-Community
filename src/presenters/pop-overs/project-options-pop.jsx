@@ -123,6 +123,7 @@ const ProjectOptionsPop = ({...props}) => {
   return(
     <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
       { addToCollectionPopover => (
+        <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
         <ProjectOptionsContent {...props} addToCollectionPopover={addToCollectionPopover}/>
       )}
     </NestedPopover>
