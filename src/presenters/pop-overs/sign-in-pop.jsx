@@ -152,9 +152,6 @@ class SignInCodeHandler extends React.Component {
             </>
           }       
         </section>
-        {/* <section className="pop-over-actions last-section pop-over-info">
-          <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
-        </section> */}
       </dialog>
     );
   }
@@ -192,13 +189,15 @@ const SignInPopWithoutRouter = (props) => (
                 <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
                 <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
               </section>
-              <section className="pop-over-actions last-section pop-over-info">
-                <NestedPopover alternateContent={() => <SignInCodeHandler {...props}/>} startAlternateVisible={false}>
-                  <button className="button-small button-tertiary button-on-secondary-background">
-                    <span>Use a sign in code</span>
-                  </button>
-                </NestedPopover>
-              </section>
+              <NestedPopover alternateContent={() => <SignInCodeHandler {...props}/>} startAlternateVisible={false}>
+                {showCodeLogin =>
+                  <section className="pop-over-actions last-section pop-over-info">
+                    <button className="button-small button-tertiary button-on-secondary-background"  onClick={() => { onClick(); showCodeLogin(api); }}>
+                      <span>Use a sign in code</span>
+                    </button>
+                  </section>
+                }
+              </NestedPopover>
             </div>
           }
         </NestedPopover>
