@@ -10,7 +10,7 @@ import Loader from '../includes/loader.jsx';
 
 import CollectionResultItem from '../includes/collection-result-item.jsx';
 
-import CreateNewCollectionPop from './create-new-collection-pop.jsx';
+import CreateCollectionPop from './create-collection-pop.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
 
@@ -106,7 +106,7 @@ AddProjectToCollectionPopContents.propTypes = {
 
 const AddProjectToCollectionPop = ({...props}) => {
   return(
-    <NestedPopover alternateContent={() => <CreateNewCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>} startAlternateVisible={false}>
+    <NestedPopover alternateContent={() => <CreateCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>} startAlternateVisible={false}>
       { createCollectionPopover => (
         <AddProjectToCollectionPopContents {...props} createCollectionPopover={createCollectionPopover}/>
       )}

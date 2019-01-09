@@ -1,4 +1,4 @@
-// create-new-collection-pop.jsx -> add a project to a new user or team collection
+// create-collection-pop.jsx -> add a project to a new user or team collection
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
@@ -87,12 +87,11 @@ class CreateNewCollectionPop extends React.Component {
       return <Redirect to={this.state.newCollectionUrl}/>;
     }
     return (
-      <dialog className="pop-over add-project-to-collection-pop wide-pop">
+      <dialog className="pop-over create-collection-pop wide-pop">
         <NestedPopoverTitle>
           Add {this.props.project.domain} to a new collection
         </NestedPopoverTitle>
         <section className="pop-over-actions">
-          <div className="pop-title collection-title">Add to a new collection</div>
           <form onSubmit={this.handleSubmit}>
             <PureEditableField
               id="collection-name"
@@ -102,6 +101,8 @@ class CreateNewCollectionPop extends React.Component {
               placeholder={placeholder}
               error={error || queryError}
             />
+            <button className="user-or-team-toggle">For myself <img src={this.props.currentUser.avatarUrl} alt={this.props.currentUser.login + "-avatar"}/> <span class="down-arrow" aria-label="options"></span></button>
+            
             {!this.state.working ? (
               <TrackClick name="Create Collection clicked" properties={inherited => ({...inherited, origin: `${inherited.origin} project`})}>
                 <button type="submit" className="create-collection button-small" disabled={!!queryError}>
