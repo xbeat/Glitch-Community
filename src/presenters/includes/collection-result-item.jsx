@@ -6,7 +6,6 @@ import Notifications from '../notifications.jsx';
 import CollectionAvatar from './collection-avatar.jsx';
 import {StaticUsersList} from '../users-list.jsx';
 
-
 const AddProjectMessage = ({projectName, collectionName, url}) => (
   <>
     <p>Added <b><span className="project-name">{projectName}</span></b> to collection <b><span className="collection-name">{collectionName}</span></b></p>
@@ -37,7 +36,7 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   }
 };
 
-const CollectionResultItem = ({onClick, project, collection, currentUserLogin, isActive, togglePopover}) => {
+const CollectionResultItem = ({onClick, project, collection, collectionUser, currentUserLogin, isActive, togglePopover}) => {
   let resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
@@ -56,6 +55,7 @@ const CollectionResultItem = ({onClick, project, collection, currentUserLogin, i
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
+              <StaticUsersList users={collectionUser} />
             </div>
           </button>
           <a href={collectionPath} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">
@@ -70,6 +70,7 @@ const CollectionResultItem = ({onClick, project, collection, currentUserLogin, i
 CollectionResultItem.propTypes = {
   onClick: PropTypes.func,
   collection: PropTypes.object.isRequired,
+  collectionUser: PropTypes.object,
   currentUserLogin: PropTypes.string.isRequired,
   isActive: PropTypes.bool,
   project: PropTypes.object.isRequired,
