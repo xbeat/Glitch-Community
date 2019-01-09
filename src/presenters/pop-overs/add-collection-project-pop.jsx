@@ -96,27 +96,10 @@ class AddCollectionProjectPop extends React.Component {
       excludedProjectsCount: 0, // number of projects omitted from search
     };
     
-    this.loadRecentProjects = this.loadRecentProjects.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
     this.startSearch = debounce(this.startSearch.bind(this), 300);
     this.onClick = this.onClick.bind(this);
-  }
-  
-  componentDidMount(){
-    // load user's recent projects to show in dropdown by default
-    if(this.props.currentUser.projects.length > 0){
-      this.loadRecentProjects();
-    }
-  }
-  
-  loadRecentProjects(){
-    const MAX_PROJECTS = 20;
-    if (this.props.collection.team && this.props.collection.team.projects) {
-      this.setState({ maybeResults: this.props.collection.team.projects.slice(0,MAX_PROJECTS) });
-    } else {
-      this.setState({ maybeResults: this.props.currentUser.projects.slice(0,MAX_PROJECTS) });
-    }
   }
   
   handleChange(evt) {
@@ -132,10 +115,10 @@ class AddCollectionProjectPop extends React.Component {
   clearSearch() {
     this.setState({
       maybeRequest: null,
+      maybeResults: null,
       projectName: '',
       excludedProjectsCount: 0,
     });
-    this.loadRecentProjects();
   } 
   
   async startSearch() {
@@ -228,7 +211,11 @@ class AddCollectionProjectPop extends React.Component {
   }
   
   render() {
-    const showResults = !!(this.state.query || this.state.maybeResults.length);
+    // load user's recent projects
+    const ownProjects = this.props.collection.team ? this.props.collection.team.projects : this.props.currentUser.projects;
+    const results = this.state.maybeResults || ownProjects.slice(1,20);
+    
+    const showResults = !!(this.state.query || results.length);
     const isLoading = !!(this.state.maybeRequest || !this.state.maybeResults);
     
     return (
@@ -244,8 +231,8 @@ class AddCollectionProjectPop extends React.Component {
         {showResults && <section className="pop-over-actions last-section results-list">
           {isLoading && <Loader />}
         
-          {!!this.state.maybeResults && 
-            <ProjectsLoader api={this.props.api} projects={this.state.maybeResults}>
+          {!!results && 
+            <ProjectsLoader api={this.props.api} projects={results}>
               {projects => <ProjectSearchResults
                 projects={projects}
                 onClick={this.onClick}
