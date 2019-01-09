@@ -29,12 +29,8 @@ class AddProjectToCollectionPopContents extends React.Component {
       working: false,
       error: null, //null or string
       query: '', //The actual search text
-      collectionPair: 'wondrous-collection',
       maybeCollections: null, //null means still loading
     };
-    
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
   
   async loadCollections() {
@@ -45,68 +41,11 @@ class AddProjectToCollectionPopContents extends React.Component {
   
   async componentDidMount() {
     this.loadCollections();
-    try {
-      const collectionPair = await getCollectionPair();
-      this.setState(prev => ({query: prev.query || collectionPair, collectionPair}));
-    } catch (error) {
-      // it's ok rocky. you go when you feel like it
-    }
   }
   
-  handleChange(newValue) {
-    this.setState({ query: newValue, error: null });
-  }
-
-  async handleSubmit(event){
-    event.preventDefault();
-    this.setState({working: true});
-    // get text from input field
-    const newCollectionName = this.state.query;
-    
-    // create a new collection
-    try{
-      const name = newCollectionName;
-      const url = _.kebabCase(newCollectionName);
-      const collectionPair = this.state.collectionPair.split('-');
-      const description = `A ${collectionPair[1]} of projects that does ${collectionPair[0]} things`;
-      const avatarUrl = defaultAvatar;
-      const coverColor = randomColor({luminosity: 'light'});
-      
-      const {data} = await this.props.api.post('collections', {
-        name,
-        description,
-        url,
-        avatarUrl,
-        coverColor,
-      });
-
-      const newCollection = {user: this.props.currentUser, ...data};
-
-      // add the selected project to the collection
-      await this.props.api.patch(`collections/${newCollection.id}/add/${this.props.project.id}`);         
-      
-      // redirect to that collection
-      const newCollectionUrl = getLink(newCollection);
-      this.setState({newCollectionUrl});
-    }catch(error){
-      if (error && error.response && error.response.data && error.response.data.message) {
-        this.setState({error: error.response.data.message});
-      } else {
-        captureException(error);
-      }
-    }
-  }
-    
   render() {
-    const placeholder = 'New Collection Name';
     const {error, maybeCollections, query} = this.state;
-    let queryError = this.state.error;
-    if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === _.kebabCase(query))) {
-      queryError = 'You already have a collection with this url';
-    }
-    if(this.state.newCollectionUrl){
-      return <Redirect to={this.state.newCollectionUrl}/>;
-    }
+    
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
         {( !this.props.fromProject ?
@@ -154,7 +93,7 @@ class AddProjectToCollectionPopContents extends React.Component {
         ) : <Loader/>}
         
         <section className="pop-over-actions">
-          <button className="create-new-collection button-small">Add to a new collection</button>       
+          <button className="create-new-collection button-small" onClick={createNewCollectionPopover} >Add to a new collection</button>       
         </section>
       </dialog>
     );
@@ -171,13 +110,14 @@ AddProjectToCollectionPopContents.propTypes = {
 };
 
 
-const addProjectToCollectionPop = ({...props}) => {
+const AddProjectToCollectionPop = ({...props}) => {
   return(
     <NestedPopover alternateContent={() => <CreateNewCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
       { createNewCollectionPopover => (
-        < {...props} addToCollectionPopover={addToCollectionPopover}/>
+        <AddProjectToCollectionPopContents {...props} />
       )}
     </NestedPopover>
+    )
 }
 
 export default AddProjectToCollectionPop;
