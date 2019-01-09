@@ -105,8 +105,6 @@ module.exports = function(external) {
     const {domain} = req.params;
     
     res.render('api-auth.ejs', {
-      PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
-      ENVIRONMENT: process.env.NODE_ENV || "dev",
       domain: domain,
       CONSTANTS: constants,
     });
