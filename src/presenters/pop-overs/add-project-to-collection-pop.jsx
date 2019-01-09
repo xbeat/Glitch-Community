@@ -106,7 +106,7 @@ AddProjectToCollectionPopContents.propTypes = {
 
 const AddProjectToCollectionPop = ({...props}) => {
   return(
-    <NestedPopover alternateContent={() => <CreateNewCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>}>
+    <NestedPopover alternateContent={() => <CreateNewCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>} startAlternateVisible={false}>
       { createCollectionPopover => (
         <AddProjectToCollectionPopContents {...props} createCollectionPopover={createCollectionPopover}/>
       )}
