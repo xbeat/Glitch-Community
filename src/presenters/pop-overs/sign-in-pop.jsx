@@ -193,9 +193,11 @@ const SignInPopWithoutRouter = (props) => (
                 <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
               </section>
               <section className="pop-over-actions last-section pop-over-info">
-                <button className="button-small button-tertiary button-on-secondary-background">
-                  <span>Use a sign in code</span>
-                </button>
+                <NestedPopover alternateContent={() => <SignInCodeHandler {...props}/>} startAlternateVisible={false}>
+                  <button className="button-small button-tertiary button-on-secondary-background">
+                    <span>Use a sign in code</span>
+                  </button>
+                </NestedPopover>
               </section>
             </div>
           }
