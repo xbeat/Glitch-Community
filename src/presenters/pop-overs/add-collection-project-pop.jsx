@@ -213,10 +213,11 @@ class AddCollectionProjectPop extends React.Component {
   render() {
     // load user's recent projects
     const ownProjects = this.props.collection.team ? this.props.collection.team.projects : this.props.currentUser.projects;
-    const results = this.state.maybeResults || ownProjects.slice(1,20);
+    const results = this.state.query ? this.state.maybeResults : ownProjects.slice(0,20);
+    console.log(ownProjects);
     
     const showResults = !!(this.state.query || results.length);
-    const isLoading = !!(this.state.maybeRequest || !this.state.maybeResults);
+    const isLoading = !!(this.state.maybeRequest || !results.length);
     
     return (
       <dialog className="pop-over add-collection-project-pop wide-pop">
