@@ -300,7 +300,7 @@ popover-secondary-background()
   @media(max-width: mediumViewport)
     left: initial
     left: 0
-.add-project-to-collection-pop
+.add-project-to-collection-pop, .create-collection-pop
   .pop-over-info
     img
       width: 15px
@@ -318,9 +318,13 @@ popover-secondary-background()
       color: tertiary
       margin: 0
       clear: both
-    button.user-or-team-toggle
-      img
-        width: 10px
+    .button-wrap
+      display: block
+      margin-bottom: 10px
+      button.user-or-team-toggle
+        img
+          width: 10px
+          border-radius: 50%
   .pop-over-actions
     max-height: 225px
   li
