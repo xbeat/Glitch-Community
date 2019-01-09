@@ -137,7 +137,7 @@ class AddProjectToCollectionPop extends React.Component {
                           project={this.props.project}
                           collection={collection}                         
                           togglePopover={this.props.togglePopover} 
-                          collectionUser={getUserById(this.props.api, collection.userId)}
+                          collectionUser={() => getUserById(this.props.api, collection.userId)}
                         />
                       </TrackClick>
                     </li>
