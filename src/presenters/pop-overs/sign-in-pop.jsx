@@ -180,7 +180,9 @@ const SignInPopWithoutRouter = (props) => (
       const {header, prompt, api, location, hash} = props;
       return (
         <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
-          {showEmailLogin => 
+          {showEmailLogin =>
+            <NestedPopover alternateContent={() => <SignInCodeHandler {...props}/>} startAlternateVisible={false}>
+              {showCodeLogin =>
             <div className="pop-over sign-in-pop">
               {header}
               <section className="pop-over-actions first-section">
@@ -189,15 +191,14 @@ const SignInPopWithoutRouter = (props) => (
                 <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
                 <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
               </section>
-              <NestedPopover alternateContent={() => <SignInCodeHandler {...props}/>} startAlternateVisible={false}>
-                {showCodeLogin =>
+              
+                
                   <section className="pop-over-actions last-section pop-over-info">
                     <button className="button-small button-tertiary button-on-secondary-background"  onClick={() => { onClick(); showCodeLogin(api); }}>
                       <span>Use a sign in code</span>
                     </button>
                   </section>
-                }
-              </NestedPopover>
+
             </div>
           }
         </NestedPopover>
