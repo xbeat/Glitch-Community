@@ -18,12 +18,11 @@ import _ from 'lodash';
 
 const CollectionOwnerDialog = ({currentUser}) => {
   return(
-    { currentUser.teams.map({name}) => (
-      <dialog className="pop-over">
-        <section className="pop-over-actions">Test 1</section>
-        <section className="pop-over-actions">Test 2</section>
-      </dialog>
-    )}
+    <dialog className="pop-over">
+    { currentUser.teams.map(team => (
+      <section className="pop-over-actions">for {team.name}</section>
+    )) }
+    </dialog>
   )
 }
 
@@ -114,7 +113,7 @@ class CreateNewCollectionPop extends React.Component {
             />
             <div className="button-wrap">
               <button className="button-small user-or-team-toggle">For myself <img src={this.props.currentUser.avatarUrl} alt={this.props.currentUser.login + "-avatar"}/> <span className="down-arrow icon" aria-label="options"></span></button>
-              <CollectionOwnerDialog/>
+              <CollectionOwnerDialog currentUser={this.props.currentUser}/>
             </div>
             
             {!this.state.working ? (
