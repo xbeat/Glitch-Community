@@ -19,12 +19,12 @@ import _ from 'lodash';
 const CollectionOwnerDialog = ({currentUser}) => {
   return(
     <dialog className="pop-over">
-    { currentUser.teams.map(team => (
-      <section className="pop-over-actions">for {team.name}</section>
-    )) }
+      { currentUser.teams.map(team => (
+        <section className="pop-over-actions">for {team.name}</section>
+      )) }
     </dialog>
-  )
-}
+  );
+};
 
 class CreateNewCollectionPop extends React.Component {
   constructor(props) {

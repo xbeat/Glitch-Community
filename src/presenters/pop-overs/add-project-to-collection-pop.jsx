@@ -111,7 +111,7 @@ const AddProjectToCollectionPop = ({...props}) => {
         <AddProjectToCollectionPopContents {...props} createCollectionPopover={createCollectionPopover}/>
       )}
     </NestedPopover>
-    )
-}
+  );
+};
 
 export default AddProjectToCollectionPop;
