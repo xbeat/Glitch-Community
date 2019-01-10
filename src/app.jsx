@@ -16,7 +16,7 @@ const App = () => (
       <Notifications>
         <UserPrefsProvider>
           <DevTogglesProvider>
-            <AnalyticsContext context={{groupId: >
+            <AnalyticsContext context={{groupId: '0'}}>
               <CurrentUserProvider>
                 {api => <Router api={api}/>}
               </CurrentUserProvider>

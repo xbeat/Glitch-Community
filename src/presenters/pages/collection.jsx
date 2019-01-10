@@ -254,7 +254,7 @@ const CollectionPage = ({api, ownerName, name, ...props}) => (
   <Layout api={api}>
     <DataLoader get={() => loadCollection(api, ownerName, name)}>
       {collection => collection ? (
-        <AnalyticsContext properties={{origin: 'collection'}} context={{groupId: collection.team ? collection.team.id : 0}}>
+        <AnalyticsContext properties={{origin: 'collection'}} context={{groupId: collection.team ? collection.team.id.toString() : '0'}}>
           <CurrentUserConsumer>
             {(currentUser) => (
               <CollectionEditor api={api} initialCollection={collection} >
