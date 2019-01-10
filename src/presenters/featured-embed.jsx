@@ -29,11 +29,13 @@ const FeaturedEmbed = ({feature}) => (
 );
 
 FeaturedEmbed.propTypes = {
-  url: PropTypes.string.isRequired,
-  featured_image: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  body: PropTypes.string.isRequired,
-  embed: PropTypes.string.isRequired,
+  feature: PropTypes.object({
+    url: PropTypes.string.isRequired,
+    featured_image: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    embed: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default FeaturedEmbed;
