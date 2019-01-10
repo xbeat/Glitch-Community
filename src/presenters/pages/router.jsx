@@ -37,20 +37,25 @@ class ExternalPageReloader extends React.Component {
 }
 
 class PageChangeHandlerBase extends React.Component {
+  track() {
+    try {
+      const analytics = window.analytics;
+      if (analytics) {
+        analytics.page({}, {groupId: '0'});
+      }
+    } catch (ex) {
+      console.error("Error tracking page transition.", ex);
+    }
+  }
   componentDidUpdate(prev) {
     if (this.props.location.key !== prev.location.key) {
       window.scrollTo(0, 0);
       this.props.reloadCurrentUser();
-      
-      try {
-        const analytics = window.analytics;
-        if (analytics) {
-          analytics.page();
-        }
-      } catch (ex) {
-        console.error("Error tracking page transition.", ex);
-      }
+      this.track();
     }
+  }
+  componentDidMount() {
+    this.track();
   }
   render() {
     return null;
