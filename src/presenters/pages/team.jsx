@@ -181,6 +181,7 @@ class TeamPage extends React.Component {
           projectOptions={{
             addProjectToCollection: this.addProjectToCollection,
             removeProjectFromTeam: this.props.removeProject,
+            deleteProject: this.props.deleteProject,
             joinTeamProject: this.props.joinTeamProject,
             leaveTeamProject: this.props.leaveTeamProject,
           }}
@@ -195,6 +196,7 @@ class TeamPage extends React.Component {
           projectOptions={{
             addProjectToCollection: this.addProjectToCollection,
             removeProjectFromTeam: this.props.removeProject,
+            deleteProject: this.props.deleteProject,
             joinTeamProject: this.props.joinTeamProject,
             leaveTeamProject: this.props.leaveTeamProject,
           }}
@@ -268,6 +270,7 @@ TeamPage.propTypes = {
   }),
   addPin: PropTypes.func.isRequired,
   addProject: PropTypes.func.isRequired,
+  deleteProject:PropTypes.func.isRequired,
   updateWhitelistedDomain: PropTypes.func.isRequired,
   inviteEmail: PropTypes.func.isRequired,
   inviteUser: PropTypes.func.isRequired,

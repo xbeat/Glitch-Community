@@ -1,12 +1,13 @@
 //smallViewport = 414px
 //mediumViewport = 670px
 //largeViewport = 900px
+// hugeViewport = 1080px
 
 .featured-collections
 
   h2
     background-color: rgba(255,255,255,0.9) // So the graphic hurt text readibility on small screens
-    border-radius: 5px;
+    border-radius: 5px
     margin-top: 0
     display: inline-block
     
@@ -84,3 +85,68 @@
         max-width: 425px
       &:last-child
         margin-right: 0
+
+        
+// featured embed section 
+.featured-embed
+  a
+    color: black
+    font-weight: bold
+  .learn-more
+    font-size: smaller
+  .mask-container
+    width: 55%
+    max-width: 450px
+    @media (max-width: largeViewport)
+      width: 55%
+    @media (max-width: mediumViewport)
+      width: 100%
+    @media (max-width: smallViewport)
+      margin: 0 auto
+      width: 100%
+    .mask
+      width: 100%
+      height: 100%
+      object-fit: cover
+      mask-size: contain
+      mask-repeat: no-repeat
+      mask-position: center
+      mask-type: luminance
+    .mask-1
+      mask-image: url("https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2Fmask-1.svg")
+    .mask-2
+      mask-image: url("https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2Fmask-2.svg")
+    .mask-3
+      mask-image: url("https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2Fmask-3.svg")
+    .mask-4
+      mask-image: url("https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2Fmask-4.svg")
+    .mask-5
+      mask-image: url("https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2Fmask-5.svg")      
+  .content
+    padding: 115px 20px 20px 20px
+    box-shadow: 4px 4px #c3c3c3
+    border-radius: 5px
+    margin-top: -100px
+    padding-top: 100px
+    .description
+      width: 35%
+      @media (max-width: hugeViewport)
+        width: 45%
+      @media (max-width: mediumViewport)
+        width: 100%
+        margin: 0 auto
+  .embed
+    float: right
+    width: 55%
+    margin-top: -435px
+    margin-right: 15px
+    @media (max-width: hugeViewport)
+      width: 45%
+    @media (max-width: largeViewport)
+      width: 40%
+      margin-right: 20px
+      margin-top: -430px
+    @media (max-width: mediumViewport)
+      width: 100%
+      float: none
+      margin: 1em 0 0

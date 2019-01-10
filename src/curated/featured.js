@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Play Piano Like a Virtuoso',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2F1_2.jpg?1545054763363",
-    link: 'https://glitch.com/~piano-genie'
+    title: 'Set Your Spotify Playlists to Private',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal2TsjisseTalsma.jpg?1546519622343",
+    link: 'https://make-all-spotify-playlists-secret.glitch.me/'
   },{
-    title: 'Spot The Fake Headline',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FLivingwhileblack_1.png?1537791215940",
-    link: 'https://livingwhileblack.glitch.me/'
+    title: 'An Inclusive Language Bot for Slack',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal1TsjisseTalsma.jpg?1546519622225",
+    link: 'https://guys-bot-for-slack.glitch.me/'
   },{
-    title: 'Make Your Own Magic Eye',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmagic-eye_GLITCH.png?1543234498314",
-    link: 'https://magic-eye.glitch.me'
+    title: 'Search the Ocean\'s Depths with Dive',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal3TsjisseTalsma.jpg?1546519622071",
+    link: 'https://dive-the-game.glitch.me/'
   }  
 ];

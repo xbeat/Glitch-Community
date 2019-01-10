@@ -142,6 +142,13 @@ class TeamEditor extends React.Component {
     }));
   }
 
+  async deleteProject(id) {
+    await this.props.api.delete(`/projects/${id}`);
+    this.setState(({projects}) => ({
+      projects: projects.filter(p => p.id !== id),
+    }));
+  }
+
   async addPin(id) {
     await this.props.api.post(`teams/${this.state.id}/pinned-projects/${id}`);
     this.setState(({teamPins}) => ({
@@ -192,6 +199,7 @@ class TeamEditor extends React.Component {
       clearCover: () => this.updateFields({hasCoverImage: false}).catch(handleError),
       addProject: project => this.addProject(project).catch(handleError),
       removeProject: id => this.removeProject(id).catch(handleError),
+      deleteProject: id => this.deleteProject(id).catch(handleError),
       addPin: id => this.addPin(id).catch(handleError),
       removePin: id => this.removePin(id).catch(handleError),
       updateWhitelistedDomain: whitelistedDomain => this.updateFields({whitelistedDomain}).catch(handleError),
