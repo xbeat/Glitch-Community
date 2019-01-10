@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Set Your Spotify Playlists to Private',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal2TsjisseTalsma.jpg?1546519622343",
-    link: 'https://make-all-spotify-playlists-secret.glitch.me/'
+    title: 'Turn Music into Flowers',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal4TsjisseTalsma.jpg?1546519621787",
+    link: 'https://wavewall.glitch.me/'
   },{
-    title: 'An Inclusive Language Bot for Slack',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal1TsjisseTalsma.jpg?1546519622225",
-    link: 'https://guys-bot-for-slack.glitch.me/'
+    title: 'Make Your Own Audiograms',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal5TsjisseTalsma.jpg?1546519621503",
+    link: 'https://audiogram.glitch.me/'
   },{
-    title: 'Search the Ocean\'s Depths with Dive',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal3TsjisseTalsma.jpg?1546519622071",
-    link: 'https://dive-the-game.glitch.me/'
+    title: 'Boring Tales from Tiny Places',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal6TsjisseTalsma.jpg?1546519621645",
+    link: 'http://tinyplaces.glitch.me/'
   }  
 ];
