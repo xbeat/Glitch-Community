@@ -332,9 +332,17 @@ popover-secondary-background()
     .mini-pop
       left: 0
       top: 15px
+      div
+        display: inline
+        margin-left: 5px
+        &::before
+          display: none
+        &::after
+          display: none
       img
         width: 18px
-        vertical-align: inherit
+        height: 18px
+        vertical-align: bottom
   .pop-over-actions
     max-height: 225px
   li
@@ -496,6 +504,10 @@ popover-secondary-background()
     border-bottom: 1px solid secondary
     font-size: 12px
     color: tertiary
+  .mini-pop-action:hover
+    background: secondary-background
+    cursor: pointer
+  
 .wide-pop
     min-width: 350px
     right: 0

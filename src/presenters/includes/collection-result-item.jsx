@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {UserAvatar} from '../includes/avatar.jsx';
 import {DataLoader} from '../includes/loader.jsx';
 import {getUserById} from '../pages/team-or-user';
 import Notifications from '../notifications.jsx';
 
 import CollectionAvatar from './collection-avatar.jsx';
-import {StaticUsersList} from '../users-list.jsx';
 
 const AddProjectMessage = ({projectName, collectionName, url}) => (
   <>
@@ -38,7 +38,7 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   }
 };
 
-const CollectionResultItem = ({api, onClick, project, collection, collectionUser, currentUserLogin, isActive, togglePopover}) => {
+const CollectionResultItem = ({api, onClick, project, collection, currentUserLogin, isActive, togglePopover}) => {
   let resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
@@ -57,12 +57,7 @@ const CollectionResultItem = ({api, onClick, project, collection, collectionUser
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
-              {/* TO DO: Add user avatar in row */}
-              
-              {/*
-                <StaticUsersList users={() => getUserById(api, collection.userId)} />
-                */
-              }
+                                      
             </div>
           </button>
           <a href={collectionPath} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">
