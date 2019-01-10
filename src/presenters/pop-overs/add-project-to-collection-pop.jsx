@@ -16,7 +16,6 @@ import {NestedPopoverTitle} from './popover-nested.jsx';
 
 import _ from 'lodash';
 
-
 class AddProjectToCollectionPopContents extends React.Component {
   constructor(props) {
     super(props);
@@ -87,7 +86,8 @@ class AddProjectToCollectionPopContents extends React.Component {
         ) : <Loader/>}
         
         <section className="pop-over-actions">
-          <button className="create-new-collection button-small" onClick={this.props.createCollectionPopover} >Add to a new collection</button>       
+          {/* TO DO: may want to consider if we force all users to go through Create Collection Pop or only users with teams */}
+          <button className="create-new-collection button-small" onClick={this.props.createCollectionPopover} >Add to a new collection</button> 
         </section>
       </dialog>
     );

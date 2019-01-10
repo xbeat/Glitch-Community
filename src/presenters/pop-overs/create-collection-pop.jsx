@@ -5,7 +5,6 @@ import {Redirect} from 'react-router-dom';
 import randomColor from 'randomcolor';
 import {captureException} from '../../utils/sentry';
 
-import {getTeamById} from '../pages/team-or-user.jsx';
 import {TeamAvatar} from '../includes/avatar.jsx';
 import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';
@@ -22,7 +21,7 @@ const CollectionOwnerDialog = ({api, currentUser}) => {
   return(
     <dialog className="pop-over mini-pop">
       { currentUser.teams.map(team => (
-        <section className="mini-pop-action">{team.name}</section>
+        <section className="mini-pop-action">{team.name}<TeamAvatar team={team} className="user"/></section>
       )) }
     </dialog>
   );
