@@ -181,15 +181,14 @@ const SignInPopWithoutRouter = (props) => (
           hash: hash,
         },
       });
-              <CurrentUserConsumer>
-          {(login) => login={login}} 
-      </CurrentUserConsumer>
+      <CurrentUserConsumer>
+        {(login) => login={login}} 
+      </CurrentUserConsumer>;
       const {header, prompt, api, location, hash} = props;
       return (
         <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
           {showEmailLogin =>
-        {/*<CurrentUserConsumer>
-          {(login) => login={login}} */}
+
             <NestedPopover alternateContent={() => <SignInCodeHandler {...props}/>} startAlternateVisible={false}>
               {showCodeLogin =>
                 <div className="pop-over sign-in-pop">
@@ -208,7 +207,7 @@ const SignInPopWithoutRouter = (props) => (
                 </div>
               }
             </NestedPopover>
-        {/* </CurrentUserConsumer> 
+
           }
         </NestedPopover>
       );
