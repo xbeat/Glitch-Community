@@ -103,9 +103,8 @@ class CreateNewCollectionPop extends React.Component {
               error={error || queryError}
             />
             <div className="button-wrap">
-              <button className="button-small user-or-team-toggle">For myself <img src={this.props.currentUser.avatarUrl} alt={this.props.currentUser.login + "-avatar"}/> <span class="down-arrow" aria-label="options"></span></button>
+              <button className="button-small user-or-team-toggle">For myself <img src={this.props.currentUser.avatarUrl} alt={this.props.currentUser.login + "-avatar"}/> <span class="down-arrow icon" aria-label="options"></span></button>
             </div>
-            
             
             {!this.state.working ? (
               <TrackClick name="Create Collection clicked" properties={inherited => ({...inherited, origin: `${inherited.origin} project`})}>
