@@ -117,6 +117,7 @@ class SignInCodeHandler extends React.Component {
   async onSubmit(e) {
     e.preventDefault();
     this.setState({done: true});
+    console.log(this.props);
     try {
       const {data} = await this.props.api.post('/auth/email/' + this.state.code);
       this.props.login(data);
