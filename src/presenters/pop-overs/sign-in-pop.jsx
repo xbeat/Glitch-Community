@@ -7,8 +7,6 @@ import Link from '../includes/link';
 import LocalStorage from '../includes/local-storage';
 import PopoverWithButton from './popover-with-button';
 import {captureException} from '../../utils/sentry';
-import {CurrentUserConsumer} from '../current-user';
-import {LoginPage} from '../pages/login';
 import {NestedPopover, NestedPopoverTitle} from './popover-nested.jsx';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
@@ -119,7 +117,8 @@ class SignInCodeHandler extends React.Component {
     e.preventDefault();
     this.setState({done: true});
     try {
-      await this.props.api.post('/login/email/?token=' + this.state.code);
+      const {data} = await this.props.api.post('/login/email/?token=' + this.state.code);
+      this.props.login(data);
       this.setState({error: false});
     } catch (error) {
       captureException(error);
@@ -179,9 +178,6 @@ const SignInPopWithoutRouter = (props) => (
           hash: hash,
         },
       });
-      <CurrentUserConsumer>
-        {(currentUser, fetched, {login}) => <LoginPage setUser={login} destination={destination} setDestination={setDestination} {...props}/>}
-      </CurrentUserConsumer>;
       const {header, prompt, api, location, hash} = props;
       return (
         <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
