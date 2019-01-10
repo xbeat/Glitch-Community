@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 
 import ErrorBoundary from './presenters/includes/error-boundary.jsx';
+import {AnalyticsContext} from './presenters/analytics';
 import {CurrentUserProvider} from './presenters/current-user.jsx';
 import {UserPrefsProvider} from './presenters/includes/user-prefs.jsx';
 import {DevTogglesProvider} from './presenters/includes/dev-toggles.jsx';
@@ -15,9 +16,11 @@ const App = () => (
       <Notifications>
         <UserPrefsProvider>
           <DevTogglesProvider>
-            <CurrentUserProvider>
-              {api => <Router api={api}/>}
-            </CurrentUserProvider>
+            <AnalyticsContext context={{groupId: >
+              <CurrentUserProvider>
+                {api => <Router api={api}/>}
+              </CurrentUserProvider>
+            </AnalyticsContext>
           </DevTogglesProvider>
         </UserPrefsProvider>
       </Notifications>
