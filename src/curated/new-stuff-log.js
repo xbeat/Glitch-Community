@@ -8,7 +8,7 @@ export default [
     id: 6,
     title: "Get organized with Collections",
     body: `
-Add any project to a collection and show off your favorite things. Head over to your profile page to create and view your collections.
+Add any project to a collection and show off your favorite things. Head over to your profile or team page to create and view your collections.
 
 ![](https://cdn.glitch.com/e9551d04-9c48-4dbb-ab1b-04eca25b9652%2Fimage.png?1547136745894)
 `,
