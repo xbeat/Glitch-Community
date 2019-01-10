@@ -16,12 +16,14 @@ import {PureEditableField} from '../includes/editable-field.jsx';
 
 import _ from 'lodash';
 
-const CollectionOwnerDialog = () => {
+const CollectionOwnerDialog = ({currentUser}) => {
   return(
-    <dialog className="pop-over">
-      <section className="pop-over-actions">Test 1</section>
-      <section className="pop-over-actions">Test 2</section>
-    </dialog>
+    { currentUser.teams.map({name}) => (
+      <dialog className="pop-over">
+        <section className="pop-over-actions">Test 1</section>
+        <section className="pop-over-actions">Test 2</section>
+      </dialog>
+    )}
   )
 }
 
