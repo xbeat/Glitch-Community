@@ -22,7 +22,7 @@ const CollectionOwnerDialog = ({api, currentUser}) => {
   return(
     <dialog className="pop-over mini-pop">
       { currentUser.teams.map(team => (
-        <section className="pop-over-actions">for {team.name}</section>
+        <section className="mini-pop-action">{team.name}</section>
       )) }
     </dialog>
   );
@@ -113,8 +113,9 @@ class CreateNewCollectionPop extends React.Component {
               placeholder={placeholder}
               error={error || queryError}
             />
+            <br/>for
             <div className="button-wrap">
-              <button className="button-small button-secondary user-or-team-toggle">For myself <img src={this.props.currentUser.avatarUrl} alt={this.props.currentUser.login + "-avatar"}/> <span className="down-arrow icon" aria-label="options"></span></button>
+              <button className="button-small button-secondary user-or-team-toggle">myself <img src={this.props.currentUser.avatarUrl} alt={this.props.currentUser.login + "-avatar"}/> <span className="down-arrow icon" aria-label="options"></span></button>
               <CollectionOwnerDialog currentUser={this.props.currentUser} {...this.props.api}/>
             </div>
             
