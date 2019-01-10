@@ -7,6 +7,7 @@ import Link from '../includes/link';
 import LocalStorage from '../includes/local-storage';
 import PopoverWithButton from './popover-with-button';
 import {captureException} from '../../utils/sentry';
+import {CurrentUserConsumer} from '../current-user';
 import {NestedPopover, NestedPopoverTitle} from './popover-nested.jsx';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
@@ -178,6 +179,9 @@ const SignInPopWithoutRouter = (props) => (
           hash: hash,
         },
       });
+      <CurrentUserConsumer>
+        {(currentUser, {login}) => login(currentUser)}
+      </CurrentUserConsumer>;
       const {header, prompt, api, location, hash} = props;
       return (
         <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
