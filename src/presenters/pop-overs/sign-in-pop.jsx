@@ -181,32 +181,31 @@ const SignInPopWithoutRouter = (props) => (
           hash: hash,
         },
       });
+      <CurrentUserConsumer>
+        {(login) => login}
+      </CurrentUserConsumer>;
       const {header, prompt, api, location, hash, login} = props;
       return (
         <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
           {showEmailLogin =>
-            <CurrentUserConsumer>
-              {login => this.props.login
-                <NestedPopover alternateContent={() => <SignInCodeHandler login={login} {...props}/>} startAlternateVisible={false}>
-                  {showCodeLogin =>
-                    <div className="pop-over sign-in-pop">
-                      {header}
-                      <section className="pop-over-actions first-section">
-                        {prompt}
-                        <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
-                        <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
-                        <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
-                      </section>
-                      <section className="pop-over-actions last-section pop-over-info">
-                        <button className="button-small button-tertiary button-on-secondary-background"  onClick={() => { onClick(); showCodeLogin(api); }}>
-                          <span>Use a sign in code</span>
-                        </button>
-                      </section>
-                    </div>
-                  }
-                </NestedPopover>
+            <NestedPopover alternateContent={() => <SignInCodeHandler {...props}/>} startAlternateVisible={false}>
+              {showCodeLogin =>
+                <div className="pop-over sign-in-pop">
+                  {header}
+                  <section className="pop-over-actions first-section">
+                    {prompt}
+                    <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick}/>
+                    <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
+                    <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
+                  </section>
+                  <section className="pop-over-actions last-section pop-over-info">
+                    <button className="button-small button-tertiary button-on-secondary-background"  onClick={() => { onClick(); showCodeLogin(api); }}>
+                      <span>Use a sign in code</span>
+                    </button>
+                  </section>
+                </div>
               }
-            </CurrentUserConsumer>
+            </NestedPopover>
           }
         </NestedPopover>
       );
