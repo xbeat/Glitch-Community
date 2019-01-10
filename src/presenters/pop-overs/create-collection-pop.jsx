@@ -16,6 +16,14 @@ import {PureEditableField} from '../includes/editable-field.jsx';
 
 import _ from 'lodash';
 
+const CollectionOwnerDialog = () => {
+  return(
+    <dialog className="pop-over">
+      <section className="pop-over-actions">Test 1</section>
+      <section className="pop-over-actions">Test 2</section>
+    </dialog>
+  )
+}
 
 class CreateNewCollectionPop extends React.Component {
   constructor(props) {
@@ -103,7 +111,8 @@ class CreateNewCollectionPop extends React.Component {
               error={error || queryError}
             />
             <div className="button-wrap">
-              <button className="button-small user-or-team-toggle">For myself <img src={this.props.currentUser.avatarUrl} alt={this.props.currentUser.login + "-avatar"}/> <span class="down-arrow icon" aria-label="options"></span></button>
+              <button className="button-small user-or-team-toggle">For myself <img src={this.props.currentUser.avatarUrl} alt={this.props.currentUser.login + "-avatar"}/> <span className="down-arrow icon" aria-label="options"></span></button>
+              <CollectionOwnerDialog/>
             </div>
             
             {!this.state.working ? (
