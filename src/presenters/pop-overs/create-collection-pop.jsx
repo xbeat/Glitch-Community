@@ -15,12 +15,14 @@ import Loader from '../includes/loader.jsx';
 import {NestedPopoverTitle} from './popover-nested.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
 
-import _ from 'lodash';
+
+import {kebabCase, orderBy} from 'lodash';
 
 const CollectionOwnerDialog = ({api, currentUser}) => {
+  const orderedTeams = orderBy(currentUser.teams, team => team.name.toLowerCase());
   return(
     <dialog className="pop-over mini-pop">
-      { currentUser.teams.map(team => (
+      { orderedTeams.map(team => (
         <section className="mini-pop-action">{team.name}<TeamAvatar team={team} className="user"/></section>
       )) }
     </dialog>
@@ -56,7 +58,7 @@ class CreateNewCollectionPop extends React.Component {
     // create a new collection
     try{
       const name = newCollectionName;
-      const url = _.kebabCase(newCollectionName);
+      const url = kebabCase(newCollectionName);
       const collectionPair = this.state.collectionPair.split('-');
       const description = `A ${collectionPair[1]} of projects that does ${collectionPair[0]} things`;
       const avatarUrl = defaultAvatar;
@@ -91,7 +93,7 @@ class CreateNewCollectionPop extends React.Component {
     const {error, maybeCollections, query} = this.state;
     let queryError = this.state.error;
     let placeholder = "New Collection Name";
-    if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === _.kebabCase(query))) {
+    if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this url';
     }
     if(this.state.newCollectionUrl){
