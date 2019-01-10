@@ -5,6 +5,8 @@ import {Redirect} from 'react-router-dom';
 import randomColor from 'randomcolor';
 import {captureException} from '../../utils/sentry';
 
+import {getTeamById} from '../pages/team-or-user.jsx';
+import {TeamAvatar} from '../includes/avatar.jsx';
 import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';
 import {StaticUsersList} from '../users-list.jsx';
@@ -16,9 +18,9 @@ import {PureEditableField} from '../includes/editable-field.jsx';
 
 import _ from 'lodash';
 
-const CollectionOwnerDialog = ({currentUser}) => {
+const CollectionOwnerDialog = ({api, currentUser}) => {
   return(
-    <dialog className="pop-over">
+    <dialog className="pop-over mini-pop">
       { currentUser.teams.map(team => (
         <section className="pop-over-actions">for {team.name}</section>
       )) }
@@ -112,8 +114,8 @@ class CreateNewCollectionPop extends React.Component {
               error={error || queryError}
             />
             <div className="button-wrap">
-              <button className="button-small user-or-team-toggle">For myself <img src={this.props.currentUser.avatarUrl} alt={this.props.currentUser.login + "-avatar"}/> <span className="down-arrow icon" aria-label="options"></span></button>
-              <CollectionOwnerDialog currentUser={this.props.currentUser}/>
+              <button className="button-small button-secondary user-or-team-toggle">For myself <img src={this.props.currentUser.avatarUrl} alt={this.props.currentUser.login + "-avatar"}/> <span className="down-arrow icon" aria-label="options"></span></button>
+              <CollectionOwnerDialog currentUser={this.props.currentUser} {...this.props.api}/>
             </div>
             
             {!this.state.working ? (
