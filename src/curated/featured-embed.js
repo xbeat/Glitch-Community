@@ -16,7 +16,7 @@ var body = `<p>Follow along with MythBusters Jr. by remixing your own Glitch app
 `;
 
 export default {
-  "image": "http://culture-zine.glitch.me/culture/content/images/2019/01/mbjr-ep2-dynamite.jpg",
+  "image": "https://culture-zine.glitch.me/culture/content/images/2019/01/mbjr-ep2-dynamite.jpg",
   "mask": "mask-4",
   "title": "MythBusters Jr.",
   "url": "/dynamite-air-freshener/",
