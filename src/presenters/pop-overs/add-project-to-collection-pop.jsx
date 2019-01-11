@@ -14,21 +14,38 @@ import CreateCollectionPop from './create-collection-pop.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
 
-import _ from 'lodash';
+import {debounce, orderBy} from 'lodash';
 
 class AddProjectToCollectionPopContents extends React.Component {
   constructor(props) {
     super(props);
     
     this.state = {
+      query: '', // value of filter input field
       working: false,
+      filteredProjects: [],
       maybeCollections: null, //null means still loading
     };
+    this.updateFilter = this.updateFilter.bind(this);
+    this.debouncedSearch = debounce(this.debounchedSearch.bind(this), 300);
+  }
+  
+  handleChange(evt){
+    const query = evt.currentTarget.value.trimStart;
+    this.setState({ query });
+    if(query){
+      this.debouncedSearch();
+    }
+  }
+  
+  debouncedSearch(){
+    const query = this.state.query.trim();
+    
   }
   
   async loadCollections() {
     const collections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
-    this.setState({maybeCollections: _.orderBy(collections.data, collection => collection.updatedAt).reverse()});
+    this.setState({maybeCollections: orderBy(collections.data, collection => collection.updatedAt).reverse()});
   }
   
   
@@ -50,7 +67,10 @@ class AddProjectToCollectionPopContents extends React.Component {
         
         {(maybeCollections && maybeCollections.length > 3) && (
           <section className="pop-over-info">
-            <input id="collection-filter" className="pop-over-input search-input pop-over-search" placeholder="Filter collections"/>
+            <input id="collection-filter" 
+              className="pop-over-input search-input pop-over-search" 
+              onChange={(evt) => {this.this.updateFilter}
+              placeholder="Filter collections" />
           </section>
         )}
         
