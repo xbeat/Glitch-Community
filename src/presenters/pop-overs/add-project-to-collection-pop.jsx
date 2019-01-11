@@ -23,19 +23,18 @@ class AddProjectToCollectionPopContents extends React.Component {
     this.state = {
       query: '', // value of filter input field
       working: false,
-      filteredProjects: [],
+      filteredCollections: [], // collections filtered from search query
       maybeCollections: null, //null means still loading
     };
     this.updateFilter = this.updateFilter.bind(this);
     this.debouncedSearch = debounce(this.debounchedSearch.bind(this), 300);
   }
   
-  handleChange(evt){
-    const query = evt.currentTarget.value.trimStart;
-    this.setState({ query });
-    if(query){
-      this.debouncedSearch();
-    }
+  upddateFilter(query){
+    let collections = this.props.maybeCollections;
+    query = query.toLowerCase().trim();
+    let filteredCollections = collections.filter(collection => collection.name.toLowerCase().includes(query));
+    
   }
   
   debouncedSearch(){
@@ -45,7 +44,8 @@ class AddProjectToCollectionPopContents extends React.Component {
   
   async loadCollections() {
     const collections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
-    this.setState({maybeCollections: orderBy(collections.data, collection => collection.updatedAt).reverse()});
+    let sortedCollections = 
+    this.setState({maybeCollections: );
   }
   
   
@@ -69,7 +69,7 @@ class AddProjectToCollectionPopContents extends React.Component {
           <section className="pop-over-info">
             <input id="collection-filter" 
               className="pop-over-input search-input pop-over-search" 
-              onChange={(evt) => {this.this.updateFilter}
+              onChange={(evt) => {this.updateFilter(evt.target.value);}}
               placeholder="Filter collections" />
           </section>
         )}
