@@ -180,7 +180,7 @@ class TeamPage extends React.Component {
           removePin={this.props.removePin}
           projectOptions={{
             addProjectToCollection: this.addProjectToCollection,
-            removeProjectFromTeam: this.props.removeProject,
+            removeProjectFromTeam: {this.props.currentUserIsOnTeam && this.props.removeProject},
             deleteProject: this.props.deleteProject,
             joinTeamProject: this.props.joinTeamProject,
             leaveTeamProject: this.props.leaveTeamProject,
