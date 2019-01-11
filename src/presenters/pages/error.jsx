@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {Helmet} from 'react-helmet';
 import Layout from '../layout';
 
+import {getShowUrl} from '../../models/project';
 import NotFound from '../includes/not-found';
 
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
@@ -76,16 +77,27 @@ OauthErrorPage.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-export const ProjectNotFoundPage = ({api, name}) => (
-  <Layout api={api}>
-    <Helmet>
-      <title>👻 Project not found</title> {/* eslint-disable-line */}
-    </Helmet>
-    <NotFound name={name}/><
-  </Layout>
-);
+export class ProjectNotFoundPage extends React.Component {
+  async componentDidMount() {
+    const {data} = await this.props.api.get(`projects/${this.props.name}`);
+    if (data) {
+      window.location.replace(getShowUrl(this.props.name));
+    }
+  }
+  render() {
+    return (
+      <Layout api={this.props.api}>
+        <Helmet>
+          <title>👻 Project not found</title> {/* eslint-disable-line */}
+        </Helmet>
+        <NotFound name={this.props.name}/>
+        <p>Either there's not a project here, or you don't have access to it.  Are you logged in as the right user?</p>
+      </Layout>
+    );
+  }
+}
 
 ProjectNotFoundPage.propTypes = {
   api: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequire,
+  name: PropTypes.string.isRequired,
 };
