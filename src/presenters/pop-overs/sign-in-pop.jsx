@@ -121,7 +121,7 @@ class SignInCodeHandler extends React.Component {
     try {
       const {data} = await this.props.api.post('/auth/email/' + this.state.code);
       console.log(data);
-      this.props.setUser = data;
+      this.props.setUser(data);
       this.setState({error: false});
     } catch (error) {
       captureException(error);
@@ -186,7 +186,7 @@ const SignInPopWithoutRouter = (props) => (
       return (
         <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
           {showEmailLogin =>
-            <NestedPopover alternateContent={() => <CurrentUserConsumer>{currentUser => <SignInCodeHandler setUser={currentUser} {...props}/>}</CurrentUserConsumer>} startAlternateVisible={false}>
+            <NestedPopover alternateContent={() => <CurrentUserConsumer>{login => <SignInCodeHandler setUser={login} {...props}/>}</CurrentUserConsumer>} startAlternateVisible={false}>
               {showCodeLogin =>
                 <div className="pop-over sign-in-pop">
                   {header}
