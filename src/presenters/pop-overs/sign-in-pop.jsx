@@ -186,7 +186,7 @@ const SignInPopWithoutRouter = (props) => (
       return (
         <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
           {showEmailLogin =>
-            <NestedPopover alternateContent={() => <CurrentUserConsumer>{login => <SignInCodeHandler setUser={login} {...props}/>}</CurrentUserConsumer>} startAlternateVisible={false}>
+            <NestedPopover alternateContent={() => <CurrentUserConsumer>{(currentUser, fetched, {login}) => <SignInCodeHandler setUser={login} {...props}/>}</CurrentUserConsumer>} startAlternateVisible={false}>
               {showCodeLogin =>
                 <div className="pop-over sign-in-pop">
                   {header}
