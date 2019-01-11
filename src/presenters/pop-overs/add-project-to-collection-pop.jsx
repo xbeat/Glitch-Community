@@ -14,7 +14,7 @@ import CreateCollectionPop from './create-collection-pop.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
 
-import {debounce, orderBy} from 'lodash';
+import {orderBy} from 'lodash';
 
 class AddProjectToCollectionPopContents extends React.Component {
   constructor(props) {
@@ -27,25 +27,20 @@ class AddProjectToCollectionPopContents extends React.Component {
       maybeCollections: null, //null means still loading
     };
     this.updateFilter = this.updateFilter.bind(this);
-    this.debouncedSearch = debounce(this.debounchedSearch.bind(this), 300);
   }
   
-  upddateFilter(query){
+  updateFilter(query){
+    console.log('query');
     let collections = this.props.maybeCollections;
     query = query.toLowerCase().trim();
-    let filteredCollections = collections.filter(collection => collection.name.toLowerCase().includes(query));
-    
-  }
-  
-  debouncedSearch(){
-    const query = this.state.query.trim();
-    
+    let filteredCollections = collections.filter(collection => collection.name.toLowerCase().includes(query)); 
+    console.log("filteredCollections %O", filteredCollections);
   }
   
   async loadCollections() {
     const collections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
-    let sortedCollections = 
-    this.setState({maybeCollections: );
+    let orderedCollections = orderBy(collections.data, collection => collection.updatedAt).reverse();
+    this.setState({maybeCollections: orderedCollections, filteredCollections: orderedCollections });
   }
   
   
@@ -54,7 +49,7 @@ class AddProjectToCollectionPopContents extends React.Component {
   }
   
   render() {
-    const {maybeCollections} = this.state;
+    const {maybeCollections, filteredCollections} = this.state;
     
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
@@ -75,10 +70,10 @@ class AddProjectToCollectionPopContents extends React.Component {
         )}
         
         {maybeCollections ? (
-          maybeCollections.length ? (
+          filteredCollections.length ? (
             <section className="pop-over-actions results-list">
               <ul className="results">
-                {maybeCollections.map(collection =>   
+                {filteredCollections.map(collection =>   
                   // filter out collections that already contain the selected project
                   (collection.projects.every(project => project.id !== this.props.project.id) && 
                     <li key={collection.id}>
