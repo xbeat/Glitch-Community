@@ -17,7 +17,7 @@ import {TeamPage, UserPage, TeamOrUserPage} from './team-or-user.jsx';
 import SearchPage from './search.jsx';
 import CategoryPage from './category.jsx';
 import CollectionPage from './collection.jsx';
-import {NotFoundPage} from './error.jsx';
+import {NotFoundPage, ProjectNotFoundPage} from './error.jsx';
 import SecretPage from './secret.jsx';
 
 /* global EXTERNAL_ROUTES */
@@ -83,6 +83,7 @@ const Router = ({api}) => (
       <Route path="/questions" exact render={({location}) => <QuestionsPage key={location.key} api={api}/>}/>
 
       <Route path="/~:name" exact render={({location, match}) => <ProjectPage key={location.key} api={api} name={match.params.name}/>}/>
+      <Route path="/~:name/404" exact render={({location, match}) => <ProjectNotFoundPage key={location.key} api={api} name={match.params.name}/>}/>
 
       <Route path="/@:name" exact render={({location, match}) => <TeamOrUserPage key={location.key} api={api} name={match.params.name}/>}/>
 

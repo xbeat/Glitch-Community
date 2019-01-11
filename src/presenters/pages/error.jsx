@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import {Helmet} from 'react-helmet';
 import Layout from '../layout';
 
+import NotFound from '../includes/not-found';
+
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
 
 export const NotFoundPage = ({api}) => (
@@ -72,4 +74,18 @@ OauthErrorPage.propTypes = {
   api: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+};
+
+export const ProjectNotFoundPage = ({api, name}) => (
+  <Layout api={api}>
+    <Helmet>
+      <title>👻 Project not found</title> {/* eslint-disable-line */}
+    </Helmet>
+    <NotFound name={name}/><
+  </Layout>
+);
+
+ProjectNotFoundPage.propTypes = {
+  api: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequire,
 };
