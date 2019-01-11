@@ -91,7 +91,7 @@ export class ProjectNotFoundPage extends React.Component {
           <title>👻 Project not found</title> {/* eslint-disable-line */}
         </Helmet>
         <NotFound name={this.props.name}/>
-        <p>Either there's not a project here, or you don't have access to it.  Are you logged in as the right user?</p>
+        <p>Either there's no project here, or you don't have access to it.  Are you logged in as the right user?</p>
       </Layout>
     );
   }
