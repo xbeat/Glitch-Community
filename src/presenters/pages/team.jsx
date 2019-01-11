@@ -98,6 +98,15 @@ class TeamPage extends React.Component {
   }
 
   render() {
+    const projectOptions = {
+      addProjectToCollection: this.addProjectToCollection,
+      deleteProject: this.props.deleteProject,
+      joinTeamProject: this.props.joinTeamProject,
+      leaveTeamProject: this.props.leaveTeamProject,
+    };
+    if (this.currentUserIsOnTeam) projectOptions["removeProjectFromTeam"] = this.props.removeProject;
+
+    
     return (
       <main className="profile-page team-page">
         <section>
@@ -178,13 +187,7 @@ class TeamPage extends React.Component {
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
           removePin={this.props.removePin}
-          projectOptions={{
-            addProjectToCollection: this.addProjectToCollection,
-            removeProjectFromTeam: this.props.removeProject,
-            deleteProject: this.props.deleteProject,
-            joinTeamProject: this.props.joinTeamProject,
-            leaveTeamProject: this.props.leaveTeamProject,
-          }}
+          projectOptions={projectOptions}
           api={this.props.api}
         />
         
@@ -193,13 +196,7 @@ class TeamPage extends React.Component {
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
           addPin={this.props.addPin}
-          projectOptions={{
-            addProjectToCollection: this.addProjectToCollection,
-            removeProjectFromTeam: this.props.removeProject,
-            deleteProject: this.props.deleteProject,
-            joinTeamProject: this.props.joinTeamProject,
-            leaveTeamProject: this.props.leaveTeamProject,
-          }}
+          projectOptions={projectOptions}
           api={this.props.api}
         />
         
