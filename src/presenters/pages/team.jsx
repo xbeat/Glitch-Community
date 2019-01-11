@@ -104,7 +104,7 @@ class TeamPage extends React.Component {
       joinTeamProject: this.props.joinTeamProject,
       leaveTeamProject: this.props.leaveTeamProject,
     };
-    if (this.currentUserIsOnTeam) projectOptions["removeProjectFromTeam"] = this.props.removeProject;
+    if (this.props.currentUserIsOnTeam) projectOptions["removeProjectFromTeam"] = this.props.removeProject;
 
     
     return (
