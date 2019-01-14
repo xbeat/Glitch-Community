@@ -22,7 +22,7 @@ class ReportAbusePop extends React.Component {
     super(props);
 
     if (this.props.reportedType == "user") {
-      this.defaultReason = `This user profile doesn’t seem appropriate for Glitch because…...`;
+      this.defaultReason = `This user profile doesn’t seem appropriate for Glitch because...`;
     } else if (this.props.reportedType == "home") {
       this.defaultReason = `[Something here] doesn't seem appropriate for Glitch because...`;
     } else {
