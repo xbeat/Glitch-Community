@@ -64,6 +64,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id));
   console.log("pinnedProjects: %O", pinnedProjects);
+  console.log('featuredProjectId: ' + featuredProjectId);
   
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
   
