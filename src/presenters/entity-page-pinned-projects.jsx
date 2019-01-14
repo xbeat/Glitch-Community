@@ -20,12 +20,12 @@ function trackRemix(id, domain) {
   });
 }
 
-const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, projects, addProjectToCollection,}) => {
+const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, projects, addProjectToCollection, featureProject, unfeatureProject,}) => {
   return(
     <>
       <h2 style={{marginTop: 2+"em"}}>Pinned Projects<span className="emoji pushpin emoji-in-title"></span></h2>
       <section id="embed" style={{marginTop: 0}}>      
-        {isAuthorized && <FeaturedProjectOptionsPop />}
+        {isAuthorized && <FeaturedProjectOptionsPop {...{unfeatureProject}}/>}
         <div className="glitch-embed-wrap">
           <iframe title="embed"
             src={`${APP_URL}/embed/#!/embed/${featuredProjectId}?path=README.md&previewSize=100`}
@@ -65,8 +65,6 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
   const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id));
   
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
-  console.log(`pinnedVisible: ${pinnedVisible}`);
-  console.log(`pinnedProjects.length: ${pinnedProjects.length}`);
   
   return (
     <>
@@ -74,7 +72,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
        
        <>
         <FeaturedProject 
-          {...{api, isAuthorized, currentUser, projects, featuredProjectId, addProjectToCollection }}
+          {...{api, isAuthorized, currentUser, projects, featuredProjectId, addProjectToCollection, projectOptions: {unfeatureProject} }}
         />
        
         <ProjectsList title={""}
@@ -100,8 +98,6 @@ EntityPagePinnedProjects.propTypes = {
   }).isRequired).isRequired,
   removePin: PropTypes.func.isRequired,
   projectOptions: PropTypes.object,
-  featureProject: PropTypes.func.isRequired,
-  unfeatureProject: PropTypes.func.isRequired,
 };
 
 const EntityPagePinnedProjectsContainer = ({api, projects, maybeCurrentUser, ...props}) => (  
