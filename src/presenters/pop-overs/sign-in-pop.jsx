@@ -82,13 +82,13 @@ class EmailHandler extends React.Component {
               }
               {(this.state.done && !this.state.error) &&
                 <>
-                  <div className="notification notifySuccess">Almost Done</div>
+                  <div className="notification notifyPersistent notifySuccess">Almost Done</div>
                   <div>Finish signing in from the email sent to {this.state.email}.</div>
                 </>
               }
               {(this.state.done && this.state.error) &&
                 <>
-                  <div className="notification notifyError">Error</div>
+                  <div className="notification notifyPersistent notifyError">Error</div>
                   <div>Something went wrong, email not sent.</div>
                 </>
               }
@@ -154,12 +154,12 @@ class SignInCodeHandler extends React.Component {
           }
           {(this.state.done && !this.state.error) &&
             <>
-              <div className="notification notifySuccess">Success!</div>
+              <div className="notification notifyPersistent notifySuccess">Success!</div>
             </>
           }
           {(this.state.done && this.state.error) &&
             <>
-              <div className="notification notifyError">Error</div>
+              <div className="notification notifyPersistent notifyError">Error</div>
               <div>Code not found or already used. Try signing in with email.</div>
             </>
           }       
