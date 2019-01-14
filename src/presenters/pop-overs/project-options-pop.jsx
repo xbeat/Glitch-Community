@@ -55,7 +55,6 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
     // show feature embed if it's not already visible
     const featuredContainer = document.getElementById('embed');
     featuredContainer.classList.remove('slide-down');
-    
   }
   
   return(
