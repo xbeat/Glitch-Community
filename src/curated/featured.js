@@ -21,8 +21,8 @@ export default [
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise7.png?1547468106643",
     link: 'http://magic-sketchpad.glitch.me/'
   },{
-    title: 'Boring Tales from Tiny Places',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal6TsjisseTalsma.jpg?1546519621645",
-    link: 'http://tinyplaces.glitch.me/'
+    title: 'Read Between The Lines',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise6.png?1547468106803",
+    link: 'https://noiselines-text.glitch.me/'
   }  
 ];
