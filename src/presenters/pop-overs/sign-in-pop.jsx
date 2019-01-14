@@ -94,7 +94,7 @@ class EmailHandler extends React.Component {
               }
             </section>
             {(this.state.done && !this.state.error) &&
-              <SignInCodeSection onClick={() => { onClick(); showCodeLogin(this.props.api); }}/>
+              <SignInCodeSection onClick={() => { showCodeLogin(this.props.api); }}/>
             }
           </dialog>
         }
