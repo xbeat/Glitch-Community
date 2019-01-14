@@ -19,7 +19,6 @@ const FeaturedProjectOptionsPop = ({...props}) => {
     const featuredContainer = document.getElementById('embed');
     featuredContainer.classList.add('slide-down');
     // move the unfeatured project to pinned projects    
-    
   }
   
   return(

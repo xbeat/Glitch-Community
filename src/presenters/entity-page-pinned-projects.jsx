@@ -20,12 +20,12 @@ function trackRemix(id, domain) {
   });
 }
 
-const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, projects, addProjectToCollection, featureProject, unfeatureProject,}) => {
+const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, projects, addProjectToCollection, projectOptions}) => {
   return(
     <>
       <h2 style={{marginTop: 2+"em"}}>Pinned Projects<span className="emoji pushpin emoji-in-title"></span></h2>
       <section id="embed" style={{marginTop: 0}}>      
-        {isAuthorized && <FeaturedProjectOptionsPop {...{unfeatureProject}}/>}
+        {isAuthorized && <FeaturedProjectOptionsPop {...{projectOptions}}/>}
         <div className="glitch-embed-wrap">
           <iframe title="embed"
             src={`${APP_URL}/embed/#!/embed/${featuredProjectId}?path=README.md&previewSize=100`}
@@ -60,7 +60,7 @@ const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, pro
     )
 };
 
-const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorized, removePin, projectOptions, featuredProjectId, addProjectToCollection, featureProject, unfeatureProject,}) => {
+const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorized, removePin, projectOptions, featuredProjectId, addProjectToCollection,}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id));
   
@@ -73,7 +73,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
        <>
         <FeaturedProject   
           {...{api, isAuthorized, currentUser, projects, featuredProjectId, addProjectToCollection}}
-          
+          projectOptions={isAuthorized && {...projectOptions}}
         />
        
         <ProjectsList title={""}
