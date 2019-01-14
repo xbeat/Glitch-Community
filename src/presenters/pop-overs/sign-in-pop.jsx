@@ -82,6 +82,7 @@ class EmailHandler extends React.Component {
             <>
               <div className="notification notifySuccess">Almost Done</div>
               <div>Finish signing in from the email sent to {this.state.email}.</div>
+            </section>
               <section className="pop-over-actions last-sectionn pop-over-info">
                 <button className="button-small button-tertiary button-on-secondary-background"  onClick={() => { onClick(); showCodeLogin(api); }}>
                   <span>Use a sign in code</span>
@@ -93,9 +94,9 @@ class EmailHandler extends React.Component {
             <>
               <div className="notification notifyError">Error</div>
               <div>Something went wrong, email not sent.</div>
+            </section>
             </>
           }       
-        </section>
       </dialog>
     );
   }
