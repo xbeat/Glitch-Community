@@ -81,7 +81,9 @@ class EmailHandler extends React.Component {
           {(this.state.done && !this.state.error) &&
             <>
               <div className="notification notifySuccess">Almost Done</div>
-              <div>Please click the confirmation link sent to {this.state.email}.</div>
+              <div>Finish signing in from the email sent to {this.state.email}.</div>
+              <section className="pop-over-actions last-section">
+              </section>
             </>
           }
           {(this.state.done && this.state.error) &&
