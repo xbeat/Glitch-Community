@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import {AnalyticsContext} from '../analytics';
-import DevToggles from '../includes/dev-toggles';
 import {CurrentUserConsumer} from '../current-user';
 import {DataLoader} from '../includes/loader';
 import TeamEditor from '../team-editor.jsx';
@@ -53,20 +52,12 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
 );
 
 const TeamPageCollections = ({collections, team, api, currentUser, currentUserIsOnTeam}) => (
-  <DevToggles>
-    {enabledToggles => (
-      <CollectionsList
-        title={<>Collections {!collections.length && currentUserIsOnTeam && (
-          <aside className="inline-banners team-page">
-            Use collections to organize projects
-          </aside>
-        )}</>}
-        collections={collections.map(collection => ({...collection, team: team}))}
-        api={api} maybeCurrentUser={currentUser} maybeTeam={team}
-        isAuthorized={currentUserIsOnTeam && enabledToggles.includes('Team Collections')}
-      />
-    )}
-  </DevToggles>
+  <CollectionsList
+    title="Collections"
+    collections={collections.map(collection => ({...collection, team: team}))}
+    api={api} maybeCurrentUser={currentUser} maybeTeam={team}
+    isAuthorized={currentUserIsOnTeam}
+  />
 );
 
 // Team Page
