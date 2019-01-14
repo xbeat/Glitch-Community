@@ -13,7 +13,7 @@ const PopoverButton = ({onClick, text, emoji}) => (
 );
 
 // Project Options Pop
-const FeaturedProjectOptionsPop = ({...props}) => {
+const FeaturedProjectOptionsPop = ({featuredProjectId, ...props} ) => {
   
   function animateThenUnfeature(){
     console.log('animateThenUnfeature');
@@ -21,7 +21,7 @@ const FeaturedProjectOptionsPop = ({...props}) => {
     const featuredContainer = document.getElementById('embed');
     featuredContainer.classList.add('slide-down');
     props.togglePopover();
-    featuredContainer.addEventListener('animationend', props.unfeatureProject, {once: true});
+    featuredContainer.addEventListener('animationend', () => props.unfeatureProject(featuredProjectId), {once: true});
     // update pinned projects
   }
   
@@ -38,12 +38,13 @@ FeaturedProjectOptionsPop.propTypes = {
   api: PropTypes.any,
   currentUser: PropTypes.object,
   togglePopover: PropTypes.func.isRequired,
+  project: PropTypes.object,
 };
 
 
 // Project Options Container
 // create as stateful react component
-export default function FeaturedProjectOptions({projectOptions={}, project, api}, {...props}) {
+export default function FeaturedProjectOptions({projectOptions={}, featuredProjectId,}, {...props}) {
 
   return (
     <PopoverContainer>
@@ -54,7 +55,7 @@ export default function FeaturedProjectOptions({projectOptions={}, project, api}
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <FeaturedProjectOptionsPop {...props} {...projectOptions} project={project} api={api} currentUser={user} togglePopover={togglePopover}/> }
+              { visible && <FeaturedProjectOptionsPop {...props} {...projectOptions} featuredProjectId={featuredProjectId} togglePopover={togglePopover}/> }
             </div>
           )}
         </CurrentUserConsumer>

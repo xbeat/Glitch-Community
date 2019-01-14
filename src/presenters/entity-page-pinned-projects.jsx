@@ -25,7 +25,7 @@ const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, pro
     <>
       <h2 style={{marginTop: 2+"em"}}>Pinned Projects<span className="emoji pushpin emoji-in-title"></span></h2>
       <section id="embed" style={{marginTop: 0}}>      
-        {isAuthorized && <FeaturedProjectOptionsPop {...{projectOptions}}/>}
+        {isAuthorized && <FeaturedProjectOptionsPop {...{projectOptions, featuredProjectId}}/>}
         <div className="glitch-embed-wrap">
           <iframe title="embed"
             src={`${APP_URL}/embed/#!/embed/${featuredProjectId}?path=README.md&previewSize=100`}
