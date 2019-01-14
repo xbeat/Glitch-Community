@@ -13,13 +13,13 @@ Example:
 
 export default [
   {
-    title: 'Turn Music into Flowers',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal4TsjisseTalsma.jpg?1546519621787",
-    link: 'https://wavewall.glitch.me/'
+    title: 'What Would Moira Rose Say?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise5.png?1547468105916",
+    link: 'https://moira-rose.glitch.me/'
   },{
-    title: 'Make Your Own Audiograms',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal5TsjisseTalsma.jpg?1546519621503",
-    link: 'https://audiogram.glitch.me/'
+    title: 'Magic Sketchpad!',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise7.png?1547468106643",
+    link: 'http://magic-sketchpad.glitch.me/'
   },{
     title: 'Boring Tales from Tiny Places',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal6TsjisseTalsma.jpg?1546519621645",
