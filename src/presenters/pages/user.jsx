@@ -108,8 +108,9 @@ const UserPage = ({
         addProjectToCollection,
         featureProject,
       }}
-      featuredProjectId={featured_project_id}
+      featuredProjectId={featuredProjectId}
       addProjectToCollection={addProjectToCollection}
+      maybeCurrentUser={maybeCurrentUser}
     />
     
     {(loadedCollections && !!login &&

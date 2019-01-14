@@ -20,7 +20,7 @@ function trackRemix(id, domain) {
   });
 }
 
-const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectDomain, projects, addProjectToCollection,}) => {
+const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, projects, addProjectToCollection,}) => {
   return(
     <>
       <h2 style={{marginTop: 2+"em"}}>Pinned Projects<span className="emoji pushpin emoji-in-title"></span></h2>
@@ -28,18 +28,18 @@ const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectDomain,
         {isAuthorized && <FeaturedProjectOptionsPop />}
         <div className="glitch-embed-wrap">
           <iframe title="embed"
-            src={`${APP_URL}/embed/#!/embed/${featuredProjectDomain}?path=README.md&previewSize=100`}
+            src={`${APP_URL}/embed/#!/embed/${featuredProjectId}?path=README.md&previewSize=100`}
             allow="geolocation; microphone; camera; midi; encrypted-media"
           ></iframe>
         </div>
 
         {isAuthorized ?
           <div className="buttons buttons-left">
-            <EditButton className="button-small button-edit" name={featuredProjectDomain} isMember={isAuthorized}/>
+            <EditButton className="button-small button-edit" name={featuredProjectId} isMember={isAuthorized}/>
           </div>
           :
           <div className="buttons buttons-left">
-            <ReportButton className="button-small" name={featuredProjectDomain} id={featuredProjectDomain}/>
+            <ReportButton className="button-small" name={featuredProjectId} id={featuredProjectId}/>
           </div>
 
         }
@@ -64,11 +64,13 @@ const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectDomain,
     )
 };
 
-const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorized, removePin, projectOptions, featuredProjectDomain, addProjectToCollection}) => {
+const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorized, removePin, projectOptions, featuredProjectId, addProjectToCollection}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id)).slice(1);
   
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
+  console.log(`pinnedVisible: ${pinnedVisible}`);
+  console.log(`pinnedProjects.length: ${pinnedVisible}`);
   
   return (
     <>
@@ -76,7 +78,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
        
        <>
         <FeaturedProject 
-          {...{api, isAuthorized, currentUser, projects, featuredProjectDomain, addProjectToCollection }}
+          {...{api, isAuthorized, currentUser, projects, featuredProjectId, addProjectToCollection }}
         />
        
         <ProjectsList title={""}
@@ -105,12 +107,8 @@ EntityPagePinnedProjects.propTypes = {
   projectOptions: PropTypes.object,
 };
 
-const EntityPagePinnedProjectsContainer = ({api, projects, ...props}) => (
-  <CurrentUserConsumer>
-    {currentUser => (
-      <EntityPagePinnedProjects api={api} projects={projects} currentUser={currentUser} {...props}/>
-    )}
-  </CurrentUserConsumer>
+const EntityPagePinnedProjectsContainer = ({api, projects, maybeCurrentUser, ...props}) => (  
+    <EntityPagePinnedProjects api={api} projects={projects} currentUser={maybeCurrentUser} {...props}/>  
 );
 
 export default EntityPagePinnedProjectsContainer;  
