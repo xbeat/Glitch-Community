@@ -95,12 +95,8 @@ class EmailHandler extends React.Component {
               }
             </section>
             {(this.state.done && !this.state.error) &&
-              <section className="pop-over-actions last-sectionn pop-over-info">
-                <button className="button-small button-tertiary button-on-secondary-background"  onClick={() => { onClick(); showCodeLogin(api); }}>
-                  <span>Use a sign in code</span>
-                </button>
-              </section>
-              }
+              <SignInCodeSection onClick={() => { onClick(); showCodeLogin(api); }}/>
+            }
           </dialog>
         }
       </NestedPopover>
