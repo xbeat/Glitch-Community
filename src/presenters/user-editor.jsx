@@ -126,7 +126,6 @@ class UserEditor extends React.Component {
     this.setState({ featuredProjectDomain: domain});
   }
   
-  
   componentDidMount() {
     this.loadCollections();
   }
