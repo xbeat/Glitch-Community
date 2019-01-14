@@ -74,7 +74,7 @@ const UserPage = ({
   addPin, removePin,
   leaveProject,
   deleteProject, undeleteProject,
-  featureProject,
+  featureProject, unfeatureProject,
   setDeletedProjects,
   addProjectToCollection,
 }) => (
@@ -107,6 +107,7 @@ const UserPage = ({
         deleteProject,
         addProjectToCollection,
         featureProject,
+        unfeatureProject,
       }}
       featuredProjectId={featuredProjectId}
       addProjectToCollection={addProjectToCollection}
@@ -132,8 +133,7 @@ const UserPage = ({
       projectOptions={{
         leaveProject, 
         deleteProject,
-        addProjectToCollection,
-        featureProject
+        addProjectToCollection
       }}
     />
     
@@ -162,6 +162,7 @@ UserPage.propTypes = {
   }).isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
   featureProject: PropTypes.func.isRequired,
+  unfeatureProject: PropTypes.func.isRequired,
 };
 
 const UserPageContainer = ({api, user}) => (

@@ -41,11 +41,6 @@ const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, pro
           <div className="buttons buttons-left">
             <ReportButton className="button-small" name={featuredProjectId} id={featuredProjectId}/>
           </div>
-
-        }
-
-        {isAuthorized && 
-          <p className="hint">Tweak the way this embed looks by editing the project and going to <b>Share > Embed Project</b></p>
         }
 
         <div className="buttons buttons-right">
@@ -55,6 +50,7 @@ const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, pro
           {/* Can add to track remix later 
             onClick={() => trackRemix(projects[0].id, projects[0].domain)}
           */}
+          
           <RemixButton className="button-small"
             name={projects[0].domain} isMember={isAuthorized}
           />
@@ -64,13 +60,13 @@ const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, pro
     )
 };
 
-const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorized, removePin, projectOptions, featuredProjectId, addProjectToCollection}) => {
+const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorized, removePin, projectOptions, featuredProjectId, addProjectToCollection, featureProject, unfeatureProject,}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
-  const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id)).slice(1);
+  const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id));
   
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
   console.log(`pinnedVisible: ${pinnedVisible}`);
-  console.log(`pinnedProjects.length: ${pinnedVisible}`);
+  console.log(`pinnedProjects.length: ${pinnedProjects.length}`);
   
   return (
     <>
@@ -97,7 +93,6 @@ EntityPagePinnedProjects.propTypes = {
   addProjectToCollection: PropTypes.func,
   api: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
-  featuredProjectDomain: PropTypes.string,
   isAuthorized: PropTypes.bool.isRequired,
   projects: PropTypes.array.isRequired,
   pins: PropTypes.arrayOf(PropTypes.shape({
@@ -105,6 +100,8 @@ EntityPagePinnedProjects.propTypes = {
   }).isRequired).isRequired,
   removePin: PropTypes.func.isRequired,
   projectOptions: PropTypes.object,
+  featureProject: PropTypes.func.isRequired,
+  unfeatureProject: PropTypes.func.isRequired,
 };
 
 const EntityPagePinnedProjectsContainer = ({api, projects, maybeCurrentUser, ...props}) => (  
