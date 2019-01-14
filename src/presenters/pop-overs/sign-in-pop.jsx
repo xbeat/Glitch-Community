@@ -66,9 +66,8 @@ class EmailHandler extends React.Component {
    
   render() {
     const isEnabled = this.state.email.length > 0;
-    const {header, prompt, api, location, hash} = this.props;
     return (
-      <NestedPopover alternateContent={() => <CurrentUserConsumer>{(currentUser, fetched, {login}) => <SignInCodeHandler setUser={login} {...props}/>}</CurrentUserConsumer>} startAlternateVisible={false}>
+      <NestedPopover alternateContent={() => <CurrentUserConsumer>{(currentUser, fetched, {login}) => <SignInCodeHandler setUser={login} {this.props.api}/>}</CurrentUserConsumer>} startAlternateVisible={false}>
         {showCodeLogin =>
           <dialog className="pop-over sign-in-pop">
             <NestedPopoverTitle>
