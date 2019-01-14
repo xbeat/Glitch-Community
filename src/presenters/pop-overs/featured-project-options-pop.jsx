@@ -16,9 +16,12 @@ const PopoverButton = ({onClick, text, emoji}) => (
 const FeaturedProjectOptionsPop = ({...props}) => {
   
   function unfeatureProject(){
+    // animation stuff
     const featuredContainer = document.getElementById('embed');
     featuredContainer.classList.add('slide-down');
-    // move the unfeatured project to pinned projects    
+    props.togglePopover();
+    featuredContainer.addEventListener('animationend', props.unfeatureProject, {once: true});
+    // update pinned projects
   }
   
   return(
@@ -34,11 +37,8 @@ FeaturedProjectOptionsPop.propTypes = {
   api: PropTypes.any,
   currentUser: PropTypes.object,
   togglePopover: PropTypes.func.isRequired,
-  currentUserIsOnProject: PropTypes.bool.isRequired,
 };
-FeaturedProjectOptionsPop.defaultProps = {
-  currentUserIsOnProject: false
-};
+
 
 // Project Options Container
 // create as stateful react component
