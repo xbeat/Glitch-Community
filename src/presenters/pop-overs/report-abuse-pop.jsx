@@ -9,19 +9,35 @@ import { parseOneAddress } from "email-addresses";
 import _ from "lodash";
 import axios from "axios";
 import { captureException } from "../../utils/sentry";
+import {
+  getAbuseReportTitle,
+  getAbuseReportBody
+} from "../../utils/abuse-reporting.js";
+import Loader from "../includes/loader.jsx";
 
 import { CurrentUserConsumer } from "../current-user.jsx";
 
-const defaultReason = "This project doesn't belong on Glitch because...";
 class ReportAbusePop extends React.Component {
   constructor(props) {
     super(props);
+
+    if (this.props.reportedType == "user") {
+      this.defaultReason = `This user profile doesn’t seem appropriate for Glitch because…...`;
+    } else if (this.props.reportedType == "home") {
+      this.defaultReason = `[Something here] doesn't seem appropriate for Glitch because...`;
+    } else {
+      this.defaultReason = `This ${
+        props.reportedType
+      } doesn't seem appropriate for Glitch because...`;
+    }
+
     this.state = {
-      reason: defaultReason,
+      reason: this.defaultReason,
       email: "",
       emailError: "",
       reasonError: "",
-      submitted: false
+      submitted: false,
+      loading: false
     };
     this.submitReport = this.submitReport.bind(this);
     this.reasonOnChange = this.reasonOnChange.bind(this);
@@ -41,36 +57,13 @@ class ReportAbusePop extends React.Component {
   }
 
   formatRaw() {
-    const submitter = this.props.currentUser.login
-      ? this.props.currentUser.login
-      : "anonymous";
-    let email;
-    if (this.state.email) {
-      email = this.state.email;
-    } else {
-      const emailObj =
-        Array.isArray(this.props.currentUser.emails) &&
-        this.props.currentUser.emails.find(email => email.primary);
-      email = emailObj && emailObj.email;
-    }
-    const glitchLink = `https://glitch.com/~${this.props.projectName}`;
-    const firstHalf = `
-- Project Name: [${glitchLink}](${glitchLink}),
-
-- Project Id: ${this.props.projectId},
-
-`;
-    const submitterPart =
-      submitter != "anonymous"
-        ? `- Submitted by: [${submitter}](https://glitch.com/@${submitter})`
-        : "- Submitted by: anonymous";
-    const secondHalf = `
-- Contact: ${email}
-
-- Message: ${this.state.reason}`;
-    return `${firstHalf}
-${submitterPart}
-${secondHalf}`;
+    return getAbuseReportBody(
+      this.props.currentUser,
+      this.state.email,
+      this.props.reportedType,
+      this.props.reportedModel,
+      this.state.reason
+    );
   }
 
   async submitReport() {
@@ -80,15 +73,19 @@ ${secondHalf}`;
       if (emailErrors.emailError != "" || reasonErrors.reasonError != "") {
         return;
       }
+      this.setState({ loading: true });
 
       await axios.post("https://support-poster.glitch.me/post", {
         raw: this.formatRaw(),
-        title: `Abuse Report for ${this.props.projectName}`
+        title: getAbuseReportTitle(
+          this.props.reportedModel,
+          this.props.reportedType
+        )
       });
-      this.setState({ submitted: true, submitSuccess: true });
+      this.setState({ submitted: true, submitSuccess: true, loading: false });
     } catch (error) {
       captureException(error);
-      this.setState({ submitted: true, submitSuccess: false });
+      this.setState({ submitted: true, submitSuccess: false, loading: false });
     }
   }
 
@@ -109,7 +106,10 @@ ${secondHalf}`;
       "reasonError",
       "A description of the issue"
     );
-    if (errorObj.reasonError == "" && this.state.reason === defaultReason) {
+    if (
+      errorObj.reasonError == "" &&
+      this.state.reason === this.defaultReason
+    ) {
       errorObj = { reasonError: "Reason is required" };
       this.setState(errorObj);
     }
@@ -192,9 +192,13 @@ ${secondHalf}`;
         </section>
         {this.getUserInfoSection()}
         <section className="pop-over-actions">
-          <button className="button button-small" onClick={this.submitReport}>
-            Submit Report
-          </button>
+          {this.state.loading ? (
+            <Loader />
+          ) : (
+            <button className="button button-small" onClick={this.submitReport}>
+              Submit Report
+            </button>
+          )}
         </section>
       </>
     );
@@ -263,8 +267,8 @@ ${secondHalf}`;
 }
 
 ReportAbusePop.propTypes = {
-  projectName: PropTypes.string.isRequired,
-  projectId: PropTypes.string.isRequired,
+  reportedType: PropTypes.string.isRequired, // 'project', 'collection', 'user', 'team'
+  reportedModel: PropTypes.object.isRequired, // the actual model
   currentUser: PropTypes.object
 };
 
@@ -280,15 +284,15 @@ const ReportAbusePopButton = props => (
     buttonText="Report Abuse"
   >
     <ReportAbusePopContainer
-      projectName={props.projectName}
-      projectId={props.projectId}
+      reportedType={props.reportedType}
+      reportedModel={props.reportedModel}
     />
   </PopoverWithButton>
 );
 
 ReportAbusePopButton.propTypes = {
-  projectName: PropTypes.string.isRequired,
-  projectId: PropTypes.string.isRequired
+  reportedType: PropTypes.string.isRequired, // 'project', 'collection', 'user', 'team'
+  reportedModel: PropTypes.object // the actual model, or null if no model (like for the home page)
 };
 
 export default ReportAbusePopButton;

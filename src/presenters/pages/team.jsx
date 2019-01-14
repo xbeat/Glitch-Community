@@ -25,6 +25,7 @@ import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
+import ReportButton from '../pop-overs/report-abuse-pop.jsx';
 
 function syncPageToUrl(team) {
   history.replaceState(null, null, getLink(team));
@@ -231,10 +232,13 @@ class TeamPage extends React.Component {
             teamAdmins={this.teamAdmins()}
             users={this.props.team.users}
           />
-        )}
+        )}      
 
         { !this.props.currentUserIsOnTeam &&
-          <TeamMarketing />
+          <>
+            <ReportButton reportedType="team" reportedModel={this.props.team} />
+            <TeamMarketing />
+          </>
         }
       </main>
     );
