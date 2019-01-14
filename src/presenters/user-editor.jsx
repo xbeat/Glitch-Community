@@ -14,9 +14,9 @@ class UserEditor extends React.Component {
       ...props.initialUser,
       _deletedProjects: [],
       _collections: [],
+      _featuredProject: [],
       _cacheCover: Date.now(),
       loadedCollections: false,
-      featuredProjectDomain: props.initialUser.projects[0].domain,
     };
   }
 
@@ -123,9 +123,8 @@ class UserEditor extends React.Component {
   }
   
   featureProject(id, domain){
-    // feature project
+    this.updateFields({featured_project_id: id}).catch(this.props.handleErrorForInput);
     this.setState({ featuredProjectDomain: domain});
-    this.updateFields({featured_project_id: id})
   }
   
   componentDidMount() {

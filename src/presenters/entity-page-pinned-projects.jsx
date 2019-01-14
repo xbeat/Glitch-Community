@@ -44,9 +44,6 @@ const FeaturedPinnedProject = ({api, isAuthorized, currentUser, featuredProjectD
 
         }
 
-        {/* Might want to allow users to hide this message once they've seen it once
-          <button className="button-small button-tertiary" style={{marginLeft:5+"px"}}>hide</button> 
-        */}
         {isAuthorized && 
           <p className="hint">Tweak the way this embed looks by editing the project and going to <b>Share > Embed Project</b></p>
         }
