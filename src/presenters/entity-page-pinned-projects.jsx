@@ -71,8 +71,9 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
       {!!pinnedVisible && !!pinnedProjects.length && (
        
        <>
-        <FeaturedProject 
-          {...{api, isAuthorized, currentUser, projects, featuredProjectId, addProjectToCollection, projectOptions: {unfeatureProject} }}
+        <FeaturedProject   
+          {...{api, isAuthorized, currentUser, projects, featuredProjectId, addProjectToCollection}}
+          
         />
        
         <ProjectsList title={""}
