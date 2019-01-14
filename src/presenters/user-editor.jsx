@@ -122,8 +122,10 @@ class UserEditor extends React.Component {
     this.setState({_collections: data, loadedCollections: true});
   }
   
-  featureProject(domain){
+  featureProject(id, domain){
+    // feature project
     this.setState({ featuredProjectDomain: domain});
+    this.updateFields({featured_project_id: id})
   }
   
   componentDidMount() {
@@ -146,7 +148,7 @@ class UserEditor extends React.Component {
       undeleteProject: id => this.undeleteProject(id).catch(handleError),
       setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
       addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleError),
-      featureProject: (domain) => this.featureProject(domain)
+      featureProject: (id, domain) => this.featureProject(id, domain)
     };
     return this.props.children(this.state, funcs, this.isCurrentUser());
   }
