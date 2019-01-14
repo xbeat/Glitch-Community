@@ -20,7 +20,7 @@ function trackRemix(id, domain) {
   });
 }
 
-const FeaturedPinnedProject = ({api, isAuthorized, currentUser, featuredProjectDomain, projects, addProjectToCollection,}) => {
+const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectDomain, projects, addProjectToCollection,}) => {
   return(
     <>
       <h2 style={{marginTop: 2+"em"}}>Pinned Projects<span className="emoji pushpin emoji-in-title"></span></h2>
@@ -75,7 +75,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
       {!!pinnedVisible && !!pinnedProjects.length && (
        
        <>
-        <FeaturedPinnedProject 
+        <FeaturedProject 
           {...{api, isAuthorized, currentUser, projects, featuredProjectDomain, addProjectToCollection }}
         />
        

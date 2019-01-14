@@ -63,7 +63,7 @@ const UserPage = ({
     _cacheCover,
     _collections,
     loadedCollections,
-    featuredProjectDomain,
+    featuredProjectId,
   },
   api, isAuthorized,
   maybeCurrentUser,
@@ -108,7 +108,7 @@ const UserPage = ({
         addProjectToCollection,
         featureProject,
       }}
-      featuredProjectDomain={featuredProjectDomain}
+      featuredProjectId={featured_project_id}
       addProjectToCollection={addProjectToCollection}
     />
     
@@ -166,7 +166,7 @@ UserPage.propTypes = {
 const UserPageContainer = ({api, user}) => (
   <CurrentUserConsumer>
     {(maybeCurrentUser) => (
-      <UserEditor api={api} initialUser={user} featuredProjectDomain={user.projects[0].domain}>
+      <UserEditor api={api} initialUser={user}>
         {(user, funcs, isAuthorized) => (
           <>
             <Helmet>

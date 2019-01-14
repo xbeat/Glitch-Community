@@ -14,7 +14,6 @@ class UserEditor extends React.Component {
       ...props.initialUser,
       _deletedProjects: [],
       _collections: [],
-      _featuredProject: [],
       _cacheCover: Date.now(),
       loadedCollections: false,
     };
@@ -120,11 +119,14 @@ class UserEditor extends React.Component {
     const userId = this.state.id;
     const {data} = await this.props.api.get(`collections/?userId=${userId}`);
     this.setState({_collections: data, loadedCollections: true});
+  } 
+  
+  featureProject(id){
+    this.updateFields({featured_project_id: id}).catch(this.props.handleErrorForInput);
   }
   
-  featureProject(id, domain){
-    this.updateFields({featured_project_id: id}).catch(this.props.handleErrorForInput);
-    this.setState({ featuredProjectDomain: domain});
+  unfeatureProject(id){
+    this.updateFields({featured_project_id: null}).catch(this.props.handleErrorForInput);
   }
   
   componentDidMount() {
@@ -147,7 +149,8 @@ class UserEditor extends React.Component {
       undeleteProject: id => this.undeleteProject(id).catch(handleError),
       setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
       addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleError),
-      featureProject: (id, domain) => this.featureProject(id, domain)
+      featureProject: (id, domain) => this.featureProject(id, domain).catch(handleError),
+      unfeatureProject: id => this.unfeatureProject(id).catch(handleError)
     };
     return this.props.children(this.state, funcs, this.isCurrentUser());
   }
@@ -162,19 +165,18 @@ UserEditor.propTypes = {
   initialUser: PropTypes.shape({
     id: PropTypes.number.isRequired,
   }).isRequired,
-  featuredProjectDomain: PropTypes.string,
   uploadAsset: PropTypes.func.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
-const UserEditorContainer = ({api, children, initialUser, featuredProjectDomain}) => (
+const UserEditorContainer = ({api, children, initialUser}) => (
   <ErrorHandlers>
     {errorFuncs => (
       <Uploader>
         {uploadFuncs => (
           <CurrentUserConsumer>
             {(currentUser, fetched, {update}) => (
-              <UserEditor {...{api, currentUser, initialUser, featuredProjectDomain}} updateCurrentUser={update} {...uploadFuncs} {...errorFuncs}>
+              <UserEditor {...{api, currentUser, initialUser}} updateCurrentUser={update} {...uploadFuncs} {...errorFuncs}>
                 {children}
               </UserEditor>
             )}
@@ -188,7 +190,6 @@ UserEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   initialUser: PropTypes.object.isRequired,
-  featuredProjectDomain: PropTypes.string,
 };
 
 export default UserEditorContainer;
