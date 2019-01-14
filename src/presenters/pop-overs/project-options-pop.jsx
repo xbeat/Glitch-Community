@@ -74,20 +74,19 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
         </section>
       }
 
-      {(props.joinTeamProject || props.leaveTeamProject) &&
+      {props.joinTeamProject && !props.currentUserIsOnProject &&
         <section className="pop-over-actions collaborator-actions">
-          {!props.currentUserIsOnProject &&
-            <PopoverButton onClick={joinTeamProject} text="Join Project " emoji="rainbow"/>
-          }
-          {props.currentUserIsOnProject &&
-            <TrackClick name="Leave Project clicked">
-              <PopoverButton onClick={leaveTeamProject} text="Leave Project " emoji="wave"/>
-            </TrackClick>
-          }
+          <PopoverButton onClick={joinTeamProject} text="Join Project " emoji="rainbow"/>
         </section>
       }
       
-      
+      {props.leaveTeamProject && props.currentUserIsOnProject &&
+        <section className="pop-over-actions collaborator-actions">
+          <TrackClick name="Leave Project clicked">
+            <PopoverButton onClick={leaveTeamProject} text="Leave Project " emoji="wave"/>
+          </TrackClick>
+        </section>
+      }
       
       {(props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject) &&
         <section className="pop-over-actions collaborator-actions">
