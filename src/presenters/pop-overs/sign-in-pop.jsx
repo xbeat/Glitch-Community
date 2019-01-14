@@ -67,7 +67,7 @@ class EmailHandler extends React.Component {
   render() {
     const isEnabled = this.state.email.length > 0;
     return (
-      <NestedPopover alternateContent={() => <CurrentUserConsumer>{(currentUser, fetched, {login}) => <SignInCodeHandler setUser={login} {this.props.api}/>}</CurrentUserConsumer>} startAlternateVisible={false}>
+      <NestedPopover alternateContent={() => <CurrentUserConsumer>{(currentUser, fetched, {login}) => <SignInCodeHandler setUser={login} {...this.props}/>}</CurrentUserConsumer>} startAlternateVisible={false}>
         {showCodeLogin =>
           <dialog className="pop-over sign-in-pop">
             <NestedPopoverTitle>
@@ -94,7 +94,7 @@ class EmailHandler extends React.Component {
               }
             </section>
             {(this.state.done && !this.state.error) &&
-              <SignInCodeSection onClick={() => { onClick(); showCodeLogin(api); }}/>
+              <SignInCodeSection onClick={() => { onClick(); showCodeLogin(this.props.api); }}/>
             }
           </dialog>
         }
