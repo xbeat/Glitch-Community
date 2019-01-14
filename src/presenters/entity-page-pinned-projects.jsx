@@ -23,7 +23,6 @@ function trackRemix(id, domain) {
 const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, projects, addProjectToCollection, projectOptions}) => {
   return(
     <>
-      <h2 style={{marginTop: 2+"em"}}>Pinned Projects<span className="emoji pushpin emoji-in-title"></span></h2>
       <section id="embed" style={{marginTop: 0}}>      
         {isAuthorized && <FeaturedProjectOptionsPop {...{projectOptions, featuredProjectId}}/>}
         <div className="glitch-embed-wrap">
@@ -69,22 +68,25 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
   return (
     <>
       {!!pinnedVisible && (!!pinnedProjects.length || featuredProjectId) && (
-       
        <>
-        <FeaturedProject   
-          {...{api, isAuthorized, currentUser, projects, featuredProjectId, addProjectToCollection}}
-          projectOptions={isAuthorized && {...projectOptions}}
-        />
+         <h2 style={{marginTop: 2+"em"}}>Pinned Projects<span className="emoji pushpin emoji-in-title"></span></h2>
        
-       {pinnedProjects.length > 0 && 
-          <ProjectsList title={""}
-            projects={pinnedProjects}
-            api={api} 
-            projectOptions={isAuthorized ? {removePin, ...projectOptions} 
-              : (currentUser && currentUser.login ? {...projectOptions} : {})
-            }
-          />
-      }
+         {featuredProjectId && 
+          <FeaturedProject   
+              {...{api, isAuthorized, currentUser, projects, featuredProjectId, addProjectToCollection}}
+              projectOptions={isAuthorized && {...projectOptions}}
+            />
+         }
+
+         {pinnedProjects.length > 0 && 
+            <ProjectsList title={""}
+              projects={pinnedProjects}
+              api={api} 
+              projectOptions={isAuthorized ? {removePin, ...projectOptions} 
+                : (currentUser && currentUser.login ? {...projectOptions} : {})
+              }
+            />
+          }
        </>
       )}
     </>

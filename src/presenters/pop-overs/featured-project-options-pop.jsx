@@ -21,8 +21,8 @@ const FeaturedProjectOptionsPop = ({featuredProjectId, ...props} ) => {
     const featuredContainer = document.getElementById('embed');
     featuredContainer.classList.add('slide-down');
     props.togglePopover();
-    featuredContainer.addEventListener('animationend', () => props.unfeatureProject(featuredProjectId), {once: true});
-    // update pinned projects
+    props.unfeatureProject(featuredProjectId);
+    // should do some updating here
   }
   
   return(

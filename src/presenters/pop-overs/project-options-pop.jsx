@@ -51,10 +51,12 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
   }
   
   function featureProject(){
-    animate(event, 'slide-down', () => props.featureProject(props.project.domain));
+    animate(event, 'slide-down', () => props.featureProject(props.project.id));
     // show feature embed if it's not already visible
     const featuredContainer = document.getElementById('embed');
-    featuredContainer.classList.remove('slide-down');
+    if(featuredContainer){
+      featuredContainer.classList.remove('slide-down');
+    }
   }
   
   return(

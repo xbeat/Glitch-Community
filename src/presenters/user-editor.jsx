@@ -121,15 +121,21 @@ class UserEditor extends React.Component {
     this.setState({_collections: data, loadedCollections: true});
   } 
   
-  featureProject(id){
-    this.updateFields({featured_project_id: id}).catch(this.props.handleErrorForInput);
+  async featureProject(id){
+    console.log('attempt to feature project');
+    await this.updateFields({featured_project_id: id});
+    
+    // reload pinned projects
+    this.setState(({pins}) => ({
+      pins: [...pins],
+    }));
   }
   
-  unfeatureProject(id){
+  async unfeatureProject(id){
     console.log('unfeature project');
-    this.updateFields({featured_project_id: null}).catch(this.props.handleErrorForInput);
+    await this.updateFields({featured_project_id: null});
+    
     // reload featured projects
-    console.log('attempt to reset featured project to pin');
     this.setState(({pins}) => ({
       pins: [...pins, {projectId: id}],
     }));
