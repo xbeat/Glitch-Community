@@ -62,13 +62,13 @@ const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, pro
 
 const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorized, removePin, projectOptions, featuredProjectId, addProjectToCollection,}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
-  const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id));
+  const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != featuredProjectId); // need to filter out featuredProjectId
   
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
   
   return (
     <>
-      {!!pinnedVisible && !!pinnedProjects.length && (
+      {!!pinnedVisible && (!!pinnedProjects.length || featuredProjectId) && (
        
        <>
         <FeaturedProject   
@@ -76,13 +76,15 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
           projectOptions={isAuthorized && {...projectOptions}}
         />
        
-        <ProjectsList title={""}
-          projects={pinnedProjects}
-          api={api} 
-          projectOptions={isAuthorized ? {removePin, ...projectOptions} 
-            : (currentUser && currentUser.login ? {...projectOptions} : {})
-          }
-        />
+       {pinnedProjects.length > 0 && 
+          <ProjectsList title={""}
+            projects={pinnedProjects}
+            api={api} 
+            projectOptions={isAuthorized ? {removePin, ...projectOptions} 
+              : (currentUser && currentUser.login ? {...projectOptions} : {})
+            }
+          />
+      }
        </>
       )}
     </>

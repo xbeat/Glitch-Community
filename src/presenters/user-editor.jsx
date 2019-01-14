@@ -126,7 +126,13 @@ class UserEditor extends React.Component {
   }
   
   unfeatureProject(id){
+    console.log('unfeature project');
     this.updateFields({featured_project_id: null}).catch(this.props.handleErrorForInput);
+    // reload featured projects
+    console.log('attempt to reset featured project to pin');
+    this.setState(({pins}) => ({
+      pins: [...pins, {projectId: id}],
+    }));
   }
   
   componentDidMount() {
