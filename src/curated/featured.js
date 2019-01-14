@@ -19,7 +19,7 @@ export default [
   },{
     title: 'Magic Sketchpad!',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise7.png?1547468106643",
-    link: 'http://magic-sketchpad.glitch.me/'
+    link: 'https://magic-sketchpad.glitch.me/'
   },{
     title: 'Read Between The Lines',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise6.png?1547468106803",
