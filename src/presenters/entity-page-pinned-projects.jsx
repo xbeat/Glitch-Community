@@ -77,7 +77,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
     <>
       {!!pinnedVisible && (!!pinnedProjects.length || featuredProjectId) && (
        <>       
-       <h2>{pinnedTitle}</h2>
+       <h2 className="pinned">{pinnedTitle}</h2>
        
          {featuredProjectId && 
             <FeaturedProject   
@@ -93,7 +93,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
               projectOptions={isAuthorized ? {removePin, ...projectOptions} 
                 : (currentUser && currentUser.login ? {...projectOptions} : {})
               }
-              extraClasses="featured"
+              extraClasses="pinned"
             />
           }
        </>

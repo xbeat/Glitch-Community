@@ -8,19 +8,17 @@ import PopoverButton from './popover-button';
 const FeaturedProjectOptionsPop = ({featuredProjectId, ...props} ) => {
   
   function animateThenUnfeature(){
-    console.log('animateThenUnfeature');
     // animation stuff
     const featuredContainer = document.getElementById('featured-project-embed');
     featuredContainer.classList.add('slide-down');
     props.togglePopover();
     props.unfeatureProject(featuredProjectId);
-    // should do some updating here
   }
-  
+   
   return(
     <dialog className="pop-over project-options-pop">
       <section className="pop-over-actions">
-        <PopoverButton onClick={animateThenUnfeature} text="Unfeature" emoji="arrow-down"/>
+        <PopoverButton onClick={animateThenUnfeature} text="Un-feature" emoji="arrow-down"/>
       </section>
     </dialog>
   );
