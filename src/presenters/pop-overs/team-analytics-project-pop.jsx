@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ProjectResultItem from '../includes/project-result-item.jsx';
-import PopoverContainer from './popover-container.jsx';
+import PopoverWithButton from './popover-with-button';
 
 const AllProjectsItem = ({currentProjectDomain, action}) => {
   const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
@@ -65,7 +65,7 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomai
             <li key={project.id} className="button-unstyled">
               <ProjectResultItem 
                 {...project} 
-                action = {() => onClick(project.domain)} 
+                onClick = {() => onClick(project.domain)} 
                 isActive = {isActive(currentProjectDomain, project)}
               />
             </li>
@@ -82,7 +82,7 @@ PopOver.propTypes = {
     domain: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
   })).isRequired,
-  togglePopover: PropTypes.func.isRequired,
+  togglePopover: PropTypes.func, // required but added dynamically
   setFilter: PropTypes.func.isRequired,
   filter: PropTypes.string.isRequired,
   updateProjectDomain: PropTypes.func.isRequired,
@@ -104,25 +104,15 @@ class TeamAnalyticsProjectPop extends React.Component {
   render() {
     const {updateProjectDomain, currentProjectDomain, projects} = this.props;
     return (
-      <PopoverContainer>
-        {({visible, togglePopover}) => (
-          <div className="button-wrap">
-            <button className="button-small button-tertiary" onClick={togglePopover}>
-              Filter: {currentProjectDomain || 'All Projects'}
-            </button>
-            {visible && 
-              <PopOver 
-                projects={projects}
-                updateProjectDomain={updateProjectDomain}
-                currentProjectDomain={currentProjectDomain}
-                togglePopover={togglePopover}
-                setFilter={this.setFilter}
-                filter={this.state.filter}
-              />
-            }
-          </div>
-        )}
-      </PopoverContainer>
+      <PopoverWithButton buttonClass="button-small button-tertiary" buttonText={`Filter: ${currentProjectDomain || 'All Projects'}`} passToggleToPop>
+        <PopOver
+          projects={projects}
+          updateProjectDomain={updateProjectDomain}
+          currentProjectDomain={currentProjectDomain}
+          setFilter={this.setFilter}
+          filter={this.state.filter}
+        />
+      </PopoverWithButton>
     );
   }
 }

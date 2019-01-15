@@ -15,7 +15,7 @@ export const ProjectItem = ({api, project, collectionColor, homepageCollection, 
     <li>
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams}/>      
       <ProjectOptionsPop {...{project, api}} {...props}/>
-      <ProjectLink project={project}>
+      <ProjectLink project={project} className="button-area">
         <div className={['project', project.private ? 'private-project' : ''].join(' ')} 
           style={project.private ? {} : {backgroundColor: collectionColor, borderBottomColor:collectionColor}}
           data-track="project" data-track-label={project.domain}>
@@ -28,12 +28,12 @@ export const ProjectItem = ({api, project, collectionColor, homepageCollection, 
             {( homepageCollection 
               ?
               <div className="description">
-                <TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown>
+                <TruncatedMarkdown length={80}>{project.description}</TruncatedMarkdown>
               </div>
               :
               <div className="description" 
                 style={project.private ? {} : {color: (props.category ? "black" : (collectionColor ? getContrastTextColor(collectionColor) : "black" ) )}}>
-                <TruncatedMarkdown length={96}>{project.description}</TruncatedMarkdown></div>
+                <TruncatedMarkdown length={80}>{project.description}</TruncatedMarkdown></div>
             )}
             <div className="overflow-mask" style={project.private ? {} : {backgroundColor: collectionColor}}></div>
           </div>

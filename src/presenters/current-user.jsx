@@ -45,7 +45,7 @@ function identifyUser(user) {
         login: user.login,
         email,
         created_at: user.createdAt,
-      });
+      }, {groupId: '0'});
     }
     if (user) {
       configureScope((scope) => {
@@ -234,11 +234,12 @@ CurrentUserProvider.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-export const CurrentUserConsumer = ({children}) => (
+export const CurrentUserConsumer = (props) => (
   <Consumer>
-    {({currentUser, fetched, ...funcs}) => children(currentUser, fetched, funcs)}
+    {({currentUser, fetched, ...funcs}) => props.children(currentUser, fetched, funcs, props)}
   </Consumer>
 );
+
 CurrentUserConsumer.propTypes = {
   children: PropTypes.func.isRequired,
 };

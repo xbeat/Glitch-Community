@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {UserLink, TeamLink} from './includes/link.jsx';
-import PopoverContainer from './pop-overs/popover-container.jsx';
 import {Avatar, UserAvatar, TeamAvatar} from './includes/avatar.jsx';
 
 
@@ -100,44 +99,3 @@ UsersList.propTypes = {
 };
 
 export default UsersList;
-
-
-// UserPopoversList
-
-const adminStatusDisplay = (adminIds, user) => {
-  if (adminIds.includes(user.id)) {
-    return " (admin)";
-  }
-  return "";
-};
-
-export const UserPopoversList = ({users, adminIds, children}) => (
-  <ul className="users">
-    {users.map(user => (
-      <li key={user.id}>
-        <PopoverContainer>
-          {({visible, togglePopover}) => (
-            <div className="button-wrap">
-              <button onClick={togglePopover} className="user button-unstyled">
-                <UserAvatar user={user} suffix={adminStatusDisplay(adminIds, user)}/>
-              </button>
-              {!!visible && children(user, togglePopover)}
-            </div>
-          )}
-        </PopoverContainer>
-      </li>
-    ))}
-  </ul>
-);
-
-UserPopoversList.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-  })).isRequired,
-  children: PropTypes.func.isRequired,
-  adminIds: PropTypes.array,
-};
-
-UserPopoversList.defaultProps = {
-  adminIds: []
-};

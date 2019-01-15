@@ -1,9 +1,10 @@
 const express = require('express');
 const fs = require('fs');
 const util = require('util');
-const moment = require('moment-mini');
+const dayjs = require('dayjs');
 
 const {getProject, getTeam, getUser, getZine} = require('./api');
+const initWebpack = require('./webpack');
 const constants = require('./constants');
 
 module.exports = function(external) {
@@ -20,11 +21,13 @@ module.exports = function(external) {
   // Caching - js and CSS files have a hash in their name, so they last a long time
   ['/*.js', '/*.css'].forEach((path) => (
     app.use(path, (request, response, next) => {
-      const s = moment.duration(1, 'months').asSeconds();
+      const s = dayjs.convert(1, 'month', 'seconds');
       response.header('Cache-Control', `public, max-age=${s}`);
       return next();
     })
   ));
+  
+  initWebpack(app);
 
   app.use(express.static('public', { index: false }));
 
@@ -40,30 +43,30 @@ module.exports = function(external) {
     let built = true;
     
     const zine = await getZine() || [];
+    let scripts = [];
+    let styles = [];
     
-    let scripts = {};
     try {
-      scripts = JSON.parse(await readFilePromise('public/scripts.json'));
+      const stats = JSON.parse(await readFilePromise('public/stats.json'));
+      stats.chunks.forEach(chunk => {
+        if (chunk.initial) {
+          chunk.files.forEach(file => {
+            if (file.endsWith('.js') && !chunk.names.includes('styles')) {
+              scripts.push(`/${file}?${chunk.hash}`);
+            } else if (file.endsWith('.css')) {
+              styles.push(`/${file}?${chunk.hash}`);
+            }
+          });
+        }
+      });
     } catch (error) {
-      console.error("Failed to load script manifest");
+      console.error("Failed to load webpack stats file. Unless you see a webpack error here, the initial build probably just isn't ready yet.");
       built = false;
-    }
-    let styles = {};
-    try {
-      styles = JSON.parse(await readFilePromise('public/styles.json'));
-    } catch (error) {
-      console.error("Failed to load style manifest");
-      built = false;
-    }
-    
-    if (!built) {
-      console.error("The initial build probably isn't ready yet");
     }
     
     res.render('index.ejs', {
       title, description, image,
-      scripts: Object.values(scripts),
-      styles: Object.values(styles),
+      scripts, styles,
       BUILD_COMPLETE: built,
       EXTERNAL_ROUTES: JSON.stringify(external),
       ZINE_POSTS: JSON.stringify(zine),

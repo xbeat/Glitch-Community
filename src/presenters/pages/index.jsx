@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Layout from '../layout.jsx';
 
 import {getEditorUrl} from '../../models/project';
+import {AnalyticsContext} from '../analytics';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import Link from '../includes/link.jsx';
 
@@ -13,6 +14,7 @@ import OverlayVideo from '../overlays/overlay-video.jsx';
 import Questions from '../questions.jsx';
 import RandomCategories from '../random-categories.jsx';
 import RecentProjects from '../recent-projects.jsx';
+import ReportButton from '../pop-overs/report-abuse-pop.jsx';
 
 function loadScript(src) {
   const script = document.createElement('script');
@@ -99,6 +101,7 @@ const IndexPage = ({api, user}) => (
     <RandomCategories api={api}/>
     <Categories/>
     <MadeInGlitch/>
+    <ReportButton reportedType="home" />
   </main>
 );
 IndexPage.propTypes = {
@@ -110,9 +113,11 @@ IndexPage.propTypes = {
 
 const IndexPageContainer = ({api}) => (
   <Layout api={api}>
-    <CurrentUserConsumer>
-      {user => <IndexPage api={api} user={user}/>}
-    </CurrentUserConsumer>
+    <AnalyticsContext properties={{origin: 'index'}}>
+      <CurrentUserConsumer>
+        {user => <IndexPage api={api} user={user}/>}
+      </CurrentUserConsumer>
+    </AnalyticsContext>
   </Layout>
 );
 

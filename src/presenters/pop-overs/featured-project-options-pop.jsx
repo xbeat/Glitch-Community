@@ -2,15 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
-
-// import NestedPopover from './popover-nested.jsx';
-
-const PopoverButton = ({onClick, text, emoji}) => (
-  <button className="button-small has-emoji button-tertiary" onClick={onClick}>
-    <span>{text} </span>
-    <span className={`emoji ${emoji}`}></span>
-  </button>
-);
+import PopoverButton from './popover-button';
 
 // Project Options Pop
 const FeaturedProjectOptionsPop = ({featuredProjectId, ...props} ) => {

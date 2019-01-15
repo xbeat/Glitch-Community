@@ -1,9 +1,9 @@
 const path = require('path');
-const ManifestPlugin = require('webpack-manifest-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const AutoprefixerStylus = require("autoprefixer-stylus");
+const StatsPlugin = require('stats-webpack-plugin');
 
 
 const PUBLIC = path.resolve(__dirname, 'public');
@@ -26,7 +26,7 @@ module.exports = {
     [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
   },
   output: {
-    filename: '[name].js?[chunkhash]',
+    filename: '[name].js',
     path: PUBLIC,
     publicPath: '/',
   },
@@ -104,20 +104,8 @@ module.exports = {
   },
   plugins: [
     new LodashModuleReplacementPlugin(),
-    new ManifestPlugin({
-      fileName: "scripts.json",
-      filter: ({isInitial, name}) => (
-        isInitial && name.endsWith('.js') &&
-          name !== `${STYLE_BUNDLE_NAME}.js` // omit the no-op CSS bundle .js file
-        ),
-    }),
-    new ManifestPlugin({
-      fileName: "styles.json",
-      filter: ({isInitial, name}) => isInitial && name.endsWith('.css'),
-    }),
-    new MiniCssExtractPlugin({
-      filename: "[name].css?[contenthash]"
-    }),
+    new MiniCssExtractPlugin({filename: '[name].css'}),
+    new StatsPlugin('stats.json', {children: false, chunkModules: false, modules: false}),
   ],
   watchOptions: {
     ignored: /node_modules/,

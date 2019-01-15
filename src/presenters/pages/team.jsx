@@ -2,12 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
-import {CurrentUserConsumer} from '../current-user.jsx';
+import {AnalyticsContext} from '../analytics';
+import {CurrentUserConsumer} from '../current-user';
+import {DataLoader} from '../includes/loader';
 import TeamEditor from '../team-editor.jsx';
 import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ErrorBoundary from '../includes/error-boundary';
+
+//import SampleTeamCollections from '../../curated/sample-team-collections.jsx';
+import CollectionsList from '../collections-list';
 
 import EditableField from '../includes/editable-field.jsx';
 import Thanks from '../includes/thanks.jsx';
@@ -20,9 +25,10 @@ import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
+import ReportButton from '../pop-overs/report-abuse-pop.jsx';
 
-function syncPageToUrl(url) {
-  history.replaceState(null, null, getLink({url}));
+function syncPageToUrl(team) {
+  history.replaceState(null, null, getLink(team));
 }
 
 const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
@@ -38,12 +44,21 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
     <p className="team-url">
       <EditableField
         value={team.url}
-        update={url => updateUrl(url).then(() => syncPageToUrl(url))}
+        update={url => updateUrl(url).then(() => syncPageToUrl({...team, url}))}
         placeholder="Short url?"
         prefix="@"
       />
     </p>
   </>
+);
+
+const TeamPageCollections = ({collections, team, api, currentUser, currentUserIsOnTeam}) => (
+  <CollectionsList
+    title="Collections"
+    collections={collections.map(collection => ({...collection, team: team}))}
+    api={api} maybeCurrentUser={currentUser} maybeTeam={team}
+    isAuthorized={currentUserIsOnTeam}
+  />
 );
 
 // Team Page
@@ -58,6 +73,20 @@ class TeamPage extends React.Component {
   
   async addProjectToCollection(project, collection) {
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
+  }
+  
+  getProjectOptions() {
+    const projectOptions = {
+      addProjectToCollection: this.addProjectToCollection,
+      deleteProject: this.props.deleteProject,
+      leaveTeamProject: this.props.leaveTeamProject,
+    };
+    if (this.props.currentUserIsOnTeam) {
+      projectOptions["removeProjectFromTeam"] = this.props.removeProject;
+      projectOptions["joinTeamProject"] = this.props.joinTeamProject;
+    }
+
+    return projectOptions;
   }
 
   teamAdmins() {
@@ -155,29 +184,19 @@ class TeamPage extends React.Component {
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
           removePin={this.props.removePin}
-          projectOptions={{
-            addProjectToCollection: this.addProjectToCollection,
-            removeProjectFromTeam: this.props.removeProject,
-            joinTeamProject: this.props.joinTeamProject,
-            leaveTeamProject: this.props.leaveTeamProject,
-          }}
+          projectOptions={this.getProjectOptions()}
           api={this.props.api}
         />
-
+        
         <EntityPageRecentProjects
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
-          addPin={this.props.addPin}tToCollection={this.addProjectToCollection}
-          projectOptions={{
-            addProjectToCollection: this.addProjectToCollection,
-            removeProjectFromTeam: this.props.removeProject,
-            joinTeamProject: this.props.joinTeamProject,
-            leaveTeamProject: this.props.leaveTeamProject,
-          }}
+          addPin={this.props.addPin}
+          projectOptions={this.getProjectOptions()}
           api={this.props.api}
         />
-
+        
         { (this.props.team.projects.length === 0 && this.props.currentUserIsOnTeam) &&
           <aside className="inline-banners add-project-to-empty-team-banner">
             <div className="description-container">
@@ -186,7 +205,17 @@ class TeamPage extends React.Component {
             </div>
           </aside>
         }
-
+        
+        {/* TEAM COLLECTIONS */}
+        <ErrorBoundary>
+          <DataLoader
+            get={() => this.props.api.get(`collections?teamId=${this.props.team.id}`)}
+            renderLoader={() => <TeamPageCollections {...this.props} collections={this.props.team.collections}/>}
+          >
+            {({data}) => <TeamPageCollections {...this.props} collections={data}/>}
+          </DataLoader>
+        </ErrorBoundary>
+        
         { this.props.currentUserIsOnTeam && <ErrorBoundary>
           <TeamAnalytics
             api={this.props.api}
@@ -205,10 +234,13 @@ class TeamPage extends React.Component {
             teamAdmins={this.teamAdmins()}
             users={this.props.team.users}
           />
-        )}
+        )}      
 
         { !this.props.currentUserIsOnTeam &&
-          <TeamMarketing />
+          <>
+            <ReportButton reportedType="team" reportedModel={this.props.team} />
+            <TeamMarketing />
+          </>
         }
       </main>
     );
@@ -235,6 +267,7 @@ TeamPage.propTypes = {
   }),
   addPin: PropTypes.func.isRequired,
   addProject: PropTypes.func.isRequired,
+  deleteProject:PropTypes.func.isRequired,
   updateWhitelistedDomain: PropTypes.func.isRequired,
   inviteEmail: PropTypes.func.isRequired,
   inviteUser: PropTypes.func.isRequired,
@@ -303,23 +336,25 @@ const TeamPageEditor = ({api, initialTeam, children}) => (
   </TeamEditor>
 );
 const TeamPageContainer = ({api, team, ...props}) => (
-  <TeamPageEditor api={api} initialTeam={team}>
-    {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
-      <>
-        <Helmet>
-          <title>{team.name}</title>
-        </Helmet>
-        <CurrentUserConsumer>
-          {currentUser => (
-            <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
-              currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
-              {...props}
-            />
-          )}
-        </CurrentUserConsumer>
-        <TeamNameConflict team={team}/>
-      </>
-    )}
-  </TeamPageEditor>
+  <AnalyticsContext properties={{origin: 'team'}} context={{groupId: team.id.toString()}}>
+    <TeamPageEditor api={api} initialTeam={team}>
+      {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
+        <>
+          <Helmet>
+            <title>{team.name}</title>
+          </Helmet>
+          <CurrentUserConsumer>
+            {currentUser => (
+              <TeamPage api={api} team={team} {...funcs} currentUser={currentUser}
+                currentUserIsOnTeam={currentUserIsOnTeam} currentUserIsTeamAdmin={currentUserIsTeamAdmin}
+                {...props}
+              />
+            )}
+          </CurrentUserConsumer>
+          <TeamNameConflict team={team}/>
+        </>
+      )}
+    </TeamPageEditor>
+  </AnalyticsContext>
 );
 export default TeamPageContainer;

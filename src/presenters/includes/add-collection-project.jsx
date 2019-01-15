@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import AddCollectionProjectPop from '../pop-overs/add-collection-project-pop.jsx';
-import PopoverContainer from '../pop-overs/popover-container.jsx';
+import PopoverWithButton from '../pop-overs/popover-with-button';
 
 const AddCollectionProject = ({currentUserIsOwner, ...props}) => {
   if(!currentUserIsOwner) {
@@ -10,17 +10,9 @@ const AddCollectionProject = ({currentUserIsOwner, ...props}) => {
   }
   
   return (
-    <PopoverContainer>
-      {({visible, togglePopover}) => (
-        <div className="button-wrap">
-          <button className={`button add-project opens-pop-over`} onClick={togglePopover}>
-              Add Project
-          </button>
-          { visible && <AddCollectionProjectPop {...props} togglePopover={togglePopover} /> }
-        </div>
-      )}
-    </PopoverContainer>
-  );
+    <PopoverWithButton buttonClass="button add-project opens-pop-over" buttonText="Add Project" passToggleToPop>
+      <AddCollectionProjectPop {...props} />
+    </PopoverWithButton>);
 };
 
 AddCollectionProject.propTypes = {

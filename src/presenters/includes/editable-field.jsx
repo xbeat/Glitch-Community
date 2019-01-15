@@ -4,7 +4,8 @@ import {uniqueId} from 'lodash';
 
 import {OptimisticValue, TrimmedValue, FieldErrorIcon, FieldErrorMessage} from './field-helpers.jsx';
 
-export class PureEditableField extends React.Component {
+
+class PureEditableFieldHolder extends React.Component {
   constructor(props) {
     super(props);
     this.state = { id: uniqueId("editable-field-") };
@@ -33,6 +34,8 @@ export class PureEditableField extends React.Component {
       autoComplete: "off",
       placeholder: this.props.placeholder,
       autoFocus: this.props.autoFocus,
+      onBlur: this.props.blur,
+      type: this.props.inputType,
     };
     
     const maybeErrorIcon = !!this.props.error && <FieldErrorIcon/>;
@@ -52,7 +55,7 @@ export class PureEditableField extends React.Component {
         <span className="editable-field-flex">
           {maybePrefix}
           <span className="editable-field-input">
-            <input {...inputProps} ref={this.textInput} />
+            {this.props.children(inputProps, this.textInput)}
             {maybeErrorIcon}
           </span>
           {maybeSuffix}
@@ -62,14 +65,57 @@ export class PureEditableField extends React.Component {
     );
   }
 }
-PureEditableField.propTypes = {
+
+PureEditableFieldHolder.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
+  children: PropTypes.func.isRequired, // function that takes inputProps and inputRef as parameters and returns a node
+  blur: PropTypes.func,
   prefix: PropTypes.node,
   suffix: PropTypes.node,
   autoFocus: PropTypes.bool,
   error: PropTypes.string,
+};
+
+export const PureEditableTextArea = (props) => (
+  <PureEditableFieldHolder {...props}>
+    {(inputProps, inputRef) => (
+      <textarea {...inputProps} ref={inputRef} />  
+    )}
+  </PureEditableFieldHolder>
+);
+
+PureEditableTextArea.propTypes = {
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
+  blur: PropTypes.func,
+  prefix: PropTypes.node,
+  suffix: PropTypes.node,
+  autoFocus: PropTypes.bool,
+  error: PropTypes.string,
+  inputType: PropTypes.string,
+};
+
+export const PureEditableField = (props) => (
+  <PureEditableFieldHolder {...props}>
+    {(inputProps, inputRef) => (
+      <input {...inputProps} ref={inputRef} />  
+    )}
+  </PureEditableFieldHolder>
+);
+
+PureEditableField.propTypes = {
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
+  blur: PropTypes.func,
+  prefix: PropTypes.node,
+  suffix: PropTypes.node,
+  autoFocus: PropTypes.bool,
+  error: PropTypes.string,
+  inputType: PropTypes.string,
 };
 
 export const EditableField = ({value, update, ...props}) => (
@@ -87,6 +133,7 @@ EditableField.propTypes = {
   value: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
+  blur: PropTypes.func,
   prefix: PropTypes.node,
   suffix: PropTypes.node,
   autoFocus: PropTypes.bool,

@@ -1,10 +1,16 @@
 .project-page
+  .user-avatar
+    border-radius: 5px
+  
   .teams-information
     > li
       margin-right: 7px
 
   .buttons
     margin: -3.5px
+    &.space-between
+      display: flex
+      justify-content: space-between
     &.buttons-right
       text-align: right
     > *
@@ -24,3 +30,7 @@
     padding: 0
     > li
       display: block
+  
+  .buttons.space-between
+    .margin
+      margin: 3.5px

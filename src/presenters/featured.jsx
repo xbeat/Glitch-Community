@@ -2,17 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {sampleSize} from 'lodash';
 
-import EmbedHtml from '../curated/embed';
 import FeaturedItems from '../curated/featured';
+import FeaturedEmbedObject from '../curated/featured-embed';
+
 import Link from './includes/link.jsx';
 
-const imgWitch = 'https://cdn.glitch.com/180b5e22-4649-4c71-9a21-2482eb557c8c%2Fwitch-2.svg?1521578927355';
+import FeaturedEmbed from './featured-embed.jsx';
 
 class ZineItems extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: window.ZINE_POSTS.slice(0, 4),
+      posts: window.ZINE_POSTS.slice(0, 4), 
       masks: sampleSize([1, 2, 3, 4, 5], 4),
     };
   }
@@ -58,12 +59,10 @@ FeaturedPanel.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-const Featured = ({embedHtml, featured, isAuthorized}) => (
+const Featured = ({featured}) => (
   <section className="featured featured-collections">
-    <h2>Check These Out</h2>
     <div className="community-pick-embed-container">
-      { isAuthorized && <img className="witch" src={imgWitch} width="110px" height="82px" alt=""/> }
-      <span dangerouslySetInnerHTML={{__html: embedHtml}}/>
+      <FeaturedEmbed {...FeaturedEmbedObject}/>
     </div>
     
     <section>
@@ -80,13 +79,12 @@ const Featured = ({embedHtml, featured, isAuthorized}) => (
   </section>
 );
 Featured.propTypes = {
-  embedHtml: PropTypes.string.isRequired,
   featured: PropTypes.array.isRequired,
-  isAuthorized: PropTypes.bool,
 };
 
+
 const FeaturedContainer = ({isAuthorized}) => (
-  <Featured embedHtml={EmbedHtml} featured={FeaturedItems} isAuthorized={isAuthorized}/>
+  <Featured featured={FeaturedItems} isAuthorized={isAuthorized}/>
 );
 
 FeaturedContainer.propTypes = {

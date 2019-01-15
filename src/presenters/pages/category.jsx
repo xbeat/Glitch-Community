@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
 
-import Loader, {DataLoader} from '../includes/loader.jsx';
+import {AnalyticsContext} from '../analytics';
+import {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import Categories from '../categories.jsx';
@@ -18,7 +19,8 @@ const CategoryPageWrap = ({
   api, 
   category, 
   currentUser,
-  ...props}) => (
+  ...props
+}) => (
   <>
     <Helmet>
       <title>{category.name}</title>
@@ -80,14 +82,6 @@ CategoryPageWrap.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
 };
 
-const CategoryPageLoader = () => (
-  <Loader/>
-);
-
-const CategoryPageError = () => (
-  "Something went wrong. Try refreshing?"  
-);
-
 async function loadCategory(api, id) {
   const {data} = await api.get(`categories/${id}`);
   return data;
@@ -95,23 +89,21 @@ async function loadCategory(api, id) {
 
 const CategoryPage = ({api, category, ...props}) => (
   <Layout api={api}>
-    <DataLoader
-      get={() => loadCategory(api, category.id)}
-      renderLoader={() => <CategoryPageLoader category={category} api={api} {...props}/>}
-      renderError={() => <CategoryPageError category={category} api={api} {...props}/>}
-    >
-      {category => (
-        <CollectionEditor api={api} initialCollection={category} >
-          {(category, funcs) => (
-            <CurrentUserConsumer>
-              {(currentUser) => (
-                <CategoryPageWrap category={category} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props}/>
-              )}
-            </CurrentUserConsumer>
-          )}
-        </CollectionEditor>
-      )}
-    </DataLoader>
+    <AnalyticsContext properties={{origin: 'category'}}>
+      <DataLoader get={() => loadCategory(api, category.id)}>
+        {category => (
+          <CollectionEditor api={api} initialCollection={category} >
+            {(category, funcs) => (
+              <CurrentUserConsumer>
+                {(currentUser) => (
+                  <CategoryPageWrap category={category} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props}/>
+                )}
+              </CurrentUserConsumer>
+            )}
+          </CollectionEditor>
+        )}
+      </DataLoader>
+    </AnalyticsContext>
   </Layout>
 );
 

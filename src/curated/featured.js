@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Vera Molnár in Audio Form',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_hearing-vera-molnar.png?1543839845270",
-    link: 'https://glitch.com/~hearing-vera-molnar'
+    title: 'What Would Moira Rose Say?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise5.png?1547468105916",
+    link: 'https://moira-rose.glitch.me/'
   },{
-    title: 'Handsfree.js Starter Kit',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_handsfree-starter.png?1543839845139",
-    link: 'https://glitch.com/~handsfree-starter'
+    title: 'Magic Sketchpad!',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise7.png?1547468106643",
+    link: 'https://magic-sketchpad.glitch.me/'
   },{
-    title: 'Generate Circle Chord Patterns',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2F1201_chord-machine.png?1543839845017",
-    link: 'https://glitch.com/~chordmachine'
+    title: 'Read Between The Lines',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise6.png?1547468106803",
+    link: 'https://noiselines-text.glitch.me/'
   }  
 ];

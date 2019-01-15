@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import {getAvatarUrl as getTeamAvatarUrl} from '../../models/team';
 import {getAvatarThumbnailUrl as getUserAvatarUrl} from '../../models/user';
+import {TrackClick} from '../analytics';
 import {Link, TeamLink, UserLink} from '../includes/link.jsx';
 import PopoverContainer from './popover-container.jsx';
-import NestedPopover from './popover-nested.jsx';
+import {NestedPopover} from './popover-nested.jsx';
 import CreateTeamPop from './create-team-pop.jsx';
 
 import {orderBy} from 'lodash';
@@ -26,9 +27,11 @@ const CreateTeamButton = ({showCreateTeam, userIsAnon}) => {
     );
   }
   return (
-    <button onClick={showCreateTeam} className="button button-small has-emoji">
-      Create Team <span className="emoji herb" />
-    </button>
+    <TrackClick name="Create Team clicked">
+      <button onClick={showCreateTeam} className="button button-small has-emoji">
+        Create Team <span className="emoji herb" />
+      </button>
+    </TrackClick>
   );
 };
 
@@ -169,7 +172,7 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
           {({togglePopover, visible}) => (
             <div className="button user-options-pop-button" data-tooltip="User options" data-tooltip-right="true">
               <button className="user" onClick={togglePopover} disabled={!props.user.id}>
-                <img src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
+                <img className="user-avatar" src={avatarUrl} style={avatarStyle} width="30px" height="30px" alt="User options"/>
                 <span className="down-arrow icon"/>
               </button>
               {visible && (

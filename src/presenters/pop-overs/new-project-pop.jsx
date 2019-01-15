@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Link from '../includes/link.jsx';
+import {TrackedExternalLink} from '../analytics';
 import Loader from '../includes/loader.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
-import PopoverContainer from './popover-container.jsx';
+import PopoverWithButton from './popover-with-button';
 
 import {getRemixUrl} from '../../models/project';
 
@@ -13,15 +13,14 @@ const NewProjectPop = ({projects}) => (
     <section className="pop-over-actions results-list">
       <div className="results">
         {projects.length ? projects.map((project) => (
-          <Link key={project.id} to={getRemixUrl(project.domain)}>
-            <ProjectResultItem {...project} cdnUrl="https://cdn.glitch.com" users={[]} action={()=>{
-              /* global analytics */
-              analytics.track("New Project Clicked", {
-                baseDomain: project.domain,
-                origin: "community new project pop",
-              });
-            }} />
-          </Link>
+          <TrackedExternalLink key={project.id} to={getRemixUrl(project.domain)}
+            name="New Project Clicked" properties={{
+              baseDomain: project.domain,
+              origin: "community new project pop",
+            }}
+          >
+            <ProjectResultItem {...project} cdnUrl="https://cdn.glitch.com" users={[]} onClick={() => {}}/>
+          </TrackedExternalLink>
         )) : <Loader/>}
       </div>
     </section>
@@ -64,16 +63,12 @@ class NewProjectPopButton extends React.Component {
   }
   
   render() {
-    return (
-      <PopoverContainer>
-        {({visible, togglePopover}) => (
-          <div className="button-wrap">
-            <button className="button-small" data-track="open new-project pop" onClick={togglePopover}>New Project</button>
-            {visible && <NewProjectPop projects={this.state.projects}/>}
-          </div>
-        )}
-      </PopoverContainer>
-    );
+    return (<PopoverWithButton 
+      buttonClass="button-small"
+      dataTrack="open new-project pop"
+      buttonText="New Project">
+      <NewProjectPop projects={this.state.projects}/>
+    </PopoverWithButton>);
   }
 }
 NewProjectPopButton.propTypes = {

@@ -13,9 +13,7 @@ class UserEditor extends React.Component {
     this.state = {
       ...props.initialUser,
       _deletedProjects: [],
-      _collections: [],
       _cacheCover: Date.now(),
-      loadedCollections: false,
     };
   }
 
@@ -116,10 +114,9 @@ class UserEditor extends React.Component {
   }
   
   async loadCollections() {
-    const userId = this.state.id;
-    const {data} = await this.props.api.get(`collections/?userId=${userId}`);
-    this.setState({_collections: data, loadedCollections: true});
-  } 
+    const {data} = await this.props.api.get(`collections?userId=${this.state.id}`);
+    this.setState({collections: data});
+  }
   
   async featureProject(id){
     console.log('attempt to feature project');
@@ -139,6 +136,7 @@ class UserEditor extends React.Component {
     this.setState(({pins}) => ({
       pins: [...pins, {projectId: id}],
     }));
+
   }
   
   componentDidMount() {

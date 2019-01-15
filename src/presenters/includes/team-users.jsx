@@ -2,31 +2,50 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getDisplayName} from '../../models/user';
+import {TrackClick} from '../analytics';
 import {WhitelistedDomainIcon} from './team-elements.jsx';
+import {UserAvatar} from '../includes/avatar.jsx';
 import AddTeamUserPop from '../pop-overs/add-team-user-pop.jsx';
+import PopoverWithButton from '../pop-overs/popover-with-button.jsx';
 import PopoverContainer from '../pop-overs/popover-container.jsx';
 import TeamUserInfoPop from '../pop-overs/team-user-info-pop.jsx';
 import UsersList from '../users-list.jsx';
-import {UserPopoversList} from '../users-list.jsx';
-
 
 // Team Users list (in profile container)
 
 export const TeamUsers = (props) => (
-  <UserPopoversList users={props.users} adminIds={props.adminIds}>
-    {(user, togglePopover) =>
-      <TeamUserInfoPop
-        userIsTeamAdmin={props.adminIds.includes(user.id)}
-        userIsTheOnlyMember={props.users.length === 1}
-        user={user} togglePopover={togglePopover}
-        {...props}
-      />
-    }
-  </UserPopoversList>
+  <ul className="users">
+    {props.users.map(user => (
+      <li key={user.id}>
+        <PopoverWithButton 
+          buttonClass="user button-unstyled" 
+          buttonText={<UserAvatar user={user} suffix={adminStatusDisplay(props.adminIds, user)}/>}
+          passToggleToPop 
+        >
+          <TeamUserInfoPop
+            userIsTeamAdmin={props.adminIds.includes(user.id)}
+            userIsTheOnlyMember={props.users.length === 1}
+            user={user}
+            {...props}
+          />
+        </PopoverWithButton>
+      </li>
+    ))}
+  </ul>
 );
 
+const adminStatusDisplay = (adminIds, user) => {
+  if (adminIds.includes(user.id)) {
+    return " (admin)";
+  }
+  return "";
+};
+
+
 TeamUsers.propTypes = {
-  users: PropTypes.array.isRequired,
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  })).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
   updateUserPermissions: PropTypes.func.isRequired,
@@ -124,7 +143,9 @@ export class AddTeamUser extends React.Component {
             {!!this.state.alreadyInvited.length && 
               <UsersList users={this.state.alreadyInvited}/>
             }
-            <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
+            <TrackClick name="Add to Team clicked">
+              <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
+            </TrackClick>
             {!!this.state.invitee &&
               <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeNotifyInvited}>
                 Invited {this.state.invitee}

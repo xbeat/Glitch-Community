@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import {getAvatarUrl} from '../../models/project';
 
+import {AnalyticsContext} from '../analytics';
 import {DataLoader} from '../includes/loader.jsx';
 import NotFound from '../includes/not-found.jsx';
 import {Markdown} from '../includes/markdown.jsx';
@@ -14,7 +15,8 @@ import Expander from '../includes/expander.jsx';
 import EditableField from '../includes/editable-field.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
-import {ShowButton, EditButton, RemixButton, ReportButton} from '../includes/project-actions.jsx';
+import {ShowButton, EditButton, RemixButton} from '../includes/project-actions.jsx';
+import ReportButton from '../pop-overs/report-abuse-pop.jsx';
 import AddProjectToCollection from '../includes/add-project-to-collection.jsx';
 import TeamsList from '../teams-list.jsx';
 import UsersList from '../users-list.jsx';
@@ -89,10 +91,7 @@ ReadmeLoader.propTypes = {
 };
 
 const ProjectPage = ({
-  project: {
-    description, domain, users, teams,
-    ...project // 'private' can't be used as a variable name
-  },
+  project,
   addProjectToCollection,
   api,
   currentUser,
@@ -100,8 +99,9 @@ const ProjectPage = ({
   updateDomain,
   updateDescription,
   updatePrivate,
-}) => (
-  <main className="project-page">
+}) => {
+  const {domain, users, teams} = project; 
+  return <main className="project-page">
     <section id="info">
       <InfoContainer>
         <ProjectInfoContainer style={{backgroundImage: `url('${getAvatarUrl(project.id)}')`}}>
@@ -118,7 +118,7 @@ const ProjectPage = ({
             {!!teams.length && <TeamsList teams={teams}/>}
           </div>
           <AuthDescription
-            authorized={isAuthorized} description={description}
+            authorized={isAuthorized} description={project.description}
             update={updateDescription} placeholder="Tell us about your app"
           />
           <p className="buttons">
@@ -130,13 +130,15 @@ const ProjectPage = ({
     </section>
     <section id="embed">
       <Embed domain={domain}/>
-      <div className="buttons buttons-right">
-
-        {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
-        <RemixButton className="button-small"
-          name={domain} isMember={isAuthorized}
-          onClick={() => trackRemix(project.id, domain)}
-        />
+      <div className="buttons space-between">
+        <ReportButton reportedType="project" reportedModel={project} />
+        <div>
+          {currentUser.login && <AddProjectToCollection className="button-small margin" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
+          <RemixButton className="button-small margin"
+            name={domain} isMember={isAuthorized}
+            onClick={() => trackRemix(project.id, domain)}
+          />
+        </div>
       </div>
     </section>
     <section id="readme">
@@ -145,11 +147,8 @@ const ProjectPage = ({
     <section id="related">
       <RelatedProjects ignoreProjectId={project.id} {...{api, teams, users}}/>
     </section>
-    <section id="feedback" className="buttons buttons-right">
-      <ReportButton name={domain} id={project.id} className="button-small button-tertiary"/>
-    </section>
-  </main>
-);
+  </main>;
+};
 ProjectPage.propTypes = {
   api: PropTypes.any.isRequired,
   currentUser: PropTypes.object.isRequired,
@@ -187,9 +186,11 @@ ProjectPageLoader.propTypes = {
 
 const ProjectPageContainer = ({api, name}) => (
   <Layout api={api}>
-    <CurrentUserConsumer>
-      {currentUser => <ProjectPageLoader api={api} domain={name} currentUser={currentUser}/>}
-    </CurrentUserConsumer>
+    <AnalyticsContext properties={{origin: 'project'}}>
+      <CurrentUserConsumer>
+        {currentUser => <ProjectPageLoader api={api} domain={name} currentUser={currentUser}/>}
+      </CurrentUserConsumer>
+    </AnalyticsContext>
   </Layout>
 );
 
