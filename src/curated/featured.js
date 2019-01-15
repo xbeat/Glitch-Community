@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Set Your Spotify Playlists to Private',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal2TsjisseTalsma.jpg?1546519622343",
-    link: 'https://make-all-spotify-playlists-secret.glitch.me/'
+    title: 'What Would Moira Rose Say?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise5.png?1547468105916",
+    link: 'https://moira-rose.glitch.me/'
   },{
-    title: 'An Inclusive Language Bot for Slack',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal1TsjisseTalsma.jpg?1546519622225",
-    link: 'https://guys-bot-for-slack.glitch.me/'
+    title: 'Magic Sketchpad!',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise7.png?1547468106643",
+    link: 'https://magic-sketchpad.glitch.me/'
   },{
-    title: 'Search the Ocean\'s Depths with Dive',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitchfinal3TsjisseTalsma.jpg?1546519622071",
-    link: 'https://dive-the-game.glitch.me/'
+    title: 'Read Between The Lines',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise6.png?1547468106803",
+    link: 'https://noiselines-text.glitch.me/'
   }  
 ];

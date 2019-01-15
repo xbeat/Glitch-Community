@@ -91,10 +91,7 @@ ReadmeLoader.propTypes = {
 };
 
 const ProjectPage = ({
-  project: {
-    description, domain, users, teams,
-    ...project // 'private' can't be used as a variable name
-  },
+  project,
   addProjectToCollection,
   api,
   currentUser,
@@ -102,8 +99,9 @@ const ProjectPage = ({
   updateDomain,
   updateDescription,
   updatePrivate,
-}) => (
-  <main className="project-page">
+}) => {
+  const {domain, users, teams} = project; 
+  return <main className="project-page">
     <section id="info">
       <InfoContainer>
         <ProjectInfoContainer style={{backgroundImage: `url('${getAvatarUrl(project.id)}')`}}>
@@ -120,7 +118,7 @@ const ProjectPage = ({
             {!!teams.length && <TeamsList teams={teams}/>}
           </div>
           <AuthDescription
-            authorized={isAuthorized} description={description}
+            authorized={isAuthorized} description={project.description}
             update={updateDescription} placeholder="Tell us about your app"
           />
           <p className="buttons">
@@ -133,7 +131,7 @@ const ProjectPage = ({
     <section id="embed">
       <Embed domain={domain}/>
       <div className="buttons space-between">
-        <ReportButton projectName={domain} projectId={project.id} />
+        <ReportButton reportedType="project" reportedModel={project} />
         <div>
           {currentUser.login && <AddProjectToCollection className="button-small margin" api={api} currentUser={currentUser} project={project} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
           <RemixButton className="button-small margin"
@@ -149,8 +147,8 @@ const ProjectPage = ({
     <section id="related">
       <RelatedProjects ignoreProjectId={project.id} {...{api, teams, users}}/>
     </section>
-  </main>
-);
+  </main>;
+};
 ProjectPage.propTypes = {
   api: PropTypes.any.isRequired,
   currentUser: PropTypes.object.isRequired,
@@ -188,7 +186,7 @@ ProjectPageLoader.propTypes = {
 
 const ProjectPageContainer = ({api, name}) => (
   <Layout api={api}>
-    <AnalyticsContext properties={{origin: 'project'}} context={{groupId: 0}}>
+    <AnalyticsContext properties={{origin: 'project'}}>
       <CurrentUserConsumer>
         {currentUser => <ProjectPageLoader api={api} domain={name} currentUser={currentUser}/>}
       </CurrentUserConsumer>

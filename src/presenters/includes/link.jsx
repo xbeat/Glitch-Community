@@ -58,7 +58,7 @@ CollectionLink.propTypes = {
 };
 
 export const ProjectLink = ({project, children, ...props}) => (
-  <Link to={getProjectLink(project.domain)} {...props}>{children}</Link>
+  <Link to={getProjectLink(project)} {...props}>{children}</Link>
 );
 ProjectLink.propTypes = {
   project: PropTypes.shape({

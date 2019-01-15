@@ -19,6 +19,7 @@ import CollectionEditor from '../collection-editor.jsx';
 import EditCollectionColor from '../includes/edit-collection-color.jsx';
 import EditCollectionNameAndUrl from '../includes/edit-collection-name-and-url.jsx';
 import AddCollectionProject from '../includes/add-collection-project.jsx';
+import ReportButton from '../pop-overs/report-abuse-pop.jsx';
 
 import CollectionAvatar from '../includes/collection-avatar.jsx';
 import {TeamTile} from '../teams-list';
@@ -173,9 +174,8 @@ const CollectionPageContents = ({
              }
            </ProjectsLoader>
         }
-        
       </article>
-      
+      {!isAuthorized && <ReportButton reportedType="collection" reportedModel={collection} />}
     </main>
    {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection}/>}
   </>
@@ -254,7 +254,7 @@ const CollectionPage = ({api, ownerName, name, ...props}) => (
   <Layout api={api}>
     <DataLoader get={() => loadCollection(api, ownerName, name)}>
       {collection => collection ? (
-        <AnalyticsContext properties={{origin: 'collection'}} context={{groupId: collection.team ? collection.team.id : 0}}>
+        <AnalyticsContext properties={{origin: 'collection'}} context={{groupId: collection.team ? collection.team.id.toString() : '0'}}>
           <CurrentUserConsumer>
             {(currentUser) => (
               <CollectionEditor api={api} initialCollection={collection} >

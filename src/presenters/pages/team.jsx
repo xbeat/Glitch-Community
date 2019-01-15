@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import {AnalyticsContext} from '../analytics';
-import DevToggles from '../includes/dev-toggles';
 import {CurrentUserConsumer} from '../current-user';
 import {DataLoader} from '../includes/loader';
 import TeamEditor from '../team-editor.jsx';
@@ -26,6 +25,7 @@ import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
+import ReportButton from '../pop-overs/report-abuse-pop.jsx';
 
 function syncPageToUrl(team) {
   history.replaceState(null, null, getLink(team));
@@ -53,20 +53,12 @@ const TeamNameUrlFields = ({team, updateName, updateUrl}) => (
 );
 
 const TeamPageCollections = ({collections, team, api, currentUser, currentUserIsOnTeam}) => (
-  <DevToggles>
-    {enabledToggles => (
-      <CollectionsList
-        title={<>Collections {!collections.length && currentUserIsOnTeam && (
-          <aside className="inline-banners team-page">
-            Use collections to organize projects
-          </aside>
-        )}</>}
-        collections={collections.map(collection => ({...collection, team: team}))}
-        api={api} maybeCurrentUser={currentUser} maybeTeam={team}
-        isAuthorized={currentUserIsOnTeam && enabledToggles.includes('Team Collections')}
-      />
-    )}
-  </DevToggles>
+  <CollectionsList
+    title="Collections"
+    collections={collections.map(collection => ({...collection, team: team}))}
+    api={api} maybeCurrentUser={currentUser} maybeTeam={team}
+    isAuthorized={currentUserIsOnTeam}
+  />
 );
 
 // Team Page
@@ -81,6 +73,20 @@ class TeamPage extends React.Component {
   
   async addProjectToCollection(project, collection) {
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
+  }
+  
+  getProjectOptions() {
+    const projectOptions = {
+      addProjectToCollection: this.addProjectToCollection,
+      deleteProject: this.props.deleteProject,
+      leaveTeamProject: this.props.leaveTeamProject,
+    };
+    if (this.props.currentUserIsOnTeam) {
+      projectOptions["removeProjectFromTeam"] = this.props.removeProject;
+      projectOptions["joinTeamProject"] = this.props.joinTeamProject;
+    }
+
+    return projectOptions;
   }
 
   teamAdmins() {
@@ -178,13 +184,7 @@ class TeamPage extends React.Component {
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
           removePin={this.props.removePin}
-          projectOptions={{
-            addProjectToCollection: this.addProjectToCollection,
-            removeProjectFromTeam: this.props.removeProject,
-            deleteProject: this.props.deleteProject,
-            joinTeamProject: this.props.joinTeamProject,
-            leaveTeamProject: this.props.leaveTeamProject,
-          }}
+          projectOptions={this.getProjectOptions()}
           api={this.props.api}
         />
         
@@ -193,13 +193,7 @@ class TeamPage extends React.Component {
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
           addPin={this.props.addPin}
-          projectOptions={{
-            addProjectToCollection: this.addProjectToCollection,
-            removeProjectFromTeam: this.props.removeProject,
-            deleteProject: this.props.deleteProject,
-            joinTeamProject: this.props.joinTeamProject,
-            leaveTeamProject: this.props.leaveTeamProject,
-          }}
+          projectOptions={this.getProjectOptions()}
           api={this.props.api}
         />
         
@@ -240,10 +234,13 @@ class TeamPage extends React.Component {
             teamAdmins={this.teamAdmins()}
             users={this.props.team.users}
           />
-        )}
+        )}      
 
         { !this.props.currentUserIsOnTeam &&
-          <TeamMarketing />
+          <>
+            <ReportButton reportedType="team" reportedModel={this.props.team} />
+            <TeamMarketing />
+          </>
         }
       </main>
     );
@@ -339,7 +336,7 @@ const TeamPageEditor = ({api, initialTeam, children}) => (
   </TeamEditor>
 );
 const TeamPageContainer = ({api, team, ...props}) => (
-  <AnalyticsContext properties={{origin: 'team'}} context={{groupId: team.id}}>
+  <AnalyticsContext properties={{origin: 'team'}} context={{groupId: team.id.toString()}}>
     <TeamPageEditor api={api} initialTeam={team}>
       {(team, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
         <>

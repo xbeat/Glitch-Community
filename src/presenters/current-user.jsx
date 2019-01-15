@@ -45,7 +45,7 @@ function identifyUser(user) {
         login: user.login,
         email,
         created_at: user.createdAt,
-      });
+      }, {groupId: '0'});
     }
     if (user) {
       configureScope((scope) => {
