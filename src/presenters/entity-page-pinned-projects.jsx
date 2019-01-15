@@ -23,7 +23,7 @@ function trackRemix(id, domain) {
 const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, projects, addProjectToCollection, projectOptions}) => {
   return(
     <>
-      <section id="embed" style={{marginTop: 0}}>      
+      <section id="feature-embed" style={{marginTop: 0}}>      
         {isAuthorized && <FeaturedProjectOptionsPop {...{projectOptions, featuredProjectId}}/>}
         <div className="glitch-embed-wrap">
           <iframe title="embed"

@@ -52,12 +52,8 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
   }
   
   function featureProject(){
+    // remove the featured project from the pinned list
     animate(event, 'slide-down', () => props.featureProject(props.project.id));
-    // show feature embed if it's not already visible
-    const featuredContainer = document.getElementById('embed');
-    if(featuredContainer){
-      featuredContainer.classList.remove('slide-down');
-    }
   }
   
   return(
@@ -73,6 +69,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
       {!!props.removePin &&
         <section className="pop-over-actions">
           <TrackClick name="Project Un-Pinned">
+            <PopoverButton onClick={featureProject} text="Feature" emoji="arrow-up"/>
             <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>
           </TrackClick>
         </section>
