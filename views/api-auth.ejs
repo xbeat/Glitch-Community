@@ -19,24 +19,27 @@
       //  Any changes to this code can have large security implications.  Make sure you 
       //  are aware of them before touching anything.
       
+      const parentUrl = `https://${domain}.${PROJECTS_DOMAIN}`;
       const cachedUser = window.localStorage.cachedUser;
-      let msg = null;
-      if (cachedUser) {
-        const user = JSON.parse(cachedUser);
-        const url = `${API_URL}projects/${domain}/appAuthToken?authorization=${user.persistentToken}`;
-        fetch(url, {
-            method : "POST",
-        }).then(function(response) {
-          return response.json();
-        }).then(function(json) {
-          msg = json.token;
-        }).catch(function(err) {
-          console.log(err);
-          //  Just don't blow up.  Default empty message will be sent
-        });
+      
+      if (!cachedUser) {
+        window.parent.postMessage(null);
+        return;
       }
       
-      window.parent.postMessage(msg, `https://${domain}.${PROJECTS_DOMAIN}`);
+      const user = JSON.parse(cachedUser);
+      const url = `${API_URL}projects/${domain}/appAuthToken?authorization=${user.persistentToken}`;
+      
+      fetch(url, {
+          method : "POST",
+      }).then(function(response) {
+        return response.json();
+      }).then(function(json) {
+        window.parent.postMessage(json.token, parentUrl);
+      }).catch(function() {
+        window.parent.postMessage(null);
+      });
+      }
     </script>
   </body>
 </html>
