@@ -44,6 +44,7 @@ const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, pro
 
         <div className="buttons buttons-right">
 
+          {/* need to replace project below with actual project */}
           {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={projects[0]} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
 
           {/* Can add to track remix later 
@@ -57,6 +58,15 @@ const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, pro
       </section>
     </>
     )
+};
+
+FeaturedProject.propTypes = {
+  api: PropTypes.func,
+  isAuthorized: PropTypes.bool.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  featuredProjectId: PropTypes.number.isRequired,
+  addProjectToCollection: PropTypes.func,
+  projectOptions: PropTypes.object.isRequired,
 };
 
 const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorized, removePin, projectOptions, featuredProjectId, addProjectToCollection,}) => {
@@ -86,7 +96,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
          }
 
          {pinnedProjects.length > 0 && 
-            <ProjectsList title={null}
+            <ProjectsList title=""
               projects={pinnedProjects}
               api={api} 
               projectOptions={isAuthorized ? {removePin, ...projectOptions} 
