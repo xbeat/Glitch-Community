@@ -23,7 +23,8 @@ function trackRemix(id, domain) {
 const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, projects, addProjectToCollection, projectOptions}) => {
   return(
     <>
-      <section id="featured-project-embed" style={{marginTop: 0}}>      
+      <section id="featured-project-embed">      
+      
         {isAuthorized && <FeaturedProjectOptionsPop {...{projectOptions, featuredProjectId}}/>}
         <div className="glitch-embed-wrap">
           <iframe title="embed"
@@ -76,18 +77,17 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
     <>
       {!!pinnedVisible && (!!pinnedProjects.length || featuredProjectId) && (
        <>       
+       <h2>{pinnedTitle}</h2>
+       
          {featuredProjectId && 
-          <>
-            <h2 style={{marginTop: 2+"em"}}>Pinned Projects<span className="emoji pushpin emoji-in-title"></span></h2>
             <FeaturedProject   
                 {...{api, isAuthorized, currentUser, projects, featuredProjectId, addProjectToCollection}}
                 projectOptions={isAuthorized && {...projectOptions}}
               />
-          </>
          }
 
          {pinnedProjects.length > 0 && 
-            <ProjectsList title={(featuredProjectId ? null : pinnedTitle)}
+            <ProjectsList title={null}
               projects={pinnedProjects}
               api={api} 
               projectOptions={isAuthorized ? {removePin, ...projectOptions} 
