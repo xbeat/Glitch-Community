@@ -30,7 +30,8 @@
           return response.json();
         }).then(function(json) {
           msg = json.token;
-        }).catch(function() {
+        }).catch(function(err) {
+          console.log(err);
           //  Just don't blow up.  Default empty message will be sent
         });
       }
