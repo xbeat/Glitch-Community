@@ -180,7 +180,7 @@ EmailSignInButton.propTypes = {
 
 const SignInCodeSection = ({onClick}) => (
   <section className="pop-over-actions last-section pop-over-info">
-    <button className="button-small button-tertiary button-on-secondary-background"  onClick={() => { onClick();}}>
+    <button className="button-small button-tertiary button-on-secondary-background"  onClick={onClick}>
       <span>Use a sign in code</span>
     </button>
   </section>
