@@ -10,7 +10,7 @@ const FeaturedProjectOptionsPop = ({featuredProjectId, ...props} ) => {
   function animateThenUnfeature(){
     console.log('animateThenUnfeature');
     // animation stuff
-    const featuredContainer = document.getElementById('embed');
+    const featuredContainer = document.getElementById('featured-project-embed');
     featuredContainer.classList.add('slide-down');
     props.togglePopover();
     props.unfeatureProject(featuredProjectId);
