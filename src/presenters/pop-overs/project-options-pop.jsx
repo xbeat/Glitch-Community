@@ -51,7 +51,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
     animate(event, 'slide-down', () => props.deleteProject(props.project.id));
   }
   
-  function featureProject(){
+  function featureProject(event){
     // remove the featured project from the pinned list
     animate(event, 'slide-up', () => (
       props.featureProject(props.project.id)
