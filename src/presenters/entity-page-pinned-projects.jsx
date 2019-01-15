@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 
 import ProjectsList from './projects-list.jsx';
 import FeaturedProjectOptionsPop from "./pop-overs/featured-project-options-pop.jsx";
-import {EditButton, RemixButton, ReportButton} from './includes/project-actions.jsx';
+import {EditButton, RemixButton} from './includes/project-actions.jsx';
+import ReportButton from './pop-overs/report-abuse-pop.jsx';
 import AddProjectToCollection from './includes/add-project-to-collection.jsx';
 
 import {CurrentUserConsumer} from './current-user.jsx';
@@ -21,6 +22,12 @@ function trackRemix(id, domain) {
 }
 
 const FeaturedProject = ({api, isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject}) => {
+  
+  const reportBtn = 
+    <div className="buttons buttons-left">
+      <ReportButton className="button-small" reportedType="project" reportedModel={featuredProject} />
+    </div>;
+  
   return(
     <>
       <section id="featured-project-embed">            
@@ -36,10 +43,7 @@ const FeaturedProject = ({api, isAuthorized, currentUser, unfeatureProject, addP
           <div className="buttons buttons-left">
             <EditButton className="button-small button-edit" name={featuredProject.id} isMember={isAuthorized}/>
           </div>
-          :
-          <div className="buttons buttons-left">
-            <ReportButton className="button-small" name={featuredProject.id} id={featuredProject.id}/>
-          </div>
+          : reportBtn
         }
 
         <div className="buttons buttons-right">
@@ -61,7 +65,7 @@ FeaturedProject.propTypes = {
   api: PropTypes.func,
   isAuthorized: PropTypes.bool.isRequired,
   currentUser: PropTypes.object.isRequired,
-  unfeatureProject: PropTypes.func.isRequired,
+  unfeatureProject: PropTypes.func,
   featuredProject: PropTypes.object,
   addProjectToCollection: PropTypes.func,
 };
@@ -89,7 +93,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
          {featuredProjectId && 
             <FeaturedProject   
               {...{api, isAuthorized, currentUser, addProjectToCollection}}
-              unfeatureProject={isAuthorized ? projectOptions.unfeatureProject : ()}
+              unfeatureProject={projectOptions.unfeatureProject}
               featuredProject={featuredProject}
             />
          }
