@@ -22,23 +22,22 @@
       const parentUrl = `https://${domain}.${PROJECTS_DOMAIN}`;
       const cachedUser = window.localStorage.cachedUser;
       
-      if (!cachedUser) {
-        window.parent.postMessage(null);
-        return;
+      if (cachedUser) {
+        const user = JSON.parse(cachedUser);
+        const url = `${API_URL}projects/${domain}/appAuthToken?authorization=${user.persistentToken}`;
+
+        fetch(url, {
+            method : "POST",
+        }).then(function(response) {
+          return response.json();
+        }).then(function(json) {
+          window.parent.postMessage(json.token, parentUrl);
+        }).catch(function() {
+          window.parent.postMessage(null, parentUrl);
+        });
       }
-      
-      const user = JSON.parse(cachedUser);
-      const url = `${API_URL}projects/${domain}/appAuthToken?authorization=${user.persistentToken}`;
-      
-      fetch(url, {
-          method : "POST",
-      }).then(function(response) {
-        return response.json();
-      }).then(function(json) {
-        window.parent.postMessage(json.token, parentUrl);
-      }).catch(function() {
-        window.parent.postMessage(null);
-      });
+      else {
+        window.parent.postMessage(null, parentUrl);
       }
     </script>
   </body>
