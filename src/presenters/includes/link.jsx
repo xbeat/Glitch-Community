@@ -11,7 +11,7 @@ import { getLink as getUserLink } from '../../models/user';
 /* global EXTERNAL_ROUTES */
 const external = Array.from(EXTERNAL_ROUTES);
 
-export const Link = React.forwardRef(({to, children, ...props}, ref) => {
+export const Link = React.forwardRef(function Link({to, children, ...props}, ref) {
   if (typeof to === 'string') {
     const currentUrl = new URL(window.location.href);
     const targetUrl = new URL(to, currentUrl);
