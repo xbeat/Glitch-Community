@@ -24,7 +24,7 @@ module.exports = {
     // Overrides/additions to eslint:recommended:
     "no-console": OFF,
     "no-else-return": ERROR,
-    "indent": ["error", 2],
+    "indent": ["error", 2,  { "SwitchCase": 1 }],
     "linebreak-style": ["error", "unix"],
     "semi": ["error", "always"],
     "no-debugger": WARN,
