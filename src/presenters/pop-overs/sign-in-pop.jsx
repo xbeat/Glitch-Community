@@ -67,7 +67,7 @@ class EmailHandler extends React.Component {
   render() {
     const isEnabled = this.state.email.length > 0;
     return (
-      <NestedPopover alternateContent={(login) => <SignInCodeHandler setUser={login} {...this.props}/>} startAlternateVisible={false}>
+      <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props}/>} startAlternateVisible={false}>
         {showCodeLogin =>
           <dialog className="pop-over sign-in-pop">
             <NestedPopoverTitle>
@@ -124,10 +124,8 @@ class SignInCodeHandler extends React.Component {
   async onSubmit(e) {
     e.preventDefault();
     this.setState({done: true});
-    console.log(this.props);
     try {
       const {data} = await this.props.api.post('/auth/email/' + this.state.code);
-      console.log(data);
       this.props.setUser(data);
       this.setState({error: false});
     } catch (error) {
