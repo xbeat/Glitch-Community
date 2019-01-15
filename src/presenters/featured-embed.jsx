@@ -14,7 +14,7 @@ const FeaturedEmbed = ({image, mask, title, url, embed, body, color}) => (
     <div className="content" style={{backgroundColor: color}}>
       <div className="description">
         <Link to={`culture${url}`}>
-          <h1>{title}</h1>
+          <h2>{title}</h2>
         </Link>
         <p dangerouslySetInnerHTML={{__html: body}}/>
         <Link to={`culture${url}`} className="learn-more">
