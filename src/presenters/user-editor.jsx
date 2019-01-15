@@ -134,7 +134,6 @@ class UserEditor extends React.Component {
     this.setState(({pins}) => ({
       pins: [...pins, {projectId: id}],
     }));
-
   }
   
   componentDidMount() {
@@ -157,7 +156,7 @@ class UserEditor extends React.Component {
       undeleteProject: id => this.undeleteProject(id).catch(handleError),
       setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
       addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleError),
-      featureProject: (id, domain) => this.featureProject(id, domain).catch(handleError),
+      featureProject: (id) => this.featureProject(id).catch(handleError),
       unfeatureProject: id => this.unfeatureProject(id).catch(handleError)
     };
     return this.props.children(this.state, funcs, this.isCurrentUser());

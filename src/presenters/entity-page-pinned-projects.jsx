@@ -58,7 +58,7 @@ const FeaturedProject = ({api, isAuthorized, currentUser, unfeatureProject, addP
         </div>
       </section>
     </>
-    )
+  );
 };
 
 FeaturedProject.propTypes = {
@@ -107,7 +107,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
               }
               extraClasses="pinned"
             />
-          }
+         }
        </>
       )}
     </>
@@ -127,7 +127,7 @@ EntityPagePinnedProjects.propTypes = {
 };
 
 const EntityPagePinnedProjectsContainer = ({api, projects, maybeCurrentUser, ...props}) => (  
-    <EntityPagePinnedProjects api={api} projects={projects} currentUser={maybeCurrentUser} {...props}/>  
+  <EntityPagePinnedProjects api={api} projects={projects} currentUser={maybeCurrentUser} {...props}/>  
 );
 
 export default EntityPagePinnedProjectsContainer;  
