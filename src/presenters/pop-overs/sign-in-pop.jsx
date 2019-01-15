@@ -130,7 +130,6 @@ class SignInCodeHandler extends React.Component {
       this.setState({error: false});
     } catch (error) {
       captureException(error);
-      console.log(error);
       this.setState({error: true});
     }
   }
