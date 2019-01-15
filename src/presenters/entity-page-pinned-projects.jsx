@@ -61,7 +61,6 @@ FeaturedProject.propTypes = {
   api: PropTypes.func,
   isAuthorized: PropTypes.bool.isRequired,
   currentUser: PropTypes.object.isRequired,
-  featuredProjectId: PropTypes.string.isRequired,
   featuredProject: PropTypes.object,
   addProjectToCollection: PropTypes.func,
   projectOptions: PropTypes.object.isRequired,
@@ -70,6 +69,8 @@ FeaturedProject.propTypes = {
 const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorized, removePin, projectOptions, featuredProjectId, addProjectToCollection,}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != featuredProjectId); 
+  const featuredProject = projects[0];
+  // const featuredProject = Object.is(featuredProjectId, undefined) ? projects.filter( ({id}) => id == featuredProjectId).first() : undefined;
   
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
     
@@ -90,7 +91,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
             <FeaturedProject   
               {...{api, isAuthorized, currentUser, addProjectToCollection}}
               projectOptions={isAuthorized && {...projectOptions}}
-              featuredProject={projects.filter( ({id}) => id === featuredProjectId)}
+              featuredProject={featuredProject}
             />
          }
 
