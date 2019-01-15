@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import ProjectItem from './project-item.jsx';
 import Link from './includes/link';
 
-export const ProjectsList = ({title, placeholder, ...props}) => (
-  <article className="projects">
+export const ProjectsList = ({title, placeholder, extraClasses, ...props}) => (
+  <article className={"projects " + extraClasses}>
     <h2>{title}</h2>
 
     {!!(placeholder && !props.projects.length) && (
@@ -20,6 +20,7 @@ ProjectsList.propTypes = {
   projects: PropTypes.array.isRequired,
   title: PropTypes.node.isRequired,
   placeholder: PropTypes.node,
+  extraClasses: PropTypes.string,
 };
 
 class ExpandyProjects extends React.Component {
