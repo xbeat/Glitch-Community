@@ -64,27 +64,36 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
   const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != featuredProjectId); // need to filter out featuredProjectId
   
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
+    
+  const pinnedTitle = (
+    <>
+      Pinned Projects
+      <span className="emoji pushpin emoji-in-title"></span>
+    </>
+  );
   
   return (
     <>
       {!!pinnedVisible && (!!pinnedProjects.length || featuredProjectId) && (
-       <>
-         <h2 style={{marginTop: 2+"em"}}>Pinned Projects<span className="emoji pushpin emoji-in-title"></span></h2>
-       
+       <>       
          {featuredProjectId && 
-          <FeaturedProject   
-              {...{api, isAuthorized, currentUser, projects, featuredProjectId, addProjectToCollection}}
-              projectOptions={isAuthorized && {...projectOptions}}
-            />
+          <>
+            <h2 style={{marginTop: 2+"em"}}>Pinned Projects<span className="emoji pushpin emoji-in-title"></span></h2>
+            <FeaturedProject   
+                {...{api, isAuthorized, currentUser, projects, featuredProjectId, addProjectToCollection}}
+                projectOptions={isAuthorized && {...projectOptions}}
+              />
+          </>
          }
 
          {pinnedProjects.length > 0 && 
-            <ProjectsList title={""}
+            <ProjectsList title={(featuredProjectId ? null : pinnedTitle)}
               projects={pinnedProjects}
               api={api} 
               projectOptions={isAuthorized ? {removePin, ...projectOptions} 
                 : (currentUser && currentUser.login ? {...projectOptions} : {})
               }
+              extraClasses="featured"
             />
           }
        </>
