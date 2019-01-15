@@ -120,20 +120,10 @@ class UserEditor extends React.Component {
   
   async featureProject(id){
     await this.updateFields({featured_project_id: id});
-    
-    // reload pinned projects
-    this.setState(({pins}) => ({
-      pins: [...pins],
-    }));
   }
   
   async unfeatureProject(id){
     await this.updateFields({featured_project_id: null});
-    
-    // reload featured projects
-    this.setState(({pins}) => ({
-      pins: [...pins, {projectId: id}],
-    }));
   }
   
   componentDidMount() {

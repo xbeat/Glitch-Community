@@ -53,7 +53,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
   
   function featureProject(){
     // remove the featured project from the pinned list
-    animate(event, 'slide-down', () => (
+    animate(event, 'slide-up', () => (
       props.featureProject(props.project.id)
     ));
   }
@@ -64,6 +64,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
       {!!props.addPin &&
         <section className="pop-over-actions">
           <TrackClick name="Project Pinned">
+            <PopoverButton onClick={featureProject} text="Feature" emoji="arrow-up"/>
             <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>
           </TrackClick>
         </section>

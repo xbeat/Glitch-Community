@@ -74,7 +74,9 @@ const UserPage = ({
   featureProject, unfeatureProject,
   setDeletedProjects,
   addProjectToCollection,
-}) => (
+}) =>
+{
+(
   <main className="profile-page user-page">   
     <section>
       <ProfileContainer
@@ -126,6 +128,7 @@ const UserPage = ({
       api={api} 
       addPin={addPin} 
       projectOptions={{
+        featureProject,
         leaveProject, 
         deleteProject,
         addProjectToCollection

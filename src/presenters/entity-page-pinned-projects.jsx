@@ -47,7 +47,6 @@ const FeaturedProject = ({api, isAuthorized, currentUser, unfeatureProject, addP
         <div className="buttons buttons-right">
 
           {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={featuredProject} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
-
           
           <RemixButton className="button-small"
             name={featuredProject.domain} isMember={isAuthorized}
