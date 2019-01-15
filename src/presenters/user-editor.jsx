@@ -122,7 +122,7 @@ class UserEditor extends React.Component {
     await this.updateFields({featured_project_id: id});
   }
   
-  async unfeatureProject(id){
+  async unfeatureProject(){
     await this.updateFields({featured_project_id: null});
   }
   

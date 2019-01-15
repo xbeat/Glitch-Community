@@ -76,11 +76,11 @@ const UserPage = ({
   setDeletedProjects,
   addProjectToCollection,
 }) =>
-  { 
-    const pinnedSet = new Set(user.pins.map(({projectId}) => projectId));
-    const pinnedProjects = user.projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != featuredProjectId); 
-    const recentProjects = user.projects.filter(({id}) => !pinnedSet.has(id)).filter( ({id}) => id != featuredProjectId);
-    const featuredProject = Object.is(featuredProjectId, undefined) ? undefined : user.projects.filter( ({id}) => id == featuredProjectId)[0];
+{ 
+  const pinnedSet = new Set(user.pins.map(({projectId}) => projectId));
+  const pinnedProjects = user.projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != featuredProjectId); 
+  const recentProjects = user.projects.filter(({id}) => !pinnedSet.has(id)).filter( ({id}) => id != featuredProjectId);
+  const featuredProject = Object.is(featuredProjectId, undefined) ? undefined : user.projects.filter( ({id}) => id == featuredProjectId)[0];
   
   return(
     <main className="profile-page user-page">   
@@ -153,8 +153,8 @@ const UserPage = ({
       {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
       {!isAuthorized && <ReportButton reportedType="user" reportedModel={user} />}
     </main>
-  )
-}
+  );
+};
 UserPage.propTypes = {
   clearCover: PropTypes.func.isRequired,
   maybeCurrentUser: PropTypes.object,

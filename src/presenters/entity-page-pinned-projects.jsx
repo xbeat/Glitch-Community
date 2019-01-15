@@ -1,19 +1,12 @@
-/* global analytics APP_URL */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import ProjectsList from './projects-list.jsx';
-import {EditButton, RemixButton} from './includes/project-actions.jsx';
-import ReportButton from './pop-overs/report-abuse-pop.jsx';
-import AddProjectToCollection from './includes/add-project-to-collection.jsx';
 
 /* globals Set */
 
-const EntityPagePinnedProjects = ({api, projects, currentUser, isAuthorized, removePin, projectOptions, addProjectToCollection,}) => {
-  
-  const pinnedVisible = (isAuthorized || projects.length);
-    
+const EntityPagePinnedProjects = ({api, projects, currentUser, isAuthorized, removePin, projectOptions}) => {
+      
   const pinnedTitle = (
     <>
       Pinned Projects
@@ -37,7 +30,6 @@ const EntityPagePinnedProjects = ({api, projects, currentUser, isAuthorized, rem
   );
 };
 EntityPagePinnedProjects.propTypes = {
-  addProjectToCollection: PropTypes.func,
   api: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   isAuthorized: PropTypes.bool.isRequired,
