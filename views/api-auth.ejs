@@ -19,7 +19,9 @@
       //  Any changes to this code can have large security implications.  Make sure you 
       //  are aware of them before touching anything.
       
-      const user = JSON.parse(window.localStorage.cachedUser);
+      const cachedUser = window.localStorage.cachedUser;
+      if (
+      const user = JSON.parse(cachedUser);
       const url = `${API_URL}projects/${domain}/appAuthToken?authorization=${user.persistentToken}`;
       fetch(url, {
           method : "POST",
