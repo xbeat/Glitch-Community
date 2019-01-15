@@ -74,6 +74,20 @@ class TeamPage extends React.Component {
   async addProjectToCollection(project, collection) {
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
   }
+  
+  getProjectOptions() {
+    const projectOptions = {
+      addProjectToCollection: this.addProjectToCollection,
+      deleteProject: this.props.deleteProject,
+      leaveTeamProject: this.props.leaveTeamProject,
+    };
+    if (this.props.currentUserIsOnTeam) {
+      projectOptions["removeProjectFromTeam"] = this.props.removeProject;
+      projectOptions["joinTeamProject"] = this.props.joinTeamProject;
+    }
+
+    return projectOptions;
+  }
 
   teamAdmins() {
     return this.props.team.users.filter(user => {
@@ -170,13 +184,7 @@ class TeamPage extends React.Component {
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
           removePin={this.props.removePin}
-          projectOptions={{
-            addProjectToCollection: this.addProjectToCollection,
-            removeProjectFromTeam: this.props.removeProject,
-            deleteProject: this.props.deleteProject,
-            joinTeamProject: this.props.joinTeamProject,
-            leaveTeamProject: this.props.leaveTeamProject,
-          }}
+          projectOptions={this.getProjectOptions()}
           api={this.props.api}
         />
         
@@ -185,13 +193,7 @@ class TeamPage extends React.Component {
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
           addPin={this.props.addPin}
-          projectOptions={{
-            addProjectToCollection: this.addProjectToCollection,
-            removeProjectFromTeam: this.props.removeProject,
-            deleteProject: this.props.deleteProject,
-            joinTeamProject: this.props.joinTeamProject,
-            leaveTeamProject: this.props.leaveTeamProject,
-          }}
+          projectOptions={this.getProjectOptions()}
           api={this.props.api}
         />
         
