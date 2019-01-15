@@ -20,11 +20,11 @@ function trackRemix(id, domain) {
   });
 }
 
-const FeaturedProject = ({api, isAuthorized, currentUser, featuredProject, addProjectToCollection, projectOptions}) => {
+const FeaturedProject = ({api, isAuthorized, currentUser, featuredProject, addProjectToCollection, featureProject}) => {
   return(
     <>
       <section id="featured-project-embed">            
-        {isAuthorized && <FeaturedProjectOptionsPop {...{projectOptions}} featuredProjectId={featuredProject.id}/>}
+        {isAuthorized && <FeaturedProjectOptionsPop {featureProject} featuredProjectId={featuredProject.id}/>}
         <div className="glitch-embed-wrap">
           <iframe title="embed"
             src={`${APP_URL}/embed/#!/embed/${featuredProject.id}?path=README.md&previewSize=100`}
@@ -48,7 +48,7 @@ const FeaturedProject = ({api, isAuthorized, currentUser, featuredProject, addPr
 
           
           <RemixButton className="button-small"
-            name={featuredProject} isMember={isAuthorized}
+            name={featuredProject.domain} isMember={isAuthorized}
             onClick={() => trackRemix(featuredProject.id, featuredProject.domain)}
           />
         </div>
@@ -61,16 +61,15 @@ FeaturedProject.propTypes = {
   api: PropTypes.func,
   isAuthorized: PropTypes.bool.isRequired,
   currentUser: PropTypes.object.isRequired,
+  featureProject: PropTypes.func.isRequired,
   featuredProject: PropTypes.object,
   addProjectToCollection: PropTypes.func,
-  projectOptions: PropTypes.object.isRequired,
 };
 
 const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorized, removePin, projectOptions, featuredProjectId, addProjectToCollection,}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
   const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != featuredProjectId); 
-  const featuredProject = projects[0];
-  // const featuredProject = Object.is(featuredProjectId, undefined) ? projects.filter( ({id}) => id == featuredProjectId).first() : undefined;
+  const featuredProject = Object.is(featuredProjectId, undefined) ? undefined : projects.filter( ({id}) => id == featuredProjectId)[0];
   
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
     
@@ -90,7 +89,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
          {featuredProjectId && 
             <FeaturedProject   
               {...{api, isAuthorized, currentUser, addProjectToCollection}}
-              projectOptions={isAuthorized && {...projectOptions}}
+              projectOptions={isAuthorized && projectOptions.featureProject}
               featuredProject={featuredProject}
             />
          }
