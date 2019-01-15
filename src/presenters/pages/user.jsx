@@ -59,8 +59,6 @@ const UserPage = ({
   user: { //has science gone too far?
     _deletedProjects,
     _cacheCover,
-    _collections,
-    loadedCollections,
     featuredProjectId,
     ...user
   },

@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
-import {CurrentUserConsumer} from '../current-user.jsx';
 import PopoverButton from './popover-button';
 
 // Project Options Pop
-const FeaturedProjectOptionsPop = ({unfeatureProject, featuredProjectId, togglePopover, ...props} ) => {
+const FeaturedProjectOptionsPop = ({unfeatureProject, featuredProjectId, togglePopover} ) => {
   
   function animateThenUnfeature(){
     // animation stuff
@@ -26,7 +25,6 @@ const FeaturedProjectOptionsPop = ({unfeatureProject, featuredProjectId, toggleP
 
 FeaturedProjectOptionsPop.propTypes = {
   api: PropTypes.any,
-  currentUser: PropTypes.object,
   togglePopover: PropTypes.func.isRequired,
   featureProject: PropTypes.func,
 };
@@ -39,16 +37,12 @@ export default function FeaturedProjectOptions({unfeatureProject, featuredProjec
   return (
     <PopoverContainer>
       {({togglePopover, visible}) => (
-        <CurrentUserConsumer>
-          {user => (
-            <div>
-              <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
-                <div className="down-arrow" />
-              </button>
-              { visible && <FeaturedProjectOptionsPop {...props} unfeatureProject={unfeatureProject} featuredProjectId={featuredProjectId} togglePopover={togglePopover}/> }
-            </div>
-          )}
-        </CurrentUserConsumer>
+        <div>
+          <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
+            <div className="down-arrow" />
+          </button>
+          { visible && <FeaturedProjectOptionsPop {...props} unfeatureProject={unfeatureProject} featuredProjectId={featuredProjectId} togglePopover={togglePopover}/> }
+        </div>
       )}
     </PopoverContainer>     
   );

@@ -9,8 +9,6 @@ import {EditButton, RemixButton} from './includes/project-actions.jsx';
 import ReportButton from './pop-overs/report-abuse-pop.jsx';
 import AddProjectToCollection from './includes/add-project-to-collection.jsx';
 
-import {CurrentUserConsumer} from './current-user.jsx';
-
 /* globals Set */
 
 function trackRemix(id, domain) {
