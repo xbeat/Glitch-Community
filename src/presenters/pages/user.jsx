@@ -12,6 +12,7 @@ import UserEditor from '../user-editor.jsx';
 import Thanks from '../includes/thanks.jsx';
 
 import DeletedProjects from '../deleted-projects.jsx';
+import EntityPageFeaturedProjects from '../entity-page-featured-projects.jsx';
 import EntityPagePinnedProjects from '../entity-page-pinned-projects.jsx';
 import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import CollectionsList from '../collections-list.jsx';
@@ -75,70 +76,83 @@ const UserPage = ({
   setDeletedProjects,
   addProjectToCollection,
 }) =>
-{
-(
-  <main className="profile-page user-page">   
-    <section>
-      <ProfileContainer
-        avatarStyle={getAvatarStyle(user)}
-        coverStyle={getProfileStyle({...user, cache: _cacheCover})}
-        coverButtons={isAuthorized && !!user.login && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={user.hasCoverImage ? clearCover : null}/>}
-        avatarButtons={isAuthorized && !!user.login && <ImageButtons name="Avatar" uploadImage={uploadAvatar}/>}
-        teams={user.teams} 
-      >
-        <NameAndLogin
-          name={user.name} login={user.login} {...{isAuthorized, updateName}}
-          updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
-        />
-        {!!user.thanksCount && <Thanks count={user.thanksCount}/>}
-        <AuthDescription authorized={isAuthorized && !!user.login} description={user.description} update={updateDescription} placeholder="Tell us about yourself"/>
-      </ProfileContainer>
-    </section>
-    
-    <EntityPagePinnedProjects
-      projects={user.projects} 
-      pins={user.pins} 
-      isAuthorized={isAuthorized}
-      api={api} 
-      removePin={removePin}
-      projectOptions={{
-        leaveProject, 
-        deleteProject,
-        addProjectToCollection,
-        featureProject,
-        unfeatureProject,
-      }}
-      featuredProjectId={featuredProjectId}
-      addProjectToCollection={addProjectToCollection}
-      maybeCurrentUser={maybeCurrentUser}
-    />
-    
-    {!!user.login && (
-      <CollectionsList title="Collections" 
-        collections={user.collections.map(collection => ({...collection, user}))} 
-        api={api} isAuthorized={isAuthorized}
+  { 
+    const pinnedSet = new Set(user.pins.map(({projectId}) => projectId));
+    const pinnedProjects = user.projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != featuredProjectId); 
+    const recentProjects = user.projects.filter(({id}) => !pinnedSet.has(id)).filter( ({id}) => id != featuredProjectId);
+    const featuredProject = Object.is(featuredProjectId, undefined) ? undefined : user.projects.filter( ({id}) => id == featuredProjectId)[0];
+  
+  return(
+    <main className="profile-page user-page">   
+      <section>
+        <ProfileContainer
+          avatarStyle={getAvatarStyle(user)}
+          coverStyle={getProfileStyle({...user, cache: _cacheCover})}
+          coverButtons={isAuthorized && !!user.login && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={user.hasCoverImage ? clearCover : null}/>}
+          avatarButtons={isAuthorized && !!user.login && <ImageButtons name="Avatar" uploadImage={uploadAvatar}/>}
+          teams={user.teams} 
+        >
+          <NameAndLogin
+            name={user.name} login={user.login} {...{isAuthorized, updateName}}
+            updateLogin={login => updateLogin(login).then(() => syncPageToLogin(login))}
+          />
+          {!!user.thanksCount && <Thanks count={user.thanksCount}/>}
+          <AuthDescription authorized={isAuthorized && !!user.login} description={user.description} update={updateDescription} placeholder="Tell us about yourself"/>
+        </ProfileContainer>
+      </section>
+      
+      <EntityPageFeaturedProject
+        featuredProject={featuredProject}
+        api={api}
+        isAuthorized={isAuthorized}
+        unfeatureProject={unfeatureProject}
+        addProjectToCollection={addProjectToCollection}
+        currentUser={maybeCurrentUser}
+      />
+
+      <EntityPagePinnedProjects
+        projects={pinnedProjects} 
+        isAuthorized={isAuthorized}
+        api={api} 
+        removePin={removePin}
+        projectOptions={{
+          leaveProject, 
+          deleteProject,
+          addProjectToCollection,
+          featureProject,
+          unfeatureProject,
+        }}
+        featuredProjectId={featuredProjectId}
+        addProjectToCollection={addProjectToCollection}
         maybeCurrentUser={maybeCurrentUser}
       />
-    )}
 
-    <EntityPageRecentProjects
-      projects={user.projects} 
-      pins={user.pins} 
-      isAuthorized={isAuthorized}
-      api={api} 
-      addPin={addPin} 
-      projectOptions={{
-        featureProject,
-        leaveProject, 
-        deleteProject,
-        addProjectToCollection
-      }}
-    />
-    
-    {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
-    {!isAuthorized && <ReportButton reportedType="user" reportedModel={user} />}
-  </main>
-);
+      {!!user.login && (
+        <CollectionsList title="Collections" 
+          collections={user.collections.map(collection => ({...collection, user}))} 
+          api={api} isAuthorized={isAuthorized}
+          maybeCurrentUser={maybeCurrentUser}
+        />
+      )}
+
+      <EntityPageRecentProjects
+        projects={recentProjects} 
+        isAuthorized={isAuthorized}
+        api={api} 
+        addPin={addPin} 
+        projectOptions={{
+          featureProject,
+          leaveProject, 
+          deleteProject,
+          addProjectToCollection
+        }}
+      />
+
+      {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
+      {!isAuthorized && <ReportButton reportedType="user" reportedModel={user} />}
+    </main>
+  )
+}
 UserPage.propTypes = {
   clearCover: PropTypes.func.isRequired,
   maybeCurrentUser: PropTypes.object,
