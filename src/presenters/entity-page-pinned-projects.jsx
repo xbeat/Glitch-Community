@@ -20,39 +20,36 @@ function trackRemix(id, domain) {
   });
 }
 
-const FeaturedProject = ({api, isAuthorized, currentUser, featuredProjectId, projects, addProjectToCollection, projectOptions}) => {
+const FeaturedProject = ({api, isAuthorized, currentUser, featuredProject, addProjectToCollection, projectOptions}) => {
   return(
     <>
       <section id="featured-project-embed">            
-        {isAuthorized && <FeaturedProjectOptionsPop {...{projectOptions, featuredProjectId}}/>}
+        {isAuthorized && <FeaturedProjectOptionsPop {...{projectOptions}} featuredProjectId={featuredProject.id}/>}
         <div className="glitch-embed-wrap">
           <iframe title="embed"
-            src={`${APP_URL}/embed/#!/embed/${featuredProjectId}?path=README.md&previewSize=100`}
+            src={`${APP_URL}/embed/#!/embed/${featuredProject.id}?path=README.md&previewSize=100`}
             allow="geolocation; microphone; camera; midi; encrypted-media"
           ></iframe>
         </div>
 
         {isAuthorized ?
           <div className="buttons buttons-left">
-            <EditButton className="button-small button-edit" name={featuredProjectId} isMember={isAuthorized}/>
+            <EditButton className="button-small button-edit" name={featuredProject.id} isMember={isAuthorized}/>
           </div>
           :
           <div className="buttons buttons-left">
-            <ReportButton className="button-small" name={featuredProjectId} id={featuredProjectId}/>
+            <ReportButton className="button-small" name={featuredProject.id} id={featuredProject.id}/>
           </div>
         }
 
         <div className="buttons buttons-right">
 
-          {/* need to replace project below with actual project */}
-          {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={projects[0]} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
+          {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={featuredProject} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
 
-          {/* Can add to track remix later 
-            onClick={() => trackRemix(projects[0].id, projects[0].domain)}
-          */}
           
           <RemixButton className="button-small"
-            name={projects[0].domain} isMember={isAuthorized}
+            name={featuredProject} isMember={isAuthorized}
+            onClick={() => trackRemix(featuredProject.id, featuredProject.domain)}
           />
         </div>
       </section>
@@ -64,14 +61,15 @@ FeaturedProject.propTypes = {
   api: PropTypes.func,
   isAuthorized: PropTypes.bool.isRequired,
   currentUser: PropTypes.object.isRequired,
-  featuredProjectId: PropTypes.number.isRequired,
+  featuredProjectId: PropTypes.string.isRequired,
+  featuredProject: PropTypes.object,
   addProjectToCollection: PropTypes.func,
   projectOptions: PropTypes.object.isRequired,
 };
 
 const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorized, removePin, projectOptions, featuredProjectId, addProjectToCollection,}) => {
   const pinnedSet = new Set(pins.map(({projectId}) => projectId));
-  const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != featuredProjectId); // need to filter out featuredProjectId
+  const pinnedProjects = projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != featuredProjectId); 
   
   const pinnedVisible = (isAuthorized || pinnedProjects.length) && projects.length;
     
@@ -90,9 +88,10 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
        
          {featuredProjectId && 
             <FeaturedProject   
-                {...{api, isAuthorized, currentUser, projects, featuredProjectId, addProjectToCollection}}
-                projectOptions={isAuthorized && {...projectOptions}}
-              />
+              {...{api, isAuthorized, currentUser, addProjectToCollection}}
+              projectOptions={isAuthorized && {...projectOptions}}
+              featuredProject={projects.filter( ({id}) => id === featuredProjectId)}
+            />
          }
 
          {pinnedProjects.length > 0 && 
