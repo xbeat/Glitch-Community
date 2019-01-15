@@ -119,7 +119,6 @@ class UserEditor extends React.Component {
   }
   
   async featureProject(id){
-    console.log('attempt to feature project');
     await this.updateFields({featured_project_id: id});
     
     // reload pinned projects
@@ -129,7 +128,6 @@ class UserEditor extends React.Component {
   }
   
   async unfeatureProject(id){
-    console.log('unfeature project');
     await this.updateFields({featured_project_id: null});
     
     // reload featured projects
