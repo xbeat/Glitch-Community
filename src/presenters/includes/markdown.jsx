@@ -22,7 +22,7 @@ RawHTML.propTypes = {
   children: PropTypes.string.isRequired,
 };
 
-export const Markdown = React.memo(({children}) => {
+export const Markdown = React.memo(function Markdown({children}) {
   const rendered = md.render(children || '');
   return <RawHTML>{rendered}</RawHTML>;
 });
