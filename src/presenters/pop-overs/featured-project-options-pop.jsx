@@ -5,14 +5,14 @@ import {CurrentUserConsumer} from '../current-user.jsx';
 import PopoverButton from './popover-button';
 
 // Project Options Pop
-const FeaturedProjectOptionsPop = ({featuredProjectId, ...props} ) => {
+const FeaturedProjectOptionsPop = ({unfeatureProject, featuredProjectId, togglePopover, ...props} ) => {
   
   function animateThenUnfeature(){
     // animation stuff
     const featuredContainer = document.getElementById('featured-project-embed');
     featuredContainer.classList.add('slide-down');
-    props.togglePopover();
-    props.unfeatureProject(featuredProjectId);
+    togglePopover();
+    unfeatureProject(featuredProjectId);
   }
    
   return(
@@ -28,13 +28,13 @@ FeaturedProjectOptionsPop.propTypes = {
   api: PropTypes.any,
   currentUser: PropTypes.object,
   togglePopover: PropTypes.func.isRequired,
-  project: PropTypes.object,
+  featureProject: PropTypes.func,
 };
 
 
 // Project Options Container
 // create as stateful react component
-export default function FeaturedProjectOptions({projectOptions={}, featuredProjectId,}, {...props}) {
+export default function FeaturedProjectOptions({unfeatureProject, featuredProjectId}, {...props}) {
 
   return (
     <PopoverContainer>
@@ -45,7 +45,7 @@ export default function FeaturedProjectOptions({projectOptions={}, featuredProje
               <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
                 <div className="down-arrow" />
               </button>
-              { visible && <FeaturedProjectOptionsPop {...props} {...projectOptions} featuredProjectId={featuredProjectId} togglePopover={togglePopover}/> }
+              { visible && <FeaturedProjectOptionsPop {...props} unfeatureProject={unfeatureProject} featuredProjectId={featuredProjectId} togglePopover={togglePopover}/> }
             </div>
           )}
         </CurrentUserConsumer>
@@ -55,7 +55,8 @@ export default function FeaturedProjectOptions({projectOptions={}, featuredProje
 }
 
 FeaturedProjectOptions.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   project: PropTypes.object,
+  unfeatureProject: PropTypes.func.isRequired,
 };
 

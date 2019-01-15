@@ -20,11 +20,11 @@ function trackRemix(id, domain) {
   });
 }
 
-const FeaturedProject = ({api, isAuthorized, currentUser, featuredProject, addProjectToCollection, featureProject}) => {
+const FeaturedProject = ({api, isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject}) => {
   return(
     <>
       <section id="featured-project-embed">            
-        {isAuthorized && <FeaturedProjectOptionsPop {featureProject} featuredProjectId={featuredProject.id}/>}
+        {isAuthorized && <FeaturedProjectOptionsPop api={api} unfeatureProject={unfeatureProject} featuredProjectId={featuredProject.id}/>}
         <div className="glitch-embed-wrap">
           <iframe title="embed"
             src={`${APP_URL}/embed/#!/embed/${featuredProject.id}?path=README.md&previewSize=100`}
@@ -61,7 +61,7 @@ FeaturedProject.propTypes = {
   api: PropTypes.func,
   isAuthorized: PropTypes.bool.isRequired,
   currentUser: PropTypes.object.isRequired,
-  featureProject: PropTypes.func.isRequired,
+  unfeatureProject: PropTypes.func.isRequired,
   featuredProject: PropTypes.object,
   addProjectToCollection: PropTypes.func,
 };
@@ -89,7 +89,7 @@ const EntityPagePinnedProjects = ({api, projects, pins, currentUser, isAuthorize
          {featuredProjectId && 
             <FeaturedProject   
               {...{api, isAuthorized, currentUser, addProjectToCollection}}
-              projectOptions={isAuthorized && projectOptions.featureProject}
+              unfeatureProject={isAuthorized ? projectOptions.unfeatureProject : ()}
               featuredProject={featuredProject}
             />
          }
