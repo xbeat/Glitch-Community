@@ -11,18 +11,19 @@
 import * as Sentry from '@sentry/browser';
 export * from '@sentry/browser';
 
-function scrubTokens(data, ...tokens) {
-  const json = JSON.stringify(data);
-  const scrubbedJSON = json.replace(/"persistentToken":"[^"]+"/g, `"persistentToken":"****"`);
-  const scrubbedData = JSON.parse(scrubbedJSON);
-  return scrubbedData;
-}
-
 try {
   Sentry.init({
     dsn: 'https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508',
     environment: ENVIRONMENT,
-    beforeSend: event => scrubTokens(event, 'persistentToken', 'facebookToken', 'githubToken'),
+    beforeSend(event) {
+      const tokens = ['facebookToken', 'githubToken', 'persistentToken'];
+      let json = JSON.stringify(event);
+      tokens.forEach(token => {
+        const regexp = new RegExp(`"${token}":"[^"]+"`, 'g');
+        json = json.replace(regexp, `"${token}":"****"`);
+      });
+      return JSON.parse(json);
+    },
   });
   
   Sentry.configureScope((scope) => {
@@ -34,4 +35,3 @@ try {
 } catch (error) {
   console.warn("Error initializing Sentry", error);
 }
-
