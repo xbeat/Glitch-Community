@@ -11,17 +11,18 @@
 import * as Sentry from '@sentry/browser';
 export * from '@sentry/browser';
 
+function scrubTokens(data, ...tokens) {
+  const json = JSON.stringify(data);
+  const scrubbedJSON = json.replace(/"persistentToken":"[^"]+"/g, `"persistentToken":"****"`);
+  const scrubbedData = JSON.parse(scrubbedJSON);
+  return scrubbedData;
+}
+
 try {
   Sentry.init({
     dsn: 'https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508',
     environment: ENVIRONMENT,
-    beforeSend(event) {
-      const json = JSON.stringify(event);
-      const scrubbedJSON = json.replace(/"persistentToken":"[^"]+"/g, `"persistentToken":"****"`);
-      const scrubbedEvent = JSON.parse(scrubbedJSON);
-
-      return scrubbedEvent;
-    },
+    beforeSend: event => scrubTokens(event, 'persistentToken', 'facebookToken', 'githubToken'),
   });
   
   Sentry.configureScope((scope) => {
