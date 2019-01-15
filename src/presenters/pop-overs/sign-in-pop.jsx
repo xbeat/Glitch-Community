@@ -67,7 +67,7 @@ class EmailHandler extends React.Component {
   render() {
     const isEnabled = this.state.email.length > 0;
     return (
-      <NestedPopover alternateContent={() => <CurrentUserConsumer>{(currentUser, fetched, {login}) => <SignInCodeHandler setUser={login} {...this.props}/>}</CurrentUserConsumer>} startAlternateVisible={false}>
+      <NestedPopover alternateContent={(login) => <SignInCodeHandler setUser={login} {...this.props}/>} startAlternateVisible={false}>
         {showCodeLogin =>
           <dialog className="pop-over sign-in-pop">
             <NestedPopoverTitle>
@@ -140,31 +140,33 @@ class SignInCodeHandler extends React.Component {
   render() {
     const isEnabled = this.state.code.length > 0;
     return (
-      <dialog className="pop-over sign-in-pop">
-        <NestedPopoverTitle>
-          Use a sign in code
-        </NestedPopoverTitle>
-        <section className="pop-over-actions first-section">
-          {!this.state.done &&
-            <form onSubmit={this.onSubmit} style={{marginBottom: 0}}>
-              Paste your temporary sign in code below
-              <input value={this.state.code} onChange={this.onChange} className="pop-over-input" type="text" placeholder="cute-unique-cosmos"></input>
-              <button style={{marginTop: 10}} className="button-small button-link" disabled={!isEnabled}>Sign In</button>
-            </form>
-          }
-          {(this.state.done && !this.state.error) &&
-            <>
-              <div className="notification notifyPersistent notifySuccess">Success!</div>
-            </>
-          }
-          {(this.state.done && this.state.error) &&
-            <>
-              <div className="notification notifyPersistent notifyError">Error</div>
-              <div>Code not found or already used. Try signing in with email.</div>
-            </>
-          }       
-        </section>
-      </dialog>
+      <CurrentUserConsumer>{(currentUser, fetched, {login}) =>
+        <dialog className="pop-over sign-in-pop">
+          <NestedPopoverTitle>
+            Use a sign in code
+          </NestedPopoverTitle>
+          <section className="pop-over-actions first-section">
+            {!this.state.done &&
+              <form onSubmit={this.onSubmit} style={{marginBottom: 0}}>
+                Paste your temporary sign in code below
+                <input value={this.state.code} onChange={this.onChange} className="pop-over-input" type="text" placeholder="cute-unique-cosmos"></input>
+                <button style={{marginTop: 10}} className="button-small button-link" disabled={!isEnabled}>Sign In</button>
+              </form>
+            }
+            {(this.state.done && !this.state.error) &&
+              <>
+                <div className="notification notifyPersistent notifySuccess">Success!</div>
+              </>
+            }
+            {(this.state.done && this.state.error) &&
+              <>
+                <div className="notification notifyPersistent notifyError">Error</div>
+                <div>Code not found or already used. Try signing in with email.</div>
+              </>
+            }       
+          </section>
+        </dialog>
+      }</CurrentUserConsumer>
     );
   }
 }
@@ -204,7 +206,7 @@ const SignInPopWithoutRouter = (props) => (
       return (
         <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
           {showEmailLogin =>
-            <NestedPopover alternateContent={() => <CurrentUserConsumer>{(currentUser, fetched, {login}) => <SignInCodeHandler setUser={login} {...props}/>}</CurrentUserConsumer>} startAlternateVisible={false}>
+            <NestedPopover alternateContent={(login) => <SignInCodeHandler setUser={login} {...props}/>} startAlternateVisible={false}>
               {showCodeLogin =>
                 <div className="pop-over sign-in-pop">
                   {header}
