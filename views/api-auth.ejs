@@ -20,16 +20,22 @@
       //  are aware of them before touching anything.
       
       const cachedUser = window.localStorage.cachedUser;
-      if (
-      const user = JSON.parse(cachedUser);
-      const url = `${API_URL}projects/${domain}/appAuthToken?authorization=${user.persistentToken}`;
-      fetch(url, {
-          method : "POST",
-      }).then(function(response) {
-        return response.json();
-      }).then(function(json) {
-        window.parent.postMessage(json.token, `https://${domain}.${PROJECTS_DOMAIN}`);
-      });
+      let msg = null;
+      if (cachedUser) {
+        const user = JSON.parse(cachedUser);
+        const url = `${API_URL}projects/${domain}/appAuthToken?authorization=${user.persistentToken}`;
+        fetch(url, {
+            method : "POST",
+        }).then(function(response) {
+          return response.json();
+        }).then(function(json) {
+          msg = json.token;
+        }).catch(function() {
+          //  Just don't blow up.  Default empty message will be sent
+        });
+      }
+      
+      window.parent.postMessage(msg, `https://${domain}.${PROJECTS_DOMAIN}`);
     </script>
   </body>
 </html>
