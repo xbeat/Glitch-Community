@@ -12,7 +12,7 @@ import UserEditor from '../user-editor.jsx';
 import Thanks from '../includes/thanks.jsx';
 
 import DeletedProjects from '../deleted-projects.jsx';
-import EntityPageFeaturedProjects from '../entity-page-featured-projects.jsx';
+import EntityPageFeaturedProject from '../entity-page-featured-project.jsx';
 import EntityPagePinnedProjects from '../entity-page-pinned-projects.jsx';
 import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import CollectionsList from '../collections-list.jsx';
@@ -101,14 +101,16 @@ const UserPage = ({
         </ProfileContainer>
       </section>
       
-      <EntityPageFeaturedProject
-        featuredProject={featuredProject}
-        api={api}
-        isAuthorized={isAuthorized}
-        unfeatureProject={unfeatureProject}
-        addProjectToCollection={addProjectToCollection}
-        currentUser={maybeCurrentUser}
-      />
+      {featuredProject && 
+        <EntityPageFeaturedProject
+          featuredProject={featuredProject}
+          api={api}
+          isAuthorized={isAuthorized}
+          unfeatureProject={unfeatureProject}
+          addProjectToCollection={addProjectToCollection}
+          currentUser={maybeCurrentUser}
+        />
+      }
 
       <EntityPagePinnedProjects
         projects={pinnedProjects} 

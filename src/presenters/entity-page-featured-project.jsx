@@ -16,7 +16,7 @@ function trackRemix(id, domain) {
   });
 }
 
-const FeaturedProject = ({api, isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject}) => {
+const EntityPageFeaturedProject = ({api, isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject}) => {
   
   const reportBtn = 
     <div className="buttons buttons-left">
@@ -55,7 +55,7 @@ const FeaturedProject = ({api, isAuthorized, currentUser, unfeatureProject, addP
   );
 };
 
-FeaturedProject.propTypes = {
+EntityPageFeaturedProject.propTypes = {
   api: PropTypes.func,
   isAuthorized: PropTypes.bool.isRequired,
   currentUser: PropTypes.object.isRequired,
@@ -64,4 +64,4 @@ FeaturedProject.propTypes = {
   addProjectToCollection: PropTypes.func,
 };
 
-export default FeaturedProject;
+export default EntityPageFeaturedProject;

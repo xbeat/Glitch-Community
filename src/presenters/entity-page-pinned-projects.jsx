@@ -4,7 +4,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ProjectsList from './projects-list.jsx';
-import FeaturedProjectOptionsPop from "./pop-overs/featured-project-options-pop.jsx";
 import {EditButton, RemixButton} from './includes/project-actions.jsx';
 import ReportButton from './pop-overs/report-abuse-pop.jsx';
 import AddProjectToCollection from './includes/add-project-to-collection.jsx';
@@ -23,9 +22,10 @@ const EntityPagePinnedProjects = ({api, projects, currentUser, isAuthorized, rem
   );
   
   return (
+    <>
      {projects.length > 0 && 
         <ProjectsList title={pinnedTitle}
-          projects={pinnedProjects}
+          projects={projects}
           api={api} 
           projectOptions={isAuthorized ? {removePin, ...projectOptions} 
             : (currentUser && currentUser.login ? {...projectOptions} : {})
@@ -33,7 +33,7 @@ const EntityPagePinnedProjects = ({api, projects, currentUser, isAuthorized, rem
           extraClasses="pinned"
         />
      }
-       
+    </>
   );
 };
 EntityPagePinnedProjects.propTypes = {
