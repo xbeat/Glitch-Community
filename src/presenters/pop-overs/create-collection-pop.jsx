@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 import randomColor from 'randomcolor';
 import {captureException} from '../../utils/sentry';
 
-import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
+import {StaticUserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';
 
@@ -89,6 +89,10 @@ class CreateNewCollectionPop extends React.Component {
       }
     }
   }
+  
+  getTeamContents(){
+    
+  }
 
     
   render() {
@@ -97,8 +101,8 @@ class CreateNewCollectionPop extends React.Component {
     let placeholder = "New Collection Name";
     
     // for testing dropdown stuff
-    const collectionOwnerBtnContents = <>myself <UserAvatar user={this.props.currentUser}/></>;
-    const userTeamContents = ["hello", "hi"];
+    const collectionOwnerBtnContents = <>myself <StaticUserAvatar user={this.props.currentUser}/></>;
+    const userTeamContents = getTeamContents();
     
     if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this url';
@@ -126,6 +130,8 @@ class CreateNewCollectionPop extends React.Component {
             <br style={{clear: "both"}}/>for
             
             <Dropdown buttonContents={collectionOwnerBtnContents} menuContents={userTeamContents}/>
+            
+            <br/>
             
             {/*
             <div className="button-wrap" style={{display: "inline", marginLeft: "10px", verticalAlign: "sub"}}>
