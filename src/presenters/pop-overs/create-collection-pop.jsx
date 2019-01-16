@@ -51,6 +51,7 @@ class CreateNewCollectionPop extends React.Component {
   }
 
   async handleSubmit(event){
+    console.log('handle submit');
     event.preventDefault();
     this.setState({working: true});
     // get text from input field
@@ -90,7 +91,6 @@ class CreateNewCollectionPop extends React.Component {
     }
   }
 
-    
   render() {
     const {error, maybeCollections, query} = this.state;
     let queryError = this.state.error;
@@ -107,17 +107,17 @@ class CreateNewCollectionPop extends React.Component {
         let content = <>{team.name} {<TeamAvatar team={team} className="user"/>}</>;
         teamContents.push(content);
         })
-      console.log("teamContents %O", teamContents);
       return teamContents;
     }
     const userTeamContents = getTeamContents();
     const collectionOwnerBtnContents = <>myself <UserAvatar user={this.props.currentUser} isStatic={true}/></>;
     
+    //--> end dropdown stuff
+    
     if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this url';
     }
     if(this.state.newCollectionUrl){
-      console.log('redirect');
       return <Redirect to={this.state.newCollectionUrl}/>;
     }
     return (
@@ -142,13 +142,6 @@ class CreateNewCollectionPop extends React.Component {
             <Dropdown buttonContents={collectionOwnerBtnContents} menuContents={userTeamContents}/>
             
             <br/>
-            
-            {/*
-            <div className="button-wrap" style={{display: "inline", marginLeft: "10px", verticalAlign: "sub"}}>
-              <button className="button-small button-tertiary user-or-team-toggle">myself <img src={this.props.currentUser.avatarUrl} alt={this.props.currentUser.login + "-avatar"}/> <span className="down-arrow icon" aria-label="options"></span></button>
-                <CollectionOwnerDialog currentUser={this.props.currentUser} {...this.props.api}/>
-            </div>
-            */}
             
             {!this.state.working ? (
               <TrackClick name="Create Collection clicked" properties={inherited => ({...inherited, origin: `${inherited.origin} project`})}>

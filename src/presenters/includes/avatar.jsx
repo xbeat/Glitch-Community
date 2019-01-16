@@ -21,8 +21,6 @@ export const Avatar = ({name, src, color, srcFallback, type, isStatic}) => {
     </div>
   }
   return contents;
-
-
 };
 Avatar.propTypes = {
   name: PropTypes.string.isRequired,
