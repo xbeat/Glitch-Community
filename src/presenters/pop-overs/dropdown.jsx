@@ -6,7 +6,10 @@ const DropdownMenu = ({contents, selected, updateSelected}) => {
   return(
     <dialog className="pop-over mini-pop">
     { contents.map((item, index) => (
-       <section className={"mini-pop-action" + (index == selected ? " selected" : "")}>{item}</section>
+       <section className={"mini-pop-action" + (index == selected ? " selected" : "")} key={index} 
+         onClick={() => updateSelected(index)}>
+          {item}
+        </section>
      ))}
     </dialog>
 )};
