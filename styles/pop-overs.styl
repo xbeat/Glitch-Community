@@ -184,7 +184,14 @@ popover-secondary-background()
 
   .danger-zone
     background-color: warning-background
-
+.button-wrap
+  &.dropdown
+    display: inline
+    vertical-align: sub
+  img
+    width: 18px
+    height: 18px
+    vertical-align: bottom    
 .sign-in-pop
   width: 205px
   right: 0
@@ -339,10 +346,6 @@ popover-secondary-background()
           display: none
         &::after
           display: none
-      img
-        width: 18px
-        height: 18px
-        vertical-align: bottom
   .pop-over-actions
     max-height: 225px
   li

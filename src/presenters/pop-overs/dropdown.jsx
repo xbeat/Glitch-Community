@@ -43,8 +43,9 @@ class Dropdown extends React.Component {
   render(){
     return(
       <PopoverWithButton
-        buttonClass="button-small"
-        buttonText={this.props.buttonContents}
+        buttonClass="button-small dropdown-btn"
+        buttonText={this.state.buttonContents}
+        containerClass="dropdown"
       > 
         <DropdownMenu contents={this.props.menuContents} selected={this.state.selected} updateSelected={this.updateSelected}/>
       </PopoverWithButton>
