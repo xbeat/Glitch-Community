@@ -32,7 +32,6 @@ export const StaticAvatar = ({src, color, srcFallback, type}) => (
   />
 );
 Avatar.propTypes = {
-  name: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   srcFallback: PropTypes.string,
   color: PropTypes.string,
@@ -51,8 +50,11 @@ TeamAvatar.propTypes = {
   }).isRequired,
 };
 
-export const UserAvatar = ({user, suffix=''}) => (
-  <Avatar name={getDisplayName(user) + suffix} src={getAvatarThumbnailUrl(user)} color={user.color} srcFallback={ANON_AVATAR_URL} type="user"/>
+export const UserAvatar = ({user, suffix='', isStatic}) => (
+  ( isStatic ? 
+     <StaticAvatar name={getDisplayName(user) + suffix} src={getAvatarThumbnailUrl(user)} color={user.color} srcFallback={ANON_AVATAR_URL} type="user"/>
+   : <Avatar name={getDisplayName(user) + suffix} src={getAvatarThumbnailUrl(user)} color={user.color} srcFallback={ANON_AVATAR_URL} type="user"/>
+  )
 );
 UserAvatar.propTypes = {
   user: PropTypes.shape({
@@ -63,18 +65,5 @@ UserAvatar.propTypes = {
     color: PropTypes.string.isRequired,
   }).isRequired,
   suffix: PropTypes.string,
-};
-
-export const StaticUserAvatar = ({user, suffix=''}) => (
-  <StaticAvatar src={getAvatarThumbnailUrl(user)} color={user.color} srcFallback={ANON_AVATAR_URL} type="user"/>
-);
-StaticUserAvatar.propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    login: PropTypes.string,
-    name: PropTypes.string,
-    avatarThumbnailUrl: PropTypes.string,
-    color: PropTypes.string.isRequired,
-  }).isRequired,
-  suffix: PropTypes.string,
+  isStatic: PropTypes.bool,
 };

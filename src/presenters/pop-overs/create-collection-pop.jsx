@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 import randomColor from 'randomcolor';
 import {captureException} from '../../utils/sentry';
 
-import {StaticUserAvatar, TeamAvatar} from '../includes/avatar.jsx';
+import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';
 
@@ -89,10 +89,6 @@ class CreateNewCollectionPop extends React.Component {
       }
     }
   }
-  
-  getTeamContents(){
-    
-  }
 
     
   render() {
@@ -100,8 +96,16 @@ class CreateNewCollectionPop extends React.Component {
     let queryError = this.state.error;
     let placeholder = "New Collection Name";
     
+    function getTeamContents(){
+      const orderedTeams = orderBy(this.props.currentUser.teams, team => team.name.toLowerCase());   
+      const teamContents = [];
+      { orderedTeams.map(team => (
+        teamContents.push(team.name)
+      )) }
+    }
+
     // for testing dropdown stuff
-    const collectionOwnerBtnContents = <>myself <StaticUserAvatar user={this.props.currentUser}/></>;
+    const collectionOwnerBtnContents = <>myself <UserAvatar user={this.props.currentUser}/></>;
     const userTeamContents = getTeamContents();
     
     if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === kebabCase(query))) {
