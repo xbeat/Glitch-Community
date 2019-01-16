@@ -103,21 +103,21 @@ class CreateNewCollectionPop extends React.Component {
     function getTeamContents(){
       const orderedTeams = orderBy(teams, team => team.name.toLowerCase());   
       const teamContents = [];
-      {orderedTeams.map(team => {
-        let content = <>{team.name} <TeamAvatar team={team} className="user"/></>;
+      orderedTeams.map(team => {
+        let content = <>{team.name} {<TeamAvatar team={team} className="user"/>}</>;
         teamContents.push(content);
         })
-      }
       console.log("teamContents %O", teamContents);
       return teamContents;
     }
     const userTeamContents = getTeamContents();
-    const collectionOwnerBtnContents = <>myself <UserAvatar user={this.props.currentUser}/></>;
+    const collectionOwnerBtnContents = <>myself <UserAvatar user={this.props.currentUser} isStatic={true}/></>;
     
     if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this url';
     }
     if(this.state.newCollectionUrl){
+      console.log('redirect');
       return <Redirect to={this.state.newCollectionUrl}/>;
     }
     return (

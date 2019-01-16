@@ -6,38 +6,32 @@ import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName} from '../../mode
 
 // UserAvatar
 
-export const Avatar = ({name, src, color, srcFallback, type}) => (
-  <div data-tooltip={name} data-tooltip-left="true">
+export const Avatar = ({name, src, color, srcFallback, type, isStatic}) => {
+  var contents = (
     <img width="32px" height="32px" src={src} alt={name}
       style={color ? {backgroundColor: color} : null}
       onError={srcFallback ? (event => event.target.src = srcFallback) : null}
       className={type + "-avatar"}
     />
-  </div>
-);
+    );
+  
+  if(!isStatic){
+    <div data-tooltip={name} data-tooltip-left="true">
+      {contents}
+    </div>
+  }
+  return contents;
+
+
+};
 Avatar.propTypes = {
   name: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   srcFallback: PropTypes.string,
   color: PropTypes.string,
   type: PropTypes.string,
+  isStatic: PropTypes.bool
 };
-
-// avatar without tooltip
-export const StaticAvatar = ({src, color, srcFallback, type}) => (
-  <img width="32px" height="32px" src={src} alt={name}
-    style={color ? {backgroundColor: color} : null}
-    onError={srcFallback ? (event => event.target.src = srcFallback) : null}
-    className={type + "-avatar"}
-  />
-);
-Avatar.propTypes = {
-  src: PropTypes.string.isRequired,
-  srcFallback: PropTypes.string,
-  color: PropTypes.string,
-  type: PropTypes.string,
-};
-
 
 export const TeamAvatar = ({team}) => (
   <Avatar name={team.name} src={getTeamAvatarUrl({...team, size:'small'})} srcFallback={DEFAULT_TEAM_AVATAR} type="team"/>
@@ -51,10 +45,7 @@ TeamAvatar.propTypes = {
 };
 
 export const UserAvatar = ({user, suffix='', isStatic}) => (
-  ( isStatic ? 
-     <StaticAvatar name={getDisplayName(user) + suffix} src={getAvatarThumbnailUrl(user)} color={user.color} srcFallback={ANON_AVATAR_URL} type="user"/>
-   : <Avatar name={getDisplayName(user) + suffix} src={getAvatarThumbnailUrl(user)} color={user.color} srcFallback={ANON_AVATAR_URL} type="user"/>
-  )
+  <Avatar name={getDisplayName(user) + suffix} src={getAvatarThumbnailUrl(user)} color={user.color} srcFallback={ANON_AVATAR_URL} type="user" isStatic={isStatic}/>
 );
 UserAvatar.propTypes = {
   user: PropTypes.shape({
