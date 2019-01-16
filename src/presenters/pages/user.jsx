@@ -118,13 +118,11 @@ const UserPage = ({
         api={api} 
         removePin={removePin}
         projectOptions={{
+          featureProject,
           leaveProject, 
           deleteProject,
           addProjectToCollection,
-          featureProject,
-          unfeatureProject,
         }}
-        featuredProjectId={featuredProjectId}
         addProjectToCollection={addProjectToCollection}
         maybeCurrentUser={maybeCurrentUser}
       />
@@ -149,7 +147,6 @@ const UserPage = ({
           addProjectToCollection
         }}
       />
-
       {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
       {!isAuthorized && <ReportButton reportedType="user" reportedModel={user} />}
     </main>

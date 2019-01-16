@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import ProjectsList from './projects-list.jsx';
 
-/* globals Set */
-
 const EntityPagePinnedProjects = ({api, projects, currentUser, isAuthorized, removePin, projectOptions}) => {
       
   const pinnedTitle = (

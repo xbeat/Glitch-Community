@@ -4,8 +4,6 @@ import ProjectsList from './projects-list.jsx';
 
 import {CurrentUserConsumer} from './current-user.jsx';
 
-/* globals Set */
-
 const EntityPageProjects = ({api, projects, currentUser, isAuthorized, addPin, projectOptions}) => {
 
   return (
