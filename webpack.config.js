@@ -105,7 +105,7 @@ module.exports = {
   plugins: [
     new LodashModuleReplacementPlugin(),
     new MiniCssExtractPlugin({filename: '[name].css?[chunkhash]'}),
-    new StatsPlugin('stats.json', {children: false, chunkModules: false, modules: false}),
+    new StatsPlugin('stats.json', {all: false, entrypoints: true}),
   ],
   watchOptions: {
     ignored: /node_modules/,

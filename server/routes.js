@@ -48,15 +48,14 @@ module.exports = function(external) {
     
     try {
       const stats = JSON.parse(await readFilePromise('public/stats.json'));
-      stats.chunks.forEach(chunk => {
-        if (chunk.initial) {
-          chunk.files.forEach(file => {
-            if (file.endsWith('.js') && !chunk.names.includes('styles')) {
-              scripts.push(`${stats.publicPath}${file}`);
-            } else if (file.endsWith('.css')) {
-              styles.push(`${stats.publicPath}${file}`);
-            }
-          });
+      stats.entrypoints.client.assets.forEach(file => {
+        if (file.match(/\.js(\?|$)/)) {
+          scripts.push(`${stats.publicPath}${file}`);
+        }
+      });
+      stats.entrypoints.styles.assets.forEach(file => {
+        if (file.match(/\.css(\?|$)/)) {
+          styles.push(`${stats.publicPath}${file}`);
         }
       });
     } catch (error) {
