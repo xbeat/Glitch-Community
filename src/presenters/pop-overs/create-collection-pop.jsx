@@ -96,17 +96,23 @@ class CreateNewCollectionPop extends React.Component {
     let queryError = this.state.error;
     let placeholder = "New Collection Name";
     
-    function getTeamContents(){
-      const orderedTeams = orderBy(this.props.currentUser.teams, team => team.name.toLowerCase());   
-      const teamContents = [];
-      { orderedTeams.map(team => (
-        teamContents.push(team.name)
-      )) }
-    }
-
     // for testing dropdown stuff
-    const collectionOwnerBtnContents = <>myself <UserAvatar user={this.props.currentUser}/></>;
+    // for populating user team contents for dropdown menu
+    const teams = this.props.currentUser.teams;
+    
+    function getTeamContents(){
+      const orderedTeams = orderBy(teams, team => team.name.toLowerCase());   
+      const teamContents = [];
+      {orderedTeams.map(team => {
+        let content = <>{team.name} <TeamAvatar team={team} className="user"/></>;
+        teamContents.push(content);
+        })
+      }
+      console.log("teamContents %O", teamContents);
+      return teamContents;
+    }
     const userTeamContents = getTeamContents();
+    const collectionOwnerBtnContents = <>myself <UserAvatar user={this.props.currentUser}/></>;
     
     if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this url';
