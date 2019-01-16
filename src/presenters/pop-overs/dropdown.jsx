@@ -5,15 +5,15 @@ import PopoverWithButton from "./popover-with-button";
 const DropdownMenu = ({contents, selected, updateSelected}) => {
   return(
     <dialog className="pop-over mini-pop">
-    { contents.map(item => (
-       <section className={"mini-pop-action" + (selected ? " selected" : null)}>{item} onClick={() => updateSelected}></section>
+    { contents.map((item, index) => (
+       <section className={"mini-pop-action" + (index == selected ? " selected" : null)} onClick={() => updateSelected}>{item}</section>
      ))}
     </dialog>
 )};
 
 DropdownMenu.propTypes = {
   contents: PropTypes.node.isRequired,
-  selected: PropTypes.node.isRequired,
+  selected: PropTypes.number.isRequired,
   updateSelected: PropTypes.func.isRequired,
 };
 
@@ -21,11 +21,10 @@ DropdownMenu.propTypes = {
 class Dropdown extends React.Component {
   constructor(props) {
     super(props);
-    this.state({ 
-      selected: null, 
-      buttonContents: [],
-      menuContents: [],
-    });
+    this.state = { 
+      selected: 0, 
+      buttonContents: this.props.buttonContents
+    };
     
     this.updateSelected = this.updateSelected.bind(this);
   }
@@ -34,26 +33,28 @@ class Dropdown extends React.Component {
     // set default menu item here
   }
   
-  updateSelected(selectedItem){
+  updateSelected(itemIndex){
     this.setState({
-      selected: selectedItem,
-      buttonText: selectedItem.name
+      selected: itemIndex,
+      buttonText: this.props.buttonContents[itemIndex],
     });
   }
   
   render(){
-    <PopoverWithButton
-      buttonClass="button-small"
-      buttonText={this.state.buttonContents}
-    > 
-      <DropdownMenu contents={this.state.menuContents} selected={this.state.selected} updateSelected={this.updateSelected}/>
-    </PopoverWithButton>
+    return(
+      <PopoverWithButton
+        buttonClass="button-small"
+        buttonText={this.props.buttonContents}
+      > 
+        <DropdownMenu contents={this.props.menuContents} selected={this.state.selected} updateSelected={this.updateSelected}/>
+      </PopoverWithButton>
+    )
   }
 }
 
 Dropdown.propTypes = {
   buttonContents: PropTypes.node.isRequired,
-  menuContents: PropTypes.obj.isRequired,
+  menuContents: PropTypes.node.isRequired,
 }
 
 export default Dropdown;
