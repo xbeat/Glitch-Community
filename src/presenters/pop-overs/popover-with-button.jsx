@@ -47,4 +47,3 @@ PopoverWithButton.defaultProps = {
 };
 
 export default PopoverWithButton;
-d

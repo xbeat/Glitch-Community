@@ -37,10 +37,10 @@ class Dropdown extends React.Component {
   }
   
   updateSelected(itemIndex){
-    console.log('update selected with ' + itemIndex);
+    console.log('update selected with ' + itemIndex + " buttonContents %O", this.props.menuContents[itemIndex]);
     this.setState({
       selected: itemIndex,
-      buttonText: this.props.buttonContents[itemIndex],
+      buttonContents: this.props.menuContents[itemIndex],
     });
   }
   
