@@ -63,7 +63,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
 
       {!!props.addPin &&
         <section className="pop-over-actions">
-          {!props.project.private && <PopoverButton onClick={featureProject} text="Feature" emoji="arrow-up"/>}
+          {!props.project.private && <PopoverButton onClick={featureProject} text="Feature" emoji="clapper"/>}
           <TrackClick name="Project Pinned">
             <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>
           </TrackClick>
@@ -80,7 +80,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
       
       {!!props.addProjectToCollection &&
         <section className="pop-over-actions">
-          <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to My Collection " emoji="framed_picture"/>
+          <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to My Collection " emoji="framed-picture"/>
         </section>
       }
 
