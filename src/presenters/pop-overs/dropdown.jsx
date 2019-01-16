@@ -50,6 +50,7 @@ class Dropdown extends React.Component {
         buttonText={this.state.buttonContents}
         containerClass="dropdown"
         dropdown={true}
+        passToggleToPop
       > 
         <DropdownMenu contents={this.props.menuContents} selected={this.state.selected} updateSelected={this.updateSelected}/>
       </PopoverWithButton>

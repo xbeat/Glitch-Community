@@ -9,6 +9,7 @@ const PopoverWithButton = props => {
         let childrenToShow = props.children;
         if (props.passToggleToPop) {
           childrenToShow = React.Children.map(props.children, child => React.cloneElement(child, { togglePopover: togglePopover }));
+          // what's happening here?
         }
         return (
           <div className={"button-wrap " + props.containerClass}>
