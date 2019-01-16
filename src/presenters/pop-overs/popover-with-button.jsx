@@ -15,7 +15,7 @@ const PopoverWithButton = props => {
             <button
               className={props.buttonClass}
               data-track={props.dataTrack}
-              onClick={props.dropdown ? null : togglePopover}
+              onClick={togglePopover}
             >
               {props.buttonText}
               {props.dropdown && <span className="down-arrow icon" aria-label="options"></span>}

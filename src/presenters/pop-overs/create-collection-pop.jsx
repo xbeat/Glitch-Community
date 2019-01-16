@@ -47,6 +47,7 @@ class CreateNewCollectionPop extends React.Component {
   }
   
   handleChange(newValue) {
+    console.log('handle change');
     this.setState({ query: newValue, error: null });
   }
 
@@ -125,6 +126,9 @@ class CreateNewCollectionPop extends React.Component {
         <NestedPopoverTitle>
           Add {this.props.project.domain} to a new collection
         </NestedPopoverTitle>
+        
+        <Dropdown buttonContents={collectionOwnerBtnContents} menuContents={userTeamContents}/>
+        
         <section className="pop-over-actions">
           {/* TO DO: Add back to submit form */}
           {/* <form onSubmit={this.handleSubmit}> */}
@@ -138,8 +142,6 @@ class CreateNewCollectionPop extends React.Component {
               error={error || queryError}
             />
             <br style={{clear: "both"}}/>for
-            
-            <Dropdown buttonContents={collectionOwnerBtnContents} menuContents={userTeamContents}/>
             
             <br/>
             
