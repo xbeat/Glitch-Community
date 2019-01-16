@@ -26,7 +26,7 @@ const EntityPageFeaturedProject = ({api, isAuthorized, currentUser, unfeaturePro
   return(
     <>
       <section id="featured-project-embed">            
-        {isAuthorized && <FeaturedProjectOptionsPop api={api} unfeatureProject={unfeatureProject} featuredProjectId={featuredProject.id}/>}
+        {isAuthorized && <FeaturedProjectOptionsPop api={api} unfeatureProject={unfeatureProject}/>}
         <div className="glitch-embed-wrap">
           <iframe title="embed"
             src={`${APP_URL}/embed/#!/embed/${featuredProject.id}?path=README.md&previewSize=100`}

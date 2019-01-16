@@ -3,37 +3,17 @@ import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
 import PopoverButton from './popover-button';
 
-// Project Options Pop
-const FeaturedProjectOptionsPop = ({unfeatureProject, featuredProjectId, togglePopover} ) => {
+// Project Options Container
+// create as stateful react component
+export default function FeaturedProjectOptionsPop({unfeatureProject}, {...props}) {
   
-  function animateThenUnfeature(){
-    // animation stuff
+  function animateThenUnfeature(togglePopover){
     const featuredContainer = document.getElementById('featured-project-embed');
     featuredContainer.classList.add('slide-down');
     togglePopover();
-    unfeatureProject(featuredProjectId);
+    unfeatureProject();
   }
    
-  return(
-    <dialog className="pop-over project-options-pop">
-      <section className="pop-over-actions">
-        <PopoverButton onClick={animateThenUnfeature} text="Un-feature" emoji="arrow-down"/>
-      </section>
-    </dialog>
-  );
-};
-
-FeaturedProjectOptionsPop.propTypes = {
-  api: PropTypes.any,
-  togglePopover: PropTypes.func.isRequired,
-  featureProject: PropTypes.func,
-};
-
-
-// Project Options Container
-// create as stateful react component
-export default function FeaturedProjectOptions({unfeatureProject, featuredProjectId}, {...props}) {
-
   return (
     <PopoverContainer>
       {({togglePopover, visible}) => (
@@ -41,14 +21,20 @@ export default function FeaturedProjectOptions({unfeatureProject, featuredProjec
           <button className="project-options button-borderless opens-pop-over" onClick={togglePopover}> 
             <div className="down-arrow" />
           </button>
-          { visible && <FeaturedProjectOptionsPop {...props} unfeatureProject={unfeatureProject} featuredProjectId={featuredProjectId} togglePopover={togglePopover}/> }
+          { visible && (
+            <dialog className="pop-over project-options-pop">
+              <section className="pop-over-actions">
+                <PopoverButton onClick={() => animateThenUnfeature(togglePopover)} text="Un-feature" emoji="arrow-down"/>
+              </section>
+            </dialog>
+          )}
         </div>
       )}
     </PopoverContainer>     
   );
 }
 
-FeaturedProjectOptions.propTypes = {
+FeaturedProjectOptionsPop.propTypes = {
   api: PropTypes.func.isRequired,
   project: PropTypes.object,
   unfeatureProject: PropTypes.func.isRequired,

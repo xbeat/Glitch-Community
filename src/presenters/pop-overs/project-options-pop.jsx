@@ -52,9 +52,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
   }
   
   function featureProject(event){
-    animate(event, 'slide-up', () => (
-      props.featureProject(props.project.id)
-    ));
+    animate(event, 'slide-up', () => props.featureProject(props.project.id));
   }
   
   return(
@@ -152,6 +150,7 @@ ProjectOptionsPop.propTypes = {
   removeProjectFromTeam: PropTypes.func,
   joinTeamProject: PropTypes.func,
   leaveTeamProject: PropTypes.func,
+  featureProject: PropTypes.func,
   currentUserIsOnProject: PropTypes.bool.isRequired,
 };
 ProjectOptionsPop.defaultProps = {
