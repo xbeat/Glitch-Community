@@ -21,7 +21,7 @@ export default class DropdownButton extends React.Component{
       
         { this.state.menuVisible && 
           <dialog className="pop-over mini-pop">
-            { this.props.content.map(item => (
+            { this.props.menu.map(item => (
               <DropdownItem item={item}/>
             ))};                     
           </dialog>
