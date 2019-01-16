@@ -1,27 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const {Consumer} = React.createContext();
-
 export default class DropdownButton extends React.Component{
   constructor(props){
     super(props);
+    this.state = {
+      menuVisible: false,
+    }
     this.toggleMenu = this.toggleMenu.bind(this);
   }
   
   toggleMenu(evt){
-    
+    this.setState({menuVisible: !this.state.menuVisible});
   }
   
   render(){
     return(
       <>
-        <button className="button-small button-tertiary" onClick={() => this.toggleMenu}>{this.props.button.name}</button>
-        <dialog className="pop-over mini-pop">
-          { this.props.content.map(item => (
-            <DropdownItem item={item}/>
-          ))};                     
-        </dialog>
+        <button className="button-small button-tertiary" onClick={() => this.toggleMenu}>{this.props.button.label}</button>
+      
+        { this.state.menuVisible && 
+          <dialog className="pop-over mini-pop">
+            { this.props.content.map(item => (
+              <DropdownItem item={item}/>
+            ))};                     
+          </dialog>
+        }
+      
       </>
     )
   } 
@@ -29,9 +34,10 @@ export default class DropdownButton extends React.Component{
 
 DropdownButton.propTypes = {
   button: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
   }).isRequired,
   menu: PropTypes.object.isRequired,
+  menuVisible: PropTypes.bool,
 }
 
 export const DropdownItem = ({item}) => {
@@ -41,5 +47,8 @@ export const DropdownItem = ({item}) => {
 }
 
 DropdownItem.propTypes = {
-  item: PropTypes.object.isRequired,
+  item: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    avatar: PropTypes.obj.isRequired,
+  }).isRequired,
 }
