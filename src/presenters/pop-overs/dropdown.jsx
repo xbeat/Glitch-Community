@@ -37,7 +37,6 @@ class Dropdown extends React.Component {
   }
   
   updateSelected(itemIndex){
-    console.log('update selected with ' + itemIndex + " buttonContents %O", this.props.menuContents[itemIndex]);
     this.setState({
       selected: itemIndex,
       buttonContents: this.props.menuContents[itemIndex],
@@ -47,7 +46,7 @@ class Dropdown extends React.Component {
   render(){
     return(
       <PopoverWithButton
-        buttonClass="button-small dropdown-btn"
+        buttonClass="button-small dropdown-btn user-or-team-toggle"
         buttonText={this.state.buttonContents}
         containerClass="dropdown"
         dropdown={true}
