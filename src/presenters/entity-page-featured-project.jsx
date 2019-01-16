@@ -23,9 +23,18 @@ const EntityPageFeaturedProject = ({api, isAuthorized, currentUser, unfeaturePro
       <ReportButton className="button-small" reportedType="project" reportedModel={featuredProject} />
     </div>;
   
+  const featuredTitle = (
+    <>
+      Featured Project
+      <span className="emoji clapper emoji-in-title"></span>
+    </>
+  );
+  
   return(
     <>
-      <section id="featured-project-embed">            
+      <section id="featured-project-embed">      
+        <h2>{featuredTitle}</h2>
+      
         {isAuthorized && <FeaturedProjectOptionsPop api={api} unfeatureProject={unfeatureProject}/>}
         <div className="glitch-embed-wrap">
           <iframe title="embed"
