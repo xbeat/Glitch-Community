@@ -116,7 +116,10 @@ class CreateNewCollectionPop extends React.Component {
             <br style={{clear: "both"}}/>for
             <div className="button-wrap" style={{display: "inline", marginLeft: "10px", verticalAlign: "sub"}}>
               <button className="button-small button-tertiary user-or-team-toggle">myself <img src={this.props.currentUser.avatarUrl} alt={this.props.currentUser.login + "-avatar"}/> <span className="down-arrow icon" aria-label="options"></span></button>
-              <CollectionOwnerDialog currentUser={this.props.currentUser} {...this.props.api}/>
+              
+              {/*
+                <CollectionOwnerDialog currentUser={this.props.currentUser} {...this.props.api}/>
+              */}
             </div>
             
             {!this.state.working ? (
