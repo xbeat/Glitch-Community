@@ -11,9 +11,11 @@ function webpackExpressMiddleware() {
   const compiler = webpack(webpackConfig);
   
   const webpackMiddleware = require('webpack-dev-middleware');
-  const middleware = webpackMiddleware(compiler, {writeToDisk: true});
+  const middleware = webpackMiddleware(compiler, {writeToDisk: false});
   
-  let ready = false;
+  // TODO: switch this back to false when webpack-dev-middleware merges
+  // https://github.com/webpack/webpack-dev-middleware/pull/361
+  let ready = true;
   middleware.waitUntilValid(() => {
     ready = true;
   });

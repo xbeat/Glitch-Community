@@ -63,8 +63,8 @@
     "terser-webpack-plugin": "^1.2.1",
     "url-join": "^4.0.0",
     "webpack": "^4.28.4",
-    "webpack-cli": "^3.2.0",
-    "webpack-dev-middleware": "GregWeil/webpack-dev-middleware"
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-middleware": "^3.5.0"
   },
   "engines": {
     "node": "10.x"
