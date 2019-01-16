@@ -112,7 +112,9 @@ class CreateNewCollectionPop extends React.Component {
           Add {this.props.project.domain} to a new collection
         </NestedPopoverTitle>
         <section className="pop-over-actions">
-          <form onSubmit={this.handleSubmit}>
+          {/* TO DO: Add back to submit form */}
+          {/* <form onSubmit={this.handleSubmit}> */}
+          <form>
             <PureEditableField
               id="collection-name"
               className="pop-over-input create-input"

@@ -18,6 +18,7 @@ const PopoverWithButton = props => {
               onClick={togglePopover}
             >
               {props.buttonText}
+              {props.dropdown && <span className="down-arrow icon" aria-label="options"></span>}
             </button>
             {visible && childrenToShow}
           </div>
@@ -31,6 +32,7 @@ PopoverWithButton.propTypes = {
   buttonClass: PropTypes.string,
   containerClass: PropTypes.string,
   dataTrack: PropTypes.string,
+  dropdown: PropTypes.bool,
   buttonText: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired, // should be the stuff to show in a popover
   passToggleToPop: PropTypes.bool

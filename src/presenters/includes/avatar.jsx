@@ -23,6 +23,14 @@ Avatar.propTypes = {
   type: PropTypes.string,
 };
 
+export const StaticAvatar = ({name, src, color, srcFallback, type}) => (
+  <img width="32px" height="32px" src={src} alt={name}
+    style={color ? {backgroundColor: color} : null}
+    onError={srcFallback ? (event => event.target.src = srcFallback) : null}
+    className={type + "-avatar"}
+  />
+);
+
 export const TeamAvatar = ({team}) => (
   <Avatar name={team.name} src={getTeamAvatarUrl({...team, size:'small'})} srcFallback={DEFAULT_TEAM_AVATAR} type="team"/>
 );
