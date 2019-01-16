@@ -6,16 +6,24 @@ const {Consumer} = React.createContext();
 export default class DropdownButton extends React.Component{
   constructor(props){
     super(props);
+    this.toggleMenu = this.toggleMenu.bind(this);
   }
+  
+  toggleMenu(evt){
+    
+  }
+  
   render(){
     return(
-      <button className=
-      <dialog className="pop-over mini-pop">
-        { this.props.content.map(item => (
-          <DropdownItem item={item}/>
-        ))};                     
-      </dialog>
-      )
+      <>
+        <button className="button-small button-tertiary" onClick={() => this.toggleMenu}>{this.props.button.name}</button>
+        <dialog className="pop-over mini-pop">
+          { this.props.content.map(item => (
+            <DropdownItem item={item}/>
+          ))};                     
+        </dialog>
+      </>
+    )
   } 
 }
 
