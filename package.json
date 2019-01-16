@@ -64,7 +64,7 @@
     "url-join": "^4.0.0",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.0",
-    "webpack-dev-middleware": "^3.5.0"
+    "webpack-dev-middleware": "GregWeil/webpack-dev-middleware"
   },
   "engines": {
     "node": "10.x"
