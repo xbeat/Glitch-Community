@@ -5,7 +5,7 @@ import PopoverButton from './popover-button';
 
 // Project Options Container
 // create as stateful react component
-export default function FeaturedProjectOptionsPop({unfeatureProject}, {...props}) {
+export default function FeaturedProjectOptionsPop({unfeatureProject}) {
   
   function animateThenUnfeature(togglePopover){
     const featuredContainer = document.getElementById('featured-project-embed');
