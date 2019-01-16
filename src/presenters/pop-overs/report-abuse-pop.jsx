@@ -290,6 +290,7 @@ const ReportAbusePopButton = props => (
   </PopoverWithButton>
 );
 
+
 ReportAbusePopButton.propTypes = {
   reportedType: PropTypes.string.isRequired, // 'project', 'collection', 'user', 'team'
   reportedModel: PropTypes.object // the actual model, or null if no model (like for the home page)
