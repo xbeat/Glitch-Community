@@ -5,19 +5,19 @@ import {Redirect} from 'react-router-dom';
 import randomColor from 'randomcolor';
 import {captureException} from '../../utils/sentry';
 
-import {TeamAvatar} from '../includes/avatar.jsx';
+import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';
-import {StaticUsersList} from '../users-list.jsx';
 
 import Loader from '../includes/loader.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
-import Dropdown from './pop-overs/dropdown.jsx';
+import Dropdown from './dropdown.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
 
 import {kebabCase, orderBy} from 'lodash';
 
+{/*
 const CollectionOwnerDialog = ({api, currentUser}) => {
   const orderedTeams = orderBy(currentUser.teams, team => team.name.toLowerCase());
   return(
@@ -28,6 +28,7 @@ const CollectionOwnerDialog = ({api, currentUser}) => {
     </dialog>
   );
 };
+*/}
 
 class CreateNewCollectionPop extends React.Component {
   constructor(props) {
@@ -94,6 +95,11 @@ class CreateNewCollectionPop extends React.Component {
     const {error, maybeCollections, query} = this.state;
     let queryError = this.state.error;
     let placeholder = "New Collection Name";
+    
+    // for testing dropdown stuff
+    const collectionOwnerBtnContents = <>myself <UserAvatar user={this.props.currentUser}/></>;
+    const userTeamContents = ["hello", "hi"];
+    
     if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this url';
     }
@@ -117,9 +123,7 @@ class CreateNewCollectionPop extends React.Component {
             />
             <br style={{clear: "both"}}/>for
             
-            
-            
-            
+            <Dropdown buttonContents={collectionOwnerBtnContents} menuContents={userTeamContents}/>
             
             {/*
             <div className="button-wrap" style={{display: "inline", marginLeft: "10px", verticalAlign: "sub"}}>

@@ -6,7 +6,7 @@ const DropdownMenu = ({contents, selected, updateSelected}) => {
   return(
     <dialog className="pop-over mini-pop">
     { contents.map(item => (
-       <section className="mini-pop-action">{item} onClick={() => updateSelected}></section>
+       <section className={"mini-pop-action" + (selected ? " selected" : null)}>{item} onClick={() => updateSelected}></section>
      ))}
     </dialog>
 )};
@@ -55,3 +55,5 @@ Dropdown.propTypes = {
   buttonContents: PropTypes.node.isRequired,
   menuContents: PropTypes.obj.isRequired,
 }
+
+export default Dropdown;
