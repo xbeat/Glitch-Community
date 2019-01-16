@@ -17,6 +17,7 @@ import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import CollectionsList from '../collections-list.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
+import ReportButton from '../pop-overs/report-abuse-pop.jsx';
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, getLink({login}));
@@ -125,6 +126,7 @@ const UserPage = ({
     />
     
     {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
+    {!isAuthorized && <ReportButton reportedType="user" reportedModel={user} />}
   </main>
 );
 UserPage.propTypes = {
@@ -150,7 +152,7 @@ UserPage.propTypes = {
 };
 
 const UserPageContainer = ({api, user}) => (
-  <AnalyticsContext properties={{origin: 'user'}} context={{groupId: 0}}>
+  <AnalyticsContext properties={{origin: 'user'}}>
     <UserEditor api={api} initialUser={user}>
       {(user, funcs, isAuthorized) => (
         <>

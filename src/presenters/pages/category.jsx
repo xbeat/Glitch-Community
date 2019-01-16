@@ -89,7 +89,7 @@ async function loadCategory(api, id) {
 
 const CategoryPage = ({api, category, ...props}) => (
   <Layout api={api}>
-    <AnalyticsContext properties={{origin: 'category'}} context={{groupId: 0}}>
+    <AnalyticsContext properties={{origin: 'category'}}>
       <DataLoader get={() => loadCategory(api, category.id)}>
         {category => (
           <CollectionEditor api={api} initialCollection={category} >

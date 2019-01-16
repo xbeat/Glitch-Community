@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import {CurrentUserConsumer} from './current-user.jsx';
 import ErrorHandlers from './error-handlers.jsx';
-import DevToggles from './includes/dev-toggles';
 
 class CollectionEditor extends React.Component {
   constructor(props) {
@@ -20,7 +19,7 @@ class CollectionEditor extends React.Component {
     if (this.state.user) {
       return this.state.user.id === currentUserId;
     }
-    if (this.state.team && this.props.teamsEnabled) {
+    if (this.state.team) {
       return this.state.team.users.some(user => user.id === currentUserId);
     }
     return false;
@@ -72,23 +71,18 @@ CollectionEditor.propTypes = {
   handleError: PropTypes.func.isRequired,
   handleErrorForInput: PropTypes.func.isRequired,
   initialCollection: PropTypes.object.isRequired,
-  teamsEnabled: PropTypes.bool.isRequired,
 };
 
 const CollectionEditorContainer = ({api, children, initialCollection}) => (
   <ErrorHandlers>
     {errorFuncs => (
-      <DevToggles>
-        {enabledToggles => (
-          <CurrentUserConsumer>
-            {(currentUser) => (
-              <CollectionEditor {...{api, currentUser, initialCollection}} {...errorFuncs} teamsEnabled={enabledToggles.includes('Team Collections')}>
-                {children}
-              </CollectionEditor>
-            )}
-          </CurrentUserConsumer>
+      <CurrentUserConsumer>
+        {(currentUser) => (
+          <CollectionEditor {...{api, currentUser, initialCollection}} {...errorFuncs}>
+            {children}
+          </CollectionEditor>
         )}
-      </DevToggles>
+      </CurrentUserConsumer>
     )}
   </ErrorHandlers>
 );

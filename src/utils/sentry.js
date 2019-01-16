@@ -16,11 +16,13 @@ try {
     dsn: 'https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508',
     environment: ENVIRONMENT,
     beforeSend(event) {
-      const json = JSON.stringify(event);
-      const scrubbedJSON = json.replace(/"persistentToken":"[^"]+"/g, `"persistentToken":"****"`);
-      const scrubbedEvent = JSON.parse(scrubbedJSON);
-
-      return scrubbedEvent;
+      const tokens = ['facebookToken', 'githubToken', 'persistentToken'];
+      let json = JSON.stringify(event);
+      tokens.forEach(token => {
+        const regexp = new RegExp(`"${token}":"[^"]+"`, 'g');
+        json = json.replace(regexp, `"${token}":"****"`);
+      });
+      return JSON.parse(json);
     },
   });
   
@@ -33,4 +35,3 @@ try {
 } catch (error) {
   console.warn("Error initializing Sentry", error);
 }
-

@@ -39,6 +39,11 @@ Now select 'BlackBoxing' on the left, and blackbox `@sentry`:
 Now, in your devtools, it'll be just like Raven.js doesn't exist -- line numbers and exceptions will flow straight through, but it'll stay functional behind the scenes.
 
 
+### What are dev toggles?
+
+We use them to hide features that we're still working on. The code lives in `dev-toggles.jsx`. Visit remix.glitch.me/secret to enable a feature locally.
+
+
 ### Is any configuration required to get my remix running?
 
 Nope! Though you can set your remix to run in production mode by setting `NODE_ENV=production` in the `.env` file. Doing so will improve performance a bit, but webpack will take a lot longer.

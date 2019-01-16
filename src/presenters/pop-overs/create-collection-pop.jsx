@@ -15,7 +15,6 @@ import Loader from '../includes/loader.jsx';
 import {NestedPopoverTitle} from './popover-nested.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
 
-
 import {kebabCase, orderBy} from 'lodash';
 
 const CollectionOwnerDialog = ({api, currentUser}) => {
