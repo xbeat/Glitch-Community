@@ -13,6 +13,7 @@ import {StaticUsersList} from '../users-list.jsx';
 import Loader from '../includes/loader.jsx';
 
 import {NestedPopoverTitle} from './popover-nested.jsx';
+import Dropdown from './pop-overs/dropdown.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
 
 import {kebabCase, orderBy} from 'lodash';
@@ -87,6 +88,7 @@ class CreateNewCollectionPop extends React.Component {
       }
     }
   }
+
     
   render() {
     const {error, maybeCollections, query} = this.state;
@@ -114,13 +116,17 @@ class CreateNewCollectionPop extends React.Component {
               error={error || queryError}
             />
             <br style={{clear: "both"}}/>for
+            
+            
+            
+            
+            
+            {/*
             <div className="button-wrap" style={{display: "inline", marginLeft: "10px", verticalAlign: "sub"}}>
               <button className="button-small button-tertiary user-or-team-toggle">myself <img src={this.props.currentUser.avatarUrl} alt={this.props.currentUser.login + "-avatar"}/> <span className="down-arrow icon" aria-label="options"></span></button>
-              
-              {/*
                 <CollectionOwnerDialog currentUser={this.props.currentUser} {...this.props.api}/>
-              */}
             </div>
+            */}
             
             {!this.state.working ? (
               <TrackClick name="Create Collection clicked" properties={inherited => ({...inherited, origin: `${inherited.origin} project`})}>
