@@ -76,7 +76,8 @@ module.exports = {
         }
       },
       {
-        test: /\.(js|jsx)$/,   
+        test: /\.(js|jsx)$/,
+        include: SRC,
         loader: 'babel-loader',
       },
       {
