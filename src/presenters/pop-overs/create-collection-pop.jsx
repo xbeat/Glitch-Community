@@ -7,7 +7,7 @@ import {captureException} from '../../utils/sentry';
 
 import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import {TrackClick} from '../analytics';
-import {getLink, defaultAvatar} from '../../models/collection';
+import {getLink, defaultAvatar} from '../../models/collection';      
 
 import Loader from '../includes/loader.jsx';
 
