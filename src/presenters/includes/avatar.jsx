@@ -56,3 +56,8 @@ UserAvatar.propTypes = {
   suffix: PropTypes.string,
   isStatic: PropTypes.bool,
 };
+
+export const TeamAvatarFromId =({api, teamId}) => (
+  const team = await api.get(`/teams/${this.state.teamId}`);
+
+  );
