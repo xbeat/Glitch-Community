@@ -41,6 +41,7 @@ class Dropdown extends React.Component {
       selected: itemIndex,
       buttonContents: this.props.menuContents[itemIndex],
     });
+    this.props.togglePopover;
   }
   
   render(){
@@ -61,6 +62,7 @@ class Dropdown extends React.Component {
 Dropdown.propTypes = {
   buttonContents: PropTypes.node.isRequired,
   menuContents: PropTypes.node.isRequired,
+  togglePopover: PropTypes.func.isRequired,
 }
 
 export default Dropdown;
