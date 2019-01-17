@@ -101,9 +101,9 @@ class CreateNewCollectionPop extends React.Component {
       menuContents.push(currentUserMenuItem);
       
       orderedTeams.map(team => {
-        let content = <>{team.name} {<TeamAvatar team={team} className="user"/>}</>;
+        let content = <span teamId={team.id}>{team.name} {<TeamAvatar team={team} className="user"/>}</span>;
         menuContents.push(content);
-        })
+      })
       return menuContents;
     }
     
