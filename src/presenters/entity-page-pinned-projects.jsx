@@ -21,7 +21,6 @@ const EntityPagePinnedProjects = ({api, projects, currentUser, isAuthorized, rem
           projectOptions={isAuthorized ? {removePin, ...projectOptions} 
             : (currentUser && currentUser.login ? {...projectOptions} : {})
           }
-          extraClasses="pinned"
         />
      }
     </>

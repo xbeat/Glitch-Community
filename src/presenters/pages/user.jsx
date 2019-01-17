@@ -13,8 +13,9 @@ import Thanks from '../includes/thanks.jsx';
 
 import DeletedProjects from '../deleted-projects.jsx';
 import EntityPageFeaturedProject from '../entity-page-featured-project.jsx';
-import EntityPagePinnedProjects from '../entity-page-pinned-projects.jsx';
-import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
+import EntityPageProjects from '../entity-page-projects.jsx';
+// import EntityPagePinnedProjects from '../entity-page-pinned-projects.jsx';
+// import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
 import CollectionsList from '../collections-list.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
@@ -79,8 +80,16 @@ const UserPage = ({
 { 
   const pinnedSet = new Set(user.pins.map(({projectId}) => projectId));
   const pinnedProjects = user.projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != featuredProjectId); 
+  const pinnedTitle = (
+    <>
+      Pinned Projects
+      <span className="emoji pushpin emoji-in-title"></span>
+    </>
+  );
   const recentProjects = user.projects.filter(({id}) => !pinnedSet.has(id)).filter( ({id}) => id != featuredProjectId);
+  const recentTitle = "Recent Projects";
   const featuredProject = user.projects.find(({id}) => id === featuredProjectId);
+  
   
   return(
     <main className="profile-page user-page">   
@@ -112,7 +121,8 @@ const UserPage = ({
         />
       }
 
-      <EntityPagePinnedProjects
+      {/* Pinned Projects */}
+      <EntityPageProjects
         projects={pinnedProjects} 
         isAuthorized={isAuthorized}
         api={api} 
@@ -125,6 +135,7 @@ const UserPage = ({
         }}
         addProjectToCollection={addProjectToCollection}
         maybeCurrentUser={maybeCurrentUser}
+        title={pinnedTitle}
       />
 
       {!!user.login && (
@@ -135,7 +146,8 @@ const UserPage = ({
         />
       )}
 
-      <EntityPageRecentProjects
+      {/* Recent Projects */}
+      <EntityPageProjects
         projects={recentProjects} 
         isAuthorized={isAuthorized}
         api={api} 
@@ -146,6 +158,7 @@ const UserPage = ({
           deleteProject,
           addProjectToCollection
         }}
+        title={recentTitle}
       />
       {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
       {!isAuthorized && <ReportButton reportedType="user" reportedModel={user} />}
