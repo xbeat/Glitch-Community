@@ -41,9 +41,8 @@ class CreateNewCollectionPop extends React.Component {
   
   setTeamId(buttonContents){
     const teamId = buttonContents.props.id;
-    console.log(`teamId: ${teamId}`);
      this.setState({
-       teamId: (buttonContents.id)
+       teamId: teamId
      });
   }
 
@@ -62,6 +61,7 @@ class CreateNewCollectionPop extends React.Component {
       const description = `A ${collectionPair[1]} of projects that does ${collectionPair[0]} things`;
       const avatarUrl = defaultAvatar;
       const coverColor = randomColor({luminosity: 'light'});
+      const teamId = this.state.teamId;
       
       const {data} = await this.props.api.post('collections', {
         name,
@@ -69,14 +69,23 @@ class CreateNewCollectionPop extends React.Component {
         url,
         avatarUrl,
         coverColor,
+        teamId,
       });
-
-      const newCollection = {user: this.props.currentUser, ...data};
 
       // add the selected project to the collection
       await this.props.api.patch(`collections/${newCollection.id}/add/${this.props.project.id}`);         
       
       // redirect to that collection
+      if(data && data.url){
+        if(this.state.teamId){
+          data.team = this.state.teamId;
+        }else{
+          data.user = this.props.currentUser;
+        }
+      }
+      
+      const newCollection = {...data};
+      
       const newCollectionUrl = getLink(newCollection);
       this.setState({newCollectionUrl});
     }catch(error){
@@ -92,6 +101,7 @@ class CreateNewCollectionPop extends React.Component {
     const {error, maybeCollections, query} = this.state;
     let queryError = this.state.error;
     let submitEnabled = this.state.query.length > 0;
+
     let placeholder = "New Collection Name";
     
     // for testing dropdown stuff
@@ -150,7 +160,7 @@ class CreateNewCollectionPop extends React.Component {
             {!this.state.working ? (
               <TrackClick name="Create Collection clicked" properties={inherited => ({...inherited, origin: `${inherited.origin} project`})}>
                 <div className="button-wrap">
-                  <button type="submit" className="create-collection button-small" disabled={!!queryError && !!submitEnabled}>
+                  <button type="submit" className="create-collection button-small" disabled={!!queryError || !submitEnabled}>
                     Create
                   </button>
                 </div>

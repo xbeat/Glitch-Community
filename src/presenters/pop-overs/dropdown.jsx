@@ -54,7 +54,7 @@ class Dropdown extends React.Component {
   render(){
     return(
       <PopoverWithButton
-        buttonClass="button-small dropdown-btn user-or-team-toggle"
+        buttonClass="button-small dropdown-btn user-or-team-toggle has-emoji"
         buttonText={this.state.buttonContents}
         containerClass="dropdown"
         dropdown={true}
