@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Link from '../includes/link.jsx';
 import PopoverWithButton from "./popover-with-button";
 
 const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
@@ -8,7 +9,7 @@ const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
     <dialog className="pop-over mini-pop">
       { contents.map((item, index) => (
         <section className={"mini-pop-action" + (index == selected ? " selected" : "")} key={index} >
-          <button 
+          <Link
             onClick={() => {
               updateSelected(index);
               togglePopover();
@@ -17,9 +18,10 @@ const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
               updateSelected(index);
               togglePopover();
             }}
+            to={""}
           >
             {item}
-          </button>
+          </Link>
         </section>
       ))}
     </dialog>
