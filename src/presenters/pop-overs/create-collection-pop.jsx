@@ -40,11 +40,11 @@ class CreateNewCollectionPop extends React.Component {
   }
   
   setTeamId(buttonContents){
-    // called to determine whether teamID should be added to request
-    console.log(`buttonContents ${buttonContents}`);
-    // this.setState({
-    //   teamId: (teamId)
-    // });
+    const teamId = buttonContents.props.id;
+    console.log(`teamId: ${teamId}`);
+     this.setState({
+       teamId: (buttonContents.id)
+     });
   }
 
   async handleSubmit(event){
@@ -91,6 +91,7 @@ class CreateNewCollectionPop extends React.Component {
   render() {
     const {error, maybeCollections, query} = this.state;
     let queryError = this.state.error;
+    let submitEnabled = this.state.query.length > 0;
     let placeholder = "New Collection Name";
     
     // for testing dropdown stuff
@@ -149,7 +150,7 @@ class CreateNewCollectionPop extends React.Component {
             {!this.state.working ? (
               <TrackClick name="Create Collection clicked" properties={inherited => ({...inherited, origin: `${inherited.origin} project`})}>
                 <div className="button-wrap">
-                  <button type="submit" className="create-collection button-small" disabled={!!queryError}>
+                  <button type="submit" className="create-collection button-small" disabled={!!queryError && !!submitEnabled}>
                     Create
                   </button>
                 </div>
