@@ -5,7 +5,7 @@ import PopoverWithButton from "./popover-with-button";
 const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
     
   return(
-    <ul className="pop-over mini-pop" role="listbox" tabindex="-1">
+    <ul className="pop-over mini-pop" role="listbox" tabIndex="-1">
       { contents.map((item, index) => (
         <li className={"mini-pop-action" + (index == selected ? " selected" : "")} key={index} 
           aria-selected={index==selected}
