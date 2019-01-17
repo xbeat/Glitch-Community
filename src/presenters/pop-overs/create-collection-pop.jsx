@@ -28,7 +28,8 @@ class CreateNewCollectionPop extends React.Component {
       query: '', //The actual search text
       collectionPair: 'wondrous-collection',
       maybeCollections: null, //null means still loading
-      teamId: undefined // by default, create a collection for a user, but if team is selected from dropdown, set to teamID
+      teamId: undefined, // by default, create a collection for a user, but if team is selected from dropdown, set to teamID,
+      redirectReady: false
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -75,22 +76,31 @@ class CreateNewCollectionPop extends React.Component {
 
       // add the selected project to the collection
       await this.props.api.patch(`collections/${data.id}/add/${this.props.project.id}`);         
+      console.log("data %O", data);
       
       // redirect to that collection
       if(data && data.url){
         if(this.state.teamId){
-          <DataLoad
-          data.team = this.state.teamId;
+          <DataLoader get={() => getTeamById(this.props.api, this.state.teamId)}>
+            {team => {
+              console.log('got team');
+              data.team = team;
+              this.setState({redirectReady: true});
+            }}
+          </DataLoader>
         }else{
+          console.log('set user');
           data.user = this.props.currentUser;
+          this.setState({redirectReady: true});
+        }
+        if(this.state.redirectReady){
+          const newCollectionUrl = getLink(data);
+          console.log(`newCollectionUrl: ${newCollectionUrl}`);
+          this.setState({newCollectionUrl});
         }
       }
       
-      console.log("data %O", data);
-      const newCollectionUrl = getLink(data);
-      console.log(`newCollectionUrl: ${newCollectionUrl}`);
-      
-      this.setState({newCollectionUrl});
+
     }catch(error){
       if (error && error.response && error.response.data && error.response.data.message) {
         this.setState({error: error.response.data.message});
