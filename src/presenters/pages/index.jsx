@@ -60,8 +60,10 @@ class WhatIsGlitch extends React.Component {
       <section className="what-is-glitch">
         <span>
           <figure>
-            <img className="witch large" src={witchLarge} alt={whatsGlitchAlt}/>
-            <img className="witch small" src={witchSmall} alt={whatsGlitchAlt}/>
+            <h1>
+              <img className="witch large" src={witchLarge} alt={whatsGlitchAlt}/>
+              <img className="witch small" src={witchSmall} alt={whatsGlitchAlt}/>
+            </h1>
             
             <OverlayVideo>
               <div className="button video">
