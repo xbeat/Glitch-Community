@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Notifications from '../notifications.jsx';
 
 import CollectionAvatar from './collection-avatar.jsx';
-import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 
 const AddProjectMessage = ({projectName, collectionName, url}) => (
   <>
@@ -54,7 +53,8 @@ const CollectionResultItem = ({onClick, project, collection, currentUserLogin, i
             </div>
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
-              { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }                              
+              { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
+                                                
             </div>
           </button>
           <a href={collectionPath} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">

@@ -80,6 +80,7 @@ class AddProjectToCollectionPopContents extends React.Component {
                     <li key={collection.id}>
                       <TrackClick name="Project Added to Collection" context={{groupId: collection.team ? collection.team.id : 0}}>
                         <CollectionResultItem 
+                          api={this.props.api}
                           onClick={this.props.addProjectToCollection}
                           currentUserLogin={this.props.currentUser.login}
                           project={this.props.project}
