@@ -103,6 +103,15 @@ module.exports = function(external) {
     }
     await render(res, `@${name}`, `We couldn't find @${name}`);
   });
+  
+  app.get('/auth/:domain', async (req, res) => {
+    const {domain} = req.params;
+    
+    res.render('api-auth.ejs', {
+      domain: domain,
+      CONSTANTS: constants,
+    });
+  });
 
   app.get('*', async (req, res) => {
     await render(res,
