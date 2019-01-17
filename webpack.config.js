@@ -12,7 +12,7 @@ const STYLES = path.resolve(__dirname, 'styles');
 const STYLE_BUNDLE_NAME = 'styles';
 
 
-let mode = 'development';
+let mode = 'production';
 if (process.env.NODE_ENV === 'production') {
   mode = 'production';
 }
@@ -77,6 +77,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
+        exclude: /node_modules\/(?!d3-array)/,
         loader: 'babel-loader',
       },
       {
