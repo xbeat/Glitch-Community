@@ -8,6 +8,7 @@ import {captureException} from '../../utils/sentry';
 import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';
+import {getTeamById} from '../pages/team-or-user';
 
 import Loader from '../includes/loader.jsx';
 
@@ -73,20 +74,22 @@ class CreateNewCollectionPop extends React.Component {
       });
 
       // add the selected project to the collection
-      await this.props.api.patch(`collections/${newCollection.id}/add/${this.props.project.id}`);         
+      await this.props.api.patch(`collections/${data.id}/add/${this.props.project.id}`);         
       
       // redirect to that collection
       if(data && data.url){
         if(this.state.teamId){
+          <DataLoad
           data.team = this.state.teamId;
         }else{
           data.user = this.props.currentUser;
         }
       }
       
-      const newCollection = {...data};
+      console.log("data %O", data);
+      const newCollectionUrl = getLink(data);
+      console.log(`newCollectionUrl: ${newCollectionUrl}`);
       
-      const newCollectionUrl = getLink(newCollection);
       this.setState({newCollectionUrl});
     }catch(error){
       if (error && error.response && error.response.data && error.response.data.message) {
