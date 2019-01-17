@@ -20,7 +20,7 @@ AddProjectMessage.propTypes = {
 const addProject = (addProjectToCollection, project, collection, collectionPath, notification, togglePopover) => {
 
   try{
-    // add project to collection via api
+    // add project to collection
     addProjectToCollection(project, collection);
 
     // toggle popover
@@ -35,7 +35,7 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   }
 };
 
-const CollectionResultItem = ({api, onClick, project, collection, currentUserLogin, isActive, togglePopover}) => {
+const CollectionResultItem = ({onClick, project, collection, currentUserLogin, isActive, togglePopover}) => {
   let resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
@@ -67,7 +67,6 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUserLog
 };
 
 CollectionResultItem.propTypes = {
-  api: PropTypes.func,
   onClick: PropTypes.func,
   collection: PropTypes.object.isRequired,
   currentUserLogin: PropTypes.string.isRequired,

@@ -85,7 +85,6 @@ class AddProjectToCollectionPopContents extends React.Component {
                           project={this.props.project}
                           collection={collection}                         
                           togglePopover={this.props.togglePopover} 
-                          api={this.props.api}
                         />
                       </TrackClick>
                     </li>

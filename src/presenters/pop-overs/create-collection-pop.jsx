@@ -29,7 +29,6 @@ class CreateNewCollectionPop extends React.Component {
       collectionPair: 'wondrous-collection',
       maybeCollections: null, //null means still loading
       teamId: undefined, // by default, create a collection for a user, but if team is selected from dropdown, set to teamID,
-      redirectReady: false
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -76,25 +75,19 @@ class CreateNewCollectionPop extends React.Component {
 
       // add the selected project to the collection
       await this.props.api.patch(`collections/${data.id}/add/${this.props.project.id}`);         
-      console.log("data %O", data);
       
       // redirect to that collection
       if(data && data.url){
         if(this.state.teamId){
-          const team = await getTeamById(this.props.api, this.state.teamId);
+          const {data: team} = await this.props.api.get(`/teams/${this.state.teamId}`);
           console.log('got team');
-          data.team = team;
-          this.setState({redirectReady: true});  
+          data.team = team; 
         }else{
           console.log('set user');
           data.user = this.props.currentUser;
-          this.setState({redirectReady: true});
         }
-        if(this.state.redirectReady){
-          const newCollectionUrl = getLink(data);
-          console.log(`newCollectionUrl: ${newCollectionUrl}`);
-          this.setState({newCollectionUrl});
-        }
+        const newCollectionUrl = getLink(data);
+        this.setState({newCollectionUrl});
       }
       
 
