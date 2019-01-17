@@ -1,4 +1,4 @@
-/* global analytics APP_URL */
+/* global APP_URL */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -7,14 +7,7 @@ import FeaturedProjectOptionsPop from "./pop-overs/featured-project-options-pop.
 import {EditButton, RemixButton} from './includes/project-actions.jsx';
 import ReportButton from './pop-overs/report-abuse-pop.jsx';
 import AddProjectToCollection from './includes/add-project-to-collection.jsx';
-
-function trackRemix(id, domain) {
-  analytics.track("Click Remix", {
-    origin: "project page",
-    baseProjectId: id,
-    baseDomain: domain,
-  });
-}
+import {TrackClick} from './analytics';
 
 const EntityPageFeaturedProject = ({api, isAuthorized, currentUser, unfeatureProject, addProjectToCollection, featuredProject}) => {
   
@@ -54,10 +47,11 @@ const EntityPageFeaturedProject = ({api, isAuthorized, currentUser, unfeaturePro
 
           {currentUser.login && <AddProjectToCollection className="button-small" api={api} currentUser={currentUser} project={featuredProject} fromProject={true} addProjectToCollection={addProjectToCollection}/>}
           
-          <RemixButton className="button-small"
-            name={featuredProject.domain} isMember={isAuthorized}
-            onClick={() => trackRemix(featuredProject.id, featuredProject.domain)}
-          />
+          <TrackClick name="Click Remix" properties={{baseProjectId: featuredProject.id, baseDomain: featuredProject.domain}}>
+            <RemixButton className="button-small"
+              name={featuredProject.domain} isMember={isAuthorized}
+            />
+          </TrackClick>
         </div>
       </section>
     </>

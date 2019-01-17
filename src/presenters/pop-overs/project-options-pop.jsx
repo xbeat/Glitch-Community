@@ -68,7 +68,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
       }
       {!!props.removePin &&
         <section className="pop-over-actions">
-          {!props.project.private && <PopoverButton onClick={featureProject} text="Feature" emoji="arrow-up"/>}
+          {!props.project.private && <PopoverButton onClick={featureProject} text="Feature" emoji="clapper"/>}
           <TrackClick name="Project Un-Pinned">
             <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>
           </TrackClick>

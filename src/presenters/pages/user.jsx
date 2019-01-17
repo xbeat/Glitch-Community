@@ -80,7 +80,7 @@ const UserPage = ({
   const pinnedSet = new Set(user.pins.map(({projectId}) => projectId));
   const pinnedProjects = user.projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != featuredProjectId); 
   const recentProjects = user.projects.filter(({id}) => !pinnedSet.has(id)).filter( ({id}) => id != featuredProjectId);
-  const featuredProject = Object.is(featuredProjectId, undefined) ? undefined : user.projects.filter( ({id}) => id == featuredProjectId)[0];
+  const featuredProject = user.projects.find(({id}) => id === featuredProjectId);
   
   return(
     <main className="profile-page user-page">   
