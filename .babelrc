@@ -5,6 +5,7 @@
       "es2017": false,
     }],
     "@babel/preset-react",
+    "@babel/preset-env",
   ],
   "plugins": [
     "lodash",
