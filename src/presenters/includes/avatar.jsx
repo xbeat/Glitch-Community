@@ -13,12 +13,12 @@ export const Avatar = ({name, src, color, srcFallback, type, isStatic}) => {
       onError={srcFallback ? (event => event.target.src = srcFallback) : null}
       className={type + "-avatar"}
     />
-    );
+  );
   
   if(!isStatic){
     <div data-tooltip={name} data-tooltip-left="true">
       {contents}
-    </div>
+    </div>;
   }
   return contents;
 };

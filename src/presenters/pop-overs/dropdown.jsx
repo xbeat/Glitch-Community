@@ -6,18 +6,18 @@ const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
     
   return(
     <dialog className="pop-over mini-pop">
-    { contents.map((item, index) => (
-       <section className={"mini-pop-action" + (index == selected ? " selected" : "")} key={index} 
-         onClick={() => {
+      { contents.map((item, index) => (
+        <section className={"mini-pop-action" + (index == selected ? " selected" : "")} key={index} 
+          onClick={() => {
             updateSelected(index);
             togglePopover();
           }
           }>
           {item}
         </section>
-     ))}
+      ))}
     </dialog>
-)};
+  );};
 
 DropdownMenu.propTypes = {
   contents: PropTypes.node.isRequired,
@@ -62,7 +62,7 @@ class Dropdown extends React.Component {
       > 
         <DropdownMenu contents={this.props.menuContents} selected={this.state.selected} updateSelected={this.updateSelected}/>
       </PopoverWithButton>
-    )
+    );
   }
 }
 
@@ -70,6 +70,6 @@ Dropdown.propTypes = {
   buttonContents: PropTypes.node.isRequired,
   menuContents: PropTypes.node.isRequired,
   onUpdate: PropTypes.func.isRequired,
-}
+};
 
 export default Dropdown;

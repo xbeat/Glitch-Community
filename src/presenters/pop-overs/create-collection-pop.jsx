@@ -43,9 +43,9 @@ class CreateNewCollectionPop extends React.Component {
   
   setTeamId(buttonContents){
     const teamId = buttonContents.props.id;
-     this.setState({
-       teamId: teamId
-     });
+    this.setState({
+      teamId: teamId
+    });
   }
 
   async handleSubmit(event){
@@ -81,13 +81,10 @@ class CreateNewCollectionPop extends React.Component {
       // redirect to that collection
       if(data && data.url){
         if(this.state.teamId){
-          <DataLoader get={() => getTeamById(this.props.api, this.state.teamId)}>
-            {team => {
-              console.log('got team');
-              data.team = team;
-              this.setState({redirectReady: true});
-            }}
-          </DataLoader>
+          const team = await getTeamById(this.props.api, this.state.teamId);
+          console.log('got team');
+          data.team = team;
+          this.setState({redirectReady: true});  
         }else{
           console.log('set user');
           data.user = this.props.currentUser;
@@ -129,7 +126,7 @@ class CreateNewCollectionPop extends React.Component {
       orderedTeams.map(team => {
         let content = <span id={team.id}>{team.name} {<TeamAvatar team={team} className="user"/>}</span>;
         menuContents.push(content);
-      })
+      });
       return menuContents;
     }
     
@@ -165,8 +162,8 @@ class CreateNewCollectionPop extends React.Component {
                 <br style={{clear: "both"}}/>for
                 <Dropdown buttonContents={collectionOwnerBtnContents} menuContents={userDropdownContents} onUpdate={this.setTeamId}/>
               </>
-            : null
-           }
+              : null
+            }
             
             <br style={{clear: "both"}}/>
             
