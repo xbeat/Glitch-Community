@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PopoverWithButton from "./popover-with-button";
 
-const DropdownMenu = ({contents, selected, updateSelected}) => {
+const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
     
   return(
     <dialog className="pop-over mini-pop">
@@ -23,7 +23,7 @@ DropdownMenu.propTypes = {
   contents: PropTypes.node.isRequired,
   selected: PropTypes.number.isRequired,
   updateSelected: PropTypes.func.isRequired,
-  togglePopover: PropTypes.func.isRequired, // passed from PopoverWithButton
+  togglePopover: PropTypes.func, // added dynamically from PopoverWithButton
 };
 
 
@@ -47,7 +47,6 @@ class Dropdown extends React.Component {
       selected: itemIndex,
       buttonContents: this.props.menuContents[itemIndex],
     });
-    this.props.togglePopover();
   }
   
   render(){
