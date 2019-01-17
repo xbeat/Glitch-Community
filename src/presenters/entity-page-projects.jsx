@@ -4,11 +4,19 @@ import PropTypes from 'prop-types';
 import ProjectsList from './projects-list.jsx';
 
 const EntityPageProjects = ({api, projects, currentUser, isAuthorized, addPin, removePin, projectOptions, title}) => {
+  const pinnedTitle = (
+    <>
+      Pinned Projects
+      <span className="emoji pushpin emoji-in-title"></span>
+    </>
+  );
+  
+  const recentTitle = "Recent Projects";
   
   return (
     <>
      {projects.length > 0 && 
-        <ProjectsList title={title}
+        <ProjectsList title={removePin ? pinnedTitle : recentTitle}
           projects={projects}
           api={api} 
           projectOptions={isAuthorized ? {addPin, removePin, ...projectOptions} 
@@ -27,7 +35,6 @@ EntityPageProjects.propTypes = {
   addPin: PropTypes.func,
   removePin: PropTypes.func,
   projectOptions: PropTypes.object,
-  title: PropTypes.node.isRequired,
 };
 
 const EntityPageProjectsContainer = ({api, projects, maybeCurrentUser, ...props}) => (  

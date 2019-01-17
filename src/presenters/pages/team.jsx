@@ -20,8 +20,7 @@ import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
 import DeleteTeam from '../includes/delete-team.jsx';
 import {AddTeamUser, TeamUsers, WhitelistedDomain, JoinTeam} from '../includes/team-users.jsx';
-import EntityPagePinnedProjects from '../entity-page-pinned-projects.jsx';
-import EntityPageRecentProjects from '../entity-page-recent-projects.jsx';
+import EntityPageProjects from '../entity-page-projects.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
@@ -179,7 +178,8 @@ class TeamPage extends React.Component {
           />
         </ErrorBoundary>
         
-        <EntityPagePinnedProjects
+        {/* Pinned Projects */}
+        <EntityPageProjects
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
@@ -188,7 +188,8 @@ class TeamPage extends React.Component {
           api={this.props.api}
         />
         
-        <EntityPageRecentProjects
+        {/* Recent Projects */}
+        <EntityPageProjects
           projects={this.props.team.projects}
           pins={this.props.team.teamPins}
           isAuthorized={this.props.currentUserIsOnTeam}
