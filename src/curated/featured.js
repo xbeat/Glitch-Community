@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'What Would Moira Rose Say?',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise5.png?1547468105916",
-    link: 'https://moira-rose.glitch.me/'
+    title: 'Re-creating Art from Fortran',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise4.png?1547468106510",
+    link: 'https://sinus-fischer.glitch.me/'
   },{
-    title: 'Magic Sketchpad!',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise7.png?1547468106643",
-    link: 'https://magic-sketchpad.glitch.me/'
+    title: 'Make Your Emoji Explode',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise9.png?1547468106394",
+    link: 'https://exploji.glitch.me/'
   },{
-    title: 'Read Between The Lines',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise6.png?1547468106803",
-    link: 'https://noiselines-text.glitch.me/'
+    title: 'Delete Your Twitter Archive',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise8.png?1547468106128",
+    link: 'https://twitter-archive-deleter.glitch.me/'
   }  
 ];
