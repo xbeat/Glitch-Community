@@ -32,17 +32,19 @@ class CreateNewCollectionPop extends React.Component {
     
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setTeamId = this.setTeamId.bind(this);
   }
   
   handleChange(newValue) {
     this.setState({ query: newValue, error: null });
   }
   
-  setTeamId(teamId){
+  setTeamId(buttonContents){
     // called to determine whether teamID should be added to request
-    this.setState({
-      teamId: (teamId)
-    });
+    console.log(`buttonContents ${buttonContents}`);
+    // this.setState({
+    //   teamId: (teamId)
+    // });
   }
 
   async handleSubmit(event){
@@ -137,7 +139,7 @@ class CreateNewCollectionPop extends React.Component {
             { this.props.currentUser.teams.length > 0 ?
               <>
                 <br style={{clear: "both"}}/>for
-                <Dropdown buttonContents={collectionOwnerBtnContents} menuContents={userDropdownContents} />
+                <Dropdown buttonContents={collectionOwnerBtnContents} menuContents={userDropdownContents} onUpdate={this.setTeamId}/>
               </>
             : null
            }

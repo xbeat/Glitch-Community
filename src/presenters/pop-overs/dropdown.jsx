@@ -47,6 +47,8 @@ class Dropdown extends React.Component {
       selected: itemIndex,
       buttonContents: this.props.menuContents[itemIndex],
     });
+    // pass selected button back to onUpdate
+    this.props.onUpdate(this.props.menuContents[itemIndex]);
   }
   
   render(){
@@ -67,6 +69,7 @@ class Dropdown extends React.Component {
 Dropdown.propTypes = {
   buttonContents: PropTypes.node.isRequired,
   menuContents: PropTypes.node.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 }
 
 export default Dropdown;
