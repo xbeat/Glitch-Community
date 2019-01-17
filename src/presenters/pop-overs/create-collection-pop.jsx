@@ -27,6 +27,7 @@ class CreateNewCollectionPop extends React.Component {
       query: '', //The actual search text
       collectionPair: 'wondrous-collection',
       maybeCollections: null, //null means still loading
+      teamId: undefined // by default, create a collection for a user, but if team is selected from dropdown, set to teamID
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -34,8 +35,14 @@ class CreateNewCollectionPop extends React.Component {
   }
   
   handleChange(newValue) {
-    console.log('handle change');
     this.setState({ query: newValue, error: null });
+  }
+  
+  setTeamId(selected){
+    // called to determine whether teamID should be added to request
+    this.setState({
+      teamId: (selected)
+    });
   }
 
   async handleSubmit(event){
