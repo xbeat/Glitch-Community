@@ -17,19 +17,6 @@ import {PureEditableField} from '../includes/editable-field.jsx';
 
 import {kebabCase, orderBy} from 'lodash';
 
-{/*
-const CollectionOwnerDialog = ({api, currentUser}) => {
-  const orderedTeams = orderBy(currentUser.teams, team => team.name.toLowerCase());
-  return(
-    <dialog className="pop-over mini-pop">
-      { orderedTeams.map(team => (
-        <section className="mini-pop-action">{team.name}<TeamAvatar team={team} className="user"/></section>
-      )) }
-    </dialog>
-  );
-};
-*/}
-
 class CreateNewCollectionPop extends React.Component {
   constructor(props) {
     super(props);
@@ -98,21 +85,23 @@ class CreateNewCollectionPop extends React.Component {
     let placeholder = "New Collection Name";
     
     // for testing dropdown stuff
-    // for populating user team contents for dropdown menu
     const teams = this.props.currentUser.teams;
+    const currentUserMenuItem = <>myself <UserAvatar user={this.props.currentUser} isStatic={true}/></>;
     
     function getTeamContents(){
       const orderedTeams = orderBy(teams, team => team.name.toLowerCase());   
-      const teamContents = [];
+      const menuContents = [];
+      menuContents.push(currentUserMenuItem);
+      
       orderedTeams.map(team => {
         let content = <>{team.name} {<TeamAvatar team={team} className="user"/>}</>;
-        teamContents.push(content);
+        menuContents.push(content);
         })
-      return teamContents;
+      return menuContents;
     }
-    const userTeamContents = getTeamContents();
-    const collectionOwnerBtnContents = <>myself <UserAvatar user={this.props.currentUser} isStatic={true}/></>;
     
+    const userDropdownContents = getTeamContents();
+    const collectionOwnerBtnContents = currentUserMenuItem;
     //--> end dropdown stuff
     
     if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === kebabCase(query))) {
@@ -128,9 +117,7 @@ class CreateNewCollectionPop extends React.Component {
         </NestedPopoverTitle>
         
         <section className="pop-over-actions">
-          {/* TO DO: Add back to submit form */}
-          {/* <form onSubmit={this.handleSubmit}> */}
-          <form>
+          <form onSubmit={this.handleSubmit}> 
             <PureEditableField
               id="collection-name"
               className="pop-over-input create-input"
@@ -139,11 +126,16 @@ class CreateNewCollectionPop extends React.Component {
               placeholder={placeholder}
               error={error || queryError}
             />
-            <br style={{clear: "both"}}/>for
             
-            <Dropdown buttonContents={collectionOwnerBtnContents} menuContents={userTeamContents}/>
+            { this.props.currentUser.teams.length > 0 ?
+              <>
+                <br style={{clear: "both"}}/>for
+                <Dropdown buttonContents={collectionOwnerBtnContents} menuContents={userDropdownContents}/>
+              </>
+            : null
+           }
             
-            <br/>
+            <br style={{clear: "both"}}/>
             
             {!this.state.working ? (
               <TrackClick name="Create Collection clicked" properties={inherited => ({...inherited, origin: `${inherited.origin} project`})}>
