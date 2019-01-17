@@ -13,7 +13,7 @@ const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
             togglePopover();
           }
           }>
-          {React.cloneElement(item)}
+          {item}
         </section>
      ))}
     </dialog>

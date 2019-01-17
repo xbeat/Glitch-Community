@@ -38,10 +38,10 @@ class CreateNewCollectionPop extends React.Component {
     this.setState({ query: newValue, error: null });
   }
   
-  setTeamId(selected){
+  setTeamId(teamId){
     // called to determine whether teamID should be added to request
     this.setState({
-      teamId: (selected)
+      teamId: (teamId)
     });
   }
 
@@ -101,7 +101,7 @@ class CreateNewCollectionPop extends React.Component {
       menuContents.push(currentUserMenuItem);
       
       orderedTeams.map(team => {
-        let content = <span teamId={team.id}>{team.name} {<TeamAvatar team={team} className="user"/>}</span>;
+        let content = <span id={team.id}>{team.name} {<TeamAvatar team={team} className="user"/>}</span>;
         menuContents.push(content);
       })
       return menuContents;
@@ -137,7 +137,7 @@ class CreateNewCollectionPop extends React.Component {
             { this.props.currentUser.teams.length > 0 ?
               <>
                 <br style={{clear: "both"}}/>for
-                <Dropdown buttonContents={collectionOwnerBtnContents} menuContents={userDropdownContents}/>
+                <Dropdown buttonContents={collectionOwnerBtnContents} menuContents={userDropdownContents} />
               </>
             : null
            }
