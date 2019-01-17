@@ -8,7 +8,6 @@ import {captureException} from '../../utils/sentry';
 import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';
-import {getTeamById} from '../pages/team-or-user';
 
 import Loader from '../includes/loader.jsx';
 

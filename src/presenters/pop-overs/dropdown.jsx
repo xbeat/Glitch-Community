@@ -11,8 +11,13 @@ const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
           onClick={() => {
             updateSelected(index);
             togglePopover();
-          }
-          }>
+          }}
+          onKeyPress={() => {
+            updateSelected(index);
+            togglePopover();
+          }}
+          role="menuitem"
+        >
           {item}
         </section>
       ))}
