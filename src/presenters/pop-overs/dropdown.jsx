@@ -7,18 +7,19 @@ const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
   return(
     <dialog className="pop-over mini-pop">
       { contents.map((item, index) => (
-        <section className={"mini-pop-action" + (index == selected ? " selected" : "")} key={index} 
-          onClick={() => {
-            updateSelected(index);
-            togglePopover();
-          }}
-          onKeyPress={() => {
-            updateSelected(index);
-            togglePopover();
-          }}
-          role="menuitem"
-        >
-          {item}
+        <section className={"mini-pop-action" + (index == selected ? " selected" : "")} key={index} >
+          <button 
+            onClick={() => {
+              updateSelected(index);
+              togglePopover();
+            }}
+            onKeyPress={() => {
+              updateSelected(index);
+              togglePopover();
+            }}
+          >
+            {item}
+          </button>
         </section>
       ))}
     </dialog>
