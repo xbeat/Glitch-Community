@@ -35,7 +35,7 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   }
 };
 
-const CollectionResultItem = async({api, onClick, project, collection, currentUserLogin, isActive, togglePopover}) => {
+const CollectionResultItem = ({api, onClick, project, collection, currentUserLogin, isActive, togglePopover}) => {
   let resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
@@ -84,14 +84,22 @@ export default CollectionResultItem;
 
 async function getTeam(api, teamId){
   console.log(`attempt to get team ${teamId}`);
-  const {team} = await api.get(`/teams/${teamId}`);
-  console.log("team %O", team);
-  return team;
+  try{
+    const {team} = await api.get(`/teams/${teamId}`);
+    console.log("team %O", team);
+    return team;
+  }catch(error){
+    console.log(error);
+  }
 }
 
 async function getUser(api, userId){
   console.log(`attempt to get user ${userId}`);
-  const {user} = await api.get(`/users/${userId}`);
-  console.log("user %O", user);
-  return user;
+  try{
+    const {user} = await api.get(`/users/${userId}`);
+    console.log("user %O", user);
+    return user;
+  }catch(error){
+    console.log(error);
+  }
 }
