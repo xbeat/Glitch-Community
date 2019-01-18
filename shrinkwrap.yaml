@@ -10,6 +10,7 @@ dependencies:
   babel-eslint: 10.0.1
   babel-loader: 8.0.5
   babel-plugin-lodash: 3.3.4
+  babel-polyfill: 6.26.0
   babel-preset-env: 1.7.0
   babel-preset-modern-browsers: 13.0.1
   body-parser: 1.18.3
@@ -1669,6 +1670,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-1fr3qleKZbvlkc9e2uBKDGcCB1g=
+  /babel-polyfill/6.26.0:
+    dependencies:
+      babel-runtime: 6.26.0
+      core-js: 2.6.2
+      regenerator-runtime: 0.10.5
+    dev: false
+    resolution:
+      integrity: sha1-N5k3q8Z9eJWXCtxiHyhM2WbPIVM=
   /babel-preset-env/1.7.0:
     dependencies:
       babel-plugin-check-es2015-constants: 6.22.0
@@ -5770,6 +5779,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-1G6jJVDWrt0rK99kBjvEtziZNCICAuvIPkSiUFIQxVP06RCVpq3dmDo2oi6ABpYaDYaTRr67BEhL8r1wgEZZKg==
+  /regenerator-runtime/0.10.5:
+    dev: false
+    resolution:
+      integrity: sha1-M2w+/BIgrc7dosn6tntaeVWjNlg=
   /regenerator-runtime/0.11.1:
     dev: false
     resolution:
@@ -7082,6 +7095,7 @@ specifiers:
   babel-eslint: ^10.0.1
   babel-loader: ^8.0.5
   babel-plugin-lodash: ^3.3.4
+  babel-polyfill: ^6.26.0
   babel-preset-env: ^1.7.0
   babel-preset-modern-browsers: ^13.0.1
   body-parser: ^1.18.3
