@@ -25,6 +25,7 @@ class AddProjectToCollectionPopContents extends React.Component {
       working: false,
       filteredCollections: [], // collections filtered from search query
       maybeCollections: null, //null means still loading
+      collectionOwners: [],
     };
     this.updateFilter = this.updateFilter.bind(this);
   }
@@ -44,6 +45,17 @@ class AddProjectToCollectionPopContents extends React.Component {
     this.setState({maybeCollections: orderedCollections, filteredCollections: orderedCollections });
   }
   
+  async loadCollectionOwners(){
+    for(const collection 
+    this.state.maybeCollections.forEach(collection => {
+      if(collection.teamId){
+        // store collection user
+        const user = await this.props.api(`users/${collection.userId}`);
+      }else{
+        // store collection team
+      }
+    });
+  }
   
   async componentDidMount() {
     this.loadCollections();
