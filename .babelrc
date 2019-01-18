@@ -1,9 +1,5 @@
 {
   "presets" : [
-    ["modern-browsers", {
-      "loose": true,
-      "es2017": false,
-    }],
     "@babel/preset-react",
     "@babel/preset-env",
   ],
