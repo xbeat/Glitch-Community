@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Notifications from '../notifications.jsx';
-
+import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import CollectionAvatar from './collection-avatar.jsx';
 
 const AddProjectMessage = ({projectName, collectionName, url}) => (
@@ -35,12 +35,22 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   }
 };
 
-const CollectionResultItem = ({onClick, project, collection, currentUserLogin, isActive, togglePopover}) => {
+const CollectionResultItem = ({api, onClick, project, collection, currentUserLogin, isActive, togglePopover}) => {
   let resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
   }
   const collectionPath = `/@${currentUserLogin}/${collection.url}`;
+  
+  async function getTeam(teamId){
+    const team = await api.get(`/team/${teamId}`);
+    return team;
+  }
+                    
+  async function getUser(userId){
+    const user = await api.get(`/user/${userId}`);
+    return user;
+  }
 
   return (
     
@@ -54,6 +64,10 @@ const CollectionResultItem = ({onClick, project, collection, currentUserLogin, i
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
+              { collection.teamId >=0 ?
+                <TeamAvatar team={getTeam(collection.teamId)}/>
+                : <UserAvatar user={getUser(collection.userId)}/>
+              }
                                                 
             </div>
           </button>
@@ -67,6 +81,7 @@ const CollectionResultItem = ({onClick, project, collection, currentUserLogin, i
 };
 
 CollectionResultItem.propTypes = {
+  api: PropTypes.object.isRequired,
   onClick: PropTypes.func,
   collection: PropTypes.object.isRequired,
   currentUserLogin: PropTypes.string.isRequired,
