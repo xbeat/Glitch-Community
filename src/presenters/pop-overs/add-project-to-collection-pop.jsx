@@ -50,14 +50,13 @@ class AddProjectToCollectionPopContents extends React.Component {
     console.log('load collection owners');
     for(const collection of this.state.filteredCollections){
       console.log(collection);
-      if(collection.teamId){
+      if(collection.teamId == -1){
         // store collection user
-        const user = await this.props.api(`users/${collection.userId}`);
-        this.props.collectionOwners.push(user);
+        this.state.collectionOwners.push(this.props.currentUser);
       }else{
         // store collection team
-        const team = await this.props.api(`teams/${collection.teamId}`);
-        this.props.collectionOwners.push(team);
+        const {team} = await this.props.api(`teams/${collection.teamId}`);
+        this.state.collectionOwners.push(team);
       }
     }
     
@@ -65,7 +64,6 @@ class AddProjectToCollectionPopContents extends React.Component {
   
   async componentDidMount() {
     this.loadCollections();
-    this.loadCollectionOwners();
   }
   
   render() {
@@ -105,6 +103,7 @@ class AddProjectToCollectionPopContents extends React.Component {
                           project={this.props.project}
                           collection={collection}                         
                           togglePopover={this.props.togglePopover} 
+                          currentUser={this.props.currentUser}
                         />
                       </TrackClick>
                     </li>

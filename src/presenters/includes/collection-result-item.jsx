@@ -35,7 +35,7 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   }
 };
 
-const CollectionResultItem = ({api, onClick, project, collection, currentUserLogin, isActive, togglePopover}) => {
+const CollectionResultItem = ({api, onClick, project, collection, currentUser, currentUserLogin, isActive, togglePopover}) => {
   let resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
@@ -54,10 +54,10 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUserLog
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
-              {/* collection.teamId === -1 ?
-                <UserAvatar user={getUser(api, collection.userId)}/>
-                : <TeamAvatar team={getTeam(api, collection.teamId)}/>
-              */}
+              { collection.teamId === -1 ?
+                <UserAvatar user={currentUser}/>
+                : null
+              }
                                                 
             </div>
           </button>
@@ -74,6 +74,7 @@ CollectionResultItem.propTypes = {
   api: PropTypes.func.isRequired,
   onClick: PropTypes.func,
   collection: PropTypes.object.isRequired,
+  currentUser: PropTypes.object,
   currentUserLogin: PropTypes.string.isRequired,
   isActive: PropTypes.bool,
   project: PropTypes.object.isRequired,
