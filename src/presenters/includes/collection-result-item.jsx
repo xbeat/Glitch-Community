@@ -35,7 +35,7 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   }
 };
 
-const CollectionResultItem = ({api, onClick, project, collection, currentUserLogin, isActive, togglePopover}) => {
+const CollectionResultItem = async({api, onClick, project, collection, currentUserLogin, isActive, togglePopover}) => {
   let resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
@@ -43,12 +43,14 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUserLog
   const collectionPath = `/@${currentUserLogin}/${collection.url}`;
   
   async function getTeam(teamId){
-    const team = await api.get(`/team/${teamId}`);
+    const {team} = await api.get(`/teams/${teamId}`);
     return team;
   }
                     
   async function getUser(userId){
-    const user = await api.get(`/user/${userId}`);
+    console.log('get user with id ' + userId);
+    const {user} = await api.get(`/users/${userId}`);
+    console.log('user: %O', user);
     return user;
   }
 
@@ -64,9 +66,9 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUserLog
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
-              { collection.teamId >=0 ?
-                <TeamAvatar team={getTeam(collection.teamId)}/>
-                : <UserAvatar user={getUser(collection.userId)}/>
+              { collection.teamId === -1 ?
+                <UserAvatar user={getUser(collection.userId)}/>
+                : <TeamAvatar team={getTeam(collection.teamId)}/>
               }
                                                 
             </div>
@@ -81,7 +83,7 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUserLog
 };
 
 CollectionResultItem.propTypes = {
-  api: PropTypes.object.isRequired,
+  api: PropTypes.func.isRequired,
   onClick: PropTypes.func,
   collection: PropTypes.object.isRequired,
   currentUserLogin: PropTypes.string.isRequired,
