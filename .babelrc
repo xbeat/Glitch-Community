@@ -1,7 +1,14 @@
 {
   "presets" : [
     "@babel/preset-react",
-    "@babel/preset-env",
+    ["env", {
+      "modules": false,
+      "targets": {
+        "chrome": "41"
+      },
+      "useBuiltIns": "usage",
+      "debug": true,
+    }],
   ],
   "plugins": [
     "lodash",
