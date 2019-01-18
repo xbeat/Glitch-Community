@@ -99,7 +99,6 @@ class AddProjectToCollectionPopContents extends React.Component {
                         <CollectionResultItem 
                           api={this.props.api}
                           onClick={this.props.addProjectToCollection}
-                          currentUserLogin={this.props.currentUser.login}
                           project={this.props.project}
                           collection={collection}                         
                           togglePopover={this.props.togglePopover} 

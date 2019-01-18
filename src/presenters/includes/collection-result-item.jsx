@@ -35,12 +35,12 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   }
 };
 
-const CollectionResultItem = ({api, onClick, project, collection, currentUser, currentUserLogin, isActive, togglePopover}) => {
+const CollectionResultItem = ({api, onClick, project, collection, currentUser, isActive, togglePopover}) => {
   let resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
   }
-  const collectionPath = `/@${currentUserLogin}/${collection.url}`;
+  const collectionPath = `/@${currentUser.l}/${collection.url}`;
 
   return (
     
@@ -75,7 +75,6 @@ CollectionResultItem.propTypes = {
   onClick: PropTypes.func,
   collection: PropTypes.object.isRequired,
   currentUser: PropTypes.object,
-  currentUserLogin: PropTypes.string.isRequired,
   isActive: PropTypes.bool,
   project: PropTypes.object.isRequired,
   togglePopover: PropTypes.func.isRequired,
