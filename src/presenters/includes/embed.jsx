@@ -1,4 +1,4 @@
-/* global analytics APP_URL */
+/* global APP_URL */
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -10,9 +10,9 @@ export class Embed extends React.Component {
         src={`${APP_URL}/embed/#!/embed/${this.props.domain}?path=README.md&previewSize=100`}
         alt={this.props.alt}
         allow="geolocation; microphone; camera; midi; encrypted-media"
-        style="height: 100%; width: 100%; border: 0;"
+        //style="height: 100%; width: 100%; border: 0;"
       ></iframe>
-    </div>
+    </div>;
   }
 }
 
