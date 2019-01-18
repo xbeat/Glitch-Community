@@ -31,8 +31,8 @@ FeaturedEmbed.propTypes = {
   image: PropTypes.string.isRequired,
   mask: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  embed: PropTypes.string.isRequired,
+  domain: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
 };
