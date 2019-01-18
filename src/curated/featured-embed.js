@@ -7,9 +7,9 @@ export default {
   "image": "https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2Fmbjr-ep3-battery-blast-1.jpg?1547670709314",
   "mask": "mask-4",
   "title": "MythBusters Jr.",
-  "app-domain": "lithium-battery-recycling",
+  "appDomain": "lithium-battery-recycling",
   "alt":"lithium-battery-recycling on Glitch",//is this always the same?
-  "blog-url": "/battery-blast/",
+  "blogUrl": "/battery-blast/",
   "body": body,
   "color": '#D0F1FF',
 };
