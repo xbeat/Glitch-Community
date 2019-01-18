@@ -13,6 +13,7 @@ import {Markdown} from '../includes/markdown.jsx';
 import ProjectEditor from '../project-editor.jsx';
 import Expander from '../includes/expander.jsx';
 import EditableField from '../includes/editable-field.jsx';
+import Embed from '../includes/embed.jsx';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {InfoContainer, ProjectInfoContainer} from '../includes/profile.jsx';
 import {ShowButton, EditButton, RemixButton} from '../includes/project-actions.jsx';
@@ -63,17 +64,7 @@ PrivateToggle.propTypes = {
   setPrivate: PropTypes.func.isRequired,
 };
 
-const Embed = ({domain}) => (
-  <div className="glitch-embed-wrap">
-    <iframe title="embed"
-      src={`${APP_URL}/embed/#!/embed/${domain}?path=README.md&previewSize=100`}
-      allow="geolocation; microphone; camera; midi; encrypted-media"
-    ></iframe>
-  </div>
-);
-Embed.propTypes = {
-  domain: PropTypes.string.isRequired,
-};
+
 
 const ReadmeError = (error) => (
   (error && error.response && error.response.status === 404)
