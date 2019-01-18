@@ -1,6 +1,7 @@
 dependencies:
   '@babel/core': 7.2.0
   '@babel/plugin-syntax-dynamic-import': 7.2.0
+  '@babel/polyfill': 7.2.5
   '@babel/preset-env': 7.2.3
   '@babel/preset-react': 7.0.0
   '@sentry/browser': 4.4.1
@@ -675,6 +676,13 @@ packages:
       '@babel/core': ^7.0.0-0
     resolution:
       integrity: sha512-m48Y0lMhrbXEJnVUaYly29jRXbQ3ksxPrS1Tg8t+MHqzXhtBYAvI51euOBaoAlZLPHsieY9XPVMf80a5x0cPcA==
+  /@babel/polyfill/7.2.5:
+    dependencies:
+      core-js: 2.6.2
+      regenerator-runtime: 0.12.1
+    dev: false
+    resolution:
+      integrity: sha512-8Y/t3MWThtMLYr0YNC/Q76tqN1w30+b0uQMeFUYauG2UGTR19zyUtFrAzT23zNtBxPp+LbE5E/nwV/q/r3y6ug==
   /@babel/preset-env/7.2.3:
     dependencies:
       '@babel/helper-module-imports': 7.0.0
@@ -7086,6 +7094,7 @@ shrinkwrapVersion: 3
 specifiers:
   '@babel/core': ^7.2.0
   '@babel/plugin-syntax-dynamic-import': ^7.2.0
+  '@babel/polyfill': ^7.2.5
   '@babel/preset-env': ^7.2.3
   '@babel/preset-react': ^7.0.0
   '@sentry/browser': ^4.4.0
