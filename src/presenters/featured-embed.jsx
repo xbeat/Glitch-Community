@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Link from './includes/link.jsx';
-import Embed from '../includes/embed.jsx';
+import Embed from './includes/embed.jsx';
 
 const FeaturedEmbed = ({image, mask, title, domain, alt, body, color}) => (
   <div className="featured-embed">
