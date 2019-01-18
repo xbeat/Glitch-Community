@@ -12,6 +12,7 @@ export class Embed extends React.Component {
         allow="geolocation; microphone; camera; midi; encrypted-media"
         height="100%" 
         width="100%"
+        border="0"
       ></iframe>
     </div>;
   }
