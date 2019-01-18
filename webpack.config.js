@@ -77,7 +77,6 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules\/(?!d3-array|classnames)/,
         loader: 'babel-loader',
       },
       {
