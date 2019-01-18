@@ -8,7 +8,9 @@ export class Embed extends React.Component {
     return <div className="glitch-embed-wrap">
       <iframe title="embed"
         src={`${APP_URL}/embed/#!/embed/${this.props.domain}?path=README.md&previewSize=100`}
+        alt={this.props.alt}
         allow="geolocation; microphone; camera; midi; encrypted-media"
+        style="height: 100%; width: 100%; border: 0;"
       ></iframe>
     </div>
   }
@@ -16,6 +18,7 @@ export class Embed extends React.Component {
 
 Embed.propTypes = {
   domain: PropTypes.string.isRequired,
+  alt: PropTypes.string,
 };
 
 export default Embed;

@@ -2,28 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Link from './includes/link.jsx';
+import Embed from '../includes/embed.jsx';
 
-const FeaturedEmbed = ({image, mask, title, url, embed, body, color}) => (
+const FeaturedEmbed = ({image, mask, title, domain, alt, body, color}) => (
   <div className="featured-embed">
     <div className="mask-container">
-      <Link to={`culture${url}`}>
+      <Link to={`culture/${domain}/`}>
         <img className={'mask ' + mask} src={image} alt=""/>
       </Link>
     </div>
       
     <div className="content" style={{backgroundColor: color}}>
       <div className="description">
-        <Link to={`culture${url}`}>
+        <Link to={`culture/${domain}/`}>
           <h2>{title}</h2>
         </Link>
         <p dangerouslySetInnerHTML={{__html: body}}/>
-        <Link to={`culture${url}`} className="learn-more">
+        <Link to={`culture/${domain}/`} className="learn-more">
           <button className="button-small">Learn More →</button>
         </Link>
       </div>
-      <div className="embed">
-        <span dangerouslySetInnerHTML={{__html: embed}}/>
-      </div>
+      <Embed domain={domain} alt={alt}/>
     </div>
   </div>
 );
