@@ -28,6 +28,7 @@ class AddProjectToCollectionPopContents extends React.Component {
       collectionOwners: [],
     };
     this.updateFilter = this.updateFilter.bind(this);
+    this.loadCollectionOwners = this.loadCollectionOwners.bind(this);
   }
   
   updateFilter(query){
@@ -46,19 +47,25 @@ class AddProjectToCollectionPopContents extends React.Component {
   }
   
   async loadCollectionOwners(){
-    for(const collection 
-    this.state.maybeCollections.forEach(collection => {
+    console.log('load collection owners');
+    for(const collection of this.state.filteredCollections){
+      console.log(collection);
       if(collection.teamId){
         // store collection user
         const user = await this.props.api(`users/${collection.userId}`);
+        this.props.collectionOwners.push(user);
       }else{
         // store collection team
+        const team = await this.props.api(`teams/${collection.teamId}`);
+        this.props.collectionOwners.push(team);
       }
-    });
+    }
+    
   }
   
   async componentDidMount() {
     this.loadCollections();
+    this.loadCollectionOwners();
   }
   
   render() {
@@ -86,7 +93,7 @@ class AddProjectToCollectionPopContents extends React.Component {
           filteredCollections.length ? (
             <section className="pop-over-actions results-list">
               <ul className="results">
-                {filteredCollections.map(collection =>   
+                {filteredCollections.map((collection, index) =>   
                   // filter out collections that already contain the selected project
                   (collection.projects.every(project => project.id !== this.props.project.id) && 
                     <li key={collection.id}>

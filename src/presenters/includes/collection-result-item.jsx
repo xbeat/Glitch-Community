@@ -54,10 +54,10 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUserLog
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
-              { collection.teamId === -1 ?
+              {/* collection.teamId === -1 ?
                 <UserAvatar user={getUser(api, collection.userId)}/>
                 : <TeamAvatar team={getTeam(api, collection.teamId)}/>
-              }
+              */}
                                                 
             </div>
           </button>
