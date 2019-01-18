@@ -41,18 +41,6 @@ const CollectionResultItem = async({api, onClick, project, collection, currentUs
     resultClass += " active";
   }
   const collectionPath = `/@${currentUserLogin}/${collection.url}`;
-  
-  async function getTeam(teamId){
-    const {team} = await api.get(`/teams/${teamId}`);
-    return team;
-  }
-                    
-  async function getUser(userId){
-    console.log('get user with id ' + userId);
-    const {user} = await api.get(`/users/${userId}`);
-    console.log('user: %O', user);
-    return user;
-  }
 
   return (
     
@@ -67,8 +55,8 @@ const CollectionResultItem = async({api, onClick, project, collection, currentUs
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
               { collection.teamId === -1 ?
-                <UserAvatar user={getUser(collection.userId)}/>
-                : <TeamAvatar team={getTeam(collection.teamId)}/>
+                <UserAvatar user={getUser(api, collection.userId)}/>
+                : <TeamAvatar team={getTeam(api, collection.teamId)}/>
               }
                                                 
             </div>
@@ -93,3 +81,17 @@ CollectionResultItem.propTypes = {
 };
 
 export default CollectionResultItem;
+
+async function getTeam(api, teamId){
+  console.log(`attempt to get team ${teamId}`);
+  const {team} = await api.get(`/teams/${teamId}`);
+  console.log("team %O", team);
+  return team;
+}
+
+async function getUser(api, userId){
+  console.log(`attempt to get user ${userId}`);
+  const {user} = await api.get(`/users/${userId}`);
+  console.log("user %O", user);
+  return user;
+}
