@@ -1,13 +1,13 @@
 // Categories.styl
 
-category-box-radius = 5px
+more-ideas-box-radius = 5px
 
-.categories
+.more-ideas
   margin-top: 1rem
   ul
     padding: 0
     margin-bottom: 0
-  .category-box-link
+  .more-ideas-box-link
     color: primary
 
   li
@@ -17,7 +17,7 @@ category-box-radius = 5px
     width: 19%
     margin-right: 10px
     &:hover
-      .category-box-label
+      .more-ideas-box-label
         text-decoration: underline
     @media (max-width: 1097px)
       width: 18.5%
@@ -30,36 +30,21 @@ category-box-radius = 5px
     @media (max-width: 500px)
       width: 46%
 
-  .category-box
+  .more-ideas-box
     background-color: lightgrey
     height: 122px
-    border-top-left-radius: category-box-radius
-    border-top-right-radius: category-box-radius
+    border-top-left-radius: more-ideas-box-radius
+    border-top-right-radius: more-ideas-box-radius
     img
       max-width: 80%
       max-height: 75%
     @media (max-width: smallViewport)
       height: 115px
 
-  .category-box-label
+  .more-ideas-box-label
     background-color: lightgrey
     height: 37px
     font-size: 14px
     font-weight: 600
-    border-bottom-left-radius: category-box-radius
-    border-bottom-right-radius: category-box-radius
-
-.categories-link
-  color: primary
-  padding-bottom: 2px
-  font-weight: 600
-  font-size: 14px
-  padding: 6px 10px
-  border-radius: 3px
-  background-color: secondary-background
-  text-decoration: none
-  display: inline-block
-  &:hover
-    text-decoration: underline
-  &:active
-    background-color: secondary-background-active
+    border-bottom-left-radius: more-ideas-box-radius
+    border-bottom-right-radius: more-ideas-box-radius

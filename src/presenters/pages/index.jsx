@@ -8,8 +8,8 @@ import {AnalyticsContext} from '../analytics';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import Link from '../includes/link.jsx';
 
-import Categories from '../categories.jsx';
 import Featured from '../featured.jsx';
+import MoreIdeas from '../more-ideas.jsx';
 import OverlayVideo from '../overlays/overlay-video.jsx';
 import Questions from '../questions.jsx';
 import RandomCategories from '../random-categories.jsx';
@@ -101,7 +101,7 @@ const IndexPage = ({api, user}) => (
     {!!user.login && <Questions api={api}/>}
     <Featured isAuthorized={!!user.login}/>
     <RandomCategories api={api}/>
-    <Categories/>
+    <MoreIdeas api={api}/>
     <MadeInGlitch/>
     <ReportButton reportedType="home" />
   </main>

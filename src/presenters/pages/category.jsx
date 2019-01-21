@@ -8,7 +8,7 @@ import {AnalyticsContext} from '../analytics';
 import {DataLoader} from '../includes/loader.jsx';
 import {ProjectsUL} from '../projects-list.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
-import Categories from '../categories.jsx';
+import MoreIdeas from '../more-ideas.jsx';
 
 import CollectionEditor from '../collection-editor.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
@@ -66,7 +66,7 @@ const CategoryPageWrap = ({
       </article>
       
     </main>
-    <Categories/>
+    <MoreIdeas api={api/>
   </>
 );
 

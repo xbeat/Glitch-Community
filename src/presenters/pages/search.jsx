@@ -7,8 +7,8 @@ import Layout from '../layout.jsx';
 import {CurrentUserConsumer} from '../current-user.jsx';
 
 import ErrorHandlers from '../error-handlers.jsx';
-import Categories from '../categories.jsx';
 import Loader from '../includes/loader.jsx';
+import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found.jsx';
 import ProjectsList from '../projects-list.jsx';
 import TeamItem from '../team-item.jsx';
@@ -145,7 +145,7 @@ const SearchPage = ({api, query}) => (
         )}
       </ErrorHandlers>
     ) : <NotFound name="anything"/>}
-    <Categories/>
+    <MoreIdeas api={api}/>
   </Layout>
 );
 SearchPage.propTypes = {
