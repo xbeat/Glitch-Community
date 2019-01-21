@@ -21,7 +21,7 @@ module.exports = function(external) {
   // Caching - js and CSS files have a hash in their name, so they last a long time
   ['/*.js', '/*.css'].forEach((path) => (
     app.use(path, (request, response, next) => {
-      const s = dayjs.convert(1, 'month', 'seconds');
+      const s = dayjs.convert(7, 'days', 'seconds');
       response.header('Cache-Control', `public, max-age=${s}`);
       return next();
     })
@@ -48,15 +48,14 @@ module.exports = function(external) {
     
     try {
       const stats = JSON.parse(await readFilePromise('public/stats.json'));
-      stats.chunks.forEach(chunk => {
-        if (chunk.initial) {
-          chunk.files.forEach(file => {
-            if (file.endsWith('.js') && !chunk.names.includes('styles')) {
-              scripts.push(`/${file}?${chunk.hash}`);
-            } else if (file.endsWith('.css')) {
-              styles.push(`/${file}?${chunk.hash}`);
-            }
-          });
+      stats.entrypoints.client.assets.forEach(file => {
+        if (file.match(/\.js(\?|$)/)) {
+          scripts.push(`${stats.publicPath}${file}`);
+        }
+      });
+      stats.entrypoints.styles.assets.forEach(file => {
+        if (file.match(/\.css(\?|$)/)) {
+          styles.push(`${stats.publicPath}${file}`);
         }
       });
     } catch (error) {

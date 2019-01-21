@@ -56,7 +56,7 @@ dependencies:
   url-join: 4.0.0
   webpack: 4.28.4
   webpack-cli: 3.2.1
-  webpack-dev-middleware: 3.5.0
+  webpack-dev-middleware: 3.5.1
 packages:
   /@babel/code-frame/7.0.0:
     dependencies:
@@ -6034,7 +6034,7 @@ packages:
     requiresBuild: true
     resolution:
       integrity: sha512-jeJveHwz/vwpJ3B8bxEL5a/rVKIpRNJDsKggfKnxuYeohNDW4Y/wB9N/XHJA093qZyS0r6mYL+/crLsIol4WKA==
-  /webpack-dev-middleware/3.5.0:
+  /webpack-dev-middleware/3.5.1:
     dependencies:
       memory-fs: 0.4.1
       mime: 2.4.0
@@ -6046,7 +6046,7 @@ packages:
     peerDependencies:
       webpack: ^4.0.0
     resolution:
-      integrity: sha512-1Zie7+dMr4Vv3nGyhr8mxGQkzTQK1PTS8K3yJ4yB1mfRGwO1DzQibgmNfUqbEfQY6eEtEEUzC+o7vhpm/Sfn5w==
+      integrity: sha512-4dwCh/AyMOYAybggUr8fiCkRnjVDp+Cqlr9c+aaNB3GJYgRGYQWJ1YX/WAKUNA9dPNHZ6QSN2lYDKqjKSI8Vqw==
   /webpack-log/2.0.0:
     dependencies:
       ansi-colors: 3.2.3
@@ -6268,6 +6268,6 @@ specifiers:
   stylus-loader: ^3.0.2
   terser-webpack-plugin: ^1.2.1
   url-join: ^4.0.0
-  webpack: ^4.28.3
-  webpack-cli: ^3.2.0
-  webpack-dev-middleware: ^3.5.0
+  webpack: ^4.28.4
+  webpack-cli: ^3.2.1
+  webpack-dev-middleware: ^3.5.1
