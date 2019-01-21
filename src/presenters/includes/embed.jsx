@@ -45,7 +45,7 @@ export class Embed extends React.Component {
         <img className="error-image" src={telescopeImageUrl} alt="" width="50%" height="50%" />
         <div className="error-msg">
           <h2>The web browser you're using is missing some important Javascript features</h2>
-          <p>To use this app, please try applying your latest system updates, or try us with a different web browser.</p>
+          <p>To use this app, please try applying your latest system updates, or try again with a different web browser.</p>
         </div>
       </div>
     }
