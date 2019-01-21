@@ -20,23 +20,23 @@ import App from './app.jsx';
 // If the user has the right level of JS support, allow them to access the editor.
 // If they don't, we can still show the homepage, just without code editor/embeds.
 window.bootstrap = () => {
-  if (getBrowserJSCompatibility()) {
-    if (location.hash.startsWith("#!/")) {
-      window.location.replace(EDITOR_URL + window.location.hash);
-      return false;
-    }
-
-    // Mark that bootstrapping has occurred,
-    // ..and more importantly, use this as an excuse
-    // to call into Sentry so that its initialization
-    // happens early in our JS bundle.
-    configureScope((scope) => {
-      scope.setTag("bootstrap", "true");
-    });
+  if (location.hash.startsWith("#!/")) {
+    window.location.replace(EDITOR_URL + window.location.hash);
+    return true;
   }
+  
+  // Mark that bootstrapping has occurred,
+  // ..and more importantly, use this as an excuse
+  // to call into Sentry so that its initialization
+  // happens early in our JS bundle.
+  configureScope((scope) => {
+    scope.setTag("bootstrap", "true");
+  });
 
   const dom = document.createElement('div');
   document.body.appendChild(dom);
   render(<App/>, dom);
-  return true;
+  
+  return getBrowserJSCompatibility() ? true : false;
+  } 
 };

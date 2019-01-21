@@ -74,10 +74,6 @@
             <h1>The web browser that you're using does not support Javascript</h1>
             <p>Since Glitch requires Javascript to run, please try using Glitch in a different web browser.</p>
           </div>
-          <div class="error-msg" id="fallback-yesscript" style="display: none">
-            <h1>The web browser you're using is missing some important Javascript features</h1>
-            <p>To use Glitch, please try applying your latest system updates, or try us with a different web browser.</p>
-          </div>
           <div class="error-msg" id="fallback-notbuilt" style="display: none">
             <h1>The site isn&apos;t quite ready yet</h1>
             <p>Try refreshing in a few moments.</p>
@@ -91,16 +87,13 @@
     <% } %>
     <script>
       if (window.bootstrap) {
-        window.bootstrap();
-      } else {
-        console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
-        document.getElementById('fallback').removeAttribute('style');
-        document.getElementById('fallback-img').removeAttribute('style');
-        if (BUILD_COMPLETE) {
-          document.getElementById('fallback-yesscript').removeAttribute('style');
-        } else {
-          document.getElementById('fallback-notbuilt').removeAttribute('style');
+        if (!window.bootstrap()) {
+          console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
+          document.getElementById('fallback').removeAttribute('style');
+          document.getElementById('fallback-img').removeAttribute('style');
         }
+      } else if (!BUILD_COMPLETE) {
+        document.getElementById('fallback-notbuilt').removeAttribute('style');
       }
     </script>
   </body>
