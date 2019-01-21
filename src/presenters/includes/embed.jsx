@@ -27,10 +27,9 @@ export class Embed extends React.Component {
   }
   
   render() {
-    //{ this.browserSatisfiesRequirements() ?
     return <div className="glitch-embed-wrap">
-      { false ?
-      // Embed iframe
+    { this.browserSatisfiesRequirements() ?
+      // Embed iframe for app
       <iframe title="embed"
         src={`${APP_URL}/embed/#!/embed/${this.props.domain}?path=README.md&previewSize=100`}
         alt={this.props.alt}
