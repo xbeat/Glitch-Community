@@ -91,16 +91,14 @@
     <script src="<%= scripts[i] %>"></script>
     <% } %>
     <script defer=true>
-      if (window.bootstrap) {
-        window.bootstrap();
-      }
+      window.bootstrap();
     </script>
     <noscript>
-      console.warn("Sorry, but your browser doesn't support modern JS features. You're getting the barebones site");
+      console.warn("Sorry, but your browser doesn't support JS.");
       document.getElementById('fallback').removeAttribute('style');
       document.getElementById('fallback-img').removeAttribute('style');
       if (BUILD_COMPLETE) {
-        document.getElementById('fallback-yesscript').removeAttribute('style');
+        document.getElementById('fallback-noscript').removeAttribute('style');
       } else {
         document.getElementById('fallback-notbuilt').removeAttribute('style');
       }

@@ -16,11 +16,11 @@ import React from 'react';
 import {render} from 'react-dom';
 import App from './app.jsx';
 
-if (getBrowserJSCompatibility()) {
-  // If the user has the right level of JS support, set the global bootstrap function.
-  // This will get used to check for compatibility in index.ejs
-  // If it isn't there, we can't show the code editor/embeds.
-  window.bootstrap = () => {
+// This function will get used to check for compatibility in index.ejs
+// If the user has the right level of JS support, allow them to access the editor.
+// If they don't, we can still show the homepage, just without code editor/embeds.
+window.bootstrap = () => {
+  if (getBrowserJSCompatibility()) {
     if (location.hash.startsWith("#!/")) {
       window.location.replace(EDITOR_URL + window.location.hash);
       return;
@@ -33,9 +33,9 @@ if (getBrowserJSCompatibility()) {
     configureScope((scope) => {
       scope.setTag("bootstrap", "true");
     });
+  }
 
-    const dom = document.createElement('div');
-    document.body.appendChild(dom);
-    render(<App/>, dom);
-  };
-}
+  const dom = document.createElement('div');
+  document.body.appendChild(dom);
+  render(<App/>, dom);
+};
