@@ -23,7 +23,7 @@ window.bootstrap = () => {
   if (getBrowserJSCompatibility()) {
     if (location.hash.startsWith("#!/")) {
       window.location.replace(EDITOR_URL + window.location.hash);
-      return;
+      return false;
     }
 
     // Mark that bootstrapping has occurred,
@@ -38,4 +38,5 @@ window.bootstrap = () => {
   const dom = document.createElement('div');
   document.body.appendChild(dom);
   render(<App/>, dom);
+  return true;
 };
