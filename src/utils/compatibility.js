@@ -1,5 +1,4 @@
-
-// Here's a bunch of browser support tests
+// Try a bunch of browser support tests
 // If any of them don't work we can't run the editor or embeds in this browser
 export const getBrowserJSCompatibility = () => {
   try {
@@ -14,9 +13,9 @@ export const getBrowserJSCompatibility = () => {
     new URLSearchParams(); // Do we have URLSearchParams? 
     /* eslint-enable no-unused-vars */
 
-  return true;
+    return true;
   } catch (error) {
     console.log("Sorry, you don't have the necessary JS permissions to run Glitch code editors", error);
     return false;
   }
-}
+};
