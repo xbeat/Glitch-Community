@@ -8,4 +8,4 @@ export const featuredCollections = [
 ];
 
 // More ideas is populated from this team
-export const moreIdeasTeam = 'gregs-test-team-1';
+export const moreIdeasTeam = 'glitch';

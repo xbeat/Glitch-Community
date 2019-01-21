@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {moreIdeasTeam} from '../curated/collections';
+import {getContrastTextColor} from '../models/collection';
 
 import CollectionAvatar from './includes/collection-avatar';
 import {CollectionLink} from './includes/link';
@@ -16,7 +17,10 @@ const MoreIdeasDisplay = ({collections}) => (
             <div className="more-ideas-box centered" style={{backgroundColor: collection.coverColor}}>
               <CollectionAvatar backgroundColor={collection.coverColor}/>
             </div>
-            <div className="more-ideas-box-label centered" style={{backgroundColor: collection.coverColor}}>{collection.name}</div>
+            <div className="more-ideas-box-label centered" style={{
+              backgroundColor: collection.coverColor,
+              color: getContrastTextColor(collection.coverColor),
+            }}>{collection.name}</div>
           </CollectionLink>
         </li>
       ))}
