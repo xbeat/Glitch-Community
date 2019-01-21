@@ -13,7 +13,7 @@ Example:
 
 export default [
   {
-    title: 'Track Your Year in Pixels',
+    title: 'Track Your Mood in Pixels',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch01_year-in_pictures.png?1548074746553",
     link: 'https://glitch.com/~year-in-pixels'
   },{

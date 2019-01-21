@@ -3,24 +3,22 @@ var embed = `
 <div class="glitch-embed-wrap" style="height: 420px; width: 100%;">
   <iframe
     allow="geolocation; microphone; camera; midi; encrypted-media"
-    src="https://glitch.com/embed/#!/embed/lithium-battery-recycling?path=README.MD&previewSize=100"
-    alt="lithium-battery-recycling on Glitch"
+    src="https://glitch.com/embed/#!/embed/starter-react?path=README.MD&previewSize=100"
+    alt="starter-react on Glitch"
     style="height: 100%; width: 100%; border: 0;">
   </iframe>
 </div>
 `;
 
-var body = `<p>Follow along with MythBusters Jr. by remixing your own Glitch apps inspired by each episode.</p>
-<p><b>Episode 3:</b></p>
-<p>Can a lithium-ion battery cause a garbage truck to explode?</p>
+var body = `<p>A free, 5-part video course with interactive code examples that will help you learn React.</p>
 `;
 
 export default {
-  "image": "https://cdn.glitch.com/3cef6b25-69ba-4fa9-aa32-cff0fedce195%2Fmbjr-ep3-battery-blast-1.jpg?1547670709314",
+  "image": "https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg",
   "mask": "mask-4",
-  "title": "MythBusters Jr.",
-  "url": "/battery-blast/",
+  "title": "Build a Web App with React",
+  "url": "/react-starter-kit/",
   "embed": embed,
   "body": body,
-  "color": '#D0F1FF',
+  "color": '#58c2dc',
 };
