@@ -66,7 +66,7 @@ const CategoryPageWrap = ({
       </article>
       
     </main>
-    <MoreIdeas api={api/>
+    <MoreIdeas api={api}/>
   </>
 );
 

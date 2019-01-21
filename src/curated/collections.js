@@ -4,8 +4,8 @@
 export const featuredCollections = [
   { user: 'scientiffic', url: 'microbit' },
   { team: 'gregs-test-team-1', url: 'zany-playlist' },
+  { user: 'cori', url: 'glitch-json' },
 ];
 
-// More ideas is populated from this user/team
-// Pull from here if there are less than 3 featured collections
-export const moreIdeasTeam = 'glitch';
+// More ideas is populated from this team
+export const moreIdeasTeam = 'gregs-test-team-1';
