@@ -5,7 +5,7 @@ export default {
   "mask": "mask-4",
   "title": "Build a Web App with React",
   "appDomain": "starter-react",
-  "alt":"starter-react on Glitch",//is this always the same?
+  "alt":"starter-react on Glitch",//TODO(sheridan): check with Gareth whether this is always the same
   "blogUrl": "/react-starter-kit/",
   "body": body,
   "color": '#b5d3de',
