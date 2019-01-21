@@ -21,7 +21,7 @@ export default [
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch02_smallwins.png?1548074745861",
     link: 'https://glitch.com/~smallwins'
   },{
-    title: 'O-R-E-O-O-R-E-O',
+    title: 'How Would You Stack Your Oreo?',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch03_oreoreo.png?1548074745705",
     link: 'https://glitch.com/~oreoreo'
   }  
