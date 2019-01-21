@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Re-creating Art from Fortran',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise4.png?1547468106510",
-    link: 'https://sinus-fischer.glitch.me/'
+    title: 'Track Your Year in Pixels',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch01_year-in_pictures.png?1548074746553",
+    link: 'https://glitch.com/~year-in-pixels'
   },{
-    title: 'Make Your Emoji Explode',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise9.png?1547468106394",
-    link: 'https://exploji.glitch.me/'
+    title: 'Document Your Small Wins',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch02_smallwins.png?1548074745861",
+    link: 'https://glitch.com/~smallwins'
   },{
-    title: 'Delete Your Twitter Archive',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise8.png?1547468106128",
-    link: 'https://twitter-archive-deleter.glitch.me/'
+    title: 'O-R-E-O-O-R-E-O',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch03_oreoreo.png?1548074745705",
+    link: 'https://glitch.com/~oreoreo'
   }  
 ];
