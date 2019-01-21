@@ -1,6 +1,6 @@
 // Try a bunch of browser support tests
 // If any of them don't work we can't run the editor or embeds in this browser
-export const getBrowserJSCompatibility = () => {
+export const browserSatisfiesRequirements = () => {
   try {
     /* eslint-disable no-unused-vars */
     let x = {a: 1, b: 2}; // Can we use let?

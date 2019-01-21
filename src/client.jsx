@@ -2,7 +2,6 @@
 
 // Import Sentry early to help it initialize.
 import {configureScope} from './utils/sentry';
-import {getBrowserJSCompatibility} from './utils/compatibility';
 import './polyfills.js';
 
 // Init our dayjs plugins
@@ -16,13 +15,11 @@ import React from 'react';
 import {render} from 'react-dom';
 import App from './app.jsx';
 
-// This function will get used to check for compatibility in index.ejs
-// If the user has the right level of JS support, allow them to access the editor.
-// If they don't, we can still show the homepage, just without code editor/embeds.
+// This function is used in index.ejs to set up the app
 window.bootstrap = () => {
   if (location.hash.startsWith("#!/")) {
     window.location.replace(EDITOR_URL + window.location.hash);
-    return true;
+    return;
   }
   
   // Mark that bootstrapping has occurred,
@@ -36,7 +33,4 @@ window.bootstrap = () => {
   const dom = document.createElement('div');
   document.body.appendChild(dom);
   render(<App/>, dom);
-  
-  return getBrowserJSCompatibility() ? true : false;
-  } 
 };
