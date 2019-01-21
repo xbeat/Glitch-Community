@@ -3,6 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
+
 export class Embed extends React.Component {  
   browserSatisfiesRequirements() {
     try {
@@ -25,8 +27,9 @@ export class Embed extends React.Component {
   }
   
   render() {
+      //{ this.browserSatisfiesRequirements() ?
     return <div className="glitch-embed-wrap">
-      { this.browserSatisfiesRequirements() ?
+        { false ?
         // Embed iframe
         <iframe title="embed"
           src={`${APP_URL}/embed/#!/embed/${this.props.domain}?path=README.md&previewSize=100`}
@@ -37,9 +40,13 @@ export class Embed extends React.Component {
           border="0"
         ></iframe> :
         // Error message if JS not supported
-        <div className="error-msg">
-          <h1>The web browser you're using is missing some important Javascript features</h1>
-          <p>To use Glitch, please try applying your latest system updates, or try us with a different web browser.</p>
+        // TODO(sheridan): Refactor this once we have a true error component
+        <div className="error-container">
+          <img className="error-image" src={telescopeImageUrl} alt="" width="318px" height="297px" />
+          <div className="error-msg">
+            <h1>The web browser you're using is missing some important Javascript features</h1>
+            <p>To use Glitch, please try applying your latest system updates, or try us with a different web browser.</p>
+          </div>
         </div>
       }
     </div>;
