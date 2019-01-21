@@ -20,5 +20,5 @@ export default {
   "url": "/react-starter-kit/",
   "embed": embed,
   "body": body,
-  "color": '#58c2dc',
+  "color": '#b5d3de',
 };
