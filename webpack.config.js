@@ -12,7 +12,7 @@ const STYLES = path.resolve(__dirname, 'styles');
 const STYLE_BUNDLE_NAME = 'styles';
 
 
-let mode = 'production';
+let mode = 'development';
 if (process.env.NODE_ENV === 'production') {
   mode = 'production';
 }
