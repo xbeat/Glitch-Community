@@ -20,6 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 console.log(`Starting Webpack in ${mode} mode.`);
 
 module.exports = {
+  bail: true,
   mode,
   entry: {
     "client": `${SRC}/client.jsx`,
