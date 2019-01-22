@@ -78,6 +78,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         loader: 'babel-loader',
+        query: { compact: false }
       },
       {
         test: /\.styl$/,
