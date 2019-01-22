@@ -7,8 +7,10 @@ const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cd
 
 export class Embed extends React.Component {  
   constructor(props) {
-    super(props)
-    this.state.browserSupported = this.browserSatisfiesRequirements()
+    super(props);
+    this.state = {
+      browserSupported: this.browserSatisfiesRequirements()
+    };
   }
   
   browserSatisfiesRequirements() {
