@@ -2,14 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {sampleSize} from 'lodash';
 
+import {featuredCollections} from '../curated/collections';
 import {getLink} from '../models/collection';
+
 import CollectionAvatar from './includes/collection-avatar';
 import CollectionLink from './includes/link';
 import {ProjectsUL} from './projects-list';
 
-const Collection = ({collection}) => {
+const CollectionWide = ({collection}) => {
   const ulProps = {
-    projects: collection.projects||[],
+    projects: collection.projects,
     categoryColor: collection.color,
     homepageCollection: true,
     collectionUrl: getLink(collection),
@@ -27,56 +29,59 @@ const Collection = ({collection}) => {
         </span>
         <p className="category-description">{collection.description}</p>
       </header>
-      <ProjectsUL {...ulProps} projectCount={projectCount} collectionColor={collection.coverColor}/>
+      <ProjectsUL {...ulProps} projectCount={collection.projects.length} collectionColor={collection.coverColor}/>
     </article>
   );
 };
 
-Collection.propTypes = {
-  category: PropTypes.shape({
+CollectionWide.propTypes = {
+  collection: PropTypes.shape({
     avatarUrl: PropTypes.string.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
+    coverColor: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
   }).isRequired,
 };
 
-class CategoryLoader extends React.Component {
+class FeaturedCollections extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: [],
-      categoriesProjectCount: {},
+      collections: {},
     };
   }
   
-  async componentDidMount() {
-    // The API gives us a json blob with all of the categories, but only
-    // the 'projects' field on 3 of them.  If the field is present,
-    // then it's an array of projects.
-    const {data} = await this.props.api.get('categories/random?numCategories=3');
-    const categoriesWithProjects = data.filter(category => !!category.projects);
-    const categories = sampleSize(categoriesWithProjects, 3);
-    this.setState({categories});
-    // Now load each category to see how many projects it has
-    categories.forEach(async ({id}) => {
-      const {data} = await this.props.api.get(`categories/${id}`);
-      this.setState(prevState => ({
-        categoriesProjectCount: {...prevState.categoriesProjectCount, [id]: data.projects.length},
-      }));
+  async loadCollection(n, info) {
+    try {
+      let collections = [];
+      if (info.team) {
+        const {data} = await this.props.api.get(`teams/byUrl/${info.team}`);
+        collections = data.collections;
+      } else if (info.user) {
+        const {data} = await this.props.api.get(`userid/byLogin/${info.user}`);
+        
+      }
+    } catch (error) {
+    }
+  }
+  
+  componentDidMount() {
+    featuredCollections.forEach((info, n) => {
+      this.loadCollection(n, info);
     });
   }
   
   render() {
-    return this.state.categories.map(category => (
-      <Category key={category.id} category={category} projectCount={this.state.categoriesProjectCount[category.id]}/>
+    const collections = Array.from(featuredCollections.keys()).map(n => this.state.collections[n]);
+    return collections.filter(c => !!c).map(collection => (
+      <CollectionWide key={collection.id} collection={collection}/>
     ));
   }
 }
 
-CategoryLoader.propTypes = {
+FeaturedCollections.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
-export default CategoryLoader;
+export default FeaturedCollections;
