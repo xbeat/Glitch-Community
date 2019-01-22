@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {sampleSize} from 'lodash';
-import {captureException, captureMessage} from '../utils/sentry';
+import {captureException} from '../utils/sentry';
 
 import {featuredCollections} from '../curated/collections';
 import {getLink} from '../models/collection';
 
-import CollectionAvatar from './includes/collection-avatar';
-import CollectionLink from './includes/link';
+import {CollectionLink} from './includes/link';
 import {ProjectsUL} from './projects-list';
+import ProjectsLoader from './projects-loader';
 
 const CollectionWide = ({collection}) => {
   const ulProps = {
-    projects: collection.projects,
+    projects: collection.projects.map(p => ({...p, users: p.users||[]})),
     categoryColor: collection.color,
     homepageCollection: true,
     collectionUrl: getLink(collection),
@@ -30,7 +30,7 @@ const CollectionWide = ({collection}) => {
         </span>
         <p className="category-description">{collection.description}</p>
       </header>
-      <ProjectsUL {...ulProps} projectCount={collection.projects.length} collectionColor={collection.coverColor}/>
+      <ProjectsUL {...ulProps} projectCount={collection.projectCount}/>
     </article>
   );
 };
@@ -69,6 +69,8 @@ class FeaturedCollections extends React.Component {
       const collection = collections.find(c => c.url === info.url);
       if (collection) {
         const {data} = await this.props.api.get(`collections/${collection.id}`);
+        data.projectCount = data.projects.length;
+        data.projects = sampleSize(data.projects, 3);
         this.setState(({collections}) => ({collections: {...collections, [n]: data}}));
       }
     } catch (error) {
