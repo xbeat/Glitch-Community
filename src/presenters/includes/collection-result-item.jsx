@@ -57,8 +57,7 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUser, i
               { collection.teamId === -1 ?
                 <UserAvatar user={currentUser}/>
                 : null
-              }
-                                                
+              }                                                
             </div>
           </button>
           <a href={collectionPath} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">
