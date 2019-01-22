@@ -10,9 +10,8 @@ import {CollectionLink} from './includes/link';
 import {ProjectsUL} from './projects-list';
 import ProjectsLoader from './projects-loader';
 
-const CollectionWide = ({collection}) => {
+const CollectionWide = ({collection, api}) => {
   const ulProps = {
-    projects: collection.projects.map(p => ({...p, users: p.users||[]})),
     categoryColor: collection.color,
     homepageCollection: true,
     collectionUrl: getLink(collection),
@@ -30,7 +29,9 @@ const CollectionWide = ({collection}) => {
         </span>
         <p className="category-description">{collection.description}</p>
       </header>
-      <ProjectsUL {...ulProps} projectCount={collection.projectCount}/>
+      <ProjectsLoader api={api} projects={collection.projects}>
+        {projects => <ProjectsUL {...ulProps} projects={projects} projectCount={collection.projectCount}/>}
+      </ProjectsLoader>
     </article>
   );
 };
@@ -43,6 +44,7 @@ CollectionWide.propTypes = {
     name: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
   }).isRequired,
+  api: PropTypes.any.isRequired,
 };
 
 class FeaturedCollections extends React.Component {
@@ -70,7 +72,7 @@ class FeaturedCollections extends React.Component {
       if (collection) {
         const {data} = await this.props.api.get(`collections/${collection.id}`);
         data.projectCount = data.projects.length;
-        data.projects = sampleSize(data.projects, 3);
+        data.projects = sampleSize(data.projects, 3).map(p => ({...p, users: p.users||[]}));
         this.setState(({collections}) => ({collections: {...collections, [n]: data}}));
       }
     } catch (error) {
@@ -88,7 +90,7 @@ class FeaturedCollections extends React.Component {
   render() {
     const collections = Array.from(featuredCollections.keys()).map(n => this.state.collections[n]);
     return collections.filter(c => !!c).map(collection => (
-      <CollectionWide key={collection.id} collection={collection}/>
+      <CollectionWide key={collection.id} collection={collection} api={this.props.api}/>
     ));
   }
 }
