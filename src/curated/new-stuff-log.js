@@ -8,7 +8,7 @@ export default [
     id: 1,
     title: "Use your email to get Glitchy",
     body: `
-Add any project to a collection and show off your favorite things, group all your related projects, collect precious memories, etc. 
+Don't have Facebook or GitHub, but still want to use Glitch? 
 
 Head over to your profile or team page to create and view your collections.
 
