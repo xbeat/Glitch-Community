@@ -32,7 +32,7 @@ export class Embed extends React.Component {
         // Embed iframe for app
         <iframe title="embed"
           src={`${APP_URL}/embed/#!/embed/${this.props.domain}?path=README.md&previewSize=100`}
-          alt={this.props.alt}
+          alt={`${this.props.domain} on Glitch`}
           allow="geolocation; microphone; camera; midi; encrypted-media"
           height="100%" 
           width="100%"

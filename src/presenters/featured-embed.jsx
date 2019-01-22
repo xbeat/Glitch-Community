@@ -22,7 +22,7 @@ const FeaturedEmbed = ({image, mask, title, appDomain, alt, blogUrl, body, color
           <button className="button-small">Learn More →</button>
         </Link>
       </div>
-      <Embed domain={appDomain} alt={alt}/>
+      <Embed domain={appDomain}/>
     </div>
   </div>
 );
@@ -32,7 +32,6 @@ FeaturedEmbed.propTypes = {
   mask: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   appDomain: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
   blogUrl: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
