@@ -25,8 +25,9 @@ const CollectionWide = ({collection, api}) => {
         <p className="collection-description">{collection.description}</p>
       </header>
       <ProjectsLoader api={api} projects={collection.projects}>
-        {projects => <ProjectsUL collectionUrl={getLink(collection)} projects={projects} projectCount={collection.projectCount}/>}
+        {projects => <ProjectsUL projects={projects}/>}
       </ProjectsLoader>
+      <CollectionLink collection={collection} className="collection-view-all">View all {collection.projectCount} projects →</CollectionLink>
     </article>
   );
 };
