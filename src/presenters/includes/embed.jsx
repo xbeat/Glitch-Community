@@ -21,7 +21,7 @@ export class Embed extends React.Component {
 
       return true;
     } catch (error) {
-      console.log("Sorry, you don't have the necessary JS permissions to run Glitch code editors", error);
+      console.log("Sorry, you don't have the necessary JavaScript features to run Glitch code editors. Try applying your latest system updates, or try again with a different web browser.", error);
       return false;
     }
   }
