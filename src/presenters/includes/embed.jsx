@@ -6,6 +6,11 @@ import PropTypes from 'prop-types';
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
 
 export class Embed extends React.Component {  
+  constructor(props) {
+    super(props)
+    this.state.browserSupported = this.browserSatisfiesRequirements()
+  }
+  
   browserSatisfiesRequirements() {
     try {
       /* eslint-disable no-unused-vars */
@@ -28,7 +33,7 @@ export class Embed extends React.Component {
   
   render() {
     return <div className="glitch-embed-wrap">
-      { this.browserSatisfiesRequirements() ?
+      { this.state.browserSupported ?
         // Embed iframe for app
         <iframe title="embed"
           src={`${APP_URL}/embed/#!/embed/${this.props.domain}?path=README.md&previewSize=100`}
