@@ -10,7 +10,7 @@ import UsersList from "./users-list.jsx";
 
 import {getContrastTextColor} from '../models/collection.js'; 
 
-export const ProjectItem = ({api, project, collectionColor, homepageCollection, ...props}) => {
+export const ProjectItem = ({api, project, collectionColor, ...props}) => {
   return (
     <li>
       <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams}/>      
@@ -25,16 +25,9 @@ export const ProjectItem = ({api, project, collectionColor, homepageCollection, 
               <span className="project-badge private-project-badge" aria-label="private"></span>
               <div className="project-name">{project.domain}</div>
             </div>
-            {( homepageCollection 
-              ?
-              <div className="description">
-                <TruncatedMarkdown length={80}>{project.description}</TruncatedMarkdown>
-              </div>
-              :
-              <div className="description" 
-                style={project.private ? {} : {color: (props.category ? "black" : (collectionColor ? getContrastTextColor(collectionColor) : "black" ) )}}>
-                <TruncatedMarkdown length={80}>{project.description}</TruncatedMarkdown></div>
-            )}
+            <div className="description" style={project.private ? {} : {color: (collectionColor ? getContrastTextColor(collectionColor) : "black")}}>
+              <TruncatedMarkdown length={80}>{project.description}</TruncatedMarkdown>
+            </div>
             <div className="overflow-mask" style={project.private ? {} : {backgroundColor: collectionColor}}></div>
           </div>
         </div>
@@ -57,7 +50,6 @@ ProjectItem.propTypes = {
     teams: PropTypes.array,
   }).isRequired,
   collectionColor: PropTypes.string,
-  homepageCollection: PropTypes.bool,
   projectOptions: PropTypes.object,
 };
 

@@ -11,26 +11,21 @@ import {ProjectsUL} from './projects-list';
 import ProjectsLoader from './projects-loader';
 
 const CollectionWide = ({collection, api}) => {
-  const ulProps = {
-    categoryColor: collection.color,
-    homepageCollection: true,
-    collectionUrl: getLink(collection),
-  };
   return (
     <article className="projects" style={{backgroundColor: collection.coverColor}}>
-      <header className="category">
-        <CollectionLink className="category-name" collection={collection}>
+      <header className="collection">
+        <CollectionLink className="collection-name" collection={collection}>
           <h2>{collection.name}</h2>
         </CollectionLink>
-        <span className="category-image-container">
-          <CollectionLink className="category-image" collection={collection}>
+        <span className="collection-image-container">
+          <CollectionLink className="collection-image" collection={collection}>
             <img height="80px" width="120px" src={collection.avatarUrl} alt="" />
           </CollectionLink>
         </span>
-        <p className="category-description">{collection.description}</p>
+        <p className="collection-description">{collection.description}</p>
       </header>
       <ProjectsLoader api={api} projects={collection.projects}>
-        {projects => <ProjectsUL {...ulProps} projects={projects} projectCount={collection.projectCount}/>}
+        {projects => <ProjectsUL collectionUrl={getLink(collection)} projects={projects} projectCount={collection.projectCount}/>}
       </ProjectsLoader>
     </article>
   );
