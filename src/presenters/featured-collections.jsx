@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {sampleSize} from 'lodash';
+import {captureException, captureMessage} from '../utils/sentry';
 
 import {featuredCollections} from '../curated/collections';
 import {getLink} from '../models/collection';
@@ -59,10 +60,20 @@ class FeaturedCollections extends React.Component {
         const {data} = await this.props.api.get(`teams/byUrl/${info.team}`);
         collections = data.collections;
       } else if (info.user) {
-        const {data} = await this.props.api.get(`userid/byLogin/${info.user}`);
-        
+        const {data: userId} = await this.props.api.get(`userid/byLogin/${info.user}`);
+        if (userId !== 'NOT FOUND') {
+          const {data} = await this.props.api.get(`collections?userId=${userId}`);
+          collections = data;
+        }
+      }
+      const collection = collections.find(c => c.url === info.url);
+      if (collection) {
+        const {data} = await this.props.api.get(`collections/${collection.id}`);
+        this.setState(({collections}) => ({collections: {...collections, [n]: data}}));
       }
     } catch (error) {
+      console.log(error);
+      captureException(error);
     }
   }
   

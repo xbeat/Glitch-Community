@@ -12,7 +12,6 @@ import Featured from '../featured.jsx';
 import MoreIdeas from '../more-ideas.jsx';
 import OverlayVideo from '../overlays/overlay-video.jsx';
 import Questions from '../questions.jsx';
-import RandomCategories from '../random-categories.jsx';
 import RecentProjects from '../recent-projects.jsx';
 import ReportButton from '../pop-overs/report-abuse-pop.jsx';
 
@@ -99,8 +98,7 @@ const IndexPage = ({api, user}) => (
     
     {!!user.projects.length && <RecentProjects api={api}/>}
     {!!user.login && <Questions api={api}/>}
-    <Featured isAuthorized={!!user.login}/>
-    <RandomCategories api={api}/>
+    <Featured isAuthorized={!!user.login} api={api}/>
     <MoreIdeas api={api}/>
     <MadeInGlitch/>
     <ReportButton reportedType="home" />
