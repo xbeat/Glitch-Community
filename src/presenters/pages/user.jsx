@@ -125,7 +125,7 @@ const UserPage = ({
           addProjectToCollection,
         }}
         addProjectToCollection={addProjectToCollection}
-        maybeCurrentUser={maybeCurrentUser}
+        currentUser={maybeCurrentUser}
       />
 
       {!!user.login && (

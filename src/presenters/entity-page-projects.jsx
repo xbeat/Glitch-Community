@@ -37,8 +37,4 @@ EntityPageProjects.propTypes = {
   projectOptions: PropTypes.object,
 };
 
-const EntityPageProjectsContainer = ({api, projects, maybeCurrentUser, ...props}) => (  
-  <EntityPageProjects api={api} projects={projects} currentUser={maybeCurrentUser} {...props}/>  
-);
-
-export default EntityPageProjectsContainer;  
+export default EntityPageProjects;
