@@ -102,6 +102,10 @@ module.exports = {
       },
     ],
   },
+  performance: {
+    maxEntrypointSize: 400000,
+    maxAssetSize: 400000,
+  },
   plugins: [
     new LodashModuleReplacementPlugin(),
     new MiniCssExtractPlugin({filename: '[name].css'}),
