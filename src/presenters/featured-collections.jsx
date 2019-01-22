@@ -4,7 +4,6 @@ import {sampleSize} from 'lodash';
 import {captureException} from '../utils/sentry';
 
 import {featuredCollections} from '../curated/collections';
-import {getLink} from '../models/collection';
 
 import {CollectionLink} from './includes/link';
 import {ProjectsUL} from './projects-list';
@@ -24,10 +23,12 @@ const CollectionWide = ({collection, api}) => {
         </span>
         <p className="collection-description">{collection.description}</p>
       </header>
-      <ProjectsLoader api={api} projects={collection.projects}>
-        {projects => <ProjectsUL projects={projects}/>}
-      </ProjectsLoader>
-      <CollectionLink collection={collection} className="collection-view-all">View all {collection.projectCount} projects →</CollectionLink>
+      <div>
+        <ProjectsLoader api={api} projects={collection.projects}>
+          {projects => <ProjectsUL projects={projects}/>}
+        </ProjectsLoader>
+        <CollectionLink collection={collection} className="collection-view-all">View all {collection.projectCount} projects →</CollectionLink>
+      </div>
     </article>
   );
 };
