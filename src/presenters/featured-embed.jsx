@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Link from './includes/link.jsx';
 import Embed from './includes/embed.jsx';
 
-const FeaturedEmbed = ({image, mask, title, appDomain, alt, blogUrl, body, color}) => (
+const FeaturedEmbed = ({image, mask, title, appDomain, blogUrl, body, color}) => (
   <div className="featured-embed">
     <div className="mask-container">
       <Link to={`culture${blogUrl}`}>
