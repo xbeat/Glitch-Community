@@ -4,7 +4,7 @@
 // prepend new updates
 
 export default [
-    {
+  {
     id: 1,
     title: "Use your email to get Glitchy",
     body: `
