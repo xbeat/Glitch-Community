@@ -10,9 +10,8 @@ export default [
     body: `
 Don't have Facebook or GitHub, but still want to use Glitch? Want to code at the library without remembering all your logins?
 
-Now you can sign into Glitch with a one-time code sent to your email, check it out in the Sign In popover.
-
-![](https://cdn.glitch.com/69bf2d27-a029-4632-86a4-a722974778ae%2FScreen%20Shot%202019-01-22%20at%204.26.50%20PM.png?1548192423838)
+Now you can sign into Glitch with just your email. Choose Sign in with Email to get a magic link and temporary sign-in code made just for you and delivered straight to your inbox.  
+![](https://cdn.glitch.com/69bf2d27-a029-4632-86a4-a722974778ae%2Femail-sign-in.gif?1548196863943)
 `,
   },
   {
