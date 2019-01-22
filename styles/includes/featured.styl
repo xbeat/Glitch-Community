@@ -3,12 +3,10 @@
 //largeViewport = 900px
 // hugeViewport = 1080px
 
-.featured-collections
+.featured
 
   h2
-    background-color: rgba(255,255,255,0.9) // So the graphic hurt text readibility on small screens
     border-radius: 5px
-    margin-top: 0
     display: inline-block
     
   ul
@@ -135,9 +133,10 @@
       @media (max-width: mediumViewport)
         width: 100%
         margin: 0 auto
-  .embed
+  .glitch-embed-wrap
     float: right
     width: 55%
+    height: 420px
     margin-top: -435px
     margin-right: 15px
     @media (max-width: hugeViewport)
@@ -150,3 +149,5 @@
       width: 100%
       float: none
       margin: 1em 0 0
+    iframe
+      border: 0

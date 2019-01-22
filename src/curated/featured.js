@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'What Would Moira Rose Say?',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise5.png?1547468105916",
-    link: 'https://moira-rose.glitch.me/'
+    title: 'Track Your Mood in Pixels',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch01_year-in_pictures.png?1548074746553",
+    link: 'https://glitch.com/~year-in-pixels'
   },{
-    title: 'Magic Sketchpad!',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise7.png?1547468106643",
-    link: 'https://magic-sketchpad.glitch.me/'
+    title: 'Document Your Small Wins',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch02_smallwins.png?1548074745861",
+    link: 'https://glitch.com/~smallwins'
   },{
-    title: 'Read Between The Lines',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise6.png?1547468106803",
-    link: 'https://noiselines-text.glitch.me/'
+    title: 'How Would You Stack Your Oreo?',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch03_oreoreo.png?1548074745705",
+    link: 'https://glitch.com/~oreoreo'
   }  
 ];

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import FeaturedProjectOptionsPop from "./pop-overs/featured-project-options-pop.jsx";
 import {EditButton, RemixButton} from './includes/project-actions.jsx';
+import Embed from './includes/embed.jsx';
 import ReportButton from './pop-overs/report-abuse-pop.jsx';
 import AddProjectToCollection from './includes/add-project-to-collection.jsx';
 import {TrackClick} from './analytics';
@@ -30,10 +31,7 @@ const EntityPageFeaturedProject = ({api, isAuthorized, currentUser, unfeaturePro
       
         {isAuthorized && <FeaturedProjectOptionsPop api={api} unfeatureProject={unfeatureProject}/>}
         <div className="glitch-embed-wrap">
-          <iframe title="embed"
-            src={`${APP_URL}/embed/#!/embed/${featuredProject.id}?path=README.md&previewSize=100`}
-            allow="geolocation; microphone; camera; midi; encrypted-media"
-          ></iframe>
+          <Embed domain={featuredProject.domain}/>
         </div>
 
         {isAuthorized ?
