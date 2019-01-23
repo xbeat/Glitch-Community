@@ -28,9 +28,8 @@ const EntityPageFeaturedProject = ({api, isAuthorized, currentUser, unfeaturePro
         <h2>{featuredTitle}</h2>
       
         {isAuthorized && <FeaturedProjectOptionsPop api={api} unfeatureProject={unfeatureProject}/>}
-        <div className="glitch-embed-wrap">
-          <Embed domain={featuredProject.domain}/>
-        </div>
+        <Embed domain={featuredProject.domain}/>
+        
 
         {isAuthorized ?
           <div className="buttons buttons-left">
