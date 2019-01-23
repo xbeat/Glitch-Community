@@ -67,31 +67,38 @@ class EmailHandler extends React.Component {
   render() {
     const isEnabled = this.state.email.length > 0;
     return (
-      <dialog className="pop-over sign-in-pop">
-        <NestedPopoverTitle>
-          Email Sign In <span className="emoji email" />
-        </NestedPopoverTitle>
-        <section className="pop-over-actions first-section">
-          {!this.state.done &&
-            <form onSubmit={this.onSubmit} style={{marginBottom: 0}}>
-              <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
-              <button style={{marginTop: 10}} className="button-small button-link" disabled={!isEnabled}>Send Link</button>
-            </form>
-          }
-          {(this.state.done && !this.state.error) &&
-            <>
-              <div className="notification notifySuccess">Almost Done</div>
-              <div>Please click the confirmation link sent to {this.state.email}.</div>
-            </>
-          }
-          {(this.state.done && this.state.error) &&
-            <>
-              <div className="notification notifyError">Error</div>
-              <div>Something went wrong, email not sent.</div>
-            </>
-          }       
-        </section>
-      </dialog>
+      <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props}/>} startAlternateVisible={false}>
+        {showCodeLogin =>
+          <dialog className="pop-over sign-in-pop">
+            <NestedPopoverTitle>
+              Email Sign In <span className="emoji email" />
+            </NestedPopoverTitle>
+            <section className="pop-over-actions first-section">
+              {!this.state.done &&
+                <form onSubmit={this.onSubmit} style={{marginBottom: 0}}>
+                  <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com"></input>
+                  <button style={{marginTop: 10}} className="button-small button-link" disabled={!isEnabled}>Send Link</button>
+                </form>
+              }
+              {(this.state.done && !this.state.error) &&
+                <>
+                  <div className="notification notifyPersistent notifySuccess">Almost Done</div>
+                  <div>Finish signing in from the email sent to {this.state.email}.</div>
+                </>
+              }
+              {(this.state.done && this.state.error) &&
+                <>
+                  <div className="notification notifyPersistent notifyError">Error</div>
+                  <div>Something went wrong, email not sent.</div>
+                </>
+              }
+            </section>
+            {(this.state.done && !this.state.error) &&
+              <SignInCodeSection onClick={() => { showCodeLogin(this.props.api); }}/>
+            }
+          </dialog>
+        }
+      </NestedPopover>
     );
   }
 }
@@ -117,15 +124,12 @@ class SignInCodeHandler extends React.Component {
   async onSubmit(e) {
     e.preventDefault();
     this.setState({done: true});
-    console.log(this.props);
     try {
       const {data} = await this.props.api.post('/auth/email/' + this.state.code);
-      console.log(data);
       this.props.setUser(data);
       this.setState({error: false});
     } catch (error) {
       captureException(error);
-      console.log(error);
       this.setState({error: true});
     }
   }
@@ -147,12 +151,12 @@ class SignInCodeHandler extends React.Component {
           }
           {(this.state.done && !this.state.error) &&
             <>
-              <div className="notification notifySuccess">Success!</div>
+              <div className="notification notifyPersistent notifySuccess">Success!</div>
             </>
           }
           {(this.state.done && this.state.error) &&
             <>
-              <div className="notification notifyError">Error</div>
+              <div className="notification notifyPersistent notifyError">Error</div>
               <div>Code not found or already used. Try signing in with email.</div>
             </>
           }       
@@ -162,12 +166,27 @@ class SignInCodeHandler extends React.Component {
   }
 }
 
+const SignInWithConsumer = (props) => (
+  <CurrentUserConsumer>{(currentUser, fetched, {login}) => <SignInCodeHandler setUser={login} {...props}/>}</CurrentUserConsumer>
+);
+
 const EmailSignInButton = ({onClick}) => (
   <button className="button button-small button-link has-emoji" onClick={() => {onClick();}}>
     Sign in with Email <span className="emoji email"></span>
   </button>
 );
 EmailSignInButton.propTypes = {
+  onClick: PropTypes.func.isRequired
+};
+
+const SignInCodeSection = ({onClick}) => (
+  <section className="pop-over-actions last-section pop-over-info">
+    <button className="button-small button-tertiary button-on-secondary-background"  onClick={onClick}>
+      <span>Use a sign in code</span>
+    </button>
+  </section>
+);
+SignInCodeSection.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
@@ -186,7 +205,7 @@ const SignInPopWithoutRouter = (props) => (
       return (
         <NestedPopover alternateContent={() => <EmailHandler {...props}/>} startAlternateVisible={false}>
           {showEmailLogin =>
-            <NestedPopover alternateContent={() => <CurrentUserConsumer>{(currentUser, fetched, {login}) => <SignInCodeHandler setUser={login} {...props}/>}</CurrentUserConsumer>} startAlternateVisible={false}>
+            <NestedPopover alternateContent={() => <SignInWithConsumer {...props}/>} startAlternateVisible={false}>
               {showCodeLogin =>
                 <div className="pop-over sign-in-pop">
                   {header}
@@ -196,11 +215,7 @@ const SignInPopWithoutRouter = (props) => (
                     <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick}/>
                     <EmailSignInButton onClick={() => { onClick(); showEmailLogin(api); }}/>
                   </section>
-                  <section className="pop-over-actions last-section pop-over-info">
-                    <button className="button-small button-tertiary button-on-secondary-background"  onClick={() => { onClick(); showCodeLogin(api); }}>
-                      <span>Use a sign in code</span>
-                    </button>
-                  </section>
+                  <SignInCodeSection onClick={() => { onClick(); showCodeLogin(api); }}/>
                 </div>
               }
             </NestedPopover>

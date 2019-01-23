@@ -1,10 +1,13 @@
 {
   "presets" : [
-    ["modern-browsers", {
-      "loose": true,
-      "es2017": false,
-    }],
     "@babel/preset-react",
+    ["@babel/preset-env", {
+      "modules": false,
+      "targets": {
+        "chrome": "41"
+      },
+      "useBuiltIns": "usage",
+    }],
   ],
   "plugins": [
     "lodash",

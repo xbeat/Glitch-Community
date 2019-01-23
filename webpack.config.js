@@ -26,7 +26,7 @@ module.exports = {
     [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
   },
   output: {
-    filename: '[name].js',
+    filename: '[name].js?[contenthash]',
     path: PUBLIC,
     publicPath: '/',
   },
@@ -76,9 +76,9 @@ module.exports = {
         }
       },
       {
-        test: /\.jsx?/,
-        include: SRC,
+        test: /\.(js|jsx)$/,
         loader: 'babel-loader',
+        query: { compact: false }
       },
       {
         test: /\.styl$/,
@@ -104,8 +104,8 @@ module.exports = {
   },
   plugins: [
     new LodashModuleReplacementPlugin(),
-    new MiniCssExtractPlugin({filename: '[name].css'}),
-    new StatsPlugin('stats.json', {children: false, chunkModules: false, modules: false}),
+    new MiniCssExtractPlugin({filename: '[name].css?[chunkhash]'}),
+    new StatsPlugin('stats.json', {all: false, entrypoints: true, publicPath: true}),
   ],
   watchOptions: {
     ignored: /node_modules/,
