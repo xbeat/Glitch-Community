@@ -87,7 +87,8 @@ collection-avatar-size = 55px
       margin: 0
     
   .collection
-    margin-top: 30px
+    margin-top: 0px
+    margin-bottom: 1em
     font-size: 0.9rem
     border-radius: 5px
     width: 100%
@@ -97,6 +98,8 @@ collection-avatar-size = 55px
     transition: 0.1s all
     overflow: visible
     background-color: secondary-background
+    &.authorized
+      margin-top: 30px
 
     a
       color: primary
@@ -194,9 +197,9 @@ collection-avatar-size = 55px
     .projects-preview.empty
       height: 100%
       padding: 10px
-      margin: 0px 10px 5px;
-      border-radius: 5px;
-      height: auto;
+      margin: 0px 10px 5px
+      border-radius: 5px
+      height: auto
       a
         color: tertiary
     .collection-link

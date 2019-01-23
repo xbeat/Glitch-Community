@@ -118,6 +118,14 @@ class UserEditor extends React.Component {
     this.setState({collections: data});
   }
   
+  async featureProject(id){
+    await this.updateFields({featured_project_id: id});
+  }
+  
+  async unfeatureProject(){
+    await this.updateFields({featured_project_id: null});
+  }
+  
   componentDidMount() {
     this.loadCollections();
   }
@@ -138,6 +146,8 @@ class UserEditor extends React.Component {
       undeleteProject: id => this.undeleteProject(id).catch(handleError),
       setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
       addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleError),
+      featureProject: (id) => this.featureProject(id).catch(handleError),
+      unfeatureProject: id => this.unfeatureProject(id).catch(handleError)
     };
     return this.props.children(this.state, funcs, this.isCurrentUser());
   }
