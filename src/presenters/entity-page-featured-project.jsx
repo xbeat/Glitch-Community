@@ -30,7 +30,6 @@ const EntityPageFeaturedProject = ({api, isAuthorized, currentUser, unfeaturePro
         {isAuthorized && <FeaturedProjectOptionsPop api={api} unfeatureProject={unfeatureProject}/>}
         <Embed domain={featuredProject.domain}/>
         
-
         {isAuthorized ?
           <div className="buttons buttons-left">
             <EditButton className="button-small button-edit" name={featuredProject.id} isMember={isAuthorized}/>
