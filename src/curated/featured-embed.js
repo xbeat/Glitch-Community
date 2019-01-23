@@ -1,11 +1,13 @@
-var body = `<p>A free, 5-part video course with interactive code examples that will help you learn React.</p>`;
+var body = `<p>Follow along with MythBusters Jr. by remixing your own Glitch apps inspired by each episode.</p>
+<p><b>Episode 4:</b></p>
+<p>Is the force used to topple dominoes strong enough to crush a car?</p>`;
 
 export default {
-  "image": "https://glitch.com/culture/content/images/2018/10/react-starter-kit-1.jpg",
+  "image": "http://culture-zine.glitch.me/culture/content/images/2019/01/Screenshot_1-2.jpg",
   "mask": "mask-4",
-  "title": "Build a Web App with React",
-  "appDomain": "starter-react",
-  "blogUrl": "/react-starter-kit/",
+  "title": "MythBusters Jr.",
+  "appDomain": "car-crush",
+  "blogUrl": "/demolition-dominoes/",
   "body": body,
-  "color": '#b5d3de',
+  "color": '#D0F1FF',
 };
