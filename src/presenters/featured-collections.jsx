@@ -23,10 +23,12 @@ const CollectionWide = ({collection, api}) => {
         </span>
         <p className="collection-description">{collection.description}</p>
       </header>
-      <ProjectsLoader api={api} projects={collection.projects}>
-        {projects => <ProjectsUL projects={projects}/>}
-      </ProjectsLoader>
-      <CollectionLink collection={collection} className="collection-view-all">View all {collection.projectCount} projects →</CollectionLink>
+      <div className="collection-projects">
+        <ProjectsLoader api={api} projects={collection.projects}>
+          {projects => <ProjectsUL projects={projects}/>}
+        </ProjectsLoader>
+        <CollectionLink collection={collection} className="collection-view-all">View all {collection.projectCount} projects →</CollectionLink>
+      </div>
     </article>
   );
 };
