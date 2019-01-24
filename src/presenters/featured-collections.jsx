@@ -4,14 +4,16 @@ import {sampleSize} from 'lodash';
 import {captureException} from '../utils/sentry';
 
 import {featuredCollections} from '../curated/collections';
+import {getContrastTextColor, hexToRgbA} from '../models/collection';
 
 import {CollectionLink} from './includes/link';
 import {ProjectsUL} from './projects-list';
 import ProjectsLoader from './projects-loader';
 
 const CollectionWide = ({collection, api}) => {
+  const dark = getContrastTextColor(collection.coverColor) === 'white' ? 'dark' : '';
   return (
-    <article className="projects" style={{backgroundColor: collection.coverColor}}>
+    <article className={`collection-wide ${dark} projects`} style={{backgroundColor: collection.coverColor}}>
       <header className="collection">
         <CollectionLink className="collection-name" collection={collection}>
           <h2>{collection.name}</h2>
