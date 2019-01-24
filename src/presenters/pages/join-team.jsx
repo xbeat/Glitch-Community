@@ -33,19 +33,17 @@ class JoinTeamPageBase extends React.Component {
     try {
       // Suppress the authorization header to prevent user merging
       const {data: user} = await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`);
+      if (user) {
+        this.props.replaceCurrentUser(user);
+      }
       this.props.createNotification('Invitation accepted');
-      await this.props.replaceCurrentUser(user);
     } catch (error) {
       // The team is real but the token didn't work
       // Maybe it's been used already or expired?
       const data = error && error.response && error.response.data;
       console.log('Team invite error', data);
       captureMessage('Team invite error', {extra: {error}});
-      if (data.status === 401 && data.message === 'Token is for another user') {
-        this.props.createErrorNotification('Invite is for someone else, are you signed in as the right user?');
-      } else {
-        this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
-      }
+      this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
     }
     this.setState({redirect: getLink(team)});
   }
