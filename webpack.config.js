@@ -30,7 +30,7 @@ module.exports = {
     path: PUBLIC,
     publicPath: '/',
   },
-  devtool: mode === 'production' ? 'source-map' : 'none',
+  devtool: mode === 'production' ? 'source-map' : 'eval',
   optimization: {
     splitChunks: {
       chunks: 'initial',
