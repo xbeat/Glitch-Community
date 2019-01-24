@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Track Your Mood in Pixels',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch01_year-in_pictures.png?1548074746553",
-    link: 'https://glitch.com/~year-in-pixels'
+    title: 'Wave Function Maps',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch04_zealous-mammal.png?1548074746239",
+    link: 'https://glitch.com/~zealous-mammal'
   },{
-    title: 'Document Your Small Wins',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch02_smallwins.png?1548074745861",
-    link: 'https://glitch.com/~smallwins'
+    title: '',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FtwitchLiveStream.png?1548339656179",
+    link: 'https://www.twitch.tv/events/dppl6CecTFmB67JTc8sfSg'
   },{
-    title: 'How Would You Stack Your Oreo?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch03_oreoreo.png?1548074745705",
-    link: 'https://glitch.com/~oreoreo'
-  }  
+    title: 'Make Your Own RSS Reader',
+    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch05_lmo-feeder.png?1548074746382",
+    link: 'https://glitch.com/~lmo-feeder'
+  } 
 ];
