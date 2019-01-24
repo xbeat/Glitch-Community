@@ -13,7 +13,7 @@ Example:
 
 export default [
   {
-    title: 'Creeping Pixel Maps',
+    title: 'Wave Function Maps',
     img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch04_zealous-mammal.png?1548074746239",
     link: 'https://glitch.com/~zealous-mammal'
   },{
