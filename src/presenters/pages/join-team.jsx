@@ -32,7 +32,7 @@ class JoinTeamPageBase extends React.Component {
     }
     try {
       // Suppress the authorization header to prevent user merging
-      var {data: user} = await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`);
+      const {data: user} = await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`);
       this.props.createNotification('Invitation accepted');
       await this.props.replaceCurrentUser(user);
     } catch (error) {
