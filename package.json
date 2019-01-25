@@ -4,7 +4,7 @@
   "description": "Find cool projects and people using Glitch",
   "scripts": {
     "prestart": "bash sh/watchers.sh &",
-    "start": "nodemon --watch server --watch shared --watch views ./server/server.js"
+    "start": "nodemon --watch server --watch shared --watch views ./server/server.js start-storybook -p 3000 -c .storybook"
   },
   "dependencies": {
     "@babel/core": "^7.2.0",
@@ -66,7 +66,8 @@
     "url-join": "^4.0.0",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
-    "webpack-dev-middleware": "^3.5.1"
+    "webpack-dev-middleware": "^3.5.1",
+    "@storybook/react": "^4.1.1"
   },
   "engines": {
     "node": "10.x"
@@ -84,5 +85,6 @@
     "./src/utils/progress-promise.js",
     "./src/polyfills.js"
   ],
+  
   "license": "Apache License Version 2.0"
 }
