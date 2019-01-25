@@ -8,4 +8,7 @@ storiesOf('Button', module)
   ))
   .add('with some emoji', () => (
     <Button><span role="img" aria-label="so cool">😀 😎 👍 💯</span></Button>
+  ))
+  .add('with different text', () => (
+    <Button>Hello Second Button</Button>
   ));   
