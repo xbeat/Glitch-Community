@@ -1,19 +1,14 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Button } from '@storybook/react/demo';
+import Button from '../src/atoms/button/button';
 
 storiesOf('Button', module)
   .add('with text', () => (
     <Button>Hello Button</Button>
   ))
-  .add('with some emoji', () => (
-    <Button><span role="img" aria-label="so cool">😀 😎 👍 💯</span></Button>
-  ))
-  .add('with different text', () => (
-    <Button>Hello Second Button</Button>
-  ))
-  .add('new button', () => ())
-;   
+  .add('new button', () => (
+    <Button>New Button</Button>
+  ));   
 
 // <button
 //               className={props.buttonClass}
