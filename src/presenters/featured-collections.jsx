@@ -4,7 +4,7 @@ import {sampleSize} from 'lodash';
 import {captureException} from '../utils/sentry';
 
 import {featuredCollections} from '../curated/collections';
-import {getContrastTextColor, hexToRgbA} from '../models/collection';
+import {getContrastTextColor} from '../models/collection';
 
 import {CollectionLink} from './includes/link';
 import {ProjectsUL} from './projects-list';
