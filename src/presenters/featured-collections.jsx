@@ -18,8 +18,8 @@ const CollectionWide = ({collection, api}) => {
   const dark = getContrastTextColor(collection.coverColor) === 'white' ? 'dark' : '';
   return (
     <div className="collection-wide">
-      <article className={`${dark} projects`} style={{backgroundColor: collection.coverColor}}>
-        <header className="collection">
+      <article className="projects" style={{backgroundColor: collection.coverColor}}>
+        <header className={`collection ${dark}`}>
           <CollectionLink className="collection-image-container" collection={collection}>
             <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)}/>
           </CollectionLink>
