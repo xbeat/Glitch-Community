@@ -6,7 +6,7 @@ export default {
   "image": "http://culture-zine.glitch.me/culture/content/images/2019/01/episode-5-header.jpg",
   "mask": "mask-4",
   "title": "MythBusters Jr.",
-  "appDomain": "car-crush",
+  "appDomain": "pencil-distance",
   "blogUrl": "/gravity-busters/",
   "body": body,
   "color": '#FF7D00',
