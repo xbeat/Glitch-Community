@@ -29,12 +29,12 @@ const MoreIdeasCollectionsDisplay = ({collections}) => (
   </section>
 );
 
-const MoreIdeasCollections = ({api}) => (
+export const MoreIdeasCollections = ({api}) => (
   <DataLoader get={() => api.get(`teamid/byUrl/${moreIdeasTeam}`)}>
     {({data}) => (
       <DataLoader get={() => data !== 'NOT FOUND' ? api.get(`collections?teamId=${data}`) : null}>
         {({data}) => (
-          <MoreIdeasDisplay collections={data.map(collection => ({...collection, team: {url: moreIdeasTeam}}))}/>
+          <MoreIdeasCollectionsDisplay collections={data.map(collection => ({...collection, team: {url: moreIdeasTeam}}))}/>
         )}
       </DataLoader>
     )}

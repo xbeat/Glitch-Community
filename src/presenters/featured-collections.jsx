@@ -8,21 +8,26 @@ import {getContrastTextColor, hexToRgbA} from '../models/collection';
 
 import CollectionAvatar from './includes/collection-avatar';
 import {CollectionLink} from './includes/link';
-import {ProjectsUL} from './projects-list';
+import {TruncatedMarkdown} from './includes/markdown';
 import ProjectsLoader from './projects-loader';
+import {ProjectsUL} from './projects-list';
+import {TeamTile} from '../teams-list';
+import {UserTile} from '../users-list';
 
 const CollectionWide = ({collection, api}) => {
   const dark = getContrastTextColor(collection.coverColor) === 'white' ? 'dark' : '';
   return (
     <article className={`collection-wide ${dark} projects`} style={{backgroundColor: collection.coverColor}}>
       <header className="collection">
-        <CollectionLink className="collection-name" collection={collection}>
-          <h2>{collection.name}</h2>
-        </CollectionLink>
         <CollectionLink className="collection-image-container" collection={collection}>
           <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)}/>
         </CollectionLink>
-        <p className="collection-description">{collection.description}</p>
+        <CollectionLink className="collection-name" collection={collection}>
+          <h2>{collection.name}</h2>
+        </CollectionLink>
+        <div className="collection-description">
+          <TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown>
+        </div>
       </header>
       <ProjectsLoader api={api} projects={collection.projects}>
         {projects => <ProjectsUL projects={projects}/>}
