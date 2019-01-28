@@ -29,9 +29,13 @@ const MoreIdeasDisplay = ({collections}) => (
 );
 
 const MoreIdeas = ({api}) => (
-  <DataLoader get={() => api.get(`teams/byUrl/${moreIdeasTeam}`)}>
+  <DataLoader get={() => api.get(`teamid/byUrl/${moreIdeasTeam}`)}>
     {({data}) => (
-      <MoreIdeasDisplay collections={data.collections.map(collection => ({...collection, team: data}))}/>
+      <DataLoader get={() => data !== 'NOT FOUND' ? api.get(`collections?teamId=${data}`) : null}>
+        {({data}) => (
+          <MoreIdeasDisplay collections={data.map(collection => ({...collection, team: {url: moreIdeasTeam}}))}/>
+        )}
+      </DataLoader>
     )}
   </DataLoader>
 );
