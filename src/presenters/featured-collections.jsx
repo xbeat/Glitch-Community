@@ -80,6 +80,7 @@ const loadCollection = async (api, info) => {
 };
 
 const loadAllCollections = async (api, infos) => {
+  // don't await until every request is sent so they can all run at once
   const promises = infos.map(info => loadCollection(api, info));
   return await Promise.all(promises);
 };

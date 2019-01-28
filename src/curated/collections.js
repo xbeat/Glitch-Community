@@ -4,7 +4,7 @@
 export const featuredCollections = [
   { user: 'scientiffic', url: 'microbit' },
   { team: 'gregs-test-team-1', url: 'zany-playlist' },
-  { user: 'cordi', url: 'glitch-json' },
+  { user: 'cori', url: 'glitch-json' },
 ];
 
 // More ideas is populated from this team
