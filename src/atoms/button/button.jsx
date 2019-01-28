@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 /**
  * Button Component
  */
-const Button = ({ onClick, disabled, style, children }) => {
+const Button = ({ onClick, tertiary, style, children }) => {
   return (
-    <button onClick={onClick} disabled={disabled} style={style}>
+    <button onClick={onClick} tertiary={tertiary} style={style}>
       {children}
     </button>
   )
