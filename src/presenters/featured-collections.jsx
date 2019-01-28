@@ -4,7 +4,7 @@ import {sampleSize} from 'lodash';
 import {captureException} from '../utils/sentry';
 
 import {featuredCollections} from '../curated/collections';
-import {getContrastTextColor, hexToRgbA} from '../models/collection';
+import {getContrastTextColor} from '../models/collection';
 
 import CollectionAvatar from './includes/collection-avatar';
 import {CollectionLink} from './includes/link';
@@ -21,7 +21,7 @@ const CollectionWide = ({collection, api}) => {
       <article className="projects" style={{backgroundColor: collection.coverColor}}>
         <header className={`collection ${dark}`}>
           <CollectionLink className="collection-image-container" collection={collection}>
-            <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)}/>
+            <CollectionAvatar color={collection.coverColor}/>
           </CollectionLink>
           <CollectionLink className="collection-name" collection={collection}>
             <h2>{collection.name}</h2>

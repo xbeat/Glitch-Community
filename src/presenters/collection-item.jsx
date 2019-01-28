@@ -10,7 +10,7 @@ import CollectionAvatar from './includes/collection-avatar.jsx';
 
 import {getAvatarUrl} from '../models/project.js';
 
-import {getContrastTextColor, hexToRgbA} from '../models/collection';
+import {getContrastTextColor} from '../models/collection';
 
 const ProjectsPreview = ({projects}) => {
   
@@ -56,7 +56,7 @@ class CollectionItem extends React.Component{
                 <div className="collection-info" style={{backgroundColor: collection.coverColor}}> 
                   <div className="avatar-container">
                     <div className="avatar">
-                      <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)} collectionId={collection.id}/>
+                      <CollectionAvatar color={collection.coverColor}/>
                     </div>
                   </div>
                   <div className="collection-name-description">
