@@ -67,7 +67,9 @@
     "url-join": "^4.0.0",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
-    "webpack-dev-middleware": "^3.5.1"
+    "webpack-dev-middleware": "^3.5.1",
+    "http-proxy": "^1.17.0",
+    "@storybook/react": "^4.1.1"
   },
   "devDependencies": {
     "http-proxy": "^1.17.0",
