@@ -29,7 +29,7 @@ const CollectionWide = ({collection, api}) => {
           {!!collection.team && <TeamTile team={collection.team}/>}
           {!!collection.user && <UserTile {...collection.user}/>}
           <div className="collection-description">
-            <TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown>
+            <TruncatedMarkdown length={80}>{collection.description}</TruncatedMarkdown>
           </div>
         </header>
         <div className="collection-contents">

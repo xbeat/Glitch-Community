@@ -14,21 +14,19 @@ more-ideas-box-radius = 5px
     display: inline-block
     list-style-type: none
     margin-bottom: 10px
-    width: 19%
+    width: calc(20% - 10px)
     margin-right: 10px
     &:hover
       .more-ideas-box-label
         text-decoration: underline
-    @media (max-width: 1097px)
-      width: 18.5%
     @media (max-width: largeViewport)
-      width: 23.5%
-    @media (max-width: 739px)
-      width: 31.5%
-    @media (max-width: 605px)
-      width: 30%
-    @media (max-width: 500px)
-      width: 46%
+      width: calc(25% - 10px)
+    @media (max-width: mediumViewport)
+      width: calc(100% / 3 - 10px)
+    @media (max-width: mediumSmallViewport)
+      width: calc(50% - 10px)
+    @media (max-width: smallViewport)
+      width: 100%
 
   .more-ideas-box
     background-color: lightgrey
