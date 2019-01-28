@@ -1,16 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './button.css'
+import classNames from 'classnames/bind';
+import styles from './button.css'
 
-const TYPES = ["TERTIARY", "CTA", "REGULAR"]
-const SIZES = ["SMALL", "REGULAR"]
+let cx = classNames.bind(styles);
+
+const TYPES = ["tertiary", "cta"]
+const SIZES = ["small"]
 
 /**
  * Button Component
  */
 const Button = ({ onClick, disabled, type, size, emoji, children }) => {
+  let className = cx({
+    type: this.props.type,
+  });
+  
   return (
-    <button onClick={onClick} disabled={disabled} type={type} size={size} emoji={emoji} children={children}>
+    <button onClick={onClick} disabled={disabled} size={size} emoji={emoji} children={children} className={className}>
       {children}
     </button>
   )

@@ -7,7 +7,7 @@ storiesOf('Button', module)
     <Button>Hello Button</Button>
   ))
   .add('new button', () => (
-    <Button>New Button</Button>
+    <Button type="cta">New Button</Button>
   ));   
 
 // <button
