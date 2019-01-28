@@ -11,6 +11,9 @@ storiesOf('Button', module)
   ))
   .add('small', () => (
     <Button size="small">Small Button</Button>
+  ))
+.add('tertiary', () => (
+    <Button type="tertiary">Tertiary Button</Button>
   ));   
 
 // <button

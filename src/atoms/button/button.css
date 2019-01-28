@@ -38,3 +38,16 @@ button.small {
     padding: 3px 8px;
     padding-top: 5px;
 }
+
+button.tertiary {
+    color: #636363;
+    border-width: 1px;
+    border-color: #c3c3c3;
+    cursor: pointer;
+    display: inline-block;
+}
+
+button.tertiary:hover {
+    color: #222;
+    border-color: #b8b8b8;
+}
