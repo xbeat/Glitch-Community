@@ -14,7 +14,7 @@ button {
   vertical-align: middle;
 }
 
-button .cta {
+button.cta {
   color: #222;
   background-color: #83ffcd;
   -webkit-box-shadow: 4px 4px 0 #222;

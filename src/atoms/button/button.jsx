@@ -13,7 +13,7 @@ const SIZES = ["small"]
  */
 const Button = ({ onClick, disabled, type, size, emoji, children }) => {
   let className = cx({
-    type: this.props.type,
+    cta: type === "cta",
   });
   
   return (
