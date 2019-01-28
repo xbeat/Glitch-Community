@@ -17,25 +17,29 @@ import {UserTile} from './users-list';
 const CollectionWide = ({collection, api}) => {
   const dark = getContrastTextColor(collection.coverColor) === 'white' ? 'dark' : '';
   return (
-    <article className={`collection-wide ${dark} projects`} style={{backgroundColor: collection.coverColor}}>
-      <header className="collection">
-        <CollectionLink className="collection-image-container" collection={collection}>
-          <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)}/>
-        </CollectionLink>
-        <CollectionLink className="collection-name" collection={collection}>
-          <h2>{collection.name}</h2>
-        </CollectionLink>
-        {!!collection.team && <TeamTile team={collection.team}/>}
-        {!!collection.user && <UserTile {...collection.user}/>}
-        <div className="collection-description">
-          <TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown>
+    <div className="collection-wide">
+      <article className={`${dark} projects`} style={{backgroundColor: collection.coverColor}}>
+        <header className="collection">
+          <CollectionLink className="collection-image-container" collection={collection}>
+            <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)}/>
+          </CollectionLink>
+          <CollectionLink className="collection-name" collection={collection}>
+            <h2>{collection.name}</h2>
+          </CollectionLink>
+          {!!collection.team && <TeamTile team={collection.team}/>}
+          {!!collection.user && <UserTile {...collection.user}/>}
+          <div className="collection-description">
+            <TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown>
+          </div>
+        </header>
+        <div className="collection-contents">
+          <ProjectsLoader api={api} projects={collection.projects}>
+            {projects => <ProjectsUL projects={projects}/>}
+          </ProjectsLoader>
+          <CollectionLink collection={collection} className="collection-view-all">View all {collection.projectCount} projects →</CollectionLink>
         </div>
-      </header>
-      <ProjectsLoader api={api} projects={collection.projects}>
-        {projects => <ProjectsUL projects={projects}/>}
-      </ProjectsLoader>
-      <CollectionLink collection={collection} className="collection-view-all">View all {collection.projectCount} projects →</CollectionLink>
-    </article>
+      </article>
+    </div>
   );
 };
 
