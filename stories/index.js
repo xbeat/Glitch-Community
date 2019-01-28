@@ -3,11 +3,14 @@ import { storiesOf } from '@storybook/react';
 import Button from '../src/atoms/button/button';
 
 storiesOf('Button', module)
-  .add('with text', () => (
+  .add('regular', () => (
     <Button>Hello Button</Button>
   ))
-  .add('new button', () => (
-    <Button type="cta">New Button</Button>
+  .add('cta', () => (
+    <Button type="cta">CTA Button</Button>
+  ))
+  .add('small', () => (
+    <Button size="small">Small Button</Button>
   ));   
 
 // <button

@@ -32,3 +32,9 @@ button.cta:hover {
     -webkit-box-shadow: 2px 2px 0 #222;
     box-shadow: 2px 2px 0 #222;
 }
+
+button.small {
+    font-size: 12px;
+    padding: 3px 8px;
+    padding-top: 5px;
+}
