@@ -8,6 +8,7 @@ import {getContrastTextColor} from '../models/collection';
 
 import CollectionAvatar from './includes/collection-avatar';
 import {CollectionLink} from './includes/link';
+import {DataLoader} from './includes/loader';
 import {TruncatedMarkdown} from './includes/markdown';
 import ProjectsLoader from './projects-loader';
 import {ProjectsUL} from './projects-list';
@@ -54,11 +55,50 @@ CollectionWide.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
+const loadCollection = async info => {
+  let collections = [];
+  if (info.team) {
+    const {data: teamId} = await this.props.api.get(`teamid/byUrl/${info.team}`);
+    if (teamId !== 'NOT FOUND') {
+      const {data} = await this.props.api.get(`collections?teamId=${teamId}`);
+      collections = data;
+    }
+  } else if (info.user) {
+    const {data: userId} = await this.props.api.get(`userid/byLogin/${info.user}`);
+    if (userId !== 'NOT FOUND') {
+      const {data} = await this.props.api.get(`collections?userId=${userId}`);
+      collections = data;
+    }
+  }
+  const collection = collections.find(c => c.url === info.url);
+  if (collection) {
+    const {data} = await this.props.api.get(`collections/${collection.id}`);
+    data.projectCount = data.projects.length;
+    data.projects = sampleSize(data.projects, 3).map(p => ({...p, users: p.users||[]}));
+    return data;
+  }
+  return null;
+};
+
+export const FeaturedCollections = ({api}) => (
+  <>
+    {featuredCollections.map(info => (
+     <DataLoader get={() => loadCollection(info)}>
+       {collection => !!collection && (
+         
+       )}
+     </DataLoader>
+    ))}
+  </>
+);
+
 class FeaturedCollections extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       collections: {},
+      done: false,
+      error: false,
     };
   }
   
@@ -88,12 +128,15 @@ class FeaturedCollections extends React.Component {
     } catch (error) {
       console.log(error);
       captureException(error);
+      throw error;
     }
   }
   
   componentDidMount() {
-    featuredCollections.forEach((info, n) => {
-      this.loadCollection(n, info);
+    const loaders = featuredCollections.map((info, n) => this.loadCollection(n, info));
+    Promise.all(loaders).then(() => {
+      
+    }, () => {
     });
   }
   
