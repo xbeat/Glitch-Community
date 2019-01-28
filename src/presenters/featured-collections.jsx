@@ -11,8 +11,8 @@ import {CollectionLink} from './includes/link';
 import {TruncatedMarkdown} from './includes/markdown';
 import ProjectsLoader from './projects-loader';
 import {ProjectsUL} from './projects-list';
-import {TeamTile} from '../teams-list';
-import {UserTile} from '../users-list';
+import {TeamTile} from './teams-list';
+import {UserTile} from './users-list';
 
 const CollectionWide = ({collection, api}) => {
   const dark = getContrastTextColor(collection.coverColor) === 'white' ? 'dark' : '';
@@ -25,6 +25,8 @@ const CollectionWide = ({collection, api}) => {
         <CollectionLink className="collection-name" collection={collection}>
           <h2>{collection.name}</h2>
         </CollectionLink>
+        {!!collection.team && <TeamTile team={collection.team}/>}
+        {!!collection.user && <UserTile {...collection.user}/>}
         <div className="collection-description">
           <TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown>
         </div>
