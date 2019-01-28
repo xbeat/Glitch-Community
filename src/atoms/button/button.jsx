@@ -17,10 +17,11 @@ Button.propTypes = {
   onClick: PropTypes.func,
   /** button disabled */
   disabled: PropTypes.bool,
-  /** custom button style */
-  style: PropTypes.object,
-  /** children nodes  */
-  children: PropTypes.node
+  /** type of button */
+  type: PropTypes.text,
+  /** */
+  size: PropTypes.text,
+  
 }
 
 export default Button
