@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Wave Function Maps',
+    title: 'Practice Change Ringing',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fbells.jpg?1548682192588",
-    link: 'https://glitch.com/~zealous-mammal'
+    link: 'https://glitch.com/~changeringing'
   },{
-    title: 'What Am I Drawing?',
+    title: 'Export Twitter Followers to OPML',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fopml.jpg?1548682192922",
-    link: 'https://technology-pictionary.glitch.me'
+    link: 'https://glitch.com/~opml'
   },{
-    title: 'Make Your Own RSS Reader',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch05_lmo-feeder.png?1548074746382",
-    link: 'https://glitch.com/~lmo-feeder'
+    title: 'DIY ASCII Art',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fasciipaint.jpg?1548682193863",
+    link: 'https://glitch.com/~asc-paint'
   } 
 ];
