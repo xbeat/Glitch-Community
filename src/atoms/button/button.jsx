@@ -13,8 +13,9 @@ const SIZES = ["small"]
  */
 const Button = ({ onClick, disabled, type, size, emoji, children }) => {
   let className = cx({
-    ,
-    size,
+    cta: type === "cta",
+    small: size === "small",
+    tertiary: type === "tertiary",
   });
   
   return (
