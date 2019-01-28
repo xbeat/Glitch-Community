@@ -4,8 +4,9 @@ import {sampleSize} from 'lodash';
 import {captureException} from '../utils/sentry';
 
 import {featuredCollections} from '../curated/collections';
-import {getContrastTextColor} from '../models/collection';
+import {getContrastTextColor, hexToRgbA} from '../models/collection';
 
+import CollectionAvatar from './includes/collection-avatar';
 import {CollectionLink} from './includes/link';
 import {ProjectsUL} from './projects-list';
 import ProjectsLoader from './projects-loader';
@@ -18,11 +19,9 @@ const CollectionWide = ({collection, api}) => {
         <CollectionLink className="collection-name" collection={collection}>
           <h2>{collection.name}</h2>
         </CollectionLink>
-        <span className="collection-image-container">
-          <CollectionLink className="collection-image" collection={collection}>
-            <img height="80px" width="120px" src={collection.avatarUrl} alt="" />
-          </CollectionLink>
-        </span>
+        <CollectionLink className="collection-image-container" collection={collection}>
+          <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)}/>
+        </CollectionLink>
         <p className="collection-description">{collection.description}</p>
       </header>
       <ProjectsLoader api={api} projects={collection.projects}>
@@ -56,8 +55,11 @@ class FeaturedCollections extends React.Component {
     try {
       let collections = [];
       if (info.team) {
-        const {data} = await this.props.api.get(`teams/byUrl/${info.team}`);
-        collections = data.collections;
+        const {data: teamId} = await this.props.api.get(`teamid/byUrl/${info.team}`);
+        if (teamId !== 'NOT FOUND') {
+          const {data} = await this.props.api.get(`collections?teamId=${teamId}`);
+          collections = data;
+        }
       } else if (info.user) {
         const {data: userId} = await this.props.api.get(`userid/byLogin/${info.user}`);
         if (userId !== 'NOT FOUND') {

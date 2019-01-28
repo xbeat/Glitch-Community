@@ -51,8 +51,9 @@ collection-avatar-size = 55px
 
   .category-image-container
     display: block
-    .category-image
-      display: inline-block
+    svg
+      width: 120px
+      height: 80px
 
   .category-description
     font-size: 14px
@@ -256,6 +257,11 @@ collection-avatar-size = 55px
   left: 25%
   @media(max-width: 800px)
     left: 0
+
+.collection-wide
+  .collection-image-container svg
+    width: 120px
+    height: 80px
     
 .collection-wide.dark
   .collection-name, .collection-description, .collection-view-all
