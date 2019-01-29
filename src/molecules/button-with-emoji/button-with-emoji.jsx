@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind';
 import styles from './button-with-emoji.css'
-import { Button, TYPES, SIZES } from '../../atoms/button/button'
+import Button, { TYPES, SIZES } from '../../atoms/button/button'
 console.log(process.env.MOLECULE_DIR)
 
 let cx = classNames.bind(styles);
