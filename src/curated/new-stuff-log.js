@@ -7,11 +7,11 @@ export default [
   {
     id: 1,
     title: "Featured projects now live on your profile",
-    body: `Have a project you're particularly proud of?  Show it off by embedding it directly on your profile. 
+    body: `Have a project you're particularly proud of?  Feature it to embed the app directly at the top of your profile.
 
-You can only choose one featured project, so pick wisely...🎬
+You can only choose one featured project at a time, so pick wisely...🎬
 
-![](https://cdn.glitch.com/1b4c205a-e6b6-4ad9-ae8a-1e511e611105%2Ffeature.png?1548796845064)
+![](https://cdn.glitch.com/1b4c205a-e6b6-4ad9-ae8a-1e511e611105%2Ffeature.png?1548796979652)
 `,
   },  
   {
