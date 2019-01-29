@@ -18,32 +18,29 @@ import {UserTile} from './users-list';
 const CollectionWide = ({collection, api}) => {
   const dark = isDarkColor(collection.coverColor) ? 'dark' : '';
   return (
-    <div className="collection-wide">
-      <article className="projects" style={{backgroundColor: collection.coverColor}}>
-        <header className={`collection ${dark}`}>
-          <CollectionLink className="collection-image-container" collection={collection}>
-            <CollectionAvatar color={collection.coverColor}/>
-          </CollectionLink>
-          <CollectionLink className="collection-name" collection={collection}>
-            <h2>{collection.name}</h2>
-          </CollectionLink>
-          {!!collection.team && <TeamTile team={collection.team}/>}
-          {!!collection.user && <UserTile {...collection.user}/>}
-          <div className="collection-description">
-            <TruncatedMarkdown length={80}>{collection.description}</TruncatedMarkdown>
-          </div>
-        </header>
-        <div className="collection-contents">
-          <ProjectsLoader api={api} projects={collection.projects}>
-            {projects => <ProjectsUL projects={projects}/>}
-          </ProjectsLoader>
-          <CollectionLink collection={collection} className="collection-view-all">
-            View all <Pluralize count={collection.projectCount} singular="project"/>
-            <span role="presentation">→</span>
-          </CollectionLink>
+    <article className="collection-wide projects" style={{backgroundColor: collection.coverColor}}>
+      <header className={`collection ${dark}`}>
+        <CollectionLink className="collection-image-container" collection={collection}>
+          <CollectionAvatar color={collection.coverColor}/>
+        </CollectionLink>
+        <CollectionLink className="collection-name" collection={collection}>
+          <h2>{collection.name}</h2>
+        </CollectionLink>
+        {!!collection.team && <TeamTile team={collection.team}/>}
+        {!!collection.user && <UserTile {...collection.user}/>}
+        <div className="collection-description">
+          <TruncatedMarkdown length={80}>{collection.description}</TruncatedMarkdown>
         </div>
-      </article>
-    </div>
+      </header>
+      <div className="collection-contents">
+        <ProjectsLoader api={api} projects={collection.projects}>
+          {projects => <ProjectsUL projects={projects}/>}
+        </ProjectsLoader>
+        <CollectionLink collection={collection} className="collection-view-all">
+          View all <Pluralize count={collection.projectCount} singular="project"/> <span aria-hidden>→</span>
+        </CollectionLink>
+      </div>
+    </article>
   );
 };
 

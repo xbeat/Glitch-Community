@@ -86,7 +86,7 @@ const CollectionPageContents = ({
       <title>{collection.name}</title>
     </Helmet>
     <main className="collection-page">
-      <article className="projects" style={{backgroundColor: collection.coverColor}}>
+      <article className="collection-full projects" style={{backgroundColor: collection.coverColor}}>
         <header className={"collection " + (isDarkColor(collection.coverColor) ? "dark" : "")}>
           <div className="collection-image-container">
             <CollectionAvatar color={collection.coverColor}/>

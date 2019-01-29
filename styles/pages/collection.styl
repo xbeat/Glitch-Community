@@ -1,9 +1,18 @@
-.collection-page, .collection-wide
-  article.projects
-    display: flex
-    border-radius: 5px
-    @media(max-width: largeViewport)
-      flex-wrap: wrap
+.collection-full, .collection-wide
+  display: flex
+  border-radius: 5px
+  background-color: rgba(229, 229, 229, 0.4)
+  width: 100%
+  margin-right: initial
+  padding: 0px
+
+  .category
+    img
+      padding-bottom: 0.5rem
+    .description
+      max-width: initial
+  @media(max-width: largeViewport)
+    flex-wrap: wrap
   .collection-image-container
     margin: 15px 0px
     max-width: 175px
@@ -94,17 +103,6 @@
       margin-right: 10px
     p
       float: left
-  .projects
-    background-color: rgba(229, 229, 229, 0.4)
-    width: 100%
-    margin-right: initial
-    padding: 0px
-    
-    .category
-      img
-        padding-bottom: 0.5rem
-      .description
-        max-width: initial
   .button.delete-collection
     margin-top: 50px
     display: block
