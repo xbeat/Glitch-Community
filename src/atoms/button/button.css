@@ -11,7 +11,7 @@ button {
   padding-bottom: 5px;
   cursor: pointer;
   position: relative;
-  vertical-align: middle;
+  /*vertical-align: middle;*/
 }
 
 button:hover {
@@ -36,7 +36,6 @@ button.cta:hover {
 button.small {
     font-size: 12px;
     padding: 3px 8px;
-    padding-top: 5px;
 }
 
 button.tertiary {

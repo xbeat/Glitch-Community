@@ -21,6 +21,9 @@ storiesOf('Button With Emoji', module)
   .add('regular', () => (
     <ButtonWithEmoji emoji="https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fframed_picture.png?1496341054682">Emoji Button</ButtonWithEmoji>
   ))
+.add('small emoji', () => (
+    <ButtonWithEmoji emoji="https://cdn.glitch.com/9c72d8a2-2546-4c4c-9e97-2e6450752c11%2Fmicrophone.png?1507674704246" size="small">Remix this</ButtonWithEmoji>
+  ))
 
 // <button
 //               className={props.buttonClass}
