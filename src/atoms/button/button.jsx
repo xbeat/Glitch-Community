@@ -5,8 +5,8 @@ import styles from './button.css'
 
 let cx = classNames.bind(styles);
 
-const TYPES = ["tertiary", "cta"]
-const SIZES = ["small"]
+export const TYPES = ["tertiary", "cta"]
+export const SIZES = ["small"]
 
 /**
  * Button Component
@@ -19,7 +19,7 @@ const Button = ({ onClick, disabled, type, size, emoji, children }) => {
   });
   
   return (
-    <button onClick={onClick} disabled={disabled} emoji={emoji} children={children} className={className}>
+    <button onClick={onClick} className={className}>
       {children}
     </button>
   )

@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind';
-import styles from './button.css'
+import styles from './button-with-emoji.css'
+import { Button, TYPES, SIZES } from '../../atoms/button/button'
 
 let cx = classNames.bind(styles);
-
-const TYPES = ["tertiary", "cta"]
-const SIZES = ["small"]
 
 /**
  * Button Component
@@ -20,9 +18,9 @@ const ButtonWithEmoji = ({ onClick, disabled, type, size, emoji, children }) => 
   
   return (
     <div className={className}>
-      <button onClick={onClick} disabled={disabled} emoji={emoji} children={children} className={className}>
+      <Button onClick={onClick} type size>
         {children}
-      </button>
+      </Button>
     </div>
   )
 }
@@ -45,4 +43,4 @@ Button.propTypes = {
   emoji: PropTypes.text
 };
 
-export default Button
+export default ButtonWithEmoji
