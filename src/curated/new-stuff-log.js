@@ -9,8 +9,7 @@ export default [
     title: "Featured projects now live on your profile",
     body: `Have a project you're particularly proud of?  Feature it to embed the app directly at the top of your profile.
 
-You can feature one project at a time – and change or remove your featured project as often as you'd like.
-
+You can feature one project at a time -- and change or remove your featured project as often as you'd like.
 ![](https://cdn.glitch.com/1b4c205a-e6b6-4ad9-ae8a-1e511e611105%2Ffeature.png?1548796979652)
 `,
   },  
