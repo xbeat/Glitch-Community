@@ -6,7 +6,7 @@ const AutoprefixerStylus = require("autoprefixer-stylus");
 const StatsPlugin = require('stats-webpack-plugin');
 
 
-const PUBLIC = path.resolve(__dirname, 'public');
+const BUILD = path.resolve(__dirname, 'build');
 const SRC = path.resolve(__dirname, 'src');
 const STYLES = path.resolve(__dirname, 'styles');
 const STYLE_BUNDLE_NAME = 'styles';
@@ -27,7 +27,7 @@ module.exports = {
   },
   output: {
     filename: '[name].js?[contenthash]',
-    path: PUBLIC,
+    path: BUILD,
     publicPath: '/',
   },
   devtool: mode === 'production' ? 'source-map' : 'eval',

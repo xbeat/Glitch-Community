@@ -30,6 +30,7 @@ module.exports = function(external) {
   initWebpack(app);
 
   app.use(express.static('public', { index: false }));
+  app.use(express.static('build', { index: false }));
 
   // Log all requests for diagnostics
   app.use(function(request, response, next) {
@@ -47,7 +48,7 @@ module.exports = function(external) {
     let styles = [];
     
     try {
-      const stats = JSON.parse(await readFilePromise('public/stats.json'));
+      const stats = JSON.parse(await readFilePromise('build/stats.json'));
       stats.entrypoints.client.assets.forEach(file => {
         if (file.match(/\.js(\?|$)/)) {
           scripts.push(`${stats.publicPath}${file}`);
