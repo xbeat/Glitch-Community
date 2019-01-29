@@ -39,7 +39,11 @@ NewProjectPop.propTypes = {
 };
 
 const importGitRepo = () => {
-  window.prompt("Paste the full URL of your repository", "https://github.com/orgname/reponame.git");
+  const repoUrl = window.prompt("Paste the full URL of your repository", "https://github.com/orgname/reponame.git");
+  if (!repoUrl) {
+    return;
+  }
+  window.location.href = 'edit/#!/import/git?url=${repoUrl}';
 };
 
 class NewProjectPopButton extends React.Component {
