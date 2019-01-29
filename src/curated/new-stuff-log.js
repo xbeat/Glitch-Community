@@ -11,7 +11,7 @@ export default [
 
 You can only choose one featured project, so pick wisely...🎬
 
-![](https://cdn.glitch.com/1b4c205a-e6b6-4ad9-ae8a-1e511e611105%2Ffeature.gif?1548716062069)
+![](https://cdn.glitch.com/1b4c205a-e6b6-4ad9-ae8a-1e511e611105%2Ffeature.png?1548796845064)
 `,
   },  
   {
