@@ -69,7 +69,7 @@ const loadCollection = async (api, info) => {
       collections = data;
     }
   }
-  const collection = collections.find(c => c.url === info.url);
+  const collection = collections.find(c => c.url === info.name);
   if (collection) {
     const {data} = await api.get(`collections/${collection.id}`);
     data.projectCount = data.projects.length;
