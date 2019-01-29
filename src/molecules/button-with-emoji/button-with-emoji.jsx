@@ -11,7 +11,7 @@ const SIZES = ["small"]
 /**
  * Button Component
  */
-const Button = ({ onClick, disabled, type, size, emoji, children }) => {
+const ButtonWithEmoji = ({ onClick, disabled, type, size, emoji, children }) => {
   let className = cx({
     cta: type === "cta",
     small: size === "small",
@@ -19,9 +19,11 @@ const Button = ({ onClick, disabled, type, size, emoji, children }) => {
   });
   
   return (
-    <button onClick={onClick} disabled={disabled} emoji={emoji} children={children} className={className}>
-      {children}
-    </button>
+    <div className={className}>
+      <button onClick={onClick} disabled={disabled} emoji={emoji} children={children} className={className}>
+        {children}
+      </button>
+    </div>
   )
 }
 
