@@ -68,6 +68,12 @@ class NewProjectPopButton extends React.Component {
       dataTrack="open new-project pop"
       buttonText="New Project">
       <NewProjectPop projects={this.state.projects}/>
+      <section className="pop-over-actions last-section pop-over-info">
+        <button className="button-small button-tertiary button-on-secondary-background">
+          <span>Clone from Git Repo</span>
+        </button>
+      </section>
+          
     </PopoverWithButton>);
   }
 }
