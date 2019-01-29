@@ -11,7 +11,7 @@ export const SIZES = ["small"]
 /**
  * Button Component
  */
-const Button = ({ onClick, disabled, type, size, emoji, children }) => {
+const Button = ({ onClick, disabled, type, size, children }) => {
   let className = cx({
     cta: type === "cta",
     small: size === "small",
@@ -25,12 +25,6 @@ const Button = ({ onClick, disabled, type, size, emoji, children }) => {
   )
 }
 
-Button.defaultProps = {
-  type: "REGULAR",
-  size: "REGULAR",
-  emoji: "none"
-};
-
 Button.propTypes = {
   /** callback when button clicked */
   onClick: PropTypes.func,
@@ -39,8 +33,7 @@ Button.propTypes = {
   /** type of button */
   type: PropTypes.oneOf(TYPES),
   /** size of button */
-  size: PropTypes.text,
-  emoji: PropTypes.text
+  size: PropTypes.string
 };
 
 export default Button

@@ -11,26 +11,15 @@ let cx = classNames.bind(styles);
  * Button Component
  */
 const ButtonWithEmoji = ({ onClick, disabled, type, size, emoji, children }) => {
-  let className = cx({
-    cta: type === "cta",
-    small: size === "small",
-    tertiary: type === "tertiary",
-  });
-  
   return (
-    <div className={className}>
-      <Button onClick={onClick} type size>
+    <div className="button-with-emoji">
+      <Button onClick={onClick} type {size}>
         {children}
+        <span className="emoji" role="presentation" style={{ backgroundImage: emoji }}></span>
       </Button>
     </div>
   )
 }
-
-ButtonWithEmoji.defaultProps = {
-  type: "REGULAR",
-  size: "REGULAR",
-  emoji: "none"
-};
 
 ButtonWithEmoji.propTypes = {
   /** callback when button clicked */
@@ -40,8 +29,9 @@ ButtonWithEmoji.propTypes = {
   /** type of button */
   type: PropTypes.oneOf(TYPES),
   /** size of button */
-  size: PropTypes.text,
-  emoji: PropTypes.text
+  size: PropTypes.string,
+  /** full url for emoji image */
+  emoji: PropTypes.string.isRequired
 };
 
 export default ButtonWithEmoji
