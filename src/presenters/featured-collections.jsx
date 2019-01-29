@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Pluralize from 'react-pluralize';
 import {sampleSize} from 'lodash';
 
 import {featuredCollections} from '../curated/collections';
@@ -36,7 +37,10 @@ const CollectionWide = ({collection, api}) => {
           <ProjectsLoader api={api} projects={collection.projects}>
             {projects => <ProjectsUL projects={projects}/>}
           </ProjectsLoader>
-          <CollectionLink collection={collection} className="collection-view-all">View all {collection.projectCount} projects →</CollectionLink>
+          <CollectionLink collection={collection} className="collection-view-all">
+            View all <Pluralize count={collection.projectCount} singular="project"/>
+            <span role="presentation">→</span>
+          </CollectionLink>
         </div>
       </article>
     </div>
