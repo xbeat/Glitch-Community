@@ -7,17 +7,17 @@ export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/1afc1ac4-170b-48af-b5
 export const defaultAvatar = "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-avatar.svg?1540389405633";
 
 // from http://dannyruchtie.com/color-contrast-calculator-with-yiq/
-export const getContrastTextColor = (hex) =>{
+export const isDarkColor = (hex) =>{
   if(hex){
     hex = hex.substring(1);
     const r = parseInt(hex.substr(0,2),16);
     const g = parseInt(hex.substr(2,2),16);
     const b = parseInt(hex.substr(4,2),16);
     const yiq = ((r*299)+(g*587)+(b*114))/1000;
-    return (yiq >= 128) ? 'black' : 'white';
+    return yiq < 128;
   }
   
-  return 'black';
+  return false;
 };
 
 export function getAvatarUrl(id) {
