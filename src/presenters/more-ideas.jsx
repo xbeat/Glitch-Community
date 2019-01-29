@@ -14,14 +14,11 @@ const MoreIdeasCollectionsDisplay = ({collections}) => (
     <ul>
       {collections.map(collection => (
         <li key={collection.id}>
-          <CollectionLink className="more-ideas-box-link" collection={collection}>
-            <div className="more-ideas-box centered" style={{backgroundColor: collection.coverColor}}>
-              <CollectionAvatar color={collection.coverColor}/>
-            </div>
-            <div className="more-ideas-box-label centered" style={{
-              backgroundColor: collection.coverColor,
-              color: isDarkColor(collection.coverColor) ? 'white' : '',
-            }}>{collection.name}</div>
+          <CollectionLink collection={collection} style={{backgroundColor: collection.coverColor}}
+            className={"more-ideas-box " + (isDarkColor(collection.coverColor) ? "dark" : "")}
+          >
+            <CollectionAvatar color={collection.coverColor}/>
+            {collection.name}
           </CollectionLink>
         </li>
       ))}
@@ -41,7 +38,7 @@ export const MoreIdeasCollections = ({api}) => (
   </DataLoader>
 );
 
-const MoreIdeas = () => (
+export const MoreIdeasCategories = () => (
   <section className="more-ideas" role="navigation">
     <h2>More Ideas</h2>
     <ul>
@@ -57,4 +54,4 @@ const MoreIdeas = () => (
   </section>
 );
 
-export default MoreIdeas;
+export default MoreIdeasCollections;
