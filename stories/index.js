@@ -25,7 +25,7 @@ storiesOf('Button With Emoji', module)
     <ButtonWithEmoji emoji="https://cdn.glitch.com/9c72d8a2-2546-4c4c-9e97-2e6450752c11%2Fmicrophone.png?1507674704246" size="small">Remix this</ButtonWithEmoji>
   ))
 .add('additional emoji', () => (
-    <ButtonWithEmoji emoji="https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg">Show</ButtonWithEmoji>
+    <ButtonWithEmoji emoji="https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg" type="cta">Show</ButtonWithEmoji>
   ))
 
 // <button
