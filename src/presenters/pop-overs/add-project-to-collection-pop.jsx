@@ -41,33 +41,31 @@ class AddProjectToCollectionPopContents extends React.Component {
   }
   
   async loadCollections() {
-    // BEFORE
-    // const collections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
-    // let orderedCollections = orderBy(collections.data, collection => collection.updatedAt).reverse();
-    // this.setState({maybeCollections: orderedCollections, filteredCollections: orderedCollections });
-    
-    const userCollections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
-    
-    // load team collections
-    const userTeams = this.props.currentUser.teams;
-    let userTeamCollections = [];
-    if(userTeams.length > 0){
-      // load potential team collections
-      for(const team of userTeams){
-        const teamInfo = await this.props.api.get(`teams/${team.id}`);
-        const teamCollections = teamInfo.collections;
-        if(teamCollections.length > 0){
-          userTeamCollections.push(teamCollections);
-        }
-      }
-    }
-    console.log(JSON.stringify(userTeamCollections));
-    
-    const allUserCollections = userCollections + userTeamCollections;
+    // CURRENT LOADING OF ONLY USER COLLECTIONS
+    const collections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
+    let orderedCollections = orderBy(collections.data, collection => collection.updatedAt).reverse();
+    this.setState({maybeCollections: orderedCollections, filteredCollections: orderedCollections });
     
     
-    // let orderedCollections = orderBy(collections.data, collection => collection.updatedAt).reverse();
-    // this.setState({maybeCollections: orderedCollections, filteredCollections: orderedCollections });
+    // IN PROGRESS UPDATE - ADDING TEAM USER COLLECTIONS (UNCOMMENT TO TEST...)
+//     const userCollections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
+    
+//     // load team collections
+//     const userTeams = this.props.currentUser.teams;
+//     let userTeamCollections = [];
+//     if(userTeams.length > 0){
+//       // load potential team collections
+//       for(const team of userTeams){
+//         const teamInfo = await this.props.api.get(`teams/${team.id}`);
+//         const teamCollections = teamInfo.collections;
+//         if(teamCollections.length > 0){
+//           userTeamCollections.push(teamCollections);
+//         }
+//       }
+//     }
+//     console.log(JSON.stringify(userTeamCollections));
+    
+//     const allUserCollections = userCollections + userTeamCollections;
   }
   
   async loadCollectionOwners(){
