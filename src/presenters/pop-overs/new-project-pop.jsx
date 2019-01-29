@@ -43,7 +43,7 @@ const importGitRepo = () => {
   if (!repoUrl) {
     return;
   }
-  window.location.href = 'edit/#!/import/git?url=${repoUrl}';
+  window.location.href = `/edit/#!/import/git?url=${repoUrl}`;
 };
 
 class NewProjectPopButton extends React.Component {
