@@ -7,7 +7,7 @@ export default [
   {
     id: 1,
     title: "Featured projects now live on your profile",
-    body: `Have a project you're particularly proud of?  Show it off by embedding the app directly on your profile. 
+    body: `Have a project you're particularly proud of?  Show it off by embedding it directly on your profile. 
 
 You can only choose one featured project, so pick wisely...🎬
 
