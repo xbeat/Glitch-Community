@@ -14,7 +14,7 @@ const ButtonWithEmoji = ({ onClick, disabled, type, size, emoji, children }) => 
     <div className="button-with-emoji">
       <Button onClick={onClick} type={type} size={size}>
         {children}
-        <span className="emoji" role="presentation" style={{ backgroundImage: `url("${emoji}")` }}></span>
+        <img className="emoji" src={emoji}></img>
       </Button>
     </div>
   )
