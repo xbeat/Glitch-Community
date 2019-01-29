@@ -47,13 +47,9 @@ const MoreIdeas = () => (
     <ul>
       {categories.map(category => (
         <li key={category.id}>
-          <Link className="more-ideas-box-link" to={category.url}>
-            <div className="more-ideas-box centered" style={{backgroundColor: category.color}}>
-              <img src={category.avatarUrl} alt=""/>
-            </div>
-            <div className="more-ideas-box-label centered" style={{backgroundColor: category.color}}>
-              {category.name}
-            </div>
+          <Link className="more-ideas-box" to={category.url} style={{backgroundColor: category.color}}>
+            <img src={category.avatarUrl} alt=""/>
+            <div>{category.name}</div>
           </Link>
         </li>
       ))}

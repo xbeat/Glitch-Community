@@ -1,7 +1,5 @@
 // more-ideas.styl
 
-more-ideas-box-radius = 5px
-
 .more-ideas
   margin-top: 1rem
   ul
@@ -30,26 +28,13 @@ more-ideas-box-radius = 5px
 
   .more-ideas-box
     background-color: lightgrey
+    display: block
     height: 122px
-    border-top-left-radius: more-ideas-box-radius
-    border-top-right-radius: more-ideas-box-radius
-    > span
-      display: block
-      width: 80%
-      height: 75%
-    svg
-      width: 100%
-      height: 100%
-    @media (max-width: smallViewport)
-      height: 115px
-
-  .more-ideas-box-label
-    background-color: lightgrey
-    height: 37px
+    border-radius: 5px
     font-size: 14px
     font-weight: 600
-    border-bottom-left-radius: more-ideas-box-radius
-    border-bottom-right-radius: more-ideas-box-radius
+    @media (max-width: smallViewport)
+      height: 115px
     
   .white
     color: white
