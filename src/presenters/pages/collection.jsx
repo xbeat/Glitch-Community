@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
-import {getContrastTextColor, getLink, getOwnerLink} from '../../models/collection';
+import {isDarkColor, getLink, getOwnerLink} from '../../models/collection';
 
 import {AnalyticsContext} from '../analytics';
 import {DataLoader} from '../includes/loader.jsx';
@@ -87,7 +87,7 @@ const CollectionPageContents = ({
     </Helmet>
     <main className="collection-page">
       <article className="projects" style={{backgroundColor: collection.coverColor}}>
-        <header className={"collection " + (getContrastTextColor(collection.coverColor) == "white" ? "dark" : "")}>
+        <header className={"collection " + (isDarkColor(collection.coverColor) ? "dark" : "")}>
           <div className="collection-image-container">
             <CollectionAvatar color={collection.coverColor}/>
           </div>

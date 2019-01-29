@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {sampleSize} from 'lodash';
 
 import {featuredCollections} from '../curated/collections';
-import {getContrastTextColor} from '../models/collection';
+import {isDarkColor} from '../models/collection';
 
 import CollectionAvatar from './includes/collection-avatar';
 import {CollectionLink} from './includes/link';
@@ -15,7 +15,7 @@ import {TeamTile} from './teams-list';
 import {UserTile} from './users-list';
 
 const CollectionWide = ({collection, api}) => {
-  const dark = getContrastTextColor(collection.coverColor) === 'white' ? 'dark' : '';
+  const dark = isDarkColor(collection.coverColor) ? 'dark' : '';
   return (
     <div className="collection-wide">
       <article className="projects" style={{backgroundColor: collection.coverColor}}>
@@ -57,16 +57,16 @@ CollectionWide.propTypes = {
 const loadCollection = async (api, info) => {
   let collections = [];
   if (info.team) {
-    const {data: teamId} = await api.get(`teamid/byUrl/${info.team}`);
+    const {data: teamId} = await api.get(`teamId/byUrl/${info.team}`);
     if (teamId !== 'NOT FOUND') {
-      const {data} = await api.get(`collections?teamId=${teamId}`);
-      collections = data;
+      const {data: teamCollections} = await api.get(`collections?teamId=${teamId}`);
+      collections = teamCollections;
     }
   } else if (info.user) {
-    const {data: userId} = await api.get(`userid/byLogin/${info.user}`);
+    const {data: userId} = await api.get(`userId/byLogin/${info.user}`);
     if (userId !== 'NOT FOUND') {
-      const {data} = await api.get(`collections?userId=${userId}`);
-      collections = data;
+      const {data: userCollections} = await api.get(`collections?userId=${userId}`);
+      collections = userCollections;
     }
   }
   const collection = collections.find(c => c.url === info.name);

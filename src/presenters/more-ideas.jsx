@@ -2,7 +2,7 @@ import React from 'react';
 
 import categories from '../curated/categories';
 import {moreIdeasTeam} from '../curated/collections';
-import {getContrastTextColor} from '../models/collection';
+import {isDarkColor} from '../models/collection';
 
 import CollectionAvatar from './includes/collection-avatar';
 import Link, {CollectionLink} from './includes/link';
@@ -20,7 +20,7 @@ const MoreIdeasCollectionsDisplay = ({collections}) => (
             </div>
             <div className="more-ideas-box-label centered" style={{
               backgroundColor: collection.coverColor,
-              color: getContrastTextColor(collection.coverColor),
+              color: isDarkColor(collection.coverColor) ? 'white' : '',
             }}>{collection.name}</div>
           </CollectionLink>
         </li>

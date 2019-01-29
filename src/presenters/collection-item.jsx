@@ -10,7 +10,7 @@ import CollectionAvatar from './includes/collection-avatar.jsx';
 
 import {getAvatarUrl} from '../models/project.js';
 
-import {getContrastTextColor} from '../models/collection';
+import {isDarkColor} from '../models/collection';
 
 const ProjectsPreview = ({projects}) => {
   
@@ -64,7 +64,9 @@ class CollectionItem extends React.Component{
                       <span className="project-badge private-project-badge" aria-label="private"></span>
                       <div className="project-name">{collection.name}</div>
                     </div>
-                    <div className="description" style={{color: getContrastTextColor(collection.coverColor)}}><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
+                    <div className="description" style={{color: isDarkColor(collection.coverColor) ? 'white' : ''}}>
+                      <TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown>
+                    </div>
                   </div>
 
                   <div className="overflow-mask"></div>
