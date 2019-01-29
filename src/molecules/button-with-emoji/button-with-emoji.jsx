@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames/bind';
 import styles from './button-with-emoji.css'
 import Button, { TYPES, SIZES } from '../../atoms/button/button'
-console.log(process.env.MOLECULE_DIR)
 
 let cx = classNames.bind(styles);
 
@@ -13,7 +12,7 @@ let cx = classNames.bind(styles);
 const ButtonWithEmoji = ({ onClick, disabled, type, size, emoji, children }) => {
   return (
     <div className="button-with-emoji">
-      <Button onClick={onClick} type {size}>
+      <Button onClick={onClick} type={type} size={size}>
         {children}
         <span className="emoji" role="presentation" style={{ backgroundImage: emoji }}></span>
       </Button>
