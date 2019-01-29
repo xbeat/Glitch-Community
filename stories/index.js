@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Button from '../src/atoms/button/button';
-import ButtonWithEmoji from '../molecules/button-with-emoji/button-with-emoji';
+import { Button, TYPES } from '../src/atoms/button/button';
+import ButtonWithEmoji from '../src/molecules/button-with-emoji/button-with-emoji';
 
 storiesOf('Button', module)
   .add('regular', () => (
