@@ -20,6 +20,7 @@ import NameConflictWarning from '../includes/name-conflict.jsx';
 import AddTeamProject from '../includes/add-team-project.jsx';
 import DeleteTeam from '../includes/delete-team.jsx';
 import {AddTeamUser, TeamUsers, WhitelistedDomain, JoinTeam} from '../includes/team-users.jsx';
+import EntityPageFeaturedProject from '../entity-page-featured-project.jsx';
 import EntityPageProjects from '../entity-page-projects.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
@@ -178,6 +179,17 @@ class TeamPage extends React.Component {
           />
         </ErrorBoundary>
         
+        {this.props.team.featuredProject && 
+          <EntityPageFeaturedProject
+            featuredProject={this.props.team.featuredProject}
+            api={this.props.api}
+            isAuthorized={this.props.currentUserIsOnTeam}
+            unfeatureProject={this.props.unfeatureProject}
+            addProjectToCollection={this.props.addProjectToCollection}
+            currentUser={this.props.currentUser}
+          />
+        }
+        
         {/* Pinned Projects */}
         <EntityPageProjects
           projects={this.props.team.projects}
@@ -265,6 +277,7 @@ TeamPage.propTypes = {
     teamPins: PropTypes.array.isRequired,
     users: PropTypes.array.isRequired,
     whitelistedDomain: PropTypes.string,
+    featuredProjectId: PropTypes.number,
   }),
   addPin: PropTypes.func.isRequired,
   addProject: PropTypes.func.isRequired,
@@ -285,6 +298,8 @@ TeamPage.propTypes = {
   updateDescription: PropTypes.func.isRequired,
   uploadAvatar: PropTypes.func.isRequired,
   uploadCover: PropTypes.func.isRequired,
+  featureProject: PropTypes.func.isRequired,
+  unfeatureProject: PropTypes.func.isRequired,
 };
 
 const teamConflictsWithUser = (team, currentUser) => {

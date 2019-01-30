@@ -174,6 +174,14 @@ class TeamEditor extends React.Component {
       },
     });
   }
+  
+  async featureProject(id){
+    await this.updateFields({featured_project_id: id});
+  }
+  
+  async unfeatureProject(){
+    await this.updateFields({featured_project_id: null});
+  }
 
   currentUserIsTeamAdmin() {
     if (!this.props.currentUser) return false;
@@ -206,6 +214,8 @@ class TeamEditor extends React.Component {
       updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),
       joinTeamProject: projectId => this.joinTeamProject(projectId).catch(handleError),
       leaveTeamProject: projectId => this.leaveTeamProject(projectId).catch(handleError),
+      featureProject: (id) => this.featureProject(id).catch(handleError),
+      unfeatureProject: id => this.unfeatureProject(id).catch(handleError)
     };
     return this.props.children(this.state, funcs, this.currentUserIsOnTeam(), this.currentUserIsTeamAdmin());
   }
