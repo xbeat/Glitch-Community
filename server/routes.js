@@ -21,7 +21,6 @@ module.exports = function(external) {
   // Caching - js and CSS files have a hash in their name, so they last a long time
   ['/*.js', '/*.css'].forEach((path) => (
     app.use(path, (request, response, next) => {
-      const s = dayjs.convert(7, 'days', 'seconds');
       response.header('Cache-Control', `public, max-age=${s}`);
       return next();
     })
@@ -29,8 +28,9 @@ module.exports = function(external) {
   
   initWebpack(app);
 
-  app.use(express.static('public', { index: false }));
-  app.use(express.static('build', { index: false }));
+  const s = dayjs.convert(7, 'days', 'seconds');
+  app.use(express.static('public', { index: false, maxAge: s }));
+  app.use(express.static('build', { index: false, maxAge: s }));
 
   // Log all requests for diagnostics
   app.use(function(request, response, next) {
