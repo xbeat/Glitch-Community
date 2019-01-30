@@ -17,19 +17,12 @@ module.exports = function(external) {
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     return next();
   });
-
-  // Caching - js and CSS files have a hash in their name, so they last a long time
-  ['/*.js', '/*.css'].forEach((path) => (
-    app.use(path, (request, response, next) => {
-      const s = dayjs.convert(7, 'days', 'seconds');
-      response.header('Cache-Control', `public, max-age=${s}`);
-      return next();
-    })
-  ));
   
   initWebpack(app);
 
-  app.use(express.static('public', { index: false }));
+  const ms = dayjs.convert(7, 'days', 'miliseconds');
+  app.use(express.static('public', { index: false, maxAge: ms }));
+  app.use(express.static('build', { index: false, maxAge: ms }));
 
   // Log all requests for diagnostics
   app.use(function(request, response, next) {
@@ -47,7 +40,7 @@ module.exports = function(external) {
     let styles = [];
     
     try {
-      const stats = JSON.parse(await readFilePromise('public/stats.json'));
+      const stats = JSON.parse(await readFilePromise('build/stats.json'));
       stats.entrypoints.client.assets.forEach(file => {
         if (file.match(/\.js(\?|$)/)) {
           scripts.push(`${stats.publicPath}${file}`);
