@@ -9,5 +9,5 @@ export default {
   "appDomain": "pencil-distance",
   "blogUrl": "/gravity-busters/",
   "body": body,
-  "color": '#FF7D00',
+  "color": '#C9BFF4',
 };
