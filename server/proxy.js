@@ -39,12 +39,15 @@ module.exports = function(app) {
     const genericProxy = proxy(target, proxyConfig);
     
     const rewriteProxy = proxy(target, {
-      ...proxyConfig, userResDecorator: (res, data) => data.toString().replace(target, /quixotic-rocket\.glitch\.me/g),
+      userResDecorator: (res, data, req) => {
+        return data.toString().replace(target, req.hostname);
+      },
+      ...proxyConfig,
     });
     
     // Do the actual proxy
     app.use(routeWithLeadingSlash, (req, ...args) => {
-      if (req.path === '/sitemap.xml') {
+      if (/^\\sitemap.*\.xml$/.test(req.path)) {
         return rewriteProxy(req, ...args);
       }
       return genericProxy(req, ...args);
