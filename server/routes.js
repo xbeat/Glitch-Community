@@ -20,9 +20,9 @@ module.exports = function(external) {
   
   initWebpack(app);
 
-  const s = dayjs.convert(7, 'days', 'seconds');
-  app.use(express.static('public', { index: false, maxAge: s }));
-  app.use(express.static('build', { index: false, maxAge: s }));
+  const ms = dayjs.convert(7, 'days', 'miliseconds');
+  app.use(express.static('public', { index: false, maxAge: ms }));
+  app.use(express.static('build', { index: false, maxAge: ms }));
 
   // Log all requests for diagnostics
   app.use(function(request, response, next) {
