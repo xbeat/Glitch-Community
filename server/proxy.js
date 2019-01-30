@@ -26,8 +26,7 @@ module.exports = function(app) {
         return next();
     });
     
-    // Do the actual proxy
-    app.use(routeWithLeadingSlash, proxy(target, {
+    const proxyConfig = {
       preserveHostHdr: false, // glitch routes based on this, so we have to reset it
       https: true,
       proxyReqPathResolver: (req) => {
@@ -35,7 +34,19 @@ module.exports = function(app) {
         console.log("Proxied:", urlJoin(routeWithLeadingSlash, req.path));
         return path;
       }
-    }));
+    };
+    
+    const genericProxy = proxy(proxyConfig);
+    const rewwritingProxy = proxy({
+      ...proxyConfig,
+      userResDecorator: (proxyRes, proxyResData) => {
+      },
+    });
+    
+    // Do the actual proxy
+    app.use(routeWithLeadingSlash, (req, ...args) => {
+      console.log(req.path);
+    });
     
     routes.push(routeWithLeadingSlash);
   }
