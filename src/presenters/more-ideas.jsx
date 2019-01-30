@@ -54,4 +54,4 @@ export const MoreIdeasCategories = () => (
   </section>
 );
 
-export default MoreIdeasCollections;
+export default MoreIdeasCategories;
