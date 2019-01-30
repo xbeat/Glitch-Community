@@ -1,4 +1,4 @@
-build/*
+public/*
 styles/style.css
 styles/style.css.map
 *.gz
