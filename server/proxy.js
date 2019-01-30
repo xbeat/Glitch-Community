@@ -42,6 +42,7 @@ module.exports = function(app) {
     const sitemapProxy = proxy(target, {
       userResDecorator: (res, data, req) => {
         // do gross stuff to rewrite urls
+        // this is dangerous to do on a full page, but the sitemap is simple
         const regexp = new RegExp(escapeRegExp(target), 'g');
         return data.toString().replace(regexp, req.hostname);
       },
