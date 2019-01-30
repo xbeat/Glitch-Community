@@ -24,6 +24,11 @@ const NewProjectPop = ({projects}) => (
         )) : <Loader/>}
       </div>
     </section>
+    <section className="pop-over-actions last-section pop-over-info">
+      <button className="button-small button-tertiary button-on-secondary-background" onClick={importGitRepo}>
+        <span>Clone from Git Repo</span>
+      </button>
+    </section>
   </div>
 );
 NewProjectPop.propTypes = {
@@ -31,6 +36,14 @@ NewProjectPop.propTypes = {
     id: PropTypes.string.isRequired,
     domain: PropTypes.string.isRequired,
   })).isRequired,
+};
+
+const importGitRepo = () => {
+  const repoUrl = window.prompt("Paste the full URL of your repository", "https://github.com/orgname/reponame.git");
+  if (!repoUrl) {
+    return;
+  }
+  window.location.href = `/edit/#!/import/git?url=${repoUrl}`;
 };
 
 class NewProjectPopButton extends React.Component {
