@@ -17,14 +17,6 @@ module.exports = function(external) {
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     return next();
   });
-
-  // Caching - js and CSS files have a hash in their name, so they last a long time
-  ['/*.js', '/*.css'].forEach((path) => (
-    app.use(path, (request, response, next) => {
-      response.header('Cache-Control', `public, max-age=${s}`);
-      return next();
-    })
-  ));
   
   initWebpack(app);
 
