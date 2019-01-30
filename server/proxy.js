@@ -26,8 +26,7 @@ module.exports = function(app) {
         return next();
     });
     
-    // Do the actual proxy
-    app.use(routeWithLeadingSlash, proxy(target, {
+    const proxyConfig = {
       preserveHostHdr: false, // glitch routes based on this, so we have to reset it
       https: true,
       proxyReqPathResolver: (req) => {
@@ -35,7 +34,21 @@ module.exports = function(app) {
         console.log("Proxied:", urlJoin(routeWithLeadingSlash, req.path));
         return path;
       }
-    }));
+    };
+    
+    const genericProxy = proxy(target, proxyConfig);
+    
+    const rewriteProxy = proxy(target, {
+      ...proxyConfig, userResDecorator: (res, data) => data.toString().replace(target, /quixotic-rocket\.glitch\.me/g),
+    });
+    
+    // Do the actual proxy
+    app.use(routeWithLeadingSlash, (req, ...args) => {
+      if (req.path === '/sitemap.xml') {
+        return rewriteProxy(req, ...args);
+      }
+      return genericProxy(req, ...args);
+    });
     
     routes.push(routeWithLeadingSlash);
   }
