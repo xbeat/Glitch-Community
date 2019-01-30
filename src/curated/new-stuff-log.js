@@ -6,6 +6,15 @@
 export default [
   {
     id: 1,
+    title: "Featured projects now live on your profile",
+    body: `Have a project you're particularly proud of?  Feature it to embed the app directly at the top of your profile.
+
+You can feature one project at a time -- and change or remove your featured project as often as you'd like.
+![](https://cdn.glitch.com/1b4c205a-e6b6-4ad9-ae8a-1e511e611105%2Ffeature.png?1548796979652)
+`,
+  },  
+  {
+    id: 2,
     title: "Use your email to get Glitchy",
     body: `
 Don't have Facebook or GitHub, but still want to use Glitch? Want to code at the library without remembering all your logins?
@@ -15,7 +24,7 @@ Now you can sign into Glitch with just your email. Choose Sign in with Email to 
 `,
   },
   {
-    id: 2,
+    id: 3,
     title: "Get organized with Collections",
     body: `
 Add any project to a collection and show off your favorite things, group all your related projects, collect precious memories, etc. 
