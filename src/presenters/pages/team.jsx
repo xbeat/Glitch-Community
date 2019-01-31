@@ -197,7 +197,6 @@ class TeamPage extends React.Component {
               addProjectToCollection={this.props.addProjectToCollection}
               currentUser={this.props.currentUser}
             />
-            <hr/>
           </>
         }
         

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
+import Notifications from '../notifications.jsx';  
 
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
@@ -88,10 +89,12 @@ export class AddTeamProjectPop extends React.Component {
     return await this.props.api.post(inviteUserPath);
   }
 
-  onClick(event, project) {
+  onClick(event, project, createNotification) {
     event.preventDefault();
     this.props.togglePopover();
     this.props.addProject(project);
+    
+    createNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>, "notifySuccess");    
   }
 
   sourceIsTemplates() {
@@ -166,14 +169,18 @@ export class AddTeamProjectPop extends React.Component {
         <section className="pop-over-actions results-list" data-source='templates'>
           <ul className="results">
             { filteredProjects.map((project) => (
-              <li key={project.id}>
-                <ProjectResultItem
-                  onClick={event => this.onClick(event, project)}
-                  {...project}
-                  title={project.domain}
-                  isPrivate={project.private}
-                />
-              </li>
+              <Notifications key={project.id}>
+                {({createNotification}) => (
+                  <li key={project.id}>
+                    <ProjectResultItem
+                      onClick={event => this.onClick(event, project)}
+                      {...project}
+                      title={project.domain}
+                      isPrivate={project.private}
+                    />
+                  </li>
+                )}
+              </Notifications>
             ))}
           </ul>
           { (this.state.filteredProjects.length === 0 && this.filterInputIsBlank) &&
