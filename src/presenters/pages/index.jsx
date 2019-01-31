@@ -74,7 +74,7 @@ class WhatIsGlitch extends React.Component {
           </figure>
           
           <div className="callouts">
-            <Callout classes="discover" imgUrl={discover} title="Explore Apps" description="Discover over a million free apps built by people like you"/>
+            <Callout classes="discover" imgUrl={discover} title="Explore Apps Hello" description="Discover over a million free apps built by people like you"/>
             <Callout classes="remix" imgUrl={remix} title="Remix Anything" description="Edit any project and have your own app running instantly"/>
             <Callout classes="collaborate" imgUrl={collaborate} title="Build with Your Team" description="Invite everyone to create together"/>          </div>
               
