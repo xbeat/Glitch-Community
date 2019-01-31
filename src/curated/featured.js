@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Practice Change Ringing',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fbells.jpg?1548682192588",
-    link: 'https://glitch.com/~changeringing'
+    title: 'Recycle Your Batteries Locally',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fbatteries.jpg?1548682194002",
+    link: 'https://glitch.com/~lithium-battery-recycling'
   },{
-    title: 'Export Twitter Followers to OPML',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fopml.jpg?1548682192922",
-    link: 'https://glitch.com/~opml'
+    title: 'Langton\'s Ant',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fant.jpg?1548682195476",
+    link: 'https://p5js-langtons-ant.glitch.me/'
   },{
-    title: 'DIY ASCII Art',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fasciipaint.jpg?1548682193863",
-    link: 'https://glitch.com/~asc-paint'
+    title: 'Your Own Virtual Notepad',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fnotebook.jpg?1548682194594",
+    link: 'https://glitch.com/~notepad-design'
   } 
 ];
