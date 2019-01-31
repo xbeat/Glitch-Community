@@ -118,7 +118,7 @@ class TeamPage extends React.Component {
           <a href="/teams/" target="_blank" className="beta">
             <img src="https://cdn.glitch.com/0c3ba0da-dac8-4904-bb5e-e1c7acc378a2%2Fbeta-flag.svg?1541448893958" alt=""></img>
             <div>
-              <h4>Teams are in beta TEST</h4>
+              <h4>Teams are in beta</h4>
               <p>Learn More</p>
             </div>
           </a>
@@ -176,9 +176,9 @@ class TeamPage extends React.Component {
               update={this.props.updateDescription}
               placeholder="Tell us about your team"
             />
-          </ProfileContainer>
+          </ProfileContainer> 
         </section>
-        
+
         <ErrorBoundary>
           <AddTeamProject
             {...this.props}
