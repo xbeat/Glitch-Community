@@ -13132,7 +13132,7 @@ function (_React$Component) {
         unfeatureProject: this.props.unfeatureProject,
         addProjectToCollection: this.props.addProjectToCollection,
         currentUser: this.props.currentUser
-      })), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_entity_page_projects_jsx__WEBPACK_IMPORTED_MODULE_30__["default"], {
+      }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("hr", null)), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_entity_page_projects_jsx__WEBPACK_IMPORTED_MODULE_30__["default"], {
         projects: pinnedProjects,
         isAuthorized: this.props.currentUserIsOnTeam,
         removePin: this.props.removePin,
@@ -14531,7 +14531,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _current_user_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../current-user.jsx */ "./src/presenters/current-user.jsx");
 /* harmony import */ var _includes_project_result_item_jsx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../includes/project-result-item.jsx */ "./src/presenters/includes/project-result-item.jsx");
-/* harmony import */ var _notifications_jsx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../notifications.jsx */ "./src/presenters/notifications.jsx");
 
 
 
@@ -14561,7 +14560,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 
 
 
@@ -14754,14 +14752,10 @@ function (_React$Component) {
     }()
   }, {
     key: "onClick",
-    value: function onClick(event, project, createNotification) {
+    value: function onClick(event, project) {
       event.preventDefault();
       this.props.togglePopover();
       this.props.addProject(project);
-      console.log('create notification');
-      createNotification(react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("p", null, "Added ", react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("b", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", {
-        className: "project-name"
-      }, project.domain))), "notifySuccess");
     }
   }, {
     key: "sourceIsTemplates",
@@ -14852,21 +14846,16 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("ul", {
         className: "results"
       }, filteredProjects.map(function (project) {
-        return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_notifications_jsx__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("li", {
           key: project.id
-        }, function (_ref4) {
-          var createNotification = _ref4.createNotification;
-          return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("li", {
-            key: project.id
-          }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_includes_project_result_item_jsx__WEBPACK_IMPORTED_MODULE_10__["default"], _extends({
-            onClick: function onClick(event) {
-              return _this3.onClick(event, project, createNotification);
-            }
-          }, project, {
-            title: project.domain,
-            isPrivate: project.private
-          })));
-        });
+        }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_includes_project_result_item_jsx__WEBPACK_IMPORTED_MODULE_10__["default"], _extends({
+          onClick: function onClick(event) {
+            return _this3.onClick(event, project);
+          }
+        }, project, {
+          title: project.domain,
+          isPrivate: project.private
+        })));
       })), this.state.filteredProjects.length === 0 && this.filterInputIsBlank && react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("p", {
         className: "action-description no-projects-description"
       }, "Create or Join projects to add them to the team")));
@@ -23344,4 +23333,4 @@ try {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=client.js.map?5e6faacf14241f650820
+//# sourceMappingURL=client.js.map?a75daa7007451bccf26b
