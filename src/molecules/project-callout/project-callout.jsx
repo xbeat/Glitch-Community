@@ -11,8 +11,10 @@ let cx = classNames.bind(styles);
  */
 const ProjectCallout = ({ project }) => {
   return (
-    <div className="project-callout">
-      <Button onClick={onClick} type={type} size={size}>
+    <ProjectLink project={project} className="view-result-link button button-small button-link" target="_blank" >
+      
+    <a href={onClick} className="project-callout" rel="noopener noreferrer">
+      <Button type={type} size={size}>
         <a class="button-area" href=""><div class="project " data-track="project" data-track-label="famous-chipmunk-with-really-long-project-name"><div class="project-container"><img class="avatar" src="https://cdn.glitch.com/project-avatar/8ebe96ce-cfb0-49ea-9a7a-17b8d46764ce.png" alt="famous-chipmunk-with-really-long-project-name avatar"><div class="button"><span class="project-badge private-project-badge" aria-label="private"></span><div class="project-name">famous-chipmunk-with-really-long-project-name</div></div><div class="description" style="color: black;"><span class="markdown-content"><p>Your very own basic web page, ready for you to customize.</p>
 </span></div><div class="overflow-mask"></div></div></div></a>
         {children}
