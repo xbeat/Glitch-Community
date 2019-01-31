@@ -10,11 +10,13 @@ let cx = classNames.bind(styles);
 /**
  * Button Component
  */
-const ProjectCallout = ( domain ) => {
+const ProjectCallout = ({ domain }) => {
   return (
     <a href={getProjectLink({ domain })} className="project-callout" rel="noopener noreferrer">
-      <Button>
-        "hello"
+      <div
+  className=
+        <Button>
+        { domain }
       </Button>
     </a>
   )

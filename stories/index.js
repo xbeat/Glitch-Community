@@ -31,7 +31,7 @@ storiesOf('Button With Emoji', module)
 
 storiesOf("Project Callout", module)
 .add('project callout', () => (
-  <ProjectCallout domain={"community" }/>
+  <ProjectCallout domain="community"/>
 ))
 
 // <button
