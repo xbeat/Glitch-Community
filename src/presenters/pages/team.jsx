@@ -192,14 +192,6 @@ class TeamPage extends React.Component {
             <hr/>
           </>
         }
-
-        <ErrorBoundary>
-          <AddTeamProject
-            {...this.props}
-            teamProjects={this.props.team.projects}
-            api={this.props.api}
-          />
-        </ErrorBoundary>
         
         {/* Pinned Projects */}
         <EntityPageProjects
