@@ -28,6 +28,11 @@ storiesOf('Button With Emoji', module)
     <ButtonWithEmoji emoji="https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg" type="cta">Show</ButtonWithEmoji>
   ))
 
+storiesOf("Project Callout", module)
+.add('project callout', () => (
+  
+))
+
 // <button
 //               className={props.buttonClass}
 //               data-track={props.dataTrack}
