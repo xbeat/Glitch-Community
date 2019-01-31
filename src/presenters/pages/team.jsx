@@ -84,7 +84,7 @@ class TeamPage extends React.Component {
     if (this.props.currentUserIsOnTeam) {
       projectOptions["removeProjectFromTeam"] = this.props.removeProject;
       projectOptions["joinTeamProject"] = this.props.joinTeamProject;
-      projectOptions["featureProject"
+      projectOptions["featureProject"] = this.props.featureProject;
     }
 
     return projectOptions;
@@ -105,6 +105,8 @@ class TeamPage extends React.Component {
   }
 
   render() {
+    const featuredProject = this.props.team.featuredProjectId ? this.props.team.projects.find(({id}) => id === this.props.team.featuredProjectId) : null;
+    
     return (
       <main className="profile-page team-page">
         <section>
@@ -180,9 +182,9 @@ class TeamPage extends React.Component {
           />
         </ErrorBoundary>
         
-        {this.props.team.featuredProject && 
+        {featuredProject && 
           <EntityPageFeaturedProject
-            featuredProject={this.props.team.featuredProject}
+            featuredProject={featuredProject}
             api={this.props.api}
             isAuthorized={this.props.currentUserIsOnTeam}
             unfeatureProject={this.props.unfeatureProject}
@@ -278,7 +280,7 @@ TeamPage.propTypes = {
     teamPins: PropTypes.array.isRequired,
     users: PropTypes.array.isRequired,
     whitelistedDomain: PropTypes.string,
-    featuredProjectId: PropTypes.number,
+    featuredProjectId: PropTypes.string,
   }),
   addPin: PropTypes.func.isRequired,
   addProject: PropTypes.func.isRequired,

@@ -170,6 +170,7 @@ UserPage.propTypes = {
     avatarUrl: PropTypes.string,
     color: PropTypes.string.isRequired,
     coverColor: PropTypes.string,
+    featuredProjectId: PropTypes.string,
     _cacheCover: PropTypes.number.isRequired,
     _deletedProjects: PropTypes.array.isRequired,
   }).isRequired,
