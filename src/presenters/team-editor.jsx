@@ -177,7 +177,6 @@ class TeamEditor extends React.Component {
   
   async addProjectToCollection(project, collection) {
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
-    this.loadCollections();
   }
   
   async featureProject(id){

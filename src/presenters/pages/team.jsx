@@ -105,7 +105,11 @@ class TeamPage extends React.Component {
   }
 
   render() {
+    
     const featuredProject = this.props.team.featuredProjectId ? this.props.team.projects.find(({id}) => id === this.props.team.featuredProjectId) : null;
+    const pinnedSet = new Set(this.props.team.pins.map(({projectId}) => projectId));
+    const pinnedProjects = this.props.team.projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != this.props.team.featuredProjectId); 
+    const recentProjects = this.props.team.projects.filter(({id}) => !pinnedSet.has(id)).filter( ({id}) => id != this.props.team.featuredProjectId);
     
     return (
       <main className="profile-page team-page">
@@ -175,14 +179,17 @@ class TeamPage extends React.Component {
         </section>
         
         {featuredProject && 
-          <EntityPageFeaturedProject
-            featuredProject={featuredProject}
-            api={this.props.api}
-            isAuthorized={this.props.currentUserIsOnTeam}
-            unfeatureProject={this.props.unfeatureProject}
-            addProjectToCollection={this.props.addProjectToCollection}
-            currentUser={this.props.currentUser}
-          />
+          <>
+            <EntityPageFeaturedProject
+              featuredProject={featuredProject}
+              api={this.props.api}
+              isAuthorized={this.props.currentUserIsOnTeam}
+              unfeatureProject={this.props.unfeatureProject}
+              addProjectToCollection={this.props.addProjectToCollection}
+              currentUser={this.props.currentUser}
+            />
+            <hr/>
+          </>
         }
 
         <ErrorBoundary>
@@ -195,8 +202,7 @@ class TeamPage extends React.Component {
         
         {/* Pinned Projects */}
         <EntityPageProjects
-          projects={this.props.team.projects}
-          pins={this.props.team.teamPins}
+          projects={pinnedProjects}
           isAuthorized={this.props.currentUserIsOnTeam}
           removePin={this.props.removePin}
           projectOptions={this.getProjectOptions()}
@@ -205,8 +211,7 @@ class TeamPage extends React.Component {
         
         {/* Recent Projects */}
         <EntityPageProjects
-          projects={this.props.team.projects}
-          pins={this.props.team.teamPins}
+          projects={recentProjects}
           isAuthorized={this.props.currentUserIsOnTeam}
           addPin={this.props.addPin}
           projectOptions={this.getProjectOptions()}
