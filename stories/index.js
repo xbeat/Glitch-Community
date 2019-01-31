@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Button, { TYPES } from '../src/atoms/button/button';
 import ButtonWithEmoji from '../src/molecules/button-with-emoji/button-with-emoji';
+import ProjectCallout from '../src/molecules/project-callout/project-callout.jsx';
 
 storiesOf('Button', module)
   .add('regular', () => (
@@ -30,7 +31,7 @@ storiesOf('Button With Emoji', module)
 
 storiesOf("Project Callout", module)
 .add('project callout', () => (
-  
+  <ProjectCallout domain={"community" }/>
 ))
 
 // <button
