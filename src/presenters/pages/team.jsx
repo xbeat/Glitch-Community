@@ -179,6 +179,14 @@ class TeamPage extends React.Component {
           </ProfileContainer>
         </section>
         
+        <ErrorBoundary>
+          <AddTeamProject
+            {...this.props}
+            teamProjects={this.props.team.projects}
+            api={this.props.api}
+          />
+        </ErrorBoundary>
+        
         {featuredProject && 
           <>
             <EntityPageFeaturedProject
