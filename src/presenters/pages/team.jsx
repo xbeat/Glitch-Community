@@ -111,7 +111,6 @@ class TeamPage extends React.Component {
     const recentProjects = this.props.team.projects.filter(({id}) => !pinnedSet.has(id)).filter( ({id}) => id != this.props.team.featuredProjectId);
     const featuredProject = this.props.team.projects.find(({id}) => id === this.props.team.featuredProjectId);
     
-    
     return (
       <main className="profile-page team-page">
         <section>

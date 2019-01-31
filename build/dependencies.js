@@ -26556,29 +26556,25 @@ module.exports = defineProperty;
   !*** /rbd/pnpm-volume/99eddafc-6494-4c66-9aa7-8c0b90372419/node_modules/.registry.npmjs.org/lodash/4.17.11/node_modules/lodash/_flatRest.js ***!
   \**********************************************************************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+var flatten = __webpack_require__(/*! ./flatten */ "../rbd/pnpm-volume/99eddafc-6494-4c66-9aa7-8c0b90372419/node_modules/.registry.npmjs.org/lodash/4.17.11/node_modules/lodash/flatten.js"),
+    overRest = __webpack_require__(/*! ./_overRest */ "../rbd/pnpm-volume/99eddafc-6494-4c66-9aa7-8c0b90372419/node_modules/.registry.npmjs.org/lodash/4.17.11/node_modules/lodash/_overRest.js"),
+    setToString = __webpack_require__(/*! ./_setToString */ "../rbd/pnpm-volume/99eddafc-6494-4c66-9aa7-8c0b90372419/node_modules/.registry.npmjs.org/lodash/4.17.11/node_modules/lodash/_setToString.js");
 /**
- * This method returns the first argument it receives.
+ * A specialized version of `baseRest` which flattens the rest array.
  *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Util
- * @param {*} value Any value.
- * @returns {*} Returns `value`.
- * @example
- *
- * var object = { 'a': 1 };
- *
- * console.log(_.identity(object) === object);
- * // => true
+ * @private
+ * @param {Function} func The function to apply a rest parameter to.
+ * @returns {Function} Returns the new function.
  */
-function identity(value) {
-  return value;
+
+
+function flatRest(func) {
+  return setToString(overRest(func, undefined, flatten), func + '');
 }
 
-module.exports = identity;
+module.exports = flatRest;
 
 /***/ }),
 
@@ -27987,6 +27983,39 @@ function eq(value, other) {
 }
 
 module.exports = eq;
+
+/***/ }),
+
+/***/ "../rbd/pnpm-volume/99eddafc-6494-4c66-9aa7-8c0b90372419/node_modules/.registry.npmjs.org/lodash/4.17.11/node_modules/lodash/flatten.js":
+/*!********************************************************************************************************************************************!*\
+  !*** /rbd/pnpm-volume/99eddafc-6494-4c66-9aa7-8c0b90372419/node_modules/.registry.npmjs.org/lodash/4.17.11/node_modules/lodash/flatten.js ***!
+  \********************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseFlatten = __webpack_require__(/*! ./_baseFlatten */ "../rbd/pnpm-volume/99eddafc-6494-4c66-9aa7-8c0b90372419/node_modules/.registry.npmjs.org/lodash/4.17.11/node_modules/lodash/_baseFlatten.js");
+/**
+ * Flattens `array` a single level deep.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Array
+ * @param {Array} array The array to flatten.
+ * @returns {Array} Returns the new flattened array.
+ * @example
+ *
+ * _.flatten([1, [2, [3, [4]], 5]]);
+ * // => [1, 2, [3, [4]], 5]
+ */
+
+
+function flatten(array) {
+  var length = array == null ? 0 : array.length;
+  return length ? baseFlatten(array, 1) : [];
+}
+
+module.exports = flatten;
 
 /***/ }),
 
@@ -43269,4 +43298,4 @@ module.exports = function (module) {
 /***/ })
 
 }]);
-//# sourceMappingURL=dependencies.js.map?73bb134ed8a5e6ddf65b
+//# sourceMappingURL=dependencies.js.map?5adeca868220591eba95
