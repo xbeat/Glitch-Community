@@ -95,7 +95,8 @@ export class AddTeamProjectPop extends React.Component {
     this.props.togglePopover();
     this.props.addProject(project);
     
-    createNotification(AddProjectMessage(project.domain), "notifySuccess");    
+    console.log(Addproject.domain);
+    createNotification("hi", "notifySuccess");    
   }
 
   sourceIsTemplates() {

@@ -8,8 +8,10 @@ const Notification = ({children, className, remove}) => (
   </aside>
 );
 
-export function AddProjectMessage(domain){
-  return <p>Added <b><span className="project-name">domain</span></b></p>
+export const AddProjectMessage = ({domain}) => {
+  <p>
+    Added <b><span className="project-name">domain</span></b>
+  </p>
 };
 
 export class Notifications extends React.Component {
