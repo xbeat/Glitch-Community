@@ -187,7 +187,6 @@ class TeamPage extends React.Component {
         </ErrorBoundary>
         
         {featuredProject && 
-          <>
             <EntityPageFeaturedProject
               featuredProject={featuredProject}
               api={this.props.api}
@@ -196,7 +195,6 @@ class TeamPage extends React.Component {
               addProjectToCollection={this.props.addProjectToCollection}
               currentUser={this.props.currentUser}
             />
-          </>
         }
         
         {/* Pinned Projects */}
