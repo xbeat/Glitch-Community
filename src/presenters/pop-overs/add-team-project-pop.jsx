@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {CurrentUserConsumer} from '../current-user.jsx';
 import ProjectResultItem from '../includes/project-result-item.jsx';
-import Notifications from '../notifications.jsx';  
+import {Notifications, AddProjectMessage} from '../notifications.jsx';  
 
 export class AddTeamProjectPop extends React.Component {
   constructor(props) {
@@ -94,7 +94,9 @@ export class AddTeamProjectPop extends React.Component {
     this.props.togglePopover();
     this.props.addProject(project);
     
-    createNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>, "notifySuccess");    
+    let notificationMessage = AddProjectMessage(project.domain);
+    
+    createNotification(notificationMessage, "notifySuccess");    
   }
 
   sourceIsTemplates() {
