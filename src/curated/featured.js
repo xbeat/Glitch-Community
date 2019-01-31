@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Wave Function Maps',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch04_zealous-mammal.png?1548074746239",
-    link: 'https://glitch.com/~zealous-mammal'
+    title: 'Recycle Your Batteries Locally',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fbatteries.jpg?1548682194002",
+    link: 'https://glitch.com/~lithium-battery-recycling'
   },{
-    title: 'What Am I Drawing?',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch06_technology-pictionary.png?1548074745528",
-    link: 'https://technology-pictionary.glitch.me'
+    title: 'Langton\'s Ant',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fant.jpg?1548682195476",
+    link: 'https://p5js-langtons-ant.glitch.me/'
   },{
-    title: 'Make Your Own RSS Reader',
-    img: "https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fglitch05_lmo-feeder.png?1548074746382",
-    link: 'https://glitch.com/~lmo-feeder'
+    title: 'Your Own Virtual Notepad',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fnotebook.jpg?1548682194594",
+    link: 'https://glitch.com/~notepad-design'
   } 
 ];
