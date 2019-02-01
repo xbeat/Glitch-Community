@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './button.css';
 
@@ -20,11 +20,11 @@ const Button = ({ onClick, disabled, type, size, hover, children, dataTrack }) =
   });
   
   return (
-    <button onClick={onClick} className={className} data-track={dataTrack}>
+    <button onClick={onClick} className={className} data-track={dataTrack} {disabled && "disabled"}>
       {children}
     </button>
   );
-}
+};
 
 Button.propTypes = {
   /** callback when button clicked */
@@ -39,4 +39,4 @@ Button.propTypes = {
   dataTrack: PropTypes.string,
 };
 
-export default Button
+export default Button;

@@ -81,7 +81,7 @@ module.exports = {
         query: { compact: false }
       },
       {
-        test: /\.styl$/,
+        test: /\.(styl|css)$/,
         include: STYLES,
         use: [
           MiniCssExtractPlugin.loader,
