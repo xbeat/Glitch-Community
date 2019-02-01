@@ -27,7 +27,7 @@ button.cta {
   margin-bottom: 2px;
 }
 
-button.cta:hover {
+button.cta:hover, button.cta.hover {
     background-color: #83ffcd;
     -webkit-box-shadow: 2px 2px 0 #222;
     box-shadow: 2px 2px 0 #222;

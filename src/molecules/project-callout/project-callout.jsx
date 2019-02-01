@@ -18,14 +18,16 @@ class ProjectCallout extends React.Component {
   }
   
   handleHover() {
-    this.setState({ hover: true });
+    if (this.state.hover) { 
+      this.setState({ hover: false })
+    } else this.setState({ hover: true })
   }
   
   render() {
     return (
-    <a href={ getProjectLink(this.props.domain) } rel="noopener noreferrer">
-      <div className="project-callout" onMouseOver={ this.handleHover }>
-        <Button type="cta" className={this.state.hover && "hover"}>
+    <a href={ getProjectLink({ this.props.domain }) } rel="noopener noreferrer">
+      <div className="project-callout" onMouseOver={ this.handleHover } onMouseOut={ this.handleHover }>
+        <Button type="cta" hover={ this.state.hover }>
           { this.props.domain }
         </Button>
       </div>

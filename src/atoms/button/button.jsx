@@ -11,11 +11,12 @@ export const SIZES = ["small"]
 /**
  * Button Component
  */
-const Button = ({ onClick, disabled, type, size, children }) => {
+const Button = ({ onClick, disabled, type, size, hover, children }) => {
   let className = cx({
     cta: type === "cta",
     small: size === "small",
     tertiary: type === "tertiary",
+    hover: hover,
   });
   
   return (
