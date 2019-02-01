@@ -14,7 +14,7 @@ button {
   /*vertical-align: middle;*/
 }
 
-button:hover {
+button:hover, button.hover {
     background-color: #f5f5f5;
     text-decoration: none;
 }

@@ -12,12 +12,12 @@ let cx = classNames.bind(styles);
  */
 const ProjectCallout = ({ domain }) => {
   return (
-    <a href={getProjectLink({ domain })} className="project-callout" rel="noopener noreferrer">
-      <div
-  className=
-        <Button>
-        { domain }
-      </Button>
+    <a href={getProjectLink({ domain })} rel="noopener noreferrer">
+      <div className="project-callout" onmouseover="">
+        <Button type="cta">
+          { domain }
+        </Button>
+      </div>
     </a>
   )
 }
