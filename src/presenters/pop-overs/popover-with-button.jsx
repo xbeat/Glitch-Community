@@ -12,7 +12,9 @@ const PopoverWithButton = props => {
         }
         return (
           <div className={"button-wrap " + props.containerClass}>
-            
+            <Button	data-track={props.dataTrack}	onClick={togglePopover}	>
+              {props.buttonText}
+            </Button>
             {visible && childrenToShow}
           </div>
         );
