@@ -168,9 +168,9 @@ export class AddTeamProjectPop extends React.Component {
 
         <section className="pop-over-actions results-list" data-source='templates'>
           <ul className="results">
-            { filteredProjects.map((project) => (
-              <Notifications key={project.id}>
-                {({createNotification}) => (
+            <Notifications>
+              {({createNotification}) => (
+                filteredProjects.map((project) => (
                   <li key={project.id}>
                     <ProjectResultItem
                       onClick={event => this.onClick(event, project, createNotification)}
@@ -179,9 +179,9 @@ export class AddTeamProjectPop extends React.Component {
                       isPrivate={project.private}
                     />
                   </li>
-                )}
-              </Notifications>
-            ))}
+                )
+                ))}
+            </Notifications>
           </ul>
           { (this.state.filteredProjects.length === 0 && this.filterInputIsBlank) &&
              <p className="action-description no-projects-description">Create or Join projects to add them to the team</p>
