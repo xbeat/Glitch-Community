@@ -10,16 +10,28 @@ let cx = classNames.bind(styles);
 /**
  * ProjectCallout Component
  */
-const ProjectCallout = ({ domain }) => {
-  return (
-    <a href={getProjectLink({ domain })} rel="noopener noreferrer">
-      <div className="project-callout">
-        <Button type="cta">
-          { domain }
+class ProjectCallout extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { hover: false }
+    this.handleHover() = this.handleHover.bind(this)
+  }
+  
+  handleHover() {
+    console.log("hovered")
+  }
+  
+  render() {
+    return (
+    <a href={ getProjectLink(this.props.domain) } rel="noopener noreferrer">
+      <div className="project-callout" onmouseover={ this.handleHover }>
+        <Button type="cta" className={this.state.hover && "hover"}>
+          { this.props.domain }
         </Button>
       </div>
     </a>
-  )
+    )
+  }
 }
 
 ProjectCallout.propTypes = {
