@@ -6,10 +6,6 @@ const Notification = ({children, className, remove}) => (
   <aside className={`notification ${className}`} onAnimationEnd={remove}>
     {children}
   </aside>
-);
-
-export function addProjectMessage(domain){
-  return(<p>Added <b><span className="project-name">domain</span></b></p>);
 };
 
 export class Notifications extends React.Component {
@@ -77,7 +73,8 @@ export class Notifications extends React.Component {
                 {content}
               </Notification>
             ))}
-          </div>
+          </
+div>
         )}
       </>
     );

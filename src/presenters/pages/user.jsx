@@ -76,11 +76,10 @@ const UserPage = ({
   addProjectToCollection,
 }) =>
 { 
-  const pinnedSet = new Set(user.pins.map(({projectId}) => projectId));
-  const pinnedProjects = user.projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != featuredProjectId); 
-  const recentProjects = user.projects.filter(({id}) => !pinnedSet.has(id)).filter( ({id}) => id != featuredProjectId);
+  const pinnedAndFeaturedSet = new Set(user.pins.map(({projectId}) => projectId)).add(featuredProjectId);
+  const pinnedProjects = user.projects.filter( ({id}) => pinnedAndFeaturedSet.has(id));
+  const recentProjects = user.projects.filter(({id}) => !pinnedAndFeaturedSet.has(id));
   const featuredProject = user.projects.find(({id}) => id === featuredProjectId);
-  
   
   return(
     <main className="profile-page user-page">   
