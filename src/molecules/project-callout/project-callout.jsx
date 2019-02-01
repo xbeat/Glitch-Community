@@ -8,12 +8,12 @@ import { getLink as getProjectLink } from '../../models/project';
 let cx = classNames.bind(styles);
 
 /**
- * Button Component
+ * ProjectCallout Component
  */
 const ProjectCallout = ({ domain }) => {
   return (
     <a href={getProjectLink({ domain })} rel="noopener noreferrer">
-      <div className="project-callout" onmouseover="">
+      <div className="project-callout">
         <Button type="cta">
           { domain }
         </Button>
