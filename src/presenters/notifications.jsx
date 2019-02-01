@@ -6,7 +6,7 @@ const Notification = ({children, className, remove}) => (
   <aside className={`notification ${className}`} onAnimationEnd={remove}>
     {children}
   </aside>
-);
+};
 
 export class Notifications extends React.Component {
   constructor(props) {
@@ -73,7 +73,8 @@ export class Notifications extends React.Component {
                 {content}
               </Notification>
             ))}
-          </div>
+          </
+div>
         )}
       </>
     );
