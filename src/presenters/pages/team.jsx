@@ -105,10 +105,10 @@ class TeamPage extends React.Component {
   }
 
   render() {
-    
+    const {featuredProjectId} = 
     const pinnedSet = new Set(this.props.team.teamPins.map(({projectId}) => projectId));
-    const pinnedProjects = this.props.team.projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != this.props.team.featuredProjectId); 
-    const recentProjects = this.props.team.projects.filter(({id}) => !pinnedSet.has(id)).filter( ({id}) => id != this.props.team.featuredProjectId);
+    const pinnedProjects = this.props.team.projects.filter( ({id}) => pinnedSet.has(id) && this.props.team.featuredProjectId !== id)
+    const recentProjects = this.props.team.projects.filter(({id}) => !pinnedSet.has(id) && this.props.team.featuredProjectId !== id)
     const featuredProject = this.props.team.projects.find(({id}) => id === this.props.team.featuredProjectId);
     
     return (
