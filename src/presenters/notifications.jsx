@@ -29,7 +29,7 @@ export class Notifications extends React.Component {
   }
   
   createConfirmProjectAdded(domain){
-    let content = <p>Added <b><span className="project-name">${domain}</span></b></p>;
+    let content = <p>Added <b><span className="project-name">{domain}</span></b></p>;
     this.create(content, 'notifySuccess');
   }
   
