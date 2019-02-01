@@ -13,7 +13,7 @@ import Notifications from '../notifications.jsx';
 const ProjectResultsUL = ({projects, collection, onClick}) => (
   <ul className="results">
     <Notifications>
-      {({createNotification}) => (
+      {({createConfirmProjectAdded}) => (
         projects.map(project => (
           <li key={project.id}>
             <TrackClick name="Project Added to Collection" properties={{origin: 'Add Project collection'}}>
@@ -24,7 +24,7 @@ const ProjectResultsUL = ({projects, collection, onClick}) => (
                 id={project.id}
                 isActive={false}
                 collection={collection}
-                onClick={() => onClick(project, collection, createNotification)}
+                onClick={() => onClick(project, collection, createConfirmProjectAdded)}
                 isPrivate={project.private}
               />
             </TrackClick>
@@ -200,14 +200,14 @@ class AddCollectionProjectPop extends React.Component {
 
   }
   
-  onClick(project, collection, createNotification) {
+  onClick(project, collection, createConfirmProjectAdded) {
     this.props.togglePopover();
     
     // add project to page if successful
     this.props.addProjectToCollection(project, collection);
     
     // show notification
-    createNotification(<p>Added <b><span className="project-name">{project.domain}</span></b></p>, "notifySuccess");
+    createConfirmProjectAdded(project.domain);
   }
   
   render() {

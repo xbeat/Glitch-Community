@@ -89,12 +89,12 @@ export class AddTeamProjectPop extends React.Component {
     return await this.props.api.post(inviteUserPath);
   }
 
-  onClick(event, project, createNotification) {
+  onClick(event, project, createConfirmProjectAdded) {
     event.preventDefault();
     this.props.togglePopover();
     this.props.addProject(project);
     
-    createNotification(<p>Added <b><span className="project-name">domain</span></b></p>, "notifySuccess");    
+    createConfirmProjectAdded(project.domain);    
   }
 
   sourceIsTemplates() {
@@ -169,11 +169,11 @@ export class AddTeamProjectPop extends React.Component {
         <section className="pop-over-actions results-list" data-source='templates'>
           <ul className="results">
             <Notifications>
-              {({createNotification}) => (
+              {({createConfirmProjectAdded}) => (
                 filteredProjects.map((project) => (
                   <li key={project.id}>
                     <ProjectResultItem
-                      onClick={event => this.onClick(event, project, createNotification)}
+                      onClick={event => this.onClick(event, project, createConfirmProjectAdded)}
                       {...project}
                       title={project.domain}
                       isPrivate={project.private}
