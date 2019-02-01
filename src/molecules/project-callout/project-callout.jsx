@@ -25,7 +25,7 @@ class ProjectCallout extends React.Component {
   
   render() {
     return (
-    <a href={ getProjectLink({ this.props.domain }) } rel="noopener noreferrer">
+    <a href={ getProjectLink({ domain: this.props.domain }) } rel="noopener noreferrer">
       <div className="project-callout" onMouseOver={ this.handleHover } onMouseOut={ this.handleHover }>
         <Button type="cta" hover={ this.state.hover }>
           { this.props.domain }
