@@ -12,10 +12,10 @@ import Notifications from '../notifications.jsx';
 
 const ProjectResultsUL = ({projects, collection, onClick}) => (
   <ul className="results">
-    {projects.map(project => (
-      <Notifications key={project.id}>
-        {({createNotification}) => (
-          <li>
+    <Notifications>
+      {({createNotification}) => (
+        projects.map(project => (
+          <li key={project.id}>
             <TrackClick name="Project Added to Collection" properties={{origin: 'Add Project collection'}}>
               <ProjectResultItem
                 domain={project.domain}
@@ -29,9 +29,9 @@ const ProjectResultsUL = ({projects, collection, onClick}) => (
               />
             </TrackClick>
           </li>
-        )}
-      </Notifications>
-    ))}
+        )
+        ))}
+    </Notifications>
   </ul>
 );
 ProjectResultsUL.propTypes = {
