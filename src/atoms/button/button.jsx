@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind';
-import styles from './button.css';
+import styles from './button.styl';
 
 let cx = classNames.bind(styles);
 

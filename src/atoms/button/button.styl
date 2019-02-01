@@ -1,4 +1,4 @@
-button {
+button 
   text-align: left;
   font-size: 14px;
   line-height: 14px;
@@ -12,32 +12,28 @@ button {
   cursor: pointer;
   position: relative;
   /*vertical-align: middle;*/
-}
 
-button:hover, button.hover {
+  &:hover, &.hover 
     background-color: #f5f5f5;
     text-decoration: none;
-}
 
-button.cta {
-  color: #222;
-  background-color: #83ffcd;
-  -webkit-box-shadow: 4px 4px 0 #222;
-  box-shadow: 4px 4px 0 #222;
-  margin-bottom: 2px;
-}
+  &.cta {
+    color: #222;
+    background-color: #83ffcd;
+    -webkit-box-shadow: 4px 4px 0 #222;
+    box-shadow: 4px 4px 0 #222;
+    margin-bottom: 2px;
+  }
 
-button.cta:hover, button.cta.hover {
+  &.cta:hover, &.cta.hover
     background-color: #83ffcd;
     -webkit-box-shadow: 2px 2px 0 #222;
     box-shadow: 2px 2px 0 #222;
-}
 
-button.small {
-  font-size: 12px;
-  padding: 3px 8px;
-  padding-top: 5px;
-}
+  .small {
+    font-size: 12px;
+    padding: 3px 8px;
+    padding-top: 5px;
 
 button.tertiary {
     color: #636363;
