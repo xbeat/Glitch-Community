@@ -11,7 +11,7 @@ export const SIZES = ["small"]
 /**
  * Button Component
  */
-const Button = ({ onClick, disabled, type, size, hover, children }) => {
+const Button = ({ onClick, disabled, type, size, hover, children, dataTrack }) => {
   let className = cx({
     cta: type === "cta",
     small: size === "small",
@@ -20,7 +20,7 @@ const Button = ({ onClick, disabled, type, size, hover, children }) => {
   });
   
   return (
-    <button onClick={onClick} className={className}>
+    <button onClick={onClick} className={className} data-track={dataTrack}>
       {children}
     </button>
   )
@@ -34,7 +34,9 @@ Button.propTypes = {
   /** type of button */
   type: PropTypes.oneOf(TYPES),
   /** size of button */
-  size: PropTypes.string
+  size: PropTypes.string,
+  /** tracking information */
+  dataTrack: PropTypes.string,
 };
 
 export default Button
