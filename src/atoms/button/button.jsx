@@ -20,7 +20,7 @@ const Button = ({ onClick, disabled, type, size, hover, children, dataTrack }) =
   });
   
   return (
-    <button onClick={onClick} className={className} data-track={dataTrack} {disabled && "disabled"}>
+    <button onClick={onClick} className={className} data-track={dataTrack} disabled={disabled}>
       {children}
     </button>
   );
