@@ -102,6 +102,21 @@ module.exports = {
           },
         ]
       },
+      {
+        test: /\.styl$/,
+        include: SRC,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader?modules',
+            options: {
+              sourceMap: true,
+              modules: true,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
+            },
+          },
+        ]
+      },
     ],
   },
   plugins: [
