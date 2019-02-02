@@ -86,14 +86,6 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader?modules',
-            options: {
-              sourceMap: true,
-              modules: true,
-              localIdentName: '[name]__[local]___[hash:base64:5]'
-            },
-          },
-          {
             loader: 'stylus-loader',
             options: {
               compress: mode === 'production', // Compress CSS as part of the stylus build
@@ -103,7 +95,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.styl$/,
+        test: /\.css$/,
         include: SRC,
         use: [
           MiniCssExtractPlugin.loader,
