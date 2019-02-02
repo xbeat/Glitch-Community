@@ -13,6 +13,7 @@ export const SIZES = ["small"];
  */
 const Button = ({ onClick, disabled, type, size, hover, children, dataTrack }) => {
   let className = cx({
+    btn: true,
     cta: type === "cta",
     small: size === "small",
     tertiary: type === "tertiary",
