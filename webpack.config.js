@@ -80,26 +80,6 @@ module.exports = {
         loader: 'babel-loader',
         query: { compact: false }
       },
-      // {
-      //   test: /\.styl$/,
-      //   include: STYLES,
-      //   use: [
-      //     MiniCssExtractPlugin.loader,
-      //     {
-      //       loader: 'css-loader',
-      //       options: {
-      //         sourceMap: true,
-      //       },
-      //     },
-      //     {
-      //       loader: 'stylus-loader',
-      //       options: {
-      //         compress: mode === 'production', // Compress CSS as part of the stylus build
-      //         use: [AutoprefixerStylus()],
-      //       },
-      //     },
-      //   ]
-      // },
       {
         test: /\.css$/,
         include: SRC,
@@ -111,6 +91,26 @@ module.exports = {
               sourceMap: true,
               modules: true,
               localIdentName: '[name]__[local]___[hash:base64:5]'
+            },
+          },
+        ]
+      },
+      {
+        test: /\.styl$/,
+        include: STYLES,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'stylus-loader',
+            options: {
+              compress: mode === 'production', // Compress CSS as part of the stylus build
+              use: [AutoprefixerStylus()],
             },
           },
         ]
