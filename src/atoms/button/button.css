@@ -27,19 +27,19 @@ button.cta {
   margin-bottom: 2px;
 }
 
-button.cta:hover, .btn.cta.hover {
+button.cta:hover, button.cta.hover {
     background-color: #83ffcd;
     -webkit-box-shadow: 2px 2px 0 #222;
     box-shadow: 2px 2px 0 #222;
 }
 
-.btn.small {
+button.small {
   font-size: 12px;
   padding: 3px 8px;
   padding-top: 5px;
 }
 
-.btn.tertiary {
+button.tertiary {
     color: #636363;
     border-width: 1px;
     border-color: #c3c3c3;
@@ -47,7 +47,7 @@ button.cta:hover, .btn.cta.hover {
     display: inline-block;
 }
 
-.btn.tertiary:hover {
+button.tertiary:hover {
     color: #222;
     border-color: #b8b8b8;
 }
