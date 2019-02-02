@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import styles from './button.css';
-
+import styles from '../../../styles/atoms/button/button.styl';
+debugger;
 let cx = classNames.bind(styles);
 
 export const TYPES = ["tertiary", "cta"];
