@@ -1,4 +1,4 @@
-.btn {
+button {
   text-align: left;
   font-size: 14px;
   line-height: 14px;
@@ -14,12 +14,12 @@
   /*vertical-align: middle;*/
 }
 
-.btn:hover, .btn.hover {
+button:hover, button.hover {
     background-color: #f5f5f5;
     text-decoration: none;
 }
 
-.btn.cta {
+button.cta {
   color: #222;
   background-color: #83ffcd;
   -webkit-box-shadow: 4px 4px 0 #222;
@@ -27,7 +27,7 @@
   margin-bottom: 2px;
 }
 
-.btn.cta:hover, .btn.cta.hover {
+button.cta:hover, .btn.cta.hover {
     background-color: #83ffcd;
     -webkit-box-shadow: 2px 2px 0 #222;
     box-shadow: 2px 2px 0 #222;

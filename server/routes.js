@@ -45,6 +45,9 @@ module.exports = function(external) {
         if (file.match(/\.js(\?|$)/)) {
           scripts.push(`${stats.publicPath}${file}`);
         }
+        if (file.match(/\.css(\?|$)/)) {
+          styles.push(`${stats.publicPath}${file}`);
+        }
       });
       stats.entrypoints.styles.assets.forEach(file => {
         if (file.match(/\.css(\?|$)/)) {
