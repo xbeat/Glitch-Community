@@ -41,15 +41,15 @@ module.exports = function(external) {
     
     try {
       const stats = JSON.parse(await readFilePromise('build/stats.json'));
-      stats.entrypoints.client.assets.forEach(file => {
-        if (file.match(/\.js(\?|$)/)) {
-          scripts.push(`${stats.publicPath}${file}`);
-        }
+      stats.entrypoints.styles.assets.forEach(file => {
         if (file.match(/\.css(\?|$)/)) {
           styles.push(`${stats.publicPath}${file}`);
         }
       });
-      stats.entrypoints.styles.assets.forEach(file => {
+      stats.entrypoints.client.assets.forEach(file => {
+        if (file.match(/\.js(\?|$)/)) {
+          scripts.push(`${stats.publicPath}${file}`);
+        }
         if (file.match(/\.css(\?|$)/)) {
           styles.push(`${stats.publicPath}${file}`);
         }
