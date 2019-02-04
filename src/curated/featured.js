@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Recycle Your Batteries Locally',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fbatteries.jpg?1548682194002",
-    link: 'https://glitch.com/~lithium-battery-recycling'
+    title: 'Make Blackout Poetry',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fblackoutpoetry_final.jpg?1549281321752",
+    link: 'https://blackoutpoetry.glitch.me/'
   },{
-    title: 'Langton\'s Ant',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fant.jpg?1548682195476",
-    link: 'https://p5js-langtons-ant.glitch.me/'
+    title: 'Which is More Expensive?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fdomainpricing_final.jpg?1549281323718",
+    link: 'https://domain-pricing.glitch.me/'
   },{
-    title: 'Your Own Virtual Notepad',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fnotebook.jpg?1548682194594",
-    link: 'https://glitch.com/~notepad-design'
+    title: 'Sims Patch Notes',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsimspatch_final.jpg?1549281326378",
+    link: 'https://glitch.com/~sims-patch-notes'
   } 
 ];
