@@ -28,6 +28,7 @@ const app = express();
 
 app.use(Sentry.Handlers.requestHandler());
 
+// Listen to X-Forwarded-Host, so request.hostname is glitch.com and not community.glitch.me
 app.enable('trust proxy');
 
 // Accept JSON as req.body
