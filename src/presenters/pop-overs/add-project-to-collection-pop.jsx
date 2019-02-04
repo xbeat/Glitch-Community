@@ -62,11 +62,16 @@ class AddProjectToCollectionPopContents extends React.Component {
         const {data} = await this.props.api.get(`teams/${team.id}`);
         const teamCollections = data.collections;
         if(teamCollections.length > 0){
-          userCollections.data.push(teamCollections);
+          // argh need to do an api request for each collection based on id before adding to list of collections );
+          teamCollections.forEach(teamCollection => userCollections.data.push(teamCollection));
         }
       }
     
-    let orderedCollections = orderBy(userCollections.date, userCollections => userCollections.updatedAt).reverse();
+    console.log(userCollections);
+    
+    let orderedCollections = orderBy(userCollections.data, collection => collection.updatedAt).reverse();
+      
+    console.log(orderedCollections);
     this.setState({maybeCollections: orderedCollections, filteredCollections: orderedCollections });
   }
   }
@@ -118,7 +123,7 @@ class AddProjectToCollectionPopContents extends React.Component {
               <ul className="results">
                 {filteredCollections.map((collection) =>   
                   // filter out collections that already contain the selected project
-                  (collection.projects.every(project => project.id !== this.props.project.id) && 
+                  (collection.projects && collection.projects.every(project => project.id !== this.props.project.id) && 
                     <li key={collection.id}>
                       <TrackClick name="Project Added to Collection" context={{groupId: collection.team ? collection.team.id : 0}}>
                         <CollectionResultItem 
