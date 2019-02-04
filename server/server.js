@@ -28,6 +28,8 @@ const app = express();
 
 app.use(Sentry.Handlers.requestHandler());
 
+app.enable('trust proxy');
+
 // Accept JSON as req.body
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
