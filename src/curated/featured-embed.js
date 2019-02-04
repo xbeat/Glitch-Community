@@ -9,5 +9,5 @@ export default {
   "appDomain": "mayo-hero",
   "blogUrl": "/paper-shred-ka-boom/",
   "body": body,
-  "color": '#C9BFF4',
+  "color": '#C9BFF4', 
 };
