@@ -19,6 +19,8 @@ import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import ReportButton from '../pop-overs/report-abuse-pop.jsx';
 
+import {partition} from 'lodash';
+
 function syncPageToLogin(login) {
   history.replaceState(null, null, getLink({login}));
 }
@@ -77,8 +79,7 @@ const UserPage = ({
 }) =>
 { 
   const pinnedAndFeaturedSet = new Set(user.pins.map(({projectId}) => projectId)).add(featuredProjectId);
-  const pinnedProjects = user.projects.filter( ({id}) => pinnedAndFeaturedSet.has(id));
-  const recentProjects = user.projects.filter(({id}) => !pinnedAndFeaturedSet.has(id));
+  const [pinnedProjects, recentProjects] = partition(user.projects, ({id}) => pinnedAndFeaturedSet.has(id));
   const featuredProject = user.projects.find(({id}) => id === featuredProjectId);
   
   return(
