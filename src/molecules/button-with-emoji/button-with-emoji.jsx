@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind';
-import styles from './button-with-emoji.css'
+import styles from './button-with-emoji.styl'
 import Button, { TYPES, SIZES } from '../../atoms/button/button'
 
 let cx = classNames.bind(styles);
