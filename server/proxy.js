@@ -1,5 +1,6 @@
 const proxy = require('express-http-proxy');
 const urlJoin = require('url-join');
+const {escapeRegExp} = require('lodash');
 
 //
 // Some glitch.com urls are served by other sites.
@@ -26,8 +27,7 @@ module.exports = function(app) {
         return next();
     });
     
-    // Do the actual proxy
-    app.use(routeWithLeadingSlash, proxy(target, {
+    const proxyConfig = {
       preserveHostHdr: false, // glitch routes based on this, so we have to reset it
       https: true,
       proxyReqPathResolver: (req) => {
@@ -35,7 +35,27 @@ module.exports = function(app) {
         console.log("Proxied:", urlJoin(routeWithLeadingSlash, req.path));
         return path;
       }
-    }));
+    };
+    
+    const genericProxy = proxy(target, proxyConfig);
+    
+    const sitemapProxy = proxy(target, {
+      userResDecorator: (res, data, req) => {
+        // do gross stuff to rewrite urls
+        // this is dangerous to do on a full page, but the sitemap is simple
+        const regexp = new RegExp(escapeRegExp(target), 'g');
+        return data.toString().replace(regexp, req.hostname);
+      },
+      ...proxyConfig,
+    });
+    
+    // Do the actual proxy
+    app.use(routeWithLeadingSlash, (req, ...args) => {
+      if (/\/sitemap.*(\.xml|\.xsl)$/.test(req.path)) {
+        return sitemapProxy(req, ...args);
+      }
+      return genericProxy(req, ...args);
+    });
     
     routes.push(routeWithLeadingSlash);
   }
