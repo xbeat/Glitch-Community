@@ -17,7 +17,7 @@ export default [
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fblackoutpoetry_final.jpg?1549281321752",
     link: 'https://blackoutpoetry.glitch.me/'
   },{
-    title: 'Which is More Expensive?',
+    title: 'Which Domain is More Expensive?',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fdomainpricing_final.jpg?1549281323718",
     link: 'https://domain-pricing.glitch.me/'
   },{
