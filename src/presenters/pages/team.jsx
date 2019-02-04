@@ -27,6 +27,8 @@ import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 import ReportButton from '../pop-overs/report-abuse-pop.jsx';
 
+import {partition} from 'lodash';
+
 function syncPageToUrl(team) {
   history.replaceState(null, null, getLink(team));
 }
@@ -107,8 +109,7 @@ class TeamPage extends React.Component {
   render() {
     const {team} = this.props;
     const pinnedAndFeaturedSet = new Set(team.teamPins.map(({projectId}) => projectId)).add(team.featuredProjectId);
-    const pinnedProjects = team.projects.filter( ({id}) => pinnedAndFeaturedSet.has(id));
-    const recentProjects = team.projects.filter(({id}) => !pinnedAndFeaturedSet.has(id));
+    const [pinnedProjects, recentProjects] = partition(team.projects, ({id}) => pinnedAndFeaturedSet.has(id));
     const featuredProject = team.projects.find(({id}) => id === team.featuredProjectId);
     
     return (
