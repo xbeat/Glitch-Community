@@ -81,7 +81,7 @@ module.exports = {
         query: { compact: false }
       },
       {
-        test: /\.css$/,
+        test: /\.styl/,
         include: SRC,
         use: [
           MiniCssExtractPlugin.loader,
@@ -91,6 +91,13 @@ module.exports = {
               sourceMap: true,
               modules: true,
               localIdentName: '[name]__[local]___[hash:base64:5]'
+            },
+          },
+          {
+            loader: 'stylus-loader',
+            options: {
+              compress: mode === 'production', // Compress CSS as part of the stylus build
+              use: [AutoprefixerStylus()],
             },
           },
         ]

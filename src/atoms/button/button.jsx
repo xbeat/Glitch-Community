@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import styles from './button.css';
+import styles from './button.styl';
 
 let cx = classNames.bind(styles);
 
@@ -13,7 +13,6 @@ export const SIZES = ["small"];
  */
 const Button = ({ onClick, disabled, type, size, hover, children, dataTrack }) => {
   let className = cx({
-    btn: true,
     cta: type === "cta",
     small: size === "small",
     tertiary: type === "tertiary",
