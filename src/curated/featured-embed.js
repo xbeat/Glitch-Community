@@ -3,7 +3,7 @@ var body = `<p>Follow along with MythBusters Jr. by remixing your own Glitch app
 <p>How much reliable energy can be harnessed from a human fart?</p>`;
 
 export default {
-  "image": "http://culture-zine.glitch.me/culture/content/images/2019/01/episode-8-flatus.jpg",
+  "image": "https://culture-zine.glitch.me/culture/content/images/2019/01/episode-8-flatus.jpg",
   "mask": "mask-4",
   "title": "MythBusters Jr.",
   "appDomain": "whoopie-cushion",
