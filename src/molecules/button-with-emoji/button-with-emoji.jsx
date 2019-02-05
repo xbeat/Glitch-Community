@@ -4,17 +4,15 @@ import classNames from 'classnames/bind';
 import styles from './button-with-emoji.styl'
 import Button, { TYPES, SIZES } from '../../atoms/button/button'
 
-let cx = classNames.bind(styles);
-
 /**
  * Button Component
  */
 const ButtonWithEmoji = ({ onClick, disabled, type, size, emoji, children }) => {
   return (
-    <div className="button-with-emoji">
+    <div className={styles.buttonWithEmoji}>
       <Button onClick={onClick} type={type} size={size}>
         {children}
-        <img className="emoji" src={emoji}></img>
+        <img className={styles.emoji} src={emoji}></img>
       </Button>
     </div>
   )
