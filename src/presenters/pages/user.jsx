@@ -83,6 +83,7 @@ const UserPage = ({
   const [pinnedProjects, recentProjects] = partition(user.projects.filter(({id}) => id !== featuredProjectId), ({id}) => pinnedSet.has(id));
   const featuredProject = user.projects.find(({id}) => id === featuredProjectId);
   
+  
   return(
     <main className="profile-page user-page">   
       <section>
@@ -171,7 +172,6 @@ UserPage.propTypes = {
     avatarUrl: PropTypes.string,
     color: PropTypes.string.isRequired,
     coverColor: PropTypes.string,
-    featuredProjectId: PropTypes.string,
     _cacheCover: PropTypes.number.isRequired,
     _deletedProjects: PropTypes.array.isRequired,
   }).isRequired,
