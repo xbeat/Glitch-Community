@@ -179,12 +179,12 @@ class TeamEditor extends React.Component {
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
   }
   
-  async featureProject(id){
-    await this.updateFields({featured_project_id: id});
-  }
-  
   async unfeatureProject(){
     await this.updateFields({featured_project_id: null});
+  }
+  
+  async featureProject(id){
+    await this.updateFields({featured_project_id: id});
   }
 
   currentUserIsTeamAdmin() {
@@ -224,7 +224,7 @@ class TeamEditor extends React.Component {
     };
     return this.props.children(this.state, funcs, this.currentUserIsOnTeam(), this.currentUserIsTeamAdmin());
   }
-}
+} 
 TeamEditor.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
