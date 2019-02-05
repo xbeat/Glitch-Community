@@ -36,12 +36,12 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   }
 };
 
-const CollectionResultItem = ({api, onClick, project, collection, currentUser, isActive, togglePopover}) => {
+const CollectionResultItem = ({api, onClick, project, collection, owner, isActive, togglePopover}) => {
   let resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
   }
-  const collectionPath = `/@${currentUser.l}/${collection.url}`;
+  const collectionPath = `/@${owner}/${collection.url}`;
   
   async function getCollectionTeam(api, collection){
     const {data} = await api.get(`teams/${collection.teamId}`);
@@ -61,13 +61,10 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUser, i
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
               { collection.userId !== -1?                 
-                  <UserAvatar user={currentUser}/>      
+                  <UserAvatar user={owner}/>      
                 :
-                 <DataLoader get={() => getCollectionTeam(api, collection)}>
-                    {team => <TeamAvatar team={team}/>}      
-                  </DataLoader>
+                  <TeamAvatar team={owner}/>
               }
-                
             </div>
           </button>
           <a href={collectionPath} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">

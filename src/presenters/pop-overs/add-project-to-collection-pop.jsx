@@ -28,7 +28,7 @@ class AddProjectToCollectionPopContents extends React.Component {
       collectionOwners: [],
     };
     this.updateFilter = this.updateFilter.bind(this);
-    this.loadCollectionOwners = this.loadCollectionOwners.bind(this);
+    this.loadCollectionTeam = this.loadCollectionTeam.bind(this);
   }
   
   updateFilter(query){
@@ -57,22 +57,13 @@ class AddProjectToCollectionPopContents extends React.Component {
     let orderedCollections = orderBy(userCollections.data, collection => collection.updatedAt).reverse();
     console.log(orderedCollections);
     this.setState({maybeCollections: orderedCollections, filteredCollections: orderedCollections });
-  
   }
   
-  async loadCollectionOwners(){
-    for(const collection of this.state.filteredCollections){
-      console.log(collection);
-      if(collection.teamId == -1){
-        // store collection user
-        this.state.collectionOwners.push(this.props.currentUser);
-      }else{
-        // store collection team
-        const {team} = await this.props.api(`teams/${collection.teamId}`);
-        this.state.collectionOwners.push(team);
-      }
-    }
-    
+  async loadCollectionTeam(teamId) {
+    console.log('loadCollectionTeam');
+    const {data} = await this.props.api.get(`teams/${teamId}`);
+    console.log('team', data);
+    return data;
   }
   
   async componentDidMount() {
@@ -115,7 +106,7 @@ class AddProjectToCollectionPopContents extends React.Component {
                           project={this.props.project}
                           collection={collection}                         
                           togglePopover={this.props.togglePopover} 
-                          currentUser={this.props.currentUser}
+                          owner={collection.userId !== -1 ? this.props.currentUser : this.loadCollectionTeam(collection.team.id)}
                         />
                       </TrackClick>
                     </li>
