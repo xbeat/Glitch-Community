@@ -43,18 +43,11 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUser, i
   }
   const collectionPath = `/@${currentUser.l}/${collection.url}`;
   
-  async function loadAvatar(api, collection){
-    if(collection.userId){
-      const user = await api.get(`users/${collection.userId}`);
-      console.log('user', user);
-      return user;
-    }else{
-      const team = await api.get(`teams/${collection.teamId}`);
-      console.log('team', team);
-      return team;
-    }
+  async function getCollectionTeam(api, collection){
+    const {data} = await api.get(`teams/${collection.teamId}`);
+    return data;
   }
-
+    
   return (
     
     <Notifications>
@@ -67,13 +60,11 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUser, i
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
-              { collection.userId ?                 
-                  <DataLoader get={() => loadAvatar(api, collection)}>
-                    {user => <UserAvatar user={loadAvatar(api, collection)}/>}      
-                  </DataLoader>
+              { collection.userId !== -1?                 
+                  <UserAvatar user={currentUser}/>      
                 :
-                 <DataLoader get={() => loadAvatar(api, collection)}>
-                    {team => <UserAvatar team=)}/>}      
+                 <DataLoader get={() => getCollectionTeam(api, collection)}>
+                    {team => <TeamAvatar team={team}/>}      
                   </DataLoader>
               }
                 
@@ -99,25 +90,3 @@ CollectionResultItem.propTypes = {
 };
 
 export default CollectionResultItem;
-
-async function getTeam(api, teamId){
-  console.log(`attempt to get team ${teamId}`);
-  try{
-    const {team} = await api.get(`/teams/${teamId}`);
-    console.log("team %O", team);
-    return team;
-  }catch(error){
-    console.log(error);
-  }
-}
-
-async function getUser(api, userId){
-  console.log(`attempt to get user ${userId}`);
-  try{
-    const {user} = await api.get(`/users/${userId}`);
-    console.log("user %O", user);
-    return user;
-  }catch(error){
-    console.log(error);
-  }
-}
