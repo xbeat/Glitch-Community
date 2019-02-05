@@ -109,7 +109,7 @@ class TeamPage extends React.Component {
   render() {
     const {team} = this.props;
     const pinnedSet = new Set(team.teamPins.map(({projectId}) => projectId));
-    // filter featuredProject out of both pinned and recent projects
+    // filter featuredProject out of both pinned & recent projects
     const [pinnedProjects, recentProjects] = partition(team.projects.filter(({id}) => id !== team.featuredProjectId), ({id}) => pinnedSet.has(id));
     const featuredProject = team.projects.find(({id}) => id === team.featuredProjectId); 
     
