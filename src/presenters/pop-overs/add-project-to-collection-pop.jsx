@@ -49,31 +49,26 @@ class AddProjectToCollectionPopContents extends React.Component {
     
     // IN PROGRESS UPDATE - ADDING TEAM USER COLLECTIONS (UNCOMMENT TO TEST...)
     const userCollections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
-    console.log(userCollections);
+    console.log('userCollections', userCollections);
     
     // load team collections
     const userTeams = this.props.currentUser.teams;
-    
-    if(userTeams.length > 0){
-      console.log('load user team collections');
-      // load potential team collections
-      for(const team of userTeams){
-        console.log(team);
-        const {data} = await this.props.api.get(`teams/${team.id}`);
-        const teamCollections = data.collections;
-        if(teamCollections.length > 0){
-          // argh need to do an api request for each collection based on id before adding to list of collections );
-          teamCollections.forEach(teamCollection => userCollections.data.push(teamCollection));
-        }
+
+    for(const team of userTeams){
+      console.log(
+      const teamCollections = await this.props.api.get(`collections/?teamId=${team.id}`);
+      console.log('teamCollections', teamCollections);
+      if(teamCollections){
+        teamCollections.forEach(teamCollection => userCollections.data.push(teamCollection));
       }
+    }
     
     console.log(userCollections);
-    
     let orderedCollections = orderBy(userCollections.data, collection => collection.updatedAt).reverse();
       
     console.log(orderedCollections);
     this.setState({maybeCollections: orderedCollections, filteredCollections: orderedCollections });
-  }
+  
   }
   
   async loadCollectionOwners(){
