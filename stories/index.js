@@ -17,6 +17,9 @@ storiesOf('Button', module)
 .add('tertiary', () => (
     <Button type="tertiary">Tertiary Button</Button>
   ))
+.add('danger zone', () => (
+    <Button type="dangerZone">Destructive Action</Button>
+  ))
 .add('data tracking', () => (
   <Button size="small" dataTrack="open new-project pop">New Project</Button>
   ));   

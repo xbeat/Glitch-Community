@@ -5,7 +5,7 @@ import styles from './button.styl';
 
 let cx = classNames.bind(styles);
 
-export const TYPES = ["tertiary", "cta"];
+export const TYPES = ["tertiary", "cta", "dangerZone"];
 export const SIZES = ["small"];
 
 /**
@@ -17,6 +17,7 @@ const Button = ({ onClick, disabled, type, size, hover, children, dataTrack }) =
     cta: type === "cta",
     small: size === "small",
     tertiary: type === "tertiary",
+    dangerZone: type === "dangerZone",
     hover: hover,
   });
   
