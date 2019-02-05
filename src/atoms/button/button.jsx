@@ -16,7 +16,7 @@ const Button = ({ onClick, disabled, type, size, hover, children, dataTrack }) =
     btn: true,
     cta: type === "cta",
     small: size === "small",
-    tertiary: type === "tertiary",
+    tertiary: ["tertiary", "dangerZone"].includes(type),
     dangerZone: type === "dangerZone",
     hover: hover,
   });
