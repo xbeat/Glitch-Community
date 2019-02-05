@@ -41,23 +41,14 @@ class AddProjectToCollectionPopContents extends React.Component {
   }
   
   async loadCollections() {
-    // CURRENT LOADING OF ONLY USER COLLECTIONS
-    // const collections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
-    // let orderedCollections = orderBy(collections.data, collection => collection.updatedAt).reverse();
-    // this.setState({maybeCollections: orderedCollections, filteredCollections: orderedCollections });
-    
-    
-    // IN PROGRESS UPDATE - ADDING TEAM USER COLLECTIONS (UNCOMMENT TO TEST...)
     const userCollections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
-    console.log('userCollections', userCollections);
     
     // load team collections
     const userTeams = this.props.currentUser.teams;
 
     for(const team of userTeams){
-      console.log(
-      const teamCollections = await this.props.api.get(`collections/?teamId=${team.id}`);
-      console.log('teamCollections', teamCollections);
+      const {data} = await this.props.api.get(`collections/?teamId=${team.id}`);
+      const teamCollections = data;
       if(teamCollections){
         teamCollections.forEach(teamCollection => userCollections.data.push(teamCollection));
       }
@@ -72,7 +63,6 @@ class AddProjectToCollectionPopContents extends React.Component {
   }
   
   async loadCollectionOwners(){
-    console.log('load collection owners');
     for(const collection of this.state.filteredCollections){
       console.log(collection);
       if(collection.teamId == -1){

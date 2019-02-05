@@ -41,6 +41,14 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUser, i
     resultClass += " active";
   }
   const collectionPath = `/@${currentUser.l}/${collection.url}`;
+  
+  async function loadAvatar(collection){
+    if(collection.teamId){
+      return await this.props.api.get(`teams/${collection.teamId}`);
+    }else{
+      return await this.props.api.get(`users/${collection.userId}`);
+    }
+  }
 
   return (
     
