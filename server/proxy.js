@@ -1,6 +1,7 @@
 const proxy = require('express-http-proxy');
 const urlJoin = require('url-join');
 const {escapeRegExp} = require('lodash');
+const {APP_URL} = require("./constants").current;
 
 //
 // Some glitch.com urls are served by other sites.
@@ -40,11 +41,11 @@ module.exports = function(app) {
     const genericProxy = proxy(target, proxyConfig);
     
     const sitemapProxy = proxy(target, {
-      userResDecorator: (res, data, req) => {
+      userResDecorator: (res, data) => {
         // do gross stuff to rewrite urls
         // this is dangerous to do on a full page, but the sitemap is simple
-        const regexp = new RegExp(escapeRegExp(target), 'g');
-        return data.toString().replace(regexp, req.hostname);
+        const regexp = new RegExp('(https?://)?' + escapeRegExp(target), 'g');
+        return data.toString().replace(regexp, APP_URL);
       },
       ...proxyConfig,
     });
