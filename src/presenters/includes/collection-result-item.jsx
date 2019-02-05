@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Notifications from '../notifications.jsx';
 import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import CollectionAvatar from './collection-avatar.jsx';
+import {DataLoader} from './loader.jsx';
 
 const AddProjectMessage = ({projectName, collectionName, url}) => (
   <>
@@ -42,11 +43,15 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUser, i
   }
   const collectionPath = `/@${currentUser.l}/${collection.url}`;
   
-  async function loadAvatar(collection){
-    if(collection.teamId){
-      return await this.props.api.get(`teams/${collection.teamId}`);
+  async function loadAvatar(api, collection){
+    if(collection.userId){
+      const user = await api.get(`users/${collection.userId}`);
+      console.log('user', user);
+      return user;
     }else{
-      return await this.props.api.get(`users/${collection.userId}`);
+      const team = await api.get(`teams/${collection.teamId}`);
+      console.log('team', team);
+      return team;
     }
   }
 
@@ -62,10 +67,16 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUser, i
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
-              { collection.teamId === -1 ?
-                <UserAvatar user={currentUser}/>
-                : null
-              }                                                
+              { collection.userId ?                 
+                  <DataLoader get={() => loadAvatar(api, collection)}>
+                    {user => <UserAvatar user={loadAvatar(api, collection)}/>}      
+                  </DataLoader>
+                :
+                 <DataLoader get={() => loadAvatar(api, collection)}>
+                    {team => <UserAvatar team=)}/>}      
+                  </DataLoader>
+              }
+                
             </div>
           </button>
           <a href={collectionPath} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">

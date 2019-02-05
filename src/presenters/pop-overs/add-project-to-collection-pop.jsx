@@ -54,10 +54,7 @@ class AddProjectToCollectionPopContents extends React.Component {
       }
     }
     
-    console.log(userCollections);
     let orderedCollections = orderBy(userCollections.data, collection => collection.updatedAt).reverse();
-      
-    console.log(orderedCollections);
     this.setState({maybeCollections: orderedCollections, filteredCollections: orderedCollections });
   
   }
