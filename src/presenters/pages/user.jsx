@@ -78,9 +78,14 @@ const UserPage = ({
   addProjectToCollection,
 }) =>
 { 
+<<<<<<< HEAD
   const pinnedSet = new Set(user.pins.map(({projectId}) => projectId));
   // filter featuredProject out of both pinned and recent projects
   const [pinnedProjects, recentProjects] = partition(user.projects.filter(({id}) => id !== featuredProjectId), ({id}) => pinnedSet.has(id));
+=======
+  const pinnedAndFeaturedSet = new Set(user.pins.map(({projectId}) => projectId)).add(featuredProjectId);
+  const [pinnedProjects, recentProjects] = partition(user.projects, ({id}) => pinnedAndFeaturedSet.has(id) && id !== featuredProjectId);
+>>>>>>> parent of 6169760... 🍱💝 Checkpoint
   const featuredProject = user.projects.find(({id}) => id === featuredProjectId);
   
   
