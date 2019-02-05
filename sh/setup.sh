@@ -1,4 +1,6 @@
 #!/bin/bash
+# Creates a remote corresponding to the passed-in remix name, pulls from it to a
+# new local branch, and pushes that branch up to the origin repo
 
 if [ "$1" == "-h" ]; then
   echo "Usage: ensure you're in the Community Git Repo" 

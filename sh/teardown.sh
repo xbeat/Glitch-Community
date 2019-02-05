@@ -1,4 +1,5 @@
 #!/bin/bash
+# Deletes the git remote and branch corresponding to a remix
 
 if [ "$1" == "-h" ]; then
   echo "Usage: ensure you're in the Community Git Repo" 
