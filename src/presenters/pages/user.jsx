@@ -79,7 +79,7 @@ const UserPage = ({
 }) =>
 { 
   const pinnedAndFeaturedSet = new Set(user.pins.map(({projectId}) => projectId)).add(featuredProjectId);
-  const [pinnedProjects, recentProjects] = partition(user.projects, ({id}) => pinnedAndFeaturedSet.has(id));
+  const [pinnedProjects, recentProjects] = partition(user.projects, ({id}) => pinnedAndFeaturedSet.has(id) && id !== featuredProjectId);
   const featuredProject = user.projects.find(({id}) => id === featuredProjectId);
   
   return(
