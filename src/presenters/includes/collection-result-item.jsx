@@ -41,7 +41,7 @@ const CollectionResultItem = ({api, onClick, project, collection, owner, isActiv
   if(isActive) {
     resultClass += " active";
   }
-  const collectionPath = `/@${owner}/${collection.url}`;
+  const collectionPath = `/@${owner.login ? owner.login : owner.url}/${collection.url}`;
   
   async function getCollectionTeam(api, collection){
     const {data} = await api.get(`teams/${collection.teamId}`);
