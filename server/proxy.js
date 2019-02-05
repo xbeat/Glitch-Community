@@ -45,7 +45,6 @@ module.exports = function(app) {
         // do gross stuff to rewrite urls
         // this is dangerous to do on a full page, but the sitemap is simple
         const regexp = new RegExp('((https?:)?//)?' + escapeRegExp(target), 'g');
-        console.log(regexp);
         return data.toString().replace(regexp, APP_URL);
       },
       ...proxyConfig,
