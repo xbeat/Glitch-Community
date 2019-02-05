@@ -19,6 +19,8 @@ import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import ReportButton from '../pop-overs/report-abuse-pop.jsx';
 
+import {partition} from 'lodash';
+
 function syncPageToLogin(login) {
   history.replaceState(null, null, getLink({login}));
 }
@@ -76,11 +78,9 @@ const UserPage = ({
   addProjectToCollection,
 }) =>
 { 
-  const pinnedSet = new Set(user.pins.map(({projectId}) => projectId));
-  const pinnedProjects = user.projects.filter( ({id}) => pinnedSet.has(id)).filter ( ({id}) => id != featuredProjectId); 
-  const recentProjects = user.projects.filter(({id}) => !pinnedSet.has(id)).filter( ({id}) => id != featuredProjectId);
+  const pinnedAndFeaturedSet = new Set(user.pins.map(({projectId}) => projectId)).add(featuredProjectId);
+  const [pinnedProjects, recentProjects] = partition(user.projects, ({id}) => pinnedAndFeaturedSet.has(id));
   const featuredProject = user.projects.find(({id}) => id === featuredProjectId);
-  
   
   return(
     <main className="profile-page user-page">   
@@ -170,6 +170,7 @@ UserPage.propTypes = {
     avatarUrl: PropTypes.string,
     color: PropTypes.string.isRequired,
     coverColor: PropTypes.string,
+    featuredProjectId: PropTypes.string,
     _cacheCover: PropTypes.number.isRequired,
     _deletedProjects: PropTypes.array.isRequired,
   }).isRequired,
