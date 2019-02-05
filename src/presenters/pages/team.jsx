@@ -108,18 +108,10 @@ class TeamPage extends React.Component {
 
   render() {
     const {team} = this.props;
-<<<<<<< HEAD
-<<<<<<< HEAD
     const pinnedSet = new Set(team.teamPins.map(({projectId}) => projectId));
+    // filter featuredProject out of both pinned and recent projects
     const [pinnedProjects, recentProjects] = partition(team.projects.filter(({id}) => id !== team.featuredProjectId), ({id}) => pinnedSet.has(id));
     const featuredProject = team.projects.find(({id}) => id === team.featuredProjectId); 
-=======
-=======
->>>>>>> parent of 6169760... 🍱💝 Checkpoint
-    const pinnedAndFeaturedSet = new Set(team.teamPins.map(({projectId}) => projectId)).add(team.featuredProjectId);
-    const [pinnedProjects, recentProjects] = partition(team.projects, ({id}) => pinnedAndFeaturedSet.has(id));
-    const featuredProject = team.projects.find(({id}) => id === team.featuredProjectId);
->>>>>>> parent of 6169760... 🍱💝 Checkpoint
     
     return (
       <main className="profile-page team-page">
