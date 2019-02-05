@@ -28,11 +28,6 @@ export class Notifications extends React.Component {
     return notification.id;
   }
   
-  createConfirmProjectAdded(domain){
-    let content = <p>Added <b><span className="project-name">{domain}</span></b></p>;
-    this.create(content, 'notifySuccess');
-  }
-  
   createError(content='Something went wrong. Try refreshing?') {
     this.create(content, 'notifyError');
   }
@@ -64,7 +59,6 @@ export class Notifications extends React.Component {
       createNotification: this.create.bind(this),
       createPersistentNotification: this.createPersistent.bind(this),
       createErrorNotification: this.createError.bind(this),
-      createConfirmProjectAdded: this.createConfirmProjectAdded.bind(this),
     };
     const {notifications} = this.state;
     return (
