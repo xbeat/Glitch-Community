@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Notifications from '../notifications.jsx';
 import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import CollectionAvatar from './collection-avatar.jsx';
-import {DataLoader} from './loader.jsx';
 
 const AddProjectMessage = ({projectName, collectionName, url}) => (
   <>
@@ -36,13 +35,17 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   }
 };
 
-const CollectionResultItem = ({api, onClick, project, collection, currentUser, isActive, togglePopover}) => {
+const CollectionResultItem = ({onClick, project, collection, isActive, togglePopover}) => {
   let resultClass = "button-unstyled result result-collection";
   if(isActive) {
     resultClass += " active";
   }
-  //TODO: need to update to account for team  url
-  const collectionPath = `/@${currentUser.login}/${collection.url}`;
+  let collectionPath;
+  if(collection.userId !== -1){
+    collectionPath = `/@${collection.owner.login}/${collection.url}`;
+  }else{
+    collectionPath = `/@${collection.owner.url}/${collection.url}`;
+  }
     
   return (    
     <Notifications>
@@ -55,10 +58,7 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUser, i
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
-              { collection.userId !== -1?                 
-                  <UserAvatar user={collection.owner}/> : <TeamAvatar team={collection.owner}/>
-              }
-
+              { collection.userId !== -1? <UserAvatar user={collection.owner}/> : <TeamAvatar team={collection.owner}/>}
             </div>
           </button>
           <a href={collectionPath} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">
@@ -71,7 +71,6 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUser, i
 };
 
 CollectionResultItem.propTypes = {
-  api: PropTypes.func.isRequired,
   onClick: PropTypes.func,
   collection: PropTypes.object.isRequired,
   currentUser: PropTypes.object,
