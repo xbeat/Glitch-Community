@@ -40,7 +40,8 @@ class EmailHandler extends React.Component {
     this.state = {
       email: '',
       done: false,
-      error: false
+      error: false,
+      errorMsg: '',
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -59,8 +60,20 @@ class EmailHandler extends React.Component {
       await this.props.api.post('/email/sendLoginEmail', {emailAddress:this.state.email});
       this.setState({error: false});
     } catch (error) {
-      captureException(error);
-      this.setState({error: true});
+      if (error && error.response) {
+        if (error.response.status === 429) {
+          this.setState({error: true, errorMsg: 'Sign in code sent recently. Please check your email.'});
+        } else if (error.response.status === 400) {
+          this.setState({error: true, errorMsg: 'Email address is invalid.'});
+        } else {
+          captureException(error);
+          this.setState({error: true, errorMsg: 'Something went wrong, email not sent.'});
+        }
+      }
+      else {
+        captureException(error);
+        this.setState({error: true, errorMsg: 'Something went wrong, email not sent.'});
+      }
     }
   }
    
@@ -89,7 +102,7 @@ class EmailHandler extends React.Component {
               {(this.state.done && this.state.error) &&
                 <>
                   <div className="notification notifyPersistent notifyError">Error</div>
-                  <div>Something went wrong, email not sent.</div>
+                  <div>{this.state.errorMsg}</div>
                 </>
               }
             </section>

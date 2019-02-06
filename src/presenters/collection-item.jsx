@@ -51,7 +51,7 @@ class CollectionItem extends React.Component{
 
         {(collection &&
           <CollectionLink collection={collection} className="button-area">
-            <div className="collection" id={"collection-" + collection.id}>
+            <div className={"collection" + (isAuthorized ? " authorized" : "")} id={"collection-" + collection.id}>
               <div className="collection-container">
                 <div className="collection-info" style={{backgroundColor: collection.coverColor}}> 
                   <div className="avatar-container">

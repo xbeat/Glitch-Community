@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Re-creating Art from Fortran',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise4.png?1547468106510",
-    link: 'https://sinus-fischer.glitch.me/'
+    title: 'Make Blackout Poetry',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fblackoutpoetry_final.jpg?1549281321752",
+    link: 'https://blackoutpoetry.glitch.me/'
   },{
-    title: 'Make Your Emoji Explode',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise9.png?1547468106394",
-    link: 'https://exploji.glitch.me/'
+    title: 'Which Domain is More Expensive?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fdomainpricing_final.jpg?1549281323718",
+    link: 'https://domain-pricing.glitch.me/'
   },{
-    title: 'Delete Your Twitter Archive',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitchsurudenise8.png?1547468106128",
-    link: 'https://twitter-archive-deleter.glitch.me/'
-  }  
+    title: 'Sims Patch Notes',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsimspatch_final.jpg?1549281326378",
+    link: 'https://glitch.com/~sims-patch-notes'
+  } 
 ];
