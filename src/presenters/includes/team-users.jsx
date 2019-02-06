@@ -117,7 +117,14 @@ export class AddTeamUser extends React.Component {
       invitee: getDisplayName(user),
       alreadyInvited: [...state.alreadyInvited, user],
     }));
-    await this.props.inviteUser(user);
+    try {
+      await this.props.inviteUser(user);
+    } catch (error) {
+      this.setState((state) => ({
+        invitee: '',
+        alreadyInvited: state.alreadyInvited.filter(u => u.id !== user.id),
+      }));
+    }
   }
   
   async inviteEmail(togglePopover, email) {
@@ -125,7 +132,13 @@ export class AddTeamUser extends React.Component {
     this.setState({
       invitee: email,
     });
-    await this.props.inviteEmail(email);
+    try {
+      await this.props.inviteEmail(email);
+    } catch (error) {
+      this.setState({
+        invitee: '',
+      });
+    }
   }
 
   removeNotifyInvited() {
