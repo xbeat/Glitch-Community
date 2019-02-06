@@ -102,14 +102,13 @@ class CreateNewCollectionPop extends React.Component {
 
     let placeholder = "New Collection Name";
     
-    // for testing dropdown stuff
     const teams = this.props.currentUser.teams;
     const currentUserMenuItem = <>myself <UserAvatar user={this.props.currentUser} isStatic={true}/></>;
     
-    function getTeamContents(){
+    function getTeamMenuContents(){
       const orderedTeams = orderBy(teams, team => team.name.toLowerCase());   
       const menuContents = [];
-      menuContents.push(currentUserMenuItem);
+      menuContents.push(currentUserMenuItem); // add user as first option
       
       orderedTeams.map(team => {
         let content = <span id={team.id}>{team.name} {<TeamAvatar team={team} className="user"/>}</span>;
@@ -117,10 +116,6 @@ class CreateNewCollectionPop extends React.Component {
       });
       return menuContents;
     }
-    
-    const userDropdownContents = getTeamContents();
-    const collectionOwnerBtnContents = currentUserMenuItem;
-    //--> end dropdown stuff
     
     if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this url';
@@ -148,7 +143,7 @@ class CreateNewCollectionPop extends React.Component {
             { this.props.currentUser.teams.length > 0 ?
               <>
                 <br style={{clear: "both"}}/>for
-                <Dropdown buttonContents={collectionOwnerBtnContents} menuContents={userDropdownContents} onUpdate={this.setTeamId}/>
+                <Dropdown buttonContents={currentUserMenuItem} menuContents={getTeamMenuContents()} onUpdate={this.setTeamId}/>
               </>
               : null
             }
