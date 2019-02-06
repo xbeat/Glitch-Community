@@ -4,7 +4,7 @@
   "description": "Find cool projects and people using Glitch",
   "scripts": {
     "prestart": "bash sh/watchers.sh &",
-    "start": "nodemon --watch server --watch shared --watch views ./server/server.js",
+    "start": "nodemon --watch server --watch shared --watch views ./server/server.js ./server/storybook-server.js",
     "//start": "start-storybook -p 3000 -c .storybook"
   },
   "dependencies": {
