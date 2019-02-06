@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
 import {sampleSize} from 'lodash';
 
+import {captureException} from '../utils/sentry';
 import {featuredCollections} from '../curated/collections';
 import {isDarkColor} from '../models/collection';
 
@@ -55,27 +56,18 @@ CollectionWide.propTypes = {
   api: PropTypes.any.isRequired,
 };
 
-const loadCollection = async (api, info) => {
-  let collections = [];
-  if (info.team) {
-    const {data: teamId} = await api.get(`teamId/byUrl/${info.team}`);
-    if (teamId !== 'NOT FOUND') {
-      const {data: teamCollections} = await api.get(`collections?teamId=${teamId}`);
-      collections = teamCollections;
+const loadCollection = async (api, {owner, name}) => {
+  try {
+    const {data: collectionId} = await api.get(`collections/${owner}/${name}`);
+    const {data: collection} = await api.get(`collections/${collectionId}`);
+    collection.projectCount = collection.projects.length;
+    collection.projects = sampleSize(collection.projects, 3).map(p => ({...p, users: p.users||[]}));
+    return collection;
+  } catch (error) {
+    if (error && error.response && error.response.status === 404) {
+      return null;
     }
-  } else if (info.user) {
-    const {data: userId} = await api.get(`userId/byLogin/${info.user}`);
-    if (userId !== 'NOT FOUND') {
-      const {data: userCollections} = await api.get(`collections?userId=${userId}`);
-      collections = userCollections;
-    }
-  }
-  const collection = collections.find(c => c.url === info.name);
-  if (collection) {
-    const {data} = await api.get(`collections/${collection.id}`);
-    data.projectCount = data.projects.length;
-    data.projects = sampleSize(data.projects, 3).map(p => ({...p, users: p.users||[]}));
-    return data;
+    captureException(error);
   }
   return null;
 };
