@@ -25,10 +25,8 @@ class AddProjectToCollectionPopContents extends React.Component {
       working: false,
       filteredCollections: [], // collections filtered from search query
       maybeCollections: null, //null means still loading
-      collectionOwners: [],
     };
     this.updateFilter = this.updateFilter.bind(this);
-    this.getCollectionTeam = this.getCollectionTeam.bind(this);
   }
   
   updateFilter(query){
@@ -40,13 +38,6 @@ class AddProjectToCollectionPopContents extends React.Component {
     console.log("filteredCollections %O", filteredCollections);
   }
   
-  async getCollectionTeam(teamId){
-    console.log('get collection team for', teamId);
-    const {data} = await this.props.api.get(`teams/${teamId}`);
-    console.log('data', data);
-    return data;
-  }  
-  
   async loadCollections() {
     const userCollections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
     
@@ -55,17 +46,15 @@ class AddProjectToCollectionPopContents extends React.Component {
       userCollection.owner = this.props.currentUser;
     });
     
-    // load team collections
+    
     const userTeams = this.props.currentUser.teams;
-
     for(const team of userTeams){
       const {data} = await this.props.api.get(`collections/?teamId=${team.id}`);
       const teamCollections = data;
       if(teamCollections){
-        const teamObject = this.getCollectionTeam(team.id);
         teamCollections.forEach(teamCollection => {
           // get the team avatar
-          teamCollection.owner = teamObject;
+          teamCollection.owner = this.props.currentUser.teams.find(userTeam => userTeam.id == team.id);
           userCollections.data.push(teamCollection)
         });
       }
