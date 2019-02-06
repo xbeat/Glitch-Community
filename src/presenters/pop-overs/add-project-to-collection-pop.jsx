@@ -30,12 +30,10 @@ class AddProjectToCollectionPopContents extends React.Component {
   }
   
   updateFilter(query){
-    console.log('query');
     let collections = this.state.maybeCollections;
-    console.log("collections %O", collections);
     query = query.toLowerCase().trim();
     let filteredCollections = collections.filter(collection => collection.name.toLowerCase().includes(query)); 
-    console.log("filteredCollections %O", filteredCollections);
+    this.setState({filteredCollections: filteredCollections});
   }
   
   async loadCollections() {

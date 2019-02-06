@@ -25,7 +25,6 @@ class CreateNewCollectionPop extends React.Component {
       working: false,
       error: null, //null or string
       query: '', //The actual search text
-      collectionPair: 'wondrous-collection',
       maybeCollections: null, //null means still loading
       teamId: undefined, // by default, create a collection for a user, but if team is selected from dropdown, set to teamID,
     };
@@ -57,15 +56,12 @@ class CreateNewCollectionPop extends React.Component {
     try{
       const name = newCollectionName;
       const url = kebabCase(newCollectionName);
-      const collectionPair = this.state.collectionPair.split('-');
-      const description = `A ${collectionPair[1]} of projects that does ${collectionPair[0]} things`;
       const avatarUrl = defaultAvatar;
       const coverColor = randomColor({luminosity: 'light'});
       const teamId = this.state.teamId;
       
       const {data} = await this.props.api.post('collections', {
         name,
-        description,
         url,
         avatarUrl,
         coverColor,
