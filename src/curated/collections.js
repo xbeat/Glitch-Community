@@ -2,9 +2,9 @@
 
 // What collections to show in the expanded area on the homepage
 export const featuredCollections = [
-  { user: 'scientiffic', name: 'microbit' },
-  { team: 'gregs-test-team-1', name: 'zany-playlist' },
-  { user: 'cori', name: 'glitch-json' },
+  { team: 'glitch', name: 'just-face-it' },
+  { team: 'glitch', name: 'souped-up-spotify' },
+  { team: 'glitch', name: 'discover-modern-art' }
 ];
 
 // More ideas is populated from this team
