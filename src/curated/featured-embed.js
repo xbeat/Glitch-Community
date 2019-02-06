@@ -1,13 +1,13 @@
 var body = `<p>Follow along with MythBusters Jr. by remixing your own Glitch apps inspired by each episode.</p>
-<p><b>Episode 4:</b></p>
-<p>Is the force used to topple dominoes strong enough to crush a car?</p>`;
+<p><b>Episode 7:</b></p>
+<p>How much reliable energy can be harnessed from a human fart?</p>`;
 
 export default {
-  "image": "http://culture-zine.glitch.me/culture/content/images/2019/01/Screenshot_1-2.jpg",
+  "image": "https://culture-zine.glitch.me/culture/content/images/2019/01/episode-8-flatus.jpg",
   "mask": "mask-4",
   "title": "MythBusters Jr.",
-  "appDomain": "car-crush",
-  "blogUrl": "/demolition-dominoes/",
+  "appDomain": "whoopie-cushion",
+  "blogUrl": "/flatus-special/",
   "body": body,
-  "color": '#D0F1FF',
+  "color": '#F87D93',
 };

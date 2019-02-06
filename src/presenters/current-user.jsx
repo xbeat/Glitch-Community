@@ -154,10 +154,7 @@ class CurrentUserManager extends React.Component {
         const newSharedUser = await this.getSharedUser();
         this.props.setSharedUser(newSharedUser);
         console.warn('Fixed shared cachedUser from', sharedUser, 'to', newSharedUser);
-        captureMessage('Invalid cachedUser', {extra: {
-          from: sharedUser || null,
-          to: newSharedUser || null,
-        }});
+        captureMessage('Invalid cachedUser');
       } else {
         this.props.setCachedUser(newCachedUser);
         this.setState({fetched: true});

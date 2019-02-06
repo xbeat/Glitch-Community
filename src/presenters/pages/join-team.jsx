@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {captureMessage, captureException} from '../../utils/sentry';
+import {captureException} from '../../utils/sentry';
 
 import {Redirect} from 'react-router-dom';
 import {getLink} from '../../models/team';
@@ -40,9 +40,10 @@ class JoinTeamPageBase extends React.Component {
     } catch (error) {
       // The team is real but the token didn't work
       // Maybe it's been used already or expired?
-      const data = error && error.response && error.response.data;
-      console.log('Team invite error', data);
-      captureMessage('Team invite error', {extra: {error}});
+      console.log('Team invite error', error && error.response && error.response.data);
+      if (error && error.response.status != 401) {      
+        captureException(error);
+      }
       this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
     }
     this.setState({redirect: getLink(team)});
