@@ -212,8 +212,7 @@ class AddCollectionProjectPop extends React.Component {
   
   render() {
     // load user's recent projects
-    const ownProjects = this.props.collection.team ? this.props.collection.team.projects : this.props.currentUser.projects;
-    const results = this.state.query ? this.state.maybeResults : ownProjects.slice(0,20);
+    const results = this.state.query ? this.state.maybeResults : this.props.initialProjects;
     
     const showResults = !!(this.state.query || (results && results.length));
     const isLoading = !!(this.state.maybeRequest || !results);
@@ -251,6 +250,7 @@ class AddCollectionProjectPop extends React.Component {
 AddCollectionProjectPop.propTypes = {
   api: PropTypes.func.isRequired,
   collection: PropTypes.object.isRequired,
+  initialProjects: PropTypes.array.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
   togglePopover: PropTypes.func, // required but added dynamically
   currentUser: PropTypes.object.isRequired,
