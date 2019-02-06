@@ -58,6 +58,15 @@ app.use(function(req, res, next) {
 
 app.use(Sentry.Handlers.errorHandler());
 
+const httpProxy = require('http-proxy');
+const storybookProxy = httpProxy.createProxyServer();
+const storybookServer = 'http://localhost:9001';
+
+app.all("/storybook/*", function(req, res) {
+  console.log("redirecting to Storybook");
+  storybookProxy.web(req, res, {target: storybookServer});
+});
+
 // Listen on App port
 const listener = app.listen(process.env.PORT, () => {
   console.log(`Your app is listening on port ${listener.address().port}.`);
