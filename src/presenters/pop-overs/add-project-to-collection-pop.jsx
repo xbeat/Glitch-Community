@@ -16,8 +16,6 @@ import {NestedPopoverTitle} from './popover-nested.jsx';
 
 import {orderBy} from 'lodash';
 
-const defaul
-
 class AddProjectToCollectionPopContents extends React.Component {
   constructor(props) {
     super(props);
@@ -115,9 +113,8 @@ class AddProjectToCollectionPopContents extends React.Component {
               </ul>
             </section>
           ) : (<section className="pop-over-info">
-            <p className="info-description">
-              Organize your favorite projects in one place
-            </p>
+            
+              {maybeCollections.length ? <NoSearchResultsPlaceholder/> :<NoCollectionPlaceholder/>}
           </section>)
         ) : <Loader/>}
         
@@ -139,6 +136,8 @@ AddProjectToCollectionPopContents.propTypes = {
   fromProject: PropTypes.bool,
 };
 
+const NoSearchResultsPlaceholder = <p className="info-description">"Nothing found" <span role="img" aria-label="">💫</span></p>;
+const NoCollectionPlaceholder = <p className="info-description">"Nothing found" <span role="img" aria-label="">💫</span></p>;
 
 const AddProjectToCollectionPop = ({...props}) => {
   return(
