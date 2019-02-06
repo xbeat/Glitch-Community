@@ -26,7 +26,7 @@ module.exports = {
     [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
   },
   output: {
-    filename: '[name].js?[contenthash]',
+    filename: '[name].js?[contenthash]-v1',
     path: BUILD,
     publicPath: '/',
   },
