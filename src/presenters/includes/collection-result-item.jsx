@@ -43,14 +43,8 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUser, i
   }
   //TODO: need to update to account for team  url
   const collectionPath = `/@${currentUser.login}/${collection.url}`;
-  
-  async function getCollectionTeam(api, collection){
-    const {data} = await api.get(`teams/${collection.teamId}`);
-    return data;
-  }  
     
-  return (
-    
+  return (    
     <Notifications>
       {({createNotification}) => ( 
         <div>
@@ -62,9 +56,7 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUser, i
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
               { collection.userId !== -1?                 
-                  <UserAvatar user={currentUser}/>      
-                :
-                  <TeamAvatar team={getCollectionTeam(api, collection)}/>
+                  <UserAvatar user={collection.owner}/> : <TeamAvatar team={collection.owner}/>
               }
 
             </div>

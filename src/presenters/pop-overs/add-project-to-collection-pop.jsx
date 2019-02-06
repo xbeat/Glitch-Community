@@ -41,10 +41,11 @@ class AddProjectToCollectionPopContents extends React.Component {
   }
   
   async getCollectionTeam(teamId){
+    console.log('get collection team for', teamId);
     const {data} = await this.props.api.get(`teams/${teamId}`);
+    console.log('data', data);
     return data;
   }  
-    
   
   async loadCollections() {
     const userCollections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
@@ -61,7 +62,7 @@ class AddProjectToCollectionPopContents extends React.Component {
       const {data} = await this.props.api.get(`collections/?teamId=${team.id}`);
       const teamCollections = data;
       if(teamCollections){
-        const teamObject = await this.getCollectionTeam(team.id);
+        const teamObject = this.getCollectionTeam(team.id);
         teamCollections.forEach(teamCollection => {
           // get the team avatar
           teamCollection.owner = teamObject;
