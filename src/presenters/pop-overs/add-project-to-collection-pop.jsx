@@ -16,6 +16,8 @@ import {NestedPopoverTitle} from './popover-nested.jsx';
 
 import {orderBy} from 'lodash';
 
+const defaul
+
 class AddProjectToCollectionPopContents extends React.Component {
   constructor(props) {
     super(props);
