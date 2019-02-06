@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Route, Switch, withRouter} from 'react-router-dom';
+import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
 
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
@@ -106,7 +106,7 @@ const Router = ({api}) => (
       {EXTERNAL_ROUTES.map(route => (
         <Route key={route} path={route} render={({location}) => <ExternalPageReloader key={location.key}/>}/>
       ))}
-
+      <Route path="/storybook" render={() => ( <Redirect to="/storybook"/>)}/>
       <Route render={({location}) => <NotFoundPage api={api} key={location.key}/>}/>
     </Switch>
   </>
