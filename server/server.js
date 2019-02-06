@@ -49,6 +49,15 @@ const proxied = proxy(app);
 const router = require('./routes');
 app.use('/', router(['/edit', ...proxied]));
 
+const httpProxy = require('http-proxy');
+const storybookProxy = httpProxy.createProxyServer();
+const storybookServer = 'https://localhost:9001';
+
+app.all("/storybook/*", function(req, res) {
+  console.log("redirecting to Storybook");
+  storybookProxy.web(req, res, {target: storybookServer});
+});
+
 // Add an explicit no-cache to 404 responses
 // Since this is the last handler it will only be hit when all other handlers miss
 app.use(function(req, res, next) {
@@ -57,15 +66,6 @@ app.use(function(req, res, next) {
 });
 
 app.use(Sentry.Handlers.errorHandler());
-
-const httpProxy = require('http-proxy');
-const storybookProxy = httpProxy.createProxyServer();
-const storybookServer = 'http://localhost:9001';
-
-app.all("/storybook/*", function(req, res) {
-  console.log("redirecting to Storybook");
-  storybookProxy.web(req, res, {target: storybookServer});
-});
 
 // Listen on App port
 const listener = app.listen(process.env.PORT, () => {
