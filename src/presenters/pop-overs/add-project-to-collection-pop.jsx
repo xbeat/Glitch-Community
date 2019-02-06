@@ -42,6 +42,8 @@ class AddProjectToCollectionPopContents extends React.Component {
   async loadCollections() {
     const userCollections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
     
+    userCollections.data.forEach(userCollection => userCollection.owner = this.props.currentUser);
+    
     // load team collections
     const userTeams = this.props.currentUser.teams;
 
@@ -52,9 +54,11 @@ class AddProjectToCollectionPopContents extends React.Component {
         teamCollections.forEach(teamCollection => userCollections.data.push(teamCollection));
       }
     }
-    
     let orderedCollections = orderBy(userCollections.data, collection => collection.updatedAt).reverse();
     console.log(orderedCollections);
+    
+    // store all team owners
+    
     this.setState({maybeCollections: orderedCollections, filteredCollections: orderedCollections });
   }
   

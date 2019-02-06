@@ -47,7 +47,7 @@ const CollectionResultItem = ({api, onClick, project, collection, currentUser, i
   async function getCollectionTeam(api, collection){
     const {data} = await api.get(`teams/${collection.teamId}`);
     return data;
-  }
+  }  
     
   return (
     
