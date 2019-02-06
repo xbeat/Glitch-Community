@@ -28,6 +28,7 @@ class AddProjectToCollectionPopContents extends React.Component {
       collectionOwners: [],
     };
     this.updateFilter = this.updateFilter.bind(this);
+    this.getCollectionTeam = this.getCollectionTeam.bind(this);
   }
   
   updateFilter(query){
@@ -39,10 +40,19 @@ class AddProjectToCollectionPopContents extends React.Component {
     console.log("filteredCollections %O", filteredCollections);
   }
   
+  async getCollectionTeam(teamId){
+    const {data} = await this.props.api.get(`teams/${teamId}`);
+    return data;
+  }  
+    
+  
   async loadCollections() {
     const userCollections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
     
-    userCollections.data.forEach(userCollection => userCollection.owner = this.props.currentUser);
+    // add current user as owner for collection (for generating user avatar for collection result item)
+    userCollections.data.forEach(userCollection => {
+      userCollection.owner = this.props.currentUser;
+    });
     
     // load team collections
     const userTeams = this.props.currentUser.teams;
@@ -51,7 +61,12 @@ class AddProjectToCollectionPopContents extends React.Component {
       const {data} = await this.props.api.get(`collections/?teamId=${team.id}`);
       const teamCollections = data;
       if(teamCollections){
-        teamCollections.forEach(teamCollection => userCollections.data.push(teamCollection));
+        const teamObject = await this.getCollectionTeam(team.id);
+        teamCollections.forEach(teamCollection => {
+          // get the team avatar
+          teamCollection.owner = teamObject;
+          userCollections.data.push(teamCollection)
+        });
       }
     }
     let orderedCollections = orderBy(userCollections.data, collection => collection.updatedAt).reverse();
