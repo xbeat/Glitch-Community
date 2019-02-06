@@ -136,8 +136,8 @@ AddProjectToCollectionPopContents.propTypes = {
   fromProject: PropTypes.bool,
 };
 
-const NoSearchResultsPlaceholder = <p className="info-description">"Nothing found" <span role="img" aria-label="">💫</span></p>;
-const NoCollectionPlaceholder = <p className="info-description">"Nothing found" <span role="img" aria-label="">💫</span></p>;
+const NoSearchResultsPlaceholder = () => <p className="info-description">Nothing found <span role="img" aria-label="">💫</span></p>;
+const NoCollectionPlaceholder = () => <p className="info-description">Create collections to organize your favorite projects.</p>;
 
 const AddProjectToCollectionPop = ({...props}) => {
   return(
