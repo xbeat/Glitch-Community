@@ -11,8 +11,16 @@ class AddCollectionProject extends React.Component {
   }
   async loadProjects() {
     this.setState({projects: []});
-    if (this.props.collection.teamId > 0) {
-    } else if (this.props.collection.userId
+    const {api, collection, currentUser} = this.props;
+    if (collection.teamId > 0) {
+      const {data: team} = await api.get(`teams/${collection.teamId}`);
+      this.setState({projects: team.projects});
+    } else if (collection.userId === currentUser.id) {
+      this.setState({projects: currentUser.projects});
+    } else if (collection.userId > 0) {
+      const {data: user} = await api.get(`users/${collection.userId}`);
+      this.setState({projects: user.projects});
+    }
   }
   componentDidMount() {
     this.loadProjects();
@@ -27,7 +35,7 @@ class AddCollectionProject extends React.Component {
   render() {
     return (
       <PopoverWithButton buttonClass="button add-project opens-pop-over" buttonText="Add Project" passToggleToPop>
-        <AddCollectionProjectPop initialProjects={this.state.projects} {...this.props} />
+        <AddCollectionProjectPop initialProjects={this.state.projects.slice(0,20)} {...this.props} />
       </PopoverWithButton>
     );
   }
