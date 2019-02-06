@@ -127,7 +127,6 @@ const CollectionPageContents = ({
                          addProjectToCollection={addProjectToCollection}
                          collection={collection}
                          api={api}
-                         currentUserIsOwner={isAuthorized}
                          currentUser={currentUser}
                        />
                      )}

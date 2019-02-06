@@ -5,10 +5,6 @@ import AddCollectionProjectPop from '../pop-overs/add-collection-project-pop.jsx
 import PopoverWithButton from '../pop-overs/popover-with-button';
 
 const AddCollectionProject = ({currentUserIsOwner, ...props}) => {
-  if(!currentUserIsOwner) {
-    return null;
-  }
-  
   return (
     <PopoverWithButton buttonClass="button add-project opens-pop-over" buttonText="Add Project" passToggleToPop>
       <AddCollectionProjectPop {...props} />
