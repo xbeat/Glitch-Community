@@ -17,13 +17,13 @@ class JoinTeamPageBase extends React.Component {
   
   async componentDidMount() {
     try {
-      var {data: team} = await this.props.api.get(`/teams/byUrl/${this.props.teamUrl}`);
+      var {data: teamId} = await this.props.api.get(`/teamId/byUrl/${this.props.teamUrl}`);
     } catch (error) {
       if (error && !(error.response && error.response.status === 404)) {
         captureException(error);
       }
     }
-    if (!team) {
+    if (!teamId) {
       // Either the api is down or the team doesn't exist
       // Regardless we can't really do anything with this
       this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
@@ -32,7 +32,7 @@ class JoinTeamPageBase extends React.Component {
     }
     try {
       // Suppress the authorization header to prevent user merging
-      const {data: user} = await this.props.api.post(`/teams/${team.id}/join/${this.props.joinToken}`);
+      const {data: user} = await this.props.api.post(`/teams/${teamId}/join/${this.props.joinToken}`);
       if (user) {
         this.props.replaceCurrentUser(user);
       }
@@ -46,7 +46,7 @@ class JoinTeamPageBase extends React.Component {
       }
       this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
     }
-    this.setState({redirect: getLink(team)});
+    this.setState({redirect: getLink({url: this.props.teamUrl})});
   }
   
   render() {
