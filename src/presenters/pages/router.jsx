@@ -106,7 +106,6 @@ const Router = ({api}) => (
       {EXTERNAL_ROUTES.map(route => (
         <Route key={route} path={route} render={({location}) => <ExternalPageReloader key={location.key}/>}/>
       ))}
-      <Route path="/storybook" render={() => ( <Redirect to="/storybook"/>)}/>
       <Route render={({location}) => <NotFoundPage api={api} key={location.key}/>}/>
     </Switch>
   </>
