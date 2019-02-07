@@ -9,7 +9,7 @@ import Link, {CollectionLink} from './includes/link';
 import {DataLoader} from './includes/loader';
 
 const MoreIdeasCollectionsDisplay = ({collections}) => (
-  <section className="more-ideas" role="navigation">
+  <section className="more-ideas">
     <h2>More Ideas</h2>
     <ul>
       {collections.map(collection => (
@@ -39,7 +39,7 @@ export const MoreIdeasCollections = ({api}) => (
 );
 
 export const MoreIdeasCategories = () => (
-  <section className="more-ideas" role="navigation">
+  <section className="more-ideas">
     <h2>More Ideas</h2>
     <ul>
       {categories.map(category => (
