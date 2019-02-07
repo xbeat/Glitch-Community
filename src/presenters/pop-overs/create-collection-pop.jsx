@@ -93,7 +93,7 @@ class CreateNewCollectionPop extends React.Component {
     const {error, query} = this.state;
     const {collections} = this.props;
     
-    let queryError = this.state.error;
+    let queryError = error;
     let submitEnabled = this.state.query.length > 0;
     let nameTakenError = "You already have a collection with this url";
 
@@ -114,6 +114,7 @@ class CreateNewCollectionPop extends React.Component {
       return menuContents;
     }
     
+    // filter collections based on selected owner from dropdown
     const selectedOwnerCollections = (this.state.teamId 
       ? collections.filter( ({teamId}) => teamId == this.state.teamId) 
       : collections.filter( ({userId}) => userId == this.props.currentUser.id));
