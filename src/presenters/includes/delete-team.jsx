@@ -8,7 +8,7 @@ const DeleteTeam = ({...props}) => {
   
   return (
     <section>
-      <PopoverWithButton buttonClass="button button-small button-tertiary has-emoji opens-pop-over danger-zone"
+      <PopoverWithButton buttonClass="button-small button-tertiary has-emoji danger-zone"
         buttonText={<>Delete {props.teamName}&nbsp;<span className="emoji bomb" role="img" aria-label="" /> </>}
         passToggleToPop
       >
