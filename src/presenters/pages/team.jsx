@@ -163,6 +163,7 @@ class TeamPage extends React.Component {
                   inviteEmail={this.props.inviteEmail}
                   inviteUser={this.props.inviteUser}
                   setWhitelistedDomain={this.props.currentUserIsTeamAdmin ? this.props.updateWhitelistedDomain : null}
+                  members={team.users.map(({id}) => id)}
                   invitedMembers={this.props.team.tokens}
                   whitelistedDomain={team.whitelistedDomain}
                   api={this.props.api}
