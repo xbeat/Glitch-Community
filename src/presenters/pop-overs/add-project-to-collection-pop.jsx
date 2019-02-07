@@ -19,23 +19,22 @@ import {orderBy} from 'lodash';
 class AddProjectToCollectionPopContents extends React.Component {
   constructor(props) {
     super(props);
-    console.log('constructor');
     this.state = {
       query: '', // value of filter input field
+      collections: this.props.collections,
       filteredCollections: this.props.collections, // collections filtered from search query
     };
     this.updateFilter = this.updateFilter.bind(this);
   }
   
   componentWillReceiveProps(nextProps){
-    console.log('nextProps', nextProps);
-    if(nextProps.collections !== this.state.filteredCollections){
-      this.setState({filteredCollections: nextProps.collections});
+    if(nextProps.collections !== this.props.collections){
+      this.setState({collections: nextProps.collections, filteredCollections: nextProps.collections});
     }
   }
   
   updateFilter(query){
-    let collections = this.state.collections;
+    let collections = this.props.collections;
     query = query.toLowerCase().trim();
     let filteredCollections = collections.filter(collection => collection.name.toLowerCase().includes(query)); 
     this.setState({filteredCollections: filteredCollections});
@@ -43,20 +42,18 @@ class AddProjectToCollectionPopContents extends React.Component {
   
   render() {
     const {filteredCollections} = this.state;
-    console.log('filteredCollections', filteredCollections);
     
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
-        {( !this.props.fromProject ?
+        { !this.props.fromProject &&
           <NestedPopoverTitle>
             <img src={getAvatarUrl(this.props.project.id)} alt={`Project avatar for ${this.props.project.domain}`}/> Add {this.props.project.domain} to collection
           </NestedPopoverTitle>
-          : null
-        )}
+        }
         
         { this.props.collections ?        
           <>
-            {(filteredCollections && filteredCollections.length > 3) && (
+            {this.props.collections.length > 3 && (
               <section className="pop-over-info">
                 <input id="collection-filter" 
                   className="pop-over-input search-input pop-over-search" 
@@ -94,7 +91,7 @@ class AddProjectToCollectionPopContents extends React.Component {
         
           <section className="pop-over-actions">
             {/* TO DO: may want to consider if we force all users to go through Create Collection Pop or only users with teams */}
-            <button className="create-new-collection button-small" onClick={this.props.createCollectionPopover} >Add to a new collection</button> 
+            <button className="create-new-collection button-small button-tertiary" onClick={this.props.createCollectionPopover} >Add to a new collection</button> 
           </section>
         </>
         : 
@@ -129,7 +126,6 @@ class AddProjectToCollectionPop extends React.Component {
   }
   
   async loadCollections() {
-    console.log('load collections');
     // first, load all of the user's collections
     const userCollections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
     // add current user as owner for collection (for generating user avatar for collection result item)
@@ -152,7 +148,6 @@ class AddProjectToCollectionPop extends React.Component {
     
     // order reverse chronological
     let orderedCollections = orderBy(userCollections.data, collection => collection.updatedAt).reverse();
-    console.log('orderedCollections', orderedCollections);
     this.setState({maybeCollections: orderedCollections});
   }
   

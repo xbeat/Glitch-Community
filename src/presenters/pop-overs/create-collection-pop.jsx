@@ -44,7 +44,6 @@ class CreateNewCollectionPop extends React.Component {
   }
 
   async handleSubmit(event){
-    console.log('handle submit');
     event.preventDefault();
     this.setState({working: true});
     // get text from input field
@@ -73,10 +72,8 @@ class CreateNewCollectionPop extends React.Component {
       if(data && data.url){
         if(this.state.teamId){
           const {data: team} = await this.props.api.get(`/teams/${this.state.teamId}`);
-          console.log('got team');
           data.team = team; 
         }else{
-          console.log('set user');
           data.user = this.props.currentUser;
         }
         const newCollectionUrl = getLink(data);
@@ -96,7 +93,6 @@ class CreateNewCollectionPop extends React.Component {
   render() {
     const {error, query} = this.state;
     const {collections} = this.props;
-    console.log('collections', collections);
     
     let queryError = this.state.error;
     let submitEnabled = this.state.query.length > 0;
@@ -118,7 +114,7 @@ class CreateNewCollectionPop extends React.Component {
       return menuContents;
     }
     
-    if (!!collections && collections.some(c => c.url === kebabCase(query))) {
+    if (!!collections && collections.filter(({teamId})=> teamId == thicollections.some(c => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this url';
     }
     if(this.state.newCollectionUrl){
