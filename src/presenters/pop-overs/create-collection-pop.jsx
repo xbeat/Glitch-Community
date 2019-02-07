@@ -96,6 +96,7 @@ class CreateNewCollectionPop extends React.Component {
     
     let queryError = this.state.error;
     let submitEnabled = this.state.query.length > 0;
+    let nameTakenError = "You already have a collection with this url";
 
     let placeholder = "New Collection Name";
     
@@ -114,9 +115,14 @@ class CreateNewCollectionPop extends React.Component {
       return menuContents;
     }
     
-    if (!!collections && collections.filter(({teamId})=> teamId == thicollections.some(c => c.url === kebabCase(query))) {
-      queryError = 'You already have a collection with this url';
+    const selectedOwnerCollections = (this.state.teamId 
+                              ? collections.filter( ({teamId}) => teamId == this.state.teamId) 
+                              : collections.filter( ({userId}) => userId == this.props.currentUser.id));
+    
+    if (!!collections && selectedOwnerCollections.some(c => c.url === kebabCase(query))) {
+      queryError = nameTakenError;
     }
+    
     if(this.state.newCollectionUrl){
       return <Redirect to={this.state.newCollectionUrl}/>;
     }
