@@ -1,8 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Button, { TYPES } from '../src/components/buttons/button';
-import ButtonWithEmoji from '../src/components/buttons/button-with-emoji';
-import ProjectCallout from '../src/components/project-callout/project-callout.jsx';
+import Button from '../src/components/buttons/button';
 
 storiesOf('Button', module)
   .add('regular', () => (
@@ -22,29 +20,4 @@ storiesOf('Button', module)
   ))
 .add('data tracking', () => (
   <Button size="small" dataTrack="open new-project pop">New Project</Button>
-  ));   
-
-storiesOf('Button With Emoji', module)
-  .add('regular', () => (
-    <ButtonWithEmoji emoji="https://cdn.glitch.com/f7224274-1330-4022-a8f2-8ae09dbd68a8%2Fframed_picture.png?1496341054682">Emoji Button</ButtonWithEmoji>
-  ))
-.add('small emoji', () => (
-    <ButtonWithEmoji emoji="https://cdn.glitch.com/9c72d8a2-2546-4c4c-9e97-2e6450752c11%2Fmicrophone.png?1507674704246" size="small">Remix this</ButtonWithEmoji>
-  ))
-.add('additional emoji', () => (
-    <ButtonWithEmoji emoji="https://cdn.glitch.com/6ce807b5-7214-49d7-aadd-f11803bc35fd%2Fshow-app.svg" type="cta">Show</ButtonWithEmoji>
-  ))
-
-storiesOf("Project Callout", module)
-.add('project callout', () => (
-  <ProjectCallout domain="community"/>
-))
-
-// <button
-//               className={props.buttonClass}
-//               data-track={props.dataTrack}
-//               onClick={togglePopover}
-//             >
-//               //{props.buttonText}
-//             </button>
-    
+  ));
