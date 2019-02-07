@@ -41,8 +41,8 @@ class AddProjectToCollectionPopContents extends React.Component {
   }
   
   render() {
-    const {filteredCollections} = this.state;
-    const NoSearchResultsPlaceholder = () => <p className="info-description">No matching collections found – create a new one?</p>;
+    const {filteredCollections, query} = this.state;
+    const NoSearchResultsPlaceholder = () => <p className="info-description">No matching collections found – add to a new one?</p>;
     const NoCollectionPlaceholder = () => <p className="info-description">Create collections to organize your favorite projects.</p>;
     
     return (
@@ -87,7 +87,7 @@ class AddProjectToCollectionPopContents extends React.Component {
                 </ul>
               </section>
                : <section className="pop-over-info">
-                    {this.props.query ? <NoSearchResultsPlaceholder/> :<NoCollectionPlaceholder/>}
+                    {!!query ? <NoSearchResultsPlaceholder/> :<NoCollectionPlaceholder/>}
                   </section>
             }
         
