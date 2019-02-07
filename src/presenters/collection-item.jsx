@@ -42,7 +42,7 @@ class CollectionItem extends React.Component{
   }
 
   render(){
-    const {collection, deleteCollection, isAuthorized} = this.props;
+    const {collection, deleteCollection, projects, isAuthorized} = this.props;
     return (
       <li>
         {isAuthorized && (
