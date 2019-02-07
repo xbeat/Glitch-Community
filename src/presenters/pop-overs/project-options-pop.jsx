@@ -175,7 +175,7 @@ export default function ProjectOptions({projectOptions={}, project, api, current
 
   return (
     <PopoverWithButton
-      buttonClass="project-options button-borderless opens-pop-over button-small"
+      buttonClass="project-options button-borderless button-small"
       buttonText={<div className="down-arrow" aria-label="options" />}
       containerClass="project-options-pop-btn"
       passToggleToPop
