@@ -80,7 +80,7 @@ class NewStuff extends React.Component {
         {children(show)}
         {dogVisible && (
           <div className="new-stuff-footer">
-            <button className="button-unstyled new-stuff opens-pop-over" onClick={show}>
+            <button className="button-unstyled new-stuff" onClick={show}>
               <figure className="new-stuff-avatar" data-tooltip="New" data-tooltip-top="true" data-tooltip-persistent="true" alt="New Stuff"/>
             </button>
           </div>

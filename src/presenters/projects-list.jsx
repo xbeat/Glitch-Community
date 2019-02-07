@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProjectItem from './project-item.jsx';
-import Link from './includes/link';
+import ProjectItem from './project-item';
 
 export const ProjectsList = ({title, placeholder, extraClasses, ...props}) => (
   <article className={"projects " + extraClasses}>
@@ -67,23 +66,18 @@ ExpandyProjects.defaultProps = {
 };
 
 
-export const ProjectsUL = ({projectCount, collectionUrl, ...props}) => {
+export const ProjectsUL = ({...props}) => {
   return (
     <ul className="projects-container">
       { props.projects.map(project => (
         <ProjectItem key={project.id} {...{project}} {...props}></ProjectItem>
       ))}
-
-      {props.homepageCollection &&
-        <Link to={collectionUrl} className="collection-view-all">View all {projectCount} projects →</Link>
-      }
     </ul>
   );
 };
 
 ProjectsUL.propTypes = {
   projects: PropTypes.array.isRequired,
-  homepageCollection: PropTypes.bool,
   collectionUrl: PropTypes.string,
   projectCount: PropTypes.number,
 };

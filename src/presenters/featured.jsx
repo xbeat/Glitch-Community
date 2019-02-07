@@ -7,7 +7,8 @@ import FeaturedEmbedObject from '../curated/featured-embed';
 
 import Link from './includes/link.jsx';
 
-import FeaturedEmbed from './featured-embed.jsx';
+import FeaturedEmbed from './featured-embed';
+import FeaturedCollections from './featured-collections';
 
 class ZineItems extends React.Component {
   constructor(props) {
@@ -59,7 +60,7 @@ FeaturedPanel.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-const Featured = ({featured}) => (
+const Featured = ({featured, api}) => (
   <section className="featured">
     <div className="community-pick-embed-container">
       <FeaturedEmbed {...FeaturedEmbedObject}/>
@@ -76,19 +77,22 @@ const Featured = ({featured}) => (
     </section>
     
     <ZineItems/>
+    <FeaturedCollections api={api}/>
   </section>
 );
 Featured.propTypes = {
   featured: PropTypes.array.isRequired,
+  api: PropTypes.any.isRequired,
 };
 
 
-const FeaturedContainer = ({isAuthorized}) => (
-  <Featured featured={FeaturedItems} isAuthorized={isAuthorized}/>
+const FeaturedContainer = ({isAuthorized, api}) => (
+  <Featured featured={FeaturedItems} isAuthorized={isAuthorized} api={api}/>
 );
 
 FeaturedContainer.propTypes = {
-  isAuthorized: PropTypes.bool,
+  isAuthorized: PropTypes.bool.isRequired,
+  api: PropTypes.any.isRequired,
 };
 
 export default FeaturedContainer;
