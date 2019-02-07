@@ -5,9 +5,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const AutoprefixerStylus = require("autoprefixer-stylus");
 const StatsPlugin = require('stats-webpack-plugin');
 
-
 const BUILD = path.resolve(__dirname, 'build');
 const SRC = path.resolve(__dirname, 'src');
+const CSS_MODULES = path.resolve(__dirname, 'src/components');
 const STYLES = path.resolve(__dirname, 'styles');
 const STYLE_BUNDLE_NAME = 'styles';
 
@@ -82,7 +82,7 @@ module.exports = {
       },
       {
         test: /\.styl/,
-        include: SRC,
+        include: CSS_MODULES,
         use: [
           MiniCssExtractPlugin.loader,
           {

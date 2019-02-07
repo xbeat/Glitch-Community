@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Button, { TYPES } from '../src/atoms/button/button';
-import ButtonWithEmoji from '../src/molecules/button-with-emoji/button-with-emoji';
-import ProjectCallout from '../src/molecules/project-callout/project-callout.jsx';
+import Button, { TYPES } from '../src/components/buttons/button';
+import ButtonWithEmoji from '../src/components/buttons/button-with-emoji';
+import ProjectCallout from '../src/components/project-callout/project-callout.jsx';
 
 storiesOf('Button', module)
   .add('regular', () => (
