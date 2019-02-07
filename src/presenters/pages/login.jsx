@@ -68,9 +68,11 @@ class LoginPage extends React.Component {
         this.setState({errorMessage: errorData.message});
       }
       
+      if (error && error.response && error.response.status !== 401) {
+        console.error("Login error.", errorData);
+        captureException(error);
+      }
       const details = {provider, error: errorData};
-      console.error("Login error.", details);
-      captureException(error);
       notifyParent({success: false, details});
     }
   }
