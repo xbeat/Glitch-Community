@@ -49,14 +49,10 @@ const proxied = proxy(app);
 const router = require('./routes');
 app.use('/', router(['/edit', ...proxied]));
 
-const httpProxy = require('http-proxy');
-const storybookProxy = httpProxy.createProxyServer();
-const storybookServer = 'https://localhost:9001';
-
-app.all("/storybook/*", function(req, res) {
-  console.log("redirecting to Storybook");
-  storybookProxy.web(req, res, {target: storybookServer});
-});
+if (process.env.NODE_ENV === 'development') {
+  require('../.storybook/config.js');
+  require('@storybook/react').renderAtPath('/storybook');
+}
 
 // Add an explicit no-cache to 404 responses
 // Since this is the last handler it will only be hit when all other handlers miss
