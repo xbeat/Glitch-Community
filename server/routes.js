@@ -107,11 +107,6 @@ module.exports = function(external) {
       CONSTANTS: constants,
     });
   });
-
-  app.get('/storybook', (req, res) => {
-    console.log('getting storybook')
-    res.redirect('./out');
-  });
   
   app.get('*', async (req, res) => {
     await render(res,
