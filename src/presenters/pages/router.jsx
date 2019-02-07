@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
+import {Route, Switch, withRouter} from 'react-router-dom';
 
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
