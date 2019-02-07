@@ -146,6 +146,7 @@ export class AddTeamUser extends React.Component {
     console.log(this.state.alreadyInvited);
     
     const {inviteEmail, inviteUser, setWhitelistedDomain, getInvitees, ...props} = this.props;
+    this.getInvitees;
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
