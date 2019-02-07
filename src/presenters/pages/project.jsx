@@ -73,7 +73,7 @@ const ReadmeError = (error) => (
 );
 const ReadmeLoader = ({api, domain}) => (
   <DataLoader get={() => api.get(`projects/${domain}/readme`)} renderError={ReadmeError}>
-    {({data}) => <Expander height={250}><Markdown>{data}</Markdown></Expander>}
+    {({data}) => <Expander height={250}><Markdown>{data.toString()}</Markdown></Expander>}
   </DataLoader>
 );
 ReadmeLoader.propTypes = {
