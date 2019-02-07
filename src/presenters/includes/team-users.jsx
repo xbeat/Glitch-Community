@@ -100,20 +100,10 @@ export class AddTeamUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      invitee: '',
+      invitee: getDisplayName(...this.props.invitedMembers),
       alreadyInvited: this.props.invitedMembers,
     };
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
-  }
-  
-  async getInvitees() {
-    this.props.invitedMembers.forEach(user => { 
-      const {data} = this.props.api.get(`users/${user.id}`);
-      this.setState((state) => ({
-        invitee: getDisplayName(user),
-        alreadyInvited: [...state.alreadyInvited, {data}]
-      }));
-    });
   }
   
   async setWhitelistedDomain(togglePopover, domain) {
