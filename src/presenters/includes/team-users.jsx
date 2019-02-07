@@ -143,8 +143,8 @@ export class AddTeamUser extends React.Component {
   }
 
   render() {
-    console.log(this.state.alreadyInvited);
-    
+    //console.log(this.state.alreadyInvited);
+    console.log(this.props);
     const {inviteEmail, inviteUser, setWhitelistedDomain, getInvitees, ...props} = this.props;
     this.getInvitees;
     return (
