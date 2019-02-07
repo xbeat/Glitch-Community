@@ -108,8 +108,12 @@ export class AddTeamUser extends React.Component {
   
   async getInvitees() {
     this.props.invitedMembers.forEach(user => { 
-      const {data} = await this.props.api.get(`users/${user.id}`);
-      this.setState(alreadyInvited: {data});
+      const {data} = this.props.api.get(`users/${user.id}`);
+      this.setState((state) => ({
+        invitee: getDisplayName(user),
+        alreadyInvited: [...state.alreadyInvited, {data}]
+      }));
+    });
   }
   
   async setWhitelistedDomain(togglePopover, domain) {
@@ -141,6 +145,7 @@ export class AddTeamUser extends React.Component {
   }
 
   render() {
+    console.log(this.props.members);
     console.log(this.state.alreadyInvited);
     const {inviteEmail, inviteUser, setWhitelistedDomain, ...props} = this.props;
     return (
