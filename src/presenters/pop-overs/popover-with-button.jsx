@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopoverContainer from './popover-container.jsx';
-import Button from '../../components/buttons/button.jsx';
 
 const PopoverWithButton = props => {
   return (
@@ -13,9 +12,13 @@ const PopoverWithButton = props => {
         }
         return (
           <div className={"button-wrap " + props.containerClass}>
-            <Button	size="small" dataTrack={props.dataTrack}	onClick={togglePopover}	>
+            <button
+              className={props.buttonClass}
+              data-track={props.dataTrack}
+              onClick={togglePopover}
+            >
               {props.buttonText}
-            </Button>
+            </button>
             {visible && childrenToShow}
           </div>
         );
