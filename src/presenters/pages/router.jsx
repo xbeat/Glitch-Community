@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Route, Switch, withRouter} from 'react-router-dom';
+import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
 
 import categories from '../../curated/categories';
 import rootTeams from '../../curated/teams';
@@ -103,6 +103,8 @@ const Router = ({api}) => (
 
       <Route path="/secret" exact render={({location}) => <SecretPage key={location.key}/>}></Route>
 
+      <Route path="/.out" exact render={() => <Redirect to="/.out/index.html"/>} />
+    
       {EXTERNAL_ROUTES.map(route => (
         <Route key={route} path={route} render={({location}) => <ExternalPageReloader key={location.key}/>}/>
       ))}
