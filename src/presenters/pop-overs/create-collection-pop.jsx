@@ -12,6 +12,7 @@ import {getLink, defaultAvatar} from '../../models/collection';
 import {NestedPopoverTitle} from './popover-nested.jsx';
 import Dropdown from './dropdown.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
+import Loader from '../includes/loader.jsx';
 
 import {kebabCase, orderBy} from 'lodash';
 
@@ -21,7 +22,7 @@ class CreateNewCollectionPop extends React.Component {
     
     this.state = {
       working: false,
-      query: '', //The actual search text
+      query: '', //The entered collection name
       teamId: undefined, // by default, create a collection for a user, but if team is selected from dropdown, set to teamID,
     };
     
@@ -99,7 +100,7 @@ class CreateNewCollectionPop extends React.Component {
     let placeholder = "New Collection Name";
     
     const teams = this.props.currentUser.teams;
-    const currentUserMenuItem = <>myself <UserAvatar user={this.props.currentUser} isStatic={true}/></>;
+    const currentUserMenuItem = <span>myself <UserAvatar user={this.props.currentUser} isStatic={true}/></span>;
     
     function getTeamMenuContents(){
       const orderedTeams = orderBy(teams, team => team.name.toLowerCase());   

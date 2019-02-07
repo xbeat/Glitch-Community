@@ -184,35 +184,6 @@ popover-secondary-background()
 
   .danger-zone
     background-color: warning-background
-.button-wrap
-  &.dropdown // DROPDOWN STYLING STARTS HERE....
-    display: inline
-    vertical-align: sub
-    button
-      margin-bottom: 10px
-    .mini-pop
-      max-width: 180px
-      position: absolute
-      list-style-type: none
-      .mini-pop-action
-        padding: 8px 12px
-        font-weight: 600
-        margin: 0
-        border-bottom: 1px solid input-border
-        font-size: 12px
-        &.selected
-          background: #E8E8E8
-      .mini-pop-action:hover
-        background: secondary-background
-        cursor: pointer
-    div
-      display: inline
-    img
-      width: 18px
-      height: 18px
-      vertical-align: bottom   
-    .down-arrow
-      margin-left: 3px
 .sign-in-pop
   width: 205px
   right: 0
@@ -348,14 +319,11 @@ popover-secondary-background()
       color: tertiary
       margin: 0
       clear: both
-    .button-wrap
+    button.user-or-team-toggle
       margin-bottom: 10px
-      &:first
-        margin-top: 10px
-      button.user-or-team-toggle
-        margin-left: 5px
-        img
-          vertical-align: inherit
+      margin-left: 5px
+      img
+        vertical-align: inherit
     .mini-pop
       left: 5px
       top: 18px
