@@ -107,7 +107,10 @@ class TeamPage extends React.Component {
   }
   
   getInvitees() {
-    const ids = this.props.team.tokens.map(({userId}) => userId)
+    console.log("get invitees");
+    const ids = this.props.team.tokens.map(({userId}) => userId);
+    const userArray = ids.forEach(this.props.api.get(`users/${ids}`));
+    return userArray;
   }
 
   render() {
@@ -168,7 +171,7 @@ class TeamPage extends React.Component {
                   inviteUser={this.props.inviteUser}
                   setWhitelistedDomain={this.props.currentUserIsTeamAdmin ? this.props.updateWhitelistedDomain : null}
                   members={team.users.map(({id}) => id)}
-                  invitedMembers={team.tokens.map(({userId}) => userId)}
+                  invitedMembers={this.getInvitees()}
                   whitelistedDomain={team.whitelistedDomain}
                   api={this.props.api}
                 />
