@@ -2,6 +2,7 @@
 
 // 🐈
 // prepend new updates
+// make sure image urls use https
 
 export default [
   {

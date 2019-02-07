@@ -11,6 +11,7 @@ Example:
 },
 */
 
+// make sure image urls use https
 export default [
   {
     title: 'What\'s the Right Tea for You?',
