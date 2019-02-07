@@ -22,9 +22,7 @@ class AddProjectToCollectionPopContents extends React.Component {
     
     this.state = {
       query: '', // value of filter input field
-      working: false,
-      filteredCollections: [], // collections filtered from search query
-      maybeCollections: null, //null means still loading
+      filteredCollections: this.props.maybeCollections, // collections filtered from search query
     };
     this.updateFilter = this.updateFilter.bind(this);
   }
@@ -36,39 +34,8 @@ class AddProjectToCollectionPopContents extends React.Component {
     this.setState({filteredCollections: filteredCollections});
   }
   
-  async loadCollections() {
-    // first, load all of the user's collections
-    const userCollections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
-    // add current user as owner for collection (for generating user avatar for collection result item)
-    userCollections.data.forEach(userCollection => {
-      userCollection.owner = this.props.currentUser;
-    });
-    
-    // next all of the user's team's collections
-    const userTeams = this.props.currentUser.teams;
-    for(const team of userTeams){
-      const {data} = await this.props.api.get(`collections/?teamId=${team.id}`);
-      const teamCollections = data;
-      if(teamCollections){
-        teamCollections.forEach(teamCollection => {
-          teamCollection.owner = this.props.currentUser.teams.find(userTeam => userTeam.id == team.id);
-          userCollections.data.push(teamCollection);
-        });
-      }
-    }
-    
-    // order reverse chronological
-    let orderedCollections = orderBy(userCollections.data, collection => collection.updatedAt).reverse();
-    
-    this.setState({maybeCollections: orderedCollections, filteredCollections: orderedCollections});
-  }
-  
-  async componentDidMount() {
-    this.loadCollections();
-  }
-  
   render() {
-    const {maybeCollections, filteredCollections} = this.state;
+    const {filteredCollections} = this.state;
     
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
@@ -79,7 +46,7 @@ class AddProjectToCollectionPopContents extends React.Component {
           : null
         )}
         
-        {(maybeCollections && maybeCollections.length > 3) && (
+        {(this.props.filteredCollections && this.props.filteredCollections.length > 3) && (
           <section className="pop-over-info">
             <input id="collection-filter" 
               className="pop-over-input search-input pop-over-search" 
@@ -88,8 +55,7 @@ class AddProjectToCollectionPopContents extends React.Component {
           </section>
         )}
         
-        {maybeCollections ? (
-          filteredCollections.length ? (
+        (filteredCollections.length ? (
             <section className="pop-over-actions results-list">
               <ul className="results">
                 {filteredCollections.map((collection) =>   
@@ -113,10 +79,9 @@ class AddProjectToCollectionPopContents extends React.Component {
               </ul>
             </section>
           ) : (<section className="pop-over-info">
-            
-              {maybeCollections.length ? <NoSearchResultsPlaceholder/> :<NoCollectionPlaceholder/>}
+              {this.props.query ? <NoSearchResultsPlaceholder/> :<NoCollectionPlaceholder/>}
           </section>)
-        ) : <Loader/>}
+        )
         
         <section className="pop-over-actions">
           {/* TO DO: may want to consider if we force all users to go through Create Collection Pop or only users with teams */}
@@ -180,13 +145,22 @@ class AddProjectToCollectionPop extends React.Component {
   
   render(){
     return(
-      <NestedPopover alternateContent={() => <CreateCollectionPop {this.props} api={props.api} togglePopover={props.togglePopover}/>} startAlternateVisible={false}>
+      <NestedPopover alternateContent={() => <CreateCollectionPop {...this.props} api={this.props.api} collections={this.state.maybeCollections} togglePopover={this.props.togglePopover}/>} startAlternateVisible={false}>
         { createCollectionPopover => (
-          <AddProjectToCollectionPopContents {...props} createCollectionPopover={createCollectionPopover}/>
+          <>
+            { this.state.maybeCollections ? 
+              <AddProjectToCollectionPopContents {...this.props} collections={this.state.maybeCollections} createCollectionPopover={createCollectionPopover}/>
+             : <Loader/>
+            }
+          </>
         )}
       </NestedPopover>
     );
   }
 };
+
+AddProjectToCollectionPop.propTypes = {
+    
+}
 
 export default AddProjectToCollectionPop;
