@@ -91,6 +91,12 @@ class TeamPage extends React.Component {
 
     return projectOptions;
   }
+  
+  async getInvitees() {
+    const {data} = await this.props.api.get(`teams/${this.props.teamId}`);
+    console.log('hi');
+    return data.tokens;
+  }
 
   teamAdmins() {
     return this.props.team.users.filter(user => {
@@ -163,7 +169,7 @@ class TeamPage extends React.Component {
                   inviteEmail={this.props.inviteEmail}
                   inviteUser={this.props.inviteUser}
                   setWhitelistedDomain={this.props.currentUserIsTeamAdmin ? this.props.updateWhitelistedDomain : null}
-                  members={this.props.api.get(`teams/${this.props.teamId}`)}
+                  members={this.getInvitees()}
                   whitelistedDomain={team.whitelistedDomain}
                   api={this.props.api}
                 />
