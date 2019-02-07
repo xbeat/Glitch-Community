@@ -101,17 +101,9 @@ export class AddTeamUser extends React.Component {
     super(props);
     this.state = {
       invitee: '',
-      alreadyInvited: [],
+      alreadyInvited: this.props.invitedMembers,
     };
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
-  }
-  
-  async getInvitees() {
-    const {data} = await this.props.api.get(`teams/${this.props.teamId}`);
-    console.log('hi');
-    this.setState({
-      alreadyInvited: data.tokens
-    });
   }
   
   async setWhitelistedDomain(togglePopover, domain) {
@@ -144,9 +136,8 @@ export class AddTeamUser extends React.Component {
 
   render() {
     //console.log(this.state.alreadyInvited);
-    console.log(this.props);
-    const {inviteEmail, inviteUser, setWhitelistedDomain, getInvitees, ...props} = this.props;
-    this.getInvitees;
+    //console.log(this.props);
+    const {inviteEmail, inviteUser, setWhitelistedDomain, ...props} = this.props;
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
