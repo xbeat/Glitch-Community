@@ -50,7 +50,7 @@ class CollectionItem extends React.Component{
         )}
 
         {(collection &&
-          <CollectionLink collection={collection} className="button-area">
+          <CollectionLink collection={collection} projects={projects} className="button-area">
             <div className={"collection" + (isAuthorized ? " authorized" : "")} id={"collection-" + collection.id}>
               <div className="collection-container">
                 <div className="collection-info" style={{backgroundColor: collection.coverColor}}>
