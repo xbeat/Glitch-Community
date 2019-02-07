@@ -112,6 +112,7 @@ module.exports = function(external) {
     console.log('getting storybook')
     require('../.storybook/config.js');
     require('@storybook/react').renderAtPath('/storybook');
+    res.send(200);
   });
   
   app.get('*', async (req, res) => {
