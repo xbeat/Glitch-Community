@@ -31,13 +31,20 @@ try {
   Sentry.init({
     dsn: "https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508",
     environment: ENVIRONMENT,
-    beforeSend(event) {
-      const tokens = ['facebookToken', 'githubToken', 'persistentToken'];
-      let json = JSON.stringify(event);
-      tokens.forEach(token => {
-        const regexp = new RegExp(`"${token}":"[^"]+"`, 'g');
-        json = json.replace(regexp, `"${token}":"****"`);
-      });
+    beforeSend(event, hint) {
+      if (!shouldSendError) {
+        return null;
+      }
+
+      if (
+        hint.originalException &&
+        hint.originalException.message === "Network Error"
+      ) {
+        // axios couldn't find the server it was supposed to make a request to - probably user network error
+        return null;
+      }
+
+      const json = filterSecrets(JSON.stringify(event));
       return JSON.parse(json);
     },
     beforeBreadcrumb(breadcrumb) {

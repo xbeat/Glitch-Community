@@ -77,7 +77,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
       
       {!!props.addProjectToCollection &&
         <section className="pop-over-actions">
-          <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to My Collection " emoji="framed_picture"/>
+          <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to My Collection " emoji="framed-picture"/>
         </section>
       }
 
