@@ -11,7 +11,7 @@ function webpackExpressMiddleware() {
   const compiler = webpack(webpackConfig);
   
   const webpackMiddleware = require('webpack-dev-middleware');
-  const middleware = webpackMiddleware(compiler, {writeToDisk: true});
+  const middleware = webpackMiddleware(compiler, {logLevel: 'debug', writeToDisk: true});
   
   let ready = false;
   middleware.waitUntilValid(() => {
