@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
 
 import Questions from '../questions.jsx';
-import Categories from '../categories.jsx';
+import MoreIdeas from '../more-ideas';
 
 const QuestionsPage = ({api}) => (
   <Layout api={api}>
@@ -14,7 +14,7 @@ const QuestionsPage = ({api}) => (
     </Helmet>
     <main className="questions-page">
       <Questions api={api} max={12}/>
-      <Categories/>
+      <MoreIdeas api={api}/>
     </main>
   </Layout>
 );
