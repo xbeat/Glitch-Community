@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind';
 import styles from './project-callout.styl'
-import Button from '../../atoms/button/button'
+import Button from '../buttons/button'
 import { getLink as getProjectLink } from '../../models/project';
 
 let cx = classNames.bind(styles);

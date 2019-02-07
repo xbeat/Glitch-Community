@@ -102,10 +102,11 @@ const Router = ({api}) => (
       ))}
 
       <Route path="/secret" exact render={({location}) => <SecretPage key={location.key}/>}></Route>
-    
+
       {EXTERNAL_ROUTES.map(route => (
         <Route key={route} path={route} render={({location}) => <ExternalPageReloader key={location.key}/>}/>
       ))}
+    
       <Route render={({location}) => <NotFoundPage api={api} key={location.key}/>}/>
     </Switch>
   </>
