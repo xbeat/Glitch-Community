@@ -139,14 +139,54 @@ AddProjectToCollectionPopContents.propTypes = {
 const NoSearchResultsPlaceholder = () => <p className="info-description">Nothing found <span role="img" aria-label="">💫</span></p>;
 const NoCollectionPlaceholder = () => <p className="info-description">Create collections to organize your favorite projects.</p>;
 
-const AddProjectToCollectionPop = ({...props}) => {
-  return(
-    <NestedPopover alternateContent={() => <CreateCollectionPop {...props} api={props.api} togglePopover={props.togglePopover}/>} startAlternateVisible={false}>
-      { createCollectionPopover => (
-        <AddProjectToCollectionPopContents {...props} createCollectionPopover={createCollectionPopover}/>
-      )}
-    </NestedPopover>
-  );
+class AddProjectToCollectionPop extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      maybeCollections: null, // null means still loading
+    }
+  }
+  
+  async loadCollections() {
+    // first, load all of the user's collections
+    const userCollections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
+    // add current user as owner for collection (for generating user avatar for collection result item)
+    userCollections.data.forEach(userCollection => {
+      userCollection.owner = this.props.currentUser;
+    });
+    
+    // next all of the user's team's collections
+    const userTeams = this.props.currentUser.teams;
+    for(const team of userTeams){
+      const {data} = await this.props.api.get(`collections/?teamId=${team.id}`);
+      const teamCollections = data;
+      if(teamCollections){
+        teamCollections.forEach(teamCollection => {
+          teamCollection.owner = this.props.currentUser.teams.find(userTeam => userTeam.id == team.id);
+          userCollections.data.push(teamCollection);
+        });
+      }
+    }
+    
+    // order reverse chronological
+    let orderedCollections = orderBy(userCollections.data, collection => collection.updatedAt).reverse();
+    
+    this.setState({maybeCollections: orderedCollections});
+  }
+  
+  async componentDidMount() {
+    this.loadCollections();
+  }
+  
+  render(){
+    return(
+      <NestedPopover alternateContent={() => <CreateCollectionPop {this.props} api={props.api} togglePopover={props.togglePopover}/>} startAlternateVisible={false}>
+        { createCollectionPopover => (
+          <AddProjectToCollectionPopContents {...props} createCollectionPopover={createCollectionPopover}/>
+        )}
+      </NestedPopover>
+    );
+  }
 };
 
 export default AddProjectToCollectionPop;
