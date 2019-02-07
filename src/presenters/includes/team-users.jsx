@@ -100,7 +100,7 @@ export class AddTeamUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      invitee: getDisplayName(...this.props.invitedMembers),
+      invitee: '',
       alreadyInvited: this.props.invitedMembers,
     };
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
@@ -135,9 +135,8 @@ export class AddTeamUser extends React.Component {
   }
 
   render() {
-    console.log(this.props.members);
-    console.log(this.props.invitedMembers);
-    //console.log(this.state.alreadyInvited);
+    console.log("state", this.state.alreadyInvited);
+    console.log("props", this.props.invitedMembers);
     const {inviteEmail, inviteUser, setWhitelistedDomain, ...props} = this.props;
     return (
       <PopoverContainer>

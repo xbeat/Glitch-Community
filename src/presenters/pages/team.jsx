@@ -105,6 +105,10 @@ class TeamPage extends React.Component {
     }
     return false;
   }
+  
+  getInvitees() {
+    const ids = this.props.team.tokens.map(({userId}) => userId)
+  }
 
   render() {
     const {team} = this.props;
