@@ -13,7 +13,7 @@ import {getAvatarUrl} from '../models/project.js';
 import {getContrastTextColor, hexToRgbA} from '../models/collection';
 
 const ProjectsPreview = ({projects}) => {
-  
+
   return (
     <>
       <ul className="projects-preview">
@@ -26,7 +26,7 @@ const ProjectsPreview = ({projects}) => {
         )) }
       </ul>
       <div className="collection-link">
-        View <Pluralize count={projects.length} singular="project"/> →
+        View collection →
       </div>
     </>
   );
@@ -40,7 +40,7 @@ class CollectionItem extends React.Component{
   constructor(props){
     super(props);
   }
-  
+
   render(){
     const {collection, deleteCollection, isAuthorized} = this.props;
     return (
@@ -53,12 +53,13 @@ class CollectionItem extends React.Component{
           <CollectionLink collection={collection} className="button-area">
             <div className={"collection" + (isAuthorized ? " authorized" : "")} id={"collection-" + collection.id}>
               <div className="collection-container">
-                <div className="collection-info" style={{backgroundColor: collection.coverColor}}> 
+                <div className="collection-info" style={{backgroundColor: collection.coverColor}}>
                   <div className="avatar-container">
                     <div className="avatar">
                       <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)} collectionId={collection.id}/>
                     </div>
                   </div>
+                  <Pluralize count={projects.length} singular="project"/>
                   <div className="collection-name-description">
                     <div className="button">
                       <span className="project-badge private-project-badge" aria-label="private"></span>
@@ -82,7 +83,7 @@ class CollectionItem extends React.Component{
                 ) : <div className="collection-link"><Loader/></div>}
               </div>
             </div>
-          </CollectionLink>             
+          </CollectionLink>
         )}
       </li>
     );
