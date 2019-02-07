@@ -108,10 +108,8 @@ module.exports = function(external) {
     });
   });
 
-  app.get('/storybook', async (req, res) => {
+  app.get('/storybook', (req, res) => {
     console.log('getting storybook')
-    require('../.storybook/config.js');
-    require('@storybook/react').renderAtPath('/storybook');
     res.send(200);
   });
   
