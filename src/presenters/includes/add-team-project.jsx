@@ -13,7 +13,7 @@ const AddTeamProject = ({currentUserIsOnTeam, ...props}) => {
     <section className="add-project-container">
       {/* Add disabled={props.projectLimitIsReached} once billing is ready */}
       <PopoverWithButton
-        buttonClass={`button add-project has-emoji opens-pop-over ${props.extraButtonClass}`}
+        buttonClass={`add-project has-emoji ${props.extraButtonClass}`}
         buttonText={<>Add Project <span className="emoji bento-box" role="img" aria-label="" /></>}
         passToggleToPop
       >
