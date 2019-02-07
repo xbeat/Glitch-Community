@@ -23,9 +23,7 @@ class CreateNewCollectionPop extends React.Component {
     
     this.state = {
       working: false,
-      error: null, //null or string
       query: '', //The actual search text
-      maybeCollections: null, //null means still loading
       teamId: undefined, // by default, create a collection for a user, but if team is selected from dropdown, set to teamID,
     };
     
@@ -96,7 +94,10 @@ class CreateNewCollectionPop extends React.Component {
   }
 
   render() {
-    const {error, maybeCollections, query} = this.state;
+    const {error, query} = this.state;
+    const {maybeCollections} = this.props;
+    const existingCollectionNames = new Set(maybeCollections.map(({url}) => url));
+    
     let queryError = this.state.error;
     let submitEnabled = this.state.query.length > 0;
 
@@ -117,7 +118,7 @@ class CreateNewCollectionPop extends React.Component {
       return menuContents;
     }
     
-    if (!!maybeCollections && !!query && maybeCollections.some(c => c.url === kebabCase(query))) {
+    if (!!maybeCollections && maybeCollections.some(c => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this url';
     }
     if(this.state.newCollectionUrl){
