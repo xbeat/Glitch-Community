@@ -9,8 +9,6 @@ import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import {TrackClick} from '../analytics';
 import {getLink, defaultAvatar} from '../../models/collection';      
 
-import Loader from '../includes/loader.jsx';
-
 import {NestedPopoverTitle} from './popover-nested.jsx';
 import Dropdown from './dropdown.jsx';
 import {PureEditableField} from '../includes/editable-field.jsx';
@@ -116,8 +114,8 @@ class CreateNewCollectionPop extends React.Component {
     }
     
     const selectedOwnerCollections = (this.state.teamId 
-                              ? collections.filter( ({teamId}) => teamId == this.state.teamId) 
-                              : collections.filter( ({userId}) => userId == this.props.currentUser.id));
+      ? collections.filter( ({teamId}) => teamId == this.state.teamId) 
+      : collections.filter( ({userId}) => userId == this.props.currentUser.id));
     
     if (!!collections && selectedOwnerCollections.some(c => c.url === kebabCase(query))) {
       queryError = nameTakenError;
@@ -144,9 +142,9 @@ class CreateNewCollectionPop extends React.Component {
             />
             
             { this.props.currentUser.teams.length > 0 &&
-              <>
+              <div>
                 for <Dropdown buttonContents={currentUserMenuItem} menuContents={getTeamMenuContents()} onUpdate={this.setTeamId}/>
-              </>
+              </div>
             }
             
             {!this.state.working ? (

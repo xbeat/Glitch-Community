@@ -34,19 +34,19 @@ class AddProjectToCollectionPopContents extends React.Component {
   }
   
   updateFilter(query){
-    let collections = this.props.collections;
     query = query.toLowerCase().trim();
-    let filteredCollections = collections.filter(collection => collection.name.toLowerCase().includes(query)); 
+    let filteredCollections = this.props.collections.filter(collection => collection.name.toLowerCase().includes(query)); 
     this.setState({filteredCollections: filteredCollections, query: query});
   }
   
   render() {
     const {filteredCollections, query} = this.state;
-    const NoSearchResultsPlaceholder = () => <p className="info-description">No matching collections found – add to a new one?</p>;
-    const NoCollectionPlaceholder = () => <p className="info-description">Create collections to organize your favorite projects.</p>;
+    const NoSearchResultsPlaceholder = <p className="info-description">No matching collections found – add to a new one?</p>;
+    const NoCollectionPlaceholder = <p className="info-description">Create collections to organize your favorite projects.</p>;
     
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
+        {/* Only show this nested popover title from project-options */}
         { !this.props.fromProject &&
           <NestedPopoverTitle>
             <img src={getAvatarUrl(this.props.project.id)} alt={`Project avatar for ${this.props.project.domain}`}/> Add {this.props.project.domain} to collection
@@ -65,11 +65,11 @@ class AddProjectToCollectionPopContents extends React.Component {
             )}
 
            { filteredCollections && filteredCollections.length ? 
-              <section className="pop-over-actions results-list">
-                <ul className="results">
-                  {filteredCollections.map((collection) =>   
-                    // filter out collections that already contain the selected project
-                    (collection.projects && collection.projects.every(project => project.id !== this.props.project.id) && 
+             <section className="pop-over-actions results-list">
+               <ul className="results">
+                 {filteredCollections.map((collection) =>   
+                 // filter out collections that already contain the selected project
+                   (collection.projects && collection.projects.every(project => project.id !== this.props.project.id) && 
                       <li key={collection.id}>
                         <TrackClick name="Project Added to Collection" context={{groupId: collection.team ? collection.team.id : 0}}>
                           <CollectionResultItem 
@@ -82,24 +82,23 @@ class AddProjectToCollectionPopContents extends React.Component {
                           />
                         </TrackClick>
                       </li>
-                    )
-                  )}
-                </ul>
-              </section>
-               : <section className="pop-over-info">
-                    {!!query ? <NoSearchResultsPlaceholder/> :<NoCollectionPlaceholder/>}
-                  </section>
-            }
+                   )
+                 )}
+               </ul>
+             </section>
+             : <section className="pop-over-info">
+               {query ? NoSearchResultsPlaceholder : NoCollectionPlaceholder}
+             </section>
+           }
         
           <section className="pop-over-actions">
-            {/* TO DO: may want to consider if we force all users to go through Create Collection Pop or only users with teams */}
             <button className="create-new-collection button-small button-tertiary" onClick={this.props.createCollectionPopover} >Add to a new collection</button> 
           </section>
         </>
-        : 
-        <div className="loader-container">
-          <Loader/>
-        </div>
+          : 
+          <div className="loader-container">
+            <Loader/>
+          </div>
         }
       </dialog>
     );
@@ -132,7 +131,7 @@ class AddProjectToCollectionPop extends React.Component {
       userCollection.owner = this.props.currentUser;
     });
     
-    // next all of the user's team's collections
+    // next load all of the user's team's collections
     const userTeams = this.props.currentUser.teams;
     for(const team of userTeams){
       const {data} = await this.props.api.get(`collections/?teamId=${team.id}`);
@@ -158,7 +157,7 @@ class AddProjectToCollectionPop extends React.Component {
     return(
       <NestedPopover alternateContent={() => <CreateCollectionPop {...this.props} api={this.props.api} collections={this.state.maybeCollections} togglePopover={this.props.togglePopover}/>} startAlternateVisible={false}>
         { createCollectionPopover => (
-           <AddProjectToCollectionPopContents {...this.props} collections={this.state.maybeCollections} createCollectionPopover={createCollectionPopover}/>    
+          <AddProjectToCollectionPopContents {...this.props} collections={this.state.maybeCollections} createCollectionPopover={createCollectionPopover}/>    
         )}
       </NestedPopover>
     );
@@ -166,7 +165,8 @@ class AddProjectToCollectionPop extends React.Component {
 }
 
 AddProjectToCollectionPop.propTypes = {
-    
+  api: PropTypes.func.isRequired,
+  currentUser: PropTypes.object,
 };
 
 export default AddProjectToCollectionPop;
