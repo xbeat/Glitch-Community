@@ -4,7 +4,8 @@
   "description": "Find cool projects and people using Glitch",
   "scripts": {
     "prestart": "nodemon --watch server --watch shared --exec 'eslint --config server/.eslintrc.server.js server shared webpack.config.js' &",
-    "start": "nodemon --watch server --watch shared --watch views ./server/server.js & nodemon --watch stories --watch src/components --exec 'build-storybook -c .storybook -o build/storybook'"
+    "start": "nodemon --watch server --watch shared --watch views ./server/server.js",
+    "storybook": "build-storybook -c .storybook -o build/storybook"
   },
   "dependencies": {
     "@babel/core": "^7.2.0",
