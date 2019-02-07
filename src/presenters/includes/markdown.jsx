@@ -16,14 +16,14 @@ const md = markdownIt({
   .use(markdownSanitizer);
 
 const RawHTML = ({children}) => (
-  children ? <span className="markdown-content" dangerouslySetInnerHTML={{__html: children}}></span> : null
+  children.toString() ? <span className="markdown-content" dangerouslySetInnerHTML={{__html: children.toString()}}></span> : null
 );
 RawHTML.propTypes = {
   children: PropTypes.string.isRequired,
 };
 
 export const Markdown = React.memo(function Markdown({children}) {
-  const rendered = md.render(children || '');
+  const rendered = md.render(children.toString() || '');
   return <RawHTML>{rendered}</RawHTML>;
 });
 Markdown.propTypes = {
@@ -31,7 +31,7 @@ Markdown.propTypes = {
 };
 
 export const TruncatedMarkdown = React.memo(({children, length}) => {
-  const rendered = md.render(children || '');
+  const rendered = md.render(children.toString() || '');
   const truncated = truncate(rendered, length, {ellipsis: '…'});
   return <RawHTML>{truncated}</RawHTML>;
 });
