@@ -36,6 +36,7 @@ class AddProjectToCollectionPopContents extends React.Component {
   
   render() {
     const {filteredCollections} = this.state;
+    console.log('filteredCollections', filteredCollections);
     
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
@@ -56,11 +57,11 @@ class AddProjectToCollectionPopContents extends React.Component {
         )}
         
         (filteredCollections.length ? (
-            <section className="pop-over-actions results-list">
-              <ul className="results">
-                {filteredCollections.map((collection) =>   
-                  // filter out collections that already contain the selected project
-                  (collection.projects && collection.projects.every(project => project.id !== this.props.project.id) && 
+        <section className="pop-over-actions results-list">
+          <ul className="results">
+            {filteredCollections.map((collection) =>   
+            // filter out collections that already contain the selected project
+              (collection.projects && collection.projects.every(project => project.id !== this.props.project.id) && 
                     <li key={collection.id}>
                       <TrackClick name="Project Added to Collection" context={{groupId: collection.team ? collection.team.id : 0}}>
                         <CollectionResultItem 
@@ -73,14 +74,14 @@ class AddProjectToCollectionPopContents extends React.Component {
                         />
                       </TrackClick>
                     </li>
-                  )
-                )
-                }
-              </ul>
-            </section>
+              )
+            )
+            }
+          </ul>
+        </section>
           ) : (<section className="pop-over-info">
-              {this.props.query ? <NoSearchResultsPlaceholder/> :<NoCollectionPlaceholder/>}
-          </section>)
+          {this.props.query ? <NoSearchResultsPlaceholder/> :<NoCollectionPlaceholder/>}
+        </section>)
         )
         
         <section className="pop-over-actions">
@@ -94,6 +95,7 @@ class AddProjectToCollectionPopContents extends React.Component {
 
 AddProjectToCollectionPopContents.propTypes = {
   addProjectToCollection: PropTypes.func,
+  maybeCollections: PropTypes.object.isRequired,
   api: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   togglePopover: PropTypes.func, // required but added dynamically
@@ -109,10 +111,11 @@ class AddProjectToCollectionPop extends React.Component {
     super(props);
     this.state = {
       maybeCollections: null, // null means still loading
-    }
+    };
   }
   
   async loadCollections() {
+    console.log('load collections');
     // first, load all of the user's collections
     const userCollections = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
     // add current user as owner for collection (for generating user avatar for collection result item)
@@ -135,7 +138,7 @@ class AddProjectToCollectionPop extends React.Component {
     
     // order reverse chronological
     let orderedCollections = orderBy(userCollections.data, collection => collection.updatedAt).reverse();
-    
+    console.log('orderedCollections', orderedCollections);
     this.setState({maybeCollections: orderedCollections});
   }
   
@@ -149,18 +152,18 @@ class AddProjectToCollectionPop extends React.Component {
         { createCollectionPopover => (
           <>
             { this.state.maybeCollections ? 
-              <AddProjectToCollectionPopContents {...this.props} collections={this.state.maybeCollections} createCollectionPopover={createCollectionPopover}/>
+             <AddProjectToCollectionPopContents {...this.props} maybeCollections={this.state.maybeCollections} createCollectionPopover={createCollectionPopover}/>
              : <Loader/>
-            }
+             }
           </>
         )}
       </NestedPopover>
     );
   }
-};
+}
 
 AddProjectToCollectionPop.propTypes = {
     
-}
+};
 
 export default AddProjectToCollectionPop;

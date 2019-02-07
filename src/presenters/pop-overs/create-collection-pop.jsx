@@ -96,7 +96,6 @@ class CreateNewCollectionPop extends React.Component {
   render() {
     const {error, query} = this.state;
     const {maybeCollections} = this.props;
-    const existingCollectionNames = new Set(maybeCollections.map(({url}) => url));
     
     let queryError = this.state.error;
     let submitEnabled = this.state.query.length > 0;
