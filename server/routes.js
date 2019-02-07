@@ -110,7 +110,7 @@ module.exports = function(external) {
 
   app.get('/storybook', (req, res) => {
     console.log('getting storybook')
-    res.send(200);
+    res.redirect('./out');
   });
   
   app.get('*', async (req, res) => {
