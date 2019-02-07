@@ -13,16 +13,16 @@ Example:
 
 export default [
   {
-    title: 'Make Blackout Poetry',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fblackoutpoetry_final.jpg?1549281321752",
-    link: 'https://blackoutpoetry.glitch.me/'
+    title: 'What\'s the Right Tea for You?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fteaforme_final.jpg?1549538703848",
+    link: 'https://theteaforme.glitch.me/'
   },{
-    title: 'Which Domain is More Expensive?',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fdomainpricing_final.jpg?1549281323718",
-    link: 'https://domain-pricing.glitch.me/'
+    title: 'A Mahjong Platformer',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftilejumper_final.jpg?1549538704021",
+    link: 'https://tile-jumper.glitch.me/'
   },{
-    title: 'Sims Patch Notes',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsimspatch_final.jpg?1549281326378",
-    link: 'https://glitch.com/~sims-patch-notes'
+    title: 'Absurd Karaoke Lyrics',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsongbot_final.jpg?1549538704210",
+    link: 'https://songbot.glitch.me/'
   } 
 ];
