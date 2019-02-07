@@ -17,19 +17,12 @@ module.exports = function(external) {
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     return next();
   });
-
-  // Caching - js and CSS files have a hash in their name, so they last a long time
-  ['/*.js', '/*.css'].forEach((path) => (
-    app.use(path, (request, response, next) => {
-      const s = dayjs.convert(1, 'month', 'seconds');
-      response.header('Cache-Control', `public, max-age=${s}`);
-      return next();
-    })
-  ));
   
   initWebpack(app);
 
+  const ms = dayjs.convert(7, 'days', 'miliseconds');
   app.use(express.static('public', { index: false }));
+  app.use(express.static('build', { index: false, maxAge: ms }));
 
   // Log all requests for diagnostics
   app.use(function(request, response, next) {
@@ -47,16 +40,15 @@ module.exports = function(external) {
     let styles = [];
     
     try {
-      const stats = JSON.parse(await readFilePromise('public/stats.json'));
-      stats.chunks.forEach(chunk => {
-        if (chunk.initial) {
-          chunk.files.forEach(file => {
-            if (file.endsWith('.js') && !chunk.names.includes('styles')) {
-              scripts.push(`/${file}?${chunk.hash}`);
-            } else if (file.endsWith('.css')) {
-              styles.push(`/${file}?${chunk.hash}`);
-            }
-          });
+      const stats = JSON.parse(await readFilePromise('build/stats.json'));
+      stats.entrypoints.client.assets.forEach(file => {
+        if (file.match(/\.js(\?|$)/)) {
+          scripts.push(`${stats.publicPath}${file}`);
+        }
+      });
+      stats.entrypoints.styles.assets.forEach(file => {
+        if (file.match(/\.css(\?|$)/)) {
+          styles.push(`${stats.publicPath}${file}`);
         }
       });
     } catch (error) {
@@ -102,6 +94,15 @@ module.exports = function(external) {
       return;
     }
     await render(res, `@${name}`, `We couldn't find @${name}`);
+  });
+  
+  app.get('/auth/:domain', async (req, res) => {
+    const {domain} = req.params;
+    
+    res.render('api-auth.ejs', {
+      domain: domain,
+      CONSTANTS: constants,
+    });
   });
 
   app.get('*', async (req, res) => {

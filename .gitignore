@@ -1,9 +1,4 @@
-public/*.css
-public/*.css.map
-public/*.ks
-public/*.js.map
-public/*.js
-public/*.json
+build/*
 styles/style.css
 styles/style.css.map
 *.gz

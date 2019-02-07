@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {captureMessage} from '../../utils/sentry';
+import {captureException} from '../../utils/sentry';
 
 import {Redirect} from 'react-router-dom';
 import LocalStorage from '../includes/local-storage';
@@ -68,9 +68,11 @@ class LoginPage extends React.Component {
         this.setState({errorMessage: errorData.message});
       }
       
+      if (error && error.response && error.response.status !== 401) {
+        console.error("Login error.", errorData);
+        captureException(error);
+      }
       const details = {provider, error: errorData};
-      console.error("Login error.", details);
-      captureMessage("Login error", {extra: details});
       notifyParent({success: false, details});
     }
   }

@@ -51,10 +51,16 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
     animate(event, 'slide-down', () => props.deleteProject(props.project.id));
   }
   
+  function featureProject(event){
+    animate(event, 'slide-up', () => props.featureProject(props.project.id));
+  }
+  
   return(
     <dialog className="pop-over project-options-pop">
+
       {!!props.addPin &&
         <section className="pop-over-actions">
+          {!props.project.private && <PopoverButton onClick={featureProject} text="Feature" emoji="clapper"/>}
           <TrackClick name="Project Pinned">
             <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin"/>
           </TrackClick>
@@ -62,6 +68,7 @@ const ProjectOptionsContent = ({addToCollectionPopover, ...props}) => {
       }
       {!!props.removePin &&
         <section className="pop-over-actions">
+          {!props.project.private && <PopoverButton onClick={featureProject} text="Feature" emoji="clapper"/>}
           <TrackClick name="Project Un-Pinned">
             <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin"/>
           </TrackClick>
@@ -143,6 +150,7 @@ ProjectOptionsPop.propTypes = {
   removeProjectFromTeam: PropTypes.func,
   joinTeamProject: PropTypes.func,
   leaveTeamProject: PropTypes.func,
+  featureProject: PropTypes.func,
   currentUserIsOnProject: PropTypes.bool.isRequired,
 };
 ProjectOptionsPop.defaultProps = {
@@ -167,7 +175,7 @@ export default function ProjectOptions({projectOptions={}, project, api, current
 
   return (
     <PopoverWithButton
-      buttonClass="project-options button-borderless opens-pop-over button-small"
+      buttonClass="project-options button-borderless button-small"
       buttonText={<div className="down-arrow" aria-label="options" />}
       containerClass="project-options-pop-btn"
       passToggleToPop

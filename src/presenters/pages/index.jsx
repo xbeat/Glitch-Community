@@ -8,11 +8,10 @@ import {AnalyticsContext} from '../analytics';
 import {CurrentUserConsumer} from '../current-user.jsx';
 import Link from '../includes/link.jsx';
 
-import Categories from '../categories.jsx';
 import Featured from '../featured.jsx';
+import MoreIdeas from '../more-ideas.jsx';
 import OverlayVideo from '../overlays/overlay-video.jsx';
 import Questions from '../questions.jsx';
-import RandomCategories from '../random-categories.jsx';
 import RecentProjects from '../recent-projects.jsx';
 import ReportButton from '../pop-overs/report-abuse-pop.jsx';
 
@@ -60,8 +59,10 @@ class WhatIsGlitch extends React.Component {
       <section className="what-is-glitch">
         <span>
           <figure>
-            <img className="witch large" src={witchLarge} alt={whatsGlitchAlt}/>
-            <img className="witch small" src={witchSmall} alt={whatsGlitchAlt}/>
+            <h1>
+              <img className="witch large" src={witchLarge} alt={whatsGlitchAlt}/>
+              <img className="witch small" src={witchSmall} alt={whatsGlitchAlt}/>
+            </h1>
             
             <OverlayVideo>
               <div className="button video">
@@ -97,9 +98,8 @@ const IndexPage = ({api, user}) => (
     
     {!!user.projects.length && <RecentProjects api={api}/>}
     {!!user.login && <Questions api={api}/>}
-    <Featured isAuthorized={!!user.login}/>
-    <RandomCategories api={api}/>
-    <Categories/>
+    <Featured isAuthorized={!!user.login} api={api}/>
+    <MoreIdeas api={api}/>
     <MadeInGlitch/>
     <ReportButton reportedType="home" />
   </main>

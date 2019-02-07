@@ -175,6 +175,18 @@ class TeamEditor extends React.Component {
     });
   }
 
+  async addProjectToCollection(project, collection) {
+    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
+  }
+  
+  async unfeatureProject(){
+    await this.updateFields({featured_project_id: null});
+  }
+  
+  async featureProject(id){
+    await this.updateFields({featured_project_id: id});
+  }
+
   currentUserIsTeamAdmin() {
     if (!this.props.currentUser) return false;
     const currentUserId = this.props.currentUser.id;
@@ -206,10 +218,13 @@ class TeamEditor extends React.Component {
       updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),
       joinTeamProject: projectId => this.joinTeamProject(projectId).catch(handleError),
       leaveTeamProject: projectId => this.leaveTeamProject(projectId).catch(handleError),
+      addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleError),
+      featureProject: (id) => this.featureProject(id).catch(handleError),
+      unfeatureProject: id => this.unfeatureProject(id).catch(handleError)
     };
     return this.props.children(this.state, funcs, this.currentUserIsOnTeam(), this.currentUserIsTeamAdmin());
   }
-}
+} 
 TeamEditor.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,

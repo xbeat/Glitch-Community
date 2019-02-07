@@ -8,7 +8,7 @@ const EditCollectionColor = ({update, initialColor, ...props}) => {
   return (
     <PopoverWithButton 
       containerClass="edit-collection-color-btn"
-      buttonClass="button add-project opens-pop-over"
+      buttonClass="add-project"
       buttonText="Color"
       passToggleToPop >
       <EditCollectionColorPop {...props} updateColor={update} initialColor={initialColor}/>

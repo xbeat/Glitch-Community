@@ -15,12 +15,16 @@ class CollectionEditor extends React.Component {
   
   userIsAuthor(){
     if (!this.props.currentUser) return false;
-    const currentUserId = this.props.currentUser.id;
-    if (this.state.user) {
-      return this.state.user.id === currentUserId;
+    if (this.state.teamId > 0) {
+      return this.props.currentUser.teams.some(team => team.id === this.state.teamId);
     }
+<<<<<<< HEAD
     if (this.state.team) {
       return this.state.team.users.some(user => user.id === currentUserId);
+=======
+    if (this.state.userId > 0) {
+      return this.props.currentUser.id === this.state.userId;
+>>>>>>> b1ebc544b6fae4a0442d6cb74678a9ef04c489f5
     }
     return false;
   }
