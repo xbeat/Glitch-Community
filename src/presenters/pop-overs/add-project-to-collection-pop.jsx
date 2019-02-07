@@ -19,12 +19,19 @@ import {orderBy} from 'lodash';
 class AddProjectToCollectionPopContents extends React.Component {
   constructor(props) {
     super(props);
-    
+    console.log('constructor');
     this.state = {
       query: '', // value of filter input field
       filteredCollections: this.props.collections, // collections filtered from search query
     };
     this.updateFilter = this.updateFilter.bind(this);
+  }
+  
+  componentWillReceiveProps(nextProps){
+    console.log('nextProps', nextProps);
+    if(nextProps.collections !== this.state.filteredCollections){
+      this.setState({filteredCollections: nextProps.collections});
+    }
   }
   
   updateFilter(query){
@@ -91,7 +98,9 @@ class AddProjectToCollectionPopContents extends React.Component {
           </section>
         </>
         : 
-        <Loader/>
+        <div className="loader-container">
+          <Loader/>
+        </div>
         }
       </dialog>
     );
