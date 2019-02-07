@@ -30,6 +30,10 @@ module.exports = function(external) {
     return next();
   });
 
+  app.get('/storybook', (req, res) => {
+    res.render('/.out/index.html');
+  });
+  
   const readFilePromise = util.promisify(fs.readFile);
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
   async function render(res, title, description, image=imageDefault) {
