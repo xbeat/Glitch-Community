@@ -30,8 +30,9 @@ module.exports = function(external) {
     return next();
   });
 
-  app.get('/storybook', (req, res) => {
+  app.get('/.out', (req, res) => {
     res.render('/.out/index.html');
+    return;
   });
   
   const readFilePromise = util.promisify(fs.readFile);
