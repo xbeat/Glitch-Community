@@ -23,16 +23,12 @@ module.exports = function(external) {
   const ms = dayjs.convert(7, 'days', 'miliseconds');
   app.use(express.static('public', { index: false }));
   app.use(express.static('build', { index: false, maxAge: ms }));
+  app.use(express.static('.out', {index: false}));
 
   // Log all requests for diagnostics
   app.use(function(request, response, next) {
     console.log(request.method, request.originalUrl, request.body);
     return next();
-  });
-
-  app.get('/.out', (req, res) => {
-    res.render('/.out/index.html');
-    return;
   });
   
   const readFilePromise = util.promisify(fs.readFile);
