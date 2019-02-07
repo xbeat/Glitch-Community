@@ -110,7 +110,7 @@ export class AddTeamUser extends React.Component {
     const {data} = await this.props.api.get(`teams/${this.props.teamId}`);
     console.log('hi');
     this.setState({
-      alreadyInvited: {data}
+      alreadyInvited: data.tokens
     });
   }
   
