@@ -101,7 +101,7 @@ export class AddTeamUser extends React.Component {
     super(props);
     this.state = {
       invitee: '',
-      alreadyInvited: [],
+      alreadyInvited: this.props.api.get(`teams/${this.props.teamId}`),
     };
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
