@@ -23,7 +23,6 @@ module.exports = function(external) {
   const ms = dayjs.convert(7, 'days', 'miliseconds');
   app.use(express.static('public', { index: false }));
   app.use(express.static('build', { index: false, maxAge: ms }));
-  app.use(express.static('.out', {index: false}));
 
   // Log all requests for diagnostics
   app.use(function(request, response, next) {
