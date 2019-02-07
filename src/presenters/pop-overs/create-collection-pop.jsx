@@ -95,7 +95,8 @@ class CreateNewCollectionPop extends React.Component {
 
   render() {
     const {error, query} = this.state;
-    const {maybeCollections} = this.props;
+    const {collections} = this.props;
+    console.log('collections', collections);
     
     let queryError = this.state.error;
     let submitEnabled = this.state.query.length > 0;
@@ -117,7 +118,7 @@ class CreateNewCollectionPop extends React.Component {
       return menuContents;
     }
     
-    if (!!maybeCollections && maybeCollections.some(c => c.url === kebabCase(query))) {
+    if (!!collections && collections.some(c => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this url';
     }
     if(this.state.newCollectionUrl){
