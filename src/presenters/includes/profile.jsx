@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {TrackClick} from '../analytics';
 import TeamsList from '../teams-list';
+import Button from '../../components/buttons/button.jsx';
 
 // Image Buttons
 
@@ -11,16 +12,17 @@ export const ImageButtons = ({name, uploadImage, clearImage}) => {
     <div className="upload-image-buttons">
       { !!uploadImage && (
         <TrackClick name={`Upload ${name}`}>
-          <button className="button button-small button-tertiary" onClick={uploadImage}>
+          
+          <Button size="small" type="tertiary" onClick={uploadImage}>
             Upload {name}
-          </button>
+          </Button>
         </TrackClick>
       )}
       { !!clearImage && (
         <TrackClick name={`Clear ${name}`}>
-          <button className="button button-small button-tertiary" onClick={clearImage}>
+          <Button size="small" type="tertiary" onClick={clearImage}>
             Clear {name} 
-          </button>
+          </Button>
         </TrackClick>
       )}
     </div>
