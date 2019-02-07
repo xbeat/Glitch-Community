@@ -108,6 +108,12 @@ module.exports = function(external) {
     });
   });
 
+  app.get('/storybook', async (req, res) => {
+    console.log('getting storybook')
+    require('../.storybook/config.js');
+    require('@storybook/react').renderAtPath('/storybook');
+  });
+  
   app.get('*', async (req, res) => {
     await render(res,
       "Glitch",
