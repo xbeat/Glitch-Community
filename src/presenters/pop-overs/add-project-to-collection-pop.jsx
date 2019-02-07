@@ -83,7 +83,7 @@ class AddProjectToCollectionPopContents extends React.Component {
                         </TrackClick>
                       </li>
                     )
-                    )}
+                  )}
                 </ul>
               </section>
                : <section className="pop-over-info">

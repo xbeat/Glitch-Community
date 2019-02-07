@@ -143,15 +143,11 @@ class CreateNewCollectionPop extends React.Component {
               error={error || queryError}
             />
             
-            { this.props.currentUser.teams.length > 0 ?
+            { this.props.currentUser.teams.length > 0 &&
               <>
-                <br style={{clear: "both"}}/>for
-                <Dropdown buttonContents={currentUserMenuItem} menuContents={getTeamMenuContents()} onUpdate={this.setTeamId}/>
+                for <Dropdown buttonContents={currentUserMenuItem} menuContents={getTeamMenuContents()} onUpdate={this.setTeamId}/>
               </>
-              : null
             }
-            
-            <br style={{clear: "both"}}/>
             
             {!this.state.working ? (
               <TrackClick name="Create Collection clicked" properties={inherited => ({...inherited, origin: `${inherited.origin} project`})}>
