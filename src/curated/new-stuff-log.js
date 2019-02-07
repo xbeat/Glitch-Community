@@ -7,14 +7,6 @@
 export default [
   {
     id: 1,
-<<<<<<< HEAD
-    title: "Get organized with Collections",
-    body: `
-Add any project to a collection and show off your favorite things, group all your related projects, collect precious memories, etc. 
-
-Head over to your profile or team page to create and view your collections.
-
-=======
     title: "Featured projects now live on your profile",
     body: `Have a project you're particularly proud of?  Feature it to embed the app directly at the top of your profile.
 
@@ -40,7 +32,6 @@ Add any project to a collection and show off your favorite things, group all you
 
 Head over to your profile or team page to create and view your collections.
 
->>>>>>> b1ebc544b6fae4a0442d6cb74678a9ef04c489f5
 ![](https://cdn.glitch.com/e9551d04-9c48-4dbb-ab1b-04eca25b9652%2Fimage.png?1547136745894)
 `,
   }

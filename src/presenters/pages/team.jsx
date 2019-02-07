@@ -26,11 +26,8 @@ import ProjectsLoader from '../projects-loader.jsx';
 import TeamAnalytics from '../includes/team-analytics.jsx';
 import {TeamMarketing, VerifiedBadge} from '../includes/team-elements.jsx';
 import ReportButton from '../pop-overs/report-abuse-pop.jsx';
-<<<<<<< HEAD
-=======
 
 import {partition} from 'lodash';
->>>>>>> b1ebc544b6fae4a0442d6cb74678a9ef04c489f5
 
 function syncPageToUrl(team) {
   history.replaceState(null, null, getLink(team));
@@ -89,10 +86,7 @@ class TeamPage extends React.Component {
     if (this.props.currentUserIsOnTeam) {
       projectOptions["removeProjectFromTeam"] = this.props.removeProject;
       projectOptions["joinTeamProject"] = this.props.joinTeamProject;
-<<<<<<< HEAD
-=======
       projectOptions["featureProject"] = this.props.featureProject;
->>>>>>> b1ebc544b6fae4a0442d6cb74678a9ef04c489f5
     }
 
     return projectOptions;
@@ -264,11 +258,7 @@ class TeamPage extends React.Component {
 
         { !this.props.currentUserIsOnTeam &&
           <>
-<<<<<<< HEAD
             <ReportButton reportedType="team" reportedModel={this.props.team} />
-=======
-            <ReportButton reportedType="team" reportedModel={team} />
->>>>>>> b1ebc544b6fae4a0442d6cb74678a9ef04c489f5
             <TeamMarketing />
           </>
         }

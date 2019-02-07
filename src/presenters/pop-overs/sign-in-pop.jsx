@@ -102,7 +102,7 @@ class EmailHandler extends React.Component {
               {(this.state.done && this.state.error) &&
                 <>
                   <div className="notification notifyPersistent notifyError">Error</div>
-                  <div>Something went wrong, email not sent.</div>
+                  <div>{this.state.errorMsg}</div>
                 </>
               }
             </section>

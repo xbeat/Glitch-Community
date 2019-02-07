@@ -64,15 +64,9 @@
     "stylus-loader": "^3.0.2",
     "terser-webpack-plugin": "^1.2.1",
     "url-join": "^4.0.0",
-<<<<<<< HEAD
-    "webpack": "^4.28.3",
-    "webpack-cli": "^3.2.0",
-    "webpack-dev-middleware": "^3.5.0"
-=======
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
     "webpack-dev-middleware": "^3.5.1"
->>>>>>> b1ebc544b6fae4a0442d6cb74678a9ef04c489f5
   },
   "engines": {
     "node": "10.x"

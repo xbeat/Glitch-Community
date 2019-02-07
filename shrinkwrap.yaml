@@ -58,11 +58,8 @@ dependencies:
   url-join: 4.0.0
   webpack: 4.28.4
   webpack-cli: 3.2.1
-<<<<<<< HEAD
   webpack-dev-middleware: 3.5.0
-=======
   webpack-dev-middleware: 3.5.1
->>>>>>> b1ebc544b6fae4a0442d6cb74678a9ef04c489f5
 packages:
   /@babel/code-frame/7.0.0:
     dependencies:

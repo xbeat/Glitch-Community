@@ -18,11 +18,8 @@ import CollectionsList from '../collections-list.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ProjectsLoader from '../projects-loader.jsx';
 import ReportButton from '../pop-overs/report-abuse-pop.jsx';
-<<<<<<< HEAD
-=======
 
 import {partition} from 'lodash';
->>>>>>> b1ebc544b6fae4a0442d6cb74678a9ef04c489f5
 
 function syncPageToLogin(login) {
   history.replaceState(null, null, getLink({login}));
@@ -133,25 +130,6 @@ const UserPage = ({
         currentUser={maybeCurrentUser}
       />
 
-<<<<<<< HEAD
-    <EntityPageRecentProjects
-      projects={user.projects} 
-      pins={user.pins} 
-      isAuthorized={isAuthorized}
-      api={api} 
-      addPin={addPin} 
-      projectOptions={{
-        leaveProject, 
-        deleteProject,
-        addProjectToCollection
-      }}
-    />
-    
-    {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
-    {!isAuthorized && <ReportButton reportedType="user" reportedModel={user} />}
-  </main>
-);
-=======
       {!!user.login && (
         <CollectionsList title="Collections" 
           collections={user.collections.map(collection => ({...collection, user}))} 
@@ -178,7 +156,7 @@ const UserPage = ({
     </main>
   );
 };
->>>>>>> b1ebc544b6fae4a0442d6cb74678a9ef04c489f5
+
 UserPage.propTypes = {
   clearCover: PropTypes.func.isRequired,
   maybeCurrentUser: PropTypes.object,
