@@ -37,11 +37,13 @@ class AddProjectToCollectionPopContents extends React.Component {
     let collections = this.props.collections;
     query = query.toLowerCase().trim();
     let filteredCollections = collections.filter(collection => collection.name.toLowerCase().includes(query)); 
-    this.setState({filteredCollections: filteredCollections});
+    this.setState({filteredCollections: filteredCollections, query: query});
   }
   
   render() {
     const {filteredCollections} = this.state;
+    const NoSearchResultsPlaceholder = () => <p className="info-description">No matching collections found – create a new one?</p>;
+    const NoCollectionPlaceholder = () => <p className="info-description">Create collections to organize your favorite projects.</p>;
     
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
@@ -113,9 +115,6 @@ AddProjectToCollectionPopContents.propTypes = {
   project: PropTypes.object.isRequired,
   fromProject: PropTypes.bool,
 };
-
-const NoSearchResultsPlaceholder = () => <p className="info-description">Nothing found <span role="img" aria-label="">💫</span></p>;
-const NoCollectionPlaceholder = () => <p className="info-description">Create collections to organize your favorite projects.</p>;
 
 class AddProjectToCollectionPop extends React.Component {
   constructor(props){
