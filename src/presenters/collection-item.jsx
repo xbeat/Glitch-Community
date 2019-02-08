@@ -4,7 +4,7 @@ import Pluralize from 'react-pluralize';
 
 import {TruncatedMarkdown} from './includes/markdown.jsx';
 import CollectionOptionsContainer from "./pop-overs/collection-options-pop.jsx";
-import { CollectionLink } from './includes/link';
+import { CollectionLink, ProjectLink } from './includes/link';
 import Loader from './includes/loader';
 import CollectionAvatar from './includes/collection-avatar.jsx';
 
@@ -19,9 +19,11 @@ const ProjectsPreview = ({projects}) => {
       <ul className="projects-preview">
         { projects.slice(0,3).map(project => (
           <li key={project.id} className={"project-container " + (project.private ? "private" : '')}>
-            <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
-            <div className="project-name">{project.domain}</div>
-            <div className="project-badge private-project-badge" aria-label="private"></div>
+            <ProjectLink project={project}>
+              <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
+              <div className="project-name">{project.domain}</div>
+              <div className="project-badge private-project-badge" aria-label="private"></div>
+            </ProjectLink>
           </li>
         )) }
       </ul>
@@ -60,7 +62,7 @@ class CollectionItem extends React.Component{
                     </div>
                   </div>
                   <div className="collection-name-description">
-                    <div className="button">
+                    <CollectionLink collection={collection} className="button">
                       <span className="project-badge private-project-badge" aria-label="private"></span>
                       <div className="project-name">{collection.name}</div>
                     </div>
