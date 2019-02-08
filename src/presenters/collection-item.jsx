@@ -54,22 +54,22 @@ class CollectionItem extends React.Component{
         {(collection &&
           <div className={"collection" + (isAuthorized ? " authorized" : "")} id={"collection-" + collection.id}>
             <div className="collection-container">
-              <div className="collection-info" style={{backgroundColor: collection.coverColor}}>
+              <CollectionLink collection={collection} projects={projects} className="collection-info button-area" style={{backgroundColor: collection.coverColor}}>
                 <div className="avatar-container">
                   <div className="avatar">
                     <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)} collectionId={collection.id}/>
                   </div>
                 </div>
-                <CollectionLink collection={collection} projects={projects} className="collection-name-description button-area">
+                <div className="collection-name-description button-area">
                   <div className="button">
                     <span className="project-badge private-project-badge" aria-label="private"></span>
                     <div className="project-name">{collection.name}</div>
                   </div>
                   <div className="description" style={{color: getContrastTextColor(collection.coverColor)}}><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
-                </CollectionLink>
+                </div>
 
                 <div className="overflow-mask"></div>
-              </div>
+              </CollectionLink>
 
               {collection.projects ? (collection.projects.length > 0
                 ? <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection}/>
