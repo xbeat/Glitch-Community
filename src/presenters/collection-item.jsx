@@ -13,6 +13,7 @@ import {getAvatarUrl} from '../models/project.js';
 import {getContrastTextColor, hexToRgbA} from '../models/collection';
 
 const ProjectsPreview = ({collection, projects}) => {
+  console.log(projects.length)
 
   return (
     <>
@@ -28,7 +29,8 @@ const ProjectsPreview = ({collection, projects}) => {
         )) }
       </ul>
       <CollectionLink collection={collection} className="collection-link link">
-        View {projects.length > 3 ? "all" : ""} {projects.length} <Pluralize count={projects.length} singular="project →
+      
+      View {collection.projects.length > 3 ? "all" : ""} <Pluralize count={collection.projects.length} singular="project"></Pluralize> →
       </CollectionLink>
     </>
   );
