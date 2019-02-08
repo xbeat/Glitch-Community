@@ -28,7 +28,7 @@ const ProjectsPreview = ({collection, projects}) => {
         )) }
       </ul>
       <CollectionLink collection={collection} className="collection-link link">
-        View collection →
+        View {projects.length > 3 ? "all" : ""} projects →
       </CollectionLink>
     </>
   );
@@ -60,9 +60,6 @@ class CollectionItem extends React.Component{
                     <div className="avatar">
                       <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)} collectionId={collection.id}/>
                     </div>
-                  </div>
-                  <div className="project-count">
-                    <Pluralize count={collection.projects && collection.projects.length ? collection.projects.length: 0} singular="project"/>
                   </div>
                 </div>
                 <div className="collection-name-description button-area">
