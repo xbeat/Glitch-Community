@@ -10,8 +10,6 @@ import {getAvatarUrl} from '../models/project';
 import {TrackClick} from './analytics';
 import Loader from './includes/loader';
 
-/* globals Set */
-
 function clickUndelete(event, callback) {
   const node = event.target.closest('li');
   node.addEventListener('animationend', callback, {once: true});

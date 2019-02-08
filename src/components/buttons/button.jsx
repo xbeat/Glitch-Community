@@ -29,6 +29,7 @@ const Button = ({ onClick, disabled, type, size, hover, children }) => {
 };
 
 Button.propTypes = {
+  /** element(s) to display in the button */
   children: PropTypes.node.isRequired,
   /** callback when button clicked */
   onClick: PropTypes.func,
@@ -37,7 +38,7 @@ Button.propTypes = {
   /** type of button */
   type: PropTypes.oneOf(TYPES),
   /** size of button */
-  size: PropTypes.string,
+  size: PropTypes.oneOf(SIZES),
   /** whether or not the button's hover state should be active */
   hover: PropTypes.bool,
 };
