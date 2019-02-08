@@ -28,7 +28,7 @@ const ProjectsPreview = ({collection, projects}) => {
         )) }
       </ul>
       <CollectionLink collection={collection} className="collection-link link">
-        View {projects.length > 3 ? "all" : ""} projects →
+        View {projects.length > 3 ? "all" : ""} {projects.length} <Pluralize count={projects.length} singular="project →
       </CollectionLink>
     </>
   );
