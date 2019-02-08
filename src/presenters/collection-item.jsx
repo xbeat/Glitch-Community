@@ -52,39 +52,37 @@ class CollectionItem extends React.Component{
         )}
 
         {(collection &&
-          <CollectionLink collection={collection} projects={projects} className="button-area">
-            <div className={"collection" + (isAuthorized ? " authorized" : "")} id={"collection-" + collection.id}>
-              <div className="collection-container">
-                <div className="collection-info" style={{backgroundColor: collection.coverColor}}>
-                  <div className="avatar-container">
-                    <div className="avatar">
-                      <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)} collectionId={collection.id}/>
-                    </div>
+          <div className={"collection" + (isAuthorized ? " authorized" : "")} id={"collection-" + collection.id}>
+            <div className="collection-container">
+              <div className="collection-info" style={{backgroundColor: collection.coverColor}}>
+                <div className="avatar-container">
+                  <div className="avatar">
+                    <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)} collectionId={collection.id}/>
                   </div>
-                  <div className="collection-name-description">
-                    <CollectionLink collection={collection} className="button">
-                      <span className="project-badge private-project-badge" aria-label="private"></span>
-                      <div className="project-name">{collection.name}</div>
-                    </div>
-                    <div className="description" style={{color: getContrastTextColor(collection.coverColor)}}><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
-                  </div>
-
-                  <div className="overflow-mask"></div>
                 </div>
-
-                {collection.projects ? (collection.projects.length > 0
-                  ? <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection}/>
-                  :
-                  <div className="projects-preview empty">
-                    {(isAuthorized
-                      ? <p>This collection is empty – add some projects <span role="img" aria-label="">☝️</span></p>
-                      : <p>No projects to see in this collection just yet.</p>
-                    )}
+                <CollectionLink collection={collection} projects={projects} className="collection-name-description button-area">
+                  <div className="button">
+                    <span className="project-badge private-project-badge" aria-label="private"></span>
+                    <div className="project-name">{collection.name}</div>
                   </div>
-                ) : <div className="collection-link"><Loader/></div>}
+                  <div className="description" style={{color: getContrastTextColor(collection.coverColor)}}><TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown></div>
+                </CollectionLink>
+
+                <div className="overflow-mask"></div>
               </div>
+
+              {collection.projects ? (collection.projects.length > 0
+                ? <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection}/>
+                :
+                <div className="projects-preview empty">
+                  {(isAuthorized
+                    ? <p>This collection is empty – add some projects <span role="img" aria-label="">☝️</span></p>
+                    : <p>No projects to see in this collection just yet.</p>
+                  )}
+                </div>
+              ) : <div className="collection-link"><Loader/></div>}
             </div>
-          </CollectionLink>
+          </div>
         )}
       </li>
     );
