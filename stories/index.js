@@ -16,5 +16,5 @@ storiesOf('Button', module)
     <Button type="tertiary">Tertiary Button</Button>
   ))
 .add('danger zone', () => (
-    <Button type="dangerZone">Destructive Action</Button>
+    <Button type="dangerZone" size="small">Destructive Action</Button>
   ));
