@@ -59,7 +59,6 @@ class CollectionItem extends React.Component{
                       <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)} collectionId={collection.id}/>
                     </div>
                   </div>
-                  <Pluralize count={projects.length} singular="project"/>
                   <div className="collection-name-description">
                     <div className="button">
                       <span className="project-badge private-project-badge" aria-label="private"></span>
