@@ -56,13 +56,15 @@ class CollectionItem extends React.Component{
             <div className="collection-container">
               <CollectionLink collection={collection} className="collection-info button-area" style={{backgroundColor: collection.coverColor}}>
                 <div>
-                <div className="avatar-container">
-                  <div className="avatar">
-                    <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)} collectionId={collection.id}/>
+                  <div className="avatar-container">
+                    <div className="avatar">
+                      <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)} collectionId={collection.id}/>
+                    </div>
+                  </div>
+                  <div className="project-count">
+                    <Pluralize count={collection.projects && collection.projects.length ? collection.projects.length: 0} singular="project"/>
                   </div>
                 </div>
-                
-                <Pluralize count={collection.projects && collection.projects.length ? collection.projects.length: 0} singular="project"/>
                 <div className="collection-name-description button-area">
                   <div className="button">
                     <span className="project-badge private-project-badge" aria-label="private"></span>
