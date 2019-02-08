@@ -29,6 +29,7 @@ const Button = ({ onClick, disabled, type, size, hover, children }) => {
 };
 
 Button.propTypes = {
+  children: PropTypes.node.isRequired,
   /** callback when button clicked */
   onClick: PropTypes.func,
   /** button disabled */
