@@ -107,13 +107,12 @@ class TeamPage extends React.Component {
   }
   
   async getInvitees() {
-    console.log("get invitees", this.props.team.tokens);
+    console.log("get invitees");
     const ids = this.props.team.tokens.map(({userId}) => userId);
-    const userArray = await ids.forEach(id => {
-      console.log(this.props.api.get(`users/${id}`));
-    });
-    console.log("users", userArray);
-    return userArray;
+    await Promise.all(ids.map(async (id) => {
+      const user = await this.props.api.get(`users/${id}`);
+      console.log(user.data);
+    }));
   }
 
   render() {
@@ -174,7 +173,7 @@ class TeamPage extends React.Component {
                   inviteUser={this.props.inviteUser}
                   setWhitelistedDomain={this.props.currentUserIsTeamAdmin ? this.props.updateWhitelistedDomain : null}
                   members={team.users.map(({id}) => id)}
-                  invitedMembers={this.props.team.tokens}
+                  invitedMembers={this.getInvitees()}
                   whitelistedDomain={team.whitelistedDomain}
                   api={this.props.api}
                 />
