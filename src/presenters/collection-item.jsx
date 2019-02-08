@@ -27,7 +27,7 @@ const ProjectsPreview = ({collection, projects}) => {
           </li>
         )) }
       </ul>
-      <CollectionLink collection={collection} projects={projects} className="collection-link">
+      <CollectionLink collection={collection} projects={projects} className="collection-link link">
         View collection →
       </CollectionLink>
     </>
