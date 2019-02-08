@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout.jsx';
-import {getContrastTextColor, getLink, getOwnerLink, hexToRgbA} from '../../models/collection';
+import {isDarkColor, getLink, getOwnerLink} from '../../models/collection';
 
 import {AnalyticsContext} from '../analytics';
 import {DataLoader} from '../includes/loader.jsx';
@@ -86,10 +86,10 @@ const CollectionPageContents = ({
       <title>{collection.name}</title>
     </Helmet>
     <main className="collection-page">
-      <article className="projects" style={{backgroundColor: collection.coverColor}}>
-        <header className={"collection " + (getContrastTextColor(collection.coverColor) == "white" ? "dark" : "")}>
+      <article className="collection-full projects" style={{backgroundColor: collection.coverColor}}>
+        <header className={"collection " + (isDarkColor(collection.coverColor) ? "dark" : "")}>
           <div className="collection-image-container">
-            <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)}/>
+            <CollectionAvatar color={collection.coverColor}/>
           </div>
           
           <EditCollectionNameAndUrl isAuthorized={isAuthorized}
@@ -127,7 +127,6 @@ const CollectionPageContents = ({
                          addProjectToCollection={addProjectToCollection}
                          collection={collection}
                          api={api}
-                         currentUserIsOwner={isAuthorized}
                          currentUser={currentUser}
                        />
                      )}
@@ -199,55 +198,17 @@ CollectionPageContents.propTypes = {
   uploadAvatar: PropTypes.func,
 };
 
-const getOrNull = async(api, route) => {
+async function loadCollection(api, ownerName, collectionName) {
   try {
-    const {data} = await api.get(route);
-    return data;
+    const {data: collectionId} = await api.get(`collections/${ownerName}/${collectionName}`);
+    const {data: collection} = await api.get(`collections/${collectionId}`);
+    return collection;
   } catch (error) {
     if (error && error.response && error.response.status === 404) {
       return null;
     }
     throw error;
   }
-};
-
-async function getUserIdByLogin(api, userLogin){
-  const {data} = await api.get(`userid/byLogin/${userLogin}`);
-  if(data === "NOT FOUND"){
-    return null;
-  }
-  return data;
-}
-
-async function loadCollection(api, ownerName, collectionName){
-  let collections = [];
-  
-  // get team by url
-  const team = await getOrNull(api, `teams/byUrl/${ownerName}`);
-  if (team) {
-    const {data} = await api.get(`collections?teamId=${team.id}`);
-    collections = data;
-  } else {
-    
-    // get userId by login name
-    const userId = await getUserIdByLogin(api, ownerName);
-    if (userId) {
-      const {data} = await api.get(`collections?userId=${userId}`);
-      collections = data;
-    }
-  }
-  
-  // pick out the correct collection, then load the full data
-  const collectionMatch = collections.find(c => c.url == collectionName);
-  const collection = collectionMatch && await getOrNull(api, `collections/${collectionMatch.id}`);
-  if (!collection) return null;
-  
-  // inject the full team so we get their projects and members
-  if (team) {
-    collection.team = team;
-  }
-  
-  return collection;
 }  
 
 const CollectionPage = ({api, ownerName, name, ...props}) => (
