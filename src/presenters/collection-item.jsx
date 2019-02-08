@@ -12,7 +12,7 @@ import {getAvatarUrl} from '../models/project.js';
 
 import {getContrastTextColor, hexToRgbA} from '../models/collection';
 
-const ProjectsPreview = ({projects}) => {
+const ProjectsPreview = ({collection, projects}) => {
 
   return (
     <>
@@ -27,9 +27,9 @@ const ProjectsPreview = ({projects}) => {
           </li>
         )) }
       </ul>
-      <div className="collection-link">
+      <CollectionLink collection={collection} projects={projects} className="collection-link">
         View collection →
-      </div>
+      </CollectionLink>
     </>
   );
 };
