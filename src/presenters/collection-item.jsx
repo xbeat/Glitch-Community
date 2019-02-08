@@ -27,7 +27,7 @@ const ProjectsPreview = ({collection, projects}) => {
           </li>
         )) }
       </ul>
-      <CollectionLink collection={collection} projects={projects} className="collection-link link">
+      <CollectionLink collection={collection} className="collection-link link">
         View collection →
       </CollectionLink>
     </>
@@ -44,7 +44,7 @@ class CollectionItem extends React.Component{
   }
 
   render(){
-    const {collection, deleteCollection, projects, isAuthorized} = this.props;
+    const {collection, deleteCollection, isAuthorized} = this.props;
     return (
       <li>
         {isAuthorized && (
@@ -54,12 +54,15 @@ class CollectionItem extends React.Component{
         {(collection &&
           <div className={"collection" + (isAuthorized ? " authorized" : "")} id={"collection-" + collection.id}>
             <div className="collection-container">
-              <CollectionLink collection={collection} projects={projects} className="collection-info button-area" style={{backgroundColor: collection.coverColor}}>
+              <CollectionLink collection={collection} className="collection-info button-area" style={{backgroundColor: collection.coverColor}}>
+                <div>
                 <div className="avatar-container">
                   <div className="avatar">
                     <CollectionAvatar backgroundColor={hexToRgbA(collection.coverColor)} collectionId={collection.id}/>
                   </div>
                 </div>
+                
+                <Pluralize count={collection.projects && collection.projects.length ? collection.projects.length: 0} singular="project"/>
                 <div className="collection-name-description button-area">
                   <div className="button">
                     <span className="project-badge private-project-badge" aria-label="private"></span>
