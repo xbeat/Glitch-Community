@@ -40,7 +40,6 @@
     "express-http-proxy": "^1.5.1",
     "group-by-time": "^1.0.0",
     "html-truncate": "^1.2.2",
-    "http-proxy": "^1.17.0",
     "lodash": "^4.17.11",
     "lodash-webpack-plugin": "^0.11.5",
     "markdown-it": "^8.4.2",

@@ -31,7 +31,6 @@ dependencies:
   express-http-proxy: 1.5.1
   group-by-time: 1.0.0
   html-truncate: 1.2.2
-  http-proxy: 1.17.0
   lodash: 4.17.11
   lodash-webpack-plugin: 0.11.5
   markdown-it: 8.4.2
@@ -6211,16 +6210,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-cZdEF7r4gfRIq7ezX9J0T+kQmJNOub71dWbgAXVHDct80TKP4MCETtZQ31xyv38UwgzkWPYF/Xc0ge55dW9Z9w==
-  /http-proxy/1.17.0:
-    dependencies:
-      eventemitter3: 3.1.0
-      follow-redirects: 1.6.1
-      requires-port: 1.0.0
-    dev: false
-    engines:
-      node: '>=4.0.0'
-    resolution:
-      integrity: sha512-Taqn+3nNvYRfJ3bGvKfBSRwy1v6eePlm3oc/aWVxZp57DQr5Eq3xhKJi7Z4hZpS8PC3H4qI+Yly5EmFacGuA/g==
   /https-browserify/1.0.0:
     dev: false
     resolution:
@@ -10668,7 +10657,6 @@ specifiers:
   express-http-proxy: ^1.5.1
   group-by-time: ^1.0.0
   html-truncate: ^1.2.2
-  http-proxy: ^1.17.0
   lodash: ^4.17.11
   lodash-webpack-plugin: ^0.11.5
   markdown-it: ^8.4.2
