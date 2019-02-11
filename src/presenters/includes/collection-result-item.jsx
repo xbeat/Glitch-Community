@@ -43,6 +43,7 @@ const CollectionResultItem = ({onClick, project, collection, isActive, togglePop
   }
   
   const collectionPath = getCollectionLink(collection);
+  console.log('rendering collection', collection.name);
     
   return (    
     <Notifications>
@@ -55,7 +56,8 @@ const CollectionResultItem = ({onClick, project, collection, isActive, togglePop
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
               { collection.description.length > 0 && <div className="result-description">{collection.description}</div> }
-              { collection.userId !== -1? <UserAvatar user={collection.owner}/> : <TeamAvatar team={collection.owner}/>}
+              { collection.team && <TeamAvatar team={collection.team}/> }
+              { collection.user && <UserAvatar {...collection.user}/> }
             </div>
           </button>
           <a href={collectionPath} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">
