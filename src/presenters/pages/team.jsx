@@ -258,7 +258,7 @@ class TeamPage extends React.Component {
 
         { !this.props.currentUserIsOnTeam &&
           <>
-            <ReportButton reportedType="team" reportedModel={this.props.team} />
+            <ReportButton reportedType="team" reportedModel={team} />
             <TeamMarketing />
           </>
         }
