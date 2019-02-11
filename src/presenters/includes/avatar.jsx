@@ -13,7 +13,7 @@ import {
 
 // UserAvatar
 
-export const Avatar = ({ name, src, color, srcFallback, type, isStatic }) => {
+export const Avatar = ({ name, src, color, srcFallback, type, hasTooltip }) => {
   const contents = (
     <img
       width="32px"
@@ -26,7 +26,7 @@ export const Avatar = ({ name, src, color, srcFallback, type, isStatic }) => {
     />
   );
 
-  if (!isStatic) {
+  if (!hasTooltip) {
     <div data-tooltip={name} data-tooltip-left="true">
       {contents}
     </div>;
@@ -39,7 +39,7 @@ Avatar.propTypes = {
   srcFallback: PropTypes.string,
   color: PropTypes.string,
   type: PropTypes.string,
-  isStatic: PropTypes.bool
+  hasTooltip: PropTypes.bool
 };
 
 export const TeamAvatar = ({ team }) => (
@@ -58,14 +58,14 @@ TeamAvatar.propTypes = {
   }).isRequired
 };
 
-export const UserAvatar = ({ user, suffix = "", isStatic }) => (
+export const UserAvatar = ({ user, suffix = "", hasTooltip }) => (
   <Avatar
     name={getDisplayName(user) + suffix}
     src={getAvatarThumbnailUrl(user)}
     color={user.color}
     srcFallback={ANON_AVATAR_URL}
     type="user"
-    isStatic={isStatic}
+    hasTooltip={hasTooltip}
   />
 );
 UserAvatar.propTypes = {
@@ -77,5 +77,5 @@ UserAvatar.propTypes = {
     color: PropTypes.string.isRequired
   }).isRequired,
   suffix: PropTypes.string,
-  isStatic: PropTypes.bool
+  hasTooltip: PropTypes.bool
 };
