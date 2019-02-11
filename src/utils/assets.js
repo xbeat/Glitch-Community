@@ -116,7 +116,7 @@ export function getDominantColor(image) {
     colors = outlyingColors;
   }
   if (transparentPixels) {
-    return null;
+    return '';
   } 
   const colorMap = quantize(colors, 5);
   const [r, g, b] = Array.from(colorMap.palette()[0]);
