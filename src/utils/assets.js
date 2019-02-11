@@ -73,6 +73,11 @@ export function resizeImage(file, max) {
     });
 }
 
+// Takes an image object and returns an approximate average color
+// Used to set background colors as an avatar image fallback
+// Works by sampling the top-left 11x11 pixels and quantizing
+// them into 5 colors and returning the most common color
+// Returns '' if any pixels were transparent
 export function getDominantColor(image) {
   const {width, height} = image;
   const PIXELS_FROM_EDGE = 11;
