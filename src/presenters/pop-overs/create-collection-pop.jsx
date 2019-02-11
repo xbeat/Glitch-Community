@@ -41,6 +41,29 @@ class CreateCollectionPop extends React.Component {
       teamId: teamId
     });
   }
+  
+  currentUserMenuItem(user) {
+    return(
+      <span>
+      myself <UserAvatar user={} isStatic={true} />
+    </span>
+  }
+
+  getTeamMenuContents(teams) {
+    const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
+    const menuContents = [];
+    menuContents.push(currentUserMenuItem); // add user as first option
+
+    orderedTeams.map(team => {
+      let content = (
+        <span id={team.id}>
+          {team.name} {<TeamAvatar team={team} />}
+        </span>
+      );
+      menuContents.push(content);
+    });
+    return menuContents;
+  }
 
   async handleSubmit(event) {
     event.preventDefault();
@@ -98,45 +121,25 @@ class CreateCollectionPop extends React.Component {
     const { error, query } = this.state;
     const { collections } = this.props;
 
-    let queryError = error;
     let submitEnabled = this.state.query.length > 0;
     let nameTakenError = "You already have a collection with this url";
 
     let placeholder = "New Collection Name";
 
     const teams = this.props.currentUser.teams;
-    const currentUserMenuItem = (
-      <span>
-        myself <UserAvatar user={this.props.currentUser} isStatic={true} />
-      </span>
-    );
-
-    function getTeamMenuContents() {
-      const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
-      const menuContents = [];
-      menuContents.push(currentUserMenuItem); // add user as first option
-
-      orderedTeams.map(team => {
-        let content = (
-          <span id={team.id}>
-            {team.name} {<TeamAvatar team={team} className="user" />}
-          </span>
-        );
-        menuContents.push(content);
-      });
-      return menuContents;
-    }
 
     // filter collections based on selected owner from dropdown
     const selectedOwnerCollections = this.state.teamId
-      ? collections.filter(({ teamId }) => teamId == this.state.teamId)
-      : collections.filter(({ userId }) => userId == this.props.currentUser.id);
+      ? collections.filter(({ teamId }) => teamId === this.state.teamId)
+      : collections.filter(
+          ({ userId }) => userId === this.props.currentUser.id
+        );
 
     if (
       !!collections &&
       selectedOwnerCollections.some(c => c.url === kebabCase(query))
     ) {
-      queryError = nameTakenError;
+      error = nameTakenError;
     }
 
     if (this.state.newCollectionUrl) {
@@ -156,7 +159,7 @@ class CreateCollectionPop extends React.Component {
               value={query}
               update={this.handleChange}
               placeholder={placeholder}
-              error={error || queryError}
+              error={error || error}
             />
 
             {this.props.currentUser.teams.length > 0 && (
@@ -164,7 +167,9 @@ class CreateCollectionPop extends React.Component {
                 for{" "}
                 <Dropdown
                   buttonContents={currentUserMenuItem}
-                  menuContents={getTeamMenuContents()}
+                  menuContents={getTeamMenuContents(
+                    this.props.currentUser.teams
+                  )}
                   onUpdate={this.setTeamId}
                 />
               </div>
@@ -182,7 +187,7 @@ class CreateCollectionPop extends React.Component {
                   <button
                     type="submit"
                     className="create-collection button-small"
-                    disabled={!!queryError || !submitEnabled}
+                    disabled={!!error || !submitEnabled}
                   >
                     Create
                   </button>
