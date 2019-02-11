@@ -36,7 +36,6 @@ class AddProjectToCollectionPopContents extends React.Component {
     super(props);
     this.state = {
       query: "", // value of filter input field
-      collections: this.props.collections,
       filteredCollections: this.props.collections // collections filtered from search query
     };
     this.updateFilter = this.updateFilter.bind(this);
@@ -45,7 +44,6 @@ class AddProjectToCollectionPopContents extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.collections !== this.props.collections) {
       this.setState({
-        collections: nextProps.collections,
         filteredCollections: nextProps.collections
       });
     }
@@ -56,7 +54,7 @@ class AddProjectToCollectionPopContents extends React.Component {
     let filteredCollections = this.props.collections.filter(collection =>
       collection.name.toLowerCase().includes(query)
     );
-    this.setState({ filteredCollections: filteredCollections, query: query });
+    this.setState({ filteredCollections, query });
   }
 
   render() {
