@@ -13,7 +13,7 @@ import {
 
 // UserAvatar
 
-export const Avatar = ({ name, src, color, srcFallback, type, hasTooltip }) => {
+export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip }) => {
   const contents = (
     <img
       width="32px"
@@ -26,7 +26,7 @@ export const Avatar = ({ name, src, color, srcFallback, type, hasTooltip }) => {
     />
   );
 
-  if (!hasTooltip) {
+  if (!hideTooltip) {
     <div data-tooltip={name} data-tooltip-left="true">
       {contents}
     </div>;
@@ -39,7 +39,7 @@ Avatar.propTypes = {
   srcFallback: PropTypes.string,
   color: PropTypes.string,
   type: PropTypes.string,
-  hasTooltip: PropTypes.bool
+  hideTooltip: PropTypes.bool
 };
 
 export const TeamAvatar = ({ team }) => (
@@ -58,14 +58,14 @@ TeamAvatar.propTypes = {
   }).isRequired
 };
 
-export const UserAvatar = ({ user, suffix = "", hasTooltip }) => (
+export const UserAvatar = ({ user, suffix = "", hideTooltip }) => (
   <Avatar
     name={getDisplayName(user) + suffix}
     src={getAvatarThumbnailUrl(user)}
     color={user.color}
     srcFallback={ANON_AVATAR_URL}
     type="user"
-    hasTooltip={hasTooltip}
+    hideTooltip={hideTooltip}
   />
 );
 UserAvatar.propTypes = {
@@ -77,5 +77,5 @@ UserAvatar.propTypes = {
     color: PropTypes.string.isRequired
   }).isRequired,
   suffix: PropTypes.string,
-  hasTooltip: PropTypes.bool
+  hideTooltip: PropTypes.bool
 };
