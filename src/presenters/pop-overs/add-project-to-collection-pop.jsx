@@ -184,10 +184,9 @@ class AddProjectToCollectionPop extends React.Component {
       // next load all of the user's team's collections
       const userTeams = this.props.currentUser.teams;
       for (const team of userTeams) {
-        const { data } = await this.props.api.get(
+        const { data: teamCollections } = await this.props.api.get(
           `collections/?teamId=${team.id}`
         );
-        const teamCollections = data;
         if (teamCollections) {
           teamCollections.forEach(teamCollection => {
             teamCollection.team = this.props.currentUser.teams.find(
