@@ -49,7 +49,7 @@ class DeleteTeamPopBase extends React.Component {
           </div>
         </section>
         <section className="pop-over-actions danger-zone">
-          <button className="button button-small has-emoji opens-pop-over" onClick={this.deleteTeam}>
+          <button className="button-small has-emoji" onClick={this.deleteTeam}>
             <span>Delete {this.props.teamName} </span> 
             <span className="emoji bomb" role="img" aria-label="bomb emoji"></span>
             { this.state.teamIsDeleting && <Loader /> }
