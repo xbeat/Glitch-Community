@@ -17,13 +17,15 @@ import { NestedPopoverTitle } from "./popover-nested.jsx";
 import { orderBy } from "lodash";
 
 const AddProjectPopoverTitle = ({ project }) => {
-  <NestedPopoverTitle>
-    <img
-      src={getAvatarUrl(project.id)}
-      alt={`Project avatar for ${project.domain}`}
-    />{" "}
-    Add {project.domain} to collection
-  </NestedPopoverTitle>;
+  return (
+    <NestedPopoverTitle>
+      <img
+        src={getAvatarUrl(project.id)}
+        alt={`Project avatar for ${project.domain}`}
+      />{" "}
+      Add {project.domain} to collection
+    </NestedPopoverTitle>
+  );
 };
 AddProjectPopoverTitle.propTypes = {
   project: PropTypes.object.isRequired
@@ -73,7 +75,7 @@ class AddProjectToCollectionPopContents extends React.Component {
     if (!this.props.collections) {
       return (
         <dialog className="pop-over add-project-to-collection-pop wide-pop">
-          {!this.projects.fromProject && (
+          {!this.props.fromProject && (
             <AddProjectPopoverTitle project={this.props.project} />
           )}
           <div className="loader-container">
@@ -90,71 +92,63 @@ class AddProjectToCollectionPopContents extends React.Component {
           <AddProjectPopoverTitle project={this.props.project} />
         )}
 
-        {this.props.collections ? (
-          <>
-            {this.props.collections.length > 3 && (
-              <section className="pop-over-info">
-                <input
-                  className="pop-over-input search-input pop-over-search"
-                  onChange={evt => {
-                    this.updateFilter(evt.target.value);
-                  }}
-                  placeholder="Filter collections"
-                />
-              </section>
-            )}
-
-            {filteredCollections && filteredCollections.length ? (
-              <section className="pop-over-actions results-list">
-                <ul className="results">
-                  {filteredCollections.map(
-                    collection =>
-                      // filter out collections that already contain the selected project
-                      collection.projects &&
-                      collection.projects.every(
-                        project => project.id !== this.props.project.id
-                      ) && (
-                        <li key={collection.id}>
-                          <TrackClick
-                            name="Project Added to Collection"
-                            context={{
-                              groupId: collection.team ? collection.team.id : 0
-                            }}
-                          >
-                            <CollectionResultItem
-                              api={this.props.api}
-                              onClick={this.props.addProjectToCollection}
-                              project={this.props.project}
-                              collection={collection}
-                              togglePopover={this.props.togglePopover}
-                              currentUser={this.props.currentUser}
-                            />
-                          </TrackClick>
-                        </li>
-                      )
-                  )}
-                </ul>
-              </section>
-            ) : (
-              <section className="pop-over-info">
-                {query ? NoSearchResultsPlaceholder : NoCollectionPlaceholder}
-              </section>
-            )}
-
-            <section className="pop-over-actions">
-              <button
-                className="create-new-collection button-small button-tertiary"
-                onClick={this.props.createCollectionPopover}
-              >
-                Add to a new collection
-              </button>
-            </section>
-          </>
-        ) : (
-          <div className="loader-container">
-            <Loader />
-          </div>
+        {this.props.collections.length > 3 && (
+          <section className="pop-over-info">
+            <input
+              className="pop-over-input search-input pop-over-search"
+              onChange={evt => {
+                this.updateFilter(evt.target.value);
+              }}
+              placeholder="Filter collections"
+            />
+          </section>
         )}
+
+        {filteredCollections && filteredCollections.length ? (
+          <section className="pop-over-actions results-list">
+            <ul className="results">
+              {filteredCollections.map(
+                collection =>
+                  // filter out collections that already contain the selected project
+                  collection.projects &&
+                  collection.projects.every(
+                    project => project.id !== this.props.project.id
+                  ) && (
+                    <li key={collection.id}>
+                      <TrackClick
+                        name="Project Added to Collection"
+                        context={{
+                          groupId: collection.team ? collection.team.id : 0
+                        }}
+                      >
+                        <CollectionResultItem
+                          api={this.props.api}
+                          onClick={this.props.addProjectToCollection}
+                          project={this.props.project}
+                          collection={collection}
+                          togglePopover={this.props.togglePopover}
+                          currentUser={this.props.currentUser}
+                        />
+                      </TrackClick>
+                    </li>
+                  )
+              )}
+            </ul>
+          </section>
+        ) : (
+          <section className="pop-over-info">
+            {query ? NoSearchResultsPlaceholder : NoCollectionPlaceholder}
+          </section>
+        )}
+
+        <section className="pop-over-actions">
+          <button
+            className="create-new-collection button-small button-tertiary"
+            onClick={this.props.createCollectionPopover}
+          >
+            Add to a new collection
+          </button>
+        </section>
       </dialog>
     );
   }
