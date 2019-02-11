@@ -20,7 +20,7 @@ export const ProjectItem = ({api, project, collectionColor, homepageCollection, 
           style={project.private ? {} : {backgroundColor: collectionColor, borderBottomColor:collectionColor}}
           data-track="project" data-track-label={project.domain}>
           <div className="project-container">
-            <img className="avatar" src={getAvatarUrl(project.id)} alt={`${project.domain} avatar`}/>
+            <img className="avatar" src={getAvatarUrl(project.id)} alt=""/>
             <div className="button">
               <span className="project-badge private-project-badge" aria-label="private"></span>
               <div className="project-name">{project.domain}</div>

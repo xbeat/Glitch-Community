@@ -19,7 +19,7 @@ const ProjectsPreview = ({collection, projects}) => {
         { projects.slice(0,3).map(project => (
           <li key={project.id} className={"project-container " + (project.private ? "private" : '')}>
             <ProjectLink project={project} className="project-link">
-              <img className="avatar" src={getAvatarUrl(project.id)} alt={`Project avatar for ${project.domain}`}/>
+              <img className="avatar" src={getAvatarUrl(project.id)} alt="" />
               <div className="project-name">{project.domain}</div>
               <div className="project-badge private-project-badge" aria-label="private"></div>
             </ProjectLink>
