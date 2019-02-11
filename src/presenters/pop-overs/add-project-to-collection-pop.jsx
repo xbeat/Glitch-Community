@@ -202,8 +202,7 @@ class AddProjectToCollectionPop extends React.Component {
 
       // let orderedCollections = orderBy(allCollections, ['updatedAt'], ['desc']);
       const orderedCollections = orderBy(
-        allCollections, ['updatedAt'],
-        collection => collection.updatedAt
+        allCollections, collection => collection.updatedAt
       ).reverse();
       this.setState({ maybeCollections: orderedCollections });
     } catch (error) {
