@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
+import {getLink as getCollectionLink} from '../../models/collection.js'
 import Notifications from '../notifications.jsx';
 import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import CollectionAvatar from './collection-avatar.jsx';
@@ -41,12 +41,8 @@ const CollectionResultItem = ({onClick, project, collection, isActive, togglePop
   if(isActive) {
     resultClass += " active";
   }
-  let collectionPath;
-  if(collection.userId !== -1){
-    collectionPath = `/@${collection.owner.login}/${collection.url}`;
-  }else{
-    collectionPath = `/@${collection.owner.url}/${collection.url}`;
-  }
+  
+  const collectionPath = getCollectionLink(collection);
     
   return (    
     <Notifications>
