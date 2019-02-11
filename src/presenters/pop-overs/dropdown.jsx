@@ -7,7 +7,7 @@ const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
   return(
     <ul className="pop-over mini-pop" role="listbox" tabIndex="-1">
       { contents.map((item, index) => (
-        <li className={"mini-pop-action" + (index == selected ? " selected" : "")} key={index} 
+        <li className={"mini-pop-action" + (index === selected ? " selected" : "")} key={index} 
           aria-selected={index==selected}
           onClick={() => {
             updateSelected(index);
@@ -46,6 +46,7 @@ class Dropdown extends React.Component {
   
   componentDidMount(){
     // set default menu item here
+    // TO DO - set default menu item based on whether we're on a user or team page
   }
   
   updateSelected(itemIndex){
