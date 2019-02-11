@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { NestedPopover } from "./popover-nested";
+import { captureException } from "../../utils/sentry";
 
 import { TrackClick } from "../analytics";
 import { getAvatarUrl } from "../../models/project";
@@ -171,36 +172,49 @@ class AddProjectToCollectionPop extends React.Component {
   }
 
   async loadCollections() {
-    // first, load all of the user's collections
-    const userCollections = await this.props.api.get(
-      `collections/?userId=${this.props.currentUser.id}`
-    );
-    userCollections.data.forEach(userCollection => {
-      userCollection.user = this.props.currentUser;
-    });
-
-    // next load all of the user's team's collections
-    const userTeams = this.props.currentUser.teams;
-    for (const team of userTeams) {
-      const { data } = await this.props.api.get(
-        `collections/?teamId=${team.id}`
+    try {
+      // first, load all of the user's collections
+      const userCollections = await this.props.api.get(
+        `collections/?userId=${this.props.currentUser.id}`
       );
-      const teamCollections = data;
-      if (teamCollections) {
-        teamCollections.forEach(teamCollection => {
-          teamCollection.team = this.props.currentUser.teams.find(
-            userTeam => userTeam.id == team.id
-          );
-          userCollections.data.push(teamCollection);
-        });
+      userCollections.data.forEach(userCollection => {
+        userCollection.user = this.props.currentUser;
+      });
+
+      // next load all of the user's team's collections
+      const userTeams = this.props.currentUser.teams;
+      for (const team of userTeams) {
+        const { data } = await this.props.api.get(
+          `collections/?teamId=${team.id}`
+        );
+        const teamCollections = data;
+        if (teamCollections) {
+          teamCollections.forEach(teamCollection => {
+            teamCollection.team = this.props.currentUser.teams.find(
+              userTeam => userTeam.id == team.id
+            );
+            userCollections.data.push(teamCollection);
+          });
+        }
+      }
+
+      let orderedCollections = orderBy(
+        userCollections.data,
+        collection => collection.updatedAt
+      ).reverse();
+      this.setState({ maybeCollections: orderedCollections });
+    } catch (error) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        this.setState({ error: error.response.data.message });
+      } else {
+        captureException(error);
       }
     }
-
-    let orderedCollections = orderBy(
-      userCollections.data,
-      collection => collection.updatedAt
-    ).reverse();
-    this.setState({ maybeCollections: orderedCollections });
   }
 
   async componentDidMount() {
