@@ -43,7 +43,7 @@ dependencies:
   quantize: 1.0.2
   randomcolor: 0.5.3
   react: 16.8.1
-  react-dom: 16.6.3
+  react-dom: 16.8.1
   react-helmet: 5.2.0
   react-is: 16.8.1
   react-konami: 0.5.0
@@ -5263,17 +5263,17 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==
-  /react-dom/16.6.3:
+  /react-dom/16.8.1:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-      prop-types: 15.6.2
-      scheduler: 0.11.3
+      prop-types: 15.7.1
+      scheduler: 0.13.1
     dev: false
     peerDependencies:
-      react: ^16.6.3
+      react: ^16.0.0
     resolution:
-      integrity: sha512-8ugJWRCWLGXy+7PmNh8WJz3g1TaTUt1XyoIcFN+x0Zbkoz+KKdUyx1AQLYJdbFXjuF41Nmjn5+j//rxvhFjgSQ==
+      integrity: sha512-N74IZUrPt6UiDjXaO7UbDDFXeUXnVhZzeRLy/6iqqN1ipfjrhR60Bp5NuBK+rv3GMdqdIuwIl22u1SYwf330bg==
   /react-helmet/5.2.0:
     dependencies:
       deep-equal: 1.0.1
@@ -5679,13 +5679,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-HUcJicG5Ou8xfR//c2rPT0lPIRR09vVvN81T9fqfVgBmhERUbDEQoYKjpBxbueJnCPpSu2ujXzOnRQt6x9o/jw==
-  /scheduler/0.11.3:
-    dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
-    dev: false
-    resolution:
-      integrity: sha512-i9X9VRRVZDd3xZw10NY5Z2cVMbdYg6gqFecfj79USv1CFN+YrJ3gIPRKf1qlY+Sxly4djoKdfx1T+m9dnRB8kQ==
   /scheduler/0.13.1:
     dependencies:
       loose-envify: 1.4.0
@@ -6750,9 +6743,9 @@ specifiers:
   quantize: ^1.0.2
   randomcolor: ^0.5.3
   react: ^16.8.1
-  react-dom: ^16.6.3
+  react-dom: ^16.8.1
   react-helmet: ^5.2.0
-  react-is: ^16.8.0
+  react-is: ^16.8.1
   react-konami: ^0.5.0
   react-onclickoutside: ^6.7.1
   react-pluralize: ^1.5.0
