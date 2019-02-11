@@ -16,6 +16,19 @@ import { NestedPopoverTitle } from "./popover-nested.jsx";
 
 import { orderBy } from "lodash";
 
+const AddProjectPopoverTitle = ({ project }) => {
+  <NestedPopoverTitle>
+    <img
+      src={getAvatarUrl(project.id)}
+      alt={`Project avatar for ${project.domain}`}
+    />{" "}
+    Add {project.domain} to collection
+  </NestedPopoverTitle>;
+};
+AddProjectPopoverTitle.propTypes = {
+  project: PropTypes.object.isRequired
+};
+
 class AddProjectToCollectionPopContents extends React.Component {
   constructor(props) {
     super(props);
@@ -57,17 +70,24 @@ class AddProjectToCollectionPopContents extends React.Component {
       </p>
     );
 
+    if (!this.props.collections) {
+      return (
+        <dialog className="pop-over add-project-to-collection-pop wide-pop">
+          {!this.projects.fromProject && (
+            <AddProjectPopoverTitle project={this.props.project} />
+          )}
+          <div className="loader-container">
+            <Loader />
+          </div>
+        </dialog>
+      );
+    }
+
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
         {/* Only show this nested popover title from project-options */}
         {!this.props.fromProject && (
-          <NestedPopoverTitle>
-            <img
-              src={getAvatarUrl(this.props.project.id)}
-              alt={`Project avatar for ${this.props.project.domain}`}
-            />{" "}
-            Add {this.props.project.domain} to collection
-          </NestedPopoverTitle>
+          <AddProjectPopoverTitle project={this.props.project} />
         )}
 
         {this.props.collections ? (
