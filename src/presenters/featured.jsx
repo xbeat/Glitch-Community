@@ -10,40 +10,36 @@ import Link from './includes/link.jsx';
 import FeaturedEmbed from './featured-embed';
 import FeaturedCollections from './featured-collections';
 
-class ZineItems extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+const ZinePosts = () => {
       posts: window.ZINE_POSTS.slice(0, 4), 
       masks: sampleSize([1, 2, 3, 4, 5], 4),
-    };
+        
+  const [posts] = React.useState(window.ZINE_POSTS.slice(0, 4));
+  const [masks] = React.useState(
+  if (!this.state.posts.length) {
+    return null;
   }
-  render() {
-    if (!this.state.posts.length) {
-      return null;
-    }
-    return (
-      <section>
-        <ul className="zine-items">
-          {this.state.posts.map(({id, title, url, feature_image, primary_tag}, n) => (
-            <li key={id} className="zine-item">
-              <Link to={`/culture${url}`}>
-                {!!feature_image && <div className="mask-container">
-                  <img className={`mask mask-${this.state.masks[n]}`} src={feature_image} alt=""/>
-                </div>}
-                <div className="zine-item-meta">
-                  <h1 className="zine-item-title">{title}</h1>
-                  {!!primary_tag && <p className="zine-item-tag">
-                    {primary_tag.name}
-                  </p>}
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-    );
-  }
+  return (
+    <section>
+      <ul className="zine-items">
+        {posts.map(({id, title, url, feature_image, primary_tag}, n) => (
+          <li key={id} className="zine-item">
+            <Link to={`/culture${url}`}>
+              {!!feature_image && <div className="mask-container">
+                <img className={`mask mask-${masks[n]}`} src={feature_image} alt=""/>
+              </div>}
+              <div className="zine-item-meta">
+                <h1 className="zine-item-title">{title}</h1>
+                {!!primary_tag && <p className="zine-item-tag">
+                  {primary_tag.name}
+                </p>}
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 }
 
 const FeaturedPanel = ({img, link, title}) => (
