@@ -81,6 +81,7 @@ export function getDominantColor(image) {
   canvas.height = height;
   const context = canvas.getContext('2d');
   context.drawImage(image, 0, 0, width, height);
+  let transparentPixels = false;
   let colors = [];
   const outlyingColors = [];
   const outlyingColorsList = JSON.stringify([
@@ -91,33 +92,32 @@ export function getDominantColor(image) {
   Iterate through edge pixels and get the average color, then conditionally
   handle edge colors and transparent images
   */
-  for (let x = -PIXELS_FROM_EDGE; x < PIXELS_FROM_EDGE; x++) {
-    for (let y = -PIXELS_FROM_EDGE; y < PIXELS_FROM_EDGE; y++) {
-      const boundedX = (x + width) % width;
-      const boundedY = (y + height) % height;
-      const pixelData = context.getImageData(boundedX, boundedY, 1, 1).data;
+  for (let x = 0; x < PIXELS_FROM_EDGE; x++) {
+    for (let y = 0; y < PIXELS_FROM_EDGE; y++) {
+      const pixelData = context.getImageData(x, y, 1, 1).data;
+      if (pixelData[3] < 255) { // alpha pixels
+        transparentPixels = true;
+        break;
+      }
       const color = [
         pixelData[0], // r
         pixelData[1], // g
         pixelData[2], // b
       ];
-      if (pixelData[3] < 255) { // alpha pixels
-        continue;
-      }
-      if (outlyingColorsList.includes(JSON.stringify(color))) {
+      const colorList = JSON.stringify(color);
+      if (outlyingColorsList.includes(colorList)) {
         outlyingColors.push(color);
       } else {
         colors.push(color);
       }
     }
   }
-  if (colors.length === 0 && outlyingColors.length === 0) {
-    // every pixel we checked was transparent
-    return '';
-  }
   if (outlyingColors.length > colors.length) {
     colors = outlyingColors;
   }
+  if (transparentPixels) {
+    return '';
+  } 
   const colorMap = quantize(colors, 5);
   const [r, g, b] = Array.from(colorMap.palette()[0]);
   return `rgb(${r},${g},${b})`;
