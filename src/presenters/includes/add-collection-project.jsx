@@ -17,15 +17,9 @@ class AddCollectionProject extends React.Component {
     }
   }
   render() {
-    let initialProjects = [];
-    if (this.props.collection.teamId > 0) {
-      initialProjects = this.state.projects;
-    } else if (this.props.currentUser) {
-      initialProjects = this.props.currentUser.projects;
-    }
     return (
       <PopoverWithButton buttonClass="add-project" buttonText="Add Project" passToggleToPop>
-        <AddCollectionProjectPop initialProjects={initialProjects.slice(0,20)} {...this.props} />
+        <AddCollectionProjectPop {...this.props} />
       </PopoverWithButton>
     );
   }
