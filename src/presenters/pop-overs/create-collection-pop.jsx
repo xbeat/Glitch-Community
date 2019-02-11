@@ -16,12 +16,12 @@ import Loader from '../includes/loader.jsx';
 
 import {kebabCase, orderBy} from 'lodash';
 
-class CreateNewCollectionPop extends React.Component {
+class CreateCollectionPop extends React.Component {
   constructor(props) {
     super(props);
     
     this.state = {
-      working: false,
+      loading: false,
       query: '', //The entered collection name
       teamId: undefined, // by default, create a collection for a user, but if team is selected from dropdown, set to teamID,
     };
@@ -44,7 +44,7 @@ class CreateNewCollectionPop extends React.Component {
 
   async handleSubmit(event){
     event.preventDefault();
-    this.setState({working: true});
+    this.setState({loading: true});
     // get text from input field
     const newCollectionName = this.state.query;
     
@@ -149,7 +149,7 @@ class CreateNewCollectionPop extends React.Component {
               </div>
             }
             
-            {!this.state.working ? (
+            {!this.state.loading ? (
               <TrackClick name="Create Collection clicked" properties={inherited => ({...inherited, origin: `${inherited.origin} project`})}>
                 <div className="button-wrap">
                   <button type="submit" className="create-collection button-small" disabled={!!queryError || !submitEnabled}>
@@ -165,11 +165,11 @@ class CreateNewCollectionPop extends React.Component {
   }
 }
 
-CreateNewCollectionPop.propTypes = {
+CreateCollectionPop.propTypes = {
   api: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   project: PropTypes.object.isRequired,
   fromProject: PropTypes.bool,
 };
 
-export default CreateNewCollectionPop;
+export default CreateCollectionPop;

@@ -183,7 +183,6 @@ class AddProjectToCollectionPop extends React.Component {
         userCollection.user = this.props.currentUser;
       });
       allCollections = userCollections.data;
-      console.log('userCollections: ', allCollections);
 
       // next load all of the user's team's collections
       const userTeams = this.props.currentUser.teams;
@@ -200,11 +199,12 @@ class AddProjectToCollectionPop extends React.Component {
           });
         }
       }
-      console.log('user + team collections', allCollections);
 
-      let orderedCollections = orderBy(allCollections, ['updatedAt'], ['desc']);
-      console.log('orderedCollections', orderedCollections);
-      
+      // let orderedCollections = orderBy(allCollections, ['updatedAt'], ['desc']);
+      const orderedCollections = orderBy(
+        allCollections, ['updatedAt'],
+        collection => collection.updatedAt
+      ).reverse();
       this.setState({ maybeCollections: orderedCollections });
     } catch (error) {
       if (
