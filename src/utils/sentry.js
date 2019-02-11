@@ -11,12 +11,7 @@
 import * as Sentry from "@sentry/browser";
 export * from "@sentry/browser";
 
-const shouldSendError = () => {
-  return (
-    !PROJECT_DOMAIN ||
-    !(PROJECT_DOMAIN === "community" || PROJECT_DOMAIN === "community-staging")
-  );
-};
+const shouldSendError = PROJECT_DOMAIN === "community" || PROJECT_DOMAIN === "community-staging";
 
 const filterSecrets = jsonEvent => {
   const tokens = ["facebookToken", "githubToken", "persistentToken"];
