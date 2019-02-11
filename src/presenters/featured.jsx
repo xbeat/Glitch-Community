@@ -10,13 +10,10 @@ import Link from './includes/link.jsx';
 import FeaturedEmbed from './featured-embed';
 import FeaturedCollections from './featured-collections';
 
-const ZinePosts = () => {
-      posts: window.ZINE_POSTS.slice(0, 4), 
-      masks: sampleSize([1, 2, 3, 4, 5], 4),
-        
+const ZineItems = () => {
   const [posts] = React.useState(window.ZINE_POSTS.slice(0, 4));
-  const [masks] = React.useState(
-  if (!this.state.posts.length) {
+  const [masks] = React.useState(sampleSize([1, 2, 3, 4, 5], 4));
+  if (!posts.length) {
     return null;
   }
   return (
@@ -40,7 +37,7 @@ const ZinePosts = () => {
       </ul>
     </section>
   );
-}
+};
 
 const FeaturedPanel = ({img, link, title}) => (
   <Link to={link} data-track="featured-project" data-track-label={title}>
