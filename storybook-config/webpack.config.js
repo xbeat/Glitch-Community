@@ -19,7 +19,7 @@ module.exports = {
             loader: 'stylus-loader',
           }
         ],
-        include: path.resolve(__dirname, "../")
+        include: path.resolve(__dirname, "../src/components")
       }
     ]
   }
