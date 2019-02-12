@@ -1,14 +1,13 @@
-var body = `<p>Follow along with MythBusters Jr. by remixing your own Glitch apps inspired by each episode.</p>
-<p><b>Episode 10:</b></p>
-<p>Can you move the shredder to the documents in a room of magnetized furniture?</p>`;
+var body = `<p>Create your own Virtual Reality experiences with the WebVR Starter Kit.</p>
+<p>A free, 5-part video course with interactive code examples that will teach you the fundamentals of WebVR using A-Frame.</p>`;
 
 // make sure image urls use https
 export default {
-  "image": "https://culture-zine.glitch.me/culture/content/images/2019/02/breaking-bad-2.jpg",
+  "image": "https://culture-zine.glitch.me/culture/content/images/2019/02/WebVR-Starter-Kit.-Part-1_-Intro-to-WebVR-1.png",
   "mask": "mask-4",
-  "title": "MythBusters Jr.",
-  "appDomain": "magnet-caper",
-  "blogUrl": "/breaking-bad-blow-up/",
+  "title": "WebVR Starter Kit",
+  "appDomain": "starter-aframe-animated",
+  "blogUrl": "/an-intro-to-webvr/",
   "body": body,
-  "color": '#458F65',
+  "color": '#b388e2',
 };
