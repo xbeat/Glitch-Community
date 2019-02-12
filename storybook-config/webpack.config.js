@@ -1,14 +1,18 @@
 const path = require("path");
 
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const AutoprefixerStylus = require("autoprefixer-stylus");
+
 module.exports = {
   module: {
     rules: [
       {
-        test: /\.styl$/,
+        test: /\.styl/,
+        include: path.resolve(__dirname, "../src/components"),
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           {
-            loader: "css-loader?modules",
+            loader: 'css-loader?modules',
             options: {
               sourceMap: true,
               modules: true,
@@ -17,10 +21,15 @@ module.exports = {
           },
           {
             loader: 'stylus-loader',
-          }
-        ],
-        include: path.resolve(__dirname, "../src/components")
-      }
+            options: {
+              use: [AutoprefixerStylus()],
+            },
+          },
+        ]
+      },
     ]
-  }
+  },
+  plugins: [
+    new MiniCssExtractPlugin({filename: '[name].css?[chunkhash]'}),
+  ],
 };
