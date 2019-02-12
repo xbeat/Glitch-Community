@@ -119,7 +119,7 @@ class CreateCollectionPop extends React.Component {
       orderedTeams.map(team => {
         let content = (
           <span id={team.id}>
-            {team.name} {<TeamAvatar team={team} className="user" />}
+            {team.name} {<TeamAvatar team={team} />}
           </span>
         );
         menuContents.push(content);
@@ -156,6 +156,7 @@ class CreateCollectionPop extends React.Component {
               update={this.handleChange}
               placeholder={placeholder}
               error={error || error}
+              aria-label={placeholder}
             />
 
             {this.props.currentUser.teams.length > 0 && (
