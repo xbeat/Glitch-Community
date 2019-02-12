@@ -99,6 +99,7 @@ class AddProjectToCollectionPopContents extends React.Component {
                 this.updateFilter(evt.target.value);
               }}
               placeholder="Filter collections"
+              arial-label="Filter colelctions"
             />
           </section>
         )}
