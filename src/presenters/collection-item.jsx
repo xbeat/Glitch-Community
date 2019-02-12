@@ -10,7 +10,6 @@ import CollectionAvatar from "./includes/collection-avatar.jsx";
 
 import { getAvatarUrl } from "../models/project.js";
 
-import { getContrastTextColor, hexToRgbA } from "../models/collection";
 import { isDarkColor } from "../models/collection";
 
 const ProjectsPreview = ({ collection, projects }) => {
