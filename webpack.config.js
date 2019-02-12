@@ -110,7 +110,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true,
+              sourceMap: mode !== 'production', // no css source maps in production
             },
           },
           {

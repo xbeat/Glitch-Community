@@ -49,7 +49,7 @@ const CollectionResultItem = ({onClick, project, collection, currentUserLogin, i
         <div>
           <button className={resultClass} onClick={() => addProject(onClick, project, collection, collectionPath, createNotification, togglePopover)} data-project-id={project.id}>
             <div className="avatar" id={"avatar-collection-" + collection.id}>
-              <CollectionAvatar backgroundColor={collection.coverColor}/>
+              <CollectionAvatar color={collection.coverColor}/>
             </div>
             <div className="results-info">
               <div className="result-name" title={collection.name}>{collection.name}</div>
