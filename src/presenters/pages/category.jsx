@@ -27,6 +27,7 @@ const CategoryPageWrap = ({
     </Helmet>
     <main className="collection-page">
       <article className="projects collection-full" style={{backgroundColor: category.backgroundColor}}>
+        
         <header className="collection">
           <h1 className="collection-name">
             {category.name}
@@ -38,8 +39,6 @@ const CategoryPageWrap = ({
           <p className="description">
             {category.description}
           </p>
-
-          
         </header>
         
         <ProjectsLoader api={api} projects={category.projects}>
