@@ -78,7 +78,10 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         loader: 'babel-loader',
-        query: { compact: false }
+        query: { 
+          // We only want to use compact mode in development for faster builds; this causes the test runner to break in production
+          compact: mode === 'development' ? true : false 
+        }
       },
       {
         test: /\.styl/,
