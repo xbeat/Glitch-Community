@@ -5,10 +5,11 @@ import PopoverWithButton from "./popover-with-button";
 const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
     
   return(
-    <ul className="pop-over mini-pop" role="listbox" tabIndex="-1">
+    <ul className="pop-over mini-pop" role="listbox" tabIndex="-1" aria-activedescendant={"option-"+selected}>
       { contents.map((item, index) => (
         <li className={"mini-pop-action" + (index === selected ? " selected" : "")} key={index} 
           aria-selected={index==selected}
+          id={"option-" + index}
           onClick={() => {
             updateSelected(index);
             togglePopover();
@@ -27,7 +28,7 @@ const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
 
 DropdownMenu.propTypes = {
   contents: PropTypes.node.isRequired,
-  selected: PropTypes.number.isRequired,
+  selected: PropTypes.number.isRequired, // the index of the selected item
   updateSelected: PropTypes.func.isRequired,
   togglePopover: PropTypes.func, // added dynamically from PopoverWithButton
 };
