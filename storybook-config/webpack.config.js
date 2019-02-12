@@ -1,22 +1,26 @@
 const path = require("path");
 
-module.exports = (baseConfig, env, defaultConfig) => {
-  defaultConfig.module.rules.push({
-    test: /\.styl/,
-    include: path.resolve(__dirname, "../src/components"),
-    loaders: [
-      require.resolve('style-loader'),
+module.exports = {
+  module: {
+    rules: [
       {
-        loader: require.resolve('css-loader'),
-        options: {
-          importLoaders: 1,
-          modules: true,
-          localIdentName: '[name]__[local]___[hash:base64:5]'
-        }
+        test: /\.styl$/,
+        use: [
+          'style-loader',
+          {
+            loader: "css-loader?modules",
+            options: {
+              sourceMap: true,
+              modules: true,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
+            },
+          },
+          {
+            loader: 'stylus-loader',
+          }
+        ],
+        include: path.resolve(__dirname, "../")
       }
     ]
-  });
-  defaultConfig.resolve.extensions.push(".styl");
-
-  return defaultConfig;
+  }
 };
