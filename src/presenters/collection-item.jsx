@@ -11,7 +11,7 @@ import CollectionAvatar from "./includes/collection-avatar.jsx";
 import { getAvatarUrl } from "../models/project.js";
 
 import { getContrastTextColor, hexToRgbA } from "../models/collection";
-import {isDarkColor} from '../models/collection';
+import { isDarkColor } from "../models/collection";
 
 const ProjectsPreview = ({ collection, projects }) => {
   return (
@@ -64,7 +64,6 @@ class CollectionItem extends React.Component {
           />
         )}
 
-<<<<<<< HEAD
         {collection && (
           <div
             className={"collection" + (isAuthorized ? " authorized" : "")}
@@ -79,7 +78,7 @@ class CollectionItem extends React.Component {
                 <div className="avatar-container" aria-hidden="true">
                   <div className="avatar">
                     <CollectionAvatar
-                      backgroundColor={hexToRgbA(collection.coverColor)}
+                      color={collection.coverColor}
                       collectionId={collection.id}
                     />
                   </div>
@@ -95,32 +94,12 @@ class CollectionItem extends React.Component {
                   <div
                     className="description"
                     style={{
-                      color: getContrastTextColor(collection.coverColor)
+                      color: isDarkColor(collection.coverColor) ? "white" : ""
                     }}
                   >
                     <TruncatedMarkdown length={96}>
                       {collection.description}
                     </TruncatedMarkdown>
-=======
-        {(collection &&
-          <CollectionLink collection={collection} className="button-area">
-            <div className={"collection" + (isAuthorized ? " authorized" : "")} id={"collection-" + collection.id}>
-              <div className="collection-container">
-                <div className="collection-info" style={{backgroundColor: collection.coverColor}}> 
-                  <div className="avatar-container">
-                    <div className="avatar">
-                      <CollectionAvatar color={collection.coverColor}/>
-                    </div>
-                  </div>
-                  <div className="collection-name-description">
-                    <div className="button">
-                      <span className="project-badge private-project-badge" aria-label="private"></span>
-                      <div className="project-name">{collection.name}</div>
-                    </div>
-                    <div className="description" style={{color: isDarkColor(collection.coverColor) ? 'white' : ''}}>
-                      <TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown>
-                    </div>
->>>>>>> b069088c40c0c859a276cf00d6fc5335ab39703b
                   </div>
                 </div>
 
