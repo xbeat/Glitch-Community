@@ -29,7 +29,7 @@ module.exports = function(external) {
     console.log(request.method, request.originalUrl, request.body);
     return next();
   });
-
+  
   const readFilePromise = util.promisify(fs.readFile);
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
   async function render(res, title, description, image=imageDefault) {
@@ -41,12 +41,15 @@ module.exports = function(external) {
     
     try {
       const stats = JSON.parse(await readFilePromise('build/stats.json'));
+      stats.entrypoints.styles.assets.forEach(file => {
+        if (file.match(/\.css(\?|$)/)) {
+          styles.push(`${stats.publicPath}${file}`);
+        }
+      });
       stats.entrypoints.client.assets.forEach(file => {
         if (file.match(/\.js(\?|$)/)) {
           scripts.push(`${stats.publicPath}${file}`);
         }
-      });
-      stats.entrypoints.styles.assets.forEach(file => {
         if (file.match(/\.css(\?|$)/)) {
           styles.push(`${stats.publicPath}${file}`);
         }
@@ -104,7 +107,7 @@ module.exports = function(external) {
       CONSTANTS: constants,
     });
   });
-
+  
   app.get('*', async (req, res) => {
     await render(res,
       "Glitch",

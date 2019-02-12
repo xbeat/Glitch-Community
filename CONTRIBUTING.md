@@ -212,3 +212,9 @@ Good job :-) Pop back over to #community and tell the room that you're all done.
  _Can I just edit ~community directly, since it’s Glitch we’re dealing with here?_
   
 Sure thing. All standard caveats and cautions apply.  This is appropriate for updating the curated content, fixing typos, editing .md files, and one-line bug fixes. Our build scripts don't update the live site until the build is healthy and your changes are complete.
+
+**Storybook**
+
+We now have [Storybook for React](https://www.npmjs.com/package/@storybook/react) integrated with our site, as we're gradually moving it towards a more component-based design. It's not hooked into the build process, so to see your changes reflected in it, you can do the following:
+1. Run ```npm run storybook``` from the terminal console to build the static storybook files.
+2. Go to https://<remix-name>/storybook. All the files are served there (from the build folder in the app).
