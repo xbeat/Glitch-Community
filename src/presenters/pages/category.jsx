@@ -26,7 +26,7 @@ const CategoryPageWrap = ({
       <title>{category.name}</title>
     </Helmet>
     <main className="collection-page">
-      <article className="projects" style={{backgroundColor: category.backgroundColor}}>
+      <article className="projects collection-full" style={{backgroundColor: category.backgroundColor}}>
         <header className="collection">
           <h1 className="collection-name">
             {category.name}
