@@ -16,6 +16,7 @@ const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
             togglePopover();
           }}
           onKeyPress={() => {
+            console.log('key press');
             updateSelected(index);
             togglePopover();
           }}
