@@ -5,6 +5,7 @@ import PopoverWithButton from "./popover-with-button";
 const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
     
   return(
+    /** Note - should have a unique identifier here, in the case that there are multiple dropdowns on a single page*/
     <ul className="pop-over mini-pop" role="listbox" tabIndex="-1" aria-activedescendant={"option-"+selected}>
       { contents.map((item, index) => (
         <li className={"mini-pop-action" + (index === selected ? " selected" : "")} key={index} 
