@@ -39,6 +39,7 @@ export class Embed extends React.Component {
           height="100%" 
           width="100%"
           border="0"
+          allowvr="yes"
         ></iframe> :
         // Error message if JS not supported
         // TODO(sheridan): Refactor this once we have a true error component
