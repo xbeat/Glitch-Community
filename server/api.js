@@ -25,7 +25,6 @@ async function getFromCacheOrApi(id, cache, api) {
     return value;
   } catch (error) {
     console.error(error);
-    captureException(error);
     return null;
   }
 }
