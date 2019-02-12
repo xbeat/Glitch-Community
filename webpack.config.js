@@ -78,10 +78,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         loader: 'babel-loader',
-        query: { 
-          // We only want to use compact mode in development for more stable builds; this causes the test runner to break in production
-          compact: mode === 'development' ? true : false 
-        }
+        query: { compact: false }
       },
       {
         test: /\.styl/,
@@ -89,11 +86,11 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader?modules',
+            loader: 'css-loader',//?modules',
             options: {
               sourceMap: true,
-              modules: true,
-              localIdentName: '[name]__[local]___[hash:base64:5]'
+              // modules: true,
+              // localIdentName: '[name]__[local]___[hash:base64:5]'
             },
           },
           {
