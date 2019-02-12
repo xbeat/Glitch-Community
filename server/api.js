@@ -3,6 +3,7 @@
 const axios = require("axios");
 const {Cache} = require("memory-cache");
 const dayjs = require("dayjs");
+const {captureException} = require("@sentry/node");
 
 const {API_URL} = require("./constants").current;
 
@@ -23,6 +24,7 @@ async function getFromCacheOrApi(id, cache, api) {
     const value = await promise;
     return value;
   } catch (error) {
+    console.error(error);
     return null;
   }
 }
