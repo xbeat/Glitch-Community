@@ -4,22 +4,19 @@ module.exports = (baseConfig, env, defaultConfig) => {
   defaultConfig.module.rules.push({
     test: /\.styl/,
     include: path.resolve(__dirname, "../src/components"),
-    use: [
-      'style-loader',
+    loaders: [
+      require.resolve('style-loader'),
       {
-        loader: "css-loader?modules",
+        loader: require.resolve('css-loader'),
         options: {
-          sourceMap: true,
+          importLoaders: 1,
           modules: true,
           localIdentName: '[name]__[local]___[hash:base64:5]'
-        },
-      },
-      {
-        loader: 'stylus-loader',
+        }
       }
-    ],
+    ]
   });
   defaultConfig.resolve.extensions.push(".styl");
-  
+
   return defaultConfig;
 };
