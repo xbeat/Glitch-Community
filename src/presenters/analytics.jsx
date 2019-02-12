@@ -14,7 +14,7 @@ const resolveProperties = (properties={}, inheritedProperties) => {
   }
   return {...inheritedProperties, ...properties};
 };
-
+console.log('hi');
 // stick this in the tree to add a property value to any tracking calls within it
 export const AnalyticsContext = ({children, properties, context}) => (
   <Context.Consumer>

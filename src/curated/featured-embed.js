@@ -1,5 +1,4 @@
-var body = `<p>Create your own Virtual Reality experiences with the WebVR Starter Kit.</p>
-<p>A free, 5-part video course with interactive code examples that will teach you the fundamentals of WebVR using A-Frame.</p>`;
+var body = '<p>Create your own Virtual Reality experiences with the WebVR Starter Kit.</p><p>A free, 5-part video course with interactive code examples that will teach you the fundamentals of WebVR using A-Frame.</p>';
 
 // make sure image urls use https
 export default {
