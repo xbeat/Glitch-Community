@@ -9,6 +9,7 @@ const TextField = ({opaque, postfix, prefix, ...props}) => {
   const className = cx({
     'text-input': true,
     'opaque': opaque,
+    'underline': !opaque,
   });
   return (
     <input className={className}/>
