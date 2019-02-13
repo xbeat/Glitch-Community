@@ -52,6 +52,14 @@ class Dropdown extends React.Component {
     // TO DO - set default menu item based on whether we're on a user or team page
   }
   
+  
+  handleKeyPress(e){
+    const {selected, buttonContents} = this.state;
+    if(e.keyCode === 38 && selected > 0){
+      console.log('pressed key down');
+    }else if(e.keyCode === 40 && selected < buttonContents.length - 1)
+  }
+  
   updateSelected(itemIndex){
     this.setState({
       selected: itemIndex,
@@ -69,6 +77,7 @@ class Dropdown extends React.Component {
         containerClass="dropdown"
         dropdown={true}
         passToggleToPop
+        onKeyDown={this.handleKeyPress}
       > 
         <DropdownMenu contents={this.props.menuContents} selected={this.state.selected} updateSelected={this.updateSelected}/>
       </PopoverWithButton>
