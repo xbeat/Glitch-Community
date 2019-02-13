@@ -132,9 +132,11 @@ button.link
 //   padding-bottom: 4px
 
 .button-area
-  &:hover .button
-    background-color: secondary-background
-    box-shadow: 2px 2px 0 primary
+  &:hover
+  &:focus
+    .button
+      background-color: secondary-background
+      box-shadow: 2px 2px 0 primary
   &:active .button
     background-color: secondary-background-active
     box-shadow: none

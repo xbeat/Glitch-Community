@@ -126,7 +126,6 @@ const UserPage = ({
           deleteProject,
           addProjectToCollection,
         }}
-        addProjectToCollection={addProjectToCollection}
         currentUser={maybeCurrentUser}
       />
 
@@ -150,6 +149,7 @@ const UserPage = ({
           deleteProject,
           addProjectToCollection
         }}
+        currentUser={maybeCurrentUser}
       />
       {isAuthorized && <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject}/>}
       {!isAuthorized && <ReportButton reportedType="user" reportedModel={user} />}

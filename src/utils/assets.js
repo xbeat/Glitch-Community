@@ -73,6 +73,11 @@ export function resizeImage(file, max) {
     });
 }
 
+// Takes an image object and returns an approximate average color
+// Used to set background colors as an avatar image fallback
+// Works by sampling the top-left 11x11 pixels and quantizing
+// them into 5 colors and returning the most common color
+// Returns '' if any pixels were transparent
 export function getDominantColor(image) {
   const {width, height} = image;
   const PIXELS_FROM_EDGE = 11;
@@ -95,17 +100,17 @@ export function getDominantColor(image) {
   for (let x = 0; x < PIXELS_FROM_EDGE; x++) {
     for (let y = 0; y < PIXELS_FROM_EDGE; y++) {
       const pixelData = context.getImageData(x, y, 1, 1).data;
+      if (pixelData[3] < 255) { // alpha pixels
+        transparentPixels = true;
+        break;
+      }
       const color = [
         pixelData[0], // r
         pixelData[1], // g
         pixelData[2], // b
       ];
-      const colorRegExObject = new RegExp(`(${color})`, 'g');
-      if (pixelData[3] < 255) { // alpha pixels
-        transparentPixels = true;
-        break;
-      }
-      if (outlyingColorsList.match(colorRegExObject)) {
+      const colorList = JSON.stringify(color);
+      if (outlyingColorsList.includes(colorList)) {
         outlyingColors.push(color);
       } else {
         colors.push(color);
@@ -116,7 +121,7 @@ export function getDominantColor(image) {
     colors = outlyingColors;
   }
   if (transparentPixels) {
-    return null;
+    return '';
   } 
   const colorMap = quantize(colors, 5);
   const [r, g, b] = Array.from(colorMap.palette()[0]);

@@ -19,6 +19,7 @@ module.exports = {
   },
   "plugins": [
     "jsx-a11y", // https://www.npmjs.com/package/eslint-plugin-jsx-a11y
+    "react-hooks", // https://www.npmjs.com/package/eslint-plugin-react-hooks
   ],
   "rules": {
     // Overrides/additions to eslint:recommended:
@@ -34,10 +35,13 @@ module.exports = {
     // Overrides of react/recommended:
     "react/no-unescaped-entities": ["error", {"forbid": [`"`, ">", "}"]}], // permit ' in jsx html,
     "react/prop-types": [OFF], // disabled so we can use composed prop-types
+    
+    // React hooks config
+    "react-hooks/rules-of-hooks": "error"
   },
   "settings": {
     "react": {
-      "version": "16.6.0" // Should match package.json
+      "version": "16.8.1" // Should match package.json
     }
   }
 }
