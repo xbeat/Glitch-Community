@@ -2677,10 +2677,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-d09ehQWqLMywP/PT/5JvXwPskPK9QCXUjiSkAHehreB381qExXf5JFCBWhfEyNonRbkIneCeYM99w+Ud48YIQQ==
-  /@types/node/11.9.2:
+  /@types/node/11.9.3:
     dev: false
     resolution:
-      integrity: sha512-MMwOkF+sy8LlSN2jLTGtwTcfqVN3H1WaCRO8gVaySVMJtOiZR+9V0y/3UprGi0rx6X7OrWGKGUtSviGVT44W3A==
+      integrity: sha512-DMiqG51GwES/c4ScBY0u5bDlH44+oY8AeYHjY1SGCWidD7h08o1dfHue/TGK7REmif2KiJzaUskO+Q0eaeZ2fQ==
   /@types/q/1.5.1:
     dev: false
     resolution:
@@ -2695,14 +2695,14 @@ packages:
       integrity: sha512-iHI60IbyfQilNubmxsq4zqSjdynlmc2Q/QvH9kjzg9+CCYVVzq1O6tc7VBzSygIwnmOt07w80IG6HDQvjv3Liw==
   /@types/vfile-message/1.0.1:
     dependencies:
-      '@types/node': 11.9.2
+      '@types/node': 11.9.3
       '@types/unist': 2.0.2
     dev: false
     resolution:
       integrity: sha512-mlGER3Aqmq7bqR1tTTIVHq8KSAFFRyGbrxuM8C/H82g6k7r2fS+IMEkIu3D7JHzG10NvPdR8DNx0jr0pwpp4dA==
   /@types/vfile/3.0.2:
     dependencies:
-      '@types/node': 11.9.2
+      '@types/node': 11.9.3
       '@types/unist': 2.0.2
       '@types/vfile-message': 1.0.1
     dev: false
