@@ -13,7 +13,6 @@ class DropdownMenu extends React.Component {
     }
     this.getFocusableMenuItems = this.getFocusableMenuItems.bind(this);
     this.focusNext = this.focusNext.bind(this);
-    this.focusPrev = this.focusPrev.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
   
@@ -22,7 +21,7 @@ class DropdownMenu extends React.Component {
   }
   
   getFocusableMenuItems(){
-    const node = ReactDOM.findDomNode(this);
+    const node = ReactDOM.findDOMNode(this); 
     console.log('node', node);
     this.setState({ menuItems: Array.from(node.querySelectorAll('li')) });
   }
@@ -74,7 +73,6 @@ class DropdownMenu extends React.Component {
 
 DropdownMenu.propTypes = {
   contents: PropTypes.node.isRequired,
-  handleKeyPress: PropTypes.func.isRequired,
   selected: PropTypes.number.isRequired, // the index of the selected item
   togglePopover: PropTypes.func, // added dynamically from PopoverWithButton
   updateSelected: PropTypes.func.isRequired,
@@ -87,7 +85,6 @@ class Dropdown extends React.Component {
       selected: 0,
       buttonContents: this.props.buttonContents
     };
-    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.updateSelected = this.updateSelected.bind(this);
   }
 
