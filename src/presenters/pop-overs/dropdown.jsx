@@ -43,7 +43,7 @@ class Dropdown extends React.Component {
       selected: 0, 
       buttonContents: this.props.buttonContents
     };
-    
+    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.updateSelected = this.updateSelected.bind(this);
   }
   
@@ -54,10 +54,14 @@ class Dropdown extends React.Component {
   
   
   handleKeyPress(e){
-    const {selected, buttonContents} = this.state;
+    const {selected} = this.state;
+    const {menuContents} = this.props.menuContents;
+    
     if(e.keyCode === 38 && selected > 0){
       console.log('pressed key down');
-    }else if(e.keyCode === 40 && selected < buttonContents.length - 1)
+    }else if(e.keyCode === 40 && selected < menuContents.length - 1){
+      console.log('pressed key up');
+    }
   }
   
   updateSelected(itemIndex){
