@@ -11,7 +11,7 @@ class DropdownMenu extends React.Component {
     this.state = {
       menuItems: [] // menu li elements
     }
-    this.getFocusableMenuItems = this.getFocusableMenuItems.bind(this);
+    // this.getFocusableMenuItems = this.getFocusableMenuItems.bind(this);
     this.focusNext = this.focusNext.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }

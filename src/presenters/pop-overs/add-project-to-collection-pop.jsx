@@ -174,32 +174,15 @@ class AddProjectToCollectionPop extends React.Component {
 
   async loadCollections() {
     try {
-      let allCollections = [];
-      
-      // first, load all of the user's collections
-      const userCollections = await this.props.api.get(
-        `collections/?userId=${this.props.currentUser.id}`
-      );
-      userCollections.data.forEach(userCollection => {
-        userCollection.user = this.props.currentUser;
-      });
-      allCollections = userCollections.data;
-
-      // next load all of the user's team's collections
-      const userTeams = this.props.currentUser.teams;
-      for (const team of userTeams) {
-        const { data: teamCollections } = await this.props.api.get(
-          `collections/?teamId=${team.id}`
-        );
-        if (teamCollections) {
-          teamCollections.forEach(teamCollection => {
-            teamCollection.team = this.props.currentUser.teams.find(
-              userTeam => userTeam.id == team.id
-            );
-            allCollections.push(teamCollection);
-          });
+      const {data: allCollections} = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
+      // add user / team to each collection
+      allCollections.forEach(collection => {
+        if(collection.teamId == -1){
+          collection.user = this.props.currentUser;
+        }else{
+          collection.team = this.props.currentUser.teams.find( userTeam => userTeam.id == collection.teamId);
         }
-      }
+      });
 
       // let orderedCollections = orderBy(allCollections, ['updatedAt'], ['desc']);
       const orderedCollections = orderBy(
