@@ -38,6 +38,7 @@ module.exports = function(external) {
     const zine = await getZine() || [];
     let scripts = [];
     let styles = [];
+    let hash = null;
     
     try {
       const stats = JSON.parse(await readFilePromise('build/stats.json'));
@@ -51,6 +52,7 @@ module.exports = function(external) {
           styles.push(`${stats.publicPath}${file}`);
         }
       });
+      hash = stats.hash;
     } catch (error) {
       console.error("Failed to load webpack stats file. Unless you see a webpack error here, the initial build probably just isn't ready yet.");
       built = false;
@@ -60,6 +62,7 @@ module.exports = function(external) {
       title, description, image,
       scripts, styles,
       BUILD_COMPLETE: built,
+      BUILD_HASH: hash,
       EXTERNAL_ROUTES: JSON.stringify(external),
       ZINE_POSTS: JSON.stringify(zine),
       PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
