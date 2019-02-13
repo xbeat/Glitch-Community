@@ -8,7 +8,13 @@ import ReactDOM from 'react-dom';
 class DropdownMenu extends React.Component {
   constructor(props){
     super(props);
+    this.state = {
+      menuItems: [] // menu li elements
+    }
     this.getFocusableMenuItems = this.getFocusableMenuItems.bind(this);
+    this.focusNext = this.focusNext.bind(this);
+    this.focusPrev = this.focusPrev.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
   
   componentDidMount(){
@@ -18,7 +24,25 @@ class DropdownMenu extends React.Component {
   getFocusableMenuItems(){
     const node = ReactDOM.findDomNode(this);
     console.log('node', node);
-    return Array.from(node.querySelectorAll
+    this.setState({ menuItems: Array.from(node.querySelectorAll('li')) });
+  }
+  
+  focusNext(){
+    const {selected, contents} = this.props;
+    const nextIndex = selected < contents.length-1 ? selected + 1: 0;
+    this.state.menuItems[nextIndex].focus();
+  }
+  
+  handleKeyPress(e) {
+    const { selected } = this.state;
+    const { menuContents } = this.props.menuContents;
+
+    if (e.keyCode === 38 && selected > 0) {
+      console.log("pressed key down");
+      this.focusNext();
+    } else if (e.keyCode === 40 && selected < menuContents.length - 1) {
+      console.log("pressed key up");
+    }
   }
   
   render(){
@@ -37,7 +61,7 @@ class DropdownMenu extends React.Component {
               updateSelected(index);
               togglePopover();
             }}
-            onKeyPress={() => {handleKeyPress()}}
+            onKeyPress={() => {this.handleKeyPress()}}
             tabIndex="-1"
           >
             {item}
@@ -72,17 +96,6 @@ class Dropdown extends React.Component {
     // TO DO - set default menu item based on whether we're on a user or team page
   }
 
-  handleKeyPress(e) {
-    const { selected } = this.state;
-    const { menuContents } = this.props.menuContents;
-
-    if (e.keyCode === 38 && selected > 0) {
-      console.log("pressed key down");
-    } else if (e.keyCode === 40 && selected < menuContents.length - 1) {
-      console.log("pressed key up");
-    }
-  }
-
   updateSelected(itemIndex) {
     this.setState({
       selected: itemIndex,
@@ -106,7 +119,6 @@ class Dropdown extends React.Component {
           contents={this.props.menuContents}
           selected={this.state.selected}
           updateSelected={this.updateSelected}
-          handleKeyPress={this.handleKeyPress}
         />
       </PopoverWithButton>
     );
