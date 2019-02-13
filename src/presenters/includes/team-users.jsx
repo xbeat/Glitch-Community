@@ -142,7 +142,7 @@ export class AddTeamUser extends React.Component {
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <span className="add-user-container">
-            {!!this.state.alreadyInvited.length && 
+            {this.state.alreadyInvited && this.state.alreadyInvited.length && 
               <UsersList users={this.state.alreadyInvited}/>
             }
             <TrackClick name="Add to Team clicked">

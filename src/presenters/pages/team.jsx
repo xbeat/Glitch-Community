@@ -70,7 +70,14 @@ class TeamPage extends React.Component {
     super(props);
     this.state = {};
     this.teamAdmins = this.teamAdmins.bind(this);
+    this.getInvitees = this.getInvitees.bind(this);
     this.addProjectToCollection = this.addProjectToCollection.bind(this);
+    
+  }
+  
+  async componentDidMount () {
+    this.invitees = await this.getInvitees()
+    console.log("invitees didMount", this.invitees)
   }
   
   async addProjectToCollection(project, collection) {
@@ -113,7 +120,6 @@ class TeamPage extends React.Component {
       const user = await this.props.api.get(`users/${id}`);
       invitees.push(user.data);
     }
-    console.log("invitees", invitees);
     return invitees;
   }
 
@@ -123,7 +129,6 @@ class TeamPage extends React.Component {
     // filter featuredProject out of both pinned & recent projects
     const [pinnedProjects, recentProjects] = partition(team.projects.filter(({id}) => id !== team.featuredProjectId), ({id}) => pinnedSet.has(id));
     const featuredProject = team.projects.find(({id}) => id === team.featuredProjectId); 
-    const invitees = await this.getInvitees();
     
     return (
       <main className="profile-page team-page">
@@ -176,7 +181,7 @@ class TeamPage extends React.Component {
                   inviteUser={this.props.inviteUser}
                   setWhitelistedDomain={this.props.currentUserIsTeamAdmin ? this.props.updateWhitelistedDomain : null}
                   members={team.users.map(({id}) => id)}
-                  invitedMembers={await this.getInvitees()}
+                  invitedMembers={this.invitees}
                   whitelistedDomain={team.whitelistedDomain}
                   api={this.props.api}
                 />
