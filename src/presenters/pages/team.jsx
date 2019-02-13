@@ -68,15 +68,17 @@ const TeamPageCollections = ({collections, team, api, currentUser, currentUserIs
 class TeamPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      invitees: [],
+    };
     this.teamAdmins = this.teamAdmins.bind(this);
     this.getInvitees = this.getInvitees.bind(this);
     this.addProjectToCollection = this.addProjectToCollection.bind(this);
   }
   
   async componentDidMount() {
-    this.invitees = await this.getInvitees();
-    this.setState(this.state);
+    const invitees = await this.getInvitees();
+    this.setState({ invitees });
   }
   
   async addProjectToCollection(project, collection) {
@@ -180,7 +182,7 @@ class TeamPage extends React.Component {
                   inviteUser={this.props.inviteUser}
                   setWhitelistedDomain={this.props.currentUserIsTeamAdmin ? this.props.updateWhitelistedDomain : null}
                   members={team.users.map(({id}) => id)}
-                  invitedMembers={this.invitees}
+                  invitedMembers={this.state.invitees}
                   whitelistedDomain={team.whitelistedDomain}
                   api={this.props.api}
                 />

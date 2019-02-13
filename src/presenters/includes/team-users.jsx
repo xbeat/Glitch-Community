@@ -101,17 +101,12 @@ export class AddTeamUser extends React.Component {
     super(props);
     this.state = {
       invitee: '',
-      alreadyInvited: this.props.invitedMembers,
+      newlyInvited: [],
     };
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
   
-  componentDidUpdate(prevProps) {
-    if (this.props.invitedMembers !== prevProps.invitedMembers) {
-      this.setState(() => ({alreadyInvited: this.props.invitedMembers}));
-    }
-  }
-  
+
   async setWhitelistedDomain(togglePopover, domain) {
     togglePopover();
     await this.props.setWhitelistedDomain(domain);
@@ -122,12 +117,8 @@ export class AddTeamUser extends React.Component {
     
     this.setState({
       invitee: getDisplayName(user),
-      alreadyInvited: [...this.state.alreadyInvited, user],
+      newlyInvited: [...this.state.newlyInvited, user],
     });
-    this.setState((state) => ({
-      invitee: getDisplayName(user),
-      alreadyInvited: [...state.alreadyInvited, user],
-    }));
     await this.props.inviteUser(user);
   }
   
@@ -147,12 +138,14 @@ export class AddTeamUser extends React.Component {
 
   render() {
     const {inviteEmail, inviteUser, setWhitelistedDomain, ...props} = this.props;
+    // this isn't real syntax - concat this in an array
+    const alreadyInvitedAndNewInvited = this.props.invitedMembers + this.state.invitee;
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <span className="add-user-container">
-            {this.state.alreadyInvited && this.state.alreadyInvited.length && 
-              <UsersList users={this.state.alreadyInvited}/>
+            {this.props.invitedMembers && this.props.invitedMembers.length && 
+              <UsersList users={this.props.invitedMembers}/>
             }
             <TrackClick name="Add to Team clicked">
               <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
