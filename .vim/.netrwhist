@@ -1,3 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
-let g:netrw_dirhist_1='/rbd/pnpm-volume/178e1703-9379-4b29-b92f-1f66b8ea76b2/node_modules/.registry.npmjs.org/d3-shape/1.3.4/node_modules/d3-shape'
