@@ -95,7 +95,7 @@ class CreateCollectionPop extends React.Component {
   }
 
   render() {
-    const { error, query } = this.state;
+    const { query } = this.state;
     const { collections } = this.props;
 
     const submitEnabled = this.state.query.length > 0;
@@ -136,7 +136,7 @@ class CreateCollectionPop extends React.Component {
       !!collections &&
       selectedOwnerCollections.some(c => c.url === kebabCase(query))
     ) {
-      error = nameTakenError;
+      this.state.error = nameTakenError;
     }
 
     if (this.state.newCollectionUrl) {
@@ -155,7 +155,7 @@ class CreateCollectionPop extends React.Component {
               value={query}
               update={this.handleChange}
               placeholder={placeholder}
-              error={error || error}
+              error={this.state.error}
               aria-label={placeholder}
             />
 

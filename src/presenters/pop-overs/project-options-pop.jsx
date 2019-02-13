@@ -204,4 +204,4 @@ ProjectOptions.propTypes = {
   api: PropTypes.func,
   currentCollectionId: PropTypes.number,
   project: PropTypes.object.isRequired
-};t
+};
