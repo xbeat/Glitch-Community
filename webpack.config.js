@@ -95,7 +95,7 @@ module.exports = {
               {
                 loader: 'css-loader?modules',
                 options: {
-                  sourceMap: true,
+                  sourceMap: mode !== 'production', // no css source maps in production
                   modules: true,
                   localIdentName: '[name]__[local]___[hash:base64:5]'
                 },
