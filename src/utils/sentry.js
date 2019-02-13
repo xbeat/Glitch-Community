@@ -1,4 +1,4 @@
-/* globals BUILD_HASH, ENVIRONMENT, PROJECT_DOMAIN */
+/* globals BUILD_TIMESTAMP, ENVIRONMENT, PROJECT_DOMAIN */
 
 //
 // This utility wraps the Sentry library so that we can guarantee
@@ -26,7 +26,7 @@ try {
   Sentry.init({
     dsn: "https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508",
     environment: ENVIRONMENT,
-    release: BUILD_HASH,
+    release: `community@${BUILD_TIMESTAMP}`,
     beforeSend(event, hint) {
       if (!shouldSendError) {
         return null;
