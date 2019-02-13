@@ -106,8 +106,10 @@ export class AddTeamUser extends React.Component {
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
   
-  componentDidUpdate() {
-    this.setState((state) => ({alreadyInvited: this.props.invitedMembers}));
+  componentDidUpdate(prevProps) {
+    if (this.props.invitedMembers !== prevProps.invitedMembers) {
+      this.setState(() => ({alreadyInvited: this.props.invitedMembers}));
+    }
   }
   
   async setWhitelistedDomain(togglePopover, domain) {
@@ -139,8 +141,6 @@ export class AddTeamUser extends React.Component {
   }
 
   render() {
-    console.log("state", this.state.alreadyInvited);
-    console.log("props", this.props.invitedMembers);
     const {inviteEmail, inviteUser, setWhitelistedDomain, ...props} = this.props;
     return (
       <PopoverContainer>

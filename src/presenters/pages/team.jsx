@@ -74,14 +74,9 @@ class TeamPage extends React.Component {
     this.addProjectToCollection = this.addProjectToCollection.bind(this);
   }
   
-  componentDidUpdate() {
-    console.log("cDU", this.invitees)
-  }
-  
   async componentDidMount() {
-    this.invitees = await this.getInvitees()
-    console.log("invitees didMount", this.invitees)
-    this.setState(this.state)
+    this.invitees = await this.getInvitees();
+    this.setState(this.state);
   }
   
   async addProjectToCollection(project, collection) {
