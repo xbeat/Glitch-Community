@@ -8,7 +8,6 @@ class DropdownMenu extends React.Component {
   }
   render(){
     const { contents, selected, togglePopover, updateSelected } = this.props;
-    
     return (
       <ul className="pop-over mini-pop" tabIndex="-1">
         {contents.map((item, index) => (

@@ -94,7 +94,7 @@ class CreateCollectionPop extends React.Component {
     }
   }
   
-  getTeamMenuContents() {
+  getTeamMenuContents(teams) {
     const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
     const menuContents = [];
 
@@ -163,7 +163,7 @@ class CreateCollectionPop extends React.Component {
                 for{" "}
                 <Dropdown
                   buttonContents={currentUserMenuItem}
-                  menuContents={getMenuContents()}
+                  menuContents={[currentUserMenuItem].concat(this.getTeamMenuContents(teams))}
                   onUpdate={this.setTeamId}
                 />
               </div>
