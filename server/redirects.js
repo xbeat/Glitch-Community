@@ -12,6 +12,7 @@ module.exports = function(app) {
   redirect(app, '/mythbustersjr*', '/culture/mythbusters-jr/');
   redirect(app, '/mythbusters*', '/culture/mythbusters-jr/');
   redirect(app, '/saastr', 'https://saastr.glitch.me/');  
+  redirect(app, '/storybook', '/storybook/index.html');
   redirectPath(app, '/featured*', '/culture/');
 }
 
