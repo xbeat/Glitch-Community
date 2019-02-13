@@ -69,8 +69,7 @@
     "url-join": "^4.0.0",
     "webpack": "^4.29.2",
     "webpack-cli": "^3.2.1",
-    "webpack-dev-middleware": "^3.5.1",
-    "webpack-bundle-analyzer": "^3.0.4"
+    "webpack-dev-middleware": "^3.5.1"
   },
   "engines": {
     "node": "10.x"
