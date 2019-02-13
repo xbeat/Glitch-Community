@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Button from '../src/components/buttons/button';
+import TextInput from '../src/components/fields/text';
 
 storiesOf('Button', module)
   .add('regular', () => (
@@ -18,3 +19,8 @@ storiesOf('Button', module)
 .add('danger zone', () => (
     <Button type="dangerZone" size="small">Destructive Action</Button>
   ));
+
+storiesOf('Text Input', module)
+  .add('regular', () => (
+    <TextInput placeholder="type something!"/>
+  ))
