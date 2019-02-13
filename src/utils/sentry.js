@@ -1,4 +1,4 @@
-/* globals ENVIRONMENT, PROJECT_DOMAIN */
+/* globals BUILD_HASH, ENVIRONMENT, PROJECT_DOMAIN */
 
 //
 // This utility wraps the Sentry library so that we can guarantee
@@ -11,7 +11,7 @@
 import * as Sentry from "@sentry/browser";
 export * from "@sentry/browser";
 
-const shouldSendError = PROJECT_DOMAIN === "community" || PROJECT_DOMAIN === "community-staging";
+const shouldSendError = true || PROJECT_DOMAIN === "community" || PROJECT_DOMAIN === "community-staging";
 
 const filterSecrets = jsonEvent => {
   const tokens = ["facebookToken", "githubToken", "persistentToken"];
@@ -26,6 +26,7 @@ try {
   Sentry.init({
     dsn: "https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508",
     environment: ENVIRONMENT,
+    release: BUILD_HASH,
     beforeSend(event, hint) {
       if (!shouldSendError) {
         return null;
