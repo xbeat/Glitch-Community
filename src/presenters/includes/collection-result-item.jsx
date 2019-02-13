@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getLink as getCollectionLink} from '../../models/collection.js'
+import {getLink as getCollectionLink} from '../../models/collection.js';
 import Notifications from '../notifications.jsx';
 import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import CollectionAvatar from './collection-avatar.jsx';

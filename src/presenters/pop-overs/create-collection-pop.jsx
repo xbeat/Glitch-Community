@@ -136,7 +136,7 @@ class CreateCollectionPop extends React.Component {
       !!collections &&
       selectedOwnerCollections.some(c => c.url === kebabCase(query))
     ) {
-      this.state.error = nameTakenError;
+      this.setState({error: nameTakenError});
     }
 
     if (this.state.newCollectionUrl) {
@@ -182,7 +182,7 @@ class CreateCollectionPop extends React.Component {
                   <button
                     type="submit"
                     className="create-collection button-small"
-                    disabled={!!error || !submitEnabled}
+                    disabled={!!this.state.error || !submitEnabled}
                   >
                     Create
                   </button>

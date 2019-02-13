@@ -6,26 +6,24 @@ class DropdownMenu extends React.Component {
   constructor(props){
     super(props);
   }
-  componentDidMount(){
-    const selectedLi = document.getElementbyClassName
-  }
   render(){
     const { contents, selected, togglePopover, updateSelected } = this.props;
     
     return (
-      <ul className="pop-over mini-pop" tabIndex="0">
+      <ul className="pop-over mini-pop" tabIndex="-1">
         {contents.map((item, index) => (
           <li
             className={
               "mini-pop-action" + (index === selected ? " selected" : "")
             }
             key={index}
-            aria-selected={index == selected}
             onClick={() => {
               updateSelected(index);
               togglePopover();
-            }}            
-            tabIndex="-1"
+            }}   
+            onKeyPress={() => {
+              updateSelected(index);
+            }}
           >
             {item}
           </li>
@@ -33,7 +31,7 @@ class DropdownMenu extends React.Component {
       </ul>
     );
   }
-};
+}
 
 DropdownMenu.propTypes = {
   contents: PropTypes.node.isRequired,
