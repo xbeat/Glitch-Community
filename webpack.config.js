@@ -77,7 +77,8 @@ module.exports = {
           failOnError: false,
         }
       },
-      {
+      oneOf: [
+      { 
         test: /\.(js|jsx)$/,
         include: mode === "development" ? [SRC, SHARED, NODE_MODULES, path.resolve(__dirname, '.')] : [SRC, SHARED, NODE_MODULES],
         loader: 'babel-loader',
