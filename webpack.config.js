@@ -104,7 +104,7 @@ module.exports = {
   },
   plugins: [
     new LodashModuleReplacementPlugin(),
-    new MiniCssExtractPlugin({filename: '[name].css?[chunkhash]'}),
+    new MiniCssExtractPlugin({filename: '[name].css?[contenthash]'}),
     new StatsPlugin('stats.json', {all: false, entrypoints: true, hash: true, publicPath: true}),
   ],
   watchOptions: {
