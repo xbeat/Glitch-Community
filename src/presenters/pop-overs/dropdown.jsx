@@ -63,13 +63,12 @@ class Dropdown extends React.Component {
   }
 
   render() {
-    const dropdownArrow = `<span className="down-arrow icon" aria-label="options"></span>`;
-    const buttonText = this.state.buttonContents;
-    const buttonContents = <>{buttonText} d
+    const dropdownArrow = <span className="down-arrow icon" aria-label="options"></span>;
+    const buttonContents = `<>${this.state.buttonContents} ${dropdownArrow}</>`;
     return (
       <PopoverWithButton
         buttonClass="button-small dropdown-btn user-or-team-toggle has-emoji"
-        buttonText={this.state.buttonContents + '<span className="down-arrow icon" aria-label="options"></span>'}
+        buttonText={this.state.buttonContents}
         containerClass="dropdown"
         dropdown={true}
         passToggleToPop
