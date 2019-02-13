@@ -5,14 +5,14 @@ import styles from './text.styl';
 
 const cx = classNames.bind(styles);
 
-const TextField = ({opaque, postfix, prefix, ...props}) => {
+const TextField = ({opaque, ...props}) => {
   const className = cx({
     'text-input': true,
     'opaque': opaque,
     'underline': !opaque,
   });
   return (
-    <input className={className}/>
+    <input className={className} {...props}/>
   );
 };
 
@@ -21,8 +21,6 @@ TextField.propTypes = {
   onChange: PropTypes.function,
   opaque: PropTypes.bool,
   placeholder: PropTypes.string,
-  postfix: PropTypes.node,
-  prefix: PropTypes.node,
   value: PropTypes.string,
 };
 
