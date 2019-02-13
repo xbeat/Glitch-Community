@@ -115,14 +115,39 @@ class TeamPage extends React.Component {
   }
   
   async getInvitees() {
-    const ids = this.props.team.tokens.map(({userId}) => userId);
+    await Promise.all(this.props.team.tokens.map(({userId}) => {
+      return this.props.api.get(`users/${userId}`);
+    }));
+    /*const ids = this.props.team.tokens.map(({userId}) => userId);
     const invitees = [];
     for (const id of ids) {
       const user = await this.props.api.get(`users/${id}`);
       invitees.push(user.data);
     }
-    return invitees;
+    return invitees;*/
   }
+
+  /*
+  
+    await Promise.all(projectIds.map(projectId => {
+      return this.props.api.delete(`projects/${projectId}/authorization`, {data: {targetUserId: id}});
+    }));
+    
+    
+  const loadAllCollections = async (api, infos) => {
+  // don't await until every request is sent so they can all run at once
+  const promises = infos.map(info => loadCollection(api, info));
+  return await Promise.all(promises);
+};
+
+export const FeaturedCollections = ({api}) => (
+  <DataLoader get={() => loadAllCollections(api, featuredCollections)}>
+    {collections => collections.filter(c => !!c).map(collection => (
+      <CollectionWide collection={collection} api={api} key={collection.id}/>
+    ))}
+  </DataLoader>
+);
+  */
 
   render() {
     const {team} = this.props;

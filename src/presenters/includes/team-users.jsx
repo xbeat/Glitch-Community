@@ -106,7 +106,6 @@ export class AddTeamUser extends React.Component {
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
   
-
   async setWhitelistedDomain(togglePopover, domain) {
     togglePopover();
     await this.props.setWhitelistedDomain(domain);
@@ -138,14 +137,13 @@ export class AddTeamUser extends React.Component {
 
   render() {
     const {inviteEmail, inviteUser, setWhitelistedDomain, ...props} = this.props;
-    // this isn't real syntax - concat this in an array
-    const alreadyInvitedAndNewInvited = this.props.invitedMembers + this.state.invitee;
+    const alreadyInvitedAndNewInvited = this.props.invitedMembers.concat(this.state.newlyInvited);
     return (
       <PopoverContainer>
         {({visible, togglePopover}) => (
           <span className="add-user-container">
-            {this.props.invitedMembers && this.props.invitedMembers.length && 
-              <UsersList users={this.props.invitedMembers}/>
+            {alreadyInvitedAndNewInvited.length > 0 && 
+              <UsersList users={alreadyInvitedAndNewInvited}/>
             }
             <TrackClick name="Add to Team clicked">
               <button onClick={togglePopover} className="button button-small button-tertiary add-user">Add</button>
