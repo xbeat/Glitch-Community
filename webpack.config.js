@@ -79,7 +79,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
-        include: mode === "development" ? [SRC, SHARED, path.resolve(__dirname, '.')] : [SRC, SHARED, NODE_MODULES],
+        include: mode === "development" ? [SRC, SHARED, NODE_MODULES, path.resolve(__dirname, '.')] : [SRC, SHARED, NODE_MODULES],
         loader: 'babel-loader',
         query: { compact: false }
       },
