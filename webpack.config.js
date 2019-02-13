@@ -7,8 +7,10 @@ const StatsPlugin = require('stats-webpack-plugin');
 
 const BUILD = path.resolve(__dirname, 'build');
 const SRC = path.resolve(__dirname, 'src');
+const SHARED = path.resolve(__dirname, 'shared');
 const CSS_MODULES = path.resolve(__dirname, 'src/components');
 const STYLES = path.resolve(__dirname, 'styles');
+const NODE_MODULES = path.resolve(__dirname, 'node_modules');
 const STYLE_BUNDLE_NAME = 'styles';
 
 
@@ -76,52 +78,59 @@ module.exports = {
         }
       },
       {
-        test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        query: { compact: false }
-      },
-      {
-        test: /\.styl/,
-        include: CSS_MODULES,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader?modules',
-            options: {
-              sourceMap: true,
-              modules: true,
-              localIdentName: '[name]__[local]___[hash:base64:5]'
-            },
+        oneOf: [
+          { 
+            test: /\.(js|jsx)$/,
+            loader: 'babel-loader',
+            include: mode === 'development' ? [SRC, SHARED] : [SRC, SHARED, NODE_MODULES],
+            query: { 
+              compact: mode === 'development' ? true : false 
+            }
           },
           {
-            loader: 'stylus-loader',
-            options: {
-              compress: mode === 'production', // Compress CSS as part of the stylus build
-              use: [AutoprefixerStylus()],
-            },
+            test: /\.styl/,
+            include: CSS_MODULES,
+            use: [
+              MiniCssExtractPlugin.loader,
+              {
+                loader: 'css-loader?modules',
+                options: {
+                  sourceMap: mode !== 'production', // no css source maps in production
+                  modules: true,
+                  localIdentName: '[name]__[local]___[hash:base64:5]'
+                },
+              },
+              {
+                loader: 'stylus-loader',
+                options: {
+                  compress: mode === 'production', // Compress CSS as part of the stylus build
+                  use: [AutoprefixerStylus()],
+                },
+              },
+            ]
           },
-        ]
-      },
-      {
-        test: /\.styl$/,
-        include: STYLES,
-        use: [
-          MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader',
-            options: {
-              sourceMap: mode !== 'production', // no css source maps in production
-            },
+            test: /\.styl$/,
+            include: STYLES,
+            use: [
+              MiniCssExtractPlugin.loader,
+              {
+                loader: 'css-loader',
+                options: {
+                  sourceMap: mode !== 'production', // no css source maps in production
+                },
+              },
+              {
+                loader: 'stylus-loader',
+                options: {
+                  compress: mode === 'production', // Compress CSS as part of the stylus build
+                  use: [AutoprefixerStylus()],
+                },
+              },
+            ]
           },
-          {
-            loader: 'stylus-loader',
-            options: {
-              compress: mode === 'production', // Compress CSS as part of the stylus build
-              use: [AutoprefixerStylus()],
-            },
-          },
-        ]
-      },
+        ],
+      }
     ],
   },
   plugins: [
