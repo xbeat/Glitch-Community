@@ -5,19 +5,20 @@ import styles from './text.styl';
 
 const cx = classNames.bind(styles);
 
-const TextField = ({opaque, search, ...props}) => {
-  const className = cx({
+const TextField = ({className, opaque, search, ...props}) => {
+  const classes = cx({
     'text-input': true,
     'search': search,
     'opaque': opaque,
     'underline': !opaque,
-  });
+  }, className);
   return (
-    <input className={className} {...props}/>
+    <input className={classes} {...props}/>
   );
 };
 
 TextField.propTypes = {
+  className: PropTypes.string,
   disabled: PropTypes.bool,
   name: PropTypes.string,
   onChange: PropTypes.function,
