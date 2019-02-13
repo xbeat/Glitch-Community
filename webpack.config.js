@@ -83,7 +83,9 @@ module.exports = {
             test: /\.(js|jsx)$/,
             loader: 'babel-loader',
             include: mode === 'development' ? [SRC, SHARED] : [SRC, SHARED, NODE_MODULES],
-            query: { compact: false }
+            query: { 
+              compact: mode === 'development' ? true : false 
+            }
           },
           {
             test: /\.styl/,
