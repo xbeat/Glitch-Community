@@ -116,9 +116,8 @@ class TeamPage extends React.Component {
   }
   
   async getInvitees() {
-    return await Promise.all(this.props.team.tokens.map(({userId}) => {
-      const user = this.props.api.get(`users/${userId}`);
-      user.data;
+    return await Promise.all(this.props.team.tokens.map(userId => {
+      this.props.api.get(`users/${userId}`).data;
     }));
     /*const ids = this.props.team.tokens.map(({userId}) => userId);
     const invitees = [];
@@ -129,8 +128,9 @@ class TeamPage extends React.Component {
     return invitees;*/
   }
 
-  /*
+  /* reference material :)
   
+  hmm so do any of these set a variable? 
     await Promise.all(projectIds.map(projectId => {
       return this.props.api.delete(`projects/${projectId}/authorization`, {data: {targetUserId: id}});
     }));
