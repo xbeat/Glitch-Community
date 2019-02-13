@@ -6,11 +6,10 @@ const DropdownMenu = ({contents, selected, updateSelected, togglePopover}) => {
     
   return(
     /** Note - should have a unique identifier here, in the case that there are multiple dropdowns on a single page*/
-    <ul className="pop-over mini-pop" role="listbox" tabIndex="0" aria-activedescendant={"option-"+selected}>
+    <ul className="pop-over mini-pop" tabIndex="0">
       { contents.map((item, index) => (
         <li className={"mini-pop-action" + (index === selected ? " selected" : "")} key={index} 
           aria-selected={index==selected}
-          id={"option-" + index}
           onClick={() => {
             updateSelected(index);
             togglePopover();
@@ -51,18 +50,7 @@ class Dropdown extends React.Component {
     // set default menu item here
     // TO DO - set default menu item based on whether we're on a user or team page
   }
-  
-  
-  handleKeyPress(e){
-    const {selected} = this.state;
-    const {menuContents} = this.props.menuContents;
-    
-    if(e.keyCode === 38 && selected > 0){
-      console.log('pressed key down');
-    }else if(e.keyCode === 40 && selected < menuContents.length - 1){
-      console.log('pressed key up');
-    }
-  }
+
   
   updateSelected(itemIndex){
     this.setState({
@@ -81,7 +69,6 @@ class Dropdown extends React.Component {
         containerClass="dropdown"
         dropdown={true}
         passToggleToPop
-        onKeyDown={this.handleKeyPress}
       > 
         <DropdownMenu contents={this.props.menuContents} selected={this.state.selected} updateSelected={this.updateSelected}/>
       </PopoverWithButton>
