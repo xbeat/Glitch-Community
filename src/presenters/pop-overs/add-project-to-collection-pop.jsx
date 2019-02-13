@@ -16,6 +16,7 @@ import CreateCollectionPop from "./create-collection-pop.jsx";
 import { NestedPopoverTitle } from "./popover-nested.jsx";
 
 import { orderBy } from "lodash";
+import _ from 'lodash';
 
 const AddProjectPopoverTitle = ({ project }) => {
   return (
@@ -174,7 +175,7 @@ class AddProjectToCollectionPop extends React.Component {
 
   async loadCollections() {
     try {
-      const {data: allCollections} = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}`);
+      const {data: allCollections} = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}&includeTeams=true`);
       // add user / team to each collection
       allCollections.forEach(collection => {
         if(collection.teamId == -1){
@@ -184,10 +185,13 @@ class AddProjectToCollectionPop extends React.Component {
         }
       });
 
+      window.allCollections = allCollections;
+      let orderedCollections = _.orderBy(allCollections, ['updatedAt'], ['desc']);
       // let orderedCollections = orderBy(allCollections, ['updatedAt'], ['desc']);
-      const orderedCollections = orderBy(
-        allCollections, collection => collection.updatedAt
-      ).reverse();
+      // const orderedCollections = orderBy(
+      //   allCollections, collection => collection.updatedAt
+      // ).reverse();
+      
       this.setState({ maybeCollections: orderedCollections });
     } catch (error) {
       if (
