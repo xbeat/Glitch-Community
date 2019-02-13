@@ -1,14 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PopoverWithButton from "./popover-with-button";
+import ReactDOM from 'react-dom';
+
+// https://github.com/trendmicro-frontend/react-dropdown/blob/master/src/DropdownMenu.jsx
 
 class DropdownMenu extends React.Component {
   constructor(props){
     super(props);
+    this.getFocusableMenuItems = this.getFocusableMenuItems.bind(this);
   }
+  
   componentDidMount(){
-    const selectedLi = document.getElementbyClassName
+    this.getFocusableMenuItems();
   }
+  
+  getFocusableMenuItems(){
+    const node = ReactDOM.findDomNode(this);
+    console.log('node', node);
+    return Array.from(node.querySelectorAll
+  }
+  
   render(){
     const { contents, handleKeyPress, selected, togglePopover, updateSelected } = this.props;
     
