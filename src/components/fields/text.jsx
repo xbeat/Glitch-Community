@@ -19,6 +19,7 @@ const TextField = ({opaque, search, ...props}) => {
 
 TextField.propTypes = {
   disabled: PropTypes.bool,
+  name: PropTypes.string,
   onChange: PropTypes.function,
   opaque: PropTypes.bool,
   placeholder: PropTypes.string,
