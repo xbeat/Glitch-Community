@@ -1,51 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PopoverWithButton from "./popover-with-button";
-import ReactDOM from 'react-dom';
-
-// https://github.com/trendmicro-frontend/react-dropdown/blob/master/src/DropdownMenu.jsx
 
 class DropdownMenu extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-      menuItems: [] // menu li elements
-    }
-    // this.getFocusableMenuItems = this.getFocusableMenuItems.bind(this);
-    this.focusNext = this.focusNext.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
-  
   componentDidMount(){
-    this.getFocusableMenuItems();
+    const selectedLi = document.getElementbyClassName
   }
-  
-  getFocusableMenuItems(){
-    const node = ReactDOM.findDOMNode(this); 
-    console.log('node', node);
-    this.setState({ menuItems: Array.from(node.querySelectorAll('li')) });
-  }
-  
-  focusNext(){
-    const {selected, contents} = this.props;
-    const nextIndex = selected < contents.length-1 ? selected + 1: 0;
-    this.state.menuItems[nextIndex].focus();
-  }
-  
-  handleKeyPress(e) {
-    const { selected } = this.state;
-    const { menuContents } = this.props.menuContents;
-
-    if (e.keyCode === 38 && selected > 0) {
-      console.log("pressed key down");
-      this.focusNext();
-    } else if (e.keyCode === 40 && selected < menuContents.length - 1) {
-      console.log("pressed key up");
-    }
-  }
-  
   render(){
-    const { contents, handleKeyPress, selected, togglePopover, updateSelected } = this.props;
+    const { contents, selected, togglePopover, updateSelected } = this.props;
     
     return (
       <ul className="pop-over mini-pop" tabIndex="0">
@@ -59,8 +24,7 @@ class DropdownMenu extends React.Component {
             onClick={() => {
               updateSelected(index);
               togglePopover();
-            }}
-            onKeyPress={() => {this.handleKeyPress()}}
+            }}            
             tabIndex="-1"
           >
             {item}
@@ -110,7 +74,6 @@ class Dropdown extends React.Component {
         containerClass="dropdown"
         dropdown={true}
         passToggleToPop
-        onKeyDown={this.handleKeyPress}
       >
         <DropdownMenu
           contents={this.props.menuContents}
