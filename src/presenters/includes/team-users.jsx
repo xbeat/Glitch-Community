@@ -106,6 +106,10 @@ export class AddTeamUser extends React.Component {
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
   
+  componentDidUpdate() {
+    this.setState((state) => ({alreadyInvited: this.props.invitedMembers}));
+  }
+  
   async setWhitelistedDomain(togglePopover, domain) {
     togglePopover();
     await this.props.setWhitelistedDomain(domain);
