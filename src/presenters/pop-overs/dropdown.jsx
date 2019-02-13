@@ -50,7 +50,7 @@ class Dropdown extends React.Component {
   }
 
   componentDidMount() {
-    // TO DO - set default menu item based on whether we're on a user or team page
+    // TO DO - set default menu item to current team if loaded from a team page
   }
 
   updateSelected(itemIndex) {
