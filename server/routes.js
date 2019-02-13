@@ -8,7 +8,6 @@ const initWebpack = require('./webpack');
 const constants = require('./constants');
 
 module.exports = function(external) {
-
   const app = express.Router();
 
   // CORS - Allow pages from any domain to make requests to our API
@@ -19,6 +18,7 @@ module.exports = function(external) {
   });
   
   initWebpack(app);
+  const buildTime = dayjs();
 
   const ms = dayjs.convert(7, 'days', 'miliseconds');
   app.use(express.static('public', { index: false }));
@@ -63,6 +63,7 @@ module.exports = function(external) {
       title, description, image,
       scripts, styles,
       BUILD_COMPLETE: built,
+      BUILD_TIMESTAMP: buildTime.toISOString(),
       EXTERNAL_ROUTES: JSON.stringify(external),
       ZINE_POSTS: JSON.stringify(zine),
       PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
