@@ -108,7 +108,6 @@ class TeamPage extends React.Component {
   
   async getInvitees() {
     const ids = this.props.team.tokens.map(({userId}) => userId);
-    console.log("ids", ids);
     const invitees = [];
     for (const id of ids) {
       const user = await this.props.api.get(`users/${id}`);
@@ -124,6 +123,7 @@ class TeamPage extends React.Component {
     // filter featuredProject out of both pinned & recent projects
     const [pinnedProjects, recentProjects] = partition(team.projects.filter(({id}) => id !== team.featuredProjectId), ({id}) => pinnedSet.has(id));
     const featuredProject = team.projects.find(({id}) => id === team.featuredProjectId); 
+    const invitees = await this.getInvitees();
     
     return (
       <main className="profile-page team-page">
@@ -176,7 +176,7 @@ class TeamPage extends React.Component {
                   inviteUser={this.props.inviteUser}
                   setWhitelistedDomain={this.props.currentUserIsTeamAdmin ? this.props.updateWhitelistedDomain : null}
                   members={team.users.map(({id}) => id)}
-                  invitedMembers={this.getInvitees()}
+                  invitedMembers={await this.getInvitees()}
                   whitelistedDomain={team.whitelistedDomain}
                   api={this.props.api}
                 />
