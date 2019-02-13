@@ -2,35 +2,38 @@ import React from "react";
 import PropTypes from "prop-types";
 import PopoverWithButton from "./popover-with-button";
 
-const DropdownMenu = ({
-  contents,
-  handleKeyPress,
-  selected,
-  togglePopover,
-  updateSelected,
-}) => {
-  return (
-    /** Note - should have a unique identifier here, in the case that there are multiple dropdowns on a single page*/
-    <ul className="pop-over mini-pop" tabIndex="0">
-      {contents.map((item, index) => (
-        <li
-          className={
-            "mini-pop-action" + (index === selected ? " selected" : "")
-          }
-          key={index}
-          aria-selected={index == selected}
-          onClick={() => {
-            updateSelected(index);
-            togglePopover();
-          }}
-          onKeyPress={() => {handleKeyPress()}}
-          tabIndex="-1"
-        >
-          {item}
-        </li>
-      ))}
-    </ul>
-  );
+class DropdownMenu extends React.Component {
+  constructor(props){
+    super(props);
+  }
+  componentDidMount(){
+    const selectedLi = document.getElementbyClassName
+  }
+  render(){
+    const { contents, handleKeyPress, selected, togglePopover, updateSelected } = this.props;
+    
+    return (
+      <ul className="pop-over mini-pop" tabIndex="0">
+        {contents.map((item, index) => (
+          <li
+            className={
+              "mini-pop-action" + (index === selected ? " selected" : "")
+            }
+            key={index}
+            aria-selected={index == selected}
+            onClick={() => {
+              updateSelected(index);
+              togglePopover();
+            }}
+            onKeyPress={() => {handleKeyPress()}}
+            tabIndex="-1"
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    );
+  }
 };
 
 DropdownMenu.propTypes = {
