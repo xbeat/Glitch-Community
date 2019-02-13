@@ -93,6 +93,21 @@ class CreateCollectionPop extends React.Component {
       }
     }
   }
+  
+  getTeamMenuContents() {
+    const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
+    const menuContents = [];
+
+    orderedTeams.map(team => {
+      let content = (
+        <span id={team.id}>
+          {team.name} {<TeamAvatar team={team} />}
+        </span>
+      );
+      menuContents.push(content);
+    });
+    return menuContents;
+  }
 
   render() {
     const { query } = this.state;
@@ -110,22 +125,6 @@ class CreateCollectionPop extends React.Component {
         myself <UserAvatar user={this.props.currentUser} isStatic />
       </span>
     );
-
-    function getTeamMenuContents() {
-      const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
-      const menuContents = [];
-      menuContents.push(currentUserMenuItem); // add user as first option
-
-      orderedTeams.map(team => {
-        let content = (
-          <span id={team.id}>
-            {team.name} {<TeamAvatar team={team} />}
-          </span>
-        );
-        menuContents.push(content);
-      });
-      return menuContents;
-    }
 
     // filter collections based on selected owner from dropdown
     const selectedOwnerCollections = this.state.teamId
@@ -164,7 +163,7 @@ class CreateCollectionPop extends React.Component {
                 for{" "}
                 <Dropdown
                   buttonContents={currentUserMenuItem}
-                  menuContents={getTeamMenuContents()}
+                  menuContents={getMenuContents()}
                   onUpdate={this.setTeamId}
                 />
               </div>
