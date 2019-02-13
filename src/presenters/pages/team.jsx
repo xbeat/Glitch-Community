@@ -117,7 +117,8 @@ class TeamPage extends React.Component {
   
   async getInvitees() {
     return await Promise.all(this.props.team.tokens.map(({userId}) => {
-      this.props.api.get(`users/${userId}`);
+      const user = this.props.api.get(`users/${userId}`);
+      user.data;
     }));
     /*const ids = this.props.team.tokens.map(({userId}) => userId);
     const invitees = [];
