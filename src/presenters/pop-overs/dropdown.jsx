@@ -53,7 +53,6 @@ class Dropdown extends React.Component {
   }
 
   componentDidMount() {
-    // set default menu item here
     // TO DO - set default menu item based on whether we're on a user or team page
   }
 
