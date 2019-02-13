@@ -7,7 +7,6 @@ const StatsPlugin = require('stats-webpack-plugin');
 
 const BUILD = path.resolve(__dirname, 'build');
 const SRC = path.resolve(__dirname, 'src');
-const SHARED = path.resolve(__dirname, 'shared');
 const CSS_MODULES = path.resolve(__dirname, 'src/components');
 const STYLES = path.resolve(__dirname, 'styles');
 const NODE_MODULES = path.resolve(__dirname, 'node_modules');
@@ -79,7 +78,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
-        include: mode === "development" ? [SRC, SHARED] : [SRC, SHARED, NODE_MODULES],
+        exclude: mode === "development" && NODE_MODULES,
         loader: 'babel-loader',
         query: { compact: false }
       },
