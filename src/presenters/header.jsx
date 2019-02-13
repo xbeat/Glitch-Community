@@ -6,6 +6,7 @@ import {Redirect} from 'react-router-dom';
 import {TrackedExternalLink} from './analytics';
 import Link from './includes/link';
 import Logo from './includes/logo';
+import TextInput from '../components/fields/text';
 
 import UserOptionsPop from './pop-overs/user-options-pop';
 import SignInPop from './pop-overs/sign-in-pop';
@@ -40,7 +41,7 @@ class SearchForm extends React.Component {
     const {value, submitted} = this.state;
     return (
       <form action="/search" method="get" role="search" onSubmit={this.onSubmit.bind(this)}>
-        <input className="search-input" name="q" placeholder="bots, apps, users" value={value} onChange={this.onChange.bind(this)}/>
+        <TextInput name="q" placeholder="bots, apps, users" value={value} onChange={this.onChange.bind(this)}/>
         {submitted && <Redirect to={`/search?q=${value}`} push={true}/>}
       </form>
     );
