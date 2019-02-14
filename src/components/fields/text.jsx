@@ -5,11 +5,10 @@ import styles from './text.styl';
 
 const cx = classNames.bind(styles);
 
-import Error from './error';
-
 const TextField = ({className, error, onChange, opaque, postfix, prefix, search, ...props}) => {
-  const wrapperClassName = cx(className, {
-    wrap: true,
+  const outerClassName = cx('outer', className);
+  const flexClassName = cx({
+    flex: true,
     underline: !opaque,
     opaque: opaque,
   });
@@ -19,13 +18,14 @@ const TextField = ({className, error, onChange, opaque, postfix, prefix, search,
     search: search,
   });
   return (
-    <Error error={error}>
-      <label className={wrapperClassName}>
+    <label className={outerClassName}>
+      <div className={flexClassName}>
         {!!prefix && <div className={cx('part')}>{prefix}</div>}
         <input className={inputClassName} onChange={evt => onChange(evt.target.value)} {...props}/>
         {!!postfix && <div className={cx('part')}>{postfix}</div>}
-      </label>
-    </Error>
+      </div>
+      {!!error && <div className={cx('error')}>{error}</div>}
+    </label>
   );
 };
 

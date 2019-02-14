@@ -1,8 +1,10 @@
 @require '../../../styles/globals'
 
-.wrap
-  display: inline-flex
-  width: 100%
+.outer
+  display: inline-block
+
+.flex
+  display: flex
 
   &.underline
     border: none;
@@ -31,3 +33,13 @@
     background-image: url(search)
     background-repeat: no-repeat
     background-position: right 5px center
+
+.error
+  color: error-text
+  background-color: error
+  padding: 3px 6px
+  border-radius: 5px
+  border-top-left-radius: 0
+  border-top-right-radius: 0
+  font-weight: 600
+  font-size: 0.8rem
