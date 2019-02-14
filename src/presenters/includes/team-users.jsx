@@ -15,30 +15,32 @@ import UsersList from "../users-list.jsx";
 
 export const TeamUsers = props => (
   <ul className="users">
-    {props.users.map(user => (
-      <li key={user.id}>
-        <PopoverWithButton
-          buttonClass="user button-unstyled"
-          buttonText={
-            <UserAvatar
-              user={user}
-              suffix={adminStatusDisplay(props.adminIds, user)}
-            />
-          }
-          passToggleToPop
-        >
-          <TeamUserInfoPop
-            userIsTeamAdmin={props.adminIds.includes(user.id)}
-            userIsTheOnlyAdmin={
-              props.adminIds.length === 1 && props.adminIds.includes(user.id)
+    {props.users.map(user => {
+      const userIsTeamAdmin = props.adminIds.includes(user.id);
+      
+      return (
+        <li key={user.id}>
+          <PopoverWithButton
+            buttonClass="user button-unstyled"
+            buttonText={
+              <UserAvatar
+                user={user}
+                suffix={adminStatusDisplay(props.adminIds, user)}
+              />
             }
-            userIsTheOnlyMember={props.users.length === 1}
-            user={user}
-            {...props}
-          />
-        </PopoverWithButton>
-      </li>
-    ))}
+            passToggleToPop
+          >
+            <TeamUserInfoPop
+              userIsTeamAdmin={userIsTeamAdmin}
+              userIsTheOnlyAdmin={userIsTeamAdmin && props.adminIds.length === 1}
+              userIsTheOnlyMember={props.users.length === 1}
+              user={user}
+              {...props}
+            />
+          </PopoverWithButton>
+        </li>
+      );
+    })}
   </ul>
 );
 
