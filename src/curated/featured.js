@@ -14,16 +14,16 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'Make Inkle Patterns',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftracery-inkle.gif?1549879572651",
-    link: 'https://tracery-inkle.glitch.me/'
+    title: 'Check Yo\' Contrast',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcontrast-checker.gif?1549879573206",
+    link: 'http://contrast-checker.glitch.me/'
   },{
-    title: 'Hello, World!',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fhello-around-the-world.gif?1549879571293",
-    link: 'https://hello-around-the-world.glitch.me/'
+    title: 'How Many Pencils?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpencil-distance.gif?1549879571534",
+    link: 'https://pencil-distance.glitch.me/'
   },{
-    title: 'Springy Particles',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fimages-to-particles.gif?1549879572018",
-    link: 'https://image-to-particles.glitch.me/'
+    title: 'Un, Deux, Twist',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fvera-memphis.gif?1549879573380",
+    link: 'https://vera-memphis.glitch.me/'
   } 
 ];
