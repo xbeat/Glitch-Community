@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 
 import Error from './error';
 
-const TextField = ({className, error, opaque, postfix, prefix, search, ...props}) => {
+const TextField = ({className, error, onChange, opaque, postfix, prefix, search, ...props}) => {
   const wrapperClassName = cx(className, {
     wrap: true,
     underline: !opaque,
@@ -22,7 +22,7 @@ const TextField = ({className, error, opaque, postfix, prefix, search, ...props}
     <Error error={error}>
       <label className={wrapperClassName}>
         {!!prefix && <div className={cx('part')}>{prefix}</div>}
-        <input className={inputClassName} {...props}/>
+        <input className={inputClassName} onChange={evt => onChange(evt.target.value)} {...props}/>
         {!!postfix && <div className={cx('part')}>{postfix}</div>}
       </label>
     </Error>

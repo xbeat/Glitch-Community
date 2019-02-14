@@ -6,13 +6,10 @@ import styles from './error.styl';
 const cx = classNames.bind(styles);
 
 const Error = ({children, error}) => {
-  if (!error) {
-    return children;
-  }
   return (
     <div className={cx('wrap')}>
       {children}
-      <div className={cx('error')}>{error}</div>
+      {!!error && <div className={cx('error')}>{error}</div>}
     </div>
   );
 };
