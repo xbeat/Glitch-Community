@@ -10,6 +10,7 @@ import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ErrorBoundary from '../includes/error-boundary';
+import { captureException } from "../../utils/sentry";
 
 //import SampleTeamCollections from '../../curated/sample-team-collections.jsx';
 import CollectionsList from '../collections-list';
@@ -68,9 +69,17 @@ const TeamPageCollections = ({collections, team, api, currentUser, currentUserIs
 class TeamPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      invitees: [],
+    };
     this.teamAdmins = this.teamAdmins.bind(this);
+    this.getInvitees = this.getInvitees.bind(this);
     this.addProjectToCollection = this.addProjectToCollection.bind(this);
+  }
+  
+  async componentDidMount() {
+    const invitees = await this.getInvitees();
+    this.setState({ invitees });
   }
   
   async addProjectToCollection(project, collection) {
@@ -104,6 +113,21 @@ class TeamPage extends React.Component {
       return currentUser.emails.some(({email, verified}) => verified && email.endsWith(`@${team.whitelistedDomain}`));
     }
     return false;
+  }
+  
+  async getInvitees() {
+    try {
+      const data = await Promise.all(this.props.team.tokens.map(({userId}) => (
+        this.props.api.get(`users/${userId}`)
+      )));
+      const invitees = data.map(user => user.data).filter(user => !!user);
+      return invitees;
+    } catch (error) {
+      if (error && error.response && error.response.status === 404) {
+        return null;
+      }
+      captureException(error);
+    }
   }
 
   render() {
@@ -164,6 +188,7 @@ class TeamPage extends React.Component {
                   inviteUser={this.props.inviteUser}
                   setWhitelistedDomain={this.props.currentUserIsTeamAdmin ? this.props.updateWhitelistedDomain : null}
                   members={team.users.map(({id}) => id)}
+                  invitedMembers={this.state.invitees}
                   whitelistedDomain={team.whitelistedDomain}
                   api={this.props.api}
                 />

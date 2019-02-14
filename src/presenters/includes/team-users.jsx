@@ -114,8 +114,8 @@ export class AddTeamUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      invitee: "",
-      alreadyInvited: []
+      invitee: '',
+      newlyInvited: [],
     };
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
@@ -127,10 +127,11 @@ export class AddTeamUser extends React.Component {
 
   async inviteUser(togglePopover, user) {
     togglePopover();
-    this.setState(state => ({
+    
+    this.setState({
       invitee: getDisplayName(user),
-      alreadyInvited: [...state.alreadyInvited, user]
-    }));
+      newlyInvited: [...this.state.newlyInvited, user],
+    });
     await this.props.inviteUser(user);
   }
 
@@ -149,6 +150,7 @@ export class AddTeamUser extends React.Component {
   }
 
   render() {
+    const alreadyInvitedAndNewInvited = this.props.invitedMembers.concat(this.state.newlyInvited);
     const {
       inviteEmail,
       inviteUser,
@@ -159,9 +161,9 @@ export class AddTeamUser extends React.Component {
       <PopoverContainer>
         {({ visible, togglePopover }) => (
           <span className="add-user-container">
-            {!!this.state.alreadyInvited.length && (
-              <UsersList users={this.state.alreadyInvited} />
-            )}
+            {alreadyInvitedAndNewInvited.length > 0 && 
+              <UsersList users={alreadyInvitedAndNewInvited}/>
+            }
             <TrackClick name="Add to Team clicked">
               <button
                 onClick={togglePopover}
