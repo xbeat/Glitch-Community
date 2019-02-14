@@ -6,14 +6,17 @@ import styles from './text.styl';
 const cx = classNames.bind(styles);
 
 const TextField = ({className, opaque, search, ...props}) => {
-  const classes = cx({
-    'text-input': true,
-    'search': search,
-    'opaque': opaque,
+  const wrapperClassName = cx({
+    'input-wrap': true,
     'underline': !opaque,
+    'opaque': opaque,
+    'search': search,
   }, className);
+  const inputClassName = cx('text-input');
   return (
-    <input className={classes} {...props}/>
+    <label className={wrapperClassName}>
+      <input className={inputClassName} {...props}/>
+    </label>
   );
 };
 
