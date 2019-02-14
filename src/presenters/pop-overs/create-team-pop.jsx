@@ -9,7 +9,7 @@ import {getPredicates, getTeamPair} from '../../models/words';
 import {getLink} from '../../models/team';
 import Loader from '../includes/loader.jsx';
 import {NestedPopoverTitle} from '../pop-overs/popover-nested.jsx';
-import {PureEditableField} from '../includes/editable-field.jsx';
+import TextInput from '../../components/fields/text';
 import {SignInPop} from './sign-in-pop.jsx';
 
 // Create Team 🌿
@@ -127,9 +127,9 @@ class CreateTeamPopBase extends React.Component {
         
         <section className="pop-over-actions">  
           <form onSubmit={this.handleSubmit}>
-            <PureEditableField
+            <TextInput
               value={this.state.teamName}
-              update={this.handleChange}
+              onChange={this.handleChange}
               placeholder={placeholder}
               error={this.state.error}
             />
