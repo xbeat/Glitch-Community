@@ -12,10 +12,9 @@ const TextField = ({className, opaque, search, ...props}) => {
     'opaque': opaque,
     'search': search,
   }, className);
-  const inputClassName = cx('text-input');
   return (
     <label className={wrapperClassName}>
-      <input className={inputClassName} {...props}/>
+      <input className={cx('text-input', 'input-part')} {...props}/>
     </label>
   );
 };

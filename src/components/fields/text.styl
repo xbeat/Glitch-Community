@@ -1,23 +1,30 @@
 @require '../../../styles/globals'
 
+.input-wrap
+  display: inline-flex
+
 .text-input
+  flex-grow: 1
+  border: none
+  background: none
   transition: box-shadow .1s
   &:focus
     box-shadow: 0px 0px 3px 0px input-border-focused
 
 .underline
-  padding: 4px 0px 2px 0px
-  font-family: monospace
   border: none;
   border-bottom: 1px solid line-on-secondary-background
   border-radius: 0
+  .input-part
+    font-family: monospace
+    padding: 4px 0px 2px 0px
 
 .opaque
   background-color: primary-background
   border: 1px solid input-border
   border-radius: 3px
-  .te
-  padding: 4px 0px 2px 10px
+  .input-part
+    padding: 4px 0px 2px 10px
 
 .search
   background-image: url(search)
