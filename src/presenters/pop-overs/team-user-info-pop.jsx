@@ -37,10 +37,7 @@ const AdminActions = ({
   updateUserPermissions,
   canChangeUserAdminStatus
 }) => {
-  if (!canChangeUserAdminStatus) {
-    console.log("test");
-    return null;
-  }
+  if (!canChangeUserAdminStatus) return null;
   return (
     <section className="pop-over-actions admin-actions">
       <p className="action-description">
