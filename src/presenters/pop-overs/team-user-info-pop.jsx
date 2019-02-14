@@ -37,31 +37,35 @@ const AdminActions = ({
   updateUserPermissions,
   canChangeUserAdminStatus
 }) => {
-  canChangeUserAdminStatus && (
-    <section className="pop-over-actions admin-actions">
-      <p className="action-description">
-        Admins can update team info, billing, and remove users
-      </p>
-      {userIsTeamAdmin ? (
-        <TrackClick name="Remove Admin Status clicked">
-          <button
-            className="button-small button-tertiary has-emoji"
-            onClick={() => updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)}
-          >
-            Remove Admin Status <span className="emoji fast-down" />
-          </button>
-        </TrackClick>
-      ) : (
-        <TrackClick name="Make an Admin clicked">
-          <button
-            className="button-small button-tertiary has-emoji"
-            onClick={() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)}
-          >
-            Make an Admin <span className="emoji fast-up" />
-          </button>
-        </TrackClick>
-      )}
-    </section>
+  return (
+    canChangeUserAdminStatus && (
+      <section className="pop-over-actions admin-actions">
+        <p className="action-description">
+          Admins can update team info, billing, and remove users
+        </p>
+        {userIsTeamAdmin ? (
+          <TrackClick name="Remove Admin Status clicked">
+            <button
+              className="button-small button-tertiary has-emoji"
+              onClick={() =>
+                updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)
+              }
+            >
+              Remove Admin Status <span className="emoji fast-down" />
+            </button>
+          </TrackClick>
+        ) : (
+          <TrackClick name="Make an Admin clicked">
+            <button
+              className="button-small button-tertiary has-emoji"
+              onClick={() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)}
+            >
+              Make an Admin <span className="emoji fast-up" />
+            </button>
+          </TrackClick>
+        )}
+      </section>
+    )
   );
 };
 
@@ -87,8 +91,9 @@ const ThanksCount = ({ count }) => (
 const TeamUserInfo = ({ currentUser, showRemove, ...props }) => {
   const userAvatarStyle = { backgroundColor: props.user.color };
   const canRemoveUser =
-    props.currentUserIsTeamAdmin ||
-    (currentUser && currentUser.id === props.user.id);
+    !(props.userIsTheOnlyMember || props.userIsTheOnlyAdmin) &&
+    (props.currentUserIsTeamAdmin ||
+      (currentUser && currentUser.id === props.user.id));
   return (
     <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info user-info">
@@ -129,11 +134,10 @@ const TeamUserInfo = ({ currentUser, showRemove, ...props }) => {
           user={props.user}
           userIsTeamAdmin={props.userIsTeamAdmin}
           updateUserPermissions={props.updateUserPermissions}
+          canChangeUserAdminStatus={!props.userIsTheOnlyAdmin}
         />
       )}
-      {canRemoveUser && !props.userIsTheOnlyMember && (
-        <RemoveFromTeam onClick={showRemove} />
-      )}
+      {canRemoveUser && <RemoveFromTeam onClick={showRemove} />}
     </dialog>
   );
 };
