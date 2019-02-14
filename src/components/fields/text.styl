@@ -1,9 +1,24 @@
 @require '../../../styles/globals'
 
-.input-wrap
+.wrap
   display: inline-flex
 
-.text-input
+  &.underline
+    border: none;
+    border-bottom: 1px solid line-on-secondary-background
+    border-radius: 0
+    .part
+      font-family: monospace
+      padding: 4px 0px 2px 0px
+
+  &.opaque
+    background-color: primary-background
+    border: 1px solid input-border
+    border-radius: 3px
+    .part
+      padding: 4px 0px 2px 10px
+
+.input
   flex-grow: 1
   border: none
   background: none
@@ -11,22 +26,7 @@
   &:focus
     box-shadow: 0px 0px 3px 0px input-border-focused
 
-.underline
-  border: none;
-  border-bottom: 1px solid line-on-secondary-background
-  border-radius: 0
-  .input-part
-    font-family: monospace
-    padding: 4px 0px 2px 0px
-
-.opaque
-  background-color: primary-background
-  border: 1px solid input-border
-  border-radius: 3px
-  .input-part
-    padding: 4px 0px 2px 10px
-
-.search
-  background-image: url(search)
-  background-repeat: no-repeat
-  background-position: right 5px center
+  &.search
+    background-image: url(search)
+    background-repeat: no-repeat
+    background-position: right 5px center

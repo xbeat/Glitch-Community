@@ -5,16 +5,22 @@ import styles from './text.styl';
 
 const cx = classNames.bind(styles);
 
-const TextField = ({className, opaque, search, ...props}) => {
+const TextField = ({className, opaque, postfix, prefix, search, ...props}) => {
   const wrapperClassName = cx({
-    'input-wrap': true,
-    'underline': !opaque,
-    'opaque': opaque,
-    'search': search,
+    wrap: true,
+    underline: !opaque,
+    opaque: opaque,
   }, className);
+  const inputClassName=cx({
+    input: true,
+    part: true,
+    search: search,
+  });
   return (
     <label className={wrapperClassName}>
-      <input className={cx('text-input', 'input-part')} {...props}/>
+      {!!prefix && <div className={cx('part')}>{prefix}</div>}
+      <input className={inputClassName} {...props}/>
+      {!!postfix && <div className={cx('part')}>{postfix}</div>}
     </label>
   );
 };
@@ -26,6 +32,8 @@ TextField.propTypes = {
   onChange: PropTypes.func,
   opaque: PropTypes.bool,
   placeholder: PropTypes.string,
+  postfix: PropTypes.node,
+  prefix: PropTypes.node,
   search: PropTypes.bool,
   value: PropTypes.string,
 };
