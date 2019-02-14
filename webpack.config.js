@@ -71,7 +71,7 @@ module.exports = {
         loader: "eslint-loader",
         options: {
           fix: mode === 'development',
-          cache: false, // Keep this off, it can use a lot of space.  Let Webpack --watch does the heavy lifting for us.
+// Only change source files in development          cache: false, // Keep this off, it can use a lot of space.  Let Webpack --watch does the heavy lifting for us.
           emitError: false,
           emitWarning: true,
           failOnError: false,

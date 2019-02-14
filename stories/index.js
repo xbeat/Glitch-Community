@@ -28,5 +28,8 @@ storiesOf('Text Input', module)
     <TextInput placeholder="type something!" prefix="@"/>
   ))
   .add('search', () => (
-    <TextInput type="search" opaque={true} search={true} placeholder="type something!" prefix="@"/>
+    <TextInput type="search" opaque={true} search={true} placeholder="bots, apps, users"/>
+  ))
+  .add('with error', () => (
+    <TextInput value="glitch" error="That team already exists"/>
   ))
