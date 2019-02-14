@@ -37,7 +37,10 @@ const AdminActions = ({
   updateUserPermissions,
   canChangeUserAdminStatus
 }) => {
-  if (!canChangeUserAdminStatus) return null;
+  if (!canChangeUserAdminStatus) {
+    console.log("test");
+    return null;
+  }
   return (
     <section className="pop-over-actions admin-actions">
       <p className="action-description">
@@ -85,12 +88,22 @@ const ThanksCount = ({ count }) => (
 
 // Team User Info 😍
 
-const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, ...props }) => {
+const TeamUserInfo = ({
+  currentUser,
+  currentUserIsTeamAdmin,
+  showRemove,
+  ...props
+}) => {
   const userAvatarStyle = { backgroundColor: props.user.color };
-  
-  const hasRemovePrivelegesForUser = currentUserIsTeamAdmin || currentUser && currentUser.id === props.user.id
-  const canRemoveUser = hasRemovePrivelegesForUser && !(props.userIsTheOnlyMember || props.userIsTheOnlyAdmin)
-    
+
+  const currentUserHasRemovePriveleges =
+    currentUserIsTeamAdmin || (currentUser && currentUser.id === props.user.id);
+  const canRemoveUser = !(
+    props.userIsTheOnlyMember || props.userIsTheOnlyAdmin
+  );
+  const canCurrentUserRemoveUser =
+    canRemoveUser && currentUserHasRemovePriveleges;
+
   return (
     <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info user-info">
@@ -126,7 +139,7 @@ const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, ...prop
       {props.user.thanksCount > 0 && (
         <ThanksCount count={props.user.thanksCount} />
       )}
-      {props.currentUserIsTeamAdmin && (
+      {currentUserIsTeamAdmin && (
         <AdminActions
           user={props.user}
           userIsTeamAdmin={props.userIsTeamAdmin}
@@ -134,7 +147,7 @@ const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, ...prop
           canChangeUserAdminStatus={!props.userIsTheOnlyAdmin}
         />
       )}
-      {canRemoveUser && <RemoveFromTeam onClick={showRemove} />}
+      {canCurrentUserRemoveUser && <RemoveFromTeam onClick={showRemove} />}
     </dialog>
   );
 };
