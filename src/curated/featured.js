@@ -14,16 +14,16 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'What\'s the Right Tea for You?',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fteaforme_final.jpg?1549538703848",
-    link: 'https://theteaforme.glitch.me/'
+    title: 'Check Yo\' Contrast',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcontrast-checker.gif?1549879573206",
+    link: 'http://contrast-checker.glitch.me/'
   },{
-    title: 'A Mahjong Platformer',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftilejumper_final.jpg?1549538704021",
-    link: 'https://tile-jumper.glitch.me/'
+    title: 'How Many Pencils?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpencil-distance.gif?1549879571534",
+    link: 'https://pencil-distance.glitch.me/'
   },{
-    title: 'Absurd Karaoke Lyrics',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsongbot_final.jpg?1549538704210",
-    link: 'https://songbot.glitch.me/'
+    title: 'Un, Deux, Twist',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fvera-memphis.gif?1549879573380",
+    link: 'https://vera-memphis.glitch.me/'
   } 
 ];

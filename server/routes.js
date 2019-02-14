@@ -8,7 +8,6 @@ const initWebpack = require('./webpack');
 const constants = require('./constants');
 
 module.exports = function(external) {
-
   const app = express.Router();
 
   // CORS - Allow pages from any domain to make requests to our API
@@ -19,6 +18,7 @@ module.exports = function(external) {
   });
   
   initWebpack(app);
+  const buildTime = dayjs();
 
   const ms = dayjs.convert(7, 'days', 'miliseconds');
   app.use(express.static('public', { index: false }));
@@ -29,7 +29,7 @@ module.exports = function(external) {
     console.log(request.method, request.originalUrl, request.body);
     return next();
   });
-
+  
   const readFilePromise = util.promisify(fs.readFile);
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
   async function render(res, title, description, image=imageDefault) {
@@ -41,12 +41,15 @@ module.exports = function(external) {
     
     try {
       const stats = JSON.parse(await readFilePromise('build/stats.json'));
+      stats.entrypoints.styles.assets.forEach(file => {
+        if (file.match(/\.css(\?|$)/)) {
+          styles.push(`${stats.publicPath}${file}`);
+        }
+      });
       stats.entrypoints.client.assets.forEach(file => {
         if (file.match(/\.js(\?|$)/)) {
           scripts.push(`${stats.publicPath}${file}`);
         }
-      });
-      stats.entrypoints.styles.assets.forEach(file => {
         if (file.match(/\.css(\?|$)/)) {
           styles.push(`${stats.publicPath}${file}`);
         }
@@ -60,6 +63,7 @@ module.exports = function(external) {
       title, description, image,
       scripts, styles,
       BUILD_COMPLETE: built,
+      BUILD_TIMESTAMP: buildTime.toISOString(),
       EXTERNAL_ROUTES: JSON.stringify(external),
       ZINE_POSTS: JSON.stringify(zine),
       PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
@@ -104,7 +108,7 @@ module.exports = function(external) {
       CONSTANTS: constants,
     });
   });
-
+  
   app.get('*', async (req, res) => {
     await render(res,
       "Glitch",
