@@ -10,6 +10,7 @@ import {getLink, getAvatarStyle, getProfileStyle} from '../../models/team';
 import {AuthDescription} from '../includes/description-field.jsx';
 import {ProfileContainer, ImageButtons} from '../includes/profile.jsx';
 import ErrorBoundary from '../includes/error-boundary';
+import { captureException } from "../../utils/sentry";
 
 //import SampleTeamCollections from '../../curated/sample-team-collections.jsx';
 import CollectionsList from '../collections-list';
@@ -74,7 +75,6 @@ class TeamPage extends React.Component {
     this.teamAdmins = this.teamAdmins.bind(this);
     this.getInvitees = this.getInvitees.bind(this);
     this.addProjectToCollection = this.addProjectToCollection.bind(this);
-    this.testFcn = this.testFcn.bind(this);
   }
   
   async componentDidMount() {
@@ -115,15 +115,10 @@ class TeamPage extends React.Component {
     return false;
   }
   
-  async testFcn() {
-    return this.error.response.status(404);
-  }
-  
   async getInvitees() {
     try {
       const data = await Promise.all(this.props.team.tokens.map(({userId}) => (
-        //this.props.api.get(`users/${userId}`)
-        testFcn();
+        this.props.api.get(`users/${userId}`)
       )));
       const invitees = data.map(user => user.data).filter(user => !!user);
       return invitees;
@@ -131,7 +126,7 @@ class TeamPage extends React.Component {
       if (error && error.response && error.response.status === 404) {
         return null;
       }
-      throw error;
+      captureException(error);
     }
   }
 
