@@ -32,4 +32,4 @@ storiesOf('Text Input', module)
   ))
   .add('with error', () => (
     <TextInput value="glitch" error="That team already exists"/>
-  ))
+  ));
