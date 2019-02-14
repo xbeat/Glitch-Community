@@ -36,8 +36,9 @@ const AdminActions = ({
   userIsTeamAdmin,
   updateUserPermissions,
   canChangeUserAdminStatus
-}) =>
-  canChangeUserAdminStatus ? (
+}) => {
+  if (!canChangeUserAdminStatus) return null;
+  return (
     <section className="pop-over-actions admin-actions">
       <p className="action-description">
         Admins can update team info, billing, and remove users
@@ -62,7 +63,8 @@ const AdminActions = ({
         </TrackClick>
       )}
     </section>
-  ) : null;
+  );
+};
 
 AdminActions.propTypes = {
   user: PropTypes.shape({
@@ -83,12 +85,12 @@ const ThanksCount = ({ count }) => (
 
 // Team User Info 😍
 
-const TeamUserInfo = ({ currentUser, showRemove, ...props }) => {
+const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, ...props }) => {
   const userAvatarStyle = { backgroundColor: props.user.color };
-  const canRemoveUser =
-    !(props.userIsTheOnlyMember || props.userIsTheOnlyAdmin) &&
-    (props.currentUserIsTeamAdmin ||
-      (currentUser && currentUser.id === props.user.id));
+  
+  const hasRemovePrivelegesForUser = currentUserIsTeamAdmin || currentUser && currentUser.id === props.user.id
+  const canRemoveUser = hasRemovePrivelegesForUser && !(props.userIsTheOnlyMember || props.userIsTheOnlyAdmin)
+    
   return (
     <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info user-info">
