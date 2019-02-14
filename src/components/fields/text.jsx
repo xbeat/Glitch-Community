@@ -5,7 +5,7 @@ import styles from './text.styl';
 
 const cx = classNames.bind(styles);
 
-const inputTypes = [
+const TYPES = [
   'email',
   'password',
   'search',
@@ -24,13 +24,14 @@ const TextField = ({className, error, onChange, opaque, postfix, prefix, search,
     'input-part': true,
     search: search,
   });
+  const partClassName = cx('input-part');
   return (
     <label className={outerClassName}>
       <div className={flexClassName}>
-        {!!prefix && <span className={cx('input-part')}>{prefix}</span>}
+        {!!prefix && <span className={partClassName}>{prefix}</span>}
         <input className={inputClassName} onChange={evt => onChange(evt.target.value)} {...props}/>
-        {!!error && <span className={cx('input-part')} role="img" aria-label="Warning">🚒</span>}
-        {!!postfix && <span className={cx('input-part')}>{postfix}</span>}
+        {!!error && <span className={partClassName} role="img" aria-label="Warning">🚒</span>}
+        {!!postfix && <span className={partClassName}>{postfix}</span>}
       </div>
       {!!error && <div className={cx('error')}>{error}</div>}
     </label>
@@ -48,7 +49,7 @@ TextField.propTypes = {
   postfix: PropTypes.node,
   prefix: PropTypes.node,
   search: PropTypes.bool,
-  type: PropTypes.oneOf(inputTypes),
+  type: PropTypes.oneOf(TYPES),
   value: PropTypes.string,
 };
 
