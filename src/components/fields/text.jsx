@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 const TextField = ({className, error, onChange, opaque, postfix, prefix, search, ...props}) => {
   const outerClassName = cx('outer', className);
   const flexClassName = cx({
-    flex: true,
+    'input-box': true,
     underline: !opaque,
     opaque: opaque,
   });
@@ -22,6 +22,7 @@ const TextField = ({className, error, onChange, opaque, postfix, prefix, search,
       <div className={flexClassName}>
         {!!prefix && <div className={cx('part')}>{prefix}</div>}
         <input className={inputClassName} onChange={evt => onChange(evt.target.value)} {...props}/>
+        {!!error && <div className={cx('part')} aria-label="Warning">🚒</div>}
         {!!postfix && <div className={cx('part')}>{postfix}</div>}
       </div>
       {!!error && <div className={cx('error')}>{error}</div>}

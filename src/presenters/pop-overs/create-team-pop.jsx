@@ -55,8 +55,8 @@ class CreateTeamPopBase extends React.Component {
       }
       
       try {
-        const {data} = await this.props.api.get(`teams/byUrl/${url}`);
-        if (data) {
+        const {data} = await this.props.api.get(`teamId/byUrl/${url}`);
+        if (data !== 'NOT FOUND') {
           error = 'Team already exists, try another';
         }
       } catch (error) {
