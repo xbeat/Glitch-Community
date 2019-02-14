@@ -7,7 +7,6 @@ const cx = classNames.bind(styles);
 
 const TextField = ({className, opaque, search, ...props}) => {
   const classes = cx({
-    'text-input': true,
     'search': search,
     'opaque': opaque,
     'underline': !opaque,
@@ -21,7 +20,7 @@ TextField.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   name: PropTypes.string,
-  onChange: PropTypes.function,
+  onChange: PropTypes.func,
   opaque: PropTypes.bool,
   placeholder: PropTypes.string,
   search: PropTypes.bool,
