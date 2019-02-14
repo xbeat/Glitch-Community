@@ -24,3 +24,9 @@ storiesOf('Text Input', module)
   .add('regular', () => (
     <TextInput placeholder="type something!"/>
   ))
+  .add('login', () => (
+    <TextInput placeholder="type something!" prefix="@"/>
+  ))
+  .add('search', () => (
+    <TextInput type="search" opaque={true} search={true} placeholder="type something!" prefix="@"/>
+  ))
