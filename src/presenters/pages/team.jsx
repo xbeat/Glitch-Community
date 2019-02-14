@@ -74,6 +74,7 @@ class TeamPage extends React.Component {
     this.teamAdmins = this.teamAdmins.bind(this);
     this.getInvitees = this.getInvitees.bind(this);
     this.addProjectToCollection = this.addProjectToCollection.bind(this);
+    this.testFcn = this.testFcn.bind(this);
   }
   
   async componentDidMount() {
@@ -114,10 +115,15 @@ class TeamPage extends React.Component {
     return false;
   }
   
+  async testFcn() {
+    return this.error.response.status(404);
+  }
+  
   async getInvitees() {
     try {
       const data = await Promise.all(this.props.team.tokens.map(({userId}) => (
-        this.props.api.get(`users/${userId}`)
+        //this.props.api.get(`users/${userId}`)
+        testFcn();
       )));
       const invitees = data.map(user => user.data).filter(user => !!user);
       return invitees;
