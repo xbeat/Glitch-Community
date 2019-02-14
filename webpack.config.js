@@ -28,7 +28,7 @@ module.exports = {
     [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
   },
   output: {
-    filename: '[name].js?[contenthash]-v1',
+    filename: '[name].js?[contenthash]',
     path: BUILD,
     publicPath: '/',
   },
@@ -135,8 +135,8 @@ module.exports = {
   },
   plugins: [
     new LodashModuleReplacementPlugin(),
-    new MiniCssExtractPlugin({filename: '[name].css?[chunkhash]'}),
-    new StatsPlugin('stats.json', {all: false, entrypoints: true, publicPath: true}),
+    new MiniCssExtractPlugin({filename: '[name].css?[contenthash]'}),
+    new StatsPlugin('stats.json', {all: false, entrypoints: true, hash: true, publicPath: true}),
   ],
   watchOptions: {
     ignored: /node_modules/,

@@ -16,7 +16,7 @@ dependencies:
   body-parser: 1.18.3
   c3: 0.6.12
   compression: 1.7.3
-  css-loader: 1.0.1
+  css-loader: 2.1.0
   d3-array: 2.0.3
   dayjs: 1.8.5
   details-element-polyfill: 2.3.0
@@ -42,7 +42,7 @@ dependencies:
   nodemon: 1.18.10
   prop-types: 15.7.1
   quantize: 1.0.2
-  randomcolor: 0.5.3
+  randomcolor: 0.5.4
   react: 16.8.1
   react-dom: 16.8.1
   react-helmet: 5.2.0
@@ -4381,27 +4381,6 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-ojD2T1aDEOFJgAmUB5DsmVRbyn4=
-  /css-loader/1.0.1:
-    dependencies:
-      babel-code-frame: 6.26.0
-      css-selector-tokenizer: 0.7.1
-      icss-utils: 2.1.0
-      loader-utils: 1.2.3
-      lodash: 4.17.11
-      postcss: 6.0.23
-      postcss-modules-extract-imports: 1.2.1
-      postcss-modules-local-by-default: 1.2.0
-      postcss-modules-scope: 1.1.0
-      postcss-modules-values: 1.3.0
-      postcss-value-parser: 3.3.1
-      source-list-map: 2.0.1
-    dev: false
-    engines:
-      node: '>= 6.9.0 <7.0.0 || >= 8.9.0'
-    peerDependencies:
-      webpack: ^4.0.0
-    resolution:
-      integrity: sha512-+ZHAZm/yqvJ2kDtPne3uX0C+Vr3Zn5jFn2N4HywtS5ujwvsVkyg0VArEXpl3BgczDA8anieki1FIzhchX4yrDw==
   /css-loader/1.0.1/webpack@4.29.3:
     dependencies:
       babel-code-frame: 6.26.0
@@ -4425,6 +4404,25 @@ packages:
       webpack: ^4.0.0
     resolution:
       integrity: sha512-+ZHAZm/yqvJ2kDtPne3uX0C+Vr3Zn5jFn2N4HywtS5ujwvsVkyg0VArEXpl3BgczDA8anieki1FIzhchX4yrDw==
+  /css-loader/2.1.0:
+    dependencies:
+      icss-utils: 4.0.0
+      loader-utils: 1.2.3
+      lodash: 4.17.11
+      postcss: 7.0.14
+      postcss-modules-extract-imports: 2.0.0
+      postcss-modules-local-by-default: 2.0.5
+      postcss-modules-scope: 2.0.1
+      postcss-modules-values: 2.0.0
+      postcss-value-parser: 3.3.1
+      schema-utils: 1.0.0
+    dev: false
+    engines:
+      node: '>= 6.9.0'
+    peerDependencies:
+      webpack: ^4.0.0
+    resolution:
+      integrity: sha512-MoOu+CStsGrSt5K2OeZ89q3Snf+IkxRfAIt9aAKg4piioTrhtP1iEFPu+OVn3Ohz24FO6L+rw9UJxBILiSBw5Q==
   /css-parse/1.7.0:
     dev: false
     resolution:
@@ -6258,6 +6256,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-g/Cg7DeL8yRheLbCrZE28TWxyWI=
+  /icss-utils/4.0.0:
+    dependencies:
+      postcss: 7.0.14
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-bA/xGiwWM17qjllIs9X/y0EjsB7e0AV08F3OL8UPsoNkNRibIuu8f1eKTnQ8QO1DteKKTxTUAn+IEWUToIwGOA==
   /ieee754/1.1.12:
     dev: false
     resolution:
@@ -8216,6 +8222,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-6jt9XZwUhwmRUhb/CkyJY020PYaPJsCyt3UjbaWo6XEbH/94Hmv6MP7fG2C5NDU/BcHzyGYxNtHvM+LTf9HrYw==
+  /postcss-modules-extract-imports/2.0.0:
+    dependencies:
+      postcss: 7.0.14
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-LaYLDNS4SG8Q5WAWqIJgdHPJrDDr/Lv775rMBFUbgjTz6j34lUznACHcdRWroPvXANP2Vj7yNK57vp9eFqzLWQ==
   /postcss-modules-local-by-default/1.2.0:
     dependencies:
       css-selector-tokenizer: 0.7.1
@@ -8223,6 +8237,16 @@ packages:
     dev: false
     resolution:
       integrity: sha1-99gMOYxaOT+nlkRmvRlQCn1hwGk=
+  /postcss-modules-local-by-default/2.0.5:
+    dependencies:
+      css-selector-tokenizer: 0.7.1
+      postcss: 7.0.14
+      postcss-value-parser: 3.3.1
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-iFgxlCAVLno5wIJq+4hyuOmc4VjZEZxzpdeuZcBytLNWEK5Bx2oRF9PPcAz5TALbaFvrZm8sJYtJ3hV+tMSEIg==
   /postcss-modules-scope/1.1.0:
     dependencies:
       css-selector-tokenizer: 0.7.1
@@ -8230,6 +8254,15 @@ packages:
     dev: false
     resolution:
       integrity: sha1-1upkmUx5+XtipytCb75gVqGUu5A=
+  /postcss-modules-scope/2.0.1:
+    dependencies:
+      css-selector-tokenizer: 0.7.1
+      postcss: 7.0.14
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-7+6k9c3/AuZ5c596LJx9n923A/j3nF3ormewYBF1RrIQvjvjXe1xE8V8A1KFyFwXbvnshT6FBZFX0k/F1igneg==
   /postcss-modules-values/1.3.0:
     dependencies:
       icss-replace-symbols: 1.1.0
@@ -8237,6 +8270,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-7P+p1+GSUYOJ9CrQ6D9yrsRW6iA=
+  /postcss-modules-values/2.0.0:
+    dependencies:
+      icss-replace-symbols: 1.1.0
+      postcss: 7.0.14
+    dev: false
+    resolution:
+      integrity: sha512-Ki7JZa7ff1N3EIMlPnGTZfUMe69FFwiQPnVSXC9mnn3jozCRBYIxiZd44yJOV2AmabOo4qFf8s0dC/+lweG7+w==
   /postcss-value-parser/3.3.1:
     dev: false
     resolution:
@@ -8480,10 +8520,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-CIQ5OFxf4Jou6uOKe9t1AOgqpeU5fd70A8NPdHSGeYXqXsPe6peOwI0cUl88RWZ6sP1vPMV3avd/R6cZ5/sP1A==
-  /randomcolor/0.5.3:
+  /randomcolor/0.5.4:
     dev: false
     resolution:
-      integrity: sha1-f5Dy8qf21aUiMhYe6u6uqaw7WBU=
+      integrity: sha512-nYd4nmTuuwMFzHL6W+UWR5fNERGZeVauho8mrJDUSXdNDbao4rbrUwhuLgKC/j8VCS5+34Ria8CsTDuBjrIrQA==
   /randomfill/1.0.4:
     dependencies:
       randombytes: 2.0.6
@@ -10651,17 +10691,17 @@ specifiers:
   body-parser: ^1.18.3
   c3: ^0.6.12
   compression: ^1.7.3
-  css-loader: ^1.0.1
+  css-loader: ^2.1.0
   d3-array: ^2.0.3
-  dayjs: ^1.8.0
+  dayjs: ^1.8.5
   details-element-polyfill: ^2.2.0
   ejs: ^2.6.1
   email-addresses: ^3.0.3
-  eslint: ^5.12.0
-  eslint-loader: ^2.1.1
-  eslint-plugin-jsx-a11y: ^6.1.2
+  eslint: ^5.13.0
+  eslint-loader: ^2.1.2
+  eslint-plugin-jsx-a11y: ^6.2.1
   eslint-plugin-react: ^7.12.2
-  eslint-plugin-react-hooks: ^1.0.0
+  eslint-plugin-react-hooks: ^1.0.1
   eslint-scope: ^4.0.0
   express: ^4.16.4
   express-http-proxy: ^1.5.1
@@ -10674,10 +10714,10 @@ specifiers:
   markdown-it-sanitizer: ^0.4.3
   memory-cache: ^0.2.0
   mini-css-extract-plugin: ^0.5.0
-  nodemon: ^1.18.9
+  nodemon: ^1.18.10
   prop-types: ^15.6.2
   quantize: ^1.0.2
-  randomcolor: ^0.5.3
+  randomcolor: ^0.5.4
   react: ^16.8.1
   react-dom: ^16.8.1
   react-helmet: ^5.2.0
@@ -10691,8 +10731,8 @@ specifiers:
   stats-webpack-plugin: ^0.7.0
   stylus: ^0.54.5
   stylus-loader: ^3.0.2
-  terser-webpack-plugin: ^1.2.1
+  terser-webpack-plugin: ^1.2.2
   url-join: ^4.0.0
   webpack: ^4.29.3
-  webpack-cli: ^3.2.1
-  webpack-dev-middleware: ^3.5.1
+  webpack-cli: ^3.2.2
+  webpack-dev-middleware: ^3.5.2
