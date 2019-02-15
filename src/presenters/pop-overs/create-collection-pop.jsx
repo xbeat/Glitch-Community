@@ -108,7 +108,6 @@ class CreateCollectionPop extends React.Component {
       );
       item.value = team.id;
       item.label = label;
-      item.ariaLabel = "test";
       teamOptions.push(item);
     });
     return teamOptions;
