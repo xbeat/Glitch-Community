@@ -69,7 +69,7 @@ class CreateCollectionPop extends React.Component {
         // redirect to collection
         if (newCollection.url) {
           if (this.state.teamId) {
-            const { newCollection: team } = await this.props.api.get(
+            const { data: team } = await this.props.api.get(
               `/teams/${this.state.teamId}`
             );
             newCollection.team = team;
@@ -139,7 +139,7 @@ class CreateCollectionPop extends React.Component {
       !!collections &&
       selectedOwnerCollections.some(c => c.url === kebabCase(query))
     ) {
-      queryError = "You already have a collection with this url";
+      queryError = "You already have a collection with this name";
     }
 
     if (this.state.newCollectionUrl) {
