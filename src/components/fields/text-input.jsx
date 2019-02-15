@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import InputErrorMessage from './input-error-message';
 import InputErrorIcon from './input-error-icon';
 
-import styles from './text.styl';
+import styles from './text-input.styl';
 const cx = classNames.bind(styles);
 
 const TYPES = [
@@ -18,7 +18,7 @@ const TYPES = [
 const TextInput = ({className, error, onChange, opaque, postfix, prefix, search, ...props}) => {
   const outerClassName = cx('outer', className);
   const flexClassName = cx({
-    'input-box': true,
+    'input-flex': true,
     underline: !opaque,
     opaque: opaque,
   });
