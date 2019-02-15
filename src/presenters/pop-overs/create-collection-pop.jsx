@@ -53,7 +53,7 @@ class CreateCollectionPop extends React.Component {
       const coverColor = randomColor({ luminosity: "light" });
       const teamId = this.state.teamId;
 
-      const { data } = await this.props.api.post("collections", {
+      const { data: newCollection } = await this.props.api.post("collections", {
         name,
         url,
         avatarUrl,
@@ -61,23 +61,24 @@ class CreateCollectionPop extends React.Component {
         teamId
       });
 
-      // add the selected project to the collection
-      await this.props.api.patch(
-        `collections/${data.id}/add/${this.props.project.id}`
-      );
-
-      // redirect to that collection
-      if (data && data.url) {
-        if (this.state.teamId) {
-          const { data: team } = await this.props.api.get(
-            `/teams/${this.state.teamId}`
-          );
-          data.team = team;
-        } else {
-          data.user = this.props.currentUser;
+      if (newCollection) {
+        // add the selected project to the collection
+        await this.props.api.patch(
+          `collections/${newCollection.id}/add/${this.props.project.id}`
+        );
+        // redirect to collection
+        if (newCollection.url) {
+          if (this.state.teamId) {
+            const { newCollection: team } = await this.props.api.get(
+              `/teams/${this.state.teamId}`
+            );
+            newCollection.team = team;
+          } else {
+            newCollection.user = this.props.currentUser;
+          }
+          const newCollectionUrl = getLink(newCollection);
+          this.setState({ newCollectionUrl });
         }
-        const newCollectionUrl = getLink(data);
-        this.setState({ newCollectionUrl });
       }
     } catch (error) {
       if (

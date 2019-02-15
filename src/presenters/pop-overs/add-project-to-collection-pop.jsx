@@ -42,14 +42,6 @@ class AddProjectToCollectionPopContents extends React.Component {
     this.updateFilter = this.updateFilter.bind(this);
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.collections !== this.props.collections) {
-  //     this.setState({
-  //       filteredCollections: nextProps.collections
-  //     });
-  //   }
-  // }
-
   updateFilter(query) {
     query = query.toLowerCase().trim();
     let filteredCollections = this.props.collections.filter(collection =>
@@ -71,19 +63,6 @@ class AddProjectToCollectionPopContents extends React.Component {
       </p>
     );
 
-    if (!this.props.collections) {
-      return (
-        <dialog className="pop-over add-project-to-collection-pop wide-pop">
-          {!this.props.fromProject && (
-            <AddProjectPopoverTitle project={this.props.project} />
-          )}
-          <div className="loader-container">
-            <Loader />
-          </div>
-        </dialog>
-      );
-    }
-
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
         {/* Only show this nested popover title from project-options */}
@@ -99,7 +78,7 @@ class AddProjectToCollectionPopContents extends React.Component {
                 this.updateFilter(evt.target.value);
               }}
               placeholder="Filter collections"
-              arial-label="Filter colelctions"
+              arial-label="Filter collections"
             />
           </section>
         )}
@@ -174,21 +153,26 @@ class AddProjectToCollectionPop extends React.Component {
 
   async loadCollections() {
     try {
-      const {data: allCollections} = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}&includeTeams=true`);
+      const { data: allCollections } = await this.props.api.get(
+        `collections/?userId=${this.props.currentUser.id}&includeTeams=true`
+      );
       // add user / team to each collection
       allCollections.forEach(collection => {
-        if(collection.teamId == -1){
+        if (collection.teamId == -1) {
           collection.user = this.props.currentUser;
-        }else{
-          collection.team = this.props.currentUser.teams.find( userTeam => userTeam.id == collection.teamId);
+        } else {
+          collection.team = this.props.currentUser.teams.find(
+            userTeam => userTeam.id == collection.teamId
+          );
         }
       });
-      // const orderedCollections = orderBy(allCollections, ['updatedAt'], ['desc']);
 
       const orderedCollections = orderBy(
-        allCollections, collection => collection.updatedAt
-      ).reverse();
-      
+        allCollections,
+        collection => collection.updatedAt,
+        ["desc"]
+      );
+
       this.setState({ maybeCollections: orderedCollections });
     } catch (error) {
       if (
@@ -209,6 +193,7 @@ class AddProjectToCollectionPop extends React.Component {
   }
 
   render() {
+    const { maybeCollections } = this.state;
     return (
       <NestedPopover
         alternateContent={() => (
@@ -221,13 +206,24 @@ class AddProjectToCollectionPop extends React.Component {
         )}
         startAlternateVisible={false}
       >
-        {createCollectionPopover => (
-          <AddProjectToCollectionPopContents
-            {...this.props}
-            collections={this.state.maybeCollections}
-            createCollectionPopover={createCollectionPopover}
-          />
-        )}
+        {createCollectionPopover =>
+          maybeCollections ? (
+            <AddProjectToCollectionPopContents
+              {...this.props}
+              collections={maybeCollections}
+              createCollectionPopover={createCollectionPopover}
+            />
+          ) : (
+            <dialog className="pop-over add-project-to-collection-pop wide-pop">
+              {!this.props.fromProject && (
+                <AddProjectPopoverTitle project={this.props.project} />
+              )}
+              <div className="loader-container">
+                <Loader />
+              </div>
+            </dialog>
+          )
+        }
       </NestedPopover>
     );
   }
