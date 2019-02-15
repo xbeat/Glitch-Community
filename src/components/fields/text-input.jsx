@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import styles from './input-wrap.styl';
 
+import InputErrorMessage from './input-error-message';
+import InputErrorIcon from './input-error-icon';
+
+import styles from './text.styl';
 const cx = classNames.bind(styles);
 
 const TYPES = [
@@ -20,20 +23,22 @@ const TextInput = ({className, error, onChange, opaque, postfix, prefix, search,
     opaque: opaque,
   });
   const inputClassName=cx({
-    input: true,
     'input-part': true,
+    input: true,
     search: search,
   });
-  const partClassName = cx('input-part');
+  const partClassName = cx({
+    'input-part': true,
+  });
   return (
     <label className={outerClassName}>
       <div className={flexClassName}>
         {!!prefix && <span className={partClassName}>{prefix}</span>}
         <input className={inputClassName} onChange={evt => onChange(evt.target.value)} {...props}/>
-        {!!error && <span className={partClassName} role="img" aria-label="Warning">🚒</span>}
+        {!!error && <InputErrorIcon/>}
         {!!postfix && <span className={partClassName}>{postfix}</span>}
       </div>
-      {!!error && <div className={cx('error')}>{error}</div>}
+      {!!error && <InputErrorMessage error={error}/>}
     </label>
   );
 };

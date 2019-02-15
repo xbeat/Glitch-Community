@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InputErrorIcon = ({error}) => {
+const InputErrorIcon = () => {
   return <span role="img" aria-label="Warning">🚒</span>;
 };
 
