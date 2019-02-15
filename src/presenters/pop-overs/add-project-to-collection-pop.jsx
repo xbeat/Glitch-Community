@@ -42,13 +42,13 @@ class AddProjectToCollectionPopContents extends React.Component {
     this.updateFilter = this.updateFilter.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.collections !== this.props.collections) {
-      this.setState({
-        filteredCollections: nextProps.collections
-      });
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.collections !== this.props.collections) {
+  //     this.setState({
+  //       filteredCollections: nextProps.collections
+  //     });
+  //   }
+  // }
 
   updateFilter(query) {
     query = query.toLowerCase().trim();
