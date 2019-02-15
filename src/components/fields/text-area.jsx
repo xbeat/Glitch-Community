@@ -33,4 +33,14 @@ TextArea.propTypes = {
   value: PropTypes.string,
 };
 
+TextArea.defaultProps = {
+  className: undefined,
+  disabled: undefined,
+  error: null,
+  name: undefined,
+  onChange: undefined,
+  placeholder: undefined,
+  value: undefined,
+}; 
+
 export default TextArea;
