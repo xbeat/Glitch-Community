@@ -116,6 +116,10 @@ class TeamPage extends React.Component {
   }
   
   async getInvitees() {
+    if (this.props.team.tokens.length < 1) {
+      console.log("no invited members");
+      return null;
+    }
     try {
       const data = await Promise.all(this.props.team.tokens.map(({userId}) => (
         this.props.api.get(`users/${userId}`)
