@@ -33,6 +33,7 @@ class Dropdown extends React.Component {
         classNamePrefix="dropdown"
         onChange={this.updateSelected}
         isSearchable={false}
+        aria-label="test"
       />
     );
   }
