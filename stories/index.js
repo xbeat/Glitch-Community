@@ -1,7 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Button from '../src/components/buttons/button';
-import TextInput from '../src/components/fields/text';
+import TextInput from '../src/components/fields/text-input';
+import TextArea from '../src/components/fields/text-area';
 
 storiesOf('Button', module)
   .add('regular', () => (
@@ -30,6 +31,11 @@ storiesOf('Text Input', module)
   .add('search', () => (
     <TextInput type="search" opaque={true} search={true} placeholder="bots, apps, users"/>
   ))
-  .add('with error', () => (
-    <TextInput value="glitch" error="That team already exists"/>
-  ));
+  .add('with error', () => {
+    const [value, setValue] = React.useState('');
+    return <TextInput value={value} onChange={setValue} error={value ? "That team already exists" : null}/>
+  })
+  .add('text area', () => {
+    const [value, setValue] = React.useState('');
+    return <TextArea value={value} onChange={setValue} error={value ? "That team already exists" : null}/>
+  });
