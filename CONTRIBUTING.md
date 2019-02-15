@@ -80,6 +80,8 @@ In your local repository,
   
 ```
 
+Or, run `./sh/setup.sh my-remix`. 
+
 Now you can use the GitHub UI to turn your branch into a pull request. 
 
 It's good practice to share a link to your project in the PR and talk about the functional changes you've made.  This allows the reviewers to easily visit your remix to test out your new behavior.
@@ -101,12 +103,17 @@ In your local repository,
    # 3. Update the PR in Github
    git push origin my-remix
  ``` 
+ 
+ Or, run `./sh/update.sh my-remix`. 
 
 And you're all set.
 
 Keep your PR's small! (Days of work, not weeks.)  This will save you from having to think about and use all of the more advanced git hyjinks to keep your PR in sync with master (not documented here, because there would be _over 9000 🐉_'s. )
 
 _Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes. If you make some quick changes, they may not show up in your diff on the Github pull request. If that is the case, you can either wait several minutes for the checkpoint to be made, or toggle Glitch Rewind on-and-off (which will force a checkpoint)._
+
+#### Updating a Glitch Remix from your local machine
+Sometimes it's helpful to work on your local machine, then push your changes back to Glitch. To do this, run `./sh/update.sh my-remix` to get your changes to Github, then run `git pull my-remote my-remix` from your remix's console to pull the changes from Github to Glitch. If you're a member of the Glitch Github organization, my-remote will be `origin`. If not, you'll have to add a remote in your remix pointing to your fork of the project and use that. 
 
 ### Deployment
 
@@ -141,6 +148,8 @@ In your local git repository:
   git push origin master
   
 ``` 
+
+Or, run `./sh/merge.sh`.
 
 Ok, now the GitHub repository is updated and stable. 
 
@@ -189,6 +198,8 @@ Take a glance at glitch.com and see that your changes are live.
 
 This is also a fun time to grab a screenshot and share what you've shipped, if you like.
 
+Run `./sh/teardown.sh` on your local machine to remove the branch and remote for your remix from your local git repository.
+
 #### Announce Completion
 
 Good job :-) Pop back over to #community and tell the room that you're all done.
@@ -201,3 +212,9 @@ Good job :-) Pop back over to #community and tell the room that you're all done.
  _Can I just edit ~community directly, since it’s Glitch we’re dealing with here?_
   
 Sure thing. All standard caveats and cautions apply.  This is appropriate for updating the curated content, fixing typos, editing .md files, and one-line bug fixes. Our build scripts don't update the live site until the build is healthy and your changes are complete.
+
+**Storybook**
+
+We now have [Storybook for React](https://www.npmjs.com/package/@storybook/react) integrated with our site, as we're gradually moving it towards a more component-based design. It's not hooked into the build process, so to see your changes reflected in it, you can do the following:
+1. Run ```npm run storybook``` from the terminal console to build the static storybook files.
+2. Go to https://<remix-name>/storybook. All the files are served there (from the build folder in the app).

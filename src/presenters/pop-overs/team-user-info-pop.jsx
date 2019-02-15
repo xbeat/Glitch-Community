@@ -1,34 +1,43 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import {getAvatarThumbnailUrl} from '../../models/user';
+import { getAvatarThumbnailUrl } from "../../models/user";
 
-import {TrackClick} from '../analytics';
-import {NestedPopover} from './popover-nested.jsx';
-import {UserLink} from '../includes/link.jsx';
-import Thanks from '../includes/thanks.jsx';
+import { TrackClick } from "../analytics";
+import { NestedPopover } from "./popover-nested.jsx";
+import { UserLink } from "../includes/link.jsx";
+import Thanks from "../includes/thanks.jsx";
 
-import TeamUserRemovePop from './team-user-remove-pop.jsx';
+import TeamUserRemovePop from "./team-user-remove-pop.jsx";
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
 
 // Remove from Team 👋
 
-const RemoveFromTeam = (props) => (
+const RemoveFromTeam = props => (
   <section className="pop-over-actions danger-zone">
     <TrackClick name="Remove from Team clicked">
-      <button className="button-small has-emoji button-tertiary button-on-secondary-background" {...props}>
-        Remove from Team <span className="emoji wave" role="img" aria-label=""/>
+      <button
+        className="button-small has-emoji button-tertiary button-on-secondary-background"
+        {...props}
+      >
+        Remove from Team{" "}
+        <span className="emoji wave" role="img" aria-label="" />
       </button>
     </TrackClick>
   </section>
 );
 
-
 // Admin Actions Section ⏫⏬
 
-const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
+const AdminActions = ({
+  user,
+  userIsTeamAdmin,
+  updateUserPermissions,
+  canChangeUserAdminStatus
+}) => {
+  if (!canChangeUserAdminStatus) return null;
   return (
     <section className="pop-over-actions admin-actions">
       <p className="action-description">
@@ -36,13 +45,19 @@ const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
       </p>
       {userIsTeamAdmin ? (
         <TrackClick name="Remove Admin Status clicked">
-          <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)}>
+          <button
+            className="button-small button-tertiary has-emoji"
+            onClick={() => updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)}
+          >
             Remove Admin Status <span className="emoji fast-down" />
           </button>
         </TrackClick>
       ) : (
         <TrackClick name="Make an Admin clicked">
-          <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)}>
+          <button
+            className="button-small button-tertiary has-emoji"
+            onClick={() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)}
+          >
             Make an Admin <span className="emoji fast-up" />
           </button>
         </TrackClick>
@@ -53,72 +68,95 @@ const AdminActions = ({user, userIsTeamAdmin, updateUserPermissions}) => {
 
 AdminActions.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired
   }).isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
   updateUserPermissions: PropTypes.func.isRequired,
+  canChangeUserAdminStatus: PropTypes.bool.isRequired
 };
-
 
 // Thanks 💖
 
-const ThanksCount = ({count}) => (
+const ThanksCount = ({ count }) => (
   <section className="pop-over-info">
     <Thanks count={count} />
   </section>
 );
 
-
 // Team User Info 😍
 
-const TeamUserInfo = ({currentUser, showRemove, ...props}) => {
-  const userAvatarStyle = {backgroundColor: props.user.color};
-  const canRemoveUser = props.currentUserIsTeamAdmin || (currentUser && currentUser.id === props.user.id);
+const TeamUserInfo = ({
+  currentUser,
+  currentUserIsTeamAdmin,
+  showRemove,
+  ...props
+}) => {
+  const userAvatarStyle = { backgroundColor: props.user.color };
+
+  const currentUserHasRemovePriveleges =
+    currentUserIsTeamAdmin || (currentUser && currentUser.id === props.user.id);
+  const canRemoveUser = !(
+    props.userIsTheOnlyMember || props.userIsTheOnlyAdmin
+  );
+  const canCurrentUserRemoveUser =
+    canRemoveUser && currentUserHasRemovePriveleges;
+
   return (
     <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info user-info">
         <UserLink user={props.user}>
-          <img className="avatar" src={getAvatarThumbnailUrl(props.user)} alt={props.user.login} style={userAvatarStyle}/>
+          <img
+            className="avatar"
+            src={getAvatarThumbnailUrl(props.user)}
+            alt={props.user.login}
+            style={userAvatarStyle}
+          />
         </UserLink>
         <div className="info-container">
-          <p className="name" title={props.user.name}>{props.user.name || "Anonymous"}</p>
-          { props.user.login &&
-            <p className="user-login" title={props.user.login}>@{props.user.login}</p>
-          }
-          { props.userIsTeamAdmin && 
+          <p className="name" title={props.user.name}>
+            {props.user.name || "Anonymous"}
+          </p>
+          {props.user.login && (
+            <p className="user-login" title={props.user.login}>
+              @{props.user.login}
+            </p>
+          )}
+          {props.userIsTeamAdmin && (
             <div className="status-badge">
-              <span className="status admin" data-tooltip="Can edit team info and billing">
+              <span
+                className="status admin"
+                data-tooltip="Can edit team info and billing"
+              >
                 Team Admin
               </span>
             </div>
-          }
+          )}
         </div>
       </section>
-      { props.user.thanksCount > 0 && <ThanksCount count={props.user.thanksCount} /> }
-      { props.currentUserIsTeamAdmin &&
-        <AdminActions 
+      {props.user.thanksCount > 0 && (
+        <ThanksCount count={props.user.thanksCount} />
+      )}
+      {currentUserIsTeamAdmin && (
+        <AdminActions
           user={props.user}
           userIsTeamAdmin={props.userIsTeamAdmin}
           updateUserPermissions={props.updateUserPermissions}
+          canChangeUserAdminStatus={!props.userIsTheOnlyAdmin}
         />
-      }
-      { canRemoveUser && !props.userIsTheOnlyMember && <RemoveFromTeam onClick={showRemove}/> }
+      )}
+      {canCurrentUserRemoveUser && <RemoveFromTeam onClick={showRemove} />}
     </dialog>
   );
 };
 
-
 // Team User Remove 💣
-
 
 // Team User Info or Remove
 // uses removeTeamUserVisible state to toggle between showing user info and remove views
 
-const TeamUserInfoAndRemovePop = (props) => (
-  <NestedPopover alternateContent={() => <TeamUserRemovePop {...props}/>}>
-    {showRemove => (
-      <TeamUserInfo {...props} showRemove={showRemove}/>
-    )}
+const TeamUserInfoAndRemovePop = props => (
+  <NestedPopover alternateContent={() => <TeamUserRemovePop {...props} />}>
+    {showRemove => <TeamUserInfo {...props} showRemove={showRemove} />}
   </NestedPopover>
 );
 
@@ -127,7 +165,7 @@ TeamUserInfoAndRemovePop.propTypes = {
     name: PropTypes.string,
     login: PropTypes.string,
     thanksCount: PropTypes.number.isRequired,
-    color: PropTypes.string,
+    color: PropTypes.string
   }).isRequired,
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
@@ -138,12 +176,12 @@ TeamUserInfoAndRemovePop.propTypes = {
   teamId: PropTypes.number.isRequired,
   updateUserPermissions: PropTypes.func.isRequired,
   team: PropTypes.shape({
-    projects: PropTypes.array.isRequired,
-  }),
+    projects: PropTypes.array.isRequired
+  })
 };
 
 TeamUserInfoAndRemovePop.defaultProps = {
-  currentUserIsOnTeam: false,
+  currentUserIsOnTeam: false
 };
 
 export default TeamUserInfoAndRemovePop;
