@@ -1,23 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames/bind';
+import classNames from 'classnames';
 
 import TextAreaAutosize from 'react-textarea-autosize';
 import InputErrorMessage from './input-error-message';
 import InputErrorIcon from './input-error-icon';
+import useUniqueId from './hook-unique-id';
 
 import styles from './text-area.styl';
-const cx = classNames.bind(styles);
 
 const TextArea = ({className, error, onChange, ...props}) => {
-  const outerClassName = cx('input-wrap', className);
-  const borderClassName = cx('input-border');
-  const inputClassName = cx('input');
+  const uniqueId = useUniqueId();
+  const outerClassName = classNames(styles.inputWrap, className);
   return (
-    <label className={outerClassName}>
-      <div className={borderClassName}>
-        <TextAreaAutosize className={inputClassName} onChange={evt => onChange(evt.target.value)} {...props}/>
-        {!!error && <InputErrorIcon className={cx('error-icon')} />}
+    <label className={outerClassName} htmlFor={uniqueId}>
+      <div className={styles.inputBorder}>
+        <TextAreaAutosize id={uniqueId} className={styles.input} onChange={evt => onChange(evt.target.value)} {...props}/>
+        {!!error && <InputErrorIcon className={styles.errorIcon} />}
       </div>
       {!!error && <InputErrorMessage error={error}/>}
     </label>

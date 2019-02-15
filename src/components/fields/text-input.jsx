@@ -19,7 +19,7 @@ const TYPES = [
 const TextInput = ({className, error, onChange, opaque, postfix, prefix, search, ...props}) => {
   const uniqueId = useUniqueId();
   const outerClassName = cx('outer', className);
-  const flexClassName = cx({
+  const borderClassName = cx({
     'input-flex': true,
     underline: !opaque,
     opaque: opaque,
@@ -29,14 +29,13 @@ const TextInput = ({className, error, onChange, opaque, postfix, prefix, search,
     input: true,
     search: search,
   });
-  const partClassName = cx('input-part');
   return (
     <label className={outerClassName} htmlFor={uniqueId}>
       <div className={flexClassName}>
-        {!!prefix && <span className={partClassName}>{prefix}</span>}
+        {!!prefix && <span className={styles.inputPart}>{prefix}</span>}
         <input id={uniqueId} className={inputClassName} onChange={evt => onChange(evt.target.value)} {...props}/>
         {!!error && <InputErrorIcon/>}
-        {!!postfix && <span className={partClassName}>{postfix}</span>}
+        {!!postfix && <span className={styles.inputPart}>{postfix}</span>}
       </div>
       {!!error && <InputErrorMessage error={error}/>}
     </label>
