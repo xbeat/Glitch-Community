@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import styles from './text.styl';
 
+import InputError from './input-error';l
+
+import styles from './input-wrap.styl';
 const cx = classNames.bind(styles);
 
 const TYPES = [
@@ -12,7 +14,7 @@ const TYPES = [
   'text',
 ];
 
-const TextField = ({className, error, onChange, opaque, postfix, prefix, search, ...props}) => {
+const TextInput = ({className, error, onChange, opaque, postfix, prefix, search, ...props}) => {
   const outerClassName = cx('outer', className);
   const flexClassName = cx({
     'input-box': true,
@@ -38,7 +40,7 @@ const TextField = ({className, error, onChange, opaque, postfix, prefix, search,
   );
 };
 
-TextField.propTypes = {
+TextInput.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.node,
@@ -53,4 +55,4 @@ TextField.propTypes = {
   value: PropTypes.string,
 };
 
-export default TextField;
+export default TextInput;

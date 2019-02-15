@@ -6,7 +6,7 @@ import {Redirect} from 'react-router-dom';
 import {TrackedExternalLink} from './analytics';
 import Link from './includes/link';
 import Logo from './includes/logo';
-import TextInput from '../components/fields/text';
+import TextInput from '../components/fields/text-input';
 
 import UserOptionsPop from './pop-overs/user-options-pop';
 import SignInPop from './pop-overs/sign-in-pop';
