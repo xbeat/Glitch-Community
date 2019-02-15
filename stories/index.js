@@ -31,11 +31,9 @@ storiesOf('Text Input', module)
   .add('search', () => (
     <TextInput type="search" opaque={true} search={true} placeholder="bots, apps, users"/>
   ))
-  .add('with error', () => {
-    const [value, setValue] = React.useState('');
-    return <TextInput value={value} onChange={setValue} error={value ? "That team already exists" : null}/>
-  })
-  .add('text area', () => {
-    const [value, setValue] = React.useState('');
-    return <TextArea value={value} onChange={setValue} error={value ? "That team already exists" : null}/>
-  });
+  .add('with error', () => (
+    <TextInput value="glitch" error="That team already exists"/>
+  ))
+  .add('text area', () => (
+    <TextArea value="[Something here] doesn't seem appropriate for Glitch because..." error="Reason is required"/>
+  ));
