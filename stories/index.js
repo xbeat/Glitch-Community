@@ -32,8 +32,8 @@ storiesOf('Text Input', module)
     <TextInput type="search" opaque={true} search={true} placeholder="bots, apps, users"/>
   ))
   .add('with error', () => (
-    <TextInput value="glitch" error="That team already exists"/>
+    <TextInput placeholder="glitch" error="That team already exists"/>
   ))
   .add('text area', () => (
-    <TextArea value="[Something here] doesn't seem appropriate for Glitch because..." error="Reason is required"/>
+    <TextArea placeholder="[Something here] doesn't seem appropriate for Glitch because..." error="Reason is required"/>
   ));
