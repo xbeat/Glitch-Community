@@ -1,91 +1,46 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PopoverWithButton from "./popover-with-button";
-
-class DropdownMenu extends React.Component {
-  constructor(props){
-    super(props);
-  }
-  render(){
-    const { contents, selected, togglePopover, updateSelected } = this.props;
-    return (
-      <ul className="pop-over mini-pop" tabIndex="-1">
-        {contents.map((item, index) => (
-          <li
-            className={
-              "mini-pop-action" + (index === selected ? " selected" : "")
-            }
-            key={index}
-            onClick={() => {
-              updateSelected(index);
-              togglePopover();
-            }}   
-            onKeyPress={() => {
-              updateSelected(index);
-            }}
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-    );
-  }
-}
-
-DropdownMenu.propTypes = {
-  contents: PropTypes.node.isRequired,
-  selected: PropTypes.number.isRequired, // the index of the selected item
-  togglePopover: PropTypes.func, // added dynamically from PopoverWithButton
-  updateSelected: PropTypes.func.isRequired,
-};
+import Select from "react-select";
 
 class Dropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 0,
-      buttonContents: this.props.buttonContents
+      selectedOption: this.props.options[0] // set to the first option by default
     };
     this.updateSelected = this.updateSelected.bind(this);
   }
 
-  componentDidMount() {
-    // TO DO - set default menu item to current team if loaded from a team page
+  shouldComponentUpdate(nextProps, nextState){
+    return nextState.selectedOption.value !== this.state.selectedOption.value; // render is continually called without this check...
   }
 
-  updateSelected(itemIndex) {
+  updateSelected(option) {
     this.setState({
-      selected: itemIndex,
-      buttonContents: this.props.menuContents[itemIndex]
+      selectedOption: option
     });
-    // pass selected button back to onUpdate
-    this.props.onUpdate(this.props.menuContents[itemIndex]);
+    // pass selected value back to onUpdate
+    this.props.onUpdate(option.value);
   }
 
   render() {
-    const dropdownArrow = <span className="down-arrow icon" aria-label="options"></span>;
-    const buttonText = [this.state.buttonContents, dropdownArrow];
     return (
-      <PopoverWithButton
-        buttonClass="button-small dropdown-btn user-or-team-toggle has-emoji"
-        buttonText={buttonText}
-        containerClass="dropdown"
-        dropdown={true}
-        passToggleToPop
-      >
-        <DropdownMenu
-          contents={this.props.menuContents}
-          selected={this.state.selected}
-          updateSelected={this.updateSelected}
-        />
-      </PopoverWithButton>
+      <Select
+        autoWidth={true}
+        value={this.state.selectedOption}
+        options={this.props.options}
+        className={"dropdown " + this.props.containerClass}
+        classNamePrefix="dropdown"
+        onChange={this.updateSelected}
+        isSearchable={false}
+      />
     );
   }
 }
 
 Dropdown.propTypes = {
-  buttonContents: PropTypes.node.isRequired,
-  menuContents: PropTypes.node.isRequired,
+  containerClass: PropTypes.string,
+  options: PropTypes.array.isRequired,
   onUpdate: PropTypes.func.isRequired
 };
 

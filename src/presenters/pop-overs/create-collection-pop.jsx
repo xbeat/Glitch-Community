@@ -35,8 +35,7 @@ class CreateCollectionPop extends React.Component {
     this.setState({ query: newValue, error: null });
   }
 
-  setTeamId(buttonContents) {
-    const teamId = buttonContents.props.id;
+  setTeamId(teamId) {
     this.setState({
       teamId: teamId
     });
@@ -93,20 +92,24 @@ class CreateCollectionPop extends React.Component {
       }
     }
   }
-  
-  getTeamMenuContents(teams) {
+
+  // getTeamOptions: Format teams in { value: teamId, label: html elements } format for react-select
+  getTeamOptions(teams) {
     const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
-    const menuContents = [];
+    const teamOptions = [];
 
     orderedTeams.map(team => {
-      let content = (
+      let item = {};
+      let label = (
         <span id={team.id}>
           {team.name} {<TeamAvatar team={team} />}
         </span>
       );
-      menuContents.push(content);
+      item.value = team.id;
+      item.label = label;
+      teamOptions.push(item);
     });
-    return menuContents;
+    return teamOptions;
   }
 
   render() {
@@ -115,18 +118,18 @@ class CreateCollectionPop extends React.Component {
 
     const submitEnabled = this.state.query.length > 0;
     const nameTakenError = "You already have a collection with this url";
-
     const placeholder = "New Collection Name";
 
     const teams = this.props.currentUser.teams;
 
-    const currentUserMenuItem = (
+    const currentUserOptionLabel = (
       <span>
-        myself <UserAvatar user={this.props.currentUser} isStatic />
+        myself <UserAvatar user={this.props.currentUser} />
       </span>
     );
+    const currentUserOption = [{ value: -1, label: currentUserOptionLabel }];
 
-    // filter collections based on selected owner from dropdown
+    // determine if entered name already exists for selected user / team
     const selectedOwnerCollections = this.state.teamId
       ? collections.filter(({ teamId }) => teamId == this.state.teamId)
       : collections.filter(({ userId }) => userId == this.props.currentUser.id);
@@ -135,7 +138,7 @@ class CreateCollectionPop extends React.Component {
       !!collections &&
       selectedOwnerCollections.some(c => c.url === kebabCase(query))
     ) {
-      this.setState({error: nameTakenError});
+      this.setState({ error: nameTakenError });
     }
 
     if (this.state.newCollectionUrl) {
@@ -162,8 +165,8 @@ class CreateCollectionPop extends React.Component {
               <div>
                 for{" "}
                 <Dropdown
-                  buttonContents={currentUserMenuItem}
-                  menuContents={[currentUserMenuItem].concat(this.getTeamMenuContents(teams))}
+                  containerClass="user-or-team-toggle"
+                  options={currentUserOption.concat(this.getTeamOptions(teams))}
                   onUpdate={this.setTeamId}
                 />
               </div>
