@@ -59,13 +59,13 @@ TextInput.defaultProps = {
   error: null,
   name: undefined,
   onChange: undefined,
-  opaque: PropTypes.bool,
-  placeholder: PropTypes.string,
-  postfix: PropTypes.node,
-  prefix: PropTypes.node,
-  search: PropTypes.bool,
-  type: PropTypes.oneOf(TYPES),
-  value: PropTypes.string,
+  opaque: false,
+  placeholder: undefined,
+  postfix: null,
+  prefix: null,
+  search: false,
+  type: undefined,
+  value: undefined,
 };
 
 export default TextInput;
