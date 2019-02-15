@@ -1,10 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PopoverWithButton from "./popover-with-button";
-import {
-  PureEditableField,
-  PureEditableTextArea
-} from "../includes/editable-field.jsx";
+import { PureEditableField } from "../includes/editable-field.jsx";
 import { parseOneAddress } from "email-addresses";
 import _ from "lodash";
 import axios from "axios";
@@ -16,7 +13,7 @@ import {
 import Loader from "../includes/loader.jsx";
 
 import { CurrentUserConsumer } from "../current-user.jsx";
-import TextArea from '../../components/f
+import TextArea from '../../components/fields/text-area';
 
 class ReportAbusePop extends React.Component {
   constructor(props) {
@@ -182,12 +179,11 @@ class ReportAbusePop extends React.Component {
           <h1 className="pop-title">Report Abuse</h1>
         </section>
         <section className="pop-over-actions">
-          <PureEditableTextArea
+          <TextArea
             value={this.state.reason}
-            update={this.reasonOnChange}
-            blur={() => this.debouncedValidateReason()}
+            onChange={this.reasonOnChange}
+            onBlur={() => this.debouncedValidateReason()}
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
-            placeholder=""
             error={this.state.reasonError}
           />
         </section>
