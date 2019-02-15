@@ -38,6 +38,10 @@ export function getLink(collection) {
   return `${getOwnerLink(collection)}/${collection.url}`;
 }
 
+export async function createCollection(name, description, user, team){
+  
+}
+
 // Circular dependencies must go below module.exports
 // eventually want to handle whether the collection belongs to a team or a user
 

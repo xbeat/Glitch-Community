@@ -121,6 +121,7 @@ export class CreateCollectionButton extends React.Component{
   }
   
   async generateNames() {
+    // defaults
     let collectionSynonyms = ["mix","bricolage","playlist","assortment","potpourri","melange","album","collection","variety","compilation"];
     let predicate = "radical";
 
