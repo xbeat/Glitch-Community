@@ -4,12 +4,12 @@ import {Redirect} from 'react-router-dom';
 import {TrackClick} from './analytics';
 import CollectionItem from "./collection-item.jsx";
 import {defaultAvatar, getLink} from '../models/collection';
-import {getCollections, getPredicate} from '../models/words';
+import {getCollectionPairs} from '../models/words';
 import Loader from './includes/loader.jsx';
 
 import randomColor from 'randomcolor';
 
-import {kebabCase, orderBy} from 'lodash';
+import {kebabCase, map, orderBy} from 'lodash';
 
 
 class CollectionsList extends React.Component {
@@ -124,16 +124,16 @@ export class CreateCollectionButton extends React.Component{
     // defaults
     let collectionSynonyms = ["mix","bricolage","playlist","assortment","potpourri","melange","album","collection","variety","compilation"];
     let predicate = "radical";
+    let names = collectionSynonyms.map(collection => 
 
     try {
       // get collection names
-      collectionSynonyms = await getCollections();
-      predicate = await getPredicate();
+      names = await getCollectionPairs();
     } catch(error) {
       // If there's a failure, we'll stick with our defaults.
     }
     
-    return [collectionSynonyms, predicate];
+    return [names];
   }
   
   async createCollection(){
