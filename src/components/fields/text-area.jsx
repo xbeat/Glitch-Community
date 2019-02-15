@@ -15,7 +15,7 @@ const TextArea = ({className, error, onChange, ...props}) => {
   return (
     <label className={outerClassName}>
       <TextAreaAutosize className={inputClassName} onChange={evt => onChange(evt.target.value)} {...props}/>
-      {!!error && <InputErrorIcon/>}
+      {!!error && <InputErrorIcon className={cx('error-icon')} />}
       {!!error && <InputErrorMessage error={error}/>}
     </label>
   );
