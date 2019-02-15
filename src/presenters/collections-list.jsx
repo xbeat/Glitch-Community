@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import {TrackClick} from './analytics';
 import CollectionItem from "./collection-item.jsx";
-import {defaultAvatar, getLink} from '../models/collection';
+import {defaultAvatar, getLink, createCollection} from '../models/collection';
 import {getCollectionPairs} from '../models/words';
 import Loader from './includes/loader.jsx';
 
@@ -139,7 +139,7 @@ export class CreateCollectionButton extends React.Component{
   async createCollection(){
     this.setState({loading: true});
     const collectionNames = await this.generateNames();
-    let creationSuccess = false;
+    
     for(let name of collectionNames){
       try{
         creationSuccess = await this.postCollection(name);

@@ -3,6 +3,9 @@
 import {getLink as getTeamLink} from './team';
 import {getLink as getUserLink} from './user';
 
+import {kebabCase} from 'lodash';
+import randomColor from 'randomcolor';
+
 export const FALLBACK_AVATAR_URL = "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-avatar.svg?1541449590339";
 export const defaultAvatar = "https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-avatar.svg?1540389405633";
 
@@ -39,7 +42,37 @@ export function getLink(collection) {
 }
 
 export async function createCollection(name, description, user, team){
-  
+  try{
+    const url = kebabCase(name);
+    const avatarUrl = defaultAvatar;
+    // get a random color
+    const coverColor = randomColor({luminosity: 'light'});
+    // set the team id if there is one
+    const teamId = this.props.maybeTeam ? this.props.maybeTeam.id : undefined;
+
+    const {data} = await this.props.api.post('collections', {
+      name,
+      description,
+      url,
+      avatarUrl,
+      coverColor,
+      teamId,
+    });
+
+    if(data && data.url){
+      if (this.props.maybeTeam) {
+        data.team = this.props.maybeTeam;
+      } else {
+        data.user = this.props.currentUser;
+      }
+      const newCollectionUrl = getLink(data);
+      return newCollectionUrl;
+      return true;
+    }
+    return false;
+  }catch(error){
+    // need to do something smart here
+  }
 }
 
 // Circular dependencies must go below module.exports
