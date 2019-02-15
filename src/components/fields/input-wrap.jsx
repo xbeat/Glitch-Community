@@ -2,19 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
-import InputError from './input-error';l
+import InputError from './input-error';
 
 import styles from './input-wrap.styl';
 const cx = classNames.bind(styles);
 
-const TYPES = [
-  'email',
-  'password',
-  'search',
-  'text',
-];
-
-const TextInput = ({className, error, onChange, opaque, postfix, prefix, search, ...props}) => {
+const InputWrap = ({className, error, onChange, opaque, postfix, prefix, search, ...props}) => {
   const outerClassName = cx('outer', className);
   const flexClassName = cx({
     'input-box': true,
@@ -40,19 +33,13 @@ const TextInput = ({className, error, onChange, opaque, postfix, prefix, search,
   );
 };
 
-TextInput.propTypes = {
+InputWrap.propTypes = {
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  disabled: PropTypes.bool,
   error: PropTypes.node,
-  name: PropTypes.string,
-  onChange: PropTypes.func,
   opaque: PropTypes.bool,
-  placeholder: PropTypes.string,
   postfix: PropTypes.node,
   prefix: PropTypes.node,
-  search: PropTypes.bool,
-  type: PropTypes.oneOf(TYPES),
-  value: PropTypes.string,
 };
 
-export default TextInput;
+export default InputWrap;
