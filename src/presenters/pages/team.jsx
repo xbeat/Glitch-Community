@@ -80,7 +80,6 @@ class TeamPage extends React.Component {
   async componentDidMount() {
     const invitees = await this.getInvitees();
     this.setState({ invitees });
-    console.log(this.state.invitees);
   }
   
   async addProjectToCollection(project, collection) {
@@ -131,6 +130,7 @@ class TeamPage extends React.Component {
         captureException(error);
       }
     }
+    return [];
   }
 
   render() {
