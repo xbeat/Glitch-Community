@@ -11,11 +11,14 @@ const cx = classNames.bind(styles);
 
 const TextArea = ({className, error, onChange, ...props}) => {
   const outerClassName = cx('input-wrap', className);
-  const inputClassName=cx('input');
+  const borderClassName = cx('input-border');
+  const inputClassName = cx('input');
   return (
     <label className={outerClassName}>
-      <TextAreaAutosize className={inputClassName} onChange={evt => onChange(evt.target.value)} {...props}/>
-      {!!error && <InputErrorIcon className={cx('error-icon')} />}
+      <div className={borderClassName}>
+        <TextAreaAutosize className={inputClassName} onChange={evt => onChange(evt.target.value)} {...props}/>
+        {!!error && <InputErrorIcon className={cx('error-icon')} />}
+      </div>
       {!!error && <InputErrorMessage error={error}/>}
     </label>
   );

@@ -22,7 +22,7 @@ const TextInput = ({className, error, onChange, opaque, postfix, prefix, search,
     underline: !opaque,
     opaque: opaque,
   });
-  const inputClassName=cx({
+  const inputClassName = cx({
     'input-part': true,
     input: true,
     search: search,
