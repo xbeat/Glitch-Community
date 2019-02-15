@@ -4,6 +4,7 @@ import classNames from 'classnames/bind';
 
 import InputErrorMessage from './input-error-message';
 import InputErrorIcon from './input-error-icon';
+import useUniqueId from './hook-unique-id';
 
 import styles from './text-input.styl';
 const cx = classNames.bind(styles);
@@ -16,6 +17,7 @@ const TYPES = [
 ];
 
 const TextInput = ({className, error, onChange, opaque, postfix, prefix, search, ...props}) => {
+  const uniqueId = useUniqueId();
   const outerClassName = cx('outer', className);
   const flexClassName = cx({
     'input-flex': true,
@@ -29,10 +31,10 @@ const TextInput = ({className, error, onChange, opaque, postfix, prefix, search,
   });
   const partClassName = cx('input-part');
   return (
-    <label className={outerClassName}>
+    <label className={outerClassName} htmlFor={uniqueId}>
       <div className={flexClassName}>
         {!!prefix && <span className={partClassName}>{prefix}</span>}
-        <input className={inputClassName} onChange={evt => onChange(evt.target.value)} {...props}/>
+        <input id={uniqueId} className={inputClassName} onChange={evt => onChange(evt.target.value)} {...props}/>
         {!!error && <InputErrorIcon/>}
         {!!postfix && <span className={partClassName}>{postfix}</span>}
       </div>
