@@ -27,9 +27,7 @@ const TextInput = ({className, error, onChange, opaque, postfix, prefix, search,
     input: true,
     search: search,
   });
-  const partClassName = cx({
-    'input-part': true,
-  });
+  const partClassName = cx('input-part');
   return (
     <label className={outerClassName}>
       <div className={flexClassName}>
