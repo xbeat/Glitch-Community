@@ -84,8 +84,8 @@ export class CreateCollectionButton extends React.Component{
     this.createCollection = this.createCollection.bind(this);
   }
   
-  async postCollection(collectionSynonym, predicate){
-    const name = [predicate, collectionSynonym].join('-');
+  async postCollection(name){
+    const [predicate, collectionSynonym] = name.split('-');
     const description = `A ${collectionSynonym} of projects that does ${predicate} things`;
     const url = kebabCase(name);
     
@@ -124,7 +124,7 @@ export class CreateCollectionButton extends React.Component{
     // defaults
     let collectionSynonyms = ["mix","bricolage","playlist","assortment","potpourri","melange","album","collection","variety","compilation"];
     let predicate = "radical";
-    let names = collectionSynonyms.map(collection => 
+    let names = collectionSynonyms.map(collectionSynonym => (predicate + "-" + collectionSynonym));
 
     try {
       // get collection names
@@ -132,18 +132,17 @@ export class CreateCollectionButton extends React.Component{
     } catch(error) {
       // If there's a failure, we'll stick with our defaults.
     }
-    
-    return [names];
+      
+    return names;
   }
   
   async createCollection(){
     this.setState({loading: true});
-    
-    const [collectionSynonymns, predicate] = await this.generateNames();
+    const collectionNames = await this.generateNames();
     let creationSuccess = false;
-    for(let synonym of collectionSynonymns){
+    for(let name of collectionNames){
       try{
-        creationSuccess = await this.postCollection(synonym, predicate);
+        creationSuccess = await this.postCollection(name);
         if(creationSuccess) {
           break;
         }
