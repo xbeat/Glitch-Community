@@ -113,11 +113,11 @@ class CreateCollectionPop extends React.Component {
   }
 
   render() {
-    const { query } = this.state;
+    const { error, query } = this.state;
     const { collections } = this.props;
+    let queryError; // if user already has a collection with the specified name
 
     const submitEnabled = this.state.query.length > 0;
-    const nameTakenError = "You already have a collection with this url";
     const placeholder = "New Collection Name";
 
     const teams = this.props.currentUser.teams;
@@ -138,7 +138,7 @@ class CreateCollectionPop extends React.Component {
       !!collections &&
       selectedOwnerCollections.some(c => c.url === kebabCase(query))
     ) {
-      this.setState({ error: nameTakenError });
+      queryError = "You already have a collection with this url";
     }
 
     if (this.state.newCollectionUrl) {
@@ -157,7 +157,7 @@ class CreateCollectionPop extends React.Component {
               value={query}
               update={this.handleChange}
               placeholder={placeholder}
-              error={this.state.error}
+              error={error || queryError}
               aria-label={placeholder}
             />
 
@@ -184,7 +184,7 @@ class CreateCollectionPop extends React.Component {
                   <button
                     type="submit"
                     className="create-collection button-small"
-                    disabled={!!this.state.error || !submitEnabled}
+                    disabled={!!queryError || !submitEnabled}
                   >
                     Create
                   </button>
