@@ -95,7 +95,6 @@ export const ProjectNotFoundPage = ({api, name}) => {
       }
     }
   };
-  console.log('render');
   React.useEffect(() => {
     check();
   }, [name, currentUser && currentUser.token]);
