@@ -82,10 +82,10 @@ export class Notifications extends React.Component {
 }
 
 export const AddProjectToCollectionMsg = ({projectName, collectionName, url}) => (
-    <>
-      <p>Added <b>{projectName}</b> to collection <b>{collectionName}</b></p>
-      <a href={url} rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
-    </>
+  <>
+    <p>Added <b>{projectName}</b> to collection <b>{collectionName}</b></p>
+    <a href={url} rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
+  </>
 );
 
 AddProjectToCollectionMsg.propTypes = {
