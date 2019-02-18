@@ -44,6 +44,7 @@ export function getLink(collection) {
 }
 
 export async function postNewCollection(api, name, description, user, team){
+
   if(!name){
     // generate a new random name & description
     name="radical-mix"; // a default to fall back on
@@ -55,7 +56,7 @@ export async function postNewCollection(api, name, description, user, team){
     const [predicate, collectionSynonym] = name.split('-');
     description = `A ${collectionSynonym} of projects that does ${predicate} things`;
   }
-  name="future-album"; // test error handling
+  // name="future-album"; // test error handling
   console.log('createCollection with ', name, description, user, team);
   const url = kebabCase(name);
   const avatarUrl = defaultAvatar;
@@ -89,9 +90,11 @@ export async function postNewCollection(api, name, description, user, team){
     // wasn't able to get a collection for whatever reason - should throw error
     }
   }catch(error){
+    // need to repeat generating the collection until we get a valid collectionUrl
     if(error.code == 400){
       // collection already exists - try again with a new name
     }else{
+      // repeat the call here
     }
     console.log(error);
   }

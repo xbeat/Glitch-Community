@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import {TrackClick} from './analytics';
 import CollectionItem from "./collection-item.jsx";
-import {defaultAvatar, getLink, postNewCollection} from '../models/collection';
-import {getCollectionPairs} from '../models/words';
+import {postNewCollection} from '../models/collection';
 import Loader from './includes/loader.jsx';
 
-import randomColor from 'randomcolor';
-
-import {kebabCase, map, orderBy} from 'lodash';
+import {orderBy} from 'lodash';
 
 
 class CollectionsList extends React.Component {

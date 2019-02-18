@@ -7,7 +7,7 @@ import { captureException } from "../../utils/sentry";
 
 import { UserAvatar, TeamAvatar } from "../includes/avatar.jsx";
 import { TrackClick } from "../analytics";
-import { getLink, defaultAvatar } from "../../models/collection";
+import { getLink, defaultAvatar, postNewCollection } from "../../models/collection";
 
 import { NestedPopoverTitle } from "./popover-nested.jsx";
 import Dropdown from "./dropdown.jsx";
@@ -44,6 +44,17 @@ class CreateCollectionPop extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
     this.setState({ loading: true });
+    
+    let team = undefined;
+    
+    if(this.state.teamId){
+      let { data } = await this.props.api.get(
+        `/teams/${this.state.teamId}`
+      );
+      team = data;
+    }
+    
+    const newCollectionUrl = await postNewCollection(this.props.api, this.state.query, null, (this.state.teamId ? null : this.props.currentUser), team);
 
     // create a new collection
     try {
