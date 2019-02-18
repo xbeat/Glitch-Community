@@ -81,6 +81,7 @@ OauthErrorPage.propTypes = {
 
 export const ProjectNotFoundPage = ({api, name}) => {
   const {currentUser} = useCurrentUser();
+  const token = currentUser && currentUser.persistentToken;
   
   const check = async () => {
     try {
@@ -95,15 +96,15 @@ export const ProjectNotFoundPage = ({api, name}) => {
       }
     }
   };
-  /*React.useEffect(() => {
-    check();
-  }, [name, currentUser && currentUser.token]);*/
+  React.useEffect(() => {
+    if (token) {
+      check();
+    }
+  }, [name, token]);
   
   return (
     <Layout api={api}>
-      <Helmet>
-        <title>👻 Project not found</title> {/* eslint-disable-line */}
-      </Helmet>
+      <Helmet title="👻 Project not found" />
       <NotFound name={name}/>
       <p>Either there's no project here, or you don't have access to it.  Are you logged in as the right user?</p>
     </Layout>
