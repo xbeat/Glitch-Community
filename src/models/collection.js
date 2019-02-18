@@ -3,7 +3,7 @@
 import {getLink as getTeamLink} from './team';
 import {getLink as getUserLink} from './user';
 
-import {getCollectionPairs} from '../models/words';
+import {getCollectionPair} from '../models/words';
 
 import {kebabCase} from 'lodash';
 import randomColor from 'randomcolor';
@@ -43,59 +43,50 @@ export function getLink(collection) {
   return `${getOwnerLink(collection)}/${collection.url}`;
 }
 
-export async function generateNames(){
-  // defaults
-  let collectionSynonyms = ["mix","bricolage","playlist","assortment","potpourri","melange","album","collection","variety","compilation"];
-  let predicate = "radical";
-  let names = collectionSynonyms.map(collectionSynonym => (predicate + "-" + collectionSynonym));
-
-  try {
-    // get collection names
-    names = await getCollectionPairs();
-  } catch(error) {
-    // If there's a failure, we'll stick with our defaults.
+export async function createCollection(api, name, description, user, team){
+  if(!name){
+    // generate some random names
+    name = await getCollectionPair();
+    console.log('random name: ', name);
   }
+  try{
+    console.log('createCollection with ', name, description, user, team);
+    const url = kebabCase(name);
+    const avatarUrl = defaultAvatar;
+    // get a random color
+    const coverColor = randomColor({luminosity: 'light'});
+    // set the team id if there is one
+    const teamId = team ? team.id : undefined;
 
-  return names;
-}
+    const {data: collection} = await api.post('collections', {
+      name,
+      description,
+      url,
+      avatarUrl,
+      coverColor,
+      teamId,
+    });
+    console.log('collection', collection);
 
-export async function createCollection(name, description, user, team){
-  const collectionNames = await generateNames();
-  for(let name of collectionNames){
-    try{
-      console.log('createCollection with ', name, description, user, team);
-      const url = kebabCase(name);
-      const avatarUrl = defaultAvatar;
-      // get a random color
-      const coverColor = randomColor({luminosity: 'light'});
-      // set the team id if there is one
-      const teamId = this.props.maybeTeam ? this.props.maybeTeam.id : undefined;
-
-      const {data} = await this.props.api.post('collections', {
-        name,
-        description,
-        url,
-        avatarUrl,
-        coverColor,
-        teamId,
-      });
-
-      if(data && data.url){
-        if (this.props.maybeTeam) {
-          data.team = this.props.maybeTeam;
-        } else {
-          data.user = this.props.currentUser;
-        }
-        const newCollectionUrl = getLink(data);
-        console.log('newCollectionUrl', newCollectionUrl);
+    if(collection && collection.url){
+      if (team) {
+        collection.team = team;
+      } else {
+        collection.user = user;
+      }
+      const newCollectionUrl = getLink(collection);
+      console.log('newCollectionUrl', newCollectionUrl);
+      if(newCollectionUrl){
         return newCollectionUrl;
-    }else{
-      // wasn't able to get a collection for whatever reason - should throw error
-    }
-    }catch(error){
-      // need to do something smart here
-    }
+      }
+
+  }else{
+    // wasn't able to get a collection for whatever reason - should throw error
   }
+  }catch(error){
+    // need to do something smart here
+  }
+  
 }
 
 // Circular dependencies must go below module.exports

@@ -122,23 +122,16 @@ export class CreateCollectionButton extends React.Component{
 
   async createCollection(){
     this.setState({loading: true});
-    const collectionNames = await this.generateNames();
-    let creationSuccess = false;
-    for(let name of collectionNames){
-      try{
-        const newCollectionUrl = await createCollection(name, null, (this.props.maybeTeam ? null : this.props.currentUser), this.props.maybeTeam);
-        if(newCollectionUrl){
-          this.setState({newCollectionUrl, shouldRedirect: true});
-          break;
-        }
-      } catch(error){
-        // Try again.
+    try{
+      const newCollectionUrl = await createCollection(this.props.api, null, null, (this.props.maybeTeam ? null : this.props.currentUser), this.props.maybeTeam);
+      if(newCollectionUrl){
+        this.setState({newCollectionUrl, shouldRedirect: true});
       }
-    }
-    if(!creationSuccess) {
-      this.setState({error: "Unable to create collection :-("});
+    } catch(error){
+      // Try again.
     }
   }
+  
   
   render(){
     if(this.state.shouldRedirect){
