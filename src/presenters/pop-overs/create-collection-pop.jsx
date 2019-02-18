@@ -2,14 +2,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
-import randomColor from "randomcolor";
 import { captureException } from "../../utils/sentry";
 
 import { UserAvatar, TeamAvatar } from "../includes/avatar.jsx";
 import { TrackClick } from "../analytics";
 import {
   getLink,
-  defaultAvatar,
   createCollection
 } from "../../models/collection";
 
@@ -67,9 +65,8 @@ class CreateCollectionPop extends React.Component {
         // redirect to collection
         if (newCollection.url) {
           if (this.state.teamId) {
-            const { data: team } = await this.props.api.get(
-              `/teams/${this.state.teamId}`
-            );
+            const team = this.props.currentUser.teams.filter(({id}) => id == this.state.teamId);
+            console.log('team', team);
             newCollection.team = team;
           } else {
             newCollection.user = this.props.currentUser;
@@ -98,15 +95,15 @@ class CreateCollectionPop extends React.Component {
     const teamOptions = [];
 
     orderedTeams.map(team => {
-      let item = {};
+      let option = {};
       let label = (
         <span id={team.id}>
           {team.name} {<TeamAvatar team={team} />}
         </span>
       );
-      item.value = team.id;
-      item.label = label;
-      teamOptions.push(item);
+      option.value = team.id;
+      option.label = label;
+      teamOptions.push(option);
     });
     return teamOptions;
   }
