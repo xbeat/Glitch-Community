@@ -6,7 +6,7 @@ import {Helmet} from 'react-helmet';
 import Layout from '../layout';
 
 import {getShowUrl} from '../../models/project';
-import {CurrentUserConsumer} from '../current-user';
+import {useCurrentUser} from '../current-user';
 import NotFound from '../includes/not-found';
 
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
@@ -79,7 +79,9 @@ OauthErrorPage.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-const ProjectNotFoundPageReloader = ({api, currentUser, name}) => {
+export const ProjectNotFoundPage = ({api, name}) => {
+  const {currentUser} = {};//useCurrentUser();
+  
   const check = async () => {
     try {
       const {data} = await api.post(`projects/${name}/appAuthToken`);
@@ -94,22 +96,19 @@ const ProjectNotFoundPageReloader = ({api, currentUser, name}) => {
     }
   };
   React.useEffect(() => {
-    check(); // effects can't be async
+    check();
   }, [name, currentUser && currentUser.token]);
-  return null;
+  
+  return (
+    <Layout api={api}>
+      <Helmet>
+        <title>👻 Project not found</title> {/* eslint-disable-line */}
+      </Helmet>
+      <NotFound name={name}/>
+      <p>Either there's no project here, or you don't have access to it.  Are you logged in as the right user?</p>
+    </Layout>
+  );
 };
-export const ProjectNotFoundPage = ({api, name}) => (
-  <Layout api={api}>
-    <Helmet>
-      <title>👻 Project not found</title> {/* eslint-disable-line */}
-    </Helmet>
-    <NotFound name={name}/>
-    <p>Either there's no project here, or you don't have access to it.  Are you logged in as the right user?</p>
-    <CurrentUserConsumer>
-      {currentUser => <ProjectNotFoundPageReloader api={api} name={name} currentUser={currentUser}/>}
-    </CurrentUserConsumer>
-  </Layout>
-);
 
 ProjectNotFoundPage.propTypes = {
   api: PropTypes.func.isRequired,
