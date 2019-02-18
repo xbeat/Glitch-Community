@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Select from "react-select";
+import Select from "react-select"; // https://react-select.com/
 
+// Options passed to Dropdown are expected to be formatted like options = [ {value: optionValue, label: optionLabel}, ... ]
 class Dropdown extends React.Component {
   constructor(props) {
     super(props);
@@ -11,7 +12,7 @@ class Dropdown extends React.Component {
     this.updateSelected = this.updateSelected.bind(this);
   }
 
-  shouldComponentUpdate(nextProps, nextState){
+  shouldComponentUpdate(nextProps, nextState) {
     return nextState.selectedOption.value !== this.state.selectedOption.value; // render is continually called without this check...
   }
 

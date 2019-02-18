@@ -24,7 +24,7 @@ class CreateCollectionPop extends React.Component {
 
     this.state = {
       loading: false,
-      query: "", //The entered collection name
+      query: "", //The entered collection nam e
       teamId: undefined // by default, create a collection for a user, but if team is selected from dropdown, set to teamID,
     };
 
@@ -65,8 +65,7 @@ class CreateCollectionPop extends React.Component {
         // redirect to collection
         if (newCollection.url) {
           if (this.state.teamId) {
-            const team = this.props.currentUser.teams.filter(({id}) => id == this.state.teamId);
-            console.log('team', team);
+            const team = this.props.currentUser.teams.find(({id}) => id == this.state.teamId);
             newCollection.team = team;
           } else {
             newCollection.user = this.props.currentUser;
