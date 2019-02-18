@@ -75,7 +75,7 @@ export async function createCollection(api, name, teamId){
     if(error.code == 400){
       // collection already exists - try again with a new name
     }else{
-      // repeat the call here
+      // maybe pass back some error here
     }
   }
 }
