@@ -14,15 +14,15 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'Emoji tarot readings',
+    title: 'Emoji Tarot Readings',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FTarojibot_final.jpg?1550484666312",
     link: 'https://tarojibot.glitch.me/'
   },{
-    title: 'But do they bring you joy?',
+    title: 'Do They Spark Joy?',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FTokimeki_final.jpg?1550484665630",
     link: 'https://tokimeki-unfollow.glitch.me/'
   },{
-    title: 'Look around you',
+    title: 'Look Around You',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FDepth_index_final.jpg?1550484664956",
     link: 'https://depth-index-demo.glitch.me/'
   } 
