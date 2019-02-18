@@ -18,7 +18,7 @@ export default [
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FTarojibot_final.jpg?1550484666312",
     link: 'https://tarojibot.glitch.me/'
   },{
-    title: 'Do They Spark Joy?',
+    title: 'Does Who You Follow Spark Joy?',
     img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FTokimeki_final.jpg?1550484665630",
     link: 'https://tokimeki-unfollow.glitch.me/'
   },{
