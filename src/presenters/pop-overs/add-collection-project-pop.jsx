@@ -213,6 +213,8 @@ class AddCollectionProjectPop extends React.Component {
   render() {
     // load user's recent projects
     const ownProjects = this.props.collection.team ? this.props.collection.team.projects : this.props.currentUser.projects;
+    console.log('ownProjects', ownProjects);
+    console.log('this.props.collection.team', this.props.collection.team);
     const results = this.state.query ? this.state.maybeResults : ownProjects.slice(0,20);
     
     const showResults = !!(this.state.query || (results && results.length));
