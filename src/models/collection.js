@@ -56,12 +56,9 @@ export async function createCollection(api, name, teamId){
     const [predicate, collectionSynonym] = name.split('-');
     description = `A ${collectionSynonym} of projects that does ${predicate} things`;
   }
-  // name="future-album"; // test error handling
-  console.log('createCollection with ', name, description, teamId);
   const url = kebabCase(name);
   const avatarUrl = defaultAvatar;
-  // get a random color
-  const coverColor = randomColor({luminosity: 'light'});
+  const coverColor = randomColor({luminosity: 'light'}); // get a random color
 
   try{
     const {data: collection} = await api.post('collections', {
@@ -80,7 +77,6 @@ export async function createCollection(api, name, teamId){
     }else{
       // repeat the call here
     }
-    console.log(error);
   }
 }
 
