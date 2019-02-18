@@ -80,7 +80,7 @@ OauthErrorPage.propTypes = {
 };
 
 export const ProjectNotFoundPage = ({api, name}) => {
-  const {currentUser} = {};//useCurrentUser();
+  const {currentUser} = useCurrentUser();
   
   const check = async () => {
     try {
@@ -95,6 +95,7 @@ export const ProjectNotFoundPage = ({api, name}) => {
       }
     }
   };
+  console.log('render');
   React.useEffect(() => {
     check();
   }, [name, currentUser && currentUser.token]);
