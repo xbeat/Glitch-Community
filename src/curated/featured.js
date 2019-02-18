@@ -14,16 +14,16 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'Check Yo\' Contrast',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fcontrast-checker.gif?1549879573206",
-    link: 'http://contrast-checker.glitch.me/'
+    title: 'Emoji tarot readings',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FTarojibot_final.jpg?1550484666312",
+    link: 'https://tarojibot.glitch.me/'
   },{
-    title: 'How Many Pencils?',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fpencil-distance.gif?1549879571534",
-    link: 'https://pencil-distance.glitch.me/'
+    title: 'But do they bring you joy?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FTokimeki_final.jpg?1550484665630",
+    link: 'https://tokimeki-unfollow.glitch.me/'
   },{
-    title: 'Un, Deux, Twist',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fvera-memphis.gif?1549879573380",
-    link: 'https://vera-memphis.glitch.me/'
+    title: 'Look around you',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FDepth_index_final.jpg?1550484664956",
+    link: 'https://depth-index-demo.glitch.me/'
   } 
 ];
