@@ -84,66 +84,53 @@ export class CreateCollectionButton extends React.Component{
     this.createCollection = this.createCollection.bind(this);
   }
   
-  async postCollection(name){
-    const [predicate, collectionSynonym] = name.split('-');
-    const description = `A ${collectionSynonym} of projects that does ${predicate} things`;
-    const url = kebabCase(name);
+//   async postCollection(name){
+//     const [predicate, collectionSynonym] = name.split('-');
+//     const description = `A ${collectionSynonym} of projects that does ${predicate} things`;
+//     const url = kebabCase(name);
     
-    // defaults
-    const avatarUrl = defaultAvatar;
+//     // defaults
+//     const avatarUrl = defaultAvatar;
     
-    // get a random color
-    const coverColor = randomColor({luminosity: 'light'});
+//     // get a random color
+//     const coverColor = randomColor({luminosity: 'light'});
     
-    // set the team id if there is one
-    const teamId = this.props.maybeTeam ? this.props.maybeTeam.id : undefined;
+//     // set the team id if there is one
+//     const teamId = this.props.maybeTeam ? this.props.maybeTeam.id : undefined;
 
-    const {data} = await this.props.api.post('collections', {
-      name,
-      description,
-      url,
-      avatarUrl,
-      coverColor,
-      teamId,
-    });
+//     const {data} = await this.props.api.post('collections', {
+//       name,
+//       description,
+//       url,
+//       avatarUrl,
+//       coverColor,
+//       teamId,
+//     });
     
-    if(data && data.url){
-      if (this.props.maybeTeam) {
-        data.team = this.props.maybeTeam;
-      } else {
-        data.user = this.props.currentUser;
-      }
-      const newCollectionUrl = getLink(data);
-      this.setState({newCollectionUrl, shouldRedirect: true});
-      return true;
-    }
-    return false;
-  }
-  
-  async generateNames() {
-    // defaults
-    let collectionSynonyms = ["mix","bricolage","playlist","assortment","potpourri","melange","album","collection","variety","compilation"];
-    let predicate = "radical";
-    let names = collectionSynonyms.map(collectionSynonym => (predicate + "-" + collectionSynonym));
+//     if(data && data.url){
+//       if (this.props.maybeTeam) {
+//         data.team = this.props.maybeTeam;
+//       } else {
+//         data.user = this.props.currentUser;
+//       }
+//       const newCollectionUrl = getLink(data);
+//       this.setState({newCollectionUrl, shouldRedirect: true});
+//       return true;
+//     }
+//     return false;
+//   }
 
-    try {
-      // get collection names
-      names = await getCollectionPairs();
-    } catch(error) {
-      // If there's a failure, we'll stick with our defaults.
-    }
-      
-    return names;
-  }
-  
   async createCollection(){
     this.setState({loading: true});
     const collectionNames = await this.generateNames();
     let creationSuccess = false;
     for(let name of collectionNames){
       try{
-        const newCollectionUrl = await this.postCollection(name);
-        this.setState({newCollectionUrl, shouldRedirect: true});
+        const newCollectionUrl = await createCollection(name, null, (this.props.maybeTeam ? null : this.props.currentUser), this.props.maybeTeam);
+        if(newCollectionUrl){
+          this.setState({newCollectionUrl, shouldRedirect: true});
+          break;
+        }
       } catch(error){
         // Try again.
       }
