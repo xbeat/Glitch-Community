@@ -106,7 +106,7 @@ export class CreateCollectionButton extends React.Component {
       const collection = await createCollection(
         this.props.api,
         null,
-        this.props.maybeTeam.id
+        (this.props.maybeTeam ? this.props.maybeTeam.id : null)
       );
 
       if (collection && collection.url) {
