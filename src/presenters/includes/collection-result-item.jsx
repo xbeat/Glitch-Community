@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getLink as getCollectionLink} from '../../models/collection.js';
-import {Notifications, AddProjectToCollectionMsg} from '../notifications.jsx';
+import Notifications from '../notifications.jsx';
+import {AddProjectToCollectionMsg} from '../notifications.jsx';
 import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import CollectionAvatar from './collection-avatar.jsx';
 
@@ -17,6 +18,7 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
 
     // show notification
     const content = <AddProjectToCollectionMsg projectName={project.domain} collectionName={collection.name} url={collectionPath}/>;
+    console.log('show notification with content', content);
     notification(content, "notifySuccess");
   }catch(error){
     console.log('error ', error);

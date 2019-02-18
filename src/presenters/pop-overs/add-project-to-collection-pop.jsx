@@ -70,7 +70,7 @@ class AddProjectToCollectionPopContents extends React.Component {
           <AddProjectPopoverTitle project={this.props.project} />
         )}
 
-        {this.props.collections.length > 3 && (
+        {filteredCollections.length > 3 && (
           <section className="pop-over-info">
             <input
               className="pop-over-input search-input pop-over-search"
