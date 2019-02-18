@@ -107,8 +107,7 @@ export class CreateCollectionButton extends React.Component {
         this.props.api,
         null,
         null,
-        this.props.maybeTeam ? null : this.props.currentUser,
-        this.props.maybeTeam
+        this.props.maybeTeam.id
       );
 
       if (collection && collection.url) {

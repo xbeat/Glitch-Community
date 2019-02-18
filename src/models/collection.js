@@ -43,7 +43,7 @@ export function getLink(collection) {
   return `${getOwnerLink(collection)}/${collection.url}`;
 }
 
-export async function createCollection(api, name, description, user, team){
+export async function createCollection(api, name, description, teamId){
   if(!name){
     // generate a new random name & description
     name="radical-mix"; // a default to fall back on
@@ -56,12 +56,11 @@ export async function createCollection(api, name, description, user, team){
     description = `A ${collectionSynonym} of projects that does ${predicate} things`;
   }
   // name="future-album"; // test error handling
-  console.log('createCollection with ', name, description, user, team);
+  console.log('createCollection with ', name, description, teamId);
   const url = kebabCase(name);
   const avatarUrl = defaultAvatar;
   // get a random color
   const coverColor = randomColor({luminosity: 'light'});
-  const teamId = team ? team.id : undefined;
 
   try{
     const {data: collection} = await api.post('collections', {

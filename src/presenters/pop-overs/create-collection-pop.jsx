@@ -49,29 +49,22 @@ class CreateCollectionPop extends React.Component {
     event.preventDefault();
     this.setState({ loading: true });
 
-    let team = undefined;
-
-    if (this.state.teamId) {
-      let { data } = await this.props.api.get(`/teams/${this.state.teamId}`);
-      team = data;
-    }
-
     try {
       // create the new collection
       const newCollection = await createCollection(
         this.props.api,
         this.state.query,
         null,
-        this.state.teamId ? null : this.props.currentUser,
-        team
+        this.state.teamId
       );
 
       // add the project to the collection
-      if (newCollection) {
+      if (newCollection) {           
         // add the selected project to the collection
         await this.props.api.patch(
           `collections/${newCollection.id}/add/${this.props.project.id}`
         );
+           
         // redirect to collection
         if (newCollection.url) {
           if (this.state.teamId) {
