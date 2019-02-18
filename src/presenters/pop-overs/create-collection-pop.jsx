@@ -7,7 +7,11 @@ import { captureException } from "../../utils/sentry";
 
 import { UserAvatar, TeamAvatar } from "../includes/avatar.jsx";
 import { TrackClick } from "../analytics";
-import { getLink, defaultAvatar, postNewCollection, addProjectToCollection } from "../../models/collection";
+import {
+  getLink,
+  defaultAvatar,
+  createCollection
+} from "../../models/collection";
 
 import { NestedPopoverTitle } from "./popover-nested.jsx";
 import Dropdown from "./dropdown.jsx";
@@ -44,53 +48,25 @@ class CreateCollectionPop extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
     this.setState({ loading: true });
-    
+
     let team = undefined;
-    
-    if(this.state.teamId){
-      let { data } = await this.props.api.get(
-        `/teams/${this.state.teamId}`
-      );
+
+    if (this.state.teamId) {
+      let { data } = await this.props.api.get(`/teams/${this.state.teamId}`);
       team = data;
     }
-    
-    try{
-      // create the new collection
-      const newCollectionUrl = await postNewCollection(this.props.api, this.state.query, null, (this.state.teamId ? null : this.props.currentUser), team);
-      
-      // add the project to the collection
-      
-      
-      
-    }catch(error){
-       if (
-        error &&
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        this.setState({ error: error.response.data.message });
-      } else {
-        captureException(error);
-      }
-    }
 
-    // create a new collection
     try {
-      const name = this.state.query;
-      const url = kebabCase(name);
-      const avatarUrl = defaultAvatar;
-      const coverColor = randomColor({ luminosity: "light" });
-      const teamId = this.state.teamId;
+      // create the new collection
+      const newCollection = await createCollection(
+        this.props.api,
+        this.state.query,
+        null,
+        this.state.teamId ? null : this.props.currentUser,
+        team
+      );
 
-      const { data: newCollection } = await this.props.api.post("collections", {
-        name,
-        url,
-        avatarUrl,
-        coverColor,
-        teamId
-      });
-
+      // add the project to the collection
       if (newCollection) {
         // add the selected project to the collection
         await this.props.api.patch(

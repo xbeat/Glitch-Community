@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 import { TrackClick } from "./analytics";
 import CollectionItem from "./collection-item.jsx";
-import { getLink, postNewCollection } from "../models/collection";
+import { getLink, createCollection } from "../models/collection";
 import Loader from "./includes/loader.jsx";
 
 import { orderBy } from "lodash";

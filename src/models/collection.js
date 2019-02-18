@@ -84,14 +84,6 @@ export async function createCollection(api, name, description, user, team){
   }
 }
 
-export async function addProjectToCollection(api, projectId, collectionId){
-  try{
-    await api.patch(`collections/${collectionId}/add/${projectId}`);
-  }catch (error){
-    // unable to add project to collection
-  }
-}
-
 // Circular dependencies must go below module.exports
 // eventually want to handle whether the collection belongs to a team or a user
 
