@@ -36,6 +36,7 @@ class CollectionEditor extends React.Component {
         projects: [...projects, project],
       }));
     }
+    console.log('add project to collection');
     await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
   }
   

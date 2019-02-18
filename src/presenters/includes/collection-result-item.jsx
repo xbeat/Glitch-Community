@@ -18,7 +18,6 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
 
     // show notification
     const content = <AddProjectToCollectionMsg projectName={project.domain} collectionName={collection.name} url={collectionPath}/>;
-    console.log('show notification with content', content);
     notification(content, "notifySuccess");
   }catch(error){
     console.log('error ', error);
