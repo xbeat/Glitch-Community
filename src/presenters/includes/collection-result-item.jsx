@@ -8,9 +8,10 @@ import CollectionAvatar from './collection-avatar.jsx';
 
 const AddProjectMessage = ({projectName, collectionName, url}) => (
   <>
-    <p>Added <b><span className="project-name">{projectName}</span></b> to collection <b><span className="collection-name">{collectionName}</span></b></p>
+    <p>Added <b>{projectName}</b> to collection <b>{collectionName}</b></p>
     <a href={url} rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
-  </>);
+  </>
+);
 
 AddProjectMessage.propTypes = {
   projectName: PropTypes.string,

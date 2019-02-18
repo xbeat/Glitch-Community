@@ -6,11 +6,9 @@ import { captureException } from "../../utils/sentry";
 
 import { UserAvatar, TeamAvatar } from "../includes/avatar.jsx";
 import { TrackClick } from "../analytics";
-import {
-  getLink,
-  createCollection
-} from "../../models/collection";
+import { getLink, createCollection } from "../../models/collection";
 
+import Notifications from "../notifications.jsx";
 import { NestedPopoverTitle } from "./popover-nested.jsx";
 import Dropdown from "./dropdown.jsx";
 import { PureEditableField } from "../includes/editable-field.jsx";
@@ -43,7 +41,7 @@ class CreateCollectionPop extends React.Component {
     });
   }
 
-  async handleSubmit(event) {
+  async handleSubmit(event, createNotification) {
     event.preventDefault();
     this.setState({ loading: true });
 
@@ -56,16 +54,18 @@ class CreateCollectionPop extends React.Component {
       );
 
       // add the project to the collection
-      if (newCollection) {           
+      if (newCollection) {
         // add the selected project to the collection
         await this.props.api.patch(
           `collections/${newCollection.id}/add/${this.props.project.id}`
         );
-           
+
         // redirect to collection
         if (newCollection.url) {
           if (this.state.teamId) {
-            const team = this.props.currentUser.teams.find(({id}) => id == this.state.teamId);
+            const team = this.props.currentUser.teams.find(
+              ({ id }) => id == this.state.teamId
+            );
             newCollection.team = team;
           } else {
             newCollection.user = this.props.currentUser;
@@ -140,57 +140,63 @@ class CreateCollectionPop extends React.Component {
       return <Redirect to={this.state.newCollectionUrl} />;
     }
     return (
-      <dialog className="pop-over create-collection-pop wide-pop">
-        <NestedPopoverTitle>
-          Add {this.props.project.domain} to a new collection
-        </NestedPopoverTitle>
+      <Notifications>
+        {({ createNotification }) => (
+          <dialog className="pop-over create-collection-pop wide-pop">
+            <NestedPopoverTitle>
+              Add {this.props.project.domain} to a new collection
+            </NestedPopoverTitle>
 
-        <section className="pop-over-actions">
-          <form onSubmit={this.handleSubmit}>
-            <PureEditableField
-              className="pop-over-input create-input"
-              value={query}
-              update={this.handleChange}
-              placeholder={placeholder}
-              error={error || queryError}
-              aria-label={placeholder}
-            />
-
-            {this.props.currentUser.teams.length > 0 && (
-              <div>
-                for{" "}
-                <Dropdown
-                  containerClass="user-or-team-toggle"
-                  options={currentUserOption.concat(this.getTeamOptions(teams))}
-                  onUpdate={this.setTeamId}
+            <section className="pop-over-actions">
+              <form onSubmit={this.handleSubmit(createNotification)}>
+                <PureEditableField
+                  className="pop-over-input create-input"
+                  value={query}
+                  update={this.handleChange}
+                  placeholder={placeholder}
+                  error={error || queryError}
+                  aria-label={placeholder}
                 />
-              </div>
-            )}
 
-            {!this.state.loading ? (
-              <TrackClick
-                name="Create Collection clicked"
-                properties={inherited => ({
-                  ...inherited,
-                  origin: `${inherited.origin} project`
-                })}
-              >
-                <div className="button-wrap">
-                  <button
-                    type="submit"
-                    className="create-collection button-small"
-                    disabled={!!queryError || !submitEnabled}
+                {this.props.currentUser.teams.length > 0 && (
+                  <div>
+                    for{" "}
+                    <Dropdown
+                      containerClass="user-or-team-toggle"
+                      options={currentUserOption.concat(
+                        this.getTeamOptions(teams)
+                      )}
+                      onUpdate={this.setTeamId}
+                    />
+                  </div>
+                )}
+
+                {!this.state.loading ? (
+                  <TrackClick
+                    name="Create Collection clicked"
+                    properties={inherited => ({
+                      ...inherited,
+                      origin: `${inherited.origin} project`
+                    })}
                   >
-                    Create
-                  </button>
-                </div>
-              </TrackClick>
-            ) : (
-              <Loader />
-            )}
-          </form>
-        </section>
-      </dialog>
+                    <div className="button-wrap">
+                      <button
+                        type="submit"
+                        className="create-collection button-small"
+                        disabled={!!queryError || !submitEnabled}
+                      >
+                        Create
+                      </button>
+                    </div>
+                  </TrackClick>
+                ) : (
+                  <Loader />
+                )}
+              </form>
+            </section>
+          </dialog>
+        )}
+      </Notifications>
     );
   }
 }
