@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {captureException} from '../../utils/sentry';
 
 import {Helmet} from 'react-helmet';
 import Layout from '../layout';
@@ -80,9 +81,16 @@ OauthErrorPage.propTypes = {
 
 class ProjectNotFoundPageReloader extends React.Component {
   async check() {
-    const {data} = await this.props.api.get(`projects/${this.props.name}`);
-    if (data) {
-      window.location.replace(getShowUrl(this.props.name));
+    try {
+      const {data} = await this.props.api.post(`projects/${this.props.name}/appAuthToken`);
+      if (data) {
+        window.location.replace(getShowUrl(this.props.name));
+      }
+    } catch (error) {
+      const status = error && error.response && error.response.status;
+      if (status !== 404 && status !== 401) {
+        captureException(error);
+      }
     }
   }
   componentDidMount() {
