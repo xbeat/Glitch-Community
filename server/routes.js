@@ -2,6 +2,8 @@ const express = require('express');
 const fs = require('fs');
 const util = require('util');
 const dayjs = require('dayjs');
+const winston = require("winston")
+const expressWinston = require("express-winston")
 
 const {getProject, getTeam, getUser, getZine} = require('./api');
 const initWebpack = require('./webpack');
@@ -24,11 +26,25 @@ module.exports = function(external) {
   app.use(express.static('public', { index: false }));
   app.use(express.static('build', { index: false, maxAge: ms }));
 
-  // Log all requests for diagnostics
+  // Log all requests to a local file for diagnostics
   app.use(function(request, response, next) {
     console.log(request.method, request.originalUrl, request.body);
     return next();
   });
+  
+  app.use(expressWinston.logger({
+      transports: [
+        new winston.transports.Console()
+      ],
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.json()
+      ),
+      meta: true, // logs meta data about the request
+      msg: "HTTP {{req.method}} {{req.url}}",
+      expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
+      colorize: false, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
+    }));
   
   const readFilePromise = util.promisify(fs.readFile);
   const imageDefault = 'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
