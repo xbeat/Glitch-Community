@@ -44,20 +44,23 @@ export function getLink(collection) {
 }
 
 export async function createCollection(api, name, description, user, team){
-  if(!name){
-    // generate some random names
-    name = await getCollectionPair();
-    console.log('random name: ', name);
-  }
-  try{
-    console.log('createCollection with ', name, description, user, team);
-    const url = kebabCase(name);
-    const avatarUrl = defaultAvatar;
-    // get a random color
-    const coverColor = randomColor({luminosity: 'light'});
-    // set the team id if there is one
-    const teamId = team ? team.id : undefined;
+//   if(!name){
+//     // generate a new random name & description
+//     name = await getCollectionPair();
+//     console.log('random name: ', name);
+    
+//     const [predicate, collectionSynonym] = name.split('-');
+//     description = `A ${collectionSynonym} of projects that does ${predicate} things`;
+//   }
+  name="future-album"; // test error handling
+  console.log('createCollection with ', name, description, user, team);
+  const url = kebabCase(name);
+  const avatarUrl = defaultAvatar;
+  // get a random color
+  const coverColor = randomColor({luminosity: 'light'});
+  const teamId = team ? team.id : undefined;
 
+  try{
     const {data: collection} = await api.post('collections', {
       name,
       description,
@@ -79,12 +82,15 @@ export async function createCollection(api, name, description, user, team){
       if(newCollectionUrl){
         return newCollectionUrl;
       }
-
-  }else{
-    // wasn't able to get a collection for whatever reason - should throw error
-  }
+      }else{
+        // wasn't able to get a collection for whatever reason - should throw error
+    }
   }catch(error){
-    // need to do something smart here
+    if(error.code == 400){
+      // collection already exists - try again with a new name
+    }else{
+    }
+    console.log(error);
   }
   
 }
