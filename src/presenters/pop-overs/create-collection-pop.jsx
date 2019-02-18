@@ -1,7 +1,6 @@
 // create-collection-pop.jsx -> add a project to a new user or team collection
 import React from "react";
 import PropTypes from "prop-types";
-import { Redirect } from "react-router-dom";
 import { captureException } from "../../utils/sentry";
 
 import { UserAvatar, TeamAvatar } from "../includes/avatar.jsx";
@@ -15,6 +14,20 @@ import { PureEditableField } from "../includes/editable-field.jsx";
 import Loader from "../includes/loader.jsx";
 
 import { kebabCase, orderBy } from "lodash";
+
+const AddProjectMessage = ({projectName, collectionName, url}) => (
+  <>
+    <p>Added <b>{projectName}</b> to collection <b>{collectionName}</b></p>
+    <a href={url} rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
+  </>
+);
+
+AddProjectMessage.propTypes = {
+  projectName: PropTypes.string,
+  collectionName: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+};
+
 
 class CreateCollectionPop extends React.Component {
   constructor(props) {
@@ -42,6 +55,7 @@ class CreateCollectionPop extends React.Component {
   }
 
   async handleSubmit(event, createNotification) {
+    console.log('createNotification', createNotification);
     event.preventDefault();
     this.setState({ loading: true });
 
@@ -60,7 +74,6 @@ class CreateCollectionPop extends React.Component {
           `collections/${newCollection.id}/add/${this.props.project.id}`
         );
 
-        // redirect to collection
         if (newCollection.url) {
           if (this.state.teamId) {
             const team = this.props.currentUser.teams.find(
@@ -136,9 +149,6 @@ class CreateCollectionPop extends React.Component {
       queryError = "You already have a collection with this name";
     }
 
-    if (this.state.newCollectionUrl) {
-      return <Redirect to={this.state.newCollectionUrl} />;
-    }
     return (
       <Notifications>
         {({ createNotification }) => (
