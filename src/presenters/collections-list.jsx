@@ -115,8 +115,8 @@ export class CreateCollectionButton extends React.Component {
         } else {
           collection.user = this.props.currentUser;
         }
-        const newCollectionUrl = getLink(collection);
-        this.setState({ newCollectionUrl, shouldRedirect: true });
+      const newCollectionUrl = getLink(collection);
+      this.setState({ newCollectionUrl, shouldRedirect: true });
       }
     } catch (error) {
       // Try again.
