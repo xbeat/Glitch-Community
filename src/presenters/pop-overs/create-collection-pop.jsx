@@ -7,7 +7,7 @@ import { captureException } from "../../utils/sentry";
 
 import { UserAvatar, TeamAvatar } from "../includes/avatar.jsx";
 import { TrackClick } from "../analytics";
-import { getLink, defaultAvatar, postNewCollection } from "../../models/collection";
+import { getLink, defaultAvatar, postNewCollection, addProjectToCollection } from "../../models/collection";
 
 import { NestedPopoverTitle } from "./popover-nested.jsx";
 import Dropdown from "./dropdown.jsx";
@@ -54,7 +54,26 @@ class CreateCollectionPop extends React.Component {
       team = data;
     }
     
-    const newCollectionUrl = await postNewCollection(this.props.api, this.state.query, null, (this.state.teamId ? null : this.props.currentUser), team);
+    try{
+      // create the new collection
+      const newCollectionUrl = await postNewCollection(this.props.api, this.state.query, null, (this.state.teamId ? null : this.props.currentUser), team);
+      
+      // add the project to the collection
+      
+      
+      
+    }catch(error){
+       if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        this.setState({ error: error.response.data.message });
+      } else {
+        captureException(error);
+      }
+    }
 
     // create a new collection
     try {

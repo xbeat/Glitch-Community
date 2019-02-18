@@ -43,8 +43,7 @@ export function getLink(collection) {
   return `${getOwnerLink(collection)}/${collection.url}`;
 }
 
-export async function postNewCollection(api, name, description, user, team){
-
+export async function createCollection(api, name, description, user, team){
   if(!name){
     // generate a new random name & description
     name="radical-mix"; // a default to fall back on
@@ -73,30 +72,23 @@ export async function postNewCollection(api, name, description, user, team){
       coverColor,
       teamId,
     });
-    console.log('collection', collection);
-
-    if(collection && collection.url){
-      if (team) {
-        collection.team = team;
-      } else {
-        collection.user = user;
-      }
-      const newCollectionUrl = getLink(collection);
-      console.log('newCollectionUrl', newCollectionUrl);
-      if(newCollectionUrl){
-        return newCollectionUrl;
-      }
-    }else{
-    // wasn't able to get a collection for whatever reason - should throw error
-    }
+    
+    return collection;
   }catch(error){
-    // need to repeat generating the collection until we get a valid collectionUrl
     if(error.code == 400){
       // collection already exists - try again with a new name
     }else{
       // repeat the call here
     }
     console.log(error);
+  }
+}
+
+export async function addProjectToCollection(api, projectId, collectionId){
+  try{
+    await api.patch(`collections/${collectionId}/add/${projectId}`);
+  }catch (error){
+    // unable to add project to collection
   }
 }
 
