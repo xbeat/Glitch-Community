@@ -43,15 +43,18 @@ export function getLink(collection) {
   return `${getOwnerLink(collection)}/${collection.url}`;
 }
 
-export async function createCollection(api, name, description, user, team){
-//   if(!name){
-//     // generate a new random name & description
-//     name = await getCollectionPair();
-//     console.log('random name: ', name);
-    
-//     const [predicate, collectionSynonym] = name.split('-');
-//     description = `A ${collectionSynonym} of projects that does ${predicate} things`;
-//   }
+export async function postNewCollection(api, name, description, user, team){
+  if(!name){
+    // generate a new random name & description
+    name="radical-mix"; // a default to fall back on
+    try{
+      name = await getCollectionPair();
+    }catch(error){
+      // stick to default
+    }    
+    const [predicate, collectionSynonym] = name.split('-');
+    description = `A ${collectionSynonym} of projects that does ${predicate} things`;
+  }
   name="future-album"; // test error handling
   console.log('createCollection with ', name, description, user, team);
   const url = kebabCase(name);
@@ -82,8 +85,8 @@ export async function createCollection(api, name, description, user, team){
       if(newCollectionUrl){
         return newCollectionUrl;
       }
-      }else{
-        // wasn't able to get a collection for whatever reason - should throw error
+    }else{
+    // wasn't able to get a collection for whatever reason - should throw error
     }
   }catch(error){
     if(error.code == 400){
@@ -92,7 +95,6 @@ export async function createCollection(api, name, description, user, team){
     }
     console.log(error);
   }
-  
 }
 
 // Circular dependencies must go below module.exports

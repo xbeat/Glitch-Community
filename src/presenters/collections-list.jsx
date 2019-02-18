@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import {TrackClick} from './analytics';
 import CollectionItem from "./collection-item.jsx";
-import {defaultAvatar, getLink, createCollection} from '../models/collection';
+import {defaultAvatar, getLink, postNewCollection} from '../models/collection';
 import {getCollectionPairs} from '../models/words';
 import Loader from './includes/loader.jsx';
 
@@ -83,47 +83,11 @@ export class CreateCollectionButton extends React.Component{
     };
     this.createCollection = this.createCollection.bind(this);
   }
-  
-//   async postCollection(name){
-//     const [predicate, collectionSynonym] = name.split('-');
-//     const description = `A ${collectionSynonym} of projects that does ${predicate} things`;
-//     const url = kebabCase(name);
-    
-//     // defaults
-//     const avatarUrl = defaultAvatar;
-    
-//     // get a random color
-//     const coverColor = randomColor({luminosity: 'light'});
-    
-//     // set the team id if there is one
-//     const teamId = this.props.maybeTeam ? this.props.maybeTeam.id : undefined;
-
-//     const {data} = await this.props.api.post('collections', {
-//       name,
-//       description,
-//       url,
-//       avatarUrl,
-//       coverColor,
-//       teamId,
-//     });
-    
-//     if(data && data.url){
-//       if (this.props.maybeTeam) {
-//         data.team = this.props.maybeTeam;
-//       } else {
-//         data.user = this.props.currentUser;
-//       }
-//       const newCollectionUrl = getLink(data);
-//       this.setState({newCollectionUrl, shouldRedirect: true});
-//       return true;
-//     }
-//     return false;
-//   }
 
   async createCollection(){
     this.setState({loading: true});
     try{
-      const newCollectionUrl = await createCollection(this.props.api, null, null, (this.props.maybeTeam ? null : this.props.currentUser), this.props.maybeTeam);
+      const newCollectionUrl = await postNewCollection(this.props.api, null, null, (this.props.maybeTeam ? null : this.props.currentUser), this.props.maybeTeam);
       if(newCollectionUrl){
         this.setState({newCollectionUrl, shouldRedirect: true});
       }
