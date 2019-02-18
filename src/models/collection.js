@@ -67,9 +67,9 @@ export async function createCollection(name, description, user, team){
       }
       const newCollectionUrl = getLink(data);
       return newCollectionUrl;
-      return true;
-    }
-    return false;
+  }else{
+    // wasn't able to get a collection for whatever reason - should throw error
+  }
   }catch(error){
     // need to do something smart here
   }
