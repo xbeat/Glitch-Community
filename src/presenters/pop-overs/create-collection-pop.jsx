@@ -15,20 +15,6 @@ import Loader from "../includes/loader.jsx";
 
 import { kebabCase, orderBy } from "lodash";
 
-const AddProjectMessage = ({projectName, collectionName, url}) => (
-  <>
-    <p>Added <b>{projectName}</b> to collection <b>{collectionName}</b></p>
-    <a href={url} rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
-  </>
-);
-
-AddProjectMessage.propTypes = {
-  projectName: PropTypes.string,
-  collectionName: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-};
-
-
 class CreateCollectionPop extends React.Component {
   constructor(props) {
     super(props);

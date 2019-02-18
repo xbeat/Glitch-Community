@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 
 const {Provider, Consumer} = React.createContext();
 
@@ -79,5 +80,20 @@ export class Notifications extends React.Component {
     );
   }
 }
+
+export const AddProjectToCollectionMsg = ({projectName, collectionName, url}) => (
+  <>
+    <p>Added <b>{projectName}</b> to collection <b>{collectionName}</b></p>
+    <a href={url} rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
+  </>
+);
+
+AddProjectToCollectionMsg.propTypes = {
+  projectName: PropTypes.string,
+  collectionName: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+};
+
+export const authenticationMsg = "You are not authorized to edit this collection.";
 
 export default Consumer;

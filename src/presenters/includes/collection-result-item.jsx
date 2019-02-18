@@ -2,22 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {getLink as getCollectionLink} from '../../models/collection.js';
-import Notifications from '../notifications.jsx';
+import {Notifications, AddProjectToCollectionMsg} from '../notifications.jsx';
 import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import CollectionAvatar from './collection-avatar.jsx';
-
-const AddProjectMessage = ({projectName, collectionName, url}) => (
-  <>
-    <p>Added <b>{projectName}</b> to collection <b>{collectionName}</b></p>
-    <a href={url} rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
-  </>
-);
-
-AddProjectMessage.propTypes = {
-  projectName: PropTypes.string,
-  collectionName: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-};
 
 const addProject = (addProjectToCollection, project, collection, collectionPath, notification, togglePopover) => {
 
@@ -29,9 +16,10 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
     togglePopover();  
 
     // show notification
-    const content = <AddProjectMessage projectName={project.domain} collectionName={collection.name} url={collectionPath}/>;
+    const content = <AddProjectToCollectionMsg projectName={project.domain} collectionName={collection.name} url={collectionPath}/>;
     notification(content, "notifySuccess");
   }catch(error){
+    console.log('error ', error);
     const content = <p>Something went wrong. Try refreshing and adding the project again.</p>;
     notification(content, "notifyError");
   }
