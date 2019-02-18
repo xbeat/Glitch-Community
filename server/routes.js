@@ -29,17 +29,20 @@ module.exports = function(external) {
   // Log all requests to a local file for diagnostics  
   app.use(expressWinston.logger({
       transports: [
-        new winston.transports.Console(),
+        new winston.transports.Console(), // we could log a subset to the console as well, but I will likely just remove this.
         new winston.transports.File({
-            name: 'requests',
-            filename: 'requests.log',
+          name: 'requests',
+          filename: 'requests.log',
+          maxsize: 102400, // max size of each log file in bytes
+          maxFiles: 1,
+          tailable: true, // should make it so the oldest data will get removed from the file when it exceeds maxsize
         })
       ],
       format: winston.format.combine(
         winston.format.colorize(),
         winston.format.json()
       ),
-      meta: false, // logs meta data about the request
+      meta: false, // logs meta data about the request if true
       msg: "HTTP {{req.method}} {{req.url}}",
       expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
       colorize: false, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
