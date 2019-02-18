@@ -54,7 +54,6 @@ class CreateCollectionPop extends React.Component {
       const newCollection = await createCollection(
         this.props.api,
         this.state.query,
-        null,
         this.state.teamId
       );
 
