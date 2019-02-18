@@ -94,7 +94,7 @@ const ProjectNotFoundPageReloader = ({api, currentUser, name}) => {
     }
   };
   React.useEffect(() => {
-    check();
+    check(); // effects can't be async
   }, [name, currentUser && currentUser.token]);
   return null;
 };
