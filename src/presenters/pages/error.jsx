@@ -79,12 +79,12 @@ OauthErrorPage.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-class ProjectNotFoundPageReloader extends React.Component {
-  async check() {
+const ProjectNotFoundPageReloader = ({api, currentUser, name}) => {
+  const check = async () => {
     try {
-      const {data} = await this.props.api.post(`projects/${this.props.name}/appAuthToken`);
+      const {data} = await api.post(`projects/${name}/appAuthToken`);
       if (data) {
-        window.location.replace(getShowUrl(this.props.name));
+        window.location.replace(getShowUrl(name));
       }
     } catch (error) {
       const status = error && error.response && error.response.status;
@@ -92,21 +92,12 @@ class ProjectNotFoundPageReloader extends React.Component {
         captureException(error);
       }
     }
-  }
-  componentDidMount() {
-    this.check();
-  }
-  componentDidUpdate(prevProps) {
-    const token = this.props.currentUser && this.props.currentUser.persistentToken;
-    const prevToken = prevProps.currentUser && prevProps.currentUser.persistentToken;
-    if (this.props.name !== prevProps.name || token !== prevToken) {
-      this.check();
-    }
-  }
-  render() {
-    return null;
-  }
-}
+  };
+  React.useEffect(() => {
+    check();
+  }, [name, currentUser && currentUser.token]);
+  return null;
+};
 export const ProjectNotFoundPage = ({api, name}) => (
   <Layout api={api}>
     <Helmet>
