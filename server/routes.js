@@ -26,21 +26,20 @@ module.exports = function(external) {
   app.use(express.static('public', { index: false }));
   app.use(express.static('build', { index: false, maxAge: ms }));
 
-  // Log all requests to a local file for diagnostics
-  app.use(function(request, response, next) {
-    console.log(request.method, request.originalUrl, request.body);
-    return next();
-  });
-  
+  // Log all requests to a local file for diagnostics  
   app.use(expressWinston.logger({
       transports: [
-        new winston.transports.Console()
+        new winston.transports.Console(),
+        new winston.transports.File({
+            name: 'requests',
+            filename: 'requests.log',
+        })
       ],
       format: winston.format.combine(
         winston.format.colorize(),
         winston.format.json()
       ),
-      meta: true, // logs meta data about the request
+      meta: false, // logs meta data about the request
       msg: "HTTP {{req.method}} {{req.url}}",
       expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
       colorize: false, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
