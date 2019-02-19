@@ -46,7 +46,6 @@ export function getLink(collection) {
 export async function createCollection(api, name, teamId, createNotification){
   let description = "";
   let generatedName = false;
-  name = "firs";
   if(!name){
     // generate a new random name & description
     generatedName = true;
@@ -76,10 +75,10 @@ export async function createCollection(api, name, teamId, createNotification){
     return collection;
   }catch(error){
     let message = "Unable to create collection.  Try again?";
-    if(generatedName && error.response && error.response.data){
+    if(!generatedName && error.response && error.response.data){
       message = error.response.data.message;
     }
-    createNotification(error.response.data.message, 'notifyError');
+    createNotification(message, 'notifyError');
   }
 }
 
