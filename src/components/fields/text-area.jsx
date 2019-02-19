@@ -9,14 +9,21 @@ import useUniqueId from './use-unique-id';
 
 import styles from './text-area.styl';
 
-const TextArea = ({className, error, onChange, ...props}) => {
+const TextArea = ({autoFocus, disabled, error, name, onChange, placeholder, value}) => {
   const uniqueId = useUniqueId();
-  const outerClassName = classNames(styles.inputWrap, className);
   return (
-    <label className={outerClassName} htmlFor={uniqueId}>
+    <label className={styles.inputWrap} htmlFor={uniqueId}>
       <div className={styles.inputBorder}>
-        <TextAreaAutosize id={uniqueId} className={styles.input} onChange={evt => onChange(evt.target.value)} {...props}/>
-        {!!error && <InputErrorIcon className={styles.errorIcon} />}
+        <TextAreaAutosize
+          autoFocus={autoFocus}
+          className={styles.input}
+          disabled={disabled}
+          id={uniqueId}
+          onChange={evt => onChange(evt.target.value)}
+          placeholder={placeholder}
+          value={value}
+        />
+        {!!error && <span className={styles.errorIcon}><InputErrorIcon /></span>}
       </div>
       {!!error && <InputErrorMessage error={error}/>}
     </label>
@@ -24,7 +31,7 @@ const TextArea = ({className, error, onChange, ...props}) => {
 };
 
 TextArea.propTypes = {
-  className: PropTypes.string,
+  autoFocus: PropTypes.bool,
   disabled: PropTypes.bool,
   error: PropTypes.node,
   name: PropTypes.string,
@@ -34,7 +41,7 @@ TextArea.propTypes = {
 };
 
 TextArea.defaultProps = {
-  className: undefined,
+  autoFocus: undefined,
   disabled: undefined,
   error: null,
   name: undefined,
