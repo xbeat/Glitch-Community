@@ -5,7 +5,7 @@ import { TrackClick } from "./analytics";
 import CollectionItem from "./collection-item.jsx";
 import { getLink, createCollection } from "../models/collection";
 import Loader from "./includes/loader.jsx";
-import Notifications from "../notifications.jsx";
+import Notifications from "./notifications.jsx";
 
 import { orderBy } from "lodash";
 
@@ -101,13 +101,14 @@ export class CreateCollectionButton extends React.Component {
     this.createCollectionOnClick = this.createCollectionOnClick.bind(this);
   }
 
-  async createCollectionOnClick() {
+  async createCollectionOnClick(createNotification) {
     this.setState({ loading: true });
 
     let collectionResponse = await createCollection(
       this.props.api,
       null,
-      this.props.maybeTeam ? this.props.maybeTeam.id : null
+      this.props.maybeTeam ? this.props.maybeTeam.id : null,
+      createNotification
     );
     if (collectionResponse && collectionResponse.id) {
       const collection = collectionResponse;
@@ -119,7 +120,7 @@ export class CreateCollectionButton extends React.Component {
       const newCollectionUrl = getLink(collection);
       this.setState({ newCollectionUrl, shouldRedirect: true });
     } else {
-      // got an error from createCollection - should handle this differently?
+      // error messaging handled in createCollection
       this.setState({ loading: false });
     }
   }
@@ -143,7 +144,7 @@ export class CreateCollectionButton extends React.Component {
               <button
                 className="button"
                 id="create-collection"
-                onClick={() => this.createCollectionOnClick()}
+                onClick={() => this.createCollectionOnClick(createNotification)}
               >
                 Create Collection
               </button>

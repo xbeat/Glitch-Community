@@ -1,7 +1,6 @@
 // create-collection-pop.jsx -> add a project to a new user or team collection
 import React from "react";
 import PropTypes from "prop-types";
-import { captureException } from "../../utils/sentry";
 
 import { UserAvatar, TeamAvatar } from "../includes/avatar.jsx";
 import { TrackClick } from "../analytics";
@@ -48,7 +47,8 @@ class CreateCollectionPop extends React.Component {
     const collectionResponse = await createCollection(
       this.props.api,
       this.state.query,
-      this.state.teamId
+      this.state.teamId,
+      createNotification,
     );
     // add the project to the collection
     if (collectionResponse && collectionResponse.id) {
@@ -74,14 +74,8 @@ class CreateCollectionPop extends React.Component {
         this.props.togglePopover();
       });
     }else{
-      let message = "Unable to create new collection.  Try again?"; // default error message
-      if(collectionResponse.response && collectionResponse.response.data && collectionResponse.response.data.message){
-        message = collectionResponse.response.data.message;
-        createNotification(message, "notifyError");
-      }else{
-        captureException(collectionResponse);
-      }
-      this.props.togglePopover();
+      // error messaging is handled in createCollection
+      this.props.togglePopover();      
     }
   }
 
