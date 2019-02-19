@@ -8,6 +8,7 @@ import { TrackClick } from "../analytics";
 import { getLink, createCollection } from "../../models/collection";
 
 import Notifications from "../notifications.jsx";
+import {AddProjectToCollectionMsg} from '../notifications.jsx';
 import { NestedPopoverTitle } from "./popover-nested.jsx";
 import Dropdown from "./dropdown.jsx";
 import { PureEditableField } from "../includes/editable-field.jsx";
@@ -41,7 +42,6 @@ class CreateCollectionPop extends React.Component {
   }
 
   async handleSubmit(event, createNotification) {
-    console.log('createNotification', createNotification);
     event.preventDefault();
     this.setState({ loading: true });
 
@@ -58,9 +58,7 @@ class CreateCollectionPop extends React.Component {
         // add the selected project to the collection
         await this.props.api.patch(
           `collections/${newCollection.id}/add/${this.props.project.id}`
-        );
-
-        if (newCollection.url) {
+        ).then(() => {
           if (this.state.teamId) {
             const team = this.props.currentUser.teams.find(
               ({ id }) => id == this.state.teamId
@@ -70,8 +68,10 @@ class CreateCollectionPop extends React.Component {
             newCollection.user = this.props.currentUser;
           }
           const newCollectionUrl = getLink(newCollection);
-          this.setState({ newCollectionUrl });
-        }
+          // show notification       
+          const content = <AddProjectToCollectionMsg project={this.props.project.domain} collectionName={
+        });
+        
       }
     } catch (error) {
       if (
