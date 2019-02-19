@@ -45,51 +45,37 @@ class CreateCollectionPop extends React.Component {
     event.preventDefault();
     this.setState({ loading: true });
     console.log('handle submit');
-    try {
-      // create the new collection
-      const newCollection = await createCollection(
-        this.props.api,
-        this.state.query,
-        this.state.teamId
-      );
-      console.log('newCollection', newCollection);
-      // add the project to the collection
-      if (newCollection) {
-        // add the selected project to the collection
-        await this.props.api.patch(
-          `collections/${newCollection.id}/add/${this.props.project.id}`
-        ).then(() => {
-          if (this.state.teamId) {
-            const team = this.props.currentUser.teams.find(
-              ({ id }) => id == this.state.teamId
-            );
-            newCollection.team = team;
-          } else {
-            newCollection.user = this.props.currentUser;
-          }
-          const newCollectionUrl = getLink(newCollection);
-          
-          // show notification       
-          const content = <AddProjectToCollectionMsg projectDomain={this.props.project.domain} collectionName={newCollection.name} url={newCollectionUrl}/>;
-          createNotification(content, "notifySuccess");
-          
-          this.props.togglePopover();
-        });
-      }else{
-        
-      }
-    } catch (error) {
-      if (
-        error &&
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        createNotification(error.response.data.message, "notifyError");
+    // create the new collection
+    const collection = await createCollection(
+      this.props.api,
+      this.state.query,
+      this.state.teamId
+    );
+    // add the project to the collection
+    if (collection && collection.id) {
+      // add the selected project to the collection
+      await this.props.api.patch(
+        `collections/${collection.id}/add/${this.props.project.id}`
+      ).then(() => {
+        if (this.state.teamId) {
+          const team = this.props.currentUser.teams.find(
+            ({ id }) => id == this.state.teamId
+          );
+          collection.team = team;
+        } else {
+          collection.user = this.props.currentUser;
+        }
+        const newCollectionUrl = getLink(collection);
+
+        // show notification       
+        const content = <AddProjectToCollectionMsg projectDomain={this.props.project.domain} collectionName={collection.name} url={newCollectionUrl}/>;
+        createNotification(content, "notifySuccess");
+
         this.props.togglePopover();
-      } else {
-        captureException(error);
-      }
+      });
+    }else{
+      createNotification("Unable to create new collection.  Try refreshing?", "notifyError");
+      this.props.togglePopover();
     }
   }
 
