@@ -7,7 +7,7 @@ import { TrackClick } from "../analytics";
 import { getLink, createCollection } from "../../models/collection";
 
 import Notifications from "../notifications.jsx";
-import {AddProjectToCollectionMsg} from '../notifications.jsx';
+import { AddProjectToCollectionMsg } from "../notifications.jsx";
 import { NestedPopoverTitle } from "./popover-nested.jsx";
 import Dropdown from "./dropdown.jsx";
 import { PureEditableField } from "../includes/editable-field.jsx";
@@ -19,20 +19,25 @@ class CreateCollectionPop extends React.Component {
   constructor(props) {
     super(props);
 
+    const currentUserOptionLabel = (
+      <span>
+        myself <UserAvatar user={this.props.currentUser} />
+      </span>
+    );
+    const currentUserOption = [{ value: -1, label: currentUserOptionLabel }];
+
     this.state = {
       loading: false,
       query: "", //The entered collection name
-      selection: [], // the dropdown selection option (the value of the option is the teamID used to create a collection)
-      options: [] // options that will appear in the dropdown
+      options: currentUserOption.concat(
+        this.getTeamOptions(this.props.currentUser.teams)
+      ), // options that will appear in the dropdown
+      selection: currentUserOption, // the selected option from the dropdown 
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setSelection = this.setSelection.bind(this);
-  }
-  
-  componentDidMount(){
-    this.setState({ selection: this.state.options[0] });
   }
 
   handleChange(newValue) {
@@ -48,39 +53,46 @@ class CreateCollectionPop extends React.Component {
   async handleSubmit(event, createNotification) {
     event.preventDefault();
     this.setState({ loading: true });
-    // create the new collection
+    // create the new collection with createCollection(api, name, teamId, notification)
     const collectionResponse = await createCollection(
       this.props.api,
       this.state.query,
       this.state.selection.value,
-      createNotification,
+      createNotification
     );
+    console.log('collectionResponse', collectionResponse);
     // add the project to the collection
     if (collectionResponse && collectionResponse.id) {
       const collection = collectionResponse;
       // add the selected project to the collection
-      await this.props.api.patch(
-        `collections/${collection.id}/add/${this.props.project.id}`
-      ).then(() => {
-        if (this.state.selection) {
-          const team = this.props.currentUser.teams.find(
-            ({ id }) => id == this.state.selection.value
+      await this.props.api
+        .patch(`collections/${collection.id}/add/${this.props.project.id}`)
+        .then(() => {
+          if (this.state.selection) {
+            const team = this.props.currentUser.teams.find(
+              ({ id }) => id == this.state.selection.value
+            );
+            collection.team = team;
+          } else {
+            collection.user = this.props.currentUser;
+          }
+          const newCollectionUrl = getLink(collection);
+
+          // show notification
+          const content = (
+            <AddProjectToCollectionMsg
+              projectDomain={this.props.project.domain}
+              collectionName={collection.name}
+              url={newCollectionUrl}
+            />
           );
-          collection.team = team;
-        } else {
-          collection.user = this.props.currentUser;
-        }
-        const newCollectionUrl = getLink(collection);
+          createNotification(content, "notifySuccess");
 
-        // show notification       
-        const content = <AddProjectToCollectionMsg projectDomain={this.props.project.domain} collectionName={collection.name} url={newCollectionUrl}/>;
-        createNotification(content, "notifySuccess");
-
-        this.props.togglePopover();
-      });
-    }else{
+          this.props.togglePopover();
+        });
+    } else {
       // error messaging is handled in createCollection
-      this.props.togglePopover();      
+      this.props.togglePopover();
     }
   }
 
@@ -104,7 +116,6 @@ class CreateCollectionPop extends React.Component {
   }
 
   render() {
-    console.log('render from create collection pop');
     const { error, query } = this.state;
     const { collections } = this.props;
     let queryError; // if user already has a collection with the specified name
@@ -113,13 +124,6 @@ class CreateCollectionPop extends React.Component {
     const placeholder = "New Collection Name";
 
     const teams = this.props.currentUser.teams;
-
-    const currentUserOptionLabel = (
-      <span>
-        myself <UserAvatar user={this.props.currentUser} />
-      </span>
-    );
-    const currentUserOption = [{ value: -1, label: currentUserOptionLabel }];
 
     // determine if entered name already exists for selected user / team
     const selectedOwnerCollections = this.state.selection.value
@@ -142,7 +146,9 @@ class CreateCollectionPop extends React.Component {
             </NestedPopoverTitle>
 
             <section className="pop-over-actions">
-              <form onSubmit={(event) => this.handleSubmit(event, createNotification)}>
+              <form
+                onSubmit={event => this.handleSubmit(event, createNotification)}
+              >
                 <PureEditableField
                   className="pop-over-input create-input"
                   value={query}
@@ -152,7 +158,7 @@ class CreateCollectionPop extends React.Component {
                   aria-label={placeholder}
                 />
 
-                {this.props.currentUser.teams.length > 0 && (
+                {teams.length > 0 && (
                   <div>
                     for{" "}
                     <Dropdown
@@ -199,7 +205,7 @@ CreateCollectionPop.propTypes = {
   currentUser: PropTypes.object,
   project: PropTypes.object.isRequired,
   fromProject: PropTypes.bool,
-  togglePopover: PropTypes.func.isRequired,
+  togglePopover: PropTypes.func.isRequired
 };
 
 export default CreateCollectionPop;
