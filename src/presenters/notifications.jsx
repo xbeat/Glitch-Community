@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 import PropTypes from "prop-types";
 
-const {Provider, Consumer} = React.createContext();
+const { Provider, Consumer } = React.createContext();
 
-const Notification = ({children, className, remove}) => (
+const Notification = ({ children, className, remove }) => (
   <aside className={`notification ${className}`} onAnimationEnd={remove}>
     {children}
   </aside>
@@ -13,31 +13,33 @@ export class Notifications extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      notifications: [],
+      notifications: []
     };
   }
-  
-  create(content, className='') {
+
+  create(content, className = "") {
     const notification = {
       id: `${Date.now()}{Math.random()}`,
       className,
-      content,
+      content
     };
-    this.setState(({notifications}) => ({
-      notifications: [...notifications, notification],
+    this.setState(({ notifications }) => ({
+      notifications: [...notifications, notification]
     }));
     return notification.id;
   }
-  
-  createError(content='Something went wrong. Try refreshing?') {
-    this.create(content, 'notifyError');
+
+  createError(content = "Something went wrong. Try refreshing?") {
+    this.create(content, "notifyError");
   }
-  
-  createPersistent(content, className='') {
+
+  createPersistent(content, className = "") {
     const id = this.create(content, `notifyPersistent ${className}`);
-    const updateNotification = (content) => {
-      this.setState(({notifications}) => ({
-        notifications: notifications.map(n => n.id === id ? {...n, content} : n),
+    const updateNotification = content => {
+      this.setState(({ notifications }) => ({
+        notifications: notifications.map(
+          n => (n.id === id ? { ...n, content } : n)
+        )
       }));
     };
     const removeNotification = () => {
@@ -45,32 +47,34 @@ export class Notifications extends React.Component {
     };
     return {
       updateNotification,
-      removeNotification,
+      removeNotification
     };
   }
-  
+
   remove(id) {
-    this.setState(({notifications}) => ({
-      notifications: notifications.filter(n => n.id !== id),
+    this.setState(({ notifications }) => ({
+      notifications: notifications.filter(n => n.id !== id)
     }));
   }
-  
+
   render() {
     const funcs = {
       createNotification: this.create.bind(this),
       createPersistentNotification: this.createPersistent.bind(this),
-      createErrorNotification: this.createError.bind(this),
+      createErrorNotification: this.createError.bind(this)
     };
-    const {notifications} = this.state;
+    const { notifications } = this.state;
     return (
       <>
-        <Provider value={funcs}>
-          {this.props.children}
-        </Provider>
+        <Provider value={funcs}>{this.props.children}</Provider>
         {!!notifications.length && (
           <div className="notifications">
-            {notifications.map(({id, className, content}) => (
-              <Notification key={id} className={className} remove={this.remove.bind(this, id)}>
+            {notifications.map(({ id, className, content }) => (
+              <Notification
+                key={id}
+                className={className}
+                remove={this.remove.bind(this, id)}
+              >
                 {content}
               </Notification>
             ))}
@@ -81,19 +85,34 @@ export class Notifications extends React.Component {
   }
 }
 
-export const AddProjectToCollectionMsg = ({projectName, collectionName, url}) => (
+export const AddProjectToCollectionMsg = ({
+  projectName,
+  collectionName,
+  url
+}) => (
   <>
-    <p>Added <b>{projectName}</b> to collection <b>{collectionName}</b></p>
-    <a href={url} rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">Take me there</a>
+    <p>
+      Added <b>{projectName}</b> { collectionName ? ("to collection" + <b>{collectionName}</b>) : null }
+    </p>
+    { url ?
+    <a
+      href={url}
+      rel="noopener noreferrer"
+      className="button button-small button-tertiary button-in-notification-container notify-collection-link"
+    >
+      Take me there
+    </a>
+    : null}
   </>
 );
 
 AddProjectToCollectionMsg.propTypes = {
-  projectName: PropTypes.string,
-  collectionName: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  projectName: PropTypes.string.isRequired,
+  collectionName: PropTypes.string,
+  url: PropTypes.string
 };
 
-export const authenticationMsg = "You are not authorized to edit this collection.";
+export const authenticationMsg =
+  "You are not authorized to edit this collection.";
 
 export default Consumer;

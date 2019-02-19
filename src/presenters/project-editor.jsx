@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import {CurrentUserConsumer} from './current-user.jsx';
-import ErrorHandlers from './error-handlers.jsx';
+import { CurrentUserConsumer } from "./current-user.jsx";
+import ErrorHandlers from "./error-handlers.jsx";
 
 class ProjectEditor extends React.Component {
   constructor(props) {
@@ -11,29 +11,37 @@ class ProjectEditor extends React.Component {
       ...props.initialProject
     };
   }
-  
+
   userIsMember() {
     if (!this.props.currentUser) return false;
     const currentUserId = this.props.currentUser.id;
-    return this.state.users.some(({id}) => currentUserId === id);
+    return this.state.users.some(({ id }) => currentUserId === id);
   }
-  
+
   async updateFields(changes) {
     await this.props.api.patch(`projects/${this.state.id}`, changes);
     this.setState(changes);
   }
-  
+
   async addProjectToCollection(project, collection) {
-    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
+    await this.props.api.patch(
+      `collections/${collection.id}/add/${project.id}`
+    );
   }
-  
+
   render() {
-    const {handleError, handleErrorForInput} = this.props;
+    const { handleError, handleErrorForInput, handleCustomError } = this.props;
     const funcs = {
-      addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleError),
-      updateDomain: domain => this.updateFields({domain}).catch(handleErrorForInput),
-      updateDescription: description => this.updateFields({description}).catch(handleError),
-      updatePrivate: isPrivate => this.updateFields({private: isPrivate}).catch(handleError),
+      addProjectToCollection: (project, collection) =>
+        this.addProjectToCollection(project, collection).catch(
+          handleCustomError
+        ),
+      updateDomain: domain =>
+        this.updateFields({ domain }).catch(handleErrorForInput),
+      updateDescription: description =>
+        this.updateFields({ description }).catch(handleError),
+      updatePrivate: isPrivate =>
+        this.updateFields({ private: isPrivate }).catch(handleError)
     };
     return this.props.children(this.state, funcs, this.userIsMember());
   }
@@ -45,15 +53,20 @@ ProjectEditor.propTypes = {
   currentUser: PropTypes.object,
   handleError: PropTypes.func.isRequired,
   handleErrorForInput: PropTypes.func.isRequired,
-  initialProject: PropTypes.object.isRequired,
+  initialProject: PropTypes.object.isRequired
 };
 
-const ProjectEditorContainer = ({api, children, initialProject}) => (
+const ProjectEditorContainer = ({ api, children, initialProject }) => (
   <ErrorHandlers>
     {wrapErrors => (
       <CurrentUserConsumer>
         {currentUser => (
-          <ProjectEditor api={api} currentUser={currentUser} initialProject={initialProject} {...wrapErrors}>
+          <ProjectEditor
+            api={api}
+            currentUser={currentUser}
+            initialProject={initialProject}
+            {...wrapErrors}
+          >
             {children}
           </ProjectEditor>
         )}
@@ -64,7 +77,7 @@ const ProjectEditorContainer = ({api, children, initialProject}) => (
 ProjectEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
-  initialProject: PropTypes.object.isRequired,
+  initialProject: PropTypes.object.isRequired
 };
 
 export default ProjectEditorContainer;
