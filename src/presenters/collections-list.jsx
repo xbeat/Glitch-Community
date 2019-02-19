@@ -107,9 +107,7 @@ export class CreateCollectionButton extends React.Component {
         this.props.api,
         null,
         (this.props.maybeTeam ? this.props.maybeTeam.id : null)
-      );
-
-      if (collection && collection.url) {
+      ).then( () => {
         if (this.props.maybeTeam) {
           collection.team = this.props.maybeTeam;
         } else {
@@ -117,7 +115,7 @@ export class CreateCollectionButton extends React.Component {
         }
         const newCollectionUrl = getLink(collection);
         this.setState({ newCollectionUrl, shouldRedirect: true });
-      }
+      });
     } catch (error) {
       // Try again.
     }

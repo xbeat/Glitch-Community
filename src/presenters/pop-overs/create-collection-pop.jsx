@@ -52,7 +52,6 @@ class CreateCollectionPop extends React.Component {
         this.state.query,
         this.state.teamId
       );
-
       // add the project to the collection
       if (newCollection) {
         // add the selected project to the collection
@@ -209,3 +208,4 @@ CreateCollectionPop.propTypes = {
 };
 
 export default CreateCollectionPop;
+c

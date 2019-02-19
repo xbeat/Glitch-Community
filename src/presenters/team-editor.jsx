@@ -197,7 +197,7 @@ class TeamEditor extends React.Component {
   }
 
   render() {
-    const {handleError, handleErrorForInput} = this.props;
+    const {handleError, handleErrorForInput, handleCustomError} = this.props;
     const funcs = {
       updateName: name => this.updateFields({name}).catch(handleErrorForInput),
       updateUrl: url => this.updateFields({url}).catch(handleErrorForInput),
@@ -218,7 +218,7 @@ class TeamEditor extends React.Component {
       updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),
       joinTeamProject: projectId => this.joinTeamProject(projectId).catch(handleError),
       leaveTeamProject: projectId => this.leaveTeamProject(projectId).catch(handleError),
-      addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleError),
+      addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleCustomError),
       featureProject: (id) => this.featureProject(id).catch(handleError),
       unfeatureProject: id => this.unfeatureProject(id).catch(handleError)
     };
