@@ -45,13 +45,14 @@ class CreateCollectionPop extends React.Component {
     event.preventDefault();
     this.setState({ loading: true });
     // create the new collection
-    const collection = await createCollection(
+    const collectionResponse = await createCollection(
       this.props.api,
       this.state.query,
       this.state.teamId
     );
     // add the project to the collection
-    if (collection && collection.id) {
+    if (collectionResponse && collectionResponse.id) {
+      const collection = collectionResponse;
       // add the selected project to the collection
       await this.props.api.patch(
         `collections/${collection.id}/add/${this.props.project.id}`
@@ -73,7 +74,13 @@ class CreateCollectionPop extends React.Component {
         this.props.togglePopover();
       });
     }else{
-      createNotification("Unable to create new collection.  Try again?", "notifyError");
+      let message = "Unable to create new collection.  Try again?"; // default error message
+      if(collectionResponse.response && collectionResponse.response.data && collectionResponse.response.data.message){
+        message = collectionResponse.response.data.message;
+        createNotification(message, "notifyError");
+      }else{
+        captureException(collectionResponse);
+      }
       this.props.togglePopover();
     }
   }

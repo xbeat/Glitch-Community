@@ -102,12 +102,14 @@ export class CreateCollectionButton extends React.Component {
 
   async createCollectionOnClick() {
     this.setState({ loading: true });
-    try {
-      let collection = await createCollection(
-        this.props.api,
-        null,
-        (this.props.maybeTeam ? this.props.maybeTeam.id : null)
-      );
+    
+    let collectionResponse = await createCollection(
+      this.props.api,
+      null,
+      (this.props.maybeTeam ? this.props.maybeTeam.id : null)
+    );
+    if(collectionResponse && collectionResponse.id){
+      const collection = collectionResponse;
       if (this.props.maybeTeam) {
         collection.team = this.props.maybeTeam;
       } else {
@@ -115,8 +117,10 @@ export class CreateCollectionButton extends React.Component {
       }
       const newCollectionUrl = getLink(collection);
       this.setState({ newCollectionUrl, shouldRedirect: true });
-    } catch (error) {
-      console.log(error);
+    }else{
+      // got an error from createCollection
+      this.setState({ loading: false });
+      console.log(collectionResponse);
     }
   }
 
