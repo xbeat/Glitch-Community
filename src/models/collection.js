@@ -43,7 +43,7 @@ export function getLink(collection) {
   return `${getOwnerLink(collection)}/${collection.url}`;
 }
 
-export async function createCollection(api, name, teamId){
+export async function createCollection(api, name, teamId, createNotification){
   let description = "";
   if(!name){
     // generate a new random name & description
