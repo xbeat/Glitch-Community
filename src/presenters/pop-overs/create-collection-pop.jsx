@@ -44,7 +44,6 @@ class CreateCollectionPop extends React.Component {
   async handleSubmit(event, createNotification) {
     event.preventDefault();
     this.setState({ loading: true });
-    console.log('handle submit');
     // create the new collection
     const collection = await createCollection(
       this.props.api,
@@ -74,7 +73,7 @@ class CreateCollectionPop extends React.Component {
         this.props.togglePopover();
       });
     }else{
-      createNotification("Unable to create new collection.  Try refreshing?", "notifyError");
+      createNotification("Unable to create new collection.  Try again?", "notifyError");
       this.props.togglePopover();
     }
   }

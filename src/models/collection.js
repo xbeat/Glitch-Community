@@ -72,6 +72,7 @@ export async function createCollection(api, name, teamId){
     
     return collection;
   }catch(error){
+    console.log(error);
     return error;
   }
 }
