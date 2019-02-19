@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import InputErrorMessage from './input-error-message';
 import InputErrorIcon from './input-error-icon';
-import useUniqueId from './hook-unique-id';
+import useUniqueId from './use-unique-id';
 
 import styles from './text-input.styl';
 
@@ -19,9 +19,8 @@ const InputPart = ({children}) => {
   return <span className={styles.inputPart}>{children}</span>;
 };
 
-const TextInput = ({className, error, onChange, opaque, postfix, prefix, type, ...props}) => {
+const TextInput = ({disabled, error, name, onChange, opaque, placeholder, postfix, prefix, type, value}) => {
   const uniqueId = useUniqueId();
-  const outerClassName = classNames(styles.outer, className);
   const borderClassName = classNames(styles.inputBorder, {
     [styles.underline]: !opaque,
     [styles.opaque]: opaque,
@@ -30,10 +29,19 @@ const TextInput = ({className, error, onChange, opaque, postfix, prefix, type, .
     [styles.search]: type === 'search',
   });
   return (
-    <label className={outerClassName} htmlFor={uniqueId}>
+    <label className={styles.outer} htmlFor={uniqueId}>
       <div className={borderClassName}>
         {!!prefix && <InputPart>{prefix}</InputPart>}
-        <input id={uniqueId} className={inputClassName} onChange={evt => onChange(evt.target.value)} type={type} {...props}/>
+        <input
+          className={inputClassName}
+          disabled={disabled}
+          id={uniqueId}
+          name={name}
+          onChange={evt => onChange(evt.target.value)}
+          placeholder={placeholder}
+          type={type}
+          value={value}
+        />
         {!!error && <InputPart><InputErrorIcon/></InputPart>}
         {!!postfix && <InputPart>{postfix}</InputPart>}
       </div>
@@ -43,7 +51,6 @@ const TextInput = ({className, error, onChange, opaque, postfix, prefix, type, .
 };
 
 TextInput.propTypes = {
-  className: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.node,
   name: PropTypes.string,
@@ -57,7 +64,6 @@ TextInput.propTypes = {
 };
 
 TextInput.defaultProps = {
-  className: undefined,
   disabled: undefined,
   error: null,
   name: undefined,
