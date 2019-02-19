@@ -118,9 +118,8 @@ export class CreateCollectionButton extends React.Component {
       const newCollectionUrl = getLink(collection);
       this.setState({ newCollectionUrl, shouldRedirect: true });
     }else{
-      // got an error from createCollection
+      // got an error from createCollection - should handle this differently?
       this.setState({ loading: false });
-      console.log(collectionResponse);
     }
   }
 

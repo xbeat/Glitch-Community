@@ -149,7 +149,6 @@ ProjectPage.propTypes = {
 
 async function getProject(api, domain) {
   const {data} = await api.get(`projects/${domain}`);
-  console.log("project", data);
   return data;
 }
 
