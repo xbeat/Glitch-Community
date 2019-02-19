@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {captureException} from '../../utils/sentry';
 
 import {Helmet} from 'react-helmet';
 import Layout from '../layout';
 
 import {getShowUrl} from '../../models/project';
-import {CurrentUserConsumer} from '../current-user';
+import {useCurrentUser} from '../current-user';
 import NotFound from '../includes/not-found';
 
 const telescopeImageUrl = 'https://cdn.glitch.com/7138972f-76e1-43f4-8ede-84c3cdd4b40a%2Ftelescope_404.svg?1543258683849';
@@ -78,39 +79,34 @@ OauthErrorPage.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-class ProjectNotFoundPageReloader extends React.Component {
-  async check() {
-    const {data} = await this.props.api.get(`projects/${this.props.name}`);
-    if (data) {
-      window.location.replace(getShowUrl(this.props.name));
+export const ProjectNotFoundPage = ({api, name}) => {
+  const {currentUser} = useCurrentUser();
+  
+  const check = async () => {
+    try {
+      const {data} = await api.post(`projects/${name}/appAuthToken`);
+      if (data) {
+        window.location.replace(getShowUrl(name));
+      }
+    } catch (error) {
+      const status = error && error.response && error.response.status;
+      if (status !== 404 && status !== 401) {
+        captureException(error);
+      }
     }
-  }
-  componentDidMount() {
-    this.check();
-  }
-  componentDidUpdate(prevProps) {
-    const token = this.props.currentUser && this.props.currentUser.persistentToken;
-    const prevToken = prevProps.currentUser && prevProps.currentUser.persistentToken;
-    if (this.props.name !== prevProps.name || token !== prevToken) {
-      this.check();
-    }
-  }
-  render() {
-    return null;
-  }
-}
-export const ProjectNotFoundPage = ({api, name}) => (
-  <Layout api={api}>
-    <Helmet>
-      <title>👻 Project not found</title> {/* eslint-disable-line */}
-    </Helmet>
-    <NotFound name={name}/>
-    <p>Either there's no project here, or you don't have access to it.  Are you logged in as the right user?</p>
-    <CurrentUserConsumer>
-      {currentUser => <ProjectNotFoundPageReloader api={api} name={name} currentUser={currentUser}/>}
-    </CurrentUserConsumer>
-  </Layout>
-);
+  };
+  React.useEffect(() => {
+    check();
+  }, [name, currentUser.persistentToken]);
+  
+  return (
+    <Layout api={api}>
+      <Helmet title="👻 Project not found" />
+      <NotFound name={name}/>
+      <p>Either there's no project here, or you don't have access to it.  Are you logged in as the right user?</p>
+    </Layout>
+  );
+};
 
 ProjectNotFoundPage.propTypes = {
   api: PropTypes.func.isRequired,

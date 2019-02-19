@@ -14,16 +14,16 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'Make Inkle Patterns',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Ftracery-inkle.gif?1549879572651",
-    link: 'https://tracery-inkle.glitch.me/'
+    title: 'Emoji Tarot Readings',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FTarojibot_final.jpg?1550484666312",
+    link: 'https://tarojibot.glitch.me/'
   },{
-    title: 'Hello, World!',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fhello-around-the-world.gif?1549879571293",
-    link: 'https://hello-around-the-world.glitch.me/'
+    title: 'Does Who You Follow Spark Joy?',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FTokimeki_final.jpg?1550484665630",
+    link: 'https://tokimeki-unfollow.glitch.me/'
   },{
-    title: 'Springy Particles',
-    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fimages-to-particles.gif?1549879572018",
-    link: 'https://image-to-particles.glitch.me/'
+    title: 'Look Around You',
+    img: "https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FDepth_index_final.jpg?1550484664956",
+    link: 'https://depth-index-demo.glitch.me/'
   } 
 ];

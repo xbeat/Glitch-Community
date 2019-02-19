@@ -7,7 +7,7 @@ import axios from 'axios';
 import {configureScope, captureException, captureMessage} from '../utils/sentry';
 import LocalStorage from './includes/local-storage.jsx';
 
-const {Provider, Consumer} = React.createContext();
+const Context = React.createContext();
 
 // Default values for all of the user fields we need you to have
 // We always generate a 'real' anon user, but use this until we do
@@ -217,9 +217,9 @@ export const CurrentUserProvider = ({children}) => (
         {(sharedUser, setSharedUser, loadedSharedUser) => (loadedSharedUser && loadedCachedUser &&
           <CurrentUserManager sharedUser={sharedUser} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
             {({api, ...props}) => (
-              <Provider value={props}>
+              <Context.Provider value={props}>
                 {children(api)}
-              </Provider>
+              </Context.Provider>
             )}
           </CurrentUserManager>
         )}
@@ -232,13 +232,16 @@ CurrentUserProvider.propTypes = {
 };
 
 export const CurrentUserConsumer = (props) => (
-  <Consumer>
+  <Context.Consumer>
     {({currentUser, fetched, ...funcs}) => props.children(currentUser, fetched, funcs, props)}
-  </Consumer>
+  </Context.Consumer>
 );
-
 CurrentUserConsumer.propTypes = {
   children: PropTypes.func.isRequired,
+};
+
+export const useCurrentUser = () => {
+  return React.useContext(Context);
 };
 
 export function normalizeUser(user, currentUser) {
