@@ -27,7 +27,7 @@ Dropdown.propTypes = {
   containerClass: PropTypes.string,
   options: PropTypes.array.isRequired,
   onUpdate: PropTypes.func.isRequired,
-  selection: PropTypes.array.isRequired,
+  selection: PropTypes.object.isRequired,
 };
 
 export default Dropdown;

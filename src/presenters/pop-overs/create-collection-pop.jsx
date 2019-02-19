@@ -24,12 +24,12 @@ class CreateCollectionPop extends React.Component {
         myself <UserAvatar user={this.props.currentUser} />
       </span>
     );
-    const currentUserOption = [{ value: -1, label: currentUserOptionLabel }];
+    const currentUserOption = { value: -1, label: currentUserOptionLabel };
 
     this.state = {
       loading: false,
       query: "", //The entered collection name
-      options: currentUserOption.concat(
+      options: [currentUserOption].concat(
         this.getTeamOptions(this.props.currentUser.teams)
       ), // options that will appear in the dropdown
       selection: currentUserOption, // the selected option from the dropdown 
@@ -60,7 +60,6 @@ class CreateCollectionPop extends React.Component {
       this.state.selection.value,
       createNotification
     );
-    console.log('collectionResponse', collectionResponse);
     // add the project to the collection
     if (collectionResponse && collectionResponse.id) {
       const collection = collectionResponse;
@@ -68,7 +67,7 @@ class CreateCollectionPop extends React.Component {
       await this.props.api
         .patch(`collections/${collection.id}/add/${this.props.project.id}`)
         .then(() => {
-          if (this.state.selection) {
+          if (this.state.selection.value) {
             const team = this.props.currentUser.teams.find(
               ({ id }) => id == this.state.selection.value
             );
