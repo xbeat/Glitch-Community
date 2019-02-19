@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Notifications from "./notifications.jsx";
 
 function handleError(notify, error) {
+  console.log('handle error');
   console.error(error);
   notify();
   return Promise.reject(error);
@@ -19,6 +20,7 @@ function handleErrorForInput(notify, error) {
 }
 
 function handleCustomError(notify, error) {
+  console.log('handle custom error');
   console.error(error);
   if (error && error.response && error.response.data) {
     notify(error.response.data.message, "notifyError");
