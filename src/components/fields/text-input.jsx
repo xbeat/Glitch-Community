@@ -19,7 +19,7 @@ const InputPart = ({children}) => {
   return <span className={styles.inputPart}>{children}</span>;
 };
 
-const TextInput = ({autoFocus, disabled, error, name, onChange, opaque, placeholder, postfix, prefix, type, value}) => {
+const TextInput = ({autoFocus, disabled, error, maxLength, name, onChange, opaque, placeholder, postfix, prefix, type, value}) => {
   const uniqueId = useUniqueId();
   const borderClassName = classNames(styles.inputBorder, {
     [styles.underline]: !opaque,
@@ -37,6 +37,7 @@ const TextInput = ({autoFocus, disabled, error, name, onChange, opaque, placehol
           className={inputClassName}
           disabled={disabled}
           id={uniqueId}
+          maxLength={maxLength}
           name={name}
           onChange={evt => onChange(evt.target.value)}
           placeholder={placeholder}
@@ -55,6 +56,7 @@ TextInput.propTypes = {
   autoFocus: PropTypes.bool,
   disabled: PropTypes.bool,
   error: PropTypes.node,
+  maxLength: PropTypes.number,
   name: PropTypes.string,
   onChange: PropTypes.func,
   opaque: PropTypes.bool,
@@ -69,13 +71,14 @@ TextInput.defaultProps = {
   autoFocus: undefined,
   disabled: undefined,
   error: null,
+  maxLength: undefined,
   name: undefined,
   onChange: undefined,
   opaque: false,
   placeholder: undefined,
   postfix: null,
   prefix: null,
-  type: undefined,
+  type: 'text',
   value: undefined,
 };
 
