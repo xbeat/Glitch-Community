@@ -82,7 +82,7 @@ class CreateCollectionPop extends React.Component {
         error.response.data &&
         error.response.data.message
       ) {
-        this.setState({ error: error.response.data.message });
+        createNotification(error.response.data.message, "notifyError");
       } else {
         captureException(error);
       }
@@ -208,4 +208,3 @@ CreateCollectionPop.propTypes = {
 };
 
 export default CreateCollectionPop;
-c
