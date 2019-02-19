@@ -44,7 +44,7 @@ class CreateCollectionPop extends React.Component {
   async handleSubmit(event, createNotification) {
     event.preventDefault();
     this.setState({ loading: true });
-
+    console.log('handle submit');
     try {
       // create the new collection
       const newCollection = await createCollection(
@@ -52,6 +52,7 @@ class CreateCollectionPop extends React.Component {
         this.state.query,
         this.state.teamId
       );
+      console.log('newCollection', newCollection);
       // add the project to the collection
       if (newCollection) {
         // add the selected project to the collection
@@ -74,6 +75,8 @@ class CreateCollectionPop extends React.Component {
           
           this.props.togglePopover();
         });
+      }else{
+        
       }
     } catch (error) {
       if (
@@ -83,6 +86,7 @@ class CreateCollectionPop extends React.Component {
         error.response.data.message
       ) {
         createNotification(error.response.data.message, "notifyError");
+        this.props.togglePopover();
       } else {
         captureException(error);
       }

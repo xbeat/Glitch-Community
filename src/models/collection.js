@@ -61,7 +61,7 @@ export async function createCollection(api, name, teamId){
   const coverColor = randomColor({luminosity: 'light'}); // get a random color
 
   try{
-    const {data: collection} = await api.post('collections', {
+    const collection = await api.post('collections', {
       name,
       description,
       url,
@@ -70,13 +70,10 @@ export async function createCollection(api, name, teamId){
       teamId,
     });
     
+    console.log('collection', collection);
     return collection;
   }catch(error){
-    if(error.code == 400){
-      // collection already exists - try again with a new name
-    }else{
-      // maybe pass back some error here
-    }
+    return error;
   }
 }
 
