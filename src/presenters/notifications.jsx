@@ -92,7 +92,7 @@ export const AddProjectToCollectionMsg = ({
 }) => (
   <>
     <p>
-      Added <b>{projectName}</b> { collectionName ? ("to collection" + <b>collectionName</b>) : null }
+      Added {projectName} { collectionName ? (`to collection ${collectionName}`) : null }
     </p>
     { url ?
       <a
