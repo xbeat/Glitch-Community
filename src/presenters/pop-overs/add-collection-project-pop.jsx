@@ -238,7 +238,7 @@ class AddCollectionProjectPop extends React.Component {
       .addProjectToCollection(project, collection)
       .then(() =>
         createNotification(
-          <AddProjectToCollectionMsg projectName={project.domain} />,
+          <AddProjectToCollectionMsg projectDomain={project.domain} />,
           "notifySuccess"
         )
       );

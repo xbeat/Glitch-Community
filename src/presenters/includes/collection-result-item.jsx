@@ -11,7 +11,7 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
   // add project to collection
   addProjectToCollection(project, collection).then(() => {
     // show notification
-    const content = <AddProjectToCollectionMsg projectName={project.domain} collectionName={collection.name} url={collectionPath}/>;
+    const content = <AddProjectToCollectionMsg projectDomain={project.domain} collectionName={collection.name} url={collectionPath}/>;
     notification(content, "notifySuccess");
   });
 

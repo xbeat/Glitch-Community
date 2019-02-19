@@ -86,13 +86,13 @@ export class Notifications extends React.Component {
 }
 
 export const AddProjectToCollectionMsg = ({
-  projectName,
+  projectDomain,
   collectionName,
   url
 }) => (
   <>
     <p>
-      Added {projectName} { collectionName ? (`to collection ${collectionName}`) : null }
+      Added {projectDomain} { collectionName ? (`to collection ${collectionName}`) : null }
     </p>
     { url ?
       <a
@@ -107,12 +107,9 @@ export const AddProjectToCollectionMsg = ({
 );
 
 AddProjectToCollectionMsg.propTypes = {
-  projectName: PropTypes.string.isRequired,
+  projectDomain: PropTypes.string.isRequired,
   collectionName: PropTypes.string,
   url: PropTypes.string
 };
-
-export const authenticationMsg =
-  "You are not authorized to edit this collection.";
 
 export default Consumer;
