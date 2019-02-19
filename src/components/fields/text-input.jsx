@@ -15,7 +15,7 @@ const TYPES = [
   'text',
 ];
 
-const inputPart = ({children}) => {
+const InputPart = ({children}) => {
   return <span className={styles.inputPart}>{children}</span>;
 };
 
@@ -32,10 +32,10 @@ const TextInput = ({className, error, onChange, opaque, postfix, prefix, type, .
   return (
     <label className={outerClassName} htmlFor={uniqueId}>
       <div className={borderClassName}>
-        {!!prefix && <span className={styles.inputPart}>{prefix}</span>}
+        {!!prefix && <InputPart>{prefix}</InputPart>}
         <input id={uniqueId} className={inputClassName} onChange={evt => onChange(evt.target.value)} type={type} {...props}/>
-        {!!error && <span className={styles.inputPart}><InputErrorIcon/></span>}
-        {!!postfix && <span className={styles.inputPart}>{postfix}</span>}
+        {!!error && <InputPart><InputErrorIcon/></InputPart>}
+        {!!postfix && <InputPart>{postfix}</InputPart>}
       </div>
       {!!error && <InputErrorMessage error={error}/>}
     </label>
