@@ -15,7 +15,6 @@ const addProject = (addProjectToCollection, project, collection, collectionPath,
     notification(content, "notifySuccess");
   });
 
-  // toggle popover
   togglePopover();  
 };
 

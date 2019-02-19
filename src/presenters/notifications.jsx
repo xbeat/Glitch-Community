@@ -92,9 +92,9 @@ export const AddProjectToCollectionMsg = ({
 }) => (
   <>
     <p>
-      Added {projectDomain} { collectionName ? (`to collection ${collectionName}`) : null }
+      Added {projectDomain} { collectionName && (`to collection ${collectionName}`) }
     </p>
-    { url ?
+    { url &&
       <a
         href={url}
         rel="noopener noreferrer"
@@ -102,7 +102,7 @@ export const AddProjectToCollectionMsg = ({
       >
       Take me there
       </a>
-      : null}
+    }
   </>
 );
 
