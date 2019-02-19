@@ -1,4 +1,4 @@
-var body = '<p>Get started with data visualization using Chart.js</p><p>Learn how to make interactive charts and graphs with our how-to tutorial and remixable starter app.</p>';
+var body = '<p>Get started with data visualization using Chart.js.</p><p>Learn how to make interactive charts and graphs with our how-to tutorial and remixable starter app.</p>';
 
 // make sure image urls use https
 export default {
