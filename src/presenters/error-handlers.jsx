@@ -28,13 +28,13 @@ function handleCustomError(notify, error) {
 
 const ErrorHandler = ({ children }) => (
   <Notifications>
-    {({ createErrorNotification }) =>
+    {({ createNotification, createErrorNotification }) =>
       children({
         handleError: error => handleError(createErrorNotification, error),
         handleErrorForInput: error =>
           handleErrorForInput(createErrorNotification, error),
         handleCustomError: error =>
-          handleCustomError(createErrorNotification, error)
+          handleCustomError(createNotification, error)
       })
     }
   </Notifications>

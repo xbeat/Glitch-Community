@@ -92,17 +92,17 @@ export const AddProjectToCollectionMsg = ({
 }) => (
   <>
     <p>
-      Added <b>{projectName}</b> { collectionName ? ("to collection" + <b>{collectionName}</b>) : null }
+      Added <b>{projectName}</b> { collectionName ? ("to collection" + <b>collectionName</b>) : null }
     </p>
     { url ?
-    <a
-      href={url}
-      rel="noopener noreferrer"
-      className="button button-small button-tertiary button-in-notification-container notify-collection-link"
-    >
+      <a
+        href={url}
+        rel="noopener noreferrer"
+        className="button button-small button-tertiary button-in-notification-container notify-collection-link"
+      >
       Take me there
-    </a>
-    : null}
+      </a>
+      : null}
   </>
 );
 

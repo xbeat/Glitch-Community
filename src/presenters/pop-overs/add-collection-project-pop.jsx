@@ -9,7 +9,7 @@ import ProjectResultItem from "../includes/project-result-item.jsx";
 import ProjectsLoader from "../projects-loader.jsx";
 
 import Notifications from "../notifications.jsx";
-import {AddProjectToCollectionMsg} from "../notifications.jsx";
+import { AddProjectToCollectionMsg } from "../notifications.jsx";
 
 const ProjectResultsUL = ({ projects, collection, onClick }) => (
   <ul className="results">
@@ -222,10 +222,10 @@ class AddCollectionProjectPop extends React.Component {
     this.setState(({ maybeRequest }) => {
       return request === maybeRequest
         ? {
-            maybeRequest: null,
-            maybeResults: nonCollectionResults,
-            recentProjects: null
-          }
+          maybeRequest: null,
+          maybeResults: nonCollectionResults,
+          recentProjects: null
+        }
         : {};
     });
   }
@@ -234,9 +234,14 @@ class AddCollectionProjectPop extends React.Component {
     this.props.togglePopover();
 
     // add project to page if successful & show notification
-    this.props.addProjectToCollection(project, collection).then(() =>
-      createNotification(<AddProjectToCollectionMsg projectName={project.domain}/>, "notifySuccess")
-    );
+    this.props
+      .addProjectToCollection(project, collection)
+      .then(() =>
+        createNotification(
+          <AddProjectToCollectionMsg projectName={project.domain} />,
+          "notifySuccess"
+        )
+      );
   }
 
   render() {

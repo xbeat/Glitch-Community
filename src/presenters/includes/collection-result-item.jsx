@@ -8,22 +8,15 @@ import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import CollectionAvatar from './collection-avatar.jsx';
 
 const addProject = (addProjectToCollection, project, collection, collectionPath, notification, togglePopover) => {
-
-  try{
-    // add project to collection
-    addProjectToCollection(project, collection);
-
-    // toggle popover
-    togglePopover();  
-
+  // add project to collection
+  addProjectToCollection(project, collection).then(() => {
     // show notification
     const content = <AddProjectToCollectionMsg projectName={project.domain} collectionName={collection.name} url={collectionPath}/>;
     notification(content, "notifySuccess");
-  }catch(error){
-    console.log('error ', error);
-    const content = <p>Something went wrong. Try refreshing and adding the project again.</p>;
-    notification(content, "notifyError");
-  }
+  });
+
+  // toggle popover
+  togglePopover();  
 };
 
 const CollectionResultItem = ({onClick, project, collection, isActive, togglePopover}) => {
