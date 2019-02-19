@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import TextAreaAutosize from 'react-textarea-autosize';
 import InputErrorMessage from './input-error-message';
 import InputErrorIcon from './input-error-icon';
-import useUniqueId from './hook-unique-id';
+import useUniqueId from './use-unique-id';
 
 import styles from './text-area.styl';
 

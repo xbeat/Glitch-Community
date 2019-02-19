@@ -40,8 +40,10 @@ class SearchForm extends React.Component {
   render() {
     const {value, submitted} = this.state;
     return (
-      <form className="header-search" action="/search" method="get" role="search" onSubmit={this.onSubmit.bind(this)}>
-        <TextInput name="q" type="search" opaque={true} placeholder="bots, apps, users" value={value} onChange={this.onChange.bind(this)}/>
+      <form action="/search" method="get" role="search" onSubmit={this.onSubmit.bind(this)}>
+        <div className="header-search">
+          <TextInput name="q" type="search" opaque={true} placeholder="bots, apps, users" value={value} onChange={this.onChange.bind(this)}/>
+        </div>
         {submitted && <Redirect to={`/search?q=${value}`} push={true}/>}
       </form>
     );
