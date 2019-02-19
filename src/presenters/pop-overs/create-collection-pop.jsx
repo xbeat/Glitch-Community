@@ -41,7 +41,7 @@ class CreateCollectionPop extends React.Component {
     });
   }
 
-  async handleSubmit(event) {
+  async handleSubmit(event, createNotification) {
     event.preventDefault();
     this.setState({ loading: true });
 
@@ -68,12 +68,13 @@ class CreateCollectionPop extends React.Component {
             newCollection.user = this.props.currentUser;
           }
           const newCollectionUrl = getLink(newCollection);
-          console.log('newCollectionUrl ', newCollectionUrl);
+          
           // show notification       
           const content = <AddProjectToCollectionMsg projectDomain={this.props.project.domain} collectionName={newCollection.name} url={newCollectionUrl}/>;
-          // this.createNotification(content, "notifySuccess");
+          createNotification(content, "notifySuccess");
+          
+          this.props.togglePopover();
         });
-        
       }
     } catch (error) {
       if (
@@ -146,7 +147,7 @@ class CreateCollectionPop extends React.Component {
             </NestedPopoverTitle>
 
             <section className="pop-over-actions">
-              <form onSubmit={this.handleSubmit}>
+              <form onSubmit={(event) => this.handleSubmit(event, createNotification)}>
                 <PureEditableField
                   className="pop-over-input create-input"
                   value={query}
@@ -203,7 +204,8 @@ CreateCollectionPop.propTypes = {
   api: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   project: PropTypes.object.isRequired,
-  fromProject: PropTypes.bool
+  fromProject: PropTypes.bool,
+  togglePopover: PropTypes.func.isRequired,
 };
 
 export default CreateCollectionPop;
