@@ -21,22 +21,22 @@ class CreateCollectionPop extends React.Component {
 
     this.state = {
       loading: false,
-      query: "", //The entered collection nam e
-      teamId: undefined // by default, create a collection for a user, but if team is selected from dropdown, set to teamID,
+      query: "", //The entered collection name
+      selection: null // the dropdown selection option (the value of the option is the teamID used to create a collection)
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.setTeamId = this.setTeamId.bind(this);
+    this.setSelection = this.setSelection.bind(this);
   }
 
   handleChange(newValue) {
     this.setState({ query: newValue, error: null });
   }
 
-  setTeamId(teamId) {
+  setSelection(option) {
     this.setState({
-      teamId: teamId
+      selection: option
     });
   }
 
@@ -47,7 +47,7 @@ class CreateCollectionPop extends React.Component {
     const collectionResponse = await createCollection(
       this.props.api,
       this.state.query,
-      this.state.teamId,
+      this.state.selection.value,
       createNotification,
     );
     // add the project to the collection
@@ -57,9 +57,9 @@ class CreateCollectionPop extends React.Component {
       await this.props.api.patch(
         `collections/${collection.id}/add/${this.props.project.id}`
       ).then(() => {
-        if (this.state.teamId) {
+        if (this.state.selection) {
           const team = this.props.currentUser.teams.find(
-            ({ id }) => id == this.state.teamId
+            ({ id }) => id == this.state.selection.value
           );
           collection.team = team;
         } else {
@@ -116,8 +116,8 @@ class CreateCollectionPop extends React.Component {
     const currentUserOption = [{ value: -1, label: currentUserOptionLabel }];
 
     // determine if entered name already exists for selected user / team
-    const selectedOwnerCollections = this.state.teamId
-      ? collections.filter(({ teamId }) => teamId == this.state.teamId)
+    const selectedOwnerCollections = this.state.selection.value
+      ? collections.filter(({ teamId }) => teamId == this.state.selection.value)
       : collections.filter(({ userId }) => userId == this.props.currentUser.id);
 
     if (
