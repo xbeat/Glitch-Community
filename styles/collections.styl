@@ -52,10 +52,6 @@ collection-avatar-size = 55px
       @media (max-width: mediumViewport)
         width: 100%
       
-    a
-      &:hover
-        text-decoration: none
-      
     .down-arrow
       margin: 0
     
@@ -80,8 +76,6 @@ collection-avatar-size = 55px
     .collection-container
       overflow: hidden
       height: calc(100% + 45px)
-      &:hover
-        cursor: pointer
 
     .collection-info
       display: flex
@@ -90,6 +84,7 @@ collection-avatar-size = 55px
       overflow: hidden
       border-top-right-radius: 5px
       border-top-left-radius: 5px
+      text-decoration: none;
       .avatar
         display: block
         margin-top: 6px
@@ -99,6 +94,8 @@ collection-avatar-size = 55px
         svg
           width: 100%
           height: 100%
+      a
+        color: inherit
       
     .avatar
       border-radius: 5px
@@ -148,10 +145,8 @@ collection-avatar-size = 55px
       padding-top: 15px
       .project-container
         display: block
-        padding: 7px 15px
         margin: 0px 10px 5px
         border-radius: 5px
-        // background-color: input-border
         background-color: section-line
         .avatar
           width: 25px
@@ -167,6 +162,12 @@ collection-avatar-size = 55px
           background-color: private
           .private-project-badge
             display: inline-block
+        &:hover
+        &:focus
+          background-color: secondary-hover-on-color
+      .project-link
+        display: block
+        padding: 7px 15px
     .projects-preview.empty
       height: 100%
       padding: 10px
@@ -176,6 +177,7 @@ collection-avatar-size = 55px
       a
         color: tertiary
     .collection-link
+      display: block
       padding: 12px
       font-weight: 600
       font-size: 13px

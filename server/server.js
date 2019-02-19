@@ -3,12 +3,16 @@ const compression = require("compression");
 
 // https://docs.sentry.io/error-reporting/quickstart/?platform=node
 const Sentry = require("@sentry/node");
+const shouldSendError = process.env.PROJECT_DOMAIN === "community" || process.env.PROJECT_DOMAIN === "community-staging";
 
 try {
   Sentry.init({
     dsn: 'https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508',
     environment: process.env.NODE_ENV || 'dev',
     beforeSend(event) {
+      if (!shouldSendError) {
+        return null;
+      }
       const json = JSON.stringify(event);
       const scrubbedJSON = json.replace(/"persistentToken":"[^"]+"/g, `"persistentToken":"****"`);
       return JSON.parse(scrubbedJSON);
