@@ -15,7 +15,11 @@ const TYPES = [
   'text',
 ];
 
-const TextInput = ({className, error, onChange, opaque, postfix, prefix, search, ...props}) => {
+const inputPart = ({children}) => {
+  return <span className={styles.inputPart}>{children}</span>;
+};
+
+const TextInput = ({className, error, onChange, opaque, postfix, prefix, type, ...props}) => {
   const uniqueId = useUniqueId();
   const outerClassName = classNames(styles.outer, className);
   const borderClassName = classNames(styles.inputBorder, {
@@ -23,14 +27,14 @@ const TextInput = ({className, error, onChange, opaque, postfix, prefix, search,
     [styles.opaque]: opaque,
   });
   const inputClassName = classNames(styles.inputPart, styles.input, {
-    [styles.search]: search,
+    [styles.search]: type === 'search',
   });
   return (
     <label className={outerClassName} htmlFor={uniqueId}>
       <div className={borderClassName}>
         {!!prefix && <span className={styles.inputPart}>{prefix}</span>}
-        <input id={uniqueId} className={inputClassName} onChange={evt => onChange(evt.target.value)} {...props}/>
-        {!!error && <InputErrorIcon/>}
+        <input id={uniqueId} className={inputClassName} onChange={evt => onChange(evt.target.value)} type={type} {...props}/>
+        {!!error && <span className={styles.inputPart}><InputErrorIcon/></span>}
         {!!postfix && <span className={styles.inputPart}>{postfix}</span>}
       </div>
       {!!error && <InputErrorMessage error={error}/>}
@@ -48,7 +52,6 @@ TextInput.propTypes = {
   placeholder: PropTypes.string,
   postfix: PropTypes.node,
   prefix: PropTypes.node,
-  search: PropTypes.bool,
   type: PropTypes.oneOf(TYPES),
   value: PropTypes.string,
 };
@@ -63,7 +66,6 @@ TextInput.defaultProps = {
   placeholder: undefined,
   postfix: null,
   prefix: null,
-  search: false,
   type: undefined,
   value: undefined,
 };
