@@ -33,7 +33,7 @@ const TextInput = ({autoFocus, disabled, error, name, onChange, opaque, placehol
       <div className={borderClassName}>
         {!!prefix && <InputPart>{prefix}</InputPart>}
         <input
-          autoFocus={autoFocus}
+          autoFocus={autoFocus} // eslint-disable-line jsx-a11y/no-autofocus
           className={inputClassName}
           disabled={disabled}
           id={uniqueId}

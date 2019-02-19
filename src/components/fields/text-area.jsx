@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import TextAreaAutosize from 'react-textarea-autosize';
 import InputErrorMessage from './input-error-message';
@@ -15,10 +14,11 @@ const TextArea = ({autoFocus, disabled, error, name, onChange, placeholder, valu
     <label className={styles.inputWrap} htmlFor={uniqueId}>
       <div className={styles.inputBorder}>
         <TextAreaAutosize
-          autoFocus={autoFocus}
+          autoFocus={autoFocus} // eslint-disable-line jsx-a11y/no-autofocus
           className={styles.input}
           disabled={disabled}
           id={uniqueId}
+          name={name}
           onChange={evt => onChange(evt.target.value)}
           placeholder={placeholder}
           value={value}
