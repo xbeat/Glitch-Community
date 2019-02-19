@@ -6,33 +6,17 @@ import Select from "react-select"; // https://react-select.com/
 class Dropdown extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedOption: this.props.options[0] // set to the first option by default
-    };
-    this.updateSelected = this.updateSelected.bind(this);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextState.selectedOption.value !== this.state.selectedOption.value; // render is continually called without this check...
-  }
-
-  updateSelected(option) {
-    this.setState({
-      selectedOption: option
-    });
-    // pass selected value back to onUpdate
-    this.props.onUpdate(option.value);
   }
 
   render() {
     return (
       <Select
         autoWidth={true}
-        value={this.state.selectedOption}
+        value={this.props.selection}
         options={this.props.options}
         className={"dropdown " + this.props.containerClass}
         classNamePrefix="dropdown"
-        onChange={this.updateSelected}
+        onChange={this.props.onUpdate}
         isSearchable={false}
       />
     );
@@ -42,7 +26,8 @@ class Dropdown extends React.Component {
 Dropdown.propTypes = {
   containerClass: PropTypes.string,
   options: PropTypes.array.isRequired,
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
+  selection: PropTypes.array.isRequired,
 };
 
 export default Dropdown;

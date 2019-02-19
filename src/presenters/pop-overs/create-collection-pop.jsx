@@ -22,12 +22,17 @@ class CreateCollectionPop extends React.Component {
     this.state = {
       loading: false,
       query: "", //The entered collection name
-      selection: null // the dropdown selection option (the value of the option is the teamID used to create a collection)
+      selection: [], // the dropdown selection option (the value of the option is the teamID used to create a collection)
+      options: [] // options that will appear in the dropdown
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setSelection = this.setSelection.bind(this);
+  }
+  
+  componentDidMount(){
+    this.setState({ selection: this.state.options[0] });
   }
 
   handleChange(newValue) {
@@ -99,6 +104,7 @@ class CreateCollectionPop extends React.Component {
   }
 
   render() {
+    console.log('render from create collection pop');
     const { error, query } = this.state;
     const { collections } = this.props;
     let queryError; // if user already has a collection with the specified name
@@ -151,10 +157,9 @@ class CreateCollectionPop extends React.Component {
                     for{" "}
                     <Dropdown
                       containerClass="user-or-team-toggle"
-                      options={currentUserOption.concat(
-                        this.getTeamOptions(teams)
-                      )}
-                      onUpdate={this.setTeamId}
+                      options={this.state.options}
+                      selection={this.state.selection}
+                      onUpdate={this.setSelection}
                     />
                   </div>
                 )}
