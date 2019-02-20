@@ -205,11 +205,7 @@ class AddProjectToCollectionPop extends React.Component {
 
 AddProjectToCollectionPop.propTypes = {
   api: PropTypes.func.isRequired,
-  currentUser: PropTypes.object,
-};
-
-AddProjectToCollectionPop.defaultProps = {
-  currentUser: null,
+  currentUser: PropTypes.object.isRequired,
 };
 
 export default AddProjectToCollectionPop;

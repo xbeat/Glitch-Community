@@ -114,6 +114,7 @@ class CreateCollectionPop extends React.Component {
     const placeholder = 'New Collection Name';
 
     const { teams } = this.props.currentUser.teams;
+    console.log('teams', teams);
 
     // determine if entered name already exists for selected user / team
     const selectedOwnerCollections = this.state.selection.value
@@ -183,13 +184,9 @@ class CreateCollectionPop extends React.Component {
 
 CreateCollectionPop.propTypes = {
   api: PropTypes.func.isRequired,
-  currentUser: PropTypes.object,
+  currentUser: PropTypes.object.isRequired,
   project: PropTypes.object.isRequired,
   togglePopover: PropTypes.func.isRequired,
-};
-
-CreateCollectionPop.defaultProps = {
-  currentUser: null,
 };
 
 export default CreateCollectionPop;
