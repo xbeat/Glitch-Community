@@ -42,7 +42,7 @@ module.exports = function(external) {
         winston.format.json()
       ),
       meta: false, // logs meta data about the request if true
-      msg: "HTTP {{req.method}} {{req.url}} {{res.statusCode}} / Response-Time: {{req.responseTime}}ms / User-Agent: {{req.headers['user-agent']}} / Cache-Control: {{req.headers.['cache-control']}}",
+      msg: "HTTP {{req.method}} {{req.url}} {{res.statusCode}} / Response-Time: {{req.responseTime}}ms / User-Agent: {{req.headers.userAgent}} / Cache-Control: {{req.headers.cacheControl}} {{JSON.stringify(req, null, 2)}} {{res}}",
       colorize: false, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
     }));
   
