@@ -28,7 +28,11 @@ export default function UserItem({ user }) {
             alt=""
           />
           <div className="information">
-            {!!user.name && <h3 className="name">{user.name}</h3>}
+            {!!user.name && (
+              <h3 className="name">
+                {user.name}
+              </h3>
+            )}
             <div className="button">
               {`@${user.login}`}
             </div>

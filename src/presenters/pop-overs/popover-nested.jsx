@@ -52,7 +52,9 @@ export const NestedPopoverTitle = ({ children }) => (
           <div className="left-arrow icon" />
         </div>
         &nbsp;
-        <div className="pop-title">{children}</div>
+        <div className="pop-title">
+          {children}
+        </div>
       </button>
     )}
   </Consumer>

@@ -31,7 +31,9 @@ const CollectionWide = ({ collection, api }) => {
           <CollectionAvatar color={collection.coverColor} />
         </CollectionLink>
         <CollectionLink className="collection-name" collection={collection}>
-          <h2>{collection.name}</h2>
+          <h2>
+            {collection.name}
+          </h2>
         </CollectionLink>
         {!!collection.team && <TeamTile team={collection.team} />}
         {!!collection.user && <UserTile {...collection.user} />}

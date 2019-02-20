@@ -7,7 +7,11 @@ const { Provider, Consumer } = React.createContext();
 
 export const UserPrefsProvider = ({ children }) => (
   <LocalStorage name="community-userPrefs" default={{}}>
-    {(prefs, set) => <Provider value={{ prefs, set }}>{children}</Provider>}
+    {(prefs, set) => (
+      <Provider value={{ prefs, set }}>
+        {children}
+      </Provider>
+    )}
   </LocalStorage>
 );
 UserPrefsProvider.propTypes = {

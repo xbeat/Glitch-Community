@@ -79,7 +79,9 @@ class RelatedProjects extends React.Component {
         {teams.map(team => (
           <li key={team.id}>
             <h2>
-              <TeamLink team={team}>{`More by ${team.name} → `}</TeamLink>
+              <TeamLink team={team}>
+                {`More by ${team.name} → `}
+              </TeamLink>
             </h2>
             <DataLoader
               get={() => this.getProjects(team.id, getTeamPins, getTeam)}

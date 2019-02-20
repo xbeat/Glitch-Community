@@ -19,7 +19,9 @@ class CreateCollectionPop extends React.Component {
 
     const currentUserOptionLabel = (
       <span>
-        myself <UserAvatar user={this.props.currentUser} />
+        myself
+        {' '}
+        <UserAvatar user={this.props.currentUser} />
       </span>
     );
     const currentUserOption = { value: null, label: currentUserOptionLabel };
@@ -35,10 +37,6 @@ class CreateCollectionPop extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setSelection = this.setSelection.bind(this);
-  }
-
-  handleChange(newValue) {
-    this.setState({ query: newValue, error: null });
   }
 
   setSelection(option) {
@@ -59,7 +57,7 @@ class CreateCollectionPop extends React.Component {
       try {
         this.props.api.patch(`collections/${collection.id}/add/${this.props.project.id}`);
         if (this.state.selection.value) {
-          const team = this.props.currentUser.teams.find(({ id }) => id == this.state.selection.value);
+          const team = this.props.currentUser.teams.find(({ id }) => id === this.state.selection.value);
           collection.team = team;
         }
         collection.user = this.props.currentUser;
@@ -85,14 +83,16 @@ class CreateCollectionPop extends React.Component {
 
   // getTeamOptions: Format teams in { value: teamId, label: html elements } format for react-select
   getTeamOptions(teams) {
-    const orderedTeams = orderBy(teams, (team) => team.name.toLowerCase());
+    const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
     const teamOptions = [];
 
     orderedTeams.map((team) => {
       const option = {};
       const label = (
         <span id={team.id}>
-          {team.name} {<TeamAvatar team={team} />}
+          {team.name}
+          {' '}
+          {<TeamAvatar team={team} />}
         </span>
       );
       option.value = team.id;
@@ -100,6 +100,10 @@ class CreateCollectionPop extends React.Component {
       teamOptions.push(option);
     });
     return teamOptions;
+  }
+
+  handleChange(newValue) {
+    this.setState({ query: newValue, error: null });
   }
 
   render() {
@@ -114,10 +118,10 @@ class CreateCollectionPop extends React.Component {
 
     // determine if entered name already exists for selected user / team
     const selectedOwnerCollections = this.state.selection.value
-      ? collections.filter(({ teamId }) => teamId == this.state.selection.value)
-      : collections.filter(({ userId }) => userId == this.props.currentUser.id);
+      ? collections.filter(({ teamId }) => teamId === this.state.selection.value)
+      : collections.filter(({ userId }) => userId === this.props.currentUser.id);
 
-    if (!!collections && selectedOwnerCollections.some((c) => c.url === kebabCase(query))) {
+    if (!!collections && selectedOwnerCollections.some(c => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this name';
     }
 
@@ -125,10 +129,12 @@ class CreateCollectionPop extends React.Component {
       <NotificationConsumer>
         {({ createNotification }) => (
           <dialog className="pop-over create-collection-pop wide-pop">
-            <NestedPopoverTitle>Add {this.props.project.domain} to a new collection</NestedPopoverTitle>
+            <NestedPopoverTitle>
+              {`Add ${this.props.project.domain} to a new collection`}
+            </NestedPopoverTitle>
 
             <section className="pop-over-actions">
-              <form onSubmit={(event) => this.handleSubmit(event, createNotification)}>
+              <form onSubmit={event => this.handleSubmit(event, createNotification)}>
                 <PureEditableField
                   className="pop-over-input create-input"
                   value={query}
@@ -140,7 +146,7 @@ class CreateCollectionPop extends React.Component {
 
                 {teams.length > 0 && (
                   <div>
-                    {`for `}
+                    {'for '}
                     <Dropdown
                       containerClass="user-or-team-toggle"
                       options={this.options}
@@ -153,7 +159,7 @@ class CreateCollectionPop extends React.Component {
                 {!this.state.loading ? (
                   <TrackClick
                     name="Create Collection clicked"
-                    properties={(inherited) => ({
+                    properties={inherited => ({
                       ...inherited,
                       origin: `${inherited.origin} project`,
                     })}

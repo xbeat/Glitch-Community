@@ -14,7 +14,9 @@ const PopoverButton = ({ onClick, text, emoji }) => (
     onClick={onClick}
     type="button"
   >
-    <span>{`${text} `}</span>
+    <span>
+      {`${text} `}
+    </span>
     <span className={`emoji ${emoji}`} />
   </button>
 );

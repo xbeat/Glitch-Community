@@ -33,7 +33,9 @@ const RecentProjectsContainer = ({ children, user, api }) => (
           )}
         </div>
       </div>
-      <article className="projects">{children}</article>
+      <article className="projects">
+        {children}
+      </article>
     </CoverContainer>
   </section>
 );

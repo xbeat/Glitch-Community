@@ -5,7 +5,7 @@ import { orderBy } from 'lodash';
 import { TrackClick } from './analytics';
 import CollectionItem from './collection-item';
 import { getLink, createCollection } from '../models/collection';
-import { getCollections, getPredicate } from '../models/words';
+import { getPredicate } from '../models/words';
 import { Loader } from './includes/loader';
 import { NotificationConsumer } from './notifications.jsx';
 
@@ -47,7 +47,9 @@ class CollectionsList extends React.Component {
     }
     return (
       <article className="collections">
-        <h2>{title}</h2>
+        <h2>
+          {title}
+        </h2>
         {canMakeCollections && (
           <>
             <CreateCollectionButton

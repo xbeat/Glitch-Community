@@ -22,7 +22,9 @@ const DeletedProject = ({ id, domain, onClick }) => (
     >
       <div className="deleted-project">
         <img className="avatar" src={getAvatarUrl(id)} alt="" />
-        <div className="deleted-project-name">{domain}</div>
+        <div className="deleted-project-name">
+          {domain}
+        </div>
         <div className="button button-small">Undelete</div>
       </div>
     </button>

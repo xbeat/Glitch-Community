@@ -10,7 +10,9 @@ const TimeFrameItem = ({ selectTimeFrame, isActive, timeFrame }) => {
   return (
     <button className={resultClass} onClick={selectTimeFrame} type="button">
       <div className="result-container">
-        <div className="result-name">{timeFrame}</div>
+        <div className="result-name">
+          {timeFrame}
+        </div>
       </div>
     </button>
   );
@@ -56,7 +58,11 @@ TeamAnalyticsTimePop.propTypes = {
 const TeamAnalyticsTimePopButton = ({ updateTimeFrame, currentTimeFrame }) => (
   <PopoverWithButton
     buttonClass="button-small button-tertiary button-select"
-    buttonText={<span>{currentTimeFrame}</span>}
+    buttonText={(
+      <span>
+        {currentTimeFrame}
+      </span>
+    )}
     passToggleToPop
   >
     <TeamAnalyticsTimePop

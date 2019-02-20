@@ -31,7 +31,9 @@ const ZineItems = () => {
                 </div>
               )}
               <div className="zine-item-meta">
-                <h1 className="zine-item-title">{title}</h1>
+                <h1 className="zine-item-title">
+                  {title}
+                </h1>
                 {!!primary_tag && (
                   <p className="zine-item-tag">
                     {primary_tag.name}
@@ -50,7 +52,9 @@ const FeaturedPanel = ({ img, link, title }) => (
   <Link to={link} data-track="featured-project" data-track-label={title}>
     <div className="featured-container">
       <img className="featured" src={img} alt="" />
-      <p className="project-name">{title}</p>
+      <p className="project-name">
+        {title}
+      </p>
     </div>
   </Link>
 );

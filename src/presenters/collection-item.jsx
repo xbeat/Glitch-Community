@@ -33,7 +33,9 @@ const ProjectsPreview = ({ collection, projects, isAuthorized }) => {
             >
               <ProjectLink project={project} className="project-link">
                 <img className="avatar" src={getAvatarUrl(project.id)} alt="" />
-                <div className="project-name">{project.domain}</div>
+                <div className="project-name">
+                  {project.domain}
+                </div>
                 <div
                   className="project-badge private-project-badge"
                   aria-label="private"
@@ -50,7 +52,11 @@ const ProjectsPreview = ({ collection, projects, isAuthorized }) => {
       </>
     );
   }
-  return (<div className="projects-preview empty">{emptyState}</div>);
+  return (
+    <div className="projects-preview empty">
+      {emptyState}
+    </div>
+  );
 };
 
 ProjectsPreview.propTypes = {
@@ -94,7 +100,9 @@ const CollectionItem = (props) => {
                     className="project-badge private-project-badge"
                     aria-label="private"
                   />
-                  <div className="project-name">{collection.name}</div>
+                  <div className="project-name">
+                    {collection.name}
+                  </div>
                 </div>
                 <div
                   className="description"

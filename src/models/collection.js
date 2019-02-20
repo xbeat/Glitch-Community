@@ -1,12 +1,12 @@
 /* global CDN_URL */
 
+import { kebabCase } from 'lodash';
+import randomColor from 'randomcolor';
 import { getLink as getTeamLink } from './team';
 import { getLink as getUserLink } from './user';
 
-import { getCollectionPair } from '../models/words';
+import { getCollectionPair } from './words';
 
-import { kebabCase } from 'lodash';
-import randomColor from 'randomcolor';
 
 export const FALLBACK_AVATAR_URL = 'https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-avatar.svg?1541449590339';
 export const defaultAvatar = 'https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fcollection-avatar.svg?1540389405633';

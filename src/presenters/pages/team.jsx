@@ -477,7 +477,9 @@ const TeamPageContainer = ({ api, team, ...props }) => (
       {(teamFromEditor, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
         <>
           <Helmet>
-            <title>{teamFromEditor.name}</title>
+            <title>
+              {teamFromEditor.name}
+            </title>
           </Helmet>
           <CurrentUserConsumer>
             {currentUser => (

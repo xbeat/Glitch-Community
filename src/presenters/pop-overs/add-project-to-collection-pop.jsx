@@ -26,7 +26,8 @@ const NoCollectionPlaceholder = <p className="info-description">Create collectio
 
 const AddProjectPopoverTitle = ({ project }) => (
   <NestedPopoverTitle>
-    <img src={getAvatarUrl(project.id)} alt="" /> Add {project.domain} to collection
+    <img src={getAvatarUrl(project.id)} alt="" />
+    {` Add ${project.domain} to collection`}
   </NestedPopoverTitle>
 );
 AddProjectPopoverTitle.propTypes = {
@@ -45,7 +46,7 @@ class AddProjectToCollectionPopContents extends React.Component {
 
   updateFilter(query) {
     query = query.toLowerCase().trim();
-    const filteredCollections = this.props.collections.filter((collection) => collection.name.toLowerCase().includes(query));
+    const filteredCollections = this.props.collections.filter(collection => collection.name.toLowerCase().includes(query));
     this.setState({ filteredCollections, query });
   }
 
@@ -73,15 +74,17 @@ class AddProjectToCollectionPopContents extends React.Component {
           <section className="pop-over-actions results-list">
             <ul className="results">
               {filteredCollections.map(
-                (collection) =>
+                collection =>
                   // filter out collections that already contain the selected project
                   collection.projects &&
-                  collection.projects.every((project) => project.id !== this.props.project.id) && (
+                  collection.projects.every(
+                    project => project.id !== this.props.project.id
+                  ) && (
                     <li key={collection.id}>
                       <TrackClick
                         name="Project Added to Collection"
                         context={{
-                          groupId: collection.team ? collection.team.id : 0,
+                          groupId: collection.team ? collection.team.id : 0
                         }}
                       >
                         <CollectionResultItem
@@ -94,7 +97,7 @@ class AddProjectToCollectionPopContents extends React.Component {
                         />
                       </TrackClick>
                     </li>
-                  ),
+                  )
               )}
             </ul>
           </section>
@@ -134,15 +137,15 @@ class AddProjectToCollectionPop extends React.Component {
     try {
       const { data: allCollections } = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}&includeTeams=true`);
       // add user / team to each collection
-      allCollections.forEach((collection) => {
+      allCollections.forEach(collection => {
         if (collection.teamId == -1) {
           collection.user = this.props.currentUser;
         } else {
-          collection.team = this.props.currentUser.teams.find((userTeam) => userTeam.id == collection.teamId);
+          collection.team = this.props.currentUser.teams.find((userTeam) => ( userTeam.id == collection.teamId));
         }
       });
 
-      const orderedCollections = orderBy(allCollections, (collection) => collection.updatedAt, ['desc']);
+      const orderedCollections = orderBy(allCollections, (collection) => ( collection.updatedAt, ['desc']));
 
       this.setState({ maybeCollections: orderedCollections });
     } catch (error) {
@@ -162,7 +165,7 @@ class AddProjectToCollectionPop extends React.Component {
     const { maybeCollections } = this.state;
     return (
       <NestedPopover
-        alternateContent={() => (
+        alternateContent={() => ( 
           <CreateCollectionPop
             {...this.props}
             api={this.props.api}
@@ -172,8 +175,8 @@ class AddProjectToCollectionPop extends React.Component {
         )}
         startAlternateVisible={false}
       >
-        {(createCollectionPopover) =>
-          maybeCollections ? (
+        {createCollectionPopover => 
+          (maybeCollections ? (
             <AddProjectToCollectionPopContents {...this.props} collections={maybeCollections} createCollectionPopover={createCollectionPopover} />
           ) : (
             <dialog className="pop-over add-project-to-collection-pop wide-pop">
@@ -182,7 +185,7 @@ class AddProjectToCollectionPop extends React.Component {
                 <Loader />
               </div>
             </dialog>
-          )
+          ))
         }
       </NestedPopover>
     );

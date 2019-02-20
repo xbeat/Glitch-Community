@@ -39,7 +39,7 @@ export class Notifications extends React.Component {
     const id = this.create(content, `notifyPersistent ${className}`);
     const updateNotification = (updatedContent) => {
       this.setState(({ notifications }) => ({
-        notifications: notifications.map(n => (n.id === id ? { ...n, updatedContent } : n)),
+        notifications: notifications.map((n) => (n.id === id ? { ...n, updatedContent } : n)),
       }));
     };
     const removeNotification = () => {
@@ -53,7 +53,7 @@ export class Notifications extends React.Component {
 
   remove(id) {
     this.setState(({ notifications }) => ({
-      notifications: notifications.filter(n => n.id !== id),
+      notifications: notifications.filter((n) => n.id !== id),
     }));
   }
 
@@ -70,11 +70,7 @@ export class Notifications extends React.Component {
         {!!notifications.length && (
           <div className="notifications">
             {notifications.map(({ id, className, content }) => (
-              <Notification
-                key={id}
-                className={className}
-                remove={this.remove.bind(this, id)}
-              >
+              <Notification key={id} className={className} remove={this.remove.bind(this, id)}>
                 {content}
               </Notification>
             ))}
@@ -85,30 +81,17 @@ export class Notifications extends React.Component {
   }
 }
 
-export const AddProjectToCollectionMsg = ({
-  projectDomain,
-  collectionName,
-  url,
-}) => (
+export const AddProjectToCollectionMsg = ({ projectDomain, collectionName, url }) => (
   <>
     <p>
-      Added
-      {' '}
-      {projectDomain}
-      {' '}
-      { collectionName && (`to collection ${collectionName}`) }
+      {`Added ${projectDomain} `}
+      {collectionName && `to collection ${collectionName}`}
     </p>
-    { url
-      && (
-        <a
-          href={url}
-          rel="noopener noreferrer"
-          className="button button-small button-tertiary button-in-notification-container notify-collection-link"
-        >
-      Take me there
-        </a>
-      )
-    }
+    {url && (
+      <a href={url} rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">
+        Take me there
+      </a>
+    )}
   </>
 );
 
@@ -116,4 +99,9 @@ AddProjectToCollectionMsg.propTypes = {
   projectDomain: PropTypes.string.isRequired,
   collectionName: PropTypes.string,
   url: PropTypes.string,
+};
+
+AddProjectToCollectionMsg.defaultProps = {
+  url: null,
+  collectionName: null,
 };
