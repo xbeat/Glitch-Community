@@ -57,13 +57,13 @@ ProjectEditor.defaultProps = {
 
 const ProjectEditorContainer = ({ api, children, initialProject }) => {
   const { currentUser } = useCurrentUser();
-  const wrapErrors = useErrorHandlers();
+  const errorFuncs = useErrorHandlers();
   return (
     <ProjectEditor
       api={api}
       currentUser={currentUser}
       initialProject={initialProject}
-      {...wrapErrors}
+      {...errorFuncs}
     >
       {children}
     </ProjectEditor>
