@@ -1,28 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {debounce} from 'lodash';
+import { debounce } from 'lodash';
 
 export class OptimisticValue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: null, // value is only set when waiting for server response
+      value: props.value, // value is only set when waiting for server response
       error: null, // error is only set if there is an error ¯\_(ツ)_/¯
     };
-    
+
     this.onChange = this.onChange.bind(this);
     this.update = debounce(this.update.bind(this), 500);
   }
-  
+
+  onChange(value) {
+    this.update(value);
+    this.setState({ value });
+  }
+
   async update(value) {
     try {
       await this.props.update(value);
       this.setState((prevState, props) => {
         // if value didn't change during this update then switch back to props
         if (prevState.value === props.value) {
-          return {value: null, error: null};
+          return { value: null, error: null };
         }
-        return {error: null};
+        return { error: null };
       });
     } catch (error) {
       this.setState((prevState, props) => {
@@ -30,27 +35,22 @@ export class OptimisticValue extends React.Component {
         if (prevState.value !== value) {
           return {};
         }
-        
+
         // Ah, we haven't moved on, and we know the last edit failed.
         // Ok, display an error.
         if (props.resetOnError) {
-          return {error, value: null};
+          return { error, value: null };
         }
-        return {error};
+        return { error };
       });
     }
   }
-  
-  onChange(value) {
-    this.update(value);
-    this.setState({value});
-  }
-  
+
   render() {
     return this.props.children({
-      value: this.state.value !== null ? this.state.value : this.props.value,
+      optimisticValue: this.state.value !== null ? this.state.value : this.props.value,
       error: this.state.error,
-      update: this.onChange,
+      optimisticUpdate: this.onChange,
     });
   }
 }
@@ -66,16 +66,21 @@ OptimisticValue.defaultProps = {
 export class TrimmedValue extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: props.value};
+    this.state = { value: props.value };
     this.update = this.update.bind(this);
   }
+
   update(value) {
     this.props.update(value.trim());
-    this.setState({value});
+    this.setState({ value });
   }
+
   render() {
     return this.props.children({
-      value: this.state.value.trim() === this.props.value ? this.state.value : this.props.value,
+      value:
+        this.state.value.trim() === this.props.value
+          ? this.state.value
+          : this.props.value,
       update: this.update,
     });
   }
@@ -86,16 +91,21 @@ TrimmedValue.propTypes = {
 };
 
 export const FieldErrorIcon = () => (
-  <span className="editable-field-error-icon" role="img" aria-label="Warning">🚒</span>
+  <span className="editable-field-error-icon" role="img" aria-label="Warning">
+    🚒
+  </span>
 );
 
-export const FieldErrorMessage = ({error, hideIcon}) => (
+export const FieldErrorMessage = ({ error, hideIcon }) => (
   <span className="editable-field-error-message">
-    {!hideIcon && <FieldErrorIcon/>}
+    {!hideIcon && <FieldErrorIcon />}
     {error}
   </span>
 );
 FieldErrorMessage.propTypes = {
   error: PropTypes.node.isRequired,
   hideIcon: PropTypes.bool,
+};
+FieldErrorMessage.defaultProps = {
+  hideIcon: false,
 };

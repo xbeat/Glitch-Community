@@ -1,12 +1,12 @@
 import React from 'react';
-import {BrowserRouter} from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-import ErrorBoundary from './presenters/includes/error-boundary.jsx';
-import {AnalyticsContext} from './presenters/analytics';
-import {CurrentUserProvider} from './presenters/current-user.jsx';
-import {UserPrefsProvider} from './presenters/includes/user-prefs.jsx';
-import {DevTogglesProvider} from './presenters/includes/dev-toggles.jsx';
-import {Notifications} from './presenters/notifications.jsx';
+import ErrorBoundary from './presenters/includes/error-boundary';
+import { AnalyticsContext } from './presenters/analytics';
+import { CurrentUserProvider } from './presenters/current-user';
+import { UserPrefsProvider } from './presenters/includes/user-prefs';
+import { DevTogglesProvider } from './presenters/includes/dev-toggles';
+import { Notifications } from './presenters/notifications';
 
 import Router from './presenters/pages/router';
 
@@ -16,9 +16,9 @@ const App = () => (
       <Notifications>
         <UserPrefsProvider>
           <DevTogglesProvider>
-            <AnalyticsContext context={{groupId: '0'}}>
+            <AnalyticsContext context={{ groupId: '0' }}>
               <CurrentUserProvider>
-                {api => <Router api={api}/>}
+                {api => <Router api={api} />}
               </CurrentUserProvider>
             </AnalyticsContext>
           </DevTogglesProvider>
@@ -29,4 +29,3 @@ const App = () => (
 );
 
 export default App;
-

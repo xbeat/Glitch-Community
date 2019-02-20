@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {UserPref} from '../includes/user-prefs.jsx';
-const {Provider, Consumer} = React.createContext();
+import UserPref from './user-prefs';
+
+const { Provider, Consumer } = React.createContext();
 
 //  Dev Toggles!
 //
@@ -10,25 +11,28 @@ const {Provider, Consumer} = React.createContext();
 //   ship things _extra_ early without impacting customer UX
 //
 
-
 // Define your dev toggles here.
 // We can only have three.
 // Users can enable them with the /secret page.
 const toggleData = [
-  {name: "Email Invites", description: "Enables invite-by-email behavior on the team page."},
-  {name: "Everybody Dance!", description: "Placeholder for a new toggle."},
-  {name: "Inflatable Crocodiles", description: "I don't think this does anything yet."},
-].splice(0,3); // <-- Yeah really, only 3.  If you need more, clean up one first.
-
+  {
+    name: 'Email Invites',
+    description: 'Enables invite-by-email behavior on the team page.',
+  },
+  { name: 'Everybody Dance!', description: 'Placeholder for a new toggle.' },
+  {
+    name: 'Inflatable Crocodiles',
+    description: "I don't think this does anything yet.",
+  },
+].splice(0, 3); // <-- Yeah really, only 3.  If you need more, clean up one first.
 
 // Usage:
 // Import Devtoggles into your scope:
 
-// import DevToggles from '../includes/dev-toggles.jsx`
-
+// import DevToggles from '../includes/dev-toggles`
 // Use the DevToggles from inside of a DevTogglesProvider
 // (Which in turn must be inside of a UserPrefProvider,
-// both of which are provided by the Client.jsx)
+// both of which are provided by the Client)
 
 // Fetch the array enabledToggles and test for features with [].includes:
 /*
@@ -41,10 +45,10 @@ const toggleData = [
   </DevToggles>
 */
 
-export const DevTogglesProvider = ({children}) => (
+export const DevTogglesProvider = ({ children }) => (
   <UserPref name="devToggles" default={[]}>
     {(enabledToggles, setEnabledToggles) => (
-      <Provider value={{enabledToggles, toggleData, setEnabledToggles}}>
+      <Provider value={{ enabledToggles, toggleData, setEnabledToggles }}>
         {children}
       </Provider>
     )}
@@ -54,11 +58,10 @@ DevTogglesProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export const DevToggles = ({children}) => (
+const DevToggles = ({ children }) => (
   <Consumer>
-    {({enabledToggles, toggleData, setEnabledToggles}) => children(
-      enabledToggles||[], toggleData, setEnabledToggles
-    )}
+    {({ enabledToggles, currentToggleData, setEnabledToggles }) => children(enabledToggles || [], currentToggleData, setEnabledToggles)
+    }
   </Consumer>
 );
 DevToggles.propTypes = {

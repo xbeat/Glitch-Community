@@ -1,55 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {TrackClick} from '../analytics';
+import { TrackClick } from '../analytics';
 import TeamsList from '../teams-list';
-import Button from '../../components/buttons/button.jsx';
+import Button from '../../components/buttons/button';
 
 // Image Buttons
 
-export const ImageButtons = ({name, uploadImage, clearImage}) => {
-  return (
-    <div className="upload-image-buttons">
-      { !!uploadImage && (
-        <TrackClick name={`Upload ${name}`}>
-          
-          <Button size="small" type="tertiary" onClick={uploadImage}>
-            Upload {name}
-          </Button>
-        </TrackClick>
-      )}
-      { !!clearImage && (
-        <TrackClick name={`Clear ${name}`}>
-          <Button size="small" type="tertiary" onClick={clearImage}>
-            Clear {name} 
-          </Button>
-        </TrackClick>
-      )}
-    </div>
-  );
-};
+export const ImageButtons = ({ name, uploadImage, clearImage }) => (
+  <div className="upload-image-buttons">
+    { !!uploadImage && (
+      <TrackClick name={`Upload ${name}`}>
+
+        <Button size="small" type="tertiary" onClick={uploadImage}>
+            Upload
+          {' '}
+          {name}
+        </Button>
+      </TrackClick>
+    )}
+    { !!clearImage && (
+      <TrackClick name={`Clear ${name}`}>
+        <Button size="small" type="tertiary" onClick={clearImage}>
+            Clear
+          {' '}
+          {name}
+        </Button>
+      </TrackClick>
+    )}
+  </div>
+);
 ImageButtons.propTypes = {
   name: PropTypes.string.isRequired,
   uploadImage: PropTypes.func,
   clearImage: PropTypes.func,
 };
-
+ImageButtons.defaultProps = {
+  uploadImage: null,
+  clearImage: null,
+};
 
 // Project Info Container
 
-export const ProjectInfoContainer = ({
-  style,
-  children,
-  buttons,
-}) => (
+export const ProjectInfoContainer = ({ style, children, buttons }) => (
   <>
     <div className="avatar-container">
       <div className="user-avatar" style={style} />
       {buttons}
     </div>
-    <div className="profile-information">
-      {children}
-    </div>
+    <div className="profile-information">{children}</div>
   </>
 );
 ProjectInfoContainer.propTypes = {
@@ -57,19 +56,18 @@ ProjectInfoContainer.propTypes = {
   children: PropTypes.node.isRequired,
   buttons: PropTypes.element,
 };
-
+ProjectInfoContainer.defaultProps = {
+  buttons: null,
+};
 
 // Info Container (generic)
 
-export const InfoContainer = ({children}) => (
-  <div className="profile-info">
-    {children}
-  </div>
+export const InfoContainer = ({ children }) => (
+  <div className="profile-info">{children}</div>
 );
 InfoContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
 
 // Cover Container
 
@@ -88,15 +86,18 @@ CoverContainer.propTypes = {
 };
 CoverContainer.defaultProps = {
   className: '',
+  buttons: null,
 };
-
 
 // Profile Container
 
 export const ProfileContainer = ({
-  avatarStyle, avatarButtons,
-  coverStyle, coverButtons,
-  children, teams
+  avatarStyle,
+  avatarButtons,
+  coverStyle,
+  coverButtons,
+  children,
+  teams,
 }) => (
   <CoverContainer style={coverStyle} buttons={coverButtons}>
     <InfoContainer>
@@ -104,15 +105,12 @@ export const ProfileContainer = ({
         <div className="user-avatar" style={avatarStyle} />
         {avatarButtons}
       </div>
-      <div className="profile-information">
-        {children}
-      </div>
+      <div className="profile-information">{children}</div>
     </InfoContainer>
     {!!teams && !!teams.length && (
-      <div className="teams-information"> 
-        <TeamsList teams={teams}/>
+      <div className="teams-information">
+        <TeamsList teams={teams} />
       </div>
     )}
   </CoverContainer>
 );
- 

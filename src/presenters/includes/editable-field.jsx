@@ -1,55 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {uniqueId} from 'lodash';
+import { uniqueId } from 'lodash';
 
-import {OptimisticValue, TrimmedValue, FieldErrorIcon, FieldErrorMessage} from './field-helpers.jsx';
-
+import {
+  OptimisticValue,
+  TrimmedValue,
+  FieldErrorIcon,
+  FieldErrorMessage,
+} from './field-helpers';
 
 class PureEditableFieldHolder extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { id: uniqueId("editable-field-") };
+    this.state = { id: uniqueId('editable-field-') };
     this.textInput = React.createRef();
     this.onChange = this.onChange.bind(this);
   }
-  
+
   componentDidMount() {
     if (this.props.autoFocus) {
       this.textInput.current.select();
     }
   }
-  
+
   onChange(evt) {
     this.props.update(evt.target.value);
   }
-  
+
   render() {
-    const classes = ["content-editable", this.props.error ? "error" : ""].join(" ");
+    const classes = ['content-editable', this.props.error ? 'error' : ''].join(
+      ' ',
+    );
     const inputProps = {
       id: this.state.id,
       className: classes,
       value: this.props.value,
       onChange: this.onChange,
       spellCheck: false,
-      autoComplete: "off",
+      autoComplete: 'off',
       placeholder: this.props.placeholder,
       autoFocus: this.props.autoFocus,
       onBlur: this.props.blur,
       type: this.props.inputType,
     };
-    
-    const maybeErrorIcon = !!this.props.error && <FieldErrorIcon/>;
-    
-    const maybeErrorMessage = !!this.props.error && <FieldErrorMessage error={this.props.error} hideIcon={true}/>;
-    
+
+    const maybeErrorIcon = !!this.props.error && <FieldErrorIcon />;
+
+    const maybeErrorMessage = !!this.props.error && (
+      <FieldErrorMessage error={this.props.error} hideIcon />
+    );
+
     const maybePrefix = !!this.props.prefix && (
-      <span className={"content-editable-affix " + classes}>{this.props.prefix}</span>
+      <span className={`content-editable-affix ${classes}`}>
+        {this.props.prefix}
+      </span>
     );
-    
+
     const maybeSuffix = !!this.props.suffix && (
-      <span className={"content-editable-affix " + classes}>{this.props.suffix}</span>
+      <span className={`content-editable-affix ${classes}`}>
+        {this.props.suffix}
+      </span>
     );
-    
+
     return (
       <label htmlFor={inputProps.id}>
         <span className="editable-field-flex">
@@ -78,11 +90,17 @@ PureEditableFieldHolder.propTypes = {
   error: PropTypes.string,
 };
 
-export const PureEditableTextArea = (props) => (
+PureEditableFieldHolder.defaultProps = {
+  blur: () => {},
+  prefix: null,
+  suffix: null,
+  autoFocus: false,
+  error: '',
+};
+
+export const PureEditableTextArea = props => (
   <PureEditableFieldHolder {...props}>
-    {(inputProps, inputRef) => (
-      <textarea {...inputProps} ref={inputRef} />  
-    )}
+    {(inputProps, inputRef) => <textarea {...inputProps} ref={inputRef} />}
   </PureEditableFieldHolder>
 );
 
@@ -98,11 +116,18 @@ PureEditableTextArea.propTypes = {
   inputType: PropTypes.string,
 };
 
-export const PureEditableField = (props) => (
+PureEditableTextArea.defaultProps = {
+  blur: () => {},
+  prefix: null,
+  suffix: null,
+  autoFocus: false,
+  error: '',
+  inputType: 'text',
+};
+
+export const PureEditableField = props => (
   <PureEditableFieldHolder {...props}>
-    {(inputProps, inputRef) => (
-      <input {...inputProps} ref={inputRef} />  
-    )}
+    {(inputProps, inputRef) => <input {...inputProps} ref={inputRef} />}
   </PureEditableFieldHolder>
 );
 
@@ -118,12 +143,21 @@ PureEditableField.propTypes = {
   inputType: PropTypes.string,
 };
 
-export const EditableField = ({value, update, ...props}) => (
+PureEditableField.defaultProps = {
+  blur: () => {},
+  prefix: null,
+  suffix: null,
+  autoFocus: false,
+  error: '',
+  inputType: 'text',
+};
+
+const EditableField = ({ value, update, ...props }) => (
   <OptimisticValue value={value} update={update} resetOnError={false}>
-    {({value, update, error}) => (
-      <TrimmedValue value={value} update={update}>
+    {({ optimisticValue, optimisticUpdate, error }) => (
+      <TrimmedValue value={optimisticValue} update={optimisticUpdate}>
         {valueProps => (
-          <PureEditableField {...props} {...valueProps} error={error}/>
+          <PureEditableField {...props} {...valueProps} error={error} />
         )}
       </TrimmedValue>
     )}
@@ -137,6 +171,13 @@ EditableField.propTypes = {
   prefix: PropTypes.node,
   suffix: PropTypes.node,
   autoFocus: PropTypes.bool,
+};
+
+EditableField.defaultProps = {
+  blur: () => {},
+  prefix: null,
+  suffix: null,
+  autoFocus: false,
 };
 
 export default EditableField;

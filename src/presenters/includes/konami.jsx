@@ -10,14 +10,14 @@ import ReactKonami from 'react-konami';
 export default class Konami extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {active: false};
+    this.state = { active: false };
   }
-  
-  render() {  
+
+  render() {
     return (
       <>
-        <ReactKonami easterEgg={()=>this.setState({active: true})}/>
-        { !!this.state.active && this.props.children }
+        <ReactKonami easterEgg={() => this.setState({ active: true })} />
+        {!!this.state.active && this.props.children}
       </>
     );
   }

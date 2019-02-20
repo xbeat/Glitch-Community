@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {TeamLink} from './includes/link.jsx';
-import {TeamAvatar} from './includes/avatar.jsx';
+import { TeamLink } from './includes/link';
+import { TeamAvatar } from './includes/avatar';
 
-export const TeamTile = ({team}) => (
+export const TeamTile = ({ team }) => (
   <TeamLink team={team} className="user">
-    <TeamAvatar team={team}/>
+    <TeamAvatar team={team} />
   </TeamLink>
 );
 
@@ -18,11 +18,11 @@ TeamTile.propTypes = {
   }).isRequired,
 };
 
-export const TeamsList = ({teams}) => (
+const TeamsList = ({ teams }) => (
   <ul className="users teams-information">
     {teams.map(team => (
       <li key={team.id}>
-        <TeamTile team={team}/>
+        <TeamTile team={team} />
       </li>
     ))}
   </ul>

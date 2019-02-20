@@ -3,24 +3,26 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './button.styl';
 
-let cx = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
-export const TYPES = ["tertiary", "cta", "dangerZone"];
-export const SIZES = ["small"];
+export const TYPES = ['tertiary', 'cta', 'dangerZone'];
+export const SIZES = ['small'];
 
 /**
  * Button Component
  */
-const Button = ({ onClick, disabled, type, size, hover, children }) => {
-  let className = cx({
+const Button = ({
+  onClick, disabled, type, size, hover, children,
+}) => {
+  const className = cx({
     btn: true,
-    cta: type === "cta",
-    small: size === "small",
-    tertiary: ["tertiary", "dangerZone"].includes(type),
-    dangerZone: type === "dangerZone",
-    hover: hover,
+    cta: type === 'cta',
+    small: size === 'small',
+    tertiary: ['tertiary', 'dangerZone'].includes(type),
+    dangerZone: type === 'dangerZone',
+    hover,
   });
-  
+
   return (
     <button onClick={onClick} className={className} disabled={disabled}>
       {children}
@@ -41,6 +43,14 @@ Button.propTypes = {
   size: PropTypes.oneOf(SIZES),
   /** whether or not the button's hover state should be active */
   hover: PropTypes.bool,
+};
+
+Button.defaultProps = {
+  onClick: () => {},
+  disabled: false,
+  type: '',
+  size: '',
+  hover: false,
 };
 
 export default Button;

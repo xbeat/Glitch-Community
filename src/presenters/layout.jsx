@@ -1,33 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
-import Header from './header.jsx';
-import Footer from './footer.jsx';
-import ErrorBoundary from './includes/error-boundary.jsx';
-import Konami from './includes/konami.jsx';
+import Header from './header';
+import Footer from './footer';
+import ErrorBoundary from './includes/error-boundary';
+import Konami from './includes/konami';
 
-
-const Layout = ({children, api, searchQuery}) => (
+const Layout = ({ children, api, searchQuery }) => (
   <div className="content">
     <Helmet title="Glitch" />
-    <Header api={api} searchQuery={searchQuery}/>
+    <Header api={api} searchQuery={searchQuery} />
     <ErrorBoundary>
       {children}
     </ErrorBoundary>
-    <Footer/>
+    <Footer />
     <ErrorBoundary fallback={null}>
       <Konami>
-        <Redirect to="/secret" push={true}/>
+        <Redirect to="/secret" push />
       </Konami>
     </ErrorBoundary>
   </div>
 );
 Layout.propTypes = {
-  api: PropTypes.any.isRequired,
+  api: PropTypes.any,
   children: PropTypes.node.isRequired,
   searchQuery: PropTypes.string,
+};
+Layout.defaultProps = {
+  searchQuery: '',
+  api: null,
 };
 
 export default Layout;

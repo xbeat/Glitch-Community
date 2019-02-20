@@ -5,7 +5,7 @@ const api = axios.create({
 });
 
 const getData = async (name) => {
-  const {data} = await api.get(name);
+  const { data } = await api.get(name);
   return data;
 };
 
