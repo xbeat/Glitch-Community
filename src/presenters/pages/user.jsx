@@ -54,12 +54,12 @@ const NameAndLogin = ({
       </>
     );
   }
-
+  const editableName = name !== null ? name : '';
   return (
     <>
       <h1 className="username">
         <EditableField
-          value={name}
+          value={editableName}
           update={updateName}
           placeholder="What's your name?"
         />
