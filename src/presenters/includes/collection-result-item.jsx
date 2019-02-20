@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getLink as getCollectionLink } from '../../models/collection.js';
-import { NotificationConsumer } from '../notifications';
-import { AddProjectToCollectionMsg } from '../notifications.jsx';
-import { UserAvatar, TeamAvatar } from './avatar.jsx';
-import CollectionAvatar from './collection-avatar.jsx';
+import { getLink as getCollectionLink } from '../../models/collection';
+import { AddProjectToCollectionMsg, NotificationConsumer } from '../notifications';
+import CollectionAvatar from './collection-avatar';
 
 const addProject = (
   addProjectToCollection,

@@ -74,11 +74,11 @@ export async function createCollection(api, name, teamId, createNotification) {
 
     return collection;
   } catch (error) {
-    let message = 'Unable to create collection.  Try again?';
+    let errorMessage = 'Unable to create collection.  Try again?';
     if (!generatedName && error.response && error.response.data) {
-      message = error.response.data.message;
+      const { message } = error.response.data;
     }
-    createNotification(message, 'notifyError');
+    createNotification(message ? message : defaultMessage, 'notifyError');
   }
   return null;
 }

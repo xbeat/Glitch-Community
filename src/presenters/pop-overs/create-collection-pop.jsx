@@ -13,6 +13,26 @@ import Dropdown from './dropdown';
 import { PureEditableField } from '../includes/editable-field';
 import Loader from '../includes/loader';
 
+// getTeamOptions: Format teams in { value: teamId, label: html elements } format for react-select
+function getTeamOptions(teams) {
+  const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
+
+  const teamOptions = orderedTeams.map((team) => {
+    const option = {};
+    const label = (
+      <span id={team.id}>
+        {team.name}
+        {' '}
+        {<TeamAvatar team={team} />}
+      </span>
+    );
+    option.value = team.id;
+    option.label = label;
+    return option;
+  });
+  return teamOptions;
+}
+
 class CreateCollectionPop extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +46,7 @@ class CreateCollectionPop extends React.Component {
     );
     const currentUserOption = { value: null, label: currentUserOptionLabel };
 
-    this.options = [currentUserOption].concat(this.getTeamOptions(this.props.currentUser.teams));
+    this.options = [currentUserOption].concat(getTeamOptions(this.props.currentUser.teams));
 
     this.state = {
       loading: false,
@@ -79,27 +99,6 @@ class CreateCollectionPop extends React.Component {
       // error messaging is handled in createCollection
       this.props.togglePopover();
     }
-  }
-
-  // getTeamOptions: Format teams in { value: teamId, label: html elements } format for react-select
-  getTeamOptions(teams) {
-    const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
-    const teamOptions = [];
-
-    orderedTeams.map((team) => {
-      const option = {};
-      const label = (
-        <span id={team.id}>
-          {team.name}
-          {' '}
-          {<TeamAvatar team={team} />}
-        </span>
-      );
-      option.value = team.id;
-      option.label = label;
-      teamOptions.push(option);
-    });
-    return teamOptions;
   }
 
   handleChange(newValue) {
@@ -186,16 +185,11 @@ CreateCollectionPop.propTypes = {
   api: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   project: PropTypes.object.isRequired,
-  fromProject: PropTypes.bool,
   togglePopover: PropTypes.func.isRequired,
 };
 
 CreateCollectionPop.defaultProps = {
-  api: null,
   currentUser: null,
-  project: null,
-  fromProject: false,
-  togglePopover: null,
 };
 
 export default CreateCollectionPop;
