@@ -15,14 +15,17 @@ const md = markdownIt({
   .use(markdownEmoji)
   .use(markdownSanitizer);
 
-const RawHTML = ({children}) => (
-  children ? <span className="markdown-content" dangerouslySetInnerHTML={{__html: children}}></span> : null
-);
+const RawHTML = ({ children }) => (children ? (
+  <span
+    className="markdown-content"
+    dangerouslySetInnerHTML={{ __html: children }} // eslint-disable-line react/no-danger
+  />
+) : null);
 RawHTML.propTypes = {
   children: PropTypes.string.isRequired,
 };
 
-export const Markdown = React.memo(function Markdown({children}) {
+const Markdown = React.memo(({ children }) => {
   const rendered = md.render(children || '');
   return <RawHTML>{rendered}</RawHTML>;
 });
@@ -30,9 +33,9 @@ Markdown.propTypes = {
   children: PropTypes.string.isRequired,
 };
 
-export const TruncatedMarkdown = React.memo(({children, length}) => {
+export const TruncatedMarkdown = React.memo(({ children, length }) => {
   const rendered = md.render(children || '');
-  const truncated = truncate(rendered, length, {ellipsis: '…'});
+  const truncated = truncate(rendered, length, { ellipsis: '…' });
   return <RawHTML>{truncated}</RawHTML>;
 });
 TruncatedMarkdown.propTypes = {

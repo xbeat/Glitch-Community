@@ -74,8 +74,8 @@ SOFTWARE.
 */
 
 export default function(credentials) {
-  const {policy, signature, accessKeyId} = credentials;
-  const {acl, bucket, namespace} = extractPolicyData(policy);
+  const { policy, signature, accessKeyId } = credentials;
+  const { acl, bucket, namespace } = extractPolicyData(policy);
 
   const bucketUrl = `https://s3.amazonaws.com/${bucket}`;
 
@@ -88,43 +88,46 @@ export default function(credentials) {
   return {
     urlFor,
 
-    upload({key, blob, cacheControl}) {
-      console.log('upload called', key); // 2, based on user id
-      console.log('using namespace', namespace); // user-cover/2, not sure what it's based on
+    upload({ key, blob, cacheControl }) {
+      console.log("upload called", key); // 2, based on user id
+      console.log("using namespace", namespace); // user-cover/2, not sure what it's based on
       const namespacedKey = `${namespace}${key}`;
       const url = urlFor(key);
 
-      return sendForm(bucketUrl, objectToForm({
-        key: namespacedKey,
-        "Content-Type": blob.type || 'binary/octet-stream',
-        "Cache-Control": `max-age=${cacheControl || 31536000}`,
-        AWSAccessKeyId: accessKeyId,
-        "x-amz-security-token": credentials.sessionToken,
-        acl,
-        policy,
-        signature,
-        file: blob,
-      })).then(() => `${bucketUrl}/${encodeURIComponent(namespacedKey)}`);
-    },
+      return sendForm(
+        bucketUrl,
+        objectToForm({
+          key: namespacedKey,
+          "Content-Type": blob.type || "binary/octet-stream",
+          "Cache-Control": `max-age=${cacheControl || 31536000}`,
+          AWSAccessKeyId: accessKeyId,
+          "x-amz-security-token": credentials.sessionToken,
+          acl,
+          policy,
+          signature,
+          file: blob
+        })
+      ).then(() => `${bucketUrl}/${encodeURIComponent(namespacedKey)}`);
+    }
   };
-};
+}
 
 const getKey = function(conditions, key) {
-  const results = conditions.filter(condition => typeof condition === "object").map(object => object[key])
+  const results = conditions
+    .filter(condition => typeof condition === "object")
+    .map(object => object[key])
     .filter(value => value);
 
   return results[0];
 };
 
 const getNamespaceFromPolicyConditions = conditions =>
-  (conditions.filter(function(condition) {
+  conditions.filter(function(condition) {
     if (Array.isArray(condition)) {
       const [a, b, c] = Array.from(condition);
-      return (b === "$key") && ((a === "starts-with") || (a === "eq"));
+      return b === "$key" && (a === "starts-with" || a === "eq");
     }
-  }))[0][2]
-;
-
+  })[0][2];
 var extractPolicyData = function(policy) {
   const policyObject = JSON.parse(atob(policy));
 
@@ -133,7 +136,7 @@ var extractPolicyData = function(policy) {
   return {
     acl: getKey(conditions, "acl"),
     bucket: getKey(conditions, "bucket"),
-    namespace: getNamespaceFromPolicyConditions(conditions),
+    namespace: getNamespaceFromPolicyConditions(conditions)
   };
 };
 
@@ -152,21 +155,17 @@ var sendForm = (url, formData) =>
     request.onreadystatechange = function(e) {
       if (request.readyState === 4) {
         if (isSuccess(request)) {
-
           return resolve(request);
-        } 
+        }
         return reject(request);
-        
       }
     };
 
     return request.send(formData);
-  })
-;
-
+  });
 var objectToForm = function(data) {
   let formData;
-  return formData = Object.keys(data).reduce(function(formData, key) {
+  return (formData = Object.keys(data).reduce(function(formData, key) {
     const value = data[key];
 
     if (value) {
@@ -174,6 +173,5 @@ var objectToForm = function(data) {
     }
 
     return formData;
-  }
-    , new FormData);
+  }, new FormData()));
 };

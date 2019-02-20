@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // add-collection-project-pop.jsx -> Add a project to a collection via the collection page
 import React from "react";
 import PropTypes from "prop-types";
@@ -10,16 +11,37 @@ import ProjectsLoader from "../projects-loader.jsx";
 
 import Notifications from "../notifications.jsx";
 import { AddProjectToCollectionMsg } from "../notifications.jsx";
+=======
+// add-collection-project-pop -> Add a project to a collection via the collection page
+import React from 'react';
+import PropTypes from 'prop-types';
+import { debounce } from 'lodash';
+
+import { TrackClick } from '../analytics';
+import { Loader } from '../includes/loader';
+import ProjectResultItem from '../includes/project-result-item';
+import ProjectsLoader from '../projects-loader';
+
+import { NotificationConsumer } from '../notifications';
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
 
 const ProjectResultsUL = ({ projects, collection, onClick }) => (
   <ul className="results">
     {projects.map(project => (
+<<<<<<< HEAD
       <Notifications key={project.id}>
+=======
+      <NotificationConsumer key={project.id}>
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
         {({ createNotification }) => (
           <li>
             <TrackClick
               name="Project Added to Collection"
+<<<<<<< HEAD
               properties={{ origin: "Add Project collection" }}
+=======
+              properties={{ origin: 'Add Project collection' }}
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
             >
               <ProjectResultItem
                 domain={project.domain}
@@ -34,7 +56,7 @@ const ProjectResultsUL = ({ projects, collection, onClick }) => (
             </TrackClick>
           </li>
         )}
-      </Notifications>
+      </NotificationConsumer>
     ))}
   </ul>
 );
@@ -49,12 +71,20 @@ const ProjectSearchResults = ({
   collection,
   onClick,
   projectName,
+<<<<<<< HEAD
   excludedProjectsCount
+=======
+  excludedProjectsCount,
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
 }) => {
   if (projects.length > 0) {
     const collectionProjectIds = collection.projects.map(project => project.id);
     projects = projects.filter(
+<<<<<<< HEAD
       project => !collectionProjectIds.includes(project.id)
+=======
+      project => !collectionProjectIds.includes(project.id),
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
     );
 
     return <ProjectResultsUL {...{ projects, collection, onClick }} />;
@@ -63,7 +93,13 @@ const ProjectSearchResults = ({
   if (projectName) {
     return (
       <p className="results-empty">
+<<<<<<< HEAD
         {projectName} is already in this collection
+=======
+        {projectName}
+        {' '}
+is already in this collection
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
         <span role="img" aria-label="">
           💫
         </span>
@@ -73,15 +109,32 @@ const ProjectSearchResults = ({
 
   return (
     <p className="results-empty">
+<<<<<<< HEAD
       nothing found{" "}
+=======
+      nothing found
+      {' '}
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
       <span role="img" aria-label="">
         💫
       </span>
       <br />
       {excludedProjectsCount > 0 && (
         <span>
+<<<<<<< HEAD
           (Excluded {excludedProjectsCount} search{" "}
           {excludedProjectsCount > 1 ? "results" : "result"} already found in
+=======
+          (Excluded
+          {' '}
+          {excludedProjectsCount}
+          {' '}
+search
+          {' '}
+          {excludedProjectsCount > 1 ? 'results' : 'result'}
+          {' '}
+already found in
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
           collection)
         </span>
       )}
@@ -95,9 +148,14 @@ ProjectSearchResults.propTypes = {
   excludedProjectsCount: PropTypes.number
 };
 
+ProjectSearchResults.defaultProps = {
+  projectName: '',
+  excludedProjectsCount: 0,
+};
+
 function isUrl(s) {
   try {
-    new URL(s);
+    new URL(s); // eslint-disable-line no-new
     return true;
   } catch (_) {
     return false;
@@ -109,11 +167,19 @@ class AddCollectionProjectPop extends React.Component {
     super(props);
 
     this.state = {
+<<<<<<< HEAD
       query: "", //The actual search text
       maybeRequest: null, //The active request promise
       maybeResults: null, //Null means still waiting vs empty,
       projectName: "", // the project name if the search result is a Url
       excludedProjectsCount: 0 // number of projects omitted from search
+=======
+      query: '', // The actual search text
+      maybeRequest: null, // The active request promise
+      maybeResults: null, // Null means still waiting vs empty,
+      projectName: '', // the project name if the search result is a Url
+      excludedProjectsCount: 0, // number of projects omitted from search
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -122,6 +188,28 @@ class AddCollectionProjectPop extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
 
+<<<<<<< HEAD
+=======
+  onClick(project, collection, createNotification) {
+    this.props.togglePopover();
+
+    // add project to page if successful
+    this.props.addProjectToCollection(project, collection);
+
+    // show notification
+    createNotification(
+      <p>
+        Added
+        {' '}
+        <b>
+          <span className="project-name">{project.domain}</span>
+        </b>
+      </p>,
+      'notifySuccess',
+    );
+  }
+
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
   handleChange(evt) {
     const query = evt.currentTarget.value.trim();
     this.setState({ query });
@@ -150,15 +238,22 @@ class AddCollectionProjectPop extends React.Component {
     this.setState({ maybeResults: null });
 
     let searchByUrl = false;
+<<<<<<< HEAD
     let query = this.state.query;
     const collectionProjectIds = this.props.collection.projects.map(
       project => project.id
+=======
+    let { query } = this.state;
+    const collectionProjectIds = this.props.collection.projects.map(
+      project => project.id,
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
     );
 
     if (isUrl(query)) {
       searchByUrl = true;
       // check if the query is a URL or a name of a project
       // Project URL pattern: https://add-to-alexa.glitch.me/, https://glitch.com/~add-to-alexa
+<<<<<<< HEAD
       let queryUrl = new URL(query);
       if (queryUrl.href.includes("me") && !queryUrl.href.includes("~")) {
         // https://add-to-alexa.glitch.me/
@@ -166,6 +261,15 @@ class AddCollectionProjectPop extends React.Component {
       } else {
         // https://glitch.com/~add-to-alexa
         query = queryUrl.pathname.substring(queryUrl.pathname.indexOf("~") + 1);
+=======
+      const queryUrl = new URL(query);
+      if (queryUrl.href.includes('me') && !queryUrl.href.includes('~')) {
+        // https://add-to-alexa.glitch.me/
+        query = queryUrl.hostname.substring(0, queryUrl.hostname.indexOf('.'));
+      } else {
+        // https://glitch.com/~add-to-alexa
+        query = queryUrl.pathname.substring(queryUrl.pathname.indexOf('~') + 1);
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
       }
     }
 
@@ -185,11 +289,16 @@ class AddCollectionProjectPop extends React.Component {
 
     const results = data;
 
+<<<<<<< HEAD
     let originalNumResults = results.length;
+=======
+    const originalNumResults = results.length;
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
 
     let nonCollectionResults = [];
     if (searchByUrl) {
       // get the single result that matches the URL exactly - check with https://community.glitch.me/
+<<<<<<< HEAD
       nonCollectionResults = results.filter(
         result => (result ? result.domain == query : null)
       );
@@ -198,6 +307,14 @@ class AddCollectionProjectPop extends React.Component {
       if (
         nonCollectionResults.length > 0 &&
         collectionProjectIds.includes(nonCollectionResults[0].id)
+=======
+      nonCollectionResults = results.filter(result => result.domain === query);
+
+      // check if the project is already in the collection
+      if (
+        nonCollectionResults.length > 0
+        && collectionProjectIds.includes(nonCollectionResults[0].id)
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
       ) {
         nonCollectionResults = [];
         this.setState({ projectName: query });
@@ -205,7 +322,11 @@ class AddCollectionProjectPop extends React.Component {
     } else {
       // user is searching by project name  - filter out any projects currently in the collection
       nonCollectionResults = results.filter(
+<<<<<<< HEAD
         result => !collectionProjectIds.includes(result.id)
+=======
+        result => !collectionProjectIds.includes(result.id),
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
       );
 
       if (nonCollectionResults.length !== originalNumResults) {
@@ -219,6 +340,7 @@ class AddCollectionProjectPop extends React.Component {
       }
     }
 
+<<<<<<< HEAD
     this.setState(({ maybeRequest }) => {
       return request === maybeRequest
         ? {
@@ -242,11 +364,27 @@ class AddCollectionProjectPop extends React.Component {
           "notifySuccess"
         )
       );
+=======
+    this.setState(({ maybeRequest }) => (request === maybeRequest
+      ? {
+        maybeRequest: null,
+        maybeResults: nonCollectionResults,
+        recentProjects: null,
+      }
+      : {}));
+    return null;
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
   }
 
   render() {
     // load user's recent projects
+<<<<<<< HEAD
     const results = this.state.query ? this.state.maybeResults : this.props.initialProjects;
+=======
+    const results = this.state.query
+      ? this.state.maybeResults
+      : this.props.initialProjects;
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
 
     const showResults = !!(this.state.query || (results && results.length));
     const isLoading = !!(this.state.maybeRequest || !results);
@@ -287,12 +425,22 @@ class AddCollectionProjectPop extends React.Component {
 }
 
 AddCollectionProjectPop.propTypes = {
-  api: PropTypes.func.isRequired,
+  api: PropTypes.func,
   collection: PropTypes.object.isRequired,
   initialProjects: PropTypes.array.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
   togglePopover: PropTypes.func, // required but added dynamically
+<<<<<<< HEAD
   currentUser: PropTypes.object.isRequired
 };
 
+=======
+};
+
+AddCollectionProjectPop.defaultProps = {
+  togglePopover: null,
+  api: null,
+};
+
+>>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
 export default AddCollectionProjectPop;

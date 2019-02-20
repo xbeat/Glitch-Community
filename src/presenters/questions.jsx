@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import randomColor from 'randomcolor';
-import {sample} from 'lodash';
+import { sample } from 'lodash';
 
-import ErrorBoundary from './includes/error-boundary.jsx';
-import Link from './includes/link.jsx';
-import QuestionItem from './question-item.jsx';
-import {captureException} from '../utils/sentry';
+import ErrorBoundary from './includes/error-boundary';
+import { Link } from './includes/link';
+import QuestionItem from './question-item';
+import { captureException } from '../utils/sentry';
 
 const kaomojis = [
   '八(＾□＾*)',
@@ -18,10 +18,17 @@ const kaomojis = [
   'ヽ(^。^)丿',
 ];
 
-const QuestionTimer = ({animating, callback}) => (
+const QuestionTimer = ({ animating, callback }) => (
   <div className="loader-pie" title="Looking for more questions...">
-    <div className="left-side"><div className={`slice ${animating ? 'animated' : ''}`} onAnimationEnd={callback}></div></div>
-    <div className="right-side"><div className={`slice ${animating ? 'animated' : ''}`}></div></div>
+    <div className="left-side">
+      <div
+        className={`slice ${animating ? 'animated' : ''}`}
+        onAnimationEnd={callback}
+      />
+    </div>
+    <div className="right-side">
+      <div className={`slice ${animating ? 'animated' : ''}`} />
+    </div>
   </div>
 );
 QuestionTimer.propTypes = {
@@ -38,15 +45,26 @@ class Questions extends React.Component {
       questions: [],
     };
   }
-  
+
+  componentDidMount() {
+    this.load();
+  }
+
   async load() {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     try {
-      const {data} = await this.props.api.get('projects/questions');
-      const questions = data.map(q => JSON.parse(q.details)).filter(q => !!q).slice(0, this.props.max).map(question => {
-        const [colorInner, colorOuter] = randomColor({luminosity: 'light', count: 2});
-        return {colorInner, colorOuter, ...question};
-      });
+      const { data } = await this.props.api.get('projects/questions');
+      const questions = data
+        .map(q => JSON.parse(q.details))
+        .filter(q => !!q)
+        .slice(0, this.props.max)
+        .map((question) => {
+          const [colorInner, colorOuter] = randomColor({
+            luminosity: 'light',
+            count: 2,
+          });
+          return { colorInner, colorOuter, ...question };
+        });
       this.setState({
         kaomoji: sample(kaomojis),
         questions,
@@ -55,20 +73,17 @@ class Questions extends React.Component {
       console.error(error);
       captureException(error);
     }
-    this.setState({loading: false});
+    this.setState({ loading: false });
   }
-  
-  componentDidMount() {
-    this.load();
-  }
-  
+
   render() {
-    const {kaomoji, loading, questions} = this.state;
+    const { kaomoji, loading, questions } = this.state;
     return (
       <section className="questions">
         <h2>
-          <Link to="/questions">Help Others, Get Thanks →</Link>{' '}
-          <QuestionTimer animating={!loading} callback={() => this.load()}/>
+          <Link to="/questions">Help Others, Get Thanks →</Link>
+          {' '}
+          <QuestionTimer animating={!loading} callback={() => this.load()} />
         </h2>
         <article className="projects">
           {questions.length ? (
@@ -76,15 +91,23 @@ class Questions extends React.Component {
               <ul className="projects-container">
                 {questions.map(question => (
                   <li key={question.questionId}>
-                    <QuestionItem {...question}/>
+                    <QuestionItem {...question} />
                   </li>
                 ))}
               </ul>
             </ErrorBoundary>
           ) : (
             <>
-              {kaomoji} Looks like nobody is asking for help right now.{' '}
-              <Link className="general-link" to="/help/how-can-i-get-help-with-code-in-my-project/">Learn about helping</Link>
+              {kaomoji}
+              {' '}
+Looks like nobody is asking for help right now.
+              {' '}
+              <Link
+                className="general-link"
+                to="/help/how-can-i-get-help-with-code-in-my-project/"
+              >
+                Learn about helping
+              </Link>
             </>
           )}
         </article>
@@ -93,11 +116,12 @@ class Questions extends React.Component {
   }
 }
 Questions.propTypes = {
-  api: PropTypes.any.isRequired,
+  api: PropTypes.any,
   max: PropTypes.number,
 };
 Questions.defaultProps = {
   max: 3,
+  api: null,
 };
 
 export default Questions;

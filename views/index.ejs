@@ -87,13 +87,13 @@
     <script src="<%= scripts[i] %>"></script>
     <% } %>
     <script>
-      if (window.bootstrap) {
-        window.bootstrap()
-      } else if (!BUILD_COMPLETE) {
-        document.getElementById('fallback').removeAttribute('style');
-        document.getElementById('fallback-img').removeAttribute('style');
-        document.getElementById('fallback-notbuilt').removeAttribute('style');
-      }
+        if (window.bootstrap) {
+          window.bootstrap()
+        } else if (!BUILD_COMPLETE) {
+          document.getElementById('fallback').removeAttribute('style');
+          document.getElementById('fallback-img').removeAttribute('style');
+          document.getElementById('fallback-notbuilt').removeAttribute('style');
+        }
     </script>
   </body>
 </html>

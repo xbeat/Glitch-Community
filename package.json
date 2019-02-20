@@ -24,6 +24,7 @@
     "babel-preset-modern-browsers": "^13.0.1",
     "body-parser": "^1.18.3",
     "c3": "^0.6.12",
+    "classnames": "^2.2.6",
     "compression": "^1.7.3",
     "css-loader": "^2.1.0",
     "d3-array": "^2.0.3",
@@ -32,6 +33,7 @@
     "ejs": "^2.6.1",
     "email-addresses": "^3.0.3",
     "eslint": "^5.13.0",
+    "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.2",
@@ -88,5 +90,10 @@
     "./src/utils/progress-promise.js",
     "./src/polyfills.js"
   ],
-  "license": "Apache License Version 2.0"
+  "license": "Apache License Version 2.0",
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-import": "^2.16.0"
+  }
 }

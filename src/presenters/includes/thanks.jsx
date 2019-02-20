@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ThanksText = ({count}) => {
+const ThanksText = ({ count }) => {
   if (count === 1) {
-    return "Thanked once";
-  } else if (count === 2) {
-    return "Thanked twice";
-  } 
+    return 'Thanked once';
+  } if (count === 2) {
+    return 'Thanked twice';
+  }
   return `Thanked ${count} times`;
 };
 ThanksText.propTypes = {
   count: PropTypes.number.isRequired,
 };
 
-const Thanks = ({count}) => (count > 0 ? (
+const Thanks = ({ count }) => (count > 0 ? (
   <p className="thanks">
     <ThanksText count={count} />
-    &nbsp;
+      &nbsp;
     <span className="emoji sparkling_heart" />
   </p>
 ) : null);
@@ -24,7 +24,7 @@ Thanks.propTypes = {
   count: PropTypes.number.isRequired,
 };
 
-const ThanksShort = ({count}) => (
+const ThanksShort = ({ count }) => (
   <p className="thanks">
     <span className="emoji sparkling_heart" />
     &nbsp;
@@ -35,5 +35,4 @@ ThanksShort.propTypes = {
   count: PropTypes.number.isRequired,
 };
 
-export {Thanks, ThanksShort};
-export default Thanks;
+export { Thanks, ThanksShort };

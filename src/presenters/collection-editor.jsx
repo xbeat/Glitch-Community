@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { CurrentUserConsumer } from "./current-user.jsx";
-import ErrorHandlers from "./error-handlers.jsx";
+import { CurrentUserConsumer } from './current-user';
+import ErrorHandlers from './error-handlers';
 
 class CollectionEditor extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      ...props.initialCollection
+      ...props.initialCollection,
     };
   }
 
@@ -17,7 +17,7 @@ class CollectionEditor extends React.Component {
     if (!this.props.currentUser) return false;
     if (this.state.teamId > 0) {
       return this.props.currentUser.teams.some(
-        team => team.id === this.state.teamId
+        team => team.id === this.state.teamId,
       );
     }
     if (this.state.userId > 0) {
@@ -29,27 +29,29 @@ class CollectionEditor extends React.Component {
   async updateFields(changes) {
     const { data } = await this.props.api.patch(
       `collections/${this.state.id}`,
-      changes
+      changes,
     );
     this.setState(data);
   }
 
   async addProjectToCollection(project, collection) {
-    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
-    if (collection.id == this.state.id) {
+    if (collection.id === this.state.id) {
       // add project to collection page
       this.setState(({ projects }) => ({
-        projects: [...projects, project]
+        projects: [...projects, project],
       }));
     }
+    await this.props.api.patch(
+      `collections/${collection.id}/add/${project.id}`,
+    );
   }
 
   async removeProjectFromCollection(project) {
     await this.props.api.patch(
-      `collections/${this.state.id}/remove/${project.id}`
+      `collections/${this.state.id}/remove/${project.id}`,
     );
     this.setState(({ projects }) => ({
-      projects: projects.filter(p => p.id !== project.id)
+      projects: projects.filter(p => p.id !== project.id),
     }));
   }
 
@@ -71,18 +73,23 @@ class CollectionEditor extends React.Component {
         this.updateFields({ name, url }).catch(handleErrorForInput),
       updateDescription: description =>
         this.updateFields({ description }).catch(handleError),
-      updateColor: color => this.updateFields({ coverColor: color })
+      updateColor: color => this.updateFields({ coverColor: color }),
     };
     return this.props.children(this.state, funcs, this.userIsAuthor());
   }
 }
 CollectionEditor.propTypes = {
-  api: PropTypes.any.isRequired,
+  api: PropTypes.any,
   children: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   handleError: PropTypes.func.isRequired,
   handleErrorForInput: PropTypes.func.isRequired,
   initialCollection: PropTypes.object.isRequired
+};
+
+CollectionEditor.defaultProps = {
+  currentUser: null,
+  api: null,
 };
 
 const CollectionEditorContainer = ({ api, children, initialCollection }) => (
@@ -102,9 +109,13 @@ const CollectionEditorContainer = ({ api, children, initialCollection }) => (
   </ErrorHandlers>
 );
 CollectionEditorContainer.propTypes = {
-  api: PropTypes.any.isRequired,
+  api: PropTypes.any,
   children: PropTypes.func.isRequired,
   initialCollection: PropTypes.object.isRequired
+};
+
+CollectionEditorContainer.defaultProps = {
+  api: null,
 };
 
 export default CollectionEditorContainer;
