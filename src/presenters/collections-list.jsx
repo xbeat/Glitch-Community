@@ -7,7 +7,7 @@ import CollectionItem from './collection-item';
 import { getLink, createCollection } from '../models/collection';
 import { getPredicate } from '../models/words';
 import { Loader } from './includes/loader';
-import { NotificationConsumer } from './notifications.jsx';
+import { NotificationConsumer } from './notifications';
 
 
 class CollectionsList extends React.Component {

@@ -80,6 +80,7 @@ export async function createCollection(api, name, teamId, createNotification) {
     }
     createNotification(message, 'notifyError');
   }
+  return null;
 }
 
 // Circular dependencies must go below module.exports

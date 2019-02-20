@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { debounce } from 'lodash';
 
 import { TrackClick } from '../analytics';
-import Loader from '../includes/loader';
+import { Loader } from '../includes/loader';
 import ProjectResultItem from '../includes/project-result-item';
 import ProjectsLoader from '../projects-loader';
 
