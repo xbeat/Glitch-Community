@@ -23,15 +23,23 @@ export const Avatar = ({
       src={src}
       alt={name}
       style={color ? { backgroundColor: color } : null}
-      onError={srcFallback ? event => (event.target.src = srcFallback) : null}
-      className={type + "-avatar"}
+      onError={
+        srcFallback
+          ? (event) => {
+            event.target.src = srcFallback;
+          }
+          : null
+      }
+      className={`${type}-avatar`}
     />
   );
 
   if (!hideTooltip) {
-    <div data-tooltip={name} data-tooltip-left="true">
-      {contents}
-    </div>;
+    return (
+      <div data-tooltip={name} data-tooltip-left="true">
+        {contents}
+      </div>
+    );
   }
   return contents;
 };
@@ -67,13 +75,14 @@ TeamAvatar.propTypes = {
   }).isRequired,
 };
 
-export const UserAvatar = ({ user, suffix = '' }) => (
+export const UserAvatar = ({ user, suffix = '', hideTooltip }) => (
   <Avatar
     name={getDisplayName(user) + suffix}
     src={getAvatarThumbnailUrl(user)}
     color={user.color}
     srcFallback={ANON_AVATAR_URL}
     type="user"
+    hideTooltip={hideTooltip}
   />
 );
 UserAvatar.propTypes = {
@@ -85,8 +94,10 @@ UserAvatar.propTypes = {
     color: PropTypes.string.isRequired,
   }).isRequired,
   suffix: PropTypes.string,
+  hideTooltip: PropTypes.bool,
 };
 
 UserAvatar.defaultProps = {
   suffix: '',
+  hideTooltip: false,
 };
