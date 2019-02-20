@@ -23,7 +23,7 @@ function getTeamOptions(teams) {
       <span id={team.id}>
         {team.name}
         {' '}
-        {<TeamAvatar team={team} />}
+        {<TeamAvatar team={team} hideTooltip={true}/>}
       </span>
     );
     option.value = team.id;
@@ -41,7 +41,7 @@ class CreateCollectionPop extends React.Component {
       <span>
         myself
         {' '}
-        <UserAvatar user={this.props.currentUser} />
+        <UserAvatar user={this.props.currentUser} hideTooltip={true}/>
       </span>
     );
     const currentUserOption = { value: null, label: currentUserOptionLabel };
