@@ -30,6 +30,13 @@ module.exports = function(external) {
   app.use(express.static("build", { index: false, maxAge: ms }));
 
   // Log all requests to a local file for diagnostics
+  const requestTime = function(req, res, next) {
+    req.requestTime = Date.now();
+    next();
+  };
+  
+  app.use(requestTime)
+  
   app.use(
     expressWinston.logger({
       transports: [
@@ -47,11 +54,10 @@ module.exports = function(external) {
       ),
       meta: false, // logs meta data about the request if true
       msg: (req, res) => {
-        return `HTTP ${req.method} ${req.url} ${
-          res.statusCode
-        } / Response-Time: ${res.responseTime}ms / User-Agent: ${
-          req.headers["user-agent"]
-        } / Cache-Control: ${req.headers["cache-control"]}`;
+        return `${req.requestTime}: HTTP ${req.method} ${req.url} ${res.statusCode} /
+Response-Time: ${res.responseTime}ms / 
+User-Agent: ${req.headers["user-agent"]} / 
+Cache-Control: ${req.headers["cache-control"]}`;
       },
       colorize: false, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
     }),

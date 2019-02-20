@@ -51,7 +51,7 @@ const proxy = require('./proxy');
 const proxied = proxy(app);
 
 const router = require('./routes');
-app.use('/', router(['/edit', ...proxied]));
+app.use(router(['/edit', ...proxied]));
 
 // Add an explicit no-cache to 404 responses
 // Since this is the last handler it will only be hit when all other handlers miss
