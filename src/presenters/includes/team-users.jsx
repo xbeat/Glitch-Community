@@ -140,7 +140,7 @@ export class AddTeamUser extends React.Component {
 
   async inviteUser(togglePopover, user) {
     togglePopover();
-    
+
     this.setState(state => ({
       invitee: getDisplayName(user),
       newlyInvited: [...state.newlyInvited, user],
@@ -148,7 +148,7 @@ export class AddTeamUser extends React.Component {
     try {
       await this.props.inviteUser(user);
     } catch (error) {
-      this.setState((state) => ({
+      this.setState(state => ({
         invitee: '',
         alreadyInvited: state.alreadyInvited.filter(u => u.id !== user.id),
       }));

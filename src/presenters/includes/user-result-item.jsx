@@ -77,18 +77,19 @@ InviteByEmail.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export const WhitelistEmailDomain = ({domain, onClick}) => (
+export const WhitelistEmailDomain = ({ domain, onClick }) => (
   <button onClick={onClick} className="button-unstyled result">
-    <WhitelistedDomainIcon domain={domain}/>
-    <div className="result-name">Allow anyone with an @{domain} email to join</div>
+    <WhitelistedDomainIcon domain={domain} />
+    <div className="result-name">
+Allow anyone with an @
+      {domain}
+      {' '}
+email to join
+    </div>
   </button>
 );
 
 WhitelistEmailDomain.propTypes = {
   domain: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-};
-
-WhitelistEmailDomain.defaultProps = {
-  prevDomain: '',
 };
