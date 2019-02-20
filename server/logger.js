@@ -21,7 +21,7 @@ app.use(
         name: "requests",
         filename: ".log/requests.log",
         maxsize: 2500, // max size of each log file in bytes
-        maxFiles: 0,
+        maxFiles: 1,
         tailable: true, // should make it so the oldest data will get removed from the file when it exceeds maxsize
       }),
     ],
