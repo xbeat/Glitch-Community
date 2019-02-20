@@ -102,16 +102,12 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
 
       {!!props.addProjectToCollection && (
         <section className="pop-over-actions">
-<<<<<<< HEAD
-          <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to Collection " emoji="framed-picture"/>
-=======
           <PopoverButton
             onClick={addToCollectionPopover}
             {...props}
             text="Add to My Collection "
             emoji="framed-picture"
           />
->>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
         </section>
       )}
 

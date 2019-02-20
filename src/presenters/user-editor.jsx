@@ -152,11 +152,7 @@ class UserEditor extends React.Component {
   }
 
   render() {
-<<<<<<< HEAD
     const {handleError, handleErrorForInput, handleCustomError} = this.props;
-=======
-    const { handleError, handleErrorForInput } = this.props;
->>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
     const funcs = {
       updateName: name => this.updateFields({ name }).catch(handleErrorForInput),
       updateLogin: login => this.updateFields({ login }).catch(handleErrorForInput),
@@ -169,17 +165,10 @@ class UserEditor extends React.Component {
       leaveProject: id => this.leaveProject(id).catch(handleError),
       deleteProject: id => this.deleteProject(id).catch(handleError),
       undeleteProject: id => this.undeleteProject(id).catch(handleError),
-<<<<<<< HEAD
       setDeletedProjects: _deletedProjects => this.setState({_deletedProjects}),
       addProjectToCollection: (project,collection) => this.addProjectToCollection(project, collection).catch(handleCustomError),
       featureProject: (id) => this.featureProject(id).catch(handleError),
       unfeatureProject: id => this.unfeatureProject(id).catch(handleError)
-=======
-      setDeletedProjects: _deletedProjects => this.setState({ _deletedProjects }),
-      addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(handleError),
-      featureProject: id => this.featureProject(id).catch(handleError),
-      unfeatureProject: id => this.unfeatureProject(id).catch(handleError),
->>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
     };
     return this.props.children(this.state, funcs, this.isCurrentUser());
   }
