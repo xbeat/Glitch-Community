@@ -76,9 +76,9 @@ export async function createCollection(api, name, teamId, createNotification) {
   } catch (error) {
     let errorMessage = 'Unable to create collection.  Try again?';
     if (!generatedName && error.response && error.response.data) {
-      const { message } = error.response.data;
+      errorMessage = error.response.data.message;
     }
-    createNotification(message ? message : defaultMessage, 'notifyError');
+    createNotification(errorMessage, 'notifyError');
   }
   return null;
 }

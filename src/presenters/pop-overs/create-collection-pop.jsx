@@ -11,7 +11,7 @@ import { AddProjectToCollectionMsg, NotificationConsumer } from '../notification
 import { NestedPopoverTitle } from './popover-nested';
 import Dropdown from './dropdown';
 import { PureEditableField } from '../includes/editable-field';
-import Loader from '../includes/loader';
+import { Loader } from '../includes/loader';
 
 // getTeamOptions: Format teams in { value: teamId, label: html elements } format for react-select
 function getTeamOptions(teams) {

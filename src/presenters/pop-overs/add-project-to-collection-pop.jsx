@@ -133,6 +133,7 @@ AddProjectToCollectionPopContents.defaultProps = {
   addProjectToCollection: null,
   collections: [],
   currentUser: null,
+  togglePopover: null,
   fromProject: false,
 };
 
@@ -142,6 +143,10 @@ class AddProjectToCollectionPop extends React.Component {
     this.state = {
       maybeCollections: null, // null means still loading
     };
+  }
+
+  async componentDidMount() {
+    this.loadCollections();
   }
 
   async loadCollections() {
@@ -156,20 +161,12 @@ class AddProjectToCollectionPop extends React.Component {
         }
       });
 
-      const orderedCollections = orderBy(allCollections, collection => (collection.updatedAt, ['desc']));
+      const orderedCollections = orderBy(allCollections, collection => collection.updatedAt, ['desc']);
 
       this.setState({ maybeCollections: orderedCollections });
     } catch (error) {
-      if (error && error.response && error.response.data && error.response.data.message) {
-        this.setState({ error: error.response.data.message });
-      } else {
-        captureException(error);
-      }
+      captureException(error);
     }
-  }
-
-  async componentDidMount() {
-    this.loadCollections();
   }
 
   render() {
@@ -186,18 +183,21 @@ class AddProjectToCollectionPop extends React.Component {
         )}
         startAlternateVisible={false}
       >
-        {(createCollectionPopover) =>
-          maybeCollections ? (
-            <AddProjectToCollectionPopContents {...this.props} collections={maybeCollections} createCollectionPopover={createCollectionPopover} />
-          ) : (
+        {(createCollectionPopover) => {
+          if (maybeCollections) {
+            return (
+              <AddProjectToCollectionPopContents {...this.props} collections={maybeCollections} createCollectionPopover={createCollectionPopover} />
+            );
+          }
+          return (
             <dialog className="pop-over add-project-to-collection-pop wide-pop">
               {!this.props.fromProject && <AddProjectPopoverTitle project={this.props.project} />}
               <div className="loader-container">
                 <Loader />
               </div>
             </dialog>
-          )
-        }
+          );
+        }}
       </NestedPopover>
     );
   }
@@ -209,9 +209,7 @@ AddProjectToCollectionPop.propTypes = {
 };
 
 AddProjectToCollectionPop.defaultProps = {
-  togglePopover: null,
-  fromProject: false,
-  api: null,
+  currentUser: null,
 };
 
 export default AddProjectToCollectionPop;
