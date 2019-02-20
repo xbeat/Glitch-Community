@@ -18,9 +18,9 @@ app.use(
       new winston.transports.File({
         name: "requests",
         filename: ".log/requests.log",
-        maxsize: 2500, // max size of each log file in bytes
-        maxFiles: 0,
-        tailable: true, // should make it so the oldest data will get removed from the file when it exceeds maxsize
+        maxsize: 100 * 1024, // max size of each log file in bytes
+        maxFiles: 1, // overflow will go into requests1.log once the max size of requests.log is reached
+        tailable: true, // the oldest data will get removed from requests.log so that you can always tail it for the latest logs
       }),
     ],
     format: winston.format.combine(
