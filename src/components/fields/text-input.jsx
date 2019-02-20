@@ -30,7 +30,9 @@ const TextInput = ({
   placeholder,
   postfix,
   prefix,
-  type, value}) => {
+  type,
+  value,
+}) => {
   const uniqueId = useUniqueId();
   const borderClassName = classNames(styles.inputBorder, {
     [styles.underline]: !opaque,
@@ -55,10 +57,10 @@ const TextInput = ({
           type={type}
           value={value}
         />
-        {!!error && <InputPart><InputErrorIcon/></InputPart>}
+        {!!error && <InputPart><InputErrorIcon /></InputPart>}
         {!!postfix && <InputPart>{postfix}</InputPart>}
       </div>
-      {!!error && <InputErrorMessage error={error}/>}
+      {!!error && <InputErrorMessage error={error} />}
     </label>
   );
 };

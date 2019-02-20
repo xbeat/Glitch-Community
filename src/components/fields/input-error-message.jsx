@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './input-error-message.styl';
 
-const InputErrorMessage = ({error}) => (
+const InputErrorMessage = ({ error }) => (
   <div className={styles.errorMessage}>{error}</div>
 );
 
