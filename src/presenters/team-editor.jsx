@@ -294,12 +294,9 @@ const TeamEditorContainer = ({ api, children, initialTeam }) => {
   );
 };
 TeamEditorContainer.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   initialTeam: PropTypes.object.isRequired,
-};
-TeamEditorContainer.defaultProps = {
-  api: null,
 };
 
 export default TeamEditorContainer;

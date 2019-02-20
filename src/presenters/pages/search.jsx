@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Layout from '../layout';
 
-import { CurrentUserConsumer } from '../current-user';
+import { useCurrentUser } from '../current-user';
 
-import ErrorHandlers from '../error-handlers';
+import { useErrorHandlers } from '../error-handlers';
 import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';
@@ -158,45 +158,39 @@ SearchResults.defaultProps = {
   api: null,
 };
 
-const SearchPage = ({ api, query }) => (
-  <Layout api={api} searchQuery={query}>
-    <Helmet>
-      {!!query && (
-        <title>
-          Search for
-          {query}
-        </title>
-      )}
-    </Helmet>
-    {query ? (
-      <ErrorHandlers>
-        {errorFuncs => (
-          <CurrentUserConsumer>
-            {currentUser => (
-              <SearchResults
-                {...errorFuncs}
-                api={api}
-                query={query}
-                currentUser={currentUser}
-              />
-            )}
-          </CurrentUserConsumer>
+const SearchPage = ({ api, query }) => {
+  const { currentUser } = useCurrentUser();
+  const errorFuncs = useErrorHandlers();
+  return (
+    <Layout api={api} searchQuery={query}>
+      <Helmet>
+        {!!query && (
+          <title>
+            Search for
+            {query}
+          </title>
         )}
-      </ErrorHandlers>
-    ) : (
-      <NotFound name="anything" />
-    )}
-    <MoreIdeas api={api} />
-  </Layout>
-);
+      </Helmet>
+      {query ? (
+        <SearchResults
+          {...errorFuncs}
+          api={api}
+          query={query}
+          currentUser={currentUser}
+        />
+      ) : (
+        <NotFound name="anything" />
+      )}
+      <MoreIdeas api={api} />
+    </Layout>
+  );
+};
 SearchPage.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   query: PropTypes.string,
 };
-
 SearchPage.defaultProps = {
   query: '',
-  api: null,
 };
 
 export default SearchPage;
