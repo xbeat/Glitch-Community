@@ -54,6 +54,7 @@ class CreateCollectionPop extends React.Component {
   async handleSubmit(event, createNotification) {
     event.preventDefault();
     this.setState({ loading: true });
+    const teamId = { this.state.selection.value == -1 ? null : this.state.selection.value };
     // create the new collection with createCollection(api, name, teamId, notification)
     const collectionResponse = await createCollection(
       this.props.api,
@@ -73,9 +74,9 @@ class CreateCollectionPop extends React.Component {
             ({ id }) => id == this.state.selection.value
           );
           collection.team = team;
-        } else {
-          collection.user = this.props.currentUser;
         }
+        collection.user = this.props.currentUser;
+        
         const newCollectionUrl = getLink(collection);
 
         // show notification
