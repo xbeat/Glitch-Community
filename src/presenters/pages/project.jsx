@@ -211,12 +211,7 @@ ProjectPage.defaultProps = {
 };
 
 async function getProject(api, domain) {
-<<<<<<< HEAD
-  const {data} = await api.get(`projects/${domain}`);
-=======
   const { data } = await api.get(`projects/${domain}`);
-  console.log('project', data);
->>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
   return data;
 }
 

@@ -232,17 +232,15 @@ class AddCollectionProjectPop extends React.Component {
         }
       }
     }
-
-<<<<<<< HEAD
-    this.setState(({ maybeRequest }) => {
-      return request === maybeRequest
-        ? {
-          maybeRequest: null,
-          maybeResults: nonCollectionResults,
-          recentProjects: null
-        }
-        : {};
-    });
+    
+    this.setState(({ maybeRequest }) => (request === maybeRequest
+      ? {
+        maybeRequest: null,
+        maybeResults: nonCollectionResults,
+        recentProjects: null,
+      }
+      : {}));
+    return null;
   }
 
   onClick(project, collection, createNotification) {
@@ -257,27 +255,13 @@ class AddCollectionProjectPop extends React.Component {
           "notifySuccess"
         )
       );
-=======
-    this.setState(({ maybeRequest }) => (request === maybeRequest
-      ? {
-        maybeRequest: null,
-        maybeResults: nonCollectionResults,
-        recentProjects: null,
-      }
-      : {}));
-    return null;
->>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
   }
 
   render() {
     // load user's recent projects
-<<<<<<< HEAD
-    const results = this.state.query ? this.state.maybeResults : this.props.initialProjects;
-=======
     const results = this.state.query
       ? this.state.maybeResults
       : this.props.initialProjects;
->>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
 
     const showResults = !!(this.state.query || (results && results.length));
     const isLoading = !!(this.state.maybeRequest || !results);
@@ -323,11 +307,7 @@ AddCollectionProjectPop.propTypes = {
   initialProjects: PropTypes.array.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
   togglePopover: PropTypes.func, // required but added dynamically
-<<<<<<< HEAD
   currentUser: PropTypes.object.isRequired
-};
-
-=======
 };
 
 AddCollectionProjectPop.defaultProps = {
@@ -335,5 +315,4 @@ AddCollectionProjectPop.defaultProps = {
   api: null,
 };
 
->>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
 export default AddCollectionProjectPop;

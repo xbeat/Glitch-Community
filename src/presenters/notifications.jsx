@@ -1,13 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-<<<<<<< HEAD
-const { Provider, Consumer } = React.createContext();
-=======
 const context = React.createContext();
 const { Provider } = context;
 export const NotificationConsumer = context.Consumer;
->>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
 
 const Notification = ({ children, className, remove }) => (
   <aside className={`notification ${className}`} onAnimationEnd={remove}>
@@ -23,39 +19,18 @@ export class Notifications extends React.Component {
     };
   }
 
-<<<<<<< HEAD
-  create(content, className = "") {
-=======
   create(content, className = '') {
->>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
     const notification = {
       id: `${Date.now()}{Math.random()}`,
       className,
       content
     };
     this.setState(({ notifications }) => ({
-<<<<<<< HEAD
-      notifications: [...notifications, notification]
-=======
       notifications: [...notifications, notification],
->>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
     }));
     return notification.id;
   }
 
-<<<<<<< HEAD
-  createError(content = "Something went wrong. Try refreshing?") {
-    this.create(content, "notifyError");
-  }
-
-  createPersistent(content, className = "") {
-    const id = this.create(content, `notifyPersistent ${className}`);
-    const updateNotification = content => {
-      this.setState(({ notifications }) => ({
-        notifications: notifications.map(
-          n => (n.id === id ? { ...n, content } : n)
-        )
-=======
   createError(content = 'Something went wrong. Try refreshing?') {
     this.create(content, 'notifyError');
   }
@@ -65,7 +40,6 @@ export class Notifications extends React.Component {
     const updateNotification = (updatedContent) => {
       this.setState(({ notifications }) => ({
         notifications: notifications.map(n => (n.id === id ? { ...n, updatedContent } : n)),
->>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
       }));
     };
     const removeNotification = () => {
@@ -79,11 +53,7 @@ export class Notifications extends React.Component {
 
   remove(id) {
     this.setState(({ notifications }) => ({
-<<<<<<< HEAD
-      notifications: notifications.filter(n => n.id !== id)
-=======
       notifications: notifications.filter(n => n.id !== id),
->>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
     }));
   }
 
@@ -114,7 +84,6 @@ export class Notifications extends React.Component {
     );
   }
 }
-<<<<<<< HEAD
 
 export const AddProjectToCollectionMsg = ({
   projectDomain,
@@ -143,6 +112,3 @@ AddProjectToCollectionMsg.propTypes = {
   url: PropTypes.string
 };
 
-export default Consumer;
-=======
->>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656

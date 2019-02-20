@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 <<<<<<< HEAD
 import {getLink as getCollectionLink} from '../../models/collection.js';
-import Notifications from '../notifications.jsx';
+import { NotificationConsumer } from '../notifications';
 import {AddProjectToCollectionMsg} from '../notifications.jsx';
 import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
 import CollectionAvatar from './collection-avatar.jsx';
