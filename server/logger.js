@@ -6,6 +6,8 @@ const app = express.Router();
 
 // Log all requests to a local file for diagnostics
 const requestTime = function(req, res, next) {
+  console.log(req.url)
+  console.log(req.url.match(/\.js|\.css/) !== null)
   req.requestTime = new Date().toISOString();
   next();
 };
@@ -37,7 +39,7 @@ User-Agent: ${req.headers["user-agent"]} /
 Cache-Control: ${req.headers["cache-control"]}`;
     },
     colorize: false, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).,
-    ignoredRoute: (req) => { return req.url.match(/\.js|\.css/) }
+    ignoredRoute: (req) => { return req.url.match(/\.js|\.css/) !== null }
   }),
 );
 
