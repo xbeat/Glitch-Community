@@ -4,8 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { captureException } from '../../utils/sentry';
 
 import { getLink } from '../../models/team';
-import { CurrentUserConsumer } from '../current-user';
-import NotificationsConsumer from '../notifications';
+import { useCurrentUser } from '../current-user';
+import { useNotifications } from '../notifications';
 
 class JoinTeamPageBase extends React.Component {
   constructor(props) {
@@ -18,7 +18,8 @@ class JoinTeamPageBase extends React.Component {
   async componentDidMount() {
     let teamId = null;
     try {
-      var { data: teamId } = await this.props.api.get(`/teamId/byUrl/${this.props.teamUrl}`);
+      const response = await this.props.api.get(`/teamId/byUrl/${this.props.teamUrl}`);
+      teamId = response.data;
     } catch (error) {
       if (error && !(error.response && error.response.status === 404)) {
         captureException(error);
@@ -42,7 +43,7 @@ class JoinTeamPageBase extends React.Component {
       // The team is real but the token didn't work
       // Maybe it's been used already or expired?
       console.log('Team invite error', error && error.response && error.response.data);
-      if (error && error.response.status != 401) {
+      if (error && error.response.status !== 401) {
         captureException(error);
       }
       this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
@@ -66,14 +67,10 @@ JoinTeamPageBase.propTypes = {
   replaceCurrentUser: PropTypes.func.isRequired,
 };
 
-const JoinTeamPage = props => (
-  <CurrentUserConsumer>
-    {(currentUser, fetched, { login }) => (
-      <NotificationsConsumer>
-        {notify => <JoinTeamPageBase {...notify} {...props} replaceCurrentUser={login} />}
-      </NotificationsConsumer>
-    )}
-  </CurrentUserConsumer>
-);
+const JoinTeamPage = (props) => {
+  const { login } = useCurrentUser();
+  const notify = useNotifications();
+  return <JoinTeamPageBase replaceCurrentUser={login} {...notify} {...props} />;
+};
 
 export default JoinTeamPage;
