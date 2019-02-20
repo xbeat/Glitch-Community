@@ -3,17 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { kebabCase, orderBy } from 'lodash';
-import { UserAvatar, TeamAvatar } from '../includes/avatar.jsx';
+import { UserAvatar, TeamAvatar } from '../includes/avatar';
 import { TrackClick } from '../analytics';
 import { getLink, createCollection } from '../../models/collection';
 
-import Notifications from '../notifications.jsx';
-import { AddProjectToCollectionMsg } from '../notifications.jsx';
-import { NestedPopoverTitle } from './popover-nested.jsx';
-import Dropdown from './dropdown.jsx';
-import { PureEditableField } from '../includes/editable-field.jsx';
-import Loader from '../includes/loader.jsx';
-
+import { AddProjectToCollectionMsg, NotificationConsumer } from '../notifications';
+import { NestedPopoverTitle } from './popover-nested';
+import Dropdown from './dropdown';
+import { PureEditableField } from '../includes/editable-field';
+import Loader from '../includes/loader';
 
 class CreateCollectionPop extends React.Component {
   constructor(props) {
@@ -21,16 +19,12 @@ class CreateCollectionPop extends React.Component {
 
     const currentUserOptionLabel = (
       <span>
-        myself
-        {' '}
-        <UserAvatar user={this.props.currentUser} />
+        myself <UserAvatar user={this.props.currentUser} />
       </span>
     );
     const currentUserOption = { value: null, label: currentUserOptionLabel };
 
-    this.options = [currentUserOption].concat(
-      this.getTeamOptions(this.props.currentUser.teams),
-    );
+    this.options = [currentUserOption].concat(this.getTeamOptions(this.props.currentUser.teams));
 
     this.state = {
       loading: false,
@@ -57,23 +51,15 @@ class CreateCollectionPop extends React.Component {
     event.preventDefault();
     this.setState({ loading: true });
     // create the new collection with createCollection(api, name, teamId, notification)
-    const collectionResponse = await createCollection(
-      this.props.api,
-      this.state.query,
-      this.state.selection.value,
-      createNotification,
-    );
+    const collectionResponse = await createCollection(this.props.api, this.state.query, this.state.selection.value, createNotification);
     // add the project to the collection
     if (collectionResponse && collectionResponse.id) {
       const collection = collectionResponse;
       // add the selected project to the collection
       try {
-        this.props.api
-          .patch(`collections/${collection.id}/add/${this.props.project.id}`);
+        this.props.api.patch(`collections/${collection.id}/add/${this.props.project.id}`);
         if (this.state.selection.value) {
-          const team = this.props.currentUser.teams.find(
-            ({ id }) => id == this.state.selection.value,
-          );
+          const team = this.props.currentUser.teams.find(({ id }) => id == this.state.selection.value);
           collection.team = team;
         }
         collection.user = this.props.currentUser;
@@ -82,11 +68,7 @@ class CreateCollectionPop extends React.Component {
 
         // show notification
         const content = (
-          <AddProjectToCollectionMsg
-            projectDomain={this.props.project.domain}
-            collectionName={collection.name}
-            url={newCollectionUrl}
-          />
+          <AddProjectToCollectionMsg projectDomain={this.props.project.domain} collectionName={collection.name} url={newCollectionUrl} />
         );
         createNotification(content, 'notifySuccess');
 
@@ -103,16 +85,14 @@ class CreateCollectionPop extends React.Component {
 
   // getTeamOptions: Format teams in { value: teamId, label: html elements } format for react-select
   getTeamOptions(teams) {
-    const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
+    const orderedTeams = orderBy(teams, (team) => team.name.toLowerCase());
     const teamOptions = [];
 
     orderedTeams.map((team) => {
       const option = {};
       const label = (
         <span id={team.id}>
-          {team.name}
-          {' '}
-          {<TeamAvatar team={team} />}
+          {team.name} {<TeamAvatar team={team} />}
         </span>
       );
       option.value = team.id;
@@ -137,29 +117,18 @@ class CreateCollectionPop extends React.Component {
       ? collections.filter(({ teamId }) => teamId == this.state.selection.value)
       : collections.filter(({ userId }) => userId == this.props.currentUser.id);
 
-    if (
-      !!collections
-      && selectedOwnerCollections.some(c => c.url === kebabCase(query))
-    ) {
+    if (!!collections && selectedOwnerCollections.some((c) => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this name';
     }
 
     return (
-      <Notifications>
+      <NotificationConsumer>
         {({ createNotification }) => (
           <dialog className="pop-over create-collection-pop wide-pop">
-            <NestedPopoverTitle>
-              Add
-              {' '}
-              {this.props.project.domain}
-              {' '}
-to a new collection
-            </NestedPopoverTitle>
+            <NestedPopoverTitle>Add {this.props.project.domain} to a new collection</NestedPopoverTitle>
 
             <section className="pop-over-actions">
-              <form
-                onSubmit={event => this.handleSubmit(event, createNotification)}
-              >
+              <form onSubmit={(event) => this.handleSubmit(event, createNotification)}>
                 <PureEditableField
                   className="pop-over-input create-input"
                   value={query}
@@ -171,8 +140,7 @@ to a new collection
 
                 {teams.length > 0 && (
                   <div>
-                    for
-                    {' '}
+                    {`for `}
                     <Dropdown
                       containerClass="user-or-team-toggle"
                       options={this.options}
@@ -185,17 +153,13 @@ to a new collection
                 {!this.state.loading ? (
                   <TrackClick
                     name="Create Collection clicked"
-                    properties={inherited => ({
+                    properties={(inherited) => ({
                       ...inherited,
                       origin: `${inherited.origin} project`,
                     })}
                   >
                     <div className="button-wrap">
-                      <button
-                        type="submit"
-                        className="create-collection button-small"
-                        disabled={!!queryError || !submitEnabled}
-                      >
+                      <button type="submit" className="create-collection button-small" disabled={!!queryError || !submitEnabled}>
                         Create
                       </button>
                     </div>
@@ -207,7 +171,7 @@ to a new collection
             </section>
           </dialog>
         )}
-      </Notifications>
+      </NotificationConsumer>
     );
   }
 }

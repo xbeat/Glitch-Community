@@ -27,14 +27,14 @@ function handleCustomError(notify, error) {
 }
 
 const ErrorHandler = ({ children }) => (
-  <Notifications>
+  <NotificationConsumer>
     {({ createNotification, createErrorNotification }) => children({
       handleError: error => handleError(createErrorNotification, error),
       handleErrorForInput: error => handleErrorForInput(createErrorNotification, error),
       handleCustomError: error => handleCustomError(createNotification, error),
     })
     }
-  </Notifications>
+  </NotificationConsumer>
 );
 ErrorHandler.propTypes = {
   children: PropTypes.func.isRequired,

@@ -8,20 +8,15 @@ import Loader from '../includes/loader';
 import ProjectResultItem from '../includes/project-result-item';
 import ProjectsLoader from '../projects-loader';
 
-import { NotificationConsumer } from '../notifications';
-import { AddProjectToCollectionMsg } from '../notifications';
-
+import { NotificationConsumer, AddProjectToCollectionMsg } from '../notifications';
 
 const ProjectResultsUL = ({ projects, collection, onClick }) => (
   <ul className="results">
-    {projects.map(project => (
+    {projects.map((project) => (
       <NotificationConsumer key={project.id}>
         {({ createNotification }) => (
           <li>
-            <TrackClick
-              name="Project Added to Collection"
-              properties={{ origin: 'Add Project collection' }}
-            >
+            <TrackClick name="Project Added to Collection" properties={{ origin: 'Add Project collection' }}>
               <ProjectResultItem
                 domain={project.domain}
                 description={project.description}
@@ -45,18 +40,10 @@ ProjectResultsUL.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-const ProjectSearchResults = ({
-  projects,
-  collection,
-  onClick,
-  projectName,
-  excludedProjectsCount,
-}) => {
+const ProjectSearchResults = ({ projects, collection, onClick, projectName, excludedProjectsCount }) => {
   if (projects.length > 0) {
-    const collectionProjectIds = collection.projects.map(project => project.id);
-    projects = projects.filter(
-      project => !collectionProjectIds.includes(project.id),
-    );
+    const collectionProjectIds = collection.projects.map((project) => project.id);
+    projects = projects.filter((project) => !collectionProjectIds.includes(project.id));
 
     return <ProjectResultsUL {...{ projects, collection, onClick }} />;
   }
@@ -64,9 +51,7 @@ const ProjectSearchResults = ({
   if (projectName) {
     return (
       <p className="results-empty">
-        {projectName}
-        {' '}
-is already in this collection
+        {projectName} is already in this collection
         <span role="img" aria-label="">
           💫
         </span>
@@ -76,20 +61,13 @@ is already in this collection
 
   return (
     <p className="results-empty">
-      nothing found
-      {' '}
+      nothing found{' '}
       <span role="img" aria-label="">
         💫
       </span>
       <br />
       {excludedProjectsCount > 0 && (
-        <span>
-          {`Excluded ${excludedProjectsCount} search ${excludedProjectsCount > 1 ? 'results' : 'result'}
-
-       
-
-          collection)
-        </span>
+        <span>{`Excluded ${excludedProjectsCount} search ${excludedProjectsCount > 1 ? 'results' : 'result'} already found in collection`}</span>
       )}
     </p>
   );
@@ -162,9 +140,7 @@ class AddCollectionProjectPop extends React.Component {
 
     let searchByUrl = false;
     let { query } = this.state;
-    const collectionProjectIds = this.props.collection.projects.map(
-      project => project.id,
-    );
+    const collectionProjectIds = this.props.collection.projects.map((project) => project.id);
 
     if (isUrl(query)) {
       searchByUrl = true;
@@ -197,25 +173,19 @@ class AddCollectionProjectPop extends React.Component {
     const results = data;
     const originalNumResults = results.length;
 
-
     let nonCollectionResults = [];
     if (searchByUrl) {
       // get the single result that matches the URL exactly - check with https://community.glitch.me/
-      nonCollectionResults = results.filter(result => result.domain === query);
+      nonCollectionResults = results.filter((result) => result.domain === query);
 
       // check if the project is already in the collection
-      if (
-        nonCollectionResults.length > 0
-        && collectionProjectIds.includes(nonCollectionResults[0].id)
-      ) {
+      if (nonCollectionResults.length > 0 && collectionProjectIds.includes(nonCollectionResults[0].id)) {
         nonCollectionResults = [];
         this.setState({ projectName: query });
       }
     } else {
       // user is searching by project name  - filter out any projects currently in the collection
-      nonCollectionResults = results.filter(
-        result => !collectionProjectIds.includes(result.id),
-      );
+      nonCollectionResults = results.filter((result) => !collectionProjectIds.includes(result.id));
 
       if (nonCollectionResults.length !== originalNumResults) {
         if (originalNumResults === 1) {
@@ -228,13 +198,15 @@ class AddCollectionProjectPop extends React.Component {
       }
     }
 
-    this.setState(({ maybeRequest }) => (request === maybeRequest
-      ? {
-        maybeRequest: null,
-        maybeResults: nonCollectionResults,
-        recentProjects: null,
-      }
-      : {}));
+    this.setState(({ maybeRequest }) =>
+      request === maybeRequest
+        ? {
+            maybeRequest: null,
+            maybeResults: nonCollectionResults,
+            recentProjects: null,
+          }
+        : {},
+    );
     return null;
   }
 
@@ -244,17 +216,12 @@ class AddCollectionProjectPop extends React.Component {
     // add project to page if successful & show notification
     this.props
       .addProjectToCollection(project, collection)
-      .then(() => createNotification(
-        <AddProjectToCollectionMsg projectDomain={project.domain} />,
-        'notifySuccess',
-      ));
+      .then(() => createNotification(<AddProjectToCollectionMsg projectDomain={project.domain} />, 'notifySuccess'));
   }
 
   render() {
     // load user's recent projects
-    const results = this.state.query
-      ? this.state.maybeResults
-      : this.props.initialProjects;
+    const results = this.state.query ? this.state.maybeResults : this.props.initialProjects;
 
     const showResults = !!(this.state.query || (results && results.length));
     const isLoading = !!(this.state.maybeRequest || !results);
@@ -276,7 +243,7 @@ class AddCollectionProjectPop extends React.Component {
 
             {!!results && (
               <ProjectsLoader api={this.props.api} projects={results}>
-                {projects => (
+                {(projects) => (
                   <ProjectSearchResults
                     projects={projects}
                     onClick={this.onClick}
