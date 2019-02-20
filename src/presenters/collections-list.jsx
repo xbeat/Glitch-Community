@@ -1,12 +1,7 @@
 <<<<<<< HEAD
-import React from "react";
-import PropTypes from "prop-types";
-import { Redirect } from "react-router-dom";
-import { TrackClick } from "./analytics";
-import CollectionItem from "./collection-item.jsx";
 import { getLink, createCollection } from "../models/collection";
 import Loader from "./includes/loader.jsx";
-import Notifications from "./notifications.jsx";
+import { NotificationConsumer } from "./notifications.jsx";
 =======
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -15,9 +10,10 @@ import randomColor from 'randomcolor';
 import { kebabCase, orderBy } from 'lodash';
 import { TrackClick } from './analytics';
 import CollectionItem from './collection-item';
-import { defaultAvatar, getLink } from '../models/collection';
+import { getLink, createCollection } from '../models/collection';
 import { getCollections, getPredicate } from '../models/words';
 import { Loader } from './includes/loader';
+import { NotificationConsumer } from "./notifications.jsx";
 >>>>>>> d5ac21db1a0ca1c8d931f02a7aa2d92c31076656
 
 import { orderBy } from "lodash";
