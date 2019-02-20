@@ -6,8 +6,6 @@ const app = express.Router();
 
 // Log all requests to a local file for diagnostics
 const requestTime = function(req, res, next) {
-  console.log(req.url)
-  console.log(req.url.match(/\.js|\.css/) !== null)
   req.requestTime = new Date().toISOString();
   next();
 };
@@ -21,7 +19,7 @@ app.use(
         name: "requests",
         filename: ".log/requests.log",
         maxsize: 2500, // max size of each log file in bytes
-        maxFiles: 1,
+        maxFiles: 0,
         tailable: true, // should make it so the oldest data will get removed from the file when it exceeds maxsize
       }),
     ],
