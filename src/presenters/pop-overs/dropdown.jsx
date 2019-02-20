@@ -4,9 +4,6 @@ import Select from "react-select"; // https://react-select.com/
 
 // Options passed to Dropdown are expected to be formatted like options = [ {value: optionValue, label: optionLabel}, ... ]
 class Dropdown extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (

@@ -78,12 +78,12 @@ class AddProjectToCollectionPopContents extends React.Component {
                 this.updateFilter(evt.target.value);
               }}
               placeholder="Filter collections"
-              arial-label="Filter collections"
+              aria-label="Filter collections"
             />
           </section>
         )}
 
-        {filteredCollections && filteredCollections.length ? (
+        {filteredCollections.length ? (
           <section className="pop-over-actions results-list">
             <ul className="results">
               {filteredCollections.map(
