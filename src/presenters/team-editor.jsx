@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import * as assets from '../utils/assets';
 
 import { useCurrentUser } from './current-user';
-import { useErrorHandlers } from './error-handlers';
+import useErrorHandlers from './error-handlers';
 import { useNotifications } from './notifications';
-import Uploader from './includes/uploader';
+import useUploader from './includes/uploader';
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
@@ -275,22 +275,19 @@ TeamEditor.defaultProps = {
 
 const TeamEditorContainer = ({ api, children, initialTeam }) => {
   const { currentUser, update } = useCurrentUser();
+  const uploadFuncs = useUploader();
   const notificationFuncs = useNotifications();
   const errorFuncs = useErrorHandlers();
   return (
-    <Uploader>
-      {uploadFuncs => (
-        <TeamEditor
-          {...{ api, currentUser, initialTeam }}
-          updateCurrentUser={update}
-          {...uploadFuncs}
-          {...notificationFuncs}
-          {...errorFuncs}
-        >
-          {children}
-        </TeamEditor>
-      )}
-    </Uploader>
+    <TeamEditor
+      {...{ api, currentUser, initialTeam }}
+      updateCurrentUser={update}
+      {...uploadFuncs}
+      {...notificationFuncs}
+      {...errorFuncs}
+    >
+      {children}
+    </TeamEditor>
   );
 };
 TeamEditorContainer.propTypes = {

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import * as assets from '../utils/assets';
 
 import { useCurrentUser } from './current-user';
-import { useErrorHandlers } from './error-handlers';
-import Uploader from './includes/uploader';
+import useErrorHandlers from './error-handlers';
+import useUploader from './includes/uploader';
 
 class UserEditor extends React.Component {
   constructor(props) {
@@ -189,20 +189,17 @@ UserEditor.propTypes = {
 
 const UserEditorContainer = ({ api, children, initialUser }) => {
   const { currentUser, update } = useCurrentUser();
+  const uploadFuncs = useUploader();
   const errorFuncs = useErrorHandlers();
   return (
-    <Uploader>
-      {uploadFuncs => (
-        <UserEditor
-          {...{ api, currentUser, initialUser }}
-          updateCurrentUser={update}
-          {...uploadFuncs}
-          {...errorFuncs}
-        >
-          {children}
-        </UserEditor>
-      )}
-    </Uploader>
+    <UserEditor
+      {...{ api, currentUser, initialUser }}
+      updateCurrentUser={update}
+      {...uploadFuncs}
+      {...errorFuncs}
+    >
+      {children}
+    </UserEditor>
   );
 };
 UserEditorContainer.propTypes = {

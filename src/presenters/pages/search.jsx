@@ -6,7 +6,7 @@ import Layout from '../layout';
 
 import { useCurrentUser } from '../current-user';
 
-import { useErrorHandlers } from '../error-handlers';
+import useErrorHandlers from '../error-handlers';
 import { Loader } from '../includes/loader';
 import MoreIdeas from '../more-ideas';
 import NotFound from '../includes/not-found';

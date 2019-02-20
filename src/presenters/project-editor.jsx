@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useCurrentUser } from './current-user';
-import { useErrorHandlers } from './error-handlers';
+import useErrorHandlers from './error-handlers';
 
 class ProjectEditor extends React.Component {
   constructor(props) {

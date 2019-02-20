@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import { useNotifications } from './notifications';
 
 function handleError(notify, error) {
@@ -17,7 +15,7 @@ function handleErrorForInput(notify, error) {
   return Promise.reject();
 }
 
-export const useErrorHandlers = () => {
+const useErrorHandlers = () => {
   const { createErrorNotification } = useNotifications();
   return {
     handleError: error => handleError(createErrorNotification, error),
@@ -25,12 +23,4 @@ export const useErrorHandlers = () => {
   };
 };
 
-export const ErrorHandler = ({ children }) => {
-  const errorHandlers = useErrorHandlers();
-  return children(errorHandlers);
-};
-ErrorHandler.propTypes = {
-  children: PropTypes.func.isRequired,
-};
-
-export default ErrorHandler;
+export default useErrorHandlers;
