@@ -25,13 +25,14 @@ class CreateCollectionPop extends React.Component {
       </span>
     );
     const currentUserOption = { value: -1, label: currentUserOptionLabel };
+    
+    this.options = [currentUserOption].concat(
+      this.getTeamOptions(this.props.currentUser.teams)
+    );
 
     this.state = {
       loading: false,
       query: "", //The entered collection name
-      options: [currentUserOption].concat(
-        this.getTeamOptions(this.props.currentUser.teams)
-      ), // options that will appear in the dropdown
       selection: currentUserOption, // the selected option from the dropdown 
     };
 
@@ -64,31 +65,35 @@ class CreateCollectionPop extends React.Component {
     if (collectionResponse && collectionResponse.id) {
       const collection = collectionResponse;
       // add the selected project to the collection
-      await this.props.api
-        .patch(`collections/${collection.id}/add/${this.props.project.id}`)
-        .then(() => {
-          if (this.state.selection.value) {
-            const team = this.props.currentUser.teams.find(
-              ({ id }) => id == this.state.selection.value
-            );
-            collection.team = team;
-          } else {
-            collection.user = this.props.currentUser;
-          }
-          const newCollectionUrl = getLink(collection);
-
-          // show notification
-          const content = (
-            <AddProjectToCollectionMsg
-              projectDomain={this.props.project.domain}
-              collectionName={collection.name}
-              url={newCollectionUrl}
-            />
+      try{
+        this.props.api
+          .patch(`collections/${collection.id}/add/${this.props.project.id}`);
+        if (this.state.selection.value) {
+          const team = this.props.currentUser.teams.find(
+            ({ id }) => id == this.state.selection.value
           );
-          createNotification(content, "notifySuccess");
+          collection.team = team;
+        } else {
+          collection.user = this.props.currentUser;
+        }
+        const newCollectionUrl = getLink(collection);
 
-          this.props.togglePopover();
-        });
+        // show notification
+        const content = (
+          <AddProjectToCollectionMsg
+            projectDomain={this.props.project.domain}
+            collectionName={collection.name}
+            url={newCollectionUrl}
+          />
+        );
+        createNotification(content, "notifySuccess");
+
+        this.props.togglePopover();
+        
+      }catch(error){
+        createNotification("Unable to add project to collection.", "notifyError");
+        this.props.togglePopover();
+      }
     } else {
       // error messaging is handled in createCollection
       this.props.togglePopover();
@@ -162,7 +167,7 @@ class CreateCollectionPop extends React.Component {
                     for{" "}
                     <Dropdown
                       containerClass="user-or-team-toggle"
-                      options={this.state.options}
+                      options={this.options}
                       selection={this.state.selection}
                       onUpdate={this.setSelection}
                     />
