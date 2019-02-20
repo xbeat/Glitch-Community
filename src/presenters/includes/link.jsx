@@ -11,33 +11,47 @@ import { getLink as getUserLink } from '../../models/user';
 /* global EXTERNAL_ROUTES */
 const external = Array.from(EXTERNAL_ROUTES);
 
-export const Link = React.forwardRef(function Link({to, children, ...props}, ref) {
+export const Link = React.forwardRef((
+  { to, children, ...props },
+  ref,
+) => {
   if (typeof to === 'string') {
     const currentUrl = new URL(window.location.href);
     const targetUrl = new URL(to, currentUrl);
 
-    if (targetUrl.origin !== currentUrl.origin ||
-      external.some(route => targetUrl.pathname.startsWith(route))
+    if (
+      targetUrl.origin !== currentUrl.origin
+      || external.some(route => targetUrl.pathname.startsWith(route))
     ) {
-      return <a href={to} {...props} ref={ref}>{children}</a>;
+      return (
+        <a href={to} {...props} ref={ref}>
+          {children}
+        </a>
+      );
     }
-    
+
     to = {
       pathname: targetUrl.pathname,
       search: targetUrl.search,
       hash: targetUrl.hash,
     };
   }
-  
-  return <RouterLink to={to} {...props} innerRef={ref}>{children}</RouterLink>;
+
+  return (
+    <RouterLink to={to} {...props} innerRef={ref}>
+      {children}
+    </RouterLink>
+  );
 });
 Link.propTypes = {
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   children: PropTypes.node.isRequired,
 };
 
-export const CollectionLink = ({collection, children, ...props}) => (
-  <Link to={getCollectionLink(collection)} {...props}>{children}</Link>
+export const CollectionLink = ({ collection, children, ...props }) => (
+  <Link to={getCollectionLink(collection)} {...props}>
+    {children}
+  </Link>
 );
 CollectionLink.propTypes = {
   collection: PropTypes.oneOfType([
@@ -57,8 +71,10 @@ CollectionLink.propTypes = {
   ]).isRequired,
 };
 
-export const ProjectLink = ({project, children, ...props}) => (
-  <Link to={getProjectLink(project)} {...props}>{children}</Link>
+export const ProjectLink = ({ project, children, ...props }) => (
+  <Link to={getProjectLink(project)} {...props}>
+    {children}
+  </Link>
 );
 ProjectLink.propTypes = {
   project: PropTypes.shape({
@@ -66,8 +82,10 @@ ProjectLink.propTypes = {
   }).isRequired,
 };
 
-export const TeamLink = ({team, children, ...props}) => (
-  <Link to={getTeamLink(team)} {...props}>{children}</Link>
+export const TeamLink = ({ team, children, ...props }) => (
+  <Link to={getTeamLink(team)} {...props}>
+    {children}
+  </Link>
 );
 TeamLink.propTypes = {
   team: PropTypes.shape({
@@ -75,8 +93,10 @@ TeamLink.propTypes = {
   }).isRequired,
 };
 
-export const UserLink = ({user, children, ...props}) => (
-  <Link to={getUserLink(user)} {...props}>{children}</Link>
+export const UserLink = ({ user, children, ...props }) => (
+  <Link to={getUserLink(user)} {...props}>
+    {children}
+  </Link>
 );
 UserLink.propTypes = {
   user: PropTypes.shape({
@@ -84,5 +104,3 @@ UserLink.propTypes = {
     login: PropTypes.string,
   }).isRequired,
 };
-
-export default Link;

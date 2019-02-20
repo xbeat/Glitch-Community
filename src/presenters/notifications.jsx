@@ -1,8 +1,10 @@
 import React from 'react';
 
-const {Provider, Consumer} = React.createContext();
+const context = React.createContext();
+const { Provider } = context;
+export const NotificationConsumer = context.Consumer;
 
-const Notification = ({children, className, remove}) => (
+const Notification = ({ children, className, remove }) => (
   <aside className={`notification ${className}`} onAnimationEnd={remove}>
     {children}
   </aside>
@@ -15,28 +17,28 @@ export class Notifications extends React.Component {
       notifications: [],
     };
   }
-  
-  create(content, className='') {
+
+  create(content, className = '') {
     const notification = {
       id: `${Date.now()}{Math.random()}`,
       className,
       content,
     };
-    this.setState(({notifications}) => ({
+    this.setState(({ notifications }) => ({
       notifications: [...notifications, notification],
     }));
     return notification.id;
   }
-  
-  createError(content='Something went wrong. Try refreshing?') {
+
+  createError(content = 'Something went wrong. Try refreshing?') {
     this.create(content, 'notifyError');
   }
-  
-  createPersistent(content, className='') {
+
+  createPersistent(content, className = '') {
     const id = this.create(content, `notifyPersistent ${className}`);
-    const updateNotification = (content) => {
-      this.setState(({notifications}) => ({
-        notifications: notifications.map(n => n.id === id ? {...n, content} : n),
+    const updateNotification = (updatedContent) => {
+      this.setState(({ notifications }) => ({
+        notifications: notifications.map(n => (n.id === id ? { ...n, updatedContent } : n)),
       }));
     };
     const removeNotification = () => {
@@ -47,29 +49,31 @@ export class Notifications extends React.Component {
       removeNotification,
     };
   }
-  
+
   remove(id) {
-    this.setState(({notifications}) => ({
+    this.setState(({ notifications }) => ({
       notifications: notifications.filter(n => n.id !== id),
     }));
   }
-  
+
   render() {
     const funcs = {
       createNotification: this.create.bind(this),
       createPersistentNotification: this.createPersistent.bind(this),
       createErrorNotification: this.createError.bind(this),
     };
-    const {notifications} = this.state;
+    const { notifications } = this.state;
     return (
       <>
-        <Provider value={funcs}>
-          {this.props.children}
-        </Provider>
+        <Provider value={funcs}>{this.props.children}</Provider>
         {!!notifications.length && (
           <div className="notifications">
-            {notifications.map(({id, className, content}) => (
-              <Notification key={id} className={className} remove={this.remove.bind(this, id)}>
+            {notifications.map(({ id, className, content }) => (
+              <Notification
+                key={id}
+                className={className}
+                remove={this.remove.bind(this, id)}
+              >
                 {content}
               </Notification>
             ))}
@@ -79,5 +83,3 @@ export class Notifications extends React.Component {
     );
   }
 }
-
-export default Consumer;

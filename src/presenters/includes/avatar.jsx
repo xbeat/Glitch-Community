@@ -1,17 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {DEFAULT_TEAM_AVATAR, getAvatarUrl as getTeamAvatarUrl} from '../../models/team';
-import {ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName} from '../../models/user';
+import {
+  DEFAULT_TEAM_AVATAR,
+  getAvatarUrl as getTeamAvatarUrl,
+} from '../../models/team';
+import {
+  ANON_AVATAR_URL,
+  getAvatarThumbnailUrl,
+  getDisplayName,
+} from '../../models/user';
 
 // UserAvatar
 
-export const Avatar = ({name, src, color, srcFallback, type}) => (
+export const Avatar = ({
+  name, src, color, srcFallback, type,
+}) => (
   <div data-tooltip={name} data-tooltip-left="true">
-    <img width="32px" height="32px" src={src} alt={name}
-      style={color ? {backgroundColor: color} : null}
-      onError={srcFallback ? (event => event.target.src = srcFallback) : null}
-      className={type + "-avatar"}
+    <img
+      width="32px"
+      height="32px"
+      src={src}
+      alt={name}
+      style={color ? { backgroundColor: color } : null}
+      onError={
+        srcFallback
+          ? (event) => {
+            event.target.src = srcFallback;
+          }
+          : null
+      }
+      className={`${type}-avatar`}
     />
   </div>
 );
@@ -19,12 +38,22 @@ Avatar.propTypes = {
   name: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   srcFallback: PropTypes.string,
+  type: PropTypes.string.isRequired,
   color: PropTypes.string,
-  type: PropTypes.string,
 };
 
-export const TeamAvatar = ({team}) => (
-  <Avatar name={team.name} src={getTeamAvatarUrl({...team, size:'small'})} srcFallback={DEFAULT_TEAM_AVATAR} type="team"/>
+Avatar.defaultProps = {
+  color: null,
+  srcFallback: '',
+};
+
+export const TeamAvatar = ({ team }) => (
+  <Avatar
+    name={team.name}
+    src={getTeamAvatarUrl({ ...team, size: 'small' })}
+    srcFallback={DEFAULT_TEAM_AVATAR}
+    type="team"
+  />
 );
 TeamAvatar.propTypes = {
   team: PropTypes.shape({
@@ -34,8 +63,14 @@ TeamAvatar.propTypes = {
   }).isRequired,
 };
 
-export const UserAvatar = ({user, suffix=''}) => (
-  <Avatar name={getDisplayName(user) + suffix} src={getAvatarThumbnailUrl(user)} color={user.color} srcFallback={ANON_AVATAR_URL} type="user"/>
+export const UserAvatar = ({ user, suffix = '' }) => (
+  <Avatar
+    name={getDisplayName(user) + suffix}
+    src={getAvatarThumbnailUrl(user)}
+    color={user.color}
+    srcFallback={ANON_AVATAR_URL}
+    type="user"
+  />
 );
 UserAvatar.propTypes = {
   user: PropTypes.shape({
@@ -46,4 +81,8 @@ UserAvatar.propTypes = {
     color: PropTypes.string.isRequired,
   }).isRequired,
   suffix: PropTypes.string,
+};
+
+UserAvatar.defaultProps = {
+  suffix: '',
 };

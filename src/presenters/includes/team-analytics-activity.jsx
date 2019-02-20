@@ -9,14 +9,14 @@ import groupByTime from 'group-by-time';
 import * as d3Array from 'd3-array';
 
 const createHistogram = (bins) => {
-  let histogram = [];
+  const histogram = [];
   bins = bins || [];
-  bins.forEach (bin => {
+  bins.forEach((bin) => {
     let totalAppViews = 0;
     let totalRemixes = 0;
-    let timestamp = undefined;
+    let timestamp;
     // let codeViews = []
-    bin.forEach (data => {
+    bin.forEach((data) => {
       if (!timestamp) {
         timestamp = data['@timestamp'];
       }
@@ -33,29 +33,26 @@ const createHistogram = (bins) => {
   return histogram;
 };
 
-const groupByRegularIntervals = d3Array.histogram().value(function(data) {
-  return data['@timestamp'];
-});
+const groupByRegularIntervals = d3Array.histogram().value(data => data['@timestamp']);
 
 const createBins = (buckets, currentTimeFrame) => {
-  if (currentTimeFrame === "Last 24 Hours") {
+  if (currentTimeFrame === 'Last 24 Hours') {
     return groupByRegularIntervals(buckets);
-  } 
-  let bins = groupByTime(buckets, '@timestamp', 'day'); // supports 'day', 'week', 'month'
-  return Object.values(bins); 
-  
+  }
+  const bins = groupByTime(buckets, '@timestamp', 'day'); // supports 'day', 'week', 'month'
+  return Object.values(bins);
 };
 
 const chartColumns = (analytics, currentTimeFrame) => {
-  const buckets = analytics.buckets;
-  let bins = createBins(buckets, currentTimeFrame);
-  let histogram = createHistogram(bins);
-  let timestamps = ['x'];
-  let remixes = ['Remixes'];
-  let appViews = ['Total App Views'];
+  const { buckets } = analytics;
+  const bins = createBins(buckets, currentTimeFrame);
+  const histogram = createHistogram(bins);
+  const timestamps = ['x'];
+  const remixes = ['Remixes'];
+  const appViews = ['Total App Views'];
   // let codeViews = ['Code Views']
   histogram.shift();
-  histogram.forEach(bucket => {
+  histogram.forEach((bucket) => {
     timestamps.push(bucket.time);
     appViews.push(bucket.appViews);
     remixes.push(bucket.remixes);
@@ -64,10 +61,10 @@ const chartColumns = (analytics, currentTimeFrame) => {
 };
 
 const dateFormat = (currentTimeFrame) => {
-  if (currentTimeFrame === "Last 24 Hours") {
-    return "%H:%M %p";
-  } 
-  return "%b-%d";
+  if (currentTimeFrame === 'Last 24 Hours') {
+    return '%H:%M %p';
+  }
+  return '%b-%d';
 };
 
 const renderChart = (c3, analytics, currentTimeFrame) => {
@@ -75,50 +72,50 @@ const renderChart = (c3, analytics, currentTimeFrame) => {
   if (!_.isEmpty(analytics)) {
     columns = chartColumns(analytics, currentTimeFrame);
   }
-  
+
   // eslint-disable-next-line no-unused-vars
-  var chart = c3.generate({
+  const chart = c3.generate({
     size: {
       height: 200,
     },
     data: {
       x: 'x',
       xFormat: dateFormat(currentTimeFrame),
-      columns: columns
+      columns,
     },
     axis: {
       x: {
         type: 'timeseries',
         tick: {
           format: dateFormat(currentTimeFrame),
-        }
+        },
       },
     },
   });
 };
 
 class TeamAnalyticsActivity extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  
   componentDidUpdate(prevProps) {
     if (
-      prevProps.isGettingData === true && 
-      this.props.isGettingData === false
+      prevProps.isGettingData === true
+      && this.props.isGettingData === false
     ) {
-      renderChart(this.props.c3, this.props.analytics, this.props.currentTimeFrame);
+      renderChart(
+        this.props.c3,
+        this.props.analytics,
+        this.props.currentTimeFrame,
+      );
     }
   }
-  
+
   render() {
     return null;
   }
 }
 
 TeamAnalyticsActivity.propTypes = {
-  c3: PropTypes.object.isRequired, 
-  analytics: PropTypes.object.isRequired, 
+  c3: PropTypes.object.isRequired,
+  analytics: PropTypes.object.isRequired,
   currentTimeFrame: PropTypes.string.isRequired,
   isGettingData: PropTypes.bool.isRequired,
 };

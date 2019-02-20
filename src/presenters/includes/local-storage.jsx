@@ -4,12 +4,25 @@ import PropTypes from 'prop-types';
 export default class LocalStorage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: undefined, loaded: false};
+    this.state = { value: undefined, loaded: false };
     this.handleStorage = this.handleStorage.bind(this);
   }
-  
+
+  componentDidMount() {
+    if (!this.props.ignoreChanges) {
+      window.addEventListener('storage', this.handleStorage, { passive: true });
+    }
+    this.handleStorage();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('storage', this.handleStorage, {
+      passive: true,
+    });
+  }
+
   handleStorage() {
-    let value = undefined;
+    let value;
     try {
       const raw = window.localStorage.getItem(this.props.name);
       if (raw !== null) {
@@ -19,20 +32,9 @@ export default class LocalStorage extends React.Component {
       console.error('Failed to read from localStorage!', error);
       value = undefined;
     }
-    this.setState({value, loaded: true});
+    this.setState({ value, loaded: true });
   }
-  
-  componentDidMount() {
-    if (!this.props.ignoreChanges) {
-      window.addEventListener('storage', this.handleStorage, {passive: true});
-    }
-    this.handleStorage();
-  }
-  
-  componentWillUnmount() {
-    window.removeEventListener('storage', this.handleStorage, {passive: true});
-  }
-  
+
   set(value) {
     try {
       if (value !== undefined) {
@@ -43,9 +45,9 @@ export default class LocalStorage extends React.Component {
     } catch (error) {
       console.error('Failed to write to localStorage!', error);
     }
-    this.setState({value});
+    this.setState({ value });
   }
-  
+
   render() {
     return this.props.children(
       this.state.value !== undefined ? this.state.value : this.props.default,
@@ -59,4 +61,9 @@ LocalStorage.propTypes = {
   name: PropTypes.string.isRequired,
   default: PropTypes.any,
   ignoreChanges: PropTypes.bool,
+};
+
+LocalStorage.defaultProps = {
+  default: undefined,
+  ignoreChanges: false,
 };
