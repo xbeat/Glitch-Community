@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   DEFAULT_TEAM_AVATAR,
@@ -60,8 +60,8 @@ TeamAvatar.propTypes = {
   team: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    hasAvatarImage: PropTypes.bool.isRequired
-  }).isRequired
+    hasAvatarImage: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 export const UserAvatar = ({ user, suffix = '' }) => (
@@ -79,7 +79,7 @@ UserAvatar.propTypes = {
     login: PropTypes.string,
     name: PropTypes.string,
     avatarThumbnailUrl: PropTypes.string,
-    color: PropTypes.string.isRequired
+    color: PropTypes.string.isRequired,
   }).isRequired,
   suffix: PropTypes.string,
 };

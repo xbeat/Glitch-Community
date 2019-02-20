@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import { orderBy } from 'lodash';
 import { TrackClick } from './analytics';
 import CollectionItem from './collection-item';
 import { getLink, createCollection } from '../models/collection';
 import { getCollections, getPredicate } from '../models/words';
 import { Loader } from './includes/loader';
-import { NotificationConsumer } from "./notifications.jsx";
+import { NotificationConsumer } from './notifications.jsx';
 
-import { orderBy } from "lodash";
 
 class CollectionsList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      deletedCollectionIds: []
+      deletedCollectionIds: [],
     };
     this.deleteCollection = this.deleteCollection.bind(this);
   }
@@ -112,11 +112,11 @@ export class CreateCollectionButton extends React.Component {
   async createCollectionOnClick(createNotification) {
     this.setState({ loading: true });
 
-    let collectionResponse = await createCollection(
+    const collectionResponse = await createCollection(
       this.props.api,
       null,
       this.props.maybeTeam ? this.props.maybeTeam.id : null,
-      createNotification
+      createNotification,
     );
     if (collectionResponse && collectionResponse.id) {
       const collection = collectionResponse;
@@ -208,7 +208,7 @@ CollectionsUL.propTypes = {
   api: PropTypes.func,
   collections: PropTypes.array.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  deleteCollection: PropTypes.func
+  deleteCollection: PropTypes.func,
 };
 
 CollectionsUL.defaultProps = {

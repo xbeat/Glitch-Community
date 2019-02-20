@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import { CurrentUserConsumer } from './current-user';
 import ErrorHandlers from './error-handlers';
@@ -62,17 +62,13 @@ class CollectionEditor extends React.Component {
   render() {
     const { handleError, handleErrorForInput, handleCustomError } = this.props;
     const funcs = {
-      addProjectToCollection: (project, collection) =>
-        this.addProjectToCollection(project, collection).catch(
-          handleCustomError
-        ),
-      removeProjectFromCollection: project =>
-        this.removeProjectFromCollection(project).catch(handleError),
+      addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(
+        handleCustomError,
+      ),
+      removeProjectFromCollection: project => this.removeProjectFromCollection(project).catch(handleError),
       deleteCollection: () => this.deleteCollection().catch(handleError),
-      updateNameAndUrl: ({ name, url }) =>
-        this.updateFields({ name, url }).catch(handleErrorForInput),
-      updateDescription: description =>
-        this.updateFields({ description }).catch(handleError),
+      updateNameAndUrl: ({ name, url }) => this.updateFields({ name, url }).catch(handleErrorForInput),
+      updateDescription: description => this.updateFields({ description }).catch(handleError),
       updateColor: color => this.updateFields({ coverColor: color }),
     };
     return this.props.children(this.state, funcs, this.userIsAuthor());
@@ -84,7 +80,7 @@ CollectionEditor.propTypes = {
   currentUser: PropTypes.object,
   handleError: PropTypes.func.isRequired,
   handleErrorForInput: PropTypes.func.isRequired,
-  initialCollection: PropTypes.object.isRequired
+  initialCollection: PropTypes.object.isRequired,
 };
 
 CollectionEditor.defaultProps = {
@@ -111,7 +107,7 @@ const CollectionEditorContainer = ({ api, children, initialCollection }) => (
 CollectionEditorContainer.propTypes = {
   api: PropTypes.any,
   children: PropTypes.func.isRequired,
-  initialCollection: PropTypes.object.isRequired
+  initialCollection: PropTypes.object.isRequired,
 };
 
 CollectionEditorContainer.defaultProps = {

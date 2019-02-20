@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getLink as getCollectionLink} from '../../models/collection.js';
+import { getLink as getCollectionLink } from '../../models/collection.js';
 import { NotificationConsumer } from '../notifications';
-import {AddProjectToCollectionMsg} from '../notifications.jsx';
-import {UserAvatar, TeamAvatar} from '../includes/avatar.jsx';
+import { AddProjectToCollectionMsg } from '../notifications.jsx';
+import { UserAvatar, TeamAvatar } from './avatar.jsx';
 import CollectionAvatar from './collection-avatar.jsx';
 
 const addProject = (
@@ -18,24 +18,26 @@ const addProject = (
   // add project to collection
   addProjectToCollection(project, collection).then(() => {
     // show notification
-    const content = <AddProjectToCollectionMsg projectDomain={project.domain} collectionName={collection.name} url={collectionPath}/>;
-    notification(content, "notifySuccess");
+    const content = <AddProjectToCollectionMsg projectDomain={project.domain} collectionName={collection.name} url={collectionPath} />;
+    notification(content, 'notifySuccess');
   });
 
-  togglePopover();  
+  togglePopover();
 };
 
-const CollectionResultItem = ({onClick, project, collection, isActive, togglePopover}) => {
-  let resultClass = "button-unstyled result result-collection";
-  if(isActive) {
-    resultClass += " active";
+const CollectionResultItem = ({
+  onClick, project, collection, isActive, togglePopover,
+}) => {
+  let resultClass = 'button-unstyled result result-collection';
+  if (isActive) {
+    resultClass += ' active';
   }
-  
+
   const collectionPath = getCollectionLink(collection);
-    
-  return (    
+
+  return (
     <NotificationConsumer>
-      {({createNotification}) => ( 
+      {({ createNotification }) => (
         <div>
           <button
             className={resultClass}

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import randomColor from 'randomcolor';
 import _ from 'lodash';
+import { orderBy } from "lodash";
 import { captureException } from '../../utils/sentry';
 
 import { TrackClick } from '../analytics';
@@ -19,7 +20,6 @@ import CollectionResultItem from '../includes/collection-result-item';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
 import { PureEditableField } from '../includes/editable-field';
 
-import { orderBy } from "lodash";
 
 const NoSearchResultsPlaceholder = (
   <p className="info-description">
@@ -33,32 +33,29 @@ const NoCollectionPlaceholder = (
   </p>
 );
 
-const AddProjectPopoverTitle = ({ project }) => {
-  return (
+const AddProjectPopoverTitle = ({ project }) => (
     <NestedPopoverTitle>
       <img src={getAvatarUrl(project.id)} alt="" /> Add {project.domain} to
       collection
     </NestedPopoverTitle>
   );
-};
 AddProjectPopoverTitle.propTypes = {
-  project: PropTypes.object.isRequired
+  project: PropTypes.object.isRequired,
 };
 
 class AddProjectToCollectionPopContents extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: "", // value of filter input field
-      filteredCollections: this.props.collections // collections filtered from search query
+      query: '', // value of filter input field
+      filteredCollections: this.props.collections, // collections filtered from search query
     };
     this.updateFilter = this.updateFilter.bind(this);
   }
 
   updateFilter(query) {
     query = query.toLowerCase().trim();
-    let filteredCollections = this.props.collections.filter(collection =>
-      collection.name.toLowerCase().includes(query)
+    const filteredCollections = this.props.collections.filter(collection => collection.name.toLowerCase().includes(query),
     );
     this.setState({ filteredCollections, query });
   }
@@ -76,7 +73,7 @@ class AddProjectToCollectionPopContents extends React.Component {
           <section className="pop-over-info">
             <input
               className="pop-over-input search-input pop-over-search"
-              onChange={evt => {
+              onChange={(evt) => {
                 this.updateFilter(evt.target.value);
               }}
               placeholder="Filter collections"
@@ -89,11 +86,11 @@ class AddProjectToCollectionPopContents extends React.Component {
           <section className="pop-over-actions results-list">
             <ul className="results">
               {filteredCollections.map(
-                collection =>
+                collection => (
                   // filter out collections that already contain the selected project
                   collection.projects &&
                   collection.projects.every(
-                    project => project.id !== this.props.project.id
+                    project => ( project.id !== this.props.project.id
                   ) && (
                     <li key={collection.id}>
                       <TrackClick
@@ -113,6 +110,13 @@ class AddProjectToCollectionPopContents extends React.Component {
                       </TrackClick>
                     </li>
                   )
+         )
+                          )
+        )
+            )
+                             )
+                    )
+                )
               )}
             </ul>
           </section>
@@ -159,19 +163,19 @@ class AddProjectToCollectionPop extends React.Component {
         `collections/?userId=${this.props.currentUser.id}&includeTeams=true`
       );
       // add user / team to each collection
-      allCollections.forEach(collection => {
+      allCollections.forEach(collection => ( {
         if (collection.teamId == -1) {
           collection.user = this.props.currentUser;
         } else {
           collection.team = this.props.currentUser.teams.find(
-            userTeam => userTeam.id == collection.teamId
+            userTeam => ( userTeam.id == collection.teamId
           );
         }
       });
 
       const orderedCollections = orderBy(
         allCollections,
-        collection => collection.updatedAt,
+        collection => ( collection.updatedAt,
         ["desc"]
       );
 
@@ -198,7 +202,7 @@ class AddProjectToCollectionPop extends React.Component {
     const { maybeCollections } = this.state;
     return (
       <NestedPopover
-        alternateContent={() => (
+        alternateContent={() => ( (
           <CreateCollectionPop
             {...this.props}
             api={this.props.api}
@@ -208,8 +212,8 @@ class AddProjectToCollectionPop extends React.Component {
         )}
         startAlternateVisible={false}
       >
-        {createCollectionPopover =>
-          maybeCollections ? (
+        {createCollectionPopover => (
+          (maybeCollections ? (
             <AddProjectToCollectionPopContents
               {...this.props}
               collections={maybeCollections}
@@ -224,7 +228,7 @@ class AddProjectToCollectionPop extends React.Component {
                 <Loader />
               </div>
             </dialog>
-          )
+          ))
         }
       </NestedPopover>
     );
@@ -233,7 +237,7 @@ class AddProjectToCollectionPop extends React.Component {
 
 AddProjectToCollectionPop.propTypes = {
   api: PropTypes.func.isRequired,
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
 };
 
 AddProjectToCollectionPop.defaultProps = {

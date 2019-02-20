@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const context = React.createContext();
 const { Provider } = context;
@@ -15,7 +15,7 @@ export class Notifications extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      notifications: []
+      notifications: [],
     };
   }
 
@@ -23,7 +23,7 @@ export class Notifications extends React.Component {
     const notification = {
       id: `${Date.now()}{Math.random()}`,
       className,
-      content
+      content,
     };
     this.setState(({ notifications }) => ({
       notifications: [...notifications, notification],
@@ -47,7 +47,7 @@ export class Notifications extends React.Component {
     };
     return {
       updateNotification,
-      removeNotification
+      removeNotification,
     };
   }
 
@@ -61,7 +61,7 @@ export class Notifications extends React.Component {
     const funcs = {
       createNotification: this.create.bind(this),
       createPersistentNotification: this.createPersistent.bind(this),
-      createErrorNotification: this.createError.bind(this)
+      createErrorNotification: this.createError.bind(this),
     };
     const { notifications } = this.state;
     return (
@@ -88,20 +88,26 @@ export class Notifications extends React.Component {
 export const AddProjectToCollectionMsg = ({
   projectDomain,
   collectionName,
-  url
+  url,
 }) => (
   <>
     <p>
-      Added {projectDomain} { collectionName && (`to collection ${collectionName}`) }
+      Added
+      {' '}
+      {projectDomain}
+      {' '}
+      { collectionName && (`to collection ${collectionName}`) }
     </p>
-    { url &&
-      <a
-        href={url}
-        rel="noopener noreferrer"
-        className="button button-small button-tertiary button-in-notification-container notify-collection-link"
-      >
+    { url
+      && (
+        <a
+          href={url}
+          rel="noopener noreferrer"
+          className="button button-small button-tertiary button-in-notification-container notify-collection-link"
+        >
       Take me there
-      </a>
+        </a>
+      )
     }
   </>
 );
@@ -109,6 +115,5 @@ export const AddProjectToCollectionMsg = ({
 AddProjectToCollectionMsg.propTypes = {
   projectDomain: PropTypes.string.isRequired,
   collectionName: PropTypes.string,
-  url: PropTypes.string
+  url: PropTypes.string,
 };
-

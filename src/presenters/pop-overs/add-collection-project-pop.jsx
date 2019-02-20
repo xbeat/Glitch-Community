@@ -1,15 +1,15 @@
-// add-collection-project-pop.jsx -> Add a project to a collection via the collection page
-import React from "react";
-import PropTypes from "prop-types";
-import { debounce } from "lodash";
+// add-collection-project-pop -> Add a project to a collection via the collection page
+import React from 'react';
+import PropTypes from 'prop-types';
+import { debounce } from 'lodash';
 
-import { TrackClick } from "../analytics";
-import Loader from "../includes/loader.jsx";
-import ProjectResultItem from "../includes/project-result-item.jsx";
-import ProjectsLoader from "../projects-loader.jsx";
+import { TrackClick } from '../analytics';
+import Loader from '../includes/loader';
+import ProjectResultItem from '../includes/project-result-item';
+import ProjectsLoader from '../projects-loader';
 
 import { NotificationConsumer } from '../notifications';
-import { AddProjectToCollectionMsg } from "../notifications.jsx";
+import { AddProjectToCollectionMsg } from '../notifications';
 
 
 const ProjectResultsUL = ({ projects, collection, onClick }) => (
@@ -42,7 +42,7 @@ const ProjectResultsUL = ({ projects, collection, onClick }) => (
 ProjectResultsUL.propTypes = {
   projects: PropTypes.array.isRequired,
   collection: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 const ProjectSearchResults = ({
@@ -84,15 +84,10 @@ is already in this collection
       <br />
       {excludedProjectsCount > 0 && (
         <span>
-          (Excluded
-          {' '}
-          {excludedProjectsCount}
-          {' '}
-search
-          {' '}
-          {excludedProjectsCount > 1 ? 'results' : 'result'}
-          {' '}
-already found in
+          {`Excluded ${excludedProjectsCount} search ${excludedProjectsCount > 1 ? 'results' : 'result'}
+
+       
+
           collection)
         </span>
       )}
@@ -103,7 +98,7 @@ already found in
 ProjectSearchResults.propTypes = {
   collection: PropTypes.object.isRequired,
   projectName: PropTypes.string,
-  excludedProjectsCount: PropTypes.number
+  excludedProjectsCount: PropTypes.number,
 };
 
 ProjectSearchResults.defaultProps = {
@@ -152,8 +147,8 @@ class AddCollectionProjectPop extends React.Component {
     this.setState({
       maybeRequest: null,
       maybeResults: null,
-      projectName: "",
-      excludedProjectsCount: 0
+      projectName: '',
+      excludedProjectsCount: 0,
     });
   }
 
@@ -232,7 +227,7 @@ class AddCollectionProjectPop extends React.Component {
         }
       }
     }
-    
+
     this.setState(({ maybeRequest }) => (request === maybeRequest
       ? {
         maybeRequest: null,
@@ -249,12 +244,10 @@ class AddCollectionProjectPop extends React.Component {
     // add project to page if successful & show notification
     this.props
       .addProjectToCollection(project, collection)
-      .then(() =>
-        createNotification(
-          <AddProjectToCollectionMsg projectDomain={project.domain} />,
-          "notifySuccess"
-        )
-      );
+      .then(() => createNotification(
+        <AddProjectToCollectionMsg projectDomain={project.domain} />,
+        'notifySuccess',
+      ));
   }
 
   render() {
@@ -307,7 +300,7 @@ AddCollectionProjectPop.propTypes = {
   initialProjects: PropTypes.array.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
   togglePopover: PropTypes.func, // required but added dynamically
-  currentUser: PropTypes.object.isRequired
+  currentUser: PropTypes.object.isRequired,
 };
 
 AddCollectionProjectPop.defaultProps = {

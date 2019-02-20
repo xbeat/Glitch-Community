@@ -1,19 +1,19 @@
 // create-collection-pop.jsx -> add a project to a new user or team collection
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { UserAvatar, TeamAvatar } from "../includes/avatar.jsx";
-import { TrackClick } from "../analytics";
-import { getLink, createCollection } from "../../models/collection";
+import { kebabCase, orderBy } from 'lodash';
+import { UserAvatar, TeamAvatar } from '../includes/avatar.jsx';
+import { TrackClick } from '../analytics';
+import { getLink, createCollection } from '../../models/collection';
 
-import Notifications from "../notifications.jsx";
-import { AddProjectToCollectionMsg } from "../notifications.jsx";
-import { NestedPopoverTitle } from "./popover-nested.jsx";
-import Dropdown from "./dropdown.jsx";
-import { PureEditableField } from "../includes/editable-field.jsx";
-import Loader from "../includes/loader.jsx";
+import Notifications from '../notifications.jsx';
+import { AddProjectToCollectionMsg } from '../notifications.jsx';
+import { NestedPopoverTitle } from './popover-nested.jsx';
+import Dropdown from './dropdown.jsx';
+import { PureEditableField } from '../includes/editable-field.jsx';
+import Loader from '../includes/loader.jsx';
 
-import { kebabCase, orderBy } from "lodash";
 
 class CreateCollectionPop extends React.Component {
   constructor(props) {
@@ -21,19 +21,21 @@ class CreateCollectionPop extends React.Component {
 
     const currentUserOptionLabel = (
       <span>
-        myself <UserAvatar user={this.props.currentUser} />
+        myself
+        {' '}
+        <UserAvatar user={this.props.currentUser} />
       </span>
     );
-    const currentUserOption = { value: -1, label: currentUserOptionLabel };
-    
+    const currentUserOption = { value: null, label: currentUserOptionLabel };
+
     this.options = [currentUserOption].concat(
-      this.getTeamOptions(this.props.currentUser.teams)
+      this.getTeamOptions(this.props.currentUser.teams),
     );
 
     this.state = {
       loading: false,
-      query: "", //The entered collection name
-      selection: currentUserOption, // the selected option from the dropdown 
+      query: '', // The entered collection name
+      selection: currentUserOption, // the selected option from the dropdown
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -47,36 +49,35 @@ class CreateCollectionPop extends React.Component {
 
   setSelection(option) {
     this.setState({
-      selection: option
+      selection: option,
     });
   }
 
   async handleSubmit(event, createNotification) {
     event.preventDefault();
     this.setState({ loading: true });
-    const teamId = { this.state.selection.value == -1 ? null : this.state.selection.value };
     // create the new collection with createCollection(api, name, teamId, notification)
     const collectionResponse = await createCollection(
       this.props.api,
       this.state.query,
       this.state.selection.value,
-      createNotification
+      createNotification,
     );
     // add the project to the collection
     if (collectionResponse && collectionResponse.id) {
       const collection = collectionResponse;
       // add the selected project to the collection
-      try{
+      try {
         this.props.api
           .patch(`collections/${collection.id}/add/${this.props.project.id}`);
         if (this.state.selection.value) {
           const team = this.props.currentUser.teams.find(
-            ({ id }) => id == this.state.selection.value
+            ({ id }) => id == this.state.selection.value,
           );
           collection.team = team;
         }
         collection.user = this.props.currentUser;
-        
+
         const newCollectionUrl = getLink(collection);
 
         // show notification
@@ -87,12 +88,11 @@ class CreateCollectionPop extends React.Component {
             url={newCollectionUrl}
           />
         );
-        createNotification(content, "notifySuccess");
+        createNotification(content, 'notifySuccess');
 
         this.props.togglePopover();
-        
-      }catch(error){
-        createNotification("Unable to add project to collection.", "notifyError");
+      } catch (error) {
+        createNotification('Unable to add project to collection.', 'notifyError');
         this.props.togglePopover();
       }
     } else {
@@ -106,11 +106,13 @@ class CreateCollectionPop extends React.Component {
     const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
     const teamOptions = [];
 
-    orderedTeams.map(team => {
-      let option = {};
-      let label = (
+    orderedTeams.map((team) => {
+      const option = {};
+      const label = (
         <span id={team.id}>
-          {team.name} {<TeamAvatar team={team} />}
+          {team.name}
+          {' '}
+          {<TeamAvatar team={team} />}
         </span>
       );
       option.value = team.id;
@@ -126,7 +128,7 @@ class CreateCollectionPop extends React.Component {
     let queryError; // if user already has a collection with the specified name
 
     const submitEnabled = this.state.query.length > 0;
-    const placeholder = "New Collection Name";
+    const placeholder = 'New Collection Name';
 
     const teams = this.props.currentUser.teams;
 
@@ -136,10 +138,10 @@ class CreateCollectionPop extends React.Component {
       : collections.filter(({ userId }) => userId == this.props.currentUser.id);
 
     if (
-      !!collections &&
-      selectedOwnerCollections.some(c => c.url === kebabCase(query))
+      !!collections
+      && selectedOwnerCollections.some(c => c.url === kebabCase(query))
     ) {
-      queryError = "You already have a collection with this name";
+      queryError = 'You already have a collection with this name';
     }
 
     return (
@@ -147,7 +149,11 @@ class CreateCollectionPop extends React.Component {
         {({ createNotification }) => (
           <dialog className="pop-over create-collection-pop wide-pop">
             <NestedPopoverTitle>
-              Add {this.props.project.domain} to a new collection
+              Add
+              {' '}
+              {this.props.project.domain}
+              {' '}
+to a new collection
             </NestedPopoverTitle>
 
             <section className="pop-over-actions">
@@ -165,7 +171,8 @@ class CreateCollectionPop extends React.Component {
 
                 {teams.length > 0 && (
                   <div>
-                    for{" "}
+                    for
+                    {' '}
                     <Dropdown
                       containerClass="user-or-team-toggle"
                       options={this.options}
@@ -180,7 +187,7 @@ class CreateCollectionPop extends React.Component {
                     name="Create Collection clicked"
                     properties={inherited => ({
                       ...inherited,
-                      origin: `${inherited.origin} project`
+                      origin: `${inherited.origin} project`,
                     })}
                   >
                     <div className="button-wrap">
@@ -210,7 +217,7 @@ CreateCollectionPop.propTypes = {
   currentUser: PropTypes.object,
   project: PropTypes.object.isRequired,
   fromProject: PropTypes.bool,
-  togglePopover: PropTypes.func.isRequired
+  togglePopover: PropTypes.func.isRequired,
 };
 
 export default CreateCollectionPop;
