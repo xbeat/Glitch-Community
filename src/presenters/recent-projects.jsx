@@ -1,31 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getAvatarStyle, getProfileStyle} from '../models/user';
-import {CurrentUserConsumer} from './current-user.jsx';
-import {UserLink} from './includes/link.jsx';
+import { getAvatarStyle, getProfileStyle } from '../models/user';
+import { CurrentUserConsumer } from './current-user';
+import { UserLink } from './includes/link';
 
-import {CoverContainer} from './includes/profile.jsx';
-import Loader from './includes/loader.jsx';
-import ProjectsLoader from './projects-loader.jsx';
-import {ProjectsUL} from './projects-list.jsx';
-import SignInPop from './pop-overs/sign-in-pop.jsx';
+import { CoverContainer } from './includes/profile';
+import { Loader } from './includes/loader';
+import ProjectsLoader from './projects-loader';
+import { ProjectsUL } from './projects-list';
+import SignInPop from './pop-overs/sign-in-pop';
 
-const RecentProjectsContainer = ({children, user, api}) => (
+const RecentProjectsContainer = ({ children, user, api }) => (
   <section className="profile recent-projects">
-    <h2><UserLink user={user}>Your Projects →</UserLink></h2>
+    <h2>
+      <UserLink user={user}>Your Projects →</UserLink>
+    </h2>
     <CoverContainer style={getProfileStyle(user)}>
       <div className="profile-avatar">
         <div className="user-avatar-container">
           <UserLink user={user}>
-            <div className={`user-avatar ${!user.login ? 'anon-user-avatar' : ''}`} style={getAvatarStyle(user)} alt=""></div>
+            <div
+              className={`user-avatar ${!user.login ? 'anon-user-avatar' : ''}`}
+              style={getAvatarStyle(user)}
+              alt=""
+            />
           </UserLink>
-          {!user.login && <div className="anon-user-sign-up"><SignInPop api={api}/></div>}
+          {!user.login && (
+            <div className="anon-user-sign-up">
+              <SignInPop api={api} />
+            </div>
+          )}
         </div>
       </div>
-      <article className="projects">
-        {children}
-      </article>
+      <article className="projects">{children}</article>
     </CoverContainer>
   </section>
 );
@@ -41,21 +49,25 @@ RecentProjectsContainer.propTypes = {
   }).isRequired,
 };
 
-const RecentProjects = ({api}) => (
+const RecentProjects = ({ api }) => (
   <CurrentUserConsumer>
     {(user, fetched) => (
       <RecentProjectsContainer user={user} api={api}>
         {fetched ? (
-          <ProjectsLoader api={api} projects={user.projects.slice(0,3)}>
-            {projects => <ProjectsUL projects={projects}/>}
+          <ProjectsLoader api={api} projects={user.projects.slice(0, 3)}>
+            {projects => <ProjectsUL projects={projects} />}
           </ProjectsLoader>
-        ) : <Loader/>}
+        ) : (
+          <Loader />
+        )}
       </RecentProjectsContainer>
     )}
   </CurrentUserConsumer>
 );
 RecentProjects.propTypes = {
-  api: PropTypes.any.isRequired,
+  api: PropTypes.any,
 };
-
+RecentProjects.defaultProps = {
+  api: null,
+};
 export default RecentProjects;

@@ -3,45 +3,60 @@ const WARN = 1;
 const ERROR = 2;
 
 module.exports = {
-  "extends": [
+  extends: [
     "eslint:recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:react/recommended",
+    "airbnb"
   ],
   env: {
-    'es6': true,        // We are writing ES6 code
-    'browser': true,    // for the browser
+    es6: true, // We are writing ES6 code
+    browser: true // for the browser
   },
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "sourceType": "module",
-    "allowImportExportEverywhere": false,  // import/export must happen at the top level.
+  parser: "babel-eslint",
+  parserOptions: {
+    sourceType: "module",
+    allowImportExportEverywhere: false // import/export must happen at the top level.
   },
-  "plugins": [
+  plugins: [
     "jsx-a11y", // https://www.npmjs.com/package/eslint-plugin-jsx-a11y
     "react-hooks", // https://www.npmjs.com/package/eslint-plugin-react-hooks
   ],
-  "rules": {
+  rules: {
     // Overrides/additions to eslint:recommended:
     "no-console": OFF,
     "no-else-return": ERROR,
-    "indent": ["error", 2,  { "SwitchCase": 1 }],
+    indent: ["error", 2, { SwitchCase: 1 }],
     "linebreak-style": ["error", "unix"],
-    "semi": ["error", "always"],
+    semi: ["error", "always"],
     "no-debugger": WARN,
-    
     "jsx-a11y/label-has-for": OFF, // It's been deprecated. -- https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/label-has-for.md
-    
     // Overrides of react/recommended:
-    "react/no-unescaped-entities": ["error", {"forbid": [`"`, ">", "}"]}], // permit ' in jsx html,
+    "react/no-unescaped-entities": ["error", { forbid: [`"`, ">", "}"] }], // permit ' in jsx html,
     "react/prop-types": [OFF], // disabled so we can use composed prop-types
-    
+    "react/forbid-prop-types": [OFF],
+    "react/destructuring-assignment": [OFF, 'always'],
+    "react/no-multi-comp": [OFF], // someday on 
+    "no-param-reassign": [OFF],
+    "react/jsx-no-bind": [OFF],
+    "no-restricted-syntax": [OFF],
+    "no-restricted-globals": [OFF],
+    "no-alert": [OFF],
+    "react/button-has-type": [OFF], // TODO turn back on when button componentization is done
+    "max-len": ['error', 150, 2, {
+      ignoreUrls: true,
+      ignoreComments: true,
+      ignoreRegExpLiterals: true,
+      ignoreStrings: true,
+      ignoreTemplateLiterals: true,
+    }],
     // React hooks config
     "react-hooks/rules-of-hooks": "error"
   },
-  "settings": {
-    "react": {
-      "version": "16.8.1" // Should match package.json
-    }
-  }
-}
+  settings: {
+    react: {
+      version: "16.8.1" // Should match package.json
+    },
+    "import/ignore": ['sentry'],
+  },
+};

@@ -10,6 +10,7 @@
   "dependencies": {
     "@babel/core": "^7.2.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
@@ -24,6 +25,7 @@
     "babel-preset-modern-browsers": "^13.0.1",
     "body-parser": "^1.18.3",
     "c3": "^0.6.12",
+    "classnames": "^2.2.6",
     "compression": "^1.7.3",
     "css-loader": "^2.1.0",
     "d3-array": "^2.0.3",
@@ -32,6 +34,7 @@
     "ejs": "^2.6.1",
     "email-addresses": "^3.0.3",
     "eslint": "^5.13.0",
+    "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.2",
@@ -69,7 +72,8 @@
     "url-join": "^4.0.0",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.2",
-    "webpack-dev-middleware": "^3.5.2"
+    "webpack-dev-middleware": "^3.5.2",
+    "eslint-plugin-import": "^2.16.0"
   },
   "engines": {
     "node": "10.x"

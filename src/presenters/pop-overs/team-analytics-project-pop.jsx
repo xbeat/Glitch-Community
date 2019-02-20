@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ProjectResultItem from '../includes/project-result-item.jsx';
+import ProjectResultItem from '../includes/project-result-item';
 import PopoverWithButton from './popover-with-button';
 
-const AllProjectsItem = ({currentProjectDomain, action}) => {
+const AllProjectsItem = ({ currentProjectDomain, action }) => {
   const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
-  let resultsClass = "button-unstyled result";
+  let resultsClass = 'button-unstyled result';
   if (!currentProjectDomain) {
-    resultsClass += " active";
+    resultsClass += ' active';
   }
   return (
-    <button className={resultsClass} onClick={action}>
-      <img className="avatar" src={BENTO_BOX} alt='Bento emoji'/>
-      <div className="result-name" title="All Projects">All Projects</div>
+    <button className={resultsClass} onClick={action} type="button">
+      <img className="avatar" src={BENTO_BOX} alt="Bento emoji" />
+      <div className="result-name" title="All Projects">
+        All Projects
+      </div>
     </button>
   );
 };
@@ -23,32 +25,39 @@ AllProjectsItem.propTypes = {
   action: PropTypes.func.isRequired,
 };
 
-
 const isActive = (currentProjectDomain, project) => {
   if (currentProjectDomain === project.domain) {
     return true;
   }
+  return false;
 };
 
-const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomain, currentProjectDomain}) => {
+const PopOver = ({
+  projects,
+  togglePopover,
+  setFilter,
+  filter,
+  updateProjectDomain,
+  currentProjectDomain,
+}) => {
   const onClick = (domain) => {
     togglePopover();
     updateProjectDomain(domain);
-    setFilter("");
+    setFilter('');
   };
-  
-  const filteredProjects = projects.filter(({domain}) => {
-    return domain.toLowerCase().includes(filter.toLowerCase());
-  });
-  
+
+  const filteredProjects = projects.filter(({ domain }) => domain.toLowerCase().includes(filter.toLowerCase()));
+
   return (
     <dialog className="pop-over analytics-projects-pop wide-pop">
       <section className="pop-over-info">
         <input
           autoFocus // eslint-disable-line jsx-a11y/no-autofocus
-          onChange={(event) => {setFilter(event.target.value);}} 
-          id="analytics-project-filter" 
-          className="pop-over-input search-input pop-over-search" 
+          onChange={(event) => {
+            setFilter(event.target.value);
+          }}
+          id="analytics-project-filter"
+          className="pop-over-input search-input pop-over-search"
           placeholder="Filter projects"
           value={filter}
         />
@@ -56,32 +65,34 @@ const PopOver = ({projects, togglePopover, setFilter, filter, updateProjectDomai
       <section className="pop-over-actions results-list">
         <ul className="results">
           <li className="button-unstyled">
-            <AllProjectsItem 
-              currentProjectDomain = {currentProjectDomain}
-              action = {() => onClick('')}
+            <AllProjectsItem
+              currentProjectDomain={currentProjectDomain}
+              action={() => onClick('')}
             />
           </li>
-          { filteredProjects.map((project) => (
+          {filteredProjects.map(project => (
             <li key={project.id} className="button-unstyled">
-              <ProjectResultItem 
-                {...project} 
-                onClick = {() => onClick(project.domain)} 
-                isActive = {isActive(currentProjectDomain, project)}
+              <ProjectResultItem
+                {...project}
+                onClick={() => onClick(project.domain)}
+                isActive={isActive(currentProjectDomain, project)}
               />
             </li>
           ))}
         </ul>
       </section>
     </dialog>
-  ); 
+  );
 };
 
 PopOver.propTypes = {
-  projects: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    domain: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  })).isRequired,
+  projects: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      domain: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   togglePopover: PropTypes.func, // required but added dynamically
   setFilter: PropTypes.func.isRequired,
   filter: PropTypes.string.isRequired,
@@ -89,22 +100,29 @@ PopOver.propTypes = {
   currentProjectDomain: PropTypes.string.isRequired,
 };
 
+PopOver.defaultProps = {
+  togglePopover: () => {},
+};
 
 class TeamAnalyticsProjectPop extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {filter: ""};
+    this.state = { filter: '' };
     this.setFilter = this.setFilter.bind(this);
   }
-  
+
   setFilter(query) {
-    this.setState({filter: query});
+    this.setState({ filter: query });
   }
-  
+
   render() {
-    const {updateProjectDomain, currentProjectDomain, projects} = this.props;
+    const { updateProjectDomain, currentProjectDomain, projects } = this.props;
     return (
-      <PopoverWithButton buttonClass="button-small button-tertiary" buttonText={`Filter: ${currentProjectDomain || 'All Projects'}`} passToggleToPop>
+      <PopoverWithButton
+        buttonClass="button-small button-tertiary"
+        buttonText={`Filter: ${currentProjectDomain || 'All Projects'}`}
+        passToggleToPop
+      >
         <PopOver
           projects={projects}
           updateProjectDomain={updateProjectDomain}

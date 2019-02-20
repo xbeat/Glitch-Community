@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 
 export const Loader = () => (
   <div className="loader">
-    <div className="moon"></div>
-    <div className="earth"></div>
-    <div className="asteroid"></div>    
-    <div className="asteroid-dust"></div>    
-  </div>    
+    <div className="moon" />
+    <div className="earth" />
+    <div className="asteroid" />
+    <div className="asteroid-dust" />
+  </div>
 );
-export default Loader;
-
 export class DataLoader extends React.Component {
   constructor(props) {
     super(props);
@@ -20,30 +18,31 @@ export class DataLoader extends React.Component {
       maybeError: null,
     };
   }
-  
+
   componentDidMount() {
     this.props.get().then(
-      data => this.setState({
-        maybeData: data,
-        loaded: true,
-      }),
-      error => {
+      (data) => {
+        this.setState({
+          maybeData: data,
+          loaded: true,
+        });
+      },
+      (error) => {
         console.error(error);
         this.setState({
           maybeError: error,
         });
-      }
+      },
     );
   }
-  
+
   render() {
     if (this.state.loaded) {
       return this.props.children(this.state.maybeData);
-    } else if (this.state.maybeError) {
+    } if (this.state.maybeError) {
       return this.props.renderError(this.state.maybeError);
-    } 
+    }
     return this.props.renderLoader();
-    
   }
 }
 DataLoader.propTypes = {

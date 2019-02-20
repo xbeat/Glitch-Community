@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Link from './includes/link.jsx';
+import { Link } from './includes/link';
 
-const FooterLine = ({href, track, children}) => {
-  return <p><Link to={href} data-track={'footer → '+track}>{children}</Link></p>;
-};
+const FooterLine = ({ href, track, children }) => (
+  <p>
+    <Link to={href} data-track={`footer → ${track}`}>
+      {children}
+    </Link>
+  </p>
+);
 
 FooterLine.propTypes = {
   href: PropTypes.string.isRequired,
@@ -14,27 +18,47 @@ FooterLine.propTypes = {
 };
 
 export default function Footer() {
-  const srcForPlatforms = "https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188";
+  const srcForPlatforms = 'https://cdn.glitch.com/be1ad2d2-68ab-404a-82f4-6d8e98d28d93%2Ffor-platforms-icon.svg?1506442305188';
   return (
     <footer role="contentinfo">
       <FooterLine href="/about" track="about">
-        About Glitch <span role="img" aria-label="">🔮</span>
+        About Glitch
+        {' '}
+        <span role="img" aria-label="">
+          🔮
+        </span>
       </FooterLine>
       <FooterLine href="https://medium.com/glitch" track="blog">
-        Blog <span role="img" aria-label="">📰</span>
+        Blog
+        {' '}
+        <span role="img" aria-label="">
+          📰
+        </span>
       </FooterLine>
       <FooterLine href="/help/" track="faq">
-        Help Center <span role="img" aria-label="">☂️</span>
+        Help Center
+        {' '}
+        <span role="img" aria-label="">
+          ☂️
+        </span>
       </FooterLine>
       <FooterLine href="http://status.glitch.com/" track="system status">
-        System Status <span role="img" aria-label="">🚥</span>
+        System Status
+        {' '}
+        <span role="img" aria-label="">
+          🚥
+        </span>
       </FooterLine>
       <FooterLine href="/legal" track="legal stuff">
-        Legal Stuff <span role="img" aria-label="">👮‍</span>
+        Legal Stuff
+        {' '}
+        <span role="img" aria-label="">
+          👮‍
+        </span>
       </FooterLine>
-      <hr/>
+      <hr />
       <FooterLine href="/teams" track="platforms">
-        <img className="for-platforms-icon" src={srcForPlatforms} alt=""/>
+        <img className="for-platforms-icon" src={srcForPlatforms} alt="" />
         <span className="for-platforms-text">Glitch Teams</span>
       </FooterLine>
     </footer>

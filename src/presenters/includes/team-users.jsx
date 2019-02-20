@@ -1,38 +1,47 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { getDisplayName } from "../../models/user";
-import { TrackClick } from "../analytics";
-import { WhitelistedDomainIcon } from "./team-elements.jsx";
-import { UserAvatar } from "../includes/avatar.jsx";
-import AddTeamUserPop from "../pop-overs/add-team-user-pop.jsx";
-import PopoverWithButton from "../pop-overs/popover-with-button.jsx";
-import PopoverContainer from "../pop-overs/popover-container.jsx";
-import TeamUserInfoPop from "../pop-overs/team-user-info-pop.jsx";
-import UsersList from "../users-list.jsx";
+import { getDisplayName } from '../../models/user';
+import { TrackClick } from '../analytics';
+import { WhitelistedDomainIcon } from './team-elements';
+import { UserAvatar } from './avatar';
+import AddTeamUserPop from '../pop-overs/add-team-user-pop';
+import PopoverWithButton from '../pop-overs/popover-with-button';
+import PopoverContainer from '../pop-overs/popover-container';
+import TeamUserInfoPop from '../pop-overs/team-user-info-pop';
+import UsersList from '../users-list';
 
 // Team Users list (in profile container)
 
+const adminStatusDisplay = (adminIds, user) => {
+  if (adminIds.includes(user.id)) {
+    return ' (admin)';
+  }
+  return '';
+};
+
 export const TeamUsers = props => (
   <ul className="users">
-    {props.users.map(user => {
+    {props.users.map((user) => {
       const userIsTeamAdmin = props.adminIds.includes(user.id);
-      
+
       return (
         <li key={user.id}>
           <PopoverWithButton
             buttonClass="user button-unstyled"
-            buttonText={
+            buttonText={(
               <UserAvatar
                 user={user}
                 suffix={adminStatusDisplay(props.adminIds, user)}
               />
-            }
+            )}
             passToggleToPop
           >
             <TeamUserInfoPop
               userIsTeamAdmin={userIsTeamAdmin}
-              userIsTheOnlyAdmin={userIsTeamAdmin && props.adminIds.length === 1}
+              userIsTheOnlyAdmin={
+                userIsTeamAdmin && props.adminIds.length === 1
+              }
               userIsTheOnlyMember={props.users.length === 1}
               user={user}
               {...props}
@@ -44,27 +53,27 @@ export const TeamUsers = props => (
   </ul>
 );
 
-const adminStatusDisplay = (adminIds, user) => {
-  if (adminIds.includes(user.id)) {
-    return " (admin)";
-  }
-  return "";
-};
-
 TeamUsers.propTypes = {
   users: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired
-    })
+      id: PropTypes.number.isRequired,
+    }),
   ).isRequired,
+  // these are all used by a spread. why doesn't eslint understand?
+  /* eslint-disable react/no-unused-prop-types */
   currentUserIsOnTeam: PropTypes.bool.isRequired,
   removeUserFromTeam: PropTypes.func.isRequired,
   updateUserPermissions: PropTypes.func.isRequired,
-  api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
   adminIds: PropTypes.array.isRequired,
-  team: PropTypes.object.isRequired
+  team: PropTypes.object.isRequired,
+  api: PropTypes.func,
+  /* eslint-enable */
+};
+
+TeamUsers.defaultProps = {
+  api: null,
 };
 
 // Whitelisted domain icon
@@ -92,7 +101,11 @@ export const WhitelistedDomain = ({ domain, setDomain }) => {
                   className="button button-small button-tertiary button-on-secondary-background has-emoji"
                   onClick={() => setDomain(null)}
                 >
-                  Remove {domain} <span className="emoji bomb" />
+                  Remove
+                  {' '}
+                  {domain}
+                  {' '}
+                  <span className="emoji bomb" />
                 </button>
               </section>
             )}
@@ -105,7 +118,7 @@ export const WhitelistedDomain = ({ domain, setDomain }) => {
 
 WhitelistedDomain.propTypes = {
   domain: PropTypes.string.isRequired,
-  setDomain: PropTypes.func
+  setDomain: PropTypes.func.isRequired,
 };
 
 // Add Team User
@@ -145,7 +158,7 @@ export class AddTeamUser extends React.Component {
   async inviteEmail(togglePopover, email) {
     togglePopover();
     this.setState({
-      invitee: email
+      invitee: email,
     });
     try {
       await this.props.inviteEmail(email);
@@ -158,12 +171,14 @@ export class AddTeamUser extends React.Component {
 
   removeNotifyInvited() {
     this.setState({
-      invitee: ""
+      invitee: '',
     });
   }
 
   render() {
-    const alreadyInvitedAndNewInvited = this.props.invitedMembers.concat(this.state.newlyInvited);
+    const alreadyInvitedAndNewInvited = this.props.invitedMembers.concat(
+      this.state.newlyInvited,
+    );
     const {
       inviteEmail,
       inviteUser,
@@ -174,9 +189,9 @@ export class AddTeamUser extends React.Component {
       <PopoverContainer>
         {({ visible, togglePopover }) => (
           <span className="add-user-container">
-            {alreadyInvitedAndNewInvited.length > 0 && 
-              <UsersList users={alreadyInvitedAndNewInvited}/>
-            }
+            {alreadyInvitedAndNewInvited.length > 0 && (
+              <UsersList users={alreadyInvitedAndNewInvited} />
+            )}
             <TrackClick name="Add to Team clicked">
               <button
                 onClick={togglePopover}
@@ -190,7 +205,9 @@ export class AddTeamUser extends React.Component {
                 className="notification notifySuccess inline-notification"
                 onAnimationEnd={this.removeNotifyInvited}
               >
-                Invited {this.state.invitee}
+                Invited
+                {' '}
+                {this.state.invitee}
               </div>
             )}
             {visible && (
@@ -222,7 +239,13 @@ export class AddTeamUser extends React.Component {
 AddTeamUser.propTypes = {
   inviteEmail: PropTypes.func,
   inviteUser: PropTypes.func,
-  setWhitelistedDomain: PropTypes.func
+  setWhitelistedDomain: PropTypes.func,
+};
+
+AddTeamUser.defaultProps = {
+  setWhitelistedDomain: null,
+  inviteUser: null,
+  inviteEmail: null,
 };
 
 // Join Team
