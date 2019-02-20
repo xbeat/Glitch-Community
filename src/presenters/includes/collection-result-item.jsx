@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { getLink as getCollectionLink } from '../../models/collection';
 import { AddProjectToCollectionMsg, NotificationConsumer } from '../notifications';
+import { UserAvatar, TeamAvatar } from './avatar';
 import CollectionAvatar from './collection-avatar';
 
 const addProject = (
@@ -62,6 +63,8 @@ const CollectionResultItem = ({
                   {collection.description}
                 </div>
               )}
+              {collection.team && <TeamAvatar team={collection.team} />}
+              {collection.user && <UserAvatar user={collection.user} />}
             </div>
           </button>
           <a

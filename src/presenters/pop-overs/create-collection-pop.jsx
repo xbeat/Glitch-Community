@@ -143,7 +143,7 @@ class CreateCollectionPop extends React.Component {
                   aria-label={placeholder}
                 />
 
-                {teams.length > 0 && (
+                {teams && teams.length > 0 && (
                   <div>
                     {'for '}
                     <Dropdown
