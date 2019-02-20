@@ -15,11 +15,22 @@ const TYPES = [
   'text',
 ];
 
-const InputPart = ({children}) => {
-  return <span className={styles.inputPart}>{children}</span>;
-};
+const InputPart = ({ children }) => (
+  <span className={styles.inputPart}>{children}</span>
+);
 
-const TextInput = ({autoFocus, disabled, error, maxLength, name, onChange, opaque, placeholder, postfix, prefix, type, value}) => {
+const TextInput = ({
+  autoFocus,
+  disabled,
+  error,
+  maxLength,
+  name,
+  onChange,
+  opaque,
+  placeholder,
+  postfix,
+  prefix,
+  type, value}) => {
   const uniqueId = useUniqueId();
   const borderClassName = classNames(styles.inputBorder, {
     [styles.underline]: !opaque,
