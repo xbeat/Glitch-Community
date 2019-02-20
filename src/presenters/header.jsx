@@ -32,9 +32,9 @@ class SearchForm extends React.Component {
       submitted: false,
     };
   }
-  
+
   onChange(value) {
-    this.setState({value: value});
+    this.setState({ value });
   }
 
   onSubmit(event) {
@@ -51,13 +51,13 @@ class SearchForm extends React.Component {
           <TextInput
             name="q"
             type="search"
-            opaque={true}
+            opaque
             placeholder="bots, apps, users"
             value={value}
             onChange={this.onChange.bind(this)}
           />
         </div>
-        {submitted && <Redirect to={`/search?q=${value}`} push={true}/>}
+        {submitted && <Redirect to={`/search?q=${value}`} push />}
       </form>
     );
   }

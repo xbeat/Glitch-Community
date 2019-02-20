@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { parseOneAddress } from 'email-addresses';
 import _ from 'lodash';
 import axios from 'axios';
-import {
-  PureEditableField,
-  PureEditableTextArea,
-} from '../includes/editable-field';
+import { PureEditableField } from '../includes/editable-field';
 import PopoverWithButton from './popover-with-button';
 import { captureException } from '../../utils/sentry';
 import {
@@ -15,7 +12,7 @@ import {
 } from '../../utils/abuse-reporting';
 import { Loader } from '../includes/loader';
 
-import { CurrentUserConsumer } from '../current-user.jsx';
+import { CurrentUserConsumer } from '../current-user';
 import TextArea from '../../components/fields/text-area';
 
 class ReportAbusePop extends React.Component {
