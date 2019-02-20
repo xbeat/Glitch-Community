@@ -17,14 +17,23 @@ import { NestedPopoverTitle } from "./popover-nested.jsx";
 
 import { orderBy } from "lodash";
 
+const NoSearchResultsPlaceholder = (
+  <p className="info-description">
+    No matching collections found – add to a new one?
+  </p>
+);
+
+const NoCollectionPlaceholder = (
+  <p className="info-description">
+    Create collections to organize your favorite projects.
+  </p>
+);
+
 const AddProjectPopoverTitle = ({ project }) => {
   return (
     <NestedPopoverTitle>
-      <img
-        src={getAvatarUrl(project.id)}
-        alt={`Project avatar for ${project.domain}`}
-      />{" "}
-      Add {project.domain} to collection
+      <img src={getAvatarUrl(project.id)} alt="" /> Add {project.domain} to
+      collection
     </NestedPopoverTitle>
   );
 };
@@ -52,17 +61,6 @@ class AddProjectToCollectionPopContents extends React.Component {
 
   render() {
     const { filteredCollections, query } = this.state;
-    const NoSearchResultsPlaceholder = (
-      <p className="info-description">
-        No matching collections found – add to a new one?
-      </p>
-    );
-    const NoCollectionPlaceholder = (
-      <p className="info-description">
-        Create collections to organize your favorite projects.
-      </p>
-    );
-
     return (
       <dialog className="pop-over add-project-to-collection-pop wide-pop">
         {/* Only show this nested popover title from project-options */}
@@ -70,7 +68,7 @@ class AddProjectToCollectionPopContents extends React.Component {
           <AddProjectPopoverTitle project={this.props.project} />
         )}
 
-        {filteredCollections.length > 3 && (
+        {this.props.collections.length > 3 && (
           <section className="pop-over-info">
             <input
               className="pop-over-input search-input pop-over-search"
