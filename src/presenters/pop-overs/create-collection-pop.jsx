@@ -108,13 +108,11 @@ class CreateCollectionPop extends React.Component {
   render() {
     const { error, query } = this.state;
     const { collections } = this.props;
+    const { teams } = this.props.currentUser;
     let queryError; // if user already has a collection with the specified name
 
     const submitEnabled = this.state.query.length > 0;
     const placeholder = 'New Collection Name';
-
-    const { teams } = this.props.currentUser.teams;
-    console.log('teams', teams);
 
     // determine if entered name already exists for selected user / team
     const selectedOwnerCollections = this.state.selection.value

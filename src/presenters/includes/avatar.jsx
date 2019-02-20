@@ -14,26 +14,27 @@ import {
 // UserAvatar
 
 export const Avatar = ({
-  name, src, color, srcFallback, type,
-}) => (
-  <div data-tooltip={name} data-tooltip-left="true">
+  name, src, color, srcFallback, type, hideTooltip,
+}) => {
+  const contents = (
     <img
       width="32px"
       height="32px"
       src={src}
       alt={name}
       style={color ? { backgroundColor: color } : null}
-      onError={
-        srcFallback
-          ? (event) => {
-            event.target.src = srcFallback;
-          }
-          : null
-      }
-      className={`${type}-avatar`}
+      onError={srcFallback ? event => (event.target.src = srcFallback) : null}
+      className={type + "-avatar"}
     />
-  </div>
-);
+  );
+
+  if (!hideTooltip) {
+    <div data-tooltip={name} data-tooltip-left="true">
+      {contents}
+    </div>;
+  }
+  return contents;
+};
 
 Avatar.propTypes = {
   name: PropTypes.string.isRequired,
@@ -41,11 +42,13 @@ Avatar.propTypes = {
   srcFallback: PropTypes.string,
   type: PropTypes.string.isRequired,
   color: PropTypes.string,
+  hideTooltip: PropTypes.bool,
 };
 
 Avatar.defaultProps = {
   color: null,
   srcFallback: '',
+  hideTooltip: false,
 };
 
 export const TeamAvatar = ({ team }) => (
