@@ -74,6 +74,7 @@ module.exports = {
           emitError: false,
           emitWarning: true,
           failOnError: false,
+          ignorePattern: "src/curated/**",
         },
       },
       {
