@@ -30,8 +30,8 @@ module.exports = function(external) {
   app.use(expressWinston.logger({
       transports: [
         new winston.transports.File({
-          name: 'requests2',
-          filename: 'requests2.log',
+          name: 'requests',
+          filename: 'requests.log',
           maxsize: 2500, // max size of each log file in bytes
           maxFiles: 1,
           tailable: true, // should make it so the oldest data will get removed from the file when it exceeds maxsize
@@ -42,7 +42,8 @@ module.exports = function(external) {
         winston.format.json()
       ),
       meta: false, // logs meta data about the request if true
-      msg: "HTTP {{req.method}} {{req.url}} {{res.statusCode}} / Response-Time: {{req.responseTime}}ms / User-Agent: {{req.headers.userAgent}} / Cache-Control: {{req.headers.cacheControl}} {{JSON.stringify(req, null, 2)}} {{res}}",
+      msg: (req, res) => { return `HTTP ${req.method} ${req.url} ${res.statusCode} / Response-Time: ${req.responseTime}ms / User-Agent: {req.headers['user-agent}} / Cache-Control: {{req.headers.cacheControl}} {{JSON.stringify(req, null, 2)}} {{JSON.stringify(res, null, 2)}}
+`;},
       colorize: false, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
     }));
   
