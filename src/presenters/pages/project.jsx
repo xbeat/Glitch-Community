@@ -92,7 +92,9 @@ const ReadmeLoader = ({ api, domain }) => (
   >
     {({ data }) => (
       <Expander height={250}>
-        <Markdown>{data.toString()}</Markdown>
+        <Markdown>
+          {data.toString()}
+        </Markdown>
       </Expander>
     )}
   </DataLoader>
@@ -212,7 +214,6 @@ ProjectPage.defaultProps = {
 
 async function getProject(api, domain) {
   const { data } = await api.get(`projects/${domain}`);
-  console.log('project', data);
   return data;
 }
 
@@ -228,7 +229,9 @@ const ProjectPageLoader = ({
         {(currentProject, funcs, userIsMember) => (
           <>
             <Helmet>
-              <title>{currentProject.domain}</title>
+              <title>
+                {currentProject.domain}
+              </title>
             </Helmet>
             <ProjectPage
               api={api}

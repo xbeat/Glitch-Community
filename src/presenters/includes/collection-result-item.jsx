@@ -1,40 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { NotificationConsumer } from '../notifications';
-
+import { getLink as getCollectionLink } from '../../models/collection';
+import { AddProjectToCollectionMsg, NotificationConsumer } from '../notifications';
+import { UserAvatar, TeamAvatar } from './avatar';
 import CollectionAvatar from './collection-avatar';
-
-const AddProjectMessage = ({ projectName, collectionName, url }) => (
-  <>
-    <p>
-      Added
-      {' '}
-      <b>
-        <span className="project-name">{projectName}</span>
-      </b>
-      {' '}
-      to collection
-      {' '}
-      <b>
-        <span className="collection-name">{collectionName}</span>
-      </b>
-    </p>
-    <a
-      href={url}
-      rel="noopener noreferrer"
-      className="button button-small button-tertiary button-in-notification-container notify-collection-link"
-    >
-      Take me there
-    </a>
-  </>
-);
-
-AddProjectMessage.propTypes = {
-  projectName: PropTypes.string.isRequired,
-  collectionName: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-};
 
 const addProject = (
   addProjectToCollection,
@@ -44,43 +14,25 @@ const addProject = (
   notification,
   togglePopover,
 ) => {
-  try {
-    // add project to collection via api
-    addProjectToCollection(project, collection);
-
-    // toggle popover
-    togglePopover();
-
+  // add project to collection
+  addProjectToCollection(project, collection).then(() => {
     // show notification
-    const content = (
-      <AddProjectMessage
-        projectName={project.domain}
-        collectionName={collection.name}
-        url={collectionPath}
-      />
-    );
+    const content = <AddProjectToCollectionMsg projectDomain={project.domain} collectionName={collection.name} url={collectionPath} />;
     notification(content, 'notifySuccess');
-  } catch (error) {
-    const content = (
-      <p>Something went wrong. Try refreshing and adding the project again.</p>
-    );
-    notification(content, 'notifyError');
-  }
+  });
+
+  togglePopover();
 };
 
 const CollectionResultItem = ({
-  onClick,
-  project,
-  collection,
-  currentUserLogin,
-  isActive,
-  togglePopover,
+  onClick, project, collection, isActive, togglePopover,
 }) => {
   let resultClass = 'button-unstyled result result-collection';
   if (isActive) {
     resultClass += ' active';
   }
-  const collectionPath = `/@${currentUserLogin}/${collection.url}`;
+
+  const collectionPath = getCollectionLink(collection);
 
   return (
     <NotificationConsumer>
@@ -111,6 +63,8 @@ const CollectionResultItem = ({
                   {collection.description}
                 </div>
               )}
+              {collection.team && <TeamAvatar team={collection.team} />}
+              {collection.user && <UserAvatar user={collection.user} />}
             </div>
           </button>
           <a
@@ -130,7 +84,6 @@ const CollectionResultItem = ({
 CollectionResultItem.propTypes = {
   onClick: PropTypes.func.isRequired,
   collection: PropTypes.object.isRequired,
-  currentUserLogin: PropTypes.string.isRequired,
   isActive: PropTypes.bool,
   project: PropTypes.object.isRequired,
   togglePopover: PropTypes.func.isRequired,

@@ -33,9 +33,13 @@ const NewStuffOverlay = ({ setShowNewStuff, showNewStuff, newStuff }) => (
         id, title, body, link,
       }) => (
         <article key={id}>
-          <div className="title">{title}</div>
+          <div className="title">
+            {title}
+          </div>
           <div className="body">
-            <Markdown>{body}</Markdown>
+            <Markdown>
+              {body}
+            </Markdown>
           </div>
           {!!link && (
             <p>

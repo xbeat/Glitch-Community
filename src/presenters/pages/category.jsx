@@ -22,13 +22,17 @@ const CategoryPageWrap = ({
 }) => (
   <>
     <Helmet>
-      <title>{category.name}</title>
+      <title>
+        {category.name}
+      </title>
     </Helmet>
     <main className="collection-page">
       <article className="projects collection-full" style={{ backgroundColor: category.backgroundColor }}>
 
         <header className="collection">
-          <h1 className="collection-name">{category.name}</h1>
+          <h1 className="collection-name">
+            {category.name}
+          </h1>
           <div className="collection-image-container">
             <img src={category.avatarUrl} alt="" />
           </div>

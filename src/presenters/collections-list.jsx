@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import randomColor from 'randomcolor';
-import { kebabCase, orderBy } from 'lodash';
+import { orderBy } from 'lodash';
 import { TrackClick } from './analytics';
 import CollectionItem from './collection-item';
-import { defaultAvatar, getLink } from '../models/collection';
-import { getCollections, getPredicate } from '../models/words';
+import { getLink, createCollection } from '../models/collection';
 import { Loader } from './includes/loader';
+import { NotificationConsumer } from './notifications';
 
 
 class CollectionsList extends React.Component {
@@ -47,7 +46,9 @@ class CollectionsList extends React.Component {
     }
     return (
       <article className="collections">
-        <h2>{title}</h2>
+        <h2>
+          {title}
+        </h2>
         {canMakeCollections && (
           <>
             <CreateCollectionButton
@@ -106,89 +107,30 @@ export class CreateCollectionButton extends React.Component {
       loading: false,
       newCollectionUrl: '',
     };
-    this.createCollection = this.createCollection.bind(this);
+    this.createCollectionOnClick = this.createCollectionOnClick.bind(this);
   }
 
-  generateNames = async () => {
-    let collectionSynonyms = [
-      'mix',
-      'bricolage',
-      'playlist',
-      'assortment',
-      'potpourri',
-      'melange',
-      'album',
-      'collection',
-      'variety',
-      'compilation',
-    ];
-    let predicate = 'radical';
-
-    try {
-      // get collection names
-      collectionSynonyms = await getCollections();
-      predicate = await getPredicate();
-    } catch (error) {
-      // If there's a failure, we'll stick with our defaults.
-    }
-
-    return [collectionSynonyms, predicate];
-  }
-
-  async postCollection(collectionSynonym, predicate) {
-    const name = [predicate, collectionSynonym].join('-');
-    const description = `A ${collectionSynonym} of projects that does ${predicate} things`;
-    const url = kebabCase(name);
-
-    // defaults
-    const avatarUrl = defaultAvatar;
-
-    // get a random color
-    const coverColor = randomColor({ luminosity: 'light' });
-
-    // set the team id if there is one
-    const teamId = this.props.maybeTeam ? this.props.maybeTeam.id : undefined;
-
-    const { data } = await this.props.api.post('collections', {
-      name,
-      description,
-      url,
-      avatarUrl,
-      coverColor,
-      teamId,
-    });
-
-    if (data && data.url) {
-      if (this.props.maybeTeam) {
-        data.team = this.props.maybeTeam;
-      } else {
-        data.user = this.props.currentUser;
-      }
-      const newCollectionUrl = getLink(data);
-      this.setState({ newCollectionUrl, shouldRedirect: true });
-      return true;
-    }
-    return false;
-  }
-
-  async createCollection() {
+  async createCollectionOnClick(createNotification) {
     this.setState({ loading: true });
 
-    const [collectionSynonymns, predicate] = await this.generateNames();
-    let creationSuccess = false;
-    for (const synonym of collectionSynonymns) {
-      try {
-        // eslint-disable-next-line no-await-in-loop
-        creationSuccess = await this.postCollection(synonym, predicate);
-        if (creationSuccess) {
-          break;
-        }
-      } catch (error) {
-        // Try again.
+    const collectionResponse = await createCollection(
+      this.props.api,
+      null,
+      this.props.maybeTeam ? this.props.maybeTeam.id : null,
+      createNotification,
+    );
+    if (collectionResponse && collectionResponse.id) {
+      const collection = collectionResponse;
+      if (this.props.maybeTeam) {
+        collection.team = this.props.maybeTeam;
+      } else {
+        collection.user = this.props.currentUser;
       }
-    }
-    if (!creationSuccess) {
-      console.log('Unable to create collection :-(');
+      const newCollectionUrl = getLink(collection);
+      this.setState({ newCollectionUrl, shouldRedirect: true });
+    } else {
+      // error messaging handled in createCollection
+      this.setState({ loading: false });
     }
   }
 
@@ -204,18 +146,21 @@ export class CreateCollectionButton extends React.Component {
       );
     }
     return (
-      <div id="create-collection-container">
-        <TrackClick name="Create Collection clicked">
-          <button
-            className="button"
-            id="create-collection"
-            type="button"
-            onClick={() => this.createCollection()}
-          >
-            Create Collection
-          </button>
-        </TrackClick>
-      </div>
+      <NotificationConsumer>
+        {({ createNotification }) => (
+          <div id="create-collection-container">
+            <TrackClick name="Create Collection clicked">
+              <button
+                className="button"
+                id="create-collection"
+                onClick={() => this.createCollectionOnClick(createNotification)}
+              >
+                Create Collection
+              </button>
+            </TrackClick>
+          </div>
+        )}
+      </NotificationConsumer>
     );
   }
 }

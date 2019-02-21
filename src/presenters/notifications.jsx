@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const context = React.createContext();
 const { Provider } = context;
@@ -66,15 +67,13 @@ export class Notifications extends React.Component {
     const { notifications } = this.state;
     return (
       <>
-        <Provider value={funcs}>{this.props.children}</Provider>
+        <Provider value={funcs}>
+          {this.props.children}
+        </Provider>
         {!!notifications.length && (
           <div className="notifications">
             {notifications.map(({ id, className, content }) => (
-              <Notification
-                key={id}
-                className={className}
-                remove={this.remove.bind(this, id)}
-              >
+              <Notification key={id} className={className} remove={this.remove.bind(this, id)}>
                 {content}
               </Notification>
             ))}
@@ -84,3 +83,28 @@ export class Notifications extends React.Component {
     );
   }
 }
+
+export const AddProjectToCollectionMsg = ({ projectDomain, collectionName, url }) => (
+  <>
+    <p>
+      {`Added ${projectDomain} `}
+      {collectionName && `to collection ${collectionName}`}
+    </p>
+    {url && (
+      <a href={url} rel="noopener noreferrer" className="button button-small button-tertiary button-in-notification-container notify-collection-link">
+        Take me there
+      </a>
+    )}
+  </>
+);
+
+AddProjectToCollectionMsg.propTypes = {
+  projectDomain: PropTypes.string.isRequired,
+  collectionName: PropTypes.string,
+  url: PropTypes.string,
+};
+
+AddProjectToCollectionMsg.defaultProps = {
+  url: null,
+  collectionName: null,
+};

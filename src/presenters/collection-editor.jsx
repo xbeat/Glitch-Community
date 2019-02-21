@@ -60,9 +60,11 @@ class CollectionEditor extends React.Component {
   }
 
   render() {
-    const { handleError, handleErrorForInput } = this.props;
+    const { handleError, handleErrorForInput, handleCustomError } = this.props;
     const funcs = {
-      addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(handleError),
+      addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(
+        handleCustomError,
+      ),
       removeProjectFromCollection: project => this.removeProjectFromCollection(project).catch(handleError),
       deleteCollection: () => this.deleteCollection().catch(handleError),
       updateNameAndUrl: ({ name, url }) => this.updateFields({ name, url }).catch(handleErrorForInput),

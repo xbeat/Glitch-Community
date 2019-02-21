@@ -63,7 +63,9 @@ class ReportAbusePop extends React.Component {
           <p className="info-description right">
             from
             {' '}
-            <strong>{this.props.currentUser.login}</strong>
+            <strong>
+              {this.props.currentUser.login}
+            </strong>
           </p>
         </section>
       );

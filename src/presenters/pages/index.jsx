@@ -28,8 +28,12 @@ const Callout = ({
   <div className={`callout ${classes}`}>
     <img className="badge" src={imgUrl} alt={title} />
     <div className="window">
-      <div className="title">{title}</div>
-      <div className="description">{description}</div>
+      <div className="title">
+        {title}
+      </div>
+      <div className="description">
+        {description}
+      </div>
     </div>
   </div>
 );

@@ -63,7 +63,9 @@ export const MoreIdeasCategories = () => (
             style={{ backgroundColor: category.color }}
           >
             <img src={category.avatarUrl} alt="" />
-            <div>{category.name}</div>
+            <div>
+              {category.name}
+            </div>
           </Link>
         </li>
       ))}

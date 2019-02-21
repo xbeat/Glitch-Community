@@ -32,7 +32,9 @@ const ProjectItem = ({ api, project, ...props }) => (
               className="project-badge private-project-badge"
               aria-label="private"
             />
-            <div className="project-name">{project.domain}</div>
+            <div className="project-name">
+              {project.domain}
+            </div>
           </div>
           <div className="description">
             <TruncatedMarkdown length={80}>
