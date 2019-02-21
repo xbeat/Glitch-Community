@@ -31,7 +31,9 @@ const CollectionWide = ({ collection, api }) => {
           <CollectionAvatar color={collection.coverColor} />
         </CollectionLink>
         <CollectionLink className="collection-name" collection={collection}>
-          <h2>{collection.name}</h2>
+          <h2>
+            {collection.name}
+          </h2>
         </CollectionLink>
         {!!collection.team && <TeamTile team={collection.team} />}
         {!!collection.user && <UserTile {...collection.user} />}
@@ -59,7 +61,7 @@ const CollectionWide = ({ collection, api }) => {
 
 CollectionWide.propTypes = {
   collection: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
+    avatarUrl: PropTypes.string,
     coverColor: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

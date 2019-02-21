@@ -66,7 +66,11 @@ OptimisticValue.defaultProps = {
 export class TrimmedValue extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: props.value };
+    let valueToStore = props.value;
+    if (valueToStore === null) {
+      valueToStore = '';
+    }
+    this.state = { value: valueToStore };
     this.update = this.update.bind(this);
   }
 

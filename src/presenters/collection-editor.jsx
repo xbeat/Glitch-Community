@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { CurrentUserConsumer } from './current-user';
-import ErrorHandlers from './error-handlers';
+import { useCurrentUser } from './current-user';
+import useErrorHandlers from './error-handlers';
 
 class CollectionEditor extends React.Component {
   constructor(props) {
@@ -60,9 +60,11 @@ class CollectionEditor extends React.Component {
   }
 
   render() {
-    const { handleError, handleErrorForInput } = this.props;
+    const { handleError, handleErrorForInput, handleCustomError } = this.props;
     const funcs = {
-      addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(handleError),
+      addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(
+        handleCustomError,
+      ),
       removeProjectFromCollection: project => this.removeProjectFromCollection(project).catch(handleError),
       deleteCollection: () => this.deleteCollection().catch(handleError),
       updateNameAndUrl: ({ name, url }) => this.updateFields({ name, url }).catch(handleErrorForInput),
@@ -86,30 +88,22 @@ CollectionEditor.defaultProps = {
   api: null,
 };
 
-const CollectionEditorContainer = ({ api, children, initialCollection }) => (
-  <ErrorHandlers>
-    {errorFuncs => (
-      <CurrentUserConsumer>
-        {currentUser => (
-          <CollectionEditor
-            {...{ api, currentUser, initialCollection }}
-            {...errorFuncs}
-          >
-            {children}
-          </CollectionEditor>
-        )}
-      </CurrentUserConsumer>
-    )}
-  </ErrorHandlers>
-);
+const CollectionEditorContainer = ({ api, children, initialCollection }) => {
+  const { currentUser } = useCurrentUser();
+  const errorFuncs = useErrorHandlers();
+  return (
+    <CollectionEditor
+      {...{ api, currentUser, initialCollection }}
+      {...errorFuncs}
+    >
+      {children}
+    </CollectionEditor>
+  );
+};
 CollectionEditorContainer.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   initialCollection: PropTypes.object.isRequired,
-};
-
-CollectionEditorContainer.defaultProps = {
-  api: null,
 };
 
 export default CollectionEditorContainer;

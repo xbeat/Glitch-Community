@@ -1,7 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-import { NotificationConsumer } from './notifications';
+import { useNotifications } from './notifications';
 
 function handleError(notify, error) {
   console.error(error);
@@ -18,17 +15,21 @@ function handleErrorForInput(notify, error) {
   return Promise.reject();
 }
 
-const ErrorHandler = ({ children }) => (
-  <NotificationConsumer>
-    {({ createErrorNotification }) => children({
-      handleError: error => handleError(createErrorNotification, error),
-      handleErrorForInput: error => handleErrorForInput(createErrorNotification, error),
-    })
-    }
-  </NotificationConsumer>
-);
-ErrorHandler.propTypes = {
-  children: PropTypes.func.isRequired,
+function handleCustomError(notify, error) {
+  console.error(error);
+  if (error && error.response && error.response.data) {
+    notify(error.response.data.message, 'notifyError');
+  }
+  return Promise.reject(error);
+}
+
+const useErrorHandlers = () => {
+  const { createNotification, createErrorNotification } = useNotifications();
+  return {
+    handleError: error => handleError(createErrorNotification, error),
+    handleErrorForInput: error => handleErrorForInput(createErrorNotification, error),
+    handleCustomError: error => handleCustomError(createNotification, error),
+  };
 };
 
-export default ErrorHandler;
+export default useErrorHandlers;

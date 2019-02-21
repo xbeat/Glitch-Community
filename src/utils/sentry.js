@@ -48,6 +48,9 @@ try {
         const filteredExtras = filterSecrets(extras);
         breadcrumb.data.extra = filteredExtras; // eslint-disable-line no-param-reassign
       }
+      if (typeof breadcrumb.message === 'string') {
+        breadcrumb.message = filterSecrets(breadcrumb.message);
+      }
       return breadcrumb;
     },
   });

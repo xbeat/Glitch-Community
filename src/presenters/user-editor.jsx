@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
 
-import { CurrentUserConsumer } from './current-user';
-import ErrorHandlers from './error-handlers';
-import Uploader from './includes/uploader';
+import { useCurrentUser } from './current-user';
+import useErrorHandlers from './error-handlers';
+import useUploader from './includes/uploader';
 
 class UserEditor extends React.Component {
   constructor(props) {
@@ -18,7 +18,8 @@ class UserEditor extends React.Component {
   }
 
   componentDidMount() {
-    this.loadCollections();
+    // load collections with project info
+    this.reloadCollections();
   }
 
   isCurrentUser() {
@@ -133,10 +134,10 @@ class UserEditor extends React.Component {
     await this.props.api.patch(
       `collections/${collection.id}/add/${project.id}`,
     );
-    this.loadCollections();
+    this.reloadCollections();
   }
 
-  async loadCollections() {
+  async reloadCollections() {
     const { data } = await this.props.api.get(
       `collections?userId=${this.state.id}`,
     );
@@ -152,7 +153,7 @@ class UserEditor extends React.Component {
   }
 
   render() {
-    const { handleError, handleErrorForInput } = this.props;
+    const { handleError, handleErrorForInput, handleCustomError } = this.props;
     const funcs = {
       updateName: name => this.updateFields({ name }).catch(handleErrorForInput),
       updateLogin: login => this.updateFields({ login }).catch(handleErrorForInput),
@@ -166,7 +167,7 @@ class UserEditor extends React.Component {
       deleteProject: id => this.deleteProject(id).catch(handleError),
       undeleteProject: id => this.undeleteProject(id).catch(handleError),
       setDeletedProjects: _deletedProjects => this.setState({ _deletedProjects }),
-      addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(handleError),
+      addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(handleCustomError),
       featureProject: id => this.featureProject(id).catch(handleError),
       unfeatureProject: id => this.unfeatureProject(id).catch(handleError),
     };
@@ -187,28 +188,21 @@ UserEditor.propTypes = {
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
-const UserEditorContainer = ({ api, children, initialUser }) => (
-  <ErrorHandlers>
-    {errorFuncs => (
-      <Uploader>
-        {uploadFuncs => (
-          <CurrentUserConsumer>
-            {(currentUser, fetched, { update }) => (
-              <UserEditor
-                {...{ api, currentUser, initialUser }}
-                updateCurrentUser={update}
-                {...uploadFuncs}
-                {...errorFuncs}
-              >
-                {children}
-              </UserEditor>
-            )}
-          </CurrentUserConsumer>
-        )}
-      </Uploader>
-    )}
-  </ErrorHandlers>
-);
+const UserEditorContainer = ({ api, children, initialUser }) => {
+  const { currentUser, update } = useCurrentUser();
+  const uploadFuncs = useUploader();
+  const errorFuncs = useErrorHandlers();
+  return (
+    <UserEditor
+      {...{ api, currentUser, initialUser }}
+      updateCurrentUser={update}
+      {...uploadFuncs}
+      {...errorFuncs}
+    >
+      {children}
+    </UserEditor>
+  );
+};
 UserEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,

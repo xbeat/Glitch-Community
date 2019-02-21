@@ -34,7 +34,9 @@ const ProjectResultItem = ({
             {domain}
           </div>
           {description.length > 0 && (
-            <div className="result-description">{description}</div>
+            <div className="result-description">
+              {description}
+            </div>
           )}
           {!!users && users.length > 0 && <StaticUsersList users={users} />}
         </div>

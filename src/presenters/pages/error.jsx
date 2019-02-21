@@ -57,8 +57,12 @@ export const EmailErrorPage = ({ api, title, description }) => (
         width="470px"
       />
       <div className="error-msg">
-        <h1>{title}</h1>
-        <p>{description}</p>
+        <h1>
+          {title}
+        </h1>
+        <p>
+          {description}
+        </p>
         <a className="button button-link" href="/">
           Back to Glitch
         </a>
@@ -86,8 +90,12 @@ export const OauthErrorPage = ({ api, title, description }) => (
     <main className="error-page-container">
       <img className="error-image" src={oauthImageUrl} alt="" width="370px" />
       <div className="error-msg">
-        <h1>{title}</h1>
-        <p>{description}</p>
+        <h1>
+          {title}
+        </h1>
+        <p>
+          {description}
+        </p>
         <a className="button button-link" href="/">
           Back to Glitch
         </a>

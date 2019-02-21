@@ -14,21 +14,18 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'Emoji Tarot Readings',
-    img:
-      'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FTarojibot_final.jpg?1550484666312',
-    link: 'https://tarojibot.glitch.me/',
+    title: 'Super Fast RPN Calculator',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FNice-calculator_final.jpg?1550484665923',
+    link: 'https://nice-calculator.glitch.me/',
   },
   {
-    title: 'Does Who You Follow Spark Joy?',
-    img:
-      'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FTokimeki_final.jpg?1550484665630',
-    link: 'https://tokimeki-unfollow.glitch.me/',
+    title: 'Create a Jekyll Site',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FJekyll_final.jpg?1550484664724',
+    link: 'https://glitch.com/~jekyll-starter',
   },
   {
-    title: 'Look Around You',
-    img:
-      'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FDepth_index_final.jpg?1550484664956',
-    link: 'https://depth-index-demo.glitch.me/',
-  },
+    title: 'Test Your Corn Snack Knowledge',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FCheeto_final.jpg?1550484665165',
+    link: 'https://check-your-cheetos.glitch.me/',
+  }
 ];

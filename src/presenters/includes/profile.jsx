@@ -48,7 +48,9 @@ export const ProjectInfoContainer = ({ style, children, buttons }) => (
       <div className="user-avatar" style={style} />
       {buttons}
     </div>
-    <div className="profile-information">{children}</div>
+    <div className="profile-information">
+      {children}
+    </div>
   </>
 );
 ProjectInfoContainer.propTypes = {
@@ -63,7 +65,9 @@ ProjectInfoContainer.defaultProps = {
 // Info Container (generic)
 
 export const InfoContainer = ({ children }) => (
-  <div className="profile-info">{children}</div>
+  <div className="profile-info">
+    {children}
+  </div>
 );
 InfoContainer.propTypes = {
   children: PropTypes.node.isRequired,
@@ -105,7 +109,9 @@ export const ProfileContainer = ({
         <div className="user-avatar" style={avatarStyle} />
         {avatarButtons}
       </div>
-      <div className="profile-information">{children}</div>
+      <div className="profile-information">
+        {children}
+      </div>
     </InfoContainer>
     {!!teams && !!teams.length && (
       <div className="teams-information">

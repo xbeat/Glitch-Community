@@ -23,7 +23,9 @@ const FeaturedEmbed = ({
     <div className="content" style={{ backgroundColor: color }}>
       <div className="description">
         <Link to={`culture${blogUrl}`}>
-          <h2>{title}</h2>
+          <h2>
+            {title}
+          </h2>
         </Link>
         {/* eslint-disable-next-line react/no-danger */ }
         <p dangerouslySetInnerHTML={{ __html: body }} />
