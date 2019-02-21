@@ -206,6 +206,15 @@ class TeamEditor extends React.Component {
     await this.props.api.patch(
       `collections/${collection.id}/add/${project.id}`,
     );
+    this.reloadCollections();
+  }
+  
+  async reloadCollections(){
+    console.log('reload collections');
+    const { data } = await this.props.api.get(
+      `collections?teamId=${this.state.id}`,
+    );
+    this.setState({ collections: data });
   }
 
   async unfeatureProject() {

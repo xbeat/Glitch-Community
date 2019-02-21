@@ -137,6 +137,7 @@ class UserEditor extends React.Component {
   }
 
   async reloadCollections() {
+    console.log('reload collections');
     const { data } = await this.props.api.get(
       `collections?userId=${this.state.id}`,
     );

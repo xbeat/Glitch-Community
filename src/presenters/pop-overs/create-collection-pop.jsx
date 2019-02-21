@@ -75,7 +75,13 @@ class CreateCollectionPop extends React.Component {
       const collection = collectionResponse;
       // add the selected project to the collection
       try {
-        this.props.api.patch(`collections/${collection.id}/add/${this.props.project.id}`);
+       if(this.props.addProjectToCollection){
+         // custom add project to collection function from user or team editors (triggers reload of collections on page by default)
+         this.props.addProjectToCollection(this.props.project, collection)
+       }else{
+         // default API call to add project to collection
+         this.props.api.patch(`collections/${collection.id}/add/${this.props.project.id}`);
+       }
         if (this.state.selection.value) {
           const team = this.props.currentUser.teams.find(({ id }) => id === this.state.selection.value);
           collection.team = team;
@@ -181,10 +187,15 @@ class CreateCollectionPop extends React.Component {
 }
 
 CreateCollectionPop.propTypes = {
+  addProjectToCollection: PropTypes.func,
   api: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,
   project: PropTypes.object.isRequired,
   togglePopover: PropTypes.func.isRequired,
 };
+
+CreateCollectionPop.defaultProps = {
+  addProjectToCollection: null
+}
 
 export default CreateCollectionPop;
