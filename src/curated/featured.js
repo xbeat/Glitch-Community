@@ -19,12 +19,12 @@ export default [
     link: 'https://nice-calculator.glitch.me/',
   },
   {
-    title: 'Create a Jekyll Blog',
+    title: 'Create a Jekyll Site',
     img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FJekyll_final.jpg?1550484664724',
     link: 'https://glitch.com/~jekyll-starter',
   },
   {
-    title: 'Test Your World Corn Snack Knowledge',
+    title: 'Test Your Corn Snack Knowledge',
     img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FCheeto_final.jpg?1550484665165',
     link: 'https://check-your-cheetos.glitch.me/',
   }
