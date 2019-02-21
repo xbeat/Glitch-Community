@@ -33,11 +33,15 @@
   flex-grow: 1
   border: none
   background: none
-  transition: box-shadow .1s
-  &:focus
-    box-shadow: 0px 0px 3px 0px input-border-focused
 
   &.search
     background-image: url(search)
     background-repeat: no-repeat
     background-position: right 5px center
+
+.inputBorder, .input
+  transition: box-shadow .1s
+.inputBorder:focus-within, .input:focus
+  box-shadow: 0px 0px 3px 0px input-border-focused
+.inputBorder:focus-within .input:focus
+  box-shadow: none
