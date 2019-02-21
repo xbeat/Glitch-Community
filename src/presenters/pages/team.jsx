@@ -88,7 +88,6 @@ class TeamPage extends React.Component {
     };
     this.teamAdmins = this.teamAdmins.bind(this);
     this.getInvitees = this.getInvitees.bind(this);
-    this.addProjectToCollection = this.addProjectToCollection.bind(this);
   }
 
   async componentDidMount() {
@@ -98,7 +97,7 @@ class TeamPage extends React.Component {
 
   getProjectOptions() {
     const projectOptions = {
-      addProjectToCollection: this.addProjectToCollection,
+      addProjectToCollection: this.props.addProjectToCollection,
       deleteProject: this.props.deleteProject,
       leaveTeamProject: this.props.leaveTeamProject,
     };
@@ -146,12 +145,6 @@ class TeamPage extends React.Component {
 
   teamAdmins() {
     return this.props.team.users.filter(user => this.props.team.adminIds.includes(user.id));
-  }
-
-  async addProjectToCollection(project, collection) {
-    await this.props.api.patch(
-      `collections/${collection.id}/add/${project.id}`,
-    );
   }
 
   render() {
@@ -319,21 +312,10 @@ class TeamPage extends React.Component {
         )}
 
         {/* TEAM COLLECTIONS */}
-        <ErrorBoundary>
-          <DataLoader
-            get={() => this.props.api.get(`collections?teamId=${team.id}`)}
-            renderLoader={() => (
-              <TeamPageCollections
-                {...this.props}
-                collections={team.collections}
-              />
-            )}
-          >
-            {({ data }) => (
-              <TeamPageCollections {...this.props} collections={data} />
-            )}
-          </DataLoader>
-        </ErrorBoundary>
+        <TeamPageCollections 
+          {...this.props}
+          collections={team.collections}
+        />
 
         {this.props.currentUserIsOnTeam && (
           <ErrorBoundary>
@@ -411,6 +393,7 @@ TeamPage.propTypes = {
   uploadCover: PropTypes.func.isRequired,
   featureProject: PropTypes.func.isRequired,
   unfeatureProject: PropTypes.func.isRequired,
+  addProjectToCollection: PropTypes.func.isRequired,
 };
 TeamPage.defaultProps = {
   api: null,
