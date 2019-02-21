@@ -1,6 +1,7 @@
 // create-collection-pop.jsx -> add a project to a new user or team collection
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 import { kebabCase, orderBy } from 'lodash';
 import { UserAvatar, TeamAvatar } from '../includes/avatar';
@@ -76,26 +77,30 @@ class CreateCollectionPop extends React.Component {
       // add the selected project to the collection
       try {
        if(this.props.addProjectToCollection){
-         // custom add project to collection function from user or team editors (triggers reload of collections on page by default)
+         // custom add project to collection function from user page
          this.props.addProjectToCollection(this.props.project, collection)
        }else{
          // default API call to add project to collection
          this.props.api.patch(`collections/${collection.id}/add/${this.props.project.id}`);
        }
-        if (this.state.selection.value) {
-          const team = this.props.currentUser.teams.find(({ id }) => id === this.state.selection.value);
+       if (this.state.selection.value) {
+       const team = this.props.currentUser.teams.find(({ id }) => id === this.state.selection.value);
           collection.team = team;
         }
         collection.user = this.props.currentUser;
 
         const newCollectionUrl = getLink(collection);
 
-        // show notification
-        const content = (
-          <AddProjectToCollectionMsg projectDomain={this.props.project.domain} collectionName={collection.name} url={newCollectionUrl} />
-        );
-        createNotification(content, 'notifySuccess');
-
+        if(this.props.removeProjectFromTeam){
+          // coming from team page -> redirect to newly created collection
+          this.setState({ newCollectionUrl });
+        }else{
+          // show notification
+          const content = (
+            <AddProjectToCollectionMsg projectDomain={this.props.project.domain} collectionName={collection.name} url={newCollectionUrl} />
+          );
+          createNotification(content, 'notifySuccess');
+        }
         this.props.togglePopover();
       } catch (error) {
         createNotification('Unable to add project to collection.', 'notifyError');
@@ -127,6 +132,9 @@ class CreateCollectionPop extends React.Component {
 
     if (!!collections && selectedOwnerCollections.some(c => c.url === kebabCase(query))) {
       queryError = 'You already have a collection with this name';
+    }
+    if (this.state.newCollectionUrl) {
+      return <Redirect to={this.state.newCollectionUrl} />;
     }
 
     return (
