@@ -17,6 +17,11 @@ class UserEditor extends React.Component {
     };
   }
 
+  componentDidMount() {
+    // load collections with project info
+    this.reloadCollections();
+  }
+
   isCurrentUser() {
     return (
       !!this.props.currentUser && this.state.id === this.props.currentUser.id

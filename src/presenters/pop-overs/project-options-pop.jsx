@@ -242,7 +242,6 @@ export default function ProjectOptions(
     projectOptions,
     project,
     api,
-    currentCollectionId,
   },
   { ...props },
 ) {
@@ -272,7 +271,6 @@ export default function ProjectOptions(
             {...props}
             {...projectOptions}
             project={project}
-            currentCollectionId={currentCollectionId}
             api={api}
             currentUser={user}
             currentUserIsOnProject={currentUserIsOnProject(user)}
@@ -285,7 +283,6 @@ export default function ProjectOptions(
 
 ProjectOptions.propTypes = {
   api: PropTypes.func,
-  currentCollectionId: PropTypes.number,
   project: PropTypes.object.isRequired,
   projectOptions: PropTypes.object,
 };
@@ -293,5 +290,4 @@ ProjectOptions.propTypes = {
 ProjectOptions.defaultProps = {
   api: null,
   projectOptions: {},
-  currentCollectionId: null,
 };
