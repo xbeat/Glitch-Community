@@ -133,10 +133,10 @@ class UserEditor extends React.Component {
     await this.props.api.patch(
       `collections/${collection.id}/add/${project.id}`,
     );
-    this.loadCollections();
+    this.reloadCollections();
   }
 
-  async loadCollections() {
+  async reloadCollections() {
     const { data } = await this.props.api.get(
       `collections?userId=${this.state.id}`,
     );

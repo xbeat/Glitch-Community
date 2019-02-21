@@ -59,7 +59,7 @@ Avatar.defaultProps = {
   hideTooltip: false,
 };
 
-export const TeamAvatar = ({ team , hideTooltip}) => (
+export const TeamAvatar = ({ team, hideTooltip }) => (
   <Avatar
     name={team.name}
     src={getTeamAvatarUrl({ ...team, size: 'small' })}
@@ -78,7 +78,7 @@ TeamAvatar.propTypes = {
 };
 TeamAvatar.defaultProps = {
   hideTooltip: false,
-}
+};
 
 export const UserAvatar = ({ user, suffix = '', hideTooltip }) => (
   <Avatar
