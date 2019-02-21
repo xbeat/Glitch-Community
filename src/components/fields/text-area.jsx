@@ -25,7 +25,11 @@ const TextArea = ({
           placeholder={placeholder}
           value={value}
         />
-        {!!error && <span className={styles.errorIcon}><InputErrorIcon /></span>}
+        {!!error && (
+          <span className={styles.errorIcon}>
+            <InputErrorIcon />
+          </span>
+        )}
       </div>
       {!!error && <InputErrorMessage error={error} />}
     </label>

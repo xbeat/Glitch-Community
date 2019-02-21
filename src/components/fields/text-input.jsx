@@ -16,7 +16,9 @@ const TYPES = [
 ];
 
 const InputPart = ({ children }) => (
-  <span className={styles.inputPart}>{children}</span>
+  <span className={styles.inputPart}>
+    {children}
+  </span>
 );
 
 const TextInput = ({
@@ -44,7 +46,11 @@ const TextInput = ({
   return (
     <label className={styles.outer} htmlFor={uniqueId}>
       <div className={borderClassName}>
-        {!!prefix && <InputPart>{prefix}</InputPart>}
+        {!!prefix && (
+          <InputPart>
+            {prefix}
+          </InputPart>
+        )}
         <input
           autoFocus={autoFocus} // eslint-disable-line jsx-a11y/no-autofocus
           className={inputClassName}
@@ -57,8 +63,16 @@ const TextInput = ({
           type={type}
           value={value}
         />
-        {!!error && <InputPart><InputErrorIcon /></InputPart>}
-        {!!postfix && <InputPart>{postfix}</InputPart>}
+        {!!error && (
+          <InputPart>
+            <InputErrorIcon />
+          </InputPart>
+        )}
+        {!!postfix && (
+          <InputPart>
+            {postfix}
+          </InputPart>
+        )}
       </div>
       {!!error && <InputErrorMessage error={error} />}
     </label>
