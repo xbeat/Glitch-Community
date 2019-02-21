@@ -17,10 +17,6 @@ class UserEditor extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.loadCollections();
-  }
-
   isCurrentUser() {
     return (
       !!this.props.currentUser && this.state.id === this.props.currentUser.id
@@ -137,7 +133,6 @@ class UserEditor extends React.Component {
   }
 
   async reloadCollections() {
-    console.log('reload collections');
     const { data } = await this.props.api.get(
       `collections?userId=${this.state.id}`,
     );
