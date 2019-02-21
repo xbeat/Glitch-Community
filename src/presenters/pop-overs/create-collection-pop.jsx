@@ -23,7 +23,6 @@ function getTeamOptions(teams) {
     const label = (
       <span id={team.id}>
         {team.name}
-        {' '}
         {<TeamAvatar team={team} hideTooltip />}
       </span>
     );
@@ -41,7 +40,6 @@ class CreateCollectionPop extends React.Component {
     const currentUserOptionLabel = (
       <span>
         myself
-        {' '}
         <UserAvatar user={this.props.currentUser} hideTooltip />
       </span>
     );
@@ -76,25 +74,25 @@ class CreateCollectionPop extends React.Component {
       const collection = collectionResponse;
       // add the selected project to the collection
       try {
-       if(this.props.addProjectToCollection){
-         // custom add project to collection function from user page
-         this.props.addProjectToCollection(this.props.project, collection)
-       }else{
-         // default API call to add project to collection
-         this.props.api.patch(`collections/${collection.id}/add/${this.props.project.id}`);
-       }
-       if (this.state.selection.value) {
-       const team = this.props.currentUser.teams.find(({ id }) => id === this.state.selection.value);
+        if (this.props.addProjectToCollection) {
+          // custom add project to collection function from user page
+          this.props.addProjectToCollection(this.props.project, collection);
+        } else {
+          // default API call to add project to collection
+          this.props.api.patch(`collections/${collection.id}/add/${this.props.project.id}`);
+        }
+        if (this.state.selection.value) {
+          const team = this.props.currentUser.teams.find(({ id }) => id === this.state.selection.value);
           collection.team = team;
         }
         collection.user = this.props.currentUser;
 
         const newCollectionUrl = getLink(collection);
 
-        if(this.props.removeProjectFromTeam){
+        if (this.props.removeProjectFromTeam) {
           // coming from team page -> redirect to newly created collection
           this.setState({ newCollectionUrl });
-        }else{
+        } else {
           // show notification
           const content = (
             <AddProjectToCollectionMsg projectDomain={this.props.project.domain} collectionName={collection.name} url={newCollectionUrl} />
@@ -203,7 +201,7 @@ CreateCollectionPop.propTypes = {
 };
 
 CreateCollectionPop.defaultProps = {
-  addProjectToCollection: null
-}
+  addProjectToCollection: null,
+};
 
 export default CreateCollectionPop;

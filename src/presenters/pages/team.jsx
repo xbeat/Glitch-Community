@@ -88,6 +88,7 @@ class TeamPage extends React.Component {
     };
     this.teamAdmins = this.teamAdmins.bind(this);
     this.getInvitees = this.getInvitees.bind(this);
+    this.addProjectToCollection = this.addProjectToCollection.bind(this);
   }
 
   async componentDidMount() {
@@ -97,7 +98,7 @@ class TeamPage extends React.Component {
 
   getProjectOptions() {
     const projectOptions = {
-      addProjectToCollection: this.props.addProjectToCollection,
+      addProjectToCollection: this.addProjectToCollection,
       deleteProject: this.props.deleteProject,
       leaveTeamProject: this.props.leaveTeamProject,
     };
@@ -145,6 +146,12 @@ class TeamPage extends React.Component {
 
   teamAdmins() {
     return this.props.team.users.filter(user => this.props.team.adminIds.includes(user.id));
+  }
+
+  async addProjectToCollection(project, collection) {
+    await this.props.api.patch(
+      `collections/${collection.id}/add/${project.id}`,
+    );
   }
 
   render() {
