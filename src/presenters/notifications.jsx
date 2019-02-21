@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 const context = React.createContext();
 const { Provider } = context;
 export const NotificationConsumer = context.Consumer;
+export const useNotifications = () => React.useContext(context);
 
 const Notification = ({ children, className, remove }) => (
   <aside className={`notification ${className}`} onAnimationEnd={remove}>
