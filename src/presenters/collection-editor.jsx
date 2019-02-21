@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { CurrentUserConsumer } from './current-user';
-import ErrorHandlers from './error-handlers';
+import { useCurrentUser } from './current-user';
+import useErrorHandlers from './error-handlers';
 
 class CollectionEditor extends React.Component {
   constructor(props) {
@@ -86,30 +86,22 @@ CollectionEditor.defaultProps = {
   api: null,
 };
 
-const CollectionEditorContainer = ({ api, children, initialCollection }) => (
-  <ErrorHandlers>
-    {errorFuncs => (
-      <CurrentUserConsumer>
-        {currentUser => (
-          <CollectionEditor
-            {...{ api, currentUser, initialCollection }}
-            {...errorFuncs}
-          >
-            {children}
-          </CollectionEditor>
-        )}
-      </CurrentUserConsumer>
-    )}
-  </ErrorHandlers>
-);
+const CollectionEditorContainer = ({ api, children, initialCollection }) => {
+  const { currentUser } = useCurrentUser();
+  const errorFuncs = useErrorHandlers();
+  return (
+    <CollectionEditor
+      {...{ api, currentUser, initialCollection }}
+      {...errorFuncs}
+    >
+      {children}
+    </CollectionEditor>
+  );
+};
 CollectionEditorContainer.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   initialCollection: PropTypes.object.isRequired,
-};
-
-CollectionEditorContainer.defaultProps = {
-  api: null,
 };
 
 export default CollectionEditorContainer;

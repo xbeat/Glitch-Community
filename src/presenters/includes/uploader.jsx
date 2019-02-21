@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { uploadAsset, uploadAssetSizes } from '../../utils/assets';
-import { NotificationConsumer } from '../notifications';
+import { useNotifications } from '../notifications';
 
 const NotifyUploading = ({ progress }) => (
   <>
@@ -41,16 +40,12 @@ async function uploadWrapper(notifications, upload) {
   return result;
 }
 
-const Uploader = ({ children }) => (
-  <NotificationConsumer>
-    {notifications => children({
-      uploadAsset: (blob, policy, key) => uploadWrapper(notifications, cb => uploadAsset(blob, policy, key, cb)),
-      uploadAssetSizes: (blob, policy, sizes) => uploadWrapper(notifications, cb => uploadAssetSizes(blob, policy, sizes, cb)),
-    })
-    }
-  </NotificationConsumer>
-);
-Uploader.propTypes = {
-  children: PropTypes.func.isRequired,
+const useUploader = () => {
+  const notifications = useNotifications();
+  return {
+    uploadAsset: (blob, policy, key) => uploadWrapper(notifications, cb => uploadAsset(blob, policy, key, cb)),
+    uploadAssetSizes: (blob, policy, sizes) => uploadWrapper(notifications, cb => uploadAssetSizes(blob, policy, sizes, cb)),
+  };
 };
-export default Uploader;
+
+export default useUploader;

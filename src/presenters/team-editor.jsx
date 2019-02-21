@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
 
-import { CurrentUserConsumer } from './current-user';
-import ErrorHandlers from './error-handlers';
-import Uploader from './includes/uploader';
-import { NotificationConsumer } from './notifications';
+import { useCurrentUser } from './current-user';
+import useErrorHandlers from './error-handlers';
+import { useNotifications } from './notifications';
+import useUploader from './includes/uploader';
 
 const MEMBER_ACCESS_LEVEL = 20;
 const ADMIN_ACCESS_LEVEL = 30;
@@ -264,7 +264,6 @@ TeamEditor.propTypes = {
   children: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   updateCurrentUser: PropTypes.func.isRequired,
-  handleError: PropTypes.func.isRequired,
   initialTeam: PropTypes.object.isRequired,
   uploadAssetSizes: PropTypes.func.isRequired,
 };
@@ -274,40 +273,27 @@ TeamEditor.defaultProps = {
   api: null,
 };
 
-const TeamEditorContainer = ({ api, children, initialTeam }) => (
-  <ErrorHandlers>
-    {errorFuncs => (
-      <Uploader>
-        {uploadFuncs => (
-          <NotificationConsumer>
-            {notificationFuncs => (
-              <CurrentUserConsumer>
-                {(currentUser, fetched, { update }) => (
-                  <TeamEditor
-                    {...{ api, currentUser, initialTeam }}
-                    updateCurrentUser={update}
-                    {...uploadFuncs}
-                    {...errorFuncs}
-                    {...notificationFuncs}
-                  >
-                    {children}
-                  </TeamEditor>
-                )}
-              </CurrentUserConsumer>
-            )}
-          </NotificationConsumer>
-        )}
-      </Uploader>
-    )}
-  </ErrorHandlers>
-);
+const TeamEditorContainer = ({ api, children, initialTeam }) => {
+  const { currentUser, update } = useCurrentUser();
+  const uploadFuncs = useUploader();
+  const notificationFuncs = useNotifications();
+  const errorFuncs = useErrorHandlers();
+  return (
+    <TeamEditor
+      {...{ api, currentUser, initialTeam }}
+      updateCurrentUser={update}
+      {...uploadFuncs}
+      {...notificationFuncs}
+      {...errorFuncs}
+    >
+      {children}
+    </TeamEditor>
+  );
+};
 TeamEditorContainer.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   initialTeam: PropTypes.object.isRequired,
-};
-TeamEditorContainer.defaultProps = {
-  api: null,
 };
 
 export default TeamEditorContainer;

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import * as assets from '../utils/assets';
 
-import { CurrentUserConsumer } from './current-user';
-import ErrorHandlers from './error-handlers';
-import Uploader from './includes/uploader';
+import { useCurrentUser } from './current-user';
+import useErrorHandlers from './error-handlers';
+import useUploader from './includes/uploader';
 
 class UserEditor extends React.Component {
   constructor(props) {
@@ -187,28 +187,21 @@ UserEditor.propTypes = {
   uploadAssetSizes: PropTypes.func.isRequired,
 };
 
-const UserEditorContainer = ({ api, children, initialUser }) => (
-  <ErrorHandlers>
-    {errorFuncs => (
-      <Uploader>
-        {uploadFuncs => (
-          <CurrentUserConsumer>
-            {(currentUser, fetched, { update }) => (
-              <UserEditor
-                {...{ api, currentUser, initialUser }}
-                updateCurrentUser={update}
-                {...uploadFuncs}
-                {...errorFuncs}
-              >
-                {children}
-              </UserEditor>
-            )}
-          </CurrentUserConsumer>
-        )}
-      </Uploader>
-    )}
-  </ErrorHandlers>
-);
+const UserEditorContainer = ({ api, children, initialUser }) => {
+  const { currentUser, update } = useCurrentUser();
+  const uploadFuncs = useUploader();
+  const errorFuncs = useErrorHandlers();
+  return (
+    <UserEditor
+      {...{ api, currentUser, initialUser }}
+      updateCurrentUser={update}
+      {...uploadFuncs}
+      {...errorFuncs}
+    >
+      {children}
+    </UserEditor>
+  );
+};
 UserEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
