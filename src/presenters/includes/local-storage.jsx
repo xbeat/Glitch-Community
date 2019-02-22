@@ -68,7 +68,44 @@ LocalStorage.defaultProps = {
   ignoreChanges: false,
 };
 
+const readFromStorage = (name) => {
+  let value;
+  try {
+    const raw = window.localStorage.getItem(name);
+    if (raw !== null) {
+      value = JSON.parse(raw);
+    }
+  } catch (error) {
+    console.warn('Failed to read from localStorage!', error);
+    value = undefined;
+  }
+  return value;
+};
+
+const writeToStorage = (name, value) => {
+  try {
+    if (value !== undefined) {
+      window.localStorage.setItem(name, JSON.stringify(value));
+    } else {
+      window.localStorage.removeItem(name);
+    }
+  } catch (error) {
+    console.warn('Failed to write to localStorage!', error);
+  }
+};
+
 const useLocalStorage = (name, defaultValue) => {
-  const [value, setValueInMemory] = React.useState(() => {
-  });
+  const [rawValue, setValueInMemory] = React.useState(() => readFromStorage(name));
+  React.useEffect(() => {
+    const reload = () => {
+      setValueInMemory(
+    };
+    window.addEventListener('storage',
+  }, []);
+  const setValue = (newValue) => {
+    setValueInMemory(newValue);
+    writeToStorage(name, newValue);
+  };
+  const value = rawValue !== undefined ? rawValue : defaultValue;
+  return [value, setValue];
 };
