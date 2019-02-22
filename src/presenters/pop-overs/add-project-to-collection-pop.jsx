@@ -153,6 +153,7 @@ class AddProjectToCollectionPop extends React.Component {
     try {
       let { data: allCollections } = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}&includeTeams=true`);
       // add user / team to each collection
+      console.log('all collections length at start', allCollections.length);
       allCollections.forEach((collection, index) => {
         if (collection.teamId === -1) {
           collection.user = this.props.currentUser;
@@ -162,6 +163,7 @@ class AddProjectToCollectionPop extends React.Component {
             console.log('attempt to remove team');
             // team has been soft-deleted - remove from results
             allCollections.remove(collection);
+            console.log(allCollections.length);
           }
         }
       });
