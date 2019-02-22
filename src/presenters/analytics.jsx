@@ -52,7 +52,13 @@ export const AnalyticsTracker = ({ children }) => (
           resolveProperties(context, inherited.context),
         );
       } catch (error) {
-        captureException(error);
+        /* From Segment: "We currently return a 200 response for all API requests so debugging should be done in the Segment Debugger.
+          The only exception is if the request is too large / json is invalid it will respond with a 400."
+          If it was not a 400, it wasn't our fault so don't track it.
+        */
+        if (error && error.response && error.response.status === 400) {
+          captureException(error);
+        }
       }
     })
     }
