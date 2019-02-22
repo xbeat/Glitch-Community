@@ -291,7 +291,7 @@ const SignInPopWithoutRouter = (props) => {
   const {
     header, prompt, api, location, hash,
   } = props;
-  const [destination, setDestination] = useLocalStorage("destinationAfterAuth");
+  const [, setDestination] = useLocalStorage('destinationAfterAuth');
   const onClick = () => setDestination({
     expires: dayjs()
       .add(10, 'minutes')

@@ -6,7 +6,7 @@ import useLocalStorage from './local-storage';
 const { Provider, Consumer } = React.createContext();
 
 export const UserPrefsProvider = ({ children }) => {
-  const [prefs, set] = useLocalStorage("community-userPrefs", {});
+  const [prefs, set] = useLocalStorage('community-userPrefs', {});
   return (
     <Provider value={{ prefs, set }}>
       {children}
