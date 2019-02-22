@@ -67,3 +67,8 @@ LocalStorage.defaultProps = {
   default: undefined,
   ignoreChanges: false,
 };
+
+const useLocalStorage = (name, defaultValue) => {
+  const [value, setValueInMemory] = React.useState(() => {
+  });
+};
