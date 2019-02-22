@@ -14,9 +14,9 @@ import {
 // UserAvatar
 
 export const Avatar = ({
-  name, src, color, srcFallback, type,
-}) => (
-  <div data-tooltip={name} data-tooltip-left="true">
+  name, src, color, srcFallback, type, hideTooltip,
+}) => {
+  const contents = (
     <img
       width="32px"
       height="32px"
@@ -32,27 +32,40 @@ export const Avatar = ({
       }
       className={`${type}-avatar`}
     />
-  </div>
-);
+  );
+
+  if (!hideTooltip) {
+    return (
+      <div data-tooltip={name} data-tooltip-left="true">
+        {contents}
+      </div>
+    );
+  }
+  return contents;
+};
+
 Avatar.propTypes = {
   name: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   srcFallback: PropTypes.string,
   type: PropTypes.string.isRequired,
   color: PropTypes.string,
+  hideTooltip: PropTypes.bool,
 };
 
 Avatar.defaultProps = {
   color: null,
   srcFallback: '',
+  hideTooltip: false,
 };
 
-export const TeamAvatar = ({ team }) => (
+export const TeamAvatar = ({ team, hideTooltip }) => (
   <Avatar
     name={team.name}
     src={getTeamAvatarUrl({ ...team, size: 'small' })}
     srcFallback={DEFAULT_TEAM_AVATAR}
     type="team"
+    hideTooltip={hideTooltip}
   />
 );
 TeamAvatar.propTypes = {
@@ -61,15 +74,20 @@ TeamAvatar.propTypes = {
     name: PropTypes.string.isRequired,
     hasAvatarImage: PropTypes.bool.isRequired,
   }).isRequired,
+  hideTooltip: PropTypes.bool,
+};
+TeamAvatar.defaultProps = {
+  hideTooltip: false,
 };
 
-export const UserAvatar = ({ user, suffix = '' }) => (
+export const UserAvatar = ({ user, suffix = '', hideTooltip }) => (
   <Avatar
     name={getDisplayName(user) + suffix}
     src={getAvatarThumbnailUrl(user)}
     color={user.color}
     srcFallback={ANON_AVATAR_URL}
     type="user"
+    hideTooltip={hideTooltip}
   />
 );
 UserAvatar.propTypes = {
@@ -81,8 +99,10 @@ UserAvatar.propTypes = {
     color: PropTypes.string.isRequired,
   }).isRequired,
   suffix: PropTypes.string,
+  hideTooltip: PropTypes.bool,
 };
 
 UserAvatar.defaultProps = {
   suffix: '',
+  hideTooltip: false,
 };

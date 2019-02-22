@@ -19,7 +19,9 @@ const OverlayVideo = ({ children }) => (
         open={visible}
         className="overlay-container"
       >
-        <summary>{children}</summary>
+        <summary>
+          {children}
+        </summary>
         <dialog className="overlay video-overlay">
           <section className="pop-over-actions">
             <Video />

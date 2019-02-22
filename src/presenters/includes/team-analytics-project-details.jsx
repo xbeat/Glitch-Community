@@ -54,15 +54,21 @@ const ProjectDetails = ({ projectDetails }) => (
       <tbody>
         <tr>
           <td className="label">Created</td>
-          <td>{dayjs(projectDetails.createdAt).fromNow()}</td>
+          <td>
+            {dayjs(projectDetails.createdAt).fromNow()}
+          </td>
         </tr>
         <tr>
           <td className="label">Last viewed</td>
-          <td>{dayjs(projectDetails.lastAccess).fromNow()}</td>
+          <td>
+            {dayjs(projectDetails.lastAccess).fromNow()}
+          </td>
         </tr>
         <tr>
           <td className="label">Last edited</td>
-          <td>{dayjs(projectDetails.lastEditedAt).fromNow()}</td>
+          <td>
+            {dayjs(projectDetails.lastEditedAt).fromNow()}
+          </td>
         </tr>
         <tr>
           <td className="label">Last remixed</td>
@@ -74,19 +80,27 @@ const ProjectDetails = ({ projectDetails }) => (
         </tr>
         <tr>
           <td className="label">Total app views</td>
-          <td>{projectDetails.numAppVisits}</td>
+          <td>
+            {projectDetails.numAppVisits}
+          </td>
         </tr>
         <tr>
           <td className="label">Total code views</td>
-          <td>{projectDetails.numEditorVisits}</td>
+          <td>
+            {projectDetails.numEditorVisits}
+          </td>
         </tr>
         <tr>
           <td className="label">Total direct remixes</td>
-          <td>{projectDetails.numDirectRemixes}</td>
+          <td>
+            {projectDetails.numDirectRemixes}
+          </td>
         </tr>
         <tr>
           <td className="label">Total remixes</td>
-          <td>{projectDetails.numTotalRemixes}</td>
+          <td>
+            {projectDetails.numTotalRemixes}
+          </td>
         </tr>
         {projectDetails.baseProject.domain && (
           <tr>

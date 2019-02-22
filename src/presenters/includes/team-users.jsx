@@ -93,7 +93,9 @@ export const WhitelistedDomain = ({ domain, setDomain }) => {
           </summary>
           <dialog className="pop-over">
             <section className="pop-over-info">
-              <p className="info-description">{tooltip}</p>
+              <p className="info-description">
+                {tooltip}
+              </p>
             </section>
             {!!setDomain && (
               <section className="pop-over-actions danger-zone">

@@ -185,11 +185,10 @@ popover-secondary-background()
 
   .danger-zone
     background-color: warning-background
-
 .sign-in-pop
   width: 205px
   right: 0
-  top: 26px;
+  top: 26px
   .action-description
     margin-top: 0
 
@@ -301,16 +300,18 @@ popover-secondary-background()
   @media(max-width: mediumViewport)
     left: initial
     left: 0
-.add-project-to-collection-pop
+.add-project-to-collection-pop, .create-collection-pop
   .pop-over-info
     img
       width: 15px
       border-radius: 3px
+  .loader-container
+    margin: 0.5em
   form
     label
-      width: 78%
-      float: left
-      margin-right: 10px;
+      display: inline-block
+      width: 100%
+      margin-bottom: 10px
     .create-collection
       margin: 0
     .url-preview
@@ -319,8 +320,13 @@ popover-secondary-background()
       color: tertiary
       margin: 0
       clear: both
+    button.user-or-team-toggle
+      margin-bottom: 10px
+      margin-left: 5px
+      img
+        vertical-align: inherit
   .pop-over-actions
-    max-height: 300px
+    max-height: 225px
   li
     &:last-child
       .result-collection
@@ -348,8 +354,8 @@ popover-secondary-background()
   .custom-color-input
     width: 82%
     #color-picker-hex
-      width: 90%;
-      margin-left: 5px;
+      width: 90%
+      margin-left: 5px
       height: 23px
     #color-picker-hex.active
       border-color: black
@@ -469,7 +475,7 @@ popover-secondary-background()
   margin-bottom: side-padding
   .users
     margin-bottom: 0
-
+  
 .wide-pop
     min-width: 350px
     right: 0

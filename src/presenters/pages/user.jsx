@@ -46,7 +46,9 @@ const NameAndLogin = ({
     }
     return (
       <>
-        <h1 className="username">{name}</h1>
+        <h1 className="username">
+          {name}
+        </h1>
         <h2 className="login">
           @
           {login}
@@ -234,6 +236,7 @@ const UserPage = ({
     </main>
   );
 };
+
 UserPage.propTypes = {
   clearCover: PropTypes.func.isRequired,
   maybeCurrentUser: PropTypes.object.isRequired,

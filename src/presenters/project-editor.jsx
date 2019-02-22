@@ -30,9 +30,11 @@ class ProjectEditor extends React.Component {
   }
 
   render() {
-    const { handleError, handleErrorForInput } = this.props;
+    const { handleError, handleErrorForInput, handleCustomError } = this.props;
     const funcs = {
-      addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(handleError),
+      addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(
+        handleCustomError,
+      ),
       updateDomain: domain => this.updateFields({ domain }).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({ description }).catch(handleError),
       updatePrivate: isPrivate => this.updateFields({ private: isPrivate }).catch(handleError),
@@ -69,6 +71,7 @@ const ProjectEditorContainer = ({ api, children, initialProject }) => {
     </ProjectEditor>
   );
 };
+
 ProjectEditorContainer.propTypes = {
   api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,

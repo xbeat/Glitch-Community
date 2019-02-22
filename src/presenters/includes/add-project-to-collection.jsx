@@ -22,8 +22,8 @@ const AddProjectToCollection = ({ project, ...props }) => (
 
 AddProjectToCollection.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
-  api: PropTypes.func,
   project: PropTypes.object.isRequired,
+  api: PropTypes.func,
 };
 AddProjectToCollection.defaultProps = {
   api: null,

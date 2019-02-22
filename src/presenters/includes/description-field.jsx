@@ -49,7 +49,9 @@ class EditableDescriptionImpl extends React.Component {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
       >
-        <Markdown>{description}</Markdown>
+        <Markdown>
+          {description}
+        </Markdown>
       </p>
     );
   }
@@ -87,7 +89,9 @@ EditableDescription.defaultProps = {
 
 export const StaticDescription = ({ description }) => (description ? (
   <p className="description read-only">
-    <Markdown>{description}</Markdown>
+    <Markdown>
+      {description}
+    </Markdown>
   </p>
 ) : null);
 StaticDescription.propTypes = {

@@ -26,6 +26,7 @@ import AddProjectToCollection from '../includes/add-project-to-collection';
 import TeamsList from '../teams-list';
 import UsersList from '../users-list';
 import RelatedProjects from '../includes/related-projects';
+import { addBreadcrumb } from '../../utils/sentry';
 
 import { CurrentUserConsumer } from '../current-user';
 
@@ -92,7 +93,9 @@ const ReadmeLoader = ({ api, domain }) => (
   >
     {({ data }) => (
       <Expander height={250}>
-        <Markdown>{data.toString()}</Markdown>
+        <Markdown>
+          {data.toString()}
+        </Markdown>
       </Expander>
     )}
   </DataLoader>
@@ -212,7 +215,10 @@ ProjectPage.defaultProps = {
 
 async function getProject(api, domain) {
   const { data } = await api.get(`projects/${domain}`);
-  console.log('project', data);
+  addBreadcrumb({
+    level: 'info',
+    message: `project: ${JSON.stringify(data)}`,
+  });
   return data;
 }
 
@@ -228,7 +234,9 @@ const ProjectPageLoader = ({
         {(currentProject, funcs, userIsMember) => (
           <>
             <Helmet>
-              <title>{currentProject.domain}</title>
+              <title>
+                {currentProject.domain}
+              </title>
             </Helmet>
             <ProjectPage
               api={api}

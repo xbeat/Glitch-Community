@@ -8,6 +8,7 @@ import {
   configureScope,
   captureException,
   captureMessage,
+  addBreadcrumb,
 } from '../utils/sentry';
 import LocalStorage from './includes/local-storage';
 
@@ -35,10 +36,15 @@ const defaultUser = {
 function identifyUser(user) {
   const analytics = { window };
   if (user) {
-    console.log('👀 current user is', user);
-    console.log('🌈 login', user.login, user.id);
+    addBreadcrumb({
+      level: 'info',
+      message: `Current user is ${JSON.stringify(user)}`,
+    });
   } else {
-    console.log('👻 logged out');
+    addBreadcrumb({
+      level: 'info',
+      message: 'logged out',
+    });
   }
   try {
     if (analytics && analytics.identify && user && user.login) {
@@ -191,12 +197,14 @@ class CurrentUserManager extends React.Component {
         this.setState({ fetched: false });
         const newSharedUser = await this.getSharedUser();
         this.props.setSharedUser(newSharedUser);
-        console.warn(
-          'Fixed shared cachedUser from',
-          sharedUser,
-          'to',
-          newSharedUser,
-        );
+        addBreadcrumb({
+          level: 'info',
+          message: `Fixed shared cachedUser. Was ${JSON.stringify(sharedUser)}`,
+        });
+        addBreadcrumb({
+          level: 'info',
+          message: `New shared cachedUser: ${JSON.stringify(newSharedUser)}`,
+        });
         captureMessage('Invalid cachedUser');
       } else {
         this.props.setCachedUser(newCachedUser);

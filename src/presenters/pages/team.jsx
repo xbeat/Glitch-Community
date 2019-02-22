@@ -411,6 +411,7 @@ TeamPage.propTypes = {
   uploadCover: PropTypes.func.isRequired,
   featureProject: PropTypes.func.isRequired,
   unfeatureProject: PropTypes.func.isRequired,
+  addProjectToCollection: PropTypes.func.isRequired,
 };
 TeamPage.defaultProps = {
   api: null,
@@ -477,7 +478,9 @@ const TeamPageContainer = ({ api, team, ...props }) => (
       {(teamFromEditor, funcs, currentUserIsOnTeam, currentUserIsTeamAdmin) => (
         <>
           <Helmet>
-            <title>{teamFromEditor.name}</title>
+            <title>
+              {teamFromEditor.name}
+            </title>
           </Helmet>
           <CurrentUserConsumer>
             {currentUser => (

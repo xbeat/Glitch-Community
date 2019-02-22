@@ -86,7 +86,9 @@ const CollectionPageContents = ({
 }) => (
   <>
     <Helmet>
-      <title>{collection.name}</title>
+      <title>
+        {collection.name}
+      </title>
     </Helmet>
     <main className="collection-page">
       <article

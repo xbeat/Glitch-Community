@@ -64,7 +64,9 @@ class DeleteTeamPopBase extends React.Component {
             className="button-small has-emoji"
             onClick={this.deleteTeam}
           >
-            <span>{`Delete ${this.props.teamName} `}</span>
+            <span>
+              {`Delete ${this.props.teamName} `}
+            </span>
             <span className="emoji bomb" role="img" aria-label="bomb emoji" />
             {this.state.teamIsDeleting && <Loader />}
           </button>

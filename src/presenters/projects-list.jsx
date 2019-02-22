@@ -9,10 +9,14 @@ const ProjectsList = ({
   ...props
 }) => (
   <article className={`projects ${extraClasses}`}>
-    <h2>{title}</h2>
+    <h2>
+      {title}
+    </h2>
 
     {!!(placeholder && !props.projects.length) && (
-      <div className="placeholder">{placeholder}</div>
+      <div className="placeholder">
+        {placeholder}
+      </div>
     )}
 
     <ExpandyProjects {...props} />

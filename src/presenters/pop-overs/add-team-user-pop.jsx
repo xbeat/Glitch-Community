@@ -258,7 +258,9 @@ const Results = ({ results, isLoading }) => {
     <section className="pop-over-actions last-section results-list">
       <ul className="results">
         {results.map(({ key, item }) => (
-          <li key={key}>{item}</li>
+          <li key={key}>
+            {item}
+          </li>
         ))}
       </ul>
     </section>

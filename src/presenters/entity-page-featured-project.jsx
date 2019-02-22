@@ -36,7 +36,9 @@ const EntityPageFeaturedProject = ({
   return (
     <>
       <section id="featured-project-embed">
-        <h2>{featuredTitle}</h2>
+        <h2>
+          {featuredTitle}
+        </h2>
 
         {isAuthorized && (
           <FeaturedProjectOptionsPop
