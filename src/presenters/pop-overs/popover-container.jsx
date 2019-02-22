@@ -46,8 +46,9 @@ const PopoverContainer = ({ children, outer, startOpen }) => {
     <>
       {before}
       <MonitoredComponent
-        //disableOnClickOutside={!visible}
+        disableOnClickOutside={!visible}
         eventTypes={['mousedown', 'touchstart', 'keyup']}
+        excludeScrollbar
         onClickOutside={() => setVisible(false)}
       >
         {inner}
