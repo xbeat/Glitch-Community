@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import { captureException } from '../../utils/sentry';
 
 import useLocalStorage from '../includes/local-storage';
-import { CurrentUser from '../current-user';
+import { useCurrentUser } from '../current-user';
 import { EmailErrorPage, OauthErrorPage } from './error';
 
 // The Editor may embed /login/* endpoints in an iframe in order to share code.
@@ -105,37 +105,32 @@ class LoginPage extends React.Component {
   }
 }
 LoginPage.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   url: PropTypes.string.isRequired,
   provider: PropTypes.string.isRequired,
   setUser: PropTypes.func.isRequired,
   destination: PropTypes.shape({
     expires: PropTypes.string.isRequired,
     to: PropTypes.object.isRequired,
-  }).isRequired,
+  }),
 };
 
 LoginPage.defaultProps = {
-  api: null,
+  destination: null,
 };
 
-const LoginPageContainer = props => (
-  <LocalStorage name="destinationAfterAuth" default={undefined}>
-    {(destination, setDestination, loaded) => loaded && (
-      <CurrentUserConsumer>
-        {(currentUser, fetched, { login }) => (
-          <LoginPage
-            setUser={login}
-            destination={destination}
-            setDestination={setDestination}
-            {...props}
-          />
-        )}
-      </CurrentUserConsumer>
-    )
-    }
-  </LocalStorage>
-);
+const LoginPageContainer = (props) => {
+  const { login } = useCurrentUser();
+  const [destination, setDestination] = useLocalStorage('destinationAfterAuth', null);
+  return (
+    <LoginPage
+      setUser={login}
+      destination={destination}
+      setDestination={setDestination}
+      {...props}
+    />
+  );
+};
 
 export const FacebookLoginPage = ({ code, ...props }) => {
   const callbackUrl = `${APP_URL}/login/facebook`;
