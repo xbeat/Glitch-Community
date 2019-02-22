@@ -23,6 +23,7 @@ const InputPart = ({ children }) => (
 
 const TextInput = ({
   autoFocus,
+  className,
   disabled,
   error,
   maxLength,
@@ -36,6 +37,7 @@ const TextInput = ({
   value,
 }) => {
   const uniqueId = useUniqueId();
+  const outerClassName = classNames(className, styles.outer);
   const borderClassName = classNames(styles.inputBorder, {
     [styles.underline]: !opaque,
     [styles.opaque]: opaque,
@@ -44,7 +46,7 @@ const TextInput = ({
     [styles.search]: type === 'search',
   });
   return (
-    <label className={styles.outer} htmlFor={uniqueId}>
+    <label className={outerClassName} htmlFor={uniqueId}>
       <div className={borderClassName}>
         {!!prefix && (
           <InputPart>
@@ -81,6 +83,7 @@ const TextInput = ({
 
 TextInput.propTypes = {
   autoFocus: PropTypes.bool,
+  className: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.node,
   maxLength: PropTypes.number,
@@ -96,6 +99,7 @@ TextInput.propTypes = {
 
 TextInput.defaultProps = {
   autoFocus: undefined,
+  className: '',
   disabled: undefined,
   error: null,
   maxLength: undefined,
@@ -106,7 +110,7 @@ TextInput.defaultProps = {
   postfix: null,
   prefix: null,
   type: 'text',
-  value: undefined,
+  value: '',
 };
 
 export default TextInput;

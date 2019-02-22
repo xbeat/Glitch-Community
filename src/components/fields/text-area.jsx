@@ -53,7 +53,7 @@ TextArea.defaultProps = {
   name: undefined,
   onChange: undefined,
   placeholder: undefined,
-  value: undefined,
+  value: '',
 };
 
 export default TextArea;
