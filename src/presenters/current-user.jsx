@@ -252,19 +252,17 @@ CurrentUserManager.defaultProps = {
 };
 
 export const CurrentUserProvider = ({ children }) => {
-  <LocalStorage name="community-cachedUser" default={null}>
-    {(cachedUser, setCachedUser, loadedCachedUser) => (
-      <LocalStorage name="cachedUser" default={null}>
-        {(sharedUser, setSharedUser, loadedSharedUser) => (loadedSharedUser && loadedCachedUser
-          && (
-            <CurrentUserManager sharedUser={sharedUser} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
-              {({ api, ...props }) => (
-                <Context.Provider value={props}>
-                  {children(api)}
-                </Context.Provider>
-              )}
-            </CurrentUserManager>
-          );
+  const [cachedUser, setCachedUser] = useLocalStorage('community-cachedUser', null);
+  const [sharedUser, setSharedUser] = useLocalStorage('cachedUser', null);
+  return (
+    <CurrentUserManager sharedUser={sharedUser} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
+      {({ api, ...props }) => (
+        <Context.Provider value={props}>
+          {children(api)}
+        </Context.Provider>
+      )}
+    </CurrentUserManager>
+  );
 };
 CurrentUserProvider.propTypes = {
   children: PropTypes.func.isRequired,
