@@ -16,6 +16,15 @@ Wrapper.propTypes = {
   children: PropTypes.element,
 };
 
+class MonitoredComponent extends React.Component {
+  handleClickOutside(event) {
+    // On keyup events, only hide the popup if it was the Escape key
+    if (event.type === 'keyup' && !['Escape', 'Esc'].includes(event.key)) {
+      return;
+    }
+  }
+}
+
 export default class PopoverContainer extends React.Component {
   constructor(props) {
     super(props);
