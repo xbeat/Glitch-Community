@@ -10,7 +10,7 @@ import {
   captureMessage,
   addBreadcrumb,
 } from '../utils/sentry';
-import LocalStorage from './includes/local-storage';
+import { LocalStorage } from './includes/local-storage';
 
 const Context = React.createContext();
 

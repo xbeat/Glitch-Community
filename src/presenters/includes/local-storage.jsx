@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class LocalStorage extends React.Component {
+export class LocalStorage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: undefined, loaded: false };
@@ -96,16 +96,22 @@ const writeToStorage = (name, value) => {
 
 const useLocalStorage = (name, defaultValue) => {
   const [rawValue, setValueInMemory] = React.useState(() => readFromStorage(name));
+
   React.useEffect(() => {
-    const reload = () => {
-      setValueInMemory(
+    const reload = () => setValueInMemory(readFromStorage(name));
+    window.addEventListener('storage', reload, { passive: true });
+    return () => {
+      window.removeEventListener('storage', reload, { passive: true });
     };
-    window.addEventListener('storage',
-  }, []);
+  }, [name]);
+
+  const value = rawValue !== undefined ? rawValue : defaultValue;
   const setValue = (newValue) => {
     setValueInMemory(newValue);
     writeToStorage(name, newValue);
   };
-  const value = rawValue !== undefined ? rawValue : defaultValue;
+
   return [value, setValue];
 };
+
+export default useLocalStorage;
