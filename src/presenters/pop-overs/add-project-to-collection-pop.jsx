@@ -151,7 +151,7 @@ class AddProjectToCollectionPop extends React.Component {
 
   async loadCollections() {
     try {
-      const { data: allCollections } = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}&includeTeams=true`);
+      const{ data: allCollections } = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}&includeTeams=true`);
       let deletedCollections = []; //collections from deleted teams
       // add user / team to each collection
       allCollections.forEach((collection) => {
@@ -160,15 +160,16 @@ class AddProjectToCollectionPop extends React.Component {
         } else {
           collection.team = this.props.currentUser.teams.find(userTeam => userTeam.id === collection.teamId);
           if (!collection.team) {
-            deletedCollections.push(collection);
+            deletedCollections.push(collection.id);
           }
         }
       });
       
-      console.log('deletedCollections', deletedCollections
+      console.log('deletedCollections', deletedCollections);
+      console.log(allCollections);
 
       // remove deleted collections
-      deletedCollections.forEach(collection => allCollections.remove(collection));
+      allCollections.pull(deleteCollections);
 
       const orderedCollections = orderBy(allCollections, collection => collection.updatedAt, ['desc']);
 
