@@ -7,7 +7,7 @@ import { Link } from '../includes/link';
 import useLocalStorage from '../includes/local-storage';
 import PopoverWithButton from './popover-with-button';
 import { captureException } from '../../utils/sentry';
-import { CurrentUserConsumer } from '../current-user';
+import { useCurrentUser } from '../current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
@@ -247,13 +247,10 @@ class SignInCodeHandler extends React.Component {
   }
 }
 
-const SignInWithConsumer = props => (
-  <CurrentUserConsumer>
-    {(currentUser, fetched, { login }) => (
-      <SignInCodeHandler setUser={login} {...props} />
-    )}
-  </CurrentUserConsumer>
-);
+const SignInWithConsumer = (props) => {
+  const { login } = useCurrentUser();
+  return <SignInCodeHandler setUser={login} {...props} />;
+};
 
 const EmailSignInButton = ({ onClick }) => (
   <button
