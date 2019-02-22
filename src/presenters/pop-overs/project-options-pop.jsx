@@ -107,7 +107,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
           <PopoverButton
             onClick={addToCollectionPopover}
             {...props}
-            text="Add to My Collection "
+            text="Add to Collection "
             emoji="framed-picture"
           />
         </section>
