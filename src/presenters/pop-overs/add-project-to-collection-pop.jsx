@@ -216,4 +216,3 @@ AddProjectToCollectionPop.propTypes = {
 };
 
 export default AddProjectToCollectionPop;
-gi
