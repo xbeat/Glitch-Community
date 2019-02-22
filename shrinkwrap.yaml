@@ -2959,6 +2959,15 @@ packages:
     dev: false
     resolution:
       integrity: sha512-XDN92U311aINL77ieWHmqCcNlwjoP5cHXDxIxbf2MaPYuCXOHS7gHH8jktxeK5omgd52XbSTX6a4Piwd1pQmzA==
+  /ajv/6.9.2:
+    dependencies:
+      fast-deep-equal: 2.0.1
+      fast-json-stable-stringify: 2.0.0
+      json-schema-traverse: 0.4.1
+      uri-js: 4.2.2
+    dev: false
+    resolution:
+      integrity: sha512-4UFy0/LgDo7Oa/+wOAlj44tp9K78u38E5/359eSrqEp1Z5PdVfimCcs7SluXMP755RUQu6d2b4AvF0R1C9RZjg==
   /amdefine/1.0.1:
     dev: false
     engines:
@@ -5365,7 +5374,7 @@ packages:
   /eslint/5.14.1:
     dependencies:
       '@babel/code-frame': 7.0.0
-      ajv: 6.9.1
+      ajv: 6.9.2
       chalk: 2.4.2
       cross-spawn: 6.0.5
       debug: 4.1.1
@@ -10167,7 +10176,7 @@ packages:
       integrity: sha512-I9mrbZ5M96s7QeJDv95toF1svkUjeBybe8ydhY7foPaBmr0SPJMFupArmMkDrOKTTj0sJVr+nvQNxWLziQ7nDQ==
   /table/5.2.3:
     dependencies:
-      ajv: 6.9.1
+      ajv: 6.9.2
       lodash: 4.17.11
       slice-ansi: 2.1.0
       string-width: 3.0.0
@@ -11010,17 +11019,17 @@ specifiers:
   compression: ^1.7.3
   css-loader: ^2.1.0
   d3-array: ^2.0.3
-  dayjs: ^1.8.5
+  dayjs: ^1.8.6
   details-element-polyfill: ^2.2.0
   ejs: ^2.6.1
   email-addresses: ^3.0.3
-  eslint: ^5.13.0
+  eslint: ^5.14.1
   eslint-config-airbnb: ^17.1.0
   eslint-loader: ^2.1.2
   eslint-plugin-import: ^2.16.0
   eslint-plugin-jsx-a11y: ^6.2.1
   eslint-plugin-react: ^7.12.2
-  eslint-plugin-react-hooks: ^1.0.1
+  eslint-plugin-react-hooks: ^1.2.0
   eslint-scope: ^4.0.0
   express: ^4.16.4
   express-http-proxy: ^1.5.1
@@ -11037,10 +11046,10 @@ specifiers:
   prop-types: ^15.6.2
   quantize: ^1.0.2
   randomcolor: ^0.5.4
-  react: ^16.8.1
-  react-dom: ^16.8.1
+  react: ^16.8.3
+  react-dom: ^16.8.3
   react-helmet: ^5.2.0
-  react-is: ^16.8.1
+  react-is: ^16.8.3
   react-konami: ^0.5.0
   react-onclickoutside: ^6.8.0
   react-pluralize: ^1.5.0

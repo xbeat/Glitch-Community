@@ -13,7 +13,6 @@ popover pans, which have straight-walled sides rather than angled.
 
 class UnmonitoredComponent extends React.Component {
   handleClickOutside(event) {
-    console.log(event);
     // On keyup events, only hide the popup if it was the Escape key
     if (event.type === 'keyup' && !['Escape', 'Esc'].includes(event.key)) {
       return;
@@ -46,7 +45,7 @@ const PopoverContainer = ({ children, outer, startOpen }) => {
     <>
       {before}
       <MonitoredComponent
-        disableOnClickOutside={!visible}
+        // disableOnClickOutside={!visible}
         eventTypes={['mousedown', 'touchstart', 'keyup']}
         excludeScrollbar
         onClickOutside={() => setVisible(false)}
