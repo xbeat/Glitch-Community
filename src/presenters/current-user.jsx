@@ -10,7 +10,7 @@ import {
   captureMessage,
   addBreadcrumb,
 } from '../utils/sentry';
-import { LocalStorage } from './includes/local-storage';
+import useLocalStorage from './includes/local-storage';
 
 const Context = React.createContext();
 
@@ -251,7 +251,7 @@ CurrentUserManager.defaultProps = {
   sharedUser: null,
 };
 
-export const CurrentUserProvider = ({ children }) => (
+export const CurrentUserProvider = ({ children }) => {
   <LocalStorage name="community-cachedUser" default={null}>
     {(cachedUser, setCachedUser, loadedCachedUser) => (
       <LocalStorage name="cachedUser" default={null}>
@@ -264,13 +264,8 @@ export const CurrentUserProvider = ({ children }) => (
                 </Context.Provider>
               )}
             </CurrentUserManager>
-          )
-        )
-        }
-      </LocalStorage>
-    )}
-  </LocalStorage>
-);
+          );
+};
 CurrentUserProvider.propTypes = {
   children: PropTypes.func.isRequired,
 };
