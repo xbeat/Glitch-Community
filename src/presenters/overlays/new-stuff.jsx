@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from '../includes/link';
 import Markdown from '../includes/markdown';
 import PopoverContainer from '../pop-overs/popover-container';
-import UserPref from '../includes/user-prefs';
+import useUserPref from '../includes/user-prefs';
 
 import newStuffLog from '../../curated/new-stuff-log';
 
@@ -133,27 +133,23 @@ NewStuff.propTypes = {
   setNewStuffReadId: PropTypes.func.isRequired,
 };
 
-const NewStuffContainer = ({ children, isSignedIn }) => (
-  <UserPref name="showNewStuff" default>
-    {(showNewStuff, setShowNewStuff) => (
-      <UserPref name="newStuffReadId" default={0}>
-        {(newStuffReadId, setNewStuffReadId) => (
-          <NewStuff
-            {...{
-              isSignedIn,
-              showNewStuff,
-              newStuffReadId,
-              setShowNewStuff,
-              setNewStuffReadId,
-            }}
-          >
-            {children}
-          </NewStuff>
-        )}
-      </UserPref>
-    )}
-  </UserPref>
-);
+const NewStuffContainer = ({ children, isSignedIn }) => {
+  const [showNewStuff, setShowNewStuff] = useUserPref('showNewStuff', true);
+  const [newStuffReadId, setNewStuffReadId] = useUserPref('newStuffReadId', 0);
+  return (
+    <NewStuff
+      {...{
+        isSignedIn,
+        showNewStuff,
+        newStuffReadId,
+        setShowNewStuff,
+        setNewStuffReadId,
+      }}
+    >
+      {children}
+    </NewStuff>
+  );
+};
 NewStuffContainer.propTypes = {
   children: PropTypes.func.isRequired,
   isSignedIn: PropTypes.bool.isRequired,

@@ -17,21 +17,11 @@ UserPrefsProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const UserPref = ({ children, name, ...props }) => (
-  <Consumer>
-    {({ prefs, set }) => children(prefs[name] !== undefined ? prefs[name] : props.default, value => set({ ...prefs, [name]: value }))
-    }
-  </Consumer>
-);
-UserPref.propTypes = {
-  children: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  default: PropTypes.any.isRequired,
-};
-
 const useUserPref = (name, defaultValue) => {
   const { prefs, set } = React.useContext(Context);
-  const 
+  const value = prefs[name] !== undefined ? prefs[name] : defaultValue;
+  const setValue = newValue => set({ ...prefs, [name]: newValue });
+  return [value, setValue];
 };
 
 export default useUserPref;
