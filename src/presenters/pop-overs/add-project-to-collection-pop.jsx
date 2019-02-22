@@ -1,7 +1,7 @@
 // add-project-to-collection-pop -> Add a project to a collection via a project item's menu
 import React from 'react';
 import PropTypes from 'prop-types';
-import { orderBy, reject } from 'lodash';
+import { orderBy, remove } from 'lodash';
 import { captureException } from '../../utils/sentry';
 
 import { TrackClick } from '../analytics';
@@ -151,23 +151,24 @@ class AddProjectToCollectionPop extends React.Component {
 
   async loadCollections() {
     try {
-      let { data: allCollections } = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}&includeTeams=true`);
+      const { data: allCollections } = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}&includeTeams=true`);
+      let deletedCollections = []; //collections from deleted teams
       // add user / team to each collection
-      console.log('all collections length at start', allCollections.length);
-      console.log(allCollections);
-      allCollections.forEach((collection, index) => {
+      allCollections.forEach((collection) => {
         if (collection.teamId === -1) {
           collection.user = this.props.currentUser;
         } else {
           collection.team = this.props.currentUser.teams.find(userTeam => userTeam.id === collection.teamId);
-          if(!collection.team){
-            console.log('attempt to remove team at index', index);
-            // team has been soft-deleted - remove from results
-            allCollections.splice(index, 1);
-            console.log(allCollections.length);
+          if (!collection.team) {
+            deletedCollections.push(collection);
           }
         }
       });
+      
+      console.log('deletedCollections', deletedCollections
+
+      // remove deleted collections
+      deletedCollections.forEach(collection => allCollections.remove(collection));
 
       const orderedCollections = orderBy(allCollections, collection => collection.updatedAt, ['desc']);
 
