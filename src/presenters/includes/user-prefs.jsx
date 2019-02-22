@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import useLocalStorage from './local-storage';
 
-const { Provider, Consumer } = React.createContext();
+const Context = React.createContext();
 
 export const UserPrefsProvider = ({ children }) => {
   const [prefs, set] = useLocalStorage('community-userPrefs', {});
   return (
-    <Provider value={{ prefs, set }}>
+    <Context.Provider value={{ prefs, set }}>
       {children}
-    </Provider>
+    </Context.Provider>
   );
 };
 UserPrefsProvider.propTypes = {
@@ -29,4 +29,9 @@ UserPref.propTypes = {
   default: PropTypes.any.isRequired,
 };
 
-export default UserPref;
+const useUserPref = (name, defaultValue) => {
+  const { prefs, set } = React.useContext(Context);
+  const 
+};
+
+export default useUserPref;
