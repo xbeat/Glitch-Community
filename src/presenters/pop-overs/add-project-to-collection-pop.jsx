@@ -1,7 +1,7 @@
 // add-project-to-collection-pop -> Add a project to a collection via a project item's menu
 import React from 'react';
 import PropTypes from 'prop-types';
-import { orderBy, remove } from 'lodash';
+import { orderBy, reject } from 'lodash';
 import { captureException } from '../../utils/sentry';
 
 import { TrackClick } from '../analytics';
@@ -154,15 +154,16 @@ class AddProjectToCollectionPop extends React.Component {
       let { data: allCollections } = await this.props.api.get(`collections/?userId=${this.props.currentUser.id}&includeTeams=true`);
       // add user / team to each collection
       console.log('all collections length at start', allCollections.length);
+      console.log(allCollections);
       allCollections.forEach((collection, index) => {
         if (collection.teamId === -1) {
           collection.user = this.props.currentUser;
         } else {
           collection.team = this.props.currentUser.teams.find(userTeam => userTeam.id === collection.teamId);
           if(!collection.team){
-            console.log('attempt to remove team');
+            console.log('attempt to remove team at index', index);
             // team has been soft-deleted - remove from results
-            allCollections.remove(collection);
+            allCollections.splice(index, 1);
             console.log(allCollections.length);
           }
         }
