@@ -120,8 +120,7 @@ class NewStuff extends React.Component {
       <PopoverContainer outer={this.renderOuter.bind(this)}>
         {({ visible }) => (visible ? (
           <NewStuffOverlay {...this.props} newStuff={this.state.log} />
-        ) : null)
-        }
+        ) : null)}
       </PopoverContainer>
     );
   }
