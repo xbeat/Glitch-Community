@@ -61,7 +61,7 @@ const CollectionWide = ({ collection, api }) => {
 
 CollectionWide.propTypes = {
   collection: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
+    avatarUrl: PropTypes.string,
     coverColor: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

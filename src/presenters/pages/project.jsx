@@ -26,6 +26,7 @@ import AddProjectToCollection from '../includes/add-project-to-collection';
 import TeamsList from '../teams-list';
 import UsersList from '../users-list';
 import RelatedProjects from '../includes/related-projects';
+import { addBreadcrumb } from '../../utils/sentry';
 
 import { CurrentUserConsumer } from '../current-user';
 
@@ -214,6 +215,10 @@ ProjectPage.defaultProps = {
 
 async function getProject(api, domain) {
   const { data } = await api.get(`projects/${domain}`);
+  addBreadcrumb({
+    level: 'info',
+    message: `project: ${JSON.stringify(data)}`,
+  });
   return data;
 }
 
