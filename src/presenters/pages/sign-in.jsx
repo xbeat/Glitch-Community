@@ -20,7 +20,6 @@ import {captureException} from '../../utils/sentry';
 import {CurrentUserConsumer} from '../current-user';
 import {NestedPopover, NestedPopoverTitle} from '../pop-overs/popover-nested.jsx';
 
-// I don't think I need this class
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
@@ -158,12 +157,10 @@ class SignInCodeHandler extends React.Component {
 }
 
 const redirectToOauthDialog = (queryParams) => {
-  console.log('RedirectToOauthDialog');
   const cachedUser = JSON.parse(window.localStorage.cachedUser);
   const persistentToken = cachedUser.persistentToken;
   const login = cachedUser.login;
   if (persistentToken && login) {
-    console.log('EXPECT CHANGE');
     window.location.href = `${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`;
   }
 }
@@ -201,12 +198,12 @@ class SignInPopWithoutRouter extends React.Component  {
   }
   
   componentDidMount(){
-    window.location.href = 'https://amazon.com';
     const queryParamsStart = window.location.href.indexOf('?');
     const queryParams = window.location.href.substring(queryParamsStart);
     this.setState({
       queryParams
     });
+    redirectToOauthDialog(queryParams);
   }
   
   render() {
@@ -224,7 +221,7 @@ class SignInPopWithoutRouter extends React.Component  {
       return (
         <NestedPopover alternateContent={() => <SignIn {...this.props}/>} startAlternateVisible={false}>
           {showEmailLogin =>
-            <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props}/>} startAlternateVisible={false}>
+            <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props} queryParams={this.state.queryParams}/>} startAlternateVisible={false}>
               {showCodeLogin =>
                 <div className="pop-over sign-in-pop middle">
                   {header}
