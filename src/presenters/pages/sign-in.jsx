@@ -223,7 +223,7 @@ class SignInPopWithoutRouter extends React.Component  {
           {showEmailLogin =>
             <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props} queryParams={this.state.queryParams}/>} startAlternateVisible={false}>
               {showCodeLogin =>
-                <div className="pop-over sign-in-pop middle">
+                <div className="pop-over sign-in-pop middle" style={{position: 'relative', margin: '0 auto', width: '25%' }}>
                   {header}
                   <section className="pop-over-actions first-section">
                     {prompt}
