@@ -57,6 +57,7 @@ class SignIn extends React.Component {
       queryParams
     });
   }
+  
   render() {
     const isEnabled = this.state.email.length > 0;
     return (
