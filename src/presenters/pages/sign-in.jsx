@@ -173,6 +173,16 @@ class SignInCodeHandler extends React.Component {
   }
 }
 
+const RedirectToOauthDialog = (props) => {
+  const cachedUser = JSON.parse(window.localStorage.cachedUser);
+  const persistentToken = cachedUser.persistentToken;
+  const login = cachedUser.login;
+  if (persistentToken && login) {
+    window.location.href = `${API_URL}/oauth/dialog/authorize${this.state.queryParams}&authorization=${persistentToken}`;
+    return null;
+  }
+}
+
 const SignInWithConsumer = (props) => (
   <CurrentUserConsumer>{(currentUser, fetched, {login}) => <SignInCodeHandler setUser={login} {...props}/>}</CurrentUserConsumer>
 );
