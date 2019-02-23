@@ -20,7 +20,7 @@ import {captureException} from '../../utils/sentry';
 import {CurrentUserConsumer} from '../current-user';
 import {NestedPopover, NestedPopoverTitle} from '../pop-overs/popover-nested.jsx';
 
-
+// I don't think I need this class
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +28,6 @@ class SignIn extends React.Component {
       email: '',
       done: false,
       error: false,
-      queryParams: ''
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -50,18 +49,10 @@ class SignIn extends React.Component {
     }
   }
   
-  componentDidMount(){
-    const queryParamsStart = window.location.href.indexOf('?');
-    const queryParams = window.location.href.substring(queryParamsStart);
-    this.setState({
-      queryParams
-    });
-  }
-  
   render() {
     const isEnabled = this.state.email.length > 0;
     return (
-      <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props} queryParams={this.state.queryParams}/>} startAlternateVisible={false}>
+      <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props}/>} startAlternateVisible={false}>
         {showCodeLogin =>
           <dialog className="pop-over sign-in-pop">
             <NestedPopoverTitle>
@@ -201,8 +192,25 @@ SignInCodeSection.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-const SignInPopWithoutRouter = (props) => (
-  <LocalStorage name="destinationAfterAuth">
+class SignInPopWithoutRouter extends React.Component  {
+  constructor(props) {
+    super(props);
+    this.state = {
+      queryParams: ''
+    };
+  }
+  
+  componentDidMount(){
+    window.location.href = 'https://amazon.com';
+    const queryParamsStart = window.location.href.indexOf('?');
+    const queryParams = window.location.href.substring(queryParamsStart);
+    this.setState({
+      queryParams
+    });
+  }
+  
+  render() {
+    return <LocalStorage name="destinationAfterAuth">
     {(destination, setDestination) => {
       const onClick = () => setDestination({
         expires: dayjs().add(10, 'minutes').toISOString(),
@@ -212,11 +220,11 @@ const SignInPopWithoutRouter = (props) => (
           hash: hash,
         },
       });
-      const {header, prompt, api, location, hash} = props;
+      const {header, prompt, api, location, hash} = this.props;
       return (
-        <NestedPopover alternateContent={() => <SignIn {...props}/>} startAlternateVisible={false}>
+        <NestedPopover alternateContent={() => <SignIn {...this.props}/>} startAlternateVisible={false}>
           {showEmailLogin =>
-            <NestedPopover alternateContent={() => <SignInWithConsumer {...props}/>} startAlternateVisible={false}>
+            <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props}/>} startAlternateVisible={false}>
               {showCodeLogin =>
                 <div className="pop-over sign-in-pop middle">
                   {header}
@@ -233,7 +241,8 @@ const SignInPopWithoutRouter = (props) => (
       );
     }}
   </LocalStorage>
-);
+  }
+}
 
 export const SignInPop = withRouter(SignInPopWithoutRouter);
 SignInPop.propTypes = {
