@@ -61,6 +61,7 @@ class SignIn extends React.Component {
     const isEnabled = this.state.email.length > 0;
     return (
       <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props} queryParams={this.state.queryParams}/>} startAlternateVisible={false}>
+        <RedirectToOauthDialog queryParams={this.state.queryParams}/>
         {showCodeLogin =>
           <dialog className="pop-over sign-in-pop">
             <NestedPopoverTitle>
@@ -167,10 +168,12 @@ class SignInCodeHandler extends React.Component {
 }
 
 const RedirectToOauthDialog = (props) => {
+  console.log('RedirectToOauthDialog');
   const cachedUser = JSON.parse(window.localStorage.cachedUser);
   const persistentToken = cachedUser.persistentToken;
   const login = cachedUser.login;
   if (persistentToken && login) {
+    console.log('EXPECT CHANGE');
     window.location.href = `${API_URL}/oauth/dialog/authorize${this.props.queryParams}&authorization=${persistentToken}`;
     return null;
   }
