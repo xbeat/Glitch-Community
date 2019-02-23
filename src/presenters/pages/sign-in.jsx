@@ -56,7 +56,6 @@ class SignIn extends React.Component {
     this.setState({
       queryParams
     });
-    redirectToOauthDialog(queryParams);
   }
   render() {
     const isEnabled = this.state.email.length > 0;
