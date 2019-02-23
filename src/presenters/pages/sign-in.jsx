@@ -21,7 +21,7 @@ import {CurrentUserConsumer} from '../current-user';
 import {NestedPopover, NestedPopoverTitle} from '../pop-overs/popover-nested.jsx';
 
 
-export class SignIn extends React.Component {
+class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,14 +58,6 @@ export class SignIn extends React.Component {
     });
   }
   render() {
-    const cachedUser = JSON.parse(window.localStorage.cachedUser);
-    const persistentToken = cachedUser.persistentToken;
-    const login = cachedUser.login;
-    if (persistentToken && login) {
-      console.log('persistentToken and login present');
-      window.location.href = `${API_URL}/oauth/dialog/authorize${this.state.queryParams}&authorization=${persistentToken}`;
-      // return;
-    }
     const isEnabled = this.state.email.length > 0;
     return (
       <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props} queryParams={this.state.queryParams}/>} startAlternateVisible={false}>
@@ -145,6 +137,7 @@ class SignInCodeHandler extends React.Component {
     const isEnabled = this.state.code.length > 0;
     return (
       <dialog className="pop-over sign-in-pop middle">
+        <RedirectToOauthDialog queryParams={this.props.queryParams} />
         <NestedPopoverTitle>
           Use a sign in code
         </NestedPopoverTitle>
@@ -178,7 +171,7 @@ const RedirectToOauthDialog = (props) => {
   const persistentToken = cachedUser.persistentToken;
   const login = cachedUser.login;
   if (persistentToken && login) {
-    window.location.href = `${API_URL}/oauth/dialog/authorize${this.state.queryParams}&authorization=${persistentToken}`;
+    window.location.href = `${API_URL}/oauth/dialog/authorize${this.props.queryParams}&authorization=${persistentToken}`;
     return null;
   }
 }
