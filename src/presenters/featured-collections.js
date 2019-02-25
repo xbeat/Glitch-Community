@@ -80,7 +80,7 @@ const loadCollection = async (api, { owner, name }) => {
     );
     const { data: collection } = await api.get(`collections/${collectionId}`);
     collection.projectCount = collection.projects.length;
-    collection.projects = sampleSize(collection.projects, 3).map(p => ({
+    collection.projects = sampleSize(collection.projects, 4).map(p => ({
       ...p,
       users: p.users || [],
     }));
