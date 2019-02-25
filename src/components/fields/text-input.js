@@ -88,29 +88,27 @@ TextInput.propTypes = {
   error: PropTypes.node,
   maxLength: PropTypes.number,
   name: PropTypes.string,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
   opaque: PropTypes.bool,
   placeholder: PropTypes.string,
   postfix: PropTypes.node,
   prefix: PropTypes.node,
   type: PropTypes.oneOf(TYPES),
-  value: PropTypes.string,
+  value: PropTypes.string.isRequired,
 };
 
 TextInput.defaultProps = {
-  autoFocus: undefined,
+  autoFocus: false,
   className: '',
-  disabled: undefined,
+  disabled: false,
   error: null,
   maxLength: undefined,
   name: undefined,
-  onChange: undefined,
   opaque: false,
   placeholder: undefined,
   postfix: null,
   prefix: null,
   type: 'text',
-  value: '',
 };
 
 export default TextInput;

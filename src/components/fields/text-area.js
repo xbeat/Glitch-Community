@@ -39,19 +39,17 @@ TextArea.propTypes = {
   disabled: PropTypes.bool,
   error: PropTypes.node,
   name: PropTypes.string,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.string.isRequired,
 };
 
 TextArea.defaultProps = {
-  autoFocus: undefined,
-  disabled: undefined,
+  autoFocus: false,
+  disabled: false,
   error: null,
   name: undefined,
-  onChange: undefined,
   placeholder: undefined,
-  value: '',
 };
 
 export default TextArea;
