@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import styles from './input-error-message.styl';
 
-const InputErrorMessage = ({ error }) => (
+const InputErrorMessage = ({ children }) => (
   <div className={styles.errorMessage}>
-    {error}
+    {children}
   </div>
 );
 
 InputErrorMessage.propTypes = {
-  error: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default InputErrorMessage;

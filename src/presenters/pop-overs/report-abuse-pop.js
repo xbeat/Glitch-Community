@@ -196,7 +196,7 @@ class ReportAbusePop extends React.Component {
           <TextArea
             value={this.state.reason}
             onChange={this.reasonOnChange}
-            onBlur={() => this.debouncedValidateReason()}
+            onBlur={this.debouncedValidateReason}
             autoFocus // eslint-disable-line jsx-a11y/no-autofocus
             error={this.state.reasonError}
           />
