@@ -30,7 +30,7 @@ const UserResultItem = ({ user, action }) => {
         </div>
         {!!user.name && (
           <div className="result-description">
-@
+            @
             {login}
           </div>
         )}
@@ -64,7 +64,8 @@ export class InviteByEmail extends React.Component {
       <button onClick={this.props.onClick} className="button-unstyled result">
         <img className="avatar" src={ANON_AVATAR_URL} style={style} alt="" />
         <div className="result-name">
-Invite
+          Invite
+          {' '}
           {this.props.email}
         </div>
       </button>
@@ -81,10 +82,10 @@ export const WhitelistEmailDomain = ({ domain, onClick }) => (
   <button onClick={onClick} className="button-unstyled result">
     <WhitelistedDomainIcon domain={domain} />
     <div className="result-name">
-Allow anyone with an @
+      Allow anyone with an @
       {domain}
       {' '}
-email to join
+      email to join
     </div>
   </button>
 );
