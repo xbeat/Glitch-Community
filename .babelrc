@@ -12,5 +12,7 @@
   "plugins": [
     "lodash",
     "@babel/syntax-dynamic-import",
+    "@babel/plugin-proposal-class-properties"
   ],
+  "sourceType": "unambiguous"
 }

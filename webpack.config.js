@@ -1,22 +1,21 @@
-const path = require('path');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+const path = require("path");
+const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const AutoprefixerStylus = require("autoprefixer-stylus");
-const StatsPlugin = require('stats-webpack-plugin');
+const StatsPlugin = require("stats-webpack-plugin");
 
-const BUILD = path.resolve(__dirname, 'build');
-const SRC = path.resolve(__dirname, 'src');
-const SHARED = path.resolve(__dirname, 'shared');
-const CSS_MODULES = path.resolve(__dirname, 'src/components');
-const STYLES = path.resolve(__dirname, 'styles');
-const NODE_MODULES = path.resolve(__dirname, 'node_modules');
-const STYLE_BUNDLE_NAME = 'styles';
+const BUILD = path.resolve(__dirname, "build");
+const SRC = path.resolve(__dirname, "src");
+const SHARED = path.resolve(__dirname, "shared");
+const CSS_MODULES = path.resolve(__dirname, "src/components");
+const STYLES = path.resolve(__dirname, "styles");
+const NODE_MODULES = path.resolve(__dirname, "node_modules");
+const STYLE_BUNDLE_NAME = "styles";
 
-
-let mode = 'development';
-if (process.env.NODE_ENV === 'production') {
-  mode = 'production';
+let mode = "development";
+if (process.env.NODE_ENV === "production") {
+  mode = "production";
 }
 
 console.log(`Starting Webpack in ${mode} mode.`);
@@ -24,49 +23,49 @@ console.log(`Starting Webpack in ${mode} mode.`);
 module.exports = {
   mode,
   entry: {
-    "client": `${SRC}/client.jsx`,
+    client: `${SRC}/client.js`,
     [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
   },
   output: {
-    filename: '[name].js?[contenthash]',
+    filename: "[name].js?[contenthash]",
     path: BUILD,
-    publicPath: '/',
+    publicPath: "/",
   },
-  devtool: mode === 'production' ? 'source-map' : 'cheap-module-source-map',
+  devtool: mode === "production" ? "source-map" : "cheap-module-source-map",
   optimization: {
     splitChunks: {
-      chunks: 'initial',
+      chunks: "initial",
       maxInitialRequests: 5,
       cacheGroups: {
         curated: {
-          name: 'curated',
+          name: "curated",
           test: /[\\/]src[\\/]curated[\\/]/,
           minSize: 0,
         },
         react: {
-          name: 'react',
+          name: "react",
           test: /[\\/]node_modules[\\/]react[-\\/]/,
         },
         modules: {
-          name: 'dependencies',
+          name: "dependencies",
           test: /[\\/]node_modules[\\/]/,
           priority: -1,
         },
       },
     },
     minimizer: [
-      new TerserPlugin({terserOptions: {safari10: true}, sourceMap: true}),
+      new TerserPlugin({ terserOptions: { safari10: true }, sourceMap: true }),
     ],
     noEmitOnErrors: true,
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: [".js"],
   },
   module: {
     rules: [
       {
         enforce: "pre",
-        test: /\.jsx?$/,
+        test: /\.js$/,
         include: SRC,
         loader: "eslint-loader",
         options: {
@@ -75,17 +74,21 @@ module.exports = {
           emitError: false,
           emitWarning: true,
           failOnError: false,
-        }
+          ignorePattern: "src/curated/**",
+        },
       },
       {
         oneOf: [
-          { 
-            test: /\.(js|jsx)$/,
-            loader: 'babel-loader',
-            include: mode === 'development' ? [SRC, SHARED] : [SRC, SHARED, NODE_MODULES],
-            query: { 
-              compact: mode === 'development' ? true : false 
-            }
+          {
+            test: /\.js$/,
+            loader: "babel-loader",
+            include:
+              mode === "development"
+                ? [SRC, SHARED]
+                : [SRC, SHARED, NODE_MODULES],
+            query: {
+              compact: mode === "development" ? true : false,
+            },
           },
           {
             test: /\.styl/,
@@ -93,21 +96,21 @@ module.exports = {
             use: [
               MiniCssExtractPlugin.loader,
               {
-                loader: 'css-loader?modules',
+                loader: "css-loader?modules",
                 options: {
-                  sourceMap: mode !== 'production', // no css source maps in production
+                  sourceMap: mode !== "production", // no css source maps in production
                   modules: true,
-                  localIdentName: '[name]__[local]___[hash:base64:5]'
+                  localIdentName: "[name]__[local]___[hash:base64:5]",
                 },
               },
               {
-                loader: 'stylus-loader',
+                loader: "stylus-loader",
                 options: {
-                  compress: mode === 'production', // Compress CSS as part of the stylus build
+                  compress: mode === "production", // Compress CSS as part of the stylus build
                   use: [AutoprefixerStylus()],
                 },
               },
-            ]
+            ],
           },
           {
             test: /\.styl$/,
@@ -115,28 +118,33 @@ module.exports = {
             use: [
               MiniCssExtractPlugin.loader,
               {
-                loader: 'css-loader',
+                loader: "css-loader",
                 options: {
-                  sourceMap: mode !== 'production', // no css source maps in production
+                  sourceMap: mode !== "production", // no css source maps in production
                 },
               },
               {
-                loader: 'stylus-loader',
+                loader: "stylus-loader",
                 options: {
-                  compress: mode === 'production', // Compress CSS as part of the stylus build
+                  compress: mode === "production", // Compress CSS as part of the stylus build
                   use: [AutoprefixerStylus()],
                 },
               },
-            ]
+            ],
           },
         ],
-      }
+      },
     ],
   },
   plugins: [
-    new LodashModuleReplacementPlugin(),
-    new MiniCssExtractPlugin({filename: '[name].css?[contenthash]'}),
-    new StatsPlugin('stats.json', {all: false, entrypoints: true, hash: true, publicPath: true}),
+    new LodashModuleReplacementPlugin({ shorthands: true }), // adding shorthands fixes https://github.com/lodash/lodash/issues/3101
+    new MiniCssExtractPlugin({ filename: "[name].css?[contenthash]" }),
+    new StatsPlugin("stats.json", {
+      all: false,
+      entrypoints: true,
+      hash: true,
+      publicPath: true,
+    }),
   ],
   watchOptions: {
     ignored: /node_modules/,

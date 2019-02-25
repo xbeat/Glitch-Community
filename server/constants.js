@@ -32,8 +32,8 @@ const envs = {
 
 // in the backend, just switch between staging and production
 const currentEnv = process.env.RUNNING_ON === "staging" ? "staging" : "production";
-
 module.exports = {
   ...envs,
   current: envs[currentEnv],
+  currentEnv,
 }
