@@ -27,13 +27,13 @@ const toggleData = [
 ].splice(0, 3); // <-- Yeah really, only 3.  If you need more, clean up one first.
 
 // Usage:
-// Import useDevToggle into your scope:
-
-/*
-import useDevToggle from '../includes/dev-toggles`
-const compone
-const showNewFeature = useDevToggle('New Feature');
-*/
+//
+// import useDevToggle from '../includes/dev-toggles`
+//
+// const NewFeatureIfEnabled = () => {
+//   const showNewFeature = useDevToggle('New Feature');
+//   return showNewFeature ? <NewFeature /> : null;
+// };
 
 export const DevTogglesProvider = ({ children }) => {
   const [enabledToggles, setEnabledToggles] = useUserPref('devToggles', []);
