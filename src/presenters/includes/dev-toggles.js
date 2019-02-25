@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useUserPref from './user-prefs';
 
-const { Provider, Consumer } = React.createContext();
+const Context = React.createContext();
 
 //  Dev Toggles!
 //
@@ -48,21 +48,25 @@ const toggleData = [
 export const DevTogglesProvider = ({ children }) => {
   const [enabledToggles, setEnabledToggles] = useUserPref('devToggles', []);
   return (
-    <Provider value={{ enabledToggles, toggleData, setEnabledToggles }}>
+    <Context.Provider value={{ enabledToggles, toggleData, setEnabledToggles }}>
       {children}
-    </Provider>
+    </Context.Provider>
   );
 };
 DevTogglesProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const DevToggles = ({ children }) => (
-  <Consumer>
-    {({ enabledToggles, currentToggleData, setEnabledToggles }) => children(enabledToggles || [], currentToggleData, setEnabledToggles)
-    }
-  </Consumer>
-);
+const useDevToggles = () => {
+  return React.useContext(Context);
+};
+const useDevToggle = () => {
+  const {
+
+const DevToggles = ({ children }) => {
+  const { enabledToggles, toggleData, setEnabledToggles } = useDevToggles;
+  return children(enabledToggles, toggleData, setEnabledToggles);
+};
 DevToggles.propTypes = {
   children: PropTypes.func.isRequired,
 };
