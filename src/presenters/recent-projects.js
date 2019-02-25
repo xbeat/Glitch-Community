@@ -56,7 +56,7 @@ const RecentProjects = ({ api }) => (
     {(user, fetched) => (
       <RecentProjectsContainer user={user} api={api}>
         {fetched ? (
-          <ProjectsLoader api={api} projects={user.projects.slice(0, 3)}>
+          <ProjectsLoader api={api} projects={user.projects.slice(0, 4)}>
             {projects => <ProjectsUL projects={projects} />}
           </ProjectsLoader>
         ) : (
