@@ -57,18 +57,11 @@ DevTogglesProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const useDevToggles = () => {
-  return React.useContext(Context);
-};
-const useDevToggle = () => {
-  const {
+export const useDevToggles = () => React.useContext(Context);
 
-const DevToggles = ({ children }) => {
-  const { enabledToggles, toggleData, setEnabledToggles } = useDevToggles;
-  return children(enabledToggles, toggleData, setEnabledToggles);
-};
-DevToggles.propTypes = {
-  children: PropTypes.func.isRequired,
-};
+const useDevToggle = (toggle) => {
+  const { enabledToggles } = useDevToggles;
+  return enabledToggles.includes(toggle);
+}
 
-export default DevToggles;
+export default useDevToggle;
