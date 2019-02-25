@@ -27,22 +27,12 @@ const toggleData = [
 ].splice(0, 3); // <-- Yeah really, only 3.  If you need more, clean up one first.
 
 // Usage:
-// Import Devtoggles into your scope:
+// Import useDevToggle into your scope:
 
-// import DevToggles from '../includes/dev-toggles`
-// Use the DevToggles from inside of a DevTogglesProvider
-// (Which in turn must be inside of a UserPrefProvider,
-// both of which are provided by the Client)
-
-// Fetch the array enabledToggles and test for features with [].includes:
 /*
-  <DevToggles>
-    {(enabledToggles) => (
-      <div> I could sure go for some:
-        { enabledToggles.includes("fishsticks") && <FishSticks/> }
-      </div>
-    )}
-  </DevToggles>
+import useDevToggle from '../includes/dev-toggles`
+const compone
+const showNewFeature = useDevToggle('New Feature');
 */
 
 export const DevTogglesProvider = ({ children }) => {
@@ -60,8 +50,8 @@ DevTogglesProvider.propTypes = {
 export const useDevToggles = () => React.useContext(Context);
 
 const useDevToggle = (toggle) => {
-  const { enabledToggles } = useDevToggles;
+  const { enabledToggles } = useDevToggles();
   return enabledToggles.includes(toggle);
-}
+};
 
 export default useDevToggle;
