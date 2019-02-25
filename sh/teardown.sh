@@ -18,5 +18,4 @@ then
 else
 	git branch -d $1
 fi
-
 git remote remove $1

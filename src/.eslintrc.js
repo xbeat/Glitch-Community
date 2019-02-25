@@ -51,7 +51,9 @@ module.exports = {
       ignoreTemplateLiterals: true,
     }],
     // React hooks config
-    "react-hooks/rules-of-hooks": "error"
+    "react-hooks/rules-of-hooks": "error",
+    "react/jsx-one-expression-per-line": [ERROR, {"allow": "literal"}],
+    "react/jsx-filename-extension": [ERROR, { "extensions": [".js"] }]
   },
   settings: {
     react: {

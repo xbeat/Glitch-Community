@@ -14,21 +14,18 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'Emoji Tarot Readings',
-    img:
-      'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FTarojibot_final.jpg?1550484666312',
-    link: 'https://tarojibot.glitch.me/',
+    title: 'MIDI Songs Become Cities',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmidi-city-ctervo-gif.gif?1551088643364',
+    link: 'https://midicity-2000.glitch.me/',
   },
   {
-    title: 'Does Who You Follow Spark Joy?',
-    img:
-      'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FTokimeki_final.jpg?1550484665630',
-    link: 'https://tokimeki-unfollow.glitch.me/',
+    title: 'Markov Chain Headlines',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Frss-headlines-ctervo-gif.gif?1551088646997',
+    link: 'https://rss-headlines.glitch.me/',
   },
   {
-    title: 'Look Around You',
-    img:
-      'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2FDepth_index_final.jpg?1550484664956',
-    link: 'https://depth-index-demo.glitch.me/',
-  },
+    title: 'Sea Pinks and High Tide',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsea-pinks-ctervo-.gif?1551088649326',
+    link: 'https://sea-pinks.glitch.me/',
+  }
 ];
