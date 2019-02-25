@@ -1,33 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import LocalStorage from './local-storage';
+import useLocalStorage from './local-storage';
 
-const { Provider, Consumer } = React.createContext();
+const Context = React.createContext();
 
-export const UserPrefsProvider = ({ children }) => (
-  <LocalStorage name="community-userPrefs" default={{}}>
-    {(prefs, set) => (
-      <Provider value={{ prefs, set }}>
-        {children}
-      </Provider>
-    )}
-  </LocalStorage>
-);
+export const UserPrefsProvider = ({ children }) => {
+  const [prefs, set] = useLocalStorage('community-userPrefs', {});
+  return (
+    <Context.Provider value={{ prefs, set }}>
+      {children}
+    </Context.Provider>
+  );
+};
 UserPrefsProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const UserPref = ({ children, name, ...props }) => (
-  <Consumer>
-    {({ prefs, set }) => children(prefs[name] !== undefined ? prefs[name] : props.default, value => set({ ...prefs, [name]: value }))
-    }
-  </Consumer>
-);
-UserPref.propTypes = {
-  children: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  default: PropTypes.any.isRequired,
+const useUserPref = (name, defaultValue) => {
+  const { prefs, set } = React.useContext(Context);
+  const value = prefs[name] !== undefined ? prefs[name] : defaultValue;
+  const setValue = newValue => set({ ...prefs, [name]: newValue });
+  return [value, setValue];
 };
 
-export default UserPref;
+export default useUserPref;

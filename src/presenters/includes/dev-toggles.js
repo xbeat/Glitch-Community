@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import UserPref from './user-prefs';
+import useUserPref from './user-prefs';
 
 const { Provider, Consumer } = React.createContext();
 
@@ -45,15 +45,14 @@ const toggleData = [
   </DevToggles>
 */
 
-export const DevTogglesProvider = ({ children }) => (
-  <UserPref name="devToggles" default={[]}>
-    {(enabledToggles, setEnabledToggles) => (
-      <Provider value={{ enabledToggles, toggleData, setEnabledToggles }}>
-        {children}
-      </Provider>
-    )}
-  </UserPref>
-);
+export const DevTogglesProvider = ({ children }) => {
+  const [enabledToggles, setEnabledToggles] = useUserPref('devToggles', []);
+  return (
+    <Provider value={{ enabledToggles, toggleData, setEnabledToggles }}>
+      {children}
+    </Provider>
+  );
+};
 DevTogglesProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
