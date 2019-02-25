@@ -5,7 +5,7 @@ import { debounce } from 'lodash';
 import { parseOneAddress } from 'email-addresses';
 import { captureException } from '../../utils/sentry';
 
-import DevToggles from '../includes/dev-toggles';
+import useDevToggle from '../includes/dev-toggles';
 import { Loader } from '../includes/loader';
 import UserResultItem, {
   InviteByEmail,
@@ -158,7 +158,7 @@ class AddTeamUserPop extends React.Component {
     const results = [];
 
     const email = parseOneAddress(query);
-    if (email && this.props.enabledToggles.includes('Email Invites')) {
+    if (email && this.props.allowEmailInvites) {
       results.push({
         key: 'invite-by-email',
         item: (
@@ -219,7 +219,7 @@ AddTeamUserPop.propTypes = {
   members: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   setWhitelistedDomain: PropTypes.func,
   whitelistedDomain: PropTypes.string,
-  enabledToggles: PropTypes.array.isRequired,
+  allowEmailInvites: PropTypes.bool.isRequired,
 };
 
 AddTeamUserPop.defaultProps = {
@@ -267,12 +267,9 @@ Results.propTypes = {
   isLoading: PropTypes.bool.isRequired,
 };
 
-const AddTeamUserPopWithDevToggles = props => (
-  <DevToggles>
-    {enabledToggles => (
-      <AddTeamUserPop {...props} enabledToggles={enabledToggles} />
-    )}
-  </DevToggles>
-);
+const AddTeamUserPopWithDevToggles = (props) => {
+  const allowEmailInvites = useDevToggle('Email Invites');
+  return <AddTeamUserPop {...props} allowEmailInvites={allowEmailInvites} />;
+};
 
 export default AddTeamUserPopWithDevToggles;
