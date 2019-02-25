@@ -4,10 +4,10 @@ import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 import { Link } from '../includes/link';
-import LocalStorage from '../includes/local-storage';
+import useLocalStorage from '../includes/local-storage';
 import PopoverWithButton from './popover-with-button';
 import { captureException } from '../../utils/sentry';
-import { CurrentUserConsumer } from '../current-user';
+import { useCurrentUser } from '../current-user';
 import { NestedPopover, NestedPopoverTitle } from './popover-nested';
 
 /* global GITHUB_CLIENT_ID, FACEBOOK_CLIENT_ID, APP_URL */
@@ -247,13 +247,10 @@ class SignInCodeHandler extends React.Component {
   }
 }
 
-const SignInWithConsumer = props => (
-  <CurrentUserConsumer>
-    {(currentUser, fetched, { login }) => (
-      <SignInCodeHandler setUser={login} {...props} />
-    )}
-  </CurrentUserConsumer>
-);
+const SignInWithConsumer = (props) => {
+  const { login } = useCurrentUser();
+  return <SignInCodeHandler setUser={login} {...props} />;
+};
 
 const EmailSignInButton = ({ onClick }) => (
   <button
@@ -287,71 +284,68 @@ SignInCodeSection.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-const SignInPopWithoutRouter = props => (
-  <LocalStorage name="destinationAfterAuth">
-    {(destination, setDestination) => {
-      const {
-        header, prompt, api, location, hash,
-      } = props;
-      const onClick = () => setDestination({
-        expires: dayjs()
-          .add(10, 'minutes')
-          .toISOString(),
-        to: {
-          pathname: location.pathname,
-          search: location.search,
-          hash,
-        },
-      });
-      return (
+const SignInPopWithoutRouter = (props) => {
+  const {
+    header, prompt, api, location, hash,
+  } = props;
+  const [, setDestination] = useLocalStorage('destinationAfterAuth');
+  const onClick = () => setDestination({
+    expires: dayjs()
+      .add(10, 'minutes')
+      .toISOString(),
+    to: {
+      pathname: location.pathname,
+      search: location.search,
+      hash,
+    },
+  });
+  return (
+    <NestedPopover
+      alternateContent={() => <EmailHandler {...props} />}
+      startAlternateVisible={false}
+    >
+      {showEmailLogin => (
         <NestedPopover
-          alternateContent={() => <EmailHandler {...props} />}
+          alternateContent={() => <SignInWithConsumer {...props} />}
           startAlternateVisible={false}
         >
-          {showEmailLogin => (
-            <NestedPopover
-              alternateContent={() => <SignInWithConsumer {...props} />}
-              startAlternateVisible={false}
-            >
-              {showCodeLogin => (
-                <div className="pop-over sign-in-pop">
-                  {header}
-                  <section className="pop-over-actions first-section">
-                    {prompt}
-                    <SignInPopButton
-                      href={facebookAuthLink()}
-                      company="Facebook"
-                      emoji="facebook"
-                      onClick={onClick}
-                    />
-                    <SignInPopButton
-                      href={githubAuthLink()}
-                      company="GitHub"
-                      emoji="octocat"
-                      onClick={onClick}
-                    />
-                    <EmailSignInButton
-                      onClick={() => {
-                        onClick();
-                        showEmailLogin(api);
-                      }}
-                    />
-                  </section>
-                  <SignInCodeSection
-                    onClick={() => {
-                      onClick();
-                      showCodeLogin(api);
-                    }}
-                  />
-                </div>
-              )}
-            </NestedPopover>
+          {showCodeLogin => (
+            <div className="pop-over sign-in-pop">
+              {header}
+              <section className="pop-over-actions first-section">
+                {prompt}
+                <SignInPopButton
+                  href={facebookAuthLink()}
+                  company="Facebook"
+                  emoji="facebook"
+                  onClick={onClick}
+                />
+                <SignInPopButton
+                  href={githubAuthLink()}
+                  company="GitHub"
+                  emoji="octocat"
+                  onClick={onClick}
+                />
+                <EmailSignInButton
+                  onClick={() => {
+                    onClick();
+                    showEmailLogin(api);
+                  }}
+                />
+              </section>
+              <SignInCodeSection
+                onClick={() => {
+                  onClick();
+                  showCodeLogin(api);
+                }}
+              />
+            </div>
           )}
         </NestedPopover>
-      );
-    }}
-  </LocalStorage>
-);
+      )}
+    </NestedPopover>
+  );
+};
 
 export const SignInPopBase = withRouter(SignInPopWithoutRouter);
 SignInPopBase.propTypes = {
