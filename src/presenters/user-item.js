@@ -34,7 +34,7 @@ export default function UserItem({ user }) {
               </h3>
             )}
             <div className="button">
-              @${user.login}
+              @{user.login}
             </div>
             {user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
             {!!user.description && (

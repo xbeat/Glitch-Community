@@ -66,7 +66,7 @@ class ExpandyProjects extends React.Component {
         <ProjectsUL projects={projects} {...props} />
         {shouldShowButton && (
           <button className="button-tertiary" onClick={this.handleClick} type="button">
-            Show ${hiddenProjects} More
+            Show {hiddenProjects} More
           </button>
         )}
       </>
