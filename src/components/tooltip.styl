@@ -1,0 +1,91 @@
+@require '../../styles/globals'
+
+tooltip-background = rgba(0,0,0,0.95)
+background-color = white
+secondary = #9B9B9B
+
+.touch .tooltip
+  display: none
+    
+.tooltip-container
+  position: relative
+  box-sizing: border-box
+  display: inline-block
+
+.tooltip
+  border: none
+  box-sizing: inherit
+  display: inline-block
+  font-style: normal
+  font-weight: normal
+  pointer-events: none
+  position: absolute
+  transform: translateX(50%)
+  right: 50%
+  top: 100%
+  text-align: center
+  text-decoration: none
+  text-shadow: none
+  text-transform: none
+  z-index: 9
+  background: tooltip-background
+  border-radius: 5px
+  font-family: sansserif
+  font-size: 12px
+  color: background-color
+  padding: 6px 8px
+  margin-top: 5px
+  white-space: pre
+  width: auto
+  word-wrap: break-word
+
+.tooltip::before
+  position: absolute
+  top: -100%
+  left: 50%
+  content: ''
+  transform: translateX(-50%)
+  border: 5px solid transparent
+  border-bottom-color: tooltip-background
+  margin-top: 2px
+
+.tooltip.left,
+.tooltip.left::before
+  left: 0
+  right: initial
+  transform: translateX(0)
+  
+.tooltip.left::before
+  left: 10px
+  
+.tooltip.right,
+.tooltip.right::before
+  left: initial
+  right: 0
+  transform: translateX(0)
+
+.tooltip.right::before
+  right: 10px
+
+.tooltip.top
+  top: -100%
+  margin-top: -5px
+  
+.tooltip.top::before
+  border-top-color: tooltip-background
+  border-bottom-color: transparent
+  margin-top: 0
+  top: 100%
+
+.tooltip.persistent
+  font-weight: bold
+  
+// custom tooltips
+#new-stuff-tooltip
+  background-color: notification
+  right: 43px
+  transform: translateX(75%)
+
+#new-stuff-tooltip::before
+  border-top-color: notification
+  border-bottom-color: transparent
