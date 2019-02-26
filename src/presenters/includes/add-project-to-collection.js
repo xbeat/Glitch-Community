@@ -9,9 +9,7 @@ const AddProjectToCollection = ({ project, ...props }) => (
     buttonClass="button-small has-emoji add-project"
     buttonText={(
       <>
-          Add to Collection
-        {' '}
-        <span className="emoji framed-picture" role="presentation" />
+        Add to Collection <span className="emoji framed-picture" role="presentation" />
       </>
     )}
     passToggleToPop

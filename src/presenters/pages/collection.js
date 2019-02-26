@@ -139,9 +139,7 @@ const CollectionPageContents = ({
                 <div className="collection-contents">
                   <div className="collection-project-container-header">
                     <h3>
-Projects (
-                      {collection.projects.length}
-)
+                      Projects ({collection.projects.length})
                     </h3>
 
                     {!!isAuthorized && (

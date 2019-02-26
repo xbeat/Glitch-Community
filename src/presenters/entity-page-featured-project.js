@@ -91,7 +91,7 @@ const EntityPageFeaturedProject = ({
 };
 
 EntityPageFeaturedProject.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   currentUser: PropTypes.object,
   unfeatureProject: PropTypes.func.isRequired,
@@ -101,7 +101,6 @@ EntityPageFeaturedProject.propTypes = {
 
 EntityPageFeaturedProject.defaultProps = {
   currentUser: null,
-  api: null,
 };
 
 export default EntityPageFeaturedProject;

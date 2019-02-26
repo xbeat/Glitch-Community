@@ -121,15 +121,12 @@ class CreateTeamPopBase extends React.Component {
     return (
       <dialog className="pop-over create-team-pop">
         <NestedPopoverTitle>
-          Create Team
-          {' '}
-          <span className="emoji herb" />
+          Create Team <span className="emoji herb" />
         </NestedPopoverTitle>
 
         <section className="pop-over-info">
           <p className="info-description">
-            Showcase your projects in one place, manage collaborators, and view
-            analytics
+            Showcase your projects in one place, manage collaborators, and view analytics
           </p>
         </section>
 
@@ -142,8 +139,7 @@ class CreateTeamPopBase extends React.Component {
               error={this.state.error}
             />
             <p className="action-description team-url-preview">
-              /@
-              {_.kebabCase(this.state.teamName || placeholder)}
+              /@{_.kebabCase(this.state.teamName || placeholder)}
             </p>
 
             {this.state.isLoading ? (
@@ -187,7 +183,7 @@ const CreateTeamPopOrSignIn = ({ api }) => (
         header={<NestedPopoverTitle>Sign In</NestedPopoverTitle>}
         prompt={(
           <p className="action-description">
-              You'll need to sign in to create a team
+            You'll need to sign in to create a team
           </p>
         )}
       />

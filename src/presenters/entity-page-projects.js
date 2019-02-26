@@ -40,7 +40,7 @@ const EntityPageProjects = ({
   );
 };
 EntityPageProjects.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   isAuthorized: PropTypes.bool.isRequired,
   projects: PropTypes.array.isRequired,
@@ -54,7 +54,6 @@ EntityPageProjects.defaultProps = {
   removePin: null,
   projectOptions: {},
   currentUser: null,
-  api: null,
 };
 
 export default EntityPageProjects;

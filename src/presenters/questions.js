@@ -98,9 +98,7 @@ class Questions extends React.Component {
             </ErrorBoundary>
           ) : (
             <>
-              {kaomoji}
-              {' '}
-Looks like nobody is asking for help right now.
+              {kaomoji} Looks like nobody is asking for help right now.
               {' '}
               <Link
                 className="general-link"
@@ -116,12 +114,11 @@ Looks like nobody is asking for help right now.
   }
 }
 Questions.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   max: PropTypes.number,
 };
 Questions.defaultProps = {
   max: 3,
-  api: null,
 };
 
 export default Questions;

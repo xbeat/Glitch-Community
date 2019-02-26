@@ -23,7 +23,7 @@ function getTeamOptions(teams) {
     const label = (
       <span id={team.id}>
         {team.name}
-        {<TeamAvatar team={team} hideTooltip />}
+        <TeamAvatar team={team} hideTooltip />
       </span>
     );
     option.value = team.id;

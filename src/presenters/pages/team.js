@@ -214,8 +214,7 @@ class TeamPage extends React.Component {
                   {team.isVerified && <VerifiedBadge />}
                 </h1>
                 <p className="team-url">
-@
-                  {team.url}
+                  @{team.url}
                 </p>
               </>
             )}

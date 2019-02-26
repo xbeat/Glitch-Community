@@ -103,11 +103,7 @@ export const WhitelistedDomain = ({ domain, setDomain }) => {
                   className="button button-small button-tertiary button-on-secondary-background has-emoji"
                   onClick={() => setDomain(null)}
                 >
-                  Remove
-                  {' '}
-                  {domain}
-                  {' '}
-                  <span className="emoji bomb" />
+                  Remove {domain} <span className="emoji bomb" />
                 </button>
               </section>
             )}

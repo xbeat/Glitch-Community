@@ -67,7 +67,7 @@ const TeamList = ({ teams, showCreateTeam, userIsAnon }) => {
             className="button button-small has-emoji button-tertiary"
           >
             {team.name}
-&nbsp;
+            &nbsp;
             <img
               className="emoji avatar"
               src={getTeamAvatarUrl({ ...team, size: 'small' })}
@@ -149,8 +149,7 @@ Are you sure you want to sign out?`)) {
             </p>
             {user.login && (
               <p className="user-login" title={user.login}>
-                @
-                {user.login}
+                @{user.login}
               </p>
             )}
           </div>
@@ -276,9 +275,5 @@ UserOptionsAndCreateTeamPopContainer.propTypes = {
     login: PropTypes.string,
     teams: PropTypes.array.isRequired,
   }).isRequired,
-  api: PropTypes.func,
-};
-
-UserOptionsAndCreateTeamPopContainer.defaultProps = {
-  api: null,
+  api: PropTypes.func.isRequired,
 };
