@@ -41,8 +41,7 @@ class DeleteTeamPopBase extends React.Component {
       <dialog className="pop-over delete-team-pop" open>
         <section className="pop-over-info">
           <div className="pop-title">
-            Delete
-            {this.props.teamName}
+            Delete {this.props.teamName}
           </div>
         </section>
         <section className="pop-over-actions">
@@ -53,9 +52,9 @@ class DeleteTeamPopBase extends React.Component {
             alt=""
           />
           <div className="action-description">
-            {`Deleting ${this.props.teamName} will remove this team page. No
+            Deleting {this.props.teamName} will remove this team page. No
             projects will be deleted, but only current project members will be
-            able to edit them.`}
+            able to edit them.
           </div>
         </section>
         <section className="pop-over-actions danger-zone">
@@ -65,7 +64,7 @@ class DeleteTeamPopBase extends React.Component {
             onClick={this.deleteTeam}
           >
             <span>
-              {`Delete ${this.props.teamName} `}
+              Delete ${this.props.teamName}
             </span>
             <span className="emoji bomb" role="img" aria-label="bomb emoji" />
             {this.state.teamIsDeleting && <Loader />}
@@ -90,7 +89,7 @@ const DeleteTeamPop = withRouter(props => (
 ));
 
 DeleteTeamPop.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   teamName: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired,

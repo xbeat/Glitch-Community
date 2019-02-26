@@ -138,9 +138,7 @@ class TeamUserRemovePopBase extends React.Component {
         <section className="pop-over-actions" id="user-team-projects">
           {projects || (
             <p className="action-description">
-              {getDisplayName(this.props.user)}
-              {' '}
-is not a member of any projects
+              {getDisplayName(this.props.user)} is not a member of any projects
             </p>
           )}
         </section>
@@ -168,7 +166,7 @@ is not a member of any projects
   }
 }
 TeamUserRemovePopBase.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
     login: PropTypes.string,
@@ -182,9 +180,7 @@ TeamUserRemovePopBase.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
   createNotification: PropTypes.func.isRequired,
 };
-TeamUserRemovePopBase.defaultProps = {
-  api: null,
-};
+
 const TeamUserRemovePop = props => (
   <NotificationConsumer>
     {notifyFuncs => <TeamUserRemovePopBase {...notifyFuncs} {...props} />}

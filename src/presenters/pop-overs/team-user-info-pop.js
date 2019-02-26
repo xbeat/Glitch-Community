@@ -176,16 +176,12 @@ TeamUserInfoAndRemovePop.propTypes = {
   removeUserFromTeam: PropTypes.func.isRequired,
   userIsTeamAdmin: PropTypes.bool.isRequired,
   userIsTheOnlyMember: PropTypes.bool.isRequired,
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   teamId: PropTypes.number.isRequired,
   updateUserPermissions: PropTypes.func.isRequired,
   team: PropTypes.shape({
     projects: PropTypes.array.isRequired,
   }).isRequired,
-};
-
-TeamUserInfoAndRemovePop.defaultProps = {
-  api: () => {},
 };
 
 export default TeamUserInfoAndRemovePop;
