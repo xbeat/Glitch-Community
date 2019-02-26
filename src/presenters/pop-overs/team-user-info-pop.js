@@ -7,6 +7,7 @@ import { TrackClick } from '../analytics';
 import { NestedPopover } from './popover-nested';
 import { UserLink } from '../includes/link';
 import { Thanks } from '../includes/thanks';
+import TooltipContainer from "../../components/tooltip-container";
 
 import TeamUserRemovePop from './team-user-remove-pop';
 
@@ -127,12 +128,12 @@ const TeamUserInfo = ({
           )}
           {props.userIsTeamAdmin && (
             <div className="status-badge">
-              <span
-                className="status admin"
-                data-tooltip="Can edit team info and billing"
-              >
-                Team Admin
-              </span>
+              <TooltipContainer
+                id={"admin-badge-tooltip-" + props.user.login}
+                type="information"
+                target={<span className="status admin">Team Admin</span>}
+                tooltip="Can edit team info and billing"
+              />
             </div>
           )}
         </div>

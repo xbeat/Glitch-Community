@@ -12,7 +12,7 @@ function TooltipContainer({ id, type, tooltip, target, align, persistent }) {
   const [tooltipIsActive, setTooltipIsActive] = useState(false);
 
   const tooltipContainerClassName = cx({
-    'tooltip-container': true
+    "tooltip-container": true
   });
 
   const tooltipClassName = cx({
@@ -20,6 +20,7 @@ function TooltipContainer({ id, type, tooltip, target, align, persistent }) {
     top: align.includes("top"),
     left: align.includes("left"),
     right: align.includes("right"),
+    'new-stuff': id === 'new-stuff-tooltip',
     persistent
   });
 
@@ -51,9 +52,8 @@ function TooltipContainer({ id, type, tooltip, target, align, persistent }) {
     });
   }
 
-  const shouldShowTooltip =
-    tooltip && (type === "information" || tooltipIsActive || persistent);
-  
+  const shouldShowTooltip = tooltip && (tooltipIsActive || persistent);
+
   return (
     <div className={tooltipContainerClassName}>
       {extendedTarget}
@@ -63,7 +63,7 @@ function TooltipContainer({ id, type, tooltip, target, align, persistent }) {
         className={tooltipClassName}
         style={{ opacity: shouldShowTooltip ? 1 : 0 }}
       >
-        {shouldShowTooltip ? tooltip : null}
+        {type === 'information' || shouldShowTooltip ? tooltip : null}
       </div>
     </div>
   );

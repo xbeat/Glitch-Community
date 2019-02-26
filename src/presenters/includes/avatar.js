@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import TooltipContainer from '../../components/tooltip-container';
+
 import {
   DEFAULT_TEAM_AVATAR,
   getAvatarUrl as getTeamAvatarUrl,
@@ -36,9 +38,13 @@ export const Avatar = ({
 
   if (!hideTooltip) {
     return (
-      <div data-tooltip={name} data-tooltip-left="true">
-        {contents}
-      </div>
+      <TooltipContainer
+        tooltip={name}
+        target={contents}
+        type="action"
+        id={"avatar-tooltip-" + name}
+        align={["left"]}
+      />
     );
   }
   return contents;
