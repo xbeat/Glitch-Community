@@ -18,10 +18,7 @@ import LocalStorage from '../includes/local-storage';
 import PopoverWithButton from '../pop-overs/popover-with-button';
 import { captureException } from '../../utils/sentry';
 import { CurrentUserConsumer } from '../current-user';
-import {
-  NestedPopover,
-  NestedPopoverTitle,
-} from '../pop-overs/popover-nested';
+import { NestedPopover, NestedPopoverTitle } from '../pop-overs/popover-nested';
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -44,7 +41,7 @@ class SignIn extends React.Component {
     this.setState({ done: true });
     try {
       await this.props.api.post('/email/sendLoginEmail', {
-        emailAddress: this.state.email
+        emailAddress: this.state.email,
       });
       this.setState({ error: false });
     } catch (error) {
@@ -56,49 +53,30 @@ class SignIn extends React.Component {
   render() {
     const isEnabled = this.state.email.length > 0;
     return (
-      <NestedPopover
-        alternateContent={() => <SignInWithConsumer {...this.props} />}
-        startAlternateVisible={false}
-      >
-        {showCodeLogin => (
-          <dialog className='pop-over sign-in-pop'>
+      <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props} />} startAlternateVisible={false}>
+        {(showCodeLogin) => (
+          <dialog className="pop-over sign-in-pop">
             <NestedPopoverTitle>
-              Email Sign In <span className='emoji email' />
+              Email Sign In <span className="emoji email" />
             </NestedPopoverTitle>
-            <section className='pop-over-actions first-section'>
+            <section className="pop-over-actions first-section">
               {!this.state.done && (
                 <form onSubmit={this.onSubmit} style={{ marginBottom: 0 }}>
-                  <input
-                    value={this.state.email}
-                    onChange={this.onChange}
-                    className='pop-over-input'
-                    type='email'
-                    placeholder='new@user.com'
-                  />
-                  <button
-                    style={{ marginTop: 10 }}
-                    className='button-small button-link'
-                    disabled={!isEnabled}
-                  >
+                  <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com" />
+                  <button style={{ marginTop: 10 }} className="button-small button-link" disabled={!isEnabled}>
                     Send Link
                   </button>
                 </form>
               )}
               {this.state.done && !this.state.error && (
                 <>
-                  <div className='notification notifyPersistent notifySuccess'>
-                    Almost Done
-                  </div>
-                  <div>
-                    Finish signing in from the email sent to {this.state.email}.
-                  </div>
+                  <div className="notification notifyPersistent notifySuccess">Almost Done</div>
+                  <div>Finish signing in from the email sent to {this.state.email}.</div>
                 </>
               )}
               {this.state.done && this.state.error && (
                 <>
-                  <div className='notification notifyPersistent notifyError'>
-                    Error
-                  </div>
+                  <div className="notification notifyPersistent notifyError">Error</div>
                   <div>Something went wrong, email not sent.</div>
                 </>
               )}
@@ -137,17 +115,13 @@ class SignInCodeHandler extends React.Component {
     e.preventDefault();
     this.setState({ done: true });
     try {
-      const { data } = await this.props.api.post(
-        '/auth/email/' + this.state.code
-      );
+      const { data } = await this.props.api.post('/auth/email/' + this.state.code);
       this.props.setUser(data);
 
       const persistentToken = data.user.persistentToken;
       const login = data.user.login;
       if (persistentToken && login) {
-        window.location.href = `${API_URL}/oauth/dialog/authorize${
-          this.props.queryParams
-        }&authorization=${persistentToken}`;
+        window.location.href = `${API_URL}/oauth/dialog/authorize${this.props.queryParams}&authorization=${persistentToken}`;
       }
       this.setState({ error: false });
     } catch (error) {
@@ -159,43 +133,27 @@ class SignInCodeHandler extends React.Component {
   render() {
     const isEnabled = this.state.code.length > 0;
     return (
-      <dialog className='pop-over sign-in-pop middle'>
+      <dialog className="pop-over sign-in-pop middle">
         <NestedPopoverTitle>Use a sign in code</NestedPopoverTitle>
-        <section className='pop-over-actions first-section'>
+        <section className="pop-over-actions first-section">
           {!this.state.done && (
             <form onSubmit={this.onSubmit} style={{ marginBottom: 0 }}>
               Paste your temporary sign in code below
-              <input
-                value={this.state.code}
-                onChange={this.onChange}
-                className='pop-over-input'
-                type='text'
-                placeholder='cute-unique-cosmos'
-              />
-              <button
-                style={{ marginTop: 10 }}
-                className='button-small button-link'
-                disabled={!isEnabled}
-              >
+              <input value={this.state.code} onChange={this.onChange} className="pop-over-input" type="text" placeholder="cute-unique-cosmos" />
+              <button style={{ marginTop: 10 }} className="button-small button-link" disabled={!isEnabled}>
                 Sign In
               </button>
             </form>
           )}
           {this.state.done && !this.state.error && (
             <>
-              <div className='notification notifyPersistent notifySuccess'>
-                Success!
-              </div>
+              <div className="notification notifyPersistent notifySuccess">Success!</div>
             </>
           )}
           {this.state.done && this.state.error && (
             <>
-              <div className='notification notifyPersistent notifyError'>
-                Error
-              </div>
-              <div>
-                Code not found or already used. Try signing in with email.
-              </div>
+              <div className="notification notifyPersistent notifyError">Error</div>
+              <div>Code not found or already used. Try signing in with email.</div>
             </>
           )}
         </section>
@@ -204,7 +162,7 @@ class SignInCodeHandler extends React.Component {
   }
 }
 
-const redirectToOauthDialog = queryParams => {
+const redirectToOauthDialog = (queryParams) => {
   // TODO: Add handling for when localStorage is not available
   const cachedUser = JSON.parse(window.localStorage.cachedUser);
   const persistentToken = cachedUser.persistentToken;
@@ -214,40 +172,33 @@ const redirectToOauthDialog = queryParams => {
   }
 };
 
-const SignInWithConsumer = props => (
-  <CurrentUserConsumer>
-    {(currentUser, fetched, { login }) => (
-      <SignInCodeHandler setUser={login} {...props} />
-    )}
-  </CurrentUserConsumer>
+const SignInWithConsumer = (props) => (
+  <CurrentUserConsumer>{(currentUser, fetched, { login }) => <SignInCodeHandler setUser={login} {...props} />}</CurrentUserConsumer>
 );
 
 const EmailSignInButton = ({ onClick }) => (
   <button
-    className='button button-small button-link has-emoji'
+    className="button button-small button-link has-emoji"
     onClick={() => {
       onClick();
     }}
   >
-    Sign in with Email <span className='emoji email' />
+    Sign in with Email <span className="emoji email" />
   </button>
 );
 EmailSignInButton.propTypes = {
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 const SignInCodeSection = ({ onClick }) => (
-  <section className='pop-over-actions last-section pop-over-info'>
-    <button
-      className='button-small button-tertiary button-on-secondary-background'
-      onClick={onClick}
-    >
+  <section className="pop-over-actions last-section pop-over-info">
+    <button className="button-small button-tertiary button-on-secondary-background" onClick={onClick}>
       <span>Use a sign in code</span>
     </button>
   </section>
 );
 SignInCodeSection.propTypes = {
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 class SignInPopWithoutRouter extends React.Component {
@@ -262,14 +213,14 @@ class SignInPopWithoutRouter extends React.Component {
     const queryParamsStart = window.location.href.indexOf('?');
     const queryParams = window.location.href.substring(queryParamsStart);
     this.setState({
-      queryParams
+      queryParams,
     });
     redirectToOauthDialog(queryParams);
   }
 
   render() {
     return (
-      <LocalStorage name='destinationAfterAuth'>
+      <LocalStorage name="destinationAfterAuth">
         {(destination, setDestination) => {
           const onClick = () =>
             setDestination({
@@ -279,36 +230,28 @@ class SignInPopWithoutRouter extends React.Component {
               to: {
                 pathname: location.pathname,
                 search: location.search,
-                hash: hash
-              }
+                hash: hash,
+              },
             });
           const { header, prompt, api, location, hash } = this.props;
           return (
-            <NestedPopover
-              alternateContent={() => <SignIn {...this.props} />}
-              startAlternateVisible={false}
-            >
-              {showEmailLogin => (
+            <NestedPopover alternateContent={() => <SignIn {...this.props} />} startAlternateVisible={false}>
+              {(showEmailLogin) => (
                 <NestedPopover
-                  alternateContent={() => (
-                    <SignInWithConsumer
-                      {...this.props}
-                      queryParams={this.state.queryParams}
-                    />
-                  )}
+                  alternateContent={() => <SignInWithConsumer {...this.props} queryParams={this.state.queryParams} />}
                   startAlternateVisible={false}
                 >
-                  {showCodeLogin => (
+                  {(showCodeLogin) => (
                     <div
-                      className='pop-over sign-in-pop middle'
+                      className="pop-over sign-in-pop middle"
                       style={{
                         position: 'relative',
                         margin: '0 auto',
-                        width: '25%'
+                        width: '25%',
                       }}
                     >
                       {header}
-                      <section className='pop-over-actions first-section'>
+                      <section className="pop-over-actions first-section">
                         {prompt}
                         <EmailSignInButton
                           onClick={() => {
@@ -340,7 +283,7 @@ SignInPop.propTypes = {
   api: PropTypes.func.isRequired,
   header: PropTypes.node,
   prompt: PropTypes.node,
-  hash: PropTypes.string
+  hash: PropTypes.string,
 };
 
 export default function SignInPopContainer(props) {
