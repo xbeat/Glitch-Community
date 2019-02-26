@@ -52,13 +52,10 @@ module.exports = {
     }],
     // React hooks config
     "react-hooks/rules-of-hooks": "error",
-    "react/jsx-one-expression-per-line": [ERROR, {"allow": "literal"}],
+    "react/jsx-one-expression-per-line": [OFF],
     "react/jsx-filename-extension": [ERROR, { "extensions": [".js"] }]
   },
   settings: {
-    react: {
-      version: "16.8.1" // Should match package.json
-    },
     "import/ignore": ['sentry'],
   },
 };
