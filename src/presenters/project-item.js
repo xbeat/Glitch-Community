@@ -19,9 +19,7 @@ const ProjectItem = ({ api, project, ...props }) => (
     <ProjectOptionsPop {...{ project, api }} {...props} />
     <ProjectLink project={project} className="button-area">
       <div
-        className={['project', project.private ? 'private-project' : ''].join(
-          ' ',
-        )}
+        className={['project', project.private ? 'private-project' : ''].join(' ')}
         data-track="project"
         data-track-label={project.domain}
       >
@@ -49,7 +47,7 @@ const ProjectItem = ({ api, project, ...props }) => (
 );
 
 ProjectItem.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   project: PropTypes.shape({
     description: PropTypes.string.isRequired,
@@ -66,7 +64,6 @@ ProjectItem.propTypes = {
 ProjectItem.defaultProps = {
   currentUser: null,
   projectOptions: {},
-  api: null,
 };
 
 export default ProjectItem;

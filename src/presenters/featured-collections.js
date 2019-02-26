@@ -67,10 +67,7 @@ CollectionWide.propTypes = {
     name: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
   }).isRequired,
-  api: PropTypes.any,
-};
-CollectionWide.defaultProps = {
-  api: null,
+  api: PropTypes.any.isRequired,
 };
 
 const loadCollection = async (api, { owner, name }) => {
@@ -116,9 +113,7 @@ export const FeaturedCollections = ({ api }) => (
 );
 
 FeaturedCollections.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
 };
-FeaturedCollections.defaultProps = {
-  api: null,
-};
+
 export default FeaturedCollections;

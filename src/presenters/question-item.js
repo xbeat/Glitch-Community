@@ -51,8 +51,7 @@ const QuestionItem = ({
             alt=""
           />
           <div className="button">
-Help
-            {userLogin}
+            Help {userLogin}
           </div>
           <div className="description question" title={question}>
             {truncateQuestion(question)}

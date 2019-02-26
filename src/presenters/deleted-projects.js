@@ -115,12 +115,11 @@ export default class DeletedProjects extends React.Component {
   }
 }
 DeletedProjects.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   deletedProjects: PropTypes.array,
   setDeletedProjects: PropTypes.func.isRequired,
 };
 
 DeletedProjects.defaultProps = {
   deletedProjects: [],
-  api: null,
 };
