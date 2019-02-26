@@ -39,8 +39,7 @@ const NameAndLogin = ({
     if (!name) {
       return (
         <h1 className="login">
-          @
-          {login}
+          @{login}
         </h1>
       );
     }
@@ -50,8 +49,7 @@ const NameAndLogin = ({
           {name}
         </h1>
         <h2 className="login">
-          @
-          {login}
+          @{login}
         </h2>
       </>
     );

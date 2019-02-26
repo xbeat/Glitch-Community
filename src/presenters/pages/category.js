@@ -47,9 +47,7 @@ const CategoryPageWrap = ({
             <div className="collection-contents">
               <div className="collection-project-container-header">
                 <h3>
-Projects (
-                  {category.projects.length}
-)
+                  Projects ({category.projects.length})
                 </h3>
               </div>
 
