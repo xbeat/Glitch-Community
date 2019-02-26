@@ -220,9 +220,14 @@ class SignInPopWithoutRouter extends React.Component {
     return (
       <LocalStorage name="destinationAfterAuth">
         {(destination, setDestination) => {
-          const { header, prompt, api, location, hash } = this.props;
-          const onClick = () =>
-            setDestination({
+          const {
+            header,
+            prompt,
+            api,
+            location,
+            hash
+          } = this.props;
+          const onClick = () => setDestination({
               expires: dayjs()
                 .add(10, 'minutes')
                 .toISOString(),
@@ -234,7 +239,7 @@ class SignInPopWithoutRouter extends React.Component {
             });
           return (
             <NestedPopover alternateContent={() => <SignIn {...this.props} />} startAlternateVisible={false}>
-              {(showEmailLogin) => (
+              {showEmailLogin => (
                 <NestedPopover
                   alternateContent={() => <SignInWithConsumer {...this.props} queryParams={this.state.queryParams} />}
                   startAlternateVisible={false}

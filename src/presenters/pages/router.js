@@ -133,7 +133,7 @@ const Router = ({ api }) => (
         )}
       />
 
-      {Object.keys(rootTeams).map((name) => (
+      {Object.keys(rootTeams).map(name => (
         <Route
           key={name}
           path={`/${name}`}
@@ -144,7 +144,7 @@ const Router = ({ api }) => (
 
       <Route path="/search" exact render={({ location }) => <SearchPage key={location.key} api={api} query={parse(location.search, 'q')} />} />
 
-      {categories.map((category) => (
+      {categories.map(category => (
         <Route
           key={category.url}
           path={`/${category.url}`}
@@ -157,7 +157,7 @@ const Router = ({ api }) => (
 
       <Route path="/secret" exact render={({ location }) => <SecretPage key={location.key} />} />
 
-      {EXTERNAL_ROUTES.map((route) => (
+      {EXTERNAL_ROUTES.map(route => (
         <Route key={route} path={route} render={({ location }) => <ExternalPageReloader key={location.key} />} />
       ))}
 
