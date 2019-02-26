@@ -18,6 +18,7 @@ try {
     dsn: 'https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508',
     environment: ENVIRONMENT,
     release: `community@${BUILD_TIMESTAMP}`,
+    ignoreErrors: SentryHelpers.ignoreErrors,
     beforeSend(event, hint) {
       return SentryHelpers.beforeSend(PROJECT_DOMAIN, _env, event, hint);
     },

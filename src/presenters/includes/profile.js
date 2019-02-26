@@ -9,22 +9,17 @@ import Button from '../../components/buttons/button';
 
 export const ImageButtons = ({ name, uploadImage, clearImage }) => (
   <div className="upload-image-buttons">
-    { !!uploadImage && (
+    {!!uploadImage && (
       <TrackClick name={`Upload ${name}`}>
-
         <Button size="small" type="tertiary" onClick={uploadImage}>
-            Upload
-          {' '}
-          {name}
+          Upload {name}
         </Button>
       </TrackClick>
     )}
-    { !!clearImage && (
+    {!!clearImage && (
       <TrackClick name={`Clear ${name}`}>
         <Button size="small" type="tertiary" onClick={clearImage}>
-            Clear
-          {' '}
-          {name}
+          Clear {name}
         </Button>
       </TrackClick>
     )}
@@ -48,9 +43,7 @@ export const ProjectInfoContainer = ({ style, children, buttons }) => (
       <div className="user-avatar" style={style} />
       {buttons}
     </div>
-    <div className="profile-information">
-      {children}
-    </div>
+    <div className="profile-information">{children}</div>
   </>
 );
 ProjectInfoContainer.propTypes = {
@@ -64,11 +57,7 @@ ProjectInfoContainer.defaultProps = {
 
 // Info Container (generic)
 
-export const InfoContainer = ({ children }) => (
-  <div className="profile-info">
-    {children}
-  </div>
-);
+export const InfoContainer = ({ children }) => <div className="profile-info">{children}</div>;
 InfoContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
@@ -95,28 +84,26 @@ CoverContainer.defaultProps = {
 
 // Profile Container
 
-export const ProfileContainer = ({
-  avatarStyle,
-  avatarButtons,
-  coverStyle,
-  coverButtons,
-  children,
-  teams,
-}) => (
-  <CoverContainer style={coverStyle} buttons={coverButtons}>
-    <InfoContainer>
-      <div className="avatar-container">
-        <div className="user-avatar" style={avatarStyle} />
-        {avatarButtons}
-      </div>
-      <div className="profile-information">
-        {children}
-      </div>
-    </InfoContainer>
-    {!!teams && !!teams.length && (
-      <div className="teams-information">
-        <TeamsList teams={teams} />
-      </div>
-    )}
-  </CoverContainer>
-);
+export class ProfileContainer extends React.PureComponent {
+  render() {
+    const {
+      avatarStyle, avatarButtons, coverStyle, coverButtons, children, teams,
+    } = this.props;
+    return (
+      <CoverContainer style={coverStyle} buttons={coverButtons}>
+        <InfoContainer>
+          <div className="avatar-container">
+            <div className="user-avatar" style={avatarStyle} />
+            {avatarButtons}
+          </div>
+          <div className="profile-information">{children}</div>
+        </InfoContainer>
+        {!!teams && !!teams.length && (
+          <div className="teams-information">
+            <TeamsList teams={teams} />
+          </div>
+        )}
+      </CoverContainer>
+    );
+  }
+}

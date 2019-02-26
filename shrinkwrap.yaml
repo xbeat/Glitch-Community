@@ -52,11 +52,10 @@ dependencies:
   react-helmet: 5.2.0
   react-is: 16.8.3
   react-konami: 0.5.0
-  react-onclickoutside: 6.8.0
+  react-onclickoutside: 6.7.0
   react-pluralize: 1.5.0
   react-router-dom: 4.3.1
   react-select: 2.4.1
-  react-svg-inline: 2.1.1
   react-textarea-autosize: 7.1.0
   stats-webpack-plugin: 0.7.0
   stylus: 0.54.5
@@ -8925,13 +8924,13 @@ packages:
       react-dom: ^0.14.0 || ^15.0.0 || ^16
     resolution:
       integrity: sha512-aLKeZM9pgXpIKVwopRHMuvqKWiBajkqisDA8UzocdCF6S4fyKVfLWmZR5G1Q0ODBxxxxf2XIwiCP8G/11GJAuw==
-  /react-onclickoutside/6.8.0:
+  /react-onclickoutside/6.7.0:
     dev: false
     peerDependencies:
       react: ^15.5.x || ^16.x
       react-dom: ^15.5.x || ^16.x
     resolution:
-      integrity: sha512-5Q4Rn7QLEoh7WIe66KFvYIpWJ49GeHoygP1/EtJyZjXKgrWH19Tf0Ty3lWyQzrEEDyLOwUvvmBFSE3dcDdvagA==
+      integrity: sha512-IBivBP7xayM7SbbVlAnKgHgoWdfCVqnNBNgQRY5x9iFQm55tFdolR02hX1fCJJtTEKnbaL1stB72/TZc6+p2+Q==
   /react-pluralize/1.5.0:
     dependencies:
       react: 15.6.2
@@ -9005,15 +9004,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ywYLSjNkxKHiZOqNlso9PZByNEY+FTyh3C+7uuziK0xFXu9xzdyfHwg4S9iyiRRoPCR4k2LqaBBsWVmSBwCWYQ==
-  /react-svg-inline/2.1.1:
-    dependencies:
-      classnames: 2.2.6
-      prop-types: 15.7.2
-    dev: false
-    peerDependencies:
-      react: ^0.14.9 || ^15.3.0 || ^16.0.0
-    resolution:
-      integrity: sha512-mN7/qwq133dHMMQdtJRMtZ6tK1ynzOJMZBKR34blzv3HqQpNBsaOKXkEe1kN14hcJJhzrUbsB+uix2ZOpF4kQg==
   /react-textarea-autosize/7.1.0:
     dependencies:
       '@babel/runtime': 7.3.1
@@ -11042,11 +11032,10 @@ specifiers:
   react-helmet: ^5.2.0
   react-is: ^16.8.1
   react-konami: ^0.5.0
-  react-onclickoutside: ^6.7.1
+  react-onclickoutside: 6.7.0
   react-pluralize: ^1.5.0
   react-router-dom: ^4.3.1
   react-select: ^2.4.0
-  react-svg-inline: ^2.1.1
   react-textarea-autosize: ^7.1.0
   stats-webpack-plugin: ^0.7.0
   stylus: ^0.54.5
