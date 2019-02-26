@@ -9,27 +9,27 @@
  * copy of /pop-overs/sign-in-pop.
  */
 /* globals API_URL */
-import React from "react";
-import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import dayjs from "dayjs";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import dayjs from 'dayjs';
 
-import LocalStorage from "../includes/local-storage";
-import PopoverWithButton from "../pop-overs/popover-with-button";
-import { captureException } from "../../utils/sentry";
-import { CurrentUserConsumer } from "../current-user";
+import LocalStorage from '../includes/local-storage';
+import PopoverWithButton from '../pop-overs/popover-with-button';
+import { captureException } from '../../utils/sentry';
+import { CurrentUserConsumer } from '../current-user';
 import {
   NestedPopover,
-  NestedPopoverTitle
-} from "../pop-overs/popover-nested.jsx";
+  NestedPopoverTitle,
+} from '../pop-overs/popover-nested';
 
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      email: '',
       done: false,
-      error: false
+      error: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -43,7 +43,7 @@ class SignIn extends React.Component {
     e.preventDefault();
     this.setState({ done: true });
     try {
-      await this.props.api.post("/email/sendLoginEmail", {
+      await this.props.api.post('/email/sendLoginEmail', {
         emailAddress: this.state.email
       });
       this.setState({ error: false });
@@ -61,23 +61,23 @@ class SignIn extends React.Component {
         startAlternateVisible={false}
       >
         {showCodeLogin => (
-          <dialog className="pop-over sign-in-pop">
+          <dialog className='pop-over sign-in-pop'>
             <NestedPopoverTitle>
-              Email Sign In <span className="emoji email" />
+              Email Sign In <span className='emoji email' />
             </NestedPopoverTitle>
-            <section className="pop-over-actions first-section">
+            <section className='pop-over-actions first-section'>
               {!this.state.done && (
                 <form onSubmit={this.onSubmit} style={{ marginBottom: 0 }}>
                   <input
                     value={this.state.email}
                     onChange={this.onChange}
-                    className="pop-over-input"
-                    type="email"
-                    placeholder="new@user.com"
+                    className='pop-over-input'
+                    type='email'
+                    placeholder='new@user.com'
                   />
                   <button
                     style={{ marginTop: 10 }}
-                    className="button-small button-link"
+                    className='button-small button-link'
                     disabled={!isEnabled}
                   >
                     Send Link
@@ -86,7 +86,7 @@ class SignIn extends React.Component {
               )}
               {this.state.done && !this.state.error && (
                 <>
-                  <div className="notification notifyPersistent notifySuccess">
+                  <div className='notification notifyPersistent notifySuccess'>
                     Almost Done
                   </div>
                   <div>
@@ -96,7 +96,7 @@ class SignIn extends React.Component {
               )}
               {this.state.done && this.state.error && (
                 <>
-                  <div className="notification notifyPersistent notifyError">
+                  <div className='notification notifyPersistent notifyError'>
                     Error
                   </div>
                   <div>Something went wrong, email not sent.</div>
@@ -121,9 +121,9 @@ class SignInCodeHandler extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: "",
+      code: '',
       done: false,
-      error: false
+      error: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -138,7 +138,7 @@ class SignInCodeHandler extends React.Component {
     this.setState({ done: true });
     try {
       const { data } = await this.props.api.post(
-        "/auth/email/" + this.state.code
+        '/auth/email/' + this.state.code
       );
       this.props.setUser(data);
 
@@ -159,22 +159,22 @@ class SignInCodeHandler extends React.Component {
   render() {
     const isEnabled = this.state.code.length > 0;
     return (
-      <dialog className="pop-over sign-in-pop middle">
+      <dialog className='pop-over sign-in-pop middle'>
         <NestedPopoverTitle>Use a sign in code</NestedPopoverTitle>
-        <section className="pop-over-actions first-section">
+        <section className='pop-over-actions first-section'>
           {!this.state.done && (
             <form onSubmit={this.onSubmit} style={{ marginBottom: 0 }}>
               Paste your temporary sign in code below
               <input
                 value={this.state.code}
                 onChange={this.onChange}
-                className="pop-over-input"
-                type="text"
-                placeholder="cute-unique-cosmos"
+                className='pop-over-input'
+                type='text'
+                placeholder='cute-unique-cosmos'
               />
               <button
                 style={{ marginTop: 10 }}
-                className="button-small button-link"
+                className='button-small button-link'
                 disabled={!isEnabled}
               >
                 Sign In
@@ -183,14 +183,14 @@ class SignInCodeHandler extends React.Component {
           )}
           {this.state.done && !this.state.error && (
             <>
-              <div className="notification notifyPersistent notifySuccess">
+              <div className='notification notifyPersistent notifySuccess'>
                 Success!
               </div>
             </>
           )}
           {this.state.done && this.state.error && (
             <>
-              <div className="notification notifyPersistent notifyError">
+              <div className='notification notifyPersistent notifyError'>
                 Error
               </div>
               <div>
@@ -224,12 +224,12 @@ const SignInWithConsumer = props => (
 
 const EmailSignInButton = ({ onClick }) => (
   <button
-    className="button button-small button-link has-emoji"
+    className='button button-small button-link has-emoji'
     onClick={() => {
       onClick();
     }}
   >
-    Sign in with Email <span className="emoji email" />
+    Sign in with Email <span className='emoji email' />
   </button>
 );
 EmailSignInButton.propTypes = {
@@ -237,9 +237,9 @@ EmailSignInButton.propTypes = {
 };
 
 const SignInCodeSection = ({ onClick }) => (
-  <section className="pop-over-actions last-section pop-over-info">
+  <section className='pop-over-actions last-section pop-over-info'>
     <button
-      className="button-small button-tertiary button-on-secondary-background"
+      className='button-small button-tertiary button-on-secondary-background'
       onClick={onClick}
     >
       <span>Use a sign in code</span>
@@ -254,12 +254,12 @@ class SignInPopWithoutRouter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      queryParams: ""
+      queryParams: '',
     };
   }
 
   componentDidMount() {
-    const queryParamsStart = window.location.href.indexOf("?");
+    const queryParamsStart = window.location.href.indexOf('?');
     const queryParams = window.location.href.substring(queryParamsStart);
     this.setState({
       queryParams
@@ -269,12 +269,12 @@ class SignInPopWithoutRouter extends React.Component {
 
   render() {
     return (
-      <LocalStorage name="destinationAfterAuth">
+      <LocalStorage name='destinationAfterAuth'>
         {(destination, setDestination) => {
           const onClick = () =>
             setDestination({
               expires: dayjs()
-                .add(10, "minutes")
+                .add(10, 'minutes')
                 .toISOString(),
               to: {
                 pathname: location.pathname,
@@ -300,15 +300,15 @@ class SignInPopWithoutRouter extends React.Component {
                 >
                   {showCodeLogin => (
                     <div
-                      className="pop-over sign-in-pop middle"
+                      className='pop-over sign-in-pop middle'
                       style={{
-                        position: "relative",
-                        margin: "0 auto",
-                        width: "25%"
+                        position: 'relative',
+                        margin: '0 auto',
+                        width: '25%'
                       }}
                     >
                       {header}
-                      <section className="pop-over-actions first-section">
+                      <section className='pop-over-actions first-section'>
                         {prompt}
                         <EmailSignInButton
                           onClick={() => {
