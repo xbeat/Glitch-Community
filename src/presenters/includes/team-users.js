@@ -1,40 +1,41 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { getDisplayName } from '../../models/user';
-import { TrackClick } from '../analytics';
-import { WhitelistedDomainIcon } from './team-elements';
-import { UserAvatar } from './avatar';
-import AddTeamUserPop from '../pop-overs/add-team-user-pop';
-import PopoverWithButton from '../pop-overs/popover-with-button';
-import PopoverContainer from '../pop-overs/popover-container';
-import TeamUserInfoPop from '../pop-overs/team-user-info-pop';
-import UsersList from '../users-list';
+import { getDisplayName } from "../../models/user";
+import { TrackClick } from "../analytics";
+import { WhitelistedDomainIcon } from "./team-elements";
+import { UserAvatar } from "./avatar";
+import AddTeamUserPop from "../pop-overs/add-team-user-pop";
+import PopoverWithButton from "../pop-overs/popover-with-button";
+import PopoverContainer from "../pop-overs/popover-container";
+import TeamUserInfoPop from "../pop-overs/team-user-info-pop";
+import TooltipContainer from "../../components/tooltip-container";
+import UsersList from "../users-list";
 
 // Team Users list (in profile container)
 
 const adminStatusDisplay = (adminIds, user) => {
   if (adminIds.includes(user.id)) {
-    return ' (admin)';
+    return " (admin)";
   }
-  return '';
+  return "";
 };
 
 export const TeamUsers = props => (
   <ul className="users">
-    {props.users.map((user) => {
+    {props.users.map(user => {
       const userIsTeamAdmin = props.adminIds.includes(user.id);
 
       return (
         <li key={user.id}>
           <PopoverWithButton
             buttonClass="user button-unstyled"
-            buttonText={(
+            buttonText={
               <UserAvatar
                 user={user}
                 suffix={adminStatusDisplay(props.adminIds, user)}
               />
-            )}
+            }
             passToggleToPop
           >
             <TeamUserInfoPop
@@ -56,8 +57,8 @@ export const TeamUsers = props => (
 TeamUsers.propTypes = {
   users: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    }),
+      id: PropTypes.number.isRequired
+    })
   ).isRequired,
   // these are all used by a spread. why doesn't eslint understand?
   /* eslint-disable react/no-unused-prop-types */
@@ -68,12 +69,12 @@ TeamUsers.propTypes = {
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
   adminIds: PropTypes.array.isRequired,
   team: PropTypes.object.isRequired,
-  api: PropTypes.func,
+  api: PropTypes.func
   /* eslint-enable */
 };
 
 TeamUsers.defaultProps = {
-  api: null,
+  api: null
 };
 
 // Whitelisted domain icon
@@ -88,14 +89,21 @@ export const WhitelistedDomain = ({ domain, setDomain }) => {
           open={visible}
           className="popover-container whitelisted-domain-container"
         >
-          <summary data-tooltip={!visible ? tooltip : null}>
-            <WhitelistedDomainIcon domain={domain} />
+          <summary>
+            <TooltipContainer
+              id="whitelisted-domain-tooltip"
+              type="action"
+              tooltip={visible ? null : tooltip}
+              target={
+                <div>
+                  <WhitelistedDomainIcon domain={domain} />
+                </div>
+              }
+            />
           </summary>
           <dialog className="pop-over">
             <section className="pop-over-info">
-              <p className="info-description">
-                {tooltip}
-              </p>
+              <p className="info-description">{tooltip}</p>
             </section>
             {!!setDomain && (
               <section className="pop-over-actions danger-zone">
@@ -116,10 +124,10 @@ export const WhitelistedDomain = ({ domain, setDomain }) => {
 
 WhitelistedDomain.propTypes = {
   domain: PropTypes.string.isRequired,
-  setDomain: PropTypes.func,
+  setDomain: PropTypes.func
 };
 WhitelistedDomain.defaultProps = {
-  setDomain: null,
+  setDomain: null
 };
 
 // Add Team User
@@ -128,8 +136,8 @@ export class AddTeamUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      invitee: '',
-      newlyInvited: [],
+      invitee: "",
+      newlyInvited: []
     };
     this.removeNotifyInvited = this.removeNotifyInvited.bind(this);
   }
@@ -144,7 +152,7 @@ export class AddTeamUser extends React.Component {
 
     this.setState(prevState => ({
       invitee: getDisplayName(user),
-      newlyInvited: [...prevState.newlyInvited, user],
+      newlyInvited: [...prevState.newlyInvited, user]
     }));
     await this.props.inviteUser(user);
   }
@@ -152,20 +160,20 @@ export class AddTeamUser extends React.Component {
   async inviteEmail(togglePopover, email) {
     togglePopover();
     this.setState({
-      invitee: email,
+      invitee: email
     });
     await this.props.inviteEmail(email);
   }
 
   removeNotifyInvited() {
     this.setState({
-      invitee: '',
+      invitee: ""
     });
   }
 
   render() {
     const alreadyInvitedAndNewInvited = this.props.invitedMembers.concat(
-      this.state.newlyInvited,
+      this.state.newlyInvited
     );
     const {
       inviteEmail,
@@ -193,9 +201,7 @@ export class AddTeamUser extends React.Component {
                 className="notification notifySuccess inline-notification"
                 onAnimationEnd={this.removeNotifyInvited}
               >
-                Invited
-                {' '}
-                {this.state.invitee}
+                Invited {this.state.invitee}
               </div>
             )}
             {visible && (
@@ -227,13 +233,13 @@ export class AddTeamUser extends React.Component {
 AddTeamUser.propTypes = {
   inviteEmail: PropTypes.func,
   inviteUser: PropTypes.func,
-  setWhitelistedDomain: PropTypes.func,
+  setWhitelistedDomain: PropTypes.func
 };
 
 AddTeamUser.defaultProps = {
   setWhitelistedDomain: null,
   inviteUser: null,
-  inviteEmail: null,
+  inviteEmail: null
 };
 
 // Join Team
