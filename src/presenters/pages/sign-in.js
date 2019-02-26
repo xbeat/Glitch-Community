@@ -53,7 +53,7 @@ class SignIn extends React.Component {
     const isEnabled = this.state.email.length > 0;
     return (
       <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props} />} startAlternateVisible={false}>
-        {(showCodeLogin) => (
+        {showCodeLogin => (
           <dialog className="pop-over sign-in-pop">
             <NestedPopoverTitle>
               Email Sign In <span className="emoji email" />
@@ -170,7 +170,7 @@ const redirectToOauthDialog = (queryParams) => {
   }
 };
 
-const SignInWithConsumer = (props) => (
+const SignInWithConsumer = props => (
   <CurrentUserConsumer>{(currentUser, fetched, { login }) => <SignInCodeHandler setUser={login} {...props} />}</CurrentUserConsumer>
 );
 
@@ -225,18 +225,18 @@ class SignInPopWithoutRouter extends React.Component {
             prompt,
             api,
             location,
-            hash
+            hash,
           } = this.props;
           const onClick = () => setDestination({
-              expires: dayjs()
-                .add(10, 'minutes')
-                .toISOString(),
-              to: {
-                pathname: location.pathname,
-                search: location.search,
-                hash,
-              },
-            });
+            expires: dayjs()
+              .add(10, 'minutes')
+              .toISOString(),
+            to: {
+              pathname: location.pathname,
+              search: location.search,
+              hash,
+            },
+          });
           return (
             <NestedPopover alternateContent={() => <SignIn {...this.props} />} startAlternateVisible={false}>
               {showEmailLogin => (
@@ -244,7 +244,7 @@ class SignInPopWithoutRouter extends React.Component {
                   alternateContent={() => <SignInWithConsumer {...this.props} queryParams={this.state.queryParams} />}
                   startAlternateVisible={false}
                 >
-                  {(showCodeLogin) => (
+                  {showCodeLogin => (
                     <div
                       className="pop-over sign-in-pop middle"
                       style={{
