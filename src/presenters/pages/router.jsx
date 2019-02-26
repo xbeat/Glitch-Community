@@ -1,29 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from "react-router-dom";
 
-import categories from '../../curated/categories';
-import rootTeams from '../../curated/teams';
+import categories from "../../curated/categories";
+import rootTeams from "../../curated/teams";
 
-import { CurrentUserConsumer } from '../current-user';
+import { CurrentUserConsumer } from "../current-user";
 
-import IndexPage from './index';
+import IndexPage from "./index";
 import {
   FacebookLoginPage,
   GitHubLoginPage,
-  EmailTokenLoginPage,
-} from './login';
-import JoinTeamPage from './join-team';
-import QuestionsPage from './questions';
-import ProjectPage from './project';
-import { TeamPage, UserPage, TeamOrUserPage } from './team-or-user';
-import SearchPage from './search';
-import CategoryPage from './category';
-import CollectionPage from './collection';
-import { NotFoundPage, ProjectNotFoundPage } from './error';
-import SignInPopContainer from './sign-in';
-import SecretPage from './secret';
+  EmailTokenLoginPage
+} from "./login";
+import JoinTeamPage from "./join-team";
+import QuestionsPage from "./questions";
+import ProjectPage from "./project";
+import { TeamPage, UserPage, TeamOrUserPage } from "./team-or-user";
+import SearchPage from "./search";
+import CategoryPage from "./category";
+import CollectionPage from "./collection";
+import { NotFoundPage, ProjectNotFoundPage } from "./error";
+import SignInPopContainer from "./sign-in";
+import SecretPage from "./secret";
 
 /* global EXTERNAL_ROUTES */
 
@@ -59,12 +59,12 @@ class PageChangeHandlerBase extends React.Component {
     try {
       const { analytics } = window;
       if (analytics) {
-        analytics.page({}, { groupId: '0' });
+        analytics.page({}, { groupId: "0" });
       }
     } catch (ex) {
-      console.error('Error tracking page transition.', ex);
+      console.error("Error tracking page transition.", ex);
     }
-  }
+  };
 
   render() {
     return null;
@@ -102,8 +102,8 @@ const Router = ({ api }) => (
           <FacebookLoginPage
             key={location.key}
             api={api}
-            code={parse(location.search, 'code')}
-            hash={parse(location.search, 'hash')}
+            code={parse(location.search, "code")}
+            hash={parse(location.search, "hash")}
           />
         )}
       />
@@ -114,8 +114,8 @@ const Router = ({ api }) => (
           <GitHubLoginPage
             key={location.key}
             api={api}
-            code={parse(location.search, 'code')}
-            hash={parse(location.search, 'hash')}
+            code={parse(location.search, "code")}
+            hash={parse(location.search, "hash")}
           />
         )}
       />
@@ -126,8 +126,8 @@ const Router = ({ api }) => (
           <EmailTokenLoginPage
             key={location.key}
             api={api}
-            token={parse(location.search, 'token')}
-            hash={parse(location.search, 'hash')}
+            token={parse(location.search, "token")}
+            hash={parse(location.search, "hash")}
           />
         )}
       />
@@ -228,7 +228,7 @@ const Router = ({ api }) => (
           <SearchPage
             key={location.key}
             api={api}
-            query={parse(location.search, 'q')}
+            query={parse(location.search, "q")}
           />
         )}
       />
@@ -243,9 +243,15 @@ const Router = ({ api }) => (
           )}
         />
       ))}
-    
-      <Route path="/signin" exact render={({location}) => <SignInPopContainer key={location.key} api={api}/>}></Route>
-    
+
+      <Route
+        path="/signin"
+        exact
+        render={({ location }) => (
+          <SignInPopContainer key={location.key} api={api} />
+        )}
+      />
+
       <Route
         path="/secret"
         exact
@@ -267,11 +273,11 @@ const Router = ({ api }) => (
   </>
 );
 Router.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any
 };
 
 Router.defaultProps = {
-  api: null,
+  api: null
 };
 
 export default Router;
