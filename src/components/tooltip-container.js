@@ -8,7 +8,15 @@ const cx = classNames.bind(styles);
 export const TYPES = ["action", "information"];
 export const ALIGNMENTS = ["left", "right", "center", "top"];
 
-function TooltipContainer({ id, type, tooltip, target, align, persistent }) {
+function TooltipContainer({
+  id,
+  type,
+  tooltip,
+  target,
+  align,
+  persistent,
+  children
+}) {
   const [tooltipIsActive, setTooltipIsActive] = useState(false);
 
   const tooltipContainerClassName = cx({
@@ -20,7 +28,7 @@ function TooltipContainer({ id, type, tooltip, target, align, persistent }) {
     top: align.includes("top"),
     left: align.includes("left"),
     right: align.includes("right"),
-    'new-stuff': id === 'new-stuff-tooltip',
+    "new-stuff": id === "new-stuff-tooltip",
     persistent
   });
 
@@ -63,8 +71,9 @@ function TooltipContainer({ id, type, tooltip, target, align, persistent }) {
         className={tooltipClassName}
         style={{ opacity: shouldShowTooltip ? 1 : 0 }}
       >
-        {type === 'information' || shouldShowTooltip ? tooltip : null}
+        {type === "information" || shouldShowTooltip ? tooltip : null}
       </div>
+      {children}
     </div>
   );
 }
@@ -72,6 +81,7 @@ function TooltipContainer({ id, type, tooltip, target, align, persistent }) {
 // TODO multiple duplicate ids
 
 TooltipContainer.propTypes = {
+  children: PropTypes.node,
   /* the id of the tooltip */
   id: PropTypes.string.isRequired,
   /* the type of tooltip */

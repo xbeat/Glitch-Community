@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { orderBy } from 'lodash';
-import { getAvatarUrl as getTeamAvatarUrl } from '../../models/team';
-import { getAvatarThumbnailUrl as getUserAvatarUrl } from '../../models/user';
-import { TrackClick } from '../analytics';
-import { Link, TeamLink, UserLink } from '../includes/link';
-import PopoverContainer from './popover-container';
-import { NestedPopover } from './popover-nested';
-import CreateTeamPop from './create-team-pop';
-
+import { orderBy } from "lodash";
+import { getAvatarUrl as getTeamAvatarUrl } from "../../models/team";
+import { getAvatarThumbnailUrl as getUserAvatarUrl } from "../../models/user";
+import { TrackClick } from "../analytics";
+import { Link, TeamLink, UserLink } from "../includes/link";
+import PopoverContainer from "./popover-container";
+import { NestedPopover } from "./popover-nested";
+import CreateTeamPop from "./create-team-pop";
+import TooltipContainer from "../../components/tooltip-container";
 
 // Create Team button
 
@@ -18,16 +18,21 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
     return (
       <>
         <p className="description action-description">
-          <button onClick={showCreateTeam} className="button-unstyled link" type="button">
+          <button
+            onClick={showCreateTeam}
+            className="button-unstyled link"
+            type="button"
+          >
             Sign in
-          </button>
-          {' '}
+          </button>{" "}
           to create teams
         </p>
-        <button className="button button-small has-emoji" disabled type="button">
-          Create Team
-          {' '}
-          <span className="emoji herb" />
+        <button
+          className="button button-small has-emoji"
+          disabled
+          type="button"
+        >
+          Create Team <span className="emoji herb" />
         </button>
       </>
     );
@@ -39,9 +44,7 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
         onClick={showCreateTeam}
         className="button button-small has-emoji"
       >
-        Create Team
-        {' '}
-        <span className="emoji herb" />
+        Create Team <span className="emoji herb" />
       </button>
     </TrackClick>
   );
@@ -49,7 +52,7 @@ const CreateTeamButton = ({ showCreateTeam, userIsAnon }) => {
 
 CreateTeamButton.propTypes = {
   showCreateTeam: PropTypes.func.isRequired,
-  userIsAnon: PropTypes.bool.isRequired,
+  userIsAnon: PropTypes.bool.isRequired
 };
 
 // Team List
@@ -70,7 +73,7 @@ const TeamList = ({ teams, showCreateTeam, userIsAnon }) => {
             &nbsp;
             <img
               className="emoji avatar"
-              src={getTeamAvatarUrl({ ...team, size: 'small' })}
+              src={getTeamAvatarUrl({ ...team, size: "small" })}
               alt=""
               width="16px"
               height="16px"
@@ -92,11 +95,11 @@ TeamList.propTypes = {
       hasAvatarImage: PropTypes.bool.isRequired,
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-    }),
+      url: PropTypes.string.isRequired
+    })
   ).isRequired,
   showCreateTeam: PropTypes.func.isRequired,
-  userIsAnon: PropTypes.bool.isRequired,
+  userIsAnon: PropTypes.bool.isRequired
 };
 
 // User Options 🧕
@@ -106,9 +109,9 @@ const UserOptionsPop = ({
   showCreateTeam,
   user,
   signOut,
-  showNewStuffOverlay,
+  showNewStuffOverlay
 }) => {
-  const clickNewStuff = (event) => {
+  const clickNewStuff = event => {
     togglePopover();
     showNewStuffOverlay();
     event.stopPropagation();
@@ -119,18 +122,19 @@ const UserOptionsPop = ({
       if (
         // eslint-disable-next-line
         !window.confirm(`You won't be able to sign back in under this same anonymous account.
-Are you sure you want to sign out?`)) {
+Are you sure you want to sign out?`)
+      ) {
         return;
       }
     }
     togglePopover();
     /* global analytics */
-    analytics.track('Logout');
+    analytics.track("Logout");
     analytics.reset();
     signOut();
   };
 
-  const userName = user.name || 'Anonymous';
+  const userName = user.name || "Anonymous";
   const userAvatarStyle = { backgroundColor: user.color };
 
   return (
@@ -166,26 +170,20 @@ Are you sure you want to sign out?`)) {
           onClick={clickNewStuff}
           className="button-small has-emoji button-tertiary button-on-secondary-background"
         >
-          New Stuff
-          {' '}
-          <span className="emoji dog-face" />
+          New Stuff <span className="emoji dog-face" />
         </button>
         <Link
           to="https://support.glitch.com"
           className="button button-small has-emoji button-tertiary button-on-secondary-background"
         >
-          Support
-          {' '}
-          <span className="emoji ambulance" />
+          Support <span className="emoji ambulance" />
         </Link>
         <button
           type="button"
           onClick={clickSignout}
           className="button-small has-emoji button-tertiary button-on-secondary-background"
         >
-          Sign Out
-          {' '}
-          <span className="emoji balloon" />
+          Sign Out <span className="emoji balloon" />
         </button>
       </section>
     </dialog>
@@ -197,13 +195,13 @@ UserOptionsPop.propTypes = {
   showCreateTeam: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   signOut: PropTypes.func.isRequired,
-  showNewStuffOverlay: PropTypes.func.isRequired,
+  showNewStuffOverlay: PropTypes.func.isRequired
 };
 
 class CheckForCreateTeamHash extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { active: window.location.hash === '#create-team' };
+    this.state = { active: window.location.hash === "#create-team" };
   }
 
   componentDidMount() {
@@ -224,12 +222,8 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
     <CheckForCreateTeamHash>
       {createTeamOpen => (
         <PopoverContainer startOpen={createTeamOpen}>
-          {({ togglePopover, visible }) => (
-            <div
-              className="button user-options-pop-button"
-              data-tooltip="User options"
-              data-tooltip-right="true"
-            >
+          {({ togglePopover, visible }) => {
+            const userOptionsButton = (
               <button
                 className="user"
                 onClick={togglePopover}
@@ -246,21 +240,33 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
                 />
                 <span className="down-arrow icon" />
               </button>
-              {visible && (
-                <NestedPopover
-                  alternateContent={() => <CreateTeamPop {...props} />}
-                  startAlternateVisible={createTeamOpen}
-                >
-                  {showCreateTeam => (
-                    <UserOptionsPop
-                      {...props}
-                      {...{ togglePopover, showCreateTeam }}
-                    />
-                  )}
-                </NestedPopover>
-              )}
-            </div>
-          )}
+            );
+
+            return (
+              <TooltipContainer
+                className="button user-options-pop-button"
+                target={userOptionsButton}
+                tooltip="User options"
+                id="user-options-tooltip"
+                type="action"
+                align={["right"]}
+              >
+                {visible && (
+                  <NestedPopover
+                    alternateContent={() => <CreateTeamPop {...props} />}
+                    startAlternateVisible={createTeamOpen}
+                  >
+                    {showCreateTeam => (
+                      <UserOptionsPop
+                        {...props}
+                        {...{ togglePopover, showCreateTeam }}
+                      />
+                    )}
+                  </NestedPopover>
+                )}
+              </TooltipContainer>
+            );
+          }}
         </PopoverContainer>
       )}
     </CheckForCreateTeamHash>
@@ -273,7 +279,7 @@ UserOptionsAndCreateTeamPopContainer.propTypes = {
     color: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     login: PropTypes.string,
-    teams: PropTypes.array.isRequired,
+    teams: PropTypes.array.isRequired
   }).isRequired,
-  api: PropTypes.func.isRequired,
+  api: PropTypes.func.isRequired
 };
