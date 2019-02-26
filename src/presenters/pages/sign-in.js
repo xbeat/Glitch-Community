@@ -15,7 +15,6 @@ import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 import LocalStorage from '../includes/local-storage';
-import PopoverWithButton from '../pop-overs/popover-with-button';
 import { captureException } from '../../utils/sentry';
 import { CurrentUserConsumer } from '../current-user';
 import { NestedPopover, NestedPopoverTitle } from '../pop-overs/popover-nested';
@@ -115,11 +114,11 @@ class SignInCodeHandler extends React.Component {
     e.preventDefault();
     this.setState({ done: true });
     try {
-      const { data } = await this.props.api.post('/auth/email/' + this.state.code);
+      const { data } = await this.props.api.post(`/auth/email/${this.state.code}`);
       this.props.setUser(data);
 
-      const persistentToken = data.user.persistentToken;
-      const login = data.user.login;
+      const { persistentToken } = data.user;
+      const { login } = data.user;
       if (persistentToken && login) {
         window.location.href = `${API_URL}/oauth/dialog/authorize${this.props.queryParams}&authorization=${persistentToken}`;
       }
@@ -165,8 +164,7 @@ class SignInCodeHandler extends React.Component {
 const redirectToOauthDialog = (queryParams) => {
   // TODO: Add handling for when localStorage is not available
   const cachedUser = JSON.parse(window.localStorage.cachedUser);
-  const persistentToken = cachedUser.persistentToken;
-  const login = cachedUser.login;
+  const { persistentToken, login } = cachedUser;
   if (persistentToken && login) {
     window.location.href = `${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`;
   }
@@ -222,6 +220,7 @@ class SignInPopWithoutRouter extends React.Component {
     return (
       <LocalStorage name="destinationAfterAuth">
         {(destination, setDestination) => {
+          const { header, prompt, api, location, hash } = this.props;
           const onClick = () =>
             setDestination({
               expires: dayjs()
@@ -230,10 +229,9 @@ class SignInPopWithoutRouter extends React.Component {
               to: {
                 pathname: location.pathname,
                 search: location.search,
-                hash: hash,
+                hash,
               },
             });
-          const { header, prompt, api, location, hash } = this.props;
           return (
             <NestedPopover alternateContent={() => <SignIn {...this.props} />} startAlternateVisible={false}>
               {(showEmailLogin) => (
