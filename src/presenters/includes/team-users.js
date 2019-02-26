@@ -120,7 +120,10 @@ export const WhitelistedDomain = ({ domain, setDomain }) => {
 
 WhitelistedDomain.propTypes = {
   domain: PropTypes.string.isRequired,
-  setDomain: PropTypes.func.isRequired,
+  setDomain: PropTypes.func,
+};
+WhitelistedDomain.defaultProps = {
+  setDomain: null,
 };
 
 // Add Team User

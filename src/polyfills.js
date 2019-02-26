@@ -10,5 +10,4 @@ if (!String.prototype.trimStart) {
 if (!String.prototype.trimEnd) {
   String.prototype.trimEnd = String.prototype.trimRight;
 }
-
 /* eslint-enable no-extend-native */

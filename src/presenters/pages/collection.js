@@ -215,7 +215,7 @@ CollectionPageContents.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
   api: PropTypes.any,
   collection: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
+    avatarUrl: PropTypes.string,
     backgroundColor: PropTypes.string,
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

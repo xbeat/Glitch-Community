@@ -56,7 +56,6 @@ dependencies:
   react-pluralize: 1.5.0
   react-router-dom: 4.3.1
   react-select: 2.4.1
-  react-svg-inline: 2.1.1
   react-textarea-autosize: 7.1.0
   stats-webpack-plugin: 0.7.0
   stylus: 0.54.5
@@ -9005,15 +9004,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ywYLSjNkxKHiZOqNlso9PZByNEY+FTyh3C+7uuziK0xFXu9xzdyfHwg4S9iyiRRoPCR4k2LqaBBsWVmSBwCWYQ==
-  /react-svg-inline/2.1.1:
-    dependencies:
-      classnames: 2.2.6
-      prop-types: 15.7.2
-    dev: false
-    peerDependencies:
-      react: ^0.14.9 || ^15.3.0 || ^16.0.0
-    resolution:
-      integrity: sha512-mN7/qwq133dHMMQdtJRMtZ6tK1ynzOJMZBKR34blzv3HqQpNBsaOKXkEe1kN14hcJJhzrUbsB+uix2ZOpF4kQg==
   /react-textarea-autosize/7.1.0:
     dependencies:
       '@babel/runtime': 7.3.1
@@ -11046,7 +11036,6 @@ specifiers:
   react-pluralize: ^1.5.0
   react-router-dom: ^4.3.1
   react-select: ^2.4.0
-  react-svg-inline: ^2.1.1
   react-textarea-autosize: ^7.1.0
   stats-webpack-plugin: ^0.7.0
   stylus: ^0.54.5

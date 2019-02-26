@@ -10,18 +10,13 @@ const filterSecrets = function (jsonEvent) {
   return jsonEvent;
 };
 
+const ignoreErrors = ['Network Error', 'timeout', 'status code 401'];
+
 const beforeSend = function (projectDomain, apiEnv, event, hint) {
  if (!onProductionSite(projectDomain, apiEnv)) {
     return null;
   }
-  if (hint.originalException &&
-      hint.originalException.message &&
-    (hint.originalException.message === 'Network Error' ||
-      hint.originalException.message.indexOf('timeout') !== -1 ||
-      hint.originalException.message.indexOf('status code 401') !== -1)
-  ) {
-    return null;
-  }
+
   const json = filterSecrets(JSON.stringify(event));
   return JSON.parse(json);
 };
@@ -39,6 +34,7 @@ const beforeBreadcrumb = function (breadcrumb) {
 };
 
 module.exports = {
+  ignoreErrors,
   beforeSend,
   beforeBreadcrumb,
 };

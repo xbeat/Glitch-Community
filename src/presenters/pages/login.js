@@ -17,16 +17,15 @@ function notifyParent(message = {}) {
     return;
   }
 
-  // Specifically target our same origin;
+  // Specifically target our same origin (APP_URL) ;
   // we're only communicating between the editor and its corresponding ~community site,
   // not across other environments.
-  const sameOrigin = window.origin;
 
   // Add 'LoginMessage' to all messages of this type so that the Editor
   // can filter for them specifically.
   message.type = 'LoginMessage';
 
-  window.parent.postMessage(message, sameOrigin);
+  window.parent.postMessage(message, APP_URL);
 }
 
 class LoginPage extends React.Component {
