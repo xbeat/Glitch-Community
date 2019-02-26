@@ -21,7 +21,7 @@ const NoCollectionPlaceholder = <p className="info-description">Create collectio
 const AddProjectPopoverTitle = ({ project }) => (
   <NestedPopoverTitle>
     <img src={getAvatarUrl(project.id)} alt="" />
-    {` Add ${project.domain} to collection`}
+    Add ${project.domain} to collection
   </NestedPopoverTitle>
 );
 AddProjectPopoverTitle.propTypes = {

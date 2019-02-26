@@ -16,9 +16,7 @@ const AddTeamProject = ({ currentUserIsOnTeam, ...props }) => {
         buttonClass={`add-project has-emoji ${props.extraButtonClass}`}
         buttonText={(
           <>
-            Add Project
-            {' '}
-            <span className="emoji bento-box" role="img" aria-label="" />
+            Add Project <span className="emoji bento-box" role="img" aria-label="" />
           </>
         )}
         passToggleToPop
