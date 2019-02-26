@@ -11,20 +11,15 @@ export const ImageButtons = ({ name, uploadImage, clearImage }) => (
   <div className="upload-image-buttons">
     { !!uploadImage && (
       <TrackClick name={`Upload ${name}`}>
-
         <Button size="small" type="tertiary" onClick={uploadImage}>
-            Upload
-          {' '}
-          {name}
+          Upload {name}
         </Button>
       </TrackClick>
     )}
     { !!clearImage && (
       <TrackClick name={`Clear ${name}`}>
         <Button size="small" type="tertiary" onClick={clearImage}>
-            Clear
-          {' '}
-          {name}
+          Clear {name}
         </Button>
       </TrackClick>
     )}

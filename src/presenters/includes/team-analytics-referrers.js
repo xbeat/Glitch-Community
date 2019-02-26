@@ -25,10 +25,7 @@ const ReferrerItem = ({ count, total, description }) => {
   }
   return (
     <li>
-      {count.toLocaleString('en')}
-      {' '}
-–
-      {description}
+      {count.toLocaleString('en')} – {description}
       <progress value={progress} max="100" />
     </li>
   );

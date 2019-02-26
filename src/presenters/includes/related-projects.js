@@ -121,14 +121,13 @@ class RelatedProjects extends React.Component {
   }
 }
 RelatedProjects.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   ignoreProjectId: PropTypes.string.isRequired,
   teams: PropTypes.array,
   users: PropTypes.array,
 };
 
 RelatedProjects.defaultProps = {
-  api: [],
   teams: [],
   users: [],
 };

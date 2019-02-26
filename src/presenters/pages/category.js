@@ -89,12 +89,8 @@ CategoryPageWrap.propTypes = {
     name: PropTypes.string.isRequired,
     projects: PropTypes.array.isRequired,
   }).isRequired,
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
-};
-
-CategoryPageWrap.defaultProps = {
-  api: null,
 };
 
 async function loadCategory(api, id) {
@@ -130,12 +126,8 @@ const CategoryPage = ({ api, category, ...props }) => (
 );
 
 CategoryPage.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   category: PropTypes.object.isRequired,
-};
-
-CategoryPage.defaultProps = {
-  api: null,
 };
 
 export default CategoryPage;
