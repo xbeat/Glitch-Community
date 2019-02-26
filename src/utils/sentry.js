@@ -1,4 +1,4 @@
-/* globals BUILD_TIMESTAMP, ENVIRONMENT, PROJECT_DOMAIN */
+/* globals BUILD_TIMESTAMP, ENVIRONMENT, PROJECT_DOMAIN, _env */
 
 //
 // This utility wraps the Sentry library so that we can guarantee
@@ -11,18 +11,7 @@
 import * as Sentry from '@sentry/browser';
 
 export * from '@sentry/browser';
-
-const shouldSendError = PROJECT_DOMAIN === 'community' || PROJECT_DOMAIN === 'community-staging';
-
-const filterSecrets = (jsonEvent) => {
-  const tokens = ['facebookToken', 'githubToken', 'persistentToken'];
-  let result = jsonEvent;
-  tokens.forEach((token) => {
-    const regexp = new RegExp(`"${token}":"[^"]+"`, 'g');
-    result = result.replace(regexp, `"${token}":"****"`);
-  });
-  return result;
-};
+const SentryHelpers = require('../../shared/sentryHelpers');
 
 try {
   Sentry.init({
@@ -30,28 +19,10 @@ try {
     environment: ENVIRONMENT,
     release: `community@${BUILD_TIMESTAMP}`,
     beforeSend(event, hint) {
-      if (!shouldSendError) {
-        return null;
-      }
-
-      if (hint.originalException && hint.originalException.message === 'Network Error') {
-        // axios couldn't find the server it was supposed to make a request to - probably user network error
-        return null;
-      }
-
-      const json = filterSecrets(JSON.stringify(event));
-      return JSON.parse(json);
+      return SentryHelpers.beforeSend(PROJECT_DOMAIN, _env, event, hint);
     },
     beforeBreadcrumb(breadcrumb) {
-      if (breadcrumb.category === 'console') {
-        const extras = JSON.stringify(breadcrumb.data.extra);
-        const filteredExtras = filterSecrets(extras);
-        breadcrumb.data.extra = filteredExtras; // eslint-disable-line no-param-reassign
-      }
-      if (typeof breadcrumb.message === 'string') {
-        breadcrumb.message = filterSecrets(breadcrumb.message);
-      }
-      return breadcrumb;
+      return SentryHelpers.beforeBreadcrumb(breadcrumb);
     },
   });
 

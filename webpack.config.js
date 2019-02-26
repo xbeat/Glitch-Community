@@ -23,7 +23,7 @@ console.log(`Starting Webpack in ${mode} mode.`);
 module.exports = {
   mode,
   entry: {
-    client: `${SRC}/client.jsx`,
+    client: `${SRC}/client.js`,
     [STYLE_BUNDLE_NAME]: `${STYLES}/styles.styl`,
   },
   output: {
@@ -59,13 +59,13 @@ module.exports = {
     noEmitOnErrors: true,
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js"],
   },
   module: {
     rules: [
       {
         enforce: "pre",
-        test: /\.jsx?$/,
+        test: /\.js$/,
         include: SRC,
         loader: "eslint-loader",
         options: {
@@ -80,7 +80,7 @@ module.exports = {
       {
         oneOf: [
           {
-            test: /\.(js|jsx)$/,
+            test: /\.js$/,
             loader: "babel-loader",
             include:
               mode === "development"

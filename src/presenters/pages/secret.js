@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
-import DevToggles from '../includes/dev-toggles';
+import { useDevToggles } from '../includes/dev-toggles';
 
 class SecretEffectsOnMount extends React.Component {
   componentDidMount() {
@@ -29,13 +29,10 @@ class SecretEffectsOnMount extends React.Component {
   }
 }
 
-const SecretPageContainer = () => (
-  <DevToggles>
-    {(enabledToggles, toggleData, setEnabledToggles) => (
-      <Secret {...{ enabledToggles, toggleData, setEnabledToggles }} />
-    )}
-  </DevToggles>
-);
+const SecretPageContainer = () => {
+  const { enabledToggles, toggleData, setEnabledToggles } = useDevToggles();
+  return <Secret {...{ enabledToggles, toggleData, setEnabledToggles }} />;
+};
 
 const Secret = ({ enabledToggles, toggleData, setEnabledToggles }) => {
   const isEnabled = toggleName => enabledToggles && enabledToggles.includes(toggleName);
