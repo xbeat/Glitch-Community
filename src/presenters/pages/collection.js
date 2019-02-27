@@ -139,9 +139,7 @@ const CollectionPageContents = ({
                 <div className="collection-contents">
                   <div className="collection-project-container-header">
                     <h3>
-Projects (
-                      {collection.projects.length}
-)
+                      Projects ({collection.projects.length})
                     </h3>
 
                     {!!isAuthorized && (
@@ -215,7 +213,7 @@ CollectionPageContents.propTypes = {
   addProjectToCollection: PropTypes.func.isRequired,
   api: PropTypes.any,
   collection: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
+    avatarUrl: PropTypes.string,
     backgroundColor: PropTypes.string,
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

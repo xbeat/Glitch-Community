@@ -68,12 +68,8 @@ TeamUsers.propTypes = {
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
   adminIds: PropTypes.array.isRequired,
   team: PropTypes.object.isRequired,
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   /* eslint-enable */
-};
-
-TeamUsers.defaultProps = {
-  api: null,
 };
 
 // Whitelisted domain icon
@@ -103,11 +99,7 @@ export const WhitelistedDomain = ({ domain, setDomain }) => {
                   className="button button-small button-tertiary button-on-secondary-background has-emoji"
                   onClick={() => setDomain(null)}
                 >
-                  Remove
-                  {' '}
-                  {domain}
-                  {' '}
-                  <span className="emoji bomb" />
+                  Remove {domain} <span className="emoji bomb" />
                 </button>
               </section>
             )}

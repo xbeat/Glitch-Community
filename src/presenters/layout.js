@@ -24,13 +24,12 @@ const Layout = ({ children, api, searchQuery }) => (
   </div>
 );
 Layout.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
   searchQuery: PropTypes.string,
 };
 Layout.defaultProps = {
   searchQuery: '',
-  api: null,
 };
 
 export default Layout;

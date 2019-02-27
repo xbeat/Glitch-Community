@@ -67,9 +67,6 @@ const RecentProjects = ({ api }) => (
   </CurrentUserConsumer>
 );
 RecentProjects.propTypes = {
-  api: PropTypes.any,
-};
-RecentProjects.defaultProps = {
-  api: null,
+  api: PropTypes.any.isRequired,
 };
 export default RecentProjects;

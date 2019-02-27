@@ -10,12 +10,9 @@ const DeleteTeam = ({ ...props }) => (
       buttonClass="button-small button-tertiary has-emoji danger-zone"
       buttonText={(
         <>
-            Delete
-          {' '}
-          {props.teamName}
-&nbsp;
+          Delete {props.teamName}
+          &nbsp;
           <span className="emoji bomb" role="img" aria-label="" />
-          {' '}
         </>
       )}
       passToggleToPop

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { CurrentUserConsumer } from '../current-user';
+import { useCurrentUser } from '../current-user';
 import ProjectResultItem from '../includes/project-result-item';
 
 class AddTeamProjectPop extends React.Component {
@@ -185,7 +185,7 @@ class AddTeamProjectPop extends React.Component {
           {this.state.filteredProjects.length === 0
             && this.filterInputIsBlank && (
             <p className="action-description no-projects-description">
-                Create or Join projects to add them to the team
+              Create or Join projects to add them to the team
             </p>
           )}
         </section>
@@ -205,12 +205,9 @@ AddTeamProjectPop.defaultProps = {
   api: null,
 };
 
-const AddTeamProjectPopContainer = props => (
-  <CurrentUserConsumer>
-    {currentUser => (
-      <AddTeamProjectPop myProjects={currentUser.projects} {...props} />
-    )}
-  </CurrentUserConsumer>
-);
+const AddTeamProjectPopContainer = (props) => {
+  const { currentUser } = useCurrentUser();
+  return <AddTeamProjectPop myProjects={currentUser.projects} {...props} />;
+};
 
 export default AddTeamProjectPopContainer;

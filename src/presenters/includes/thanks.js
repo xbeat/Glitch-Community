@@ -16,7 +16,7 @@ ThanksText.propTypes = {
 const Thanks = ({ count }) => (count > 0 ? (
   <p className="thanks">
     <ThanksText count={count} />
-      &nbsp;
+    &nbsp;
     <span className="emoji sparkling_heart" />
   </p>
 ) : null);

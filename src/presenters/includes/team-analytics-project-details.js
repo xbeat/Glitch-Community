@@ -186,11 +186,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
 TeamAnalyticsProjectDetails.propTypes = {
   currentProjectDomain: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  api: PropTypes.any,
-};
-
-TeamAnalyticsProjectDetails.defaultProps = {
-  api: null,
+  api: PropTypes.any.isRequired,
 };
 
 export default TeamAnalyticsProjectDetails;

@@ -64,7 +64,6 @@
     "react-pluralize": "^1.5.0",
     "react-router-dom": "^4.3.1",
     "react-select": "^2.4.0",
-    "react-svg-inline": "^2.1.1",
     "react-textarea-autosize": "^7.1.0",
     "stats-webpack-plugin": "^0.7.0",
     "stylus": "^0.54.5",

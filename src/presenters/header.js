@@ -103,12 +103,11 @@ const Header = ({
 
 Header.propTypes = {
   maybeUser: PropTypes.object,
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {
   maybeUser: null,
-  api: null,
 };
 
 const HeaderContainer = ({ ...props }) => (

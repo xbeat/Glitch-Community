@@ -35,8 +35,7 @@ export const MoreIdeasCollections = ({ api }) => (
   <DataLoader get={() => api.get(`teamid/byUrl/${moreIdeasTeam}`)}>
     {({ data }) => (
       <DataLoader
-        get={() => (data !== 'NOT FOUND' ? api.get(`collections?teamId=${data}`) : null)
-        }
+        get={() => (data !== 'NOT FOUND' ? api.get(`collections?teamId=${data}`) : null)}
       >
         {({ loadedData }) => (
           <MoreIdeasCollectionsDisplay
