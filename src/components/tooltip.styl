@@ -9,14 +9,12 @@ secondary = #9B9B9B
     
 .tooltip-container
   position: relative
-  top: 0
   box-sizing: border-box
   display: inline-block
 
 .tooltip
   border: none
   box-sizing: inherit
-  box-sizing: border-box
   display: inline-block
   font-style: normal
   font-weight: normal
@@ -45,11 +43,11 @@ secondary = #9B9B9B
   position: absolute
   // top: -100%
   // top: -50%;
-  transform: translateX(0) translateY(-100%);
+  // transform: translateX(0) translateY(-100%);
   margin-top: -6px;
   left: 50%
   content: ''
-  transform: translateX(-50%)
+  transform: translateX(-50%) translateY(-100%)
   border: 5px solid transparent
   border-bottom-color: tooltip-background
   // margin-top: 2px
@@ -59,29 +57,33 @@ secondary = #9B9B9B
 .tooltip.left::before
   left: 0
   right: initial
-  transform: translateX(0) translateY(-100%)
+  transform: translateX(0)
   
 .tooltip.left::before
   left: 10px
+  transform: translateX(0) translateY(-100%)
   
 .tooltip.right,
 .tooltip.right::before
   left: initial
   right: 0
-  transform: translateX(0) translateY(-100%)
+  transform: translateX(0)
 
 .tooltip.right::before
   right: 10px
+  transform: translateX(0) translateY(-100%)
 
 .tooltip.top
-  top: -100%
+  // top: -100%
   margin-top: -5px
+  transform: translateX(50%) translateY(-200%)
   
 .tooltip.top::before
   border-top-color: tooltip-background
   border-bottom-color: transparent
-  margin-top: 0
-  top: 100%
+  margin-top: -4px
+  transform: translateX(-50%) translateY(100%)
+  // top: 100%
 
 .tooltip.persistent
   font-weight: bold
@@ -90,7 +92,7 @@ secondary = #9B9B9B
 .tooltip.new-stuff
   background-color: notification
   right: 32px
-  top: -10%
+  // top: -10%
 
 .tooltip.new-stuff::before
   border-top-color: notification
