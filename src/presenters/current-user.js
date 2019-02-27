@@ -115,7 +115,6 @@ class CurrentUserManager extends React.Component {
 
   componentDidUpdate(prev) {
     const { cachedUser, sharedUser } = this.props;
-    console.log(sharedUser, cachedUser);
 
     if (!usersMatch(cachedUser, prev.cachedUser)) {
       identifyUser(cachedUser);
@@ -131,6 +130,11 @@ class CurrentUserManager extends React.Component {
     // hooks for easier debugging
     window.currentUser = cachedUser;
     window.api = this.api();
+  }
+
+  async getAnonUser() {
+    const { data } = await this.api().post('users/anon');
+    return data;
   }
 
   async getSharedUser() {
@@ -187,12 +191,12 @@ class CurrentUserManager extends React.Component {
     if (this.state.working) return;
     this.setState({ working: true });
     const { sharedUser, cachedUser } = this.props;
-    
+
     // Check if we have to clear the cache
     if (!usersMatch(sharedUser, cachedUser)) {
       this.props.setCachedUser(undefined);
     }
-    
+
     if (sharedUser) {
       const newCachedUser = await this.getCachedUser();
       if (newCachedUser === 'error') {
@@ -216,10 +220,10 @@ class CurrentUserManager extends React.Component {
         this.setState({ fetched: true });
       }
     } else {
-      const { data } = await this.api().post('users/anon');
-      this.props.setSharedUser(data);
+      const newAnonUser = await this.getAnonUser();
+      this.props.setSharedUser(newAnonUser);
     }
-    
+
     this.setState({ working: false });
   }
 
@@ -238,7 +242,7 @@ class CurrentUserManager extends React.Component {
       reload: () => this.load(),
       login: user => setSharedUser(user),
       update: changes => setCachedUser({ ...cachedUser, ...changes }),
-      clear: () => setSharedUser(undefined),
+      clear: async () => setSharedUser(await this.getAnonUser()),
     });
   }
 }
