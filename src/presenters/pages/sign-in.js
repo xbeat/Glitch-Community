@@ -113,7 +113,7 @@ class SignInCodeHandler extends React.Component {
     try {
       const { data } = await this.props.api.post(`/auth/email/${this.state.code}`);
       this.props.setUser(data);
-
+      console.log(data.user);
       const { persistentToken } = data.user;
       const { login } = data.user;
       if (persistentToken && login) {
