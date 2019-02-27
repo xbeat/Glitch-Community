@@ -24,7 +24,7 @@ storiesOf("TooltipContainer", module)
       <TooltipContainer
         type="action"
         id="a-unique-id"
-        target={<button>Hover or focus me</button>}
+        target={<Button>Hover or focus me</Button>}
         tooltip="I'm an action tooltip"
       />
     </div>

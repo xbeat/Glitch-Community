@@ -40,23 +40,15 @@ function TooltipContainer({
 
     role = "tooltip";
     extendedTarget = React.cloneElement(target, {
-      "aria-labelledby": id,
-      onMouseEnter: () => setTooltipIsActive(true),
-      onMouseLeave: () => setTooltipIsActive(false),
-      onFocus: () => setTooltipIsActive(true),
-      onBlur: () => setTooltipIsActive(false)
+      "aria-labelledby": id
     });
   } else if (type === "information") {
-    // information tooltips are visible on hover and foctus, they provide supplementary info
+    // information tooltips are visible on hover and focus, they provide supplementary info
     // they should be empty when not "visible", and populated when they are
 
     role = "status";
     extendedTarget = React.cloneElement(target, {
-      "aria-describedby": id,
-      onMouseEnter: () => setTooltipIsActive(true),
-      onMouseLeave: () => setTooltipIsActive(false),
-      onFocus: () => setTooltipIsActive(true),
-      onBlur: () => setTooltipIsActive(false)
+      "aria-describedby": id
     });
   }
 
@@ -64,7 +56,14 @@ function TooltipContainer({
 
   return (
     <div className={tooltipContainerClassName}>
-      {extendedTarget}
+      <div
+        onMouseEnter={() => setTooltipIsActive(true)}
+        onMouseLeave={() => setTooltipIsActive(false)}
+        onFocus={() => setTooltipIsActive(true)}
+        onBlur={() => setTooltipIsActive(false)}
+      >
+        {extendedTarget}
+      </div>
       <div
         role={role}
         id={id}
