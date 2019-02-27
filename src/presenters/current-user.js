@@ -254,8 +254,8 @@ CurrentUserManager.defaultProps = {
 };
 
 export const CurrentUserProvider = ({ children }) => {
-  const [cachedUser, setCachedUser] = useLocalStorage('community-cachedUser', null);
   const [sharedUser, setSharedUser] = useLocalStorage('cachedUser', null);
+  const [cachedUser, setCachedUser] = useLocalStorage('community-cachedUser', null);
   return (
     <CurrentUserManager sharedUser={sharedUser} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
       {({ api, ...props }) => (
