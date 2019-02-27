@@ -186,7 +186,7 @@ class CurrentUserManager extends React.Component {
     if (this.state.working) return;
     this.setState({ working: true });
     const { sharedUser, cachedUser } = this.props;
-      console.log(sharedUser, cachedUser);
+    console.log(sharedUser, cachedUser);
     if (!usersMatch(sharedUser, cachedUser)) {
       this.props.setCachedUser(undefined);
     }
