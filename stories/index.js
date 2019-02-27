@@ -32,7 +32,10 @@ storiesOf("TooltipContainer", module)
       type="information"
       id="a-unique-id"
       target={
-        <img width="32" height="32" src="https://favicon-fetcher.glitch.me/img/glitch.com" />
+        <img
+          style={{margin: '100px', width: '32px', height: '32px'}}
+          src="https://favicon-fetcher.glitch.me/img/glitch.com"
+        />
       }
       tooltip="I'm an information tooltip"
     />
@@ -42,7 +45,10 @@ storiesOf("TooltipContainer", module)
       type="information"
       id="a-unique-id"
       target={
-        <img width="32" height="32" src="https://favicon-fetcher.glitch.me/img/glitch.com" />
+        <img
+          style={{margin: '100px', width: '32px', height: '32px'}}
+          src="https://favicon-fetcher.glitch.me/img/glitch.com"
+        />
       }
       tooltip="I'm a persistent tooltip"
       persistent
@@ -52,7 +58,7 @@ storiesOf("TooltipContainer", module)
     <TooltipContainer
       type="action"
       id="a-unique-id"
-      target={<Button>Hover or focus me</Button>}
+      target={<Button style={{margin: '100px'}}>Hover or focus me</Button>}
       tooltip="I'm a tooltip"
       align={["top", "left"]}
     />
@@ -61,7 +67,7 @@ storiesOf("TooltipContainer", module)
     <TooltipContainer
       type="action"
       id="a-unique-id"
-      target={<Button>Hover or focus me</Button>}
+      target={<Button >Hover or focus me</Button>}
       tooltip="I'm a tooltip"
     >
       <p>I'm the <code>props.children</code></p>
