@@ -1,17 +1,17 @@
 // add-collection-project-pop -> Add a project to a collection via the collection page
-import React from "react";
-import PropTypes from "prop-types";
-import { debounce } from "lodash";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { debounce } from 'lodash';
 
-import { TrackClick } from "../analytics";
-import { Loader } from "../includes/loader";
-import ProjectResultItem from "../includes/project-result-item";
-import ProjectsLoader from "../projects-loader";
+import { TrackClick } from '../analytics';
+import { Loader } from '../includes/loader';
+import ProjectResultItem from '../includes/project-result-item';
+import ProjectsLoader from '../projects-loader';
 
 import {
   NotificationConsumer,
-  AddProjectToCollectionMsg
-} from "../notifications";
+  AddProjectToCollectionMsg,
+} from '../notifications';
 
 const ProjectResultsUL = ({ projects, collection, onClick }) => (
   <ul className="results">
@@ -21,7 +21,7 @@ const ProjectResultsUL = ({ projects, collection, onClick }) => (
           <li>
             <TrackClick
               name="Project Added to Collection"
-              properties={{ origin: "Add Project collection" }}
+              properties={{ origin: 'Add Project collection' }}
             >
               <ProjectResultItem
                 domain={project.domain}
@@ -43,7 +43,7 @@ const ProjectResultsUL = ({ projects, collection, onClick }) => (
 ProjectResultsUL.propTypes = {
   projects: PropTypes.array.isRequired,
   collection: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 const ProjectSearchResults = ({
@@ -51,12 +51,12 @@ const ProjectSearchResults = ({
   collection,
   onClick,
   projectName,
-  excludedProjectsCount
+  excludedProjectsCount,
 }) => {
   if (projects.length > 0) {
     const collectionProjectIds = collection.projects.map(project => project.id);
     projects = projects.filter(
-      project => !collectionProjectIds.includes(project.id)
+      project => !collectionProjectIds.includes(project.id),
     );
 
     return <ProjectResultsUL {...{ projects, collection, onClick }} />;
@@ -75,7 +75,7 @@ const ProjectSearchResults = ({
 
   return (
     <p className="results-empty">
-      nothing found{" "}
+      nothing found{' '}
       <span role="img" aria-label="">
         💫
       </span>
@@ -83,7 +83,7 @@ const ProjectSearchResults = ({
       {excludedProjectsCount > 0 && (
         <span>
           {`Excluded ${excludedProjectsCount} search ${
-            excludedProjectsCount > 1 ? "results" : "result"
+            excludedProjectsCount > 1 ? 'results' : 'result'
           } already found in collection`}
         </span>
       )}
@@ -94,12 +94,12 @@ const ProjectSearchResults = ({
 ProjectSearchResults.propTypes = {
   collection: PropTypes.object.isRequired,
   projectName: PropTypes.string,
-  excludedProjectsCount: PropTypes.number
+  excludedProjectsCount: PropTypes.number,
 };
 
 ProjectSearchResults.defaultProps = {
-  projectName: "",
-  excludedProjectsCount: 0
+  projectName: '',
+  excludedProjectsCount: 0,
 };
 
 function isUrl(s) {
@@ -116,11 +116,11 @@ class AddCollectionProjectPop extends React.Component {
     super(props);
 
     this.state = {
-      query: "", // The actual search text
+      query: '', // The actual search text
       maybeRequest: null, // The active request promise
       maybeResults: null, // Null means still waiting vs empty,
-      projectName: "", // the project name if the search result is a Url
-      excludedProjectsCount: 0 // number of projects omitted from search
+      projectName: '', // the project name if the search result is a Url
+      excludedProjectsCount: 0, // number of projects omitted from search
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -135,12 +135,10 @@ class AddCollectionProjectPop extends React.Component {
     // add project to page if successful & show notification
     this.props
       .addProjectToCollection(project, collection)
-      .then(() =>
-        createNotification(
-          <AddProjectToCollectionMsg projectDomain={project.domain} />,
-          "notifySuccess"
-        )
-      );
+      .then(() => createNotification(
+        <AddProjectToCollectionMsg projectDomain={project.domain} />,
+        'notifySuccess',
+      ));
   }
 
   handleChange(evt) {
@@ -157,8 +155,8 @@ class AddCollectionProjectPop extends React.Component {
     this.setState({
       maybeRequest: null,
       maybeResults: null,
-      projectName: "",
-      excludedProjectsCount: 0
+      projectName: '',
+      excludedProjectsCount: 0,
     });
   }
 
@@ -173,7 +171,7 @@ class AddCollectionProjectPop extends React.Component {
     let searchByUrl = false;
     let { query } = this.state;
     const collectionProjectIds = this.props.collection.projects.map(
-      project => project.id
+      project => project.id,
     );
 
     if (isUrl(query)) {
@@ -181,12 +179,12 @@ class AddCollectionProjectPop extends React.Component {
       // check if the query is a URL or a name of a project
       // Project URL pattern: https://add-to-alexa.glitch.me/, https://glitch.com/~add-to-alexa
       const queryUrl = new URL(query);
-      if (queryUrl.href.includes("me") && !queryUrl.href.includes("~")) {
+      if (queryUrl.href.includes('me') && !queryUrl.href.includes('~')) {
         // https://add-to-alexa.glitch.me/
-        query = queryUrl.hostname.substring(0, queryUrl.hostname.indexOf("."));
+        query = queryUrl.hostname.substring(0, queryUrl.hostname.indexOf('.'));
       } else {
         // https://glitch.com/~add-to-alexa
-        query = queryUrl.pathname.substring(queryUrl.pathname.indexOf("~") + 1);
+        query = queryUrl.pathname.substring(queryUrl.pathname.indexOf('~') + 1);
       }
     }
 
@@ -204,7 +202,7 @@ class AddCollectionProjectPop extends React.Component {
       data = [data];
     }
 
-    const results = data;
+    const results = data || [];
     const originalNumResults = results.length;
 
     let nonCollectionResults = [];
@@ -214,8 +212,8 @@ class AddCollectionProjectPop extends React.Component {
 
       // check if the project is already in the collection
       if (
-        nonCollectionResults.length > 0 &&
-        collectionProjectIds.includes(nonCollectionResults[0].id)
+        nonCollectionResults.length > 0
+        && collectionProjectIds.includes(nonCollectionResults[0].id)
       ) {
         nonCollectionResults = [];
         this.setState({ projectName: query });
@@ -237,15 +235,13 @@ class AddCollectionProjectPop extends React.Component {
       }
     }
 
-    this.setState(({ maybeRequest }) =>
-      request === maybeRequest
-        ? {
-            maybeRequest: null,
-            maybeResults: nonCollectionResults,
-            recentProjects: null
-          }
-        : {}
-    );
+    this.setState(({ maybeRequest }) => (request === maybeRequest
+      ? {
+        maybeRequest: null,
+        maybeResults: nonCollectionResults,
+        recentProjects: null,
+      }
+      : {}));
     return null;
   }
 
@@ -298,12 +294,12 @@ AddCollectionProjectPop.propTypes = {
   collection: PropTypes.object.isRequired,
   initialProjects: PropTypes.array.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
-  togglePopover: PropTypes.func // required but added dynamically
+  togglePopover: PropTypes.func, // required but added dynamically
 };
 
 AddCollectionProjectPop.defaultProps = {
   togglePopover: null,
-  api: null
+  api: null,
 };
 
 export default AddCollectionProjectPop;
