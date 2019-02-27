@@ -60,16 +60,4 @@ storiesOf("TooltipContainer", module)
         align={["top", "left"]}
       />
     </div>
-  ))
-  .add("with children", () => (
-    <div style={{margin: '70px'}}>
-      <TooltipContainer
-        type="action"
-        id="a-unique-id"
-        target={<Button>Hover or focus me</Button>}
-        tooltip="I'm a tooltip"
-      >
-        <p>I'm the <code>props.children</code></p>
-      </TooltipContainer>
-    </div>
   ));

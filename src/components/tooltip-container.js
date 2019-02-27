@@ -96,7 +96,8 @@ TooltipContainer.propTypes = {
 };
 
 TooltipContainer.defaultProps = {
-  align: ["center"]
+  align: ["center"],
+  persistent: true
 };
 
 export default TooltipContainer;
