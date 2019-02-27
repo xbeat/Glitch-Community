@@ -80,7 +80,7 @@ In your local repository,
   
 ```
 
-Or, run `./sh/setup.sh my-remix`. 
+Or, run `./sh/setup.sh my-remix`.
 
 Now you can use the GitHub UI to turn your branch into a pull request. 
 
@@ -206,7 +206,7 @@ Good job :-) Pop back over to #community and tell the room that you're all done.
 
 #### Deploy Checklist
 
-Here's a shortened version of the stepyou might want a 
+Here's a short and sweet version of the steps above that you can use once you're comfortable with the deploy process:
 
 1. Tell #community that you're about to merge + deploy
 2. Run `.sh/merge.sh`
