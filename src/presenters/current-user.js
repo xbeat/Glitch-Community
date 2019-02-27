@@ -186,6 +186,7 @@ class CurrentUserManager extends React.Component {
     if (this.state.working) return;
     this.setState({ working: true });
     const { sharedUser, cachedUser } = this.props;
+      console.log(sharedUser, cachedUser);
     if (!usersMatch(sharedUser, cachedUser)) {
       this.props.setCachedUser(undefined);
     }
@@ -197,6 +198,7 @@ class CurrentUserManager extends React.Component {
         this.setState({ fetched: false });
         const newSharedUser = await this.getSharedUser();
         this.props.setSharedUser(newSharedUser);
+        console.log(`Fixed shared cachedUser from ${sharedUser && sharedUser.id} to ${newSharedUser && newSharedUser.id}`);
         addBreadcrumb({
           level: 'info',
           message: `Fixed shared cachedUser. Was ${JSON.stringify(sharedUser)}`,
