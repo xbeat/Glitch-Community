@@ -189,8 +189,6 @@ SignInCodeSection.propTypes = {
 
 const SignInPopWithoutRouter = (props) => {
   const { header, prompt, api } = props;
-
-
   const { currentUser } = useCurrentUser();
   const { persistentToken, login } = currentUser;
 
