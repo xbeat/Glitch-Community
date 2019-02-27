@@ -4,7 +4,7 @@
 export const featuredCollections = [
   { owner: 'glitch', name: 'twitter-treats' },
   { owner: 'glitch', name: 'enlightening-games' },
-  { owner: 'glitch', name: 'games-made-with-phaser' }
+  { owner: 'glitch', name: 'digital-deliciousness' }
 ];
 
 // More ideas is populated from this team
