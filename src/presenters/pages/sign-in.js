@@ -11,9 +11,9 @@
 /* globals API_URL */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { captureException } from '../../utils/sentry';
-import { CurrentUserConsumer, useCurrentUser } from '../current-user';
+import { useCurrentUser } from '../current-user';
 import { NestedPopover, NestedPopoverTitle } from '../pop-overs/popover-nested';
 
 class SignIn extends React.Component {
@@ -189,10 +189,7 @@ SignInCodeSection.propTypes = {
 
 const SignInPopWithoutRouter = (props) => {
   const { header, prompt, api } = props;
-  const queryParamsStart = window.location.href.indexOf('?');
-  const initialQueryParams = window.location.href.substring(queryParamsStart);
 
-  const [queryParams, setQueryParams] = useState(initialQueryParams);
 
   const { currentUser } = useCurrentUser();
   const { persistentToken, login } = currentUser;
@@ -203,18 +200,20 @@ const SignInPopWithoutRouter = (props) => {
   }
   
   if (isSignedIn) {
+    const queryParamsStart = window.location.href.indexOf('?');
+    const queryParams = window.location.href.substring(queryParamsStart);
     window.location.href = `${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`;
     return null;
   }
 
   return (
     <NestedPopover alternateContent={() => <SignIn {...props} />} startAlternateVisible={false}>
-      {(showEmailLogin) => (
+      {showEmailLogin => (
         <NestedPopover
           alternateContent={() => <SignInWithConsumer {...props} setIsSignedIn={setIsSignedIn} />}
           startAlternateVisible={false}
         >
-          {(showCodeLogin) => (
+          {showCodeLogin => (
             <div
               className="pop-over sign-in-pop middle"
               style={{
