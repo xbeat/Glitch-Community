@@ -191,7 +191,6 @@ class CurrentUserManager extends React.Component {
     if (this.state.working) return;
     this.setState({ working: true });
     const { sharedUser, cachedUser } = this.props;
-    console.log(sharedUser, cachedUser);
 
     // Check if we have to clear the cache
     if (!usersMatch(sharedUser, cachedUser)) {
@@ -228,6 +227,16 @@ class CurrentUserManager extends React.Component {
     this.setState({ working: false });
   }
 
+  async login(user) {
+    this.props.setSharedUser(user);
+    this.props.setCachedUser(undefined);
+  }
+
+  async logout() {
+    this.props.setSharedUser(undefined);
+    this.props.setCachedUser(undefined);
+  }
+
   render() {
     const {
       children,
@@ -241,7 +250,7 @@ class CurrentUserManager extends React.Component {
       currentUser: { ...defaultUser, ...sharedUser, ...cachedUser },
       fetched: !!cachedUser && this.state.fetched,
       reload: () => this.load(),
-      login: user => setSharedUser(user),
+      login: user => this.login(user),
       update: changes => setCachedUser({ ...cachedUser, ...changes }),
       clear: () => setSharedUser(undefined),
     });

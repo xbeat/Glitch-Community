@@ -4,7 +4,6 @@ const readFromStorage = (storage, name) => {
   try {
     const raw = storage.getItem(name);
     if (raw !== null) {
-      console.log('read',name,'as',raw,'at',Date.now());
       return JSON.parse(raw);
     }
   } catch (error) {
@@ -14,7 +13,6 @@ const readFromStorage = (storage, name) => {
 };
 
 const writeToStorage = (storage, name, value) => {
-  console.log('set',name,'to',value,'at',Date.now());
   try {
     if (value !== undefined) {
       storage.setItem(name, JSON.stringify(value));
