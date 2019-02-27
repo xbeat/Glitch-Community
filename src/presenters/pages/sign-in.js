@@ -157,9 +157,9 @@ class SignInCodeHandler extends React.Component {
   }
 }
 
-const SignInWithConsumer = ({setIsSignedIn}) => {
+const SignInWithConsumer = (props) => {
   const { login } = useCurrentUser();
-  return <SignInCodeHandler setUser={login} setIsSignedIn={setIsSignedIn} />;
+  return <SignInCodeHandler setUser={login} {...props} />;
 };
 
 const EmailSignInButton = ({ onClick }) => (
@@ -187,7 +187,8 @@ SignInCodeSection.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-const SignInPopWithoutRouter = ({ header, prompt, api }) => {
+const SignInPopWithoutRouter = (props) => {
+  const { header, prompt, api } = props;
   const queryParamsStart = window.location.href.indexOf('?');
   const initialQueryParams = window.location.href.substring(queryParamsStart);
 
@@ -197,21 +198,20 @@ const SignInPopWithoutRouter = ({ header, prompt, api }) => {
   const { persistentToken, login } = currentUser;
 
   const [isSignedIn, setIsSignedIn] = useState(false);
-  if (persistentToken && login) {
+  if (!isSignedIn && persistentToken && login) {
     setIsSignedIn(true);
-    // window.location.href = `${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`;
   }
   
   if (isSignedIn) {
-    console.log('signed in');
-    return null; // <Redirect to={`${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`}/>;
+    window.location.href = `${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`;
+    return null;
   }
 
   return (
-    <NestedPopover alternateContent={() => <SignIn {...this.props} />} startAlternateVisible={false}>
+    <NestedPopover alternateContent={() => <SignIn {...props} />} startAlternateVisible={false}>
       {(showEmailLogin) => (
         <NestedPopover
-          alternateContent={() => <SignInWithConsumer {...this.props} setIsSignedIn={setIsSignedIn} />}
+          alternateContent={() => <SignInWithConsumer {...props} setIsSignedIn={setIsSignedIn} />}
           startAlternateVisible={false}
         >
           {(showCodeLogin) => (
