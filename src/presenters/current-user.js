@@ -232,6 +232,13 @@ class CurrentUserManager extends React.Component {
     this.props.setCachedUser(undefined);
   }
 
+  update(changes) {
+    this.props.setCachedUser({
+      ...this.props.cachedUser,
+      ...changes,
+    });
+  }
+
   async logout() {
     this.props.setSharedUser(undefined);
     this.props.setCachedUser(undefined);
@@ -242,8 +249,6 @@ class CurrentUserManager extends React.Component {
       children,
       sharedUser,
       cachedUser,
-      setSharedUser,
-      setCachedUser,
     } = this.props;
     return children({
       api: this.api(),
@@ -251,7 +256,7 @@ class CurrentUserManager extends React.Component {
       fetched: !!cachedUser && this.state.fetched,
       reload: () => this.load(),
       login: user => this.login(user),
-      update: changes => setCachedUser({ ...cachedUser, ...changes }),
+      update: changes => this.update(changes),
       clear: () => this.logout(),
     });
   }
