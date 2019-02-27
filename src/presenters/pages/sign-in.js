@@ -13,7 +13,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import dayjs from 'dayjs';
-
+import useLocalStorage from '../includes/local-storage';
 import LocalStorage from '../includes/local-storage';
 import { captureException } from '../../utils/sentry';
 import { CurrentUserConsumer } from '../current-user';
@@ -217,26 +217,11 @@ class SignInPopWithoutRouter extends React.Component {
   }
 
   render() {
-    return (
-      <LocalStorage name="destinationAfterAuth">
-        {(destination, setDestination) => {
-          const {
-            header,
-            prompt,
-            api,
-            location,
-            hash,
-          } = this.props;
-          const onClick = () => setDestination({
-            expires: dayjs()
-              .add(10, 'minutes')
-              .toISOString(),
-            to: {
-              pathname: location.pathname,
-              search: location.search,
-              hash,
-            },
-          });
+    const {
+    header, prompt, api, location, hash,
+    } = this.props;
+   
+      
           return (
             <NestedPopover alternateContent={() => <SignIn {...this.props} />} startAlternateVisible={false}>
               {showEmailLogin => (
@@ -258,7 +243,7 @@ class SignInPopWithoutRouter extends React.Component {
                         {prompt}
                         <EmailSignInButton
                           onClick={() => {
-                            onClick();
+                            // onClick();
                             showEmailLogin(api);
                           }}
                         />
@@ -276,10 +261,6 @@ class SignInPopWithoutRouter extends React.Component {
             </NestedPopover>
           );
         }}
-      </LocalStorage>
-    );
-  }
-}
 
 export const SignInPop = withRouter(SignInPopWithoutRouter);
 SignInPop.propTypes = {
