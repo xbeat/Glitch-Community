@@ -252,7 +252,7 @@ class CurrentUserManager extends React.Component {
       reload: () => this.load(),
       login: user => this.login(user),
       update: changes => setCachedUser({ ...cachedUser, ...changes }),
-      clear: () => setSharedUser(undefined),
+      clear: () => this.logout(),
     });
   }
 }
