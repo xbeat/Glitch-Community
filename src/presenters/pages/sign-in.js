@@ -12,9 +12,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import dayjs from 'dayjs';
-import useLocalStorage from '../includes/local-storage';
-import LocalStorage from '../includes/local-storage';
 import { captureException } from '../../utils/sentry';
 import { CurrentUserConsumer } from '../current-user';
 import { NestedPopover, NestedPopoverTitle } from '../pop-overs/popover-nested';
@@ -218,49 +215,46 @@ class SignInPopWithoutRouter extends React.Component {
 
   render() {
     const {
-    header, prompt, api, location, hash,
+      header, prompt, api,
     } = this.props;
-   
-      
-          return (
-            <NestedPopover alternateContent={() => <SignIn {...this.props} />} startAlternateVisible={false}>
-              {showEmailLogin => (
-                <NestedPopover
-                  alternateContent={() => <SignInWithConsumer {...this.props} queryParams={this.state.queryParams} />}
-                  startAlternateVisible={false}
-                >
-                  {showCodeLogin => (
-                    <div
-                      className="pop-over sign-in-pop middle"
-                      style={{
-                        position: 'relative',
-                        margin: '0 auto',
-                        width: '25%',
-                      }}
-                    >
-                      {header}
-                      <section className="pop-over-actions first-section">
-                        {prompt}
-                        <EmailSignInButton
-                          onClick={() => {
-                            // onClick();
-                            showEmailLogin(api);
-                          }}
-                        />
-                      </section>
-                      <SignInCodeSection
-                        onClick={() => {
-                          onClick();
-                          showCodeLogin(api);
-                        }}
-                      />
-                    </div>
-                  )}
-                </NestedPopover>
-              )}
-            </NestedPopover>
-          );
-        }}
+    return (
+      <NestedPopover alternateContent={() => <SignIn {...this.props} />} startAlternateVisible={false}>
+        {showEmailLogin => (
+          <NestedPopover
+            alternateContent={() => <SignInWithConsumer {...this.props} queryParams={this.state.queryParams} />}
+            startAlternateVisible={false}
+          >
+            {showCodeLogin => (
+              <div
+                className="pop-over sign-in-pop middle"
+                style={{
+                  position: 'relative',
+                  margin: '0 auto',
+                  width: '25%',
+                }}
+              >
+                {header}
+                <section className="pop-over-actions first-section">
+                  {prompt}
+                  <EmailSignInButton
+                    onClick={() => {
+                      showEmailLogin(api);
+                    }}
+                  />
+                </section>
+                <SignInCodeSection
+                  onClick={() => {
+                    showCodeLogin(api);
+                  }}
+                />
+              </div>
+            )}
+          </NestedPopover>
+        )}
+      </NestedPopover>
+    );
+  }
+}
 
 export const SignInPop = withRouter(SignInPopWithoutRouter);
 SignInPop.propTypes = {
