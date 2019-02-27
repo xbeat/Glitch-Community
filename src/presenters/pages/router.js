@@ -249,7 +249,7 @@ const Router = ({ api }) => (
         exact
         render={({ location }) => <SecretPage key={location.key} />}
       />
-    
+
       <Route path="/signin" exact render={({ location }) => <SignInPopContainer key={location.key} api={api} />} />
 
 

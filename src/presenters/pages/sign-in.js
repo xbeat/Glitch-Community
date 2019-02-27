@@ -50,7 +50,7 @@ class SignIn extends React.Component {
     const isEnabled = this.state.email.length > 0;
     return (
       <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props} />} startAlternateVisible={false}>
-        {(showCodeLogin) => (
+        {showCodeLogin => (
           <dialog className="pop-over sign-in-pop">
             <NestedPopoverTitle>
               Email Sign In <span className="emoji email" />
@@ -198,7 +198,7 @@ const SignInPopWithoutRouter = (props) => {
   if (!isSignedIn && persistentToken && login) {
     setIsSignedIn(true);
   }
-  
+
   if (isSignedIn) {
     const queryParamsStart = window.location.href.indexOf('?');
     const queryParams = window.location.href.substring(queryParamsStart);
