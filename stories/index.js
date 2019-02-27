@@ -32,7 +32,7 @@ storiesOf("TooltipContainer", module)
       type="information"
       id="a-unique-id"
       target={
-        <img src="https://favicon-fetcher.glitch.me/img/glitch.com" />
+        <img width="32" height="32" src="https://favicon-fetcher.glitch.me/img/glitch.com" />
       }
       tooltip="I'm an information tooltip"
     />
@@ -42,7 +42,7 @@ storiesOf("TooltipContainer", module)
       type="information"
       id="a-unique-id"
       target={
-        <img src="https://favicon-fetcher.glitch.me/img/glitch.com" />
+        <img width="32" height="32" src="https://favicon-fetcher.glitch.me/img/glitch.com" />
       }
       tooltip="I'm a persistent tooltip"
       persistent
