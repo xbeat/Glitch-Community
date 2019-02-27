@@ -13,7 +13,6 @@ const readFromStorage = (storage, name) => {
 };
 
 const writeToStorage = (storage, name, value) => {
-  console.log('write ' + name);
   try {
     if (value !== undefined) {
       storage.setItem(name, JSON.stringify(value));

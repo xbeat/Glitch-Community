@@ -199,7 +199,7 @@ class CurrentUserManager extends React.Component {
       this.props.setSharedUser(sharedUser);
     }
 
-    // Check if we have to clear the cache
+    // Check if we have to clear the cached user
     if (!usersMatch(sharedUser, this.props.cachedUser)) {
       this.props.setCachedUser(undefined);
     }
