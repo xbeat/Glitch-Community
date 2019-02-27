@@ -25,13 +25,13 @@ const writeToStorage = (storage, name, value) => {
 };
 
 const useLocalStorage = (name, defaultValue) => {
-const storage = window.localStorage;
-  
+  const storage = window.localStorage;
+
   const [rawValue, setValueInMemory] = React.useState(() => readFromStorage(storage, name));
 
   React.useEffect(() => {
     const reload = (event) => {
-      if (event.storaevent.key === name) {
+      if (event.storageArea === storage && event.key === name) {
         setValueInMemory(readFromStorage(storage, name));
       }
     };

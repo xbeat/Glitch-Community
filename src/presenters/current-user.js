@@ -115,6 +115,7 @@ class CurrentUserManager extends React.Component {
 
   componentDidUpdate(prev) {
     const { cachedUser, sharedUser } = this.props;
+    console.log(sharedUser, cachedUser);
 
     if (!usersMatch(cachedUser, prev.cachedUser)) {
       identifyUser(cachedUser);
@@ -186,10 +187,12 @@ class CurrentUserManager extends React.Component {
     if (this.state.working) return;
     this.setState({ working: true });
     const { sharedUser, cachedUser } = this.props;
-    console.log(sharedUser, cachedUser);
+    
+    // Check if we have to clear the cache
     if (!usersMatch(sharedUser, cachedUser)) {
       this.props.setCachedUser(undefined);
     }
+    
     if (sharedUser) {
       const newCachedUser = await this.getCachedUser();
       if (newCachedUser === 'error') {
@@ -216,6 +219,7 @@ class CurrentUserManager extends React.Component {
       const { data } = await this.api().post('users/anon');
       this.props.setSharedUser(data);
     }
+    
     this.setState({ working: false });
   }
 
