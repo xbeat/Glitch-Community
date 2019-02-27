@@ -193,17 +193,17 @@ class CurrentUserManager extends React.Component {
     this.setState({ working: true });
     let { sharedUser } = this.props;
 
-    // Check if we have to clear the cache
-    if (!usersMatch(sharedUser, this.props.cachedUser)) {
-      this.props.setCachedUser(undefined);
-    }
-
     // If we're signed out create a new anon user
     if (!sharedUser) {
       sharedUser = await this.getAnonUser();
       this.props.setSharedUser(sharedUser);
     }
-    
+
+    // Check if we have to clear the cache
+    if (!usersMatch(sharedUser, this.props.cachedUser)) {
+      this.props.setCachedUser(undefined);
+    }
+
     const newCachedUser = await this.getCachedUser();
     if (newCachedUser === 'error') {
       // Sounds like our shared user is bad
