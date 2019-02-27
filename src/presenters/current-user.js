@@ -190,10 +190,10 @@ class CurrentUserManager extends React.Component {
   async load() {
     if (this.state.working) return;
     this.setState({ working: true });
-    const { sharedUser, cachedUser } = this.props;
+    const { sharedUser } = this.props;
 
     // Check if we have to clear the cache
-    if (!usersMatch(sharedUser, cachedUser)) {
+    if (!usersMatch(sharedUser, this.props.cachedUser)) {
       this.props.setCachedUser(undefined);
     }
 
