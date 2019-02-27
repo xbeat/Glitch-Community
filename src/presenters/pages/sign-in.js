@@ -50,7 +50,7 @@ class SignIn extends React.Component {
     const isEnabled = this.state.email.length > 0;
     return (
       <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props} />} startAlternateVisible={false}>
-        {showCodeLogin => (
+        {(showCodeLogin) => (
           <dialog className="pop-over sign-in-pop">
             <NestedPopoverTitle>
               Email Sign In <span className="emoji email" />
@@ -116,7 +116,7 @@ class SignInCodeHandler extends React.Component {
       const { persistentToken } = data;
       const { login } = data;
       if (persistentToken && login) {
-        window.location.href = `${API_URL}/oauth/dialog/authorize${this.props.queryParams}&authorization=${persistentToken}`;
+        this.props.setIsSignedIn(true);
       }
       this.setState({ error: false });
     } catch (error) {
@@ -157,18 +157,9 @@ class SignInCodeHandler extends React.Component {
   }
 }
 
-const redirectToOauthDialog = (queryParams) => {
-  // TODO: Add handling for when localStorage is not available
-  const cachedUser = JSON.parse(window.localStorage.cachedUser);
-  const { persistentToken, login } = cachedUser;
-  if (persistentToken && login) {
-    window.location.href = `${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`;
-  }
-};
-
-const SignInWithConsumer = (props) => {
+const SignInWithConsumer = ({setIsSignedIn}) => {
   const { login } = useCurrentUser();
-  return <SignInCodeHandler setUser={login} {...props} />;
+  return <SignInCodeHandler setUser={login} setIsSignedIn={setIsSignedIn} />;
 };
 
 const EmailSignInButton = ({ onClick }) => (
@@ -196,63 +187,63 @@ SignInCodeSection.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-const SignInPopWithoutRouter = ({
-      header, prompt, api,
-    }) => {
-      const queryParamsStart = window.location.href.indexOf('?');
-    const initialQueryParams = window.location.href.substring(queryParamsStart);
+const SignInPopWithoutRouter = ({ header, prompt, api }) => {
+  const queryParamsStart = window.location.href.indexOf('?');
+  const initialQueryParams = window.location.href.substring(queryParamsStart);
+
+  const [queryParams, setQueryParams] = useState(initialQueryParams);
+
+  const { currentUser } = useCurrentUser();
+  const { persistentToken, login } = currentUser;
+
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  if (persistentToken && login) {
+    setIsSignedIn(true);
+    // window.location.href = `${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`;
+  }
   
-    const [queryParams, setQueryParams] = useState(initialQueryParams);
-    
-    const { currentUser } = useCurrentUser();
-    const { persistentToken, login } = currentUser;
-  
-    const [isSignedIn, setIsSignedIn] = useState(false);
-    if (persistentToken && login) {
-      setIsSignedIn(true);
-      window.location.href = `${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`;
-    }
-    
-    return (
-      if (isSignedIn) {
-      
-      }
-      <NestedPopover alternateContent={() => <SignIn {...this.props} />} startAlternateVisible={false}>
-        {showEmailLogin => (
-          <NestedPopover
-            alternateContent={() => <SignInWithConsumer {...this.props} queryParams={this.state.queryParams} />}
-            startAlternateVisible={false}
-          >
-            {showCodeLogin => (
-              <div
-                className="pop-over sign-in-pop middle"
-                style={{
-                  position: 'relative',
-                  margin: '0 auto',
-                  width: '25%',
-                }}
-              >
-                {header}
-                <section className="pop-over-actions first-section">
-                  {prompt}
-                  <EmailSignInButton
-                    onClick={() => {
-                      showEmailLogin(api);
-                    }}
-                  />
-                </section>
-                <SignInCodeSection
+  if (isSignedIn) {
+    console.log('signed in');
+    return null; // <Redirect to={`${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`}/>;
+  }
+
+  return (
+    <NestedPopover alternateContent={() => <SignIn {...this.props} />} startAlternateVisible={false}>
+      {(showEmailLogin) => (
+        <NestedPopover
+          alternateContent={() => <SignInWithConsumer {...this.props} setIsSignedIn={setIsSignedIn} />}
+          startAlternateVisible={false}
+        >
+          {(showCodeLogin) => (
+            <div
+              className="pop-over sign-in-pop middle"
+              style={{
+                position: 'relative',
+                margin: '0 auto',
+                width: '25%',
+              }}
+            >
+              {header}
+              <section className="pop-over-actions first-section">
+                {prompt}
+                <EmailSignInButton
                   onClick={() => {
-                    showCodeLogin(api);
+                    showEmailLogin(api);
                   }}
                 />
-              </div>
-            )}
-          </NestedPopover>
-        )}
-      </NestedPopover>
-    );
-  }
+              </section>
+              <SignInCodeSection
+                onClick={() => {
+                  showCodeLogin(api);
+                }}
+              />
+            </div>
+          )}
+        </NestedPopover>
+      )}
+    </NestedPopover>
+  );
+};
 
 export const SignInPop = withRouter(SignInPopWithoutRouter);
 SignInPop.propTypes = {
