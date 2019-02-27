@@ -27,5 +27,5 @@ export default [
     title: 'Sea Pinks and High Tide',
     img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsea-pinks-ctervo-.gif?1551088649326',
     link: 'https://sea-pinks.glitch.me/',
-  }
+  },
 ];
