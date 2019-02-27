@@ -61,7 +61,7 @@ class RelatedProjects extends React.Component {
       );
       return data;
     }
-    return [];
+    return null;
   }
 
   render() {
@@ -81,7 +81,7 @@ class RelatedProjects extends React.Component {
             <DataLoader
               get={() => this.getProjects(team.id, getTeamPins, getTeam)}
             >
-              {projects => projects && projects.length && (
+              {projects => projects && (
                 <>
                   <h2>
                     <TeamLink team={team}>
@@ -99,19 +99,21 @@ class RelatedProjects extends React.Component {
         ))}
         {users.map(user => (
           <li key={user.id}>
-            <h2>
-              <UserLink user={user}>
-                More by {getDisplayName(user)} →
-              </UserLink>
-            </h2>
             <DataLoader
               get={() => this.getProjects(user.id, getUserPins, getUser)}
             >
               {projects => projects && (
-                <RelatedProjectsBody
-                  projects={projects}
-                  coverStyle={getUserProfileStyle(user)}
-                />
+                <>
+                  <h2>
+                    <UserLink user={user}>
+                      More by {getDisplayName(user)} →
+                    </UserLink>
+                  </h2>
+                  <RelatedProjectsBody
+                    projects={projects}
+                    coverStyle={getUserProfileStyle(user)}
+                  />
+                </>
               )}
             </DataLoader>
           </li>
