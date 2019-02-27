@@ -204,7 +204,7 @@ class AddCollectionProjectPop extends React.Component {
       data = [data];
     }
 
-    const results = data;
+    const results = data || [];
     const originalNumResults = results.length;
 
     let nonCollectionResults = [];
@@ -222,9 +222,9 @@ class AddCollectionProjectPop extends React.Component {
       }
     } else {
       // user is searching by project name  - filter out any projects currently in the collection
-      nonCollectionResults = results
-        ? results.filter(result => !collectionProjectIds.includes(result.id))
-        : [];
+      nonCollectionResults = results.filter(
+        result => !collectionProjectIds.includes(result.id)
+      );
 
       if (nonCollectionResults.length !== originalNumResults) {
         if (originalNumResults === 1) {
