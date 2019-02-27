@@ -204,6 +204,17 @@ Run `./sh/teardown.sh` on your local machine to remove the branch and remote for
 
 Good job :-) Pop back over to #community and tell the room that you're all done.
 
+#### Deploy checklist
+
+1. Tell #community that you're about to merge + deploy
+2. Run `.sh/merge.sh`
+3. Go to [~community-staging](https://glitch.com/~community-staging) and open up the console
+  - `git pull` to update to master
+  - Double check that `git pull` does not require any merges
+  - Run `refresh`
+4. Open the ~community-staging logs, wait for the build to finish (~7-9 minutes)
+5. Make a testing plan!
+
 --------------------
 
 
