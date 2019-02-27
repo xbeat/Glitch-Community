@@ -19,7 +19,7 @@ try {
     environment: ENVIRONMENT,
     release: `community@${BUILD_TIMESTAMP}`,
     ignoreErrors: SentryHelpers.ignoreErrors,
-    beforeSend(event, hint) {
+    beforeSend(event) {
       return SentryHelpers.beforeSend(PROJECT_DOMAIN, _env, event);
     },
     beforeBreadcrumb(breadcrumb) {
