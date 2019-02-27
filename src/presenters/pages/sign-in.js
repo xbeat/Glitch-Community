@@ -9,7 +9,7 @@
  * copy of /pop-overs/sign-in-pop.
  */
 /* globals API_URL */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { captureException } from '../../utils/sentry';
@@ -195,27 +195,21 @@ SignInCodeSection.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-class SignInPopWithoutRouter extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      queryParams: '',
-    };
-  }
+const SignInPopWithoutRouter = ({
+      header, prompt, api,
+    }) => {
+      const queryParamsStart = window.location.href.indexOf('?');
+    const newQueryParams = window.location.href.substring(queryParamsStart);
+  
+    const [queryParams, setQueryParams] = useState('');
 
   componentDidMount() {
-    const queryParamsStart = window.location.href.indexOf('?');
-    const queryParams = window.location.href.substring(queryParamsStart);
-    this.setState({
-      queryParams,
-    });
+
+    setQueryParams(newQueryParams);
+    
     redirectToOauthDialog(queryParams);
   }
 
-  render() {
-    const {
-      header, prompt, api,
-    } = this.props;
     return (
       <NestedPopover alternateContent={() => <SignIn {...this.props} />} startAlternateVisible={false}>
         {showEmailLogin => (
@@ -253,7 +247,6 @@ class SignInPopWithoutRouter extends React.Component {
       </NestedPopover>
     );
   }
-}
 
 export const SignInPop = withRouter(SignInPopWithoutRouter);
 SignInPop.propTypes = {
