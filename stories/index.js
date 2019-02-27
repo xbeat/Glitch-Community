@@ -20,56 +20,56 @@ storiesOf("Button", module)
 
 storiesOf("TooltipContainer", module)
   .add("action", () => (
-    <TooltipContainer
-      type="action"
-      id="a-unique-id"
-      target={<Button>Hover or focus me</Button>}
-      tooltip="I'm an action tooltip"
-    />
+    <div style={{margin: '70px'}}>
+      <TooltipContainer
+        type="action"
+        id="a-unique-id"
+        target={<Button>Hover or focus me</Button>}
+        tooltip="I'm an action tooltip"
+      />
+    </div>
   ))
   .add("information", () => (
-    <TooltipContainer
-      type="information"
-      id="a-unique-id"
-      target={
-        <img
-          style={{margin: '100px', width: '32px', height: '32px'}}
-          src="https://favicon-fetcher.glitch.me/img/glitch.com"
-        />
-      }
-      tooltip="I'm an information tooltip"
-    />
+    <div style={{margin: '70px'}}>
+      <TooltipContainer
+        type="information"
+        id="a-unique-id"
+        target={<img width="32" height="32" src="https://favicon-fetcher.glitch.me/img/glitch.com" />}
+        tooltip="I'm an information tooltip"
+      />
+    </div>
   ))
   .add("persistent", () => (
-    <TooltipContainer
-      type="information"
-      id="a-unique-id"
-      target={
-        <img
-          style={{margin: '100px', width: '32px', height: '32px'}}
-          src="https://favicon-fetcher.glitch.me/img/glitch.com"
-        />
-      }
-      tooltip="I'm a persistent tooltip"
-      persistent
-    />
+    <div style={{margin: '70px'}}>
+      <TooltipContainer
+        type="information"
+        id="a-unique-id"
+        target={<img width="32" height="32" src="https://favicon-fetcher.glitch.me/img/glitch.com" />}
+        tooltip="I'm a persistent tooltip"
+        persistent
+      />
+    </div>
   ))
   .add("left and top aligned", () => (
-    <TooltipContainer
-      type="action"
-      id="a-unique-id"
-      target={<Button style={{margin: '100px'}}>Hover or focus me</Button>}
-      tooltip="I'm a tooltip"
-      align={["top", "left"]}
-    />
+    <div style={{margin: '70px'}}>
+      <TooltipContainer
+        type="action"
+        id="a-unique-id"
+        target={<Button>Hover or focus me</Button>}
+        tooltip="I'm a tooltip"
+        align={["top", "left"]}
+      />
+    </div>
   ))
   .add("with children", () => (
-    <TooltipContainer
-      type="action"
-      id="a-unique-id"
-      target={<Button >Hover or focus me</Button>}
-      tooltip="I'm a tooltip"
-    >
-      <p>I'm the <code>props.children</code></p>
-  </TooltipContainer>
+    <div style={{margin: '70px'}}>
+      <TooltipContainer
+        type="action"
+        id="a-unique-id"
+        target={<Button>Hover or focus me</Button>}
+        tooltip="I'm a tooltip"
+      >
+        <p>I'm the <code>props.children</code></p>
+      </TooltipContainer>
+    </div>
   ));
