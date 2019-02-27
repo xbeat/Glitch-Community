@@ -11,9 +11,9 @@
 /* globals API_URL */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { captureException } from '../../utils/sentry';
-import { CurrentUserConsumer } from '../current-user';
+import { CurrentUserConsumer, useCurrentUser } from '../current-user';
 import { NestedPopover, NestedPopoverTitle } from '../pop-overs/popover-nested';
 
 class SignIn extends React.Component {
@@ -166,9 +166,10 @@ const redirectToOauthDialog = (queryParams) => {
   }
 };
 
-const SignInWithConsumer = props => (
-  <CurrentUserConsumer>{(currentUser, fetched, { login }) => <SignInCodeHandler setUser={login} {...props} />}</CurrentUserConsumer>
-);
+const SignInWithConsumer = (props) => {
+  const { login } = useCurrentUser();
+  return <SignInCodeHandler setUser={login} {...props} />;
+};
 
 const EmailSignInButton = ({ onClick }) => (
   <button
@@ -199,18 +200,23 @@ const SignInPopWithoutRouter = ({
       header, prompt, api,
     }) => {
       const queryParamsStart = window.location.href.indexOf('?');
-    const newQueryParams = window.location.href.substring(queryParamsStart);
+    const initialQueryParams = window.location.href.substring(queryParamsStart);
   
-    const [queryParams, setQueryParams] = useState('');
-
-  componentDidMount() {
-
-    setQueryParams(newQueryParams);
+    const [queryParams, setQueryParams] = useState(initialQueryParams);
     
-    redirectToOauthDialog(queryParams);
-  }
-
+    const { currentUser } = useCurrentUser();
+    const { persistentToken, login } = currentUser;
+  
+    const [isSignedIn, setIsSignedIn] = useState(false);
+    if (persistentToken && login) {
+      setIsSignedIn(true);
+      window.location.href = `${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`;
+    }
+    
     return (
+      if (isSignedIn) {
+      
+      }
       <NestedPopover alternateContent={() => <SignIn {...this.props} />} startAlternateVisible={false}>
         {showEmailLogin => (
           <NestedPopover
