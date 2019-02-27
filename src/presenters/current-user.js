@@ -191,38 +191,40 @@ class CurrentUserManager extends React.Component {
   async load() {
     if (this.state.working) return;
     this.setState({ working: true });
-    const { sharedUser } = this.props;
+    let { sharedUser } = this.props;
 
     // Check if we have to clear the cache
     if (!usersMatch(sharedUser, this.props.cachedUser)) {
       this.props.setCachedUser(undefined);
     }
 
-    if (sharedUser) {
-      const newCachedUser = await this.getCachedUser();
-      if (newCachedUser === 'error') {
-        // Sounds like our shared user is bad
-        // Fix it and componentDidUpdate will reload
-        this.setState({ fetched: false });
-        const newSharedUser = await this.getSharedUser();
-        this.props.setSharedUser(newSharedUser);
-        console.log(`Fixed shared cachedUser from ${sharedUser && sharedUser.id} to ${newSharedUser && newSharedUser.id}`);
-        addBreadcrumb({
-          level: 'info',
-          message: `Fixed shared cachedUser. Was ${JSON.stringify(sharedUser)}`,
-        });
-        addBreadcrumb({
-          level: 'info',
-          message: `New shared cachedUser: ${JSON.stringify(newSharedUser)}`,
-        });
-        captureMessage('Invalid cachedUser');
-      } else {
-        this.props.setCachedUser(newCachedUser);
-        this.setState({ fetched: true });
-      }
+    // If we're signed out create a new anon user
+    if (!sharedUser) {
+      sharedUser = await this.getAnonUser();
+      this.props.setSharedUser(sharedUser);
+    }
+    
+    const newCachedUser = await this.getCachedUser();
+    if (newCachedUser === 'error') {
+      // Sounds like our shared user is bad
+      // Fix it and componentDidUpdate will start a new loading cycle
+      this.setState({ fetched: false });
+      const newSharedUser = await this.getSharedUser();
+      this.props.setSharedUser(newSharedUser);
+      console.log(`Fixed shared cachedUser from ${sharedUser.id} to ${newSharedUser && newSharedUser.id}`);
+      addBreadcrumb({
+        level: 'info',
+        message: `Fixed shared cachedUser. Was ${JSON.stringify(sharedUser)}`,
+      });
+      addBreadcrumb({
+        level: 'info',
+        message: `New shared cachedUser: ${JSON.stringify(newSharedUser)}`,
+      });
+      captureMessage('Invalid cachedUser');
     } else {
-      const newAnonUser = await this.getAnonUser();
-      this.props.setSharedUser(newAnonUser);
+      // The shared user is good, store it
+      this.props.setCachedUser(newCachedUser);
+      this.setState({ fetched: true });
     }
 
     this.setState({ working: false });
