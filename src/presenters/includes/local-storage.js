@@ -1,8 +1,8 @@
 import React from 'react';
 
-const readFromStorage = (name) => {
+const readFromStorage = (storage, name) => {
   try {
-    const raw = window.localStorage.getItem(name);
+    const raw = storage.getItem(name);
     if (raw !== null) {
       return JSON.parse(raw);
     }
@@ -12,12 +12,12 @@ const readFromStorage = (name) => {
   return undefined;
 };
 
-const writeToStorage = (name, value) => {
+const writeToStorage = (storage, name, value) => {
   try {
     if (value !== undefined) {
-      window.localStorage.setItem(name, JSON.stringify(value));
+      storage.setItem(name, JSON.stringify(value));
     } else {
-      window.localStorage.removeItem(name);
+      storage.removeItem(name);
     }
   } catch (error) {
     console.warn('Failed to write to localStorage!', error);
@@ -25,20 +25,26 @@ const writeToStorage = (name, value) => {
 };
 
 const useLocalStorage = (name, defaultValue) => {
-  const [rawValue, setValueInMemory] = React.useState(() => readFromStorage(name));
+  const storage = window.localStorage;
+
+  const [rawValue, setValueInMemory] = React.useState(() => readFromStorage(storage, name));
 
   React.useEffect(() => {
-    const reload = () => setValueInMemory(readFromStorage(name));
+    const reload = (event) => {
+      if (event.storageArea === storage && event.key === name) {
+        setValueInMemory(readFromStorage(storage, name));
+      }
+    };
     window.addEventListener('storage', reload, { passive: true });
     return () => {
       window.removeEventListener('storage', reload, { passive: true });
     };
-  }, [name]);
+  }, [storage, name]);
 
   const value = rawValue !== undefined ? rawValue : defaultValue;
   const setValue = (newValue) => {
     setValueInMemory(newValue);
-    writeToStorage(name, newValue);
+    writeToStorage(storage, name, newValue);
   };
 
   return [value, setValue];
