@@ -11,34 +11,35 @@ const getStorage = () => {
   } catch (error) {
     console.warn('Local storage not available, using memory store');
   }
-  const getItem = () => null;
-  const setItem = () => {};
-  const removeItem = () => {};
-  return { getItem, setItem, removeItem };
+  return null;
 };
 const storage = getStorage();
 
 const readFromStorage = (name) => {
-  try {
-    const raw = storage.getItem(name);
-    if (raw !== null) {
-      return JSON.parse(raw);
+  if (storage) {
+    try {
+      const raw = storage.getItem(name);
+      if (raw !== null) {
+        return JSON.parse(raw);
+      }
+    } catch (error) {
+      captureException(error);
     }
-  } catch (error) {
-    captureException(error);
   }
   return undefined;
 };
 
 const writeToStorage = (name, value) => {
-  try {
-    if (value !== undefined) {
-      storage.setItem(name, JSON.stringify(value));
-    } else {
-      storage.removeItem(name);
+  if (storage) {
+    try {
+      if (value !== undefined) {
+        storage.setItem(name, JSON.stringify(value));
+      } else {
+        storage.removeItem(name);
+      }
+    } catch (error) {
+      captureException(error);
     }
-  } catch (error) {
-    captureException(error);
   }
 };
 
