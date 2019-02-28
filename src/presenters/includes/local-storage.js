@@ -11,10 +11,9 @@ const getStorage = () => {
   } catch (error) {
     console.warn('Local storage not available, using memory store');
   }
-  const data = new Map();
-  const getItem = key => (data.has(key) ? data.get(key) : null);
-  const setItem = (key, value) => data.set(key, value);
-  const removeItem = key => data.delete(key);
+  const getItem = () => null;
+  const setItem = () => {};
+  const removeItem = () => {};
   return { getItem, setItem, removeItem };
 };
 const storage = getStorage();
