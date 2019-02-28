@@ -49,7 +49,6 @@ const useLocalStorage = (name, defaultValue) => {
   React.useEffect(() => {
     const reload = (event) => {
       if (event.storageArea === storage && event.key === name) {
-        console.log(name,readFromStorage(name));
         setValueInMemory(readFromStorage(name));
       }
     };

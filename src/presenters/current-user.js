@@ -207,10 +207,10 @@ class CurrentUserManager extends React.Component {
     const newCachedUser = await this.getCachedUser();
     if (newCachedUser === 'error') {
       // Looks like our sharedUser is bad, make sure it wasn't overwritten since we last checked
-      // If we were anon and just signed in the token would have been invalidated
-      // If it changed then restart the cycle and if see if the new user is ok
+      // Anon users get their token and id deleted when they're merged into a user on sign in
+      // If it did change then quit out and let componentDidUpdate sort it out
       if (usersMatch(sharedUser, this.props.sharedUser)) {
-        // Fix it and componentDidUpdate will start a new loading cycle
+        // The user wasn't changed externally, so we do need to fix it
         this.setState({ fetched: false });
         const newSharedUser = await this.getSharedUser();
         this.props.setSharedUser(newSharedUser);
