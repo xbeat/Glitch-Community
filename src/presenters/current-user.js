@@ -206,21 +206,25 @@ class CurrentUserManager extends React.Component {
 
     const newCachedUser = await this.getCachedUser();
     if (newCachedUser === 'error') {
-      // Sounds like our shared user is bad
-      // Fix it and componentDidUpdate will start a new loading cycle
-      this.setState({ fetched: false });
-      const newSharedUser = await this.getSharedUser();
-      this.props.setSharedUser(newSharedUser);
-      console.log(`Fixed shared cachedUser from ${sharedUser.id} to ${newSharedUser && newSharedUser.id}`);
-      addBreadcrumb({
-        level: 'info',
-        message: `Fixed shared cachedUser. Was ${JSON.stringify(sharedUser)}`,
-      });
-      addBreadcrumb({
-        level: 'info',
-        message: `New shared cachedUser: ${JSON.stringify(newSharedUser)}`,
-      });
-      captureMessage('Invalid cachedUser');
+      // Looks like our sharedUser is bad, make sure it wasn't overwritten since we last checked
+      // If we were anon and just signed in the token would have been invalidated
+      // If it changed then restart the cycle and if see if the new user is ok
+      if (usersMatch(sharedUser, this.props.sharedUser)) {
+        // Fix it and componentDidUpdate will start a new loading cycle
+        this.setState({ fetched: false });
+        const newSharedUser = await this.getSharedUser();
+        this.props.setSharedUser(newSharedUser);
+        console.log(`Fixed shared cachedUser from ${sharedUser.id} to ${newSharedUser && newSharedUser.id}`);
+        addBreadcrumb({
+          level: 'info',
+          message: `Fixed shared cachedUser. Was ${JSON.stringify(sharedUser)}`,
+        });
+        addBreadcrumb({
+          level: 'info',
+          message: `New shared cachedUser: ${JSON.stringify(newSharedUser)}`,
+        });
+        captureMessage('Invalid cachedUser');
+      }
     } else {
       // The shared user is good, store it
       this.props.setCachedUser(newCachedUser);
