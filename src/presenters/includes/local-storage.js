@@ -12,9 +12,9 @@ const getStorage = () => {
     console.warn('Local storage not available, using memory store');
   }
   const data = new Map();
-  const getItem = (key) => data.get(key);
+  const getItem = key => (data.has(key) ? data.get(key) : null);
   const setItem = (key, value) => data.set(key, value);
-  const removeItem = (key) => data.delete(key);
+  const removeItem = key => data.delete(key);
   return { getItem, setItem, removeItem };
 };
 const storage = getStorage();
@@ -39,7 +39,7 @@ const writeToStorage = (name, value) => {
       storage.removeItem(name);
     }
   } catch (error) {
-    console.warn('Failed to write to localStorage!', error);
+    captureException(error);
   }
 };
 
