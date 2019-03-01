@@ -76,7 +76,7 @@ const TextInput = ({
           </InputPart>
         )}
       </div>
-      {!!error && <InputErrorMessage error={error} />}
+      {!!error && <InputErrorMessage>{error}</InputErrorMessage>}
     </label>
   );
 };
