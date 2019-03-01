@@ -82,9 +82,8 @@ const ProjectSearchResults = ({
       <br />
       {excludedProjectsCount > 0 && (
         <span>
-          {`Excluded ${excludedProjectsCount} search ${
-            excludedProjectsCount > 1 ? 'results' : 'result'
-          } already found in collection`}
+          <Pluralize count={excludedProjectsCount} singular="result" />
+          Excluded {excludedProjectsCount} search <Pluralize count={excludedProjectsCount} singular="result" />
         </span>
       )}
     </p>
