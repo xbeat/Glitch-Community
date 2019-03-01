@@ -80,7 +80,7 @@ const ReadmeError = error => (error && error.response && error.response.status =
       This project would be even better with a <code>README.md</code>
   </>
 ) : (
-  <>We couldn't load the readme. Try refreshing?</>
+  <>We couldn{"'"}t load the readme. Try refreshing?</>
 ));
 const ReadmeLoader = ({ api, domain }) => (
   <DataLoader get={() => api.get(`projects/${domain}/readme`)} renderError={ReadmeError}>
