@@ -68,12 +68,8 @@ TeamUsers.propTypes = {
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
   adminIds: PropTypes.array.isRequired,
   team: PropTypes.object.isRequired,
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   /* eslint-enable */
-};
-
-TeamUsers.defaultProps = {
-  api: null,
 };
 
 // Whitelisted domain icon
@@ -118,6 +114,7 @@ WhitelistedDomain.propTypes = {
   domain: PropTypes.string.isRequired,
   setDomain: PropTypes.func,
 };
+
 WhitelistedDomain.defaultProps = {
   setDomain: null,
 };
@@ -142,11 +139,18 @@ export class AddTeamUser extends React.Component {
   async inviteUser(togglePopover, user) {
     togglePopover();
 
-    this.setState(prevState => ({
+    this.setState(state => ({
       invitee: getDisplayName(user),
-      newlyInvited: [...prevState.newlyInvited, user],
+      newlyInvited: [...state.newlyInvited, user],
     }));
-    await this.props.inviteUser(user);
+    try {
+      await this.props.inviteUser(user);
+    } catch (error) {
+      this.setState(state => ({
+        invitee: '',
+        alreadyInvited: state.alreadyInvited.filter(u => u.id !== user.id),
+      }));
+    }
   }
 
   async inviteEmail(togglePopover, email) {
@@ -154,7 +158,13 @@ export class AddTeamUser extends React.Component {
     this.setState({
       invitee: email,
     });
-    await this.props.inviteEmail(email);
+    try {
+      await this.props.inviteEmail(email);
+    } catch (error) {
+      this.setState({
+        invitee: '',
+      });
+    }
   }
 
   removeNotifyInvited() {
