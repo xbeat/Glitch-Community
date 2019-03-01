@@ -183,18 +183,24 @@ SignInCodeSection.propTypes = {
 };
 
 const SignInPopWithoutRouter = (props) => {
-  const { header, prompt, api } = props;
+  const {
+    header, prompt, api, location,
+  } = props;
   const { currentUser } = useCurrentUser();
   const { persistentToken, login } = currentUser;
-  onst;
+  const isSignedIn = persistentToken && login;
 
   React.useEffect(() => {
-    if (persistentToken && login) {
-      const queryParamsStart = window.location.href.indexOf('?');
-      const queryParams = window.location.href.substring(queryParamsStart);
-      window.location.href = `${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`;
+    if (isSignedIn) {
+      const params = new URLSearchParams(location.search);
+      params.append('authorization', persistentToken);
+      window.location.assign(`${API_URL}/oauth/dialog/authorize?${params}`);
     }
-  }, [persistentToken, login]);
+  }, [isSignedIn]);
+
+  if (isSignedIn) {
+    return null;
+  }
 
   return (
     <NestedPopover alternateContent={() => <SignIn {...props} />} startAlternateVisible={false}>
