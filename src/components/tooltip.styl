@@ -31,7 +31,6 @@ secondary = #9B9B9B
   text-decoration: none
   text-shadow: none
   text-transform: none
-
   background: tooltip-background
   border-radius: 5px
   font-family: sansserif
@@ -42,13 +41,13 @@ secondary = #9B9B9B
 
 .tooltip::before
   position: absolute
-  margin-top: -6px;
-  left: 50%
   content: ''
   display: block
   height: 100%
-  box-sizing: border-box
+  left: 50%
   transform: translateX(-50%) translateY(-100%)
+  margin-top: -6px;
+  box-sizing: border-box
   border: 5px solid transparent
   border-bottom-color: tooltip-background
 
