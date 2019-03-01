@@ -45,7 +45,6 @@ class RelatedProjects extends React.Component {
 
     if (ids.length < PROJECT_COUNT) {
       const { projects } = await getAllProjects(id);
-      console.log(projects);
 
       const allIds = projects.map(project => project.id);
       const remainingIds = difference(allIds, [
@@ -59,6 +58,7 @@ class RelatedProjects extends React.Component {
       const { data } = await this.props.api.get(
         `projects/byIds?ids=${ids.join(',')}`,
       );
+      console.log(data)
       return data;
     }
     return null;
