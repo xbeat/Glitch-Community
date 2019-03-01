@@ -43,7 +43,7 @@ export const Avatar = ({
         target={contents}
         type="action"
         id={"avatar-tooltip-" + name}
-        align={["top", "left"]}
+        align={["left"]}
       />
     );
   }

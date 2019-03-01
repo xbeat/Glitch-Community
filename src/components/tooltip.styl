@@ -16,27 +16,28 @@ secondary = #9B9B9B
   border: none
   box-sizing: inherit
   display: inline-block
-  font-style: normal
-  font-weight: normal
   pointer-events: none
   position: absolute
+  z-index: 9
   transform: translateX(50%)
   right: 50%
   top: 100%
+  width: auto
+  padding: 6px 8px
+  margin-top: 5px
+  font-style: normal
+  font-weight: normal
   text-align: center
   text-decoration: none
   text-shadow: none
   text-transform: none
-  z-index: 9
+
   background: tooltip-background
   border-radius: 5px
   font-family: sansserif
   font-size: 12px
   color: background-color
-  padding: 6px 8px
-  margin-top: 5px
   white-space: pre
-  width: auto
   word-wrap: break-word
 
 .tooltip::before
@@ -59,7 +60,6 @@ secondary = #9B9B9B
   border-top-color: tooltip-background
   border-bottom-color: transparent
   margin-top: -6px
-  transform: translateX(-50%) translateY(200%)
   transform: translateX(-50%) translateY(100%)
   
 .tooltip.left,
@@ -86,8 +86,7 @@ secondary = #9B9B9B
 .tooltip.top.left
   transform: translateX(0) translateY(-200%)
   &::before
-    transform: translateX(0) translateY(100%);
-    transform: translateX(0) translateY(100%);
+    transform: translateX(0) translateY(100%)
 
 .tooltip.persistent
   font-weight: bold
@@ -96,6 +95,7 @@ secondary = #9B9B9B
 .tooltip.new-stuff
   background-color: notification
   right: 32px
+  top: 110%
 
 .tooltip.new-stuff::before
   border-top-color: notification
