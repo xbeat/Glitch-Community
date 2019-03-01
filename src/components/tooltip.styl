@@ -41,22 +41,27 @@ secondary = #9B9B9B
 
 .tooltip::before
   position: absolute
-  // top: -100%
-  // top: -50%;
-  // transform: translateX(0) translateY(-100%);
-  // top: 0
   margin-top: -6px;
   left: 50%
   content: ''
   display: block
+  height: 100%
+  box-sizing: border-box
   transform: translateX(-50%) translateY(-100%)
   border: 5px solid transparent
   border-bottom-color: tooltip-background
-  // margin-top: 2px
-  // margin-top: 3px
-  height: 100%
-  box-sizing: border-box
 
+.tooltip.top
+  margin-top: -12px
+  transform: translateX(50%) translateY(-200%)
+  
+.tooltip.top::before
+  border-top-color: tooltip-background
+  border-bottom-color: transparent
+  margin-top: -6px
+  transform: translateX(-50%) translateY(200%)
+  transform: translateX(-50%) translateY(100%)
+  
 .tooltip.left,
 .tooltip.left::before
   left: 0
@@ -77,20 +82,12 @@ secondary = #9B9B9B
   right: 10px
   transform: translateX(0) translateY(-100%)
 
-.tooltip.top
-  // top: -100%
-  margin-top: -5px
-  margin-top: -12px
-  transform: translateX(50%) translateY(-200%)
-  
-.tooltip.top::before
-  border-top-color: tooltip-background
-  border-bottom-color: transparent
-  margin-top: -6px
-  // margin-top: 0
-  transform: translateX(-50%) translateY(200%)
-  transform: translateX(-50%) translateY(100%)
-  // top: 100%
+.tooltip.top.right,
+.tooltip.top.left
+  transform: translateX(0) translateY(-200%)
+  &::before
+    transform: translateX(0) translateY(100%);
+    transform: translateX(0) translateY(100%);
 
 .tooltip.persistent
   font-weight: bold
@@ -99,7 +96,6 @@ secondary = #9B9B9B
 .tooltip.new-stuff
   background-color: notification
   right: 32px
-  // top: -10%
 
 .tooltip.new-stuff::before
   border-top-color: notification
