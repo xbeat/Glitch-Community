@@ -59,7 +59,7 @@ class RelatedProjects extends React.Component {
         `projects/byIds?ids=${ids.join(',')}`,
       );
 
-      return data.length ? data : null
+      return data.length ? data : null;
     }
     return null;
   }

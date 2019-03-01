@@ -76,10 +76,7 @@ const ProjectSearchResults = ({
 
   return (
     <p className="results-empty">
-      nothing found{' '}
-      <span role="img" aria-label="">
-        💫
-      </span>
+      nothing found <span role="img" aria-label="">💫</span>
       <br />
       {excludedProjectsCount > 0 && (
         <span>
