@@ -251,6 +251,8 @@ class AddCollectionProjectPop extends React.Component {
       : this.props.initialProjects;
 
     const showResults = !!(this.state.query || (results && results.length));
+    console.log('state.query', this.state.query);
+    console.log('results', results);
     const isLoading = !!(this.state.maybeRequest || !results);
 
     return (
