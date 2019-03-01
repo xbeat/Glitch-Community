@@ -11,7 +11,6 @@
 /* globals API_URL */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { captureException } from '../../utils/sentry';
 import { useCurrentUser } from '../current-user';
 import { NestedPopover, NestedPopoverTitle } from '../pop-overs/popover-nested';
@@ -183,7 +182,7 @@ SignInCodeSection.propTypes = {
 };
 
 const SignInPop = (props) => {
-  const { header, prompt, api } = props;
+  const { api } = props;
   const { currentUser } = useCurrentUser();
   const { persistentToken, login } = currentUser;
   const isSignedIn = persistentToken && login;
@@ -216,9 +215,7 @@ const SignInPop = (props) => {
                 width: '25%',
               }}
             >
-              {header}
               <section className="pop-over-actions first-section">
-                {prompt}
                 <EmailSignInButton
                   onClick={() => {
                     showEmailLogin(api);
@@ -240,9 +237,6 @@ const SignInPop = (props) => {
 
 SignInPop.propTypes = {
   api: PropTypes.func.isRequired,
-  header: PropTypes.node,
-  prompt: PropTypes.node,
-  hash: PropTypes.string,
 };
 
 export default SignInPop;
