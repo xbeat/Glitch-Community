@@ -86,10 +86,7 @@ const Featured = ({ featured, api }) => (
 );
 Featured.propTypes = {
   featured: PropTypes.array.isRequired,
-  api: PropTypes.any,
-};
-Featured.defaultProps = {
-  api: null,
+  api: PropTypes.any.isRequired,
 };
 
 const FeaturedContainer = ({ isAuthorized, api }) => (
@@ -98,10 +95,7 @@ const FeaturedContainer = ({ isAuthorized, api }) => (
 
 FeaturedContainer.propTypes = {
   isAuthorized: PropTypes.bool.isRequired,
-  api: PropTypes.any,
-};
-FeaturedContainer.defaultProps = {
-  api: null,
+  api: PropTypes.any.isRequired,
 };
 
 export default FeaturedContainer;

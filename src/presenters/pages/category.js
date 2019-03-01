@@ -47,9 +47,7 @@ const CategoryPageWrap = ({
             <div className="collection-contents">
               <div className="collection-project-container-header">
                 <h3>
-Projects (
-                  {category.projects.length}
-)
+                  Projects ({category.projects.length})
                 </h3>
               </div>
 
@@ -91,12 +89,8 @@ CategoryPageWrap.propTypes = {
     name: PropTypes.string.isRequired,
     projects: PropTypes.array.isRequired,
   }).isRequired,
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
-};
-
-CategoryPageWrap.defaultProps = {
-  api: null,
 };
 
 async function loadCategory(api, id) {
@@ -132,12 +126,8 @@ const CategoryPage = ({ api, category, ...props }) => (
 );
 
 CategoryPage.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   category: PropTypes.object.isRequired,
-};
-
-CategoryPage.defaultProps = {
-  api: null,
 };
 
 export default CategoryPage;

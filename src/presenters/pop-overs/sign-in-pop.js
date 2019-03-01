@@ -34,9 +34,7 @@ const SignInPopButton = props => (
     to={props.href}
     onClick={props.onClick}
   >
-    Sign in with
-    {' '}
-    {props.company}
+    Sign in with {props.company}
     {' '}
     <span className={`emoji ${props.emoji}`} />
   </Link>
@@ -133,9 +131,7 @@ class EmailHandler extends React.Component {
                     Almost Done
                   </div>
                   <div>
-                    Finish signing in from the email sent to
-                    {' '}
-                    {this.state.email}
+                    Finish signing in from the email sent to {this.state.email}
 .
                   </div>
                 </>

@@ -115,9 +115,7 @@ class EditCollectionColorPop extends React.Component {
             className="random-color-btn button-tertiary"
             onClick={this.getRandomColor}
           >
-            Random
-            {' '}
-            <span className="emoji bouquet" />
+            Random <span className="emoji bouquet" />
           </button>
         </section>
       </dialog>

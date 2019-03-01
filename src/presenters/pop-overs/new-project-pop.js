@@ -110,12 +110,9 @@ class NewProjectPopButton extends React.Component {
     );
   }
 }
-NewProjectPopButton.propTypes = {
-  api: PropTypes.any,
-};
 
-NewProjectPopButton.defaultProps = {
-  api: null,
+NewProjectPopButton.propTypes = {
+  api: PropTypes.any.isRequired,
 };
 
 export default NewProjectPopButton;

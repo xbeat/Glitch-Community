@@ -165,10 +165,7 @@ const SearchPage = ({ api, query }) => {
     <Layout api={api} searchQuery={query}>
       <Helmet>
         {!!query && (
-          <title>
-            Search for
-            {query}
-          </title>
+          <title>Search for {query}</title>
         )}
       </Helmet>
       {query ? (

@@ -76,14 +76,13 @@ CollectionsList.propTypes = {
   maybeCurrentUser: PropTypes.object,
   maybeTeam: PropTypes.object,
   title: PropTypes.node.isRequired,
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
 };
 
 CollectionsList.defaultProps = {
   maybeCurrentUser: undefined,
   maybeTeam: undefined,
-  api: null,
 };
 
 const CreateFirstCollection = () => (
@@ -166,14 +165,13 @@ export class CreateCollectionButton extends React.Component {
 }
 
 CreateCollectionButton.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   currentUser: PropTypes.object.isRequired,
   maybeTeam: PropTypes.object,
 };
 
 CreateCollectionButton.defaultProps = {
   maybeTeam: undefined,
-  api: null,
 };
 
 export const CollectionsUL = ({
@@ -206,7 +204,7 @@ export const CollectionsUL = ({
 };
 
 CollectionsUL.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   collections: PropTypes.array.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
@@ -214,7 +212,6 @@ CollectionsUL.propTypes = {
 
 CollectionsUL.defaultProps = {
   deleteCollection: () => {},
-  api: null,
 };
 
 export default CollectionsList;

@@ -206,7 +206,7 @@ const ProjectOptionsPop = ({ ...props }) => (
 );
 
 ProjectOptionsPop.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   currentUser: PropTypes.object.isRequired,
   project: PropTypes.shape({
     users: PropTypes.array.isRequired,
@@ -223,7 +223,6 @@ ProjectOptionsPop.propTypes = {
   currentUserIsOnProject: PropTypes.bool,
 };
 ProjectOptionsPop.defaultProps = {
-  api: null,
   currentUserIsOnProject: false,
   addPin: null,
   removePin: null,

@@ -1,26 +1,45 @@
 import React from 'react';
+import { captureException } from '../../utils/sentry';
+
+const getStorage = () => {
+  try {
+    const storage = window.localStorage;
+    storage.setItem('test', 'test');
+    storage.getItem('test');
+    storage.removeItem('test');
+    return storage;
+  } catch (error) {
+    console.warn('Local storage not available, using memory store');
+  }
+  return null;
+};
+const storage = getStorage();
 
 const readFromStorage = (name) => {
-  try {
-    const raw = window.localStorage.getItem(name);
-    if (raw !== null) {
-      return JSON.parse(raw);
+  if (storage) {
+    try {
+      const raw = storage.getItem(name);
+      if (raw !== null) {
+        return JSON.parse(raw);
+      }
+    } catch (error) {
+      captureException(error);
     }
-  } catch (error) {
-    console.warn('Failed to read from localStorage!', error);
   }
   return undefined;
 };
 
 const writeToStorage = (name, value) => {
-  try {
-    if (value !== undefined) {
-      window.localStorage.setItem(name, JSON.stringify(value));
-    } else {
-      window.localStorage.removeItem(name);
+  if (storage) {
+    try {
+      if (value !== undefined) {
+        storage.setItem(name, JSON.stringify(value));
+      } else {
+        storage.removeItem(name);
+      }
+    } catch (error) {
+      captureException(error);
     }
-  } catch (error) {
-    console.warn('Failed to write to localStorage!', error);
   }
 };
 
@@ -28,7 +47,11 @@ const useLocalStorage = (name, defaultValue) => {
   const [rawValue, setValueInMemory] = React.useState(() => readFromStorage(name));
 
   React.useEffect(() => {
-    const reload = () => setValueInMemory(readFromStorage(name));
+    const reload = (event) => {
+      if (event.storageArea === storage && event.key === name) {
+        setValueInMemory(readFromStorage(name));
+      }
+    };
     window.addEventListener('storage', reload, { passive: true });
     return () => {
       window.removeEventListener('storage', reload, { passive: true });

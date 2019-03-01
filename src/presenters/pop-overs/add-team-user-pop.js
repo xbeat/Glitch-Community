@@ -218,7 +218,7 @@ class AddTeamUserPop extends React.Component {
   }
 }
 AddTeamUserPop.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   inviteEmail: PropTypes.func.isRequired,
   inviteUser: PropTypes.func.isRequired,
   members: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
@@ -230,7 +230,6 @@ AddTeamUserPop.propTypes = {
 AddTeamUserPop.defaultProps = {
   setWhitelistedDomain: () => {},
   whitelistedDomain: '',
-  api: null,
 };
 
 const Results = ({ results, isLoading }) => {
@@ -245,11 +244,7 @@ const Results = ({ results, isLoading }) => {
   if (results.length === 0) {
     return (
       <section className="pop-over-actions last-section">
-        Nothing found
-        {' '}
-        <span role="img" aria-label="">
-          💫
-        </span>
+        Nothing found <span role="img" aria-label="">💫</span>
       </section>
     );
   }

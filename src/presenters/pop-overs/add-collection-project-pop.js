@@ -53,23 +53,15 @@ const ProjectSearchResults = ({
   if (projectName) {
     return (
       <p className="results-empty">
-        {projectName}
-        {' '}
-is already in this collection
-        <span role="img" aria-label="">
-          💫
-        </span>
+        {projectName} is already in this collection
+        <span role="img" aria-label="">💫</span>
       </p>
     );
   }
 
   return (
     <p className="results-empty">
-      nothing found
-      {' '}
-      <span role="img" aria-label="">
-        💫
-      </span>
+      nothing found <span role="img" aria-label="">💫</span>
       <br />
       {excludedProjectsCount > 0 && (
         <span>

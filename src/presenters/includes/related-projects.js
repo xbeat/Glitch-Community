@@ -80,7 +80,7 @@ class RelatedProjects extends React.Component {
           <li key={team.id}>
             <h2>
               <TeamLink team={team}>
-                {`More by ${team.name} → `}
+                More by {team.name} →
               </TeamLink>
             </h2>
             <DataLoader
@@ -91,8 +91,7 @@ class RelatedProjects extends React.Component {
                   projects={projects}
                   coverStyle={getTeamProfileStyle(team)}
                 />
-              )
-              }
+              )}
             </DataLoader>
           </li>
         ))}
@@ -100,7 +99,7 @@ class RelatedProjects extends React.Component {
           <li key={user.id}>
             <h2>
               <UserLink user={user}>
-                {`More by ${getDisplayName(user)} → `}
+                More by {getDisplayName(user)} →
               </UserLink>
             </h2>
             <DataLoader
@@ -111,8 +110,7 @@ class RelatedProjects extends React.Component {
                   projects={projects}
                   coverStyle={getUserProfileStyle(user)}
                 />
-              )
-              }
+              )}
             </DataLoader>
           </li>
         ))}
@@ -121,14 +119,13 @@ class RelatedProjects extends React.Component {
   }
 }
 RelatedProjects.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   ignoreProjectId: PropTypes.string.isRequired,
   teams: PropTypes.array,
   users: PropTypes.array,
 };
 
 RelatedProjects.defaultProps = {
-  api: [],
   teams: [],
   users: [],
 };

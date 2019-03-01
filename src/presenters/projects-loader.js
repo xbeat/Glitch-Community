@@ -70,13 +70,11 @@ class ProjectsLoader extends React.Component {
     );
   }
 }
+
 ProjectsLoader.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   projects: PropTypes.array.isRequired,
-};
-ProjectsLoader.defaultProps = {
-  api: null,
 };
 
 export default ProjectsLoader;
