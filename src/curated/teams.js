@@ -1,4 +1,4 @@
-// / These urls become root glitch.com/team pages
+// These urls become root glitch.com/team pages
 // This is here for backwards compatibility
 
 export default {
