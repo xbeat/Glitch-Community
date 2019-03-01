@@ -9,7 +9,7 @@
  * copy of /pop-overs/sign-in-pop.
  */
 /* globals API_URL */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { captureException } from '../../utils/sentry';
@@ -113,11 +113,6 @@ class SignInCodeHandler extends React.Component {
     try {
       const { data } = await this.props.api.post(`/auth/email/${this.state.code}`);
       this.props.setUser(data);
-      const { persistentToken } = data;
-      const { login } = data;
-      if (persistentToken && login) {
-        this.props.setIsSignedIn(true);
-      }
       this.setState({ error: false });
     } catch (error) {
       captureException(error);
@@ -191,24 +186,21 @@ const SignInPopWithoutRouter = (props) => {
   const { header, prompt, api } = props;
   const { currentUser } = useCurrentUser();
   const { persistentToken, login } = currentUser;
+  onst;
 
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  if (!isSignedIn && persistentToken && login) {
-    setIsSignedIn(true);
-  }
-
-  if (isSignedIn) {
-    const queryParamsStart = window.location.href.indexOf('?');
-    const queryParams = window.location.href.substring(queryParamsStart);
-    window.location.href = `${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`;
-    return null;
-  }
+  React.useEffect(() => {
+    if (persistentToken && login) {
+      const queryParamsStart = window.location.href.indexOf('?');
+      const queryParams = window.location.href.substring(queryParamsStart);
+      window.location.href = `${API_URL}/oauth/dialog/authorize${queryParams}&authorization=${persistentToken}`;
+    }
+  }, [persistentToken, login]);
 
   return (
     <NestedPopover alternateContent={() => <SignIn {...props} />} startAlternateVisible={false}>
       {showEmailLogin => (
         <NestedPopover
-          alternateContent={() => <SignInWithConsumer {...props} setIsSignedIn={setIsSignedIn} />}
+          alternateContent={() => <SignInWithConsumer {...props} />}
           startAlternateVisible={false}
         >
           {showCodeLogin => (
@@ -250,6 +242,4 @@ SignInPop.propTypes = {
   hash: PropTypes.string,
 };
 
-export default function SignInPopContainer(props) {
-  return <SignInPop {...props} />;
-}
+export default SignInPop;
