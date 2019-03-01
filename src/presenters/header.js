@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import { TrackedExternalLink } from './analytics';
 import { Link } from './includes/link';
 import Logo from './includes/logo';
+import TextInput from '../components/fields/text-input';
 
 import UserOptionsPop from './pop-overs/user-options-pop';
 import SignInPop from './pop-overs/sign-in-pop';
@@ -32,8 +33,8 @@ class SearchForm extends React.Component {
     };
   }
 
-  onChange(event) {
-    this.setState({ value: event.target.value });
+  onChange(value) {
+    this.setState({ value });
   }
 
   onSubmit(event) {
@@ -45,18 +46,15 @@ class SearchForm extends React.Component {
   render() {
     const { value, submitted } = this.state;
     return (
-      <form
-        action="/search"
-        method="get"
-        role="search"
-        onSubmit={this.onSubmit.bind(this)}
-      >
-        <input
-          className="search-input"
+      <form action="/search" method="get" role="search" onSubmit={this.onSubmit.bind(this)}>
+        <TextInput
+          className="header-search"
           name="q"
-          placeholder="bots, apps, users"
-          value={value}
           onChange={this.onChange.bind(this)}
+          opaque
+          placeholder="bots, apps, users"
+          type="search"
+          value={value}
         />
         {submitted && <Redirect to={`/search?q=${value}`} push />}
       </form>
