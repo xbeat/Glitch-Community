@@ -58,8 +58,8 @@ class RelatedProjects extends React.Component {
       const { data } = await this.props.api.get(
         `projects/byIds?ids=${ids.join(',')}`,
       );
-      console.log(data)
-      return data;
+
+      return data.length ? data : null
     }
     return null;
   }
