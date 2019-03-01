@@ -8,7 +8,9 @@ const cx = classNames.bind(styles);
 export const TYPES = ['action', 'information'];
 export const ALIGNMENTS = ['left', 'right', 'center', 'top'];
 
-function TooltipContainer({ id, type, tooltip, target, align, persistent, children }) {
+function TooltipContainer({
+  id, type, tooltip, target, align, persistent, children,
+}) {
   const [tooltipIsActive, setTooltipIsActive] = useState(false);
 
   const tooltipContainerClassName = cx({
@@ -73,7 +75,7 @@ TooltipContainer.propTypes = {
   /* the type of tooltip */
   type: PropTypes.oneOf(TYPES).isRequired,
   /* tooltip text */
-  toolip: PropTypes.string,
+  tooltip: PropTypes.string,
   /* the focus/hover target of the tooltip */
   target: PropTypes.node.isRequired,
   /* how to align the tooltip */
@@ -84,6 +86,9 @@ TooltipContainer.propTypes = {
 
 TooltipContainer.defaultProps = {
   align: ['center'],
+  persistent: false,
+  children: null,
+  tooltip: '',
 };
 
 export default TooltipContainer;

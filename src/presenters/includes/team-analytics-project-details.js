@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { ProjectLink } from './link';
 import { Loader } from './loader';
 import { FALLBACK_AVATAR_URL, getAvatarUrl } from '../../models/project';
-import TooltipContainer from "../../components/tooltip-container";
+import TooltipContainer from '../../components/tooltip-container';
 
 const RECENT_REMIXES_COUNT = 100;
 
@@ -124,9 +124,9 @@ const ProjectDetails = ({ projectDetails }) => (
 const ProjectRemixItem = ({ remix }) => (
   <ProjectLink project={remix}>
     <TooltipContainer
-      id={"project-remix-tooltip-" + remix}
+      id={`project-remix-tooltip-${remix}`}
       target={<ProjectAvatar project={remix} />}
-      align={["left"]}
+      align={['left']}
       type="information"
       tooltip={remix}
     />
