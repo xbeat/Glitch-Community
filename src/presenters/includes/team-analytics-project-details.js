@@ -124,11 +124,11 @@ const ProjectDetails = ({ projectDetails }) => (
 const ProjectRemixItem = ({ remix }) => (
   <ProjectLink project={remix}>
     <TooltipContainer
-      id={`project-remix-tooltip-${remix}`}
+      id={"project-remix-tooltip-" + remix.domain}
       target={<ProjectAvatar project={remix} />}
       align={['left']}
       type="information"
-      tooltip={remix}
+      tooltip={remix.domain}
     />
   </ProjectLink>
 );
