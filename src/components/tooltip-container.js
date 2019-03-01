@@ -1,54 +1,46 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames/bind";
-import styles from "./tooltip.styl";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
+import styles from './tooltip.styl';
 
 const cx = classNames.bind(styles);
 
-export const TYPES = ["action", "information"];
-export const ALIGNMENTS = ["left", "right", "center", "top"];
+export const TYPES = ['action', 'information'];
+export const ALIGNMENTS = ['left', 'right', 'center', 'top'];
 
-function TooltipContainer({
-  id,
-  type,
-  tooltip,
-  target,
-  align,
-  persistent,
-  children
-}) {
+function TooltipContainer({ id, type, tooltip, target, align, persistent, children }) {
   const [tooltipIsActive, setTooltipIsActive] = useState(false);
 
   const tooltipContainerClassName = cx({
-    "tooltip-container": true
+    'tooltip-container': true,
   });
 
   const tooltipClassName = cx({
     tooltip: true,
-    top: align.includes("top"),
-    left: align.includes("left"),
-    right: align.includes("right"),
-    "new-stuff": id === "new-stuff-tooltip",
-    persistent
+    top: align.includes('top'),
+    left: align.includes('left'),
+    right: align.includes('right'),
+    'new-stuff': id === 'new-stuff-tooltip',
+    persistent,
   });
 
   let role;
   let extendedTarget;
-  if (type === "action") {
+  if (type === 'action') {
     // action tooltips are visible on hover and focus, click triggers a separate action
     // they should always be populated with their content, even when they are "hidden"
 
-    role = "tooltip";
+    role = 'tooltip';
     extendedTarget = React.cloneElement(target, {
-      "aria-labelledby": id
+      'aria-labelledby': id,
     });
-  } else if (type === "information") {
+  } else if (type === 'information') {
     // information tooltips are visible on hover and focus, they provide supplementary info
     // they should be empty when not "visible", and populated when they are
 
-    role = "status";
+    role = 'status';
     extendedTarget = React.cloneElement(target, {
-      "aria-describedby": id
+      'aria-describedby': id,
     });
   }
 
@@ -64,13 +56,8 @@ function TooltipContainer({
       >
         {extendedTarget}
       </div>
-      <div
-        role={role}
-        id={id}
-        className={tooltipClassName}
-        style={{ opacity: shouldShowTooltip ? 1 : 0 }}
-      >
-        {type === "information" || shouldShowTooltip ? tooltip : null}
+      <div role={role} id={id} className={tooltipClassName} style={{ opacity: shouldShowTooltip ? 1 : 0 }}>
+        {type === 'information' || shouldShowTooltip ? tooltip : null}
       </div>
       {children}
     </div>
@@ -92,12 +79,11 @@ TooltipContainer.propTypes = {
   /* how to align the tooltip */
   align: PropTypes.arrayOf(PropTypes.oneOf(ALIGNMENTS)),
   /* whether to persistently show the tooltip */
-  persistent: PropTypes.bool
+  persistent: PropTypes.bool,
 };
 
 TooltipContainer.defaultProps = {
-  align: ["top"],
-  persistent: true
+  align: ['center'],
 };
 
 export default TooltipContainer;
