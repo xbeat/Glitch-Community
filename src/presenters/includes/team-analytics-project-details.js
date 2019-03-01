@@ -24,12 +24,7 @@ const addFallbackSrc = (event) => {
 };
 
 const ProjectAvatar = ({ project, className = '' }) => (
-  <img
-    src={getAvatarUrl(project.id)}
-    className={`avatar ${className}`}
-    alt={project.domain}
-    onError={addFallbackSrc}
-  />
+  <img src={getAvatarUrl(project.id)} className={`avatar ${className}`} alt={project.domain} onError={addFallbackSrc} />
 );
 ProjectAvatar.propTypes = {
   project: PropTypes.shape({
@@ -55,63 +50,42 @@ const ProjectDetails = ({ projectDetails }) => (
       <tbody>
         <tr>
           <td className="label">Created</td>
-          <td>
-            {dayjs(projectDetails.createdAt).fromNow()}
-          </td>
+          <td>{dayjs(projectDetails.createdAt).fromNow()}</td>
         </tr>
         <tr>
           <td className="label">Last viewed</td>
-          <td>
-            {dayjs(projectDetails.lastAccess).fromNow()}
-          </td>
+          <td>{dayjs(projectDetails.lastAccess).fromNow()}</td>
         </tr>
         <tr>
           <td className="label">Last edited</td>
-          <td>
-            {dayjs(projectDetails.lastEditedAt).fromNow()}
-          </td>
+          <td>{dayjs(projectDetails.lastEditedAt).fromNow()}</td>
         </tr>
         <tr>
           <td className="label">Last remixed</td>
-          <td>
-            {projectDetails.lastRemixedAt
-              ? dayjs(projectDetails.lastRemixedAt).fromNow()
-              : 'never'}
-          </td>
+          <td>{projectDetails.lastRemixedAt ? dayjs(projectDetails.lastRemixedAt).fromNow() : 'never'}</td>
         </tr>
         <tr>
           <td className="label">Total app views</td>
-          <td>
-            {projectDetails.numAppVisits}
-          </td>
+          <td>{projectDetails.numAppVisits}</td>
         </tr>
         <tr>
           <td className="label">Total code views</td>
-          <td>
-            {projectDetails.numEditorVisits}
-          </td>
+          <td>{projectDetails.numEditorVisits}</td>
         </tr>
         <tr>
           <td className="label">Total direct remixes</td>
-          <td>
-            {projectDetails.numDirectRemixes}
-          </td>
+          <td>{projectDetails.numDirectRemixes}</td>
         </tr>
         <tr>
           <td className="label">Total remixes</td>
-          <td>
-            {projectDetails.numTotalRemixes}
-          </td>
+          <td>{projectDetails.numTotalRemixes}</td>
         </tr>
         {projectDetails.baseProject.domain && (
           <tr>
             <td className="label">Originally remixed from</td>
             <td>
               <ProjectLink project={projectDetails.baseProject}>
-                <ProjectAvatar
-                  project={projectDetails.baseProject}
-                  className="baseproject-avatar"
-                />
+                <ProjectAvatar project={projectDetails.baseProject} className="baseproject-avatar" />
                 {projectDetails.baseProject.domain}
               </ProjectLink>
             </td>
@@ -124,7 +98,7 @@ const ProjectDetails = ({ projectDetails }) => (
 const ProjectRemixItem = ({ remix }) => (
   <ProjectLink project={remix}>
     <TooltipContainer
-      id={"project-remix-tooltip-" + remix.domain}
+      id={`project-remix-tooltip-${remix.domain}`}
       target={<ProjectAvatar project={remix} />}
       align={['left']}
       type="information"
@@ -176,9 +150,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
         <ProjectDetails projectDetails={this.state.projectDetails} />
         <article className="project-remixes">
           <h4>Latest Remixes</h4>
-          {this.state.projectRemixes.length === 0 && (
-            <p>No remixes yet (／_^)／ ●</p>
-          )}
+          {this.state.projectRemixes.length === 0 && <p>No remixes yet (／_^)／ ●</p>}
           {this.state.projectRemixes.map(remix => (
             <ProjectRemixItem key={remix.id} remix={remix} />
           ))}
