@@ -84,7 +84,7 @@ module.exports = {
             loader: "babel-loader",
             include:
               mode === "development"
-                ? [SRC, SHARED]
+                ? [SRC, SHARED, NODE_MODULES]
                 : [SRC, SHARED, NODE_MODULES],
             query: {
               compact: mode === "development" ? true : false,

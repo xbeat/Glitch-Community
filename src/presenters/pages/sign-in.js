@@ -182,17 +182,15 @@ SignInCodeSection.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-const SignInPopWithoutRouter = (props) => {
-  const {
-    header, prompt, api, location,
-  } = props;
+const SignInPop = (props) => {
+  const { header, prompt, api } = props;
   const { currentUser } = useCurrentUser();
   const { persistentToken, login } = currentUser;
   const isSignedIn = persistentToken && login;
 
   React.useEffect(() => {
     if (isSignedIn) {
-      const params = new URLSearchParams(location.search);
+      const params = new URLSearchParams(window.location.search);
       params.append('authorization', persistentToken);
       window.location.assign(`${API_URL}/oauth/dialog/authorize?${params}`);
     }
@@ -240,7 +238,6 @@ const SignInPopWithoutRouter = (props) => {
   );
 };
 
-export const SignInPop = withRouter(SignInPopWithoutRouter);
 SignInPop.propTypes = {
   api: PropTypes.func.isRequired,
   header: PropTypes.node,
