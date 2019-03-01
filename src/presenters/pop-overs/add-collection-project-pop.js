@@ -1,6 +1,7 @@
 // add-collection-project-pop -> Add a project to a collection via the collection page
 import React from 'react';
 import PropTypes from 'prop-types';
+import Pluralize from 'react-pluralize';
 import { debounce } from 'lodash';
 
 import { TrackClick } from '../analytics';
@@ -82,8 +83,7 @@ const ProjectSearchResults = ({
       <br />
       {excludedProjectsCount > 0 && (
         <span>
-          <Pluralize count={excludedProjectsCount} singular="result" />
-          Excluded {excludedProjectsCount} search <Pluralize count={excludedProjectsCount} singular="result" />
+          Excluded <Pluralize count={excludedProjectsCount} singular="search result" />
         </span>
       )}
     </p>
