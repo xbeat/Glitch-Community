@@ -14,18 +14,18 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'MIDI Songs Become Cities',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmidi-city-ctervo-gif.gif?1551088643364',
-    link: 'https://midicity-2000.glitch.me/',
+    title: 'Bot Created Space Comics',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fgentle-spaces-ctervo-lr.jpg?1551353264934',
+    link: 'https://gentle-spaces.glitch.me/',
   },
   {
-    title: 'Markov Chain Headlines',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Frss-headlines-ctervo-gif.gif?1551088646997',
-    link: 'https://rss-headlines.glitch.me/',
+    title: 'Intersecting Circles',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fhypnotic-hip-ctervo-lr.jpg?1551353263314',
+    link: 'https://hypnotic-hip.glitch.me/',
   },
   {
-    title: 'Sea Pinks and High Tide',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsea-pinks-ctervo-.gif?1551088649326',
-    link: 'https://sea-pinks.glitch.me/',
+    title: 'Programmatic Lipstick Applier',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Flipstick-robot-lr.jpg?1551353275526',
+    link: 'https://lipstick-robot.glitch.me/',
   }
 ];

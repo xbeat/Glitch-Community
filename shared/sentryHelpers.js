@@ -2,7 +2,7 @@ const onProductionSite = (projectDomain, apiEnvironment) => (projectDomain === '
   apiEnvironment === 'production';
 
 const filterSecrets = function (jsonEvent) {
-  const tokens = ['facebookToken', 'githubToken', 'persistentToken'];
+  const tokens = ['facebookToken', 'gitAccessToken', 'githubToken', 'inviteToken', 'persistentToken'];
   tokens.forEach((token) => {
     const regexp = new RegExp(`"${token}":"[^"]+"`, 'g');
     jsonEvent = jsonEvent.replace(regexp, `"${token}":"****"`);
@@ -12,7 +12,7 @@ const filterSecrets = function (jsonEvent) {
 
 const ignoreErrors = ['Network Error', 'timeout', 'status code 401'];
 
-const beforeSend = function (projectDomain, apiEnv, event, hint) {
+const beforeSend = function (projectDomain, apiEnv, event) {
  if (!onProductionSite(projectDomain, apiEnv)) {
     return null;
   }

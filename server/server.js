@@ -10,8 +10,8 @@ try {
   Sentry.init({
     dsn: 'https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508',
     environment: process.env.NODE_ENV || 'dev',
-    beforeSend(event, hint) {
-      return sentryHelpers.beforeSend(process.env.PROJECT_DOMAIN, constants.currentEnv, event, hint);
+    beforeSend(event) {
+      return sentryHelpers.beforeSend(process.env.PROJECT_DOMAIN, constants.currentEnv, event);
     },
     beforeBreadcrumb(breadcrumb) {
       return sentryHelpers.beforeBreadcrumb(breadcrumb);
