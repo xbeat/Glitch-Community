@@ -66,8 +66,6 @@ function TooltipContainer({
   );
 }
 
-// TODO multiple duplicate ids
-
 TooltipContainer.propTypes = {
   children: PropTypes.node,
   /* the id of the tooltip */
