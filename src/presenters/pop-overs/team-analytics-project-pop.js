@@ -6,7 +6,7 @@ import PopoverWithButton from './popover-with-button';
 
 const AllProjectsItem = ({ currentProjectDomain, action }) => {
   const BENTO_BOX = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fbento-box.png?1502469566743';
-  let resultsClass = 'button-unstyled result';
+  let resultsClass = 'button-unstyled result result-project';
   if (!currentProjectDomain) {
     resultsClass += ' active';
   }
