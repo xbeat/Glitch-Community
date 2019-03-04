@@ -7,7 +7,7 @@ import Helmet from 'react-helmet';
 import { getAvatarUrl } from '../../models/project';
 
 import { AnalyticsContext } from '../analytics';
-import TooltipContainer from '../../components/tooltip-container';
+import TooltipContainer from '../../components/tooltips/tooltip-container';
 import { DataLoader } from '../includes/loader';
 import NotFound from '../includes/not-found';
 import Markdown from '../includes/markdown';

@@ -7,7 +7,7 @@ import { TrackClick } from '../analytics';
 import { NestedPopover } from './popover-nested';
 import { UserLink } from '../includes/link';
 import { Thanks } from '../includes/thanks';
-import TooltipContainer from '../../components/tooltip-container';
+import TooltipContainer from '../../components/tooltips/tooltip-container';
 
 import TeamUserRemovePop from './team-user-remove-pop';
 

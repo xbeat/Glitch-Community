@@ -9,7 +9,7 @@ import AddTeamUserPop from '../pop-overs/add-team-user-pop';
 import PopoverWithButton from '../pop-overs/popover-with-button';
 import PopoverContainer from '../pop-overs/popover-container';
 import TeamUserInfoPop from '../pop-overs/team-user-info-pop';
-import TooltipContainer from '../../components/tooltip-container';
+import TooltipContainer from '../../components/tooltips/tooltip-container';
 import UsersList from '../users-list';
 
 // Team Users list (in profile container)

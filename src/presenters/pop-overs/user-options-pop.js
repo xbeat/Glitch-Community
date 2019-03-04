@@ -9,7 +9,7 @@ import { Link, TeamLink, UserLink } from '../includes/link';
 import PopoverContainer from './popover-container';
 import { NestedPopover } from './popover-nested';
 import CreateTeamPop from './create-team-pop';
-import TooltipContainer from '../../components/tooltip-container';
+import TooltipContainer from '../../components/tooltips/tooltip-container';
 
 // Create Team button
 

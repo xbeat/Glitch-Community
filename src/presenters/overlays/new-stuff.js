@@ -5,7 +5,7 @@ import { Link } from '../includes/link';
 import Markdown from '../includes/markdown';
 import PopoverContainer from '../pop-overs/popover-container';
 import useUserPref from '../includes/user-prefs';
-import TooltipContainer from '../../components/tooltip-container';
+import TooltipContainer from '../../components/tooltips/tooltip-container';
 
 import newStuffLog from '../../curated/new-stuff-log';
 
