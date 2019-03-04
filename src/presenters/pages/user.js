@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
-import { partition } from 'lodash';
+import { orderBy, partition } from 'lodash';
 import { getAvatarStyle, getLink, getProfileStyle } from '../../models/user';
 
 import { AnalyticsContext } from '../analytics';
@@ -272,7 +272,7 @@ const UserPageContainer = ({ api, user }) => (
 
           <CurrentUserConsumer>
             {maybeCurrentUser => (
-              <ProjectsLoader api={api} projects={userFromEditor.projects}>
+              <ProjectsLoader api={api} projects={orderBy(userFromEditor.projects, project => project.updatedAt, ['desc'])}>
                 {projects => (
                   <UserPage
                     {...{ api, isAuthorized, maybeCurrentUser }}
