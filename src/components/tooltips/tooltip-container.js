@@ -84,7 +84,6 @@ TooltipContainer.propTypes = {
 
 TooltipContainer.defaultProps = {
   align: ['center'],
-  persistent: false,
   children: null,
   tooltip: '',
 };
