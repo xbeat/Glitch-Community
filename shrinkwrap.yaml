@@ -20,8 +20,8 @@ dependencies:
   compression: 1.7.3
   css-loader: 2.1.0
   d3-array: 2.0.3
-  dayjs: 1.8.6
-  details-element-polyfill: 2.3.0
+  dayjs: 1.8.8
+  details-element-polyfill: 2.3.1
   ejs: 2.6.1
   email-addresses: 3.0.3
   eslint: 5.14.1
@@ -30,8 +30,8 @@ dependencies:
   eslint-plugin-import: 2.16.0
   eslint-plugin-jsx-a11y: 6.2.1
   eslint-plugin-react: 7.12.4
-  eslint-plugin-react-hooks: 1.2.0
-  eslint-scope: 4.0.0
+  eslint-plugin-react-hooks: 1.4.0
+  eslint-scope: 4.0.2
   express: 4.16.4
   express-http-proxy: 1.5.1
   group-by-time: 1.0.0
@@ -60,8 +60,9 @@ dependencies:
   stats-webpack-plugin: 0.7.0
   stylus: 0.54.5
   stylus-loader: 3.0.2
-  terser-webpack-plugin: 1.2.2
+  terser-webpack-plugin: 1.2.3
   url-join: 4.0.0
+  url-search-params-polyfill: 5.0.0
   webpack: 4.29.5
   webpack-cli: 3.2.3
   webpack-dev-middleware: 3.6.0
@@ -4787,10 +4788,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
-  /dayjs/1.8.6:
+  /dayjs/1.8.8:
     dev: false
     resolution:
-      integrity: sha512-NLhaSS1/wWLRFy0Kn/VmsAExqll2zxRUPmPbqJoeMKQrFxG+RT94VMSE+cVljB6A76/zZkR0Xub4ihTHQ5HgGg==
+      integrity: sha512-qBY3kVAVJMxzS4e7DAwZZ/SSiO/DBXbvc/qqbyf1FbsZrxBq81QPdUEWhiPu8Fragf5RfHsLwtH8kCGwKL4qLQ==
   /debug/2.6.9:
     dependencies:
       ms: 2.0.0
@@ -4889,10 +4890,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
-  /details-element-polyfill/2.3.0:
+  /details-element-polyfill/2.3.1:
     dev: false
     resolution:
-      integrity: sha512-zYkGHY5+Ga9UU4ZD5OSTPKYvwPf8felEmy1JA7lSaflOEleSEPDJUY6APqj3Vo2Z4JXSq431n/3z7hE2KYkSrg==
+      integrity: sha512-7Gr2pBgSpeSvBGBWjMESJ7WClexq3A5/HlZ2ZVgG4OjNvTgRfCEe0+ZEfT44JymqCtHd04+pSrgYg4W6yok/6w==
   /detect-file/1.0.0:
     dev: false
     engines:
@@ -5303,14 +5304,14 @@ packages:
       eslint: ^3 || ^4 || ^5
     resolution:
       integrity: sha512-cjN2ObWrRz0TTw7vEcGQrx+YltMvZoOEx4hWU8eEERDnBIU00OTq7Vr+jA7DFKxiwLNv4tTh5Pq2GUNEa8b6+w==
-  /eslint-plugin-react-hooks/1.2.0:
+  /eslint-plugin-react-hooks/1.4.0:
     dev: false
     engines:
-      node: '>=6'
+      node: '>=7'
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0
     resolution:
-      integrity: sha512-pb/pwyHg0K3Ss/8loSwCGRSXIsvPBHWfzcP/6jeei0SgWBOyXRbcKFpGxolg0xSmph0jQKLyM27B74clbZM/YQ==
+      integrity: sha512-fMGlzztW/5hSQT0UBnlPwulao0uF8Kyp0Uv6PA81lzmcDz2LBtthkWQaE8Wz2F2kEe7mSRDgK8ABEFK1ipeDxw==
   /eslint-plugin-react/7.12.4:
     dependencies:
       array-includes: 3.0.3
@@ -5349,6 +5350,15 @@ packages:
       node: '>=4.0.0'
     resolution:
       integrity: sha512-1G6UTDi7Jc1ELFwnR58HV4fK9OQK4S6N985f166xqXxpjU6plxFISJa2Ba9KCQuFa8RCnj/lSFJbHo7UFDBnUA==
+  /eslint-scope/4.0.2:
+    dependencies:
+      esrecurse: 4.2.1
+      estraverse: 4.2.0
+    dev: false
+    engines:
+      node: '>=4.0.0'
+    resolution:
+      integrity: sha512-5q1+B/ogmHl8+paxtOKx38Z8LtWkVGuNt3+GQNErqwLl6ViNp/gdJGMCjZNxZ8j/VYjDNZ2Fo+eQc1TAVPIzbg==
   /eslint-utils/1.3.1:
     dev: false
     engines:
@@ -10216,6 +10226,23 @@ packages:
       webpack: ^4.0.0
     resolution:
       integrity: sha512-1DMkTk286BzmfylAvLXwpJrI7dWa5BnFmscV/2dCr8+c56egFcbaeFAl7+sujAjdmpLam21XRdhA4oifLyiWWg==
+  /terser-webpack-plugin/1.2.3:
+    dependencies:
+      cacache: 11.3.2
+      find-cache-dir: 2.0.0
+      schema-utils: 1.0.0
+      serialize-javascript: 1.6.1
+      source-map: 0.6.1
+      terser: 3.16.1
+      webpack-sources: 1.3.0
+      worker-farm: 1.6.0
+    dev: false
+    engines:
+      node: '>= 6.9.0'
+    peerDependencies:
+      webpack: ^4.0.0
+    resolution:
+      integrity: sha512-GOK7q85oAb/5kE12fMuLdn2btOS9OBZn4VsecpHDywoUC/jLhSAKOiYo0ezx7ss2EXPMzyEWFoE0s1WLE+4+oA==
   /terser/3.16.1:
     dependencies:
       commander: 2.17.1
@@ -10561,6 +10588,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-/92DTTorg4JjktLNLe6GPS2/RvAd/RGr6LuktmWSMLEOa6rjnlrFXNgSbSmkNvCoL2T028A0a1JaJLzRMlFoHg==
+  /url-search-params-polyfill/5.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-+SCD22QJp4UnqPOI5UTTR0Ljuh8cHbjEf1lIiZrZ8nHTlTixqwVsVQTSfk5vrmDz7N09/Y+ka5jQr0ff35FnQQ==
   /url/0.11.0:
     dependencies:
       punycode: 1.3.2
@@ -11000,8 +11031,8 @@ specifiers:
   compression: ^1.7.3
   css-loader: ^2.1.0
   d3-array: ^2.0.3
-  dayjs: ^1.8.6
-  details-element-polyfill: ^2.2.0
+  dayjs: ^1.8.8
+  details-element-polyfill: ^2.3.1
   ejs: ^2.6.1
   email-addresses: ^3.0.3
   eslint: ^5.14.1
@@ -11010,8 +11041,8 @@ specifiers:
   eslint-plugin-import: ^2.16.0
   eslint-plugin-jsx-a11y: ^6.2.1
   eslint-plugin-react: ^7.12.2
-  eslint-plugin-react-hooks: ^1.2.0
-  eslint-scope: ^4.0.0
+  eslint-plugin-react-hooks: ^1.4.0
+  eslint-scope: ^4.0.1
   express: ^4.16.4
   express-http-proxy: ^1.5.1
   group-by-time: ^1.0.0
@@ -11040,8 +11071,9 @@ specifiers:
   stats-webpack-plugin: ^0.7.0
   stylus: ^0.54.5
   stylus-loader: ^3.0.2
-  terser-webpack-plugin: ^1.2.2
+  terser-webpack-plugin: ^1.2.3
   url-join: ^4.0.0
+  url-search-params-polyfill: ^5.0.0
   webpack: ^4.29.3
   webpack-cli: ^3.2.2
   webpack-dev-middleware: ^3.5.2
