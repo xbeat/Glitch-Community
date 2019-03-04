@@ -45,7 +45,6 @@ const PrivateTooltip = 'Only members can view code';
 const PublicTooltip = 'Visible to everyone';
 
 const PrivateBadge = () => {
-  console.log('privatetooltip', PrivateTooltip);
   return (
     <TooltipContainer
       type="information"
