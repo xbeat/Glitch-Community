@@ -14,18 +14,18 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'Bot Created Space Comics',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fgentle-spaces-ctervo-lr.jpg?1551353264934',
-    link: 'https://gentle-spaces.glitch.me/',
+    title: 'YA! That\'s good!',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_YoungAdult%20v2.jpg?1551709691968',
+    link: 'https://yathatsgood.glitch.me/',
   },
   {
-    title: 'Intersecting Circles',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fhypnotic-hip-ctervo-lr.jpg?1551353263314',
-    link: 'https://hypnotic-hip.glitch.me/',
+    title: 'Interactive Typography',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_Futura%20v2.jpg?1551709692693',
+    link: 'https://just-futura.glitch.me/',
   },
   {
-    title: 'Programmatic Lipstick Applier',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Flipstick-robot-lr.jpg?1551353275526',
-    link: 'https://lipstick-robot.glitch.me/',
+    title: 'Gravitational Do-si-do',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_Orbit%20v2.jpg?1551709692442',
+    link: 'https://coorbit.glitch.me/',
   }
 ];
