@@ -94,7 +94,7 @@ class NewStuff extends React.Component {
     return (
       <>
         {children(show)}
-        {!dogVisible && (
+        {dogVisible && (
           <div className="new-stuff-footer">
             <TooltipContainer
               id="new-stuff-tooltip"
