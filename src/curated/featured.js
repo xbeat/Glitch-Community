@@ -14,18 +14,18 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'MIDI Songs Become Cities',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmidi-city-ctervo-gif.gif?1551088643364',
-    link: 'https://midicity-2000.glitch.me/',
+    title: 'YA! That\'s good!',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_YoungAdult%20v2.jpg?1551709691968',
+    link: 'https://yathatsgood.glitch.me/',
   },
   {
-    title: 'Markov Chain Headlines',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Frss-headlines-ctervo-gif.gif?1551088646997',
-    link: 'https://rss-headlines.glitch.me/',
+    title: 'Interactive Typography',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_Futura%20v2.jpg?1551709692693',
+    link: 'https://just-futura.glitch.me/',
   },
   {
-    title: 'Sea Pinks and High Tide',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsea-pinks-ctervo-.gif?1551088649326',
-    link: 'https://sea-pinks.glitch.me/',
+    title: 'Gravitational Do-si-do',
+    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_Orbit%20v2.jpg?1551709692442',
+    link: 'https://coorbit.glitch.me/',
   }
 ];

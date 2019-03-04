@@ -155,7 +155,6 @@ popover-secondary-background()
       margin: 0
     textarea
       min-height: 100px
-      margin-bottom: -5px
 
   .emoji
     display: inline-block
@@ -418,9 +417,12 @@ popover-secondary-background()
       width: 76%
       vertical-align: top
     .users
-      display: block
-      margin-bottom: 3px
       project-result-avatar-size = 22px
+      users-results-height = project-result-avatar-size + 6px
+      display: block
+      height: users-results-height
+      margin-bottom: 3px
+      overflow: hidden
       .user
         width: project-result-avatar-size
         height: project-result-avatar-size

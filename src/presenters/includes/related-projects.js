@@ -45,7 +45,6 @@ class RelatedProjects extends React.Component {
 
     if (ids.length < PROJECT_COUNT) {
       const { projects } = await getAllProjects(id);
-      console.log(projects);
 
       const allIds = projects.map(project => project.id);
       const remainingIds = difference(allIds, [
@@ -59,9 +58,10 @@ class RelatedProjects extends React.Component {
       const { data } = await this.props.api.get(
         `projects/byIds?ids=${ids.join(',')}`,
       );
-      return data;
+
+      return data.length ? data : null;
     }
-    return [];
+    return null;
   }
 
   render() {
@@ -78,38 +78,42 @@ class RelatedProjects extends React.Component {
       <ul className="related-projects">
         {teams.map(team => (
           <li key={team.id}>
-            <h2>
-              <TeamLink team={team}>
-                More by {team.name} →
-              </TeamLink>
-            </h2>
             <DataLoader
               get={() => this.getProjects(team.id, getTeamPins, getTeam)}
             >
               {projects => projects && (
-                <RelatedProjectsBody
-                  projects={projects}
-                  coverStyle={getTeamProfileStyle(team)}
-                />
+                <>
+                  <h2>
+                    <TeamLink team={team}>
+                      More by {team.name} →
+                    </TeamLink>
+                  </h2>
+                  <RelatedProjectsBody
+                    projects={projects}
+                    coverStyle={getTeamProfileStyle(team)}
+                  />
+                </>
               )}
             </DataLoader>
           </li>
         ))}
         {users.map(user => (
           <li key={user.id}>
-            <h2>
-              <UserLink user={user}>
-                More by {getDisplayName(user)} →
-              </UserLink>
-            </h2>
             <DataLoader
               get={() => this.getProjects(user.id, getUserPins, getUser)}
             >
               {projects => projects && (
-                <RelatedProjectsBody
-                  projects={projects}
-                  coverStyle={getUserProfileStyle(user)}
-                />
+                <>
+                  <h2>
+                    <UserLink user={user}>
+                      More by {getDisplayName(user)} →
+                    </UserLink>
+                  </h2>
+                  <RelatedProjectsBody
+                    projects={projects}
+                    coverStyle={getUserProfileStyle(user)}
+                  />
+                </>
               )}
             </DataLoader>
           </li>

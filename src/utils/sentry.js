@@ -19,8 +19,8 @@ try {
     environment: ENVIRONMENT,
     release: `community@${BUILD_TIMESTAMP}`,
     ignoreErrors: SentryHelpers.ignoreErrors,
-    beforeSend(event, hint) {
-      return SentryHelpers.beforeSend(PROJECT_DOMAIN, _env, event, hint);
+    beforeSend(event) {
+      return SentryHelpers.beforeSend(PROJECT_DOMAIN, _env, event);
     },
     beforeBreadcrumb(breadcrumb) {
       return SentryHelpers.beforeBreadcrumb(breadcrumb);

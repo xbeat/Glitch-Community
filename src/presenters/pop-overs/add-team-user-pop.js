@@ -150,7 +150,9 @@ class AddTeamUserPop extends React.Component {
   }
 
   render() {
-    const { inviteEmail, inviteUser, setWhitelistedDomain } = this.props;
+    const {
+      inviteEmail, inviteUser, setWhitelistedDomain, whitelistedDomain,
+    } = this.props;
     const { maybeRequest, maybeResults, query } = this.state;
     const isLoading = !!maybeRequest || !maybeResults;
     const results = [];
@@ -168,19 +170,12 @@ class AddTeamUserPop extends React.Component {
       });
     }
 
-    if (setWhitelistedDomain) {
+    if (setWhitelistedDomain && !whitelistedDomain) {
       const domain = getDomain(query);
-      const prevDomain = this.props.whitelistedDomain;
-      if (domain && prevDomain !== domain && this.state.validDomains[domain]) {
+      if (domain && this.state.validDomains[domain]) {
         results.push({
           key: 'whitelist-email-domain',
-          item: (
-            <WhitelistEmailDomain
-              domain={domain}
-              prevDomain={prevDomain}
-              onClick={() => setWhitelistedDomain(domain)}
-            />
-          ),
+          item: <WhitelistEmailDomain domain={domain} onClick={() => setWhitelistedDomain(domain)} />,
         });
       }
     }
@@ -207,8 +202,8 @@ class AddTeamUserPop extends React.Component {
             placeholder="Search for a user"
           />
         </section>
-        {!!query && <Results isLoading={isLoading} results={results} />}
-        {!query && setWhitelistedDomain && (
+        {!!query && <Results isLoading={isLoading} results={results} /> }
+        {!query && !!setWhitelistedDomain && !whitelistedDomain && (
           <aside className="pop-over-info">
             You can also whitelist with @example.com
           </aside>

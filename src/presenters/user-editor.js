@@ -125,7 +125,7 @@ class UserEditor extends React.Component {
       }
     }
     this.setState(({ projects, _deletedProjects }) => ({
-      projects: [...projects, data],
+      projects: [data, ...projects],
       _deletedProjects: _deletedProjects.filter(p => p.id !== id),
     }));
   }

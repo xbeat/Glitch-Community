@@ -51,7 +51,7 @@ class LoginPage extends React.Component {
         throw new Error(`Bad user id (${data.id}) after ${provider} login`);
       }
 
-      console.log('LOGGED IN', data);
+      console.log('LOGGED IN', data.id);
       this.props.setUser(data);
 
       if (destination && destination.expires > new Date().toISOString()) {

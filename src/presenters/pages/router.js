@@ -22,6 +22,7 @@ import SearchPage from './search';
 import CategoryPage from './category';
 import CollectionPage from './collection';
 import { NotFoundPage, ProjectNotFoundPage } from './error';
+import SignInPopContainer from './sign-in';
 import SecretPage from './secret';
 
 /* global EXTERNAL_ROUTES */
@@ -248,6 +249,9 @@ const Router = ({ api }) => (
         exact
         render={({ location }) => <SecretPage key={location.key} />}
       />
+
+      <Route path="/signin" exact render={({ location }) => <SignInPopContainer key={location.key} api={api} />} />
+
 
       {EXTERNAL_ROUTES.map(route => (
         <Route

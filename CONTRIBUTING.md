@@ -80,7 +80,7 @@ In your local repository,
   
 ```
 
-Or, run `./sh/setup.sh my-remix`. 
+Or, run `./sh/setup.sh my-remix`.
 
 Now you can use the GitHub UI to turn your branch into a pull request. 
 
@@ -203,6 +203,21 @@ Run `./sh/teardown.sh` on your local machine to remove the branch and remote for
 #### Announce Completion
 
 Good job :-) Pop back over to #community and tell the room that you're all done.
+
+#### Deploy Checklist
+
+Here's a short and sweet version of the steps above that you can use once you're comfortable with the deploy process:
+
+1. Tell #community that you're about to merge + deploy
+2. Run `.sh/merge.sh`
+3. Go to [~community-staging](https://glitch.com/~community-staging) and open up the console
+    - `git pull` to update to master
+    - Double check that `git pull` doesn't require any merges
+    - Run `refresh`
+4. Open the ~community-staging logs, wait for the build to finish (~7-9 minutes)
+5. Test/QA your changes, check for console errors, etc.
+6. Deploy it with the swap script!
+7. Tell #community that you've finished the swap
 
 --------------------
 

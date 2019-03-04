@@ -9,7 +9,7 @@ import { getPredicates, getTeamPair } from '../../models/words';
 import { getLink } from '../../models/team';
 import { Loader } from '../includes/loader';
 import { NestedPopoverTitle } from './popover-nested';
-import { PureEditableField } from '../includes/editable-field';
+import TextInput from '../../components/fields/text-input';
 import { SignInPopBase } from './sign-in-pop';
 
 // Create Team 🌿
@@ -55,8 +55,8 @@ class CreateTeamPopBase extends React.Component {
       }
 
       try {
-        const { data } = await this.props.api.get(`teams/byUrl/${url}`);
-        if (data) {
+        const { data } = await this.props.api.get(`teamId/byUrl/${url}`);
+        if (data !== 'NOT FOUND') {
           error = 'Team already exists, try another';
         }
       } catch (exception) {
@@ -132,9 +132,9 @@ class CreateTeamPopBase extends React.Component {
 
         <section className="pop-over-actions">
           <form onSubmit={this.handleSubmit}>
-            <PureEditableField
+            <TextInput
               value={this.state.teamName}
-              update={this.handleChange}
+              onChange={this.handleChange}
               placeholder={placeholder}
               error={this.state.error}
             />
