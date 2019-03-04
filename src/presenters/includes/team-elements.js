@@ -32,7 +32,7 @@ export const VerifiedBadge = () => {
   return (
     <TooltipContainer
       id="verified-team-tooltip"
-      type="information"
+      type="info"
       tooltip={tooltip}
       target={<img className="verified" src={image} alt="✓" />}
     />
