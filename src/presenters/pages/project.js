@@ -46,7 +46,7 @@ const PublicTooltip = 'Visible to everyone';
 
 const PrivateBadge = () => (
   <TooltipContainer
-    type="information"
+    type="info"
     id="private-project-badge-tooltip"
     tooltip={PrivateTooltip}
     target={<span className="project-badge private-project-badge" />}
