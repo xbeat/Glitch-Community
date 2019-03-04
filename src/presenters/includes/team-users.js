@@ -9,6 +9,7 @@ import AddTeamUserPop from '../pop-overs/add-team-user-pop';
 import PopoverWithButton from '../pop-overs/popover-with-button';
 import PopoverContainer from '../pop-overs/popover-container';
 import TeamUserInfoPop from '../pop-overs/team-user-info-pop';
+import TooltipContainer from '../../components/tooltips/tooltip-container';
 import UsersList from '../users-list';
 
 // Team Users list (in profile container)
@@ -84,14 +85,21 @@ export const WhitelistedDomain = ({ domain, setDomain }) => {
           open={visible}
           className="popover-container whitelisted-domain-container"
         >
-          <summary data-tooltip={!visible ? tooltip : null}>
-            <WhitelistedDomainIcon domain={domain} />
+          <summary>
+            <TooltipContainer
+              id="whitelisted-domain-tooltip"
+              type="action"
+              tooltip={visible ? null : tooltip}
+              target={(
+                <div>
+                  <WhitelistedDomainIcon domain={domain} />
+                </div>
+              )}
+            />
           </summary>
           <dialog className="pop-over">
             <section className="pop-over-info">
-              <p className="info-description">
-                {tooltip}
-              </p>
+              <p className="info-description">{tooltip}</p>
             </section>
             {!!setDomain && (
               <section className="pop-over-actions danger-zone">
@@ -203,9 +211,7 @@ export class AddTeamUser extends React.Component {
                 className="notification notifySuccess inline-notification"
                 onAnimationEnd={this.removeNotifyInvited}
               >
-                Invited
-                {' '}
-                {this.state.invitee}
+                Invited {this.state.invitee}
               </div>
             )}
             {visible && (

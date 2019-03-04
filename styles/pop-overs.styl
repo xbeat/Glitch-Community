@@ -6,8 +6,6 @@ details.popover-container
     cursor: pointer
     &::-webkit-details-marker
       display: none
-    &:not([data-tooltip])::before
-      display: none
   &[open] > summary::after
     display: none
   &:not([open]) > :not(summary)
@@ -22,7 +20,7 @@ popover-secondary-background()
   
 .pop-over
   text-align: left
-  background-color: background-color
+  background-color: primary-background
   font-size: 14px
   margin: 0
   cursor: initial

@@ -7,6 +7,7 @@ import { TrackClick } from '../analytics';
 import { NestedPopover } from './popover-nested';
 import { UserLink } from '../includes/link';
 import { Thanks } from '../includes/thanks';
+import TooltipContainer from '../../components/tooltips/tooltip-container';
 
 import TeamUserRemovePop from './team-user-remove-pop';
 
@@ -18,13 +19,8 @@ const ADMIN_ACCESS_LEVEL = 30;
 const RemoveFromTeam = props => (
   <section className="pop-over-actions danger-zone">
     <TrackClick name="Remove from Team clicked">
-      <button
-        className="button-small has-emoji button-tertiary button-on-secondary-background"
-        {...props}
-      >
-        Remove from Team
-        {' '}
-        <span className="emoji wave" role="img" aria-label="" />
+      <button className="button-small has-emoji button-tertiary button-on-secondary-background" {...props}>
+        Remove from Team <span className="emoji wave" role="img" aria-label="" />
       </button>
     </TrackClick>
   </section>
@@ -33,37 +29,22 @@ const RemoveFromTeam = props => (
 // Admin Actions Section ⏫⏬
 
 const AdminActions = ({
-  user,
-  userIsTeamAdmin,
-  updateUserPermissions,
-  canChangeUserAdminStatus,
+  user, userIsTeamAdmin, updateUserPermissions, canChangeUserAdminStatus,
 }) => {
   if (!canChangeUserAdminStatus) return null;
   return (
     <section className="pop-over-actions admin-actions">
-      <p className="action-description">
-        Admins can update team info, billing, and remove users
-      </p>
+      <p className="action-description">Admins can update team info, billing, and remove users</p>
       {userIsTeamAdmin ? (
         <TrackClick name="Remove Admin Status clicked">
-          <button
-            className="button-small button-tertiary has-emoji"
-            onClick={() => updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)}
-          >
-            Remove Admin Status
-            {' '}
-            <span className="emoji fast-down" />
+          <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, MEMBER_ACCESS_LEVEL)}>
+            Remove Admin Status <span className="emoji fast-down" />
           </button>
         </TrackClick>
       ) : (
         <TrackClick name="Make an Admin clicked">
-          <button
-            className="button-small button-tertiary has-emoji"
-            onClick={() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)}
-          >
-            Make an Admin
-            {' '}
-            <span className="emoji fast-up" />
+          <button className="button-small button-tertiary has-emoji" onClick={() => updateUserPermissions(user.id, ADMIN_ACCESS_LEVEL)}>
+            Make an Admin <span className="emoji fast-up" />
           </button>
         </TrackClick>
       )}
@@ -91,29 +72,19 @@ const ThanksCount = ({ count }) => (
 // Team User Info 😍
 
 const TeamUserInfo = ({
-  currentUser,
-  currentUserIsTeamAdmin,
-  showRemove,
-  ...props
+  currentUser, currentUserIsTeamAdmin, showRemove, ...props
 }) => {
   const userAvatarStyle = { backgroundColor: props.user.color };
 
   const currentUserHasRemovePriveleges = currentUserIsTeamAdmin || (currentUser && currentUser.id === props.user.id);
-  const canRemoveUser = !(
-    props.userIsTheOnlyMember || props.userIsTheOnlyAdmin
-  );
+  const canRemoveUser = !(props.userIsTheOnlyMember || props.userIsTheOnlyAdmin);
   const canCurrentUserRemoveUser = canRemoveUser && currentUserHasRemovePriveleges;
 
   return (
     <dialog className="pop-over team-user-info-pop">
       <section className="pop-over-info user-info">
         <UserLink user={props.user}>
-          <img
-            className="avatar"
-            src={getAvatarThumbnailUrl(props.user)}
-            alt={props.user.login}
-            style={userAvatarStyle}
-          />
+          <img className="avatar" src={getAvatarThumbnailUrl(props.user)} alt={props.user.login} style={userAvatarStyle} />
         </UserLink>
         <div className="info-container">
           <p className="name" title={props.user.name}>
@@ -121,25 +92,22 @@ const TeamUserInfo = ({
           </p>
           {props.user.login && (
             <p className="user-login" title={props.user.login}>
-              @
-              {props.user.login}
+              @{props.user.login}
             </p>
           )}
           {props.userIsTeamAdmin && (
             <div className="status-badge">
-              <span
-                className="status admin"
-                data-tooltip="Can edit team info and billing"
-              >
-                Team Admin
-              </span>
+              <TooltipContainer
+                id={`admin-badge-tooltip-${props.user.login}`}
+                type="information"
+                target={<span className="status admin">Team Admin</span>}
+                tooltip="Can edit team info and billing"
+              />
             </div>
           )}
         </div>
       </section>
-      {props.user.thanksCount > 0 && (
-        <ThanksCount count={props.user.thanksCount} />
-      )}
+      {props.user.thanksCount > 0 && <ThanksCount count={props.user.thanksCount} />}
       {currentUserIsTeamAdmin && (
         <AdminActions
           user={props.user}
