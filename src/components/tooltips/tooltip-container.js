@@ -46,6 +46,7 @@ function TooltipContainer({
     });
   }
 
+  console.log('persistent', persistent);
   const shouldShowTooltip = tooltip && (tooltipIsActive || persistent);
 
   return (
@@ -86,6 +87,7 @@ TooltipContainer.defaultProps = {
   align: ['center'],
   children: null,
   tooltip: '',
+  persistent: false,
 };
 
 export default TooltipContainer;
