@@ -46,7 +46,6 @@ function TooltipContainer({
     });
   }
 
-  console.log('persistent', persistent);
   const shouldShowTooltip = tooltip && (tooltipIsActive || persistent);
 
   return (
