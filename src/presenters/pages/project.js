@@ -44,16 +44,14 @@ function syncPageToDomain(domain) {
 const PrivateTooltip = 'Only members can view code';
 const PublicTooltip = 'Visible to everyone';
 
-const PrivateBadge = () => {
-  return (
-    <TooltipContainer
-      type="information"
-      id="private-project-badge-tooltip"
-      tooltip={PrivateTooltip}
-      target={<span className="project-badge private-project-badge" />}
-    />
-  );
-};
+const PrivateBadge = () => (
+  <TooltipContainer
+    type="information"
+    id="private-project-badge-tooltip"
+    tooltip={PrivateTooltip}
+    target={<span className="project-badge private-project-badge" />}
+  />
+);
 
 const PrivateToggle = ({ isPrivate, setPrivate }) => {
   const tooltip = isPrivate ? PrivateTooltip : PublicTooltip;
