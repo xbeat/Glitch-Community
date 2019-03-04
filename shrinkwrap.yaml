@@ -62,7 +62,6 @@ dependencies:
   stylus-loader: 3.0.2
   terser-webpack-plugin: 1.2.2
   url-join: 4.0.0
-  url-search-params-polyfill: 5.0.0
   webpack: 4.29.5
   webpack-cli: 3.2.3
   webpack-dev-middleware: 3.6.0
@@ -10562,10 +10561,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-/92DTTorg4JjktLNLe6GPS2/RvAd/RGr6LuktmWSMLEOa6rjnlrFXNgSbSmkNvCoL2T028A0a1JaJLzRMlFoHg==
-  /url-search-params-polyfill/5.0.0:
-    dev: false
-    resolution:
-      integrity: sha512-+SCD22QJp4UnqPOI5UTTR0Ljuh8cHbjEf1lIiZrZ8nHTlTixqwVsVQTSfk5vrmDz7N09/Y+ka5jQr0ff35FnQQ==
   /url/0.11.0:
     dependencies:
       punycode: 1.3.2
@@ -11047,7 +11042,6 @@ specifiers:
   stylus-loader: ^3.0.2
   terser-webpack-plugin: ^1.2.2
   url-join: ^4.0.0
-  url-search-params-polyfill: ^5.0.0
   webpack: ^4.29.3
   webpack-cli: ^3.2.2
   webpack-dev-middleware: ^3.5.2
