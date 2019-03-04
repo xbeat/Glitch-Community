@@ -93,8 +93,7 @@ export const WhitelistedDomain = ({ domain, setDomain }) => {
             <TooltipContainer
               id="whitelisted-domain-tooltip"
               type="action"
-              tooltip={tooltip}
-              // tooltip={visible ? null : tooltip}
+              tooltip={visible ? null : tooltip}
               target={(
                 <div>
                   <WhitelistedDomainIcon domain={domain} />
