@@ -124,6 +124,7 @@ class UserEditor extends React.Component {
         console.warn('failed to rename project on undelete', e);
       }
     }
+    console.log('undeleted ', data);
     this.setState(({ projects, _deletedProjects }) => ({
       projects: [data, ...projects],
       _deletedProjects: _deletedProjects.filter(p => p.id !== id),
