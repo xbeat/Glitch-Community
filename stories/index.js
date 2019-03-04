@@ -1,7 +1,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import Button from "../src/components/buttons/button";
-import TooltipContainer from "../src/components/tooltip-container";
+import TooltipContainer from "../src/components/tooltips/tooltip-container";
 
 storiesOf("Button", module)
   .add("regular", () => <Button>Hello Button</Button>)
@@ -29,20 +29,20 @@ storiesOf("TooltipContainer", module)
       />
     </div>
   ))
-  .add("information", () => (
+  .add("info", () => (
     <div style={{margin: '70px'}}>
       <TooltipContainer
-        type="information"
+        type="info"
         id="a-unique-id"
         target={<img width="32" height="32" src="https://favicon-fetcher.glitch.me/img/glitch.com" />}
-        tooltip="I'm an information tooltip"
+        tooltip="I'm an info tooltip"
       />
     </div>
   ))
   .add("persistent", () => (
     <div style={{margin: '70px'}}>
       <TooltipContainer
-        type="information"
+        type="info"
         id="a-unique-id"
         target={<img width="32" height="32" src="https://favicon-fetcher.glitch.me/img/glitch.com" />}
         tooltip="I'm a persistent tooltip"

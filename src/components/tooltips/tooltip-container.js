@@ -5,7 +5,7 @@ import styles from './tooltip.styl';
 
 const cx = classNames.bind(styles);
 
-export const TYPES = ['action', 'information'];
+export const TYPES = ['action', 'info'];
 export const ALIGNMENTS = ['left', 'right', 'center', 'top'];
 
 function TooltipContainer({
@@ -36,8 +36,8 @@ function TooltipContainer({
     extendedTarget = React.cloneElement(target, {
       'aria-labelledby': id,
     });
-  } else if (type === 'information') {
-    // information tooltips are visible on hover and focus, they provide supplementary info
+  } else if (type === 'info') {
+    // info tooltips are visible on hover and focus, they provide supplementary info
     // they should be empty when not "visible", and populated when they are
 
     role = 'status';
@@ -59,7 +59,7 @@ function TooltipContainer({
         {extendedTarget}
       </div>
       <div role={role} id={id} className={tooltipClassName} style={{ opacity: shouldShowTooltip ? 1 : 0 }}>
-        {type === 'information' || shouldShowTooltip ? tooltip : null}
+        {type === 'info' || shouldShowTooltip ? tooltip : null}
       </div>
       {children}
     </div>
