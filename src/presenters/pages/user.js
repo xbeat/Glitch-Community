@@ -272,7 +272,8 @@ const UserPageContainer = ({ api, user }) => (
 
           <CurrentUserConsumer>
             {maybeCurrentUser => (
-              <ProjectsLoader api={api} projects={orderBy(userFromEditor.projects, project => project.updatedAt, ['desc'])}>
+              <ProjectsLoader api={api} projects={orderBy(userFromEditor.projects, project => project.updatedAt, ['desc'])>
+ 
                 {projects => (
                   <UserPage
                     {...{ api, isAuthorized, maybeCurrentUser }}
@@ -290,3 +291,4 @@ const UserPageContainer = ({ api, user }) => (
 );
 
 export default UserPageContainer;
+t
