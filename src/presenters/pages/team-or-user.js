@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getFromApi } from '../../../shared/api';
 
 import { DataLoader } from '../includes/loader';
 import NotFound from '../includes/not-found';
@@ -35,8 +36,8 @@ const getUser = async (api, name) => {
 
 const parseTeam = (team) => {
   const ADMIN_ACCESS_LEVEL = 30;
-  const adminIds = team.teamPermissions.filter(user => user.accessLevel === ADMIN_ACCESS_LEVEL);
-  team.adminIds = adminIds.map(user => user.userId);
+  const adminIds = team.teamPermissions.filter((user) => user.accessLevel === ADMIN_ACCESS_LEVEL);
+  team.adminIds = adminIds.map((user) => user.userId);
   team.users = [];
   team.projects = [];
   team.teamPins = [];
@@ -48,31 +49,38 @@ const getTeamById = async (api, id) => {
   return team && parseTeam(team);
 };
 
-const getTeam = async (api, name) => {
-  const { data } = await api.get(`v1/teams/by/url?url=${name}`);
-  const team = data[name] && parseTeam(data[name]);
-  if (team) {
+const getAllPages = async (api, url) => {
   let hasMore = true;
-  let nextPage = `v1/teams/by/id/users?id=${this.state.id}&orderKey=createdAt&orderDirection=ASC&limit=100`;
+  let results = [];
   while (hasMore) {
-    const { data } = await this.props.api.get(nextPage);
-    this.setState(({ users }) => ({ users: [...users, ...data.items] }));
+    const { data } = await api.get(url);
+    results.push(...data.items);
     hasMore = data.hasMore;
-    nextPage = data.nextPage;
+    url = data.nextPage;
   }
-  return data[name] && parseTeam(data[name]);
+  return results;
 };
 
-const TeamPageLoader = ({
-  api, id, name, ...props
-}) => (
+const getTeam = async (api, name) => {
+  const team = await getFromApi(`v1/teams/by/url?url=${name}`);
+  const team = teamResponse.data[name] && parseTeam(teamResponse.data[name]);
+  if (team) {
+    const [users, projects] = await Promise.all([
+      // load all users, need to handle pagination
+      getAllPages(api, `v1/teams/by/id/users?id=${team.id}&orderKey=createdAt&orderDirection=ASC&limit=100`),
+      // also need pagination here?
+      api.get(`v1/teams/by/id/projects?id=${team.id}&orderKey=createdAt&orderDirection=DESC&limit=12`).then(data => data.items)
+    ])
+    
+    team.users = users;
+    team.projects = projects;
+  }
+  return team;
+};
+
+const TeamPageLoader = ({ api, id, name, ...props }) => (
   <DataLoader get={() => getTeamById(api, id)}>
-    {team => (team ? (
-      <TeamPage api={api} team={team} {...props} />
-    ) : (
-      <NotFound name={name} />
-    ))
-    }
+    {(team) => (team ? <TeamPage api={api} team={team} {...props} /> : <NotFound name={name} />)}
   </DataLoader>
 );
 TeamPageLoader.propTypes = {
@@ -85,16 +93,9 @@ TeamPageLoader.defaultProps = {
   api: null,
 };
 
-const UserPageLoader = ({
-  api, id, name, ...props
-}) => (
+const UserPageLoader = ({ api, id, name, ...props }) => (
   <DataLoader get={() => getUserById(api, id)}>
-    {user => (user ? (
-      <UserPage api={api} user={user} {...props} />
-    ) : (
-      <NotFound name={name} />
-    ))
-    }
+    {(user) => (user ? <UserPage api={api} user={user} {...props} /> : <NotFound name={name} />)}
   </DataLoader>
 );
 UserPageLoader.propTypes = {
@@ -108,18 +109,14 @@ UserPageLoader.defaultProps = {
 
 const TeamOrUserPageLoader = ({ api, name, ...props }) => (
   <DataLoader get={() => getTeam(api, name)}>
-    {team => (team ? (
-      <TeamPage api={api} team={team} {...props} />
-    ) : (
-      <DataLoader get={() => getUser(api, name)}>
-        {user => (user ? (
-          <UserPage api={api} user={user} {...props} />
-        ) : (
-          <NotFound name={name} />
-        ))
-        }
-      </DataLoader>
-    ))
+    {(team) =>
+      team ? (
+        <TeamPage api={api} team={team} {...props} />
+      ) : (
+        <DataLoader get={() => getUser(api, name)}>
+          {(user) => (user ? <UserPage api={api} user={user} {...props} /> : <NotFound name={name} />)}
+        </DataLoader>
+      )
     }
   </DataLoader>
 );
@@ -141,8 +138,4 @@ const Presenter = (api, Loader, args) => (
 const TeamPagePresenter = ({ api, id, name }) => Presenter(api, TeamPageLoader, { id, name });
 const UserPagePresenter = ({ api, id, name }) => Presenter(api, UserPageLoader, { id, name });
 const TeamOrUserPagePresenter = ({ api, name }) => Presenter(api, TeamOrUserPageLoader, { name });
-export {
-  TeamPagePresenter as TeamPage,
-  UserPagePresenter as UserPage,
-  TeamOrUserPagePresenter as TeamOrUserPage,
-};
+export { TeamPagePresenter as TeamPage, UserPagePresenter as UserPage, TeamOrUserPagePresenter as TeamOrUserPage };
