@@ -22,7 +22,7 @@ import SearchPage from './search';
 import CategoryPage from './category';
 import CollectionPage from './collection';
 import { NotFoundPage, ProjectNotFoundPage } from './error';
-import SignInPopContainer from './sign-in';
+import OauthSignIn from './sign-in';
 import SecretPage from './secret';
 
 /* global EXTERNAL_ROUTES */
@@ -250,7 +250,7 @@ const Router = ({ api }) => (
         render={({ location }) => <SecretPage key={location.key} />}
       />
 
-      <Route path="/signin" exact render={({ location }) => <SignInPopContainer key={location.key} api={api} />} />
+      <Route path="/signin" exact render={({ location }) => <OauthSignIn key={location.key} api={api} />} />
 
 
       {EXTERNAL_ROUTES.map(route => (
@@ -267,12 +267,9 @@ const Router = ({ api }) => (
     </Switch>
   </>
 );
-Router.propTypes = {
-  api: PropTypes.any,
-};
 
-Router.defaultProps = {
-  api: null,
+Router.propTypes = {
+  api: PropTypes.any.isRequired,
 };
 
 export default Router;
