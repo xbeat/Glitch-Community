@@ -59,6 +59,10 @@ class CollectionEditor extends React.Component {
     await this.props.api.delete(`/collections/${this.state.id}`);
   }
 
+  async updateOrAddNote() {
+    await Promise.resolve('updated or created');
+  }
+
   render() {
     const { handleError, handleErrorForInput, handleCustomError } = this.props;
     const funcs = {
