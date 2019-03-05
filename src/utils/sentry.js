@@ -13,8 +13,8 @@ import * as Sentry from '@sentry/browser';
 export * from '@sentry/browser';
 const SentryHelpers = require('../../shared/sentryHelpers');
 
-const beforeSendFailed = false;
-const beforeBreadcrumbFailed = false;
+let beforeSendFailed = false;
+let beforeBreadcrumbFailed = false;
 
 try {
   Sentry.init({
@@ -29,7 +29,7 @@ try {
         console.error(error);
         if (!beforeSendFailed) {
           // It'll probably fail next time too, so only log it once
-          // Also wait a moment because capturing mid capture seems bad
+          // Also let this capture finish before starting another one
           window.setTimeout(() => Sentry.captureException(error), 1);
           beforeSendFailed = true;
         }
@@ -40,9 +40,12 @@ try {
       try {
         return SentryHelpers.beforeBreadcrumb(breadcrumb);
       } catch (error) {
-        // The console doesn't create breadcrumbs here
-        // If it did this would be a problem for us
-        console.error(error);
+        if (!beforeBreadcrumbFailed) {
+          // the console creates breadcrumbs, don't get into a loop
+          console.error(error);
+          window.setTimeout(() => Sentry.captureException(error), 1);
+          beforeBreadcrumbFailed = true;
+        }
         return breadcrumb;
       }
     },
