@@ -13,6 +13,9 @@ import * as Sentry from '@sentry/browser';
 export * from '@sentry/browser';
 const SentryHelpers = require('../../shared/sentryHelpers');
 
+const beforeSendFailed = false;
+const beforeBreadcrumbFailed = false;
+
 try {
   Sentry.init({
     dsn: 'https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508',
@@ -20,10 +23,28 @@ try {
     release: `community@${BUILD_TIMESTAMP}`,
     ignoreErrors: SentryHelpers.ignoreErrors,
     beforeSend(event) {
-      return SentryHelpers.beforeSend(PROJECT_DOMAIN, _env, event);
+      try {
+        return SentryHelpers.beforeSend(PROJECT_DOMAIN, _env, event);
+      } catch (error) {
+        console.error(error);
+        if (!beforeSendFailed) {
+          // It'll probably fail next time too, so only log it once
+          // Also wait a moment because capturing mid capture seems bad
+          window.setTimeout(() => Sentry.captureException(error), 1);
+          beforeSendFailed = true;
+        }
+        return event;
+      }
     },
     beforeBreadcrumb(breadcrumb) {
-      return SentryHelpers.beforeBreadcrumb(breadcrumb);
+      try {
+        return SentryHelpers.beforeBreadcrumb(breadcrumb);
+      } catch (error) {
+        // The console doesn't create breadcrumbs here
+        // If it did this would be a problem for us
+        console.error(error);
+        return breadcrumb;
+      }
     },
   });
 
