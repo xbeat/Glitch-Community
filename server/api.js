@@ -23,7 +23,7 @@ async function getFromCacheOrApi(id, cache, api) {
     const value = await promise;
     return value;
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     return null;
   }
 }

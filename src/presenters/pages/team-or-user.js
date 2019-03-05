@@ -36,8 +36,8 @@ const getUser = async (api, name) => {
 
 const parseTeam = (team) => {
   const ADMIN_ACCESS_LEVEL = 30;
-  const adminIds = team.teamPermissions.filter((user) => user.accessLevel === ADMIN_ACCESS_LEVEL);
-  team.adminIds = adminIds.map((user) => user.userId);
+  const adminIds = team.teamPermissions.filter(user => user.accessLevel === ADMIN_ACCESS_LEVEL);
+  team.adminIds = adminIds.map(user => user.userId);
   team.teamPins = [];
   return team;
 };
@@ -54,18 +54,20 @@ const getTeam = async (api, name) => {
       // load all users, need to handle pagination
       getAllPages(api, `v1/teams/by/id/users?id=${team.id}&orderKey=createdAt&orderDirection=ASC&limit=100`),
       // also need pagination here?
-      api.get(`v1/teams/by/id/projects?id=${team.id}&orderKey=createdAt&orderDirection=DESC&limit=12`).then(data => data.items)
-    ])
-    
+      api.get(`v1/teams/by/id/projects?id=${team.id}&orderKey=createdAt&orderDirection=DESC&limit=12`).then(data => data.items),
+    ]);
+
     team.users = users;
     team.projects = projects;
   }
   return team && parseTeam(team);
 };
 
-const TeamPageLoader = ({ api, id, name, ...props }) => (
+const TeamPageLoader = ({
+  api, id, name, ...props
+}) => (
   <DataLoader get={() => getTeamById(api, id)}>
-    {(team) => (team ? <TeamPage api={api} team={team} {...props} /> : <NotFound name={name} />)}
+    {team => (team ? <TeamPage api={api} team={team} {...props} /> : <NotFound name={name} />)}
   </DataLoader>
 );
 TeamPageLoader.propTypes = {
@@ -78,9 +80,11 @@ TeamPageLoader.defaultProps = {
   api: null,
 };
 
-const UserPageLoader = ({ api, id, name, ...props }) => (
+const UserPageLoader = ({
+  api, id, name, ...props
+}) => (
   <DataLoader get={() => getUserById(api, id)}>
-    {(user) => (user ? <UserPage api={api} user={user} {...props} /> : <NotFound name={name} />)}
+    {user => (user ? <UserPage api={api} user={user} {...props} /> : <NotFound name={name} />)}
   </DataLoader>
 );
 UserPageLoader.propTypes = {
@@ -92,17 +96,19 @@ UserPageLoader.defaultProps = {
   api: null,
 };
 
-const TeamOrUserPageLoader = ({ api, name, ...props }) => (
+const TeamOrUserPageLoader = ({
+  api, name, ...props
+}) => (
   <DataLoader get={() => getTeam(api, name)}>
-    {(team) =>
+    {team => (
       team ? (
         <TeamPage api={api} team={team} {...props} />
       ) : (
         <DataLoader get={() => getUser(api, name)}>
-          {(user) => (user ? <UserPage api={api} user={user} {...props} /> : <NotFound name={name} />)}
+          {user => (user ? <UserPage api={api} user={user} {...props} /> : <NotFound name={name} />)}
         </DataLoader>
       )
-    }
+    )}
   </DataLoader>
 );
 TeamOrUserPageLoader.propTypes = {
