@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getFromApi } from '../../../shared/api';
+import { getFromApi, getAllPages } from '../../../shared/api';
 
 import { DataLoader } from '../includes/loader';
 import NotFound from '../includes/not-found';
@@ -38,8 +38,6 @@ const parseTeam = (team) => {
   const ADMIN_ACCESS_LEVEL = 30;
   const adminIds = team.teamPermissions.filter((user) => user.accessLevel === ADMIN_ACCESS_LEVEL);
   team.adminIds = adminIds.map((user) => user.userId);
-  team.users = [];
-  team.projects = [];
   team.teamPins = [];
   return team;
 };
@@ -49,21 +47,8 @@ const getTeamById = async (api, id) => {
   return team && parseTeam(team);
 };
 
-const getAllPages = async (api, url) => {
-  let hasMore = true;
-  let results = [];
-  while (hasMore) {
-    const { data } = await api.get(url);
-    results.push(...data.items);
-    hasMore = data.hasMore;
-    url = data.nextPage;
-  }
-  return results;
-};
-
 const getTeam = async (api, name) => {
-  const team = await getFromApi(`v1/teams/by/url?url=${name}`);
-  const team = teamResponse.data[name] && parseTeam(teamResponse.data[name]);
+  const team = await getFromApi(api, `v1/teams/by/url?url=${name}`)[name];
   if (team) {
     const [users, projects] = await Promise.all([
       // load all users, need to handle pagination
@@ -75,7 +60,7 @@ const getTeam = async (api, name) => {
     team.users = users;
     team.projects = projects;
   }
-  return team;
+  return team && parseTeam(team);
 };
 
 const TeamPageLoader = ({ api, id, name, ...props }) => (
