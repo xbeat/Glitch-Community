@@ -60,6 +60,7 @@ class CollectionEditor extends React.Component {
   }
 
   async updateOrAddNote() {
+    console.log('update or created is getting called');
     await Promise.resolve('updated or created');
   }
 
@@ -74,6 +75,7 @@ class CollectionEditor extends React.Component {
       updateNameAndUrl: ({ name, url }) => this.updateFields({ name, url }).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({ description }).catch(handleError),
       updateColor: color => this.updateFields({ coverColor: color }),
+      updateOrAddNote: note => this.updateOrAddNote({ note }),
     };
     return this.props.children(this.state, funcs, this.userIsAuthor());
   }

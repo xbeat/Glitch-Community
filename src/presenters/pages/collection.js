@@ -82,6 +82,7 @@ const CollectionPageContents = ({
   addProjectToCollection,
   removeProjectFromCollection,
   updateColor,
+  updateOrAddNote,
   ...props
 }) => (
   <>
@@ -158,6 +159,7 @@ const CollectionPageContents = ({
                         projectOptions={{
                           removeProjectFromCollection,
                           addProjectToCollection,
+                          updateOrAddNote,
                         }}
                         {...props}
                       />
@@ -223,6 +225,7 @@ CollectionPageContents.propTypes = {
   deleteCollection: PropTypes.func.isRequired,
   isAuthorized: PropTypes.any.isRequired,
   removeProjectFromCollection: PropTypes.func.isRequired,
+  updateOrAddNote: PropTypes.func,
 };
 
 CollectionPageContents.defaultProps = {
