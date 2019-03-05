@@ -230,6 +230,7 @@ CollectionPageContents.propTypes = {
 
 CollectionPageContents.defaultProps = {
   api: null,
+  updateOrAddNote: null,
 };
 
 async function loadCollection(api, ownerName, collectionName) {
