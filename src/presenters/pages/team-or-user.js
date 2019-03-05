@@ -35,7 +35,7 @@ const getUser = async (api, name) => {
 
 const parseTeam = (team) => {
   const ADMIN_ACCESS_LEVEL = 30;
-  const adminIds = team.users.filter(user => user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL);
+  const adminIds = team.teamPermissions.filter(user => user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL);
   team.adminIds = adminIds.map(user => user.id);
   return team;
 };
@@ -46,8 +46,8 @@ const getTeamById = async (api, id) => {
 };
 
 const getTeam = async (api, name) => {
-  const team = await getOrNull(api, `/teams/byUrl/${name}`);
-  return team && parseTeam(team);
+  const { data } = await api.get(`v1/teams/by/url?url=${name}`);
+  return data[name] && parseTeam(data[name]);
 };
 
 const TeamPageLoader = ({
