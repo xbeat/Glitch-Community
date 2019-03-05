@@ -21,14 +21,6 @@ class TeamEditor extends React.Component {
     };
   }
 
-  async loadMembers() {
-    const { data } = await this.props.api.get(`v1/teams/by/id/users?id=${this.state.id}&orderKey=createdAt&orderDirection=ASC`);
-    this.setState({ users: data.items });
-  }
-
-  componentDidMount() {
-  }
-
   currentUserIsOnTeam() {
     if (!this.props.currentUser) return false;
     const currentUserId = this.props.currentUser.id;

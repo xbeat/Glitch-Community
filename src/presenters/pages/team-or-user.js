@@ -40,7 +40,6 @@ const parseTeam = (team) => {
   team.users = [];
   team.projects = [];
   team.teamPins = [];
-  team.collections = [];
   return team;
 };
 
@@ -51,6 +50,16 @@ const getTeamById = async (api, id) => {
 
 const getTeam = async (api, name) => {
   const { data } = await api.get(`v1/teams/by/url?url=${name}`);
+  const team = data[name] && parseTeam(data[name]);
+  if (team) {
+  let hasMore = true;
+  let nextPage = `v1/teams/by/id/users?id=${this.state.id}&orderKey=createdAt&orderDirection=ASC&limit=100`;
+  while (hasMore) {
+    const { data } = await this.props.api.get(nextPage);
+    this.setState(({ users }) => ({ users: [...users, ...data.items] }));
+    hasMore = data.hasMore;
+    nextPage = data.nextPage;
+  }
   return data[name] && parseTeam(data[name]);
 };
 
