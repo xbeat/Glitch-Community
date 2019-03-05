@@ -50,15 +50,17 @@ const getTeamById = async (api, id) => {
 const getTeam = async (api, name) => {
   const team = (await getFromApi(api, `v1/teams/by/url?url=${name}`))[name];
   if (team) {
-    const [users, projects] = await Promise.all([
+    const [users, pinnedProjects, projects] = await Promise.all([
       // load all users, need to handle pagination
       getAllPages(api, `v1/teams/by/id/users?id=${team.id}&orderKey=createdAt&orderDirection=ASC&limit=100`),
+      getAllPages(api, `v1/teams/by/id/pinnedProjects?id=${team.id}&orderKey=createdAt&orderDirection=DESC&limit=100`),
       // also need pagination here?
-      getFromApi(api, `v1/teams/by/id/projects?id=${team.id}&orderKey=createdAt&orderDirection=DESC&limit=12`).then(data => data.items),
+      getFromApi(api, `v1/teams/by/id/projects?id=${team.id}&orderKey=createdAt&orderDirection=DESC&limit=12`),
     ]);
 
     team.users = users;
-    team.projects = projects;
+    team.projects = [...projects.items, ...pinnedProjects];
+    team.teamPins = pinnedProjects.map(project => ({ projectId: project.id }));
   }
   return team && parseTeam(team);
 };
