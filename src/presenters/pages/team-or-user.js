@@ -35,8 +35,12 @@ const getUser = async (api, name) => {
 
 const parseTeam = (team) => {
   const ADMIN_ACCESS_LEVEL = 30;
-  const adminIds = team.teamPermissions.filter(user => user.teamsUser.accessLevel === ADMIN_ACCESS_LEVEL);
-  team.adminIds = adminIds.map(user => user.id);
+  const adminIds = team.teamPermissions.filter(user => user.accessLevel === ADMIN_ACCESS_LEVEL);
+  team.adminIds = adminIds.map(user => user.userId);
+  team.users = [];
+  team.projects = [];
+  team.teamPins = [];
+  team.collections = [];
   return team;
 };
 
