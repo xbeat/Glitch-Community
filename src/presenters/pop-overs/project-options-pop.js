@@ -110,8 +110,15 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
             text="Add to Collection "
             emoji="framed-picture"
           />
+          <PopoverButton
+            onClick={() => console.log('add note')}
+            {...props}
+            text="Add Note"
+            emoji="sparkles"
+          />
         </section>
       )}
+
 
       {props.joinTeamProject && !props.currentUserIsOnProject && (
         <section className="pop-over-actions collaborator-actions">
