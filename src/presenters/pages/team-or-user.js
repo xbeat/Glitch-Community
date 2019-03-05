@@ -38,7 +38,6 @@ const parseTeam = (team) => {
   const ADMIN_ACCESS_LEVEL = 30;
   const adminIds = team.teamPermissions.filter(user => user.accessLevel === ADMIN_ACCESS_LEVEL);
   team.adminIds = adminIds.map(user => user.userId);
-  team.teamPins = [];
   return team;
 };
 
@@ -59,7 +58,7 @@ const getTeam = async (api, name) => {
     ]);
 
     team.users = users;
-    team.projects = [...projects.items, ...pinnedProjects];
+    team.projects = projects.items;
     team.teamPins = pinnedProjects.map(project => ({ projectId: project.id }));
   }
   return team && parseTeam(team);
