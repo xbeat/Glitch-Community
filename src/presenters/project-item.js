@@ -8,9 +8,10 @@ import { TruncatedMarkdown } from './includes/markdown';
 import ProjectOptionsPop from './pop-overs/project-options-pop';
 import UsersList from './users-list';
 
+
 const ProjectItem = ({ api, project, ...props }) => (
   <li>
-    <div>this will be an annotation someday!: {project.annotation}</div>
+    <div>this will be an annotation someday! {project.annotation}</div>
     <UsersList
       glitchTeam={project.showAsGlitchTeam}
       users={project.users}
