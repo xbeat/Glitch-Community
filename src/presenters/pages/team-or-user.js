@@ -57,8 +57,8 @@ const getTeam = async (api, name) => {
       getAllPages(api, `v1/teams/by/id/collections?id=${team.id}&orderKey=createdAt&orderDirection=DESC&limit=100`),
     ]);
 
-    team.users = users;
-    team.projects = projects.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    team.users = users.sort((a, b) => new Date(a.teamPermission.updatedAt) - new Date(b.teamPermission.updatedAt));
+    team.projects = projects.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
     team.teamPins = pinnedProjects.map(project => ({ projectId: project.id }));
     team.collections = collections;
   }
