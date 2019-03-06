@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getFromApi, getAllPages } from '../../../shared/api';
+import { getSingleItem, getAllPages } from '../../../shared/api';
 
 import { DataLoader } from '../includes/loader';
 import NotFound from '../includes/not-found';
@@ -47,7 +47,7 @@ const getTeamById = async (api, id) => {
 };
 
 const getTeam = async (api, name) => {
-  const team = (await getFromApi(api, `v1/teams/by/url?url=${name}`))[name];
+  const team = await getSingleItem(api, `v1/teams/by/url?url=${name}`, name);
   if (team) {
     const [users, pinnedProjects, projects, collections] = await Promise.all([
       // load all users, need to handle pagination

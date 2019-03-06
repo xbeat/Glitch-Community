@@ -5,7 +5,7 @@ const {Cache} = require("memory-cache");
 const dayjs = require("dayjs");
 
 const {API_URL} = require("./constants").current;
-const {getFromApi} = require("../shared/api");
+const {getSingleItem} = require("../shared/api");
 
 const CACHE_TIMEOUT = dayjs.convert(15, 'minutes', 'ms');
 
@@ -36,8 +36,7 @@ const api = axios.create({
 
 async function getProjectFromApi(domain) {
   try {
-    const data = await getFromApi(api, `v1/projects/by/domain?domain=${domain}`);
-    return data[domain];
+    return await getSingleItem(api, `v1/projects/by/domain?domain=${domain}`, domain);
   } catch (error) {
     if (error.response && error.response.status === 404) {
       return null;
@@ -48,8 +47,7 @@ async function getProjectFromApi(domain) {
 
 async function getTeamFromApi(url) {
   try {
-    const data = await getFromApi(api, `v1/teams/by/url?url=${url}`);
-    return data[url];
+    return await getSingleItem(api, `v1/teams/by/url?url=${url}`, url);
   } catch (error) {
     if (error.response && error.response.status === 404) {
       return null;
@@ -60,8 +58,7 @@ async function getTeamFromApi(url) {
 
 async function getUserFromApi(login) {
   try {
-    const data = await getFromApi(api, `v1/users/by/login?login=${login}`);
-    return data[login];
+    return await getSingleItem(api, `v1/users/by/login?login=${login}`, login);
   } catch (error) {
     if (error.response && error.response.status === 404) {
       return null;

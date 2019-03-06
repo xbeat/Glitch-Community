@@ -8,12 +8,16 @@ const getFromApi = async (api, url) => {
 const getSingleItem = async (api, url, key) => {
   // The api is case insensitive when getting by url/login
   // but it'll return an object keyed using the correct case
-  // for now do an icky hack so we can get the team page
-  const data = getFromApi(api, url);
+  // so do a case insensitive lookup in the dict it returns
+  const data = await getFromApi(api, url);
   if (data[key]) {
     return data[key];
   }
-  const realKey = 
+  const realKey = Object.keys(data).find(dataKey => dataKey.toLowerCase() === key.toLowerCase());
+  if (realKey) {
+    return data[realKey];
+  }
+  return null;
 }
 
 const getAllPages = async (api, url) => {
@@ -30,5 +34,6 @@ const getAllPages = async (api, url) => {
 
 module.exports = {
   getFromApi,
+  getSingleItem,
   getAllPages,
 };
