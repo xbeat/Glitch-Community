@@ -27,11 +27,17 @@ function TooltipContainer({
     persistent,
     fallback,
   });
-  const tooltipFallbackClassName = fallback ? ' fallback' : '';
+  const tooltipFallbackClassName = fallback ? 'fallback' : '';
 
   let role;
   let extendedTarget;
-  if (type === 'action') {
+  if (fallback && target.type === 'img') {
+    extendedTarget = (
+      <div data-tooltip={tooltip} className={tooltipFallbackClassName}>
+        {target}
+      </div>
+    );
+  } else if (type === 'action') {
     // action tooltips are visible on hover and focus, click triggers a separate action
     // they should always be populated with their content, even when they are "hidden"
 
@@ -39,7 +45,7 @@ function TooltipContainer({
     extendedTarget = React.cloneElement(target, {
       'aria-labelledby': id,
       'data-tooltip': tooltip,
-      className: target.props.className + tooltipFallbackClassName,
+      className: `${target.props.className} ${tooltipFallbackClassName}`,
     });
   } else if (type === 'info') {
     // info tooltips are visible on hover and focus, they provide supplementary info
@@ -49,10 +55,9 @@ function TooltipContainer({
     extendedTarget = React.cloneElement(target, {
       'aria-describedby': id,
       'data-tooltip': tooltip,
-      className: target.props.className + tooltipFallbackClassName,
+      className: `${target.props.className} ${tooltipFallbackClassName}`,
     });
   }
-  console.log('fallback', fallback);
 
   const shouldShowTooltip = tooltip && (tooltipIsActive || persistent);
 
