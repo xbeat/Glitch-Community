@@ -62,6 +62,8 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
     animate(event, 'slide-up', () => props.featureProject(props.project.id));
   }
   const showLeaveProject = props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject;
+
+  console.log(props);
   return (
     <dialog className="pop-over project-options-pop">
       {!!props.addPin && (
@@ -104,7 +106,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
       {!!props.addNoteField && (
         <section className="pop-over-actions">
           <PopoverButton
-            onClick={props.addNoteField}
+            onClick={() => props.addNoteField(props.project.id)}
             {...props}
             text="Add Note"
             emoji="sparkles"

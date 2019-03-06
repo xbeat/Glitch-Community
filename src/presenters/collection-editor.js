@@ -65,7 +65,7 @@ class CollectionEditor extends React.Component {
     console.log('TODO make api call with this note:', note, 'for this collection item', collectionItem);
   }
 
-  createNoteField() {
+  addNoteField() {
     this.setState(({ projects }) => {
       console.log(projects);
       return ({ projects });
@@ -84,7 +84,7 @@ class CollectionEditor extends React.Component {
       updateDescription: description => this.updateFields({ description }).catch(handleError),
       updateColor: color => this.updateFields({ coverColor: color }),
       updateOrAddNote: note => this.updateOrAddNote({ note }),
-      createNoteField: () => this.createNoteField,
+      addNoteField: project => this.addNoteField(project),
     };
     return this.props.children(this.state, funcs, this.userIsAuthor());
   }
