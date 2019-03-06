@@ -20,8 +20,7 @@ const NoCollectionPlaceholder = <p className="info-description">Create collectio
 
 const AddProjectPopoverTitle = ({ project }) => (
   <NestedPopoverTitle>
-    <img src={getAvatarUrl(project.id)} alt="" />
-    Add {project.domain} to collection
+    <img src={getAvatarUrl(project.id)} alt="" /> {' '} Add {project.domain} to collection
   </NestedPopoverTitle>
 );
 AddProjectPopoverTitle.propTypes = {
@@ -99,14 +98,10 @@ class AddProjectToCollectionPopContents extends React.Component {
 
         {filteredCollections.length ? (
           <section className="pop-over-actions results-list">
-            <ul className="results">
-              {filteredCollections.map(this.renderCollectionsThatDontHaveProject)}
-            </ul>
+            <ul className="results">{filteredCollections.map(this.renderCollectionsThatDontHaveProject)}</ul>
           </section>
         ) : (
-          <section className="pop-over-info">
-            {query ? NoSearchResultsPlaceholder : NoCollectionPlaceholder}
-          </section>
+          <section className="pop-over-info">{query ? NoSearchResultsPlaceholder : NoCollectionPlaceholder}</section>
         )}
 
         <section className="pop-over-actions">
