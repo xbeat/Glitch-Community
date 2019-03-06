@@ -33,8 +33,8 @@ export const TeamUsers = props => (
             buttonText={(
               <UserAvatar
                 user={user}
-                withinButton
                 suffix={adminStatusDisplay(props.adminIds, user)}
+                withinButton
               />
             )}
             passToggleToPop

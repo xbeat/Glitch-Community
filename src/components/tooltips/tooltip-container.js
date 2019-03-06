@@ -52,7 +52,7 @@ function TooltipContainer({
       className: target.props.className + tooltipFallbackClassName,
     });
   }
-
+  console.log('fallback', fallback);
 
   const shouldShowTooltip = tooltip && (tooltipIsActive || persistent);
 
