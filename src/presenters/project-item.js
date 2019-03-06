@@ -10,6 +10,7 @@ import UsersList from './users-list';
 
 const ProjectItem = ({ api, project, ...props }) => (
   <li>
+    <div>this will be an annotation someday!: {project.annotation}</div>
     <UsersList
       glitchTeam={project.showAsGlitchTeam}
       users={project.users}
