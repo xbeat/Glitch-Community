@@ -21,7 +21,6 @@ const PopoverButton = ({ onClick, text, emoji }) => (
   </button>
 );
 
-// Project Options Content
 const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
   function animate(event, className, func) {
     const projectContainer = event.target.closest('li');
@@ -105,7 +104,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
       {!!props.updateOrAddNote && (
         <section className="pop-over-actions">
           <PopoverButton
-            onClick={() => console.log('add note')}
+            onClick={props.updateOrAddNote}
             {...props}
             text="Add Note"
             emoji="sparkles"
