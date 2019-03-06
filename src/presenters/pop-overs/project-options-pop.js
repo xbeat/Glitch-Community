@@ -101,10 +101,10 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
         </section>
       )}
 
-      {!!props.updateOrAddNote && (
+      {!!props.addNoteField && (
         <section className="pop-over-actions">
           <PopoverButton
-            onClick={props.updateOrAddNote}
+            onClick={props.addNoteField}
             {...props}
             text="Add Note"
             emoji="sparkles"
@@ -232,7 +232,7 @@ ProjectOptionsPop.propTypes = {
   leaveTeamProject: PropTypes.func,
   featureProject: PropTypes.func,
   currentUserIsOnProject: PropTypes.bool,
-  updateOrAddNote: PropTypes.func,
+  addNoteField: PropTypes.func,
 };
 ProjectOptionsPop.defaultProps = {
   currentUserIsOnProject: false,
@@ -244,7 +244,7 @@ ProjectOptionsPop.defaultProps = {
   joinTeamProject: null,
   leaveTeamProject: null,
   featureProject: null,
-  updateOrAddNote: null,
+  addNoteField: null,
 };
 
 // Project Options Container

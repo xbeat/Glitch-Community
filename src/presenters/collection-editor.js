@@ -60,9 +60,16 @@ class CollectionEditor extends React.Component {
     await this.props.api.delete(`/collections/${this.state.id}`);
   }
 
-  async updateOrAddNote({ note }) {
+  async updateOrAddNote({ note, collectionItem }) {
     await this.props.api; // TODO: figure out api call
-    console.log('TODO make api call with this note:', note);
+    console.log('TODO make api call with this note:', note, 'for this collection item', collectionItem);
+  }
+
+  createNoteField() {
+    this.setState(({ projects }) => {
+      console.log(projects);
+      return ({ projects });
+    });
   }
 
   render() {
@@ -77,6 +84,7 @@ class CollectionEditor extends React.Component {
       updateDescription: description => this.updateFields({ description }).catch(handleError),
       updateColor: color => this.updateFields({ coverColor: color }),
       updateOrAddNote: note => this.updateOrAddNote({ note }),
+      createNoteField: () => this.createNoteField,
     };
     return this.props.children(this.state, funcs, this.userIsAuthor());
   }
