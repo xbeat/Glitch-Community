@@ -1,14 +1,15 @@
 tooltip-background = rgba(0,0,0,0.95)
 
-.touch [data-tooltip]
+.touch [data-tooltip]::after
   display: none
     
-.tooltip-container
+.fallback[data-tooltip]
   position: relative
   box-sizing: border-box
   display: inline-block
 
-.fallback[data-tooltip]
+.fallback[data-tooltip]::after
+  content: attr(data-tooltip)
   border: none
   box-sizing: inherit
   display: inline-block
@@ -37,7 +38,6 @@ tooltip-background = rgba(0,0,0,0.95)
 
 .fallback[data-tooltip]::before
   position: absolute
-  content: attr(data-tooltip)
   display: block
   height: 100%
   left: 50%
@@ -47,7 +47,7 @@ tooltip-background = rgba(0,0,0,0.95)
   border: 5px solid transparent
   border-bottom-color: tooltip-background
 
-.fallback[data-tooltip].top
+.fallback[data-tooltip].top::after
   margin-top: -12px
   transform: translateX(50%) translateY(-200%)
   
@@ -57,7 +57,7 @@ tooltip-background = rgba(0,0,0,0.95)
   margin-top: -6px
   transform: translateX(-50%) translateY(100%)
   
-.fallback[data-tooltip].left,
+.fallback[data-tooltip].left::after,
 .fallback[data-tooltip].left::before
   left: 0
   right: initial
@@ -67,7 +67,7 @@ tooltip-background = rgba(0,0,0,0.95)
   left: 10px
   transform: translateX(0) translateY(-100%)
   
-.fallback[data-tooltip].right,
+.fallback[data-tooltip].right::after,
 .fallback[data-tooltip].right::before
   left: initial
   right: 0
@@ -77,17 +77,18 @@ tooltip-background = rgba(0,0,0,0.95)
   right: 10px
   transform: translateX(0) translateY(-100%)
 
-.fallback[data-tooltip].top.right,
-.fallback[data-tooltip].top.left
+.fallback[data-tooltip].top.right::after,
+.fallback[data-tooltip].top.left::after
   transform: translateX(0) translateY(-200%)
-  &::before
-    transform: translateX(0) translateY(100%)
 
-.fallback[data-tooltip].persistent
+.fallback[data-tooltip].top.right::before,
+  transform: translateX(0) translateY(100%)
+
+.fallback[data-tooltip].persistent::after
   font-weight: bold
   
 // custom tooltips
-.fallback[data-tooltip].new-stuff
+.fallback[data-tooltip].new-stuff::after
   background-color: notification
   right: 32px
   top: 110%
