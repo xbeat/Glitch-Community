@@ -65,11 +65,14 @@ class CollectionEditor extends React.Component {
     console.log('TODO make api call with this note:', note, 'for this collection item', collectionItem);
   }
 
-  addNoteField() {
-    this.setState(({ projects }) => {
-      console.log(projects);
-      return ({ projects });
-    });
+  addNoteField(projectId) {
+    this.setState(({ projects }) => ({
+      projects: projects.map((project) => {
+        if (project.id === projectId) {
+
+        }
+      }),
+    }));
   }
 
   render() {

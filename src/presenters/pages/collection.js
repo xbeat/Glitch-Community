@@ -83,6 +83,7 @@ const CollectionPageContents = ({
   removeProjectFromCollection,
   updateColor,
   updateOrAddNote,
+  addNoteField,
   ...props
 }) => (
   <>
@@ -160,6 +161,7 @@ const CollectionPageContents = ({
                           removeProjectFromCollection,
                           addProjectToCollection,
                           updateOrAddNote,
+                          addNoteField,
                         }}
                         {...props}
                       />
@@ -226,11 +228,13 @@ CollectionPageContents.propTypes = {
   isAuthorized: PropTypes.any.isRequired,
   removeProjectFromCollection: PropTypes.func.isRequired,
   updateOrAddNote: PropTypes.func,
+  addNoteField: PropTypes.func,
 };
 
 CollectionPageContents.defaultProps = {
   api: null,
   updateOrAddNote: null,
+  addNoteField: null,
 };
 
 async function loadCollection(api, ownerName, collectionName) {
