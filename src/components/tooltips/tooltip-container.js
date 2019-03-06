@@ -27,7 +27,7 @@ function TooltipContainer({
     persistent,
     fallback,
   });
-  const tooltipFallbackClassName = fallback ? 'fallback' : '';
+  const tooltipFallbackClassName = fallback ? ' fallback' : '';
 
   let role;
   let extendedTarget;
@@ -39,7 +39,7 @@ function TooltipContainer({
     extendedTarget = React.cloneElement(target, {
       'aria-labelledby': id,
       'data-tooltip': tooltip,
-      className: tooltipFallbackClassName,
+      className: target.props.className + tooltipFallbackClassName,
     });
   } else if (type === 'info') {
     // info tooltips are visible on hover and focus, they provide supplementary info
@@ -49,7 +49,7 @@ function TooltipContainer({
     extendedTarget = React.cloneElement(target, {
       'aria-describedby': id,
       'data-tooltip': tooltip,
-      className: tooltipFallbackClassName,
+      className: target.props.className + tooltipFallbackClassName,
     });
   }
 
