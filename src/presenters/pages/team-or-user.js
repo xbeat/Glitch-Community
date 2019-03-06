@@ -58,7 +58,7 @@ const getTeam = async (api, name) => {
     ]);
 
     team.users = users.sort((a, b) => new Date(a.teamPermission.updatedAt) - new Date(b.teamPermission.updatedAt));
-    team.projects = projects.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+    team.projects = projects.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
     team.teamPins = pinnedProjects.map(project => ({ projectId: project.id }));
     team.collections = collections;
   }
