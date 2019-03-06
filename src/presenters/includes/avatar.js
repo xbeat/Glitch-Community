@@ -16,7 +16,7 @@ import {
 // UserAvatar
 
 export const Avatar = ({
-  name, src, color, srcFallback, type, hideTooltip,
+  name, src, color, srcFallback, type, hideTooltip, withinButton,
 }) => {
   const contents = (
     <img
@@ -44,6 +44,7 @@ export const Avatar = ({
         type="action"
         id={`avatar-tooltip-${name}`}
         align={['left']}
+        fallback={withinButton}
       />
     );
   }
