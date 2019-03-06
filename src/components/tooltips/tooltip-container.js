@@ -58,7 +58,7 @@ function TooltipContainer({
       >
         {extendedTarget}
       </div>
-      <div role={role} id={id} className={tooltipClassName} style={{ opacity: shouldShowTooltip ? 1 : 0 }}>
+      <div role={role} id={id} className={`${tooltipClassName} tooltip`} style={{ opacity: shouldShowTooltip ? 1 : 0 }}>
         {type === 'info' || shouldShowTooltip ? tooltip : null}
       </div>
       {children}
