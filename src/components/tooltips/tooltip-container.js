@@ -9,7 +9,7 @@ export const TYPES = ['action', 'info'];
 export const ALIGNMENTS = ['left', 'right', 'center', 'top'];
 
 function TooltipContainer({
-  id, type, tooltip, target, align, persistent, children,
+  id, type, tooltip, target, align, persistent, children, fallback,
 }) {
   const [tooltipIsActive, setTooltipIsActive] = useState(false);
 
@@ -24,6 +24,7 @@ function TooltipContainer({
     right: align.includes('right'),
     'new-stuff': id === 'new-stuff-tooltip',
     persistent,
+    fallback,
   });
 
   let role;
@@ -35,6 +36,7 @@ function TooltipContainer({
     role = 'tooltip';
     extendedTarget = React.cloneElement(target, {
       'aria-labelledby': id,
+      'data-tooltip': tooltip,
     });
   } else if (type === 'info') {
     // info tooltips are visible on hover and focus, they provide supplementary info
@@ -43,13 +45,14 @@ function TooltipContainer({
     role = 'status';
     extendedTarget = React.cloneElement(target, {
       'aria-describedby': id,
+      'data-tooltip': tooltip,
     });
   }
 
   const shouldShowTooltip = tooltip && (tooltipIsActive || persistent);
 
   return (
-    <div className={tooltipContainerClassName}>
+    <div className={`${tooltipContainerClassName} tooltip-container`}>
       <div
         onMouseEnter={() => setTooltipIsActive(true)}
         onMouseLeave={() => setTooltipIsActive(false)}
@@ -80,6 +83,8 @@ TooltipContainer.propTypes = {
   align: PropTypes.arrayOf(PropTypes.oneOf(ALIGNMENTS)),
   /* whether to persistently show the tooltip */
   persistent: PropTypes.bool,
+  /* whether to use CSS tooltips as a fallback (for < FF 66) */
+  fallback: PropTypes.bool,
 };
 
 TooltipContainer.defaultProps = {
@@ -87,6 +92,7 @@ TooltipContainer.defaultProps = {
   children: null,
   tooltip: '',
   persistent: false,
+  fallback: false,
 };
 
 export default TooltipContainer;
