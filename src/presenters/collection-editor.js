@@ -69,10 +69,8 @@ class CollectionEditor extends React.Component {
     this.setState(({ projects }) => ({
       projects: projects.map((project) => {
         if (project.id === projectId) {
-          console.log(project);
-          return { ...project, annotation: 'such annotation' };
+
         }
-        return { ...project };
       }),
     }));
   }
