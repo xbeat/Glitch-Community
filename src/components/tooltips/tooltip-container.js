@@ -56,6 +56,15 @@ function TooltipContainer({
 
   const shouldShowTooltip = tooltip && (tooltipIsActive || persistent);
 
+  let tooltipNode = null;
+  if (!fallback) {
+    tooltipNode = (
+      <div role={role} id={id} className={`${tooltipClassName} tooltip`} style={{ opacity: shouldShowTooltip ? 1 : 0 }}>
+        {type === 'info' || shouldShowTooltip ? tooltip : null}
+      </div>
+    );
+  }
+
   return (
     <div className={`${tooltipContainerClassName} tooltip-container`}>
       <div
@@ -66,9 +75,7 @@ function TooltipContainer({
       >
         {extendedTarget}
       </div>
-      <div role={role} id={id} className={`${tooltipClassName} tooltip`} style={{ opacity: shouldShowTooltip ? 1 : 0 }}>
-        {type === 'info' || shouldShowTooltip ? tooltip : null}
-      </div>
+      {tooltipNode}
       {children}
     </div>
   );
