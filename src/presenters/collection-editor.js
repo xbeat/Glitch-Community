@@ -11,6 +11,7 @@ class CollectionEditor extends React.Component {
     this.state = {
       ...props.initialCollection,
     };
+    console.log(props);
   }
 
   userIsAuthor() {
@@ -59,8 +60,9 @@ class CollectionEditor extends React.Component {
     await this.props.api.delete(`/collections/${this.state.id}`);
   }
 
-  updateOrAddNote({ note }) {
-    console.log('update or created is getting called'); ote;
+  async updateOrAddNote({ note }) {
+    await this.props.api; // TODO: figure out api call
+    console.log('TODO make api call with this note:', note);
   }
 
   render() {
