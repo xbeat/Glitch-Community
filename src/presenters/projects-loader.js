@@ -29,7 +29,7 @@ class ProjectsLoader extends React.Component {
     this.ensureProjects(this.props.projects);
   }
 
-  async loadProjects(...ids) {
+  async loadProjects(...ids) { // Why do we do this? we pass in projects and we also load them?
     if (!ids.length) return;
     const { data } = await this.props.api.get(
       `projects/byIds?ids=${ids.join(',')}`,
@@ -56,8 +56,12 @@ class ProjectsLoader extends React.Component {
 
   render() {
     const { children, projects } = this.props;
+    // I think in general we want to avoid this kind of behavior. If we subscribe to props we're listening for updates, but by overwriting them here we never get that news. So if elsewhere in the app we update
+    // the projects, we won't get that news or rather we will but we won't show the new data until we fetch again from the backend. I think if we have to do this for some reason I would prefix things like initialProjects just so it's clear
+    // that these are the projects from props vs projects from the server or whatever. I kinda feel like this feels like a nice case for redux or something like that.
     const loadedProjects = projects.map(
       project => this.state[project.id] || project,
+      // project => project || this.state[project.id], TODO remove just needed to debug something
     );
     return (
       <CurrentUserConsumer>
