@@ -39,7 +39,7 @@ class ProjectsLoader extends React.Component {
     if (!ids.length) return;
     const data = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
     console.log('data', data);
-    const newData = await Object.values(data).map(async (project) => {
+    let newData = Object.values(data).map(async (project) => {
       const userIds = project.permissions.map((permission) => permission.userId);
       const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(userIds)}`);
       console.log('users', users);
@@ -48,8 +48,9 @@ class ProjectsLoader extends React.Component {
         users,
       };
     });
+    newData = Promise.all(newData);
     console.log('new data', newData);
-    Promise.all(newData);
+
     this.setState(data);
     console.log('~ loaded projects ~');
   }
