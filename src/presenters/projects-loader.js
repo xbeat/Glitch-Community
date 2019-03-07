@@ -35,7 +35,7 @@ class ProjectsLoader extends React.Component {
     this.ensureProjects(this.props.projects);
   }
 
-  async loadUsersForProject(project, ...ids) {
+  async loadUsersForProject(project, ids) {
     const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(ids)}`);
     return {
       ...project,
@@ -47,18 +47,19 @@ class ProjectsLoader extends React.Component {
     if (!ids.length) return;
 
     let data = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
-
-    data = Object.values(data).map(async (project) => {
+    data = Object.values(data)
+    console.log(data);
+    data = data.map((project) => {
       const userIds = project.permissions.map((permission) => permission.userId);
-      return this.loadUsersForProject(project, userIds);
+      return await this.loadUsersForProject(project, userIds);
     });
+    console.log(data);
     data = await Promise.all(data);
+
     this.setState(keyByVal(data, 'id'));
-    console.log('~ loaded projects ~');
   }
 
   ensureProjects(projects) {
-    console.log('~ ensure projects ~');
     const ids = projects.map(({ id }) => id);
 
     const discardedProjects = Object.keys(this.state).filter((id) => this.state[id] && !ids.includes(id));
