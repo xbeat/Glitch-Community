@@ -19,7 +19,6 @@ module.exports = function(external) {
     response.header("X-XSS-Protection", "1; mode=block");
     response.header("X-Content-Type-Options", "nosniff");
     response.header("Strict-Transport-Security", "max-age=15768000");
-    response.header("Content-Security-Policy", "frame-ancestors 'self'");
     return next();
   });
   
