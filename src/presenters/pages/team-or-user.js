@@ -21,6 +21,7 @@ const getOrNull = async (api, route) => {
   }
 };
 
+// TODO: this can be put in a `utils` junk drawer
 const allByKeys = async (objOfPromises) => {
   const keys = Object.keys(objOfPromises);
   const values = await Promise.all(Object.values(objOfPromises));
@@ -30,8 +31,12 @@ const allByKeys = async (objOfPromises) => {
   }, {});
 };
 
-// TODO: we'll want to actually use the pagination for these, 
-// instead of just fetching everything
+// TODOs:
+// this works pretty well, even for users with lots of projects,
+// but we should consider pushing the API calls down to the individiual components,
+// instead of handling them at the page level.
+// none of them _have to_ load in any particular order,
+// and pagination needs to be closely integrated with the UI anyways.
 const getUserById = async (api, id) => {
   const data = await allByKeys({
     user: getSingleItem(api, `v1/users/by/id?id=${id}`, id),
@@ -40,8 +45,7 @@ const getUserById = async (api, id) => {
     teams: getAllPages(api, `v1/users/by/id/teams?id=${id}&limit=100&orderKey=createdAt&orderDirection=DESC`),
     collections: getAllPages(api, `v1/users/by/id/collections?id=${id}&limit=100&orderKey=createdAt&orderDirection=DESC`),
   });
-  const { user, ...rest } = data;
-  return { ...user, ...rest };
+  return mergeUserData(data);
 }
 
 const getUserByLogin = async (api, name) => {
@@ -52,9 +56,13 @@ const getUserByLogin = async (api, name) => {
     teams: getAllPages(api, `v1/users/by/login/teams?login=${name}&limit=100&orderKey=createdAt&orderDirection=DESC`),
     collections: getAllPages(api, `v1/users/by/login/collections?login=${name}&limit=100&orderKey=createdAt&orderDirection=DESC`),
   });
+  return mergeUserData(data);
+};
+
+const mergeUserData = (data) => {
   const { user, ...rest } = data;
   return { ...user, ...rest };
-};
+}
 
 const parseTeam = (team) => {
   const ADMIN_ACCESS_LEVEL = 30;
