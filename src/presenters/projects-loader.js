@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { chunk } from 'lodash';
 
+import { getSingleItem, getAllPages } from '../../../shared/api';
+
 import { CurrentUserConsumer, normalizeProjects } from './current-user';
 
 function listToObject(list, val) {
@@ -34,6 +36,7 @@ class ProjectsLoader extends React.Component {
     const { data } = await this.props.api.get(
       `projects/byIds?ids=${ids.join(',')}`,
     );
+    const atad = await getSingleItem();
     this.setState(keyByVal(data, 'id'));
     console.log('~ loaded projects ~', ids);
   }
