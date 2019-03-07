@@ -24,13 +24,7 @@ function syncPageToLogin(login) {
   history.replaceState(null, null, getLink({ login }));
 }
 
-const NameAndLogin = ({
-  name,
-  login,
-  isAuthorized,
-  updateName,
-  updateLogin,
-}) => {
+const NameAndLogin = ({ name, login, isAuthorized, updateName, updateLogin }) => {
   if (!login) {
     return <h1 className="login">Anonymous</h1>;
   }
@@ -50,19 +44,10 @@ const NameAndLogin = ({
   return (
     <>
       <h1 className="username">
-        <EditableField
-          value={editableName}
-          update={updateName}
-          placeholder="What's your name?"
-        />
+        <EditableField value={editableName} update={updateName} placeholder="What's your name?" />
       </h1>
       <h2 className="login">
-        <EditableField
-          value={login}
-          update={updateLogin}
-          prefix="@"
-          placeholder="Nickname?"
-        />
+        <EditableField value={login} update={updateLogin} prefix="@" placeholder="Nickname?" />
       </h2>
     </>
   );
@@ -110,13 +95,8 @@ const UserPage = ({
 }) => {
   const pinnedSet = new Set(user.pins.map(({ projectId }) => projectId));
   // filter featuredProject out of both pinned & recent projects
-  const [pinnedProjects, recentProjects] = partition(
-    user.projects.filter(({ id }) => id !== featuredProjectId),
-    ({ id }) => pinnedSet.has(id),
-  );
-  const featuredProject = user.projects.find(
-    ({ id }) => id === featuredProjectId,
-  );
+  const [pinnedProjects, recentProjects] = partition(user.projects.filter(({ id }) => id !== featuredProjectId), ({ id }) => pinnedSet.has(id));
+  const featuredProject = user.projects.find(({ id }) => id === featuredProjectId);
 
   return (
     <main className="profile-page user-page">
@@ -126,29 +106,16 @@ const UserPage = ({
           coverStyle={getProfileStyle({ ...user, cache: _cacheCover })}
           coverButtons={
             isAuthorized &&
-            !!user.login && (
-              <ImageButtons
-                name="Cover"
-                uploadImage={uploadCover}
-                clearImage={user.hasCoverImage ? clearCover : null}
-              />
-            )
+            !!user.login && <ImageButtons name="Cover" uploadImage={uploadCover} clearImage={user.hasCoverImage ? clearCover : null} />
           }
-          avatarButtons={
-            isAuthorized &&
-            !!user.login && (
-              <ImageButtons name="Avatar" uploadImage={uploadAvatar} />
-            )
-          }
+          avatarButtons={isAuthorized && !!user.login && <ImageButtons name="Avatar" uploadImage={uploadAvatar} />}
           teams={user.teams}
         >
           <NameAndLogin
             name={user.name}
             login={user.login}
             {...{ isAuthorized, updateName }}
-            updateLogin={(login) =>
-              updateLogin(login).then(() => syncPageToLogin(login))
-            }
+            updateLogin={(login) => updateLogin(login).then(() => syncPageToLogin(login))}
           />
           {!!user.thanksCount && <Thanks count={user.thanksCount} />}
           <AuthDescription
@@ -214,16 +181,9 @@ const UserPage = ({
         currentUser={maybeCurrentUser}
       />
       {isAuthorized && (
-        <DeletedProjects
-          api={api}
-          setDeletedProjects={setDeletedProjects}
-          deletedProjects={_deletedProjects}
-          undelete={undeleteProject}
-        />
+        <DeletedProjects api={api} setDeletedProjects={setDeletedProjects} deletedProjects={_deletedProjects} undelete={undeleteProject} />
       )}
-      {!isAuthorized && (
-        <ReportButton reportedType="user" reportedModel={user} />
-      )}
+      {!isAuthorized && <ReportButton reportedType="user" reportedModel={user} />}
     </main>
   );
 };
@@ -263,24 +223,13 @@ const UserPageContainer = ({ api, user }) => (
       {(userFromEditor, funcs, isAuthorized) => (
         <>
           <Helmet>
-            <title>
-              {userFromEditor.name ||
-                (userFromEditor.login
-                  ? `@${userFromEditor.login}`
-                  : `User ${userFromEditor.id}`)}
-            </title>
+            <title>{userFromEditor.name || (userFromEditor.login ? `@${userFromEditor.login}` : `User ${userFromEditor.id}`)}</title>
           </Helmet>
 
           <CurrentUserConsumer>
             {(maybeCurrentUser) => (
               <ProjectsLoader api={api} projects={userFromEditor.projects}>
-                {(projects) => (
-                  <UserPage
-                    {...{ api, isAuthorized, maybeCurrentUser }}
-                    user={{ ...userFromEditor, projects }}
-                    {...funcs}
-                  />
-                )}
+                {(projects) => <UserPage {...{ api, isAuthorized, maybeCurrentUser }} user={{ ...userFromEditor, projects }} {...funcs} />}
               </ProjectsLoader>
             )}
           </CurrentUserConsumer>
