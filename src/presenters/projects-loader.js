@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { chunk } from 'lodash';
 
-import { getFromApi } from '../../shared/api';
+import { getFromApi, joinIdsToQueryString } from '../../shared/api';
 
 import { CurrentUserConsumer, normalizeProjects } from './current-user';
 
@@ -12,10 +12,6 @@ function listToObject(list, val) {
 
 function keyByVal(list, key) {
   return list.reduce((data, val) => ({ ...data, [val[key]]: val }), {});
-}
-
-function joinIdsToQueryString(ids) {
-  return ids.map((id) => `id=${id}`).join('&');
 }
 
 class ProjectsLoader extends React.Component {

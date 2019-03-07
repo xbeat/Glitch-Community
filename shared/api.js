@@ -1,5 +1,9 @@
 /// Api helper functions
 
+const joinIdsToQueryString = (ids) => {
+  return ids.map((id) => `id=${id}`).join('&');
+}
+
 const getFromApi = async (api, url) => {
   const { data } = await api.get(url);
   return data;
@@ -33,6 +37,7 @@ const getAllPages = async (api, url) => {
 };
 
 module.exports = {
+  joinIdsToQueryString,
   getFromApi,
   getSingleItem,
   getAllPages,
