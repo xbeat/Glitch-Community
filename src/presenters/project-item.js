@@ -6,12 +6,19 @@ import { getAvatarUrl } from '../models/project';
 import { ProjectLink } from './includes/link';
 import { TruncatedMarkdown } from './includes/markdown';
 import ProjectOptionsPop from './pop-overs/project-options-pop';
-import { EditableDescriptionImpl } from './includes/description-field;
+import { AuthDescription } from './includes/description-field';
 import UsersList from './users-list';
 
 const ProjectItem = ({ api, project, ...props }) => (
   <li>
-    <EditableDescriptionImpl description={project.annotation} placeholder="placeholder" update={() => console.log('update that annotation yo')} />
+    {project.hasOwnProperty('annotation') && (
+      <AuthDescription
+        authorized
+        description={project.annotation}
+        placeholder="Share why you love this app."
+        update={() => console.log('update that annotation yo')}
+      />
+    )}
     <UsersList
       glitchTeam={project.showAsGlitchTeam}
       users={project.users}
