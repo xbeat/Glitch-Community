@@ -21,18 +21,23 @@ const getOrNull = async (api, route) => {
   }
 };
 
-const getUserById = async (api, id) => {
-  const user = await getOrNull(api, `/users/${id}`);
-  return user;
-};
+// const getUserById = async (api, id) => {
+//   const user = await getOrNull(api, `/users/${id}`);
+//   return user;
+// };
+
+// const getUser = async (api, name) => {
+//   const id = await getOrNull(api, `/userId/byLogin/${name}`);
+//   if (id === 'NOT FOUND') {
+//     return null;
+//   }
+//   return getUserById(api, id);
+// };
 
 const getUser = async (api, name) => {
-  const id = await getOrNull(api, `/userId/byLogin/${name}`);
-  if (id === 'NOT FOUND') {
-    return null;
-  }
-  return getUserById(api, id);
-};
+  const user = await getSingleItem(api, `v1/users/by/login?login=${name}`, name)
+  return user
+}
 
 const parseTeam = (team) => {
   const ADMIN_ACCESS_LEVEL = 30;
