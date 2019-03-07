@@ -14,11 +14,12 @@ module.exports = function(external) {
   app.use(function(request, response, next) {
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    // security headers 20 + 10, 5, 20, 25 (we need 75 total?)
+    
+    // security headers
     response.header("X-XSS-Protection", "1; mode=block");
     response.header("X-Content-Type-Options", "nosniff");
     response.header("Strict-Transport-Security", "max-age=15768000");
-    // response.header("Content-Security-Policy", "https:");
+    response.header("Content-Security-Policy", "frame-ancestors 'self'");
     return next();
   });
   
