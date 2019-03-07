@@ -21,6 +21,7 @@ const getOrNull = async (api, route) => {
   }
 };
 
+// TODO: where is this used?
 // const getUserById = async (api, id) => {
 //   const user = await getOrNull(api, `/users/${id}`);
 //   return user;
@@ -36,6 +37,8 @@ const getOrNull = async (api, route) => {
 
 const getUser = async (api, name) => {
   const user = await getSingleItem(api, `v1/users/by/login?login=${name}`, name)
+  // TODO
+  user.
   return user
 }
 
