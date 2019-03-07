@@ -14,9 +14,9 @@ module.exports = function(external) {
   app.use(function(request, response, next) {
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    // security headers 10, 5, 20, 25 (we need 60 total)
+    // security headers 10, 5, 20, 25 (we need 55 total)
     response.header("X-XSS-Protection", "1; mode=block");
-    //response.header("X-Content-Type-Options", "nosniff");
+    response.header("X-Content-Type-Options", "nosniff");
     //response.header("Strict-Transport-Security", "max-age=6307200");
     // response.header("Content-Security-Policy", "https:");
     return next();
