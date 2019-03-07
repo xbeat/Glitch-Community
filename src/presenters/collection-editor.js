@@ -71,7 +71,7 @@ class CollectionEditor extends React.Component {
       }),
     }));
 
-    await this.updateFields({ projects: updatedProjects });
+    await this.updateFields({ collectionProjects: updatedProjects });
   }
 
   addNoteField(projectId) {
