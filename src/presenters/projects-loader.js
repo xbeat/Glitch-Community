@@ -15,15 +15,16 @@ function keyByVal(list, key) {
 }
 
 function joinIdsToQueryString(ids) {
-  return ids.map(id => `id=${id}`).join('&');
+  return ids.map((id) => `id=${id}`).join('&');
 }
 
 async function addUsersToProject(project) {
-  const ids = 
- return {
-   ...project,
-   users: await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(ids)}`)
- }
+  const ids = project.permissions.reduce((permission) => permission.userId);
+  const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(ids)}`);
+  return {
+    ...project,
+    users,
+  };
 }
 
 class ProjectsLoader extends React.Component {
@@ -49,8 +50,8 @@ class ProjectsLoader extends React.Component {
 
     const atad = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
     console.log('data backwards', atad);
-    atad.map(addUsersToProject)
-    const newState = keyByVal(data, 'id')
+    atad.map(addUsersToProject);
+    const newState = keyByVal(data, 'id');
     this.setState(newState);
     console.log('~ loaded projects ~', newState);
   }
@@ -59,24 +60,24 @@ class ProjectsLoader extends React.Component {
     console.log('~ ensure projects ~');
     const ids = projects.map(({ id }) => id);
 
-    const discardedProjects = Object.keys(this.state).filter(id => this.state[id] && !ids.includes(id));
+    const discardedProjects = Object.keys(this.state).filter((id) => this.state[id] && !ids.includes(id));
     if (discardedProjects.length) {
       this.setState(listToObject(discardedProjects, undefined));
     }
 
-    const unloadedProjects = ids.filter(id => this.state[id] === undefined);
+    const unloadedProjects = ids.filter((id) => this.state[id] === undefined);
     if (unloadedProjects.length) {
       this.setState(listToObject(unloadedProjects, null));
-      chunk(unloadedProjects, 100).forEach(currentChunk => this.loadProjects(...currentChunk));
+      chunk(unloadedProjects, 100).forEach((currentChunk) => this.loadProjects(...currentChunk));
     }
   }
 
   render() {
     const { children, projects } = this.props;
-    const loadedProjects = projects.map(project => this.state[project.id] || project);
+    const loadedProjects = projects.map((project) => this.state[project.id] || project);
     return (
       <CurrentUserConsumer>
-        {currentUser => children(normalizeProjects(loadedProjects, currentUser), this.loadProjects.bind(this))}
+        {(currentUser) => children(normalizeProjects(loadedProjects, currentUser), this.loadProjects.bind(this))}
       </CurrentUserConsumer>
     );
   }
