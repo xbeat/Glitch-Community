@@ -31,24 +31,25 @@ const allByKeys = async (objOfPromises) => {
 };
 
 // TODO: where is this used?
-// const getUserById = async (api, id) => {//   const user = await getOrNull(api, `/users/${id}`);
+// const getUserById = async (api, id) => {
+//   const user = await getOrNull(api, `/users/${id}`);
 //   return user;
 // };
+// TODO: is this used frequently enough that we'd want to 
+
 
 const getUser = async (api, name) => {
-
   const data = await allByKeys({
     user: getSingleItem(api, `v1/users/by/login?login=${name}`, name),
-    // TODO: definitely need pagination here
-    pins: getAllPages(api, `v1/users/by/login/pinnedProjects?login=${name}&limit=100&orderKey=createdAt&orderDirection=ASC`),
-    projects: getAllPages(api, `v1/users/by/login/projects?id=${user.id}&limit=100&orderKey=createdAt&orderDirection=ASC`),
-  
-    const user = await g  // TODO: pagination
-  const associatedData = await allByKeys({
-    pins: [    projects: [    teams: [],
-    collections: [],
+    // TODO: this actually seems to work OK with large collections, 
+    // but we'll want to do lazy pagination eventually
+    pins: getAllPages(api, `v1/users/by/login/pinnedProjects?login=${name}&limit=100&orderKey=createdAt&orderDirection=DESC`),
+    projects: getAllPages(api, `v1/users/by/login/projects?login=${name}&limit=100&orderKey=createdAt&orderDirection=DESC`),
+    teams: getAllPages(api, `v1/users/by/login/teams?login=${name}&limit=100&orderKey=createdAt&orderDirection=DESC`),
+    collections: getAllPages(api, `v1/users/by/login/collections?login=${name}&limit=100&orderKey=createdAt&orderDirection=DESC`),
   });
-  return { ...user, ...associatedData };
+  const { user, ...rest } = data;
+  return { ...user, ...rest };
 };
 
 const parseTeam = (team) => {
@@ -143,4 +144,3 @@ const TeamPagePresenter = ({ api, id, name }) => Presenter(api, TeamPageLoader, 
 const UserPagePresenter = ({ api, id, name }) => Presenter(api, UserPageLoader, { id, name });
 const TeamOrUserPagePresenter = ({ api, name }) => Presenter(api, TeamOrUserPageLoader, { name });
 export { TeamPagePresenter as TeamPage, UserPagePresenter as UserPage, TeamOrUserPagePresenter as TeamOrUserPage };
- 
