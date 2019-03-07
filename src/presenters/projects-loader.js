@@ -35,7 +35,8 @@ class ProjectsLoader extends React.Component {
     this.ensureProjects(this.props.projects);
   }
 
-  async loadUsersForProject(project, ids) {
+  async loadUsersForProject(project) {
+    const ids = project.permissions.map((permission) => permission.userId);
     const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(ids)}`);
     return {
       ...project,
@@ -46,17 +47,17 @@ class ProjectsLoader extends React.Component {
   async loadProjects(...ids) {
     if (!ids.length) return;
 
-    let data = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
-    data = Object.values(data)
-    console.log(data);
-    data = data.map((project) => {
-      const userIds = project.permissions.map((permission) => permission.userId);
-      return await this.loadUsersForProject(project, userIds);
-    });
-    console.log(data);
-    data = await Promise.all(data);
+    // Reassigning just to make what is happening here more clear
+    let projects = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
+    
+    projects = Object.values(projects);
+    projects = projects.map(this.loadUsersForProject);
+    console.log('projects', projects);
+    
+    projects = await Promise.all(projects);
+    projects = keyByVal(projects, 'id');
 
-    this.setState(keyByVal(data, 'id'));
+    this.setState(projects);
   }
 
   ensureProjects(projects) {
