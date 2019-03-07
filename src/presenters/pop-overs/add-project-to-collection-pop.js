@@ -40,7 +40,7 @@ class AddProjectToCollectionPopContents extends React.Component {
 
   updateFilter(query) {
     query = query.toLowerCase().trim();
-    const filteredCollections = this.props.collections.filter((collection) => collection.name.toLowerCase().includes(query));
+    const filteredCollections = this.props.collections.filter(collection => collection.name.toLowerCase().includes(query));
     this.setState({ filteredCollections, query });
   }
 
@@ -49,7 +49,7 @@ class AddProjectToCollectionPopContents extends React.Component {
     if (!collection.projects) {
       return null;
     }
-    const currentProjectNotIncluded = collection.projects.every((project) => project.id !== this.props.project.id);
+    const currentProjectNotIncluded = collection.projects.every(project => project.id !== this.props.project.id);
 
     if (!currentProjectNotIncluded) {
       return null;
@@ -153,7 +153,7 @@ class AddProjectToCollectionPop extends React.Component {
         if (collection.teamId === -1) {
           collection.user = this.props.currentUser;
         } else {
-          collection.team = this.props.currentUser.teams.find((userTeam) => userTeam.id === collection.teamId);
+          collection.team = this.props.currentUser.teams.find(userTeam => userTeam.id === collection.teamId);
           if (!collection.team) {
             deletedCollectionIds.push(collection.id);
           }
@@ -161,9 +161,9 @@ class AddProjectToCollectionPop extends React.Component {
       });
 
       // remove deleted collections
-      remove(allCollections, (collection) => deletedCollectionIds.includes(collection.id));
+      remove(allCollections, collection => deletedCollectionIds.includes(collection.id));
 
-      const orderedCollections = orderBy(allCollections, (collection) => collection.updatedAt, ['desc']);
+      const orderedCollections = orderBy(allCollections, collection => collection.updatedAt, ['desc']);
 
       this.setState({ maybeCollections: orderedCollections });
     } catch (error) {
