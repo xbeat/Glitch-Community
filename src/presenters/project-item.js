@@ -7,17 +7,23 @@ import { ProjectLink } from './includes/link';
 import { TruncatedMarkdown } from './includes/markdown';
 import ProjectOptionsPop from './pop-overs/project-options-pop';
 import { AuthDescription } from './includes/description-field';
-import UsersList from './users-list';
+import UsersList, { UserTile } from './users-list';
 
-const ProjectItem = ({ api, project, ...props }) => (
+const ProjectItem = ({
+  api, project, currentUser, ...props
+}) => (
   <li>
     {(project.isAddingANewAnnotation || project.annotation) && (
-      <AuthDescription
-        authorized
-        description={project.annotation || ''}
-        placeholder="Share why you love this app."
-        update={() => console.log('update that annotation yo')}
-      />
+      <div>
+        <AuthDescription
+          authorized
+          description={project.annotation || ''}
+          placeholder="Share why you love this app."
+          update={() => console.log('update that annotation yo')}
+        />
+        <UserTile user={currentUser} />
+      </div>
+
     )}
     <UsersList
       glitchTeam={project.showAsGlitchTeam}
