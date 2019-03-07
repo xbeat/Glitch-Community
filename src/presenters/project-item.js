@@ -6,25 +6,18 @@ import { getAvatarUrl } from '../models/project';
 import { ProjectLink } from './includes/link';
 import { TruncatedMarkdown } from './includes/markdown';
 import ProjectOptionsPop from './pop-overs/project-options-pop';
-import { AuthDescription } from './includes/description-field';
-import UsersList, { UserTile } from './users-list';
+import UsersList from './users-list';
+import Annotation from './annotation';
 
 const ProjectItem = ({
   api, project, currentUser, ...props
 }) => (
   <li>
-    {(project.isAddingANewAnnotation || project.annotation) && (
-      <div>
-        <AuthDescription
-          authorized
-          description={project.annotation || ''}
-          placeholder="Share why you love this app."
-          update={() => console.log('update that annotation yo')}
-        />
-        <UserTile user={currentUser} />
-      </div>
-
-    )}
+    <Annotation
+      currentUser={currentUser}
+      project={project}
+      update={() => console.log("what's the api call sarah?")}
+    />
     <UsersList
       glitchTeam={project.showAsGlitchTeam}
       users={project.users}
