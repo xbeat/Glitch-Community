@@ -22,33 +22,33 @@ const getOrNull = async (api, route) => {
 };
 
 const allByKeys = async (objOfPromises) => {
-  const keys = Object.keys(objOfPromises)
-  const values = await Promise.all(Object.values(objOfPromises))
+  const keys = Object.keys(objOfPromises);
+  const values = await Promise.all(Object.values(objOfPromises));
   return keys.reduce((result, key, i) => {
-    result[key] = values[i]
-    return result
-  }, {})
-}  
+    result[key] = values[i];
+    return result;
+  }, {});
+};
 
 // TODO: where is this used?
-// const getUserById = async (api, id) => {
-//   const user = await getOrNull(api, `/users/${id}`);
+// const getUserById = async (api, id) => {//   const user = await getOrNull(api, `/users/${id}`);
 //   return user;
 // };
 
 const getUser = async (api, name) => {
-  const user = await getSingleItem(api, `v1/users/by/login?login=${name}`, name);
+
+  const data = await allByKeys({
+    user: getSingleItem(api, `v1/users/by/login?login=${name}`, name),
+    // TODO: definitely need pagination here
+    pins: getAllPages(api, `v1/users/by/login/pinnedProjects?login=${name}&limit=100&orderKey=createdAt&orderDirection=ASC`),
+    projects: getAllPages(api, `v1/users/by/login/projects?id=${user.id}&limit=100&orderKey=createdAt&orderDirection=ASC`),
+  
+    const user = await g  // TODO: pagination
   const associatedData = await allByKeys({
-    pins: [],
-    projects: [],
-    teams
-  }
-  // TODO
-  user.pins = [];
-  user.projects = [];
-  user.teams = [];
-  user.collections = [];
-  return user;
+    pins: [    projects: [    teams: [],
+    collections: [],
+  });
+  return { ...user, ...associatedData };
 };
 
 const parseTeam = (team) => {
@@ -143,3 +143,4 @@ const TeamPagePresenter = ({ api, id, name }) => Presenter(api, TeamPageLoader, 
 const UserPagePresenter = ({ api, id, name }) => Presenter(api, UserPageLoader, { id, name });
 const TeamOrUserPagePresenter = ({ api, name }) => Presenter(api, TeamOrUserPageLoader, { name });
 export { TeamPagePresenter as TeamPage, UserPagePresenter as UserPage, TeamOrUserPagePresenter as TeamOrUserPage };
+ 
