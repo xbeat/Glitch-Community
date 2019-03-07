@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { chunk } from 'lodash';
 
-import { getSingleItem, getAllPages } from '../../../shared/api';
+import { getFromApi } from '../../shared/api';
 
 import { CurrentUserConsumer, normalizeProjects } from './current-user';
 
@@ -15,7 +15,7 @@ function keyByVal(list, key) {
 }
 
 function joinIdsToQueryString(ids) {
-  return ids.map(id => `id=${id}`).join('?')
+  return ids.map(id => `id=${id}`).join('&');
 }
 
 class ProjectsLoader extends React.Component {
@@ -37,24 +37,16 @@ class ProjectsLoader extends React.Component {
 
   async loadProjects(...ids) {
     if (!ids.length) return;
-    const { data } = await this.props.api.get(
-      `projects/byIds?ids=${ids.join(',')}`,
-    );
-    
-    const atad = await getSingleItem(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
-    console.log('data backwards', atad);
-    
-    this.setState(keyByVal(data, 'id'));
-    console.log('~ loaded projects ~', ids);
+    const data = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
+    this.setState(data);
+    console.log('~ loaded projects ~', data);
   }
 
   ensureProjects(projects) {
     console.log('~ ensure projects ~');
     const ids = projects.map(({ id }) => id);
 
-    const discardedProjects = Object.keys(this.state).filter(
-      id => this.state[id] && !ids.includes(id),
-    );
+    const discardedProjects = Object.keys(this.state).filter(id => this.state[id] && !ids.includes(id));
     if (discardedProjects.length) {
       this.setState(listToObject(discardedProjects, undefined));
     }
@@ -68,16 +60,10 @@ class ProjectsLoader extends React.Component {
 
   render() {
     const { children, projects } = this.props;
-    const loadedProjects = projects.map(
-      project => this.state[project.id] || project,
-    );
+    const loadedProjects = projects.map(project => this.state[project.id] || project);
     return (
       <CurrentUserConsumer>
-        {currentUser => children(
-          normalizeProjects(loadedProjects, currentUser),
-          this.loadProjects.bind(this),
-        )
-        }
+        {currentUser => children(normalizeProjects(loadedProjects, currentUser), this.loadProjects.bind(this))}
       </CurrentUserConsumer>
     );
   }
