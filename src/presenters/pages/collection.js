@@ -134,9 +134,7 @@ const CollectionPageContents = ({
           )}
         </header>
         {/* eslint-disable no-nested-ternary */ }
-        {!!collection && (
-          <ProjectsLoader api={api} projects={collection.projects}>
-            {projects => (
+        {!!collection && collection.projects.map(projects => (
               <>
                 <div className="collection-contents">
                   <div className="collection-project-container-header">
@@ -195,7 +193,7 @@ const CollectionPageContents = ({
                   )}
                 </div>
               </>
-            )}
+            ))}
             {/* eslint-enable no-nested-ternary */ }
           </ProjectsLoader>
         )}
