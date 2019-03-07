@@ -10,9 +10,9 @@ function listToObject(list, val) {
   return list.reduce((data, key) => ({ ...data, [key]: val }), {});
 }
 
-// function keyByVal(list, key) {
-//   return list.reduce((data, val) => ({ ...data, [val[key]]: val }), {});
-// }
+function keyByVal(list, key) {
+  return list.reduce((data, val) => ({ ...data, [val[key]]: val }), {});
+}
 
 function joinIdsToQueryString(ids) {
   return ids.map((id) => `id=${id}`).join('&');
@@ -38,20 +38,18 @@ class ProjectsLoader extends React.Component {
   async loadProjects(...ids) {
     if (!ids.length) return;
     const data = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
-    console.log('data', data);
     let newData = Object.values(data).map(async (project) => {
       const userIds = project.permissions.map((permission) => permission.userId);
       const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(userIds)}`);
-      console.log('users', users);
       return {
         ...project,
         users,
       };
     });
-    newData = Promise.all(newData);
+    newData = await Promise.all(newData);
     console.log('new data', newData);
 
-    this.setState(data);
+    this.setState(keyByVal(newData, 'id');
     console.log('~ loaded projects ~');
   }
 
