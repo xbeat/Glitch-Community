@@ -134,68 +134,71 @@ const CollectionPageContents = ({
           )}
         </header>
         {/* eslint-disable no-nested-ternary */ }
-        {!!collection
-          && (collection.projects.map(project => (
-            <>
-              <div className="collection-contents">
-                <div className="collection-project-container-header">
-                  <h3>
+        {!!collection && (
+          <ProjectsLoader api={api} projects={collection.projects}>
+            {projects => (
+              <>
+                <div className="collection-contents">
+                  <div className="collection-project-container-header">
+                    <h3>
                       Projects ({collection.projects.length})
-                  </h3>
+                    </h3>
 
-                  {!!isAuthorized && (
-                    <AddCollectionProject
-                      addProjectToCollection={addProjectToCollection}
-                      collection={collection}
-                      api={api}
-                      currentUser={currentUser}
-                    />
+                    {!!isAuthorized && (
+                      <AddCollectionProject
+                        addProjectToCollection={addProjectToCollection}
+                        collection={collection}
+                        api={api}
+                        currentUser={currentUser}
+                      />
+                    )}
+                  </div>
+                  {collection.projects.length > 0 ? (
+                    isAuthorized ? (
+                      <ProjectsUL
+                        {...{ projects, currentUser, api }}
+                        projectOptions={{
+                          removeProjectFromCollection,
+                          addProjectToCollection,
+                          updateOrAddNote,
+                          addNoteField,
+                        }}
+                        {...props}
+                      />
+                    ) : currentUser && currentUser.login ? (
+                      <ProjectsUL
+                        {...{ projects, currentUser, api }}
+                        projectOptions={{
+                          addProjectToCollection,
+                        }}
+                        {...props}
+                      />
+                    ) : (
+                      <ProjectsUL
+                        {...{ projects, currentUser, api }}
+                        projectOptions={{}}
+                        {...props}
+                      />
+                    )
+                  ) : isAuthorized ? (
+                    <div className="empty-collection-hint">
+                      <img
+                        src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934"
+                        alt=""
+                      />
+                      <p>You can add any project, created by any user</p>
+                    </div>
+                  ) : (
+                    <div className="empty-collection-hint">
+                      No projects to see in this collection just yet.
+                    </div>
                   )}
                 </div>
-                {collection.projects.length > 0 ? (
-                  isAuthorized ? (
-                    <ProjectsUL
-                      {...{ projects, currentUser, api }}
-                      projectOptions={{
-                        removeProjectFromCollection,
-                        addProjectToCollection,
-                        updateOrAddNote,
-                        addNoteField,
-                      }}
-                      {...props}
-                    />
-                  ) : currentUser && currentUser.login ? (
-                    <ProjectsUL
-                      {...{ projects, currentUser, api }}
-                      projectOptions={{
-                        addProjectToCollection,
-                      }}
-                      {...props}
-                    />
-                  ) : (
-                    <ProjectsUL
-                      {...{ projects, currentUser, api }}
-                      projectOptions={{}}
-                      {...props}
-                    />
-                  )
-                ) : isAuthorized ? (
-                  <div className="empty-collection-hint">
-                    <img
-                      src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934"
-                      alt=""
-                    />
-                    <p>You can add any project, created by any user</p>
-                  </div>
-                ) : (
-                  <div className="empty-collection-hint">
-                      No projects to see in this collection just yet.
-                  </div>
-                )}
-              </div>
-            </>
-          )))}
-        {/* eslint-enable no-nested-ternary */ }
+              </>
+            )}
+            {/* eslint-enable no-nested-ternary */ }
+          </ProjectsLoader>
+        )}
       </article>
       {!isAuthorized && (
         <ReportButton reportedType="collection" reportedModel={collection} />
