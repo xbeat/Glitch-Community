@@ -29,7 +29,9 @@ class ProjectsLoader extends React.Component {
     this.ensureProjects(this.props.projects);
   }
 
-  async loadProjects(...ids) { // Why do we do this? we pass in projects and we also load them?
+  // I think this pattern is a little funky town and we might want to look into other options. It's not immediately obvious the props.projects of these child components are totally different from the props.projects of parent components of this component,
+  // maybe this could be solved with a variable name change (projectDetails as an example) or by defining this load Projects function at a higher component.
+  async loadProjects(...ids) {
     if (!ids.length) return;
     const { data } = await this.props.api.get(
       `projects/byIds?ids=${ids.join(',')}`,
