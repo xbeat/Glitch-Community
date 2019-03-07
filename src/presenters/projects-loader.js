@@ -14,6 +14,10 @@ function keyByVal(list, key) {
   return list.reduce((data, val) => ({ ...data, [val[key]]: val }), {});
 }
 
+function joinIdsToQueryString(ids) {
+  return ids.map(id => `id=${id}`).join('?')
+}
+
 class ProjectsLoader extends React.Component {
   constructor(props) {
     super(props);
@@ -36,7 +40,10 @@ class ProjectsLoader extends React.Component {
     const { data } = await this.props.api.get(
       `projects/byIds?ids=${ids.join(',')}`,
     );
-    const atad = await getSingleItem();
+    
+    const atad = await getSingleItem(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
+    console.log('data backwards', atad);
+    
     this.setState(keyByVal(data, 'id'));
     console.log('~ loaded projects ~', ids);
   }
