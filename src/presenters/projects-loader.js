@@ -37,9 +37,14 @@ class ProjectsLoader extends React.Component {
 
   async loadProjects(...ids) {
     if (!ids.length) return;
-    const data = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
-    this.setState(data);
-    console.log('~ loaded projects ~', data);
+    const { data } = await this.props.api.get(`projects/byIds?ids=${ids.join(',')}`);
+
+    const atad = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
+    console.log('data backwards', atad);
+    
+    const newState = keyByVal(data, 'id')
+    this.setState(newState);
+    console.log('~ loaded projects ~', newState);
   }
 
   ensureProjects(projects) {
