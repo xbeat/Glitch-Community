@@ -18,15 +18,6 @@ function joinIdsToQueryString(ids) {
   return ids.map((id) => `id=${id}`).join('&');
 }
 
-async function addUsersToProject(project) {
-  const ids = project.permissions.reduce((permission) => permission.userId);
-  const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(ids)}`);
-  return {
-    ...project,
-    users,
-  };
-}
-
 class ProjectsLoader extends React.Component {
   constructor(props) {
     super(props);
@@ -46,14 +37,18 @@ class ProjectsLoader extends React.Component {
 
   async loadProjects(...ids) {
     if (!ids.length) return;
-    const { data } = await this.props.api.get(`projects/byIds?ids=${ids.join(',')}`);
-
-    const atad = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
-    console.log('data backwards', atad);
-    atad.map(addUsersToProject);
-    const newState = keyByVal(data, 'id');
-    this.setState(newState);
-    console.log('~ loaded projects ~', newState);
+    const data = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
+    console.log('data', data);
+    console.log(await Object.values(data).map(async (project) => {
+      const userIds = project.permissions.map((permission) => permission.userId);
+      const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(userIds)}`);
+      return {
+        ...project,
+        users,
+      };
+    }));
+    this.setState(data);
+    console.log('~ loaded projects ~');
   }
 
   ensureProjects(projects) {
