@@ -31,6 +31,11 @@ const allByKeys = async (objOfPromises) => {
   }, {});
 };
 
+const mergeUserData = (data) => {
+  const { user, ...rest } = data;
+  return { ...user, ...rest };
+};
+
 // TODOs:
 // this works pretty well, even for users with lots of projects,
 // but we should consider pushing the API calls down to the individiual components,
@@ -46,7 +51,7 @@ const getUserById = async (api, id) => {
     collections: getAllPages(api, `v1/users/by/id/collections?id=${id}&limit=100&orderKey=createdAt&orderDirection=DESC`),
   });
   return mergeUserData(data);
-}
+};
 
 const getUserByLogin = async (api, name) => {
   const data = await allByKeys({
@@ -58,11 +63,6 @@ const getUserByLogin = async (api, name) => {
   });
   return mergeUserData(data);
 };
-
-const mergeUserData = (data) => {
-  const { user, ...rest } = data;
-  return { ...user, ...rest };
-}
 
 const parseTeam = (team) => {
   const ADMIN_ACCESS_LEVEL = 30;
