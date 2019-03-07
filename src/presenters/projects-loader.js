@@ -35,21 +35,25 @@ class ProjectsLoader extends React.Component {
     this.ensureProjects(this.props.projects);
   }
 
+  async loadUsersForProject(project, ...ids) {
+    const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(ids)}`);
+    return {
+      ...project,
+      users: Object.values(users),
+    };
+  }
+
   async loadProjects(...ids) {
     if (!ids.length) return;
-    const data = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
-    let newData = Object.values(data).map(async (project) => {
-      const userIds = project.permissions.map((permission) => permission.userId);
-      const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(userIds)}`);
-      return {
-        ...project,
-        users,
-      };
-    });
-    newData = await Promise.all(newData);
-    console.log('new data', newData);
 
-    this.setState(keyByVal(newData, 'id');
+    let data = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(ids)}`);
+
+    data = Object.values(data).map(async (project) => {
+      const userIds = project.permissions.map((permission) => permission.userId);
+      return this.loadUsersForProject(project, userIds);
+    });
+    data = await Promise.all(data);
+    this.setState(keyByVal(data, 'id'));
     console.log('~ loaded projects ~');
   }
 
