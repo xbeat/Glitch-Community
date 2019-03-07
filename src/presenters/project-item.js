@@ -11,10 +11,10 @@ import UsersList from './users-list';
 
 const ProjectItem = ({ api, project, ...props }) => (
   <li>
-    {project.hasOwnProperty('annotation') && (
+    {(project.isAddingANewAnnotation || project.annotation) && (
       <AuthDescription
         authorized
-        description={project.annotation}
+        description={project.annotation || ''}
         placeholder="Share why you love this app."
         update={() => console.log('update that annotation yo')}
       />
