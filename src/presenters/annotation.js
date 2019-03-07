@@ -12,7 +12,8 @@ const Annotation = ({
   }
 
   return (
-    <div>
+    <div className="annotation">
+      <div className="description-container" />
       <AuthDescription
         authorized
         description={project.annotation || ''}
