@@ -16,7 +16,7 @@ const ProjectItem = ({
     <Annotation
       currentUser={currentUser}
       project={project}
-      update={() => console.log("what's the api call sarah?")}
+      update={note => props.projectOptions.updateOrAddNote({ annotation: note, projectId: project.id })}
     />
     <UsersList
       glitchTeam={project.showAsGlitchTeam}
