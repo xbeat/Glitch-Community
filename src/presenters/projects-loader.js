@@ -35,9 +35,11 @@ class ProjectsLoader extends React.Component {
       `projects/byIds?ids=${ids.join(',')}`,
     );
     this.setState(keyByVal(data, 'id'));
+    console.log('~ loaded projects ~');
   }
 
   ensureProjects(projects) {
+    console.log('~ ensure projects ~');
     const ids = projects.map(({ id }) => id);
 
     const discardedProjects = Object.keys(this.state).filter(
