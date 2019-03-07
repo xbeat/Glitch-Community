@@ -62,8 +62,8 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
     animate(event, 'slide-up', () => props.featureProject(props.project.id));
   }
   const showLeaveProject = props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject;
-  const showAddNote = !props.project.annotation && !!props.addNoteField;
-  console.log('annotation?', props.project.annotation);
+  const showAddNote = !props.project.annotation && !!props.addNoteField; // TODO: revisit this since it doesn't actually update with the annotation until it's been saved
+
   return (
     <dialog className="pop-over project-options-pop">
       {!!props.addPin && (
