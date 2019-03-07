@@ -11,7 +11,6 @@ class CollectionEditor extends React.Component {
     this.state = {
       ...props.initialCollection,
     };
-    console.log(props);
   }
 
   userIsAuthor() {
