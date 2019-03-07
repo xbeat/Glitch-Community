@@ -30,19 +30,23 @@ const allByKeys = async (objOfPromises) => {
   }, {});
 };
 
-// TODO: where is this used?
-// const getUserById = async (api, id) => {
-//   const user = await getOrNull(api, `/users/${id}`);
-//   return user;
-// };
-// TODO: is this used frequently enough that we'd want to 
+// TODO: we'll want to actually use the pagination for these, 
+// instead of just fetching everything
+const getUserById = async (api, id) => {
+  const data = await allByKeys({
+    user: getSingleItem(api, `v1/users/by/id?id=${id}`, id),
+    pins: getAllPages(api, `v1/users/by/id/pinnedProjects?id=${id}&limit=100&orderKey=createdAt&orderDirection=DESC`),
+    projects: getAllPages(api, `v1/users/by/id/projects?id=${id}&limit=100&orderKey=createdAt&orderDirection=DESC`),
+    teams: getAllPages(api, `v1/users/by/id/teams?id=${id}&limit=100&orderKey=createdAt&orderDirection=DESC`),
+    collections: getAllPages(api, `v1/users/by/id/collections?id=${id}&limit=100&orderKey=createdAt&orderDirection=DESC`),
+  });
+  const { user, ...rest } = data;
+  return { ...user, ...rest };
+}
 
-
-const getUser = async (api, name) => {
+const getUserByLogin = async (api, name) => {
   const data = await allByKeys({
     user: getSingleItem(api, `v1/users/by/login?login=${name}`, name),
-    // TODO: this actually seems to work OK with large collections, 
-    // but we'll want to do lazy pagination eventually
     pins: getAllPages(api, `v1/users/by/login/pinnedProjects?login=${name}&limit=100&orderKey=createdAt&orderDirection=DESC`),
     projects: getAllPages(api, `v1/users/by/login/projects?login=${name}&limit=100&orderKey=createdAt&orderDirection=DESC`),
     teams: getAllPages(api, `v1/users/by/login/teams?login=${name}&limit=100&orderKey=createdAt&orderDirection=DESC`),
@@ -118,7 +122,7 @@ const TeamOrUserPageLoader = ({ api, name, ...props }) => (
       team ? (
         <TeamPage api={api} team={team} {...props} />
       ) : (
-        <DataLoader get={() => getUser(api, name)}>
+        <DataLoader get={() => getUserByLogin(api, name)}>
           {(user) => (user ? <UserPage api={api} user={user} {...props} /> : <NotFound name={name} />)}
         </DataLoader>
       )
