@@ -65,14 +65,11 @@ class CollectionEditor extends React.Component {
   }
 
   addNoteField(projectId) {
-    console.log('add note field being called');
     this.setState(({ projects }) => ({
       projects: projects.map((project) => {
-        console.log('this is the project:', project, 'and this is the projectId:', projectId);
         if (project.id === projectId) {
           project.annotation = "I'm an annotation";
         }
-        console.log('this is now the project', { ...project });
         return { ...project };
       }),
     }));
