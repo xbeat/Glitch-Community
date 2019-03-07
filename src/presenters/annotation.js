@@ -13,13 +13,14 @@ const Annotation = ({
 
   return (
     <div className="annotation">
-      <div className="description-container" />
-      <AuthDescription
-        authorized
-        description={project.annotation || ''}
-        placeholder="Share why you love this app."
-        update={update}
-      />
+      <div className="description-container">
+        <AuthDescription
+          authorized
+          description={project.annotation || ''}
+          placeholder="Share why you love this app."
+          update={update}
+        />
+      </div>
       <UserTile user={currentUser} />
     </div>
   );
