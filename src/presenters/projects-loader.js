@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { chunk } from 'lodash';
 
 import { getFromApi, joinIdsToQueryString } from '../../shared/api';
-import asyncMap from '../utils/async-map';
 
 import { CurrentUserConsumer, normalizeProjects } from './current-user';
 
@@ -32,27 +31,27 @@ class ProjectsLoader extends React.Component {
     this.ensureProjects(this.props.projects);
   }
 
-  async loadUsersForProject(project) {
-    const userIds = project.permissions.map((permission) => permission.userId);
-    const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(userIds)}`);
-    return {
-      ...project,
-      users: Object.values(users),
-    };
-  }
-
   async loadProjects(...projectIds) {
     if (!projectIds.length) return;
 
-    // The response is as state expects { [project_id]: { ...project }, [project_id_2]: { ...project } }
+    // Reassigning just to make what is happening here more clear
     let projects = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(projectIds)}`);
-    // We need an array of just the project objects to map over [{ ...project } , { ...project }]
     projects = Object.values(projects);
-    // We're going to map over it and load the users for each project (async/await and maps don't play well together)
-    // So we're hiding the bad parts in asyncMap
-    projects = await asyncMap(projects, this.loadUsersForProject);
-    // Put the projects back together the way state expects
+    // We want to perform these in parallel, so I'm mapping over the values rather than using a for loop
+    // It's causing some weirdness with the async/await turning into an array of promises
+    projects = projects.map(async (project) => {
+      const userIds = project.permissions.map((permission) => permission.userId);
+      const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(userIds)}`);
+      return {
+        ...project,
+        users: Object.values(users),
+      };
+    });
+    // But for now it's okay, so resolve the promises please
+    projects = await Promise.all(projects);
+    // Then turn the projects back into the format that state is expecting
     projects = keyByVal(projects, 'id');
+    
 
     this.setState(projects);
   }
