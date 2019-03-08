@@ -124,6 +124,8 @@ class UserEditor extends React.Component {
         console.warn('failed to rename project on undelete', e);
       }
     }
+    // temp set undeleted project updatedAt to now, while it's actually updating behind the scenes
+    data.updatedAt = Date.now();
     this.setState(({ projects, _deletedProjects }) => ({
       projects: [data, ...projects],
       _deletedProjects: _deletedProjects.filter(p => p.id !== id),
