@@ -7,7 +7,6 @@ import useErrorHandlers from './error-handlers';
 class CollectionEditor extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       ...props.initialCollection,
     };
