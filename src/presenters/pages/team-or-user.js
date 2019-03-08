@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getSingleItem, getAllPages } from '../../../shared/api';
+import { getSingleItem, getAllPages, allByKeys } from '../../../shared/api';
 
 import { DataLoader } from '../includes/loader';
 import NotFound from '../includes/not-found';
@@ -19,16 +19,6 @@ const getOrNull = async (api, route) => {
     }
     throw error;
   }
-};
-
-// TODO: this can be put in a `utils` junk drawer
-const allByKeys = async (objOfPromises) => {
-  const keys = Object.keys(objOfPromises);
-  const values = await Promise.all(Object.values(objOfPromises));
-  return keys.reduce((result, key, i) => {
-    result[key] = values[i];
-    return result;
-  }, {});
 };
 
 const mergeUserData = (data) => {
