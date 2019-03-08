@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { chunk } from 'lodash';
 
 import { getFromApi, joinIdsToQueryString } from '../../shared/api';
-import asyncMap from '../../utils/async-map';
+import asyncMap from '../utils/async-map';
 
 import { CurrentUserConsumer, normalizeProjects } from './current-user';
 
@@ -31,7 +31,7 @@ class ProjectsLoader extends React.Component {
   componentDidUpdate() {
     this.ensureProjects(this.props.projects);
   }
-  
+
   async loadUsersForProject(project) {
     const userIds = project.permissions.map((permission) => permission.userId);
     const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(userIds)}`);
@@ -40,16 +40,17 @@ class ProjectsLoader extends React.Component {
       users: Object.values(users),
     };
   }
+
   async loadProjects(...projectIds) {
     if (!projectIds.length) return;
-    
+
     // The response is as state expects { [project_id]: { ...project }, [project_id_2]: { ...project } }
     let projects = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(projectIds)}`);
     // We need an array of just the project objects to map over [{ ...project } , { ...project }]
     projects = Object.values(projects);
     // We're going to map over it and load the users for each project (async/await and maps don't play well together)
     // So we're hiding the bad parts in asyncMap
-    projects = asyncMap(projects, this.loadUsersForProject);
+    projects = awasyncMap(projects, this.loadUsersForProject);
     // Put the projects back together the way state expects
     projects = keyByVal(projects, 'id');
 
