@@ -27,7 +27,7 @@ class EditableDescriptionImpl extends React.Component {
   }
 
   render() {
-    const { description, placeholder } = this.props;
+    const { description, placeholder, maxLength } = this.props;
     return this.state.focused ? (
       <TextArea
         className="description content-editable"
@@ -37,6 +37,7 @@ class EditableDescriptionImpl extends React.Component {
         onBlur={this.onBlur}
         placeholder={placeholder}
         spellCheck={false}
+        maxLength={maxLength}
         autoFocus // eslint-disable-line jsx-a11y/no-autofocus
       />
     ) : (
@@ -60,19 +61,26 @@ EditableDescriptionImpl.propTypes = {
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
+  maxLength: PropTypes.number,
+
 };
 
 EditableDescriptionImpl.defaultProps = {
   placeholder: '',
+  maxLength: 524288, // this is the built in default
 };
 
-const EditableDescription = ({ description, placeholder, update }) => (
+const EditableDescription = ({
+  description, placeholder, update, maxLength,
+}) => (
   <OptimisticValue value={description} update={update}>
     {({ optimisticValue, optimisticUpdate }) => (
       <EditableDescriptionImpl
         description={optimisticValue}
         update={optimisticUpdate}
         placeholder={placeholder}
+        maxLength={maxLength}
+
       />
     )}
   </OptimisticValue>
@@ -81,10 +89,12 @@ EditableDescription.propTypes = {
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
+  maxLength: PropTypes.number,
 };
 
 EditableDescription.defaultProps = {
   placeholder: '',
+  maxLength: null,
 };
 
 export const StaticDescription = ({ description }) => (description ? (
@@ -103,11 +113,13 @@ export const AuthDescription = ({
   description,
   placeholder,
   update,
+  maxLength,
 }) => (authorized ? (
   <EditableDescription
     description={description}
     update={update}
     placeholder={placeholder}
+    maxLength={maxLength}
   />
 ) : (
   <StaticDescription description={description} />
@@ -117,8 +129,10 @@ AuthDescription.propTypes = {
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
+  maxLength: PropTypes.number,
 };
 
 AuthDescription.defaultProps = {
   placeholder: '',
+  maxLength: null,
 };

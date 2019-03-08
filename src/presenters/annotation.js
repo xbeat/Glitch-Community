@@ -19,6 +19,7 @@ const Annotation = ({
           description={project.annotation || ''}
           placeholder="Share why you love this app."
           update={update}
+          maxLength={75}
         />
       </div>
       <UserTile user={currentUser} />
