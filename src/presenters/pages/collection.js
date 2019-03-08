@@ -243,6 +243,11 @@ async function loadCollection(api, ownerName, collectionName) {
       `collections/${ownerName}/${collectionName}`,
     );
     const { data: collection } = await api.get(`collections/${collectionId}`);
+    // fetch projects in depth
+    if (collection.projects.length) {
+      collection.projects = await api.get(`projects/byIds?ids=${collection.projects.map(({ id }) => id).join(',')}`);
+      console.log(collection.projects);
+    }
     return collection;
   } catch (error) {
     if (error && error.response && error.response.status === 404) {
