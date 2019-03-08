@@ -12,7 +12,7 @@ module.exports = {
   rules: {
     'no-console': OFF,
     'arrow-parens': [ERROR, 'always'],
-    'operator-linebreak': [ERROR, "after", { "overrides": { "?": "before", ":": "before" } }],
+    'operator-linebreak': [ERROR, 'after', { overrides: { '?': 'before', ':': 'before' } }],
     // disabled for prettier compatibility
     'implicit-arrow-linebreak': OFF,
     'object-curly-newline': OFF,
