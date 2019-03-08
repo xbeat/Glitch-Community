@@ -7,7 +7,8 @@ module.exports = {
     "eslint:recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:react/recommended",
-    "airbnb"
+    "airbnb",
+    "prettier",
   ],
   env: {
     es6: true, // We are writing ES6 code
