@@ -67,9 +67,8 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
     props.addNoteField(props.project.id);
   }
   const showLeaveProject = props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject;
-  // TODO: revisit this since it doesn't actually update with the annotation until it's been saved
   // TODO: update note emoji to a notebook instead of sparkles
-  const showAddNote = !props.project.annotation && !!props.addNoteField;
+  const showAddNote = (!props.project.annotation || !props.project.isAddingANewAnnotation) && !!props.addNoteField;
 
   return (
     <dialog className="pop-over project-options-pop">
