@@ -98,7 +98,7 @@ class NewStuff extends React.Component {
           <div className="new-stuff-footer">
             <TooltipContainer
               id="new-stuff-tooltip"
-              type="info"
+              type="information"
               target={(
                 <button className="button-unstyled new-stuff" onClick={show}>
                   <figure className="new-stuff-avatar" alt="New Stuff" />

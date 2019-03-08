@@ -29,8 +29,6 @@ class ProjectsLoader extends React.Component {
     this.ensureProjects(this.props.projects);
   }
 
-  // I think this pattern is a little funky town and we might want to look into other options. It's not immediately obvious the props.projects of these child components are totally different from the props.projects of parent components of this component,
-  // maybe this could be solved with a variable name change (projectDetails as an example) or by defining this load Projects function at a higher component.
   async loadProjects(...ids) {
     if (!ids.length) return;
     const { data } = await this.props.api.get(
@@ -58,6 +56,11 @@ class ProjectsLoader extends React.Component {
 
   render() {
     const { children, projects } = this.props;
+    // Feedback needed!
+    // I'm tempted to get rid of this "projects-loader" component altogether and load the projects wherever we define them in state.
+    // Otherwise we get into this weird state where we have in-progress updates (such as an annotation on a project in a collection) in props
+    // that are not getting properly passed down unless we merge like we're doing here. It seems funky to me to have props.projects of our parent element
+    // be totally different from the props.projects of the children elements here.
     const loadedProjects = projects.map(project => ({ ...project, ...this.state[project.id] }));
     return (
       <CurrentUserConsumer>

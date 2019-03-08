@@ -71,7 +71,7 @@ class CollectionEditor extends React.Component {
       }),
     }));
 
-    await this.updateFields({ collectionProjects: updatedProjects });
+    await this.updateFields({ collectionProjects: updatedProjects }); // TODO: this is returning back a 400 not sure why
   }
 
   addNoteField(projectId) {

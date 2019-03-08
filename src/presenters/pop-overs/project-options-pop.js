@@ -67,7 +67,9 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
     props.addNoteField(props.project.id);
   }
   const showLeaveProject = props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject;
-  const showAddNote = !props.project.annotation && !!props.addNoteField; // TODO: revisit this since it doesn't actually update with the annotation until it's been saved
+  // TODO: revisit this since it doesn't actually update with the annotation until it's been saved
+  // TODO: update note emoji to a notebook instead of sparkles
+  const showAddNote = !props.project.annotation && !!props.addNoteField;
 
   return (
     <dialog className="pop-over project-options-pop">
@@ -129,7 +131,6 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
           />
         </section>
       )}
-
 
       {props.joinTeamProject && !props.currentUserIsOnProject && (
         <section className="pop-over-actions collaborator-actions">
