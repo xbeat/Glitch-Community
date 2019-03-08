@@ -9,6 +9,7 @@ import { ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName } from '../../mo
 // UserAvatar
 
 export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip }) => {
+  const onError = 
   const contents = (
     <img
       width="32px"

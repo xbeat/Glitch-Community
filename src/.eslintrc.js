@@ -38,6 +38,15 @@ module.exports = {
     "react/forbid-prop-types": [OFF],
     "react/destructuring-assignment": [OFF, 'always'],
     "react/no-multi-comp": [OFF], // someday on 
+    "react/jsx-wrap-multilines": [ERROR, {
+      "declaration": "parens",
+      "assignment": "parens",
+      "return": "parens",
+      "arrow": "parens",
+      "condition": "ignore",
+      "logical": "ignore",
+      "prop": "ignore"
+    }],
     "no-param-reassign": [OFF],
     "react/jsx-no-bind": [OFF],
     "no-restricted-syntax": [OFF],

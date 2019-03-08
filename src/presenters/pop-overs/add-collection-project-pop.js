@@ -210,15 +210,16 @@ class AddCollectionProjectPop extends React.Component {
       }
     }
 
-    this.setState(({ maybeRequest }) =>
-      request === maybeRequest
-        ? {
-            maybeRequest: null,
-            maybeResults: nonCollectionResults,
-            recentProjects: null,
-          }
-        : {},
-    );
+    this.setState(({ maybeRequest }) => {
+      if (request === maybeRequest) {
+        return {
+          maybeRequest: null,
+          maybeResults: nonCollectionResults,
+          recentProjects: null,
+        };
+      }
+      return {};
+    });
     return null;
   }
 
