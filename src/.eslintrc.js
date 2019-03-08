@@ -29,10 +29,8 @@ module.exports = {
     'arrow-parens': [ERROR, 'always'],
     'implicit-arrow-linebreak': OFF,
     'object-curly-newline': [ERROR, {
-        "ObjectExpression": "always",
+        "ObjectExpression": { "multiline": true },
         "ObjectPattern": { "multiline": true },
-        "ImportDeclaration": "never",
-        "ExportDeclaration": { "multiline": true, "minProperties": 3 }
     }],
     // Overrides of react/recommended:
     'react/no-unescaped-entities': ['error', { forbid: [`"`, '>', '}'] }], // permit ' in jsx html,
