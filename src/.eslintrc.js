@@ -27,11 +27,10 @@ module.exports = {
     'no-debugger': WARN,
     'jsx-a11y/label-has-for': OFF, // It's been deprecated. -- https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/label-has-for.md
     'arrow-parens': [ERROR, 'always'],
+    // disabled for prettier compatibility
     'implicit-arrow-linebreak': OFF,
-    'object-curly-newline': [ERROR, {
-        "ObjectExpression": { "multiline": true },
-        "ObjectPattern": { "multiline": true },
-    }],
+    'object-curly-newline': OFF,
+    'no-confusing-arrow': OFF,
     // Overrides of react/recommended:
     'react/no-unescaped-entities': ['error', { forbid: [`"`, '>', '}'] }], // permit ' in jsx html,
     'react/prop-types': [OFF], // disabled so we can use composed prop-types
