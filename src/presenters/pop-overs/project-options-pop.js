@@ -61,6 +61,11 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
   function featureProject(event) {
     animate(event, 'slide-up', () => props.featureProject(props.project.id));
   }
+
+  function animateThenAddNote(event) {
+    props.togglePopover();
+    props.addNoteField(props.project.id);
+  }
   const showLeaveProject = props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject;
   const showAddNote = !props.project.annotation && !!props.addNoteField; // TODO: revisit this since it doesn't actually update with the annotation until it's been saved
 
@@ -106,7 +111,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
       {showAddNote && (
         <section className="pop-over-actions">
           <PopoverButton
-            onClick={() => props.addNoteField(props.project.id)}
+            onClick={animateThenAddNote}
             {...props}
             text="Add Note"
             emoji="sparkles"
