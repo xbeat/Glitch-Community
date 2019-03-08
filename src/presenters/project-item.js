@@ -53,7 +53,7 @@ ProjectItem.propTypes = {
     description: PropTypes.string.isRequired,
     domain: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    private: PropTypes.bool.isRequired,
+    private: PropTypes.bool,
     showAsGlitchTeam: PropTypes.bool.isRequired,
     users: PropTypes.array.isRequired,
     teams: PropTypes.array,
