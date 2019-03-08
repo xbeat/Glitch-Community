@@ -26,6 +26,14 @@ module.exports = {
     semi: ['error', 'always'],
     'no-debugger': WARN,
     'jsx-a11y/label-has-for': OFF, // It's been deprecated. -- https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/label-has-for.md
+    'arrow-parens': [ERROR, 'always'],
+    'implicit-arrow-linebreak': OFF,
+    'object-curly-newline': [ERROR, {
+        "ObjectExpression": "always",
+        "ObjectPattern": { "multiline": true },
+        "ImportDeclaration": "never",
+        "ExportDeclaration": { "multiline": true, "minProperties": 3 }
+    }],
     // Overrides of react/recommended:
     'react/no-unescaped-entities': ['error', { forbid: [`"`, '>', '}'] }], // permit ' in jsx html,
     'react/prop-types': [OFF], // disabled so we can use composed prop-types
