@@ -12,6 +12,7 @@ import { CollectionLink } from './includes/link';
 import { DataLoader } from './includes/loader';
 import { TruncatedMarkdown } from './includes/markdown';
 import ProjectsLoader from './projects-loader';
+import { getSingleItem } from '../../shared/api';
 import { ProjectsUL } from './projects-list';
 import { TeamTile } from './teams-list';
 import { UserTile } from './users-list';
@@ -72,10 +73,9 @@ CollectionWide.propTypes = {
 
 const loadCollection = async (api, { owner, name }) => {
   try {
-    const { data: collectionId } = await api.get(
-      `collections/${owner}/${name}`,
-    );
-    const { data: collection } = await api.get(`collections/${collectionId}`);
+    const collection = await getSingleItem(api, `/v1/collections/by/fullUrl?fullUrl=${owner}/${name}`, `${owner}/${name}`);
+    collection.projects = await getSingleItem(api, `/v1/collections/by/fullUrl/projects?limit=20&fullUrl=${owner}/${name}`, 'items');
+    collection.team = await getSingleItem(api, `/v1/teams/by/id?id=${collection.team.id}`, collection.team.id);
     collection.projectCount = collection.projects.length;
     collection.projects = sampleSize(collection.projects, 3).map(p => ({
       ...p,
