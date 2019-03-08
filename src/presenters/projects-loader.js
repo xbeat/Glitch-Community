@@ -56,12 +56,9 @@ class ProjectsLoader extends React.Component {
 
   render() {
     const { children, projects } = this.props;
-    // Feedback needed!
-    // I'm tempted to get rid of this "projects-loader" component altogether and load the projects wherever we define them in state.
-    // Otherwise we get into this weird state where we have in-progress updates (such as an annotation on a project in a collection) in props
-    // that are not getting properly passed down unless we merge like we're doing here. It seems funky to me to have props.projects of our parent element
-    // be totally different from the props.projects of the children elements here.
-    const loadedProjects = projects.map(project => ({ ...project, ...this.state[project.id] }));
+    const loadedProjects = projects.map(
+      project => this.state[project.id] || project,
+    );
     return (
       <CurrentUserConsumer>
         {currentUser => children(

@@ -10,7 +10,6 @@ import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
 import { AnalyticsContext } from '../analytics';
 import { DataLoader } from '../includes/loader';
 import { ProjectsUL } from '../projects-list';
-import ProjectsLoader from '../projects-loader';
 import NotFound from '../includes/not-found';
 
 import { AuthDescription } from '../includes/description-field';
