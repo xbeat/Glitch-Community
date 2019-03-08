@@ -1,3 +1,3 @@
 #!/bin/bash
 # Runs `prettier` on our code
-npx prettier --config /app/.prettierrc --write "/app/{server,src}/**/*.js"
+npx prettier --config /app/.prettierrc --ignore-path /app/.prettierignore --write "/app/{server,src}/**/*.js"
