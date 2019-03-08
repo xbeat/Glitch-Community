@@ -7,10 +7,7 @@ import { captureException } from '../../utils/sentry';
 
 import useDevToggle from '../includes/dev-toggles';
 import { Loader } from '../includes/loader';
-import UserResultItem, {
-  InviteByEmail,
-  WhitelistEmailDomain,
-} from '../includes/user-result-item';
+import UserResultItem, { InviteByEmail, WhitelistEmailDomain } from '../includes/user-result-item';
 
 const getDomain = (query) => {
   const email = parseOneAddress(query.replace('@', 'test@'));
@@ -110,19 +107,17 @@ class AddTeamUserPop extends React.Component {
     this.setState({ maybeRequest: request });
 
     const { data } = await request;
-    const nonMemberResults = data.filter(
-      user => !this.props.members.includes(user.id),
-    );
-    const rankedResults = nonMemberResults.sort(
-      (a, b) => rankSearchResult(b, query) - rankSearchResult(a, query),
-    );
+    const nonMemberResults = data.filter((user) => !this.props.members.includes(user.id));
+    const rankedResults = nonMemberResults.sort((a, b) => rankSearchResult(b, query) - rankSearchResult(a, query));
 
-    this.setState(({ maybeRequest }) => (request === maybeRequest
-      ? {
-        maybeRequest: null,
-        maybeResults: rankedResults,
-      }
-      : {}));
+    this.setState(({ maybeRequest }) =>
+      request === maybeRequest
+        ? {
+            maybeRequest: null,
+            maybeResults: rankedResults,
+          }
+        : {},
+    );
   }
 
   async validateDomain(query) {
@@ -131,7 +126,7 @@ class AddTeamUserPop extends React.Component {
       return;
     }
 
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       validDomains: { ...prevState.validDomains, [domain]: null },
     }));
 
@@ -144,15 +139,13 @@ class AddTeamUserPop extends React.Component {
       captureException(error);
     }
 
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       validDomains: { ...prevState.validDomains, [domain]: valid },
     }));
   }
 
   render() {
-    const {
-      inviteEmail, inviteUser, setWhitelistedDomain, whitelistedDomain,
-    } = this.props;
+    const { inviteEmail, inviteUser, setWhitelistedDomain, whitelistedDomain } = this.props;
     const { maybeRequest, maybeResults, query } = this.state;
     const isLoading = !!maybeRequest || !maybeResults;
     const results = [];
@@ -161,12 +154,7 @@ class AddTeamUserPop extends React.Component {
     if (email && this.props.allowEmailInvites) {
       results.push({
         key: 'invite-by-email',
-        item: (
-          <InviteByEmail
-            email={email.address}
-            onClick={() => inviteEmail(email.address)}
-          />
-        ),
+        item: <InviteByEmail email={email.address} onClick={() => inviteEmail(email.address)} />,
       });
     }
 
@@ -183,7 +171,7 @@ class AddTeamUserPop extends React.Component {
     // now add the actual search results
     if (maybeResults) {
       results.push(
-        ...maybeResults.map(user => ({
+        ...maybeResults.map((user) => ({
           key: user.id,
           item: <UserResultItem user={user} action={() => inviteUser(user)} />,
         })),
@@ -202,12 +190,8 @@ class AddTeamUserPop extends React.Component {
             placeholder="Search for a user"
           />
         </section>
-        {!!query && <Results isLoading={isLoading} results={results} /> }
-        {!query && !!setWhitelistedDomain && !whitelistedDomain && (
-          <aside className="pop-over-info">
-            You can also whitelist with @example.com
-          </aside>
-        )}
+        {!!query && <Results isLoading={isLoading} results={results} />}
+        {!query && !!setWhitelistedDomain && !whitelistedDomain && <aside className="pop-over-info">You can also whitelist with @example.com</aside>}
       </dialog>
     );
   }
@@ -239,7 +223,10 @@ const Results = ({ results, isLoading }) => {
   if (results.length === 0) {
     return (
       <section className="pop-over-actions last-section">
-        Nothing found <span role="img" aria-label="">💫</span>
+        Nothing found{' '}
+        <span role="img" aria-label="">
+          💫
+        </span>
       </section>
     );
   }
@@ -248,9 +235,7 @@ const Results = ({ results, isLoading }) => {
     <section className="pop-over-actions last-section results-list">
       <ul className="results">
         {results.map(({ key, item }) => (
-          <li key={key}>
-            {item}
-          </li>
+          <li key={key}>{item}</li>
         ))}
       </ul>
     </section>

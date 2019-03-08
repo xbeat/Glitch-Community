@@ -26,20 +26,12 @@ const ProjectsPreview = ({ collection, projects, isAuthorized }) => {
     return (
       <>
         <ul className="projects-preview">
-          {projects.slice(0, 3).map(project => (
-            <li
-              key={project.id}
-              className={`project-container ${project.private ? 'private' : ''}`}
-            >
+          {projects.slice(0, 3).map((project) => (
+            <li key={project.id} className={`project-container ${project.private ? 'private' : ''}`}>
               <ProjectLink project={project} className="project-link">
                 <img className="avatar" src={getAvatarUrl(project.id)} alt="" />
-                <div className="project-name">
-                  {project.domain}
-                </div>
-                <div
-                  className="project-badge private-project-badge"
-                  aria-label="private"
-                />
+                <div className="project-name">{project.domain}</div>
+                <div className="project-badge private-project-badge" aria-label="private" />
               </ProjectLink>
             </li>
           ))}
@@ -52,11 +44,7 @@ const ProjectsPreview = ({ collection, projects, isAuthorized }) => {
       </>
     );
   }
-  return (
-    <div className="projects-preview empty">
-      {emptyState}
-    </div>
-  );
+  return <div className="projects-preview empty">{emptyState}</div>;
 };
 
 ProjectsPreview.propTypes = {
@@ -68,41 +56,21 @@ const CollectionItem = (props) => {
 
   return (
     <li>
-      {isAuthorized && (
-        <CollectionOptionsContainer
-          collection={collection}
-          deleteCollection={deleteCollection}
-        />
-      )}
+      {isAuthorized && <CollectionOptionsContainer collection={collection} deleteCollection={deleteCollection} />}
 
       {collection && (
-        <div
-          className={`collection${isAuthorized ? ' authorized' : ''}`}
-          id={`collection-${collection.id}`}
-        >
+        <div className={`collection${isAuthorized ? ' authorized' : ''}`} id={`collection-${collection.id}`}>
           <div className="collection-container">
-            <CollectionLink
-              collection={collection}
-              className="collection-info button-area"
-              style={{ backgroundColor: collection.coverColor }}
-            >
+            <CollectionLink collection={collection} className="collection-info button-area" style={{ backgroundColor: collection.coverColor }}>
               <div className="avatar-container" aria-hidden="true">
                 <div className="avatar">
-                  <CollectionAvatar
-                    color={collection.coverColor}
-                    collectionId={collection.id}
-                  />
+                  <CollectionAvatar color={collection.coverColor} collectionId={collection.id} />
                 </div>
               </div>
               <div className="collection-name-description button-area">
                 <div className="button">
-                  <span
-                    className="project-badge private-project-badge"
-                    aria-label="private"
-                  />
-                  <div className="project-name">
-                    {collection.name}
-                  </div>
+                  <span className="project-badge private-project-badge" aria-label="private" />
+                  <div className="project-name">{collection.name}</div>
                 </div>
                 <div
                   className="description"
@@ -110,9 +78,7 @@ const CollectionItem = (props) => {
                     color: isDarkColor(collection.coverColor) ? 'white' : '',
                   }}
                 >
-                  <TruncatedMarkdown length={96}>
-                    {collection.description}
-                  </TruncatedMarkdown>
+                  <TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown>
                 </div>
               </div>
 
@@ -120,12 +86,7 @@ const CollectionItem = (props) => {
             </CollectionLink>
 
             {collection.projects ? (
-              <ProjectsPreview
-                projects={collection.projects}
-                color={collection.coverColor}
-                collection={collection}
-                isAuthorized={isAuthorized}
-              />
+              <ProjectsPreview projects={collection.projects} color={collection.coverColor} collection={collection} isAuthorized={isAuthorized} />
             ) : (
               <div className="collection-link">
                 <Loader />

@@ -36,8 +36,8 @@ const getUser = async (api, name) => {
 
 const parseTeam = (team) => {
   const ADMIN_ACCESS_LEVEL = 30;
-  const adminIds = team.teamPermissions.filter(user => user.accessLevel === ADMIN_ACCESS_LEVEL);
-  team.adminIds = adminIds.map(user => user.userId);
+  const adminIds = team.teamPermissions.filter((user) => user.accessLevel === ADMIN_ACCESS_LEVEL);
+  team.adminIds = adminIds.map((user) => user.userId);
   return team;
 };
 
@@ -59,17 +59,15 @@ const getTeam = async (api, name) => {
 
     team.users = users.sort((a, b) => new Date(a.teamPermission.updatedAt) - new Date(b.teamPermission.updatedAt));
     team.projects = projects.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-    team.teamPins = pinnedProjects.map(project => ({ projectId: project.id }));
+    team.teamPins = pinnedProjects.map((project) => ({ projectId: project.id }));
     team.collections = collections;
   }
   return team && parseTeam(team);
 };
 
-const TeamPageLoader = ({
-  api, id, name, ...props
-}) => (
+const TeamPageLoader = ({ api, id, name, ...props }) => (
   <DataLoader get={() => getTeamById(api, id)}>
-    {team => (team ? <TeamPage api={api} team={team} {...props} /> : <NotFound name={name} />)}
+    {(team) => (team ? <TeamPage api={api} team={team} {...props} /> : <NotFound name={name} />)}
   </DataLoader>
 );
 TeamPageLoader.propTypes = {
@@ -82,11 +80,9 @@ TeamPageLoader.defaultProps = {
   api: null,
 };
 
-const UserPageLoader = ({
-  api, id, name, ...props
-}) => (
+const UserPageLoader = ({ api, id, name, ...props }) => (
   <DataLoader get={() => getUserById(api, id)}>
-    {user => (user ? <UserPage api={api} user={user} {...props} /> : <NotFound name={name} />)}
+    {(user) => (user ? <UserPage api={api} user={user} {...props} /> : <NotFound name={name} />)}
   </DataLoader>
 );
 UserPageLoader.propTypes = {
@@ -98,19 +94,17 @@ UserPageLoader.defaultProps = {
   api: null,
 };
 
-const TeamOrUserPageLoader = ({
-  api, name, ...props
-}) => (
+const TeamOrUserPageLoader = ({ api, name, ...props }) => (
   <DataLoader get={() => getTeam(api, name)}>
-    {team => (
+    {(team) =>
       team ? (
         <TeamPage api={api} team={team} {...props} />
       ) : (
         <DataLoader get={() => getUser(api, name)}>
-          {user => (user ? <UserPage api={api} user={user} {...props} /> : <NotFound name={name} />)}
+          {(user) => (user ? <UserPage api={api} user={user} {...props} /> : <NotFound name={name} />)}
         </DataLoader>
       )
-    )}
+    }
   </DataLoader>
 );
 TeamOrUserPageLoader.propTypes = {

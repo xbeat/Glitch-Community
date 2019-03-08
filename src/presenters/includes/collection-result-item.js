@@ -6,14 +6,7 @@ import { AddProjectToCollectionMsg, NotificationConsumer } from '../notification
 import { UserAvatar, TeamAvatar } from './avatar';
 import CollectionAvatar from './collection-avatar';
 
-const addProject = (
-  addProjectToCollection,
-  project,
-  collection,
-  collectionPath,
-  notification,
-  togglePopover,
-) => {
+const addProject = (addProjectToCollection, project, collection, collectionPath, notification, togglePopover) => {
   // add project to collection
   addProjectToCollection(project, collection).then(() => {
     // show notification
@@ -24,9 +17,7 @@ const addProject = (
   togglePopover();
 };
 
-const CollectionResultItem = ({
-  onClick, project, collection, isActive, togglePopover,
-}) => {
+const CollectionResultItem = ({ onClick, project, collection, isActive, togglePopover }) => {
   let resultClass = 'button-unstyled result result-collection';
   if (isActive) {
     resultClass += ' active';
@@ -40,15 +31,7 @@ const CollectionResultItem = ({
         <div>
           <button
             className={resultClass}
-            onClick={() => addProject(
-              onClick,
-              project,
-              collection,
-              collectionPath,
-              createNotification,
-              togglePopover,
-            )
-            }
+            onClick={() => addProject(onClick, project, collection, collectionPath, createNotification, togglePopover)}
             data-project-id={project.id}
           >
             <div className="avatar" id={`avatar-collection-${collection.id}`}>
@@ -58,21 +41,12 @@ const CollectionResultItem = ({
               <div className="result-name" title={collection.name}>
                 {collection.name}
               </div>
-              {collection.description.length > 0 && (
-                <div className="result-description">
-                  {collection.description}
-                </div>
-              )}
+              {collection.description.length > 0 && <div className="result-description">{collection.description}</div>}
               {collection.team && <TeamAvatar team={collection.team} />}
               {collection.user && <UserAvatar user={collection.user} />}
             </div>
           </button>
-          <a
-            href={collectionPath}
-            className="view-result-link button button-small button-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={collectionPath} className="view-result-link button button-small button-link" target="_blank" rel="noopener noreferrer">
             View →
           </a>
         </div>

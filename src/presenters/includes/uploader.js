@@ -14,10 +14,7 @@ const NotifyError = () => 'File upload failed. Try again in a few minutes?';
 async function uploadWrapper(notifications, upload) {
   let result = null;
   let progress = 0;
-  const {
-    updateNotification,
-    removeNotification,
-  } = notifications.createPersistentNotification(
+  const { updateNotification, removeNotification } = notifications.createPersistentNotification(
     <NotifyUploading progress={progress} />,
     'notifyUploading',
   );
@@ -43,8 +40,8 @@ async function uploadWrapper(notifications, upload) {
 const useUploader = () => {
   const notifications = useNotifications();
   return {
-    uploadAsset: (blob, policy, key) => uploadWrapper(notifications, cb => uploadAsset(blob, policy, key, cb)),
-    uploadAssetSizes: (blob, policy, sizes) => uploadWrapper(notifications, cb => uploadAssetSizes(blob, policy, sizes, cb)),
+    uploadAsset: (blob, policy, key) => uploadWrapper(notifications, (cb) => uploadAsset(blob, policy, key, cb)),
+    uploadAssetSizes: (blob, policy, sizes) => uploadWrapper(notifications, (cb) => uploadAssetSizes(blob, policy, sizes, cb)),
   };
 };
 

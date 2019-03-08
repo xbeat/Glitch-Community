@@ -27,5 +27,5 @@ export default [
     title: 'Hmm... Which Emoji?',
     img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_Emoji%20v2.jpg?1551709692864',
     link: 'https://emoji-suggester.glitch.me/',
-  }
+  },
 ];

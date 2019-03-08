@@ -8,7 +8,7 @@ import { Avatar, UserAvatar, TeamAvatar } from './includes/avatar';
 
 export const StaticUsersList = ({ users, extraClass }) => (
   <ul className={`users ${extraClass}`}>
-    {users.map(user => (
+    {users.map((user) => (
       <li key={user.id}>
         <span className="user">
           <UserAvatar user={user} />
@@ -43,7 +43,7 @@ const PopulatedUsersList = ({ users, extraClass, teams }) => {
   if (users.length) {
     return (
       <ul className={`users ${extraClass}`}>
-        {users.map(user => (
+        {users.map((user) => (
           <li key={user.id}>
             <UserLink user={user} className="user">
               <UserAvatar user={user} />
@@ -55,7 +55,7 @@ const PopulatedUsersList = ({ users, extraClass, teams }) => {
   }
   return (
     <ul className={`users ${extraClass}`}>
-      {teams.map(team => (
+      {teams.map((team) => (
         <li key={team.id}>
           <TeamLink team={team} className="team">
             <TeamAvatar team={team} />
@@ -89,15 +89,11 @@ const GlitchTeamUsersList = ({ extraClass = '' }) => {
   );
 };
 
-const UsersList = ({
-  glitchTeam, users, extraClass, teams,
-}) => {
+const UsersList = ({ glitchTeam, users, extraClass, teams }) => {
   if (glitchTeam) {
     return <GlitchTeamUsersList extraClass={extraClass} />;
   }
-  return (
-    <PopulatedUsersList users={users} extraClass={extraClass} teams={teams} />
-  );
+  return <PopulatedUsersList users={users} extraClass={extraClass} teams={teams} />;
 };
 
 UsersList.propTypes = {

@@ -10,34 +10,18 @@ import UsersList from './users-list';
 
 const ProjectItem = ({ api, project, ...props }) => (
   <li>
-    <UsersList
-      glitchTeam={project.showAsGlitchTeam}
-      users={project.users}
-      extraClass="single-line"
-      teams={project.teams}
-    />
+    <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams} />
     <ProjectOptionsPop {...{ project, api }} {...props} />
     <ProjectLink project={project} className="button-area">
-      <div
-        className={['project', project.private ? 'private-project' : ''].join(' ')}
-        data-track="project"
-        data-track-label={project.domain}
-      >
+      <div className={['project', project.private ? 'private-project' : ''].join(' ')} data-track="project" data-track-label={project.domain}>
         <div className="project-container">
           <img className="avatar" src={getAvatarUrl(project.id)} alt="" />
           <div className="button">
-            <span
-              className="project-badge private-project-badge"
-              aria-label="private"
-            />
-            <div className="project-name">
-              {project.domain}
-            </div>
+            <span className="project-badge private-project-badge" aria-label="private" />
+            <div className="project-name">{project.domain}</div>
           </div>
           <div className="description">
-            <TruncatedMarkdown length={80}>
-              {project.description}
-            </TruncatedMarkdown>
+            <TruncatedMarkdown length={80}>{project.description}</TruncatedMarkdown>
           </div>
           <div className="overflow-mask" />
         </div>

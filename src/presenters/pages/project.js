@@ -72,13 +72,14 @@ PrivateToggle.propTypes = {
   setPrivate: PropTypes.func.isRequired,
 };
 
-const ReadmeError = error => (error && error.response && error.response.status === 404 ? (
-  <>
+const ReadmeError = (error) =>
+  error && error.response && error.response.status === 404 ? (
+    <>
       This project would be even better with a <code>README.md</code>
-  </>
-) : (
-  <>We couldn{"'"}t load the readme. Try refreshing?</>
-));
+    </>
+  ) : (
+    <>We couldn{"'"}t load the readme. Try refreshing?</>
+  );
 const ReadmeLoader = ({ api, domain }) => (
   <DataLoader get={() => api.get(`projects/${domain}/readme`)} renderError={ReadmeError}>
     {({ data }) => (
@@ -96,9 +97,7 @@ ReadmeLoader.defaultProps = {
   api: null,
 };
 
-const ProjectPage = ({
-  project, addProjectToCollection, api, currentUser, isAuthorized, updateDomain, updateDescription, updatePrivate,
-}) => {
+const ProjectPage = ({ project, addProjectToCollection, api, currentUser, isAuthorized, updateDomain, updateDescription, updatePrivate }) => {
   const { domain, users, teams } = project;
   return (
     <main className="project-page">
@@ -110,7 +109,7 @@ const ProjectPage = ({
                 <EditableField
                   value={domain}
                   placeholder="Name your project"
-                  update={newDomain => updateDomain(newDomain).then(() => syncPageToDomain(newDomain))}
+                  update={(newDomain) => updateDomain(newDomain).then(() => syncPageToDomain(newDomain))}
                   suffix={<PrivateToggle isPrivate={project.private} isMember={isAuthorized} setPrivate={updatePrivate} />}
                 />
               ) : (
@@ -184,24 +183,23 @@ async function getProject(api, domain) {
   return data;
 }
 
-const ProjectPageLoader = ({
-  domain, api, currentUser, ...props
-}) => (
+const ProjectPageLoader = ({ domain, api, currentUser, ...props }) => (
   <DataLoader get={() => getProject(api, domain)} renderError={() => <NotFound name={domain} />}>
-    {project => (project ? (
-      <ProjectEditor api={api} initialProject={project}>
-        {(currentProject, funcs, userIsMember) => (
-          <>
-            <Helmet>
-              <title>{currentProject.domain}</title>
-            </Helmet>
-            <ProjectPage api={api} project={currentProject} {...funcs} isAuthorized={userIsMember} currentUser={currentUser} {...props} />
-          </>
-        )}
-      </ProjectEditor>
-    ) : (
-      <NotFound name={domain} />
-    ))
+    {(project) =>
+      project ? (
+        <ProjectEditor api={api} initialProject={project}>
+          {(currentProject, funcs, userIsMember) => (
+            <>
+              <Helmet>
+                <title>{currentProject.domain}</title>
+              </Helmet>
+              <ProjectPage api={api} project={currentProject} {...funcs} isAuthorized={userIsMember} currentUser={currentUser} {...props} />
+            </>
+          )}
+        </ProjectEditor>
+      ) : (
+        <NotFound name={domain} />
+      )
     }
   </DataLoader>
 );
@@ -218,7 +216,7 @@ ProjectPageLoader.defaultProps = {
 const ProjectPageContainer = ({ api, name }) => (
   <Layout api={api}>
     <AnalyticsContext properties={{ origin: 'project' }}>
-      <CurrentUserConsumer>{currentUser => <ProjectPageLoader api={api} domain={name} currentUser={currentUser} />}</CurrentUserConsumer>
+      <CurrentUserConsumer>{(currentUser) => <ProjectPageLoader api={api} domain={name} currentUser={currentUser} />}</CurrentUserConsumer>
     </AnalyticsContext>
   </Layout>
 );

@@ -43,9 +43,7 @@ const PopoverContainer = ({ children, outer, startOpen }) => {
 
   const inner = children(props);
   if (isFragment(inner)) {
-    console.error(
-      'PopoverContainer does not support Fragment as the top level item. Please use a different element.',
-    );
+    console.error('PopoverContainer does not support Fragment as the top level item. Please use a different element.');
   }
   const before = outer ? outer(props) : null;
 

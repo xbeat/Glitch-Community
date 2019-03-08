@@ -10,9 +10,7 @@ const TimeFrameItem = ({ selectTimeFrame, isActive, timeFrame }) => {
   return (
     <button className={resultClass} onClick={selectTimeFrame} type="button">
       <div className="result-container">
-        <div className="result-name">
-          {timeFrame}
-        </div>
+        <div className="result-name">{timeFrame}</div>
       </div>
     </button>
   );
@@ -27,7 +25,7 @@ TimeFrameItem.propTypes = {
 const timeFrames = ['Last 4 Weeks', 'Last 2 Weeks', 'Last 24 Hours'];
 
 const TeamAnalyticsTimePop = (props) => {
-  const selectTimeFrame = timeFrame => () => {
+  const selectTimeFrame = (timeFrame) => () => {
     props.updateTimeFrame(timeFrame);
     props.togglePopover();
   };
@@ -36,7 +34,7 @@ const TeamAnalyticsTimePop = (props) => {
     <dialog className="pop-over analytics-time-pop">
       <section className="pop-over-actions last-section results-list">
         <div className="results">
-          {timeFrames.map(timeFrame => (
+          {timeFrames.map((timeFrame) => (
             <TimeFrameItem
               key={timeFrame}
               selectTimeFrame={selectTimeFrame(timeFrame)}
@@ -56,19 +54,8 @@ TeamAnalyticsTimePop.propTypes = {
 };
 
 const TeamAnalyticsTimePopButton = ({ updateTimeFrame, currentTimeFrame }) => (
-  <PopoverWithButton
-    buttonClass="button-small button-tertiary button-select"
-    buttonText={(
-      <span>
-        {currentTimeFrame}
-      </span>
-    )}
-    passToggleToPop
-  >
-    <TeamAnalyticsTimePop
-      updateTimeFrame={updateTimeFrame}
-      currentTimeFrame={currentTimeFrame}
-    />
+  <PopoverWithButton buttonClass="button-small button-tertiary button-select" buttonText={<span>{currentTimeFrame}</span>} passToggleToPop>
+    <TeamAnalyticsTimePop updateTimeFrame={updateTimeFrame} currentTimeFrame={currentTimeFrame} />
   </PopoverWithButton>
 );
 
