@@ -36,7 +36,6 @@ class ProjectsLoader extends React.Component {
 
     // Reassigning just to make what is happening here more clear
     let projects = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(projectIds)}`);
-
     projects = Object.values(projects);
     projects = projects.map(async (project) => {
       const userIds = project.permissions.map((permission) => permission.userId);
