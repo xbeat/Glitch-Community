@@ -68,7 +68,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
   }
   const showLeaveProject = props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject;
   // TODO: update note emoji to a notebook instead of sparkles
-  const showAddNote = (!props.project.annotation || !props.project.isAddingANewAnnotation) && !!props.addNoteField;
+  const showAddNote = !(props.project.annotation || props.project.isAddingANewAnnotation) && !!props.addNoteField;
 
   return (
     <dialog className="pop-over project-options-pop">
