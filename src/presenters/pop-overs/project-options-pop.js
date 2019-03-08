@@ -115,7 +115,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
             onClick={toggleAndAddNote}
             {...props}
             text="Add Note"
-            emoji="sparkles"
+            emoji="spiral_note_pad"
           />
         </section>
       )}
