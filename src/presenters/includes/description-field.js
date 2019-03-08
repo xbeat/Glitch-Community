@@ -62,7 +62,6 @@ EditableDescriptionImpl.propTypes = {
   placeholder: PropTypes.string,
   update: PropTypes.func.isRequired,
   maxLength: PropTypes.number,
-
 };
 
 EditableDescriptionImpl.defaultProps = {
@@ -80,7 +79,6 @@ const EditableDescription = ({
         update={optimisticUpdate}
         placeholder={placeholder}
         maxLength={maxLength}
-
       />
     )}
   </OptimisticValue>
