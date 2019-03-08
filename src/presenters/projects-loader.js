@@ -50,7 +50,7 @@ class ProjectsLoader extends React.Component {
     projects = Object.values(projects);
     // We're going to map over it and load the users for each project (async/await and maps don't play well together)
     // So we're hiding the bad parts in asyncMap
-    projects = awasyncMap(projects, this.loadUsersForProject);
+    projects = await asyncMap(projects, this.loadUsersForProject);
     // Put the projects back together the way state expects
     projects = keyByVal(projects, 'id');
 

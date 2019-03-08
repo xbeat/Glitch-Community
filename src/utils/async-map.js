@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 async function AsyncMap(array, asyncFunction) {
-  return await Promise.all(array.map(asyncFunction));
+  return Promise.all(array.map(await asyncFunction));
 }
 
 export default AsyncMap;
