@@ -9,7 +9,12 @@ import { ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName } from '../../mo
 // UserAvatar
 
 export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip }) => {
-  const onError = 
+  let onError = null;
+  if (srcFallback) {
+    onError = (event) => {
+      event.target.src = srcFallback;
+    };
+  }
   const contents = (
     <img
       width="32px"
@@ -17,13 +22,7 @@ export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip }) => 
       src={src}
       alt={name}
       style={color ? { backgroundColor: color } : null}
-      onError={
-        srcFallback
-          ? (event) => {
-              event.target.src = srcFallback;
-            }
-          : null
-      }
+      onError={onError}
       className={`${type}-avatar`}
     />
   );
