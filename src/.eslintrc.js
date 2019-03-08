@@ -31,6 +31,7 @@ module.exports = {
     'implicit-arrow-linebreak': OFF,
     'object-curly-newline': OFF,
     'no-confusing-arrow': OFF,
+    'function-paren-newline': OFF,
     // Overrides of react/recommended:
     'react/no-unescaped-entities': ['error', { forbid: [`"`, '>', '}'] }], // permit ' in jsx html,
     'react/prop-types': [OFF], // disabled so we can use composed prop-types
