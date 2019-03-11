@@ -44,7 +44,7 @@ if (Promise.prototype.progress == null) {
 
 function ProgressPromise(fn) {
   var p = new Promise(((resolve, reject) => {
-    const notify = () => (p._progressHandlers != null
+    const notify = (event) => (p._progressHandlers != null
       ? p._progressHandlers.forEach((handler) => {
         try {
           return handler(event);
