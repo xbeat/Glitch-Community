@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { ProjectLink } from './link';
 import { StaticUsersList } from '../users-list';
-import ProjectAvatar from '../../components/avatars/project-avatar';
+import ProjectAvatar from './project-avatar';
 
 const ProjectResultItem = ({ onClick, isActive, isPrivate, cdnUrl, ...project }) => {
   const activeClass = isActive ? 'active' : '';
