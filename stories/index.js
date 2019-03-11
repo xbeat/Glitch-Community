@@ -4,6 +4,7 @@ import Button from '../src/components/buttons/button';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
 import TextInput from '../src/components/fields/text-input';
 import TextArea from '../src/components/fields/text-area';
+import Note from '../src/components/fields/note';
 
 storiesOf('Button', module)
   .add('regular', () => <Button>Hello Button</Button>)
@@ -71,6 +72,6 @@ storiesOf('Text Input', module)
   ));
 
 storiesOf('Note', module)
-  .add('regular', () => (
-    <TextInput placeholder="type something!"/>
-  ))
+  .add('adding a new note', () => (
+    <Note currentUser={{ id: 74 }} update={(something) => console.log(something)} project={{ isAddingANewNote: true }} />
+  ));
