@@ -19,7 +19,7 @@ export default [
     link: 'https://space-extinguisher.glitch.me/',
   },
   {
-    title: 'Tarot according to Achewood',
+    title: 'Tarot According to Achewood',
     img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_achewood.jpg?1552302000528',
     link: 'https://achewood-tarot.glitch.me/',
   },
