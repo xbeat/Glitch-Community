@@ -93,14 +93,16 @@ storiesOf('Button3', module)
 storiesOf('Note', module)
   .addDecorator(StoryRouter())
   .add('adding a new note', () => (
-    <Note
-      currentUser={{
-        color: '#9cf989',
-        id: 123,
-        login: 'glitch',
-        name: 'Glitch',
-      }}
-      update={something => console.log(something)}
-      project={{ isAddingANewNote: true }}
-    />
+    <div style={{ margin: '70px' }}>
+      <Note
+        currentUser={{
+          color: '#9cf989',
+          id: 123,
+          login: 'glitch',
+          name: 'Glitch',
+        }}
+        update={something => console.log(something)}
+        project={{ isAddingANewNote: true }}
+      />
+    </div>
   ));
