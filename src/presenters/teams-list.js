@@ -20,7 +20,7 @@ TeamTile.propTypes = {
 
 const TeamsList = ({ teams }) => (
   <ul className="users teams-information">
-    {teams.map(team => (
+    {teams.map((team) => (
       <li key={team.id}>
         <TeamTile team={team} />
       </li>

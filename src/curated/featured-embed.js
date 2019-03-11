@@ -1,4 +1,5 @@
-const body = '<p>Get started with Virtual Reality.</p><p>A free, 5-part video course with interactive code examples that will teach you the fundamentals of WebVR using A-Frame.</p>';
+const body =
+  '<p>Get started with Virtual Reality.</p><p>A free, 5-part video course with interactive code examples that will teach you the fundamentals of WebVR using A-Frame.</p>';
 
 // make sure image urls use https
 export default {

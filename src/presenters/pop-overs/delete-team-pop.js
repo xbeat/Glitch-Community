@@ -25,9 +25,7 @@ class DeleteTeamPopBase extends React.Component {
       this.props.history.push('/');
     } catch (error) {
       console.error('deleteTeam', error, error.response);
-      this.props.createErrorNotification(
-        'Something went wrong, try refreshing?',
-      );
+      this.props.createErrorNotification('Something went wrong, try refreshing?');
       this.setState({
         teamIsDeleting: false,
       });
@@ -40,29 +38,17 @@ class DeleteTeamPopBase extends React.Component {
     return (
       <dialog className="pop-over delete-team-pop" open>
         <section className="pop-over-info">
-          <div className="pop-title">
-            Delete {this.props.teamName}
-          </div>
+          <div className="pop-title">Delete {this.props.teamName}</div>
         </section>
         <section className="pop-over-actions">
-          <img
-            className="illustration"
-            src={illustration}
-            aria-label="illustration"
-            alt=""
-          />
+          <img className="illustration" src={illustration} aria-label="illustration" alt="" />
           <div className="action-description">
-            Deleting {this.props.teamName} will remove this team page. No
-            projects will be deleted, but only current project members will be
-            able to edit them.
+            Deleting {this.props.teamName} will remove this team page. No projects will be deleted, but only current project members will be able to
+            edit them.
           </div>
         </section>
         <section className="pop-over-actions danger-zone">
-          <button
-            type="button"
-            className="button-small has-emoji"
-            onClick={this.deleteTeam}
-          >
+          <button type="button" className="button-small has-emoji" onClick={this.deleteTeam}>
             Delete {this.props.teamName}&nbsp;
             <span className="emoji bomb" role="img" aria-label="bomb emoji" />
             {this.state.teamIsDeleting && <Loader />}
@@ -80,10 +66,8 @@ class DeleteTeamPopBase extends React.Component {
   }
 }
 
-const DeleteTeamPop = withRouter(props => (
-  <NotificationConsumer>
-    {notifyFuncs => <DeleteTeamPopBase {...notifyFuncs} {...props} />}
-  </NotificationConsumer>
+const DeleteTeamPop = withRouter((props) => (
+  <NotificationConsumer>{(notifyFuncs) => <DeleteTeamPopBase {...notifyFuncs} {...props} />}</NotificationConsumer>
 ));
 
 DeleteTeamPop.propTypes = {

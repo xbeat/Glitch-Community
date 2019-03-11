@@ -8,9 +8,7 @@ import useUniqueId from './use-unique-id';
 
 import styles from './text-area.styl';
 
-const TextArea = ({
-  autoFocus, disabled, error, name, onChange, placeholder, value,
-}) => {
+const TextArea = ({ autoFocus, disabled, error, name, onChange, placeholder, value }) => {
   const uniqueId = useUniqueId();
   return (
     <label className={styles.inputWrap} htmlFor={uniqueId}>
@@ -21,13 +19,11 @@ const TextArea = ({
           disabled={disabled}
           id={uniqueId}
           name={name}
-          onChange={evt => onChange(evt.target.value)}
+          onChange={(evt) => onChange(evt.target.value)}
           placeholder={placeholder}
           value={value}
         />
-        {!!error && (
-          <InputErrorIcon className={styles.errorIcon} />
-        )}
+        {!!error && <InputErrorIcon className={styles.errorIcon} />}
       </div>
       {!!error && <InputErrorMessage>{error}</InputErrorMessage>}
     </label>

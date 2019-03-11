@@ -16,15 +16,10 @@ function clickUndelete(event, callback) {
 
 const DeletedProject = ({ id, domain, onClick }) => (
   <TrackClick name="Undelete clicked">
-    <button
-      className="button-unstyled"
-      onClick={evt => clickUndelete(evt, onClick)}
-    >
+    <button className="button-unstyled" onClick={(evt) => clickUndelete(evt, onClick)}>
       <div className="deleted-project">
         <img className="avatar" src={getAvatarUrl(id)} alt="" />
-        <div className="deleted-project-name">
-          {domain}
-        </div>
+        <div className="deleted-project-name">{domain}</div>
         <div className="button button-small">Undelete</div>
       </div>
     </button>
@@ -86,9 +81,11 @@ export default class DeletedProjects extends React.Component {
           Show
         </button>
       );
-    } if (!this.state.loaded) {
+    }
+    if (!this.state.loaded) {
       return <Loader />;
-    } if (!this.props.deletedProjects.length) {
+    }
+    if (!this.props.deletedProjects.length) {
       return 'nothing found';
     }
     return (
@@ -105,9 +102,7 @@ export default class DeletedProjects extends React.Component {
     return (
       <article className="deleted-projects">
         <h2>
-          Deleted Projects
-          {' '}
-          <span className="emoji bomb emoji-in-title" />
+          Deleted Projects <span className="emoji bomb emoji-in-title" />
         </h2>
         {this.renderContents()}
       </article>
