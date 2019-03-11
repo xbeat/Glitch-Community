@@ -17,6 +17,7 @@ class EditableDescriptionImpl extends React.Component {
   }
 
   onFocus(event) {
+    console.log('onFocus called', event);
     if (event.currentTarget === event.target) {
       this.setState({ focused: true });
     }
@@ -27,6 +28,7 @@ class EditableDescriptionImpl extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     const { description, placeholder, maxLength } = this.props;
     return this.state.focused ? (
       <TextArea
