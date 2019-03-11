@@ -14,18 +14,18 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'What Were the First Tweets?',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_Tweet%20v2.jpg?1551709691713',
-    link: 'https://firsttweets.glitch.me/',
+    title: 'Fire Extinguishers In Spaaaaace!',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_space_extinguisher.jpg?1552302001273',
+    link: 'https://space-extinguisher.glitch.me/',
   },
   {
-    title: 'Take a Virtual Road Trip',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_Library%20v2.jpg?1551709692203',
-    link: 'https://library-of-places.glitch.me/',
+    title: 'Tarot according to Achewood',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_achewood.jpg?1552302000528',
+    link: 'https://achewood-tarot.glitch.me/',
   },
   {
-    title: 'Hmm... Which Emoji?',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_Emoji%20v2.jpg?1551709692864',
-    link: 'https://emoji-suggester.glitch.me/',
+    title: 'Explore the Globe',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_cesium.jpg?1552302001784',
+    link: 'https://glitch.com/~cesium-viewer',
   }
 ];
