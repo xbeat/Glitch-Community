@@ -58,12 +58,12 @@ class CollectionEditor extends React.Component {
     await this.props.api.delete(`/collections/${this.state.id}`);
   }
 
-  async updateOrAddNote({ annotation, projectId }) {
+  async updateOrAddNote({ note, projectId }) {
     const updatedProjects = [];
     this.setState(({ projects }) => ({
       projects: projects.map((project) => {
         if (project.id === projectId) {
-          project.annotation = annotation;
+          project.note = note;
         }
         updatedProjects.push({ ...project });
         return { ...project };
@@ -95,7 +95,7 @@ class CollectionEditor extends React.Component {
       updateNameAndUrl: ({ name, url }) => this.updateFields({ name, url }).catch(handleErrorForInput),
       updateDescription: description => this.updateFields({ description }).catch(handleError),
       updateColor: color => this.updateFields({ coverColor: color }),
-      updateOrAddNote: ({ annotation, projectId }) => this.updateOrAddNote({ annotation, projectId }),
+      updateOrAddNote: ({ note, projectId }) => this.updateOrAddNote({ note, projectId }),
       addNoteField: project => this.addNoteField(project),
     };
     return this.props.children(this.state, funcs, this.userIsAuthor());

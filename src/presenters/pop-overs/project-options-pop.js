@@ -67,7 +67,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
     props.addNoteField(props.project.id);
   }
   const showLeaveProject = props.leaveProject && props.project.users.length > 1 && props.currentUserIsOnProject;
-  const showAddNote = !(props.project.annotation || props.project.isAddingANewAnnotation) && !!props.addNoteField;
+  const showAddNote = !(props.project.note || props.project.isAddingANewNote) && !!props.addNoteField;
 
   return (
     <dialog className="pop-over project-options-pop">
