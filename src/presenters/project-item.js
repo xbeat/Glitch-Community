@@ -7,7 +7,8 @@ import { ProjectLink } from './includes/link';
 import { TruncatedMarkdown } from './includes/markdown';
 import ProjectOptionsPop from './pop-overs/project-options-pop';
 import UsersList from './users-list';
-import Annotation from './annotation';
+// import Annotation from './annotation';
+import Annotation from '../components/fields/note';
 
 const ProjectItem = ({
   api, project, currentUser, ...props

@@ -1,56 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames/bind';
-import styles from './button.styl';
+import styles from './note.styl';
 
-const cx = classNames.bind(styles);
-
-export const TYPES = ['tertiary', 'cta', 'dangerZone'];
-export const SIZES = ['small'];
+import { AuthDescription } from '../../presenters/includes/description-field'; // TODO: replace auth description with a component
+import { UserTile } from '../../presenters/users-list';
 
 /**
  * Button Component
  */
 const Button = ({
-  onClick, disabled, type, size, hover, children,
-}) => {
-  const className = cx({
-    btn: true,
-    cta: type === 'cta',
-    small: size === 'small',
-    tertiary: ['tertiary', 'dangerZone'].includes(type),
-    dangerZone: type === 'dangerZone',
-    hover,
-  });
-
-  return (
-    <button onClick={onClick} className={className} disabled={disabled}>
-      {children}
-    </button>
-  );
-};
+  currentUser, project, update,
+}) => (
+  <div className={styles.annotation}>
+    <div className={styles.descriptionContainer}>
+      <AuthDescription
+        authorized
+        description={project.annotation || ''}
+        placeholder="Share why you love this app."
+        update={update}
+        maxLength={75}
+      />
+    </div>
+    <UserTile user={currentUser} />
+  </div>
+);
 
 Button.propTypes = {
-  /** element(s) to display in the button */
-  children: PropTypes.node.isRequired,
-  /** callback when button clicked */
-  onClick: PropTypes.func,
-  /** button disabled */
-  disabled: PropTypes.bool,
-  /** type of button */
-  type: PropTypes.oneOf(TYPES),
-  /** size of button */
-  size: PropTypes.oneOf(SIZES),
-  /** whether or not the button's hover state should be active */
-  hover: PropTypes.bool,
+  currentUser: PropTypes.object,
+  project: PropTypes.shape({
+    annotation: PropTypes.string,
+    isAddingANewAnnotation: PropTypes.bool,
+  }).isRequired,
+  update: PropTypes.func,
 };
 
 Button.defaultProps = {
-  onClick: () => {},
-  disabled: false,
-  type: '',
-  size: '',
-  hover: false,
+  currentUser: null,
+  update: null,
 };
 
 export default Button;
