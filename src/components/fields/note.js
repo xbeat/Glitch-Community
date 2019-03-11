@@ -26,7 +26,9 @@ const Note = ({
           maxLength={75}
         />
       </div>
-      <UserTile user={currentUser} />
+      <div className={styles.user}>
+        <UserTile user={currentUser} />
+      </div>
     </div>
   );
 };
