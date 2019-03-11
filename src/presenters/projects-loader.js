@@ -35,6 +35,7 @@ class ProjectsLoader extends React.Component {
     if (!projectIds.length) return;
 
     let projects = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(projectIds)}`);
+    // Convert projects from the format state expects to an array
     projects = Object.values(projects);
 
     // Gather unique user IDs for all of the projects being loaded
@@ -53,7 +54,7 @@ class ProjectsLoader extends React.Component {
         users: projectUsers,
       };
     });
-    
+
     // Put projects back into the format state expects
     projects = keyByVal(projects, 'id');
     this.setState(projects);
