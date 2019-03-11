@@ -71,7 +71,16 @@ storiesOf('Text Input', module)
     <TextArea placeholder="[Something here] doesn't seem appropriate for Glitch because..." error="Reason is required"/>
   ));
 
-storiesOf('Note', module)
-  .add('adding a new note', () => (
-    <Note currentUser={{ id: 74 }} update={(something) => console.log(something)} project={{ isAddingANewNote: true }} />
-  ));
+// storiesOf('Note', module)
+//   .add('adding a new note', () => (
+//     <Note
+//       currentUser={{
+//         color: '#9cf989',
+//         id: 123,
+//         login: 'glitch',
+//         name: 'Glitch',
+//       }}
+//       update={something => console.log(something)}
+//       project={{ isAddingANewNote: true }}
+//     />
+//   ));
