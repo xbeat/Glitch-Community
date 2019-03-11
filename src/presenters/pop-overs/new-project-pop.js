@@ -3,17 +3,14 @@ import PropTypes from 'prop-types';
 
 import { TrackedExternalLink } from '../analytics';
 import { Loader } from '../includes/loader';
-import ProjectResultItem from '../includes/project-result-item';
 import PopoverWithButton from './popover-with-button';
+import ProjectAvatar from '../../components/collection/project-avatar';
 
 import { getRemixUrl } from '../../models/project';
 
 const importGitRepo = () => {
   /* eslint-disable no-alert */
-  const repoUrl = window.prompt(
-    'Paste the full URL of your repository',
-    'https://github.com/orgname/reponame.git',
-  );
+  const repoUrl = window.prompt('Paste the full URL of your repository', 'https://github.com/orgname/reponame.git');
   /* eslint-enable no-alert */
   if (!repoUrl) {
     return;
@@ -21,12 +18,25 @@ const importGitRepo = () => {
   window.location.href = `/edit/#!/import/git?url=${repoUrl}`;
 };
 
+
+const NewProjectResultItem = ({ id, domain, description }) => (
+  <div className="result result-project">
+    <ProjectAvatar domain={domain} id={id} cdnUrl="https://cdn.glitch.com" />
+    <div className="results-info">
+      <div className="result-name" title={domain}>
+        {domain}
+      </div>
+      {description.length > 0 && <div className="result-description">{description}</div>}
+    </div>
+  </div>
+);
+
 const NewProjectPop = ({ projects }) => (
   <div className="pop-over new-project-pop">
     <section className="pop-over-actions results-list">
       <div className="results">
         {projects.length ? (
-          projects.map(project => (
+          projects.map((project) => (
             <TrackedExternalLink
               key={project.id}
               to={getRemixUrl(project.domain)}
@@ -36,12 +46,7 @@ const NewProjectPop = ({ projects }) => (
                 origin: 'community new project pop',
               }}
             >
-              <ProjectResultItem
-                {...project}
-                cdnUrl="https://cdn.glitch.com"
-                users={[]}
-                onClick={() => {}}
-              />
+              <NewProjectResultItem {...project} />
             </TrackedExternalLink>
           ))
         ) : (
@@ -50,11 +55,7 @@ const NewProjectPop = ({ projects }) => (
       </div>
     </section>
     <section className="pop-over-actions last-section pop-over-info">
-      <button
-        className="button-small button-tertiary button-on-secondary-background"
-        onClick={importGitRepo}
-        type="button"
-      >
+      <button className="button-small button-tertiary button-on-secondary-background" onClick={importGitRepo} type="button">
         <span>Clone from Git Repo</span>
       </button>
     </section>
@@ -87,24 +88,17 @@ class NewProjectPopButton extends React.Component {
       '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
     ];
     // always request against the production API, with no token
-    const { data } = await this.props.api.get(
-      `https://api.glitch.com/projects/byIds?ids=${projectIds.join(',')}`,
-      {
-        headers: {
-          Authorization: '',
-        },
+    const { data } = await this.props.api.get(`https://api.glitch.com/projects/byIds?ids=${projectIds.join(',')}`, {
+      headers: {
+        Authorization: '',
       },
-    );
+    });
     this.setState({ projects: data });
   }
 
   render() {
     return (
-      <PopoverWithButton
-        buttonClass="button-small"
-        dataTrack="open new-project pop"
-        buttonText="New Project"
-      >
+      <PopoverWithButton buttonClass="button-small" dataTrack="open new-project pop" buttonText="New Project">
         <NewProjectPop projects={this.state.projects} />
       </PopoverWithButton>
     );
