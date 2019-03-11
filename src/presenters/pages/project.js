@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import { getAvatarUrl } from '../../models/project';
+import { getSingleItem } from '../../../shared/api';
 
 import { AnalyticsContext } from '../analytics';
 import TooltipContainer from '../../components/tooltips/tooltip-container';
@@ -176,12 +177,12 @@ ProjectPage.defaultProps = {
 };
 
 async function getProject(api, domain) {
-  const { data } = await api.get(`projects/${domain}`);
-  addBreadcrumb({
+  const project = await getSingleItem(api, `v1/projects/by/domain?domain=${domain}`, domain)
+ addBreadcrumb({
     level: 'info',
-    message: `project: ${JSON.stringify(data)}`,
+    message: `project: ${JSON.stringify(project)}`,
   });
-  return data;
+  return dproject
 }
 
 const ProjectPageLoader = ({
@@ -224,3 +225,4 @@ const ProjectPageContainer = ({ api, name }) => (
 );
 
 export default ProjectPageContainer;
+/
