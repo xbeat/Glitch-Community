@@ -7,23 +7,23 @@ module.exports = function(app) {
   redirect(app, '/you-got-this/2*', '/culture/you-got-this-zine-2/');
   redirect(app, '/you-got-this*', '/culture/you-got-this-zine/');
   redirect(app, '/function*', '/culture/function/');
-  redirect(app, '/revisionpath*', '/culture/revisionpath/');  
+  redirect(app, '/revisionpath*', '/culture/revisionpath/');
   redirect(app, '/careers*', '/about/careers/');
   redirect(app, '/mythbustersjr*', '/culture/mythbusters-jr/');
   redirect(app, '/mythbusters*', '/culture/mythbusters-jr/');
-  redirect(app, '/saastr', 'https://saastr.glitch.me/');  
+  redirect(app, '/saastr', 'https://saastr.glitch.me/');
   redirect(app, '/storybook', '/storybook/index.html');
   redirectPath(app, '/featured*', '/culture/');
-}
+};
 
 function redirect(app, route, target) {
   app.get(route, (req, res) => {
-     return res.redirect(301, target);
+    return res.redirect(301, target);
   });
 }
 
 function redirectPath(app, route, target) {
   app.get(route, (req, res) => {
-     return res.redirect(301, target + req.path.slice(route.length));
+    return res.redirect(301, target + req.path.slice(route.length));
   });
 }

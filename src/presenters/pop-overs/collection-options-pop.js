@@ -22,13 +22,7 @@ const CollectionOptionsPop = (props) => {
   return (
     <dialog className="pop-over collection-options-pop">
       <section className="pop-over-actions danger-zone last-section">
-        {props.deleteCollection && (
-          <PopoverButton
-            onClick={animateThenDeleteCollection}
-            text="Delete Collection "
-            emoji="bomb"
-          />
-        )}
+        {props.deleteCollection && <PopoverButton onClick={animateThenDeleteCollection} text="Delete Collection " emoji="bomb" />}
       </section>
     </dialog>
   );
@@ -56,11 +50,7 @@ export default function CollectionOptions({ deleteCollection, collection }) {
       containerClass="collection-options-pop-btn"
       buttonClass="collection-options button-borderless"
     >
-      <CollectionOptionsPop
-        collection={collection}
-        deleteCollection={deleteCollection}
-        currentUser={currentUser}
-      />
+      <CollectionOptionsPop collection={collection} deleteCollection={deleteCollection} currentUser={currentUser} />
     </PopoverWithButton>
   );
 }

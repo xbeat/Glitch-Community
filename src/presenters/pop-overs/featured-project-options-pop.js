@@ -17,20 +17,13 @@ export default function FeaturedProjectOptionsPop({ unfeatureProject }) {
     <PopoverContainer>
       {({ togglePopover, visible }) => (
         <div>
-          <button
-            className="project-options button-borderless"
-            onClick={togglePopover}
-          >
+          <button className="project-options button-borderless" onClick={togglePopover}>
             <div className="down-arrow" />
           </button>
           {visible && (
             <dialog className="pop-over project-options-pop">
               <section className="pop-over-actions">
-                <PopoverButton
-                  onClick={() => animateThenUnfeature(togglePopover)}
-                  text="Un-feature"
-                  emoji="arrow-down"
-                />
+                <PopoverButton onClick={() => animateThenUnfeature(togglePopover)} text="Un-feature" emoji="arrow-down" />
               </section>
             </dialog>
           )}
