@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { chunk, uniq } from 'lodash';
+import { chunk, flattenDeep, uniq } from 'lodash';
 
 import { getFromApi, joinIdsToQueryString } from '../../shared/api';
 
@@ -40,7 +40,7 @@ class ProjectsLoader extends React.Component {
 
     // Gather unique user IDs for all of the projects being loaded
     const userIdsPerProject = projects.map(({ permissions }) => permissions.map(({ userId }) => userId));
-    const uniqueUserIds = uniq(userIdsPerProject.reduceRight((accumulator, value) => accumulator.concat(value)));
+    const uniqueUserIds = uniq(flattenDeep(userIdsPerProject));
 
     // Load all of the users for this set of projects
     const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(uniqueUserIds)}`);
