@@ -2,22 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ProjectItem from './project-item';
 
-const ProjectsList = ({
-  title,
-  placeholder,
-  extraClasses,
-  ...props
-}) => (
+const ProjectsList = ({ title, placeholder, extraClasses, ...props }) => (
   <article className={`projects ${extraClasses}`}>
-    <h2>
-      {title}
-    </h2>
+    <h2>{title}</h2>
 
-    {!!(placeholder && !props.projects.length) && (
-      <div className="placeholder">
-        {placeholder}
-      </div>
-    )}
+    {!!(placeholder && !props.projects.length) && <div className="placeholder">{placeholder}</div>}
 
     <ExpandyProjects {...props} />
   </article>
@@ -85,7 +74,7 @@ ExpandyProjects.defaultProps = {
 
 export const ProjectsUL = ({ ...props }) => (
   <ul className="projects-container">
-    {props.projects.map(project => (
+    {props.projects.map((project) => (
       <ProjectItem key={project.id} {...{ project }} {...props} />
     ))}
   </ul>

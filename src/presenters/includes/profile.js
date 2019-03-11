@@ -64,9 +64,7 @@ InfoContainer.propTypes = {
 
 // Cover Container
 
-export const CoverContainer = ({
-  buttons, children, className, ...props
-}) => (
+export const CoverContainer = ({ buttons, children, className, ...props }) => (
   <div className={`cover-container ${className}`} {...props}>
     {children}
     {buttons}
@@ -86,9 +84,7 @@ CoverContainer.defaultProps = {
 
 export class ProfileContainer extends React.PureComponent {
   render() {
-    const {
-      avatarStyle, avatarButtons, coverStyle, coverButtons, children, teams,
-    } = this.props;
+    const { avatarStyle, avatarButtons, coverStyle, coverButtons, children, teams } = this.props;
     return (
       <CoverContainer style={coverStyle} buttons={coverButtons}>
         <InfoContainer>

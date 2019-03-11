@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
 import { uniqueId } from 'lodash';
 
-import {
-  OptimisticValue,
-  TrimmedValue,
-  FieldErrorMessage,
-} from './field-helpers';
+import { OptimisticValue, TrimmedValue, FieldErrorMessage } from './field-helpers';
 
 export class PureEditableWrappingField extends React.Component {
   constructor(props) {
@@ -21,9 +17,7 @@ export class PureEditableWrappingField extends React.Component {
   }
 
   render() {
-    const classes = ['content-editable', this.props.error ? 'error' : ''].join(
-      ' ',
-    );
+    const classes = ['content-editable', this.props.error ? 'error' : ''].join(' ');
     const inputProps = {
       id: this.state.id,
       className: classes,
@@ -60,9 +54,7 @@ export const EditableWrappingField = ({ value, update, ...props }) => (
   <OptimisticValue value={value} update={update} resetOnError={false}>
     {({ optimisticValue, optimisticUpdate, error }) => (
       <TrimmedValue value={optimisticValue} update={optimisticUpdate}>
-        {valueProps => (
-          <PureEditableWrappingField {...props} {...valueProps} error={error} />
-        )}
+        {(valueProps) => <PureEditableWrappingField {...props} {...valueProps} error={error} />}
       </TrimmedValue>
     )}
   </OptimisticValue>

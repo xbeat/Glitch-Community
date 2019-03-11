@@ -7,13 +7,8 @@ import { NotificationConsumer } from '../notifications';
 
 const NameConflictWarning = ({ id }) => (
   <>
-    <p>
-      This team has your name. You should update your info to remain unique ❄
-    </p>
-    <Link
-      className="button button-small button-tertiary button-in-notification-container"
-      to={`/user/${id}`}
-    >
+    <p>This team has your name. You should update your info to remain unique ❄</p>
+    <Link className="button button-small button-tertiary button-in-notification-container" to={`/user/${id}`}>
       Your Profile
     </Link>
   </>
@@ -43,11 +38,7 @@ NameConflict.propTypes = {
 
 const NameConflictContainer = () => (
   <CurrentUserConsumer>
-    {({ id }) => (
-      <NotificationConsumer>
-        {notifyFuncs => <NameConflict userId={id} {...notifyFuncs} />}
-      </NotificationConsumer>
-    )}
+    {({ id }) => <NotificationConsumer>{(notifyFuncs) => <NameConflict userId={id} {...notifyFuncs} />}</NotificationConsumer>}
   </CurrentUserConsumer>
 );
 

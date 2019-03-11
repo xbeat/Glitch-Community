@@ -29,37 +29,34 @@ class Embed extends React.Component {
       );
       return false;
     }
-  }
+  };
 
   render() {
     return (
       <div className="glitch-embed-wrap">
-        { this.state.browserSupported
-        // Embed iframe for app
-          ? (
-            <iframe
-              title="embed"
-              src={`${APP_URL}/embed/#!/embed/${this.props.domain}?path=README.md&previewSize=100`}
-              alt={`${this.props.domain} on Glitch`}
-              allow="geolocation; microphone; camera; midi; encrypted-media"
-              height="100%"
-              width="100%"
-              border="0"
-              allowvr="yes"
-            />
-          )
-        // Error message if JS not supported
-        // TODO(sheridan): Refactor this once we have a true error component
-          : (
-            <div className="error-container">
-              <img className="error-image" src={telescopeImageUrl} alt="" width="50%" height="50%" />
-              <div className="error-msg">
-                <h2>The web browser you're using is missing some important Javascript features</h2>
-                <p>To use this app, please try applying your latest system updates, or try again with a different web browser.</p>
-              </div>
+        {this.state.browserSupported ? (
+          // Embed iframe for app
+          <iframe
+            title="embed"
+            src={`${APP_URL}/embed/#!/embed/${this.props.domain}?path=README.md&previewSize=100`}
+            alt={`${this.props.domain} on Glitch`}
+            allow="geolocation; microphone; camera; midi; encrypted-media"
+            height="100%"
+            width="100%"
+            border="0"
+            allowvr="yes"
+          />
+        ) : (
+          // Error message if JS not supported
+          // TODO(sheridan): Refactor this once we have a true error component
+          <div className="error-container">
+            <img className="error-image" src={telescopeImageUrl} alt="" width="50%" height="50%" />
+            <div className="error-msg">
+              <h2>The web browser you're using is missing some important Javascript features</h2>
+              <p>To use this app, please try applying your latest system updates, or try again with a different web browser.</p>
             </div>
-          )
-        }
+          </div>
+        )}
       </div>
     );
   }

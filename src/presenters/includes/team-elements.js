@@ -10,16 +10,11 @@ export const TeamMarketing = () => {
   return (
     <section className="team-marketing">
       <p>
-        <img
-          className="for-platforms-icon"
-          src={forPlatformsIcon}
-          alt="fishing emoji"
-        />
+        <img className="for-platforms-icon" src={forPlatformsIcon} alt="fishing emoji" />
         Want your own team page, complete with detailed app analytics?
       </p>
       <Link to="/teams" className="button button-link has-emoji">
-        About Teams{' '}
-        <span className="emoji fishing_pole" role="img" aria-label="emoji" />
+        About Teams <span className="emoji fishing_pole" role="img" aria-label="emoji" />
       </Link>
     </section>
   );
@@ -29,14 +24,7 @@ export const VerifiedBadge = () => {
   const image = 'https://cdn.glitch.com/55f8497b-3334-43ca-851e-6c9780082244%2Fverified.svg?1501783108220';
   const tooltip = 'Verified to be supportive, helpful people';
 
-  return (
-    <TooltipContainer
-      id="verified-team-tooltip"
-      type="info"
-      tooltip={tooltip}
-      target={<img className="verified" src={image} alt="✓" />}
-    />
-  );
+  return <TooltipContainer id="verified-team-tooltip" type="info" tooltip={tooltip} target={<img className="verified" src={image} alt="✓" />} />;
 };
 
 export class WhitelistedDomainIcon extends React.Component {
@@ -71,14 +59,7 @@ export class WhitelistedDomainIcon extends React.Component {
   render() {
     const { domain } = this.props;
     if (this.state.src) {
-      return (
-        <img
-          className="whitelisted-domain"
-          alt={domain}
-          src={this.state.src}
-          onError={() => this.setState({ src: null })}
-        />
-      );
+      return <img className="whitelisted-domain" alt={domain} src={this.state.src} onError={() => this.setState({ src: null })} />;
     }
     return (
       <div className="whitelisted-domain" aria-label={domain}>

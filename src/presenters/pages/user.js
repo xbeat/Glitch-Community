@@ -227,15 +227,9 @@ const UserPageContainer = ({ api, user }) => (
           </Helmet>
 
           <CurrentUserConsumer>
-            {maybeCurrentUser => (
-              <ProjectsLoader api={api} projects={orderBy(userFromEditor.projects, project => project.updatedAt, ['desc'])}>
-                {projects => (
-                  <UserPage
-                    {...{ api, isAuthorized, maybeCurrentUser }}
-                    user={{ ...userFromEditor, projects }}
-                    {...funcs}
-                  />
-                )}
+            {(maybeCurrentUser) => (
+              <ProjectsLoader api={api} projects={orderBy(userFromEditor.projects, (project) => project.updatedAt, ['desc'])}>
+                {(projects) => <UserPage {...{ api, isAuthorized, maybeCurrentUser }} user={{ ...userFromEditor, projects }} {...funcs} />}
               </ProjectsLoader>
             )}
           </CurrentUserConsumer>

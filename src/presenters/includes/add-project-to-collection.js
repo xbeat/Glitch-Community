@@ -7,11 +7,11 @@ import PopoverWithButton from '../pop-overs/popover-with-button';
 const AddProjectToCollection = ({ project, ...props }) => (
   <PopoverWithButton
     buttonClass="button-small has-emoji add-project"
-    buttonText={(
+    buttonText={
       <>
         Add to Collection <span className="emoji framed-picture" role="presentation" />
       </>
-    )}
+    }
     passToggleToPop
   >
     <AddProjectToCollectionPop {...props} project={project} />
