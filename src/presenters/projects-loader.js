@@ -10,9 +10,9 @@ function listToObject(list, val) {
   return list.reduce((data, key) => ({ ...data, [key]: val }), {});
 }
 
-// function keyByVal(list, key) {
-//   return list.reduce((data, val) => ({ ...data, [val[key]]: val }), {});
-// }
+function keyByVal(list, key) {
+  return list.reduce((data, val) => ({ ...data, [val[key]]: val }), {});
+}
 
 class ProjectsLoader extends React.Component {
   constructor(props) {
@@ -36,15 +36,26 @@ class ProjectsLoader extends React.Component {
 
     let projects = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(projectIds)}`);
     projects = Object.values(projects);
-    
+
+    // Gather unique user IDs for all of the projects being loaded
     const userIdsPerProject = projects.map(({ permissions }) => permissions.map(({ userId }) => userId));
     const uniqueUserIds = uniq(userIdsPerProject.reduceRight((accumulator, value) => accumulator.concat(value)));
-    
-    const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(projectIds)}`);
-    console.log('users', users);
 
-    // Go back over the projects and pick users out of the array by id based on permissions
+    // Load all of the users for this set of projects
+    const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(uniqueUserIds)}`);
+
+    // Go back over the projects and pick users out of the array by ID based on permissions
+    projects = projects.map((project) => {
+      const projectUsers = [];
+      project.permissions.map(({ userId }) => projectUsers.push(users[userId]));
+      return {
+        ...project,
+        users: projectUsers,
+      };
+    });
     
+    // Put projects back into the format state expects
+    projects = keyByVal(projects, 'id');
     this.setState(projects);
   }
 
