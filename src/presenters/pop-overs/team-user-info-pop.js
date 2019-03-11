@@ -99,7 +99,7 @@ const TeamUserInfo = ({
             <div className="status-badge">
               <TooltipContainer
                 id={`admin-badge-tooltip-${props.user.login}`}
-                type="information"
+                type="info"
                 target={<span className="status admin">Team Admin</span>}
                 tooltip="Can edit team info and billing"
               />
