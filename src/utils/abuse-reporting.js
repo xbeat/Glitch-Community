@@ -7,6 +7,7 @@ export const getAbuseReportTitle = (model, modelType) => {
   if (modelType === 'home') {
     return 'Abuse Report for Glitch Homepage';
   }
+  const displayNameForModal = getDisplayNameForModel(model, modelType) || `Anonymous user ${model.id}`;
   return `Abuse Report for ${modelType} ${getDisplayNameForModel(model, modelType)}`;
 };
 
@@ -32,7 +33,7 @@ export const getAbuseReportBody = (currentUser, submitterEmail, reportedType, re
     const glitchLink = APP_URL + getUrlForModel(reportedModel, reportedType);
     const capitalizedReportedType = capitalize(reportedType);
     thingIdentifiers = `
-- ${capitalizedReportedType} Name: [${getDisplayNameForModel(reportedModel, reportedType)}](${glitchLink})
+- ${capitalizedReportedType} Name: [${getDisplayNameForModel(reportedModel, reportedType) || 'Anonymous user'}](${glitchLink})
 
 - ${capitalizedReportedType} Id: ${reportedModel.id}`;
   }
