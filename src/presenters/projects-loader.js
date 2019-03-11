@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { chunk, flattenDeep, flatMap, uniq } from 'lodash';
+import { chunk, keyBy, flatMap, uniq } from 'lodash';
 
 import { getFromApi, joinIdsToQueryString } from '../../shared/api';
 
@@ -8,10 +8,6 @@ import { CurrentUserConsumer, normalizeProjects } from './current-user';
 
 function listToObject(list, val) {
   return list.reduce((data, key) => ({ ...data, [key]: val }), {});
-}
-
-function keyByVal(list, key) {
-  return list.reduce((data, val) => ({ ...data, [val[key]]: val }), {});
 }
 
 class ProjectsLoader extends React.Component {
@@ -45,16 +41,13 @@ class ProjectsLoader extends React.Component {
     const allUsers = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(uniqueUserIds)}`);
 
     // Go back over the projects and pick users out of the array by ID based on permissions
-    projects = projects.map((project) => {
-      const users = flatMap(project.permissions, ({ userId }) => allUsers[userId]);
-      return {
-        ...project,
-        users,
-      };
-    });
+    projects = projects.map((project) => ({
+      ...project,
+      users: flatMap(project.permissions, ({ userId }) => allUsers[userId]),
+    }));
 
     // Put projects back into the format state expects
-    projects = keyByVal(projects, 'id');
+    projects = keyBy(projects, 'id');
     this.setState(projects);
   }
 
