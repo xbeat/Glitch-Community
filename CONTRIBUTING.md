@@ -236,5 +236,10 @@ We now have [Storybook for React](https://www.npmjs.com/package/@storybook/react
 
 **Components**
 
-We're in the process of moving our React architecture towards an Atomic Design-style approach, using CSS Modules as the backbone of that. To add a new component, or convert an existing piece of our code into a CSS Module-enabled component, here's what you should do:
-1. Create stories for the component in stories/index.js. Once this file gets too big, we'll likely start 
+We're in the process of moving our React architecture towards an Atomic Design-inspired approach, using CSS Modules as the backbone of that to better manage our styles across the app. All components live in src/components, and anything in there should be packaged as a CSS Module (i.e. a .styl file with the same name should be present in the same directory, and imported into the component). Webpack builds the src/components directory as CSS Modules, and treats the styles/ directory as traditional CSS/Stylus styles.
+
+To add a new component, or convert an existing piece of our code into a CSS Module-enabled component, here's what you should do:
+1. Only define one component per .js file. The component you're exporting should have the same name as the file it's contained in (e.g. TextArea is exported from text-area.js)
+2. Where possible, we'd like to avoid passing styles into the components and instead rely on named props that can be passed into the component. The types then define the styles that apply - the classnames npm package can be used to combine these in more readable ways (see [https://glitch.com/edit/#!/community?path=src/components/buttons/button.js:15:0](Button.js)  for an example)
+3. Create stories for each variant of the component in stories/index.js. As well as providing a visual guide for all the building blocks of our site, our designers use this for visual QA. Once this file gets too big, we'll likely start splitting it out, but for now all stories should go in there. 
+4. Generate the new storybook guide on your remix as explained above in the Storybook section.
