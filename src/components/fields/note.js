@@ -6,26 +6,32 @@ import { AuthDescription } from '../../presenters/includes/description-field'; /
 import { UserTile } from '../../presenters/users-list';
 
 /**
- * Button Component
+ * Note Component
  */
-const Button = ({
+const Note = ({
   currentUser, project, update,
-}) => (
-  <div className={styles.annotation}>
-    <div className={styles.descriptionContainer}>
-      <AuthDescription
-        authorized
-        description={project.annotation || ''}
-        placeholder="Share why you love this app."
-        update={update}
-        maxLength={75}
-      />
-    </div>
-    <UserTile user={currentUser} />
-  </div>
-);
+}) => {
+  if (!project.isAddingANewAnnotation && !project.annotation) {
+    return null;
+  }
 
-Button.propTypes = {
+  return (
+    <div className={styles.annotation}>
+      <div className={styles.descriptionContainer}>
+        <AuthDescription
+          authorized
+          description={project.annotation || ''}
+          placeholder="Share why you love this app."
+          update={update}
+          maxLength={75}
+        />
+      </div>
+      <UserTile user={currentUser} />
+    </div>
+  );
+};
+
+Note.propTypes = {
   currentUser: PropTypes.object,
   project: PropTypes.shape({
     annotation: PropTypes.string,
@@ -34,9 +40,9 @@ Button.propTypes = {
   update: PropTypes.func,
 };
 
-Button.defaultProps = {
+Note.defaultProps = {
   currentUser: null,
   update: null,
 };
 
-export default Button;
+export default Note;
