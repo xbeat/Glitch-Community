@@ -24,7 +24,7 @@ const Note = ({
         <EditableDescription
           description={project.note || ''}
           placeholder="Share why you love this app."
-          update={update}
+          update={() => console.log('hi')}
           maxLength={75}
         />
       </div>
