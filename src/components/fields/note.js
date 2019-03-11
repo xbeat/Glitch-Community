@@ -15,16 +15,14 @@ const Note = ({
   if (!project.isAddingANewNote && !project.note) {
     return null;
   }
-  console.log({
-    currentUser, project, update,
-  });
+
   return (
     <div className={styles.note}>
       <div className={styles.descriptionContainer}>
         <EditableDescription
           description={project.note || ''}
           placeholder="Share why you love this app."
-          update={() => console.log('hi')}
+          update={update}
           maxLength={75}
         />
       </div>
