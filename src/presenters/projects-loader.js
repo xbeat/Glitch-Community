@@ -42,23 +42,29 @@ class ProjectsLoader extends React.Component {
 
     // We want to perform these in parallel, so I'm mapping over the values rather than using a for loop
     // It's causing some weirdness with the async/await turning into an array of promises
-    projects = projects.map(async (project) => {
-      const userIds = project.permissions.map((permission) => permission.userId);
-      const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(userIds)}`);
-      return {
-        ...project,
-        users: Object.values(users),
-      };
-    });
-    // But for now it's okay, so resolve the promises please
-    projects = await Promise.all(projects);
-    // Then turn the projects back into the format that state is expecting
-    projects = keyByVal(projects, 'id');
+    // projects = projects.map(async (project) => {
+    //   const userIds = project.permissions.map((permission) => permission.userId);
+    //   const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(userIds)}`);
+    //   return {
+    //     ...project,
+    //     users: Object.values(users),
+    //   };
+    // });
+    // // But for now it's okay, so resolve the promises please
+    // projects = await Promise.all(projects);
+    // // Then turn the projects back into the format that state is expecting
+    // projects = keyByVal(projects, 'id');
 
     // Going to collect _all_ the user IDs here now
     const allUserIds = projects.reduce((userIds, project) => {
-      userIds.concat(project.permissions.map((permission) => permission.userId));
-    });
+      console.log('userIds', userIds)
+      project.permissions.map(({userId}) =>  {
+        if(userIds.includes(userId)) {
+          return userIds; // Don't add duplicate user IDs
+        }
+        return userIds.push(userId);
+      })
+    }, []);
     console.log('allUserIds', allUserIds);
 
     this.setState(projects);
