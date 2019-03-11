@@ -69,7 +69,7 @@ EditableDescriptionImpl.defaultProps = {
   maxLength: 524288, // this is the built in default
 };
 
-const EditableDescription = ({
+export const EditableDescription = ({
   description, placeholder, update, maxLength,
 }) => (
   <OptimisticValue value={description} update={update}>

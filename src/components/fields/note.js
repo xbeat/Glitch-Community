@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './note.styl';
 
-import { AuthDescription } from '../../presenters/includes/description-field'; // TODO: replace auth description with a component
+// TODO: let's move these into components
+import { EditableDescription } from '../../presenters/includes/description-field';
 import { UserTile } from '../../presenters/users-list';
 
 /**
@@ -14,12 +15,13 @@ const Note = ({
   if (!project.isAddingANewNote && !project.note) {
     return null;
   }
-
+  console.log({
+    currentUser, project, update,
+  });
   return (
     <div className={styles.note}>
       <div className={styles.descriptionContainer}>
-        <AuthDescription
-          authorized
+        <EditableDescription
           description={project.note || ''}
           placeholder="Share why you love this app."
           update={update}
