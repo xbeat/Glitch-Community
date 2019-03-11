@@ -168,7 +168,14 @@ ProjectPage.propTypes = {
   api: PropTypes.any,
   currentUser: PropTypes.object.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
-  project: PropTypes.object.isRequired,
+  project: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    private: PropTypes.bool,
+    domain: PropTypes.string.isRequired,
+    teams: PropTypes.array.isRequired,
+    users: PropTypes.array.isRequired,
+  }).isRequired,
 };
 
 ProjectPage.defaultProps = {
@@ -178,11 +185,10 @@ ProjectPage.defaultProps = {
 async function getProject(api, domain) {
   const data = await allByKeys({
     project: getSingleItem(api, `v1/projects/by/domain?domain=${domain}`, domain),
-    //collections: getAllPages(api, `v1/projects/by/domain/collections?domain=${domain}`),
     teams: getAllPages(api, `v1/projects/by/domain/teams?domain=${domain}`),
     users: getAllPages(api, `v1/projects/by/domain/users?domain=${domain}`),
-  })
-  
+  });
+
   const { project, ...rest } = data;
   addBreadcrumb({
     level: 'info',
