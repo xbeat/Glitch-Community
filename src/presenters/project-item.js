@@ -18,6 +18,8 @@ const ProjectItem = ({
       project={project}
       update={note => props.projectOptions.updateOrAddNote({ note, projectId: project.id })}
     />
+    <Note currentUser={{ id: 433767, login: 'sarahzinger' }} update={something => console.log(something)} project={{ isAddingANewNote: true }} />
+
     <UsersList
       glitchTeam={project.showAsGlitchTeam}
       users={project.users}
