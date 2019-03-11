@@ -8,7 +8,7 @@ export const getAbuseReportTitle = (model, modelType) => {
     return 'Abuse Report for Glitch Homepage';
   }
   const displayNameForModal = getDisplayNameForModel(model, modelType) || `Anonymous user ${model.id}`;
-  return `Abuse Report for ${modelType} ${getDisplayNameForModel(model, modelType)}`;
+  return `Abuse Report for ${modelType} ${displayNameForModal}`;
 };
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
