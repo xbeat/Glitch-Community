@@ -233,3 +233,8 @@ Sure thing. All standard caveats and cautions apply.  This is appropriate for up
 We now have [Storybook for React](https://www.npmjs.com/package/@storybook/react) integrated with our site, as we're gradually moving it towards a more component-based design. It's not hooked into the build process, so to see your changes reflected in it, you can do the following:
 1. Run ```npm run storybook``` from the terminal console to build the static storybook files.
 2. Go to https://<remix-name>/storybook. All the files are served there (from the build folder in the app).
+
+**Components**
+
+We're in the process of moving our React architecture towards an Atomic Design-style approach, using CSS Modules as the backbone of that. To add a new component, or convert an existing piece of our code into a CSS Module-enabled component, here's what you should do:
+1. Create stories for the component in stories/index.js. Once this file gets too big, we'll likely start 
