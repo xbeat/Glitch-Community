@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { chunk, flattenDeep, uniq } from 'lodash';
+import { chunk, flattenDeep, flatMap, uniq } from 'lodash';
 
 import { getFromApi, joinIdsToQueryString } from '../../shared/api';
 
@@ -38,20 +38,18 @@ class ProjectsLoader extends React.Component {
     // Convert projects from the format state expects to an array
     projects = Object.values(projects);
 
-    // Gather unique user IDs for all of the projects being loaded
-    const userIdsPerProject = projects.map(({ permissions }) => permissions.map(({ userId }) => userId));
-    const uniqueUserIds = uniq(flattenDeep(userIdsPerProject));
+    // Gather unique user IDs for all of the projects being loaded, based on permissions
+    const uniqueUserIds = uniq(flatMap(projects, ({ permissions }) => permissions.map(({ userId }) => userId)));
 
     // Load all of the users for this set of projects
-    const users = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(uniqueUserIds)}`);
+    const allUsers = await getFromApi(this.props.api, `v1/users/by/id?${joinIdsToQueryString(uniqueUserIds)}`);
 
     // Go back over the projects and pick users out of the array by ID based on permissions
     projects = projects.map((project) => {
-      const projectUsers = [];
-      project.permissions.map(({ userId }) => projectUsers.push(users[userId]));
+      const users = flatMap(project.permissions, ({ userId }) => allUsers[userId]);
       return {
         ...project,
-        users: projectUsers,
+        users,
       };
     });
 
