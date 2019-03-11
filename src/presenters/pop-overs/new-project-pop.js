@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { TrackedExternalLink } from '../analytics';
 import { Loader } from '../includes/loader';
-import PopoverWithButton from './popover-with-button';
 import ProjectAvatar from '../includes/project-avatar';
+import PopoverWithButton from './popover-with-button';
 
 import { getRemixUrl } from '../../models/project';
 
@@ -17,7 +17,6 @@ const importGitRepo = () => {
   }
   window.location.href = `/edit/#!/import/git?url=${repoUrl}`;
 };
-
 
 const NewProjectResultItem = ({ id, domain, description }) => (
   <div className="result result-project">
