@@ -17,7 +17,7 @@ const ProjectAvatar = ({ domain, id, cdnUrl }) => (
 ProjectAvatar.propTypes = {
   domain: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  cdnUrl: PropTypes.string.isRequired,
+  cdnUrl: PropTypes.string,
 };
 
 export default ProjectAvatar;
