@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { ProjectLink } from './link';
 import { StaticUsersList } from '../users-list';
-import { FALLBACK_AVATAR_URL, getAvatarUrl } from '../../models/project';
+import ProjectAvatar from '../../components/avatars/project-avatar';
 
 const ProjectResultItem = ({
   onClick,
@@ -15,7 +15,6 @@ const ProjectResultItem = ({
   const activeClass = isActive ? 'active' : '';
   const privateClass = isPrivate ? 'private' : '';
   const resultClass = `button-unstyled result result-project ${activeClass} ${privateClass}`;
-  const srcFallback = FALLBACK_AVATAR_URL;
   const {
     id, domain, description, users,
   } = project;
@@ -23,12 +22,7 @@ const ProjectResultItem = ({
   return (
     <div>
       <button className={resultClass} onClick={onClick} data-project-id={id} type="button">
-        <img
-          className="avatar"
-          src={getAvatarUrl(id, cdnUrl)}
-          alt={`Project avatar for ${domain}`}
-          onError={(event) => { event.target.src = srcFallback; }}
-        />
+        <ProjectAvatar domain={domain} id={id} cdnUrl={cdnUrl} />
         <div className="results-info">
           <div className="result-name" title={domain}>
             {domain}

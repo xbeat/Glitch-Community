@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { TrackedExternalLink } from '../analytics';
 import { Loader } from '../includes/loader';
 import PopoverWithButton from './popover-with-button';
-import ProjectAvatar from '../../components/collection/project-avatar';
+import ProjectAvatar from '../../components/avatars/project-avatar';
 
 import { getRemixUrl } from '../../models/project';
 
