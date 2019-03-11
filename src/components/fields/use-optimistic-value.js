@@ -3,10 +3,25 @@ import React from 'react';
 import useDebouncedValue from './use-debounced-value';
 
 const useOptimisticValue = (realValue, setValueAsync) => {
-  const [stateValue, setStateValue] = React.useState({ value: undefined, error: null });
+  const [state, setState] = React.useState({ value: undefined, error: null });
+  
+  const optimisticValue = state.value !== undefined ? state.value : realValue;
+  const setOptimisticValue = (newValue) => {
+    setState({ value: newValue, error: null });
+  };
+  
+  const debouncedValue = useDebouncedValue(optimisticValue);
+  React.useEffect(() => {
+    if (debouncedValue !== realValue) {
+      
+    }
+  }, [debouncedValue, realValue]);
+  
+  return [optimisticValue, state.error, setOptimisticValue];
+};
   
   const setStateIfMatches = (newState, valueToMatch) => {
-    setStateValue(prevState => {
+    setState(prevState => {
       if (prevState.value === valueToMatch) {
         return newState;
       }
@@ -23,13 +38,5 @@ const useOptimisticValue = (realValue, setValueAsync) => {
     }
   };
   
-  const optimisticValue = stateValue === undefined ? realValue : stateValue;
-  const setOptimisticValue = (newValue) => {
-    setStateValue({ value: newValue, error: null });
-    
-  };
-  
-  return [optimisticValue, stateValue.error, setOptimisticValue];
-};
 
 export default useOptimisticValue;
