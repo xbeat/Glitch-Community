@@ -28,15 +28,10 @@ class TeamEditor extends React.Component {
   }
 
   async updateFields(changes) {
-    const { data } = await this.props.api.patch(
-      `teams/${this.state.id}`,
-      changes,
-    );
+    const { data } = await this.props.api.patch(`teams/${this.state.id}`, changes);
     this.setState(data);
     if (this.props.currentUser) {
-      const teamIndex = this.props.currentUser.teams.findIndex(
-        ({ id }) => id === this.state.id,
-      );
+      const teamIndex = this.props.currentUser.teams.findIndex(({ id }) => id === this.state.id);
       if (teamIndex >= 0) {
         const teams = [...this.props.currentUser.teams];
         teams[teamIndex] = this.state;
@@ -46,10 +41,7 @@ class TeamEditor extends React.Component {
   }
 
   async uploadAvatar(blob) {
-    const { data: policy } = await assets.getTeamAvatarImagePolicy(
-      this.props.api,
-      this.state.id,
-    );
+    const { data: policy } = await assets.getTeamAvatarImagePolicy(this.props.api, this.state.id);
     await this.props.uploadAssetSizes(blob, policy, assets.AVATAR_SIZES);
 
     const image = await assets.blobToImage(blob);
@@ -62,10 +54,7 @@ class TeamEditor extends React.Component {
   }
 
   async uploadCover(blob) {
-    const { data: policy } = await assets.getTeamCoverImagePolicy(
-      this.props.api,
-      this.state.id,
-    );
+    const { data: policy } = await assets.getTeamCoverImagePolicy(this.props.api, this.state.id);
     await this.props.uploadAssetSizes(blob, policy, assets.COVER_SIZES);
 
     const image = await assets.blobToImage(blob);
@@ -105,20 +94,20 @@ class TeamEditor extends React.Component {
   async removeUserFromTeam(userId, projectIds) {
     // Kick them out of every project at once, and wait until it's all done
     await Promise.all(
-      projectIds.map(projectId => this.props.api.delete(`projects/${projectId}/authorization`, {
-        data: { targetUserId: userId },
-      })),
+      projectIds.map((projectId) =>
+        this.props.api.delete(`projects/${projectId}/authorization`, {
+          data: { targetUserId: userId },
+        }),
+      ),
     );
     // Now remove them from the team. Remove them last so if something goes wrong you can do this over again
     await this.props.api.delete(`teams/${this.state.id}/users/${userId}`);
     this.removeUserAdmin(userId);
     this.setState(({ users }) => ({
-      users: users.filter(u => u.id !== userId),
+      users: users.filter((u) => u.id !== userId),
     }));
     if (this.props.currentUser && this.props.currentUser.id === userId) {
-      const teams = this.props.currentUser.teams.filter(
-        ({ id }) => id !== this.state.id,
-      );
+      const teams = this.props.currentUser.teams.filter(({ id }) => id !== this.state.id);
       this.props.updateCurrentUser({ teams });
     }
   }
@@ -126,17 +115,14 @@ class TeamEditor extends React.Component {
   removeUserAdmin(id) {
     const index = this.state.adminIds.indexOf(id);
     if (index !== -1) {
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         counter: prevState.adminIds.splice(index, 1),
       }));
     }
   }
 
   async updateUserPermissions(id, accessLevel) {
-    if (
-      accessLevel === MEMBER_ACCESS_LEVEL
-      && this.state.adminIds.length <= 1
-    ) {
+    if (accessLevel === MEMBER_ACCESS_LEVEL && this.state.adminIds.length <= 1) {
       this.props.createErrorNotification('A team must have at least one admin');
       return false;
     }
@@ -144,7 +130,7 @@ class TeamEditor extends React.Component {
       access_level: accessLevel,
     });
     if (accessLevel === ADMIN_ACCESS_LEVEL) {
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         counter: prevState.adminIds.push(id),
       }));
     } else {
@@ -163,14 +149,14 @@ class TeamEditor extends React.Component {
   async removeProject(id) {
     await this.props.api.delete(`teams/${this.state.id}/projects/${id}`);
     this.setState(({ projects }) => ({
-      projects: projects.filter(p => p.id !== id),
+      projects: projects.filter((p) => p.id !== id),
     }));
   }
 
   async deleteProject(id) {
     await this.props.api.delete(`/projects/${id}`);
     this.setState(({ projects }) => ({
-      projects: projects.filter(p => p.id !== id),
+      projects: projects.filter((p) => p.id !== id),
     }));
   }
 
@@ -184,14 +170,12 @@ class TeamEditor extends React.Component {
   async removePin(id) {
     await this.props.api.delete(`teams/${this.state.id}/pinned-projects/${id}`);
     this.setState(({ teamPins }) => ({
-      teamPins: teamPins.filter(p => p.projectId !== id),
+      teamPins: teamPins.filter((p) => p.projectId !== id),
     }));
   }
 
   async joinTeamProject(projectId) {
-    await this.props.api.post(
-      `/teams/${this.state.id}/projects/${projectId}/join`,
-    );
+    await this.props.api.post(`/teams/${this.state.id}/projects/${projectId}/join`);
   }
 
   async leaveTeamProject(projectId) {
@@ -203,9 +187,7 @@ class TeamEditor extends React.Component {
   }
 
   async addProjectToCollection(project, collection) {
-    await this.props.api.patch(
-      `collections/${collection.id}/add/${project.id}`,
-    );
+    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
   }
 
   async unfeatureProject() {
@@ -228,35 +210,30 @@ class TeamEditor extends React.Component {
   render() {
     const { handleError, handleErrorForInput, handleCustomError } = this.props;
     const funcs = {
-      updateName: name => this.updateFields({ name }).catch(handleErrorForInput),
-      updateUrl: url => this.updateFields({ url }).catch(handleErrorForInput),
-      updateDescription: description => this.updateFields({ description }).catch(handleError),
+      updateName: (name) => this.updateFields({ name }).catch(handleErrorForInput),
+      updateUrl: (url) => this.updateFields({ url }).catch(handleErrorForInput),
+      updateDescription: (description) => this.updateFields({ description }).catch(handleError),
       joinTeam: () => this.joinTeam().catch(handleError),
-      inviteEmail: email => this.inviteEmail(email).catch(handleError),
-      inviteUser: id => this.inviteUser(id).catch(handleError),
+      inviteEmail: (email) => this.inviteEmail(email).catch(handleError),
+      inviteUser: (id) => this.inviteUser(id).catch(handleError),
       removeUserFromTeam: (id, projectIds) => this.removeUserFromTeam(id, projectIds).catch(handleError),
-      uploadAvatar: () => assets.requestFile(blob => this.uploadAvatar(blob).catch(handleError)),
-      uploadCover: () => assets.requestFile(blob => this.uploadCover(blob).catch(handleError)),
+      uploadAvatar: () => assets.requestFile((blob) => this.uploadAvatar(blob).catch(handleError)),
+      uploadCover: () => assets.requestFile((blob) => this.uploadCover(blob).catch(handleError)),
       clearCover: () => this.updateFields({ hasCoverImage: false }).catch(handleError),
-      addProject: project => this.addProject(project).catch(handleError),
-      removeProject: id => this.removeProject(id).catch(handleError),
-      deleteProject: id => this.deleteProject(id).catch(handleError),
-      addPin: id => this.addPin(id).catch(handleError),
-      removePin: id => this.removePin(id).catch(handleError),
-      updateWhitelistedDomain: whitelistedDomain => this.updateFields({ whitelistedDomain }).catch(handleError),
+      addProject: (project) => this.addProject(project).catch(handleError),
+      removeProject: (id) => this.removeProject(id).catch(handleError),
+      deleteProject: (id) => this.deleteProject(id).catch(handleError),
+      addPin: (id) => this.addPin(id).catch(handleError),
+      removePin: (id) => this.removePin(id).catch(handleError),
+      updateWhitelistedDomain: (whitelistedDomain) => this.updateFields({ whitelistedDomain }).catch(handleError),
       updateUserPermissions: (id, accessLevel) => this.updateUserPermissions(id, accessLevel).catch(handleError),
-      joinTeamProject: projectId => this.joinTeamProject(projectId).catch(handleError),
-      leaveTeamProject: projectId => this.leaveTeamProject(projectId).catch(handleError),
+      joinTeamProject: (projectId) => this.joinTeamProject(projectId).catch(handleError),
+      leaveTeamProject: (projectId) => this.leaveTeamProject(projectId).catch(handleError),
       addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(handleCustomError),
-      featureProject: id => this.featureProject(id).catch(handleError),
-      unfeatureProject: id => this.unfeatureProject(id).catch(handleError),
+      featureProject: (id) => this.featureProject(id).catch(handleError),
+      unfeatureProject: (id) => this.unfeatureProject(id).catch(handleError),
     };
-    return this.props.children(
-      this.state,
-      funcs,
-      this.currentUserIsOnTeam(),
-      this.currentUserIsTeamAdmin(),
-    );
+    return this.props.children(this.state, funcs, this.currentUserIsOnTeam(), this.currentUserIsTeamAdmin());
   }
 }
 TeamEditor.propTypes = {
@@ -279,13 +256,7 @@ const TeamEditorContainer = ({ api, children, initialTeam }) => {
   const notificationFuncs = useNotifications();
   const errorFuncs = useErrorHandlers();
   return (
-    <TeamEditor
-      {...{ api, currentUser, initialTeam }}
-      updateCurrentUser={update}
-      {...uploadFuncs}
-      {...notificationFuncs}
-      {...errorFuncs}
-    >
+    <TeamEditor {...{ api, currentUser, initialTeam }} updateCurrentUser={update} {...uploadFuncs} {...notificationFuncs} {...errorFuncs}>
       {children}
     </TeamEditor>
   );

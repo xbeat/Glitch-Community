@@ -40,9 +40,7 @@ class LoginPage extends React.Component {
   }
 
   async componentDidMount() {
-    const {
-      api, provider, url, destination,
-    } = this.props;
+    const { api, provider, url, destination } = this.props;
     this.props.setDestination(undefined);
 
     try {
@@ -81,7 +79,8 @@ class LoginPage extends React.Component {
   render() {
     if (this.state.done) {
       return <Redirect to={this.state.redirect} />;
-    } if (this.state.error) {
+    }
+    if (this.state.error) {
       const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
       if (this.props.provider === 'Email') {
         return (
@@ -121,21 +120,12 @@ LoginPage.defaultProps = {
 const LoginPageContainer = (props) => {
   const { login } = useCurrentUser();
   const [destination, setDestination] = useLocalStorage('destinationAfterAuth', null);
-  return (
-    <LoginPage
-      setUser={login}
-      destination={destination}
-      setDestination={setDestination}
-      {...props}
-    />
-  );
+  return <LoginPage setUser={login} destination={destination} setDestination={setDestination} {...props} />;
 };
 
 export const FacebookLoginPage = ({ code, ...props }) => {
   const callbackUrl = `${APP_URL}/login/facebook`;
-  const url = `/auth/facebook/${code}?callbackURL=${encodeURIComponent(
-    callbackUrl,
-  )}`;
+  const url = `/auth/facebook/${code}?callbackURL=${encodeURIComponent(callbackUrl)}`;
   return <LoginPageContainer {...props} provider="Facebook" url={url} />;
 };
 

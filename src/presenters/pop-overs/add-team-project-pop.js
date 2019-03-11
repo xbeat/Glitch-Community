@@ -60,20 +60,19 @@ class AddTeamProjectPop extends React.Component {
       return project;
     });
     return projects;
-  }
+  };
 
   filterProjects = (query, projects, teamProjects) => {
     query = query.toLowerCase().trim();
     const MAX_PROJECTS = 20;
     const teamProjectIds = teamProjects.map(({ id }) => id);
-    const availableProjects = projects.filter(
-      ({ id }) => !teamProjectIds.includes(id),
-    );
+    const availableProjects = projects.filter(({ id }) => !teamProjectIds.includes(id));
     const filteredProjects = [];
     if (!query) {
       return availableProjects.splice(0, MAX_PROJECTS);
     }
-    for (const project of availableProjects) { // eslint-disable-line
+    for (const project of availableProjects) {
+      // eslint-disable-line
       if (filteredProjects.length > MAX_PROJECTS) {
         break;
       }
@@ -84,7 +83,7 @@ class AddTeamProjectPop extends React.Component {
       }
     }
     return filteredProjects;
-  }
+  };
 
   updateFilter(query) {
     let projects = [];
@@ -93,11 +92,7 @@ class AddTeamProjectPop extends React.Component {
     } else {
       projects = this.props.myProjects;
     }
-    const filteredProjects = this.filterProjects(
-      query,
-      projects,
-      this.props.teamProjects,
-    );
+    const filteredProjects = this.filterProjects(query, projects, this.props.teamProjects);
     this.setState({
       filteredProjects,
     });
@@ -166,15 +161,12 @@ class AddTeamProjectPop extends React.Component {
           />
         </section>
 
-        <section
-          className="pop-over-actions results-list"
-          data-source="templates"
-        >
+        <section className="pop-over-actions results-list" data-source="templates">
           <ul className="results">
-            {filteredProjects.map(project => (
+            {filteredProjects.map((project) => (
               <li key={project.id}>
                 <ProjectResultItem
-                  onClick={event => this.onClick(event, project)}
+                  onClick={(event) => this.onClick(event, project)}
                   {...project}
                   title={project.domain}
                   isPrivate={project.private}
@@ -182,11 +174,8 @@ class AddTeamProjectPop extends React.Component {
               </li>
             ))}
           </ul>
-          {this.state.filteredProjects.length === 0
-            && this.filterInputIsBlank && (
-            <p className="action-description no-projects-description">
-              Create or Join projects to add them to the team
-            </p>
+          {this.state.filteredProjects.length === 0 && this.filterInputIsBlank && (
+            <p className="action-description no-projects-description">Create or Join projects to add them to the team</p>
           )}
         </section>
       </dialog>

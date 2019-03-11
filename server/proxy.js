@@ -1,7 +1,7 @@
 const proxy = require('express-http-proxy');
 const urlJoin = require('url-join');
-const {escapeRegExp} = require('lodash');
-const {APP_URL} = require("./constants").current;
+const { escapeRegExp } = require('lodash');
+const { APP_URL } = require('./constants').current;
 
 //
 // Some glitch.com urls are served by other sites.
@@ -11,35 +11,35 @@ const {APP_URL} = require("./constants").current;
 
 module.exports = function(app) {
   const routes = [];
-  
-  function proxyGlitch(route, target, pathOnTarget="") {
-    const routeWithLeadingSlash = urlJoin("/", route);
-    const sandwichedRoute = urlJoin("/", route, "/");
-    
+
+  function proxyGlitch(route, target, pathOnTarget = '') {
+    const routeWithLeadingSlash = urlJoin('/', route);
+    const sandwichedRoute = urlJoin('/', route, '/');
+
     // node matches /{route} and /{route}/;
-    // we need to force /{route}/ so that relative links in Ghost work. 
+    // we need to force /{route}/ so that relative links in Ghost work.
     app.all(routeWithLeadingSlash, (req, res, next) => {
-        const path = req.path;
-        if(!path.toLowerCase().startsWith(sandwichedRoute.toLowerCase())) {
-           //therefore, path is "/{route}[^/]"/i
-           const rest = path.substring(sandwichedRoute.length);
-           return res.redirect(301, sandwichedRoute + rest);
-        }
-        return next();
+      const path = req.path;
+      if (!path.toLowerCase().startsWith(sandwichedRoute.toLowerCase())) {
+        //therefore, path is "/{route}[^/]"/i
+        const rest = path.substring(sandwichedRoute.length);
+        return res.redirect(301, sandwichedRoute + rest);
+      }
+      return next();
     });
-    
+
     const proxyConfig = {
       preserveHostHdr: false, // glitch routes based on this, so we have to reset it
       https: true,
       proxyReqPathResolver: (req) => {
-        const path = urlJoin("/", pathOnTarget, req.path);
-        console.log("Proxied:", urlJoin(routeWithLeadingSlash, req.path));
+        const path = urlJoin('/', pathOnTarget, req.path);
+        console.log('Proxied:', urlJoin(routeWithLeadingSlash, req.path));
         return path;
-      }
+      },
     };
-    
+
     const genericProxy = proxy(target, proxyConfig);
-    
+
     const sitemapProxy = proxy(target, {
       userResDecorator: (res, data) => {
         // do gross stuff to rewrite urls
@@ -49,7 +49,7 @@ module.exports = function(app) {
       },
       ...proxyConfig,
     });
-    
+
     // Do the actual proxy
     app.use(routeWithLeadingSlash, (req, ...args) => {
       if (/\/sitemap.*(\.xml|\.xsl)$/.test(req.path)) {
@@ -57,13 +57,13 @@ module.exports = function(app) {
       }
       return genericProxy(req, ...args);
     });
-    
+
     routes.push(routeWithLeadingSlash);
   }
 
-  function proxyGhost(route, glitchTarget, pathOnTarget="") {
+  function proxyGhost(route, glitchTarget, pathOnTarget = '') {
     // Proxy all the requests to /{route}/ over to glitchTarget
-    proxyGlitch(route, glitchTarget, urlJoin("/", pathOnTarget, route));
+    proxyGlitch(route, glitchTarget, urlJoin('/', pathOnTarget, route));
   }
 
   // Proxy the some parts of our site over to ghost blogs:
@@ -71,15 +71,11 @@ module.exports = function(app) {
   proxyGhost('culture', 'culture-zine.glitch.me');
   proxyGhost('about', 'about-glitch.glitch.me');
   proxyGhost('legal', 'about-glitch.glitch.me', '/about');
-  
+
   // Pages hosted by 'about.glitch.me':
-  [
-    'faq',
-    'forplatforms',
-    'email-sales',
-  ].forEach((route) => proxyGlitch(route, 'about.glitch.me', route));
-  
+  ['faq', 'forplatforms', 'email-sales'].forEach((route) => proxyGlitch(route, 'about.glitch.me', route));
+
   proxyGlitch('teams', 'teams.glitch.me');
-  
+
   return routes;
-}
+};

@@ -15,11 +15,7 @@ import NewStuffContainer from './overlays/new-stuff';
 import { CurrentUserConsumer } from './current-user';
 
 const ResumeCoding = () => (
-  <TrackedExternalLink
-    name="Resume Coding clicked"
-    className="button button-small button-cta"
-    to={EDITOR_URL}
-  >
+  <TrackedExternalLink name="Resume Coding clicked" className="button button-small button-cta" to={EDITOR_URL}>
     Resume Coding
   </TrackedExternalLink>
 );
@@ -68,13 +64,7 @@ SearchForm.defaultProps = {
   defaultValue: '',
 };
 
-const Header = ({
-  api,
-  maybeUser,
-  clearUser,
-  searchQuery,
-  showNewStuffOverlay,
-}) => (
+const Header = ({ api, maybeUser, clearUser, searchQuery, showNewStuffOverlay }) => (
   <header role="banner">
     <div className="header-info">
       <Link to="/">
@@ -87,14 +77,7 @@ const Header = ({
       <NewProjectPop api={api} />
       {!!maybeUser && !!maybeUser.projects.length && <ResumeCoding />}
       {!(maybeUser && maybeUser.login) && <SignInPop api={api} />}
-      {!!maybeUser && (
-        <UserOptionsPop
-          user={maybeUser}
-          signOut={clearUser}
-          showNewStuffOverlay={showNewStuffOverlay}
-          api={api}
-        />
-      )}
+      {!!maybeUser && <UserOptionsPop user={maybeUser} signOut={clearUser} showNewStuffOverlay={showNewStuffOverlay} api={api} />}
     </nav>
   </header>
 );
@@ -112,14 +95,7 @@ const HeaderContainer = ({ ...props }) => (
   <CurrentUserConsumer>
     {(user, userFetched, { clear }) => (
       <NewStuffContainer isSignedIn={!!user && !!user.login}>
-        {showNewStuffOverlay => (
-          <Header
-            {...props}
-            maybeUser={user}
-            clearUser={clear}
-            showNewStuffOverlay={showNewStuffOverlay}
-          />
-        )}
+        {(showNewStuffOverlay) => <Header {...props} maybeUser={user} clearUser={clear} showNewStuffOverlay={showNewStuffOverlay} />}
       </NewStuffContainer>
     )}
   </CurrentUserConsumer>

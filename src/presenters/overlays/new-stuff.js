@@ -23,16 +23,14 @@ const NewStuffOverlay = ({ setShowNewStuff, showNewStuff, newStuff }) => (
             className="button-checkbox"
             type="checkbox"
             checked={showNewStuff}
-            onChange={evt => setShowNewStuff(evt.target.checked)}
+            onChange={(evt) => setShowNewStuff(evt.target.checked)}
           />
           Keep showing me these
         </label>
       </div>
     </section>
     <section className="pop-over-actions">
-      {newStuff.map(({
-        id, title, body, link,
-      }) => (
+      {newStuff.map(({ id, title, body, link }) => (
         <article key={id}>
           <div className="title">{title}</div>
           <div className="body">
@@ -73,17 +71,13 @@ class NewStuff extends React.Component {
 
   showNewStuff(setVisible) {
     setVisible(true);
-    const unreadStuff = newStuffLog.filter(
-      ({ id }) => id > this.props.newStuffReadId,
-    );
+    const unreadStuff = newStuffLog.filter(({ id }) => id > this.props.newStuffReadId);
     this.setState({ log: unreadStuff.length ? unreadStuff : newStuffLog });
     this.props.setNewStuffReadId(latestId);
   }
 
   renderOuter({ visible, setVisible }) {
-    const {
-      children, isSignedIn, showNewStuff, newStuffReadId,
-    } = this.props;
+    const { children, isSignedIn, showNewStuff, newStuffReadId } = this.props;
     const dogVisible = isSignedIn && showNewStuff && newStuffReadId < latestId;
     const show = () => {
       if (window.analytics) {
@@ -99,11 +93,11 @@ class NewStuff extends React.Component {
             <TooltipContainer
               id="new-stuff-tooltip"
               type="info"
-              target={(
+              target={
                 <button className="button-unstyled new-stuff" onClick={show}>
                   <figure className="new-stuff-avatar" alt="New Stuff" />
                 </button>
-              )}
+              }
               tooltip="New"
               persistent
               align={['top']}
@@ -118,10 +112,7 @@ class NewStuff extends React.Component {
   render() {
     return (
       <PopoverContainer outer={this.renderOuter.bind(this)}>
-        {({ visible }) => (visible ? (
-          <NewStuffOverlay {...this.props} newStuff={this.state.log} />
-        ) : null)
-        }
+        {({ visible }) => (visible ? <NewStuffOverlay {...this.props} newStuff={this.state.log} /> : null)}
       </PopoverContainer>
     );
   }

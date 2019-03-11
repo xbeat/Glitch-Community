@@ -33,7 +33,7 @@ const createHistogram = (bins) => {
   return histogram;
 };
 
-const groupByRegularIntervals = d3Array.histogram().value(data => data['@timestamp']);
+const groupByRegularIntervals = d3Array.histogram().value((data) => data['@timestamp']);
 
 const createBins = (buckets, currentTimeFrame) => {
   if (currentTimeFrame === 'Last 24 Hours') {
@@ -96,15 +96,8 @@ const renderChart = (c3, analytics, currentTimeFrame) => {
 
 class TeamAnalyticsActivity extends React.Component {
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.isGettingData === true
-      && this.props.isGettingData === false
-    ) {
-      renderChart(
-        this.props.c3,
-        this.props.analytics,
-        this.props.currentTimeFrame,
-      );
+    if (prevProps.isGettingData === true && this.props.isGettingData === false) {
+      renderChart(this.props.c3, this.props.analytics, this.props.currentTimeFrame);
     }
   }
 

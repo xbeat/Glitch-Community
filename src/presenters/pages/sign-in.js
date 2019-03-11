@@ -49,7 +49,7 @@ class SignIn extends React.Component {
     const isEnabled = this.state.email.length > 0;
     return (
       <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props} />} startAlternateVisible={false}>
-        {showCodeLogin => (
+        {(showCodeLogin) => (
           <dialog className="pop-over sign-in-pop">
             <NestedPopoverTitle>
               Email Sign In <span className="emoji email" />
@@ -201,12 +201,9 @@ const SignInPop = (props) => {
 
   return (
     <NestedPopover alternateContent={() => <SignIn {...props} />} startAlternateVisible={false}>
-      {showEmailLogin => (
-        <NestedPopover
-          alternateContent={() => <SignInWithConsumer {...props} />}
-          startAlternateVisible={false}
-        >
-          {showCodeLogin => (
+      {(showEmailLogin) => (
+        <NestedPopover alternateContent={() => <SignInWithConsumer {...props} />} startAlternateVisible={false}>
+          {(showCodeLogin) => (
             <div
               className="pop-over sign-in-pop middle"
               style={{
