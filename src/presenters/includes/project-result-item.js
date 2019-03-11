@@ -56,6 +56,7 @@ const ProjectResultItem = ({
 ProjectResultItem.propTypes = {
   onClick: PropTypes.func.isRequired,
   domain: PropTypes.string.isRequired,
+  cdnUrl: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   users: PropTypes.array,
