@@ -11,7 +11,6 @@ const useOptimisticValue = (realValue, setValueAsync) => {
   }, [stateValue]);
   
   const setValue = async (newValue) => {
-    setStateValue({ value: newValue, error: null });
     try {
       await setValueAsync(newValue);
       setStateValue(prevState => {
@@ -31,7 +30,11 @@ const useOptimisticValue = (realValue, setValueAsync) => {
   };
   
   const optimisticValue = stateValue === undefined ? realValue : stateValue;
-  return [optimisticValue, stateValue.error, setValue];
+  const setOptimisticValue = (newValue) => {
+    setStateValue({ value: newValue, error: null });
+  };
+  
+  return [optimisticValue, stateValue.error, setOptimisticValue];
 };
 
 export default useOptimisticValue;
