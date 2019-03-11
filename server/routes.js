@@ -15,7 +15,7 @@ module.exports = function(external) {
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     
-    // security headers
+    // security headers added by jenn to get mozilla observatory score up
     response.header("X-XSS-Protection", "1; mode=block");
     response.header("X-Content-Type-Options", "nosniff");
     response.header("Strict-Transport-Security", "max-age=15768000");
