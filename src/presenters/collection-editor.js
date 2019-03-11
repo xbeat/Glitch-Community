@@ -60,19 +60,23 @@ class CollectionEditor extends React.Component {
 
   async updateOrAddNote({ note, projectId }) {
     console.log('calling update or add note');
-    this.setState(({ projects }) => ({
-      projects: projects.map((project) => {
-        if (project.id === projectId) {
-          project.note = note;
-        }
-        return { ...project };
-      }),
-    }));
+    // this.setState(({ projects }) => ({
+    //   projects: projects.map((project) => {
+    //     if (project.id === projectId) {
+    //       project.note = note;
+    //     }
+    //     return { ...project };
+    //   }),
+    // }));
     try {
-      await this.props.api.patch(
-        `collections/${this.state.id}/project/${projectId}`,
-        JSON.stringify({ note }),
-      );
+      await 'cool';
+      console.log(this.state.id);
+      console.log(projectId);
+      console.log('ok?');
+      // await this.props.api.patch(
+      //   `collections/${this.state.id}/project/${projectId}`,
+      //   JSON.stringify({ note }),
+      // );
     } catch (e) {
       console.log('hit an error:', e);
     }
