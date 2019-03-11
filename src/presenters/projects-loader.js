@@ -34,7 +34,7 @@ class ProjectsLoader extends React.Component {
   async loadProjects(...projectIds) {
     if (!projectIds.length) return;
 
-    // Reassigning just to make what is happening here more clear
+    // Having to re-add users to the projects makes this kind of weird
     let projects = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(projectIds)}`);
     projects = Object.values(projects);
     // We want to perform these in parallel, so I'm mapping over the values rather than using a for loop
