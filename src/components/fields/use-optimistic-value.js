@@ -1,7 +1,7 @@
 import React from 'react';
 import { debounce } from 'lodash';
 
-const useOptimisticValue = (realValue, onChangeAsync) => {
+const useOptimisticValue = (realValue, setValueAsync) => {
   const [stateValue, setStateValue] = React.useState({ value: undefined, error: null });
   
   // use a ref so we can get the current value in async functions
@@ -10,19 +10,28 @@ const useOptimisticValue = (realValue, onChangeAsync) => {
     valueRef.current = stateValue;
   }, [stateValue]);
   
-  const onChange = async (newValue) => {
-    setStateValue(newValue);
+  const setValue = async (newValue) => {
+    setStateValue({ value: newValue, error: null });
     try {
-      await onChangeAsync(newValue);
+      await setValueAsync(newValue);
+      setStateValue(prevState => {
+        if (prevState.value === newValue) {
+          return { value: undefined, error: null };
+        }
+        return prevState;
+      });
     } catch (error) {
       setStateValue(prevState => {
         if (prevState.value === newValue) {
-          return { ...prevState, error };
+          return { value: newValue, error };
         }
         return prevState;
       });
     }
   };
+  
+  const optimisticValue = stateValue === undefined ? realValue : stateValue;
+  return [optimisticValue, stateValue.error, setValue];
 };
 
 export default useOptimisticValue;
