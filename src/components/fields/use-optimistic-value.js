@@ -1,5 +1,6 @@
 import React from 'react';
-import { debounce } from 'lodash';
+
+import useDebouncedValue from './use-debounced-value';
 
 const useOptimisticValue = (realValue, setValueAsync) => {
   const [stateValue, setStateValue] = React.useState({ value: undefined, error: null });
