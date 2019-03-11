@@ -3,40 +3,30 @@ import React from 'react';
 import useDebouncedValue from './use-debounced-value';
 
 const useOptimisticValue = (realValue, setValueAsync) => {
+  // store 
   const [state, setState] = React.useState({ value: undefined, error: null });
   
+  // debounce our stored state and send the async updates when it changes
+  const debouncedValue = useDebouncedValue(state.value, 500);
+  React.useEffect(() => {
+    if (debouncedValue !== undefined) {
+      const setStateIfMatches = (newState) => {
+        setState(prevState => prevState.value === debouncedValue ? newState : prevState);
+      };
+      setValueAsync(debouncedValue).then(
+        () => setStateIfMatches({ value: undefined, error: null }),
+        error => setStateIfMatches({ value: debouncedValue, error }),
+      );
+    }
+  }, [debouncedValue]);
+  
+  // parse out the display value and how to change it, and send them along
   const optimisticValue = state.value !== undefined ? state.value : realValue;
   const setOptimisticValue = (newValue) => {
-    setState({ value: newValue, error: null });
+    setState(prevState => ({ ...prevState, value: newValue }));
   };
-  
-  const debouncedValue = useDebouncedValue(optimisticValue);
-  React.useEffect(() => {
-    if (debouncedValue !== realValue) {
-      
-    }
-  }, [debouncedValue, realValue]);
   
   return [optimisticValue, state.error, setOptimisticValue];
 };
-  
-  const setStateIfMatches = (newState, valueToMatch) => {
-    setState(prevState => {
-      if (prevState.value === valueToMatch) {
-        return newState;
-      }
-      return prevState;
-    });
-  };
-  
-  const setValue = async (newValue) => {
-    try {
-      await setValueAsync(newValue);
-      setStateIfMatches({ value: undefined, error: null }, newValue);
-    } catch (error) {
-      setStateIfMatches({ value: newValue, error }, newValue);
-    }
-  };
-  
 
 export default useOptimisticValue;
