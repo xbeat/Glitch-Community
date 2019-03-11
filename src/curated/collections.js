@@ -4,7 +4,7 @@
 export const featuredCollections = [
   { owner: 'glitch', name: 'css-magic' },
   { owner: 'glitch', name: 'apps-for-writers' },
-  { owner: 'glitch', name: 'colorful-creations' }
+  { owner: 'glitch', name: 'colorful-creations' },
 ];
 
 // More ideas is populated from this team

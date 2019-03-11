@@ -46,11 +46,11 @@ CreateTeamButton.propTypes = {
 // Team List
 
 const TeamList = ({ teams, showCreateTeam, userIsAnon }) => {
-  const orderedTeams = orderBy(teams, team => team.name.toLowerCase());
+  const orderedTeams = orderBy(teams, (team) => team.name.toLowerCase());
 
   return (
     <section className="pop-over-actions">
-      {orderedTeams.map(team => (
+      {orderedTeams.map((team) => (
         <div className="button-wrap" key={team.id}>
           <TeamLink key={team.id} team={team} className="button button-small has-emoji button-tertiary">
             {team.name}
@@ -79,9 +79,7 @@ TeamList.propTypes = {
 
 // User Options 🧕
 
-const UserOptionsPop = ({
-  togglePopover, showCreateTeam, user, signOut, showNewStuffOverlay,
-}) => {
+const UserOptionsPop = ({ togglePopover, showCreateTeam, user, signOut, showNewStuffOverlay }) => {
   const clickNewStuff = (event) => {
     togglePopover();
     showNewStuffOverlay();
@@ -171,7 +169,7 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
   const avatarStyle = { backgroundColor: props.user.color };
   return (
     <CheckForCreateTeamHash>
-      {createTeamOpen => (
+      {(createTeamOpen) => (
         <PopoverContainer startOpen={createTeamOpen}>
           {({ togglePopover, visible }) => {
             const userOptionsButton = (
@@ -192,7 +190,7 @@ export default function UserOptionsAndCreateTeamPopContainer(props) {
               >
                 {visible && (
                   <NestedPopover alternateContent={() => <CreateTeamPop {...props} />} startAlternateVisible={createTeamOpen}>
-                    {showCreateTeam => <UserOptionsPop {...props} {...{ togglePopover, showCreateTeam }} />}
+                    {(showCreateTeam) => <UserOptionsPop {...props} {...{ togglePopover, showCreateTeam }} />}
                   </NestedPopover>
                 )}
               </TooltipContainer>

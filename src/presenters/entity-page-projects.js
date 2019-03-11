@@ -3,15 +3,7 @@ import PropTypes from 'prop-types';
 
 import ProjectsList from './projects-list';
 
-const EntityPageProjects = ({
-  api,
-  projects,
-  currentUser,
-  isAuthorized,
-  addPin,
-  removePin,
-  projectOptions,
-}) => {
+const EntityPageProjects = ({ api, projects, currentUser, isAuthorized, addPin, removePin, projectOptions }) => {
   const pinnedTitle = (
     <>
       Pinned Projects
@@ -29,12 +21,7 @@ const EntityPageProjects = ({
   return (
     <>
       {projects.length > 0 && (
-        <ProjectsList
-          title={removePin ? pinnedTitle : recentTitle}
-          projects={projects}
-          api={api}
-          projectOptions={projectOptionsToPass}
-        />
+        <ProjectsList title={removePin ? pinnedTitle : recentTitle} projects={projects} api={api} projectOptions={projectOptionsToPass} />
       )}
     </>
   );

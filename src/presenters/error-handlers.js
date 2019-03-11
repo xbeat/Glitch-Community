@@ -26,9 +26,9 @@ function handleCustomError(notify, error) {
 const useErrorHandlers = () => {
   const { createNotification, createErrorNotification } = useNotifications();
   return {
-    handleError: error => handleError(createErrorNotification, error),
-    handleErrorForInput: error => handleErrorForInput(createErrorNotification, error),
-    handleCustomError: error => handleCustomError(createNotification, error),
+    handleError: (error) => handleError(createErrorNotification, error),
+    handleErrorForInput: (error) => handleErrorForInput(createErrorNotification, error),
+    handleCustomError: (error) => handleCustomError(createNotification, error),
   };
 };
 

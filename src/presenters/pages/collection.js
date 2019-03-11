@@ -47,9 +47,7 @@ class DeleteCollectionBtn extends React.Component {
       <button
         className="button delete-collection button-tertiary"
         onClick={() => {
-          if (
-            !window.confirm('Are you sure you want to delete your collection?')
-          ) {
+          if (!window.confirm('Are you sure you want to delete your collection?')) {
             return;
           }
           this.props.deleteCollection();
@@ -86,20 +84,11 @@ const CollectionPageContents = ({
 }) => (
   <>
     <Helmet>
-      <title>
-        {collection.name}
-      </title>
+      <title>{collection.name}</title>
     </Helmet>
     <main className="collection-page">
-      <article
-        className="collection-full projects"
-        style={{ backgroundColor: collection.coverColor }}
-      >
-        <header
-          className={
-            `collection ${isDarkColor(collection.coverColor) ? 'dark' : ''}`
-          }
-        >
+      <article className="collection-full projects" style={{ backgroundColor: collection.coverColor }}>
+        <header className={`collection ${isDarkColor(collection.coverColor) ? 'dark' : ''}`}>
           <div className="collection-image-container">
             <CollectionAvatar color={collection.coverColor} />
           </div>
@@ -108,8 +97,7 @@ const CollectionPageContents = ({
             isAuthorized={isAuthorized}
             name={collection.name}
             url={collection.url}
-            update={data => updateNameAndUrl(data).then(() => syncPageToUrl(collection, data.url))
-            }
+            update={(data) => updateNameAndUrl(data).then(() => syncPageToUrl(collection, data.url))}
           />
 
           {collection.team && <TeamTile team={collection.team} />}
@@ -124,23 +112,16 @@ const CollectionPageContents = ({
             />
           </div>
 
-          {isAuthorized && (
-            <EditCollectionColor
-              update={updateColor}
-              initialColor={collection.coverColor}
-            />
-          )}
+          {isAuthorized && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
         </header>
-        {/* eslint-disable no-nested-ternary */ }
+        {/* eslint-disable no-nested-ternary */}
         {!!collection && (
           <ProjectsLoader api={api} projects={collection.projects}>
-            {projects => (
+            {(projects) => (
               <>
                 <div className="collection-contents">
                   <div className="collection-project-container-header">
-                    <h3>
-                      Projects ({collection.projects.length})
-                    </h3>
+                    <h3>Projects ({collection.projects.length})</h3>
 
                     {!!isAuthorized && (
                       <AddCollectionProject
@@ -170,42 +151,26 @@ const CollectionPageContents = ({
                         {...props}
                       />
                     ) : (
-                      <ProjectsUL
-                        {...{ projects, currentUser, api }}
-                        projectOptions={{}}
-                        {...props}
-                      />
+                      <ProjectsUL {...{ projects, currentUser, api }} projectOptions={{}} {...props} />
                     )
                   ) : isAuthorized ? (
                     <div className="empty-collection-hint">
-                      <img
-                        src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934"
-                        alt=""
-                      />
+                      <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt="" />
                       <p>You can add any project, created by any user</p>
                     </div>
                   ) : (
-                    <div className="empty-collection-hint">
-                      No projects to see in this collection just yet.
-                    </div>
+                    <div className="empty-collection-hint">No projects to see in this collection just yet.</div>
                   )}
                 </div>
               </>
             )}
-            {/* eslint-enable no-nested-ternary */ }
+            {/* eslint-enable no-nested-ternary */}
           </ProjectsLoader>
         )}
       </article>
-      {!isAuthorized && (
-        <ReportButton reportedType="collection" reportedModel={collection} />
-      )}
+      {!isAuthorized && <ReportButton reportedType="collection" reportedModel={collection} />}
     </main>
-    {isAuthorized && (
-      <DeleteCollectionBtn
-        collection={collection}
-        deleteCollection={deleteCollection}
-      />
-    )}
+    {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
   </>
 );
 
@@ -231,9 +196,7 @@ CollectionPageContents.defaultProps = {
 
 async function loadCollection(api, ownerName, collectionName) {
   try {
-    const { data: collectionId } = await api.get(
-      `collections/${ownerName}/${collectionName}`,
-    );
+    const { data: collectionId } = await api.get(`collections/${ownerName}/${collectionName}`);
     const { data: collection } = await api.get(`collections/${collectionId}`);
     return collection;
   } catch (error) {
@@ -244,38 +207,37 @@ async function loadCollection(api, ownerName, collectionName) {
   }
 }
 
-const CollectionPage = ({
-  api, ownerName, name, ...props
-}) => (
+const CollectionPage = ({ api, ownerName, name, ...props }) => (
   <Layout api={api}>
     <DataLoader get={() => loadCollection(api, ownerName, name)}>
-      {collection => (collection ? (
-        <AnalyticsContext
-          properties={{ origin: 'collection' }}
-          context={{
-            groupId: collection.team ? collection.team.id.toString() : '0',
-          }}
-        >
-          <CurrentUserConsumer>
-            {currentUser => (
-              <CollectionEditor api={api} initialCollection={collection}>
-                {(collectionFromEditor, funcs, userIsAuthor) => (
-                  <CollectionPageContents
-                    collection={collectionFromEditor}
-                    api={api}
-                    currentUser={currentUser}
-                    isAuthorized={userIsAuthor}
-                    {...funcs}
-                    {...props}
-                  />
-                )}
-              </CollectionEditor>
-            )}
-          </CurrentUserConsumer>
-        </AnalyticsContext>
-      ) : (
-        <NotFound name={name} />
-      ))
+      {(collection) =>
+        collection ? (
+          <AnalyticsContext
+            properties={{ origin: 'collection' }}
+            context={{
+              groupId: collection.team ? collection.team.id.toString() : '0',
+            }}
+          >
+            <CurrentUserConsumer>
+              {(currentUser) => (
+                <CollectionEditor api={api} initialCollection={collection}>
+                  {(collectionFromEditor, funcs, userIsAuthor) => (
+                    <CollectionPageContents
+                      collection={collectionFromEditor}
+                      api={api}
+                      currentUser={currentUser}
+                      isAuthorized={userIsAuthor}
+                      {...funcs}
+                      {...props}
+                    />
+                  )}
+                </CollectionEditor>
+              )}
+            </CurrentUserConsumer>
+          </AnalyticsContext>
+        ) : (
+          <NotFound name={name} />
+        )
       }
     </DataLoader>
   </Layout>
