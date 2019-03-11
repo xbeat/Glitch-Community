@@ -11,16 +11,16 @@ import { UserTile } from '../../presenters/users-list';
 const Note = ({
   currentUser, project, update,
 }) => {
-  if (!project.isAddingANewAnnotation && !project.annotation) {
+  if (!project.isAddingANewNote && !project.note) {
     return null;
   }
 
   return (
-    <div className={styles.annotation}>
+    <div className={styles.note}>
       <div className={styles.descriptionContainer}>
         <AuthDescription
           authorized
-          description={project.annotation || ''}
+          description={project.note || ''}
           placeholder="Share why you love this app."
           update={update}
           maxLength={75}
@@ -33,11 +33,12 @@ const Note = ({
   );
 };
 
+
 Note.propTypes = {
   currentUser: PropTypes.object,
   project: PropTypes.shape({
-    annotation: PropTypes.string,
-    isAddingANewAnnotation: PropTypes.bool,
+    note: PropTypes.string,
+    isAddingANewNote: PropTypes.bool,
   }).isRequired,
   update: PropTypes.func,
 };
