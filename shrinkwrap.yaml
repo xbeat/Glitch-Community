@@ -58,6 +58,7 @@ dependencies:
   react-select: 2.4.1
   react-textarea-autosize: 7.1.0
   stats-webpack-plugin: 0.7.0
+  storybook-react-router: 1.0.2
   stylus: 0.54.5
   stylus-loader: 3.0.2
   terser-webpack-plugin: 1.2.2
@@ -9896,6 +9897,18 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
+  /storybook-react-router/1.0.2:
+    dependencies:
+      prop-types: 15.7.2
+    dev: false
+    peerDependencies:
+      '@storybook/addon-actions': ^4.0.0
+      '@storybook/addons': ^4.0.0
+      react: '*'
+      react-dom: '*'
+      react-router: ^4.0.0
+    resolution:
+      integrity: sha512-+dV0wMO8DW3oUaUykoQJKC11uugwgwZRHsXksmO6bRo36CDoJPGFjfnT8LAkDpT1E9FaDZ668xOhJ+7Ml0qUDQ==
   /stream-browserify/2.0.2:
     dependencies:
       inherits: 2.0.3
@@ -11038,6 +11051,7 @@ specifiers:
   react-select: ^2.4.0
   react-textarea-autosize: ^7.1.0
   stats-webpack-plugin: ^0.7.0
+  storybook-react-router: ^1.0.2
   stylus: ^0.54.5
   stylus-loader: ^3.0.2
   terser-webpack-plugin: ^1.2.2

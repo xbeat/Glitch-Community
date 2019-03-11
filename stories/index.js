@@ -1,6 +1,8 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { storiesOf } from '@storybook/react';
+import StoryRouter from 'storybook-react-router';
+
 import Button from '../src/components/buttons/button';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
 import TextInput from '../src/components/fields/text-input';
@@ -89,17 +91,16 @@ storiesOf('Button3', module)
   ));
 
 storiesOf('Note', module)
+  .addDecorator(StoryRouter())
   .add('adding a new note', () => (
-    <Router>
-      <Note
-        currentUser={{
-          color: '#9cf989',
-          id: 123,
-          login: 'glitch',
-          name: 'Glitch',
-        }}
-        update={something => console.log(something)}
-        project={{ isAddingANewNote: true }}
-      />
-    </Router>
+    <Note
+      currentUser={{
+        color: '#9cf989',
+        id: 123,
+        login: 'glitch',
+        name: 'Glitch',
+      }}
+      update={something => console.log(something)}
+      project={{ isAddingANewNote: true }}
+    />
   ));
