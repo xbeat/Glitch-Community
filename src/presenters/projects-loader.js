@@ -36,7 +36,10 @@ class ProjectsLoader extends React.Component {
 
     // Having to re-add users to the projects makes this kind of weird
     let projects = await getFromApi(this.props.api, `v1/projects/by/id?${joinIdsToQueryString(projectIds)}`);
+
+    // Need to iterate so we grab some values to make an array
     projects = Object.values(projects);
+
     // We want to perform these in parallel, so I'm mapping over the values rather than using a for loop
     // It's causing some weirdness with the async/await turning into an array of promises
     projects = projects.map(async (project) => {
@@ -51,7 +54,12 @@ class ProjectsLoader extends React.Component {
     projects = await Promise.all(projects);
     // Then turn the projects back into the format that state is expecting
     projects = keyByVal(projects, 'id');
-    
+
+    // Going to collect _all_ the user IDs here now
+    const allUserIds = projects.reduce((userIds, project) => {
+      userIds.concat(project.permissions.map((permission) => permission.userId));
+    });
+    console.log('allUserIds', allUserIds);
 
     this.setState(projects);
   }
