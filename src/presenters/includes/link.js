@@ -9,8 +9,7 @@ import { getLink as getTeamLink } from '../../models/team';
 import { getLink as getUserLink } from '../../models/user';
 
 /* global EXTERNAL_ROUTES */
-// const external = EXTERNAL_ROUTES ? Array.from(EXTERNAL_ROUTES) : [];
-const external = []; // TODO SARAH FIX
+const external = EXTERNAL_ROUTES ? Array.from(EXTERNAL_ROUTES) : [];
 
 export const Link = React.forwardRef((
   { to, children, ...props },

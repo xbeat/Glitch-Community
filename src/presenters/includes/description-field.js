@@ -59,6 +59,7 @@ class EditableDescriptionImpl extends React.Component {
     );
   }
 }
+
 EditableDescriptionImpl.propTypes = {
   description: PropTypes.string.isRequired,
   placeholder: PropTypes.string,

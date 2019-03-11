@@ -59,18 +59,19 @@ class CollectionEditor extends React.Component {
   }
 
   async updateOrAddNote({ note, projectId }) {
-    const updatedProjects = [];
     this.setState(({ projects }) => ({
       projects: projects.map((project) => {
         if (project.id === projectId) {
           project.note = note;
         }
-        updatedProjects.push({ ...project });
         return { ...project };
       }),
     }));
 
-    await this.updateFields({ collectionProjects: updatedProjects }); // TODO: this is returning back a 400 not sure why
+    await this.props.api.patch(
+      `collections/${this.state.id}/project/${projectId}`,
+      JSON.stringify({ note }),
+    );
   }
 
   addNoteField(projectId) {
