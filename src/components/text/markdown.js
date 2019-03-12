@@ -27,7 +27,9 @@ const Markdown = ({ children, length }) => {
     'markdown-content': true,
   });
   let rendered = md.render(children || '');
-  rendered = truncate(rendered, length, { ellipsis: '…' });
+  if (length > 0) {
+    rendered = truncate(rendered, length, { ellipsis: '…' });
+  }
   return (
     <span
       className={className}
