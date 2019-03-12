@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pluralize from 'react-pluralize';
 
-import { TruncatedMarkdown } from './includes/markdown';
+import Markdown from '../components/text/markdown';
 import CollectionOptionsContainer from './pop-overs/collection-options-pop';
 import { CollectionLink, ProjectLink } from './includes/link';
 import { Loader } from './includes/loader';
@@ -78,7 +78,7 @@ const CollectionItem = (props) => {
                     color: isDarkColor(collection.coverColor) ? 'white' : '',
                   }}
                 >
-                  <TruncatedMarkdown length={96}>{collection.description}</TruncatedMarkdown>
+                  <Markdown length={96}>{collection.description}</Markdown>
                 </div>
               </div>
 
