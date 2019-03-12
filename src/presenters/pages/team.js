@@ -16,7 +16,7 @@ import { captureException } from '../../utils/sentry';
 // import SampleTeamCollections from '../../curated/sample-team-collections';
 import CollectionsList from '../collections-list';
 
-import EditableField from '../includes/editable-field';
+import TeamNameInput from '../../components/fields/team-name-input';
 import TeamUrlInput from '../../components/fields/team-url-input';
 import { Thanks } from '../includes/thanks';
 import NameConflictWarning from '../includes/name-conflict';
@@ -43,12 +43,7 @@ function syncPageToUrl(team) {
 const TeamNameUrlFields = ({ team, updateName, updateUrl }) => (
   <>
     <h1>
-      <EditableField
-        value={team.name}
-        update={updateName}
-        placeholder="What's its name?"
-        suffix={team.isVerified ? <VerifiedBadge /> : null}
-      />
+      <TeamNameInput name={team.name} onChange={updateName} suffix={team.isVerified ? <VerifiedBadge /> : null} />
     </h1>
     <p className="team-url">
       <TeamUrlInput url={team.url} onChange={url => updateUrl(url).then(() => syncPageToUrl({ ...team, url }))} />
