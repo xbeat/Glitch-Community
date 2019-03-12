@@ -45,6 +45,7 @@ ProjectResultItem.defaultProps = {
   users: [],
   isActive: false,
   isPrivate: false,
+  cdnUrl: undefined,
 };
 
 export default ProjectResultItem;

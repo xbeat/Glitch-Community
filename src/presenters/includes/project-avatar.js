@@ -20,4 +20,8 @@ ProjectAvatar.propTypes = {
   cdnUrl: PropTypes.string,
 };
 
+ProjectAvatar.defaultProps = {
+  cdnUrl: undefined,
+};
+
 export default ProjectAvatar;
