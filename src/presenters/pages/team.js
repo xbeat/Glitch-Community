@@ -40,7 +40,7 @@ const TeamNameUrlFields = ({ team, updateName, updateUrl }) => (
       <TeamNameInput name={team.name} onChange={updateName} postfix={team.isVerified ? <VerifiedBadge /> : null} />
     </h1>
     <p className="team-url">
-      <TeamUrlInput url={team.url} onChange={url => updateUrl(url).then(() => syncPageToUrl({ ...team, url }))} />
+      <TeamUrlInput url={team.url} onChange={(url) => updateUrl(url).then(() => syncPageToUrl({ ...team, url }))} />
     </p>
   </>
 );
