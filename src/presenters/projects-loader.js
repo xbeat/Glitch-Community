@@ -47,6 +47,7 @@ class ProjectsLoader extends React.Component {
     }));
 
     // Put projects back into the format state expects
+    // NOTE: We're not loading teams, but they aren't used in project lists
     projects = keyBy(projects, 'id');
     this.setState(projects);
   }
