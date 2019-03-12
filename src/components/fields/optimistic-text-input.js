@@ -6,11 +6,11 @@ import useOptimisticText from './use-optimistic-text';
 
 const OptimisticTextInput = ({ value, onChange, ...props }) => {
   const [optimisticValue, optimisticError, optimisticOnChange] = useOptimisticText(value, onChange);
-  return <TextInput {...props} value={optimisticValue} error={
+  return <TextInput {...props} value={optimisticValue} error={optimisticError} onChange={optimisticOnChange} />;
 };
 
 OptimisticTextInput.propTypes = {
-  text: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
