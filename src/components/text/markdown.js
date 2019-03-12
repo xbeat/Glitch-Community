@@ -11,7 +11,7 @@ export const SIZES = ['small', 'regular'];
 /**
  * Markdown Component
  */
-const Markdown = ({ type, size, children }) => {
+const Markdown = ({ type, size, children, truncate }) => {
   const className = cx({
     spn: true,
     // cta: type === 'cta',
@@ -34,11 +34,14 @@ Markdown.propTypes = {
   type: PropTypes.oneOf(TYPES),
   /** size of button */
   size: PropTypes.oneOf(SIZES),
+  /** whether to truncate Markdown */
+  truncate: PropTypes.boolean,
 };
 
 Markdown.defaultProps = {
   type: '',
   size: '',
+  truncate: false,
 };
 
 export default Markdown;
