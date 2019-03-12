@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import Helmet from 'react-helmet';
+import _ from 'lodash';
 import Layout from '../layout';
 import { isDarkColor, getLink, getOwnerLink } from '../../models/collection';
 
@@ -46,9 +47,7 @@ class DeleteCollectionBtn extends React.Component {
       <button
         className="button delete-collection button-tertiary"
         onClick={() => {
-          if (
-            !window.confirm('Are you sure you want to delete your collection?')
-          ) {
+          if (!window.confirm('Are you sure you want to delete your collection?')) {
             return;
           }
           this.props.deleteCollection();
@@ -87,20 +86,11 @@ const CollectionPageContents = ({
 }) => (
   <>
     <Helmet>
-      <title>
-        {collection.name}
-      </title>
+      <title>{collection.name}</title>
     </Helmet>
     <main className="collection-page">
-      <article
-        className="collection-full projects"
-        style={{ backgroundColor: collection.coverColor }}
-      >
-        <header
-          className={
-            `collection ${isDarkColor(collection.coverColor) ? 'dark' : ''}`
-          }
-        >
+      <article className="collection-full projects" style={{ backgroundColor: collection.coverColor }}>
+        <header className={`collection ${isDarkColor(collection.coverColor) ? 'dark' : ''}`}>
           <div className="collection-image-container">
             <CollectionAvatar color={collection.coverColor} />
           </div>
@@ -109,8 +99,7 @@ const CollectionPageContents = ({
             isAuthorized={isAuthorized}
             name={collection.name}
             url={collection.url}
-            update={data => updateNameAndUrl(data).then(() => syncPageToUrl(collection, data.url))
-            }
+            update={(data) => updateNameAndUrl(data).then(() => syncPageToUrl(collection, data.url))}
           />
 
           {collection.team && <TeamTile team={collection.team} />}
@@ -125,12 +114,7 @@ const CollectionPageContents = ({
             />
           </div>
 
-          {isAuthorized && (
-            <EditCollectionColor
-              update={updateColor}
-              initialColor={collection.coverColor}
-            />
-          )}
+          {isAuthorized && <EditCollectionColor update={updateColor} initialColor={collection.coverColor} />}
         </header>
         {/* eslint-disable no-nested-ternary */ }
         {!!collection && !!collection.projects && (
@@ -194,16 +178,9 @@ const CollectionPageContents = ({
         </>
         )}
       </article>
-      {!isAuthorized && (
-        <ReportButton reportedType="collection" reportedModel={collection} />
-      )}
+      {!isAuthorized && <ReportButton reportedType="collection" reportedModel={collection} />}
     </main>
-    {isAuthorized && (
-      <DeleteCollectionBtn
-        collection={collection}
-        deleteCollection={deleteCollection}
-      />
-    )}
+    {isAuthorized && <DeleteCollectionBtn collection={collection} deleteCollection={deleteCollection} />}
   </>
 );
 
@@ -233,14 +210,21 @@ CollectionPageContents.defaultProps = {
 
 async function loadCollection(api, ownerName, collectionName) {
   try {
-    const { data: collectionId } = await api.get(
-      `collections/${ownerName}/${collectionName}`,
-    );
+    const { data: collectionId } = await api.get(`collections/${ownerName}/${collectionName}`);
     const { data: collection } = await api.get(`collections/${collectionId}`);
+
     // fetch projects in depth
     if (collection.projects.length) {
       const { data: projects } = await api.get(`projects/byIds?ids=${collection.projects.map(({ id }) => id).join(',')}`);
-      collection.projects = projects;
+      collection.projects = projects.map((project) => {
+        const collectionProject = _.find(collection.collectionProjects, (p) => p.projectId === project.id);
+        if (collectionProject && collectionProject.annotation) {
+          project.note = collectionProject.annotation;
+          project.isAddingANewNote = true;
+        }
+        project.collectionCoverColor = collection.coverColor;
+        return project;
+      });
     }
     return collection;
   } catch (error) {
@@ -251,38 +235,37 @@ async function loadCollection(api, ownerName, collectionName) {
   }
 }
 
-const CollectionPage = ({
-  api, ownerName, name, ...props
-}) => (
+const CollectionPage = ({ api, ownerName, name, ...props }) => (
   <Layout api={api}>
     <DataLoader get={() => loadCollection(api, ownerName, name)}>
-      {collection => (collection ? (
-        <AnalyticsContext
-          properties={{ origin: 'collection' }}
-          context={{
-            groupId: collection.team ? collection.team.id.toString() : '0',
-          }}
-        >
-          <CurrentUserConsumer>
-            {currentUser => (
-              <CollectionEditor api={api} initialCollection={collection}>
-                {(collectionFromEditor, funcs, userIsAuthor) => (
-                  <CollectionPageContents
-                    collection={collectionFromEditor}
-                    api={api}
-                    currentUser={currentUser}
-                    isAuthorized={userIsAuthor}
-                    {...funcs}
-                    {...props}
-                  />
-                )}
-              </CollectionEditor>
-            )}
-          </CurrentUserConsumer>
-        </AnalyticsContext>
-      ) : (
-        <NotFound name={name} />
-      ))
+      {(collection) =>
+        collection ? (
+          <AnalyticsContext
+            properties={{ origin: 'collection' }}
+            context={{
+              groupId: collection.team ? collection.team.id.toString() : '0',
+            }}
+          >
+            <CurrentUserConsumer>
+              {(currentUser) => (
+                <CollectionEditor api={api} initialCollection={collection}>
+                  {(collectionFromEditor, funcs, userIsAuthor) => (
+                    <CollectionPageContents
+                      collection={collectionFromEditor}
+                      api={api}
+                      currentUser={currentUser}
+                      isAuthorized={userIsAuthor}
+                      {...funcs}
+                      {...props}
+                    />
+                  )}
+                </CollectionEditor>
+              )}
+            </CurrentUserConsumer>
+          </AnalyticsContext>
+        ) : (
+          <NotFound name={name} />
+        )
       }
     </DataLoader>
   </Layout>

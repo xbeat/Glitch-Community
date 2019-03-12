@@ -12,9 +12,7 @@ const Layout = ({ children, api, searchQuery }) => (
   <div className="content">
     <Helmet title="Glitch" />
     <Header api={api} searchQuery={searchQuery} />
-    <ErrorBoundary>
-      {children}
-    </ErrorBoundary>
+    <ErrorBoundary>{children}</ErrorBoundary>
     <Footer />
     <ErrorBoundary fallback={null}>
       <Konami>

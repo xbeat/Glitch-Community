@@ -40,7 +40,7 @@ export class Notifications extends React.Component {
     const id = this.create(content, `notifyPersistent ${className}`);
     const updateNotification = (updatedContent) => {
       this.setState(({ notifications }) => ({
-        notifications: notifications.map(n => (n.id === id ? { ...n, updatedContent } : n)),
+        notifications: notifications.map((n) => (n.id === id ? { ...n, updatedContent } : n)),
       }));
     };
     const removeNotification = () => {
@@ -54,7 +54,7 @@ export class Notifications extends React.Component {
 
   remove(id) {
     this.setState(({ notifications }) => ({
-      notifications: notifications.filter(n => n.id !== id),
+      notifications: notifications.filter((n) => n.id !== id),
     }));
   }
 
@@ -67,9 +67,7 @@ export class Notifications extends React.Component {
     const { notifications } = this.state;
     return (
       <>
-        <Provider value={funcs}>
-          {this.props.children}
-        </Provider>
+        <Provider value={funcs}>{this.props.children}</Provider>
         {!!notifications.length && (
           <div className="notifications">
             {notifications.map(({ id, className, content }) => (

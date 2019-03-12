@@ -62,14 +62,20 @@ project-avatar-size = 42px
     padding: 0
     list-style-type: none
     overflow: hidden
-
+    display: grid
+    grid-template-columns: 1fr 1fr 1fr
+    grid-template-rows: auto
+    
     > li
       float: left
-      display: block
       margin-right: 10px
-      width: calc(33.3% - 10px)
       position: relative
       margin-bottom: 12px
+      display: grid
+      align-content: end
+      min-width: calc(33.3% - 10px)
+      // min-height: 275px 
+      
       @media (max-width: mediumViewport)
         width: 100%
       

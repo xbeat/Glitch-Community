@@ -9,14 +9,8 @@ import { CurrentUserConsumer } from '../current-user';
 import AddProjectToCollectionPop from './add-project-to-collection-pop';
 
 const PopoverButton = ({ onClick, text, emoji }) => (
-  <button
-    className="button-small has-emoji button-tertiary"
-    onClick={onClick}
-    type="button"
-  >
-    <span>
-      {`${text} `}
-    </span>
+  <button className="button-small has-emoji button-tertiary" onClick={onClick} type="button">
+    <span>{`${text} `}</span>
     <span className={`emoji ${emoji}`} />
   </button>
 );
@@ -73,37 +67,17 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
     <dialog className="pop-over project-options-pop">
       {!!props.addPin && (
         <section className="pop-over-actions">
-          {!props.project.private && (
-            <PopoverButton
-              onClick={featureProject}
-              text="Feature"
-              emoji="clapper"
-            />
-          )}
+          {!props.project.private && <PopoverButton onClick={featureProject} text="Feature" emoji="clapper" />}
           <TrackClick name="Project Pinned">
-            <PopoverButton
-              onClick={animateThenAddPin}
-              text="Pin "
-              emoji="pushpin"
-            />
+            <PopoverButton onClick={animateThenAddPin} text="Pin " emoji="pushpin" />
           </TrackClick>
         </section>
       )}
       {!!props.removePin && (
         <section className="pop-over-actions">
-          {!props.project.private && (
-            <PopoverButton
-              onClick={featureProject}
-              text="Feature"
-              emoji="clapper"
-            />
-          )}
+          {!props.project.private && <PopoverButton onClick={featureProject} text="Feature" emoji="clapper" />}
           <TrackClick name="Project Un-Pinned">
-            <PopoverButton
-              onClick={animateThenRemovePin}
-              text="Un-Pin "
-              emoji="pushpin"
-            />
+            <PopoverButton onClick={animateThenRemovePin} text="Un-Pin " emoji="pushpin" />
           </TrackClick>
         </section>
       )}
@@ -121,33 +95,20 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
 
       {!!props.addProjectToCollection && (
         <section className="pop-over-actions">
-          <PopoverButton
-            onClick={addToCollectionPopover}
-            {...props}
-            text="Add to Collection "
-            emoji="framed-picture"
-          />
+          <PopoverButton onClick={addToCollectionPopover} {...props} text="Add to Collection " emoji="framed-picture" />
         </section>
       )}
 
       {props.joinTeamProject && !props.currentUserIsOnProject && (
         <section className="pop-over-actions collaborator-actions">
-          <PopoverButton
-            onClick={joinTeamProject}
-            text="Join Project "
-            emoji="rainbow"
-          />
+          <PopoverButton onClick={joinTeamProject} text="Join Project " emoji="rainbow" />
         </section>
       )}
 
       {props.leaveTeamProject && props.currentUserIsOnProject && (
         <section className="pop-over-actions collaborator-actions">
           <TrackClick name="Leave Project clicked">
-            <PopoverButton
-              onClick={leaveTeamProject}
-              text="Leave Project "
-              emoji="wave"
-            />
+            <PopoverButton onClick={leaveTeamProject} text="Leave Project " emoji="wave" />
           </TrackClick>
         </section>
       )}
@@ -155,34 +116,20 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
       {showLeaveProject && (
         <section className="pop-over-actions collaborator-actions">
           <TrackClick name="Leave Project clicked">
-            <PopoverButton
-              onClick={leaveProject}
-              text="Leave Project "
-              emoji="wave"
-            />
+            <PopoverButton onClick={leaveProject} text="Leave Project " emoji="wave" />
           </TrackClick>
         </section>
       )}
 
-      {(props.currentUserIsOnProject || !!props.removeProjectFromTeam)
-      && !props.removeProjectFromCollection && (
+      {(props.currentUserIsOnProject || !!props.removeProjectFromTeam) && !props.removeProjectFromCollection && (
         <section className="pop-over-actions danger-zone last-section">
           {!!props.removeProjectFromTeam && (
-            <PopoverButton
-              onClick={() => props.removeProjectFromTeam(props.project.id)}
-              text="Remove Project "
-              emoji="thumbs_down"
-            />
+            <PopoverButton onClick={() => props.removeProjectFromTeam(props.project.id)} text="Remove Project " emoji="thumbs_down" />
           )}
 
-          {props.currentUserIsOnProject
-          && !props.removeProjectFromCollection && (
+          {props.currentUserIsOnProject && !props.removeProjectFromCollection && (
             <TrackClick name="Delete Project clicked">
-              <PopoverButton
-                onClick={animateThenDeleteProject}
-                text="Delete Project "
-                emoji="bomb"
-              />
+              <PopoverButton onClick={animateThenDeleteProject} text="Delete Project " emoji="bomb" />
             </TrackClick>
           )}
         </section>
@@ -190,11 +137,7 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
       {props.removeProjectFromCollection && (
         <section className="pop-over-actions danger-zone last-section">
           {props.removeProjectFromCollection && (
-            <PopoverButton
-              onClick={() => props.removeProjectFromCollection(props.project)}
-              text="Remove from Collection"
-              emoji="thumbs_down"
-            />
+            <PopoverButton onClick={() => props.removeProjectFromCollection(props.project)} text="Remove from Collection" emoji="thumbs_down" />
           )}
         </section>
       )}
@@ -204,21 +147,8 @@ const ProjectOptionsContent = ({ addToCollectionPopover, ...props }) => {
 
 // Project Options Pop
 const ProjectOptionsPop = ({ ...props }) => (
-  <NestedPopover
-    alternateContent={() => (
-      <AddProjectToCollectionPop
-        {...props}
-        api={props.api}
-        togglePopover={props.togglePopover}
-      />
-    )}
-  >
-    {addToCollectionPopover => (
-      <ProjectOptionsContent
-        {...props}
-        addToCollectionPopover={addToCollectionPopover}
-      />
-    )}
+  <NestedPopover alternateContent={() => <AddProjectToCollectionPop {...props} api={props.api} togglePopover={props.togglePopover} />}>
+    {(addToCollectionPopover) => <ProjectOptionsContent {...props} addToCollectionPopover={addToCollectionPopover} />}
   </NestedPopover>
 );
 
@@ -255,20 +185,13 @@ ProjectOptionsPop.defaultProps = {
 
 // Project Options Container
 // create as stateful react component
-export default function ProjectOptions(
-  {
-    projectOptions,
-    project,
-    api,
-  },
-  { ...props },
-) {
+export default function ProjectOptions({ projectOptions, project, api }, { ...props }) {
   if (Object.keys(projectOptions).length === 0) {
     return null;
   }
 
   function currentUserIsOnProject(user) {
-    const projectUsers = project.users.map(projectUser => projectUser.id);
+    const projectUsers = project.users.map((projectUser) => projectUser.id);
     if (projectUsers.includes(user.id)) {
       return true;
     }

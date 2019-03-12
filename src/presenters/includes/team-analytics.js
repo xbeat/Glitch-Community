@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import _ from 'lodash';
-import sampleAnalytics, {
-  sampleAnalyticsTime,
-} from '../../curated/sample-analytics';
+import sampleAnalytics, { sampleAnalyticsTime } from '../../curated/sample-analytics';
 
 import { Loader } from './loader';
 import TeamAnalyticsTimePop from '../pop-overs/team-analytics-time-pop';
@@ -30,11 +28,7 @@ const dateFromTime = (newTime) => {
   return timeMap[newTime];
 };
 
-const getAnalytics = async (
-  { id, api, projects },
-  fromDate,
-  currentProjectDomain,
-) => {
+const getAnalytics = async ({ id, api, projects }, fromDate, currentProjectDomain) => {
   if (!projects.length) {
     const data = _.cloneDeep(sampleAnalytics);
     // Update timestamps so they're relative to now
@@ -73,7 +67,6 @@ class TeamAnalytics extends React.Component {
     };
   }
 
-
   componentDidMount() {
     // eslint-disable-next-line
     import(/* webpackChunkName: "c3-bundle" */ 'c3').then((c3) => {
@@ -88,16 +81,9 @@ class TeamAnalytics extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.currentUserIsOnTeam === false
-      && this.props.currentUserIsOnTeam === true
-      && this.state.isGettingC3 === false
-    ) {
+    if (prevProps.currentUserIsOnTeam === false && this.props.currentUserIsOnTeam === true && this.state.isGettingC3 === false) {
       this.updateAnalytics();
-    } else if (
-      prevProps.projects.length !== this.props.projects.length
-      && this.state.isGettingC3 === false
-    ) {
+    } else if (prevProps.projects.length !== this.props.projects.length && this.state.isGettingC3 === false) {
       this.updateAnalytics();
       // using setState in componentDidUpdate can cause bugs but hopefully it's fine here
       // eslint-disable-next-line
@@ -125,11 +111,7 @@ class TeamAnalytics extends React.Component {
       isGettingData: true,
     });
 
-    getAnalytics(
-      this.props,
-      this.state.fromDate,
-      this.state.currentProjectDomain,
-    ).then((data) => {
+    getAnalytics(this.props, this.state.fromDate, this.state.currentProjectDomain).then((data) => {
       this.setState(
         {
           isGettingData: false,
@@ -174,9 +156,7 @@ class TeamAnalytics extends React.Component {
         <h2>
           Analytics
           {this.props.projects.length === 0 && !this.state.isGettingData && (
-            <aside className="inline-banners team-page">
-              Add projects to see their stats
-            </aside>
+            <aside className="inline-banners team-page">Add projects to see their stats</aside>
           )}
         </h2>
 
@@ -187,10 +167,7 @@ class TeamAnalytics extends React.Component {
               currentProjectDomain={this.state.currentProjectDomain}
               projects={this.props.projects}
             />
-            <TeamAnalyticsTimePop
-              updateTimeFrame={this.updateTimeFrame.bind(this)}
-              currentTimeFrame={this.state.currentTimeFrame}
-            />
+            <TeamAnalyticsTimePop updateTimeFrame={this.updateTimeFrame.bind(this)} currentTimeFrame={this.state.currentTimeFrame} />
           </section>
         )}
 
@@ -198,10 +175,7 @@ class TeamAnalytics extends React.Component {
           {this.state.isGettingData ? (
             <Loader />
           ) : (
-            <TeamAnalyticsSummary
-              totalAppViews={this.state.totalAppViews}
-              totalRemixes={this.state.totalRemixes}
-            />
+            <TeamAnalyticsSummary totalAppViews={this.state.totalAppViews} totalRemixes={this.state.totalRemixes} />
           )}
         </section>
 
@@ -232,18 +206,13 @@ class TeamAnalytics extends React.Component {
         {this.state.currentProjectDomain && (
           <section className="project-details">
             <h3>Project Details</h3>
-            <TeamAnalyticsProjectDetails
-              currentProjectDomain={this.state.currentProjectDomain}
-              id={this.props.id}
-              api={this.props.api}
-            />
+            <TeamAnalyticsProjectDetails currentProjectDomain={this.state.currentProjectDomain} id={this.props.id} api={this.props.api} />
           </section>
         )}
 
         <section className="explanation">
           <p>
-            Because Glitch doesn't inject code or cookies into your projects we
-            don't collect the data required for unique app views. You can get
+            Because Glitch doesn't inject code or cookies into your projects we don't collect the data required for unique app views. You can get
             uniques by adding Google Analytics to your project.
           </p>
         </section>

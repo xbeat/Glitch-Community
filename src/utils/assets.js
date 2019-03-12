@@ -16,13 +16,14 @@ export const AVATAR_SIZES = {
   small: 60,
 };
 
-export const blobToImage = file => new Promise(((resolve, reject) => {
-  const image = new Image();
-  image.onload = () => resolve(image);
-  image.onerror = reject;
-  image.src = URL.createObjectURL(file);
-  return image;
-}));
+export const blobToImage = (file) =>
+  new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = URL.createObjectURL(file);
+    return image;
+  });
 
 // Reduces the width/height and draws a new image until it reaches
 // the final size. It loops by waiting for the onload to fire on the updated
@@ -46,15 +47,17 @@ const drawCanvasThumbnail = (image, type, max) => {
     targetContext.drawImage(sourceCanvas, 0, 0, width, height);
     sourceCanvas = targetCanvas;
   }
-  return new Promise((resolve => sourceCanvas.toBlob(
-    (blob) => {
-      blob.width = width;
-      blob.height = height;
-      return resolve(blob);
-    },
-    type,
-    quality,
-  )));
+  return new Promise((resolve) =>
+    sourceCanvas.toBlob(
+      (blob) => {
+        blob.width = width;
+        blob.height = height;
+        return resolve(blob);
+      },
+      type,
+      quality,
+    ),
+  );
 };
 
 // Takes an HTML5 File and returns a promise for an HTML5 Blob that is fulfilled
@@ -95,7 +98,8 @@ export function getDominantColor(image) {
   for (let x = 0; x < PIXELS_FROM_EDGE; x += 1) {
     for (let y = 0; y < PIXELS_FROM_EDGE; y += 1) {
       const pixelData = context.getImageData(x, y, 1, 1).data;
-      if (pixelData[3] < 255) { // alpha pixels
+      if (pixelData[3] < 255) {
+        // alpha pixels
         transparentPixels = true;
         break;
       }
@@ -156,7 +160,7 @@ export function uploadAssetSizes(blob, policy, sizes, progressHandler) {
   const upload = uploadAsset(blob, policy, 'original');
   upload.progress(progressHandler);
 
-  const scaledUploads = Object.keys(sizes).map(tag => resizeImage(blob, sizes[tag]).then(resized => uploadAsset(resized, policy, tag)));
+  const scaledUploads = Object.keys(sizes).map((tag) => resizeImage(blob, sizes[tag]).then((resized) => uploadAsset(resized, policy, tag)));
 
   return Promise.all([upload, ...scaledUploads]);
 }

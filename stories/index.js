@@ -74,27 +74,12 @@ storiesOf('Text Input', module)
     <TextArea placeholder="[Something here] doesn't seem appropriate for Glitch because..." error="Reason is required"/>
   ));
 
-// JUST TESTING
-storiesOf('Button3', module)
-  .add('regular', () => <Button>Hello Button</Button>)
-  .add('cta', () => <Button type="cta">CTA Button</Button>)
-  .add('small', () => <Button size="small">Small Button</Button>)
-  .add('tertiary', () => (
-    <Button type="tertiary" size="small">
-      Tertiary (Small) Button
-    </Button>
-  ))
-  .add('danger zone', () => (
-    <Button type="dangerZone" size="small">
-      Destructive Action
-    </Button>
-  ));
-
 storiesOf('Note', module)
   .addDecorator(StoryRouter())
   .add('adding a new note', () => (
-    <div style={{ margin: '70px' }}>
+    <div style={{ margin: '70px', width: '300px' }}>
       <Note
+        collectionCoverColor = "#ddc4fc"
         currentUser={{
           color: '#9cf989',
           id: 123,
@@ -102,7 +87,7 @@ storiesOf('Note', module)
           name: 'Glitch',
         }}
         update={something => console.log(something)}
-        project={{ isAddingANewNote: true }}
+        project={{ isAddingANewNote: true, note: null }}
       />
     </div>
   ));

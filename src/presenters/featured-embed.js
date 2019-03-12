@@ -4,15 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from './includes/link';
 import Embed from './includes/embed';
 
-const FeaturedEmbed = ({
-  image,
-  mask,
-  title,
-  appDomain,
-  blogUrl,
-  body,
-  color,
-}) => (
+const FeaturedEmbed = ({ image, mask, title, appDomain, blogUrl, body, color }) => (
   <div className="featured-embed">
     <div className="mask-container">
       <Link to={`culture${blogUrl}`}>
@@ -23,11 +15,9 @@ const FeaturedEmbed = ({
     <div className="content" style={{ backgroundColor: color }}>
       <div className="description">
         <Link to={`culture${blogUrl}`}>
-          <h2>
-            {title}
-          </h2>
+          <h2>{title}</h2>
         </Link>
-        {/* eslint-disable-next-line react/no-danger */ }
+        {/* eslint-disable-next-line react/no-danger */}
         <p dangerouslySetInnerHTML={{ __html: body }} />
         <Link to={`culture${blogUrl}`} className="learn-more">
           <button className="button-small">Learn More →</button>

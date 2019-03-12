@@ -8,21 +8,14 @@ import { getLink as getProjectLink } from '../../models/project';
 import { getLink as getTeamLink } from '../../models/team';
 import { getLink as getUserLink } from '../../models/user';
 
-/* global EXTERNAL_ROUTES */
-const external = EXTERNAL_ROUTES ? Array.from(EXTERNAL_ROUTES) : [];
+const external = global.EXTERNAL_ROUTES ? Array.from(global.EXTERNAL_ROUTES) : [];
 
-export const Link = React.forwardRef((
-  { to, children, ...props },
-  ref,
-) => {
+export const Link = React.forwardRef(({ to, children, ...props }, ref) => {
   if (typeof to === 'string') {
     const currentUrl = new URL(window.location.href);
     const targetUrl = new URL(to, currentUrl);
 
-    if (
-      targetUrl.origin !== currentUrl.origin
-      || external.some(route => targetUrl.pathname.startsWith(route))
-    ) {
+    if (targetUrl.origin !== currentUrl.origin || external.some((route) => targetUrl.pathname.startsWith(route))) {
       return (
         <a href={to} {...props} ref={ref}>
           {children}

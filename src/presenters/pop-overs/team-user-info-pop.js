@@ -16,7 +16,7 @@ const ADMIN_ACCESS_LEVEL = 30;
 
 // Remove from Team 👋
 
-const RemoveFromTeam = props => (
+const RemoveFromTeam = (props) => (
   <section className="pop-over-actions danger-zone">
     <TrackClick name="Remove from Team clicked">
       <button className="button-small has-emoji button-tertiary button-on-secondary-background" {...props}>
@@ -28,9 +28,7 @@ const RemoveFromTeam = props => (
 
 // Admin Actions Section ⏫⏬
 
-const AdminActions = ({
-  user, userIsTeamAdmin, updateUserPermissions, canChangeUserAdminStatus,
-}) => {
+const AdminActions = ({ user, userIsTeamAdmin, updateUserPermissions, canChangeUserAdminStatus }) => {
   if (!canChangeUserAdminStatus) return null;
   return (
     <section className="pop-over-actions admin-actions">
@@ -71,9 +69,7 @@ const ThanksCount = ({ count }) => (
 
 // Team User Info 😍
 
-const TeamUserInfo = ({
-  currentUser, currentUserIsTeamAdmin, showRemove, ...props
-}) => {
+const TeamUserInfo = ({ currentUser, currentUserIsTeamAdmin, showRemove, ...props }) => {
   const userAvatarStyle = { backgroundColor: props.user.color };
 
   const currentUserHasRemovePriveleges = currentUserIsTeamAdmin || (currentUser && currentUser.id === props.user.id);
@@ -126,9 +122,9 @@ const TeamUserInfo = ({
 // Team User Info or Remove
 // uses removeTeamUserVisible state to toggle between showing user info and remove views
 
-const TeamUserInfoAndRemovePop = props => (
+const TeamUserInfoAndRemovePop = (props) => (
   <NestedPopover alternateContent={() => <TeamUserRemovePop {...props} />}>
-    {showRemove => <TeamUserInfo {...props} showRemove={showRemove} />}
+    {(showRemove) => <TeamUserInfo {...props} showRemove={showRemove} />}
   </NestedPopover>
 );
 
