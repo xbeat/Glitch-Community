@@ -4,6 +4,7 @@ import Button from '../src/components/buttons/button';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
 import TextInput from '../src/components/fields/text-input';
 import TextArea from '../src/components/fields/text-area';
+import Markdown from '../src/components/text/markdown';
 
 storiesOf('Button', module)
   .add('regular', () => <Button>Hello Button</Button>)
@@ -54,18 +55,12 @@ storiesOf('TooltipContainer', module)
   ));
 
 storiesOf('Text Input', module)
-  .add('regular', () => (
-    <TextInput placeholder="type something!"/>
-  ))
-  .add('login', () => (
-    <TextInput placeholder="type something!" prefix="@"/>
-  ))
-  .add('search', () => (
-    <TextInput type="search" opaque={true} search={true} placeholder="bots, apps, users"/>
-  ))
-  .add('with error', () => (
-    <TextInput placeholder="glitch" error="That team already exists"/>
-  ))
-  .add('text area', () => (
-    <TextArea placeholder="[Something here] doesn't seem appropriate for Glitch because..." error="Reason is required"/>
-  ));
+  .add('regular', () => <TextInput placeholder="type something!" />)
+  .add('login', () => <TextInput placeholder="type something!" prefix="@" />)
+  .add('search', () => <TextInput type="search" opaque={true} search={true} placeholder="bots, apps, users" />)
+  .add('with error', () => <TextInput placeholder="glitch" error="That team already exists" />)
+  .add('text area', () => <TextArea placeholder="[Something here] doesn't seem appropriate for Glitch because..." error="Reason is required" />);
+
+storiesOf('Text Input', module)
+  .add('regular', () => <Markdown>Some _Markdown_</Markdown>)
+ .add('truncated', () => <Markdown length={17}>17 characters of rendered _Markdown_ </Markdown>);
