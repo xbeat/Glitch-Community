@@ -12,15 +12,16 @@ import { UserTile } from '../../presenters/users-list';
  * Note Component
  */
 const Note = ({
-  collectionCoverColor, currentUser, project, update,
+  currentUser, project, update,
 }) => {
   if (!project.isAddingANewNote && !project.note) {
     return null;
   }
-
+  
+  const color = project.collectionCoverColor;
   return (
     <div>
-      <div className={styles.descriptionContainer} style={{ backgroundColor: collectionCoverColor, borderColor: collectionCoverColor }}>
+      <div className={styles.descriptionContainer} style={{ backgroundColor: color, borderColor: color }}>
         <EditableDescription
           description={project.note || ''}
           placeholder="Share why you love this app."
@@ -37,11 +38,11 @@ const Note = ({
 
 
 Note.propTypes = {
-  collectionCoverColor: PropTypes.string.isRequired,
   currentUser: PropTypes.object,
   project: PropTypes.shape({
     note: PropTypes.string,
     isAddingANewNote: PropTypes.bool,
+    collectionCoverColor: PropTypes.string,
   }).isRequired,
   update: PropTypes.func,
 };

@@ -17,7 +17,6 @@ const ProjectItem = ({
       currentUser={currentUser}
       project={project}
       update={(note) => props.projectOptions.updateOrAddNote({ note, projectId: project.id })}
-      collectionCoverColor={project.collectionCoverColor}
     />
     <UsersList glitchTeam={project.showAsGlitchTeam} users={project.users} extraClass="single-line" teams={project.teams} />
     <ProjectOptionsPop {...{ project, api }} {...props} />
