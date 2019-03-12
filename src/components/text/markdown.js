@@ -22,16 +22,13 @@ const md = markdownIt({
 /**
  * Markdown Component
  */
-const Markdown = ({ type, size, children, truncate }) => {
+const Markdown = ({ children, length }) => {
   const className = cx({
     'markdown-content': true,
-    // cta: type === 'cta',
-    // small: size === 'small',
-    // tertiary: ['tertiary', 'dangerZone'].includes(type),
-    // dangerZone: type === 'dangerZone',
   });
   let rendered = md.render(children || '');
   if (length > 0) {
+    rendered = truncate(rendered, length, { ellipsis: '…' });
   }
   return (
     <span
@@ -49,8 +46,6 @@ Markdown.propTypes = {
 };
 
 Markdown.defaultProps = {
-  type: '',
-  size: '',
   length: -1,
 };
 
