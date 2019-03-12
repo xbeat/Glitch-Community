@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TextInput from './text-input';
+import TextInput from '../inputs/text-input';
 import useOptimisticText from './use-optimistic-text';
 
 const OptimisticTextInput = ({ value, onChange, ...props }) => {

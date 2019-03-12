@@ -9,7 +9,7 @@ import { getPredicates, getTeamPair } from '../../models/words';
 import { getLink } from '../../models/team';
 import { Loader } from '../includes/loader';
 import { NestedPopoverTitle } from './popover-nested';
-import TextInput from '../../components/fields/text-input';
+import TextInput from '../../components/inputs/text-input';
 import { SignInPopBase } from './sign-in-pop';
 
 // Create Team 🌿

@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Button from '../src/components/buttons/button';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
-import TextInput from '../src/components/fields/text-input';
-import TextArea from '../src/components/fields/text-area';
+import TextInput from '../src/components/inputs/text-input';
+import TextArea from '../src/components/inputs/text-area';
 
 storiesOf('Button', module)
   .add('regular', () => <Button>Hello Button</Button>)
