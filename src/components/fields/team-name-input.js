@@ -3,23 +3,23 @@ import PropTypes from 'prop-types';
 
 import OptimisticTextInput from './optimistic-text-input';
 
-const TeamNameInput = ({ name, onChange, suffix }) => (
+const TeamNameInput = ({ name, onChange, postfix }) => (
   <OptimisticTextInput
     value={name}
     onChange={onChange}
     placeholder="What's its name?"
-    suffix={suffix}
+    postfix={postfix}
   />
 );
 
 TeamNameInput.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  suffix: PropTypes.node,
+  postfix: PropTypes.node,
 };
 
 TeamNameInput.defaultProps = {
-  suffix: null,
+  postfix: null,
 };
 
 export default TeamNameInput;

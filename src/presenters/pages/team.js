@@ -43,7 +43,7 @@ function syncPageToUrl(team) {
 const TeamNameUrlFields = ({ team, updateName, updateUrl }) => (
   <>
     <h1>
-      <TeamNameInput name={team.name} onChange={updateName} suffix={team.isVerified ? <VerifiedBadge /> : null} />
+      <TeamNameInput name={team.name} onChange={updateName} postfix={team.isVerified ? <VerifiedBadge /> : null} />
     </h1>
     <p className="team-url">
       <TeamUrlInput url={team.url} onChange={url => updateUrl(url).then(() => syncPageToUrl({ ...team, url }))} />
