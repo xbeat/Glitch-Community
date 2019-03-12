@@ -61,6 +61,6 @@ storiesOf('Text Input', module)
   .add('with error', () => <TextInput placeholder="glitch" error="That team already exists" />)
   .add('text area', () => <TextArea placeholder="[Something here] doesn't seem appropriate for Glitch because..." error="Reason is required" />);
 
-storiesOf('Text Input', module)
-  .add('regular', () => <Markdown>Some _Markdown_</Markdown>)
- .add('truncated', () => <Markdown length={17}>17 characters of rendered _Markdown_ </Markdown>);
+storiesOf('Markdown', module)
+  .add('regular', () => <Markdown>Some __Markdown__</Markdown>)
+  .add('truncated', () => <Markdown length={35}>35 characters of rendered __Markdown__ (and a little **more**)</Markdown>);
