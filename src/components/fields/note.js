@@ -17,7 +17,7 @@ const Note = ({
   if (!project.isAddingANewNote && !project.note) {
     return null;
   }
-  
+
   const color = project.collectionCoverColor;
   return (
     <div>

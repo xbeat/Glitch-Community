@@ -42,7 +42,7 @@ ProjectItem.propTypes = {
   api: PropTypes.func,
   currentUser: PropTypes.object,
   project: PropTypes.shape({
-    collectionCoverColor: PropTypes.string.isRequired,
+    collectionCoverColor: PropTypes.string,
     description: PropTypes.string.isRequired,
     domain: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,

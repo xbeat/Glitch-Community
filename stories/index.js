@@ -79,7 +79,6 @@ storiesOf('Note', module)
   .add('adding a new note', () => (
     <div style={{ margin: '70px', width: '300px' }}>
       <Note
-        collectionCoverColor = "#ddc4fc"
         currentUser={{
           color: '#9cf989',
           id: 123,
@@ -87,7 +86,7 @@ storiesOf('Note', module)
           name: 'Glitch',
         }}
         update={something => console.log(something)}
-        project={{ isAddingANewNote: true, note: null }}
+        project={{ isAddingANewNote: true, note: null, collectionCoverColor: "#ddc4fc" }}
       />
     </div>
   ));
