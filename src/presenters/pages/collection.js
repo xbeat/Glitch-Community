@@ -216,13 +216,10 @@ async function loadCollection(api, ownerName, collectionName) {
     // fetch projects in depth
     if (collection.projects.length) {
       const { data: projects } = await api.get(`projects/byIds?ids=${collection.projects.map(({ id }) => id).join(',')}`);
-      console.log(...projects);
-      const { data: { items } } = await api.get(`v1/collections/${collectionId}/projects`);
-      console.log(...items);
       collection.projects = projects.map((project) => {
         const collectionProject = _.find(collection.collectionProjects, (p) => p.projectId === project.id);
-        if (collectionProject && collectionProject.note) {
-          // project.note = collectionProject.annotation;
+        if (collectionProject && collectionProject.annotation) {
+          project.note = collectionProject.annotation;
           project.isAddingANewNote = true;
         }
         project.collectionCoverColor = collection.coverColor;

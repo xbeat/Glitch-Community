@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import classNames from 'classnames/bind';
 import styles from './note.styl';
 
 // TODO: let's move these into components
 import { EditableDescription } from '../../presenters/includes/description-field';
 import { UserTile } from '../../presenters/users-list';
 
+import { isDarkColor } from '../../models/collection';
 
+const cx = classNames.bind(styles);
 /**
  * Note Component
  */
@@ -17,7 +19,7 @@ const Note = ({
   if (!project.isAddingANewNote && !project.note) {
     return null;
   }
-
+  isDarkColor(collection.coverColor) ? 'dark' : ''
   const color = project.collectionCoverColor;
   return (
     <div>
