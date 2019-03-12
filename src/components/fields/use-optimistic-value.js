@@ -11,8 +11,7 @@ const useOptimisticValue = (realValue, setValueAsync) => {
   const debouncedValue = useDebouncedValue(state.value, 500);
   React.useEffect(() => {
     if (debouncedValue !== undefined) {
-      // they might have typed something else during the async action
-      // if the value changed then we'll get a new debounced effect in time
+      // if the value changes during the async action then ignore the result
       const setStateIfMatches = (newState) => {
         setState(prevState => prevState.value === debouncedValue ? newState : prevState);
       };
