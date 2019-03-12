@@ -17,6 +17,7 @@ import { captureException } from '../../utils/sentry';
 import CollectionsList from '../collections-list';
 
 import EditableField from '../includes/editable-field';
+import TeamUrlInput from '../../components/fields/team-url-input';
 import { Thanks } from '../includes/thanks';
 import NameConflictWarning from '../includes/name-conflict';
 import AddTeamProject from '../includes/add-team-project';
@@ -50,13 +51,7 @@ const TeamNameUrlFields = ({ team, updateName, updateUrl }) => (
       />
     </h1>
     <p className="team-url">
-      <EditableField
-        value={team.url}
-        update={url => updateUrl(url).then(() => syncPageToUrl({ ...team, url }))
-        }
-        placeholder="Short url?"
-        prefix="@"
-      />
+      <TeamUrlInput url={team.url} onChange={url => updateUrl(url).then(() => syncPageToUrl({ ...team, url }))} />
     </p>
   </>
 );

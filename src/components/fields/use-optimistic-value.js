@@ -6,7 +6,7 @@ const useOptimisticValue = (realValue, setValueAsync) => {
   // store what is being typed in, along with an error message
   // value undefined means that the field is unchanged from the 'real' value
   const [state, setState] = React.useState({ value: undefined, error: null });
-  
+
   // debounce our stored value and send the async updates when it is not undefined
   const debouncedValue = useDebouncedValue(state.value, 500);
   React.useEffect(() => {
@@ -22,13 +22,13 @@ const useOptimisticValue = (realValue, setValueAsync) => {
       );
     }
   }, [debouncedValue]);
-  
+
   // replace undefined with the real value
   const optimisticValue = state.value !== undefined ? state.value : realValue;
   const setOptimisticValue = (newValue) => {
     setState(prevState => ({ ...prevState, value: newValue }));
   };
-  
+
   return [optimisticValue, state.error, setOptimisticValue];
 };
 

@@ -47,7 +47,7 @@ const TextInput = ({
   });
   return (
     <label className={outerClassName} htmlFor={uniqueId}>
-      <div className={borderClassName}>
+      <span className={borderClassName}>
         {!!prefix && (
           <InputPart>
             {prefix}
@@ -75,7 +75,7 @@ const TextInput = ({
             {postfix}
           </InputPart>
         )}
-      </div>
+      </span>
       {!!error && <InputErrorMessage>{error}</InputErrorMessage>}
     </label>
   );

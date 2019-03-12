@@ -13,6 +13,8 @@ const TeamUrlInput = ({ url, onChange }) => (
 );
 
 TeamUrlInput.propTypes = {
+  url: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default TeamUrlInput;
