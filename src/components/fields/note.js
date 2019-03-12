@@ -19,11 +19,17 @@ const Note = ({
   if (!project.isAddingANewNote && !project.note) {
     return null;
   }
-  isDarkColor(collection.coverColor) ? 'dark' : ''
+  
   const color = project.collectionCoverColor;
+  
+  const className = cx({
+    descriptionContainer: true,
+    dark: isDarkColor(color) ? true: false,
+  });
+  
   return (
     <div>
-      <div className={styles.descriptionContainer} style={{ backgroundColor: color, borderColor: color }}>
+      <div className={className} style={{ backgroundColor: color, borderColor: color }}>
         <EditableDescription
           description={project.note || ''}
           placeholder="Share why you love this app."
