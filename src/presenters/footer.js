@@ -22,36 +22,31 @@ export default function Footer() {
   return (
     <footer role="contentinfo">
       <FooterLine href="/about" track="about">
-        About Glitch
-        {' '}
+        About Glitch{' '}
         <span role="img" aria-label="">
           🔮
         </span>
       </FooterLine>
       <FooterLine href="https://medium.com/glitch" track="blog">
-        Blog
-        {' '}
+        Blog{' '}
         <span role="img" aria-label="">
           📰
         </span>
       </FooterLine>
       <FooterLine href="/help/" track="faq">
-        Help Center
-        {' '}
+        Help Center{' '}
         <span role="img" aria-label="">
           ☂️
         </span>
       </FooterLine>
       <FooterLine href="http://status.glitch.com/" track="system status">
-        System Status
-        {' '}
+        System Status{' '}
         <span role="img" aria-label="">
           🚥
         </span>
       </FooterLine>
       <FooterLine href="/legal" track="legal stuff">
-        Legal Stuff
-        {' '}
+        Legal Stuff{' '}
         <span role="img" aria-label="">
           👮‍
         </span>

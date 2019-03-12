@@ -24,20 +24,16 @@ class ProjectEditor extends React.Component {
   }
 
   async addProjectToCollection(project, collection) {
-    await this.props.api.patch(
-      `collections/${collection.id}/add/${project.id}`,
-    );
+    await this.props.api.patch(`collections/${collection.id}/add/${project.id}`);
   }
 
   render() {
     const { handleError, handleErrorForInput, handleCustomError } = this.props;
     const funcs = {
-      addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(
-        handleCustomError,
-      ),
-      updateDomain: domain => this.updateFields({ domain }).catch(handleErrorForInput),
-      updateDescription: description => this.updateFields({ description }).catch(handleError),
-      updatePrivate: isPrivate => this.updateFields({ private: isPrivate }).catch(handleError),
+      addProjectToCollection: (project, collection) => this.addProjectToCollection(project, collection).catch(handleCustomError),
+      updateDomain: (domain) => this.updateFields({ domain }).catch(handleErrorForInput),
+      updateDescription: (description) => this.updateFields({ description }).catch(handleError),
+      updatePrivate: (isPrivate) => this.updateFields({ private: isPrivate }).catch(handleError),
     };
     return this.props.children(this.state, funcs, this.userIsMember());
   }
@@ -61,12 +57,7 @@ const ProjectEditorContainer = ({ api, children, initialProject }) => {
   const { currentUser } = useCurrentUser();
   const errorFuncs = useErrorHandlers();
   return (
-    <ProjectEditor
-      api={api}
-      currentUser={currentUser}
-      initialProject={initialProject}
-      {...errorFuncs}
-    >
+    <ProjectEditor api={api} currentUser={currentUser} initialProject={initialProject} {...errorFuncs}>
       {children}
     </ProjectEditor>
   );

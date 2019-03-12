@@ -16,7 +16,7 @@ class TeamAnalyticsSummary extends React.Component {
     const element = document.querySelector(`.c3-legend-item-${summaryType}`);
     element.dispatchEvent(clickEvent);
     element.dispatchEvent(blurEvent);
-  }
+  };
 
   render() {
     return (
@@ -32,10 +32,7 @@ class TeamAnalyticsSummary extends React.Component {
           role="button"
           tabIndex={0}
         >
-          <span className="total app-views">
-            {this.props.totalAppViews.toLocaleString('en')}
-          </span>
-          {' '}
+          <span className="total app-views">{this.props.totalAppViews.toLocaleString('en')}</span>{' '}
           <Pluralize
             className="summary-label"
             singular="Total App View"
@@ -44,8 +41,7 @@ class TeamAnalyticsSummary extends React.Component {
             showCount={false}
           />
         </span>
-        ,
-        {' '}
+        ,{' '}
         <span
           className="summary-item"
           onClick={() => {
@@ -57,17 +53,8 @@ class TeamAnalyticsSummary extends React.Component {
           role="button"
           tabIndex={0}
         >
-          <span className="total remixes">
-            {this.props.totalRemixes.toLocaleString('en')}
-          </span>
-          {' '}
-          <Pluralize
-            className="summary-label"
-            singular="Remix"
-            plural="Remixes"
-            count={this.props.totalRemixes}
-            showCount={false}
-          />
+          <span className="total remixes">{this.props.totalRemixes.toLocaleString('en')}</span>{' '}
+          <Pluralize className="summary-label" singular="Remix" plural="Remixes" count={this.props.totalRemixes} showCount={false} />
         </span>
       </>
     );

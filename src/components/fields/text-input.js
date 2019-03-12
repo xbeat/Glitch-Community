@@ -8,34 +8,11 @@ import useUniqueId from './use-unique-id';
 
 import styles from './text-input.styl';
 
-const TYPES = [
-  'email',
-  'password',
-  'search',
-  'text',
-];
+const TYPES = ['email', 'password', 'search', 'text'];
 
-const InputPart = ({ children }) => (
-  <span className={styles.inputPart}>
-    {children}
-  </span>
-);
+const InputPart = ({ children }) => <span className={styles.inputPart}>{children}</span>;
 
-const TextInput = ({
-  autoFocus,
-  className,
-  disabled,
-  error,
-  maxLength,
-  name,
-  onChange,
-  opaque,
-  placeholder,
-  postfix,
-  prefix,
-  type,
-  value,
-}) => {
+const TextInput = ({ autoFocus, className, disabled, error, maxLength, name, onChange, opaque, placeholder, postfix, prefix, type, value }) => {
   const uniqueId = useUniqueId();
   const outerClassName = classNames(className, styles.outer);
   const borderClassName = classNames(styles.inputBorder, {
@@ -48,11 +25,7 @@ const TextInput = ({
   return (
     <label className={outerClassName} htmlFor={uniqueId}>
       <span className={borderClassName}>
-        {!!prefix && (
-          <InputPart>
-            {prefix}
-          </InputPart>
-        )}
+        {!!prefix && <InputPart>{prefix}</InputPart>}
         <input
           autoFocus={autoFocus} // eslint-disable-line jsx-a11y/no-autofocus
           className={inputClassName}
@@ -60,7 +33,7 @@ const TextInput = ({
           id={uniqueId}
           maxLength={maxLength}
           name={name}
-          onChange={evt => onChange(evt.target.value)}
+          onChange={(evt) => onChange(evt.target.value)}
           placeholder={placeholder}
           type={type}
           value={value}
@@ -70,11 +43,7 @@ const TextInput = ({
             <InputErrorIcon />
           </InputPart>
         )}
-        {!!postfix && (
-          <InputPart>
-            {postfix}
-          </InputPart>
-        )}
+        {!!postfix && <InputPart>{postfix}</InputPart>}
       </span>
       {!!error && <InputErrorMessage>{error}</InputErrorMessage>}
     </label>

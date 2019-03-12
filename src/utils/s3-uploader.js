@@ -89,8 +89,8 @@ export default function(credentials) {
     urlFor,
 
     upload({ key, blob, cacheControl }) {
-      console.log("upload called", key); // 2, based on user id
-      console.log("using namespace", namespace); // user-cover/2, not sure what it's based on
+      console.log('upload called', key); // 2, based on user id
+      console.log('using namespace', namespace); // user-cover/2, not sure what it's based on
       const namespacedKey = `${namespace}${key}`;
       const url = urlFor(key);
 
@@ -98,34 +98,34 @@ export default function(credentials) {
         bucketUrl,
         objectToForm({
           key: namespacedKey,
-          "Content-Type": blob.type || "binary/octet-stream",
-          "Cache-Control": `max-age=${cacheControl || 31536000}`,
+          'Content-Type': blob.type || 'binary/octet-stream',
+          'Cache-Control': `max-age=${cacheControl || 31536000}`,
           AWSAccessKeyId: accessKeyId,
-          "x-amz-security-token": credentials.sessionToken,
+          'x-amz-security-token': credentials.sessionToken,
           acl,
           policy,
           signature,
-          file: blob
-        })
+          file: blob,
+        }),
       ).then(() => `${bucketUrl}/${encodeURIComponent(namespacedKey)}`);
-    }
+    },
   };
 }
 
 const getKey = function(conditions, key) {
   const results = conditions
-    .filter(condition => typeof condition === "object")
-    .map(object => object[key])
-    .filter(value => value);
+    .filter((condition) => typeof condition === 'object')
+    .map((object) => object[key])
+    .filter((value) => value);
 
   return results[0];
 };
 
-const getNamespaceFromPolicyConditions = conditions =>
+const getNamespaceFromPolicyConditions = (conditions) =>
   conditions.filter(function(condition) {
     if (Array.isArray(condition)) {
       const [a, b, c] = Array.from(condition);
-      return b === "$key" && (a === "starts-with" || a === "eq");
+      return b === '$key' && (a === 'starts-with' || a === 'eq');
     }
   })[0][2];
 var extractPolicyData = function(policy) {
@@ -134,19 +134,19 @@ var extractPolicyData = function(policy) {
   const { conditions } = policyObject;
 
   return {
-    acl: getKey(conditions, "acl"),
-    bucket: getKey(conditions, "bucket"),
-    namespace: getNamespaceFromPolicyConditions(conditions)
+    acl: getKey(conditions, 'acl'),
+    bucket: getKey(conditions, 'bucket'),
+    namespace: getNamespaceFromPolicyConditions(conditions),
   };
 };
 
-const isSuccess = request => request.status.toString()[0] === "2";
+const isSuccess = (request) => request.status.toString()[0] === '2';
 
 var sendForm = (url, formData) =>
   new ProgressPromise(function(resolve, reject, notify) {
     const request = new XMLHttpRequest();
 
-    request.open("POST", url, true);
+    request.open('POST', url, true);
 
     if (request.upload != null) {
       request.upload.onprogress = notify;

@@ -12,16 +12,9 @@ import { VerifiedBadge } from './includes/team-elements';
 
 export default function TeamItem({ team }) {
   const style = getProfileStyle({ ...team, size: 'medium' });
-  const teamThanksCount = team.users.reduce(
-    (total, { thanksCount }) => total + thanksCount,
-    0,
-  );
+  const teamThanksCount = team.users.reduce((total, { thanksCount }) => total + thanksCount, 0);
   return (
-    <WrappingLink
-      href={getLink(team)}
-      className="item button-area"
-      style={style}
-    >
+    <WrappingLink href={getLink(team)} className="item button-area" style={style}>
       <div className="content">
         <img className="avatar" src={getAvatarUrl(team)} alt="" />
         <div className="information">
@@ -33,9 +26,7 @@ export default function TeamItem({ team }) {
           {teamThanksCount > 0 && <Thanks count={teamThanksCount} />}
           {!!team.description && (
             <p className="description">
-              <TruncatedMarkdown length={96}>
-                {team.description}
-              </TruncatedMarkdown>
+              <TruncatedMarkdown length={96}>{team.description}</TruncatedMarkdown>
             </p>
           )}
         </div>

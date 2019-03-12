@@ -37,11 +37,7 @@ const toggleData = [
 
 export const DevTogglesProvider = ({ children }) => {
   const [enabledToggles, setEnabledToggles] = useUserPref('devToggles', []);
-  return (
-    <Context.Provider value={{ enabledToggles, toggleData, setEnabledToggles }}>
-      {children}
-    </Context.Provider>
-  );
+  return <Context.Provider value={{ enabledToggles, toggleData, setEnabledToggles }}>{children}</Context.Provider>;
 };
 DevTogglesProvider.propTypes = {
   children: PropTypes.node.isRequired,

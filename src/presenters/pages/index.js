@@ -22,18 +22,12 @@ function loadScript(src) {
   document.head.appendChild(script);
 }
 
-const Callout = ({
-  classes, imgUrl, title, description,
-}) => (
+const Callout = ({ classes, imgUrl, title, description }) => (
   <div className={`callout ${classes}`}>
     <img className="badge" src={imgUrl} alt={title} />
     <div className="window">
-      <div className="title">
-        {title}
-      </div>
-      <div className="description">
-        {description}
-      </div>
+      <div className="title">{title}</div>
+      <div className="description">{description}</div>
     </div>
   </div>
 );
@@ -70,16 +64,8 @@ class WhatIsGlitch extends React.Component {
         <span>
           <figure>
             <h1>
-              <img
-                className="witch large"
-                src={witchLarge}
-                alt={whatsGlitchAlt}
-              />
-              <img
-                className="witch small"
-                src={witchSmall}
-                alt={whatsGlitchAlt}
-              />
+              <img className="witch large" src={witchLarge} alt={whatsGlitchAlt} />
+              <img className="witch small" src={witchSmall} alt={whatsGlitchAlt} />
             </h1>
 
             <OverlayVideo>
@@ -97,19 +83,8 @@ class WhatIsGlitch extends React.Component {
               title="Explore Apps"
               description="Discover over a million free apps built by people like you"
             />
-            <Callout
-              classes="remix"
-              imgUrl={remix}
-              title="Remix Anything"
-              description="Edit any project and have your own app running instantly"
-            />
-            <Callout
-              classes="collaborate"
-              imgUrl={collaborate}
-              title="Build with Your Team"
-              description="Invite everyone to create together"
-            />
-            {' '}
+            <Callout classes="remix" imgUrl={remix} title="Remix Anything" description="Edit any project and have your own app running instantly" />
+            <Callout classes="collaborate" imgUrl={collaborate} title="Build with Your Team" description="Invite everyone to create together" />{' '}
           </div>
         </span>
       </section>
@@ -120,13 +95,8 @@ class WhatIsGlitch extends React.Component {
 const MadeInGlitch = () => (
   <section className="made-in-glitch">
     <p>Of course, this site was made on Glitch too</p>
-    <Link
-      to={getEditorUrl('community')}
-      className="button button-link has-emoji"
-    >
-      View Source
-      {' '}
-      <span className="emoji carp_streamer" />
+    <Link to={getEditorUrl('community')} className="button button-link has-emoji">
+      View Source <span className="emoji carp_streamer" />
     </Link>
   </section>
 );
@@ -158,9 +128,7 @@ IndexPage.defaultProps = {
 const IndexPageContainer = ({ api }) => (
   <Layout api={api}>
     <AnalyticsContext properties={{ origin: 'index' }}>
-      <CurrentUserConsumer>
-        {user => <IndexPage api={api} user={user} />}
-      </CurrentUserConsumer>
+      <CurrentUserConsumer>{(user) => <IndexPage api={api} user={user} />}</CurrentUserConsumer>
     </AnalyticsContext>
   </Layout>
 );

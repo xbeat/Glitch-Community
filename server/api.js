@@ -1,11 +1,11 @@
 /// A locally cached minimal api wrapper
 
-const axios = require("axios");
-const {Cache} = require("memory-cache");
-const dayjs = require("dayjs");
+const axios = require('axios');
+const { Cache } = require('memory-cache');
+const dayjs = require('dayjs');
 
-const {API_URL} = require("./constants").current;
-const {getSingleItem} = require("../shared/api");
+const { API_URL } = require('./constants').current;
+const { getSingleItem } = require('../shared/api');
 
 const CACHE_TIMEOUT = dayjs.convert(15, 'minutes', 'ms');
 
@@ -80,8 +80,8 @@ async function getCultureZinePosts() {
 }
 
 module.exports = {
-  getProject: domain => getFromCacheOrApi(domain, projectCache, getProjectFromApi),
-  getTeam: url => getFromCacheOrApi(url, teamCache, getTeamFromApi),
-  getUser: login => getFromCacheOrApi(login, userCache, getUserFromApi),
+  getProject: (domain) => getFromCacheOrApi(domain, projectCache, getProjectFromApi),
+  getTeam: (url) => getFromCacheOrApi(url, teamCache, getTeamFromApi),
+  getUser: (login) => getFromCacheOrApi(login, userCache, getUserFromApi),
   getZine: () => getFromCacheOrApi('culture', generalCache, getCultureZinePosts),
 };
