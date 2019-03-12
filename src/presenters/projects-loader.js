@@ -43,7 +43,7 @@ class ProjectsLoader extends React.Component {
     // Go back over the projects and pick users out of the array by ID based on permissions
     projects = projects.map((project) => ({
       ...project,
-      users: flatMap(project.permissions, ({ userId }) => allUsers[userId]),
+      users: project.permissions.map(({ userId }) => allUsers[userId]),
     }));
 
     // Put projects back into the format state expects
