@@ -1,47 +1,57 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import styles from './button.styl';
+import markdownIt from 'markdown-it';
+import markdownEmoji from 'markdown-it-emoji';
+import markdownSanitizer from 'markdown-it-sanitizer';
+import truncate from 'html-truncate';
+import styles from './markdown.styl';
 
 const cx = classNames.bind(styles);
 
-export const TYPES = ['default'];
-export const SIZES = ['small', 'regular'];
+const md = markdownIt({
+  html: true,
+  breaks: true,
+  linkify: true,
+  typographer: true,
+})
+  .disable('smartquotes')
+  .use(markdownEmoji)
+  .use(markdownSanitizer);
 
 /**
  * Markdown Component
  */
 const Markdown = ({ type, size, children, truncate }) => {
   const className = cx({
-    spn: true,
+    'markdown-content': true,
     // cta: type === 'cta',
     // small: size === 'small',
     // tertiary: ['tertiary', 'dangerZone'].includes(type),
     // dangerZone: type === 'dangerZone',
   });
-
+  let rendered = md.render(children || '');
+  if (length > 0) {
+  }
   return (
-    <span className={className}>
-      {children}
-    </span>
+    <span
+      className={className}
+      dangerouslySetInnerHTML={{ __html: rendered }} // eslint-disable-line react/no-danger
+    />
   );
 };
 
 Markdown.propTypes = {
   /** element(s) to display in the button */
   children: PropTypes.node.isRequired,
-  /** type of button */
-  type: PropTypes.oneOf(TYPES),
-  /** size of button */
-  size: PropTypes.oneOf(SIZES),
-  /** whether to truncate Markdown */
-  truncate: PropTypes.boolean,
+  /** truncate Markdown after this length */
+  length: PropTypes.number,
 };
 
 Markdown.defaultProps = {
   type: '',
   size: '',
-  truncate: false,
+  length: -1,
 };
 
 export default Markdown;

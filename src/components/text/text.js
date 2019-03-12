@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import styles from './button.styl';
+import styles from './text.styl';
 
 const cx = classNames.bind(styles);
 
@@ -20,19 +20,15 @@ const Text = ({ type, size, children }) => {
     // dangerZone: type === 'dangerZone',
   });
 
-  return (
-    <span className={className}>
-      {children}
-    </span>
-  );
+  return <span className={className}>{children}</span>;
 };
 
 Text.propTypes = {
-  /** element(s) to display in the button */
+  /** text to display */
   children: PropTypes.node.isRequired,
-  /** type of button */
+  /** type of text */
   type: PropTypes.oneOf(TYPES),
-  /** size of button */
+  /** size of text */
   size: PropTypes.oneOf(SIZES),
 };
 
