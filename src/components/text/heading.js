@@ -35,7 +35,7 @@ Heading.propTypes = {
   /** element(s) to display in the button */
   children: PropTypes.node.isRequired,
   /** heading tag to be rendered [h1, h2...] */
-  tagName: PropTypes.oneOf(TAGS_AND_SIZES.keys()).isRequired,
+  tagName: PropTypes.oneOf(Object.keys(TAGS_AND_SIZES)).isRequired,
 };
 
 export default Heading;
