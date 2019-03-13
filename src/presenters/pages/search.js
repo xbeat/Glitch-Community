@@ -17,7 +17,7 @@ import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
 const Filters = ({
-  resetFilters, filterTeams, filterUsers, filterProjects, activeFilter, teamsCount, usersCount, projectsCount,
+  setFilter, activeFilter, teamsCount, usersCount, projectsCount,
 }) => (
   <div className="search-filters">
     <Button size="small" type={activeFilter !== 'all' && 'tertiary'} onClick={resetFilters}>
@@ -136,6 +136,10 @@ class SearchResults extends React.Component {
     this.searchUsers().catch(handleError);
     this.searchProjects().catch(handleError);
   }
+  
+  setFilter(filter){
+    this.setState({ activeFilter: filter });
+  }
 
   filterProjects() {
     this.setState({ activeFilter: 'projects' });
@@ -193,10 +197,7 @@ class SearchResults extends React.Component {
     return (
       <main className="search-results">
         <Filters
-          resetFilters={this.resetFilters}
-          filterTeams={this.filterTeams}
-          filterUsers={this.filterUsers}
-          filterProjects={this.filterProjects}
+          setFilter={this.setFilter}
           activeFilter={this.state.activeFilter}
           teamsCount={teams ? teams.length : 0}
           usersCount={users ? users.length : 0}
