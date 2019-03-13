@@ -11,27 +11,20 @@ export const SIZES = ['small']; // I'm into sizes being different from tagNames 
 /**
  * Heading Component
  */
-const Heading = ({ children, length }) => {
+const Heading = ({ children, tagName }) => {
   const className = cx({
-    btn: true,
-    cta: type === 'cta',
-    small: size === 'small',
-    tertiary: ['tertiary', 'dangerZone'].includes(type),
-    dangerZone: type === 'dangerZone',
-    hover,
+    heading: true,
   });
-  return <TAG_NAMES className={className}> /;
+  const HeadingTag = TAG_NAMES[tagName];
+  return <HeadingTag className={className}>{children}</HeadingTag>;
 };
 
 Heading.propTypes = {
   /** element(s) to display in the button */
   children: PropTypes.node.isRequired,
   /** length to truncate rendered Heading to */
-  length: PropTypes.number,
+  tagName: PropTypes.oneOf(TAG_NAMES).isRequired,
 };
 
-Heading.defaultProps = {
-  length: -1,
-};
 
 export default Heading;
