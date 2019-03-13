@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextArea from 'react-textarea-autosize';
 
-import Markdown from './markdown';
+import Markdown from '../../components/text/markdown';
 import { OptimisticValue } from './field-helpers';
 
 class EditableDescriptionImpl extends React.Component {
@@ -52,7 +52,7 @@ class EditableDescriptionImpl extends React.Component {
         onBlur={this.onBlur}
       >
         <Markdown>{description}</Markdown>
-     </p>
+      </p>
     );
   }
 }
@@ -104,7 +104,6 @@ export const StaticDescription = ({ description }) =>
 StaticDescription.propTypes = {
   description: PropTypes.string.isRequired,
 };
-
 
 export const AuthDescription = ({ authorized, description, placeholder, update }) =>
   authorized ? (

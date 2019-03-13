@@ -50,14 +50,14 @@ _(Do this once per computer to create a local repository)_
 _Remember to [set up Git SSH](https://help.github.com/articles/connecting-to-github-with-ssh/) or the [Windows Client](https://desktop.github.com/) to get your auth in order._
 
   ```
-  # 1. On your local machine, clone our git repository from Github: 
+  # 1. On your local machine, clone our git repository from Github:
   git clone git@github.com:FogCreek/Glitch-Community.git
 
   # 2. Inside of your new repo, add a remote endpoint for our live site:
   cd Glitch-Community
   git remote add live https://api.glitch.com/community/git
   ```
-    
+
 #### Creating a Pull Request
 
 _(Do this once per remix/PR)_
@@ -71,18 +71,18 @@ In your local repository,
 
   # 2. Fetch your remix into a new branch of the same name
   git fetch my-remix master:my-remix
-  
+
   # 3. Switch to your new branch
   git checkout my-remix
 
   # 4. Push your branch to github
   git push origin my-remix
-  
+
 ```
 
 Or, run `./sh/setup.sh my-remix`.
 
-Now you can use the GitHub UI to turn your branch into a pull request. 
+Now you can use the GitHub UI to turn your branch into a pull request.
 
 It's good practice to share a link to your project in the PR and talk about the functional changes you've made.  This allows the reviewers to easily visit your remix to test out your new behavior.
 
@@ -95,16 +95,16 @@ _(Don't have permission to push to github? You'll need to first [Fork](https://b
 In your local repository,
  ```
    # 1. Make sure we're on the right branch
-   git checkout my-remix 
-   
+   git checkout my-remix
+
    # 2. Pull from Glitch into your local branch.
    git pull my-remix master
-   
+
    # 3. Update the PR in Github
    git push origin my-remix
- ``` 
- 
- Or, run `./sh/update.sh my-remix`. 
+ ```
+
+ Or, run `./sh/update.sh my-remix`.
 
 And you're all set.
 
@@ -113,13 +113,13 @@ Keep your PR's small! (Days of work, not weeks.)  This will save you from having
 _Note: Glitch apps make git commits (we call them checkpoints) every 10 minutes. If you make some quick changes, they may not show up in your diff on the Github pull request. If that is the case, you can either wait several minutes for the checkpoint to be made, or toggle Glitch Rewind on-and-off (which will force a checkpoint)._
 
 #### Updating a Glitch Remix from your local machine
-Sometimes it's helpful to work on your local machine, then push your changes back to Glitch. To do this, run `./sh/update.sh my-remix` to get your changes to Github, then run `git pull my-remote my-remix` from your remix's console to pull the changes from Github to Glitch. If you're a member of the Glitch Github organization, my-remote will be `origin`. If not, you'll have to add a remote in your remix pointing to your fork of the project and use that. 
+Sometimes it's helpful to work on your local machine, then push your changes back to Glitch. To do this, run `./sh/update.sh my-remix` to get your changes to Github, then run `git pull my-remote my-remix` from your remix's console to pull the changes from Github to Glitch. If you're a member of the Glitch Github organization, my-remote will be `origin`. If not, you'll have to add a remote in your remix pointing to your fork of the project and use that.
 
 ### Deployment
 
-Only employees of Glitch will be able to do this step, and here it is! 
+Only employees of Glitch will be able to do this step, and here it is!
 
-You should perform these steps immediately after clicking the "Merge pull request" button on your PR in Github. 
+You should perform these steps immediately after clicking the "Merge pull request" button on your PR in Github.
 
 #### Announce the Deployment
 
@@ -140,18 +140,18 @@ In your local git repository:
 
   # Pull in any live changes that aren't yet in Master:
   git pull live master
-  
+
   # Merge if needed
   # [ This is on you. 🐉 ]
-  
+
   # Then push these changes back up to github
   git push origin master
-  
-``` 
+
+```
 
 Or, run `./sh/merge.sh`.
 
-Ok, now the GitHub repository is updated and stable. 
+Ok, now the GitHub repository is updated and stable.
 
 #### Stage the Deployment
 
@@ -161,11 +161,11 @@ Go to [https://glitch.com/~community-staging](https://glitch.com/~community-stag
   ```
   git log -1 # Prints out a stable changeset in case we need it.
   git pull # Update us to master.
-  
+
   # That last step should never need to merge.
   # If it does, something went wrong or somebody edited community-staging directly.
-  # Ask Jude or Greg for help. 
-  
+  # Ask Jude or Greg for help.
+
   refresh # Update the Glitch editor with the new files and kick off the build.
   ```
 
@@ -187,7 +187,7 @@ Run the _special command_ to swap ~community with ~community-staging.
 
 Repeat the _special command_ to swap ~community with ~community-staging.
 
-Thereby putting things back the way they were. Now you have time to fix it and try again. 
+Thereby putting things back the way they were. Now you have time to fix it and try again.
 
 After you revert, check on if any live changes were made to the site after you deployed and before you reverted. (Are the curated items the same on both ~community and ~community-staging?).  If so, port the curated updates to the reverted page so that the edits are preserved.
 
@@ -225,7 +225,7 @@ Here's a short and sweet version of the steps above that you can use once you're
 **Making Live Edits**
 
  _Can I just edit ~community directly, since it’s Glitch we’re dealing with here?_
-  
+
 Sure thing. All standard caveats and cautions apply.  This is appropriate for updating the curated content, fixing typos, editing .md files, and one-line bug fixes. Our build scripts don't update the live site until the build is healthy and your changes are complete.
 
 **Storybook**
@@ -239,7 +239,7 @@ We now have [Storybook for React](https://www.npmjs.com/package/@storybook/react
 We're in the process of moving our React architecture towards an Atomic Design-inspired approach, using CSS Modules as the backbone of that to better manage our styles across the app. All components live in src/components, and anything in there should be packaged as a CSS Module (i.e. a .styl file with the same name should be present in the same directory, and imported into the component). Webpack builds the src/components directory as CSS Modules, and treats the styles/ directory as traditional CSS/Stylus styles.
 
 To add a new component, or convert an existing piece of our code into a CSS Module-enabled component, here's what you should do:
-1. Only define one component per .js file. The component you're exporting should have the same name as the file it's contained in (e.g. TextArea is exported from text-area.js)
-2. Where possible, we'd like to avoid passing styles into the components and instead rely on named props that cover the use cases of the different modes of the component (e.g. we have Button types like "tertiary" or "cta" for call to action) that can be passed into the component. The named props then define the styles that apply - the classnames npm package can be used to combine these in more readable ways (see [https://glitch.com/edit/#!/community?path=src/components/buttons/button.js:15:0](Button.js) for an example)
-3. Create stories for each relevant variant of the component in stories/index.js. As well as providing a visual guide for all the building blocks of our site, our designers use this for visual QA. Once this file gets too big, we'll likely start splitting it out, but for now all stories should go in there. 
+1. Only export one component per .js file. The component you're exporting should have the same name as the file it's contained in (e.g. TextArea is exported from text-area.js). Classnames should be camelcased to make them easier to refer to in Javascript (e.g. markdownContent not markdown-content)
+2. Where possible, we'd like to avoid passing styles into the components via props and instead rely on named props that cover the use cases of the different modes of the component (e.g. we have Button types like "tertiary" or "cta" for call to action) that can be passed into the component. The named props then define the styles that apply - the classnames npm package can be used to combine these in more readable ways (see [https://glitch.com/edit/#!/community?path=src/components/buttons/button.js:15:0](Button.js) for an example)
+3. Create stories for each relevant variant of the component in stories/index.js. As well as providing a visual guide for all the building blocks of our site, our designers use this for visual QA. Once this file gets too big, we'll likely start splitting it out, but for now all stories should go in there.
 4. Generate the new storybook guide on your remix as explained above in the Storybook section.
