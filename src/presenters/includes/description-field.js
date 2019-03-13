@@ -43,7 +43,17 @@ class EditableDescriptionImpl extends React.Component {
         autoFocus // eslint-disable-line jsx-a11y/no-autofocus
       />
     ) : (
-      <input onFocus={() => console.log("the issue is with paragraphs?")} />
+      <p
+        className="description content-editable"
+        placeholder={placeholder}
+        aria-label={placeholder}
+        role="textbox" // eslint-disable-line jsx-a11y/no-noninteractive-element-to-interactive-role
+        tabIndex={0}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+      >
+        <Markdown>{description}</Markdown>
+      </p>
     );
   }
 }
