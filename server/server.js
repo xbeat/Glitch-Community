@@ -2,7 +2,6 @@ const express = require('express');
 const compression = require('compression');
 const constants = require('./constants');
 const sentryHelpers = require('../shared/sentryHelpers');
-console.err('eek')
 
 // https://docs.sentry.io/error-reporting/quickstart/?platform=node
 const Sentry = require('@sentry/node');
