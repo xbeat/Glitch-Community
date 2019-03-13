@@ -10,18 +10,25 @@ const TAGS_AND_SIZES = {
   h2: 'large',
   h3: 'medium',
   h4: 'small',
-}
+};
 
 /**
  * Heading Component
  */
-const Heading = ({ children, tagName}) => {
+const Heading = ({ children, tagName }) => {
+  // In the future we might want tag names and sizes to be different
+
+  // For now, we're keeping them 1-1,
+  // and also specifically setting 'xlarge' and 'large' headings to be bold
+  // which should match the current styles on production for switching to this
+
+  const size = TAGS_AND_SIZES[tagName];
+  const bold = tagName === 'xlarge' || tagName === 'large';
   const className = cx({
-    [TAGS_AND_SIZES[tagName]]: true,
-    bold: tagName === 'xlarge' || tagName === 'large'
+    [size]: true,
+    bold,
   });
-  const HeadingTag = tagName
-  return <HeadingTag className={className}>{children}</HeadingTag>;
+  return <tagName className={className}>{children}</tagName>;
 };
 
 Heading.propTypes = {
