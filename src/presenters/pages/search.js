@@ -16,10 +16,19 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
-const Filters = ({
-  setFilter, activeFilter, teamsCount, usersCount, projectsCount,
+const filters = [{name: 'team', count: 0}, {name: 'users', count: 0}, {name: 'projects', count: 0}];
+
+const FilterButtons = ({
+  setFilter, activeFilter
 }) => (
   <div className="search-filters">
+    
+    (filters.forEach( (filter) => 
+      <Button size="small" type={activeFilter !== filter.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>  
+        `${filter.name} + (filter.count > 0 && (${filter.count}))`;
+      </Button>
+    ));
+    
     <Button size="small" type={activeFilter !== 'all' ? 'tertiary' : null} onClick={() => setFilter('all')}>
       All
     </Button>
@@ -44,7 +53,7 @@ const Filters = ({
   </div>
 );
 
-Filters.propTypes = {
+FilterButtons.propTypes = {
   setFilter: PropTypes.func.isRequired,
   activeFilter: PropTypes.string.isRequired,
   teamsCount: PropTypes.number.isRequired,
@@ -183,7 +192,7 @@ class SearchResults extends React.Component {
     const totalResults = (teams && teams.length) + (users && users.length) + (projects && projects.length);
     return (
       <main className="search-results">
-        <Filters
+        <FilterButtons
           setFilter={this.setFilter}
           activeFilter={this.state.activeFilter}
           teamsCount={teams ? teams.length : 0}
