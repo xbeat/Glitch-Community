@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { capitalize } from 'lodash';
+import Pluralize from 'react-pluralize';
 import Helmet from 'react-helmet';
+
 import Layout from '../layout';
-const { capitalize } = require('lodash');
 
 import { useCurrentUser } from '../current-user';
 
@@ -17,18 +18,20 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
-const filters = [{name: 'all', count: null}, {name: 'teams', count: 0}, {name: 'users', count: 0}, {name: 'projects', count: 0}];
+const filters = [{ name: 'all', count: null }, { name: 'teams', count: 0 }, { name: 'users', count: 0 }, { name: 'projects', count: 0 }];
 
 const FilterButtons = ({
-  setFilter, activeFilter
+  setFilter, activeFilter,
 }) => (
   <div className="search-filters">
-    {filters.map((filter) =>  (
-      <Button size="small" type={activeFilter !== filter.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>  
-        { filter.count ? `${capitalize(filter.name)} (${filter.count})`: capitalize(filter.name) }
+    {filters.map((filter) => (
+      ((filter.count == null || filter.count > 0) &&
+      <Button size="small" type={activeFilter !== filter.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>
+        { filter.count ? `${capitalize(filter.name)} (${filter.count})` : capitalize(filter.name) }
       </Button>
-      ))}
-  </div>    
+      )
+    ))}
+  </div>
 );
 
 FilterButtons.propTypes = {
@@ -161,16 +164,17 @@ class SearchResults extends React.Component {
     const noResults = [teams, users, projects].every(
       (results) => !showResults(results),
     );
+    // I'm sure there's a better way to do this
     const showTeams = (activeFilter === 'all' || activeFilter === 'teams') && showResults(teams);
     const showUsers = (activeFilter === 'all' || activeFilter === 'users') && showResults(users);
     const showProjects = (activeFilter === 'all' || activeFilter === 'projects') && showResults(projects);
-  
+
     // store results per type
     filters[1].count = (teams ? teams.length : 0);
     filters[2].count = (users ? users.length : 0);
-    filters[3].count = (projects ? projects.length : 0);    
+    filters[3].count = (projects ? projects.length : 0);
     const totalResults = filters[1].count + filters[2].count + filters[3].count;
-    
+
     return (
       <main className="search-results">
         <FilterButtons
@@ -179,7 +183,7 @@ class SearchResults extends React.Component {
         />
         { activeFilter === 'all' &&
           <h1>
-            {totalResults} results for {this.props.query}
+            <Pluralize count={totalResults} singular="result" /> for {this.props.query}
           </h1>
         }
         { showTeams && <TeamResults teams={teams} />}
