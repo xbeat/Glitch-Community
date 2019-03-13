@@ -4,7 +4,7 @@ import React from 'react';
 import { getAvatarUrl, getLink, getProfileStyle } from '../models/team';
 
 import { TeamLink } from './includes/link';
-import { TruncatedMarkdown } from './includes/markdown';
+import Markdown from '../components/text/markdown';
 import { Thanks } from './includes/thanks';
 import UsersList from './users-list';
 import WrappingLink from './includes/wrapping-link';
@@ -26,7 +26,7 @@ export default function TeamItem({ team }) {
           {teamThanksCount > 0 && <Thanks count={teamThanksCount} />}
           {!!team.description && (
             <p className="description">
-              <TruncatedMarkdown length={96}>{team.description}</TruncatedMarkdown>
+              <Markdown length={96}>{team.description}</Markdown>
             </p>
           )}
         </div>

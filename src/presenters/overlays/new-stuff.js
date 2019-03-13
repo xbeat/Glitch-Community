@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Link } from '../includes/link';
-import Markdown from '../includes/markdown';
+import Markdown from '../../components/text/markdown';
 import PopoverContainer from '../pop-overs/popover-container';
 import useUserPref from '../includes/user-prefs';
 import TooltipContainer from '../../components/tooltips/tooltip-container';

@@ -10,7 +10,7 @@ import { isDarkColor } from '../models/collection';
 import CollectionAvatar from './includes/collection-avatar';
 import { CollectionLink } from './includes/link';
 import { DataLoader } from './includes/loader';
-import { TruncatedMarkdown } from './includes/markdown';
+import Markdown from '../components/text/markdown';
 import ProjectsLoader from './projects-loader';
 import { getSingleItem } from '../../shared/api';
 import { ProjectsUL } from './projects-list';
@@ -31,7 +31,7 @@ const CollectionWide = ({ collection, api }) => {
         {!!collection.team && <TeamTile team={collection.team} />}
         {!!collection.user && <UserTile {...collection.user} />}
         <div className="collection-description">
-          <TruncatedMarkdown length={80}>{collection.description}</TruncatedMarkdown>
+          <Markdown length={80}>{collection.description}</Markdown>
         </div>
       </header>
       <div className="collection-contents">
