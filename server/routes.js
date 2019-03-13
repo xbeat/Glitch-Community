@@ -17,9 +17,9 @@ module.exports = function(external) {
   app.use(helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", 'cdn.segment.com', 'fast.wistia.com', 'ajax.googleapis.com', 'glitch.com', 'apis.google.com', 'cdnjs.cloudflare.com', 'api.segment.io', 'static.woopra.com'],
-      styleSrc: ["'self'", 'cdn.glitch.com', 'cdn.gomix.com'],
-      imgSrc: ["'self'", 'cdn.glitch.com'],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'cdn.segment.com', 'ajax.googleapis.com', '*.glitch.com', 'apis.google.com', 'cdnjs.cloudflare.com', 'api.segment.io', 'static.woopra.com', '*.wistia.com'],
+      styleSrc: ["'self'", "'unsafe-inline'", 'cloud.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'],
+      imgSrc: ["'self'", 'cdn.glitch.com', 'cdn.gomix.com'],
     }
   }));
 
