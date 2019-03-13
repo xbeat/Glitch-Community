@@ -29,7 +29,7 @@ export const TeamUsers = props => (
       return (
         <li key={user.id}>
           <PopoverWithButton
-            buttonClass="user button-unstyled"
+            buttonClass="user button-unstyled tooltip-container-button"
             buttonText={(
               <UserAvatar
                 user={user}
