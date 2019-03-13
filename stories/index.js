@@ -76,7 +76,22 @@ storiesOf('Text Input', module)
 
 storiesOf('Note', module)
   .addDecorator(StoryRouter())
-  .add('adding a new note', () => (
+  .add('a saved note', () => (
+      <div style={{ margin: '70px', width: '300px' }}>
+      <Note
+        currentUser={{
+          color: '#9cf989',
+          id: 123,
+          login: 'glitch',
+          name: 'Glitch',
+        }}
+        update={something => console.log(something)}
+        project={{ note: "This is a *GREAT* note that supports markdown" }}
+        collectionCoverColor="#ddc4fc"
+      />
+    </div>
+  ))
+  .add('a new note with placeholder text (coming soon: this does not work until we move content-editable styles into /components)', () => (
     <div style={{ margin: '70px', width: '300px' }}>
       <Note
         currentUser={{
@@ -88,6 +103,21 @@ storiesOf('Note', module)
         update={something => console.log(something)}
         project={{ isAddingANewNote: true }}
         collectionCoverColor="#ddc4fc"
+      />
+    </div>
+  ))
+  .add('a saved note on dark text', () => (
+      <div style={{ margin: '70px', width: '300px' }}>
+      <Note
+        currentUser={{
+          color: '#9cf989',
+          id: 123,
+          login: 'glitch',
+          name: 'Glitch',
+        }}
+        update={something => console.log(something)}
+        project={{ note: "This is a *GREAT* note that supports markdown" }}
+        collectionCoverColor="#000000"
       />
     </div>
   ));
