@@ -190,7 +190,7 @@ class SearchResults extends React.Component {
           usersCount={users ? users.length : 0}
           projectsCount={projects ? projects.length : 0}
         />
-        { this.state.activeFilter === 'all' && 
+        { this.state.activeFilter === 'all' &&
           <h1>
             {totalResults} results for {this.props.query}
           </h1>
