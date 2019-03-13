@@ -19,12 +19,12 @@ const Heading = ({ children, tagName }) => {
   // In the future we might want tag names and sizes to be different
 
   // For now, we're keeping them 1-1,
-  // and also specifically setting 'xlarge' and 'large' headings to be bold
+  // and also specifically setting 'h1' and 'h2' headings to be bold
   // which should match the current styles on production for switching to this
 
   const size = TAGS_AND_SIZES[tagName];
-  const bold = tagName === 'xlarge' || tagName === 'large';
-  console.log({bold})
+  const bold = tagName === 'h1' || tagName === 'h2';
+  console.log({bold, tagName})
   const className = cx({
     [size]: true,
     bold,
