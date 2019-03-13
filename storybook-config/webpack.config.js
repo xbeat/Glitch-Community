@@ -22,11 +22,8 @@ module.exports = {
         include: path.resolve(__dirname, "../")
       },
       {
-        test: /\.md$/,
+        test: /\.js$/,
         use: [
-          {
-            loader: 'html-loader',
-          },
           {
             loader: 'markdown-loader',
             options: {
