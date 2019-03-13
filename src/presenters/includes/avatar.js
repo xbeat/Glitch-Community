@@ -117,4 +117,5 @@ UserAvatar.propTypes = {
 UserAvatar.defaultProps = {
   suffix: '',
   hideTooltip: false,
+  withinButton: false,
 };

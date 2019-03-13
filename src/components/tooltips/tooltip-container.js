@@ -16,7 +16,6 @@ function TooltipContainer({
   const tooltipContainerClassName = cx({
     'tooltip-container': true,
   });
-  const tooltipContainerFallbackClassName = fallback ? 'tooltip-container' : '';
 
   const tooltipClassName = cx({
     tooltip: true,
