@@ -4,6 +4,7 @@ import Button from '../src/components/buttons/button';
 import TooltipContainer from '../src/components/tooltips/tooltip-container';
 import TextInput from '../src/components/fields/text-input';
 import TextArea from '../src/components/fields/text-area';
+import Heading from '../src/components/text/heading';
 import Markdown from '../src/components/text/markdown';
 
 storiesOf('Button', module)
@@ -60,6 +61,12 @@ storiesOf('Text Input', module)
   .add('search', () => <TextInput type="search" opaque={true} search={true} placeholder="bots, apps, users" />)
   .add('with error', () => <TextInput placeholder="glitch" error="That team already exists" />)
   .add('text area', () => <TextArea placeholder="[Something here] doesn't seem appropriate for Glitch because..." error="Reason is required" />);
+
+storiesOf('Heading', module)
+  .add('h1 xlarge', () => (<Heading tagName="h1" size="xlarge">H1 size extra large</Heading>))
+  .add('h2 large', () => (<Heading tagName="h2" size="large">H1 size extra large</Heading>))
+  .add('h3 large', () => (<Heading tagName="h2" size="large">H1 size extra large</Heading>))
+  .add('h4 large', () => (<Heading tagName="h2" size="large">H1 size extra large</Heading>))
 
 storiesOf('Markdown', module)
   .add('regular', () => <Markdown>Some __Markdown__</Markdown>)
