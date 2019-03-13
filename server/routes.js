@@ -12,14 +12,17 @@ module.exports = function(external) {
   const app = express.Router();
   
   // questionable
-  // *.litix.i, tracking via wistia
+  // *.litix.io, tracking via wistia
   
   app.use(helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'", 'cdn.segment.com', 'ajax.googleapis.com', '*.glitch.com', 'apis.google.com', 'cdnjs.cloudflare.com', 'api.segment.io', 'static.woopra.com', '*.wistia.com'],
-      styleSrc: ["'self'", "'unsafe-inline'", 'cloud.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'],
-      imgSrc: ["'self'", 'cdn.glitch.com', 'cdn.gomix.com'],
+      styleSrc: ["'self'", "'unsafe-inline'", '*.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'],
+      imgSrc: ["'self'", '*.glitch.com', '*.gomix.com', '*.webtype.com', 'culture-zine.glitch.me'],
+      fontSrc: ["'self'", '*.webtype.com'],
+      connectSrc: ["'self'", 'api.segment.io', '*.wistia.com'],
+      frameSrc: ["'self'", "
     }
   }));
 
