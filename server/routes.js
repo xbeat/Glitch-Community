@@ -19,10 +19,10 @@ module.exports = function(external) {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'", 'cdn.segment.com', 'ajax.googleapis.com', '*.glitch.com', 'apis.google.com', 'cdnjs.cloudflare.com', 'api.segment.io', 'static.woopra.com', '*.wistia.com'],
       styleSrc: ["'self'", "'unsafe-inline'", '*.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'],
-      imgSrc: ["'self'", '*.glitch.com', '*.gomix.com', '*.webtype.com', 'culture-zine.glitch.me'],
+      imgSrc: ["'self'", '*.glitch.com', '*.gomix.com', 's3.amazonaws.com', '*.webtype.com', 'culture-zine.glitch.me'],
       fontSrc: ["'self'", '*.webtype.com'],
-      connectSrc: ["'self'", 'api.segment.io', '*.wistia.com'],
-      frameSrc: ["'self'", "
+      connectSrc: ["'self'", 'api.glitch.com', 'api.segment.io', '*.wistia.com'],
+      frameSrc: ["'self'", 'glitch.com', '*.glitch.me'],
     }
   }));
 
