@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import PropTypes from 'prop-types';
 
 import { debounce } from 'lodash';
-import { Link } from './link';
+import { Link } from "./link";
 import TooltipContainer from '../../components/tooltips/tooltip-container';
 
 export const TeamMarketing = () => {
