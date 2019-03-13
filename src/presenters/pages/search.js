@@ -20,7 +20,7 @@ const Filters = ({
   resetFilters, filterTeams, filterUsers, filterProjects, activeFilter, teamsCount, usersCount, projectsCount,
 }) => (
   <div className="search-filters">
-    <Button className="all" size="small" type={activeFilter !== 'all' && 'tertiary'} onClick={resetFilters}>
+    <Button size="small" type={activeFilter !== 'all' && 'tertiary'} onClick={resetFilters}>
       All
     </Button>
     {teamsCount > 0 && (
