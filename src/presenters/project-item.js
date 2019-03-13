@@ -10,10 +10,11 @@ import UsersList from './users-list';
 import Note from '../components/fields/note';
 
 const ProjectItem = ({
-  api, project, currentUser, ...props
+  api, project, currentUser, collectionCoverColor, ...props
 }) => (
   <li>
     <Note
+      collectionCoverColor={collectionCoverColor}
       currentUser={currentUser}
       project={project}
       update={(note) => props.projectOptions.updateOrAddNote({ note, projectId: project.id })}
@@ -40,6 +41,7 @@ const ProjectItem = ({
 
 ProjectItem.propTypes = {
   api: PropTypes.func,
+  collectionCoverColor: PropTypes.string.isRequired,
   currentUser: PropTypes.object,
   project: PropTypes.shape({
     collectionCoverColor: PropTypes.string,

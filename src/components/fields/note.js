@@ -14,22 +14,21 @@ const cx = classNames.bind(styles);
  * Note Component
  */
 const Note = ({
-  currentUser, project, update,
+  currentUser, project, update, collectionCoverColor
 }) => {
   if (!project.isAddingANewNote && !project.note) {
     return null;
   }
   
-  const color = project.collectionCoverColor;
   
   const className = cx({
     descriptionContainer: true,
-    dark: isDarkColor(color) ? true: false,
+    dark: isDarkColor(collectionCoverColor) ? true: false,
   });
   
   return (
     <div>
-      <div className={className} style={{ backgroundColor: color, borderColor: color }}>
+      <div className={className} style={{ backgroundColor: collectionCoverColor, borderColor: collectionCoverColor }}>
         <EditableDescription
           description={project.note || ''}
           placeholder="Share why you love this app."
@@ -46,6 +45,7 @@ const Note = ({
 
 
 Note.propTypes = {
+  collectionCoverColor: PropTypes.string,
   currentUser: PropTypes.object,
   project: PropTypes.shape({
     note: PropTypes.string,

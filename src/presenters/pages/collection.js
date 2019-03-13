@@ -137,7 +137,7 @@ const CollectionPageContents = ({
             {collection.projects.length > 0 ? (
               isAuthorized ? (
                 <ProjectsUL
-                  {...{ projects: collection.projects, currentUser, api }}
+                  {...{ projects: collection.projects, currentUser, api, collectionCoverColor: collection.coverColor }}
                   projectOptions={{
                     removeProjectFromCollection,
                     addProjectToCollection,
@@ -189,7 +189,7 @@ CollectionPageContents.propTypes = {
   api: PropTypes.any,
   collection: PropTypes.shape({
     avatarUrl: PropTypes.string,
-    backgroundColor: PropTypes.string,
+    coverColor: PropTypes.string,
     description: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     projects: PropTypes.array.isRequired,
