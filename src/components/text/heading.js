@@ -15,18 +15,17 @@ const TAGS_AND_SIZES = {
 /**
  * Heading Component
  */
-const Heading = ({ children, tagName, className }) => {
+const Heading = ({ children, tagName: TagName, className }) => {
   // In the future we might want tag names and sizes to be different
 
   // For now, we're keeping them 1-1,
   // and also specifically setting 'h1' and 'h2' headings to be bold
   // which should match the current styles on production for switching to this
 
-  const size = TAGS_AND_SIZES[tagName];
-  const bold = tagName === 'h1' || tagName === 'h2';
-
+  const size = TAGS_AND_SIZES[TagName];
+  const bold = TagName === 'h1' || TagName === 'h2';
   return (
-    <tagName
+    <TagName
       className={cx({
         [size]: true,
         bold,
@@ -34,7 +33,7 @@ const Heading = ({ children, tagName, className }) => {
       })}
     >
       {children}
-    </tagName>
+    </TagName>
   );
 };
 
