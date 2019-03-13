@@ -180,6 +180,7 @@ class SearchResults extends React.Component {
     const showTeams = (this.state.activeFilter === 'all' || this.state.activeFilter === 'teams') && showResults(teams);
     const showUsers = (this.state.activeFilter === 'all' || this.state.activeFilter === 'users') && showResults(users);
     const showProjects = (this.state.activeFilter === 'all' || this.state.activeFilter === 'projects') && showResults(projects);
+    const totalResults = (teams && teams.length) + (users && users.length) + (projects && projects.length);
     return (
       <main className="search-results">
         <Filters
@@ -191,7 +192,7 @@ class SearchResults extends React.Component {
         />
         { this.state.activeFilter === 'all' && 
           <h1>
-            {showResults.length
+            {totalResults} results for {this.props.query}
           </h1>
         }
         { showTeams && <TeamResults teams={teams} />}
