@@ -18,7 +18,7 @@ const resolveProperties = (properties, inheritedProperties) => {
 // stick this in the tree to add a property value to any tracking calls within it
 export const AnalyticsContext = ({ children, properties, context }) => (
   <Context.Consumer>
-    {inherited => (
+    {(inherited) => (
       <Context.Provider
         value={{
           properties: resolveProperties(properties, inherited.properties),
@@ -44,23 +44,20 @@ AnalyticsContext.defaultProps = {
 // this gives you a generic track function that pulls in inherited properties
 export const AnalyticsTracker = ({ children }) => (
   <Context.Consumer>
-    {inherited => children((name, properties, context) => {
-      try {
-        analytics.track(
-          name,
-          resolveProperties(properties, inherited.properties),
-          resolveProperties(context, inherited.context),
-        );
-      } catch (error) {
-        /* From Segment: "We currently return a 200 response for all API requests so debugging should be done in the Segment Debugger.
+    {(inherited) =>
+      children((name, properties, context) => {
+        try {
+          analytics.track(name, resolveProperties(properties, inherited.properties), resolveProperties(context, inherited.context));
+        } catch (error) {
+          /* From Segment: "We currently return a 200 response for all API requests so debugging should be done in the Segment Debugger.
           The only exception is if the request is too large / json is invalid it will respond with a 400."
           If it was not a 400, it wasn't our fault so don't track it.
         */
-        if (error && error.response && error.response.status === 400) {
-          captureException(error);
+          if (error && error.response && error.response.status === 400) {
+            captureException(error);
+          }
         }
-      }
-    })
+      })
     }
   </Context.Consumer>
 );
@@ -71,20 +68,19 @@ AnalyticsTracker.propTypes = {
 // this is the equivalent of doing <AnalyticsTracker>{track => <asdf onClick={() => track('asdf')}/></AnalyticsTracker>
 // this won't work for links that do a full page load, because the request will get cancelled by the nav
 // use the TrackedExternalLink for that, because it will stall the page for a moment and let the request finish
-export const TrackClick = ({
-  children, name, properties, context,
-}) => (
+export const TrackClick = ({ children, name, properties, context }) => (
   <AnalyticsTracker>
-    {track => React.Children.map(children, (child) => {
-      function onClick(...args) {
-        track(name, properties, context);
-        if (child.props.onClick) {
-          return child.props.onClick(...args);
+    {(track) =>
+      React.Children.map(children, (child) => {
+        function onClick(...args) {
+          track(name, properties, context);
+          if (child.props.onClick) {
+            return child.props.onClick(...args);
+          }
+          return null;
         }
-        return null;
-      }
-      return React.cloneElement(child, { onClick });
-    })
+        return React.cloneElement(child, { onClick });
+      })
     }
   </AnalyticsTracker>
 );
@@ -110,11 +106,7 @@ class TrackedExternalLinkWithoutContext extends React.Component {
 
   componentDidMount() {
     try {
-      analytics.trackLink(
-        this.ref.current,
-        () => this.props.name,
-        () => this.props.properties,
-      );
+      analytics.trackLink(this.ref.current, () => this.props.name, () => this.props.properties);
     } catch (error) {
       captureException(error);
     }
@@ -129,21 +121,10 @@ class TrackedExternalLinkWithoutContext extends React.Component {
     );
   }
 }
-export const TrackedExternalLink = ({
-  children,
-  name,
-  properties,
-  to,
-  ...props
-}) => (
+export const TrackedExternalLink = ({ children, name, properties, to, ...props }) => (
   <Context.Consumer>
-    {inherited => (
-      <TrackedExternalLinkWithoutContext
-        to={to}
-        name={name}
-        properties={resolveProperties(properties, inherited.properties)}
-        {...props}
-      >
+    {(inherited) => (
+      <TrackedExternalLinkWithoutContext to={to} name={name} properties={resolveProperties(properties, inherited.properties)} {...props}>
         {children}
       </TrackedExternalLinkWithoutContext>
     )}

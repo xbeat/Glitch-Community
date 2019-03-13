@@ -9,22 +9,12 @@ import { Link } from './includes/link';
 import QuestionItem from './question-item';
 import { captureException } from '../utils/sentry';
 
-const kaomojis = [
-  '八(＾□＾*)',
-  '(ノ^_^)ノ',
-  'ヽ(*ﾟｰﾟ*)ﾉ',
-  '♪(┌・。・)┌',
-  'ヽ(๏∀๏ )ﾉ',
-  'ヽ(^。^)丿',
-];
+const kaomojis = ['八(＾□＾*)', '(ノ^_^)ノ', 'ヽ(*ﾟｰﾟ*)ﾉ', '♪(┌・。・)┌', 'ヽ(๏∀๏ )ﾉ', 'ヽ(^。^)丿'];
 
 const QuestionTimer = ({ animating, callback }) => (
   <div className="loader-pie" title="Looking for more questions...">
     <div className="left-side">
-      <div
-        className={`slice ${animating ? 'animated' : ''}`}
-        onAnimationEnd={callback}
-      />
+      <div className={`slice ${animating ? 'animated' : ''}`} onAnimationEnd={callback} />
     </div>
     <div className="right-side">
       <div className={`slice ${animating ? 'animated' : ''}`} />
@@ -55,8 +45,8 @@ class Questions extends React.Component {
     try {
       const { data } = await this.props.api.get('projects/questions');
       const questions = data
-        .map(q => JSON.parse(q.details))
-        .filter(q => !!q)
+        .map((q) => JSON.parse(q.details))
+        .filter((q) => !!q)
         .slice(0, this.props.max)
         .map((question) => {
           const [colorInner, colorOuter] = randomColor({
@@ -81,15 +71,13 @@ class Questions extends React.Component {
     return (
       <section className="questions">
         <h2>
-          <Link to="/questions">Help Others, Get Thanks →</Link>
-          {' '}
-          <QuestionTimer animating={!loading} callback={() => this.load()} />
+          <Link to="/questions">Help Others, Get Thanks →</Link> <QuestionTimer animating={!loading} callback={() => this.load()} />
         </h2>
         <article className="projects">
           {questions.length ? (
             <ErrorBoundary>
               <ul className="projects-container">
-                {questions.map(question => (
+                {questions.map((question) => (
                   <li key={question.questionId}>
                     <QuestionItem {...question} />
                   </li>
@@ -98,12 +86,8 @@ class Questions extends React.Component {
             </ErrorBoundary>
           ) : (
             <>
-              {kaomoji} Looks like nobody is asking for help right now.
-              {' '}
-              <Link
-                className="general-link"
-                to="/help/how-can-i-get-help-with-code-in-my-project/"
-              >
+              {kaomoji} Looks like nobody is asking for help right now.{' '}
+              <Link className="general-link" to="/help/how-can-i-get-help-with-code-in-my-project/">
                 Learn about helping
               </Link>
             </>

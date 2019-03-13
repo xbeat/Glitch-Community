@@ -6,9 +6,7 @@ const needle = 'https://cdn.glitch.com/bc50f686-4c0a-4e20-852f-3999b29e8092%2Fne
 
 const NotFound = ({ name }) => (
   <section>
-    <p>
-      We didn't find {name}
-    </p>
+    <p>We didn't find {name}</p>
     <div className="error-image">
       <img className="compass" src={compass} alt="" />
       <img className="needle" src={needle} alt="" />

@@ -28,15 +28,9 @@ function facebookAuthLink() {
   return `https://www.facebook.com/v2.9/dialog/oauth?${params}`;
 }
 
-const SignInPopButton = props => (
-  <Link
-    className="button button-small button-link has-emoji"
-    to={props.href}
-    onClick={props.onClick}
-  >
-    Sign in with {props.company}
-    {' '}
-    <span className={`emoji ${props.emoji}`} />
+const SignInPopButton = (props) => (
+  <Link className="button button-small button-link has-emoji" to={props.href} onClick={props.onClick}>
+    Sign in with {props.company} <span className={`emoji ${props.emoji}`} />
   </Link>
 );
 
@@ -94,56 +88,31 @@ class EmailHandler extends React.Component {
   render() {
     const isEnabled = this.state.email.length > 0;
     return (
-      <NestedPopover
-        alternateContent={() => <SignInWithConsumer {...this.props} />}
-        startAlternateVisible={false}
-      >
-        {showCodeLogin => (
+      <NestedPopover alternateContent={() => <SignInWithConsumer {...this.props} />} startAlternateVisible={false}>
+        {(showCodeLogin) => (
           <dialog className="pop-over sign-in-pop">
             <NestedPopoverTitle>
-              Email Sign In
-              {' '}
-              <span className="emoji email" />
+              Email Sign In <span className="emoji email" />
             </NestedPopoverTitle>
             <section className="pop-over-actions first-section">
               {!this.state.done && (
                 <form onSubmit={this.onSubmit} style={{ marginBottom: 0 }}>
-                  <input
-                    value={this.state.email}
-                    onChange={this.onChange}
-                    className="pop-over-input"
-                    type="email"
-                    placeholder="new@user.com"
-                  />
-                  <button
-                    type="submit"
-                    style={{ marginTop: 10 }}
-                    className="button-small button-link"
-                    disabled={!isEnabled}
-                  >
+                  <input value={this.state.email} onChange={this.onChange} className="pop-over-input" type="email" placeholder="new@user.com" />
+                  <button type="submit" style={{ marginTop: 10 }} className="button-small button-link" disabled={!isEnabled}>
                     Send Link
                   </button>
                 </form>
               )}
               {this.state.done && !this.state.error && (
                 <>
-                  <div className="notification notifyPersistent notifySuccess">
-                    Almost Done
-                  </div>
-                  <div>
-                    Finish signing in from the email sent to {this.state.email}
-.
-                  </div>
+                  <div className="notification notifyPersistent notifySuccess">Almost Done</div>
+                  <div>Finish signing in from the email sent to {this.state.email}.</div>
                 </>
               )}
               {this.state.done && this.state.error && (
                 <>
-                  <div className="notification notifyPersistent notifyError">
-                    Error
-                  </div>
-                  <div>
-                    {this.state.errorMsg}
-                  </div>
+                  <div className="notification notifyPersistent notifyError">Error</div>
+                  <div>{this.state.errorMsg}</div>
                 </>
               )}
             </section>
@@ -181,9 +150,7 @@ class SignInCodeHandler extends React.Component {
     e.preventDefault();
     this.setState({ done: true });
     try {
-      const { data } = await this.props.api.post(
-        `/auth/email/${this.state.code}`,
-      );
+      const { data } = await this.props.api.post(`/auth/email/${this.state.code}`);
       this.props.setUser(data);
       this.setState({ error: false });
     } catch (error) {
@@ -203,38 +170,21 @@ class SignInCodeHandler extends React.Component {
           {!this.state.done && (
             <form onSubmit={this.onSubmit} style={{ marginBottom: 0 }}>
               Paste your temporary sign in code below
-              <input
-                value={this.state.code}
-                onChange={this.onChange}
-                className="pop-over-input"
-                type="text"
-                placeholder="cute-unique-cosmos"
-              />
-              <button
-                style={{ marginTop: 10 }}
-                className="button-small button-link"
-                disabled={!isEnabled}
-                type="submit"
-              >
+              <input value={this.state.code} onChange={this.onChange} className="pop-over-input" type="text" placeholder="cute-unique-cosmos" />
+              <button style={{ marginTop: 10 }} className="button-small button-link" disabled={!isEnabled} type="submit">
                 Sign In
               </button>
             </form>
           )}
           {this.state.done && !this.state.error && (
             <>
-              <div className="notification notifyPersistent notifySuccess">
-                Success!
-              </div>
+              <div className="notification notifyPersistent notifySuccess">Success!</div>
             </>
           )}
           {this.state.done && this.state.error && (
             <>
-              <div className="notification notifyPersistent notifyError">
-                Error
-              </div>
-              <div>
-                Code not found or already used. Try signing in with email.
-              </div>
+              <div className="notification notifyPersistent notifyError">Error</div>
+              <div>Code not found or already used. Try signing in with email.</div>
             </>
           )}
         </section>
@@ -256,9 +206,7 @@ const EmailSignInButton = ({ onClick }) => (
       onClick();
     }}
   >
-    Sign in with Email
-    {' '}
-    <span className="emoji email" />
+    Sign in with Email <span className="emoji email" />
   </button>
 );
 EmailSignInButton.propTypes = {
@@ -267,11 +215,7 @@ EmailSignInButton.propTypes = {
 
 const SignInCodeSection = ({ onClick }) => (
   <section className="pop-over-actions last-section pop-over-info">
-    <button
-      className="button-small button-tertiary button-on-secondary-background"
-      onClick={onClick}
-      type="button"
-    >
+    <button className="button-small button-tertiary button-on-secondary-background" onClick={onClick} type="button">
       <span>Use a sign in code</span>
     </button>
   </section>
@@ -281,47 +225,30 @@ SignInCodeSection.propTypes = {
 };
 
 const SignInPopWithoutRouter = (props) => {
-  const {
-    header, prompt, api, location, hash,
-  } = props;
+  const { header, prompt, api, location, hash } = props;
   const [, setDestination] = useLocalStorage('destinationAfterAuth');
-  const onClick = () => setDestination({
-    expires: dayjs()
-      .add(10, 'minutes')
-      .toISOString(),
-    to: {
-      pathname: location.pathname,
-      search: location.search,
-      hash,
-    },
-  });
+  const onClick = () =>
+    setDestination({
+      expires: dayjs()
+        .add(10, 'minutes')
+        .toISOString(),
+      to: {
+        pathname: location.pathname,
+        search: location.search,
+        hash,
+      },
+    });
   return (
-    <NestedPopover
-      alternateContent={() => <EmailHandler {...props} />}
-      startAlternateVisible={false}
-    >
-      {showEmailLogin => (
-        <NestedPopover
-          alternateContent={() => <SignInWithConsumer {...props} />}
-          startAlternateVisible={false}
-        >
-          {showCodeLogin => (
+    <NestedPopover alternateContent={() => <EmailHandler {...props} />} startAlternateVisible={false}>
+      {(showEmailLogin) => (
+        <NestedPopover alternateContent={() => <SignInWithConsumer {...props} />} startAlternateVisible={false}>
+          {(showCodeLogin) => (
             <div className="pop-over sign-in-pop">
               {header}
               <section className="pop-over-actions first-section">
                 {prompt}
-                <SignInPopButton
-                  href={facebookAuthLink()}
-                  company="Facebook"
-                  emoji="facebook"
-                  onClick={onClick}
-                />
-                <SignInPopButton
-                  href={githubAuthLink()}
-                  company="GitHub"
-                  emoji="octocat"
-                  onClick={onClick}
-                />
+                <SignInPopButton href={facebookAuthLink()} company="Facebook" emoji="facebook" onClick={onClick} />
+                <SignInPopButton href={githubAuthLink()} company="GitHub" emoji="octocat" onClick={onClick} />
                 <EmailSignInButton
                   onClick={() => {
                     onClick();
@@ -351,12 +278,8 @@ SignInPopBase.propTypes = {
   hash: PropTypes.string,
 };
 
-const SignInPopContainer = props => (
-  <PopoverWithButton
-    buttonClass="button button-small"
-    buttonText="Sign in"
-    passToggleToPop
-  >
+const SignInPopContainer = (props) => (
+  <PopoverWithButton buttonClass="button button-small" buttonText="Sign in" passToggleToPop>
     <SignInPopBase {...props} />
   </PopoverWithButton>
 );

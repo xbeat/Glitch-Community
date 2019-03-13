@@ -3,21 +3,19 @@ import PropTypes from 'prop-types';
 
 import TooltipContainer from '../../components/tooltips/tooltip-container';
 
-import {
-  DEFAULT_TEAM_AVATAR,
-  getAvatarUrl as getTeamAvatarUrl,
-} from '../../models/team';
-import {
-  ANON_AVATAR_URL,
-  getAvatarThumbnailUrl,
-  getDisplayName,
-} from '../../models/user';
+import { DEFAULT_TEAM_AVATAR, getAvatarUrl as getTeamAvatarUrl } from '../../models/team';
+import { ANON_AVATAR_URL, getAvatarThumbnailUrl, getDisplayName } from '../../models/user';
 
 // UserAvatar
 
-export const Avatar = ({
-  name, src, color, srcFallback, type, hideTooltip, withinButton,
-}) => {
+export const Avatar = ({ name, src, color, srcFallback, type, hideTooltip, withinButton }) => {
+  let onError = null;
+  if (srcFallback) {
+    onError = (event) => {
+      event.target.src = srcFallback;
+    };
+  }
+
   const contents = (
     <img
       width="32px"
@@ -25,13 +23,7 @@ export const Avatar = ({
       src={src}
       alt={name}
       style={color ? { backgroundColor: color } : null}
-      onError={
-        srcFallback
-          ? (event) => {
-            event.target.src = srcFallback;
-          }
-          : null
-      }
+      onError={onError}
       className={`${type}-avatar`}
     />
   );

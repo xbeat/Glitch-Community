@@ -14,18 +14,18 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'YA! That\'s good!',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_YoungAdult%20v2.jpg?1551709691968',
-    link: 'https://yathatsgood.glitch.me/',
+    title: 'Fire Extinguishers In Spaaaaace!',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_space_extinguisher.jpg?1552302001273',
+    link: 'https://space-extinguisher.glitch.me/',
   },
   {
-    title: 'Interactive Typography',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_Futura%20v2.jpg?1551709692693',
-    link: 'https://just-futura.glitch.me/',
+    title: 'Tarot According to Achewood',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_achewood.jpg?1552302000528',
+    link: 'https://achewood-tarot.glitch.me/',
   },
   {
-    title: 'Gravitational Do-si-do',
-    img: 'https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2FGlitch_2019_Illo_FeaturedAppTiles1_Orbit%20v2.jpg?1551709692442',
-    link: 'https://coorbit.glitch.me/',
+    title: 'Explore the Globe',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_cesium.jpg?1552302001784',
+    link: 'https://glitch.com/~cesium-viewer',
   }
 ];
