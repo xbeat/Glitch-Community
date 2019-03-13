@@ -24,13 +24,18 @@ const Heading = ({ children, tagName, className }) => {
 
   const size = TAGS_AND_SIZES[tagName];
   const bold = tagName === 'h1' || tagName === 'h2';
-  const classNames = cx({
-    [size]: true,
-    bold,
-    [className]: className !== undefined,
-  });
 
-  return <tagName className={classNames}>{children}</tagName>;
+  return (
+    <tagName
+      className={cx({
+        [size]: true,
+        bold,
+        [className]: className !== undefined,
+      })}
+    >
+      {children}
+    </tagName>
+  );
 };
 
 Heading.propTypes = {
