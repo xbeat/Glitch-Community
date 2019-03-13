@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { getAvatarUrl } from '../models/project';
 
 import { ProjectLink } from './includes/link';
-import { TruncatedMarkdown } from './includes/markdown';
+import Markdown from '../components/text/markdown';
 import ProjectOptionsPop from './pop-overs/project-options-pop';
 import UsersList from './users-list';
 
@@ -21,7 +21,7 @@ const ProjectItem = ({ api, project, ...props }) => (
             <div className="project-name">{project.domain}</div>
           </div>
           <div className="description">
-            <TruncatedMarkdown length={80}>{project.description}</TruncatedMarkdown>
+            <Markdown length={80}>{project.description}</Markdown>
           </div>
           <div className="overflow-mask" />
         </div>
