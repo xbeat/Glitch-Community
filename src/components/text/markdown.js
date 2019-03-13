@@ -26,7 +26,7 @@ const Markdown = ({ children, length }) => {
   }
   return (
     <span
-      className={styles['markdown-content']}
+      className={styles.markdownContent}
       dangerouslySetInnerHTML={{ __html: rendered }} // eslint-disable-line react/no-danger
     />
   );
