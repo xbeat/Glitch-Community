@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Helmet from 'react-helmet';
 import Layout from '../layout';
+const { capitalize } = require('lodash');
 
 import { useCurrentUser } from '../current-user';
 
@@ -16,40 +17,23 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
-const Filters = ({
-  setFilter, activeFilter, teamsCount, usersCount, projectsCount,
+const filters = [{name: 'all', count: null}, {name: 'teams', count: 0}, {name: 'users', count: 0}, {name: 'projects', count: 0}];
+
+const FilterButtons = ({
+  setFilter, activeFilter
 }) => (
   <div className="search-filters">
-    <Button size="small" type={activeFilter !== 'all' ? 'tertiary' : null} onClick={() => setFilter('all')}>
-      All
-    </Button>
-    {teamsCount > 0 && (
-      <Button size="small" type={activeFilter !== 'teams' ? 'tertiary' : null} onClick={() => setFilter('teams')}>
-         Teams ({teamsCount})
+    {filters.map((filter) =>  (
+      <Button size="small" type={activeFilter !== filter.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>  
+        { filter.count ? `${capitalize(filter.name)} (${filter.count})`: capitalize(filter.name) }
       </Button>
-    )
-    }
-    {usersCount > 0 && (
-      <Button size="small" type={activeFilter !== 'users' ? 'tertiary' : null} onClick={() => setFilter('users')}>
-         Users ({usersCount})
-      </Button>
-    )
-    }
-    {projectsCount > 0 && (
-      <Button size="small" type={activeFilter !== 'projects' ? 'tertiary' : null} onClick={() => setFilter('projects')}>
-         Projects ({projectsCount})
-      </Button>
-    )
-    }
-  </div>
+      ))}
+  </div>    
 );
 
-Filters.propTypes = {
+FilterButtons.propTypes = {
   setFilter: PropTypes.func.isRequired,
   activeFilter: PropTypes.string.isRequired,
-  teamsCount: PropTypes.number.isRequired,
-  usersCount: PropTypes.number.isRequired,
-  projectsCount: PropTypes.number.isRequired,
 };
 
 const TeamResults = ({ teams }) => (
@@ -173,24 +157,27 @@ class SearchResults extends React.Component {
   }
 
   render() {
-    const { teams, users, projects } = this.state;
+    const { teams, users, projects, activeFilter } = this.state;
     const noResults = [teams, users, projects].every(
       (results) => !showResults(results),
     );
-    const showTeams = (this.state.activeFilter === 'all' || this.state.activeFilter === 'teams') && showResults(teams);
-    const showUsers = (this.state.activeFilter === 'all' || this.state.activeFilter === 'users') && showResults(users);
-    const showProjects = (this.state.activeFilter === 'all' || this.state.activeFilter === 'projects') && showResults(projects);
-    const totalResults = (teams && teams.length) + (users && users.length) + (projects && projects.length);
+    const showTeams = (activeFilter === 'all' || activeFilter === 'teams') && showResults(teams);
+    const showUsers = (activeFilter === 'all' || activeFilter === 'users') && showResults(users);
+    const showProjects = (activeFilter === 'all' || activeFilter === 'projects') && showResults(projects);
+  
+    // store results per type
+    filters[1].count = (teams ? teams.length : 0);
+    filters[2].count = (users ? users.length : 0);
+    filters[3].count = (projects ? projects.length : 0);    
+    const totalResults = filters[1].count + filters[2].count + filters[3].count;
+    
     return (
       <main className="search-results">
-        <Filters
+        <FilterButtons
           setFilter={this.setFilter}
-          activeFilter={this.state.activeFilter}
-          teamsCount={teams ? teams.length : 0}
-          usersCount={users ? users.length : 0}
-          projectsCount={projects ? projects.length : 0}
+          activeFilter={activeFilter}
         />
-        { this.state.activeFilter === 'all' && 
+        { activeFilter === 'all' &&
           <h1>
             {totalResults} results for {this.props.query}
           </h1>
