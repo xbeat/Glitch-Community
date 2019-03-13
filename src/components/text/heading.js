@@ -15,7 +15,7 @@ const TAGS_AND_SIZES = {
 /**
  * Heading Component
  */
-const Heading = ({ children, tagName }) => {
+const Heading = ({ children, tagName, className }) => {
   // In the future we might want tag names and sizes to be different
 
   // For now, we're keeping them 1-1,
@@ -24,12 +24,13 @@ const Heading = ({ children, tagName }) => {
 
   const size = TAGS_AND_SIZES[tagName];
   const bold = tagName === 'h1' || tagName === 'h2';
-  console.log({bold, tagName})
-  const className = cx({
+  const classNames = cx({
     [size]: true,
     bold,
+    [className]: className !== undefined,
   });
-  return <tagName className={[className]}>{children}</tagName>;
+
+  return <tagName className={className}>{children}</tagName>;
 };
 
 Heading.propTypes = {
@@ -39,6 +40,10 @@ Heading.propTypes = {
   tagName: PropTypes.oneOf(Object.keys(TAGS_AND_SIZES)).isRequired,
   /** additional className to add to the heading */
   className: PropTypes.string,
+};
+
+Heading.defaultProps = {
+  className: undefined,
 };
 
 export default Heading;
