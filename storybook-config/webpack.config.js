@@ -17,9 +17,24 @@ module.exports = {
           },
           {
             loader: 'stylus-loader',
-          }
+          },
         ],
         include: path.resolve(__dirname, "../")
+      },
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: 'html-loader',
+          },
+          {
+            loader: 'markdown-loader',
+            options: {
+            }
+          },
+        ],
+        include: path.resolve(__dirname, "../"),
+        exclude: /node_modules/
       }
     ]
   }
