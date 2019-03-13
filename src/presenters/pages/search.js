@@ -21,36 +21,18 @@ const filters = [{name: 'team', count: 0}, {name: 'users', count: 0}, {name: 'pr
 const FilterButtons = ({
   setFilter, activeFilter
 }) => (
-  <div className="search-filters">
+  return(
     
-    (filters.forEach( (filter) => 
-      <Button size="small" type={activeFilter !== filter.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>  
-        `${filter.name} + (filter.count > 0 && (${filter.count}))`;
-      </Button>
-    ));
-    
-    <Button size="small" type={activeFilter !== 'all' ? 'tertiary' : null} onClick={() => setFilter('all')}>
-      All
-    </Button>
-    {teamsCount > 0 && (
-      <Button size="small" type={activeFilter !== 'teams' ? 'tertiary' : null} onClick={() => setFilter('teams')}>
-         Teams ({teamsCount})
-      </Button>
-    )
-    }
-    {usersCount > 0 && (
-      <Button size="small" type={activeFilter !== 'users' ? 'tertiary' : null} onClick={() => setFilter('users')}>
-         Users ({usersCount})
-      </Button>
-    )
-    }
-    {projectsCount > 0 && (
-      <Button size="small" type={activeFilter !== 'projects' ? 'tertiary' : null} onClick={() => setFilter('projects')}>
-         Projects ({projectsCount})
-      </Button>
-    )
-    }
-  </div>
+    <div className="search-filters">
+
+      (filters.forEach(filter =>  {
+        <Button size="small" type={activeFilter !== ${filter}.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>  
+          `${filter.name} + (filter.count > 0 && (${filter.count}))`;
+        </Button>
+        }
+      ));
+    </div>    
+    );
 );
 
 FilterButtons.propTypes = {
