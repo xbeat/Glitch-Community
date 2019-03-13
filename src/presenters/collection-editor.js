@@ -24,13 +24,8 @@ class CollectionEditor extends React.Component {
   }
 
   async updateFields(changes) {
-    console.log(changes)
-    const { data } = await this.props.api.patch(`collections/${this.state.id}`, changes);
-    const changedKeys = Object.keys(changes)
-    
-    this.setState((oldData) => {
-      return ({ ...oldData, ...data })
-    });
+    this.setState(changes);
+    await this.props.api.patch(`collections/${this.state.id}`, changes);    
   }
 
   async addProjectToCollection(project, collection) {
