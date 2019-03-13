@@ -24,7 +24,6 @@ app.use(
       }),
     ],
     format: winston.format.combine(
-      winston.format.colorize(),
       winston.format.json(),
     ),
     meta: false, // logs meta data about the request if true
