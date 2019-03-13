@@ -29,7 +29,7 @@ const Heading = ({ children, tagName }) => {
     [size]: true,
     bold,
   });
-  return <tagName className={className}>{children}</tagName>;
+  return <tagName className={[className]}>{children}</tagName>;
 };
 
 Heading.propTypes = {
@@ -37,6 +37,8 @@ Heading.propTypes = {
   children: PropTypes.node.isRequired,
   /** heading tag to be rendered [h1, h2...] */
   tagName: PropTypes.oneOf(Object.keys(TAGS_AND_SIZES)).isRequired,
+  /** additional className to add to the heading */
+  className: PropTypes.string,
 };
 
 export default Heading;
