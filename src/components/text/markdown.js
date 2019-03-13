@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 import markdownIt from 'markdown-it';
 import markdownEmoji from 'markdown-it-emoji';
 import markdownSanitizer from 'markdown-it-sanitizer';
 import truncate from 'html-truncate';
 import styles from './markdown.styl';
+
+const cx = classNames.bind(styles);
 
 const md = markdownIt({
   html: true,
@@ -20,13 +23,16 @@ const md = markdownIt({
  * Markdown Component
  */
 const Markdown = ({ children, length }) => {
+  const className = cx({
+    'markdown-content': true,
+  });
   let rendered = md.render(children || '');
   if (length > 0) {
     rendered = truncate(rendered, length, { ellipsis: '…' });
   }
   return (
     <span
-      className={styles['markdown-content']}
+      className={className}
       dangerouslySetInnerHTML={{ __html: rendered }} // eslint-disable-line react/no-danger
     />
   );
