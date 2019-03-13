@@ -45,21 +45,16 @@ tooltip-background = rgba(0,0,0,0.95)
   display: block
   height: 100%
   left: 50%
-  transform: translateX(-50%) translateY(-100%)
-  margin-top: -6px;
+  transform: translateX(-50%) translateY(0%)
+  margin-top: 6px;
   box-sizing: border-box
   border: 5px solid transparent
+  border-top-color: transparent
   border-bottom-color: tooltip-background
 
 .fallback[data-tooltip].top::after
   margin-top: -12px
   transform: translateX(50%) translateY(-200%)
-  
-.fallback[data-tooltip]::before
-  border-top-color: tooltip-background
-  border-bottom-color: transparent
-  margin-top: -6px
-  transform: translateX(-50%) translateY(100%)
   
 .fallback[data-tooltip].left::after,
 .fallback[data-tooltip].left::before
