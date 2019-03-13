@@ -4,12 +4,19 @@ tooltip-background = rgba(0,0,0,0.95)
   display: none
 
 .tooltip-container
-// .fallback[data-tooltip]
   position: relative
   box-sizing: border-box
   display: inline-block
-  height: 100%
 
+.fallback[data-tooltip]::before,
+.fallback[data-tooltip]::after
+  opacity: 0
+
+.fallback[data-tooltip]:hover
+  &::before,
+  &::after
+    opacity: 1
+    
 .fallback[data-tooltip]::after
   content: attr(data-tooltip)
   border: none
@@ -52,7 +59,8 @@ tooltip-background = rgba(0,0,0,0.95)
   border-top-color: transparent
   border-bottom-color: tooltip-background
 
-.fallback[data-tooltip].top::after
+.fallback[data-tooltip].top
+  &::after
   margin-top: -12px
   transform: translateX(50%) translateY(-200%)
   
