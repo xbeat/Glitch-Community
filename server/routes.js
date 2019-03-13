@@ -17,7 +17,7 @@ module.exports = function(external) {
   app.use(helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", 'cdn.segment.com', 'ajax.googleapis.com', '*.glitch.com', 'apis.google.com', 'cdnjs.cloudflare.com', 'api.segment.io', 'static.woopra.com', 'fast.wistia.com'],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'cdn.segment.com', 'ajax.googleapis.com', '*.glitch.com', 'apis.google.com', 'cdnjs.cloudflare.com', 'api.segment.io', 'static.woopra.com', 'fast.wistia.com'],
       styleSrc: ["'self'", "'unsafe-inline'", '*.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'],
       imgSrc: ["'self'", '*.glitch.com', '*.gomix.com', 's3.amazonaws.com', '*.webtype.com', 'culture-zine.glitch.me'],
       fontSrc: ["'self'", '*.webtype.com', "'data:'"],
