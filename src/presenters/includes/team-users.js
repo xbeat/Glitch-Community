@@ -29,8 +29,14 @@ export const TeamUsers = (props) => (
       return (
         <li key={user.id}>
           <PopoverWithButton
-            buttonClass="user button-unstyled"
-            buttonText={<UserAvatar user={user} suffix={adminStatusDisplay(props.adminIds, user)} />}
+            buttonClass="user button-unstyled tooltip-container-button"
+            buttonText={(
+              <UserAvatar
+                user={user}
+                suffix={adminStatusDisplay(props.adminIds, user)}
+                withinButton
+              />
+            )}
             passToggleToPop
           >
             <TeamUserInfoPop
