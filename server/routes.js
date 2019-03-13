@@ -17,7 +17,7 @@ module.exports = function(external) {
   app.use(helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", 'cdn.segment.com', 'ajax.googleapis.com', '*.glitch.com', 'apis.google.com', 'cdnjs.cloudflare.com', 'api.segment.io', 'static.woopra.com', 'fast.wistia.com'],
+      scriptSrc: ["'self'", "'nonce-2726c7f26c'", "'nonce-1234'", "'nonce-5678'", 'cdn.segment.com', 'ajax.googleapis.com', '*.glitch.com', 'apis.google.com', 'cdnjs.cloudflare.com', 'api.segment.io', 'static.woopra.com', 'fast.wistia.com'],
       styleSrc: ["'self'", "'unsafe-inline'", '*.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'],
       imgSrc: ["'self'", '*.glitch.com', '*.gomix.com', 's3.amazonaws.com', '*.webtype.com', 'culture-zine.glitch.me'],
       fontSrc: ["'self'", '*.webtype.com', "'data:'"],
@@ -62,7 +62,6 @@ module.exports = function(external) {
     
     try {
       const stats = JSON.parse(await readFilePromise('build/stats.json'));
-      console.log(stats);
       stats.entrypoints.styles.assets.forEach(file => {
         if (file.match(/\.css(\?|$)/)) {
           styles.push(`${stats.publicPath}${file}`);
@@ -75,7 +74,6 @@ module.exports = function(external) {
         if (file.match(/\.css(\?|$)/)) {
           styles.push(`${stats.publicPath}${file}`);
         }
-        console.log(scripts);
       });
     } catch (error) {
       console.error("Failed to load webpack stats file. Unless you see a webpack error here, the initial build probably just isn't ready yet.");
