@@ -20,23 +20,23 @@ const Filters = ({
   setFilter, activeFilter, teamsCount, usersCount, projectsCount,
 }) => (
   <div className="search-filters">
-    <Button size="small" type={activeFilter !== 'all' && 'tertiary'} onClick={resetFilters}>
+    <Button size="small" type={activeFilter !== 'all' && 'tertiary'} onClick={() => setFilter('all')}>
       All
     </Button>
     {teamsCount > 0 && (
-      <Button size="small" type="tertiary" type={activeFilter !== 'teams' && 'tertiary'} onClick={filterTeams}>
+      <Button size="small" type="tertiary" type={activeFilter !== 'teams' && 'tertiary'} onClick={() => setFilter('teams')}>
          Teams ({teamsCount})
       </Button>
     )
     }
     {usersCount > 0 && (
-      <Button size="small" type="tertiary" type={activeFilter !== 'users' && 'tertiary'} onClick={filterUsers}>
+      <Button size="small" type="tertiary" type={activeFilter !== 'users' && 'tertiary'} onClick={() => setFilter('users')}>
          Users ({usersCount})
       </Button>
     )
     }
     {projectsCount > 0 && (
-      <Button size="small" type="tertiary" type={activeFilter !== 'projects' && 'tertiary'} onClick={filterProjects}>
+      <Button size="small" type="tertiary" type={activeFilter !== 'projects' && 'tertiary'} onClick={() => setFilter('projects')}>
          Projects ({projectsCount})
       </Button>
     )
@@ -45,6 +45,8 @@ const Filters = ({
 );
 
 Filters.propTypes = {
+  setFilter: PropTypes.func.isRequired,
+  activeFilter: PropTypes.string.isRequired,
   teamsCount: PropTypes.number.isRequired,
   usersCount: PropTypes.number.isRequired,
   projectsCount: PropTypes.number.isRequired,
@@ -124,10 +126,7 @@ class SearchResults extends React.Component {
       activeFilter: 'all',
     };
     this.addProjectToCollection = this.addProjectToCollection.bind(this);
-    this.filterProjects = this.filterProjects.bind(this);
-    this.filterTeams = this.filterTeams.bind(this);
-    this.filterUsers = this.filterUsers.bind(this);
-    this.resetFilters = this.resetFilters.bind(this);
+    this.setFilter = this.setFilter.bind(this);
   }
 
   componentDidMount() {
@@ -139,22 +138,6 @@ class SearchResults extends React.Component {
   
   setFilter(filter){
     this.setState({ activeFilter: filter });
-  }
-
-  filterProjects() {
-    this.setState({ activeFilter: 'projects' });
-  }
-
-  filterTeams() {
-    this.setState({ activeFilter: 'teams' });
-  }
-
-  filterUsers() {
-    this.setState({ activeFilter: 'users' });
-  }
-
-  resetFilters() {
-    this.setState({ activeFilter: 'all' });
   }
 
   async searchTeams() {

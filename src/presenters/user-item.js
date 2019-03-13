@@ -5,7 +5,7 @@ import { UserLink } from './includes/link';
 import { TruncatedMarkdown } from './includes/markdown';
 import { Thanks } from './includes/thanks';
 
-import Button from '../../components/buttons/button';
+import Button from '../components/buttons/button';
 
 import { ANON_AVATAR_URL, getAvatarUrl, getProfileStyle } from '../models/user';
 
