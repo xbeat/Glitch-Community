@@ -20,18 +20,6 @@ module.exports = {
           },
         ],
         include: path.resolve(__dirname, "../")
-      },
-      {
-        test: /\.js$/,
-        use: [
-          {
-            loader: 'markdown-loader',
-            options: {
-            }
-          },
-        ],
-        include: path.resolve(__dirname, "../"),
-        exclude: /node_modules/
       }
     ]
   }
