@@ -16,26 +16,35 @@ import ProjectsList from '../projects-list';
 import TeamItem from '../team-item';
 import UserItem from '../user-item';
 
-const filters = [{name: 'team', count: 0}, {name: 'users', count: 0}, {name: 'projects', count: 0}];
-
-const FilterButtons = ({
-  setFilter, activeFilter
+const Filters = ({
+  setFilter, activeFilter, teamsCount, usersCount, projectsCount,
 }) => (
-  return(
-    
-    <div className="search-filters">
-
-      (filters.forEach(filter =>  {
-        <Button size="small" type={activeFilter !== ${filter}.name ? 'tertiary' : null} onClick={() => setFilter(filter.name)}>  
-          `${filter.name} + (filter.count > 0 && (${filter.count}))`;
-        </Button>
-        }
-      ));
-    </div>    
-    );
+  <div className="search-filters">
+    <Button size="small" type={activeFilter !== 'all' ? 'tertiary' : null} onClick={() => setFilter('all')}>
+      All
+    </Button>
+    {teamsCount > 0 && (
+      <Button size="small" type={activeFilter !== 'teams' ? 'tertiary' : null} onClick={() => setFilter('teams')}>
+         Teams ({teamsCount})
+      </Button>
+    )
+    }
+    {usersCount > 0 && (
+      <Button size="small" type={activeFilter !== 'users' ? 'tertiary' : null} onClick={() => setFilter('users')}>
+         Users ({usersCount})
+      </Button>
+    )
+    }
+    {projectsCount > 0 && (
+      <Button size="small" type={activeFilter !== 'projects' ? 'tertiary' : null} onClick={() => setFilter('projects')}>
+         Projects ({projectsCount})
+      </Button>
+    )
+    }
+  </div>
 );
 
-FilterButtons.propTypes = {
+Filters.propTypes = {
   setFilter: PropTypes.func.isRequired,
   activeFilter: PropTypes.string.isRequired,
   teamsCount: PropTypes.number.isRequired,
@@ -174,14 +183,14 @@ class SearchResults extends React.Component {
     const totalResults = (teams && teams.length) + (users && users.length) + (projects && projects.length);
     return (
       <main className="search-results">
-        <FilterButtons
+        <Filters
           setFilter={this.setFilter}
           activeFilter={this.state.activeFilter}
           teamsCount={teams ? teams.length : 0}
           usersCount={users ? users.length : 0}
           projectsCount={projects ? projects.length : 0}
         />
-        { this.state.activeFilter === 'all' &&
+        { this.state.activeFilter === 'all' && 
           <h1>
             {totalResults} results for {this.props.query}
           </h1>

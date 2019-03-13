@@ -5,8 +5,8 @@ import styles from './button.styl';
 
 const cx = classNames.bind(styles);
 
-export const TYPES = [null, 'tertiary', 'cta', 'dangerZone'];
-export const SIZES = [null, 'small'];
+export const TYPES = ['tertiary', 'cta', 'dangerZone'];
+export const SIZES = ['small'];
 
 /**
  * Button Component
