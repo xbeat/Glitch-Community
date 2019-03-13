@@ -29,6 +29,7 @@ RawHTML.propTypes = {
 const Markdown = React.memo(({ children }) => {
   console.log(children)
   const rendered = md.render(children || '');
+  console.log("rendere", rendered, typeof rendered)
   return <RawHTML>{rendered}</RawHTML>;
 });
 Markdown.propTypes = {
