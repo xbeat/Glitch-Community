@@ -99,11 +99,13 @@ module.exports = function(external) {
   
   
   // set up a route to redirect http to https
-  app.get('*', function(req, res, next) {  
+  app.get('*', function(req, res, next) {
+    console.log(req.headers);
     if (!req.secure) {
+      console.log('insecure')
       res.redirect(301, 'https://' + req.headers.host + req.url);
     } else {
-      next();
+      return next();
     }
   });
 
