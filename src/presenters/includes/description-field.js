@@ -17,9 +17,7 @@ class EditableDescriptionImpl extends React.Component {
   }
 
   onFocus(event) {
-    console.log("onFocus called")
     if (event.currentTarget === event.target) {
-      console.log("event", event)
       this.setState({ focused: true });
     }
   }
