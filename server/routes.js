@@ -18,6 +18,8 @@ module.exports = function(external) {
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'nonce-2726c7f26c'", "'nonce-1234'", "'nonce-5678'", 'cdn.segment.com', 'ajax.googleapis.com', '*.glitch.com', 'apis.google.com', 'cdnjs.cloudflare.com', 'api.segment.io', 'static.woopra.com', 'fast.wistia.com'],
+      // style-src unsafe-inline is required for our SVGs
+      // for context and link to bug, see https://pokeinthe.io/2016/04/09/black-icons-with-svg-and-csp/
       styleSrc: ["'self'", "'unsafe-inline'", '*.webtype.com', 'cdn.glitch.com', 'cdn.gomix.com'],
       imgSrc: ["'self'", '*.glitch.com', '*.gomix.com', 's3.amazonaws.com', '*.webtype.com', 'culture-zine.glitch.me'],
       fontSrc: ["'self'", '*.webtype.com', "'data:'"],
