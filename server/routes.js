@@ -62,6 +62,7 @@ module.exports = function(external) {
     
     try {
       const stats = JSON.parse(await readFilePromise('build/stats.json'));
+      console.log(stats);
       stats.entrypoints.styles.assets.forEach(file => {
         if (file.match(/\.css(\?|$)/)) {
           styles.push(`${stats.publicPath}${file}`);
@@ -74,6 +75,7 @@ module.exports = function(external) {
         if (file.match(/\.css(\?|$)/)) {
           styles.push(`${stats.publicPath}${file}`);
         }
+        console.log(scripts);
       });
     } catch (error) {
       console.error("Failed to load webpack stats file. Unless you see a webpack error here, the initial build probably just isn't ready yet.");
