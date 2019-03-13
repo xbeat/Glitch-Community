@@ -23,26 +23,23 @@ const Filters = ({
     <Button className="all" size="small" type={activeFilter !== 'all' && 'tertiary'} onClick={resetFilters}>
       All
     </Button>
-    {teamsCount > 0
-     && (
-       <Button size="small" type="tertiary" type={activeFilter !== 'teams' && 'tertiary'} onClick={filterTeams}>
+    {teamsCount > 0 && (
+      <Button size="small" type="tertiary" type={activeFilter !== 'teams' && 'tertiary'} onClick={filterTeams}>
          Teams ({teamsCount})
-       </Button>
-     )
+      </Button>
+    )
     }
-    {usersCount > 0
-     && (
-       <Button size="small" type="tertiary" type={activeFilter !== 'users' && 'tertiary'} onClick={filterUsers}>
+    {usersCount > 0 && (
+      <Button size="small" type="tertiary" type={activeFilter !== 'users' && 'tertiary'} onClick={filterUsers}>
          Users ({usersCount})
-       </Button>
-     )
+      </Button>
+    )
     }
-    {projectsCount > 0
-     && (
-       <Button size="small" type="tertiary" type={activeFilter !== 'projects' && 'tertiary'} onClick={filterProjects}>
+    {projectsCount > 0 && (
+      <Button size="small" type="tertiary" type={activeFilter !== 'projects' && 'tertiary'} onClick={filterProjects}>
          Projects ({projectsCount})
-       </Button>
-     )
+      </Button>
+    )
     }
   </div>
 );
@@ -58,7 +55,7 @@ const TeamResults = ({ teams }) => (
     <h2>Teams</h2>
     <ul className="teams-container">
       {teams ? (
-        teams.map(team => (
+        teams.map((team) => (
           <li key={team.id}>
             <TeamItem team={team} />
           </li>
@@ -75,7 +72,7 @@ const UserResults = ({ users }) => (
     <h2>Users</h2>
     <ul className="users-container">
       {users ? (
-        users.map(user => (
+        users.map((user) => (
           <li key={user.id}>
             <UserItem user={user} />
           </li>
@@ -115,7 +112,7 @@ const ProjectResults = ({
 const MAX_PROJECT_RESULTS = 20;
 const MAX_USER_TEAM_RESULTS = 8;
 
-const showResults = results => !results || !!results.length;
+const showResults = (results) => !results || !!results.length;
 
 class SearchResults extends React.Component {
   constructor(props) {
@@ -177,7 +174,7 @@ class SearchResults extends React.Component {
     const { data } = await api.get(`projects/search?q=${query}`);
     this.setState({
       projects: data
-        .filter(project => !project.notSafeForKids)
+        .filter((project) => !project.notSafeForKids)
         .slice(0, MAX_PROJECT_RESULTS),
     });
   }
@@ -191,7 +188,7 @@ class SearchResults extends React.Component {
   render() {
     const { teams, users, projects } = this.state;
     const noResults = [teams, users, projects].every(
-      results => !showResults(results),
+      (results) => !showResults(results),
     );
     return (
       <main className="search-results">
