@@ -14,18 +14,17 @@ const cx = classNames.bind(styles);
  * Note Component
  */
 const Note = ({
-  currentUser, project, update, collectionCoverColor
+  collectionCoverColor, currentUser, project, update,
 }) => {
   if (!project.isAddingANewNote && !project.note) {
     return null;
   }
-  
-  
+
   const className = cx({
     descriptionContainer: true,
-    dark: isDarkColor(collectionCoverColor) ? true: false,
+    dark: isDarkColor(collectionCoverColor),
   });
-  
+
   return (
     <div>
       <div className={className} style={{ backgroundColor: collectionCoverColor, borderColor: collectionCoverColor }}>
@@ -45,7 +44,7 @@ const Note = ({
 
 
 Note.propTypes = {
-  collectionCoverColor: PropTypes.string,
+  collectionCoverColor: PropTypes.string.isRequired,
   currentUser: PropTypes.object,
   project: PropTypes.shape({
     note: PropTypes.string,
