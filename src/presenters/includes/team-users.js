@@ -9,6 +9,7 @@ import AddTeamUserPop from '../pop-overs/add-team-user-pop';
 import PopoverWithButton from '../pop-overs/popover-with-button';
 import PopoverContainer from '../pop-overs/popover-container';
 import TeamUserInfoPop from '../pop-overs/team-user-info-pop';
+import TooltipContainer from '../../components/tooltips/tooltip-container';
 import UsersList from '../users-list';
 
 // Team Users list (in profile container)
@@ -20,7 +21,7 @@ const adminStatusDisplay = (adminIds, user) => {
   return '';
 };
 
-export const TeamUsers = props => (
+export const TeamUsers = (props) => (
   <ul className="users">
     {props.users.map((user) => {
       const userIsTeamAdmin = props.adminIds.includes(user.id);
@@ -29,19 +30,12 @@ export const TeamUsers = props => (
         <li key={user.id}>
           <PopoverWithButton
             buttonClass="user button-unstyled"
-            buttonText={(
-              <UserAvatar
-                user={user}
-                suffix={adminStatusDisplay(props.adminIds, user)}
-              />
-            )}
+            buttonText={<UserAvatar user={user} suffix={adminStatusDisplay(props.adminIds, user)} />}
             passToggleToPop
           >
             <TeamUserInfoPop
               userIsTeamAdmin={userIsTeamAdmin}
-              userIsTheOnlyAdmin={
-                userIsTeamAdmin && props.adminIds.length === 1
-              }
+              userIsTheOnlyAdmin={userIsTeamAdmin && props.adminIds.length === 1}
               userIsTheOnlyMember={props.users.length === 1}
               user={user}
               {...props}
@@ -68,12 +62,8 @@ TeamUsers.propTypes = {
   currentUserIsTeamAdmin: PropTypes.bool.isRequired,
   adminIds: PropTypes.array.isRequired,
   team: PropTypes.object.isRequired,
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   /* eslint-enable */
-};
-
-TeamUsers.defaultProps = {
-  api: null,
 };
 
 // Whitelisted domain icon
@@ -83,31 +73,27 @@ export const WhitelistedDomain = ({ domain, setDomain }) => {
   return (
     <PopoverContainer>
       {({ visible, setVisible }) => (
-        <details
-          onToggle={evt => setVisible(evt.target.open)}
-          open={visible}
-          className="popover-container whitelisted-domain-container"
-        >
-          <summary data-tooltip={!visible ? tooltip : null}>
-            <WhitelistedDomainIcon domain={domain} />
+        <details onToggle={(evt) => setVisible(evt.target.open)} open={visible} className="popover-container whitelisted-domain-container">
+          <summary>
+            <TooltipContainer
+              id="whitelisted-domain-tooltip"
+              type="action"
+              tooltip={visible ? null : tooltip}
+              target={
+                <div>
+                  <WhitelistedDomainIcon domain={domain} />
+                </div>
+              }
+            />
           </summary>
           <dialog className="pop-over">
             <section className="pop-over-info">
-              <p className="info-description">
-                {tooltip}
-              </p>
+              <p className="info-description">{tooltip}</p>
             </section>
             {!!setDomain && (
               <section className="pop-over-actions danger-zone">
-                <button
-                  className="button button-small button-tertiary button-on-secondary-background has-emoji"
-                  onClick={() => setDomain(null)}
-                >
-                  Remove
-                  {' '}
-                  {domain}
-                  {' '}
-                  <span className="emoji bomb" />
+                <button className="button button-small button-tertiary button-on-secondary-background has-emoji" onClick={() => setDomain(null)}>
+                  Remove {domain} <span className="emoji bomb" />
                 </button>
               </section>
             )}
@@ -120,7 +106,11 @@ export const WhitelistedDomain = ({ domain, setDomain }) => {
 
 WhitelistedDomain.propTypes = {
   domain: PropTypes.string.isRequired,
-  setDomain: PropTypes.func.isRequired,
+  setDomain: PropTypes.func,
+};
+
+WhitelistedDomain.defaultProps = {
+  setDomain: null,
 };
 
 // Add Team User
@@ -143,11 +133,18 @@ export class AddTeamUser extends React.Component {
   async inviteUser(togglePopover, user) {
     togglePopover();
 
-    this.setState(prevState => ({
+    this.setState((state) => ({
       invitee: getDisplayName(user),
-      newlyInvited: [...prevState.newlyInvited, user],
+      newlyInvited: [...state.newlyInvited, user],
     }));
-    await this.props.inviteUser(user);
+    try {
+      await this.props.inviteUser(user);
+    } catch (error) {
+      this.setState((state) => ({
+        invitee: '',
+        alreadyInvited: state.alreadyInvited.filter((u) => u.id !== user.id),
+      }));
+    }
   }
 
   async inviteEmail(togglePopover, email) {
@@ -155,7 +152,13 @@ export class AddTeamUser extends React.Component {
     this.setState({
       invitee: email,
     });
-    await this.props.inviteEmail(email);
+    try {
+      await this.props.inviteEmail(email);
+    } catch (error) {
+      this.setState({
+        invitee: '',
+      });
+    }
   }
 
   removeNotifyInvited() {
@@ -165,58 +168,29 @@ export class AddTeamUser extends React.Component {
   }
 
   render() {
-    const alreadyInvitedAndNewInvited = this.props.invitedMembers.concat(
-      this.state.newlyInvited,
-    );
-    const {
-      inviteEmail,
-      inviteUser,
-      setWhitelistedDomain,
-      ...props
-    } = this.props;
+    const alreadyInvitedAndNewInvited = this.props.invitedMembers.concat(this.state.newlyInvited);
+    const { inviteEmail, inviteUser, setWhitelistedDomain, ...props } = this.props;
     return (
       <PopoverContainer>
         {({ visible, togglePopover }) => (
           <span className="add-user-container">
-            {alreadyInvitedAndNewInvited.length > 0 && (
-              <UsersList users={alreadyInvitedAndNewInvited} />
-            )}
+            {alreadyInvitedAndNewInvited.length > 0 && <UsersList users={alreadyInvitedAndNewInvited} />}
             <TrackClick name="Add to Team clicked">
-              <button
-                onClick={togglePopover}
-                className="button button-small button-tertiary add-user"
-              >
+              <button onClick={togglePopover} className="button button-small button-tertiary add-user">
                 Add
               </button>
             </TrackClick>
             {!!this.state.invitee && (
-              <div
-                className="notification notifySuccess inline-notification"
-                onAnimationEnd={this.removeNotifyInvited}
-              >
-                Invited
-                {' '}
-                {this.state.invitee}
+              <div className="notification notifySuccess inline-notification" onAnimationEnd={this.removeNotifyInvited}>
+                Invited {this.state.invitee}
               </div>
             )}
             {visible && (
               <AddTeamUserPop
                 {...props}
-                setWhitelistedDomain={
-                  setWhitelistedDomain
-                    ? domain => this.setWhitelistedDomain(togglePopover, domain)
-                    : null
-                }
-                inviteUser={
-                  inviteUser
-                    ? user => this.inviteUser(togglePopover, user)
-                    : null
-                }
-                inviteEmail={
-                  inviteEmail
-                    ? email => this.inviteEmail(togglePopover, email)
-                    : null
-                }
+                setWhitelistedDomain={setWhitelistedDomain ? (domain) => this.setWhitelistedDomain(togglePopover, domain) : null}
+                inviteUser={inviteUser ? (user) => this.inviteUser(togglePopover, user) : null}
+                inviteEmail={inviteEmail ? (email) => this.inviteEmail(togglePopover, email) : null}
               />
             )}
           </span>
@@ -240,10 +214,7 @@ AddTeamUser.defaultProps = {
 // Join Team
 
 export const JoinTeam = ({ onClick }) => (
-  <button
-    className="button button-small button-cta join-team-button"
-    onClick={onClick}
-  >
+  <button className="button button-small button-cta join-team-button" onClick={onClick}>
     Join Team
   </button>
 );

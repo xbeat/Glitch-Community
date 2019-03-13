@@ -19,46 +19,19 @@ function truncateTag(tag) {
   return tag.substring(0, max);
 }
 
-const QuestionItem = ({
-  colorOuter,
-  colorInner,
-  domain,
-  question,
-  tags,
-  userAvatar,
-  userColor,
-  userLogin,
-  path,
-  line,
-  character,
-}) => (
+const QuestionItem = ({ colorOuter, colorInner, domain, question, tags, userAvatar, userColor, userLogin, path, line, character }) => (
   <>
     <img className="help-icon" src={iconHelp} alt="" />
-    <Link
-      to={getEditorUrl(domain, path, line, character)}
-      data-track="question"
-      data-track-label={domain}
-    >
+    <Link to={getEditorUrl(domain, path, line, character)} data-track="question" data-track-label={domain}>
       <div className="project" style={{ backgroundColor: colorOuter }}>
-        <div
-          className="project-container"
-          style={{ backgroundColor: colorInner }}
-        >
-          <img
-            className="avatar"
-            src={userAvatar}
-            style={{ backgroundColor: userColor }}
-            alt=""
-          />
-          <div className="button">
-Help
-            {userLogin}
-          </div>
+        <div className="project-container" style={{ backgroundColor: colorInner }}>
+          <img className="avatar" src={userAvatar} style={{ backgroundColor: userColor }} alt="" />
+          <div className="button">Help {userLogin}</div>
           <div className="description question" title={question}>
             {truncateQuestion(question)}
           </div>
           <div className="description tags">
-            {tags.map(tag => (
+            {tags.map((tag) => (
               <div key={tag} className="tag" title={tag}>
                 {truncateTag(tag)}
               </div>

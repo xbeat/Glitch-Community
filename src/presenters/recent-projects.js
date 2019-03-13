@@ -20,11 +20,7 @@ const RecentProjectsContainer = ({ children, user, api }) => (
       <div className="profile-avatar">
         <div className="user-avatar-container">
           <UserLink user={user}>
-            <div
-              className={`user-avatar ${!user.login ? 'anon-user-avatar' : ''}`}
-              style={getAvatarStyle(user)}
-              alt=""
-            />
+            <div className={`user-avatar ${!user.login ? 'anon-user-avatar' : ''}`} style={getAvatarStyle(user)} alt="" />
           </UserLink>
           {!user.login && (
             <div className="anon-user-sign-up">
@@ -33,9 +29,7 @@ const RecentProjectsContainer = ({ children, user, api }) => (
           )}
         </div>
       </div>
-      <article className="projects">
-        {children}
-      </article>
+      <article className="projects">{children}</article>
     </CoverContainer>
   </section>
 );
@@ -57,7 +51,7 @@ const RecentProjects = ({ api }) => (
       <RecentProjectsContainer user={user} api={api}>
         {fetched ? (
           <ProjectsLoader api={api} projects={user.projects.slice(0, 3)}>
-            {projects => <ProjectsUL projects={projects} />}
+            {(projects) => <ProjectsUL projects={projects} />}
           </ProjectsLoader>
         ) : (
           <Loader />
@@ -67,9 +61,6 @@ const RecentProjects = ({ api }) => (
   </CurrentUserConsumer>
 );
 RecentProjects.propTypes = {
-  api: PropTypes.any,
-};
-RecentProjects.defaultProps = {
-  api: null,
+  api: PropTypes.any.isRequired,
 };
 export default RecentProjects;

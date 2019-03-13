@@ -5,6 +5,7 @@ import { Link } from '../includes/link';
 import Markdown from '../includes/markdown';
 import PopoverContainer from '../pop-overs/popover-container';
 import useUserPref from '../includes/user-prefs';
+import TooltipContainer from '../../components/tooltips/tooltip-container';
 
 import newStuffLog from '../../curated/new-stuff-log';
 
@@ -22,24 +23,18 @@ const NewStuffOverlay = ({ setShowNewStuff, showNewStuff, newStuff }) => (
             className="button-checkbox"
             type="checkbox"
             checked={showNewStuff}
-            onChange={evt => setShowNewStuff(evt.target.checked)}
+            onChange={(evt) => setShowNewStuff(evt.target.checked)}
           />
           Keep showing me these
         </label>
       </div>
     </section>
     <section className="pop-over-actions">
-      {newStuff.map(({
-        id, title, body, link,
-      }) => (
+      {newStuff.map(({ id, title, body, link }) => (
         <article key={id}>
-          <div className="title">
-            {title}
-          </div>
+          <div className="title">{title}</div>
           <div className="body">
-            <Markdown>
-              {body}
-            </Markdown>
+            <Markdown>{body}</Markdown>
           </div>
           {!!link && (
             <p>
@@ -76,17 +71,13 @@ class NewStuff extends React.Component {
 
   showNewStuff(setVisible) {
     setVisible(true);
-    const unreadStuff = newStuffLog.filter(
-      ({ id }) => id > this.props.newStuffReadId,
-    );
+    const unreadStuff = newStuffLog.filter(({ id }) => id > this.props.newStuffReadId);
     this.setState({ log: unreadStuff.length ? unreadStuff : newStuffLog });
     this.props.setNewStuffReadId(latestId);
   }
 
   renderOuter({ visible, setVisible }) {
-    const {
-      children, isSignedIn, showNewStuff, newStuffReadId,
-    } = this.props;
+    const { children, isSignedIn, showNewStuff, newStuffReadId } = this.props;
     const dogVisible = isSignedIn && showNewStuff && newStuffReadId < latestId;
     const show = () => {
       if (window.analytics) {
@@ -99,15 +90,18 @@ class NewStuff extends React.Component {
         {children(show)}
         {dogVisible && (
           <div className="new-stuff-footer">
-            <button className="button-unstyled new-stuff" onClick={show}>
-              <figure
-                className="new-stuff-avatar"
-                data-tooltip="New"
-                data-tooltip-top="true"
-                data-tooltip-persistent="true"
-                alt="New Stuff"
-              />
-            </button>
+            <TooltipContainer
+              id="new-stuff-tooltip"
+              type="info"
+              target={
+                <button className="button-unstyled new-stuff" onClick={show}>
+                  <figure className="new-stuff-avatar" alt="New Stuff" />
+                </button>
+              }
+              tooltip="New"
+              persistent
+              align={['top']}
+            />
           </div>
         )}
         {visible && <div className="overlay-background" role="presentation" />}
@@ -118,9 +112,7 @@ class NewStuff extends React.Component {
   render() {
     return (
       <PopoverContainer outer={this.renderOuter.bind(this)}>
-        {({ visible }) => (visible ? (
-          <NewStuffOverlay {...this.props} newStuff={this.state.log} />
-        ) : null)}
+        {({ visible }) => (visible ? <NewStuffOverlay {...this.props} newStuff={this.state.log} /> : null)}
       </PopoverContainer>
     );
   }

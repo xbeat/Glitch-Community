@@ -5,14 +5,10 @@ import { UserLink } from './includes/link';
 import { TruncatedMarkdown } from './includes/markdown';
 import { Thanks } from './includes/thanks';
 
-import {
-  ANON_AVATAR_URL,
-  getAvatarUrl,
-  getProfileStyle,
-} from '../models/user';
+import { ANON_AVATAR_URL, getAvatarUrl, getProfileStyle } from '../models/user';
 
 function addDefaultSrc(event) {
-  event.target.src = ANON_AVATAR_URL; // eslint-disable-line 
+  event.target.src = ANON_AVATAR_URL; // eslint-disable-line
 }
 
 export default function UserItem({ user }) {
@@ -21,27 +17,14 @@ export default function UserItem({ user }) {
     <UserLink user={user} className="button-area">
       <div className="item" style={style}>
         <div className="content">
-          <img
-            onError={addDefaultSrc}
-            className="avatar"
-            src={getAvatarUrl(user)}
-            alt=""
-          />
+          <img onError={addDefaultSrc} className="avatar" src={getAvatarUrl(user)} alt="" />
           <div className="information">
-            {!!user.name && (
-              <h3 className="name">
-                {user.name}
-              </h3>
-            )}
-            <div className="button">
-              {`@${user.login}`}
-            </div>
+            {!!user.name && <h3 className="name">{user.name}</h3>}
+            <div className="button">@{user.login}</div>
             {user.thanksCount > 0 && <Thanks count={user.thanksCount} />}
             {!!user.description && (
               <p className="description">
-                <TruncatedMarkdown length={96}>
-                  {user.description}
-                </TruncatedMarkdown>
+                <TruncatedMarkdown length={96}>{user.description}</TruncatedMarkdown>
               </p>
             )}
           </div>

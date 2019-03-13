@@ -14,13 +14,7 @@ export function getShowUrl(domain, projectsDomain = PROJECTS_DOMAIN) {
   return `//${domain}.${projectsDomain}`;
 }
 
-export function getEditorUrl(
-  domain,
-  path,
-  line,
-  character,
-  editorUrl = EDITOR_URL,
-) {
+export function getEditorUrl(domain, path, line, character, editorUrl = EDITOR_URL) {
   if (path && Number.isInteger(line) && Number.isInteger(character)) {
     return `${editorUrl}#!/${domain}?path=${path}:${line}:${character}`;
   }

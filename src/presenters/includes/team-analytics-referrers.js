@@ -25,10 +25,7 @@ const ReferrerItem = ({ count, total, description }) => {
   }
   return (
     <li>
-      {count.toLocaleString('en')}
-      {' '}
-–
-      {description}
+      {count.toLocaleString('en')} – {description}
       <progress value={progress} max="100" />
     </li>
   );
@@ -41,7 +38,7 @@ ReferrerItem.propTypes = {
 };
 
 const filterReferrers = (referrers) => {
-  let filteredReferrers = referrers.filter(referrer => !referrer.self);
+  let filteredReferrers = referrers.filter((referrer) => !referrer.self);
   filteredReferrers = filteredReferrers.slice(0, MAX_REFERRERS);
   return filteredReferrers;
 };
@@ -60,18 +57,9 @@ class TeamAnalyticsReferrers extends React.PureComponent {
           <h4>Total App Views</h4>
           <ul>
             <ReferrerPlaceholder count={totalAppViews} />
-            <ReferrerItem
-              count={totalDirectAppViews}
-              total={totalAppViews}
-              description="direct views"
-            />
-            {appViewReferrers.map(referrer => (
-              <ReferrerItem
-                key={referrer.domain}
-                count={referrer.requests}
-                total={totalAppViews}
-                description={referrer.domain}
-              />
+            <ReferrerItem count={totalDirectAppViews} total={totalAppViews} description="direct views" />
+            {appViewReferrers.map((referrer) => (
+              <ReferrerItem key={referrer.domain} count={referrer.requests} total={totalAppViews} description={referrer.domain} />
             ))}
           </ul>
         </article>
@@ -80,18 +68,9 @@ class TeamAnalyticsReferrers extends React.PureComponent {
           <h4>Remixes</h4>
           <ul>
             <ReferrerPlaceholder count={totalRemixes} />
-            <ReferrerItem
-              count={totalDirectRemixes}
-              total={totalRemixes}
-              description="direct remixes"
-            />
-            {remixReferrers.map(referrer => (
-              <ReferrerItem
-                key={referrer.domain}
-                count={referrer.remixes}
-                total={totalRemixes}
-                description={referrer.domain}
-              />
+            <ReferrerItem count={totalDirectRemixes} total={totalRemixes} description="direct remixes" />
+            {remixReferrers.map((referrer) => (
+              <ReferrerItem key={referrer.domain} count={referrer.remixes} total={totalRemixes} description={referrer.domain} />
             ))}
           </ul>
         </article>

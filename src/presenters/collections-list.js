@@ -8,7 +8,6 @@ import { getLink, createCollection } from '../models/collection';
 import { Loader } from './includes/loader';
 import { NotificationConsumer } from './notifications';
 
-
 class CollectionsList extends React.Component {
   constructor(props) {
     super(props);
@@ -27,17 +26,9 @@ class CollectionsList extends React.Component {
   }
 
   render() {
-    const {
-      title,
-      api,
-      isAuthorized,
-      maybeCurrentUser,
-      maybeTeam,
-    } = this.props;
+    const { title, api, isAuthorized, maybeCurrentUser, maybeTeam } = this.props;
     const { deleteCollection } = this;
-    const collections = this.props.collections.filter(
-      ({ id }) => !this.state.deletedCollectionIds.includes(id),
-    );
+    const collections = this.props.collections.filter(({ id }) => !this.state.deletedCollectionIds.includes(id));
     const hasCollections = !!collections.length;
     const canMakeCollections = isAuthorized && !!maybeCurrentUser;
 
@@ -46,24 +37,19 @@ class CollectionsList extends React.Component {
     }
     return (
       <article className="collections">
-        <h2>
-          {title}
-        </h2>
+        <h2>{title}</h2>
         {canMakeCollections && (
           <>
-            <CreateCollectionButton
-              {...{ api, currentUser: maybeCurrentUser, maybeTeam }}
-            />
-            {!hasCollections && (
-              <CreateFirstCollection
-                {...{ api, currentUser: maybeCurrentUser }}
-              />
-            )}
+            <CreateCollectionButton {...{ api, currentUser: maybeCurrentUser, maybeTeam }} />
+            {!hasCollections && <CreateFirstCollection {...{ api, currentUser: maybeCurrentUser }} />}
           </>
         )}
         <CollectionsUL
           {...{
-            collections, api, isAuthorized, deleteCollection,
+            collections,
+            api,
+            isAuthorized,
+            deleteCollection,
           }}
         />
       </article>
@@ -76,25 +62,19 @@ CollectionsList.propTypes = {
   maybeCurrentUser: PropTypes.object,
   maybeTeam: PropTypes.object,
   title: PropTypes.node.isRequired,
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
 };
 
 CollectionsList.defaultProps = {
   maybeCurrentUser: undefined,
   maybeTeam: undefined,
-  api: null,
 };
 
 const CreateFirstCollection = () => (
   <div className="create-first-collection">
-    <img
-      src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934"
-      alt=""
-    />
-    <p className="placeholder">
-      Create collections to organize your favorite projects.
-    </p>
+    <img src="https://cdn.glitch.com/1afc1ac4-170b-48af-b596-78fe15838ad3%2Fpsst-pink.svg?1541086338934" alt="" />
+    <p className="placeholder">Create collections to organize your favorite projects.</p>
     <br />
   </div>
 );
@@ -150,11 +130,7 @@ export class CreateCollectionButton extends React.Component {
         {({ createNotification }) => (
           <div id="create-collection-container">
             <TrackClick name="Create Collection clicked">
-              <button
-                className="button"
-                id="create-collection"
-                onClick={() => this.createCollectionOnClick(createNotification)}
-              >
+              <button className="button" id="create-collection" onClick={() => this.createCollectionOnClick(createNotification)}>
                 Create Collection
               </button>
             </TrackClick>
@@ -166,38 +142,32 @@ export class CreateCollectionButton extends React.Component {
 }
 
 CreateCollectionButton.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   currentUser: PropTypes.object.isRequired,
   maybeTeam: PropTypes.object,
 };
 
 CreateCollectionButton.defaultProps = {
   maybeTeam: undefined,
-  api: null,
 };
 
-export const CollectionsUL = ({
-  collections,
-  deleteCollection,
-  api,
-  isAuthorized,
-}) => {
+export const CollectionsUL = ({ collections, deleteCollection, api, isAuthorized }) => {
   // order by updatedAt date
-  const orderedCollections = orderBy(
-    collections,
-    collection => collection.updatedAt,
-  ).reverse();
+  const orderedCollections = orderBy(collections, (collection) => collection.updatedAt).reverse();
   return (
     <ul className="collections-container">
       {/* FAVORITES COLLECTION CARD - note this currently references empty favorites category in categories.js
         <CollectionItem key={null} collection={null} api={api} isAuthorized={isAuthorized}></CollectionItem>
       */}
 
-      {orderedCollections.map(collection => (
+      {orderedCollections.map((collection) => (
         <CollectionItem
           key={collection.id}
           {...{
-            collection, api, isAuthorized, deleteCollection,
+            collection,
+            api,
+            isAuthorized,
+            deleteCollection,
           }}
         />
       ))}
@@ -206,7 +176,7 @@ export const CollectionsUL = ({
 };
 
 CollectionsUL.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   collections: PropTypes.array.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   deleteCollection: PropTypes.func,
@@ -214,7 +184,6 @@ CollectionsUL.propTypes = {
 
 CollectionsUL.defaultProps = {
   deleteCollection: () => {},
-  api: null,
 };
 
 export default CollectionsList;

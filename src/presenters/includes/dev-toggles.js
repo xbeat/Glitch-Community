@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useUserPref from './user-prefs';
 
-const { Provider, Consumer } = React.createContext();
+const Context = React.createContext();
 
 //  Dev Toggles!
 //
@@ -27,44 +27,27 @@ const toggleData = [
 ].splice(0, 3); // <-- Yeah really, only 3.  If you need more, clean up one first.
 
 // Usage:
-// Import Devtoggles into your scope:
-
-// import DevToggles from '../includes/dev-toggles`
-// Use the DevToggles from inside of a DevTogglesProvider
-// (Which in turn must be inside of a UserPrefProvider,
-// both of which are provided by the Client)
-
-// Fetch the array enabledToggles and test for features with [].includes:
-/*
-  <DevToggles>
-    {(enabledToggles) => (
-      <div> I could sure go for some:
-        { enabledToggles.includes("fishsticks") && <FishSticks/> }
-      </div>
-    )}
-  </DevToggles>
-*/
+//
+// import useDevToggle from '../includes/dev-toggles`
+//
+// const NewFeatureIfEnabled = () => {
+//   const showNewFeature = useDevToggle('New Feature');
+//   return showNewFeature ? <NewFeature /> : null;
+// };
 
 export const DevTogglesProvider = ({ children }) => {
   const [enabledToggles, setEnabledToggles] = useUserPref('devToggles', []);
-  return (
-    <Provider value={{ enabledToggles, toggleData, setEnabledToggles }}>
-      {children}
-    </Provider>
-  );
+  return <Context.Provider value={{ enabledToggles, toggleData, setEnabledToggles }}>{children}</Context.Provider>;
 };
 DevTogglesProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const DevToggles = ({ children }) => (
-  <Consumer>
-    {({ enabledToggles, currentToggleData, setEnabledToggles }) => children(enabledToggles || [], currentToggleData, setEnabledToggles)
-    }
-  </Consumer>
-);
-DevToggles.propTypes = {
-  children: PropTypes.func.isRequired,
+export const useDevToggles = () => React.useContext(Context);
+
+const useDevToggle = (toggle) => {
+  const { enabledToggles } = useDevToggles();
+  return enabledToggles.includes(toggle);
 };
 
-export default DevToggles;
+export default useDevToggle;

@@ -4,8 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { captureException } from '../../utils/sentry';
 
 import { getLink } from '../../models/team';
-import { CurrentUserConsumer } from '../current-user';
-import { NotificationConsumer } from '../notifications';
+import { useCurrentUser } from '../current-user';
+import { useNotifications } from '../notifications';
 
 class JoinTeamPageBase extends React.Component {
   constructor(props) {
@@ -16,50 +16,39 @@ class JoinTeamPageBase extends React.Component {
   }
 
   async componentDidMount() {
-    let team;
+    let teamId = null;
     try {
-      const response = await this.props.api.get(
-        `/teams/byUrl/${this.props.teamUrl}`,
-      );
-      team = response.data;
+      const response = await this.props.api.get(`/teamId/byUrl/${this.props.teamUrl}`);
+      teamId = response.data;
     } catch (error) {
       if (error && !(error.response && error.response.status === 404)) {
         captureException(error);
       }
     }
-    if (!team) {
+    if (!teamId) {
       // Either the api is down or the team doesn't exist
       // Regardless we can't really do anything with this
-      this.props.createErrorNotification(
-        'Invite failed, try asking your teammate to resend the invite',
-      );
+      this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
       this.setState({ redirect: getLink({ url: this.props.teamUrl }) });
       return;
     }
     try {
       // Suppress the authorization header to prevent user merging
-      await this.props.api.post(
-        `/teams/${team.id}/join/${this.props.joinToken}`,
-        {},
-        { headers: { Authorization: '' } },
-      );
+      const { data: user } = await this.props.api.post(`/teams/${teamId}/join/${this.props.joinToken}`);
+      if (user) {
+        this.props.replaceCurrentUser(user);
+      }
       this.props.createNotification('Invitation accepted');
     } catch (error) {
       // The team is real but the token didn't work
       // Maybe it's been used already or expired?
-      console.log(
-        'Team invite error',
-        error && error.response && error.response.data,
-      );
+      console.log('Team invite error', error && error.response && error.response.data);
       if (error && error.response.status !== 401) {
         captureException(error);
       }
-      this.props.createErrorNotification(
-        'Invite failed, try asking your teammate to resend the invite',
-      );
+      this.props.createErrorNotification('Invite failed, try asking your teammate to resend the invite');
     }
-    await this.props.reloadCurrentUser();
-    this.setState({ redirect: getLink(team) });
+    this.setState({ redirect: getLink({ url: this.props.teamUrl }) });
   }
 
   render() {
@@ -70,28 +59,18 @@ class JoinTeamPageBase extends React.Component {
   }
 }
 JoinTeamPageBase.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   teamUrl: PropTypes.string.isRequired,
   joinToken: PropTypes.string.isRequired,
   createErrorNotification: PropTypes.func.isRequired,
   createNotification: PropTypes.func.isRequired,
-  reloadCurrentUser: PropTypes.func.isRequired,
+  replaceCurrentUser: PropTypes.func.isRequired,
 };
 
-JoinTeamPageBase.defaultProps = {
-  api: null,
+const JoinTeamPage = (props) => {
+  const { login } = useCurrentUser();
+  const notify = useNotifications();
+  return <JoinTeamPageBase replaceCurrentUser={login} {...notify} {...props} />;
 };
-
-const JoinTeamPage = props => (
-  <CurrentUserConsumer>
-    {(currentUser, fetched, { reload }) => (
-      <NotificationConsumer>
-        {notify => (
-          <JoinTeamPageBase {...notify} {...props} reloadCurrentUser={reload} />
-        )}
-      </NotificationConsumer>
-    )}
-  </CurrentUserConsumer>
-);
 
 export default JoinTeamPage;

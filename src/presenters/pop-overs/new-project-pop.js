@@ -10,10 +10,7 @@ import { getRemixUrl } from '../../models/project';
 
 const importGitRepo = () => {
   /* eslint-disable no-alert */
-  const repoUrl = window.prompt(
-    'Paste the full URL of your repository',
-    'https://github.com/orgname/reponame.git',
-  );
+  const repoUrl = window.prompt('Paste the full URL of your repository', 'https://github.com/orgname/reponame.git');
   /* eslint-enable no-alert */
   if (!repoUrl) {
     return;
@@ -26,7 +23,7 @@ const NewProjectPop = ({ projects }) => (
     <section className="pop-over-actions results-list">
       <div className="results">
         {projects.length ? (
-          projects.map(project => (
+          projects.map((project) => (
             <TrackedExternalLink
               key={project.id}
               to={getRemixUrl(project.domain)}
@@ -36,12 +33,7 @@ const NewProjectPop = ({ projects }) => (
                 origin: 'community new project pop',
               }}
             >
-              <ProjectResultItem
-                {...project}
-                cdnUrl="https://cdn.glitch.com"
-                users={[]}
-                onClick={() => {}}
-              />
+              <ProjectResultItem {...project} cdnUrl="https://cdn.glitch.com" users={[]} onClick={() => {}} />
             </TrackedExternalLink>
           ))
         ) : (
@@ -50,11 +42,7 @@ const NewProjectPop = ({ projects }) => (
       </div>
     </section>
     <section className="pop-over-actions last-section pop-over-info">
-      <button
-        className="button-small button-tertiary button-on-secondary-background"
-        onClick={importGitRepo}
-        type="button"
-      >
+      <button className="button-small button-tertiary button-on-secondary-background" onClick={importGitRepo} type="button">
         <span>Clone from Git Repo</span>
       </button>
     </section>
@@ -87,35 +75,25 @@ class NewProjectPopButton extends React.Component {
       '929980a8-32fc-4ae7-a66f-dddb3ae4912c', // 'hello-webpage'
     ];
     // always request against the production API, with no token
-    const { data } = await this.props.api.get(
-      `https://api.glitch.com/projects/byIds?ids=${projectIds.join(',')}`,
-      {
-        headers: {
-          Authorization: '',
-        },
+    const { data } = await this.props.api.get(`https://api.glitch.com/projects/byIds?ids=${projectIds.join(',')}`, {
+      headers: {
+        Authorization: '',
       },
-    );
+    });
     this.setState({ projects: data });
   }
 
   render() {
     return (
-      <PopoverWithButton
-        buttonClass="button-small"
-        dataTrack="open new-project pop"
-        buttonText="New Project"
-      >
+      <PopoverWithButton buttonClass="button-small" dataTrack="open new-project pop" buttonText="New Project">
         <NewProjectPop projects={this.state.projects} />
       </PopoverWithButton>
     );
   }
 }
-NewProjectPopButton.propTypes = {
-  api: PropTypes.any,
-};
 
-NewProjectPopButton.defaultProps = {
-  api: null,
+NewProjectPopButton.propTypes = {
+  api: PropTypes.any.isRequired,
 };
 
 export default NewProjectPopButton;

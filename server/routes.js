@@ -3,20 +3,17 @@ const fs = require("fs");
 const util = require("util");
 const dayjs = require("dayjs");
 
-const { getProject, getTeam, getUser, getZine } = require("./api");
-const initWebpack = require("./webpack");
-const constants = require("./constants");
+const { getProject, getTeam, getUser, getZine } = require('./api');
+const initWebpack = require('./webpack');
+const constants = require('./constants');
 
 module.exports = function(external) {
   const app = express.Router();
 
   // CORS - Allow pages from any domain to make requests to our API
   app.use(function(request, response, next) {
-    response.header("Access-Control-Allow-Origin", "*");
-    response.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept",
-    );
+    response.header('Access-Control-Allow-Origin', '*');
+    response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     return next();
   });
 
@@ -29,7 +26,7 @@ module.exports = function(external) {
 
   const readFilePromise = util.promisify(fs.readFile);
   const imageDefault =
-    "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png";
+    'https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fsocial-card%402x.png';
   async function render(res, title, description, image = imageDefault) {
     let built = true;
 
@@ -38,7 +35,7 @@ module.exports = function(external) {
     let styles = [];
 
     try {
-      const stats = JSON.parse(await readFilePromise("build/stats.json"));
+      const stats = JSON.parse(await readFilePromise('build/stats.json'));
       stats.entrypoints.styles.assets.forEach((file) => {
         if (file.match(/\.css(\?|$)/)) {
           styles.push(`${stats.publicPath}${file}`);
@@ -59,7 +56,7 @@ module.exports = function(external) {
       built = false;
     }
 
-    res.render("index.ejs", {
+    res.render('index.ejs', {
       title,
       description,
       image,
@@ -70,14 +67,14 @@ module.exports = function(external) {
       EXTERNAL_ROUTES: JSON.stringify(external),
       ZINE_POSTS: JSON.stringify(zine),
       PROJECT_DOMAIN: process.env.PROJECT_DOMAIN,
-      ENVIRONMENT: process.env.NODE_ENV || "dev",
+      ENVIRONMENT: process.env.NODE_ENV || 'dev',
       CONSTANTS: constants,
     });
   }
 
   const { CDN_URL } = constants.current;
 
-  app.get("/~:domain", async (req, res) => {
+  app.get('/~:domain', async (req, res) => {
     const { domain } = req.params;
     const project = await getProject(domain);
     if (!project) {
@@ -88,7 +85,7 @@ module.exports = function(external) {
     await render(res, domain, project.description, avatar);
   });
 
-  app.get("/@:name", async (req, res) => {
+  app.get('/@:name', async (req, res) => {
     const { name } = req.params;
     const team = await getTeam(name);
     if (team) {
@@ -108,21 +105,17 @@ module.exports = function(external) {
     await render(res, `@${name}`, `We couldn't find @${name}`);
   });
 
-  app.get("/auth/:domain", async (req, res) => {
+  app.get('/auth/:domain', async (req, res) => {
     const { domain } = req.params;
 
-    res.render("api-auth.ejs", {
+    res.render('api-auth.ejs', {
       domain: domain,
       CONSTANTS: constants,
     });
   });
 
-  app.get("*", async (req, res) => {
-    await render(
-      res,
-      "Glitch",
-      "The friendly community where everyone can discover & create the best stuff on the web",
-    );
+  app.get('*', async (req, res) => {
+    await render(res, 'Glitch', 'The friendly community where everyone can discover & create the best stuff on the web');
   });
 
   return app;

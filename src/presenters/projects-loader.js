@@ -31,52 +31,40 @@ class ProjectsLoader extends React.Component {
 
   async loadProjects(...ids) {
     if (!ids.length) return;
-    const { data } = await this.props.api.get(
-      `projects/byIds?ids=${ids.join(',')}`,
-    );
+    const { data } = await this.props.api.get(`projects/byIds?ids=${ids.join(',')}`);
     this.setState(keyByVal(data, 'id'));
   }
 
   ensureProjects(projects) {
     const ids = projects.map(({ id }) => id);
 
-    const discardedProjects = Object.keys(this.state).filter(
-      id => this.state[id] && !ids.includes(id),
-    );
+    const discardedProjects = Object.keys(this.state).filter((id) => this.state[id] && !ids.includes(id));
     if (discardedProjects.length) {
       this.setState(listToObject(discardedProjects, undefined));
     }
 
-    const unloadedProjects = ids.filter(id => this.state[id] === undefined);
+    const unloadedProjects = ids.filter((id) => this.state[id] === undefined);
     if (unloadedProjects.length) {
       this.setState(listToObject(unloadedProjects, null));
-      chunk(unloadedProjects, 100).forEach(currentChunk => this.loadProjects(...currentChunk));
+      chunk(unloadedProjects, 100).forEach((currentChunk) => this.loadProjects(...currentChunk));
     }
   }
 
   render() {
     const { children, projects } = this.props;
-    const loadedProjects = projects.map(
-      project => this.state[project.id] || project,
-    );
+    const loadedProjects = projects.map((project) => this.state[project.id] || project);
     return (
       <CurrentUserConsumer>
-        {currentUser => children(
-          normalizeProjects(loadedProjects, currentUser),
-          this.loadProjects.bind(this),
-        )
-        }
+        {(currentUser) => children(normalizeProjects(loadedProjects, currentUser), this.loadProjects.bind(this))}
       </CurrentUserConsumer>
     );
   }
 }
+
 ProjectsLoader.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   children: PropTypes.func.isRequired,
   projects: PropTypes.array.isRequired,
-};
-ProjectsLoader.defaultProps = {
-  api: null,
 };
 
 export default ProjectsLoader;

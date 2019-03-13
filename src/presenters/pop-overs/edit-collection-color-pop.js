@@ -42,9 +42,7 @@ class EditCollectionColorPop extends React.Component {
 
   handleChange(e) {
     let query = e.currentTarget.value.trim();
-    const errorMsg = document.getElementsByClassName(
-      'editable-field-error-message',
-    )[0];
+    const errorMsg = document.getElementsByClassName('editable-field-error-message')[0];
     errorMsg.style.display = 'none';
     this.setState({ query });
     if (query && query.length <= 7) {
@@ -68,9 +66,7 @@ class EditCollectionColorPop extends React.Component {
       // enter key pressed - dismiss pop-over
       this.props.togglePopover();
     } else {
-      document.getElementsByClassName(
-        'editable-field-error-message',
-      )[0].style.display = 'none';
+      document.getElementsByClassName('editable-field-error-message')[0].style.display = 'none';
     }
   }
 
@@ -91,7 +87,7 @@ class EditCollectionColorPop extends React.Component {
             className="color-picker"
             type="color"
             value={this.state.color}
-            onChange={e => this.changeColor(e.target.value)}
+            onChange={(e) => this.changeColor(e.target.value)}
             style={{ backgroundColor: this.state.color }}
             id="color-picker"
           />
@@ -111,13 +107,8 @@ class EditCollectionColorPop extends React.Component {
         </section>
 
         <section className="pop-over-info">
-          <button
-            className="random-color-btn button-tertiary"
-            onClick={this.getRandomColor}
-          >
-            Random
-            {' '}
-            <span className="emoji bouquet" />
+          <button className="random-color-btn button-tertiary" onClick={this.getRandomColor}>
+            Random <span className="emoji bouquet" />
           </button>
         </section>
       </dialog>

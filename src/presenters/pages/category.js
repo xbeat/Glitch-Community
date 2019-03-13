@@ -13,50 +13,36 @@ import MoreIdeas from '../more-ideas';
 import CollectionEditor from '../collection-editor';
 import { CurrentUserConsumer } from '../current-user';
 
-const CategoryPageWrap = ({
-  addProjectToCollection,
-  api,
-  category,
-  currentUser,
-  ...props
-}) => (
+const CategoryPageWrap = ({ addProjectToCollection, api, category, currentUser, ...props }) => (
   <>
     <Helmet>
-      <title>
-        {category.name}
-      </title>
+      <title>{category.name}</title>
     </Helmet>
     <main className="collection-page">
       <article className="projects collection-full" style={{ backgroundColor: category.backgroundColor }}>
-
         <header className="collection">
-          <h1 className="collection-name">
-            {category.name}
-          </h1>
+          <h1 className="collection-name">{category.name}</h1>
           <div className="collection-image-container">
             <img src={category.avatarUrl} alt="" />
           </div>
 
-          <p className="description">
-            {category.description}
-          </p>
+          <p className="description">{category.description}</p>
         </header>
 
         <ProjectsLoader api={api} projects={category.projects}>
-          {projects => (
+          {(projects) => (
             <div className="collection-contents">
               <div className="collection-project-container-header">
-                <h3>
-Projects (
-                  {category.projects.length}
-)
-                </h3>
+                <h3>Projects ({category.projects.length})</h3>
               </div>
 
               {currentUser.login ? (
                 <ProjectsUL
                   {...{
-                    projects, currentUser, api, addProjectToCollection,
+                    projects,
+                    currentUser,
+                    api,
+                    addProjectToCollection,
                   }}
                   category
                   projectOptions={{
@@ -67,7 +53,10 @@ Projects (
               ) : (
                 <ProjectsUL
                   {...{
-                    projects, currentUser, api, addProjectToCollection,
+                    projects,
+                    currentUser,
+                    api,
+                    addProjectToCollection,
                   }}
                   category
                   projectOptions={{}}
@@ -91,12 +80,8 @@ CategoryPageWrap.propTypes = {
     name: PropTypes.string.isRequired,
     projects: PropTypes.array.isRequired,
   }).isRequired,
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
-};
-
-CategoryPageWrap.defaultProps = {
-  api: null,
 };
 
 async function loadCategory(api, id) {
@@ -108,19 +93,12 @@ const CategoryPage = ({ api, category, ...props }) => (
   <Layout api={api}>
     <AnalyticsContext properties={{ origin: 'category' }}>
       <DataLoader get={() => loadCategory(api, category.id)}>
-        {loadedCategory => (
+        {(loadedCategory) => (
           <CollectionEditor api={api} initialCollection={loadedCategory}>
             {(categoryFromEditor, funcs) => (
               <CurrentUserConsumer>
-                {currentUser => (
-                  <CategoryPageWrap
-                    category={categoryFromEditor}
-                    api={api}
-                    userIsAuthor={false}
-                    currentUser={currentUser}
-                    {...funcs}
-                    {...props}
-                  />
+                {(currentUser) => (
+                  <CategoryPageWrap category={categoryFromEditor} api={api} userIsAuthor={false} currentUser={currentUser} {...funcs} {...props} />
                 )}
               </CurrentUserConsumer>
             )}
@@ -132,12 +110,8 @@ const CategoryPage = ({ api, category, ...props }) => (
 );
 
 CategoryPage.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   category: PropTypes.object.isRequired,
-};
-
-CategoryPage.defaultProps = {
-  api: null,
 };
 
 export default CategoryPage;

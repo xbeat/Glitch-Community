@@ -26,15 +26,8 @@ class AddCollectionProject extends React.Component {
       initialProjects = this.props.currentUser.projects;
     }
     return (
-      <PopoverWithButton
-        buttonClass="add-project"
-        buttonText="Add Project"
-        passToggleToPop
-      >
-        <AddCollectionProjectPop
-          initialProjects={initialProjects.slice(0, 20)}
-          {...this.props}
-        />
+      <PopoverWithButton buttonClass="add-project" buttonText="Add Project" passToggleToPop>
+        <AddCollectionProjectPop initialProjects={initialProjects.slice(0, 20)} {...this.props} />
       </PopoverWithButton>
     );
   }
@@ -44,10 +37,7 @@ AddCollectionProject.propTypes = {
   collection: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   addProjectToCollection: PropTypes.func.isRequired,
-  api: PropTypes.func,
-};
-AddCollectionProject.defaultProps = {
-  api: null,
+  api: PropTypes.func.isRequired,
 };
 
 export default AddCollectionProject;

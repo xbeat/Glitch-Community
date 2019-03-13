@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { ProjectLink } from './link';
 import { Loader } from './loader';
 import { FALLBACK_AVATAR_URL, getAvatarUrl } from '../../models/project';
+import TooltipContainer from '../../components/tooltips/tooltip-container';
 
 const RECENT_REMIXES_COUNT = 100;
 
@@ -23,12 +24,7 @@ const addFallbackSrc = (event) => {
 };
 
 const ProjectAvatar = ({ project, className = '' }) => (
-  <img
-    src={getAvatarUrl(project.id)}
-    className={`avatar ${className}`}
-    alt={project.domain}
-    onError={addFallbackSrc}
-  />
+  <img src={getAvatarUrl(project.id)} className={`avatar ${className}`} alt={project.domain} onError={addFallbackSrc} />
 );
 ProjectAvatar.propTypes = {
   project: PropTypes.shape({
@@ -54,63 +50,42 @@ const ProjectDetails = ({ projectDetails }) => (
       <tbody>
         <tr>
           <td className="label">Created</td>
-          <td>
-            {dayjs(projectDetails.createdAt).fromNow()}
-          </td>
+          <td>{dayjs(projectDetails.createdAt).fromNow()}</td>
         </tr>
         <tr>
           <td className="label">Last viewed</td>
-          <td>
-            {dayjs(projectDetails.lastAccess).fromNow()}
-          </td>
+          <td>{dayjs(projectDetails.lastAccess).fromNow()}</td>
         </tr>
         <tr>
           <td className="label">Last edited</td>
-          <td>
-            {dayjs(projectDetails.lastEditedAt).fromNow()}
-          </td>
+          <td>{dayjs(projectDetails.lastEditedAt).fromNow()}</td>
         </tr>
         <tr>
           <td className="label">Last remixed</td>
-          <td>
-            {projectDetails.lastRemixedAt
-              ? dayjs(projectDetails.lastRemixedAt).fromNow()
-              : 'never'}
-          </td>
+          <td>{projectDetails.lastRemixedAt ? dayjs(projectDetails.lastRemixedAt).fromNow() : 'never'}</td>
         </tr>
         <tr>
           <td className="label">Total app views</td>
-          <td>
-            {projectDetails.numAppVisits}
-          </td>
+          <td>{projectDetails.numAppVisits}</td>
         </tr>
         <tr>
           <td className="label">Total code views</td>
-          <td>
-            {projectDetails.numEditorVisits}
-          </td>
+          <td>{projectDetails.numEditorVisits}</td>
         </tr>
         <tr>
           <td className="label">Total direct remixes</td>
-          <td>
-            {projectDetails.numDirectRemixes}
-          </td>
+          <td>{projectDetails.numDirectRemixes}</td>
         </tr>
         <tr>
           <td className="label">Total remixes</td>
-          <td>
-            {projectDetails.numTotalRemixes}
-          </td>
+          <td>{projectDetails.numTotalRemixes}</td>
         </tr>
         {projectDetails.baseProject.domain && (
           <tr>
             <td className="label">Originally remixed from</td>
             <td>
               <ProjectLink project={projectDetails.baseProject}>
-                <ProjectAvatar
-                  project={projectDetails.baseProject}
-                  className="baseproject-avatar"
-                />
+                <ProjectAvatar project={projectDetails.baseProject} className="baseproject-avatar" />
                 {projectDetails.baseProject.domain}
               </ProjectLink>
             </td>
@@ -122,9 +97,13 @@ const ProjectDetails = ({ projectDetails }) => (
 );
 const ProjectRemixItem = ({ remix }) => (
   <ProjectLink project={remix}>
-    <span data-tooltip={remix.domain} data-tooltip-left="true">
-      <ProjectAvatar project={remix} />
-    </span>
+    <TooltipContainer
+      id={`project-remix-tooltip-${remix.domain}`}
+      target={<ProjectAvatar project={remix} />}
+      align={['left']}
+      type="action"
+      tooltip={remix.domain}
+    />
   </ProjectLink>
 );
 
@@ -171,10 +150,8 @@ class TeamAnalyticsProjectDetails extends React.Component {
         <ProjectDetails projectDetails={this.state.projectDetails} />
         <article className="project-remixes">
           <h4>Latest Remixes</h4>
-          {this.state.projectRemixes.length === 0 && (
-            <p>No remixes yet (／_^)／ ●</p>
-          )}
-          {this.state.projectRemixes.map(remix => (
+          {this.state.projectRemixes.length === 0 && <p>No remixes yet (／_^)／ ●</p>}
+          {this.state.projectRemixes.map((remix) => (
             <ProjectRemixItem key={remix.id} remix={remix} />
           ))}
         </article>
@@ -186,11 +163,7 @@ class TeamAnalyticsProjectDetails extends React.Component {
 TeamAnalyticsProjectDetails.propTypes = {
   currentProjectDomain: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  api: PropTypes.any,
-};
-
-TeamAnalyticsProjectDetails.defaultProps = {
-  api: null,
+  api: PropTypes.any.isRequired,
 };
 
 export default TeamAnalyticsProjectDetails;

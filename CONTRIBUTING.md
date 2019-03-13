@@ -80,7 +80,7 @@ In your local repository,
   
 ```
 
-Or, run `./sh/setup.sh my-remix`. 
+Or, run `./sh/setup.sh my-remix`.
 
 Now you can use the GitHub UI to turn your branch into a pull request. 
 
@@ -204,6 +204,21 @@ Run `./sh/teardown.sh` on your local machine to remove the branch and remote for
 
 Good job :-) Pop back over to #community and tell the room that you're all done.
 
+#### Deploy Checklist
+
+Here's a short and sweet version of the steps above that you can use once you're comfortable with the deploy process:
+
+1. Tell #community that you're about to merge + deploy
+2. Run `.sh/merge.sh`
+3. Go to [~community-staging](https://glitch.com/~community-staging) and open up the console
+    - `git pull` to update to master
+    - Double check that `git pull` doesn't require any merges
+    - Run `refresh`
+4. Open the ~community-staging logs, wait for the build to finish (~7-9 minutes)
+5. Test/QA your changes, check for console errors, etc.
+6. Deploy it with the swap script!
+7. Tell #community that you've finished the swap
+
 --------------------
 
 
@@ -218,3 +233,8 @@ Sure thing. All standard caveats and cautions apply.  This is appropriate for up
 We now have [Storybook for React](https://www.npmjs.com/package/@storybook/react) integrated with our site, as we're gradually moving it towards a more component-based design. It's not hooked into the build process, so to see your changes reflected in it, you can do the following:
 1. Run ```npm run storybook``` from the terminal console to build the static storybook files.
 2. Go to https://<remix-name>/storybook. All the files are served there (from the build folder in the app).
+
+**Components**
+
+We're in the process of moving our React architecture towards an Atomic Design-style approach, using CSS Modules as the backbone of that. To add a new component, or convert an existing piece of our code into a CSS Module-enabled component, here's what you should do:
+1. Create stories for the component in stories/index.js. Once this file gets too big, we'll likely start 

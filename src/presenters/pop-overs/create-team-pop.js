@@ -9,7 +9,7 @@ import { getPredicates, getTeamPair } from '../../models/words';
 import { getLink } from '../../models/team';
 import { Loader } from '../includes/loader';
 import { NestedPopoverTitle } from './popover-nested';
-import { PureEditableField } from '../includes/editable-field';
+import TextInput from '../../components/fields/text-input';
 import { SignInPopBase } from './sign-in-pop';
 
 // Create Team 🌿
@@ -30,7 +30,7 @@ class CreateTeamPopBase extends React.Component {
   async componentDidMount() {
     try {
       const teamName = await getTeamPair();
-      this.setState(prevState => (!prevState.teamName ? { teamName } : {}));
+      this.setState((prevState) => (!prevState.teamName ? { teamName } : {}));
     } catch (error) {
       // If something goes wrong just leave the field empty
     }
@@ -55,8 +55,8 @@ class CreateTeamPopBase extends React.Component {
       }
 
       try {
-        const { data } = await this.props.api.get(`teams/byUrl/${url}`);
-        if (data) {
+        const { data } = await this.props.api.get(`teamId/byUrl/${url}`);
+        if (data !== 'NOT FOUND') {
           error = 'Team already exists, try another';
         }
       } catch (exception) {
@@ -86,9 +86,7 @@ class CreateTeamPopBase extends React.Component {
       let description = 'A team that makes things';
       try {
         const predicates = await getPredicates();
-        description = `A ${predicates[0]} team that makes ${
-          predicates[1]
-        } things`;
+        description = `A ${predicates[0]} team that makes ${predicates[1]} things`;
       } catch (error) {
         // Just use the plain description
       }
@@ -105,10 +103,7 @@ class CreateTeamPopBase extends React.Component {
       });
       this.props.history.push(getLink(data));
     } catch (error) {
-      const message = error
-        && error.response
-        && error.response.data
-        && error.response.data.message;
+      const message = error && error.response && error.response.data && error.response.data.message;
       this.setState({
         isLoading: false,
         error: message || 'Something went wrong',
@@ -121,39 +116,24 @@ class CreateTeamPopBase extends React.Component {
     return (
       <dialog className="pop-over create-team-pop">
         <NestedPopoverTitle>
-          Create Team
-          {' '}
-          <span className="emoji herb" />
+          Create Team <span className="emoji herb" />
         </NestedPopoverTitle>
 
         <section className="pop-over-info">
-          <p className="info-description">
-            Showcase your projects in one place, manage collaborators, and view
-            analytics
-          </p>
+          <p className="info-description">Showcase your projects in one place, manage collaborators, and view analytics</p>
         </section>
 
         <section className="pop-over-actions">
           <form onSubmit={this.handleSubmit}>
-            <PureEditableField
-              value={this.state.teamName}
-              update={this.handleChange}
-              placeholder={placeholder}
-              error={this.state.error}
-            />
-            <p className="action-description team-url-preview">
-              /@
-              {_.kebabCase(this.state.teamName || placeholder)}
-            </p>
+            <TextInput value={this.state.teamName} onChange={this.handleChange} placeholder={placeholder} error={this.state.error} />
+            <p className="action-description team-url-preview">/@{_.kebabCase(this.state.teamName || placeholder)}</p>
 
             {this.state.isLoading ? (
               <Loader />
             ) : (
               <TrackClick name="Create Team submitted">
                 <button type="submit" className="button-small has-emoji">
-                  Create Team
-                  {' '}
-                  <span className="emoji thumbs_up" />
+                  Create Team <span className="emoji thumbs_up" />
                 </button>
               </TrackClick>
             )}
@@ -178,20 +158,17 @@ const CreateTeamPop = withRouter(CreateTeamPopBase);
 
 const CreateTeamPopOrSignIn = ({ api }) => (
   <CurrentUserConsumer>
-    {user => (user && user.login ? (
-      <CreateTeamPop api={api} />
-    ) : (
-      <SignInPopBase
-        api={api}
-        hash="create-team"
-        header={<NestedPopoverTitle>Sign In</NestedPopoverTitle>}
-        prompt={(
-          <p className="action-description">
-              You'll need to sign in to create a team
-          </p>
-        )}
-      />
-    ))
+    {(user) =>
+      user && user.login ? (
+        <CreateTeamPop api={api} />
+      ) : (
+        <SignInPopBase
+          api={api}
+          hash="create-team"
+          header={<NestedPopoverTitle>Sign In</NestedPopoverTitle>}
+          prompt={<p className="action-description">You'll need to sign in to create a team</p>}
+        />
+      )
     }
   </CurrentUserConsumer>
 );

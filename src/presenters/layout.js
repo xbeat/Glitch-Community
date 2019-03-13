@@ -12,9 +12,7 @@ const Layout = ({ children, api, searchQuery }) => (
   <div className="content">
     <Helmet title="Glitch" />
     <Header api={api} searchQuery={searchQuery} />
-    <ErrorBoundary>
-      {children}
-    </ErrorBoundary>
+    <ErrorBoundary>{children}</ErrorBoundary>
     <Footer />
     <ErrorBoundary fallback={null}>
       <Konami>
@@ -24,13 +22,12 @@ const Layout = ({ children, api, searchQuery }) => (
   </div>
 );
 Layout.propTypes = {
-  api: PropTypes.any,
+  api: PropTypes.any.isRequired,
   children: PropTypes.node.isRequired,
   searchQuery: PropTypes.string,
 };
 Layout.defaultProps = {
   searchQuery: '',
-  api: null,
 };
 
 export default Layout;

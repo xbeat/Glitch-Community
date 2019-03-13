@@ -17,16 +17,15 @@ function notifyParent(message = {}) {
     return;
   }
 
-  // Specifically target our same origin;
+  // Specifically target our same origin (APP_URL) ;
   // we're only communicating between the editor and its corresponding ~community site,
   // not across other environments.
-  const sameOrigin = window.origin;
 
   // Add 'LoginMessage' to all messages of this type so that the Editor
   // can filter for them specifically.
   message.type = 'LoginMessage';
 
-  window.parent.postMessage(message, sameOrigin);
+  window.parent.postMessage(message, APP_URL);
 }
 
 class LoginPage extends React.Component {
@@ -41,9 +40,7 @@ class LoginPage extends React.Component {
   }
 
   async componentDidMount() {
-    const {
-      api, provider, url, destination,
-    } = this.props;
+    const { api, provider, url, destination } = this.props;
     this.props.setDestination(undefined);
 
     try {
@@ -52,7 +49,7 @@ class LoginPage extends React.Component {
         throw new Error(`Bad user id (${data.id}) after ${provider} login`);
       }
 
-      console.log('LOGGED IN', data);
+      console.log('LOGGED IN', data.id);
       this.props.setUser(data);
 
       if (destination && destination.expires > new Date().toISOString()) {
@@ -82,7 +79,8 @@ class LoginPage extends React.Component {
   render() {
     if (this.state.done) {
       return <Redirect to={this.state.redirect} />;
-    } if (this.state.error) {
+    }
+    if (this.state.error) {
       const genericDescription = "Hard to say what happened, but we couldn't log you in. Try again?";
       if (this.props.provider === 'Email') {
         return (
@@ -122,21 +120,12 @@ LoginPage.defaultProps = {
 const LoginPageContainer = (props) => {
   const { login } = useCurrentUser();
   const [destination, setDestination] = useLocalStorage('destinationAfterAuth', null);
-  return (
-    <LoginPage
-      setUser={login}
-      destination={destination}
-      setDestination={setDestination}
-      {...props}
-    />
-  );
+  return <LoginPage setUser={login} destination={destination} setDestination={setDestination} {...props} />;
 };
 
 export const FacebookLoginPage = ({ code, ...props }) => {
   const callbackUrl = `${APP_URL}/login/facebook`;
-  const url = `/auth/facebook/${code}?callbackURL=${encodeURIComponent(
-    callbackUrl,
-  )}`;
+  const url = `/auth/facebook/${code}?callbackURL=${encodeURIComponent(callbackUrl)}`;
   return <LoginPageContainer {...props} provider="Facebook" url={url} />;
 };
 

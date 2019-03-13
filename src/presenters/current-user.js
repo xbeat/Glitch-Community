@@ -4,12 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import {
-  configureScope,
-  captureException,
-  captureMessage,
-  addBreadcrumb,
-} from '../utils/sentry';
+import { configureScope, captureException, captureMessage, addBreadcrumb } from '../utils/sentry';
 import useLocalStorage from './includes/local-storage';
 
 const Context = React.createContext();
@@ -48,7 +43,7 @@ function identifyUser(user) {
   }
   try {
     if (analytics && analytics.identify && user && user.login) {
-      const emailObj = Array.isArray(user.emails) && user.emails.find(email => email.primary);
+      const emailObj = Array.isArray(user.emails) && user.emails.find((email) => email.primary);
       const email = emailObj && emailObj.email;
       analytics.identify(
         user.id,
@@ -120,16 +115,19 @@ class CurrentUserManager extends React.Component {
       identifyUser(cachedUser);
     }
 
-    if (
-      !usersMatch(cachedUser, sharedUser)
-      || !usersMatch(sharedUser, prev.sharedUser)
-    ) {
-      this.load();
+    if (!usersMatch(cachedUser, sharedUser) || !usersMatch(sharedUser, prev.sharedUser)) {
+      // delay loading a moment so both items from storage have a chance to update
+      setTimeout(() => this.load(), 1);
     }
 
     // hooks for easier debugging
     window.currentUser = cachedUser;
     window.api = this.api();
+  }
+
+  async getAnonUser() {
+    const { data } = await this.api().post('users/anon');
+    return data;
   }
 
   async getSharedUser() {
@@ -157,10 +155,7 @@ class CurrentUserManager extends React.Component {
       }
       return data;
     } catch (error) {
-      if (
-        error.response
-        && (error.response.status === 401 || error.response.status === 404)
-      ) {
+      if (error.response && (error.response.status === 401 || error.response.status === 404)) {
         // 401 means our token is bad, 404 means the user doesn't exist
         return 'error';
       }
@@ -185,18 +180,30 @@ class CurrentUserManager extends React.Component {
   async load() {
     if (this.state.working) return;
     this.setState({ working: true });
-    const { sharedUser, cachedUser } = this.props;
-    if (!usersMatch(sharedUser, cachedUser)) {
+    let { sharedUser } = this.props;
+
+    // If we're signed out create a new anon user
+    if (!sharedUser) {
+      sharedUser = await this.getAnonUser();
+      this.props.setSharedUser(sharedUser);
+    }
+
+    // Check if we have to clear the cached user
+    if (!usersMatch(sharedUser, this.props.cachedUser)) {
       this.props.setCachedUser(undefined);
     }
-    if (sharedUser) {
-      const newCachedUser = await this.getCachedUser();
-      if (newCachedUser === 'error') {
-        // Sounds like our shared user is bad
-        // Fix it and componentDidUpdate will reload
+
+    const newCachedUser = await this.getCachedUser();
+    if (newCachedUser === 'error') {
+      // Looks like our sharedUser is bad, make sure it wasn't changed since we read it
+      // Anon users get their token and id deleted when they're merged into a user on sign in
+      // If it did change then quit out and let componentDidUpdate sort it out
+      if (usersMatch(sharedUser, this.props.sharedUser)) {
+        // The user wasn't changed, so we need to fix it
         this.setState({ fetched: false });
         const newSharedUser = await this.getSharedUser();
         this.props.setSharedUser(newSharedUser);
+        console.log(`Fixed shared cachedUser from ${sharedUser.id} to ${newSharedUser && newSharedUser.id}`);
         addBreadcrumb({
           level: 'info',
           message: `Fixed shared cachedUser. Was ${JSON.stringify(sharedUser)}`,
@@ -206,33 +213,43 @@ class CurrentUserManager extends React.Component {
           message: `New shared cachedUser: ${JSON.stringify(newSharedUser)}`,
         });
         captureMessage('Invalid cachedUser');
-      } else {
-        this.props.setCachedUser(newCachedUser);
-        this.setState({ fetched: true });
       }
     } else {
-      const { data } = await this.api().post('users/anon');
-      this.props.setSharedUser(data);
+      // The shared user is good, store it
+      this.props.setCachedUser(newCachedUser);
+      this.setState({ fetched: true });
     }
+
     this.setState({ working: false });
   }
 
+  async login(user) {
+    this.props.setSharedUser(user);
+    this.props.setCachedUser(undefined);
+  }
+
+  update(changes) {
+    this.props.setCachedUser({
+      ...this.props.cachedUser,
+      ...changes,
+    });
+  }
+
+  async logout() {
+    this.props.setSharedUser(undefined);
+    this.props.setCachedUser(undefined);
+  }
+
   render() {
-    const {
-      children,
-      sharedUser,
-      cachedUser,
-      setSharedUser,
-      setCachedUser,
-    } = this.props;
+    const { children, sharedUser, cachedUser } = this.props;
     return children({
       api: this.api(),
       currentUser: { ...defaultUser, ...sharedUser, ...cachedUser },
       fetched: !!cachedUser && this.state.fetched,
       reload: () => this.load(),
-      login: user => setSharedUser(user),
-      update: changes => setCachedUser({ ...cachedUser, ...changes }),
-      clear: () => setSharedUser(undefined),
+      login: (user) => this.login(user),
+      update: (changes) => this.update(changes),
+      clear: () => this.logout(),
     });
   }
 }
@@ -252,15 +269,11 @@ CurrentUserManager.defaultProps = {
 };
 
 export const CurrentUserProvider = ({ children }) => {
-  const [cachedUser, setCachedUser] = useLocalStorage('community-cachedUser', null);
   const [sharedUser, setSharedUser] = useLocalStorage('cachedUser', null);
+  const [cachedUser, setCachedUser] = useLocalStorage('community-cachedUser', null);
   return (
     <CurrentUserManager sharedUser={sharedUser} setSharedUser={setSharedUser} cachedUser={cachedUser} setCachedUser={setCachedUser}>
-      {({ api, ...props }) => (
-        <Context.Provider value={props}>
-          {children(api)}
-        </Context.Provider>
-      )}
+      {({ api, ...props }) => <Context.Provider value={props}>{children(api)}</Context.Provider>}
     </CurrentUserManager>
   );
 };
@@ -268,10 +281,8 @@ CurrentUserProvider.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-export const CurrentUserConsumer = props => (
-  <Context.Consumer>
-    {({ currentUser, fetched, ...funcs }) => props.children(currentUser, fetched, funcs, props)}
-  </Context.Consumer>
+export const CurrentUserConsumer = (props) => (
+  <Context.Consumer>{({ currentUser, fetched, ...funcs }) => props.children(currentUser, fetched, funcs, props)}</Context.Consumer>
 );
 CurrentUserConsumer.propTypes = {
   children: PropTypes.func.isRequired,
@@ -284,7 +295,7 @@ export function normalizeUser(user, currentUser) {
 }
 
 export function normalizeUsers(users, currentUser) {
-  return users.map(user => normalizeUser(user, currentUser));
+  return users.map((user) => normalizeUser(user, currentUser));
 }
 
 export function normalizeProject({ users, ...project }, currentUser) {
@@ -292,5 +303,5 @@ export function normalizeProject({ users, ...project }, currentUser) {
 }
 
 export function normalizeProjects(projects, currentUser) {
-  return projects.map(project => normalizeProject(project, currentUser));
+  return projects.map((project) => normalizeProject(project, currentUser));
 }

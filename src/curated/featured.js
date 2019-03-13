@@ -14,18 +14,18 @@ Example:
 // make sure image urls use https
 export default [
   {
-    title: 'MIDI Songs Become Cities',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fmidi-city-ctervo-gif.gif?1551088643364',
-    link: 'https://midicity-2000.glitch.me/',
+    title: 'Fire Extinguishers In Spaaaaace!',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_space_extinguisher.jpg?1552302001273',
+    link: 'https://space-extinguisher.glitch.me/',
   },
   {
-    title: 'Markov Chain Headlines',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Frss-headlines-ctervo-gif.gif?1551088646997',
-    link: 'https://rss-headlines.glitch.me/',
+    title: 'Tarot According to Achewood',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_achewood.jpg?1552302000528',
+    link: 'https://achewood-tarot.glitch.me/',
   },
   {
-    title: 'Sea Pinks and High Tide',
-    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fsea-pinks-ctervo-.gif?1551088649326',
-    link: 'https://sea-pinks.glitch.me/',
+    title: 'Explore the Globe',
+    img: 'https://cdn.glitch.com/02863ac1-a499-4a41-ac9c-41792950000f%2Fglitch_cesium.jpg?1552302001784',
+    link: 'https://glitch.com/~cesium-viewer',
   }
 ];

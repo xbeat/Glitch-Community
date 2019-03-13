@@ -13,16 +13,41 @@ import * as Sentry from '@sentry/browser';
 export * from '@sentry/browser';
 const SentryHelpers = require('../../shared/sentryHelpers');
 
+let beforeSendFailed = false;
+let beforeBreadcrumbFailed = false;
+
 try {
   Sentry.init({
     dsn: 'https://4f1a68242b6944738df12eecc34d377c@sentry.io/1246508',
     environment: ENVIRONMENT,
     release: `community@${BUILD_TIMESTAMP}`,
-    beforeSend(event, hint) {
-      return SentryHelpers.beforeSend(PROJECT_DOMAIN, _env, event, hint);
+    ignoreErrors: SentryHelpers.ignoreErrors,
+    beforeSend(event) {
+      try {
+        return SentryHelpers.beforeSend(PROJECT_DOMAIN, _env, event);
+      } catch (error) {
+        console.error(error);
+        if (!beforeSendFailed) {
+          // It'll probably fail next time too, so only log it once
+          // Also let this capture finish before starting another one
+          window.setTimeout(() => Sentry.captureException(error), 1);
+          beforeSendFailed = true;
+        }
+        return event;
+      }
     },
     beforeBreadcrumb(breadcrumb) {
-      return SentryHelpers.beforeBreadcrumb(breadcrumb);
+      try {
+        return SentryHelpers.beforeBreadcrumb(breadcrumb);
+      } catch (error) {
+        if (!beforeBreadcrumbFailed) {
+          // the console creates breadcrumbs, don't get into a loop
+          console.error(error);
+          window.setTimeout(() => Sentry.captureException(error), 1);
+          beforeBreadcrumbFailed = true;
+        }
+        return breadcrumb;
+      }
     },
   });
 

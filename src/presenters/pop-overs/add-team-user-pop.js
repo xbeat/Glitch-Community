@@ -5,12 +5,9 @@ import { debounce } from 'lodash';
 import { parseOneAddress } from 'email-addresses';
 import { captureException } from '../../utils/sentry';
 
-import DevToggles from '../includes/dev-toggles';
+import useDevToggle from '../includes/dev-toggles';
 import { Loader } from '../includes/loader';
-import UserResultItem, {
-  InviteByEmail,
-  WhitelistEmailDomain,
-} from '../includes/user-result-item';
+import UserResultItem, { InviteByEmail, WhitelistEmailDomain } from '../includes/user-result-item';
 
 const getDomain = (query) => {
   const email = parseOneAddress(query.replace('@', 'test@'));
@@ -110,19 +107,18 @@ class AddTeamUserPop extends React.Component {
     this.setState({ maybeRequest: request });
 
     const { data } = await request;
-    const nonMemberResults = data.filter(
-      user => !this.props.members.includes(user.id),
-    );
-    const rankedResults = nonMemberResults.sort(
-      (a, b) => rankSearchResult(b, query) - rankSearchResult(a, query),
-    );
+    const nonMemberResults = data.filter((user) => !this.props.members.includes(user.id));
+    const rankedResults = nonMemberResults.sort((a, b) => rankSearchResult(b, query) - rankSearchResult(a, query));
 
-    this.setState(({ maybeRequest }) => (request === maybeRequest
-      ? {
-        maybeRequest: null,
-        maybeResults: rankedResults,
+    this.setState(({ maybeRequest }) => {
+      if (request === maybeRequest) {
+        return {
+          maybeRequest: null,
+          maybeResults: rankedResults,
+        };
       }
-      : {}));
+      return {};
+    });
   }
 
   async validateDomain(query) {
@@ -131,7 +127,7 @@ class AddTeamUserPop extends React.Component {
       return;
     }
 
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       validDomains: { ...prevState.validDomains, [domain]: null },
     }));
 
@@ -144,43 +140,31 @@ class AddTeamUserPop extends React.Component {
       captureException(error);
     }
 
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       validDomains: { ...prevState.validDomains, [domain]: valid },
     }));
   }
 
   render() {
-    const { inviteEmail, inviteUser, setWhitelistedDomain } = this.props;
+    const { inviteEmail, inviteUser, setWhitelistedDomain, whitelistedDomain } = this.props;
     const { maybeRequest, maybeResults, query } = this.state;
     const isLoading = !!maybeRequest || !maybeResults;
     const results = [];
 
     const email = parseOneAddress(query);
-    if (email && this.props.enabledToggles.includes('Email Invites')) {
+    if (email && this.props.allowEmailInvites) {
       results.push({
         key: 'invite-by-email',
-        item: (
-          <InviteByEmail
-            email={email.address}
-            onClick={() => inviteEmail(email.address)}
-          />
-        ),
+        item: <InviteByEmail email={email.address} onClick={() => inviteEmail(email.address)} />,
       });
     }
 
-    if (setWhitelistedDomain) {
+    if (setWhitelistedDomain && !whitelistedDomain) {
       const domain = getDomain(query);
-      const prevDomain = this.props.whitelistedDomain;
-      if (domain && prevDomain !== domain && this.state.validDomains[domain]) {
+      if (domain && this.state.validDomains[domain]) {
         results.push({
           key: 'whitelist-email-domain',
-          item: (
-            <WhitelistEmailDomain
-              domain={domain}
-              prevDomain={prevDomain}
-              onClick={() => setWhitelistedDomain(domain)}
-            />
-          ),
+          item: <WhitelistEmailDomain domain={domain} onClick={() => setWhitelistedDomain(domain)} />,
         });
       }
     }
@@ -188,7 +172,7 @@ class AddTeamUserPop extends React.Component {
     // now add the actual search results
     if (maybeResults) {
       results.push(
-        ...maybeResults.map(user => ({
+        ...maybeResults.map((user) => ({
           key: user.id,
           item: <UserResultItem user={user} action={() => inviteUser(user)} />,
         })),
@@ -208,29 +192,24 @@ class AddTeamUserPop extends React.Component {
           />
         </section>
         {!!query && <Results isLoading={isLoading} results={results} />}
-        {!query && setWhitelistedDomain && (
-          <aside className="pop-over-info">
-            You can also whitelist with @example.com
-          </aside>
-        )}
+        {!query && !!setWhitelistedDomain && !whitelistedDomain && <aside className="pop-over-info">You can also whitelist with @example.com</aside>}
       </dialog>
     );
   }
 }
 AddTeamUserPop.propTypes = {
-  api: PropTypes.func,
+  api: PropTypes.func.isRequired,
   inviteEmail: PropTypes.func.isRequired,
   inviteUser: PropTypes.func.isRequired,
   members: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   setWhitelistedDomain: PropTypes.func,
   whitelistedDomain: PropTypes.string,
-  enabledToggles: PropTypes.array.isRequired,
+  allowEmailInvites: PropTypes.bool.isRequired,
 };
 
 AddTeamUserPop.defaultProps = {
   setWhitelistedDomain: () => {},
   whitelistedDomain: '',
-  api: null,
 };
 
 const Results = ({ results, isLoading }) => {
@@ -245,8 +224,7 @@ const Results = ({ results, isLoading }) => {
   if (results.length === 0) {
     return (
       <section className="pop-over-actions last-section">
-        Nothing found
-        {' '}
+        Nothing found{' '}
         <span role="img" aria-label="">
           💫
         </span>
@@ -258,9 +236,7 @@ const Results = ({ results, isLoading }) => {
     <section className="pop-over-actions last-section results-list">
       <ul className="results">
         {results.map(({ key, item }) => (
-          <li key={key}>
-            {item}
-          </li>
+          <li key={key}>{item}</li>
         ))}
       </ul>
     </section>
@@ -272,12 +248,9 @@ Results.propTypes = {
   isLoading: PropTypes.bool.isRequired,
 };
 
-const AddTeamUserPopWithDevToggles = props => (
-  <DevToggles>
-    {enabledToggles => (
-      <AddTeamUserPop {...props} enabledToggles={enabledToggles} />
-    )}
-  </DevToggles>
-);
+const AddTeamUserPopWithDevToggles = (props) => {
+  const allowEmailInvites = useDevToggle('Email Invites');
+  return <AddTeamUserPop {...props} allowEmailInvites={allowEmailInvites} />;
+};
 
 export default AddTeamUserPopWithDevToggles;
