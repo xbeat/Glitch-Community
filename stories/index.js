@@ -86,7 +86,7 @@ storiesOf('Note', module)
           name: 'Glitch',
         }}
         update={something => console.log(something)}
-        project={{ isAddingANewNote: true, note: "", }}
+        project={{ isAddingANewNote: true }}
         collectionCoverColor="#ddc4fc"
       />
     </div>
