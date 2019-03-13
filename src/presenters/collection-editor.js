@@ -24,8 +24,10 @@ class CollectionEditor extends React.Component {
   }
 
   async updateFields(changes) {
-    this.setState(changes);
-    await this.props.api.patch(`collections/${this.state.id}`, changes);    
+    // A note here: we don't want to setState with the data from the server from this call, as it doesn't return back the projects in depth with users and notes and things
+    // maybe a sign we want to think of something a little more powerful for state management, as we're getting a little hairy here.
+    this.setState(changes); 
+    await this.props.api.patch(`collections/${this.state.id}`, changes);
   }
 
   async addProjectToCollection(project, collection) {
