@@ -12,9 +12,9 @@ tooltip-background = rgba(0,0,0,0.95)
 .fallback[data-tooltip]::after
   opacity: 0
 
-.fallback[data-tooltip]:hover
-  &::before,
-  &::after
+.tooltip-container:hover
+  .fallback[data-tooltip]::before,
+  .fallback[data-tooltip]::after
     opacity: 1
     
 .fallback[data-tooltip]::after
@@ -29,7 +29,6 @@ tooltip-background = rgba(0,0,0,0.95)
   right: 50%
   top: 100%
   width: auto
-  height: 100%
   padding: 6px 8px
   margin-top: 5px
   font-style: normal
@@ -61,8 +60,12 @@ tooltip-background = rgba(0,0,0,0.95)
 
 .fallback[data-tooltip].top
   &::after
-  margin-top: -12px
-  transform: translateX(50%) translateY(-200%)
+    margin-top: -12px
+    transform: translateX(50%) translateY(-200%)
+  &::before
+    margin-top: -6px
+    border-top-color: tooltip-background
+    border-bottom-color: transparent
   
 .fallback[data-tooltip].left::after,
 .fallback[data-tooltip].left::before
@@ -72,7 +75,6 @@ tooltip-background = rgba(0,0,0,0.95)
   
 .fallback[data-tooltip].left::before
   left: 10px
-  transform: translateX(0) translateY(-100%)
   
 .fallback[data-tooltip].right::after,
 .fallback[data-tooltip].right::before
@@ -82,7 +84,6 @@ tooltip-background = rgba(0,0,0,0.95)
 
 .fallback[data-tooltip].right::before
   right: 10px
-  transform: translateX(0) translateY(-100%)
 
 .fallback[data-tooltip].top.right::after,
 .fallback[data-tooltip].top.left::after
